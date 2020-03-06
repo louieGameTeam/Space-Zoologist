@@ -17,114 +17,114 @@ using UnityEngine;
  *  - TPS test with all access.
  */
 
-public class RealisticFoodDistributionSystem : MonoBehaviour
-{
+//public class RealisticFoodDistributionSystem : MonoBehaviour
+//{
 
-    private float getFoodSourceOutput(FoodSource foodSource) { return foodSource.getOutput(); }
-    private float getPopulationDominace(AnimalPopulation population) { return population.PopulationDominace; }
-    private int getPopulationSize(AnimalPopulation population) { return population.PopulationSize; }
+//    private float getFoodSourceOutput(FoodSource foodSource) { return foodSource.getOutput(); }
+//    private float getPopulationDominace(AnimalPopulation population) { return population.PopulationDominace; }
+//    private int getPopulationSize(AnimalPopulation population) { return population.PopulationSize; }
 
-    // Get a list of animal population that has access to given food source
-    private List<AnimalPopulation> getPopulationsCanAccess(FoodSource foodSource)
-    {
-        List<AnimalPopulation> populationsCanAccess = new List<AnimalPopulation>();
+//    // Get a list of animal population that has access to given food source
+//    private List<AnimalPopulation> getPopulationsCanAccess(FoodSource foodSource)
+//    {
+//        List<AnimalPopulation> populationsCanAccess = new List<AnimalPopulation>();
 
-        // TODO: get list of animal population that has access to foodSource. (RPS)
+//        // TODO: get list of animal population that has access to foodSource. (RPS)
 
-        return populationsCanAccess;
-    }
+//        return populationsCanAccess;
+//    }
 
-    private float getTotoalDominaceOfPopulations(List<AnimalPopulation> populations)
-    {
-        float totalDominace = 0f;
+//    private float getTotoalDominaceOfPopulations(List<AnimalPopulation> populations)
+//    {
+//        float totalDominace = 0f;
 
-        foreach (AnimalPopulation population in populations)
-        {
-            totalDominace += getPopulationDominace(population);
-        }
+//        foreach (AnimalPopulation population in populations)
+//        {
+//            totalDominace += getPopulationDominace(population);
+//        }
 
-        return totalDominace;
-    }
-
-
-    // Get list of populations that can consume given food source in given list of population
-    private List<AnimalPopulation> getPopulationsThatConsumeFoodSource(List<AnimalPopulation> allPopulations, FoodSource foodSource)
-    {
-        List<AnimalPopulation> canConsumePopulations = new List<AnimalPopulation>();
-
-        foreach (AnimalPopulation population in allPopulations)
-        {
-            // TODO: check in population can consume foodSourceType. (AnimalPopulation)
-            if (population.IsEdible(foodSource))
-            {
-                canConsumePopulations.Add(population);
-            }
-        }
-
-        return canConsumePopulations;
-    }
-
-    private float getCompetionRating(List<AnimalPopulation> populations)
-    {
-        float competitionRating = 0;
-        List<float> populationDominaces = new List<float>();
+//        return totalDominace;
+//    }
 
 
-        // Get all dominaces in a list
-        foreach (AnimalPopulation population in populations)
-        {
-            populationDominaces.Add(getPopulationDominace(population));
-        }
+//    // Get list of populations that can consume given food source in given list of population
+//    private List<AnimalPopulation> getPopulationsThatConsumeFoodSource(List<AnimalPopulation> allPopulations, FoodSource foodSource)
+//    {
+//        List<AnimalPopulation> canConsumePopulations = new List<AnimalPopulation>();
 
-        // Compute competition rating(standard deviviation)
-        float avg = populationDominaces.Average();
-        competitionRating = (float)Math.Sqrt(populationDominaces.Average(v => Math.Pow(v - avg, 2)));
+//        foreach (AnimalPopulation population in allPopulations)
+//        {
+//            // TODO: check in population can consume foodSourceType. (AnimalPopulation)
+//            if (population.IsEdible(foodSource))
+//            {
+//                canConsumePopulations.Add(population);
+//            }
+//        }
 
-        return competitionRating;
-    }
+//        return canConsumePopulations;
+//    }
+
+//    private float getCompetionRating(List<AnimalPopulation> populations)
+//    {
+//        float competitionRating = 0;
+//        List<float> populationDominaces = new List<float>();
+
+
+//        // Get all dominaces in a list
+//        foreach (AnimalPopulation population in populations)
+//        {
+//            populationDominaces.Add(getPopulationDominace(population));
+//        }
+
+//        // Compute competition rating(standard deviviation)
+//        float avg = populationDominaces.Average();
+//        competitionRating = (float)Math.Sqrt(populationDominaces.Average(v => Math.Pow(v - avg, 2)));
+
+//        return competitionRating;
+//    }
 
 
 
-    private void distributeFoodSource(FoodSource foodSource, List<AnimalPopulation> populations)
-    {
-        float totalDominace = getTotoalDominaceOfPopulations(populations);
+//    private void distributeFoodSource(FoodSource foodSource, List<AnimalPopulation> populations)
+//    {
+//        float totalDominace = getTotoalDominaceOfPopulations(populations);
 
 
-        foreach (AnimalPopulation population in populations)
-        {
-            float populationFood = getPopulationDominace(population) / totalDominace * getFoodSourceOutput(foodSource);
-            float foodPerIndividual = populationFood / getPopulationSize(population);
+//        foreach (AnimalPopulation population in populations)
+//        {
+//            float populationFood = getPopulationDominace(population) / totalDominace * getFoodSourceOutput(foodSource);
+//            float foodPerIndividual = populationFood / getPopulationSize(population);
 
-            // TODO: update food source need with foodPerIndividual
-            //var ListOfNeeds = population.GetNeeds();
+//            // TODO: update food source need with foodPerIndividual
+//            //var ListOfNeeds = population.GetNeeds();
 
-            //foreach(Need need in ListOfNeeds)
-            //{
-            //    if()
-            //}
-        }
-    }
+//            //foreach(Need need in ListOfNeeds)
+//            //{
+//            //    if()
+//            //}
+//        }
+//    }
 
-    // This function will be envoked when a type of food source is marked "dirty"
-    public void update(List<FoodSource> foodSources)
-    {
-        var ratingAndPopulationPair = new SortedList();
-        var foodSourceAndCanCosumePopulation = new Dictionary<FoodSource, List<AnimalPopulation>>();
+//    // This function will be envoked when a type of food source is marked "dirty"
+//    public void update(List<FoodSource> foodSources)
+//    {
+//        var ratingAndPopulationPair = new SortedList();
+//        var foodSourceAndCanCosumePopulation = new Dictionary<FoodSource, List<AnimalPopulation>>();
 
-        foreach (FoodSource foodSource in foodSources)
-        {
-            List<AnimalPopulation> animalPopulations = getPopulationsCanAccess(foodSource);
-            List<AnimalPopulation> populationsThatCanConsumeFoodSource = getPopulationsThatConsumeFoodSource(animalPopulations, foodSource);
+//        foreach (FoodSource foodSource in foodSources)
+//        {
+//            List<AnimalPopulation> animalPopulations = getPopulationsCanAccess(foodSource);
+//            List<AnimalPopulation> populationsThatCanConsumeFoodSource = getPopulationsThatConsumeFoodSource(animalPopulations, foodSource);
 
-            foodSourceAndCanCosumePopulation.Add(foodSource, populationsThatCanConsumeFoodSource);
+//            foodSourceAndCanCosumePopulation.Add(foodSource, populationsThatCanConsumeFoodSource);
 
-            float competionRating = getCompetionRating(populationsThatCanConsumeFoodSource);
-            ratingAndPopulationPair.Add(competionRating, foodSource);
-        }
+//            float competionRating = getCompetionRating(populationsThatCanConsumeFoodSource);
+//            ratingAndPopulationPair.Add(competionRating, foodSource);
+//        }
 
-        foreach (DictionaryEntry pair in ratingAndPopulationPair)
-        {
-            distributeFoodSource((FoodSource)pair.Value, foodSourceAndCanCosumePopulation[(FoodSource)pair.Value]);
-        }
-    }
-}
+//        foreach (DictionaryEntry pair in ratingAndPopulationPair)
+//        {
+//            distributeFoodSource((FoodSource)pair.Value, foodSourceAndCanCosumePopulation[(FoodSource)pair.Value]);
+//        }
+//    }
+//}

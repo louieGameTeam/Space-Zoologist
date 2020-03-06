@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class Population : MonoBehaviour
 {
-    private Species _species;
-    public Species species { get; set; }
-    //private Dictionary<string, float> 
-    //public int count { get; private set; }
+    private Species species = default;
+    public Species Species { get => species; private set => species = value; }
+    private Dictionary<string, float> Needs;
+    public int count { get; private set; }
+    private Sprite sprite;
+    public Sprite Sprite { get { return species.sprite; } private set => sprite = value; }
 
-
-    private void Awake()
+    public void InitializeFromSpecies(Species species)
     {
-
+        Species = species;
+        foreach(Need need in Species.Needs)
+        {
+            Needs.Add(need.Name, 0);
+            NeedSystemManager.RegisterPopulation(this, need.Name);
+        }
     }
 
-    private void Start()
+    public void UpdateNeed(string need, float value)
     {
-
+        Needs[need] = value;
     }
 }
+

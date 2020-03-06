@@ -14,7 +14,7 @@ public class TilePreviewTester : MonoBehaviour
     [TextArea]
     [SerializeField] string displayText = default;
 
-    [SerializeField] private Canvas canvas;
+    //[SerializeField] private Canvas canvas;
     
     void Awake()
     {
@@ -24,12 +24,12 @@ public class TilePreviewTester : MonoBehaviour
 
     private void Start()
     {
-        var text = canvas.gameObject.AddComponent<Text>();
-        text.text = displayText;
+        //var text = canvas.gameObject.AddComponent<Text>();
+        //text.text = displayText;
 
-        Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-        text.font = ArialFont;
-        text.material = ArialFont.material;
+        //Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+        //text.font = ArialFont;
+        //text.material = ArialFont.material;
 
         tilePreview.isBlockMode = isBlockMode;
     }

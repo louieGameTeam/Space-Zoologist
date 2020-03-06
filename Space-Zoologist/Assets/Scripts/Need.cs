@@ -7,7 +7,10 @@ using UnityEditor;
 public class Need : ScriptableObject
 {
     [SerializeField] private List<float> thresholds = default;
-    [SerializeField] private List<NeedCondition> conditions = default; 
+    [SerializeField] private List<NeedCondition> conditions = default;
+    [SerializeField] private string needName = default;
+
+    public string Name { get => needName; set => needName = value; }
 
     public void OnValidate()
     {
@@ -29,5 +32,4 @@ public class Need : ScriptableObject
         }
         
     }
-
 }

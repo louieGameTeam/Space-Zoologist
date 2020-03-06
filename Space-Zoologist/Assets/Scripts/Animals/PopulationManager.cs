@@ -14,7 +14,8 @@ public class PopulationManager : MonoBehaviour
     public void CreatePopulation(Species species, Vector2Int location)
     {
         GameObject gameObject = Instantiate(new GameObject(), this.transform);
-        gameObject.AddComponent<Population>().species = species;
+        gameObject.AddComponent<Population>();
+        gameObject.GetComponent<Population>().InitializeFromSpecies(species);
     }
 
 }
