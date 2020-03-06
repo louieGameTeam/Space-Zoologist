@@ -20,7 +20,7 @@ using UnityEngine;
 public class RealisticFoodDistributionSystem : MonoBehaviour
 {
 
-    private float getFoodSourceOutput(FoodSource foodSource) { return foodSource.getOutput(); }
+    // private float getFoodSourceOutput(FoodSource foodSource) { return foodSource.getOutput(); }
     private float getPopulationDominace(AnimalPopulation population) { return population.PopulationDominace; }
     private int getPopulationSize(AnimalPopulation population) { return population.PopulationSize; }
 
@@ -55,10 +55,10 @@ public class RealisticFoodDistributionSystem : MonoBehaviour
         foreach (AnimalPopulation population in allPopulations)
         {
             // TODO: check in population can consume foodSourceType. (AnimalPopulation)
-            if (population.IsEdible(foodSource))
-            {
-                canConsumePopulations.Add(population);
-            }
+            //if (population.IsEdible(foodSource))
+            //{
+            //    canConsumePopulations.Add(population);
+            //}
         }
 
         return canConsumePopulations;
@@ -92,8 +92,8 @@ public class RealisticFoodDistributionSystem : MonoBehaviour
 
         foreach (AnimalPopulation population in populations)
         {
-            float populationFood = getPopulationDominace(population) / totalDominace * getFoodSourceOutput(foodSource);
-            float foodPerIndividual = populationFood / getPopulationSize(population);
+            // float populationFood = getPopulationDominace(population) / totalDominace * getFoodSourceOutput(foodSource);
+            // float foodPerIndividual = populationFood / getPopulationSize(population);
 
             // TODO: update food source need with foodPerIndividual
             //var ListOfNeeds = population.GetNeeds();

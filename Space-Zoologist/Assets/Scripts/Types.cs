@@ -35,9 +35,8 @@ namespace BrainBlast
 
     abstract class System : MonoBehaviour
     {
-        public 
+        
     }
-
 
     class AtmosphereSystem : System
     {

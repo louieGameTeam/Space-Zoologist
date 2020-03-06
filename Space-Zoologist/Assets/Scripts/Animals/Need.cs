@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class SZNeed : ScriptableObject
 {
-    public NeedCondition condition
-    {
-        get { }
-        set { }
-    }
+    public NeedCondition condition { get; set; }
 }
 
 public class AtmosphereNeed : SZNeed

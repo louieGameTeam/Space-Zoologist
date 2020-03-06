@@ -26,10 +26,10 @@ public class FoodSourceManager : MonoBehaviour
 
         foreach (FoodSource foodSource in this.allFoodSources)
         {
-            if (foodSource.getFoodType() == type)
-            {
-                foodSourcesByType.Add(foodSource);
-            }
+            //if (foodSource.getFoodType() == type)
+            //{
+            //    foodSourcesByType.Add(foodSource);
+            //}
         }
 
         return foodSourcesByType;
@@ -57,7 +57,7 @@ public class FoodSourceManager : MonoBehaviour
 
     private void updateFoodSource(FoodSource foodSource)
     {
-        List<FoodSource> foodSourcesToDistribute = getAllFoodSourceByType(foodSource.getFoodType());
-        this.foodDis.update(foodSourcesToDistribute);
+        //List<FoodSource> foodSourcesToDistribute = getAllFoodSourceByType(foodSource.getFoodType());
+        //this.foodDis.update(foodSourcesToDistribute);
     }
 }

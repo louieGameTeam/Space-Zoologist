@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoodSource : MonoBehaviour
+public class AnimalPopulation : MonoBehaviour
 {
-    Dictionary
-    Sprite sprite = default;
-
+    public int PopulationSize { get; set; }
+    public float PopulationDominace { get; set; }
     // Start is called before the first frame update
     void Start()
     {

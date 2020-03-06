@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Species : ScriptableObject
 {
+    enum SpeciesType { }
     [SerializeField] private SpeciesType _speciesType = default;
-    public SpeciesType speciesType { get; private set; }
     [SerializeField] private List<Need> needs = default;
     [SerializeField] private Sprite _sprite = default;
     public Sprite sprite
