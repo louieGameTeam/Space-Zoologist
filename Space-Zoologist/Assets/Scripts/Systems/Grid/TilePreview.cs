@@ -55,6 +55,11 @@ public class TilePreview : MonoBehaviour
     public void StopPreview()
     {
         isPreviewing = false;
+        lastMouseCellPosition = Vector3Int.zero;
+    }
+
+    public void ClearTiles()
+    {
         tilemap.ClearAllTiles();
         lastMouseCellPosition = Vector3Int.zero;
     }
@@ -67,7 +72,7 @@ public class TilePreview : MonoBehaviour
         Vector3Int max = Vector3Int.Max(dragStartPosition + Vector3Int.one, roundedMouseCellPosition);
         Vector3Int min = Vector3Int.Min(dragStartPosition, roundedMouseCellPosition);
         Vector3Int size = max - min;
-        tilemap.ClearAllTiles();
+        // tilemap.ClearAllTiles();
 
         size.z = 1;
         BoundsInt bounds = new BoundsInt(min, size);

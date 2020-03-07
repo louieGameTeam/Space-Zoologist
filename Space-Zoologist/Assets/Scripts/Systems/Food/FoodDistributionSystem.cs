@@ -21,8 +21,8 @@ public class RealisticFoodDistributionSystem : MonoBehaviour
 {
 
     // private float getFoodSourceOutput(FoodSource foodSource) { return foodSource.getOutput(); }
-    private float getPopulationDominace(AnimalPopulation population) { return population.PopulationDominace; }
-    private int getPopulationSize(AnimalPopulation population) { return population.PopulationSize; }
+    private float getPopulationDominace(AnimalPopulation population) { return population.Dominace; }
+    private int getPopulationSize(AnimalPopulation population) { return population.PopSize; }
 
     // Get a list of animal population that has access to given food source
     private List<AnimalPopulation> getPopulationsCanAccess(FoodSource foodSource)

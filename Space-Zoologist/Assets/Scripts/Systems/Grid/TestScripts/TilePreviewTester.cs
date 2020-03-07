@@ -49,11 +49,16 @@ public class TilePreviewTester : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            tilePreview.StopPreview();
+           tilePreview.StopPreview();
         }
         if (Input.GetKeyUp(KeyCode.B))
         {
             tilePreview.isBlockMode = !tilePreview.isBlockMode;
         }
+    }
+
+    public void ResetGrid()
+    {
+        tilePreview.ClearTiles();
     }
 }
