@@ -6,7 +6,8 @@ public class Population : MonoBehaviour
 {
     private Species species = default;
     public Species Species { get => species; private set => species = value; }
-    private Dictionary<string, float> Needs;
+    public string SpeciesName { get => species.Name; }
+    private Dictionary<string, float> Needs = new Dictionary<string, float>();
     public int count { get; private set; }
     private Sprite sprite;
     public Sprite Sprite { get { return species.sprite; } private set => sprite = value; }

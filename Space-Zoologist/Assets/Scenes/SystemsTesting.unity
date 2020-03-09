@@ -316,7 +316,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   populationManager: {fileID: 727699099}
   needSystemGameObject: {fileID: 1430806087}
-  species: {fileID: 11400000, guid: a536cf0dd33c01549ba746fb5937e94f, type: 2}
+  species:
+  - {fileID: 11400000, guid: 8c7922c041a8fe241a56b79d959605ba, type: 2}
+  - {fileID: 11400000, guid: a536cf0dd33c01549ba746fb5937e94f, type: 2}
 --- !u!4 &190614407
 Transform:
   m_ObjectHideFlags: 0
