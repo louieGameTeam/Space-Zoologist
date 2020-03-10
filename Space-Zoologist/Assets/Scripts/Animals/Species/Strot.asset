@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
   m_Name: Strot
   m_EditorClassIdentifier: 
-  _speciesType: 0
-  needs:
-  - {fileID: 11400000, guid: b573b006c46b5134e838fd67e4955ae6, type: 2}
+  _speciesType: Strot
   _sprite: {fileID: 21300000, guid: bfb0f39abf5480f42ac22061ac170060, type: 3}
+  PopGrowth: {fileID: 0}
+  Needs:
+  - {fileID: 11400000, guid: 0430d22cf91454e239f5cc716bb7d2a1, type: 2}
+  PopulationSize: 5
+  DominanceScore: 1

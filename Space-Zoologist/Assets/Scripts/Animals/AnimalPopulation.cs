@@ -9,9 +9,10 @@ using UnityEngine.Events;
 public class UpdateNeedEvent : UnityEvent<string, float> { }
 public class AnimalPopulation : MonoBehaviour
 {
-    private AnimalPopulationGrowth PopGrowth;
-    private List<Need> Needs;
-    private Dictionary<string, float> DictionaryOfNeeds;
+    private Species species = default;
+    public Species Species { get => species; private set => species = value; }
+    public string SpeciesName { get => species._speciesType; }
+    private Dictionary<string, float> Needs = new Dictionary<string, float>();
     public int PopSize { get; set; }
     private float GrowthTime = 60;
     private AnimalPopulationGrowth.PopGrowthStatus GrowthStatus;
@@ -35,18 +36,13 @@ public class AnimalPopulation : MonoBehaviour
         }
     }
 
-    public void InitializeAnimalPopulation(AnimalPopulationGrowth popGrowth, List<Need> needs, int popSize, string name)
+    public void InitializeFromSpecies(Species _species)
     {
-        this.PopGrowth = popGrowth;
-        this.Needs = needs;
-        this.PopSize = popSize;
-        this.populationType = name;
-        // Initialize the Dictionary of needs by their need type
-        // There should probably be a neutral baseline start for each need?
-        DictionaryOfNeeds = new Dictionary<string, float>();
-        foreach (Need need in needs)
+        this.species = _species;
+        foreach (Need need in _species.Needs)
         {
-            DictionaryOfNeeds.Add(need.NeedType, 0);
+            Needs.Add(need.NeedType, 0);
+            NeedSystemManager.RegisterPopulation(this, need.NeedType);
         }
     }
 
@@ -54,9 +50,9 @@ public class AnimalPopulation : MonoBehaviour
     // or when a system calls this delegated method
     public void UpdateNeed(string needType, float value)
     {
-        if (DictionaryOfNeeds.ContainsKey(needType))
+        if (Needs.ContainsKey(needType))
         {
-            DictionaryOfNeeds[needType] = value;
+            Needs[needType] = value;
             UpdatePopulationGrowthConditions();
         }
         else
@@ -67,22 +63,22 @@ public class AnimalPopulation : MonoBehaviour
 
     /*
      * Steps:
-     * 1. Go through DictionaryOfNeeds grabbing needValues and updatingNeedValue
+     * 1. Go through species needs, updating value with dictionary value
      * 2. Calcualte growth with the now updated list of needs
-     * Note: Calculate growth requires NeedSeverity from each need, so changing List<Needs>
-     * to List<Need.NeedConditions> means you will have to pass in List<NeedSeverity> in correct order as well.
+     * Note: Calculate growth requires NeedSeverity
+     * TODO: Update growth calculator to include population size
      */
     public void UpdatePopulationGrowthConditions()
     {
-        foreach (Need need in Needs)
+        int needIndex = 0;
+        foreach (var need in Needs)
         {
-            float needValue = 0;
-            DictionaryOfNeeds.TryGetValue(need.NeedType, out needValue);
-            need.UpdateValue(needValue);
+            this.species.Needs[needIndex].UpdateValue(need.Value);
+            needIndex++;
         }
-        this.PopGrowth.CalculateGrowth(Needs, this.GrowthTime, this.PopSize);
-        this.GrowthTime = this.PopGrowth.GrowthTime;
-        this.GrowthStatus = this.PopGrowth.GrowthStatus;
+        this.species.PopGrowth.CalculateGrowth(this.species.Needs, this.GrowthTime, this.PopSize);
+        this.GrowthTime = this.species.PopGrowth.GrowthTime;
+        this.GrowthStatus = this.species.PopGrowth.GrowthStatus;
         Debug.Log("GrowthConditions updated, GrowthTime: " + this.GrowthTime +
             ", GrowthStatus: " + this.GrowthStatus);
         

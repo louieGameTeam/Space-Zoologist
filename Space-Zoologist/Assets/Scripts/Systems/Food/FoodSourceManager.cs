@@ -12,7 +12,7 @@ public class FoodSourceManager : MonoBehaviour
     private int currIndex = 0;
 
     // Food distribution system
-    private RealisticFoodDistributionSystem foodDis = new RealisticFoodDistributionSystem();
+    private FoodDistributionSystem foodDis = new FoodDistributionSystem();
 
     //Should we have instantiation functions for different food sources? and how to organize it all --maybe a table
 

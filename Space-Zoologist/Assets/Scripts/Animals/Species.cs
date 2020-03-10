@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Species : ScriptableObject
 {
-    [SerializeField] public string _speciesType { get; set; }
+    [SerializeField] public string _speciesType = default;
     [SerializeField] private Sprite _sprite = default;
     [SerializeField] public AnimalPopulationGrowth PopGrowth;
     [Expandable] public List<Need> Needs = default;

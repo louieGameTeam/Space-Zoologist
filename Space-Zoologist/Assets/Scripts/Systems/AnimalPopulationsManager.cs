@@ -28,48 +28,31 @@ public class AnimalPopulationsManager : MonoBehaviour
     {
         foreach (Species speciesA in this.speciesList)
         {
-            AddAnimalPopulationGameObject(speciesA);
+            CreatePopulation(speciesA, Vector2Int.zero);
         }
-        EventManager.TriggerEvent("PopulationInitialized");
-    }
-
-    /*
-     * 1. Pull data from somewhere to see what was added/removed
-     * - Maybe player object has info or maybe we have an object that holds populations which are ready to be introduced/removed
-     * - Maybe evolution creates a new Population??? Predation removes a population?
-     * 2. Send out the message that the Population List<GameObjects> has been updated so they can get the new list
-     */
-    public void AnimalPopulationNeedsToBeUpdated()
-    {
-        // if added
-        // AddAnimalPopulationGameObject(PopulationAdded);
-        // if removed
-        // RemoveAnimalPopulationGameObject(PopulationRemoved);
-        EventManager.TriggerEvent("UpdatedPopulations");
+        // EventManager.TriggerEvent("PopulationInitialized");
     }
 
     // Initialize GameObject with the specs from Species and place under PopulationsManager in Heirarchy
-    private void AddAnimalPopulationGameObject(Species populationAdded)
+    public void CreatePopulation(Species species, Vector2Int location)
     {
-        GameObject newAnimalPopulationGameObject = new GameObject(populationAdded._speciesType + "Population");
-        newAnimalPopulationGameObject.AddComponent<AnimalPopulation>();
-        AnimalPopulation newAnimalPopulation = newAnimalPopulationGameObject.GetComponent<AnimalPopulation>();
-        newAnimalPopulation.InitializeAnimalPopulation(populationAdded.GetPopGrowth(),
-            populationAdded.GetNeeds(), populationAdded.GetPopulationSize(), populationAdded._speciesType);
-        newAnimalPopulationGameObject.transform.parent = this.transform;
-        this.AnimalPopulations.Add(newAnimalPopulationGameObject);
+        GameObject gameObject = Instantiate(new GameObject(), this.transform);
+        gameObject.name = species._speciesType + "Population";
+        gameObject.AddComponent<AnimalPopulation>().InitializeFromSpecies(species);
+        AnimalPopulations.Add(gameObject);
+        NeedSystemManager.RegisterPopulation(gameObject.GetComponent<AnimalPopulation>(), species._speciesType);
     }
 
-    private void RemoveAnimalPopulation(Species populationRemoved)
-    {
-        foreach(GameObject animalPopulation in this.AnimalPopulations)
-        {
-            if (animalPopulation.GetComponent<AnimalPopulation>().populationType == populationRemoved._speciesType)
-            {
-                this.AnimalPopulations.Remove(animalPopulation);
-            }
-        }
-    }
+    //private void RemoveAnimalPopulation(Species populationRemoved)
+    //{
+    //    foreach(GameObject animalPopulation in this.AnimalPopulations)
+    //    {
+    //        if (animalPopulation.GetComponent<AnimalPopulation>().populationType == populationRemoved._speciesType)
+    //        {
+    //            this.AnimalPopulations.Remove(animalPopulation);
+    //        }
+    //    }
+    //}
 
     public List<GameObject> GetAnimalPopulationGameObjects()
     {

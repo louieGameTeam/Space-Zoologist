@@ -17,7 +17,7 @@ using UnityEngine;
  *  - TPS test with all access.
  */
 
-public class RealisticFoodDistributionSystem : MonoBehaviour
+public class FoodDistributionSystem : MonoBehaviour
 {
 
     // private float getFoodSourceOutput(FoodSource foodSource) { return foodSource.getOutput(); }

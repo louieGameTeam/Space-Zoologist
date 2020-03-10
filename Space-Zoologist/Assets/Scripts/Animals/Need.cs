@@ -8,10 +8,10 @@ using System;
 public class Need : ScriptableObject
 {
     public enum NeedCondition { Bad = -1, Neutral = 0, Good = 1 }
-    [SerializeField]public string NeedType { get; set; }
+    [SerializeField] public string NeedType = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private List<NeedCondition> conditions = default;
-    [SerializeField] public float NeedSeverity { get; set; }
+    [SerializeField] public float NeedSeverity = default;
     public NeedCondition needCondition { get; set; }
 
     public void OnValidate()
