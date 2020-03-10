@@ -45,6 +45,6 @@ public class NeedSystemManager : MonoBehaviour
     public static void AddSystem(INeedSystem needSystem)
     {
         Initialize();
-        systems.Add(needSystem.NeedName, needSystem);
+        systems.Add(needSystem.NeedName(), needSystem);
     }
 }

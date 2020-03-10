@@ -8,29 +8,33 @@ using UnityEngine.Events;
  */
 
 // [CreateAssetMenuAttribute(fileName = "AnimalPopulationsManager", menuName = "AnimalPopulations/NewAnimalPopulationsManager")]
-public class AnimalPopulationsManager : MonoBehaviour
+public class AnimalPopulationsManager : MonoBehaviour, INeedSystem
 {
     [Header("Current Populations")]
     [Expandable] public List<Species> speciesList;
-    private List<GameObject> AnimalPopulations = new List<GameObject>();
+    private List<AnimalPopulation> AnimalPopulations = new List<AnimalPopulation>();
 
     public void Start()
     {
         EventManager.StartListening("Initialize", InitializeAnimalPopulations);
     }
 
-    public void TriggerInitialize()
+    public void RegisterPopulation(AnimalPopulation population)
     {
-        EventManager.TriggerEvent("Initialize");
+        AnimalPopulations.Add(population);
+    }
+
+    public void UnregisterPopulation(AnimalPopulation population)
+    {
+        AnimalPopulations.Remove(population);
     }
 
     public void InitializeAnimalPopulations()
     {
-        foreach (Species speciesA in this.speciesList)
+        foreach (Species species in this.speciesList)
         {
-            CreatePopulation(speciesA, Vector2Int.zero);
+            CreatePopulation(species, Vector2Int.zero);
         }
-        // EventManager.TriggerEvent("PopulationInitialized");
     }
 
     // Initialize GameObject with the specs from Species and place under PopulationsManager in Heirarchy
@@ -39,8 +43,6 @@ public class AnimalPopulationsManager : MonoBehaviour
         GameObject gameObject = Instantiate(new GameObject(), this.transform);
         gameObject.name = species._speciesType + "Population";
         gameObject.AddComponent<AnimalPopulation>().InitializeFromSpecies(species);
-        AnimalPopulations.Add(gameObject);
-        NeedSystemManager.RegisterPopulation(gameObject.GetComponent<AnimalPopulation>(), species._speciesType);
     }
 
     //private void RemoveAnimalPopulation(Species populationRemoved)
@@ -54,8 +56,8 @@ public class AnimalPopulationsManager : MonoBehaviour
     //    }
     //}
 
-    public List<GameObject> GetAnimalPopulationGameObjects()
+    public string NeedName()
     {
-        return this.AnimalPopulations;
+        return "AnimalPopulation";
     }
 }

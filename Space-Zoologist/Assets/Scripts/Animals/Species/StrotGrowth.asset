@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3892d2c258bc5ec4aab8b27abd2c2a78, type: 3}
-  m_Name: Water
+  m_Script: {fileID: 11500000, guid: 25dd205b710ab4b31adddf90272fbd9a, type: 3}
+  m_Name: StrotGrowth
   m_EditorClassIdentifier: 
-  NeedType: Food
-  NeedName: Water
-  thresholds:
-  - 0
-  - 10
-  conditions: ffffffff01000000ffffffff
-  NeedSeverity: 5
+  LowerThreshold: 20
+  UpperThreshold: 7200

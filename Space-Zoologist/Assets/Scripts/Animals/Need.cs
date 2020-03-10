@@ -8,7 +8,9 @@ using System;
 public class Need : ScriptableObject
 {
     public enum NeedCondition { Bad = -1, Neutral = 0, Good = 1 }
+    // Need a way to distinguish specific needs with generic needtypes
     [SerializeField] public string NeedType = default;
+    [SerializeField] public string NeedName = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private List<NeedCondition> conditions = default;
     [SerializeField] public float NeedSeverity = default;
@@ -37,22 +39,23 @@ public class Need : ScriptableObject
 
     public void UpdateValue(float value)
     {
-        // If it's completely below or above the range value, something should probably happen?
-        //if (value <= this.thresholds[0])
-        //{
-        //    // UpdatedValue = something;
-        //}
-        //else if (value >= this.thresholds[this.thresholds.Count - 1])
-        //{
-        //    // UpdatedValue = something;
-        //}
         this.needCondition = DetermineNeedCondition(value);
     }
 
     private NeedCondition DetermineNeedCondition(float value)
     {
         NeedCondition needCondition = NeedCondition.Neutral;
-        for (int i = 0; i < this.thresholds.Count - 1; i++)
+        // Below or above threshold.
+        if (value <= this.thresholds[0])
+        {
+            needCondition = this.conditions[0];
+        }
+        else if (value >= this.thresholds[this.thresholds.Count - 1])
+        {
+            needCondition = this.conditions[this.thresholds.Count - 1];
+        }
+        // Between threshold values.
+        for (int i = 1; i < this.thresholds.Count - 2; i++)
         {
             if ((value >= this.thresholds[i]) && (value < this.thresholds[i + 1]))
             {

@@ -7,5 +7,5 @@ public interface INeedSystem
 {
     void RegisterPopulation(AnimalPopulation population);
     void UnregisterPopulation(AnimalPopulation population);
-    string NeedName { get; }
+    string NeedName();
 }

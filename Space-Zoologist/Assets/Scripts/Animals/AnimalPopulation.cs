@@ -41,18 +41,18 @@ public class AnimalPopulation : MonoBehaviour
         this.species = _species;
         foreach (Need need in _species.Needs)
         {
-            Needs.Add(need.NeedType, 0);
-            NeedSystemManager.RegisterPopulation(this, need.NeedType);
+            Needs.Add(need.NeedName, 0);
+            NeedSystemManager.RegisterPopulation(this, need.NeedName);
         }
     }
 
     // Called whenever an event triggers a system to update its value
     // or when a system calls this delegated method
-    public void UpdateNeed(string needType, float value)
+    public void UpdateNeed(string NeedName, float value)
     {
-        if (Needs.ContainsKey(needType))
+        if (Needs.ContainsKey(NeedName))
         {
-            Needs[needType] = value;
+            Needs[NeedName] = value;
             UpdatePopulationGrowthConditions();
         }
         else
@@ -80,7 +80,6 @@ public class AnimalPopulation : MonoBehaviour
         this.GrowthTime = this.species.PopGrowth.GrowthTime;
         this.GrowthStatus = this.species.PopGrowth.GrowthStatus;
         Debug.Log("GrowthConditions updated, GrowthTime: " + this.GrowthTime +
-            ", GrowthStatus: " + this.GrowthStatus);
-        
+            ", GrowthStatus: " + this.GrowthStatus);    
     }
 }

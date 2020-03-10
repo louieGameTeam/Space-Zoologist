@@ -7,7 +7,7 @@ using System;
 // TODO: figure out how popSize should affect growth
 // This could be a SO or just a serialable class
 
-// [CreateAssetMenuAttribute(fileName = "GrowthCalculator", menuName = "AnimalPopulations/NewGrowthCalculator")]
+[CreateAssetMenuAttribute(fileName = "GrowthCalculator", menuName = "AnimalPopulations/NewGrowthCalculator")]
 public class AnimalPopulationGrowth : ScriptableObject
 {
     public enum PopGrowthStatus { Decreasing = -1, Stabilized = 0, Increasing = 1 }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenuAttribute(fileName = "Species", menuName = "AnimalPopulations/NewSpecies")]
 public class Species : ScriptableObject
 {
     [SerializeField] public string _speciesType = default;
     [SerializeField] private Sprite _sprite = default;
-    [SerializeField] public AnimalPopulationGrowth PopGrowth;
+    [Expandable] public AnimalPopulationGrowth PopGrowth;
     [Expandable] public List<Need> Needs = default;
     [SerializeField] public int PopulationSize;
     [SerializeField] public float DominanceScore;
