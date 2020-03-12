@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum NeedCondition { Bad, Neutral, Good }
-public enum NeedType { GasX, GasY, GasZ}
 
 namespace BrainBlast
 {

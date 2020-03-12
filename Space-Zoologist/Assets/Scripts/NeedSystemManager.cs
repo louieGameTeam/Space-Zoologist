@@ -27,8 +27,7 @@ public class NeedSystemManager : MonoBehaviour
 
     public static void RegisterPopulation(Population population, string need)
     {
-        Initialize();
-        systems[need].RegisterPopulation(population);
+        Instance.systems[need].RegisterPopulation(population);
     }
     public static void UnregisterPopulation(Population population, string need)
     {

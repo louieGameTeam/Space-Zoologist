@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Utils
+public class GridUtils
 {
     static public Vector3 AbsVector3(Vector3 vector)
     {

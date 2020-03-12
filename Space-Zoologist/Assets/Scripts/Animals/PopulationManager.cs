@@ -6,16 +6,12 @@ public class PopulationManager : MonoBehaviour
 {
     private List<Population> populations = default;
 
-    private void Update()
+    public void CreatePopulation(Species species, Vector2Int origin)
     {
-
-    }
-
-    public void CreatePopulation(Species species, Vector2Int location)
-    {
-        GameObject gameObject = Instantiate(new GameObject(), this.transform);
+        GameObject gameObject = new GameObject();
+        gameObject.transform.parent = this.transform;
+        gameObject.name = species.SpeciesName;
         gameObject.AddComponent<Population>();
-        gameObject.GetComponent<Population>().InitializeFromSpecies(species);
+        gameObject.GetComponent<Population>().InitializeFromSpecies(species, origin);
     }
-
 }

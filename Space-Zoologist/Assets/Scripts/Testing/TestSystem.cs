@@ -7,7 +7,7 @@ public class TestSystem : MonoBehaviour, INeedSystem
 {
 
     private List<Population> Populations = new List<Population>();
-    public readonly string NeedName = "space_maple";
+    public readonly string NeedName = "test_need";
     [SerializeField] private Text populationsText = default;
 
     string INeedSystem.NeedName => NeedName;
@@ -37,10 +37,11 @@ public class TestSystem : MonoBehaviour, INeedSystem
 
     private void Update()
     {
-        string text = "";
+        string text = "Test System Listeners:\n";
         foreach (Population population in Populations)
         {
             text += population.SpeciesName;
+            text += "\n";
         }
         populationsText.text = text;
     }

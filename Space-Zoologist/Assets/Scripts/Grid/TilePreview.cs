@@ -63,7 +63,7 @@ public class TilePreview : MonoBehaviour
     {
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         Vector3 mouseLocalPosition = tilemap.WorldToLocal(mouseWorldPosition);
-        Vector3Int roundedMouseCellPosition = Utils.SignsRoundToIntVector3(mouseLocalPosition, dragStartPosition);
+        Vector3Int roundedMouseCellPosition = GridUtils.SignsRoundToIntVector3(mouseLocalPosition, dragStartPosition);
         Vector3Int max = Vector3Int.Max(dragStartPosition + Vector3Int.one, roundedMouseCellPosition);
         Vector3Int min = Vector3Int.Min(dragStartPosition, roundedMouseCellPosition);
         Vector3Int size = max - min;
