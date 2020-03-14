@@ -12,19 +12,20 @@ public class Population : MonoBehaviour
     private Sprite sprite;
     public Sprite Sprite { get { return species.Sprite; } private set => sprite = value; }
     private Vector2Int origin = Vector2Int.zero;
+    [SerializeField] private NeedSystemManager needSystemManager = default;
 
     public void InitializeFromSpecies(Species species, Vector2Int origin)
     {
         this.Species = species;
         this.origin = origin;
 
-        this.transform.position = Utils.Vector2IntToVector3Int(origin);
+        this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         this.sprite = species.Sprite;
 
         foreach(SpeciesNeed need in Species.Needs)
         {
             Needs.Add(need.NeedName, 0);
-            NeedSystemManager.RegisterPopulation(this, need.NeedName);
+            needSystemManager.RegisterPopulation(this, need.NeedName);
         }
     }
 

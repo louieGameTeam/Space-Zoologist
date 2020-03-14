@@ -20,24 +20,17 @@ public class NeedSystemManager : MonoBehaviour
         }
     }
 
-    private static void Initialize()
+    public void RegisterPopulation(Population population, string need)
     {
-        NeedSystemManager i = NeedSystemManager.Instance;
+        systems[need].RegisterPopulation(population);
     }
-
-    public static void RegisterPopulation(Population population, string need)
+    public void UnregisterPopulation(Population population, string need)
     {
-        Instance.systems[need].RegisterPopulation(population);
-    }
-    public static void UnregisterPopulation(Population population, string need)
-    {
-        Initialize();
         systems[need].UnregisterPopulation(population);
     }
 
     public static void AddSystem(INeedSystem needSystem)
     {
-        Initialize();
         systems.Add(needSystem.NeedName, needSystem);
     }
 }

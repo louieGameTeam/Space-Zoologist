@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PopulationManager : MonoBehaviour
 {
-    private List<Population> populations = default;
+    private List<Population> populations = new List<Population>();
 
     public void CreatePopulation(Species species, Vector2Int origin)
     {
