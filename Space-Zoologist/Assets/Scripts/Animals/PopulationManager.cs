@@ -5,6 +5,7 @@ using UnityEngine;
 public class PopulationManager : MonoBehaviour
 {
     private List<Population> populations = new List<Population>();
+    [SerializeField] private NeedSystemManager needSystemManager = default;
 
     public void CreatePopulation(Species species, Vector2Int origin)
     {
@@ -12,6 +13,6 @@ public class PopulationManager : MonoBehaviour
         gameObject.transform.parent = this.transform;
         gameObject.name = species.SpeciesName;
         gameObject.AddComponent<Population>();
-        gameObject.GetComponent<Population>().InitializeFromSpecies(species, origin);
+        gameObject.GetComponent<Population>().InitializeFromSpecies(species, origin, needSystemManager);
     }
 }

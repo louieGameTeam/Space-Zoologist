@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: TestMadle
   m_EditorClassIdentifier: 
   speciesName: Madle
-  dominance: 0
-  growthFactor: 0
-  _needs: []
+  dominance: 8
+  growthFactor: 2
+  _needs:
+  - {fileID: 11400000, guid: e3134f0db72d1af478d2339f22fa2270, type: 2}
   sprite: {fileID: 0}

@@ -12,16 +12,14 @@ public class Population : MonoBehaviour
     private Sprite sprite;
     public Sprite Sprite { get { return species.Sprite; } private set => sprite = value; }
     private Vector2Int origin = Vector2Int.zero;
-    [SerializeField] private NeedSystemManager needSystemManager = default;
 
-    public void InitializeFromSpecies(Species species, Vector2Int origin)
+    public void InitializeFromSpecies(Species species, Vector2Int origin, NeedSystemManager needSystemManager)
     {
         this.Species = species;
         this.origin = origin;
 
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         this.sprite = species.Sprite;
-
         foreach(SpeciesNeed need in Species.Needs)
         {
             Needs.Add(need.NeedName, 0);
@@ -42,6 +40,17 @@ public class Population : MonoBehaviour
         {
             Debug.Log("Need not found");
         }
+    }
+
+    public float GetNeedStatus(string need)
+    {
+        if (!Needs.ContainsKey(need))
+        {
+            Debug.Log($"Tried to access a nonexistent need in a { SpeciesName } population");
+            return 0;
+        }
+
+        return Needs[need];
     }
 
     /// <summary>

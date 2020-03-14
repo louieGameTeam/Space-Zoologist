@@ -5,23 +5,15 @@ using UnityEngine;
 public class NeedSystemManager : MonoBehaviour
 {
 
-    private static Dictionary<string, INeedSystem> systems = new Dictionary<string, INeedSystem>();
-
-    private static NeedSystemManager instance;
-    public static NeedSystemManager Instance
-    {
-        get
-        {
-            if (!instance)
-            {
-                instance = (new GameObject("NeedSystemManager")).AddComponent<NeedSystemManager>();
-            }
-            return instance;
-        }
-    }
+    private Dictionary<string, INeedSystem> systems = new Dictionary<string, INeedSystem>();
 
     public void RegisterPopulation(Population population, string need)
     {
+        if (!systems.ContainsKey(need))
+        {
+            Debug.Log($"Trying to register a population to a non-existant system: {need}");
+            return;
+        }
         systems[need].RegisterPopulation(population);
     }
     public void UnregisterPopulation(Population population, string need)
@@ -29,7 +21,7 @@ public class NeedSystemManager : MonoBehaviour
         systems[need].UnregisterPopulation(population);
     }
 
-    public static void AddSystem(INeedSystem needSystem)
+    public void AddSystem(INeedSystem needSystem)
     {
         systems.Add(needSystem.NeedName, needSystem);
     }

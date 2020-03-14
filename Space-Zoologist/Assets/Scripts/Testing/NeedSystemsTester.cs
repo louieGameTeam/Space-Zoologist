@@ -5,17 +5,19 @@ using UnityEngine;
 public class NeedSystemsTester : MonoBehaviour
 {
     [SerializeField] private PopulationManager populationManager = default;
-    [SerializeField] private GameObject needSystemGameObject = default;
-    private INeedSystem needSystem = default;
-    [SerializeField] private List<Species> species = default;
+    [SerializeField] private NeedSystemManager needSystemManager = default;
+    [SerializeField] private List<GameObject> testSystemGameObjects = default;
 
+    [SerializeField] private List<Species> species = default;
 
     // Start is called before the first frame update
     void Start()
     {
         if (!populationManager) populationManager = FindObjectOfType<PopulationManager>();
-        needSystem = needSystemGameObject.GetComponent<TestSystem>();
-        NeedSystemManager.AddSystem(needSystem);
+        foreach(GameObject testSystem in testSystemGameObjects)
+        {
+            needSystemManager.AddSystem(testSystem.GetComponent<TestSystem>());
+        }
         foreach(Species s in species)
         {
             populationManager.CreatePopulation(s, Vector2Int.zero);

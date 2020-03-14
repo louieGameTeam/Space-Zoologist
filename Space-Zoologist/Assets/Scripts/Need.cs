@@ -9,20 +9,27 @@ public class SpeciesNeed : ScriptableObject
     [SerializeField] private string needName = default;
     public string NeedName { get => needName; set => needName = value; }
     [Range(1.0f, 10.0f)]
-    [SerializeField] private float severity = default;
+    [SerializeField] private float severity = 1.0f;
     public float Severity { get => severity; set => severity = value; }
-    [SerializeField] private List<float> thresholds = default;
     [SerializeField] private List<NeedCondition> conditions = default;
+    [SerializeField] private List<float> thresholds = default;
 
     public void OnValidate()
     {
         while (conditions.Count < thresholds.Count + 1)
         {
-            conditions.Add(NeedCondition.Bad);
+            thresholds.RemoveAt(thresholds.Count - 1);
         }
         while (conditions.Count> thresholds.Count + 1)
         {
-            conditions.RemoveAt(conditions.Count - 1);
+            if (thresholds.Count == 0)
+            {
+                thresholds.Add(0);
+            }
+            else
+            {
+                thresholds.Add(thresholds[thresholds.Count - 1] + 1);
+            }
         }
 
         for(var i = 0; i < thresholds.Count - 1; i++)

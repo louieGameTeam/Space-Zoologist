@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: TestStrot
+  m_Name: TestJetter
   m_EditorClassIdentifier: 
-  speciesName: Strot
-  dominance: 2
-  growthFactor: 10
+  speciesName: Jetter
+  dominance: 5
+  growthFactor: 4
   _needs:
-  - {fileID: 11400000, guid: e3134f0db72d1af478d2339f22fa2270, type: 2}
+  - {fileID: 11400000, guid: d412505ea72a8804eb3b34651a00fe05, type: 2}
   sprite: {fileID: 0}
