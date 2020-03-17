@@ -9,62 +9,50 @@ public class ReserveStore : MonoBehaviour
     // Can't make serialized fields readonly >:(
     [Expandable] public List<StoreItemSO> StoreItemReferences = default;
     private List<GameObject> AvailableItems = new List<GameObject>();
-    public GameObject ItemToBuy { get; set; }
     public PlayerInventory playerInventory = default;
 
     public void InitializeStore()
     {
-        int xLocation = 200, yLocation = 400;
         foreach(StoreItemSO storeItem in this.StoreItemReferences)
         {
-            AddItemToStore(storeItem, xLocation, yLocation);
-            xLocation += 300;
+            AddItemToStore(storeItem);
         }
     }
 
-    public void AddItemToStore(StoreItemSO storeItem, int xLocation, int yLocation)
+    public void AddItemToStore(StoreItemSO storeItem)
     {
-        Vector3 ItemPosition = new Vector3(xLocation, yLocation, this.transform.position.z);      
-        GameObject newStoreItem = Instantiate(this.StoreItemPrefab, ItemPosition, Quaternion.identity, this.transform);
-        newStoreItem.GetComponent<StoreItem>().InitializeItem(storeItem, newStoreItem, this);
+        GameObject newStoreItem = Instantiate(this.StoreItemPrefab, this.transform);
+        newStoreItem.GetComponent<UsableItem>().InitializeItem(storeItem, newStoreItem);
         this.AvailableItems.Add(newStoreItem);
     }
 
-    // Should the price checking be done in the store or in each store item?
-    // TODO: if item has same name, first reference will be removed
-    public void TryToBuyItem(string itemToBuy)
+    // TODO: figure out how to handle removed items
+    public void BuyItem()
     {
         foreach(GameObject availableItem in this.AvailableItems)
         {
-            // Find the item and then check if the player has enough funds
-            StoreItem storeItem = availableItem.GetComponent<StoreItem>();
-            if (System.String.Equals(storeItem.itemInfo.ItemName, itemToBuy))
+            // Find the item selected and then check if the player has enough funds
+            UsableItem storeItem = availableItem.GetComponent<UsableItem>();
+            if (storeItem.itemSelected)
             {
+                storeItem.itemSelected = false;
                 if (storeItem.itemInfo.ItemCost <= this.playerInventory.PlayerFunds)
                 {
                     this.AvailableItems.Remove(availableItem);
-                    this.ItemToBuy = availableItem;
                     this.playerInventory.PlayerFunds -= storeItem.itemInfo.ItemCost;
+                    this.playerInventory.AddItem(availableItem);
+                    availableItem.SetActive(false);
                     break;
                 }
+                else
                 {
-                    this.ItemToBuy = null;
+                    Debug.Log("Insufficient Funds");
                 }
             }
-        }
-    }
-
-    public void ConfirmPurchase()
-    {
-        if (this.ItemToBuy == null)
-        {
-            Debug.Log("Insufficient Funds");
-        }
-        else
-        {
-            this.playerInventory.AddItem(this.ItemToBuy.GetComponent<StoreItem>());
-            this.ItemToBuy.SetActive(false);
-            this.ItemToBuy = null;
+            else
+            {
+                Debug.Log("Item not selected");
+            }
         }
     }
 }
