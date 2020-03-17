@@ -7,11 +7,11 @@ public class TestSystem : MonoBehaviour, INeedSystem
 {
 
     private List<Population> Populations = new List<Population>();
-    [SerializeField] private string needName = default;
-    public string NeedName { get => needName; }
+    [SerializeField] private NeedType need = default;
+    public NeedType Need { get => need; }
     [SerializeField] private Text populationsText = default;
 
-    string INeedSystem.NeedName => NeedName;
+    NeedType INeedSystem.Need => Need;
 
     public void RegisterPopulation(Population population)
     {
@@ -27,7 +27,7 @@ public class TestSystem : MonoBehaviour, INeedSystem
     {
         foreach (Population population in Populations)
         {
-            population.UpdateNeed(NeedName, CalculateNeedValue(population));
+            population.UpdateNeed(Need, CalculateNeedValue(population));
         }
     }
 
@@ -38,10 +38,10 @@ public class TestSystem : MonoBehaviour, INeedSystem
 
     private void Update()
     {
-        string text = "Test System Listeners:\n";
+        string text = $"{gameObject.name} Listeners\n";
         foreach (Population population in Populations)
         {
-            text += $"{population.SpeciesName}: {population.GetNeedStatus(needName)}";
+            text += $"{population.SpeciesName}: {population.GetNeedStatus(need)}";
             text += "\n";
         }
         populationsText.text = text;

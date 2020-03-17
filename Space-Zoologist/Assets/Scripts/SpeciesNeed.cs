@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+public enum NeedType { GasX, GasY, GasZ, SpaceMaple, LeafyBush, Sand, Grass, Dirt, Stone, RedLiquid, YellowLiquid, BlueLiquid }
+
 [CreateAssetMenu]
 public class SpeciesNeed : ScriptableObject
 {
-    [SerializeField] private string needName = default;
-    public string NeedName { get => needName; set => needName = value; }
+    [SerializeField] private NeedType type = default;
+    public NeedType Type { get => type; }
     [Range(1.0f, 10.0f)]
-    [SerializeField] private float severity = 1.0f;
-    public float Severity { get => severity; set => severity = value; }
+    [SerializeField] private int severity = 1;
+    public int Severity { get => severity; }
     [SerializeField] private List<NeedCondition> conditions = default;
     [SerializeField] private List<float> thresholds = default;
 
+
+
     public void OnValidate()
     {
+        if (conditions.Count == 0)
+        {
+            conditions.Add(NeedCondition.Good);
+        }
+
         while (conditions.Count < thresholds.Count + 1)
         {
             thresholds.RemoveAt(thresholds.Count - 1);
@@ -44,7 +53,11 @@ public class SpeciesNeed : ScriptableObject
 
     public NeedCondition GetCondition(float value)
     {
+        // If there is only one condition, return it.
+        if (conditions.Count == 1) return conditions[0];
+
         NeedCondition needCondition = NeedCondition.Neutral;
+
         // Below or above threshold.
         if (value <= this.thresholds[0])
         {

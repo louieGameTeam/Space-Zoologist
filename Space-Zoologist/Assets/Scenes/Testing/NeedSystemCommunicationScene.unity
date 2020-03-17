@@ -952,7 +952,7 @@ GameObject:
   - component: {fileID: 1430806088}
   - component: {fileID: 1430806089}
   m_Layer: 0
-  m_Name: TestSystem
+  m_Name: GasX System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4473e4eac92a37d4c87231d4c038c8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  needName: test_need
+  need: 0
   populationsText: {fileID: 1252317009}
 --- !u!1 &1518468379
 GameObject:
@@ -1156,7 +1156,7 @@ GameObject:
   - component: {fileID: 1659460319}
   - component: {fileID: 1659460320}
   m_Layer: 0
-  m_Name: TestSystem (1)
+  m_Name: Sand System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1188,7 +1188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4473e4eac92a37d4c87231d4c038c8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  needName: test_need (1)
+  need: 5
   populationsText: {fileID: 367519078}
 --- !u!1 &1808347687
 GameObject:

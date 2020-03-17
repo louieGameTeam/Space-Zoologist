@@ -7,7 +7,7 @@ public interface INeedSystem
 {
     void RegisterPopulation(Population population);
     void UnregisterPopulation(Population population);
-    string NeedName { get; }
+    NeedType Need { get; }
 }
 
 

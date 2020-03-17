@@ -13,6 +13,6 @@ public class PopulationManager : MonoBehaviour
         gameObject.transform.parent = this.transform;
         gameObject.name = species.SpeciesName;
         gameObject.AddComponent<Population>();
-        gameObject.GetComponent<Population>().InitializeFromSpecies(species, origin, needSystemManager);
+        gameObject.GetComponent<Population>().Initialize(species, origin, needSystemManager);
     }
 }

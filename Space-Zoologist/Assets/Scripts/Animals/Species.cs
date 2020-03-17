@@ -13,16 +13,16 @@ public class Species : ScriptableObject
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
     public float GrowthFactor { get => growthFactor; }
-    [SerializeField] private List<SpeciesNeed> _needs = default;
-    public List<SpeciesNeed> Needs { get => _needs; }
+    [SerializeField] private List<SpeciesNeed> needs = default;
+    public List<SpeciesNeed> Needs { get => needs; }
     [SerializeField] private Sprite sprite = default;
-    public Sprite Sprite { get => sprite; private set => sprite = value; }
+    public Sprite Sprite { get => sprite; }
 
-    public NeedCondition GetNeedCondition(string needName, float status)
+    public NeedCondition GetNeedCondition(NeedType needType, float status)
     {
-        foreach(SpeciesNeed need in _needs)
+        foreach(SpeciesNeed need in needs)
         {
-            if (need.NeedName == needName)
+            if (need.Type == needType)
             {
                 return need.GetCondition(status);
             }
@@ -30,11 +30,11 @@ public class Species : ScriptableObject
         throw new System.ArgumentException("needName not found in needs list");
     }
 
-    public float GetNeedSeverity(string needName)
+    public float GetNeedSeverity(NeedType needType)
     {
-        foreach (SpeciesNeed need in _needs)
+        foreach (SpeciesNeed need in needs)
         {
-            if (need.NeedName == needName)
+            if (need.Type == needType)
             {
                 return need.Severity;
             }
