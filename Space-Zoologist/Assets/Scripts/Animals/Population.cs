@@ -2,39 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A runtime instance of a species.
+/// </summary>
 public class Population : MonoBehaviour
 {
     private Species species = default;
-    public Species Species { get => species; private set => species = value; }
+    public Species Species { get => species; }
     public string SpeciesName { get => species.SpeciesName; }
-    private Dictionary<string, float> Needs = new Dictionary<string, float>();
+    private Dictionary<NeedType, float> Needs = new Dictionary<NeedType, float>();
     public int Count { get; private set; }
     private Sprite sprite;
     public Sprite Sprite { get { return species.Sprite; } private set => sprite = value; }
     private Vector2Int origin = Vector2Int.zero;
 
-    public void InitializeFromSpecies(Species species, Vector2Int origin, NeedSystemManager needSystemManager)
+    /// <summary>
+    /// Initialize the population as the given species at the given origin.
+    /// </summary>
+    /// <param name="species">The species of the population</param>
+    /// <param name="origin">The origin of the population</param>
+    /// <param name="needSystemManager"></param>
+    public void Initialize(Species species, Vector2Int origin, NeedSystemManager needSystemManager)
     {
-        this.Species = species;
+        this.species = species;
         this.origin = origin;
 
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         this.sprite = species.Sprite;
         foreach(SpeciesNeed need in Species.Needs)
         {
-            Needs.Add(need.NeedName, 0);
-            needSystemManager.RegisterPopulation(this, need.NeedName);
+            Needs.Add(need.Type, 0);
+            needSystemManager.RegisterPopulation(this, need.Type);
         }
     }
 
-    // Called whenever an event triggers a system to update its value
-    // or when a system calls this delegated method
-    public void UpdateNeed(string NeedName, float value)
+    /// <summary>
+    /// Update the given need of the population with the given value.
+    /// </summary>
+    /// <param name="need">The need to update</param>
+    /// <param name="value">The need's new value</param>
+    public void UpdateNeed(NeedType need, float value)
     {
-        if (Needs.ContainsKey(NeedName))
+        if (Needs.ContainsKey(need))
         {
-            Needs[NeedName] = value;
-            UpdatePopulationGrowthConditions();
+            Needs[need] = value;
+            // UpdateGrowthConditions();
         }
         else
         {
@@ -42,28 +54,29 @@ public class Population : MonoBehaviour
         }
     }
 
-    public float GetNeedStatus(string need)
+    /// <summary>
+    /// Get the value of the given need.
+    /// </summary>
+    /// <param name="need">The need to get the value of</param>
+    /// <returns></returns>
+    public float GetNeedValue(NeedType need)
     {
         if (!Needs.ContainsKey(need))
         {
-            Debug.Log($"Tried to access a nonexistent need in a { SpeciesName } population");
+            Debug.Log($"Tried to access nonexistent need '{need}' in a { SpeciesName } population");
             return 0;
         }
 
         return Needs[need];
     }
 
+    // TODO: Implement
     /// <summary>
     /// Gets need conditions for each need based on the current values and sends them along with the need's severity to the growth formula system.
     /// </summary>
-    public void UpdatePopulationGrowthConditions()
+    public void UpdateGrowthConditions()
     {
-        Dictionary<NeedCondition, float> needCondtions = new Dictionary<NeedCondition, float>();
-        foreach(KeyValuePair<string, float> needStatus in Needs)
-        {
-            NeedCondition condition = species.GetNeedCondition(needStatus.Key, needStatus.Value);
-            needCondtions.Add(condition, species.GetNeedSeverity(needStatus.Key));
-        }
+        throw new System.NotImplementedException();
     }
 }
 
