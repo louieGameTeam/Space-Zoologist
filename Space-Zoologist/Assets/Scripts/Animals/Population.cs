@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A runtime instance of a species.
+/// </summary>
 public class Population : MonoBehaviour
 {
     private Species species = default;
@@ -13,6 +16,12 @@ public class Population : MonoBehaviour
     public Sprite Sprite { get { return species.Sprite; } private set => sprite = value; }
     private Vector2Int origin = Vector2Int.zero;
 
+    /// <summary>
+    /// Initialize the population as the given species at the given origin.
+    /// </summary>
+    /// <param name="species">The species of the population</param>
+    /// <param name="origin">The origin of the population</param>
+    /// <param name="needSystemManager"></param>
     public void Initialize(Species species, Vector2Int origin, NeedSystemManager needSystemManager)
     {
         this.species = species;
@@ -27,8 +36,11 @@ public class Population : MonoBehaviour
         }
     }
 
-    // Called whenever an event triggers a system to update its value
-    // or when a system calls this delegated method
+    /// <summary>
+    /// Update the given need of the population with the given value.
+    /// </summary>
+    /// <param name="need">The need to update</param>
+    /// <param name="value">The need's new value</param>
     public void UpdateNeed(NeedType need, float value)
     {
         if (Needs.ContainsKey(need))
@@ -42,7 +54,12 @@ public class Population : MonoBehaviour
         }
     }
 
-    public float GetNeedStatus(NeedType need)
+    /// <summary>
+    /// Get the value of the given need.
+    /// </summary>
+    /// <param name="need">The need to get the value of</param>
+    /// <returns></returns>
+    public float GetNeedValue(NeedType need)
     {
         if (!Needs.ContainsKey(need))
         {

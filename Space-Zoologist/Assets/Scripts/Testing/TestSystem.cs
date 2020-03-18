@@ -41,7 +41,7 @@ public class TestSystem : MonoBehaviour, INeedSystem
         string text = $"{gameObject.name} Listeners\n";
         foreach (Population population in Populations)
         {
-            text += $"{population.SpeciesName}: {population.GetNeedStatus(need)}";
+            text += $"{population.SpeciesName}: {population.GetNeedValue(need)}";
             text += "\n";
         }
         populationsText.text = text;

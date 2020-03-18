@@ -10,7 +10,6 @@ public class NeedSystemsTester : MonoBehaviour
 
     [SerializeField] private List<Species> species = default;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (!populationManager) populationManager = FindObjectOfType<PopulationManager>();
@@ -22,11 +21,5 @@ public class NeedSystemsTester : MonoBehaviour
         {
             populationManager.CreatePopulation(s, Vector2Int.zero);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

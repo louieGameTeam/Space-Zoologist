@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages all need systems and the registration point for populations to register with specific need systems.
+/// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
 
@@ -21,6 +24,10 @@ public class NeedSystemManager : MonoBehaviour
         systems[need].UnregisterPopulation(population);
     }
 
+    /// <summary>
+    /// Add a system to be managed. Allows 
+    /// </summary>
+    /// <param name="needSystem">The system to add</param>
     public void AddSystem(INeedSystem needSystem)
     {
         systems.Add(needSystem.Need, needSystem);
