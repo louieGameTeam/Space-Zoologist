@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 /// <summary>
-/// Prefab should hold a reference to the scriptable object and handle buy event
+/// Holds information about item and handles ItemSelection
 /// </summary>
+public class ItemSelectedEvent : UnityEvent<GameObject> { }
 public class UsableItem : MonoBehaviour
 {
     public StoreItemSO itemInfo { get; set; }
-    public bool itemSelected { get; set; }
+    private ItemSelectedEvent DoSomethingWithItem = new ItemSelectedEvent();
 
-    public void InitializeItem(StoreItemSO storeItem, GameObject newStoreItem)
+    public void InitializeItem(StoreItemSO storeItem, ItemSelectedEvent action)
     {
         this.itemInfo = storeItem;
-        newStoreItem.transform.GetChild(0).GetComponent<Text>().text = this.itemInfo.ItemName;
-        newStoreItem.transform.GetChild(1).GetComponent<Text>().text = this.itemInfo.ItemCost.ToString();
-        newStoreItem.transform.GetChild(2).GetComponent<Text>().text = this.itemInfo.ItemDescription;
-        newStoreItem.transform.GetChild(3).GetComponent<Image>().sprite = this.itemInfo.Sprite;
+        this.DoSomethingWithItem = action;
+        this.gameObject.transform.GetChild(0).GetComponent<Text>().text = this.itemInfo.ItemName;
+        this.gameObject.transform.GetChild(1).GetComponent<Text>().text = this.itemInfo.ItemCost.ToString();
+        this.gameObject.transform.GetChild(2).GetComponent<Text>().text = this.itemInfo.ItemDescription;
+        this.gameObject.transform.GetChild(3).GetComponent<Image>().sprite = this.itemInfo.Sprite;
     }
   
     public void ItemSelected()
     {
-        this.itemSelected = true;
+        this.DoSomethingWithItem.Invoke(this.gameObject);
     }
 }

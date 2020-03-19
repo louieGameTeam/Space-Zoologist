@@ -2,42 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+
 public class PlayerInventory : MonoBehaviour
 {
+    [SerializeField] private GameObject UsableItem = default;
+    private List<GameObject> UsableItems = new List<GameObject>();
+    [SerializeField] private GameObject InventoryItemPopup = default;
     [SerializeField] private float playerFunds = default;
     public float PlayerFunds { get => playerFunds; set => playerFunds = value; }
-    private List<GameObject> UsableItems = new List<GameObject>();
+    private readonly ItemSelectedEvent OnItemSelected = new ItemSelectedEvent();
+    private GameObject ItemSelected = default;
 
-    // TODO: instantiate item in view? or move item from store?
-    public void AddItem(GameObject item)
+    public void Start()
     {
-        this.UsableItems.Add(item);
+        OnItemSelected.AddListener(DisplayOptions);
+    }
+
+    public void AddItem(StoreItemSO itemPurchased)
+    {
+        GameObject newItem = Instantiate(this.UsableItem, this.transform);
+        UsableItem usableItem = newItem.GetComponent<UsableItem>();
+        usableItem.InitializeItem(itemPurchased, this.OnItemSelected);
+        this.UsableItems.Add(newItem);
+    }
+
+    public void DisplayOptions(GameObject itemSelected)
+    {
+        this.ItemSelected = itemSelected;
+        this.InventoryItemPopup.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(UseItem);
+        this.InventoryItemPopup.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(SellItem);
+        this.InventoryItemPopup.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(ClosePopup);
+        this.InventoryItemPopup.SetActive(true);
+    }
+
+    public void UseItem()
+    {
+        ClosePopup();
     }
 
     public void SellItem()
     {
-        foreach (GameObject item in this.UsableItems)
+        if (this.ItemSelected != null)
         {
-            // Find the item selected and then add some lesser amount to player funds
-            UsableItem itemToRemove = item.GetComponent<UsableItem>();
-            if (itemToRemove.itemSelected)
-            {
-                itemToRemove.itemSelected = false;
-                float something = 0.5f;
-                this.playerFunds += itemToRemove.itemInfo.ItemCost * something;
-                item.SetActive(false);
-                this.UsableItems.Remove(item);
-            }
+            UsableItem itemToRemove = this.ItemSelected.GetComponent<UsableItem>();
+            float something = 0.5f;
+            this.playerFunds += itemToRemove.itemInfo.ItemCost * something;
+            this.ItemSelected.SetActive(false);
+            this.UsableItems.Remove(this.ItemSelected);
+            TestDisplayFunds();
+            ClosePopup();
         }
     }
 
-    public void DisplayItems()
+    public void ClosePopup()
     {
-        string items = "PlayerFunds: " + playerFunds.ToString();
-        foreach (GameObject ownedItem in this.UsableItems)
-        {
-            items += " " + ownedItem.GetComponent<UsableItem>().itemInfo.ItemName;
-        }
-        this.GetComponent<Text>().text = items;
+        this.ItemSelected = null;
+        this.InventoryItemPopup.SetActive(false);
+    }
+
+    public void TestDisplayFunds()
+    {
+        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "PlayerFunds: " + this.PlayerFunds;
     }
 }
