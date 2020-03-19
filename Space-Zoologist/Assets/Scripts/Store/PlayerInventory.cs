@@ -6,9 +6,9 @@ using UnityEngine.Events;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private GameObject UsableItem = default;
+    [SerializeField] private GameObject UsableItemPrefab = default;
     private List<GameObject> UsableItems = new List<GameObject>();
-    [SerializeField] private GameObject InventoryItemPopup = default;
+    [SerializeField] private GameObject InventoryItemPopupPrefab = default;
     [SerializeField] private float playerFunds = default;
     public float PlayerFunds { get => playerFunds; set => playerFunds = value; }
     private readonly ItemSelectedEvent OnItemSelected = new ItemSelectedEvent();
@@ -21,7 +21,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddItem(StoreItemSO itemPurchased)
     {
-        GameObject newItem = Instantiate(this.UsableItem, this.transform);
+        GameObject newItem = Instantiate(this.UsableItemPrefab, this.transform);
         UsableItem usableItem = newItem.GetComponent<UsableItem>();
         usableItem.InitializeItem(itemPurchased, this.OnItemSelected);
         this.UsableItems.Add(newItem);
@@ -30,10 +30,10 @@ public class PlayerInventory : MonoBehaviour
     public void DisplayOptions(GameObject itemSelected)
     {
         this.ItemSelected = itemSelected;
-        this.InventoryItemPopup.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(UseItem);
-        this.InventoryItemPopup.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(SellItem);
-        this.InventoryItemPopup.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(ClosePopup);
-        this.InventoryItemPopup.SetActive(true);
+        this.InventoryItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(UseItem);
+        this.InventoryItemPopupPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(SellItem);
+        this.InventoryItemPopupPrefab.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(ClosePopup);
+        this.InventoryItemPopupPrefab.SetActive(true);
     }
 
     public void UseItem()
@@ -58,11 +58,11 @@ public class PlayerInventory : MonoBehaviour
     public void ClosePopup()
     {
         this.ItemSelected = null;
-        this.InventoryItemPopup.SetActive(false);
+        this.InventoryItemPopupPrefab.SetActive(false);
     }
 
     public void TestDisplayFunds()
     {
-        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "PlayerFunds: " + this.PlayerFunds;
+        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "Funds: " + this.PlayerFunds;
     }
 }

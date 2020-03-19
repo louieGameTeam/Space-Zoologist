@@ -10,8 +10,8 @@ using UnityEngine.Events;
 public class ReserveStore : MonoBehaviour
 {
     // Can't make serialized fields readonly >:(
-    [SerializeField] private GameObject UsableItem = default;
-    [SerializeField] private GameObject StoreItemPopup = default;
+    [SerializeField] private GameObject UsableItemPrefab = default;
+    [SerializeField] private GameObject StoreItemPopupPrefab = default;
     [Expandable] public List<StoreItemSO> StoreItemReferences = default;
     private List<GameObject> AvailableItems = new List<GameObject>();
     public GameObject PlayerInventory = default;
@@ -35,7 +35,7 @@ public class ReserveStore : MonoBehaviour
 
     public void AddItemToStore(StoreItemSO storeItem)
     {
-        GameObject newStoreItem = Instantiate(this.UsableItem, this.transform);
+        GameObject newStoreItem = Instantiate(this.UsableItemPrefab, this.transform);
         UsableItem usableItem = newStoreItem.GetComponent<UsableItem>();
         usableItem.InitializeItem(storeItem, this.OnItemSelected);
         this.AvailableItems.Add(newStoreItem);
@@ -44,9 +44,9 @@ public class ReserveStore : MonoBehaviour
     public void ConfirmPurchase(GameObject itemSelected)
     {
         this.ItemSelected = itemSelected;
-        this.StoreItemPopup.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(BuyItem);
-        this.StoreItemPopup.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(ClosePopup);
-        this.StoreItemPopup.SetActive(true);
+        this.StoreItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(BuyItem);
+        this.StoreItemPopupPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(ClosePopup);
+        this.StoreItemPopupPrefab.SetActive(true);
     }
 
     public void BuyItem()
@@ -64,23 +64,23 @@ public class ReserveStore : MonoBehaviour
                 TestDisplayFunds();
                 // Note: can't move item location to inventory because of how content displays work with GameObject locations in hierarchy
                 this.ItemSelected.SetActive(false);
-                ClosePopup();
             }
             else
             {
                 Debug.Log("Insufficient Funds");
             }
         }
+        ClosePopup();
     }
 
     public void ClosePopup()
     {
         this.ItemSelected = null;
-        this.StoreItemPopup.SetActive(false);
+        this.StoreItemPopupPrefab.SetActive(false);
     }
 
     public void TestDisplayFunds()
     {
-        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "PlayerFunds: " + this.playerInventory.PlayerFunds;
+        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "Funds: " + this.playerInventory.PlayerFunds;
     }
 }

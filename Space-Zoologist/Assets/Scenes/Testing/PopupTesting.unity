@@ -1028,8 +1028,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a9b0a2c071942ce95292bd08f8278d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UsableItemPrefab: {fileID: 5244455026466092407, guid: c6fd03b637e8148468b1e3cac2cbdde1,
+    type: 3}
+  InventoryItemPopupPrefab: {fileID: 440267115}
   playerFunds: 40
-  InventoryItemPopup: {fileID: 440267115}
 --- !u!222 &1528292301
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1276,9 +1278,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4484f7f6bca7d4320a2e0a4b9b6e27cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UsableItem: {fileID: 5244455026466092407, guid: c6fd03b637e8148468b1e3cac2cbdde1,
+  UsableItemPrefab: {fileID: 5244455026466092407, guid: c6fd03b637e8148468b1e3cac2cbdde1,
     type: 3}
-  StoreItemPopup: {fileID: 35478905}
+  StoreItemPopupPrefab: {fileID: 35478905}
   StoreItemReferences:
   - {fileID: 11400000, guid: 026587819fadf4474be182a40c354523, type: 2}
   - {fileID: 11400000, guid: d0437be311f3a419cb00e4381b5b8efa, type: 2}
