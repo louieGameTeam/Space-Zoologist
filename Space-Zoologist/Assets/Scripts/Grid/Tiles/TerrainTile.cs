@@ -20,7 +20,6 @@ public class TerrainTile : RuleTile<TerrainTile.Neighbor> {
 	public List<TileLayer> replacementLayers = new List<TileLayer>();
 	public List<TileLayer> constraintLayers = new List<TileLayer>();
 	public List<TerrainTile> auxillaryTiles = new List<TerrainTile>();
-	public float[] contentValues;
 	public bool isRepresentative;
 	public bool isMergingAttributes;
 	public bool isChangingColor;
@@ -40,15 +39,8 @@ public class TerrainTile : RuleTile<TerrainTile.Neighbor> {
 		}
 		return base.RuleMatch(neighbor, other);
 	}
-	public Color GetTileColor()
+	public Color GetTileColor(float[] composition)
 	{
-		if (contentValues.Length == 0)
-		{
-			return new Color(1, 1, 1, 1);
-		}
-		else
-		{
-			return RYBConverter.ToRYBColor(contentValues, interpolationArray);
-		}
+		return RYBConverter.ToRYBColor(composition, interpolationArray);
 	}
 }

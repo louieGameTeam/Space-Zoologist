@@ -43,7 +43,7 @@ public class GetTerrainTile : MonoBehaviour
         {
             if (tilemaps[(int)tile.tileLayer].TryGetComponent(out TileAttributes tileAttributes))
             {
-                return tileAttributes.keyValuePairs[cellLocation];
+                return tileAttributes.tileContent[cellLocation];
             }
             else
             {

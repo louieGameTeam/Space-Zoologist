@@ -78,7 +78,7 @@ public class TilePlacementController : MonoBehaviour
             removedTiles.Add(layer, new Dictionary<Vector3Int, TerrainTile>());
             if (tilemaps[layer].TryGetComponent(out TileAttributes tileAttributes))
             {
-                tileAttributes.ConfirmMerge();
+                tileAttributes.ConfirmMerge(selectedTile);
             }
         }
     }
