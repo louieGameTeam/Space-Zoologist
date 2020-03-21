@@ -52,4 +52,20 @@ public class GetTerrainTile : MonoBehaviour
         }
         return null;
     }
+    public float DistanceToClosestTile(Vector3Int cellLocation,int scanRange, TerrainTile tile)
+    {
+        List<Vector3Int> tileLocations = new List<Vector3Int>();
+        for(int x=cellLocation.x-scanRange;x<cellLocation.x+scanRange;x++)
+        {
+            for (int y = cellLocation.y - scanRange; y < cellLocation.y + scanRange; y++)
+            {
+                Vector3Int currentCell = new Vector3Int(x, y, 0);
+                if (GetTerrainTileAtLocation(currentCell) == tile)
+                {
+                    tileLocations.Add(currentCell);
+                }
+            }
+        }
+        return 0;
+    }
 }

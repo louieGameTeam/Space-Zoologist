@@ -8,11 +8,6 @@ using UnityEngine.Tilemaps;
 public class TilePlacementController : MonoBehaviour
 {
     // Can be either pen or block mode.
-    /* 
-     * Known issues: 
-     * Block mode must start at a valid cell or it doesn't draw
-     * Stops drawing if cursor moves too fast in pen mode
-     */
     public bool isBlockMode { get; set; } = false;
     public TerrainTile selectedTile { get; set; } = default;
     [SerializeField] private Camera currentCamera = default;
@@ -115,9 +110,53 @@ public class TilePlacementController : MonoBehaviour
             removedTiles.Add(layer, new Dictionary<Vector3Int, TerrainTile>());
         }
     }
-    private void UpdatePreviewPen()
+    private void UpdatePreviewPen() //TODO: Fix discrete lines at overlaps within same stroke
     {
-        PlaceTile(currentMouseCellPosition, selectedTile);
+        if (!PlaceTile(currentMouseCellPosition, selectedTile))
+        {
+            if (currentMouseCellPosition.x == lastMouseCellPosition.x)// Handles divide by zero exception
+            {
+                for (int y = lastMouseCellPosition.y; y <= currentMouseCellPosition.y; y++)
+                {
+                    Vector3Int location = new Vector3Int(lastMouseCellPosition.x, y, lastMouseCellPosition.z);
+                    PlaceTile(location, selectedTile);
+                }
+            }
+            else
+            {
+                float gradient = (currentMouseCellPosition.y - lastMouseCellPosition.y) / (lastMouseCellPosition.x - currentMouseCellPosition.x);
+                bool isPositiveY = currentMouseCellPosition.y > lastMouseCellPosition.y;
+                if (currentMouseCellPosition.x > lastMouseCellPosition.x)
+                {
+                    for (float x = lastMouseCellPosition.x + 0.5f; x <= currentMouseCellPosition.x; x++)
+                    {
+                        float interpolatedY = gradient * (x - lastMouseCellPosition.x);
+                        int incrementY = Mathf.CeilToInt(interpolatedY);
+                        if(!isPositiveY)
+                        {
+                            incrementY = Mathf.FloorToInt(interpolatedY);
+                        }
+                        Vector3Int interpolateTileLocation = new Vector3Int(Mathf.CeilToInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
+                        PlaceTile(interpolateTileLocation, selectedTile);
+                    }
+                }
+                else
+                {
+                    for (float x = lastMouseCellPosition.x - 0.5f; x >= currentMouseCellPosition.x; x--)
+                    {
+                        float interpolatedY = gradient * (x - lastMouseCellPosition.x);
+                        int incrementY = Mathf.CeilToInt(interpolatedY);
+                        if (!isPositiveY)
+                        {
+                            incrementY = Mathf.FloorToInt(interpolatedY);
+                        }
+                        Vector3Int interpolateTileLocation = new Vector3Int(Mathf.FloorToInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
+                        PlaceTile(interpolateTileLocation, selectedTile);
+                    }
+                }
+            }
+            PlaceTile(currentMouseCellPosition, selectedTile);
+        }
     }
     private void UpdatePreviewBlock()
     {
@@ -189,10 +228,9 @@ public class TilePlacementController : MonoBehaviour
             return false;
         }
     }
-    private void PlaceTile(Vector3Int cellLocation, TerrainTile tile, bool checkPlacable = true)
+    private bool PlaceTile(Vector3Int cellLocation, TerrainTile tile, bool checkPlacable = true)
     {
         int tileLayer = (int)tile.tileLayer;
-
         Tilemap targetTilemap = tilemaps[tileLayer];
         if (IsPlacable(cellLocation) || !checkPlacable)
         {
@@ -231,6 +269,11 @@ public class TilePlacementController : MonoBehaviour
             {
                 triedToPlaceTiles.Add(cellLocation);
             }
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
     private void TilePlacementProcess(int tileLayer,Tilemap targetTilemap, Vector3Int cellLocation, TerrainTile tile)
