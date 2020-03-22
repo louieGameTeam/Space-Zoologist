@@ -16,8 +16,9 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
     private Grid grid;
+    private bool isFirstTile;
     public List<Tilemap> tilemapList { get { return tilemaps; } }
-    [SerializeField] private List<Tilemap> tilemaps = new List<Tilemap>();
+    [SerializeField] private List<Tilemap> tilemaps = new List<Tilemap>(); // Set up according to the order of Enum TileLayer in Terrain tile
     private Dictionary<int, List<Vector3Int>> addedTiles = new Dictionary<int, List<Vector3Int>>(); // All NEW tiles placed
     private Dictionary<int, Dictionary<Vector3Int, TerrainTile>> removedTiles = new Dictionary<int, Dictionary<Vector3Int, TerrainTile>>(); //All tiles removed
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
@@ -59,6 +60,7 @@ public class TilePlacementController : MonoBehaviour
         selectedTile = newTile;
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
+        isFirstTile = true;
     }
     public void StopPreview()
     {
@@ -112,7 +114,12 @@ public class TilePlacementController : MonoBehaviour
     }
     private void UpdatePreviewPen() //TODO: Fix discrete lines at overlaps within same stroke
     {
-        if (!PlaceTile(currentMouseCellPosition, selectedTile))
+        if (isFirstTile)
+        {
+            PlaceTile(currentMouseCellPosition, selectedTile);
+            return;
+        }
+        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastMouseCellPosition))
         {
             if (currentMouseCellPosition.x == lastMouseCellPosition.x)// Handles divide by zero exception
             {
@@ -125,21 +132,22 @@ public class TilePlacementController : MonoBehaviour
             else
             {
                 float gradient = (currentMouseCellPosition.y - lastMouseCellPosition.y) / (lastMouseCellPosition.x - currentMouseCellPosition.x);
-                bool isPositiveY = currentMouseCellPosition.y > lastMouseCellPosition.y;
-                foreach (float x in GridUtils.RangeFloat(lastMouseCellPosition.x + 0.5f , currentMouseCellPosition.x))
+                float midpoint = 0.5f;
+                if (currentMouseCellPosition.x < lastMouseCellPosition.x)
+                {
+                    midpoint = -0.5f;
+                }
+                foreach (float x in GridUtils.RangeFloat(lastMouseCellPosition.x + midpoint , currentMouseCellPosition.x))
                 {
                     float interpolatedY = gradient * (x - lastMouseCellPosition.x);
-                    int incrementY = Mathf.CeilToInt(interpolatedY);
-                    if (!isPositiveY)
-                    {
-                        incrementY = Mathf.FloorToInt(interpolatedY);
-                    }
-                    Vector3Int interpolateTileLocation = new Vector3Int(Mathf.CeilToInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
+                    int incrementY = GridUtils.RoundTowardsZeroInt(interpolatedY);
+                    Vector3Int interpolateTileLocation = new Vector3Int(GridUtils.RoundTowardsZeroInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
                     PlaceTile(interpolateTileLocation, selectedTile);
                 }
             }
-            PlaceTile(currentMouseCellPosition, selectedTile);
+            
         }
+        PlaceTile(currentMouseCellPosition, selectedTile);
     }
     private void UpdatePreviewBlock()
     {
@@ -213,7 +221,9 @@ public class TilePlacementController : MonoBehaviour
             {
                 triedToPlaceTiles.Add(cellLocation);
             }
+            isFirstTile = false;
             return true;
+
         }
         else
         {

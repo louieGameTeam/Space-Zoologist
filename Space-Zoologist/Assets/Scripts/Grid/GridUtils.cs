@@ -107,7 +107,11 @@ public class GridUtils
                 yield return i;
         }
     }
-
+    /// <summary>
+    /// Returns four cell locations next to the given cell location
+    /// </summary>
+    /// <param name="cellLocation"></param>
+    /// <returns></returns>
     public static List<Vector3Int> FourNeighborTiles(Vector3Int cellLocation)
     {
         List<Vector3Int> fourNeighborTiles = new List<Vector3Int>();
@@ -116,5 +120,27 @@ public class GridUtils
         fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z));
         fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z));
         return fourNeighborTiles;
+    }
+    public static int RoundTowardsZeroInt (float n)
+    {
+        if (n > 0)
+        {
+            return Mathf.FloorToInt(n);
+        }
+        else
+        {
+            return Mathf.CeilToInt(n);
+        }
+    }
+    public static int RoundAwayFromZeroInt(float n)
+    {
+        if (n < 0)
+        {
+            return Mathf.FloorToInt(n);
+        }
+        else
+        {
+            return Mathf.CeilToInt(n);
+        }
     }
 }
