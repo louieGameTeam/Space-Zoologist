@@ -126,33 +126,16 @@ public class TilePlacementController : MonoBehaviour
             {
                 float gradient = (currentMouseCellPosition.y - lastMouseCellPosition.y) / (lastMouseCellPosition.x - currentMouseCellPosition.x);
                 bool isPositiveY = currentMouseCellPosition.y > lastMouseCellPosition.y;
-                if (currentMouseCellPosition.x > lastMouseCellPosition.x)
+                foreach (float x in GridUtils.RangeFloat(lastMouseCellPosition.x + 0.5f , currentMouseCellPosition.x))
                 {
-                    for (float x = lastMouseCellPosition.x + 0.5f; x <= currentMouseCellPosition.x; x++)
+                    float interpolatedY = gradient * (x - lastMouseCellPosition.x);
+                    int incrementY = Mathf.CeilToInt(interpolatedY);
+                    if (!isPositiveY)
                     {
-                        float interpolatedY = gradient * (x - lastMouseCellPosition.x);
-                        int incrementY = Mathf.CeilToInt(interpolatedY);
-                        if(!isPositiveY)
-                        {
-                            incrementY = Mathf.FloorToInt(interpolatedY);
-                        }
-                        Vector3Int interpolateTileLocation = new Vector3Int(Mathf.CeilToInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
-                        PlaceTile(interpolateTileLocation, selectedTile);
+                        incrementY = Mathf.FloorToInt(interpolatedY);
                     }
-                }
-                else
-                {
-                    for (float x = lastMouseCellPosition.x - 0.5f; x >= currentMouseCellPosition.x; x--)
-                    {
-                        float interpolatedY = gradient * (x - lastMouseCellPosition.x);
-                        int incrementY = Mathf.CeilToInt(interpolatedY);
-                        if (!isPositiveY)
-                        {
-                            incrementY = Mathf.FloorToInt(interpolatedY);
-                        }
-                        Vector3Int interpolateTileLocation = new Vector3Int(Mathf.FloorToInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
-                        PlaceTile(interpolateTileLocation, selectedTile);
-                    }
+                    Vector3Int interpolateTileLocation = new Vector3Int(Mathf.CeilToInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
+                    PlaceTile(interpolateTileLocation, selectedTile);
                 }
             }
             PlaceTile(currentMouseCellPosition, selectedTile);
@@ -163,70 +146,31 @@ public class TilePlacementController : MonoBehaviour
         ClearChanges();
         PlaceTile(dragStartPosition, selectedTile, false);
         Vector3Int sweepLocation = Vector3Int.zero;
-        if (dragStartPosition.x < currentMouseCellPosition.x)
+        foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
         {
-            for (var x = dragStartPosition.x; x <= currentMouseCellPosition.x; x++)
+            foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
             {
-                if (dragStartPosition.y < currentMouseCellPosition.y)
-                {
-                    for (var y = dragStartPosition.y; y <= currentMouseCellPosition.y; y++)
-                    {
-                        sweepLocation = new Vector3Int(x, y, 0);
-                        PlaceTile(sweepLocation, selectedTile);
-                    }
-                }
-                else
-                {
-                    for (var y = dragStartPosition.y; y >= currentMouseCellPosition.y; y--)
-                    {
-                        sweepLocation = new Vector3Int(x, y, 0);
-                        PlaceTile(sweepLocation, selectedTile);
-                    }
-                }
-            }
-        }
-        else
-        {
-            for (var x = dragStartPosition.x; x >= currentMouseCellPosition.x; x--)
-            {
-                if (dragStartPosition.y < currentMouseCellPosition.y)
-                {
-                    for (var y = dragStartPosition.y; y <= currentMouseCellPosition.y; y++)
-                    {
-                        sweepLocation = new Vector3Int(x, y, 0);
-                        PlaceTile(sweepLocation, selectedTile);
-                    }
-                }
-                else
-                {
-                    for (var y = dragStartPosition.y; y >= currentMouseCellPosition.y; y--)
-                    {
-                        sweepLocation = new Vector3Int(x, y, 0);
-                        PlaceTile(sweepLocation, selectedTile);
-                    }
-                }
+                sweepLocation = new Vector3Int(x, y, 0);
+                PlaceTile(sweepLocation, selectedTile);
             }
         }
     }
 
     private bool IsPlacable(Vector3Int cellLocation)
     {
-        Vector3Int posX0 = new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z);
-        Vector3Int posX1 = new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z);
-        Vector3Int posy0 = new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z);
-        Vector3Int posy1 = new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z);
-        if (triedToPlaceTiles.Contains(posX0) ||
-            triedToPlaceTiles.Contains(posX1) ||
-            triedToPlaceTiles.Contains(posy0) ||
-            triedToPlaceTiles.Contains(posy1) ||
-            currentMouseCellPosition == dragStartPosition)
+
+        if (currentMouseCellPosition == dragStartPosition)
         {
             return true;
         }
-        else
+        foreach (Vector3Int location in GridUtils.FourNeighborTiles(cellLocation))
         {
-            return false;
+            if (triedToPlaceTiles.Contains(location))
+            {
+                return true;
+            }
         }
+        return false;
     }
     private bool PlaceTile(Vector3Int cellLocation, TerrainTile tile, bool checkPlacable = true)
     {
@@ -311,12 +255,7 @@ public class TilePlacementController : MonoBehaviour
     }
     private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile, Tilemap targetTilemap)
     {
-        Vector3Int posX0 = new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z);
-        Vector3Int posX1 = new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z);
-        Vector3Int posy0 = new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z);
-        Vector3Int posy1 = new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z);
-        List<Vector3Int> tilesToCheck = new List<Vector3Int> { posX0, posX1, posy0, posy1 };
-        foreach (Vector3Int tileToCheck in tilesToCheck)
+        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
             if (!neighborTiles.Contains(tileToCheck) && targetTilemap.GetTile(tileToCheck) == tile)
             {

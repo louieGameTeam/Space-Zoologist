@@ -24,6 +24,6 @@ public class APITester : MonoBehaviour
         TerrainTile tile = getTerrainTile.GetTerrainTileAtLocation(currentMouseCellPosition);
         /*        Debug.Log(getTerrainTile.GetTerrainTileAtLocation(currentMouseCellPosition));
                 Debug.Log(getTerrainTile.GetTileContentsAtLocation(currentMouseCellPosition, tile));*/
-        Debug.Log(getTerrainTile.DistanceToClosestTile(currentMouseCellPosition, liquid, 10));
+        //Debug.Log(getTerrainTile.DistanceToClosestTile(currentMouseCellPosition, liquid, 10));
     }
 }

@@ -63,4 +63,58 @@ public class GridUtils
         Vector3Int result = new Vector3Int(vector.x, vector.y, 0);
         return result;
     }
+    /// <summary>
+    /// Returns int from start to end (inclusive), default stepping is 1.
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <param name="step"></param>
+    /// <returns></returns>
+    public static IEnumerable<int> Range(int start, int end, int step = 1)
+    {
+        if (start < end)
+        {
+            for (int i = start; i <= end; i += step)
+            {
+                yield return i;
+            }
+        }
+        else
+        {
+            for (int i = start; i >= end; i -= step)
+                yield return i;
+        }
+    }
+    /// <summary>
+    /// Returns FLOAT from start to end (inclusive), default stepping is 1.
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <param name="step"></param>
+    /// <returns></returns>
+    public static IEnumerable<float> RangeFloat(float start, float end, float step = 1)
+    {
+        if (start < end)
+        {
+            for (float i = start; i <= end; i += step)
+            {
+                yield return i;
+            }
+        }
+        else
+        {
+            for (float i = start; i >= end; i -= step)
+                yield return i;
+        }
+    }
+
+    public static List<Vector3Int> FourNeighborTiles(Vector3Int cellLocation)
+    {
+        List<Vector3Int> fourNeighborTiles = new List<Vector3Int>();
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z));
+        return fourNeighborTiles;
+    }
 }
