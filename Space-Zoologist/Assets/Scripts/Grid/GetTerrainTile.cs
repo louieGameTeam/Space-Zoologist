@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -13,6 +12,11 @@ public class GetTerrainTile : MonoBehaviour
     {
         tilemaps = GetComponent<TilePlacementController>().tilemapList;
     }
+    /// <summary>
+    /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
+    /// </summary>
+    /// <param name="cellLocation"> Position of the cell. </param>
+    /// <returns></returns>
     public TerrainTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
         SortedDictionary<int, TerrainTile> existingTiles = new SortedDictionary<int, TerrainTile>();
@@ -37,13 +41,18 @@ public class GetTerrainTile : MonoBehaviour
             return null;
         }
     }
+    /// <summary>
+    /// Returns contents within a tile, e.g. Liquid Composition. If tile has no content, returns null.
+    /// </summary>
+    /// <param name="cellLocation"> Position of the cell. </param>
+    /// <returns></returns>
     public float[] GetTileContentsAtLocation(Vector3Int cellLocation, TerrainTile tile)
     {
         if (tile != null)
         {
             if (tilemaps[(int)tile.tileLayer].TryGetComponent(out TileAttributes tileAttributes))
             {
-                return tileAttributes.tileContent[cellLocation];
+                return tileAttributes.tileContents[cellLocation];
             }
             else
             {
@@ -54,18 +63,83 @@ public class GetTerrainTile : MonoBehaviour
     }
     public float DistanceToClosestTile(Vector3Int cellLocation,int scanRange, TerrainTile tile)
     {
-        List<Vector3Int> tileLocations = new List<Vector3Int>();
-        for(int x=cellLocation.x-scanRange;x<cellLocation.x+scanRange;x++)
+        int[] distance3 = new int[3];
+        int i = 0;
+        int posX = 0;
+        int posY = 0;
+        Vector3Int cellToCheck = cellLocation;
+        while (i < scanRange)
         {
-            for (int y = cellLocation.y - scanRange; y < cellLocation.y + scanRange; y++)
+            if (posX == 0)
             {
-                Vector3Int currentCell = new Vector3Int(x, y, 0);
-                if (GetTerrainTileAtLocation(currentCell) == tile)
+                if (GetTerrainTileAtLocation(cellLocation) == tile)
                 {
-                    tileLocations.Add(currentCell);
+                    return 0;
+                }
+                else
+                {
+                    i++;
+                    posX = i;
+                    continue;
+
                 }
             }
+            if (posX == posY)
+            {
+                if (IsTileInAnyOfFour(posX,posY,cellLocation,tile))
+                {
+                    return Mathf.Sqrt(posX * posX + posY * posY);
+                }
+                i++;
+                posX = i;
+                posY = 0;
+            }
+            else
+            {
+                if (IsTileInAnyOfEight(posX, posY, cellLocation, tile))
+                {
+                    return Mathf.Sqrt(posX * posX + posY * posY);
+                }
+                posY++;
+            }
         }
-        return 0;
+        return -1;
+    }
+    private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
+    {
+        Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
+        Vector3Int cell_2 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y - distanceY, subjectCellLocation.z);
+        Vector3Int cell_3 = new Vector3Int(subjectCellLocation.x - distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
+        Vector3Int cell_4 = new Vector3Int(subjectCellLocation.x - distanceX, subjectCellLocation.y - distanceY, subjectCellLocation.z);
+        if (GetTerrainTileAtLocation(cell_1) == tile ||
+           GetTerrainTileAtLocation(cell_2) == tile ||
+           GetTerrainTileAtLocation(cell_3) == tile ||
+           GetTerrainTileAtLocation(cell_4) == tile)
+        {
+            return true;
+        }
+        return false;
+    }
+    private bool IsTileInAnyOfEight(int distanceX, int distanceY,Vector3Int subjectCellLocation, TerrainTile tile)
+    {
+        if (IsTileInAnyOfFour(distanceX, distanceY, subjectCellLocation, tile))
+        {
+            return true;
+        }
+        else
+        {
+            Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceY, subjectCellLocation.y + distanceX, subjectCellLocation.z);
+            Vector3Int cell_2 = new Vector3Int(subjectCellLocation.x - distanceY, subjectCellLocation.y + distanceX, subjectCellLocation.z);
+            Vector3Int cell_3 = new Vector3Int(subjectCellLocation.x + distanceY, subjectCellLocation.y - distanceX, subjectCellLocation.z);
+            Vector3Int cell_4 = new Vector3Int(subjectCellLocation.x - distanceY, subjectCellLocation.y - distanceX, subjectCellLocation.z);
+            if (GetTerrainTileAtLocation(cell_1) == tile ||
+               GetTerrainTileAtLocation(cell_2) == tile ||
+               GetTerrainTileAtLocation(cell_3) == tile ||
+               GetTerrainTileAtLocation(cell_4) == tile)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

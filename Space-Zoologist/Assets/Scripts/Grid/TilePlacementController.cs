@@ -169,7 +169,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 if (dragStartPosition.y < currentMouseCellPosition.y)
                 {
-                    for (var y = dragStartPosition.y ; y <= currentMouseCellPosition.y ; y++)
+                    for (var y = dragStartPosition.y; y <= currentMouseCellPosition.y; y++)
                     {
                         sweepLocation = new Vector3Int(x, y, 0);
                         PlaceTile(sweepLocation, selectedTile);

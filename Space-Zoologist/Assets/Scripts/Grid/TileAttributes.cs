@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class TileAttributes : MonoBehaviour
 {
-    public Dictionary<Vector3Int, float[]> tileContent = new Dictionary<Vector3Int, float[]>();
+    public Dictionary<Vector3Int, float[]> tileContents = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> changedAttributes = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> addedAttributes = new Dictionary<Vector3Int, float[]>();
     private Tilemap tilemap;
@@ -31,10 +31,10 @@ public class TileAttributes : MonoBehaviour
             {
                 case neighborTileStatus.None:
                     isPlacedTileNew = true;
-                    tileContent.Add(cellLocation,new float[]{ 0,0,0 });
+                    tileContents.Add(cellLocation,new float[]{ 0,0,0 });
                     if (!addedAttributes.ContainsKey(cellLocation))
                     {
-                        addedAttributes.Add(cellLocation, tileContent[cellLocation]);
+                        addedAttributes.Add(cellLocation, tileContents[cellLocation]);
                     }
                     ChangeColor(cellLocation, tile);
                     return;
@@ -42,10 +42,10 @@ public class TileAttributes : MonoBehaviour
                     isPlacedTileNew = false;
                     foreach (Vector3Int location in addedTiles)
                     {
-                        tileContent[location] = tileContent[neighborTiles.First()];
+                        tileContents[location] = tileContents[neighborTiles.First()];
                         if (!addedAttributes.ContainsKey(location))
                         {
-                            addedAttributes.Add(location, tileContent[location]);
+                            addedAttributes.Add(location, tileContents[location]);
                         }
                         ChangeColor(location, tile);
                     }
@@ -59,7 +59,7 @@ public class TileAttributes : MonoBehaviour
                     Dictionary<float[], int> neighborTileContents = new Dictionary<float[], int>();
                     foreach (Vector3Int tileLocation in neighborTiles)
                     {
-                        float[] contents = tileContent[tileLocation];
+                        float[] contents = tileContents[tileLocation];
                         if (!changedAttributes.ContainsKey(tileLocation))
                         {
                             changedAttributes.Add(tileLocation, contents);
@@ -87,12 +87,12 @@ public class TileAttributes : MonoBehaviour
                     }
                     foreach (Vector3Int tileLocation in neighborTiles)
                     {
-                        tileContent[tileLocation] = averageContentValues;
+                        tileContents[tileLocation] = averageContentValues;
                         ChangeColor(tileLocation, tile);
                     }
                     foreach (Vector3Int tileLocation in addedTiles)
                     {
-                        tileContent[tileLocation] = tileContent[neighborTiles.First()];
+                        tileContents[tileLocation] = tileContents[neighborTiles.First()];
                         ChangeColor(tileLocation, tile);
                     }
                     neighborTiles = new List<Vector3Int>();
@@ -104,20 +104,20 @@ public class TileAttributes : MonoBehaviour
     }
     public void RemoveTile (Vector3Int cellLocation)
     {
-        changedAttributes.Add(cellLocation, tileContent[cellLocation]);
-        tileContent.Remove(cellLocation);
+        changedAttributes.Add(cellLocation, tileContents[cellLocation]);
+        tileContents.Remove(cellLocation);
     }
     public void Revert()
     {
         foreach(KeyValuePair<Vector3Int,float[]> keyValuePair in changedAttributes)
         {
-            tileContent[keyValuePair.Key] = keyValuePair.Value;
+            tileContents[keyValuePair.Key] = keyValuePair.Value;
             tilemap.SetTileFlags(keyValuePair.Key, TileFlags.None);
-            tilemap.SetColor(keyValuePair.Key, RYBConverter.ToRYBColor(tileContent[keyValuePair.Key]));
+            tilemap.SetColor(keyValuePair.Key, RYBConverter.ToRYBColor(tileContents[keyValuePair.Key]));
         }
         foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
         {
-            tileContent.Remove(keyValuePair.Key);
+            tileContents.Remove(keyValuePair.Key);
         }
     }
     private void ChangeColor(Vector3Int cellLocation, TerrainTile tile)
@@ -125,7 +125,7 @@ public class TileAttributes : MonoBehaviour
         if (tile.isChangingColor)
         {
             tilemap.SetTileFlags(cellLocation, TileFlags.None);
-            Color color = tile.GetTileColor(tileContent[cellLocation]);
+            Color color = tile.GetTileColor(tileContents[cellLocation]);
             tilemap.SetColor(cellLocation, color);
         }
     }
@@ -146,7 +146,7 @@ public class TileAttributes : MonoBehaviour
                     continue;
                 }
                 neighborTiles.Add(tileToCheck);
-                attributesToCheck.Add(tileContent[tileToCheck]);
+                attributesToCheck.Add(tileContents[tileToCheck]);
             }
         }
         if (attributesToCheck.Count == 0)
@@ -189,7 +189,7 @@ public class TileAttributes : MonoBehaviour
             float n2 = (float)Random.Range(0, 100) / 100;
             foreach(Vector3Int tileLocation in addedAttributes.Keys)
             {
-                tileContent[tileLocation] = new float[] { n0, n1, n2 };
+                tileContents[tileLocation] = new float[] { n0, n1, n2 };
                 ChangeColor(tileLocation, tile);
                 //TODO call user to enter parameters
             }
