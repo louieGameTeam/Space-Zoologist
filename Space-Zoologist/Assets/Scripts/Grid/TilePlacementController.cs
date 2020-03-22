@@ -16,6 +16,7 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
     private Grid grid;
+    private Vector3Int lastPlacedTile;
     private bool isFirstTile;
     public List<Tilemap> tilemapList { get { return tilemaps; } }
     [SerializeField] private List<Tilemap> tilemaps = new List<Tilemap>(); // Set up according to the order of Enum TileLayer in Terrain tile
@@ -23,7 +24,6 @@ public class TilePlacementController : MonoBehaviour
     private Dictionary<int, Dictionary<Vector3Int, TerrainTile>> removedTiles = new Dictionary<int, Dictionary<Vector3Int, TerrainTile>>(); //All tiles removed
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
-    private Dictionary<Vector3Int, float[]> changedAttributes = new Dictionary<Vector3Int, float[]>();
 
     private void Awake()
     {
@@ -119,29 +119,29 @@ public class TilePlacementController : MonoBehaviour
             PlaceTile(currentMouseCellPosition, selectedTile);
             return;
         }
-        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastMouseCellPosition))
+        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile))
         {
-            if (currentMouseCellPosition.x == lastMouseCellPosition.x)// Handles divide by zero exception
+            if (currentMouseCellPosition.x == lastPlacedTile.x)// Handles divide by zero exception
             {
-                for (int y = lastMouseCellPosition.y; y <= currentMouseCellPosition.y; y++)
+                foreach (int y in GridUtils.Range(lastPlacedTile.y, currentMouseCellPosition.y))
                 {
-                    Vector3Int location = new Vector3Int(lastMouseCellPosition.x, y, lastMouseCellPosition.z);
+                    Vector3Int location = new Vector3Int(lastPlacedTile.x, y, currentMouseCellPosition.z);
                     PlaceTile(location, selectedTile);
                 }
             }
             else
             {
-                float gradient = (currentMouseCellPosition.y - lastMouseCellPosition.y) / (lastMouseCellPosition.x - currentMouseCellPosition.x);
+                float gradient = (currentMouseCellPosition.y - lastPlacedTile.y) / (currentMouseCellPosition.x - lastPlacedTile.x);
                 float midpoint = 0.5f;
-                if (currentMouseCellPosition.x < lastMouseCellPosition.x)
+                if (currentMouseCellPosition.x < lastPlacedTile.x)
                 {
                     midpoint = -0.5f;
                 }
-                foreach (float x in GridUtils.RangeFloat(lastMouseCellPosition.x + midpoint , currentMouseCellPosition.x))
+                foreach (float x in GridUtils.RangeFloat(lastPlacedTile.x + midpoint , currentMouseCellPosition.x))
                 {
-                    float interpolatedY = gradient * (x - lastMouseCellPosition.x);
-                    int incrementY = GridUtils.RoundTowardsZeroInt(interpolatedY);
-                    Vector3Int interpolateTileLocation = new Vector3Int(GridUtils.RoundTowardsZeroInt(x), lastMouseCellPosition.y + incrementY, lastMouseCellPosition.z);
+                    float interpolatedY = gradient * (x - lastPlacedTile.x);
+                    int incrementY = GridUtils.RoundAwayFromZeroInt(interpolatedY);
+                    Vector3Int interpolateTileLocation = new Vector3Int(GridUtils.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
                     PlaceTile(interpolateTileLocation, selectedTile);
                 }
             }
@@ -221,6 +221,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 triedToPlaceTiles.Add(cellLocation);
             }
+            lastPlacedTile = cellLocation;
             isFirstTile = false;
             return true;
 
