@@ -6,12 +6,12 @@ public class APITester : MonoBehaviour
 {
     // Start is called before the first frame update
     public Camera Camera = default;
-    private GetTerrainTile getTerrainTile;
+    private TileSystem getTerrainTile;
     private Grid grid;
     public TerrainTile liquid;
     void Awake()
     {
-        getTerrainTile = GetComponent<GetTerrainTile>();
+        getTerrainTile = GetComponent<TileSystem>();
         grid = GetComponent<Grid>();
         Camera = FindObjectOfType<Camera>();
     }
@@ -24,6 +24,6 @@ public class APITester : MonoBehaviour
         TerrainTile tile = getTerrainTile.GetTerrainTileAtLocation(currentMouseCellPosition);
         /*        Debug.Log(getTerrainTile.GetTerrainTileAtLocation(currentMouseCellPosition));
                 Debug.Log(getTerrainTile.GetTileContentsAtLocation(currentMouseCellPosition, tile));*/
-        Debug.Log(getTerrainTile.DistanceToClosestTile(currentMouseCellPosition, 10, liquid));
+        Debug.Log(getTerrainTile.DistanceToClosestTile(currentMouseCellPosition, liquid, 10));
     }
 }

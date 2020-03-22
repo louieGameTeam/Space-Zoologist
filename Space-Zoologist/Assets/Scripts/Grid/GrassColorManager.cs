@@ -7,11 +7,11 @@ public class GrassColorManager : MonoBehaviour
 {
     public float[] gasComposition = new float[] { 0.5f, 0.2f, 0.3f };
     private Tilemap tilemap;
-    private GetTerrainTile getTerrainTile;
+    private TileSystem getTerrainTile;
     private void Awake()
     {
         tilemap = GetComponent<Tilemap>();
-        getTerrainTile = FindObjectOfType<GetTerrainTile>();
+        getTerrainTile = FindObjectOfType<TileSystem>();
     }
     private void Update()
     {

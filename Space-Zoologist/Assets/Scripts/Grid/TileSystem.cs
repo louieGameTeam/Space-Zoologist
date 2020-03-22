@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GetTerrainTile : MonoBehaviour
+public class TileSystem : MonoBehaviour
 {
     // Start is called before the first frame update
     private List<Tilemap> tilemaps;
@@ -61,18 +61,25 @@ public class GetTerrainTile : MonoBehaviour
         }
         return null;
     }
-    public float DistanceToClosestTile(Vector3Int cellLocation,int scanRange, TerrainTile tile)
+    /// <summary>
+    /// Returns distance of cloest tile from a given cell position. Scans tiles in a square within a given range, checks a total of (scanRange*2 + 1)^2 tiles. Returns -1 if not found.
+    /// </summary>
+    /// <param name="centerCellLocation"> Position of the center cell</param>
+    /// <param name="scanRange">Maximum displacement in x or y from the center cell</param>
+    /// <param name="tile"> Tile to look for </param>
+    /// <returns></returns>
+    public float DistanceToClosestTile(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8)
     {
         int[] distance3 = new int[3];
         int i = 0;
         int posX = 0;
         int posY = 0;
-        Vector3Int cellToCheck = cellLocation;
+        Vector3Int cellToCheck = centerCellLocation;
         while (i < scanRange)
         {
             if (posX == 0)
             {
-                if (GetTerrainTileAtLocation(cellLocation) == tile)
+                if (GetTerrainTileAtLocation(centerCellLocation) == tile)
                 {
                     return 0;
                 }
@@ -86,7 +93,7 @@ public class GetTerrainTile : MonoBehaviour
             }
             if (posX == posY)
             {
-                if (IsTileInAnyOfFour(posX,posY,cellLocation,tile))
+                if (IsTileInAnyOfFour(posX, posY, centerCellLocation, tile))
                 {
                     return Mathf.Sqrt(posX * posX + posY * posY);
                 }
@@ -96,7 +103,7 @@ public class GetTerrainTile : MonoBehaviour
             }
             else
             {
-                if (IsTileInAnyOfEight(posX, posY, cellLocation, tile))
+                if (IsTileInAnyOfEight(posX, posY, centerCellLocation, tile))
                 {
                     return Mathf.Sqrt(posX * posX + posY * posY);
                 }
