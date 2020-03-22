@@ -88,7 +88,6 @@ public class TileSystem : MonoBehaviour
                     i++;
                     posX = i;
                     continue;
-
                 }
             }
             if (posX == posY)
@@ -111,6 +110,30 @@ public class TileSystem : MonoBehaviour
             }
         }
         return -1;
+    }
+    public List<Vector3Int> AllCellLocationsOfTileInRange(Vector3Int cellLocation, int scanRange, TerrainTile tile)
+    {
+        List<Vector3Int> tileLocations = new List<Vector3Int>();
+        foreach(int x in GridUtils.Range(cellLocation.x - scanRange, cellLocation.x + scanRange))
+        {
+            foreach (int y in GridUtils.Range(cellLocation.y - scanRange, cellLocation.y + scanRange))
+            {
+                Vector3Int scanLocation = new Vector3Int(x, y, cellLocation.z);
+                if (GetTerrainTileAtLocation(scanLocation) == tile)
+                {
+                    tileLocations.Add(scanLocation);
+                }
+            }
+        }
+        return tileLocations;
+    }
+    public bool IsAnyTileInRange(Vector3Int cellLocation, int scanRange, TerrainTile tile)
+    {
+        if (DistanceToClosestTile(cellLocation,tile,scanRange) == -1)
+        {
+            return false;
+        }
+        return true;
     }
     private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
     {

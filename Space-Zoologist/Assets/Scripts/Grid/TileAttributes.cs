@@ -124,22 +124,21 @@ public class TileAttributes : MonoBehaviour
     }
     private void ChangeColor(Vector3Int cellLocation, TerrainTile tile)
     {
-        if (tile.isChangingColor)
+        if(tilemap.TryGetComponent<TileColorManager>(out TileColorManager tileColorManager))
+        {
+            tileColorManager.SetTileColor(tileContents[cellLocation], cellLocation, tile);
+        }
+/*        if (tile.isChangingColor)
         {
             tilemap.SetTileFlags(cellLocation, TileFlags.None);
             Color color = tile.GetTileColor(tileContents[cellLocation]);
             tilemap.SetColor(cellLocation, color);
-        }
+        }*/
     }
     private neighborTileStatus GetNeighborTileStatus(Vector3Int cellLocation, TerrainTile tile)
     {
-        Vector3Int posX0 = new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z);
-        Vector3Int posX1 = new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z);
-        Vector3Int posy0 = new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z);
-        Vector3Int posy1 = new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z);
-        List<Vector3Int> tilesToCheck = new List<Vector3Int> { posX0, posX1, posy0, posy1 };
         List<float[]> attributesToCheck = new List<float[]>();
-        foreach (Vector3Int tileToCheck in tilesToCheck)
+        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
             if (tilemap.GetTile(tileToCheck) == tile)
             {
@@ -166,12 +165,7 @@ public class TileAttributes : MonoBehaviour
     }
     private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
     {
-        Vector3Int posX0 = new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z);
-        Vector3Int posX1 = new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z);
-        Vector3Int posy0 = new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z);
-        Vector3Int posy1 = new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z);
-        List<Vector3Int> tilesToCheck = new List<Vector3Int> { posX0, posX1, posy0, posy1 };
-        foreach (Vector3Int tileToCheck in tilesToCheck)
+        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
             if (
                 !neighborTiles.Contains(tileToCheck) && 
@@ -207,10 +201,5 @@ public class TileAttributes : MonoBehaviour
             TerrainTile tile = (TerrainTile)tilemap.GetTile(tileLocation);
             ChangeColor(tileLocation, tile);
         }
-    }
-
-    public void Debug_AssignRandomContentsToTiles()
-    {
-
     }
 }

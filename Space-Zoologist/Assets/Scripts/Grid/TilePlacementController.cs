@@ -24,14 +24,32 @@ public class TilePlacementController : MonoBehaviour
     private Dictionary<int, Dictionary<Vector3Int, TerrainTile>> removedTiles = new Dictionary<int, Dictionary<Vector3Int, TerrainTile>>(); //All tiles removed
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
+    private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
+    private TileSystem tileSystem;
 
     private void Awake()
     {
+        tileSystem = FindObjectOfType<TileSystem>();
         grid = GetComponent<Grid>();
         foreach (int layer in (int[])Enum.GetValues(typeof(TerrainTile.TileLayer)))
         {
             addedTiles.Add(layer, new List<Vector3Int>());
-            removedTiles.Add(layer, new Dictionary <Vector3Int, TerrainTile> ());
+            removedTiles.Add(layer, new Dictionary <Vector3Int, TerrainTile>());
+        }
+        foreach (Tilemap tilemap in tilemaps)
+        {
+            if (tilemap.TryGetComponent<TileColorManager>(out TileColorManager tileColorManager))
+            {
+                foreach (TerrainTile tile in tileColorManager.linkedTiles)
+                {
+                    if (!colorLinkedTiles.ContainsKey(tile))
+                    {
+                        colorLinkedTiles.Add(tile, new List<Tilemap>());
+
+                    }
+                    colorLinkedTiles[tile].Add(tilemap);
+                }
+            }
         }
     }
     void Update()
@@ -66,6 +84,25 @@ public class TilePlacementController : MonoBehaviour
     {
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
+        if (colorLinkedTiles.Keys.Contains(selectedTile))
+        {
+            foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
+            {
+                TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
+                List<Vector3Int> affectedTiles = new List<Vector3Int>();
+                foreach (Vector3Int addedTileLocation in addedTiles.Values.First())
+                {
+                    foreach(TerrainTile managedTile in tileColorManager.managedTiles)
+                    {
+                        affectedTiles.AddRange(tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.affectedRange, managedTile));
+                    }
+                }
+                foreach (Vector3Int affectedTile in affectedTiles)
+                {
+                    tileColorManager.SetTileColor(null, affectedTile, null);
+                }
+            }
+        }
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
@@ -143,7 +180,7 @@ public class TilePlacementController : MonoBehaviour
         }
         PlaceTile(currentMouseCellPosition, selectedTile);
     }
-    private void UpdatePreviewBlock()
+    private void UpdatePreviewBlock() //TODO Improve Efficiency
     {
         ClearChanges();
         PlaceTile(dragStartPosition, selectedTile, false);

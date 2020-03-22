@@ -10,6 +10,10 @@ public class RYBConverter : MonoBehaviour
     public static Color ToRYBColor(float[] attributes, float[,] interpolationArray = null) // liquidComposition takes 0 - 1, Converts from RYB to RGB color space
     {
         // Trilinear interpolation method
+        if (attributes == null)
+        {
+            return (new Color(1, 1, 1));
+        }
         interpolationArray = interpolationArray ?? defautInterpolationArray;
         float[] RGB = { 1, 1, 1 };
         float[] cxy = { 0, 0, 0, 0 };

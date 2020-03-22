@@ -1109,6 +1109,7 @@ GameObject:
   - component: {fileID: 1129546612}
   - component: {fileID: 1129546611}
   - component: {fileID: 1129546613}
+  - component: {fileID: 1129546614}
   m_Layer: 0
   m_Name: Foreground
   m_TagString: Untagged
@@ -1227,6 +1228,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a59cf58627000114d842d4595b7d5bd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1129546614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129546609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c32aff9e162a6f4e82761c95d0b1911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectedRange: 0
+  managedTiles: []
+  linkedTiles: []
 --- !u!1 &1180561306
 GameObject:
   m_ObjectHideFlags: 0
