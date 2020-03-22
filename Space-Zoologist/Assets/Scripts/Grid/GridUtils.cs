@@ -121,6 +121,11 @@ public class GridUtils
         fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z));
         return fourNeighborTiles;
     }
+    /// <summary>
+    /// Round a number towards zero
+    /// </summary>
+    /// <param name="n"> Number to round</param>
+    /// <returns></returns>
     public static int RoundTowardsZeroInt (float n)
     {
         if (n > 0)
@@ -132,6 +137,11 @@ public class GridUtils
             return Mathf.CeilToInt(n);
         }
     }
+    /// <summary>
+    /// Round a number towards zero, returns int
+    /// </summary>
+    /// <param name="n"> Number to round </param>
+    /// <returns></returns>
     public static int RoundAwayFromZeroInt(float n)
     {
         if (n < 0)
@@ -141,6 +151,23 @@ public class GridUtils
         else
         {
             return Mathf.CeilToInt(n);
+        }
+    }
+    /// <summary>
+    /// Increase the magnitude (absolute value) of a number
+    /// </summary>
+    /// <param name="n"> Number to increase </param>
+    /// <param name="increment"> Increment </param>
+    /// <returns></returns>
+    public static float IncreaseMagnitude(float n, float increment)
+    {
+        if (n > 0)
+        {
+            return n += increment;
+        }
+        else
+        {
+            return n -= increment;
         }
     }
 }

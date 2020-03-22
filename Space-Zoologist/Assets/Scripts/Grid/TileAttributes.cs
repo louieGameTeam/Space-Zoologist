@@ -119,6 +119,8 @@ public class TileAttributes : MonoBehaviour
         {
             tileContents.Remove(keyValuePair.Key);
         }
+        changedAttributes = new Dictionary<Vector3Int, float[]>();
+        addedAttributes = new Dictionary<Vector3Int, float[]>();
     }
     private void ChangeColor(Vector3Int cellLocation, TerrainTile tile)
     {

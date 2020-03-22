@@ -102,7 +102,6 @@ public class TilePlacementController : MonoBehaviour
                 tileAttributes.Revert();
             }
         }
-
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
@@ -112,7 +111,7 @@ public class TilePlacementController : MonoBehaviour
             removedTiles.Add(layer, new Dictionary<Vector3Int, TerrainTile>());
         }
     }
-    private void UpdatePreviewPen() //TODO: Fix discrete lines at overlaps within same stroke
+    private void UpdatePreviewPen()
     {
         if (isFirstTile)
         {
@@ -132,15 +131,10 @@ public class TilePlacementController : MonoBehaviour
             else
             {
                 float gradient = (currentMouseCellPosition.y - lastPlacedTile.y) / (currentMouseCellPosition.x - lastPlacedTile.x);
-                float midpoint = 0.5f;
-                if (currentMouseCellPosition.x < lastPlacedTile.x)
-                {
-                    midpoint = -0.5f;
-                }
-                foreach (float x in GridUtils.RangeFloat(lastPlacedTile.x + midpoint , currentMouseCellPosition.x))
+                foreach (float x in GridUtils.RangeFloat(GridUtils.IncreaseMagnitude(lastPlacedTile.x, -0.5f), currentMouseCellPosition.x))
                 {
                     float interpolatedY = gradient * (x - lastPlacedTile.x);
-                    int incrementY = GridUtils.RoundAwayFromZeroInt(interpolatedY);
+                    int incrementY = GridUtils.RoundTowardsZeroInt(interpolatedY);
                     Vector3Int interpolateTileLocation = new Vector3Int(GridUtils.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
                     PlaceTile(interpolateTileLocation, selectedTile);
                 }
@@ -191,7 +185,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 if (tilemaps[layer].HasTile(cellLocation))
                 {
-                    TileRemovalProcess(layer, cellLocation);
+                    RemoveTile(layer, cellLocation);
                 }
             }
             // Add new tiles
@@ -203,7 +197,7 @@ public class TilePlacementController : MonoBehaviour
                     {
                         if (tilemaps[layer].HasTile(cellLocation))
                         {
-                            TilePlacementProcess(tileLayer, targetTilemap, cellLocation, tile);
+                            AddTile(tileLayer, targetTilemap, cellLocation, tile);
                         }
                     }
                 }
@@ -214,7 +208,7 @@ public class TilePlacementController : MonoBehaviour
                     {
                         removedTiles[tileLayer].Add(cellLocation, removedTile);
                     }
-                    TilePlacementProcess(tileLayer, targetTilemap, cellLocation, tile);
+                    AddTile(tileLayer, targetTilemap, cellLocation, tile);
                 }
             }
             else
@@ -231,7 +225,7 @@ public class TilePlacementController : MonoBehaviour
             return false;
         }
     }
-    private void TilePlacementProcess(int tileLayer,Tilemap targetTilemap, Vector3Int cellLocation, TerrainTile tile)
+    private void AddTile(int tileLayer,Tilemap targetTilemap, Vector3Int cellLocation, TerrainTile tile)
     {
         triedToPlaceTiles.Add(cellLocation);
         addedTiles[tileLayer].Add(cellLocation);
@@ -242,7 +236,7 @@ public class TilePlacementController : MonoBehaviour
             tileAttributes.MergeTile(cellLocation, tile, addedTiles[(int)tile.tileLayer]);
         }
     }
-    private void TileRemovalProcess(int tileLayer, Vector3Int cellLocation)
+    private void RemoveTile(int tileLayer, Vector3Int cellLocation)
     {
         TerrainTile removedTile = (TerrainTile)tilemaps[tileLayer].GetTile(cellLocation);
         if (!removedTiles[tileLayer].ContainsKey(cellLocation))
