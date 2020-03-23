@@ -89,7 +89,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
                 List<Vector3Int> affectedTiles = new List<Vector3Int>();
-                foreach (Vector3Int addedTileLocation in addedTiles.Values.First())
+                foreach (Vector3Int addedTileLocation in addedTiles[(int)selectedTile.tileLayer])
                 {
                     foreach(TerrainTile managedTile in tileColorManager.managedTiles)
                     {
@@ -98,11 +98,14 @@ public class TilePlacementController : MonoBehaviour
                 }
                 foreach (Vector3Int affectedTile in affectedTiles)
                 {
-                    tileColorManager.SetTileColor(null, affectedTile, null);
+                    foreach (TerrainTile terrainTile in tilemap.GetComponent<TileColorManager>().managedTiles)
+                    {
+                        tileColorManager.SetTileColor(null, affectedTile, terrainTile);
+                    }
                 }
             }
         }
-        if (tilemaps[(int)selectedTile.tileLayer].TryGetComponent<TileColorManager>(out TileColorManager placedTileColorManager))
+        if (!tilemaps[(int)selectedTile.tileLayer].TryGetComponent<TileAttributes>(out TileAttributes attributes) && tilemaps[(int)selectedTile.tileLayer].TryGetComponent<TileColorManager>(out TileColorManager placedTileColorManager))
         {
             foreach (Vector3Int vector3Int in addedTiles[(int)selectedTile.tileLayer])
             {

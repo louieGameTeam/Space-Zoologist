@@ -22,8 +22,6 @@ public class TerrainTile : RuleTile<TerrainTile.Neighbor> {
 	public List<TerrainTile> auxillaryTiles = new List<TerrainTile>();
 	public bool isRepresentative;
 	public bool isMergingAttributes;
-	public bool isChangingColor;
-	public float[,] interpolationArray = null;
 	public int priority;
 	public class Neighbor : RuleTile.TilingRule.Neighbor
 	{
@@ -38,9 +36,5 @@ public class TerrainTile : RuleTile<TerrainTile.Neighbor> {
 			case Neighbor.Any: return other == this || other != null;
 		}
 		return base.RuleMatch(neighbor, other);
-	}
-	public Color GetTileColor(float[] composition)
-	{
-		return RYBConverter.ToRYBColor(composition, interpolationArray);
 	}
 }

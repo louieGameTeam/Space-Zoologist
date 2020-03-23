@@ -41,6 +41,12 @@ public class TileSystem : MonoBehaviour
             return null;
         }
     }
+    /// <summary>
+    /// Whether a tile exists at given location, regardless to overlapping
+    /// </summary>
+    /// <param name="cellLocation"></param>
+    /// <param name="tile"></param>
+    /// <returns></returns>
     public bool TileExistsAtLocation(Vector3Int cellLocation, TerrainTile tile)
     {
         return tilemaps[(int)tile.tileLayer].GetTile(cellLocation) == tile;
@@ -156,6 +162,13 @@ public class TileSystem : MonoBehaviour
         }
         return -1;
     }
+    /// <summary>
+    /// Returns a list of locations of all tiles in a certain range
+    /// </summary>
+    /// <param name="cellLocation"></param>
+    /// <param name="scanRange"></param>
+    /// <param name="tile"></param>
+    /// <returns></returns>
     public List<Vector3Int> AllCellLocationsOfTileInRange(Vector3Int cellLocation, int scanRange, TerrainTile tile)
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
@@ -172,6 +185,13 @@ public class TileSystem : MonoBehaviour
         }
         return tileLocations;
     }
+    /// <summary>
+    /// Whether any of given tile is within a given range. 
+    /// </summary>
+    /// <param name="cellLocation"></param>
+    /// <param name="scanRange"></param>
+    /// <param name="tile"></param>
+    /// <returns></returns>
     public bool IsAnyTileInRange(Vector3Int cellLocation, int scanRange, TerrainTile tile)
     {
         if (DistanceToClosestTile(cellLocation,tile,scanRange) == -1)
