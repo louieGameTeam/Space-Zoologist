@@ -57,21 +57,21 @@ public class ColoringMethodGrass : ColoringMethod
             float liquidChannelRed = 0;
             float liquidChannelGreen = 0;
             float liquidChannelBlue = 0;
-            List<Vector3Int> liquidTileLocations = tileSystem.CellLocationsOfClosestTiles(cellLocation, tile, affectedRange);
-            Debug.Log(liquidTileLocations);
+            List<Vector3Int> liquidTileLocations = tileSystem.CellLocationsOfClosestTiles(cellLocation, liquid, affectedRange);
             foreach (Vector3Int liquidTile in liquidTileLocations)
             {
                 Tilemap targetTilemap = tilePlacementController.tilemapList[(int)liquid.tileLayer];
-                Color color = RYBConverter.ToRYBColor(tileSystem.GetTileContentsAtLocation(liquidTile, liquid));
-                Debug.Log(color.r);
+                Color color = targetTilemap.GetColor(liquidTile);
                 liquidChannelRed += color.r;
                 liquidChannelGreen += color.g;
                 liquidChannelBlue += color.b;
             }
             int channelCount = liquidTileLocations.Count;
-            finalColor.r = (baseColor.r * (distance - 1) + liquidChannelRed / channelCount) / (affectedRange * Mathf.Sqrt(2));
-            finalColor.g = (baseColor.g * (distance - 1) + liquidChannelGreen / channelCount) / (affectedRange * Mathf.Sqrt(2));
-            finalColor.b = (baseColor.b * (distance - 1) + liquidChannelBlue / channelCount) / (affectedRange * Mathf.Sqrt(2));
+            float ratio = distance / (affectedRange * Mathf.Sqrt(2));
+            finalColor.r = (baseColor.r * ratio + liquidChannelRed / channelCount * (1-ratio));
+            Debug.Log(finalColor.r);
+            finalColor.g = (baseColor.g * ratio + liquidChannelGreen / channelCount * (1 - ratio));
+            finalColor.b = (baseColor.b * ratio + liquidChannelBlue / channelCount * (1 - ratio));
             finalColor.a = 1;
             tilemap.SetTileFlags(cellLocation, TileFlags.None);
             tilemap.SetColor(cellLocation, finalColor);

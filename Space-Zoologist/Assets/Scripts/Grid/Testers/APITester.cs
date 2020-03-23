@@ -21,6 +21,7 @@ public class APITester : MonoBehaviour
     {
         Vector3 mouseWorldPosition = Camera.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
+        //Debug.Log(currentMouseCellPosition);
         TerrainTile tile = getTerrainTile.GetTerrainTileAtLocation(currentMouseCellPosition);
         /*        Debug.Log(getTerrainTile.GetTerrainTileAtLocation(currentMouseCellPosition));
                         Debug.Log(getTerrainTile.GetTileContentsAtLocation(currentMouseCellPosition, tile));*/
