@@ -8,16 +8,17 @@ public class ColoringMethodGrass : ColoringMethod
     public float[] gasComposition = new float[] { 0.5f, 0.2f, 0.3f };
     private float[] colorShitfDirt = new float[] { 0, 0.1f, 0 };
     private float[] colorShitfSand = new float[] { 0, -0.2f, -0.1f };
-    [SerializeField]private TileSystem tileSystem;
-    public override void SetTileColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles)
+    public override void SetTileColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
     {
         TerrainTile liquid = linkedTiles[0];
         TerrainTile dirt = linkedTiles[1];
         TerrainTile sand = linkedTiles[2];
+        Debug.Log(affectedRange);
+        Debug.Log(liquid);
         float distance = tileSystem.DistanceToClosestTile(cellLocation, liquid, affectedRange);
+        Debug.Log(distance);
         if (distance == -1)
         {
-            Debug.Log("WHY?");
             float[] newRYBValues = gasComposition;
             if (tileSystem.GetTerrainTileAtLocation(cellLocation) == dirt)
             {

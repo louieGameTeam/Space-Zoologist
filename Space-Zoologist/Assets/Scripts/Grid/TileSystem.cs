@@ -10,7 +10,7 @@ public class TileSystem : MonoBehaviour
 
     private void Awake()
     {
-        tilemaps = FindObjectOfType<TilePlacementController>().tilemapList;
+        tilemaps = GetComponent<TilePlacementController>().tilemapList;
     }
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
