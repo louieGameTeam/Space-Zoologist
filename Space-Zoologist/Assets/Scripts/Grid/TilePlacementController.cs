@@ -83,24 +83,27 @@ public class TilePlacementController : MonoBehaviour
     {
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
+        foreach(Tilemap tilemap1 in tilemaps)
+        {
+            if (tilemap1.TryGetComponent(out TileAttributes tileAttributes))
+            {
+                tileAttributes.ConfirmMerge(selectedTile);
+            }
+        }
         if (colorLinkedTiles.Keys.Contains(selectedTile))
         {
             foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
             {
                 TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
-                List<Vector3Int> affectedTiles = new List<Vector3Int>();
+                List<Vector3Int> affectedTileLocations = new List<Vector3Int>();
                 foreach (Vector3Int addedTileLocation in addedTiles[(int)selectedTile.tileLayer])
                 {
                     foreach(TerrainTile managedTile in tileColorManager.managedTiles)
                     {
-                        affectedTiles.AddRange(tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile));
-                    }
-                }
-                foreach (Vector3Int affectedTile in affectedTiles)
-                {
-                    foreach (TerrainTile terrainTile in tilemap.GetComponent<TileColorManager>().managedTiles)
-                    {
-                        tileColorManager.SetTileColor(null, affectedTile, terrainTile);
+                        foreach (Vector3Int affectedTileLocation in tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
+                        {
+                            tileColorManager.SetTileColor(null, affectedTileLocation, managedTile);
+                        }
                     }
                 }
             }
@@ -119,10 +122,6 @@ public class TilePlacementController : MonoBehaviour
         {
             addedTiles.Add(layer, new List<Vector3Int>());
             removedTiles.Add(layer, new Dictionary<Vector3Int, TerrainTile>());
-            if (tilemaps[layer].TryGetComponent(out TileAttributes tileAttributes))
-            {
-                tileAttributes.ConfirmMerge(selectedTile);
-            }
         }
     }
     public void RevertChanges()

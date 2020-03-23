@@ -36,6 +36,7 @@ public class ColoringMethodGrass : ColoringMethod
         Color baseColor = RYBConverter.ToRYBColor(newRYBValues);
         if (distance == -1)
         {
+            baseColor.a = 1;
             tilemap.SetTileFlags(cellLocation, TileFlags.None);
             tilemap.SetColor(cellLocation, baseColor);
         }
