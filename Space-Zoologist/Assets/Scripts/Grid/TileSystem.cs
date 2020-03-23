@@ -41,6 +41,10 @@ public class TileSystem : MonoBehaviour
             return null;
         }
     }
+    public bool TileExistsAtLocation(Vector3Int cellLocation, TerrainTile tile)
+    {
+        return tilemaps[(int)tile.tileLayer].GetTile(cellLocation) == tile;
+    }
     /// <summary>
     /// Returns contents within a tile, e.g. Liquid Composition. If tile has no content, returns null.
     /// </summary>
