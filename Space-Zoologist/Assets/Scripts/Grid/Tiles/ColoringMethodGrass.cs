@@ -13,10 +13,7 @@ public class ColoringMethodGrass : ColoringMethod
         TerrainTile liquid = linkedTiles[0];
         TerrainTile dirt = linkedTiles[1];
         TerrainTile sand = linkedTiles[2];
-        Debug.Log(affectedRange);
-        Debug.Log(liquid);
         float distance = tileSystem.DistanceToClosestTile(cellLocation, liquid, affectedRange);
-        Debug.Log(distance);
         if (distance == -1)
         {
             float[] newRYBValues = gasComposition;
@@ -55,25 +52,27 @@ public class ColoringMethodGrass : ColoringMethod
                     newRYBValues[i] += colorShitfSand[i];
                 }
             }
-            Debug.Log(newRYBValues);
             Color baseColor = RYBConverter.ToRYBColor(newRYBValues);
             Color finalColor = new Color();
             float liquidChannelRed = 0;
             float liquidChannelGreen = 0;
             float liquidChannelBlue = 0;
             List<Vector3Int> liquidTileLocations = tileSystem.CellLocationsOfClosestTiles(cellLocation, tile, affectedRange);
+            Debug.Log(liquidTileLocations);
             foreach (Vector3Int liquidTile in liquidTileLocations)
             {
                 Tilemap targetTilemap = tilePlacementController.tilemapList[(int)liquid.tileLayer];
-                Color color = targetTilemap.GetColor(liquidTile);
+                Color color = RYBConverter.ToRYBColor(tileSystem.GetTileContentsAtLocation(liquidTile, liquid));
+                Debug.Log(color.r);
                 liquidChannelRed += color.r;
                 liquidChannelGreen += color.g;
                 liquidChannelBlue += color.b;
             }
             int channelCount = liquidTileLocations.Count;
-            finalColor.r = (baseColor.r * (distance - 1) + liquidChannelRed / channelCount) / affectedRange / Mathf.Sqrt(2);
-            finalColor.g = (baseColor.g * (distance - 1) + liquidChannelGreen / channelCount) / affectedRange / Mathf.Sqrt(2);
-            finalColor.b = (baseColor.b * (distance - 1) + liquidChannelBlue / channelCount) / affectedRange / Mathf.Sqrt(2);
+            finalColor.r = (baseColor.r * (distance - 1) + liquidChannelRed / channelCount) / (affectedRange * Mathf.Sqrt(2));
+            finalColor.g = (baseColor.g * (distance - 1) + liquidChannelGreen / channelCount) / (affectedRange * Mathf.Sqrt(2));
+            finalColor.b = (baseColor.b * (distance - 1) + liquidChannelBlue / channelCount) / (affectedRange * Mathf.Sqrt(2));
+            finalColor.a = 1;
             tilemap.SetTileFlags(cellLocation, TileFlags.None);
             tilemap.SetColor(cellLocation, finalColor);
         }
