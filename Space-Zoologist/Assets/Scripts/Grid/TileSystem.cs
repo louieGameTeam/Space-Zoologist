@@ -61,6 +61,48 @@ public class TileSystem : MonoBehaviour
         }
         return null;
     }
+
+    public List<Vector3Int> CellLocationsOfClosestTiles(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8)
+    {
+        int[] distance3 = new int[3];
+        int i = 0;
+        int posX = 0;
+        int posY = 0;
+        List<Vector3Int> closestTiles = new List<Vector3Int>();
+        while (i < scanRange)
+        {
+            if (posX == 0)
+            {
+                if (GetTerrainTileAtLocation(centerCellLocation) == tile)
+                {
+                    closestTiles.Add(centerCellLocation);
+                    break;
+                }
+                i++;
+                posX = i;
+                continue;
+            }
+            if (posX == posY)
+            {
+                if (IsTileInAnyOfFour(posX, posY, centerCellLocation, tile))
+                {
+                    return TileCellLocationsInFour(posX, posY, centerCellLocation, tile);
+                }
+                i++;
+                posX = i;
+                posY = 0;
+            }
+            else
+            {
+                if (IsTileInAnyOfEight(posX, posY, centerCellLocation, tile))
+                {
+                    return TileCellLocationsInEight(posX, posY, centerCellLocation, tile);
+                }
+                posY++;
+            }
+        }
+        return closestTiles;
+    }
     /// <summary>
     /// Returns distance of cloest tile from a given cell position. Scans tiles in a square within a given range, checks a total of (scanRange*2 + 1)^2 tiles. Returns -1 if not found.
     /// </summary>
@@ -74,7 +116,6 @@ public class TileSystem : MonoBehaviour
         int i = 0;
         int posX = 0;
         int posY = 0;
-        Vector3Int cellToCheck = centerCellLocation;
         while (i < scanRange)
         {
             if (posX == 0)
@@ -171,5 +212,39 @@ public class TileSystem : MonoBehaviour
             }
         }
         return false;
+    }
+    private List<Vector3Int> TileCellLocationsInFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
+    {
+        Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
+        Vector3Int cell_2 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y - distanceY, subjectCellLocation.z);
+        Vector3Int cell_3 = new Vector3Int(subjectCellLocation.x - distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
+        Vector3Int cell_4 = new Vector3Int(subjectCellLocation.x - distanceX, subjectCellLocation.y - distanceY, subjectCellLocation.z);
+        List<Vector3Int> cells = new List<Vector3Int> { cell_1, cell_2, cell_3, cell_4 };
+        foreach (Vector3Int cell in cells)
+        {
+            if(!GetTerrainTileAtLocation(cell) == tile)
+            {
+                cells.Remove(cell);
+            }
+        }
+        return cells;
+    }
+    private List<Vector3Int> TileCellLocationsInEight(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
+    {
+        TileCellLocationsInFour(distanceX, distanceY, subjectCellLocation, tile);
+        Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceY, subjectCellLocation.y + distanceX, subjectCellLocation.z);
+        Vector3Int cell_2 = new Vector3Int(subjectCellLocation.x - distanceY, subjectCellLocation.y + distanceX, subjectCellLocation.z);
+        Vector3Int cell_3 = new Vector3Int(subjectCellLocation.x + distanceY, subjectCellLocation.y - distanceX, subjectCellLocation.z);
+        Vector3Int cell_4 = new Vector3Int(subjectCellLocation.x - distanceY, subjectCellLocation.y - distanceX, subjectCellLocation.z);
+        List<Vector3Int> cells = new List<Vector3Int> { cell_1, cell_2, cell_3, cell_4 };
+        foreach (Vector3Int cell in cells)
+        {
+            if (!GetTerrainTileAtLocation(cell) == tile)
+            {
+                cells.Remove(cell);
+            }
+        }
+        cells.AddRange(TileCellLocationsInFour(distanceX, distanceY, subjectCellLocation, tile));
+        return cells;
     }
 }

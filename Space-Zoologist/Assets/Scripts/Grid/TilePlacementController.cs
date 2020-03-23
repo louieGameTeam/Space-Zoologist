@@ -45,7 +45,6 @@ public class TilePlacementController : MonoBehaviour
                     if (!colorLinkedTiles.ContainsKey(tile))
                     {
                         colorLinkedTiles.Add(tile, new List<Tilemap>());
-
                     }
                     colorLinkedTiles[tile].Add(tilemap);
                 }
@@ -88,19 +87,28 @@ public class TilePlacementController : MonoBehaviour
         {
             foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
             {
+                Debug.Log("damn");
                 TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
                 List<Vector3Int> affectedTiles = new List<Vector3Int>();
                 foreach (Vector3Int addedTileLocation in addedTiles.Values.First())
                 {
                     foreach(TerrainTile managedTile in tileColorManager.managedTiles)
                     {
-                        affectedTiles.AddRange(tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.affectedRange, managedTile));
+                        affectedTiles.AddRange(tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile));
                     }
                 }
                 foreach (Vector3Int affectedTile in affectedTiles)
                 {
                     tileColorManager.SetTileColor(null, affectedTile, null);
                 }
+            }
+        }
+        if (tilemaps[(int)selectedTile.tileLayer].TryGetComponent<TileColorManager>(out TileColorManager placedTileColorManager))
+        {
+            foreach (Vector3Int vector3Int in addedTiles[(int)selectedTile.tileLayer])
+            {
+                Debug.Log(vector3Int);
+                placedTileColorManager.SetTileColor(null, vector3Int, selectedTile);
             }
         }
         addedTiles.Clear();

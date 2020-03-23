@@ -838,6 +838,7 @@ GameObject:
   - component: {fileID: 956153727}
   - component: {fileID: 956153729}
   - component: {fileID: 956153728}
+  - component: {fileID: 956153730}
   m_Layer: 0
   m_Name: Grass
   m_TagString: Untagged
@@ -944,6 +945,26 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &956153730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956153726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c32aff9e162a6f4e82761c95d0b1911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coloringMethod: {fileID: 1936870399646672439, guid: 18b7f00f391383a41809647754e60aca,
+    type: 3}
+  managedTerrainTiles:
+  - {fileID: 11400000, guid: 25490f4b3a6e5b54d9f00393e90881e6, type: 2}
+  linkedTerrainTiles:
+  - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
+  - {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
+  - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
 --- !u!1 &1083998451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,9 +1261,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c32aff9e162a6f4e82761c95d0b1911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  affectedRange: 0
-  managedTiles: []
-  linkedTiles: []
+  coloringMethod: {fileID: 949791966848937740, guid: 75744000348baaf41a81f2773b4face6,
+    type: 3}
+  managedTerrainTiles:
+  - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
+  linkedTerrainTiles: []
 --- !u!1 &1180561306
 GameObject:
   m_ObjectHideFlags: 0

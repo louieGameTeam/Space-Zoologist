@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GrassColorManager : TileColorManager
+public class ColoringMethodGrass : ColoringMethod
 {
-    [SerializeField] private TerrainTile dirt;
-    [SerializeField] private TerrainTile sand;
-    [SerializeField] private TerrainTile liquid;
     public float[] gasComposition = new float[] { 0.5f, 0.2f, 0.3f };
     private float[] colorShitfDirt = new float[] { 0, 0.1f, 0 };
     private float[] colorShitfSand = new float[] { 0, -0.2f, -0.1f };
-
-/*    public override void SetTileColor(float[] composition, Vector3Int cellLocation, TerrainTile tile)
+    private TileSystem tileSystem;
+    private void Awake()
     {
-        composition = gasComposition;
+        tileSystem = FindObjectOfType<TileSystem>();
+    }
+    public override void SetTileColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles)
+    {
+        TerrainTile liquid = linkedTiles[0];
+        TerrainTile dirt = linkedTiles[1];
+        TerrainTile sand = linkedTiles[2];
         float distance = tileSystem.DistanceToClosestTile(cellLocation, liquid, affectedRange);
         if (distance == -1)
         {
@@ -33,7 +36,9 @@ public class GrassColorManager : TileColorManager
                     newRYBValues[i] += colorShitfSand[i];
                 }
             }
-            base.SetTileColor(newRYBValues, cellLocation, tile);
+            Color color = RYBConverter.ToRYBColor(newRYBValues);
+            tilemap.SetTileFlags(cellLocation, TileFlags.None);
+            tilemap.SetColor(cellLocation, color);
         }
         else
         {
@@ -58,7 +63,7 @@ public class GrassColorManager : TileColorManager
             float liquidChannelGreen = 0;
             float liquidChannelBlue = 0;
             List<Vector3Int> liquidTileLocations = tileSystem.CellLocationsOfClosestTiles(cellLocation, tile, affectedRange);
-            foreach(Vector3Int liquidTile in liquidTileLocations)
+            foreach (Vector3Int liquidTile in liquidTileLocations)
             {
                 Tilemap targetTilemap = tilePlacementController.tilemapList[(int)liquid.tileLayer];
                 Color color = targetTilemap.GetColor(liquidTile);
@@ -70,9 +75,8 @@ public class GrassColorManager : TileColorManager
             finalColor.r = (baseColor.r * (distance - 1) + liquidChannelRed / channelCount) / affectedRange / Mathf.Sqrt(2);
             finalColor.g = (baseColor.g * (distance - 1) + liquidChannelGreen / channelCount) / affectedRange / Mathf.Sqrt(2);
             finalColor.b = (baseColor.b * (distance - 1) + liquidChannelBlue / channelCount) / affectedRange / Mathf.Sqrt(2);
-            Debug.Log("fuck");
             tilemap.SetTileFlags(cellLocation, TileFlags.None);
             tilemap.SetColor(cellLocation, finalColor);
         }
-    }*/
+    }
 }
