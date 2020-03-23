@@ -87,7 +87,6 @@ public class TilePlacementController : MonoBehaviour
         {
             foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
             {
-                Debug.Log("damn");
                 TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
                 List<Vector3Int> affectedTiles = new List<Vector3Int>();
                 foreach (Vector3Int addedTileLocation in addedTiles.Values.First())
@@ -107,7 +106,6 @@ public class TilePlacementController : MonoBehaviour
         {
             foreach (Vector3Int vector3Int in addedTiles[(int)selectedTile.tileLayer])
             {
-                Debug.Log(vector3Int);
                 placedTileColorManager.SetTileColor(null, vector3Int, selectedTile);
             }
         }

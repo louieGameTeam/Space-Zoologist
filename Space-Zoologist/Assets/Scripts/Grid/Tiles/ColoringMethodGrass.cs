@@ -8,11 +8,7 @@ public class ColoringMethodGrass : ColoringMethod
     public float[] gasComposition = new float[] { 0.5f, 0.2f, 0.3f };
     private float[] colorShitfDirt = new float[] { 0, 0.1f, 0 };
     private float[] colorShitfSand = new float[] { 0, -0.2f, -0.1f };
-    private TileSystem tileSystem;
-    private void Awake()
-    {
-        tileSystem = FindObjectOfType<TileSystem>();
-    }
+    [SerializeField]private TileSystem tileSystem;
     public override void SetTileColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles)
     {
         TerrainTile liquid = linkedTiles[0];
@@ -21,6 +17,7 @@ public class ColoringMethodGrass : ColoringMethod
         float distance = tileSystem.DistanceToClosestTile(cellLocation, liquid, affectedRange);
         if (distance == -1)
         {
+            Debug.Log("WHY?");
             float[] newRYBValues = gasComposition;
             if (tileSystem.GetTerrainTileAtLocation(cellLocation) == dirt)
             {
@@ -57,6 +54,7 @@ public class ColoringMethodGrass : ColoringMethod
                     newRYBValues[i] += colorShitfSand[i];
                 }
             }
+            Debug.Log(newRYBValues);
             Color baseColor = RYBConverter.ToRYBColor(newRYBValues);
             Color finalColor = new Color();
             float liquidChannelRed = 0;
