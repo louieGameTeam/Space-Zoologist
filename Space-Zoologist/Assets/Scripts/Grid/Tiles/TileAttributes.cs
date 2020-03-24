@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 public class TileAttributes : MonoBehaviour
 {
     public Dictionary<Vector3Int, float[]> tileContents = new Dictionary<Vector3Int, float[]>();
+    public Dictionary<Vector3Int, float[]> contentChangedTiles { get { return changedAttributes; } }
     private Dictionary<Vector3Int, float[]> changedAttributes = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> addedAttributes = new Dictionary<Vector3Int, float[]>();
     private Tilemap tilemap;
@@ -109,19 +110,26 @@ public class TileAttributes : MonoBehaviour
         changedAttributes.Add(cellLocation, tileContents[cellLocation]);
         tileContents.Remove(cellLocation);
     }
-    public void Revert()
+    public void Revert(List<Vector3Int> revertLocations = null)
     {
-        foreach(KeyValuePair<Vector3Int,float[]> keyValuePair in changedAttributes)
+        if (revertLocations == null)
         {
-            tileContents[keyValuePair.Key] = keyValuePair.Value;
-            ChangeColor(keyValuePair.Key, terrainTile);
+            foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
+            {
+                tileContents[keyValuePair.Key] = keyValuePair.Value;
+                ChangeColor(keyValuePair.Key, terrainTile);
+            }
+            foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
+            {
+                tileContents.Remove(keyValuePair.Key);
+            }
+            changedAttributes = new Dictionary<Vector3Int, float[]>();
+            addedAttributes = new Dictionary<Vector3Int, float[]>();
         }
-        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
+        else
         {
-            tileContents.Remove(keyValuePair.Key);
+
         }
-        changedAttributes = new Dictionary<Vector3Int, float[]>();
-        addedAttributes = new Dictionary<Vector3Int, float[]>();
     }
     private void ChangeColor(Vector3Int cellLocation, TerrainTile tile)
     {

@@ -96,6 +96,11 @@ public class TilePlacementController : MonoBehaviour
             {
                 TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
                 List<Vector3Int> affectedTileLocations = new List<Vector3Int>();
+                List<Vector3Int> changedTileLocations = addedTiles[(int)selectedTile.tileLayer];
+                if(tilemaps[(int)selectedTile.tileLayer].TryGetComponent<TileAttributes>(out TileAttributes tileAttributes))
+                {
+                    changedTileLocations.AddRange(tileAttributes.contentChangedTiles.Keys);
+                }
                 foreach (Vector3Int addedTileLocation in addedTiles[(int)selectedTile.tileLayer])
                 {
                     foreach(TerrainTile managedTile in tileColorManager.managedTiles)
@@ -190,7 +195,7 @@ public class TilePlacementController : MonoBehaviour
     }
     private void UpdatePreviewBlock() //TODO Improve Efficiency
     {
-        ClearChanges();
+/*        ClearChanges();
         PlaceTile(dragStartPosition, selectedTile, false);
         Vector3Int sweepLocation = Vector3Int.zero;
         foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
@@ -199,6 +204,33 @@ public class TilePlacementController : MonoBehaviour
             {
                 sweepLocation = new Vector3Int(x, y, 0);
                 PlaceTile(sweepLocation, selectedTile);
+            }
+        }*/
+        foreach (int x in GridUtils.Range(lastPlacedTile.x, currentMouseCellPosition.x))
+        {
+            foreach (int y in GridUtils.Range(lastPlacedTile.y, currentMouseCellPosition.y))
+            {
+                Vector3Int sweepLocation = new Vector3Int(x, y, currentMouseCellPosition.z);
+                if (addedTiles[(int)selectedTile.tileLayer].Contains(sweepLocation))
+                {
+                    foreach (int layer in addedTiles.Keys)
+                    {
+                        tilemaps[layer].SetTile(sweepLocation, null);
+                        addedTiles[layer].Remove(sweepLocation);
+                        tilemaps[layer].SetTile(sweepLocation, removedTiles[layer][sweepLocation]);
+                        removedTiles[layer].Remove(sweepLocation);
+                        if (tilemaps[layer].TryGetComponent(out TileAttributes tileAttributes))
+                        {
+                            tileAttributes.Revert();
+                        }
+                    }
+                    removedTiles.Clear();
+                    triedToPlaceTiles.Clear();
+                }
+                else
+                {
+                    PlaceTile(sweepLocation, selectedTile);
+                }
             }
         }
     }
