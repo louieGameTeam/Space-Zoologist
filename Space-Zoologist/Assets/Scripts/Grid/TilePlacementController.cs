@@ -87,7 +87,7 @@ public class TilePlacementController : MonoBehaviour
         {
             if (tilemap1.TryGetComponent(out TileAttributes tileAttributes))
             {
-                tileAttributes.ConfirmMerge(selectedTile);
+                tileAttributes.ConfirmMerge();
             }
         }
         if (colorLinkedTiles.Keys.Contains(selectedTile))
@@ -102,7 +102,7 @@ public class TilePlacementController : MonoBehaviour
                     {
                         foreach (Vector3Int affectedTileLocation in tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
                         {
-                            tileColorManager.SetTileColor(null, affectedTileLocation, managedTile);
+                            tileColorManager.SetTileColor(affectedTileLocation, managedTile);
                         }
                     }
                 }
@@ -112,7 +112,7 @@ public class TilePlacementController : MonoBehaviour
         {
             foreach (Vector3Int vector3Int in addedTiles[(int)selectedTile.tileLayer])
             {
-                placedTileColorManager.SetTileColor(null, vector3Int, selectedTile);
+                placedTileColorManager.SetTileColor(vector3Int, selectedTile);
             }
         }
         addedTiles.Clear();

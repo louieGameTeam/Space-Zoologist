@@ -72,7 +72,7 @@ public class TileSystem : MonoBehaviour
         return null;
     }
 
-    public List<Vector3Int> CellLocationsOfClosestTiles(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8)
+    public List<Vector3Int> CellLocationsOfClosestTiles(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
     {
         int[] distance3 = new int[3];
         int i = 0;
@@ -81,6 +81,13 @@ public class TileSystem : MonoBehaviour
         List<Vector3Int> closestTiles = new List<Vector3Int>();
         while (i < scanRange)
         {
+            if (isCircleMode && Mathf.Sqrt(posX * posX + posY * posY) > scanRange)
+            {
+                i++;
+                posX = i;
+                posY = 0;
+                continue;
+            }
             if (posX == 0)
             {
                 if (GetTerrainTileAtLocation(centerCellLocation) == tile)
@@ -113,6 +120,69 @@ public class TileSystem : MonoBehaviour
         }
         return closestTiles;
     }
+    public Dictionary<float[], float> DistancesToClosestTilesOfEachBody(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
+    {
+        int[] distance3 = new int[3];
+        int i = 0;
+        int posX = 0;
+        int posY = 0;
+        Dictionary<float[], float> compositionDistancePairs = new Dictionary<float[], float>();
+        while (i < scanRange)
+        {
+            float distance = Mathf.Sqrt(posX * posX + posY * posY);
+            if (isCircleMode &&  distance > scanRange)
+            {
+                i++;
+                posX = i;
+                posY = 0;
+                continue;
+            }
+            if (posX == 0)
+            {
+                if (GetTerrainTileAtLocation(centerCellLocation) == tile)
+                {
+                    compositionDistancePairs.Add(GetTileContentsAtLocation(centerCellLocation, tile), distance);
+                }
+                i++;
+                posX = i;
+                continue;
+            }
+            if (posX == posY)
+            {
+                if (IsTileInAnyOfFour(posX, posY, centerCellLocation, tile))
+                {
+                    foreach (Vector3Int cellLocation in TileCellLocationsInFour(posX, posY, centerCellLocation, tile))
+                    {
+                        float[] contents = GetTileContentsAtLocation(cellLocation, tile);
+                        if (!compositionDistancePairs.Keys.Contains(contents))
+                        {
+                            compositionDistancePairs.Add(GetTileContentsAtLocation(cellLocation, tile), distance);
+                        }
+                    }
+                }
+                i++;
+                posX = i;
+                posY = 0;
+            }
+            else
+            {
+                if (IsTileInAnyOfEight(posX, posY, centerCellLocation, tile))
+                {
+                    foreach (Vector3Int cellLocation in TileCellLocationsInEight(posX, posY, centerCellLocation, tile))
+                    {
+                        float[] contents = GetTileContentsAtLocation(cellLocation, tile);
+                        if (!compositionDistancePairs.Keys.Contains(contents))
+                        {
+                            compositionDistancePairs.Add(GetTileContentsAtLocation(cellLocation, tile), distance);
+                        }
+                    }
+                }
+                posY++;
+            }
+        }
+        return compositionDistancePairs;
+    }
+
     /// <summary>
     /// Returns distance of cloest tile from a given cell position. Scans tiles in a square within a given range, checks a total of (scanRange*2 + 1)^2 tiles. Returns -1 if not found.
     /// </summary>

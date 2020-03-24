@@ -13,6 +13,7 @@ public class TileAttributes : MonoBehaviour
     private Tilemap tilemap;
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private bool isPlacedTileNew;
+    private TerrainTile terrainTile;
     private enum neighborTileStatus
     {
         None,
@@ -25,9 +26,10 @@ public class TileAttributes : MonoBehaviour
     }
     public void MergeTile (Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
     {
+        terrainTile = tile;
         if (tile.isMergingAttributes)
         {
-            switch (GetNeighborTileStatus(cellLocation, tile))
+            switch (GetNeighborTileStatus(cellLocation))
             {
                 case neighborTileStatus.None:
                     isPlacedTileNew = true;
@@ -54,7 +56,7 @@ public class TileAttributes : MonoBehaviour
                 case neighborTileStatus.Different:
                     isPlacedTileNew = false;
                     neighborTiles = new List<Vector3Int>();
-                    GetNeighborCellLocations(cellLocation, tile, addedTiles);
+                    GetNeighborCellLocations(cellLocation,addedTiles);
                     neighborTiles.Remove(cellLocation);
                     Dictionary<float[], int> neighborTileContents = new Dictionary<float[], int>();
                     foreach (Vector3Int tileLocation in neighborTiles)
@@ -112,8 +114,7 @@ public class TileAttributes : MonoBehaviour
         foreach(KeyValuePair<Vector3Int,float[]> keyValuePair in changedAttributes)
         {
             tileContents[keyValuePair.Key] = keyValuePair.Value;
-            tilemap.SetTileFlags(keyValuePair.Key, TileFlags.None);
-            tilemap.SetColor(keyValuePair.Key, RYBConverter.ToRYBColor(tileContents[keyValuePair.Key]));
+            ChangeColor(keyValuePair.Key, terrainTile);
         }
         foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
         {
@@ -126,21 +127,15 @@ public class TileAttributes : MonoBehaviour
     {
         if(tilemap.TryGetComponent<TileColorManager>(out TileColorManager tileColorManager))
         {
-            tileColorManager.SetTileColor(tileContents[cellLocation], cellLocation, tile);
+            tileColorManager.SetTileColor(cellLocation, tile);
         }
-/*        if (tile.isChangingColor)
-        {
-            tilemap.SetTileFlags(cellLocation, TileFlags.None);
-            Color color = tile.GetTileColor(tileContents[cellLocation]);
-            tilemap.SetColor(cellLocation, color);
-        }*/
     }
-    private neighborTileStatus GetNeighborTileStatus(Vector3Int cellLocation, TerrainTile tile)
+    private neighborTileStatus GetNeighborTileStatus(Vector3Int cellLocation)
     {
         List<float[]> attributesToCheck = new List<float[]>();
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
-            if (tilemap.GetTile(tileToCheck) == tile)
+            if (tilemap.GetTile(tileToCheck) == terrainTile)
             {
                 if (isPlacedTileNew && addedAttributes.ContainsKey(tileToCheck))
                 {
@@ -163,20 +158,20 @@ public class TileAttributes : MonoBehaviour
         }
         return neighborTileStatus.Same;
     }
-    private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
+    private void GetNeighborCellLocations(Vector3Int cellLocation,List<Vector3Int> addedTiles)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
             if (
                 !neighborTiles.Contains(tileToCheck) && 
-                tilemap.GetTile(tileToCheck) == tile)
+                tilemap.GetTile(tileToCheck) == terrainTile)
             {
                 neighborTiles.Add(tileToCheck);
-                GetNeighborCellLocations(tileToCheck, tile, addedTiles);
+                GetNeighborCellLocations(tileToCheck, addedTiles);
             }
         }
     }
-    public void ConfirmMerge(TerrainTile tile)
+    public void ConfirmMerge()
     {
         if(isPlacedTileNew)
         {
@@ -186,7 +181,7 @@ public class TileAttributes : MonoBehaviour
             foreach(Vector3Int tileLocation in addedAttributes.Keys)
             {
                 tileContents[tileLocation] = new float[] { n0, n1, n2 };
-                ChangeColor(tileLocation, tile);
+                ChangeColor(tileLocation, terrainTile);
                 //TODO call user to enter parameters
             }
             isPlacedTileNew = false;

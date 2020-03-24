@@ -19,8 +19,9 @@ public class TileColorManager : MonoBehaviour
         tileSystem = GetComponentInParent<TileSystem>();
         tilePlacementController = GetComponentInParent<TilePlacementController>();
     }
-    public void SetTileColor(float[] composition, Vector3Int cellLocation, TerrainTile tile)
+    public void SetTileColor(Vector3Int cellLocation, TerrainTile tile)
     {
-        coloringMethod.SetTileColor(composition, cellLocation, tile, tilemap, managedTerrainTiles, linkedTerrainTiles, tileSystem, tilePlacementController);
+        float[] composition = tileSystem.GetTileContentsAtLocation(cellLocation, tile);
+        coloringMethod.SetColor(composition, cellLocation, tile, tilemap, managedTerrainTiles, linkedTerrainTiles, tileSystem, tilePlacementController);
     }
 }

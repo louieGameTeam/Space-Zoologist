@@ -8,7 +8,7 @@ public class ColoringMethodGrass : ColoringMethod
     private float[] gasComposition = new float[] { 0.5f, 0.2f, 0.3f };
     private float[] colorShitfDirt = new float[] { 0, 0.3f, 0.3f };
     private float[] colorShitfSand = new float[] { -0.2f, 0.4f, -0.1f };
-    public override void SetTileColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
+    public override void SetColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
     {
         TerrainTile liquid = linkedTiles[0];
         TerrainTile dirt = linkedTiles[1];
@@ -33,36 +33,38 @@ public class ColoringMethodGrass : ColoringMethod
                 newRYBValues[i] += colorShitfSand[i];
             }
         }
-        Color baseColor = RYBConverter.ToRYBColor(newRYBValues);
-        if (distance == -1)
+        if (distance != -1)
         {
-            baseColor.a = 1;
-            tilemap.SetTileFlags(cellLocation, TileFlags.None);
-            tilemap.SetColor(cellLocation, baseColor);
-        }
-        else
-        {
-            Color finalColor = new Color();
-            float liquidChannelRed = 0;
-            float liquidChannelGreen = 0;
-            float liquidChannelBlue = 0;
-            List<Vector3Int> liquidTileLocations = tileSystem.CellLocationsOfClosestTiles(cellLocation, liquid, affectedRange);
-            foreach (Vector3Int liquidTile in liquidTileLocations)
+            Dictionary<float[], float> compositionDistancePairs = tileSystem.DistancesToClosestTilesOfEachBody(cellLocation, liquid, affectedRange, true);
+            float[] weightedComposition = new float[] { 0, 0, 0 };
+            float totalWeight = 1;
+            foreach (KeyValuePair<float[], float> compositionDistancePair in compositionDistancePairs)
             {
-                Tilemap targetTilemap = tilePlacementController.tilemapList[(int)liquid.tileLayer];
-                Color color = targetTilemap.GetColor(liquidTile);
-                liquidChannelRed += color.r;
-                liquidChannelGreen += color.g;
-                liquidChannelBlue += color.b;
+                float weight = ColorGradient(compositionDistancePair.Value);
+                totalWeight += weight;
+                for (int i = 0; i < 3; i++)
+                {
+                    weightedComposition[i] += compositionDistancePair.Key[i] * weight;
+                }
             }
-            int channelCount = liquidTileLocations.Count;
-            float ratio = Mathf.Sqrt(distance / (affectedRange * Mathf.Sqrt(2)));
-            finalColor.r = baseColor.r * ratio + liquidChannelRed / channelCount * (1 - ratio);
-            finalColor.g = baseColor.g * ratio + liquidChannelGreen / channelCount * (1 - ratio);
-            finalColor.b = baseColor.b * ratio + liquidChannelBlue / channelCount * (1 - ratio);
-            finalColor.a = 1;
-            tilemap.SetTileFlags(cellLocation, TileFlags.None);
-            tilemap.SetColor(cellLocation, finalColor);
+            for (int i = 0; i < 3; i++)
+            {
+                newRYBValues[i] = (newRYBValues[i] + weightedComposition[i]) / totalWeight;
+            }
+            Debug.Log((newRYBValues[0], newRYBValues[1], newRYBValues[2]));
         }
+        Color baseColor = RYBConverter.ToRYBColor(newRYBValues);
+        baseColor.a = 1;
+        tilemap.SetTileFlags(cellLocation, TileFlags.None);
+        tilemap.SetColor(cellLocation, baseColor);
+    }
+    private float ColorGradient (float distance)
+    {
+        float ratio = (1 - Mathf.Sqrt(distance / affectedRange) + 0.4f);
+        if (ratio > 1)
+        {
+            ratio = 1;
+        }
+        return ratio;
     }
 }
