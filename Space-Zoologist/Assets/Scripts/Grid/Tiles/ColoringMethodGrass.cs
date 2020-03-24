@@ -51,7 +51,6 @@ public class ColoringMethodGrass : ColoringMethod
             {
                 newRYBValues[i] = (newRYBValues[i] + weightedComposition[i]) / totalWeight;
             }
-            Debug.Log((newRYBValues[0], newRYBValues[1], newRYBValues[2]));
         }
         Color baseColor = RYBConverter.ToRYBColor(newRYBValues);
         baseColor.a = 1;
@@ -60,10 +59,10 @@ public class ColoringMethodGrass : ColoringMethod
     }
     private float ColorGradient (float distance)
     {
-        float ratio = (1 - Mathf.Sqrt(distance / affectedRange) + 0.4f);
-        if (ratio > 1)
+        float ratio = (1 - Mathf.Sqrt(distance / affectedRange) - 0.4f);
+        if (ratio < 0)
         {
-            ratio = 1;
+            ratio = 0;
         }
         return ratio;
     }
