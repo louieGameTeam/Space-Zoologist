@@ -356,6 +356,10 @@ public class TilePlacementController : MonoBehaviour
             if (removedTiles[layer].ContainsKey(cellLocation))
             {
                 tilemaps[layer].SetTile(cellLocation, removedTiles[layer][cellLocation]);
+                if (tilemaps[layer].TryGetComponent(out TileAttributes tileAttributes))
+                {
+                    tileAttributes.Restore(cellLocation);
+                }
             }
             addedTiles[layer].Remove(cellLocation);
         }

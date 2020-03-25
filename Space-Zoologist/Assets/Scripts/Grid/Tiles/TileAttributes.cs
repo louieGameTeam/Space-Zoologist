@@ -131,6 +131,15 @@ public class TileAttributes : MonoBehaviour
             }
         }
     }
+    public void Restore(Vector3Int cellLocation)
+    {
+        if (changedAttributes.ContainsKey(cellLocation))
+        {
+            tileContents[cellLocation] = changedAttributes[cellLocation];
+            changedAttributes.Remove(cellLocation);
+            ChangeColor(cellLocation);
+        }
+    }
     public void Revert(List<Vector3Int> boxModeSupposedTiles = null, List<Vector3Int> addedTiles = null)
     {
         foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
