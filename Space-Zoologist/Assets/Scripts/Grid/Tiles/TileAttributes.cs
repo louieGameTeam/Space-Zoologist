@@ -128,7 +128,18 @@ public class TileAttributes : MonoBehaviour
         }
         else
         {
-
+            foreach (Vector3Int revertLocation in revertLocations)
+            {
+                if (changedAttributes.ContainsKey(revertLocation))
+                {
+                    Revert();
+                    break;
+                }
+                else
+                {
+                    addedAttributes.Remove(revertLocation);
+                }
+            }
         }
     }
     private void ChangeColor(Vector3Int cellLocation, TerrainTile tile)

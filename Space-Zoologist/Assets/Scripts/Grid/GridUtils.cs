@@ -170,4 +170,23 @@ public class GridUtils
             return n -= increment;
         }
     }
+    public static int IncreaseMagnitudeInt(int n, int increment)
+    {
+        if (n > 0)
+        {
+            return n += increment;
+        }
+        else
+        {
+            return n -= increment;
+        }
+    }
+    public static bool IsOppositeSign(int m,int n)
+    {
+        if ((m >=0 && n >= 0) || (m <= 0 && n <= 0))
+        {
+            return false;
+        }
+        return true;
+    }
 }
