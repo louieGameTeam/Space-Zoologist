@@ -183,7 +183,7 @@ public class GridUtils
     }
     public static bool IsOppositeSign(int m,int n)
     {
-        if ((m >=0 && n >= 0) || (m <= 0 && n <= 0))
+        if ((m > 0 && n > 0) || (m < 0 && n < 0))
         {
             return false;
         }
