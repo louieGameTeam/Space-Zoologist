@@ -273,11 +273,7 @@ public class TilePlacementController : MonoBehaviour
             }
             if (tilemaps[(int)selectedTile.tileLayer].TryGetComponent(out TileAttributes tileAttributes))
             {
-                tileAttributes.Revert(supposedTiles);
-                foreach (Vector3Int tileInBox in supposedTiles)
-                {
-                    tileAttributes.MergeTile(tileInBox, selectedTile, addedTiles[(int)selectedTile.tileLayer]);
-                }
+                tileAttributes.Revert(supposedTiles, addedTiles[(int)selectedTile.tileLayer]);
             }
 
         }

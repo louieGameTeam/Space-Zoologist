@@ -131,7 +131,7 @@ public class TileAttributes : MonoBehaviour
             }
         }
     }
-    public void Revert(List<Vector3Int> boxModeSupposedTiles = null)
+    public void Revert(List<Vector3Int> boxModeSupposedTiles = null, List<Vector3Int> addedTiles = null)
     {
         foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
         {
@@ -151,7 +151,7 @@ public class TileAttributes : MonoBehaviour
             {
                 if (!tileContents.ContainsKey(tileInBox))
                 {
-                    tileContents.Add(tileInBox, new float[] { 0, 0, 0 });
+                    MergeTile(tileInBox, terrainTile, addedTiles);
                 }
             }
         }
@@ -189,7 +189,7 @@ public class TileAttributes : MonoBehaviour
         List<float[]> attributesToCheck = new List<float[]>();
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
-            if (tilemap.GetTile(tileToCheck) == terrainTile)
+            if (tilemap.GetTile(tileToCheck) == terrainTile && tileContents.ContainsKey(tileToCheck))
             {
                 if (isPlacedTileNew && addedAttributes.ContainsKey(tileToCheck))
                 {
