@@ -147,11 +147,13 @@ public class TileAttributes : MonoBehaviour
         if (boxModeSupposedTiles != null)
         {
             isPlacedTileNew = true;
+            List<Vector3Int> virtualAddedTiles = new List<Vector3Int>();
             foreach (Vector3Int tileInBox in boxModeSupposedTiles)
             {
                 if (!tileContents.ContainsKey(tileInBox))
                 {
-                    MergeTile(tileInBox, terrainTile, addedTiles);
+                    virtualAddedTiles.Add(tileInBox);
+                    MergeTile(tileInBox, terrainTile, virtualAddedTiles);
                 }
             }
         }
@@ -218,7 +220,8 @@ public class TileAttributes : MonoBehaviour
         {
             if (
                 !neighborTiles.Contains(tileToCheck) && 
-                tilemap.GetTile(tileToCheck) == terrainTile && tileContents.ContainsKey(tileToCheck))
+                tilemap.GetTile(tileToCheck) == terrainTile &&
+                tileContents.ContainsKey(tileToCheck))
             {
                 neighborTiles.Add(tileToCheck);
                 GetNeighborCellLocations(tileToCheck, addedTiles);
