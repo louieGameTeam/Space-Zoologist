@@ -216,6 +216,7 @@ public class TilePlacementController : MonoBehaviour
         List<Vector3Int> tilesToRemove = new List<Vector3Int>();
         List<Vector3Int> tilesToAdd = new List<Vector3Int>();
         Vector3Int sweepLocation = Vector3Int.zero;
+        sweepLocation.z = currentMouseCellPosition.z;
         bool isXShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.x - dragStartPosition.x, currentMouseCellPosition.x - lastCornerX);
         bool isYShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.y - dragStartPosition.y, currentMouseCellPosition.y - lastCornerY);
         if(isXShrinking)
@@ -226,8 +227,9 @@ public class TilePlacementController : MonoBehaviour
                 {
                     if (x != currentMouseCellPosition.x)
                     {
-                        sweepLocation = new Vector3Int(x, y, currentMouseCellPosition.z);
-                        tilemaps[(int)selectedTile.tileLayer].SetTile(sweepLocation, null);
+                        sweepLocation.x = x;
+                        sweepLocation.y = y;
+                        tilesToRemove.Add(sweepLocation);
                     }
                 }
             }
@@ -240,8 +242,9 @@ public class TilePlacementController : MonoBehaviour
                 {
                     if (lastCornerX != currentMouseCellPosition.x)
                     {
-                        sweepLocation = new Vector3Int(x, y, currentMouseCellPosition.z);
-                        PlaceTile(sweepLocation, selectedTile);
+                        sweepLocation.x = x;
+                        sweepLocation.y = y;
+                        tilesToAdd.Add(sweepLocation);
                     }
                 }
             }
@@ -254,8 +257,17 @@ public class TilePlacementController : MonoBehaviour
                 {
                     if (y != currentMouseCellPosition.y)
                     {
-                        sweepLocation = new Vector3Int(x, y, currentMouseCellPosition.z);
-                        tilemaps[(int)selectedTile.tileLayer].SetTile(sweepLocation, null);
+                        sweepLocation.x = x;
+                        sweepLocation.y = y;
+                        if (tilesToAdd.Contains(sweepLocation))
+                        {
+                            tilesToAdd.Remove(sweepLocation);
+                        }
+                        if (!tilesToRemove.Contains(sweepLocation))
+                        {
+                            tilesToRemove.Add(sweepLocation);
+                        }
+                        
                     }
                 }
             }
@@ -268,11 +280,24 @@ public class TilePlacementController : MonoBehaviour
                 {
                     if (lastCornerY != currentMouseCellPosition.y)
                     {
-                        sweepLocation = new Vector3Int(x, y, currentMouseCellPosition.z);
-                        PlaceTile(sweepLocation, selectedTile);
+                        sweepLocation.x = x;
+                        sweepLocation.y = y;
+                        if (!tilesToRemove.Contains(sweepLocation) && !tilesToAdd.Contains(sweepLocation))
+                        {
+                            tilesToAdd.Add(sweepLocation);
+                        } 
+                        
                     }
                 }
             }
+        }
+        foreach (Vector3Int addLocation in tilesToAdd)
+        {
+            PlaceTile(addLocation, selectedTile);
+        }
+        foreach (Vector3Int removeLocation in tilesToRemove)
+        {
+            tilemaps[(int)selectedTile.tileLayer].SetTile(removeLocation, null);
         }
         lastCornerX = currentMouseCellPosition.x;
         lastCornerY = currentMouseCellPosition.y;
