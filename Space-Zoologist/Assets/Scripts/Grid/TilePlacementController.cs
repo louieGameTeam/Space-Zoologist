@@ -215,77 +215,48 @@ public class TilePlacementController : MonoBehaviour
         }
         List<Vector3Int> tilesToRemove = new List<Vector3Int>();
         List<Vector3Int> tilesToAdd = new List<Vector3Int>();
+        List<Vector3Int> supposedTiles = new List<Vector3Int>();
+        foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
+        {
+            foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
+            {
+                supposedTiles.Add(new Vector3Int(x, y, 0));
+            }
+        }
+        foreach (Vector3Int existingTile in addedTiles[(int)selectedTile.tileLayer])
+        {
+            if (!supposedTiles.Contains(existingTile))
+            {
+                tilesToRemove.Add(existingTile);
+            }
+        }
         Vector3Int sweepLocation = Vector3Int.zero;
         sweepLocation.z = currentMouseCellPosition.z;
         bool isXShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.x - dragStartPosition.x, currentMouseCellPosition.x - lastCornerX);
         bool isYShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.y - dragStartPosition.y, currentMouseCellPosition.y - lastCornerY);
-        if (currentMouseCellPosition.x != lastCornerX)
+        if (currentMouseCellPosition.x != lastCornerX || !isXShrinking)
         {
-            if (isXShrinking)
+            foreach (int x in GridUtils.Range(lastCornerX, currentMouseCellPosition.x))
             {
-                foreach (int x in GridUtils.Range(lastCornerX, currentMouseCellPosition.x))
+                foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
                 {
-                    foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
-                    {
-                        if (x != currentMouseCellPosition.x)
-                        {
-                            sweepLocation.x = x;
-                            sweepLocation.y = y;
-                            tilesToRemove.Add(sweepLocation);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (int x in GridUtils.Range(lastCornerX, currentMouseCellPosition.x))
-                {
-                    foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
-                    {
-                        sweepLocation.x = x;
-                        sweepLocation.y = y;
-                        tilesToAdd.Add(sweepLocation);
-                    }
+                    sweepLocation.x = x;
+                    sweepLocation.y = y;
+                    tilesToAdd.Add(sweepLocation);
                 }
             }
         }
-        if (currentMouseCellPosition.y != lastCornerY)
+        if (currentMouseCellPosition.y != lastCornerY || !isYShrinking)
         {
-            if (isYShrinking)
+            foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
             {
-                foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
+                foreach (int y in GridUtils.Range(lastCornerY, currentMouseCellPosition.y))
                 {
-                    foreach (int y in GridUtils.Range(lastCornerY, currentMouseCellPosition.y))
+                    sweepLocation.x = x;
+                    sweepLocation.y = y;
+                    if (!tilesToRemove.Contains(sweepLocation) && !tilesToAdd.Contains(sweepLocation))
                     {
-                        if (y != currentMouseCellPosition.y)
-                        {
-                            sweepLocation.x = x;
-                            sweepLocation.y = y;
-                            if (tilesToAdd.Contains(sweepLocation))
-                            {
-                                tilesToAdd.Remove(sweepLocation);
-                            }
-                            if (!tilesToRemove.Contains(sweepLocation))
-                            {
-                                tilesToRemove.Add(sweepLocation);
-                            }
-
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
-                {
-                    foreach (int y in GridUtils.Range(lastCornerY, currentMouseCellPosition.y))
-                    {
-                        sweepLocation.x = x;
-                        sweepLocation.y = y;
-                        if (!tilesToRemove.Contains(sweepLocation) && !tilesToAdd.Contains(sweepLocation))
-                        {
-                            tilesToAdd.Add(sweepLocation);
-                        }
+                        tilesToAdd.Add(sweepLocation);
                     }
                 }
             }
@@ -297,21 +268,6 @@ public class TilePlacementController : MonoBehaviour
         foreach (Vector3Int removeLocation in tilesToRemove)
         {
             tilemaps[(int)selectedTile.tileLayer].SetTile(removeLocation, null);
-        }
-        List<Vector3Int> supposedTiles = new List<Vector3Int>();
-        foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
-        {
-            foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
-            {
-                supposedTiles.Add(new Vector3Int(x, y, 0));
-            }
-        }
-        foreach (Vector3Int tile in addedTiles[(int)selectedTile.tileLayer])
-        {
-            if (!supposedTiles.Contains(tile))
-            {
-                tilemaps[(int)selectedTile.tileLayer].SetTile(tile, null);
-            }
         }
         lastCornerX = currentMouseCellPosition.x;
         lastCornerY = currentMouseCellPosition.y;
