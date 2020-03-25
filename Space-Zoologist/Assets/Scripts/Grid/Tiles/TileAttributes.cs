@@ -113,47 +113,69 @@ public class TileAttributes : MonoBehaviour
         changedAttributes.Add(cellLocation, tileContents[cellLocation]);
         tileContents.Remove(cellLocation);
     }
-    public void Revert(List<Vector3Int> revertLocations = null)
+    public void BoxModeUpdate (List<Vector3Int> boxModeCornerTiles)
     {
-        if (revertLocations == null)
+        List<Vector3Int> contactPoints = new List<Vector3Int>();
+        Vector3Int scanLocation = new Vector3Int();
+        foreach (int x in GridUtils.Range(boxModeCornerTiles[0].x, boxModeCornerTiles[1].x))
         {
-            foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
+            foreach (int y in GridUtils.Range(boxModeCornerTiles[0].y, boxModeCornerTiles[1].y))
             {
-                tileContents[keyValuePair.Key] = keyValuePair.Value;
-                ChangeColor(keyValuePair.Key);
+                if (x == boxModeCornerTiles[0].x ||
+                    x == boxModeCornerTiles[1].x ||
+                    y == boxModeCornerTiles[0].y ||
+                    y == boxModeCornerTiles[1].y)
+                {
+
+                }
             }
-            foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
-            {
-                tileContents.Remove(keyValuePair.Key);
-            }
-            changedAttributes = new Dictionary<Vector3Int, float[]>();
-            addedAttributes = new Dictionary<Vector3Int, float[]>();
         }
-        else
+    }
+    public void Revert(List<Vector3Int> boxModeSupposedTiles = null)
+    {
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
         {
-            foreach (Vector3Int revertLocation in revertLocations)
-            {
-                if (changedAttributes.ContainsKey(revertLocation))
-                {
-                    Revert();
-                    return;
-                }
-                else
-                {
-                    addedAttributes.Remove(revertLocation);
-                    tilemap.SetTileFlags(revertLocation, TileFlags.None);
-                    tilemap.SetColor(revertLocation, new Color(1, 1, 1, 1));
-                }
-            }
+            tileContents[keyValuePair.Key] = keyValuePair.Value;
+            ChangeColor(keyValuePair.Key);
+        }
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
+        {
+            tileContents.Remove(keyValuePair.Key);
+        }
+        changedAttributes = new Dictionary<Vector3Int, float[]>();
+        addedAttributes = new Dictionary<Vector3Int, float[]>();
+        if (boxModeSupposedTiles != null)
+        {
             isPlacedTileNew = true;
-            foreach (Vector3Int location in addedAttributes.Keys.ToList())
+            foreach (Vector3Int tileInBox in boxModeSupposedTiles)
             {
-                addedAttributes[location] = new float[] { 0, 0, 0 };
-                Debug.Log((addedAttributes[location][0], addedAttributes[location][1], addedAttributes[location][2],1));
-                tileContents[location] = addedAttributes[location];
-                ChangeColor(location);
+                if (!tileContents.ContainsKey(tileInBox))
+                {
+                    tileContents.Add(tileInBox, new float[] { 0, 0, 0 });
+                }
             }
         }
+        /*            foreach (Vector3Int revertLocation in revertLocations)
+                    {
+                        if (changedAttributes.ContainsKey(revertLocation))
+                        {
+                            Revert();
+                            return;
+                        }
+                        else
+                        {
+                            addedAttributes.Remove(revertLocation);
+                            tilemap.SetTileFlags(revertLocation, TileFlags.None);
+                            tilemap.SetColor(revertLocation, new Color(1, 1, 1, 1));
+                        }
+                    }
+                    isPlacedTileNew = true;
+                    foreach (Vector3Int location in addedAttributes.Keys.ToList())
+                    {
+                        addedAttributes[location] = new float[] { 0, 0, 0 };
+                        tileContents[location] = addedAttributes[location];
+                        ChangeColor(location);
+                    }*/
     }
     private void ChangeColor(Vector3Int cellLocation)
     {
