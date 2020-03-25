@@ -218,7 +218,7 @@ public class TileAttributes : MonoBehaviour
         {
             if (
                 !neighborTiles.Contains(tileToCheck) && 
-                tilemap.GetTile(tileToCheck) == terrainTile)
+                tilemap.GetTile(tileToCheck) == terrainTile && tileContents.ContainsKey(tileToCheck))
             {
                 neighborTiles.Add(tileToCheck);
                 GetNeighborCellLocations(tileToCheck, addedTiles);

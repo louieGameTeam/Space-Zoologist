@@ -350,13 +350,14 @@ public class TilePlacementController : MonoBehaviour
     }
     private void RemoveTile (Vector3Int cellLocation, TerrainTile tile)
     {
-        foreach (int layer in addedTiles.Keys)
+        foreach (int layer in addedTiles.Keys.ToList())
         {
             tilemaps[layer].SetTile(cellLocation, null);
             if (removedTiles[layer].ContainsKey(cellLocation))
             {
                 tilemaps[layer].SetTile(cellLocation, removedTiles[layer][cellLocation]);
             }
+            addedTiles[layer].Remove(cellLocation);
         }
     }
     private void AddTile(int tileLayer,Tilemap targetTilemap, Vector3Int cellLocation, TerrainTile tile)
