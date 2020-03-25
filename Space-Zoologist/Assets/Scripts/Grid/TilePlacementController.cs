@@ -220,7 +220,7 @@ public class TilePlacementController : MonoBehaviour
         {
             foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
             {
-                supposedTiles.Add(new Vector3Int(x, y, 0));
+                supposedTiles.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
             }
         }
         foreach (Vector3Int existingTile in addedTiles[(int)selectedTile.tileLayer])
@@ -267,7 +267,11 @@ public class TilePlacementController : MonoBehaviour
         }
         foreach (Vector3Int removeLocation in tilesToRemove)
         {
-            tilemaps[(int)selectedTile.tileLayer].SetTile(removeLocation, null);
+            RemoveTile(removeLocation, selectedTile);
+        }
+        if (tilemaps[(int)selectedTile.tileLayer].TryGetComponent(out TileAttributes tileAttributes))
+        {
+            tileAttributes.Revert(tilesToRemove);
         }
         lastCornerX = currentMouseCellPosition.x;
         lastCornerY = currentMouseCellPosition.y;
@@ -300,7 +304,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 if (tilemaps[layer].HasTile(cellLocation))
                 {
-                    RemoveTile(layer, cellLocation);
+                    ReplaceTile(layer, cellLocation);
                 }
             }
             // Add new tiles
@@ -340,6 +344,17 @@ public class TilePlacementController : MonoBehaviour
             return false;
         }
     }
+    private void RemoveTile (Vector3Int cellLocation, TerrainTile tile)
+    {
+        foreach (int layer in addedTiles.Keys)
+        {
+            tilemaps[layer].SetTile(cellLocation, null);
+            if (removedTiles[layer].ContainsKey(cellLocation))
+            {
+                tilemaps[layer].SetTile(cellLocation, removedTiles[layer][cellLocation]);
+            }
+        }
+    }
     private void AddTile(int tileLayer,Tilemap targetTilemap, Vector3Int cellLocation, TerrainTile tile)
     {
         triedToPlaceTiles.Add(cellLocation);
@@ -351,7 +366,7 @@ public class TilePlacementController : MonoBehaviour
             tileAttributes.MergeTile(cellLocation, tile, addedTiles[(int)tile.tileLayer]);
         }
     }
-    private void RemoveTile(int tileLayer, Vector3Int cellLocation)
+    private void ReplaceTile(int tileLayer, Vector3Int cellLocation)
     {
         TerrainTile removedTile = (TerrainTile)tilemaps[tileLayer].GetTile(cellLocation);
         if (!removedTiles[tileLayer].ContainsKey(cellLocation))
