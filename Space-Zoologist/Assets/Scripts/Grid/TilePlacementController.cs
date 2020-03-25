@@ -194,7 +194,7 @@ public class TilePlacementController : MonoBehaviour
         }
         PlaceTile(currentMouseCellPosition, selectedTile);
     }
-    private void UpdatePreviewBlock() //TODO Improve Efficiency
+    private void UpdatePreviewBlock() //TODO Improve Efficiency && Resolve lag when moving back and forth
     {
         /*        ClearChanges();
                 PlaceTile(dragStartPosition, selectedTile, false);
@@ -265,13 +265,16 @@ public class TilePlacementController : MonoBehaviour
         {
             PlaceTile(addLocation, selectedTile);
         }
-        foreach (Vector3Int removeLocation in tilesToRemove)
+        if (tilesToRemove.Count > 0)
         {
-            RemoveTile(removeLocation, selectedTile);
-        }
-        if (tilemaps[(int)selectedTile.tileLayer].TryGetComponent(out TileAttributes tileAttributes))
-        {
-            tileAttributes.Revert(tilesToRemove);
+            foreach (Vector3Int removeLocation in tilesToRemove)
+            {
+                RemoveTile(removeLocation, selectedTile);
+            }
+            if (tilemaps[(int)selectedTile.tileLayer].TryGetComponent(out TileAttributes tileAttributes))
+            {
+                tileAttributes.Revert(tilesToRemove);
+            }
         }
         lastCornerX = currentMouseCellPosition.x;
         lastCornerY = currentMouseCellPosition.y;
