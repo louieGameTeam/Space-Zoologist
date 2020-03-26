@@ -870,12 +870,17 @@ MonoBehaviour:
     - {x: 1, y: 0, z: 0}
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
-  targetTilemap: {fileID: 4634700425808299148, guid: cc11f2d9254d7a14aaae576a3d621e0c,
-    type: 3}
-  replacementTilemap: []
+  targetTilemap: {fileID: 0}
+  replacementTilemap:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   constraintTilemap: []
   targetLayer: 1
-  replacementLayers: 
+  replacementLayers: 0200000003000000040000000500000006000000
   constraintLayers: 
   auxillaryTiles: []
   isRepresentative: 1

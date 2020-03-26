@@ -141,9 +141,12 @@ public class TilePlacementController : MonoBehaviour
             {
                 addedTile.targetTilemap.SetTile(addedTileLocation, null);
             }
-            foreach (TerrainTile removedTile in removedTiles[addedTileLocation])
+            if (removedTiles.ContainsKey(addedTileLocation))
             {
-                removedTile.targetTilemap.SetTile(addedTileLocation, removedTile);
+                foreach (TerrainTile removedTile in removedTiles[addedTileLocation])
+                {
+                    removedTile.targetTilemap.SetTile(addedTileLocation, removedTile);
+                }
             }
         }
         foreach (Tilemap tilemap in tilemaps)
