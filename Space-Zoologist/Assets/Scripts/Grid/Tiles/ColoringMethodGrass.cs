@@ -52,7 +52,7 @@ public class ColoringMethodGrass : ColoringMethod
                 newRYBValues[i] = (newRYBValues[i] + weightedComposition[i]) / totalWeight;
             }
         }
-        Color baseColor = RYBConverter.ToRYBColor(newRYBValues);
+        Color baseColor = GridUtils.RYBValuesToRGBColor(newRYBValues);
         baseColor.a = 1;
         tilemap.SetTileFlags(cellLocation, TileFlags.None);
         tilemap.SetColor(cellLocation, baseColor);

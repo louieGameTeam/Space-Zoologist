@@ -10,7 +10,7 @@ public class ColoringMethod : MonoBehaviour
     public virtual void SetColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
     {
         tilemap.SetTileFlags(cellLocation, TileFlags.None);
-        Color color = RYBConverter.ToRYBColor(composition, interpolationArray);
+        Color color = GridUtils.RYBValuesToRGBColor(composition, interpolationArray);
         tilemap.SetColor(cellLocation, color);
     }
 }

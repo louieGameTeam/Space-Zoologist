@@ -151,7 +151,7 @@ public class TileAttributes : MonoBehaviour
     }
     private void ChangeColor(Vector3Int cellLocation)
     {
-        if(tilemap.TryGetComponent<TileColorManager>(out TileColorManager tileColorManager))
+        if(tilemap.TryGetComponent(out TileColorManager tileColorManager))
         {
             tileColorManager.SetTileColor(cellLocation, terrainTile);
         }
