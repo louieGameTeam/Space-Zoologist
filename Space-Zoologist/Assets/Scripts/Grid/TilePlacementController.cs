@@ -37,6 +37,8 @@ public class TilePlacementController : MonoBehaviour
         foreach (TerrainTile terrainTile in terrainTiles)
         {
             terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
+            terrainTile.constraintTilemap.Clear();
+            terrainTile.replacementTilemap.Clear();
             foreach (GridUtils.TileLayer layer in terrainTile.constraintLayers)
             {
                 terrainTile.constraintTilemap.Add(tilemaps[(int)layer]);
@@ -108,23 +110,27 @@ public class TilePlacementController : MonoBehaviour
                 placedTileColorManager.SetTileColor(vector3Int, selectedTile);
             }
         }
+        removedTileColors.Clear();
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
     }
     public void RevertChanges()
     {
-        foreach (Vector3Int addedTileLocation in addedTiles.Keys)
+        foreach (Vector3Int changedTileLocation in triedToPlaceTiles)
         {
-            foreach (TerrainTile addedTile in addedTiles[addedTileLocation])
+            if (addedTiles.ContainsKey(changedTileLocation))
             {
-                addedTile.targetTilemap.SetTile(addedTileLocation, null);
-            }
-            if (removedTiles.ContainsKey(addedTileLocation))
-            {
-                foreach (TerrainTile removedTile in removedTiles[addedTileLocation])
+                foreach (TerrainTile addedTile in addedTiles[changedTileLocation])
                 {
-                    removedTile.targetTilemap.SetTile(addedTileLocation, removedTile);
+                    addedTile.targetTilemap.SetTile(changedTileLocation, null);
+                }
+            }
+            if (removedTiles.ContainsKey(changedTileLocation))
+            {
+                foreach (TerrainTile removedTile in removedTiles[changedTileLocation])
+                {
+                    removedTile.targetTilemap.SetTile(changedTileLocation, removedTile);
                 }
             }
         }
@@ -135,12 +141,15 @@ public class TilePlacementController : MonoBehaviour
                 tileAttributes.Revert();
             }
         }
-        RenderColorOfColorLinkedTiles();
+        foreach (Vector3Int colorChangedTiles in removedTileColors.Keys)
+        {
+            removedTileColors[colorChangedTiles].Values.First().SetColor(colorChangedTiles, removedTileColors[colorChangedTiles].Keys.First());
+        }
+        removedTileColors.Clear();
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
         StopPreview();
-
     }
     public void RenderColorOfColorLinkedTiles()
     {
