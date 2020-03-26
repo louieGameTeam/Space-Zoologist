@@ -60,7 +60,7 @@ public class TileSystem : MonoBehaviour
     {
         if (tile != null)
         {
-            if (tile.targetTilemap.TryGetComponent(out TileAttributes tileAttributes))
+            if (tile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
             {
                 return tileAttributes.tileContents[cellLocation];
             }

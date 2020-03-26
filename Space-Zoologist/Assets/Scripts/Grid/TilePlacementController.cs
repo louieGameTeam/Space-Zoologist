@@ -94,9 +94,9 @@ public class TilePlacementController : MonoBehaviour
         lastMouseCellPosition = Vector3Int.zero;
         foreach (Tilemap tilemap1 in tilemaps)
         {
-            if (tilemap1.TryGetComponent(out TileAttributes tileAttributes))
+            if (tilemap1.TryGetComponent(out TileContentsManager tilecContentsManager))
             {
-                tileAttributes.ConfirmMerge();
+                tilecContentsManager.ConfirmMerge();
             }
         }
         if (colorLinkedTiles.Keys.Contains(selectedTile))
@@ -106,9 +106,9 @@ public class TilePlacementController : MonoBehaviour
                 TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
                 List<Vector3Int> affectedTileLocations = new List<Vector3Int>();
                 List<Vector3Int> changedTileLocations = addedTiles.Keys.ToList();
-                if (selectedTile.targetTilemap.TryGetComponent(out TileAttributes tileAttributes))
+                if (selectedTile.targetTilemap.TryGetComponent(out TileContentsManager tileContentsManager))
                 {
-                    changedTileLocations.AddRange(tileAttributes.contentChangedTiles.Keys);
+                    changedTileLocations.AddRange(tileContentsManager.contentChangedTiles.Keys);
                 }
                 foreach (Vector3Int addedTileLocation in addedTiles.Keys.ToList())
                 {
@@ -122,7 +122,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
-        if (!selectedTile.targetTilemap.TryGetComponent(out TileAttributes attributes) && selectedTile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
+        if (selectedTile.targetTilemap.GetComponent<TileContentsManager>() == null && selectedTile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
         {
             foreach (Vector3Int vector3Int in addedTiles.Keys)
             {
@@ -148,7 +148,7 @@ public class TilePlacementController : MonoBehaviour
         }
         foreach (Tilemap tilemap in tilemaps)
         {
-            if (tilemap.TryGetComponent(out TileAttributes tileAttributes))
+            if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
             {
                 tileAttributes.Revert();
             }
@@ -256,7 +256,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 RestoreReplacedTile(removeLocation, selectedTile);
             }
-            if (selectedTile.targetTilemap.TryGetComponent(out TileAttributes tileAttributes))
+            if (selectedTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
             {
                 tileAttributes.Revert(supposedTiles);
             }
@@ -325,7 +325,6 @@ public class TilePlacementController : MonoBehaviour
             lastPlacedTile = cellLocation;
             isFirstTile = false;
             return true;
-
         }
         else
         {
@@ -342,7 +341,7 @@ public class TilePlacementController : MonoBehaviour
                 foreach (TerrainTile removedTile in removedTiles[cellLocation])
                 {
                     removedTile.targetTilemap.SetTile(cellLocation, removedTile);
-                    if (removedTile.targetTilemap.TryGetComponent(out TileAttributes tileAttributes))
+                    if (removedTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
                     {
                         tileAttributes.Restore(cellLocation);
                     }
@@ -364,7 +363,7 @@ public class TilePlacementController : MonoBehaviour
         }
         tile.targetTilemap.SetTile(cellLocation, tile);
         PlaceAuxillaryTile(cellLocation, tile);
-        if (tile.targetTilemap.TryGetComponent(out TileAttributes tileAttributes))
+        if (tile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
         {
             tileAttributes.MergeTile(cellLocation, tile, addedTiles.Keys.ToList());
         }
@@ -380,7 +379,7 @@ public class TilePlacementController : MonoBehaviour
         {
             removedTiles[cellLocation].Add(removedTile);
         }
-        if (replacedTilemap.TryGetComponent(out TileAttributes tileAttributes))
+        if (replacedTilemap.TryGetComponent(out TileContentsManager tileAttributes))
         {
             tileAttributes.RemoveTile(cellLocation);
         }

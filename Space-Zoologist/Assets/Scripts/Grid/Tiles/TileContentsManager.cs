@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-public class TileAttributes : MonoBehaviour
+public class TileContentsManager : MonoBehaviour
 {
     public Dictionary<Vector3Int, float[]> tileContents = new Dictionary<Vector3Int, float[]>();
     public Dictionary<Vector3Int, float[]> contentChangedTiles { get { return changedAttributes; } }
