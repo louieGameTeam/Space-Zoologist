@@ -870,6 +870,13 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
-  tileLayer: 4
-  sibings: []
-  auxillaryTile: {fileID: 0}
+  targetTilemap: {fileID: 0}
+  replacementTilemap: []
+  constraintTilemap: []
+  targetLayer: 4
+  replacementLayers: 
+  constraintLayers: 
+  auxillaryTiles: []
+  isRepresentative: 0
+  isMergingAttributes: 0
+  priority: 0

@@ -4,21 +4,14 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu]
-public class TerrainTile : RuleTile<TerrainTile.Neighbor> {
-
-    public enum TileLayer
-	{
-		BaseLayer,
-		Terrain,
-		LiquidBackground,
-		Liquid,
-		LiquidSurface,
-		LiquidTexture,
-		Grass
-	}
-	public TileLayer tileLayer;
-	public List<TileLayer> replacementLayers = new List<TileLayer>();
-	public List<TileLayer> constraintLayers = new List<TileLayer>();
+public class TerrainTile : RuleTile<TerrainTile.Neighbor> 
+{
+	public Tilemap targetTilemap;
+	public List<Tilemap> replacementTilemap;
+	public List<Tilemap> constraintTilemap;
+	public GridUtils.TileLayer targetLayer;
+	public List<GridUtils.TileLayer> replacementLayers;
+	public List<GridUtils.TileLayer> constraintLayers;
 	public List<TerrainTile> auxillaryTiles = new List<TerrainTile>();
 	public bool isRepresentative;
 	public bool isMergingAttributes;

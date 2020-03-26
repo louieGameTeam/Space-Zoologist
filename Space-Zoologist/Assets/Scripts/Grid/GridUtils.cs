@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class GridUtils
 {
+
+    public enum TileLayer
+    {
+        BaseLayer,
+        Terrain,
+        LiquidBackground,
+        Liquid,
+        LiquidSurface,
+        LiquidTexture,
+        Grass
+    }
     static public Vector3 AbsVector3(Vector3 vector)
     {
         Vector3 result = new Vector3()

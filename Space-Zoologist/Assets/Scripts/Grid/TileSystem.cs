@@ -6,11 +6,11 @@ using UnityEngine.Tilemaps;
 public class TileSystem : MonoBehaviour
 {
     // Start is called before the first frame update
-    private List<Tilemap> tilemaps;
+    private Tilemap[] tilemaps;
 
     private void Awake()
     {
-        tilemaps = GetComponent<TilePlacementController>().tilemapList;
+        tilemaps = GetComponent<TilePlacementController>().allTilemaps;
     }
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
@@ -49,7 +49,7 @@ public class TileSystem : MonoBehaviour
     /// <returns></returns>
     public bool TileExistsAtLocation(Vector3Int cellLocation, TerrainTile tile)
     {
-        return tilemaps[(int)tile.tileLayer].GetTile(cellLocation) == tile;
+        return tile.targetTilemap.GetTile(cellLocation) == tile;
     }
     /// <summary>
     /// Returns contents within a tile, e.g. Liquid Composition. If tile has no content, returns null.
@@ -60,7 +60,7 @@ public class TileSystem : MonoBehaviour
     {
         if (tile != null)
         {
-            if (tilemaps[(int)tile.tileLayer].TryGetComponent(out TileAttributes tileAttributes))
+            if (tile.targetTilemap.TryGetComponent(out TileAttributes tileAttributes))
             {
                 return tileAttributes.tileContents[cellLocation];
             }

@@ -870,11 +870,14 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
-  tileLayer: 6
+  targetTilemap: {fileID: 7124899088976284604, guid: 2a3ddfe9934e6524885659999fa692b9,
+    type: 3}
+  replacementTilemap: []
+  constraintTilemap: []
+  targetLayer: 6
   replacementLayers: 
   constraintLayers: 01000000
   auxillaryTiles: []
   isRepresentative: 1
   isMergingAttributes: 0
-  isChangingColor: 1
-  priority: 5
+  priority: 100
