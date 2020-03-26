@@ -23,6 +23,7 @@ public class TilePlacementController : MonoBehaviour
     [SerializeField] private TerrainTile[] terrainTiles = default;
     private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles placed
     private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
+    private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
@@ -99,29 +100,7 @@ public class TilePlacementController : MonoBehaviour
                 tilecContentsManager.ConfirmMerge();
             }
         }
-        if (colorLinkedTiles.Keys.Contains(selectedTile))
-        {
-            foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
-            {
-                TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
-                List<Vector3Int> affectedTileLocations = new List<Vector3Int>();
-                List<Vector3Int> changedTileLocations = addedTiles.Keys.ToList();
-                if (selectedTile.targetTilemap.TryGetComponent(out TileContentsManager tileContentsManager))
-                {
-                    changedTileLocations.AddRange(tileContentsManager.contentChangedTiles.Keys);
-                }
-                foreach (Vector3Int addedTileLocation in addedTiles.Keys.ToList())
-                {
-                    foreach (TerrainTile managedTile in tileColorManager.managedTiles)
-                    {
-                        foreach (Vector3Int affectedTileLocation in tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
-                        {
-                            tileColorManager.SetTileColor(affectedTileLocation, managedTile);
-                        }
-                    }
-                }
-            }
-        }
+        RenderColorOfColorLinkedTiles();
         if (selectedTile.targetTilemap.GetComponent<TileContentsManager>() == null && selectedTile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
         {
             foreach (Vector3Int vector3Int in addedTiles.Keys)
@@ -156,11 +135,32 @@ public class TilePlacementController : MonoBehaviour
                 tileAttributes.Revert();
             }
         }
+        RenderColorOfColorLinkedTiles();
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
         StopPreview();
 
+    }
+    public void RenderColorOfColorLinkedTiles()
+    {
+        if (colorLinkedTiles.Keys.Contains(selectedTile))
+        {
+            foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
+            {
+                TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
+                foreach (Vector3Int addedTileLocation in addedTiles.Keys.ToList())
+                {
+                    foreach (TerrainTile managedTile in tileColorManager.managedTiles)
+                    {
+                        foreach (Vector3Int affectedTileLocation in tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
+                        {
+                            tileColorManager.SetTileColor(affectedTileLocation, managedTile);
+                        }
+                    }
+                }
+            }
+        }
     }
     private void UpdatePreviewPen()
     {
@@ -257,7 +257,7 @@ public class TilePlacementController : MonoBehaviour
         {
             foreach (Vector3Int removeLocation in tilesToRemove)
             {
-                RestoreReplacedTile(removeLocation, selectedTile);
+                RestoreReplacedTile(removeLocation);
             }
             if (selectedTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
             {
@@ -334,7 +334,7 @@ public class TilePlacementController : MonoBehaviour
             return false;
         }
     }
-    private void RestoreReplacedTile (Vector3Int cellLocation, TerrainTile tile)
+    private void RestoreReplacedTile (Vector3Int cellLocation)
     {
         foreach (TerrainTile addedTile in addedTiles[cellLocation])
         {
@@ -351,6 +351,11 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
             addedTiles.Remove(cellLocation);
+        }
+        if (removedTileColors.ContainsKey(cellLocation))
+        {
+            removedTileColors[cellLocation].Values.First().SetColor(cellLocation, removedTileColors[cellLocation].Keys.First());
+            removedTileColors.Remove(cellLocation);
         }
     }
     private void AddNewTile(Vector3Int cellLocation, TerrainTile tile)
@@ -385,6 +390,14 @@ public class TilePlacementController : MonoBehaviour
         if (replacedTilemap.TryGetComponent(out TileContentsManager tileAttributes))
         {
             tileAttributes.RemoveTile(cellLocation);
+        }
+        if (replacedTilemap.TryGetComponent(out TileColorManager tileColorManager))
+        {
+            if (!removedTileColors.ContainsKey(cellLocation))
+            {
+                removedTileColors.Add(cellLocation, new Dictionary<Color, Tilemap>());
+                removedTileColors[cellLocation].Add(replacedTilemap.GetColor(cellLocation), replacedTilemap);
+            }
         }
         replacedTilemap.SetTile(cellLocation, null);
     }
