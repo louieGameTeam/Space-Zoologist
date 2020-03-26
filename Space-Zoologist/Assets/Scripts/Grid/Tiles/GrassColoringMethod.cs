@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ColoringMethodGrass : ColoringMethod
+public class GrassColoringMethod : ColoringMethod
 {
     private float[] gasComposition = new float[] { 0.5f, 0.2f, 0.3f };
     private float[] colorShitfDirt = new float[] { 0, 0.3f, 0.3f };

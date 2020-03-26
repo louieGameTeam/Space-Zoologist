@@ -19,8 +19,8 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int lastPlacedTile;
     private bool isFirstTile;
     public Tilemap[] allTilemaps { get { return tilemaps; } }
-    [SerializeField] private Tilemap[] tilemaps; // Order according to GridUtils.TileLayer
-    [SerializeField] private TerrainTile[] terrainTiles;
+    [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
+    [SerializeField] private TerrainTile[] terrainTiles = default;
     private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles placed
     private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 

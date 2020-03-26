@@ -71,7 +71,14 @@ public class TileSystem : MonoBehaviour
         }
         return null;
     }
-
+    /// <summary>
+    /// Returns the cell location of the tile closest to the given center. List contains multiple if more than one tile at same distance.
+    /// </summary>
+    /// <param name="centerCellLocation">The cell location to calculate distance to</param>
+    /// <param name="tile">The tile of interest</param>
+    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
+    /// <returns></returns>
     public List<Vector3Int> CellLocationsOfClosestTiles(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
     {
         int[] distance3 = new int[3];
@@ -120,6 +127,14 @@ public class TileSystem : MonoBehaviour
         }
         return closestTiles;
     }
+    /// <summary>
+    /// Returns distance of cloest tiles with different tile contents. e.g.Liquid composition
+    /// </summary>
+    /// <param name="centerCellLocation">The cell location to calculate distance to</param>
+    /// <param name="tile">The tile of interest</param>
+    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
+    /// <returns></returns>
     public Dictionary<float[], float> DistancesToClosestTilesOfEachBody(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
     {
         int[] distance3 = new int[3];
@@ -184,20 +199,28 @@ public class TileSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns distance of cloest tile from a given cell position. Scans tiles in a square within a given range, checks a total of (scanRange*2 + 1)^2 tiles. Returns -1 if not found.
+    /// Returns distance of cloest tile from a given cell position. Returns -1 if not found.
     /// </summary>
-    /// <param name="centerCellLocation"> Position of the center cell</param>
-    /// <param name="scanRange">Maximum displacement in x or y from the center cell</param>
-    /// <param name="tile"> Tile to look for </param>
+    /// <param name="centerCellLocation">The cell location to calculate distance to</param>
+    /// <param name="tile">The tile of interest</param>
+    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public float DistanceToClosestTile(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8)
+    public float DistanceToClosestTile(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
     {
-        int[] distance3 = new int[3];
         int i = 0;
         int posX = 0;
         int posY = 0;
         while (i < scanRange)
         {
+            float distance = Mathf.Sqrt(posX * posX + posY * posY);
+            if (isCircleMode && distance > scanRange)
+            {
+                i++;
+                posX = i;
+                posY = 0;
+                continue;
+            }
             if (posX == 0)
             {
                 if (GetTerrainTileAtLocation(centerCellLocation) == tile)
@@ -215,7 +238,7 @@ public class TileSystem : MonoBehaviour
             {
                 if (IsTileInAnyOfFour(posX, posY, centerCellLocation, tile))
                 {
-                    return Mathf.Sqrt(posX * posX + posY * posY);
+                    return distance;
                 }
                 i++;
                 posX = i;
@@ -225,7 +248,7 @@ public class TileSystem : MonoBehaviour
             {
                 if (IsTileInAnyOfEight(posX, posY, centerCellLocation, tile))
                 {
-                    return Mathf.Sqrt(posX * posX + posY * posY);
+                    return distance;
                 }
                 posY++;
             }
@@ -235,18 +258,29 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Returns a list of locations of all tiles in a certain range
     /// </summary>
-    /// <param name="cellLocation"></param>
-    /// <param name="scanRange"></param>
-    /// <param name="tile"></param>
+    /// <param name="centerCellLocation">The cell location to calculate range from</param>
+    /// <param name="tile">The tile of interest</param>
+    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public List<Vector3Int> AllCellLocationsOfTileInRange(Vector3Int cellLocation, int scanRange, TerrainTile tile)
+    public List<Vector3Int> AllCellLocationsOfTileInRange(Vector3Int centerCellLocation, int scanRange, TerrainTile tile, bool isCircleMode = false)
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
-        foreach(int x in GridUtils.Range(cellLocation.x - scanRange, cellLocation.x + scanRange))
+        Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
+        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
         {
-            foreach (int y in GridUtils.Range(cellLocation.y - scanRange, cellLocation.y + scanRange))
+            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
             {
-                Vector3Int scanLocation = new Vector3Int(x, y, cellLocation.z);
+                if (isCircleMode)
+                {
+                    float distance = Mathf.Sqrt(x * x + y * y);
+                    if (distance > scanRange)
+                    {
+                        continue;
+                    }
+                }
+                scanLocation.x = x;
+                scanLocation.y = y;
                 if (GetTerrainTileAtLocation(scanLocation) == tile)
                 {
                     tileLocations.Add(scanLocation);
@@ -258,13 +292,14 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Whether any of given tile is within a given range. 
     /// </summary>
-    /// <param name="cellLocation"></param>
-    /// <param name="scanRange"></param>
-    /// <param name="tile"></param>
+    /// <param name="centerCellLocation">The cell location to calculate range from</param>
+    /// <param name="tile">The tile of interest</param>
+    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public bool IsAnyTileInRange(Vector3Int cellLocation, int scanRange, TerrainTile tile)
+    public bool IsAnyTileInRange(Vector3Int centerCellLocation, int scanRange, TerrainTile tile, bool isCircleMode = false)
     {
-        if (DistanceToClosestTile(cellLocation,tile,scanRange) == -1)
+        if (DistanceToClosestTile(centerCellLocation, tile,scanRange, isCircleMode) == -1)
         {
             return false;
         }
