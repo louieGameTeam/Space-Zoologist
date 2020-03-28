@@ -9,11 +9,12 @@ public enum NeedCondition { Bad, Neutral, Good }
 [CreateAssetMenu]
 public class SpeciesNeed : ScriptableObject
 {
+    public NeedType Type => type;
+    public int Severity => severity;
+
     [SerializeField] private NeedType type = default;
-    public NeedType Type { get => type; }
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
-    public int Severity { get => severity; }
     [SerializeField] private List<NeedCondition> conditions = default;
     [SerializeField] private List<float> thresholds = default;
 
