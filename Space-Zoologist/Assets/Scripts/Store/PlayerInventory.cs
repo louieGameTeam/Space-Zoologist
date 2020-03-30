@@ -4,30 +4,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class PlayerInventory : MonoBehaviour
+// Should this be directly tied to JournalSystem so entries can be updated?
+// Or use an event system?
+public class PlayerInventory : MonoBehaviour, ISelectableItem
 {
-    [SerializeField] private GameObject UsableItemPrefab = default;
-    private List<GameObject> UsableItems = new List<GameObject>();
+    [SerializeField] private GameObject SelectableItemPrefab = default;
+    private List<GameObject> SelectableItems = new List<GameObject>();
     [SerializeField] private GameObject InventoryItemPopupPrefab = default;
     [SerializeField] private float playerFunds = default;
     public float PlayerFunds { get => playerFunds; set => playerFunds = value; }
-    private readonly ItemSelectedEvent OnItemSelected = new ItemSelectedEvent();
+    // [SerializeField] GameObject journal = default;
+    // private JournalSystem PlayerJournal = default;
+    private readonly ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
     private GameObject ItemSelected = default;
 
     public void Start()
     {
-        OnItemSelected.AddListener(DisplayOptions);
+        this.OnItemSelectedEvent.AddListener(this.OnItemSelected);
+        // this.PlayerJournal = this.journal.GetComponent<JournalSystem>();
     }
 
-    public void AddItem(StoreItemSO itemPurchased)
+    public void InitializeItem(ScriptableObject itemObtained)
     {
-        GameObject newItem = Instantiate(this.UsableItemPrefab, this.transform);
-        UsableItem usableItem = newItem.GetComponent<UsableItem>();
-        usableItem.InitializeItem(itemPurchased, this.OnItemSelected);
-        this.UsableItems.Add(newItem);
+        GameObject newItem = Instantiate(this.SelectableItemPrefab, this.transform);
+        SelectableItem selectableItem = newItem.GetComponent<SelectableItem>();
+        selectableItem.InitializeItem(itemObtained, this.OnItemSelectedEvent);
+        this.SelectableItems.Add(newItem);
+        //if (itemObtained.Discovered)
+        //{
+        //    this.PlayerJournal.InitializeItem(itemObtained);
+        //}
     }
 
-    public void DisplayOptions(GameObject itemSelected)
+    public void OnItemSelected(GameObject itemSelected)
     {
         this.ItemSelected = itemSelected;
         this.InventoryItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(UseItem);
@@ -36,33 +45,37 @@ public class PlayerInventory : MonoBehaviour
         this.InventoryItemPopupPrefab.SetActive(true);
     }
 
-    public void UseItem()
-    {
-        ClosePopup();
-    }
-
-    public void SellItem()
+    private void UseItem()
     {
         if (this.ItemSelected != null)
         {
-            UsableItem itemToRemove = this.ItemSelected.GetComponent<UsableItem>();
-            float something = 0.5f;
-            this.playerFunds += itemToRemove.itemInfo.ItemCost * something;
-            this.ItemSelected.SetActive(false);
-            this.UsableItems.Remove(this.ItemSelected);
-            TestDisplayFunds();
-            ClosePopup();
+
         }
+        ClosePopup();
     }
 
-    public void ClosePopup()
+    private void SellItem()
+    {
+        if (this.ItemSelected != null)
+        {
+            SelectableItem itemToRemove = this.ItemSelected.GetComponent<SelectableItem>();
+            float SomeModifier = 0.5f;
+            this.playerFunds += itemToRemove.ItemInfo.ItemCost * SomeModifier;
+            this.ItemSelected.SetActive(false);
+            this.SelectableItems.Remove(this.ItemSelected);
+        }
+        ClosePopup();
+    }
+
+    private void ClosePopup()
     {
         this.ItemSelected = null;
         this.InventoryItemPopupPrefab.SetActive(false);
+        TestDisplayFunds();
     }
 
     public void TestDisplayFunds()
     {
-        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "Funds: " + this.PlayerFunds;
+        GameObject.Find("PlayerFundsInInventory").GetComponent<Text>().text = "Funds: " + this.PlayerFunds;
     }
 }
