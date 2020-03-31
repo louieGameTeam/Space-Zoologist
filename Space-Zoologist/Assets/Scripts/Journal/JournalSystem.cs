@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // TODO: figure out how duplicate entries handled
+// TODO: determine how we want to have these laid out
 public class JournalSystem : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private GameObject JournalItemPrefab = default;
@@ -26,12 +27,13 @@ public class JournalSystem : MonoBehaviour, ISelectableItem
             InitializeItem(testItem);
         }
     }
+
     // Called when a new species (or item?) is found
     public void InitializeItem(ScriptableObject itemDiscovered)
     {
         GameObject newItem = Instantiate(this.JournalItemPrefab, this.transform);
         SelectableItem selectableItem = newItem.GetComponent<SelectableItem>();
-        selectableItem.InitializeItem(itemDiscovered, this.OnItemSelectedEvent);
+        selectableItem.Initialize(itemDiscovered, this.OnItemSelectedEvent);
         this.Journal.Add(new KeyValuePair<string, GameObject>(selectableItem.ItemInfo.ItemName, newItem));
     }
 

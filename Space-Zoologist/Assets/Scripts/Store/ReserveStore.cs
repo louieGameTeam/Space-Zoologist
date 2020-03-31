@@ -18,6 +18,9 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
     public void Start()
     {
         this.OnItemSelectedEvent.AddListener(this.OnItemSelected);
+        // Prefabs can't hold a reference to any specific scene objects so events have to be added by code
+        this.StoreItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(BuyItem);
+        this.StoreItemPopupPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(ClosePopup);
         this.playerInventory = this.PlayerInventoryContent.GetComponent<PlayerInventory>();  
     }
 
@@ -33,7 +36,7 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
     {
         GameObject newItem = Instantiate(this.SelectableItemPrefab, this.transform);
         SelectableItem selectableItem = newItem.GetComponent<SelectableItem>();
-        selectableItem.InitializeItem(storeItem, this.OnItemSelectedEvent);
+        selectableItem.Initialize(storeItem, this.OnItemSelectedEvent);
         this.AvailableItems.Add(newItem);
     }
 
@@ -42,10 +45,6 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
     public void OnItemSelected(GameObject itemSelected)
     {
         this.ItemSelected = itemSelected;
-        this.StoreItemPopupPrefab.SetActive(true);
-        // This can be done through the gui once we determine what functionality the popup should have
-        this.StoreItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(BuyItem);
-        this.StoreItemPopupPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(ClosePopup);
         this.StoreItemPopupPrefab.SetActive(true);
     }
 
@@ -61,7 +60,6 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
                 this.AvailableItems.Remove(this.ItemSelected);
                 this.playerInventory.PlayerFunds -= storeItem.ItemInfo.ItemCost;
                 this.playerInventory.InitializeItem(storeItem.ItemInfo);
-                TestDisplayFunds();
                 // Note: can't move SelectableItem GameObject from StoreContent GameObject to InventoryContent GameObject in hierarchy so need to create a new
                 // so a new SelectableItem GameObject has to be created
                 this.ItemSelected.SetActive(false);
@@ -78,6 +76,7 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
     {
         this.ItemSelected = null;
         this.StoreItemPopupPrefab.SetActive(false);
+        TestDisplayFunds();
     }
 
     public void TestDisplayFunds()

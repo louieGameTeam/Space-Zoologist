@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 // Should this be directly tied to JournalSystem so entries can be updated?
-// Or use an event system?
+// Or use an event system? 
 public class PlayerInventory : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private GameObject SelectableItemPrefab = default;
@@ -21,6 +21,9 @@ public class PlayerInventory : MonoBehaviour, ISelectableItem
     public void Start()
     {
         this.OnItemSelectedEvent.AddListener(this.OnItemSelected);
+        this.InventoryItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(UseItem);
+        this.InventoryItemPopupPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(SellItem);
+        this.InventoryItemPopupPrefab.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(ClosePopup);
         // this.PlayerJournal = this.journal.GetComponent<JournalSystem>();
     }
 
@@ -28,7 +31,7 @@ public class PlayerInventory : MonoBehaviour, ISelectableItem
     {
         GameObject newItem = Instantiate(this.SelectableItemPrefab, this.transform);
         SelectableItem selectableItem = newItem.GetComponent<SelectableItem>();
-        selectableItem.InitializeItem(itemObtained, this.OnItemSelectedEvent);
+        selectableItem.Initialize(itemObtained, this.OnItemSelectedEvent);
         this.SelectableItems.Add(newItem);
         //if (itemObtained.Discovered)
         //{
@@ -39,9 +42,6 @@ public class PlayerInventory : MonoBehaviour, ISelectableItem
     public void OnItemSelected(GameObject itemSelected)
     {
         this.ItemSelected = itemSelected;
-        this.InventoryItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(UseItem);
-        this.InventoryItemPopupPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(SellItem);
-        this.InventoryItemPopupPrefab.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(ClosePopup);
         this.InventoryItemPopupPrefab.SetActive(true);
     }
 

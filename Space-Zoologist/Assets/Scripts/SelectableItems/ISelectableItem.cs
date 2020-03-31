@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public interface ISelectableItem
 {
     /// <summary>
-    /// Initialize SelectableItem by passing in a ScriptableObject and the event with the delegated methods
+    /// Initialize SelectableItem by creating a GameObject and attaching SelectableItem and calling Initialize
     /// </summary>
     /// <param name="item"></param>
     void InitializeItem(ScriptableObject item);

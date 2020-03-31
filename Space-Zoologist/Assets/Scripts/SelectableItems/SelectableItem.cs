@@ -9,11 +9,12 @@ using UnityEngine.Events;
 /// </summary>
 /*
  * https://stackoverflow.com/questions/44734580/why-choose-unityevent-over-native-c-sharp-events
- * states that native c# events are better than unity events so if we decide to go with this implementation, might want to change
+ * states that native c# events are better than unity events in some cases so if we decide to go with this implementation, might want to change
  */
 public class ItemSelectedEvent : UnityEvent<GameObject> { }
 public class SelectableItem : MonoBehaviour
 {
+    // Modify to be more generic?
     public SelectableItemSO ItemInfo { get; set; }
     private ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
 
@@ -24,13 +25,14 @@ public class SelectableItem : MonoBehaviour
     /// <param name="item"></param>
     /// <param name="action"></param>
     // TODO: is there a better way to handle generics?
-    public void InitializeItem(ScriptableObject item, ItemSelectedEvent action)
-    {   if (item is Species)
+    public void Initialize(ScriptableObject item, ItemSelectedEvent action)
+    {
+        // Populates specific prefab with information based off of Scriptable Object type
+        if (item is Species)
         {
             this.ItemInfo = ScriptableObject.CreateInstance<SelectableItemSO>();
             this.ItemInfo.ItemName = ((Species)item).SpeciesName;
             this.ItemInfo.Sprite = ((Species)item).Sprite;
-            // TODO: setup a way to create the description based off of the needs of the item
         }
         else if (item is SelectableItemSO)
         {
