@@ -15,6 +15,8 @@ public class JournalSystem : MonoBehaviour, ISelectableItem
     private List<KeyValuePair<string, GameObject>> Journal = new List<KeyValuePair<string, GameObject>>();
     private readonly ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
 
+    // Category buttons
+
     public void Start()
     {
         this.OnItemSelectedEvent.AddListener(OnItemSelected);
