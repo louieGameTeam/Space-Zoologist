@@ -48,6 +48,8 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
         this.StoreItemPopupPrefab.SetActive(true);
     }
 
+
+
     private void BuyItem()
     {
         // If another item is selected, ClosePopup ensures the previous ItemSelected isn't bought
@@ -60,7 +62,7 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
                 this.AvailableItems.Remove(this.ItemSelected);
                 this.playerInventory.PlayerFunds -= storeItem.ItemInfo.ItemCost;
                 this.playerInventory.InitializeItem(storeItem.ItemInfo);
-                // Note: can't move SelectableItem GameObject from StoreContent GameObject to InventoryContent GameObject in hierarchy so need to create a new
+                // Note: can't move SelectableItem GameObject from StoreContent GameObject to InventoryContent GameObject in hierarchy,
                 // so a new SelectableItem GameObject has to be created
                 this.ItemSelected.SetActive(false);
             }
