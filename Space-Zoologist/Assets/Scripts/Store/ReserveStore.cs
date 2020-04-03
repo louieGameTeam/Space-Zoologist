@@ -6,83 +6,115 @@ using UnityEngine.Events;
 
 public class ReserveStore : MonoBehaviour, ISelectableItem
 {
+    [SerializeField] GameObject Grid = default;
+    private TilePlacementController TilePlacementController = default;
     [SerializeField] private GameObject SelectableItemPrefab = default;
-    [SerializeField] private GameObject StoreItemPopupPrefab = default;
     [Expandable] public List<ScriptableObject> StoreItemReferences = default;
+    [SerializeField] GameObject StoreContent = default;
     private List<GameObject> AvailableItems = new List<GameObject>();
-    [SerializeField] private GameObject PlayerInventoryContent = default;
-    private PlayerInventory playerInventory = default;
+    [SerializeField] float PlayerFunds = default;
+    [SerializeField] GameObject PlayerFundsDisplay;
+    // [SerializeField] private GameObject PlayerInventoryContent = default;
+    // private PlayerInventory playerInventory = default;
     private readonly ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
     private GameObject ItemSelected = default;
+    public UnityEvent CloseStore = default;
+    private bool BuyingTile = false;
+    private float TotalCost = 0;
+    private float ItemCost = 0;
+    private TerrainTile selectedTile = default;
 
     public void Start()
     {
         this.OnItemSelectedEvent.AddListener(this.OnItemSelected);
-        // Prefabs can't hold a reference to any specific scene objects so events have to be added by code
-        this.StoreItemPopupPrefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(BuyItem);
-        this.StoreItemPopupPrefab.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(ClosePopup);
-        this.playerInventory = this.PlayerInventoryContent.GetComponent<PlayerInventory>();  
+        this.TilePlacementController = this.Grid.GetComponent<TilePlacementController>();
     }
 
     public void InitializeStore()
     {
-        foreach(ScriptableObject storeItem in this.StoreItemReferences)
+        if (this.AvailableItems.Count == 0)
         {
-            InitializeItem(storeItem);
+            foreach (ScriptableObject storeItem in this.StoreItemReferences)
+            {
+                InitializeItem(storeItem);
+            }
         }
     }
 
     public void InitializeItem(ScriptableObject storeItem)
     {
-        GameObject newItem = Instantiate(this.SelectableItemPrefab, this.transform);
+        GameObject newItem = Instantiate(this.SelectableItemPrefab, this.StoreContent.transform);
         SelectableItem selectableItem = newItem.GetComponent<SelectableItem>();
         selectableItem.Initialize(storeItem, this.OnItemSelectedEvent);
         this.AvailableItems.Add(newItem);
     }
 
-    // TODO: figure out if there's a better way to handle disconnect between item selected and a popup
-    // - is there a clean way to pass the itemSelected between each event call instead of saving in the ItemSelected instance field
+    public void Update()
+    {
+        if (this.BuyingTile && this.selectedTile != null)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                TilePlacementController.StartPreview(this.selectedTile);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                TilePlacementController.StopPreview(this.selectedTile);
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                this.TilePlacementController.ResetTileCounter();
+                BuyItem();
+                this.BuyingTile = false;
+            }
+            this.TotalCost = this.TilePlacementController.NumTilesPlaced;
+            this.TestDisplayFunds();
+        }
+    }
+
     public void OnItemSelected(GameObject itemSelected)
     {
         this.ItemSelected = itemSelected;
-        this.StoreItemPopupPrefab.SetActive(true);
+        if (itemSelected.GetComponent<SelectableItem>().ItemInfo.ItemDescription.Equals("landscaping"))
+        {
+            this.BuyingTile = true;
+            this.selectedTile = (TerrainTile)itemSelected.GetComponent<SelectableItem>().OriginalItem;
+        }
+        this.ItemCost = this.ItemSelected.GetComponent<SelectableItem>().ItemInfo.ItemCost;
+        this.CloseStore.Invoke();
+        // TODO: when item is selected, start listening for when player lets go in update
     }
-
-
 
     private void BuyItem()
     {
-        // If another item is selected, ClosePopup ensures the previous ItemSelected isn't bought
         if (this.ItemSelected != null)
         {
-            // Get the ItemInfo and then check if the player has enough funds
-            SelectableItem storeItem = this.ItemSelected.GetComponent<SelectableItem>();
-            if (storeItem.ItemInfo.ItemCost <= this.playerInventory.PlayerFunds)
+            // Check if the player has enough funds
+            if (this.TotalCost <= this.PlayerFunds)
             {
-                this.AvailableItems.Remove(this.ItemSelected);
-                this.playerInventory.PlayerFunds -= storeItem.ItemInfo.ItemCost;
-                this.playerInventory.InitializeItem(storeItem.ItemInfo);
+                this.PlayerFunds -= this.TotalCost;
+                //this.AvailableItems.Remove(this.ItemSelected);
                 // Note: can't move SelectableItem GameObject from StoreContent GameObject to InventoryContent GameObject in hierarchy,
                 // so a new SelectableItem GameObject has to be created
                 this.ItemSelected.SetActive(false);
             }
             else
             {
-                Debug.Log("Insufficient Funds");
+                if (this.BuyingTile)
+                {
+                    Debug.Log("not reverting");
+                    this.TilePlacementController.RevertChanges();
+                }
             }
         }
-        ClosePopup();
-    }
-
-    private void ClosePopup()
-    {
-        this.ItemSelected = null;
-        this.StoreItemPopupPrefab.SetActive(false);
-        TestDisplayFunds();
     }
 
     public void TestDisplayFunds()
     {
-        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "Funds: " + this.playerInventory.PlayerFunds;
+        if (this.ItemSelected != null)
+        {
+            this.PlayerFundsDisplay.GetComponent<Text>().text = "Funds: " + this.PlayerFunds +
+            "(-" + this.TotalCost + ")";
+        }
     }
 }

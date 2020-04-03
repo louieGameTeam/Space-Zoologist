@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/Testers/TilePreviewTester.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/TilePlacementController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="17" Column="1" />
-      <File FileName="Assets/Scripts/Store/PlayerInventory.cs" Line="19" Column="47" />
-      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" />
-      <File FileName="Assets/Scripts/SelectableItems/ISelectableItem.cs" />
-      <File FileName="Assets/Scripts/Journal/JournalSystem.cs" />
-      <File FileName="Assets/Scripts/HUD/HUDTesting.cs" />
-      <File FileName="Assets/Scripts/Grid/Testers/TilePreviewTester.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="24" Column="16" />
+      <File FileName="Assets/Scripts/Grid/Testers/TilePreviewTester.cs" Line="49" Column="37" />
+      <File FileName="Assets/Scripts/SelectableItems/SelectableItemSO.cs" Line="19" Column="17" />
+      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" Line="37" Column="40" />
+      <File FileName="Assets/Scripts/Journal/JournalSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="86" Column="30" />
+      <File FileName="Assets/Scripts/Grid/Tiles/TerrainTile.cs" Line="8" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,12 +16,13 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Grid" expanded="True">
-                  <Node name="Testers" expanded="True">
-                    <Node name="TilePreviewTester.cs" selected="True" />
-                  </Node>
+                  <Node name="Testers" expanded="True" />
+                  <Node name="Tiles" expanded="True" />
+                  <Node name="TilePlacementController.cs" selected="True" />
                 </Node>
                 <Node name="HUD" expanded="True" />
                 <Node name="Journal" expanded="True" />
+                <Node name="SelectableItems" expanded="True" />
                 <Node name="Store" expanded="True" />
               </Node>
             </Node>

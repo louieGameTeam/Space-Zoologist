@@ -30,6 +30,7 @@ public class TilePlacementController : MonoBehaviour
     private TileSystem tileSystem;
     private int lastCornerX;
     private int lastCornerY;
+    public int NumTilesPlaced = 0;
     private void Awake()
     {
         tileSystem = FindObjectOfType<TileSystem>();
@@ -91,8 +92,9 @@ public class TilePlacementController : MonoBehaviour
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
     }
-    public void StopPreview()
+    public void StopPreview(TerrainTile newTile)
     {
+        this.selectedTile = newTile;
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
         foreach (Tilemap tilemap1 in tilemaps)
@@ -149,7 +151,7 @@ public class TilePlacementController : MonoBehaviour
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
-        StopPreview();
+        StopPreview(this.selectedTile);
     }
     public void RenderColorOfColorLinkedTiles()
     {
@@ -336,6 +338,7 @@ public class TilePlacementController : MonoBehaviour
             }
             lastPlacedTile = cellLocation;
             isFirstTile = false;
+            this.NumTilesPlaced++;
             return true;
         }
         else
@@ -435,5 +438,9 @@ public class TilePlacementController : MonoBehaviour
                 GetNeighborCellLocations(tileToCheck, tile, targetTilemap);
             }
         }
+    }
+    public void ResetTileCounter()
+    {
+        this.NumTilesPlaced = 0;
     }
 }

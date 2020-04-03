@@ -13,8 +13,10 @@ public class SelectableItemSO : ScriptableObject
     public float ItemCost { get => itemCost; set => itemCost = value; }
     [SerializeField] private string itemDescription = default;
     public string ItemDescription { get => itemDescription; set => itemDescription = value; }
-    [SerializeField] private string itemCategory = default;
-    public string ItemCategory { get => itemCategory; set => itemCategory = value; }
+    //[SerializeField] private string itemCategory = default;
+    //public string ItemCategory { get => itemCategory; set => itemCategory = value; }
+    [SerializeField] private Color itemCategory = default;
+    public Color ItemCategory { get => itemCategory; set => itemCategory = value; }
     [SerializeField] private Sprite sprite = default;
     public Sprite Sprite { get => sprite; set => sprite = value; }
 }

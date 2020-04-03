@@ -16,6 +16,7 @@ public class SelectableItem : MonoBehaviour
 {
     // Modify to be more generic?
     public SelectableItemSO ItemInfo { get; set; }
+    public ScriptableObject OriginalItem { get; set; }
     private ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
 
     /// <summary>
@@ -33,14 +34,27 @@ public class SelectableItem : MonoBehaviour
             this.ItemInfo = ScriptableObject.CreateInstance<SelectableItemSO>();
             this.ItemInfo.ItemName = ((Species)item).SpeciesName;
             this.ItemInfo.Sprite = ((Species)item).Sprite;
+            ColorBlock cb = this.gameObject.GetComponent<Button>().colors;
+            cb.normalColor = Color.cyan;
+            this.gameObject.GetComponent<Button>().colors = cb;
         }
         else if (item is SelectableItemSO)
         {
             this.ItemInfo = (SelectableItemSO)item;
+            ColorBlock cb = this.gameObject.GetComponent<Button>().colors;
+            cb.normalColor = this.ItemInfo.ItemCategory;
+            this.gameObject.GetComponent<Button>().colors = cb;
+        }
+        else if (item is TerrainTile)
+        {
+            this.ItemInfo = ScriptableObject.CreateInstance<SelectableItemSO>();
+            this.ItemInfo.ItemName = ((TerrainTile)item).type.ToString();
+            this.ItemInfo.ItemDescription = "landscaping";
+            this.OriginalItem = item;
+            // TODO: figure out how image can be added
         }
         this.gameObject.transform.GetChild(0).GetComponent<Text>().text = this.ItemInfo.ItemName;
         this.gameObject.transform.GetChild(1).GetComponent<Text>().text = this.ItemInfo.ItemCost.ToString();
-        this.gameObject.transform.GetChild(2).GetComponent<Text>().text = this.ItemInfo.ItemDescription;
         this.gameObject.transform.GetChild(3).GetComponent<Image>().sprite = this.ItemInfo.Sprite;
         this.OnItemSelectedEvent = action;
     }
