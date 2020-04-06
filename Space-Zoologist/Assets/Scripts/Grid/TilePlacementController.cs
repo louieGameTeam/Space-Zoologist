@@ -112,10 +112,10 @@ public class TilePlacementController : MonoBehaviour
                 placedTileColorManager.SetTileColor(vector3Int, selectedTile);
             }
         }
-        removedTileColors.Clear();
-        addedTiles.Clear();
-        removedTiles.Clear();
-        triedToPlaceTiles.Clear();
+        //removedTileColors.Clear();
+        //addedTiles.Clear();
+        //removedTiles.Clear();
+        //triedToPlaceTiles.Clear();
     }
     public void RevertChanges()
     {
@@ -147,11 +147,20 @@ public class TilePlacementController : MonoBehaviour
         {
             removedTileColors[colorChangedTiles].Values.First().SetColor(colorChangedTiles, removedTileColors[colorChangedTiles].Keys.First());
         }
+        //removedTileColors.Clear();
+        //addedTiles.Clear();
+        //removedTiles.Clear();
+        //triedToPlaceTiles.Clear();
+        this.StopKeepingTrack();
+        StopPreview(this.selectedTile);
+    }
+    public void StopKeepingTrack()
+    {
         removedTileColors.Clear();
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
-        StopPreview(this.selectedTile);
+        this.NumTilesPlaced = 0;
     }
     public void RenderColorOfColorLinkedTiles()
     {
@@ -307,6 +316,7 @@ public class TilePlacementController : MonoBehaviour
                 if (replacingTilemap.HasTile(cellLocation))
                 {
                     ReplaceTile(replacingTilemap, cellLocation);
+                    this.NumTilesPlaced--;
                 }
             }
             // Add new tiles
@@ -335,6 +345,7 @@ public class TilePlacementController : MonoBehaviour
             else
             {
                 triedToPlaceTiles.Add(cellLocation);
+                this.NumTilesPlaced--;
             }
             lastPlacedTile = cellLocation;
             isFirstTile = false;
@@ -438,9 +449,5 @@ public class TilePlacementController : MonoBehaviour
                 GetNeighborCellLocations(tileToCheck, tile, targetTilemap);
             }
         }
-    }
-    public void ResetTileCounter()
-    {
-        this.NumTilesPlaced = 0;
     }
 }

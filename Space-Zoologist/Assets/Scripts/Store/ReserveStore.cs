@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+// Replaced tiles don't get reverted and their cost still increases
+// Switching from liquid to dirt placement can cause issues:
+// - TileContentsManager l:113 - key not present (only sometimes)
+// - tiles not counted since liquid tiles placed differently
+// Block doesn't working when selecting different areas to start from and count not updated properly
 public class ReserveStore : MonoBehaviour, ISelectableItem
 {
     [SerializeField] GameObject Grid = default;
@@ -19,10 +24,8 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
     private readonly ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
     private GameObject ItemSelected = default;
     public UnityEvent CloseStore = default;
-    private bool BuyingTile = false;
+    private TerrainTile TileToBuy = null;
     private float TotalCost = 0;
-    private float ItemCost = 0;
-    private TerrainTile selectedTile = default;
 
     public void Start()
     {
@@ -51,36 +54,48 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
 
     public void Update()
     {
-        if (this.BuyingTile && this.selectedTile != null)
+        if (this.TileToBuy != null)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                TilePlacementController.StartPreview(this.selectedTile);
+                this.TilePlacementController.StartPreview(this.TileToBuy);
             }
             if (Input.GetMouseButtonUp(0))
             {
-                TilePlacementController.StopPreview(this.selectedTile);
+                this.TilePlacementController.StopPreview(this.TileToBuy);
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("Space pressed");
+                BuyItem();
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                this.TilePlacementController.ResetTileCounter();
-                BuyItem();
-                this.BuyingTile = false;
+                Debug.Log("Escape pressed");
+                this.CancelPurchase();
             }
+            if (Input.GetKeyUp(KeyCode.B))
+            {
+                this.TilePlacementController.isBlockMode = !this.TilePlacementController.isBlockMode;
+            }
+            // TODO: have block mode work for handling different starting points
             this.TotalCost = this.TilePlacementController.NumTilesPlaced;
-            this.TestDisplayFunds();
         }
+        this.TestDisplayFunds();
     }
 
     public void OnItemSelected(GameObject itemSelected)
     {
         this.ItemSelected = itemSelected;
+        this.TotalCost = this.ItemSelected.GetComponent<SelectableItem>().ItemInfo.ItemCost;
         if (itemSelected.GetComponent<SelectableItem>().ItemInfo.ItemDescription.Equals("landscaping"))
         {
-            this.BuyingTile = true;
-            this.selectedTile = (TerrainTile)itemSelected.GetComponent<SelectableItem>().OriginalItem;
+            this.TileToBuy = (TerrainTile)itemSelected.GetComponent<SelectableItem>().OriginalItem;
         }
-        this.ItemCost = this.ItemSelected.GetComponent<SelectableItem>().ItemInfo.ItemCost;
+        else
+        {
+            this.BuyItem();
+        }
         this.CloseStore.Invoke();
         // TODO: when item is selected, start listening for when player lets go in update
     }
@@ -93,28 +108,56 @@ public class ReserveStore : MonoBehaviour, ISelectableItem
             if (this.TotalCost <= this.PlayerFunds)
             {
                 this.PlayerFunds -= this.TotalCost;
-                //this.AvailableItems.Remove(this.ItemSelected);
-                // Note: can't move SelectableItem GameObject from StoreContent GameObject to InventoryContent GameObject in hierarchy,
-                // so a new SelectableItem GameObject has to be created
-                this.ItemSelected.SetActive(false);
+                if (this.TileToBuy != null)
+                {
+                    this.TilePlacementController.StopKeepingTrack();
+                    this.TileToBuy = null;
+                    Debug.Log("Tile(s) purchased");
+                }
+                else
+                {
+                    Debug.Log("Item purchased");
+                }
             }
             else
             {
-                if (this.BuyingTile)
+                if (this.TileToBuy != null)
                 {
-                    Debug.Log("not reverting");
-                    this.TilePlacementController.RevertChanges();
+                    Debug.Log("Insufficient funds");
+                    this.CancelPlacement();
                 }
             }
         }
+        this.TotalCost = 0;
+    }
+
+    public void CancelPurchase()
+    {
+        if (this.TileToBuy != null)
+        {
+            this.TilePlacementController.RevertChanges();
+            this.TileToBuy = null;
+        }
+        this.TotalCost = 0;
+        Debug.Log("Purchase cancelled");
+    }
+
+    public void CancelPlacement()
+    {
+        this.TilePlacementController.RevertChanges();
+        Debug.Log("Placement cancelled");
     }
 
     public void TestDisplayFunds()
     {
-        if (this.ItemSelected != null)
+        if (this.TotalCost > 0)
         {
             this.PlayerFundsDisplay.GetComponent<Text>().text = "Funds: " + this.PlayerFunds +
             "(-" + this.TotalCost + ")";
+        }
+        else
+        {
+            this.PlayerFundsDisplay.GetComponent<Text>().text = "Funds: " + this.PlayerFunds;
         }
     }
 }

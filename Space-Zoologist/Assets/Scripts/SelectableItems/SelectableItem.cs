@@ -26,6 +26,8 @@ public class SelectableItem : MonoBehaviour
     /// <param name="item"></param>
     /// <param name="action"></param>
     // TODO: is there a better way to handle generics?
+    // TODO: figure out how other scriptable objects prices should be set
+    // Possibly a custom gui thing
     public void Initialize(ScriptableObject item, ItemSelectedEvent action)
     {
         // Populates specific prefab with information based off of Scriptable Object type
@@ -48,10 +50,14 @@ public class SelectableItem : MonoBehaviour
         else if (item is TerrainTile)
         {
             this.ItemInfo = ScriptableObject.CreateInstance<SelectableItemSO>();
-            this.ItemInfo.ItemName = ((TerrainTile)item).type.ToString();
+            this.ItemInfo.ItemName = ((TerrainTile)item).TileName;
             this.ItemInfo.ItemDescription = "landscaping";
+            ColorBlock cb = this.gameObject.GetComponent<Button>().colors;
+            cb.normalColor = Color.yellow;
+            this.gameObject.GetComponent<Button>().colors = cb;
+            this.ItemInfo.ItemCost = 1f;
             this.OriginalItem = item;
-            // TODO: figure out how image can be added
+            // TODO: figure out how images can be added
         }
         this.gameObject.transform.GetChild(0).GetComponent<Text>().text = this.ItemInfo.ItemName;
         this.gameObject.transform.GetChild(1).GetComponent<Text>().text = this.ItemInfo.ItemCost.ToString();

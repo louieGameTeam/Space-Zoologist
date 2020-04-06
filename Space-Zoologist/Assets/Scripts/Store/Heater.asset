@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9dd1177cc37a461c922471e0c63055e, type: 3}
-  m_Name: Sand
+  m_Name: Heater
   m_EditorClassIdentifier: 
-  itemName: Sand
-  itemCost: 1
-  itemDescription: 
-  itemCategory: {r: 0.745283, g: 0.53400683, b: 0.17928976, a: 1}
-  sprite: {fileID: -4649990736830273930, guid: 5c45237c93acfef4cb4b168592ffd344, type: 3}
+  itemName: Heater
+  itemCost: 10
+  itemDescription: Heat up the temperature in a ten tile radius
+  itemCategory: {r: 0.18222678, g: 0.4245283, b: 0.24367534, a: 1}
+  sprite: {fileID: 0}
