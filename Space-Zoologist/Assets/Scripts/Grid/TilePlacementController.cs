@@ -151,6 +151,7 @@ public class TilePlacementController : MonoBehaviour
         //addedTiles.Clear();
         //removedTiles.Clear();
         //triedToPlaceTiles.Clear();
+        Debug.Log("Placement cancelled");
         this.StopKeepingTrack();
         StopPreview(this.selectedTile);
     }

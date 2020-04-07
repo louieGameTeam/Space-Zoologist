@@ -27,7 +27,7 @@ public class SelectableItem : MonoBehaviour
     /// <param name="action"></param>
     // TODO: is there a better way to handle generics?
     // TODO: figure out how other scriptable objects prices should be set
-    // Possibly a custom gui thing
+    // Possibly a custom gui thing 
     public void Initialize(ScriptableObject item, ItemSelectedEvent action)
     {
         // Populates specific prefab with information based off of Scriptable Object type
