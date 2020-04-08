@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The interface of a system that calculates a particular need.
+/// The interface of a system that calculates a particular need. Each INeedSystem should only handle one need type. When a population is registered for 
 /// </summary>
 public interface INeedSystem
 {
