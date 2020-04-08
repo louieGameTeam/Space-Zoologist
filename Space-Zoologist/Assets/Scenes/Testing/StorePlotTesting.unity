@@ -385,7 +385,7 @@ RectTransform:
   m_Children:
   - {fileID: 1883399593}
   m_Father: {fileID: 548485615}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -522,7 +522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4484f7f6bca7d4320a2e0a4b9b6e27cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 1321963814}
   SelectableItemPrefab: {fileID: 5244455026466092407, guid: c6fd03b637e8148468b1e3cac2cbdde1,
     type: 3}
   StoreItemReferences:
@@ -532,23 +531,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c17acc8ceac2458aaaa04592c7c29c2, type: 2}
   - {fileID: 11400000, guid: b68e0ef0adf2746f8a217c383826912e, type: 2}
   StoreContent: {fileID: 45656415}
-  PlayerFunds: 1000
-  PlayerFundsDisplay: {fileID: 1942482902}
-  TestImage: {fileID: 691636237}
-  CloseStore:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 548485616}
-        m_MethodName: CloseStoreDisplay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  playerController: {fileID: 2006930187}
 --- !u!4 &152888548
 Transform:
   m_ObjectHideFlags: 0
@@ -958,7 +941,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 691636238}
   - {fileID: 60996005}
   - {fileID: 1942482903}
   m_Father: {fileID: 1534845802}
@@ -984,6 +966,8 @@ MonoBehaviour:
   StoreDisplay: {fileID: 1324579411}
   StoreDisplayButton: {fileID: 60996004}
   CloseDisplayButton: {fileID: 560670429}
+  PlayerInfo: {fileID: 2006930187}
+  PlayerFundsDisplay: {fileID: 1942482904}
 --- !u!1 &560670429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,79 +1173,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685953460}
-  m_CullTransparentMesh: 0
---- !u!1 &691636237
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 691636238}
-  - component: {fileID: 691636240}
-  - component: {fileID: 691636239}
-  m_Layer: 0
-  m_Name: HoverItem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &691636238
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691636237}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 548485615}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -522.2001, y: 178.19995}
-  m_SizeDelta: {x: -50, y: -50}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &691636239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691636237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.54901963}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7d3ecd42d74bf4bd0b470cbbc89f6c76, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &691636240
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691636237}
   m_CullTransparentMesh: 0
 --- !u!1 &808533101
 GameObject:
@@ -2056,7 +1967,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
   - {fileID: 11400000, guid: 89a14f3ed2f2a9e4b92fcb521dbe1ec2, type: 2}
   - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
-  NumTilesPlaced: 0
 --- !u!156049354 &1321963820
 Grid:
   m_ObjectHideFlags: 0
@@ -2728,7 +2638,7 @@ RectTransform:
   m_LocalScale: {x: 0.9157901, y: 0.9157901, z: 0.9157901}
   m_Children: []
   m_Father: {fileID: 548485615}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2775,6 +2685,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942482902}
   m_CullTransparentMesh: 0
+--- !u!1 &2006930186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2006930188}
+  - component: {fileID: 2006930187}
+  m_Layer: 0
+  m_Name: PlayerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2006930187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006930186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31b29894b7854e678fb6b176908187d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StoreManager: {fileID: 152888547}
+  PlayerFunds: 1000
+  tilePlacementController: {fileID: 1321963819}
+  CloseStore:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 548485616}
+        m_MethodName: CloseStoreDisplay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ItemPurchased:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 548485616}
+        m_MethodName: ClosePlayerFundsDisplay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &2006930188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006930186}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 552.5664, y: 266.83636, z: -2234.8037}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2044334006
 GameObject:
   m_ObjectHideFlags: 0

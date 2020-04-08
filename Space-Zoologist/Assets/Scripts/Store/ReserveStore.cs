@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 
 public class ReserveStore : MonoBehaviour
 {
@@ -60,7 +57,7 @@ public class ReserveStore : MonoBehaviour
         }
     }
 
-    // Will be used to handle selling
+    // Will be used to handle selling when tiles ha more functionality
     public void CancelPurchase()
     {
         Debug.Log("Purchase cancelled");

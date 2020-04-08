@@ -1,13 +1,14 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/TilePlacementController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Store/ReserveStore.cs">
     <Files>
-      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="98" Column="42" />
-      <File FileName="Assets/Scripts/Store/PlayerController.cs" Line="45" Column="13" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="120" Column="17" />
-      <File FileName="Assets/Scripts/SelectableItems/SelectableItemSO.cs" Line="15" Column="94" />
-      <File FileName="Assets/Scripts/HUD/HUDTesting2.cs" Line="14" Column="24" />
-      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" Line="30" Column="36" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="63" Column="54" />
+      <File FileName="Assets/Scripts/Store/PlayerController.cs" Line="6" Column="7" />
+      <File FileName="Assets/Scripts/HUD/HUDTesting2.cs" Line="27" Column="21" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/SelectableItems/SelectableItemSO.cs" Line="6" Column="90" />
+      <File FileName="Assets/Scripts/Grid/Tiles/TerrainTile.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Grid/Testers/TilePreviewTester.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,12 +19,12 @@
                 <Node name="Grid" expanded="True">
                   <Node name="Testers" expanded="True" />
                   <Node name="Tiles" expanded="True" />
-                  <Node name="TilePlacementController.cs" selected="True" />
                 </Node>
                 <Node name="HUD" expanded="True" />
-                <Node name="Journal" expanded="True" />
                 <Node name="SelectableItems" expanded="True" />
-                <Node name="Store" expanded="True" />
+                <Node name="Store" expanded="True">
+                  <Node name="ReserveStore.cs" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>

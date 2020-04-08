@@ -5,6 +5,17 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+/*
+ Features wanted:
+ Trigger to stop keeping track of changes instead of only being able to revert changes made before pen picked up
+ - Ability to place multiple tiles while keeping track of changes
+ Able to count number of tiles placed for store to know how much to charge
+ - For block mode and replaced tiles
+
+ Known issues:
+ Switching from liquid to other tile placement can cause issues, hard to track down
+ */
+
 public class TilePlacementController : MonoBehaviour
 {
     // Can be either pen or block mode.
@@ -30,7 +41,6 @@ public class TilePlacementController : MonoBehaviour
     private TileSystem tileSystem;
     private int lastCornerX;
     private int lastCornerY;
-    public int NumTilesPlaced = 0;
     private void Awake()
     {
         tileSystem = FindObjectOfType<TileSystem>();
@@ -112,10 +122,10 @@ public class TilePlacementController : MonoBehaviour
                 placedTileColorManager.SetTileColor(vector3Int, selectedTile);
             }
         }
-        //removedTileColors.Clear();
-        //addedTiles.Clear();
-        //removedTiles.Clear();
-        //triedToPlaceTiles.Clear();
+        removedTileColors.Clear();
+        addedTiles.Clear();
+        removedTiles.Clear();
+        triedToPlaceTiles.Clear();
     }
     public void RevertChanges()
     {
@@ -147,22 +157,13 @@ public class TilePlacementController : MonoBehaviour
         {
             removedTileColors[colorChangedTiles].Values.First().SetColor(colorChangedTiles, removedTileColors[colorChangedTiles].Keys.First());
         }
-        //removedTileColors.Clear();
-        //addedTiles.Clear();
-        //removedTiles.Clear();
-        //triedToPlaceTiles.Clear();
-        Debug.Log("Placement cancelled");
-        this.StopKeepingTrack();
-        StopPreview(this.selectedTile);
-    }
-    public void StopKeepingTrack()
-    {
         removedTileColors.Clear();
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
-        this.NumTilesPlaced = 0;
+        StopPreview(this.selectedTile);
     }
+
     public void RenderColorOfColorLinkedTiles()
     {
         if (colorLinkedTiles.Keys.Contains(selectedTile))
@@ -317,7 +318,6 @@ public class TilePlacementController : MonoBehaviour
                 if (replacingTilemap.HasTile(cellLocation))
                 {
                     ReplaceTile(replacingTilemap, cellLocation);
-                    this.NumTilesPlaced--;
                 }
             }
             // Add new tiles
@@ -346,11 +346,9 @@ public class TilePlacementController : MonoBehaviour
             else
             {
                 triedToPlaceTiles.Add(cellLocation);
-                this.NumTilesPlaced--;
             }
             lastPlacedTile = cellLocation;
             isFirstTile = false;
-            this.NumTilesPlaced++;
             return true;
         }
         else

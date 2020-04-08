@@ -1,33 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
-// Known issues:
-// Replaced tiles don't get reverted and their cost still increases
-// Switching from liquid to other tile placement can cause issues:
-// - TileContentsManager l:113 - key not present (only sometimes)
-// - tiles not counted since liquid tiles placed differently
-// Blockmode doesn't working when selecting different areas to start from and count not updated properly
-
+// some code commented out until TilePlacementController updated with needed features
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] ReserveStore StoreManager = default;
     [SerializeField] public float PlayerFunds = default;
-    [SerializeField] GameObject PlayerFundsDisplay;
+    [Tooltip("Should be attached to the Grid GameObject")]
     [SerializeField] TilePlacementController tilePlacementController = default;
-    [SerializeField] HUDTesting2 HUD = default;
     private TerrainTile TileToBuy = null;
-    public GameObject ItemSelected = default;
-    public int NumCopies = 0;
-    public readonly ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
-    // Start is called before the first frame update
-    void Start()
+    public GameObject ItemSelected { get; set; }
+    public int NumCopies { get; set; }
+    public ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
+    // TODO: figure out a better way of communicating with HUD
+    public UnityEvent CloseStore = new UnityEvent();
+    public UnityEvent ItemPurchased = new UnityEvent();
+
+    public void Start()
     {
-        
+        this.ItemSelected = null;
+        this.NumCopies = 1;
+        this.OnItemSelectedEvent.AddListener(this.OnItemSelected);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (this.TileToBuy != null)
@@ -49,27 +44,30 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Space pressed");
             if (this.StoreManager.BuyItem(ref this.PlayerFunds, this.ItemSelected, this.NumCopies))
             {
-                this.tilePlacementController.StopKeepingTrack();   
+                // this.tilePlacementController.StopKeepingTrack();   
             }
             else
             {
                 this.tilePlacementController.RevertChanges();
             }
+            this.TileToBuy = null;
+            this.ItemPurchased.Invoke();
+            this.ItemSelected = null;
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Escape pressed");
             this.StoreManager.CancelPurchase();
             this.tilePlacementController.RevertChanges();
+            this.TileToBuy = null;
+            this.ItemSelected = null;
         }
         if (Input.GetKeyUp(KeyCode.B))
         {
             this.tilePlacementController.isBlockMode = !this.tilePlacementController.isBlockMode;
         }
-        this.NumCopies = this.tilePlacementController.NumTilesPlaced;
+        // this.NumCopies = this.tilePlacementController.NumTilesPlaced;
     }
 
     // all items that can be selected by play should go through this
@@ -84,7 +82,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             this.StoreManager.BuyItem(ref this.PlayerFunds, this.ItemSelected, this.NumCopies);
+            this.ItemPurchased.Invoke();
+            this.ItemSelected = null;
         }
+        this.CloseStore.Invoke();
         // Need to get sprite of item and apply to gameobject, set true, then lerp from gameobject to cursor position in update
     }
 }

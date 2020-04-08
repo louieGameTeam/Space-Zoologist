@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 
-// class name might be a little confusing, trying to determine if making this a parent class of the species scriptable object makes sense
+// many of these properties would ideally be attached to most ScriptableObjects, some big refactoring needed though
 [CreateAssetMenu]
 public class SelectableItemSO : ScriptableObject
 {
