@@ -8,7 +8,8 @@ using UnityEngine.Tilemaps;
 public class TileContentsManager : MonoBehaviour
 {
     public Dictionary<Vector3Int, float[]> tileContents = new Dictionary<Vector3Int, float[]>();
-    public Dictionary<Vector3Int, float[]> contentChangedTiles { get { return changedAttributes; } }
+    public List<Vector3Int> changedTilesPositions { get { return allChangedAttributes.Keys.ToList(); } }
+    public List<Vector3Int> addedTilePositions { get { return allAddedAttributes.Keys.ToList(); } }
     private Dictionary<Vector3Int, float[]> changedAttributes = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> allChangedAttributes = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> addedAttributes = new Dictionary<Vector3Int, float[]>();

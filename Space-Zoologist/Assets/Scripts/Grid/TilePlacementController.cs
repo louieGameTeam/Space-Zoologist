@@ -118,7 +118,7 @@ public class TilePlacementController : MonoBehaviour
                 tilecContentsManager.ConfirmMerge();
             }
         }
-        RenderColorOfColorLinkedTiles();
+        RenderColorOfColorLinkedTiles(addedTiles.Keys.ToList());
         if (selectedTile.targetTilemap.GetComponent<TileContentsManager>() == null && selectedTile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
         {
             foreach (Vector3Int vector3Int in addedTiles.Keys)
@@ -147,7 +147,16 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
-
+        foreach (Tilemap tilemap in tilemaps)
+        {
+            if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
+            {
+                List<Vector3Int> changedTiles = tileAttributes.changedTilesPositions;
+                changedTiles.AddRange(tileAttributes.addedTilePositions);
+                tileAttributes.Revert();
+                RenderColorOfColorLinkedTiles(changedTiles);
+            }
+        }
         foreach (Vector3Int colorChangedTiles in removedTileColors.Keys)
         {
             removedTileColors[colorChangedTiles].Values.First().SetColor(colorChangedTiles, removedTileColors[colorChangedTiles].Keys.First());
@@ -157,23 +166,16 @@ public class TilePlacementController : MonoBehaviour
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
         StopPreview();
-        foreach (Tilemap tilemap in tilemaps)
-        {
-            if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
-            {
-                tileAttributes.Revert();
-            }
-        }
         allAddedTiles.Clear();
     }
-    public void RenderColorOfColorLinkedTiles()
+    public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles)
     {
         if (colorLinkedTiles.Keys.Contains(selectedTile))
         {
             foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
             {
                 TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
-                foreach (Vector3Int addedTileLocation in allAddedTiles.Keys.ToList())
+                foreach (Vector3Int addedTileLocation in changedTiles)
                 {
                     foreach (TerrainTile managedTile in tileColorManager.managedTiles)
                     {
