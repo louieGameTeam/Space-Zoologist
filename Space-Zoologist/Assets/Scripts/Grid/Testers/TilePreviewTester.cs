@@ -56,6 +56,10 @@ public class TilePreviewTester : MonoBehaviour
         {
             tilePlacementController.RevertChanges();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            tilePlacementController.ConfirmPlacement();
+        }
         if (Input.GetKeyUp(KeyCode.B))
         {
             tilePlacementController.isBlockMode = !tilePlacementController.isBlockMode;
