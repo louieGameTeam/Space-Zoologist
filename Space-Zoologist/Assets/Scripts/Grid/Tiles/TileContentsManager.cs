@@ -10,7 +10,9 @@ public class TileContentsManager : MonoBehaviour
     public Dictionary<Vector3Int, float[]> tileContents = new Dictionary<Vector3Int, float[]>();
     public Dictionary<Vector3Int, float[]> contentChangedTiles { get { return changedAttributes; } }
     private Dictionary<Vector3Int, float[]> changedAttributes = new Dictionary<Vector3Int, float[]>();
+    private Dictionary<Vector3Int, float[]> allChangedAttributes = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> addedAttributes = new Dictionary<Vector3Int, float[]>();
+    private Dictionary<Vector3Int, float[]> allAddedAttributes = new Dictionary<Vector3Int, float[]>();
     private Tilemap tilemap;
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private bool isPlacedTileNew;
@@ -124,17 +126,19 @@ public class TileContentsManager : MonoBehaviour
     }
     public void Revert(List<Vector3Int> boxModeSupposedTiles = null)
     {
-        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in allChangedAttributes)
         {
             tileContents[keyValuePair.Key] = keyValuePair.Value;
             ChangeColor(keyValuePair.Key);
         }
-        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in allAddedAttributes)
         {
             tileContents.Remove(keyValuePair.Key);
         }
         changedAttributes = new Dictionary<Vector3Int, float[]>();
         addedAttributes = new Dictionary<Vector3Int, float[]>();
+        allAddedAttributes = new Dictionary<Vector3Int, float[]>();
+        allChangedAttributes = new Dictionary<Vector3Int, float[]>();
         if (boxModeSupposedTiles != null)
         {
             isPlacedTileNew = true;
@@ -213,8 +217,21 @@ public class TileContentsManager : MonoBehaviour
             }
             isPlacedTileNew = false;
         }
+        foreach (KeyValuePair<Vector3Int,float[]> keyValuePair in addedAttributes)
+        {
+            allAddedAttributes.Add(keyValuePair.Key,keyValuePair.Value);
+        }
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
+        {
+            allChangedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+        }
         changedAttributes = new Dictionary<Vector3Int, float[]>();
         addedAttributes = new Dictionary<Vector3Int, float[]>();
+    }
+    public void FinishPlacement()
+    {
+        allAddedAttributes = new Dictionary<Vector3Int, float[]>();
+        allChangedAttributes = new Dictionary<Vector3Int, float[]>();
     }
     public void RefreshAllColors()
     {
