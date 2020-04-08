@@ -219,17 +219,25 @@ public class TileContentsManager : MonoBehaviour
         }
         foreach (KeyValuePair<Vector3Int,float[]> keyValuePair in addedAttributes)
         {
-            allAddedAttributes.Add(keyValuePair.Key,keyValuePair.Value);
+            if (!allAddedAttributes.ContainsKey(keyValuePair.Key))
+            {
+                allAddedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+            }
         }
         foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
         {
-            allChangedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+            if (!allChangedAttributes.ContainsKey(keyValuePair.Key))
+            {
+                allChangedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+            }
         }
         changedAttributes = new Dictionary<Vector3Int, float[]>();
         addedAttributes = new Dictionary<Vector3Int, float[]>();
     }
     public void FinishPlacement()
     {
+        changedAttributes = new Dictionary<Vector3Int, float[]>();
+        addedAttributes = new Dictionary<Vector3Int, float[]>();
         allAddedAttributes = new Dictionary<Vector3Int, float[]>();
         allChangedAttributes = new Dictionary<Vector3Int, float[]>();
     }
@@ -237,7 +245,6 @@ public class TileContentsManager : MonoBehaviour
     {
         foreach (Vector3Int tileLocation in tilemap.cellBounds.allPositionsWithin)
         {
-            TerrainTile tile = (TerrainTile)tilemap.GetTile(tileLocation);
             ChangeColor(tileLocation);
         }
     }
