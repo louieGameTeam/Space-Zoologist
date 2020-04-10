@@ -8,12 +8,10 @@ using UnityEngine.Tilemaps;
 public class TileContentsManager : MonoBehaviour
 {
     public Dictionary<Vector3Int, float[]> tileContents = new Dictionary<Vector3Int, float[]>();
-    public List<Vector3Int> changedTilesPositions { get { return allChangedAttributes.Keys.ToList(); } }
-    public List<Vector3Int> addedTilePositions { get { return allAddedAttributes.Keys.ToList(); } }
+    public List<Vector3Int> changedTilesPositions { get { return changedAttributes.Keys.ToList(); } }
+    public List<Vector3Int> addedTilePositions { get { return addedAttributes.Keys.ToList(); } }
     private Dictionary<Vector3Int, float[]> changedAttributes = new Dictionary<Vector3Int, float[]>();
-    private Dictionary<Vector3Int, float[]> allChangedAttributes = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> addedAttributes = new Dictionary<Vector3Int, float[]>();
-    private Dictionary<Vector3Int, float[]> allAddedAttributes = new Dictionary<Vector3Int, float[]>();
     private Tilemap tilemap;
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private bool isPlacedTileNew;
@@ -127,19 +125,17 @@ public class TileContentsManager : MonoBehaviour
     }
     public void Revert(List<Vector3Int> boxModeSupposedTiles = null)
     {
-        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in allChangedAttributes)
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
         {
             tileContents[keyValuePair.Key] = keyValuePair.Value;
             ChangeColor(keyValuePair.Key);
         }
-        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in allAddedAttributes)
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in addedAttributes)
         {
             tileContents.Remove(keyValuePair.Key);
         }
         changedAttributes = new Dictionary<Vector3Int, float[]>();
         addedAttributes = new Dictionary<Vector3Int, float[]>();
-        allAddedAttributes = new Dictionary<Vector3Int, float[]>();
-        allChangedAttributes = new Dictionary<Vector3Int, float[]>();
         if (boxModeSupposedTiles != null)
         {
             isPlacedTileNew = true;
@@ -220,27 +216,20 @@ public class TileContentsManager : MonoBehaviour
         }
         foreach (KeyValuePair<Vector3Int,float[]> keyValuePair in addedAttributes)
         {
-            if (!allAddedAttributes.ContainsKey(keyValuePair.Key))
+            if (!addedAttributes.ContainsKey(keyValuePair.Key))
             {
-                allAddedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+                addedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
             }
         }
         foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
         {
-            if (!allChangedAttributes.ContainsKey(keyValuePair.Key))
+            if (!changedAttributes.ContainsKey(keyValuePair.Key))
             {
-                allChangedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+                changedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
             }
         }
         changedAttributes = new Dictionary<Vector3Int, float[]>();
         addedAttributes = new Dictionary<Vector3Int, float[]>();
-    }
-    public void FinishPlacement()
-    {
-        changedAttributes = new Dictionary<Vector3Int, float[]>();
-        addedAttributes = new Dictionary<Vector3Int, float[]>();
-        allAddedAttributes = new Dictionary<Vector3Int, float[]>();
-        allChangedAttributes = new Dictionary<Vector3Int, float[]>();
     }
     public void RefreshAllColors()
     {
