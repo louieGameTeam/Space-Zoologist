@@ -10,6 +10,7 @@ public class TilePlacementController : MonoBehaviour
     // Can be either pen or block mode.
     public bool isBlockMode { get; set; } = false;
     public TerrainTile selectedTile { get; set; } = default;
+    public Vector3Int mouseCellPosition { get { return currentMouseCellPosition; } }
     [SerializeField] private Camera currentCamera = default;
     private bool isPreviewing { get; set; } = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
@@ -69,7 +70,7 @@ public class TilePlacementController : MonoBehaviour
         {
             Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
             currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
-            if (currentMouseCellPosition != lastMouseCellPosition)
+            if (currentMouseCellPosition != lastMouseCellPosition || isFirstTile)
             {
                 if (isBlockMode)
                 {

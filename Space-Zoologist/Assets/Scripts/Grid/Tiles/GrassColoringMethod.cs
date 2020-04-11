@@ -59,7 +59,7 @@ public class GrassColoringMethod : ColoringMethod
     }
     private float ColorGradient (float distance)
     {
-        float ratio = (1 - Mathf.Sqrt(distance / affectedRange) - 0.2f);
+        float ratio = ((affectedRange - distance) / (affectedRange+8));
         if (ratio < 0)
         {
             ratio = 0;
