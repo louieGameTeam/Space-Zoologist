@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour
 {
-    private Species species = default;
+    [SerializeField] private Species species = default;
     public Species Species { get => species; }
     public string SpeciesName { get => species.SpeciesName; }
     private Dictionary<NeedType, float> Needs = new Dictionary<NeedType, float>();
@@ -15,6 +15,12 @@ public class Population : MonoBehaviour
     private Sprite sprite;
     public Sprite Sprite { get { return species.Sprite; } private set => sprite = value; }
     private Vector2Int origin = Vector2Int.zero;
+
+    public void Start()
+    {
+        Count = 100;
+        ReservePartitionManager.ins.AddPopulation(this);
+    }
 
     /// <summary>
     /// Initialize the population as the given species at the given origin.

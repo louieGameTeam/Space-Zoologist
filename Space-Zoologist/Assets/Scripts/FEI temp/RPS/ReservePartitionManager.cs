@@ -18,8 +18,8 @@ public class ReservePartitionManager : MonoBehaviour
     private Queue<int> openID;
     public Dictionary<Population, int> PopToID { get; private set; }
     private Dictionary <Vector3Int, long> accessMap;
-    private Dictionary<Vector3Int, byte> positionToAtmosphere;
-    private List<Atmosphere> atmospheres;
+    public Dictionary<Vector3Int, byte> PositionToAtmosphere { get; private set; }
+    public List<Atmosphere> Atmospheres { get; private set; }
     public FoodSource food; //TODO to be removed, only for Demo purposes
 
     GetTerrainTile GTT; //GetTerrainTile API from Virgil
@@ -47,12 +47,18 @@ public class ReservePartitionManager : MonoBehaviour
         Pops = new List<Population>();
         PopToID = new Dictionary<Population, int>();
         accessMap = new Dictionary<Vector3Int, long>();
-        positionToAtmosphere = new Dictionary<Vector3Int, byte>();
-        atmospheres = new List<Atmosphere>();
+        PositionToAtmosphere = new Dictionary<Vector3Int, byte>();
+        Atmospheres = new List<Atmosphere>();
         GTT = FindObjectOfType<GetTerrainTile>();
         reference = GTT.GetComponent<TilePlacementController>().tilemapList[0];
 
-        atmospheres.Add(new Atmosphere());//global atmosphere
+        Atmospheres.Add(new Atmosphere());//global atmosphere
+    }
+
+    public void Start()
+    {
+        FindEnclosedAreas();
+        GetComponent<AtmosphereTester>().Graph();
     }
 
     public void Update()
@@ -81,6 +87,7 @@ public class ReservePartitionManager : MonoBehaviour
 
             //generate the map with the new id  
             GenerateMap(pop);
+            print(pop.name + " " + CanAccess(pop, new Vector3(0, 0, 0)));
             if(PopDensityManager.ins != null) PopDensityManager.ins.AddPop(pop);
         }
     }
@@ -140,6 +147,7 @@ public class ReservePartitionManager : MonoBehaviour
             TerrainTile tile = GTT.GetTerrainTileAtLocation(cur);
             if (tile != null && pop.Species.accessibleTerrain.Contains(tile.type))
             {
+                if (pop.name == "Dirt") { print(pop.name + " accesses " + tile.name + " of type " +  tile.type); }
                 //save the Vector3Int since it is already checked
                 accessible.Add(cur);
 
@@ -235,9 +243,147 @@ public class ReservePartitionManager : MonoBehaviour
 
     public Atmosphere GetAtmosphere(Vector3 worldPos) {
         Vector3Int cellPos = WorldToCell(worldPos);
-        if (positionToAtmosphere.ContainsKey(cellPos)) {
-            return atmospheres[positionToAtmosphere[cellPos]];
+        if (PositionToAtmosphere.ContainsKey(cellPos)) {
+            return Atmospheres[PositionToAtmosphere[cellPos]];
         }
-        return atmospheres[0];
+        return Atmospheres[0];
+    }
+
+    //Find enclosed spaces and populate PositionToAtmosphere, which gives the atmosphere of the tile
+    public void FindEnclosedAreas() {
+        //initialize
+        PositionToAtmosphere = new Dictionary<Vector3Int, byte>();
+
+
+        //Step 1: Populate tiles outside with 0 and find walls
+
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+        List<Vector3Int> accessible = new List<Vector3Int>();
+        List<Vector3Int> unaccessible = new List<Vector3Int>();
+        Stack<Vector3Int> walls = new Stack<Vector3Int>();
+
+        //starting location, may be changed later for better performance
+        Vector3Int cur = WorldToCell(new Vector3(-9, 0, 0));
+        stack.Push(cur);
+
+        //iterate until no tile left in stack
+        while (stack.Count > 0)
+        {
+            //next point
+            cur = stack.Pop();
+
+            if (accessible.Contains(cur) || unaccessible.Contains(cur) || walls.Contains(cur))
+            {
+                //checked before, move on
+                continue;
+            }
+
+            //check if tilemap has tile
+            TerrainTile tile = GTT.GetTerrainTileAtLocation(cur);
+            if (tile != null)
+            {
+                if (tile.type != TileType.Wall)
+                {
+                    //save the Vector3Int since it is already checked
+                    accessible.Add(cur);
+
+                    //the position uses the normal atmosphere
+                    PositionToAtmosphere.Add(cur, 0);
+
+                    //check all 4 tiles around, may be too expensive/awaiting optimization
+                    stack.Push(cur + Vector3Int.left);
+                    stack.Push(cur + Vector3Int.up);
+                    stack.Push(cur + Vector3Int.right);
+                    stack.Push(cur + Vector3Int.down);
+                }
+                else {
+                    walls.Push(cur);
+                }
+            }
+            else
+            {
+                //save the Vector3Int since it is already checked
+                unaccessible.Add(cur);
+            }
+        }
+
+
+        //Step 2: Loop through walls and push every adjacent tile into the stack
+        //and iterate through stack and assign atmosphere number
+        
+        byte atmNum = 1;
+        bool newAtm;
+
+        //iterate until no tile left in walls
+        while (walls.Count > 0)
+        {
+            //next point
+            cur = walls.Pop();
+
+            //the position uses the normal atmosphere
+            PositionToAtmosphere.Add(cur, 255);
+
+            //check all 4 tiles around, may be too expensive/awaiting optimization
+            stack.Push(cur + Vector3Int.left);
+            stack.Push(cur + Vector3Int.up);
+            stack.Push(cur + Vector3Int.right);
+            stack.Push(cur + Vector3Int.down);
+
+            //save the Vector3Int since it is already checked
+            unaccessible.Add(cur);
+
+            newAtm = false;
+
+            while (stack.Count > 0)
+            {
+                //next point
+                cur = stack.Pop();
+
+                if (accessible.Contains(cur) || unaccessible.Contains(cur) || walls.Contains(cur))
+                {
+                    //checked before, move on
+                    continue;
+                }
+
+                //check if tilemap has tile
+                TerrainTile tile = GTT.GetTerrainTileAtLocation(cur);
+                if (tile != null)
+                {
+                    if (tile.type != TileType.Wall)
+                    {
+                        //save the Vector3Int since it is already checked
+                        accessible.Add(cur);
+
+                        //the position uses a different atmosphere
+                        newAtm = true;
+                        PositionToAtmosphere.Add(cur, atmNum);
+
+                        //check all 4 tiles around, may be too expensive/awaiting optimization
+                        stack.Push(cur + Vector3Int.left);
+                        stack.Push(cur + Vector3Int.up);
+                        stack.Push(cur + Vector3Int.right);
+                        stack.Push(cur + Vector3Int.down);
+                    }
+                    else
+                    {
+                        //walls inside walls
+                        walls.Push(cur);
+                    }
+                }
+                else
+                {
+                    //save the Vector3Int since it is already checked
+                    unaccessible.Add(cur);
+                }
+            }
+            //a new atmosphere was added
+            if (newAtm)
+                atmNum++;
+        }
+        //copy the outside atmosphere
+        while (Atmospheres.Count < atmNum) {
+            Atmospheres.Add(new Atmosphere(Atmospheres[0]));
+        }
+        print("Number of Atmospheres = " + atmNum);
     }
 }

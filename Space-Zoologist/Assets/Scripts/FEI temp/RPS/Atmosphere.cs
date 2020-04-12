@@ -17,6 +17,11 @@ public class Atmosphere
         gasX = x; gasY = y; gasZ = z; temperature = t;
     }
 
+    public Atmosphere(Atmosphere from)
+    {
+        gasX = from.gasX; gasY = from.gasY; gasZ = from.gasZ; temperature = from.temperature;
+    }
+
     public Atmosphere Copy(Atmosphere from){
         gasX = from.gasX;
         gasY = from.gasY;

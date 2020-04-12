@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum TileType { Rock, Sand, Dirt, Grass, Liquid };
+public enum TileType { Rock, Sand, Dirt, Grass, Liquid, Wall };
 [CreateAssetMenu]
 public class TerrainTile : RuleTile<TerrainTile.Neighbor> {
 	public TileType type;

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8991d48a3cbca43f28a038f644446aa5, type: 3}
+  m_Name: Space Maple
+  m_EditorClassIdentifier: 
+  base_output: 25
+  radius: 2
+  needs:
+  - {fileID: 11400000, guid: 042c9812677884249a24703f69be888c, type: 2}
+  - {fileID: 11400000, guid: 95ecc9d568e014444ab6f4bf0583fb6e, type: 2}
+  - {fileID: 11400000, guid: 1789fbdbe39aa484c818582a853ad288, type: 2}
+  - {fileID: 11400000, guid: 101aeaa44b53b46a98592357ac49756b, type: 2}
+  - {fileID: 11400000, guid: 1fffe4c9ffbbf4b3aa9c9f28b1483b25, type: 2}
+  - {fileID: 11400000, guid: abe00f5afe239475186dabbb6f0c4cd6, type: 2}
+  tileVal:
+  - type: 0
+    value: 0
+  - type: 1
+    value: 1
+  - type: 2
+    value: 2
+  - type: 3
+    value: 3
+  - type: 4
+    value: 2
+  types: 000000000100000002000000040000000500000007000000
+  severities:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  totalSeverity: 6
