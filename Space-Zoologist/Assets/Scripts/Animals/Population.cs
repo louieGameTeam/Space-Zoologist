@@ -13,7 +13,6 @@ public class Population : MonoBehaviour
     private Dictionary<NeedType, float> Needs = new Dictionary<NeedType, float>();
     public int Count { get; private set; }
     private Sprite sprite;
-    public Sprite Sprite { get { return species.Sprite; } private set => sprite = value; }
     private Vector2Int origin = Vector2Int.zero;
 
     /// <summary>
@@ -28,7 +27,6 @@ public class Population : MonoBehaviour
         this.origin = origin;
 
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
-        this.sprite = species.Sprite;
         foreach(SpeciesNeed need in Species.Needs)
         {
             Needs.Add(need.Type, 0);
