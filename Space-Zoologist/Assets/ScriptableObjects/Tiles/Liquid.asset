@@ -393,7 +393,7 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 11
     m_Sprites:
-    - {fileID: 6768422241938285606, guid: cb36b878bb5216c458f79d20e5292cc4, type: 3}
+    - {fileID: -7953519304955407085, guid: cb36b878bb5216c458f79d20e5292cc4, type: 3}
     - {fileID: -3049502717133712873, guid: 377d3cf307e9bdf4eb7486197efb946a, type: 3}
     m_GameObject: {fileID: 0}
     m_AnimationSpeed: 1
@@ -412,7 +412,7 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 2
     m_Sprites:
-    - {fileID: 2806868880420751891, guid: cb36b878bb5216c458f79d20e5292cc4, type: 3}
+    - {fileID: -7884027637845134804, guid: cb36b878bb5216c458f79d20e5292cc4, type: 3}
     - {fileID: 8591988614532575647, guid: 377d3cf307e9bdf4eb7486197efb946a, type: 3}
     m_GameObject: {fileID: 0}
     m_AnimationSpeed: 1
@@ -903,16 +903,17 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
-  tileLayer: 3
+  targetTilemap: {fileID: 0}
+  replacementTilemap:
+  - {fileID: 0}
+  - {fileID: 0}
+  constraintTilemap: []
+  type: 0
+  targetLayer: 3
   replacementLayers: 0100000006000000
   constraintLayers: 
   auxillaryTiles:
   - {fileID: 11400000, guid: 89a14f3ed2f2a9e4b92fcb521dbe1ec2, type: 2}
-  contentValues:
-  - 0
-  - 0
-  - 0
   isRepresentative: 1
   isMergingAttributes: 1
-  isChangingColor: 1
-  priority: 10
+  priority: 0

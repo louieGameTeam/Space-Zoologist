@@ -16,6 +16,13 @@ MonoBehaviour:
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules: []
-  tileLayer: 0
-  sibings: []
-  auxillaryTile: {fileID: 0}
+  targetTilemap: {fileID: 0}
+  replacementTilemap: []
+  constraintTilemap: []
+  targetLayer: 0
+  replacementLayers: 
+  constraintLayers: 
+  auxillaryTiles: []
+  isRepresentative: 0
+  isMergingAttributes: 0
+  priority: 0
