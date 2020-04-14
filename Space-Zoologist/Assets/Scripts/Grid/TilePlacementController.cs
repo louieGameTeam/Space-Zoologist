@@ -31,6 +31,7 @@ public class TilePlacementController : MonoBehaviour
     private TileSystem tileSystem;
     private int lastCornerX;
     private int lastCornerY;
+
     private void Awake()
     {
         tileSystem = FindObjectOfType<TileSystem>();
@@ -64,6 +65,7 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
     void Update()
     {
         if (isPreviewing)
@@ -84,6 +86,7 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
     public void StartPreview(TerrainTile newTile)
     {
         isPreviewing = true;
@@ -92,6 +95,7 @@ public class TilePlacementController : MonoBehaviour
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
     }
+
     public void ConfirmPlacement()
     {
         foreach (Tilemap tilemap1 in tilemaps)
@@ -107,6 +111,7 @@ public class TilePlacementController : MonoBehaviour
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
     }
+
     public void StopPreview()
     {
         isPreviewing = false;
@@ -128,6 +133,7 @@ public class TilePlacementController : MonoBehaviour
         }
         addedTiles.Clear();
     }
+
     public void RevertChanges()
     {
         foreach (Vector3Int changedTileLocation in triedToPlaceTiles)
@@ -168,6 +174,7 @@ public class TilePlacementController : MonoBehaviour
         StopPreview();
         allAddedTiles.Clear();
     }
+
     public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles)
     {
         if (colorLinkedTiles.Keys.Contains(selectedTile))
@@ -188,6 +195,7 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
     private void UpdatePreviewPen()
     {
         if (isFirstTile)
@@ -219,6 +227,7 @@ public class TilePlacementController : MonoBehaviour
         }
         PlaceTile(currentMouseCellPosition, selectedTile);
     }
+
     private void UpdatePreviewBlock() //TODO Resolve lag when moving back and forth
     {
         if (isFirstTile)
@@ -311,6 +320,7 @@ public class TilePlacementController : MonoBehaviour
         }
         return false;
     }
+
     private bool PlaceTile(Vector3Int cellLocation, TerrainTile placedTile, bool checkPlacable = true)
     {
         Tilemap targetTilemap = placedTile.targetTilemap;
@@ -360,6 +370,7 @@ public class TilePlacementController : MonoBehaviour
             return false;
         }
     }
+
     private void RestoreReplacedTile (Vector3Int cellLocation)
     {
         foreach (TerrainTile addedTile in addedTiles[cellLocation])
@@ -384,6 +395,7 @@ public class TilePlacementController : MonoBehaviour
             removedTileColors.Remove(cellLocation);
         }
     }
+
     private void AddNewTile(Vector3Int cellLocation, TerrainTile tile)
     {
         triedToPlaceTiles.Add(cellLocation);
@@ -410,6 +422,7 @@ public class TilePlacementController : MonoBehaviour
             tileAttributes.MergeTile(cellLocation, tile, addedTiles.Keys.ToList());
         }
     }
+
     private void ReplaceTile(Tilemap replacedTilemap, Vector3Int cellLocation)
     {
         TerrainTile removedTile = (TerrainTile)replacedTilemap.GetTile(cellLocation);
@@ -435,6 +448,7 @@ public class TilePlacementController : MonoBehaviour
         }
         replacedTilemap.SetTile(cellLocation, null);
     }
+
     private void PlaceAuxillaryTile(Vector3Int cellLocation, TerrainTile tile)
     {
         foreach (TerrainTile auxillaryTile in tile.auxillaryTiles)
@@ -458,6 +472,7 @@ public class TilePlacementController : MonoBehaviour
             auxillaryTile.targetTilemap.SetTile(cellLocation, auxillaryTile);
         }
     }
+
     private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile, Tilemap targetTilemap)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
@@ -469,4 +484,5 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
 }
