@@ -65,7 +65,11 @@ public class TileContentsManager : MonoBehaviour
                     neighborTiles.Remove(cellLocation);
                     Dictionary<float[], int> neighborTileContents = new Dictionary<float[], int>();
                     foreach (Vector3Int tileLocation in neighborTiles)
-                    {
+                    {/*
+                        if(addedAttributes.ContainsKey(tileLocation))
+                        {
+                            continue;
+                        }*/
                         float[] contents = tileContents[tileLocation];
                         if (!changedAttributes.ContainsKey(tileLocation))
                         {
