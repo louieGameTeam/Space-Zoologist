@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -143,7 +143,7 @@ public class ReservePartitionManager : MonoBehaviour
 
             //check if tilemap has tile and if pop can access the tile (e.g. some cannot move through water)
             TerrainTile tile = _tileSystem.GetTerrainTileAtLocation(cur);
-            if (tile != null && pop.Species.accessibleTerrain.Contains(tile.type))
+            if (tile != null && pop.Species.AccessibleTerrain.Contains(tile.type))
             {
                 //save the Vector3Int since it is already checked
                 accessible.Add(cur);
