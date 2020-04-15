@@ -29,4 +29,8 @@ public class Atmosphere
         temperature = from.temperature;
         return this;
     }
+
+    public static Atmosphere operator +(Atmosphere lhs, Atmosphere rhs) {
+        return new Atmosphere(lhs.gasX + rhs.gasX, lhs.gasY + rhs.gasY, lhs.gasZ + rhs.gasZ, lhs.temperature + rhs.temperature);
+    }
 }

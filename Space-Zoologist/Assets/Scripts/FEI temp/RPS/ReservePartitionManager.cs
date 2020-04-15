@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -20,7 +20,7 @@ public class ReservePartitionManager : MonoBehaviour
     private Dictionary <Vector3Int, long> accessMap;
     public Dictionary<Vector3Int, byte> PositionToAtmosphere { get; private set; }
     public List<Atmosphere> Atmospheres { get; private set; }
-    public FoodSource food; //TODO to be removed, only for Demo purposes
+    public GameObject target; //TODO to be removed, only for Demo purposes
 
     GetTerrainTile GTT; //GetTerrainTile API from Virgil
     Tilemap reference; //a reference tilemap for converting cell position
@@ -66,9 +66,9 @@ public class ReservePartitionManager : MonoBehaviour
         if (RPMDemo) //if in demo
         {
             foreach (Population pop in Pops)
-                if (CanAccess(pop, food.transform.position))
+                if (CanAccess(pop, target.transform.position))
                 {
-                    pop.transform.Translate((food.transform.position - pop.transform.position) * 0.01f);
+                    pop.transform.Translate((target.transform.position - pop.transform.position) * 0.01f);
                 }
         }
     }
@@ -249,11 +249,14 @@ public class ReservePartitionManager : MonoBehaviour
         return Atmospheres[0];
     }
 
+    bool EnclosureInit = false;
     //Find enclosed spaces and populate PositionToAtmosphere, which gives the atmosphere of the tile
     public void FindEnclosedAreas() {
-        //initialize
-        PositionToAtmosphere = new Dictionary<Vector3Int, byte>();
-
+        if (PositionToAtmosphere == null)
+        {
+            //initialize
+            PositionToAtmosphere = new Dictionary<Vector3Int, byte>();
+        }
 
         //Step 1: Populate tiles outside with 0 and find walls
 
@@ -263,7 +266,19 @@ public class ReservePartitionManager : MonoBehaviour
         Stack<Vector3Int> walls = new Stack<Vector3Int>();
 
         //starting location, may be changed later for better performance
-        Vector3Int cur = WorldToCell(new Vector3(-9, 0, 0));
+        int p = -100;
+        while(p < 100)
+        {
+            if (GTT.GetTerrainTileAtLocation(WorldToCell(new Vector3(p, 0, 0))) != null)
+            {
+                break;
+            }
+            else {
+                p++;
+            }
+        }
+        //outer most pos
+        Vector3Int cur = WorldToCell(new Vector3(p, 0, 0));
         stack.Push(cur);
 
         //iterate until no tile left in stack
@@ -287,8 +302,14 @@ public class ReservePartitionManager : MonoBehaviour
                     //save the Vector3Int since it is already checked
                     accessible.Add(cur);
 
-                    //the position uses the normal atmosphere
-                    PositionToAtmosphere.Add(cur, 0);
+                    if (PositionToAtmosphere.ContainsKey(cur)) {
+                        PositionToAtmosphere[cur] = 0;
+                    }
+                    else
+                    {
+                        //the position uses the normal atmosphere
+                        PositionToAtmosphere.Add(cur, 0);
+                    }
 
                     //check all 4 tiles around, may be too expensive/awaiting optimization
                     stack.Push(cur + Vector3Int.left);
@@ -310,7 +331,6 @@ public class ReservePartitionManager : MonoBehaviour
 
         //Step 2: Loop through walls and push every adjacent tile into the stack
         //and iterate through stack and assign atmosphere number
-        
         byte atmNum = 1;
         bool newAtm;
 
@@ -333,6 +353,7 @@ public class ReservePartitionManager : MonoBehaviour
             unaccessible.Add(cur);
 
             newAtm = false;
+            List<byte> containedAtm = new List<byte>();
 
             while (stack.Count > 0)
             {
@@ -354,10 +375,25 @@ public class ReservePartitionManager : MonoBehaviour
                         //save the Vector3Int since it is already checked
                         accessible.Add(cur);
 
-                        //the position uses a different atmosphere
-                        newAtm = true;
-                        PositionToAtmosphere.Add(cur, atmNum);
-
+                        if (!EnclosureInit)
+                        {
+                            //the position uses a different atmosphere
+                            newAtm = true;
+                            PositionToAtmosphere.Add(cur, atmNum);
+                        }
+                        else //already initialized
+                        {
+                            //first tile to check
+                            if (!newAtm) {
+                                newAtm = true;
+                                atmNum = PositionToAtmosphere[cur];
+                                containedAtm.Add(atmNum);
+                            }
+                            if (!containedAtm.Contains(PositionToAtmosphere[cur])) {
+                                Atmospheres[atmNum] += Atmospheres[PositionToAtmosphere[cur]];
+                                containedAtm.Add(PositionToAtmosphere[cur]);
+                            }
+                        }
                         //check all 4 tiles around, may be too expensive/awaiting optimization
                         stack.Push(cur + Vector3Int.left);
                         stack.Push(cur + Vector3Int.up);
@@ -385,5 +421,6 @@ public class ReservePartitionManager : MonoBehaviour
             Atmospheres.Add(new Atmosphere(Atmospheres[0]));
         }
         print("Number of Atmospheres = " + atmNum);
+        EnclosureInit = true;
     }
 }
