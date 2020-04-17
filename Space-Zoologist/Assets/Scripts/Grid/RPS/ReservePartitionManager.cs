@@ -18,12 +18,11 @@ public class ReservePartitionManager : MonoBehaviour
     private Queue<int> openID;
     public Dictionary<Population, int> PopToID { get; private set; }
     private Dictionary<Vector3Int, long> accessMap;
-    //public FoodSource food; //TODO to be removed, only for Demo purposes
 
     TileSystem _tileSystem; //GetTerrainTile API from Virgil
     Tilemap reference; //a reference tilemap for converting cell position
 
-    public bool RPMDemo = false; //if in demo
+    [SerializeField] List<Population> popOnStartUp;
 
     int lastRecycledID;
 
@@ -50,18 +49,9 @@ public class ReservePartitionManager : MonoBehaviour
         accessMap = new Dictionary<Vector3Int, long>();
         _tileSystem = FindObjectOfType<TileSystem>();
         reference = _tileSystem.GetComponent<TilePlacementController>().allTilemaps[0];
-    }
-
-    public void Update()
-    {
-        //if (RPMDemo) //if in demo
-        //{
-        //    foreach (Population pop in Pops)
-        //        if (CanAccess(pop, food.transform.position))
-        //        {
-        //            pop.transform.Translate((food.transform.position - pop.transform.position) * 0.01f);
-        //        }
-        //}
+        foreach (Population pop in popOnStartUp) {
+            AddPopulation(pop);
+        }
     }
 
     ///<summary>
@@ -170,6 +160,16 @@ public class ReservePartitionManager : MonoBehaviour
             //set the pop.getID()th bit in accessMap[pos] to 1
             accessMap[pos] |= 1L << PopToID[pop];
         }
+    }
+
+    public List<Vector3Int> GetLocationWithAccess(Population population) {
+        List<Vector3Int> list = new List<Vector3Int>();
+        foreach (KeyValuePair<Vector3Int, long> position in accessMap) {
+            if (CanAccess(population, position.Key)) {
+                list.Add(position.Key);
+            }
+        }
+        return list;
     }
 
     ///<summary>
