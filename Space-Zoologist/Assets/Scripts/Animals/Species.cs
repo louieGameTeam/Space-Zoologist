@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +11,7 @@ public class Species : ScriptableObject
     public float GrowthFactor => growthFactor;
     public List<SpeciesNeed> Needs => needs;
     public float Size => size;
+    public List<TileType> AccessibleTerrain => accessibleTerrain;
 
     // Values
     [SerializeField] private string speciesName = default;
@@ -21,6 +22,7 @@ public class Species : ScriptableObject
     [SerializeField] private List<SpeciesNeed> needs = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
+    [SerializeField] private List<TileType> accessibleTerrain = default;
 
 
     /// <summary>

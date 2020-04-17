@@ -12,7 +12,6 @@ public class Population : MonoBehaviour
     public string SpeciesName { get => species.SpeciesName; }
     private Dictionary<NeedType, float> Needs = new Dictionary<NeedType, float>();
     public int Count { get; private set; }
-    private Sprite sprite;
     private Vector2Int origin = Vector2Int.zero;
 
     /// <summary>
