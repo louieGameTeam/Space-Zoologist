@@ -1,13 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class RPSTester : MonoBehaviour
 {
-    [SerializeField] Species species;
-    [SerializeField] Vector2Int spawnLocation;
-    [SerializeField] GameObject PopulationPrefab;
+    [SerializeField] Species species = default;
+    [SerializeField] Vector2Int spawnLocation = default;
+    [SerializeField] GameObject PopulationPrefab = default;
     Population testee;
     [SerializeField] Tilemap mask = default;
 

@@ -22,7 +22,7 @@ public class ReservePartitionManager : MonoBehaviour
     TileSystem _tileSystem; //GetTerrainTile API from Virgil
     Tilemap reference; //a reference tilemap for converting cell position
 
-    [SerializeField] List<Population> popOnStartUp;
+    [SerializeField] List<Population> popOnStartUp = default;
 
     int lastRecycledID;
 
