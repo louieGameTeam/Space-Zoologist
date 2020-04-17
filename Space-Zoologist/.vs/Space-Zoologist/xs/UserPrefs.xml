@@ -1,13 +1,14 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Store/ReserveStore.cs">
     <Files>
-      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="66" Column="1" />
-      <File FileName="Assets/Scripts/HUD/HUDTesting2.cs" Line="71" Column="1" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="453" Column="1" />
-      <File FileName="Assets/Scripts/SelectableItems/SelectableItemSO.cs" Line="18" Column="1" />
-      <File FileName="Assets/Scripts/Grid/Tiles/TerrainTile.cs" Line="37" Column="1" />
-      <File FileName="Assets/Scripts/Grid/Testers/TilePreviewTester.cs" Line="65" Column="1" />
-      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" Line="74" Column="1" />
+      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="81" Column="6" />
+      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Store/PlayerController.cs" Line="80" Column="58" />
+      <File FileName="Assets/Scripts/HUD/HUD.cs" Line="9" Column="5" />
+      <File FileName="Assets/Scripts/Journal/JournalSystem.cs" Line="78" Column="12" />
+      <File FileName="Assets/Scripts/SelectableItems/ISelectable.cs" Line="17" Column="5" />
+      <File FileName="Assets/Scripts/Store/StoreItemSO.cs" Line="3" Column="20" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="391" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,15 +16,16 @@
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Grid" expanded="True">
-                  <Node name="Testers" expanded="True" />
-                  <Node name="Tiles" expanded="True" />
-                </Node>
+                <Node name="Animals" expanded="True" />
+                <Node name="Grid" expanded="True" />
                 <Node name="HUD" expanded="True" />
+                <Node name="Journal" expanded="True" />
+                <Node name="Player" expanded="True" />
                 <Node name="SelectableItems" expanded="True" />
                 <Node name="Store" expanded="True">
                   <Node name="ReserveStore.cs" selected="True" />
                 </Node>
+                <Node name="Testing" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -33,7 +35,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="3796fb01-eb62-474c-bdc1-9d5405a23404" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4a2ddd7e-272f-401c-af4d-87407364af7d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

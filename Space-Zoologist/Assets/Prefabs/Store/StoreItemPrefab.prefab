@@ -332,8 +332,9 @@ GameObject:
   - component: {fileID: 5244455026466092401}
   - component: {fileID: 5244455026466092403}
   - component: {fileID: 3818051080390621510}
+  - component: {fileID: 5193060065150697478}
   m_Layer: 5
-  m_Name: SelectableItem
+  m_Name: StoreItemPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -462,5 +463,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dace00af6b1104abc857e9311cf81f66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5193060065150697478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244455026466092407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da4fa2be488248b8a17ba7ff44b0267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -35,8 +35,9 @@ public class JournalSystem : MonoBehaviour
     {
         GameObject newItem = Instantiate(this.JournalItemPrefab, this.transform);
         SelectableItem selectableItem = newItem.GetComponent<SelectableItem>();
-        selectableItem.Initialize(itemDiscovered, this.OnItemSelectedEvent);
-        this.Journal.Add(new KeyValuePair<string, GameObject>(selectableItem.ItemInfo.ItemName, newItem));
+        // selectableItem.Initialize(itemDiscovered);
+        selectableItem.SetupItemSelectedHandler(this.OnItemSelectedEvent);
+        // this.Journal.Add(new KeyValuePair<string, GameObject>(selectableItem.ItemInfo.ItemName, newItem));
     }
 
     // Iterative search to handle duplicate case
@@ -70,12 +71,12 @@ public class JournalSystem : MonoBehaviour
     private void DisplayItem(GameObject itemToDispaly)
     {
         SelectableItem item = itemToDispaly.GetComponent<SelectableItem>();
-        this.JournalItemPopupPrefab.transform.GetChild(0).GetComponent<Text>().text = item.ItemInfo.ItemName;
+        // this.JournalItemPopupPrefab.transform.GetChild(0).GetComponent<Text>().text = item.ItemInfo.ItemName;
         this.JournalItemPopupPrefab.GetComponent<Button>().onClick.AddListener(ClosePopup);
         // Should we be keeping track of what the date is in game?
         // this.gameObject.transform.GetChild(1).GetComponent<Text>().text = currentDate?
-        this.JournalItemPopupPrefab.transform.GetChild(2).GetComponent<Text>().text = item.ItemInfo.ItemDescription;
-        this.JournalItemPopupPrefab.transform.GetChild(3).GetComponent<Image>().sprite = item.ItemInfo.Sprite;
+        // this.JournalItemPopupPrefab.transform.GetChild(2).GetComponent<Text>().text = item.ItemDescription;
+        // this.JournalItemPopupPrefab.transform.GetChild(3).GetComponent<Image>().sprite = item.ItemInfo.Sprite;
         this.JournalItemPopupPrefab.SetActive(true);
     }
 
