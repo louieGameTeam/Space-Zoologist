@@ -5,25 +5,19 @@ using UnityEngine.Tilemaps;
 
 public class RPSTester : MonoBehaviour
 {
-    [SerializeField] Species species = default;
-    [SerializeField] Vector2Int spawnLocation = default;
-    [SerializeField] GameObject PopulationPrefab = default;
-    Population testee;
     [SerializeField] Tilemap mask = default;
+    [SerializeField] Population population = default;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject animal = Instantiate(PopulationPrefab);
-        testee = animal.GetComponent<Population>();
-        testee.Initialize(species, spawnLocation, null);
-        GetComponent<ReservePartitionManager>().AddPopulation(testee);
+        GetComponent<ReservePartitionManager>().AddPopulation(population);
         Graph();
     }
 
     public void Graph()
     {
-        List<Vector3Int> list = GetComponent<ReservePartitionManager>().GetLocationWithAccess(testee);
+        List<Vector3Int> list = GetComponent<ReservePartitionManager>().GetLocationWithAccess(population);
 
         //set color based on the fraction density/maxdensity
         foreach (Vector3Int pos in list)
