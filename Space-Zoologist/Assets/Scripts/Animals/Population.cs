@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +7,17 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour
 {
-    private Species species = default;
-    public Species Species { get => species; }
-    public string SpeciesName { get => species.SpeciesName; }
-    private Dictionary<NeedType, float> Needs = new Dictionary<NeedType, float>();
-    public int Count { get; private set; }
-    private Sprite sprite;
+    [SerializeField] private Species species = default;
+    public Species Species => species;
+    private Dictionary<NeedType, float> NeedValues = new Dictionary<NeedType, float>();
+    private int count = 0;
+    public int Count => count;
     private Vector2Int origin = Vector2Int.zero;
+
+    private void Awake()
+    {
+        this.Initialize(species, Vector2Int.RoundToInt(new Vector2(transform.position.x, transform.position.y)));
+    }
 
     /// <summary>
     /// Initialize the population as the given species at the given origin.
@@ -21,7 +25,7 @@ public class Population : MonoBehaviour
     /// <param name="species">The species of the population</param>
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
-    public void Initialize(Species species, Vector2Int origin, NeedSystemManager needSystemManager)
+    public void Initialize(Species species, Vector2Int origin)
     {
         this.species = species;
         this.origin = origin;
@@ -29,8 +33,7 @@ public class Population : MonoBehaviour
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         foreach(SpeciesNeed need in Species.Needs)
         {
-            Needs.Add(need.Type, 0);
-            needSystemManager.RegisterPopulation(this, need.Type);
+            NeedValues.Add(need.Type, 0);
         }
     }
 
@@ -41,15 +44,9 @@ public class Population : MonoBehaviour
     /// <param name="value">The need's new value</param>
     public void UpdateNeed(NeedType need, float value)
     {
-        if (Needs.ContainsKey(need))
-        {
-            Needs[need] = value;
-            // UpdateGrowthConditions();
-        }
-        else
-        {
-            Debug.Log("Need not found");
-        }
+        Debug.Assert(NeedValues.ContainsKey(need));
+        NeedValues[need] = value;
+        // UpdateGrowthConditions();
     }
 
     /// <summary>
@@ -59,13 +56,9 @@ public class Population : MonoBehaviour
     /// <returns></returns>
     public float GetNeedValue(NeedType need)
     {
-        if (!Needs.ContainsKey(need))
-        {
-            Debug.Log($"Tried to access nonexistent need '{need}' in a { SpeciesName } population");
-            return 0;
-        }
+        Debug.Assert(NeedValues.ContainsKey(need));
 
-        return Needs[need];
+        return NeedValues[need];
     }
 
     // TODO: Implement

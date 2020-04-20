@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,7 +41,7 @@ public class TestSystem : MonoBehaviour, INeedSystem
         string text = $"{gameObject.name} Listeners\n";
         foreach (Population population in Populations)
         {
-            text += $"{population.SpeciesName}: {population.GetNeedValue(need)}";
+            text += $"{population.Species.SpeciesName}: {population.GetNeedValue(need)}";
             text += "\n";
         }
         populationsText.text = text;

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,13 @@ public class PopulationManager : MonoBehaviour
 {
     private List<Population> populations = new List<Population>();
     [SerializeField] private NeedSystemManager needSystemManager = default;
+
+    private void Start()
+    {
+        // Add any populations that existed at start time.
+        this.populations.AddRange(FindObjectsOfType<Population>());
+
+    }
 
     /// <summary>
     /// Create a new population of the given species at the given origin.
@@ -18,6 +25,7 @@ public class PopulationManager : MonoBehaviour
         gameObject.transform.parent = this.transform;
         gameObject.name = species.SpeciesName;
         gameObject.AddComponent<Population>();
-        gameObject.GetComponent<Population>().Initialize(species, origin, needSystemManager);
+        Population population = gameObject.GetComponent<Population>();
+        population.Initialize(species, origin);
     }
 }
