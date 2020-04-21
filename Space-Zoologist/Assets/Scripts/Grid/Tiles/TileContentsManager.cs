@@ -8,7 +8,8 @@ using UnityEngine.Tilemaps;
 public class TileContentsManager : MonoBehaviour
 {
     public Dictionary<Vector3Int, float[]> tileContents = new Dictionary<Vector3Int, float[]>();
-    public Dictionary<Vector3Int, float[]> contentChangedTiles { get { return changedAttributes; } }
+    public List<Vector3Int> changedTilesPositions { get { return changedAttributes.Keys.ToList(); } }
+    public List<Vector3Int> addedTilePositions { get { return addedAttributes.Keys.ToList(); } }
     private Dictionary<Vector3Int, float[]> changedAttributes = new Dictionary<Vector3Int, float[]>();
     private Dictionary<Vector3Int, float[]> addedAttributes = new Dictionary<Vector3Int, float[]>();
     private Tilemap tilemap;
@@ -64,7 +65,11 @@ public class TileContentsManager : MonoBehaviour
                     neighborTiles.Remove(cellLocation);
                     Dictionary<float[], int> neighborTileContents = new Dictionary<float[], int>();
                     foreach (Vector3Int tileLocation in neighborTiles)
-                    {
+                    {/*
+                        if(addedAttributes.ContainsKey(tileLocation))
+                        {
+                            continue;
+                        }*/
                         float[] contents = tileContents[tileLocation];
                         if (!changedAttributes.ContainsKey(tileLocation))
                         {
@@ -213,6 +218,20 @@ public class TileContentsManager : MonoBehaviour
             }
             isPlacedTileNew = false;
         }
+        foreach (KeyValuePair<Vector3Int,float[]> keyValuePair in addedAttributes)
+        {
+            if (!addedAttributes.ContainsKey(keyValuePair.Key))
+            {
+                addedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+        }
+        foreach (KeyValuePair<Vector3Int, float[]> keyValuePair in changedAttributes)
+        {
+            if (!changedAttributes.ContainsKey(keyValuePair.Key))
+            {
+                changedAttributes.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+        }
         changedAttributes = new Dictionary<Vector3Int, float[]>();
         addedAttributes = new Dictionary<Vector3Int, float[]>();
     }
@@ -220,7 +239,6 @@ public class TileContentsManager : MonoBehaviour
     {
         foreach (Vector3Int tileLocation in tilemap.cellBounds.allPositionsWithin)
         {
-            TerrainTile tile = (TerrainTile)tilemap.GetTile(tileLocation);
             ChangeColor(tileLocation);
         }
     }
