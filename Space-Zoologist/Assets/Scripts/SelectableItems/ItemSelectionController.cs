@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class ItemSelectionController : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class ItemSelectionController : MonoBehaviour
             this.IsPlacing = true;
         }
         if (this.IsPlacing)
-        {
+        {      
             // Start placing tiles, otherwise buy item and place immediately
             if (this.IsPlacingTile)
             {
@@ -52,7 +53,7 @@ public class ItemSelectionController : MonoBehaviour
                 // TODO update parameter when tile placement controller gets updated to count number of tiles
                 this.StoreManager.BuyItem(ref this.playerInformation.PlayerFunds, this.ItemSelected, numCopies:1);//this.tilePlacementController.numTilesPlaced))
                 this.FinishedPreviewing();
-            }
+            }    
         }
     }
 
@@ -83,7 +84,7 @@ public class ItemSelectionController : MonoBehaviour
         this.IsPreviewingStoreItem = true;
         this.ItemSelected = itemSelected;
         StoreItemSO itemInformation = itemSelected.GetComponent<StoreItem>().ItemInformation;
-        if (itemInformation.ItemIdentifier.Equals("Terrain"))
+        if (itemInformation.StoreItemCategory.Equals("Tiles"))
         {
             this.IsPlacingTile = true;
             // this.TileToPlace = itemInformation.ItemName;
@@ -92,8 +93,8 @@ public class ItemSelectionController : MonoBehaviour
 
     private void FinishedPreviewing()
     {
-        this.IsPreviewingStoreItem = false;
         this.StopPreview.Invoke();
+        this.IsPreviewingStoreItem = false;
         this.IsPlacing = false;
         this.ItemSelected = null;
         this.IsPlacingTile = false;

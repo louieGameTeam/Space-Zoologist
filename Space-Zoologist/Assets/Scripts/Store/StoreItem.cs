@@ -5,19 +5,24 @@ public class StoreItem : MonoBehaviour
 {
     public StoreItemSO ItemInformation { get; set; }
 
-    public void InitializeStoreItem(StoreItemSO itemInfo, GameObject storeItemPrefab)
+    public void InitializeStoreItem(StoreItemSO itemInfo)
     {
         this.ItemInformation = itemInfo;
-        this.SetupStoreItemPrefab(storeItemPrefab);
+        this.SetupStoreItemSmallDisplay();
     }
 
-    public void SetupStoreItemPrefab(GameObject StoreItemPrefab)
+    private void SetupStoreItemSmallDisplay()
     {
-        ColorBlock cb = this.GetComponent<Button>().colors;
-        cb.normalColor = this.ItemInformation.StoreItemCategory;
-        this.GetComponent<Button>().colors = cb;
-        this.transform.GetChild(0).GetComponent<Text>().text = this.ItemInformation.ItemName;
-        this.transform.GetChild(1).GetComponent<Text>().text = this.ItemInformation.ItemCost.ToString();
-        this.transform.GetChild(3).GetComponent<Image>().sprite = this.ItemInformation.Sprite;
+        this.gameObject.GetComponent<Image>().sprite = this.ItemInformation.Sprite;
+    }
+
+    public GameObject SetupStoreItemExtendedDisplay(GameObject extendedDisplay, Transform extendedContentDisplay)
+    {
+        GameObject newItem = Instantiate(extendedDisplay, extendedContentDisplay);
+        extendedDisplay.transform.GetChild(0).GetComponent<Text>().text = this.ItemInformation.ItemName;
+        extendedDisplay.transform.GetChild(1).GetComponent<Text>().text = this.ItemInformation.ItemCost.ToString();
+        extendedDisplay.transform.GetChild(2).GetComponent<Text>().text = this.ItemInformation.StoreItemDescription;
+        extendedDisplay.transform.GetChild(3).GetComponent<Image>().sprite = this.ItemInformation.Sprite;
+        return newItem;
     }
 }

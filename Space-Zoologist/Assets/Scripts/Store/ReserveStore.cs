@@ -4,30 +4,38 @@ using UnityEngine.Events;
 
 public class ReserveStore : MonoBehaviour, ISelectable
 {
-    [SerializeField] private GameObject StoreItemPrefab = default;
+    [SerializeField] private GameObject StoreItemSmallDisplay = default;
+    [SerializeField] private GameObject StoreItemExpandedDisplay = default;
     [Expandable] public List<StoreItemSO> StoreItemReferences = default;
     [Tooltip("Under Store Scroll View GameObject")]
     [SerializeField] GameObject StoreContent = default;
+    [SerializeField] GameObject StoreContentExpanded = default;
+    private List<GameObject> AvailableItems = new List<GameObject>();
     // Use to setup HUD events and player interaction events
     [Header("Add methods that should occur when player selects item (e.g., BuyItem from PlayerController)")]
     public ItemSelectedEvent ItemSelectedEvent = new ItemSelectedEvent();
-    public UnityEvent SpriteStopFollowing = new UnityEvent();
-    private bool StoreInitialized = false;
 
     public void Start()
     {
         this.ItemSelectedEvent.AddListener(OnItemSelectedEvent);
+        foreach (StoreItemSO storeItem in this.StoreItemReferences)
+        {    
+            AddItem(storeItem);
+        }
     }
 
-    public void InitializeStore()
+    public void SetupDisplay(string storeSection)
     {
-        if (!this.StoreInitialized)
+        foreach (GameObject storeItem in this.AvailableItems)
         {
-            foreach (StoreItemSO storeItem in this.StoreItemReferences)
+            if (storeItem.GetComponent<StoreItem>().ItemInformation.StoreItemCategory.Equals(storeSection))
             {
-                AddItem(storeItem);
+                storeItem.SetActive(true);
             }
-            this.StoreInitialized = true;
+            else 
+            {
+                storeItem.SetActive(false);
+            }
         }
     }
 
@@ -37,9 +45,14 @@ public class ReserveStore : MonoBehaviour, ISelectable
     /// <param name="item"></param>
     public void AddItem(StoreItemSO itemInformation)
     {
-        GameObject newItem = Instantiate(this.StoreItemPrefab, this.StoreContent.transform);
-        newItem.GetComponent<StoreItem>().InitializeStoreItem(itemInformation, this.StoreItemPrefab);
+        GameObject newItem = Instantiate(this.StoreItemSmallDisplay, this.StoreContent.transform);
+        newItem.GetComponent<StoreItem>().InitializeStoreItem(itemInformation);
+        GameObject extendedDisplay = newItem.GetComponent<StoreItem>().SetupStoreItemExtendedDisplay(this.StoreItemExpandedDisplay, this.StoreContentExpanded.transform);
+        newItem.GetComponent<OnMouseHover>().InitializeDisplay(extendedDisplay);
         this.SetupHandler(newItem.GetComponent<SelectableItem>());
+        newItem.SetActive(false);
+        extendedDisplay.SetActive(false);
+        this.AvailableItems.Add(newItem);
     }
 
     public void SetupHandler(SelectableItem selectableItem)
@@ -81,7 +94,6 @@ public class ReserveStore : MonoBehaviour, ISelectable
                 isPurchaseSuccessful = false;
             }
         }
-        this.SpriteStopFollowing.Invoke();
         return isPurchaseSuccessful;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class SetupItemPreviewEvent : UnityEvent<Sprite> { }
@@ -23,7 +24,7 @@ public class SpriteFollowCursor : MonoBehaviour
     /// <param name="GameObjectSprite"></param>
     public void SetupSpriteToFollow(Sprite sprite)
     {
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        this.gameObject.GetComponent<Image>().sprite = sprite;
         this.gameObject.transform.position = Input.mousePosition;
         this.gameObject.SetActive(true);
         this.Following = true;

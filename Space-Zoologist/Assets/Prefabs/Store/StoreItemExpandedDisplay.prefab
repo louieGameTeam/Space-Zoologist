@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 3818051080390621510}
   - component: {fileID: 5193060065150697478}
   m_Layer: 5
-  m_Name: StoreItemPrefab
+  m_Name: StoreItemExpandedDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,10 +358,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12, y: -10}
-  m_SizeDelta: {x: -460.6, y: -369.05}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 57.9, y: 2}
+  m_SizeDelta: {x: 450, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5244455026466092400
 CanvasRenderer:

@@ -10,8 +10,8 @@ public class StoreItemSO : ScriptableObject
     public float ItemCost { get => itemCost; set => itemCost = value; }
     [SerializeField] private string itemDescription = default;
     public string StoreItemDescription { get => itemDescription; set => itemDescription = value; }
-    [SerializeField] private Color itemCategory = default;
-    public Color StoreItemCategory { get => itemCategory; set => itemCategory = value; }
+    [SerializeField] private string itemCategory = default;
+    public string StoreItemCategory { get => itemCategory; set => itemCategory = value; }
     [SerializeField] private Sprite sprite = default;
     public Sprite Sprite { get => sprite; set => sprite = value; }
     // Using item identifier to classify items generally (e.g., all terrain tiles identified as "Terrain")
