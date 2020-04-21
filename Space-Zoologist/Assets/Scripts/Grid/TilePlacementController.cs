@@ -116,6 +116,10 @@ public class TilePlacementController : MonoBehaviour
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
     }
+    public int PlacedTileCount()
+    {
+        return addedTiles.Count();
+    }
     public void RevertChanges()
     {
         foreach (Vector3Int changedTileLocation in triedToPlaceTiles)
