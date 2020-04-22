@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,14 +7,17 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour
 {
-    private Species species = default;
+    [SerializeField] private Species species = default;
     public Species Species { get => species; }
     public string SpeciesName { get => species.SpeciesName; }
     private Dictionary<NeedType, float> Needs = new Dictionary<NeedType, float>();
     public int Count { get; private set; }
-    private Sprite sprite;
-    public Sprite Sprite { get { return species.Sprite; } private set => sprite = value; }
     private Vector2Int origin = Vector2Int.zero;
+
+    private void Awake()
+    {
+        this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position), null);
+    }
 
     /// <summary>
     /// Initialize the population as the given species at the given origin.
@@ -28,11 +31,13 @@ public class Population : MonoBehaviour
         this.origin = origin;
 
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
-        this.sprite = species.Sprite;
-        foreach(SpeciesNeed need in Species.Needs)
+        if (needSystemManager)
         {
-            Needs.Add(need.Type, 0);
-            needSystemManager.RegisterPopulation(this, need.Type);
+            foreach (SpeciesNeed need in Species.Needs)
+            {
+                Needs.Add(need.Type, 0);
+                needSystemManager.RegisterPopulation(this, need.Type);
+            }
         }
     }
 

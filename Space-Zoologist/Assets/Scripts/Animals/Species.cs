@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +6,12 @@ using UnityEngine;
 public class Species : ScriptableObject
 {
     // Getters
-    public string SpeciesName { get { return speciesName; } }
-    public float Dominance { get => dominance; }
-    public float GrowthFactor { get => growthFactor; }
-    public List<SpeciesNeed> Needs { get => needs; }
-    public Sprite Sprite { get => sprite; }
+    public string SpeciesName => speciesName;
+    public float Dominance => dominance;
+    public float GrowthFactor => growthFactor;
+    public List<SpeciesNeed> Needs => needs;
+    public float Size => size;
+    public List<TileType> AccessibleTerrain => accessibleTerrain;
 
     // Values
     [SerializeField] private string speciesName = default;
@@ -19,7 +20,10 @@ public class Species : ScriptableObject
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
     [SerializeField] private List<SpeciesNeed> needs = default;
-    [SerializeField] private Sprite sprite = default;
+    [Range(0.0f, 10.0f)]
+    [SerializeField] private float size = default;
+    [SerializeField] private List<TileType> accessibleTerrain = default;
+
 
     /// <summary>
     /// Get the condition of a need given its current value.
