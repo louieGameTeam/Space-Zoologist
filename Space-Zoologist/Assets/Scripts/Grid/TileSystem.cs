@@ -7,10 +7,21 @@ public class TileSystem : MonoBehaviour
 {
     // Start is called before the first frame update
     private Tilemap[] tilemaps;
+    private Grid grid;
 
     private void Awake()
     {
         tilemaps = GetComponent<TilePlacementController>().allTilemaps;
+        grid = GetComponent<Grid>();
+    }
+    /// <summary>
+    /// Convert a world position to cell positions on the grid.
+    /// </summary>
+    /// <param name="worldPosition"></param>
+    /// <returns></returns>
+    public Vector3Int WorldToCell(Vector3 worldPosition)
+    {
+        return grid.WorldToCell(worldPosition);
     }
 
     /// <summary>
