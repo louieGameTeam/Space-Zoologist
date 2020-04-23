@@ -69,7 +69,7 @@ public class Population : MonoBehaviour
         if (!Needs.ContainsKey(need))
         {
             Debug.Log($"Tried to access nonexistent need '{need}' in a { SpeciesName } population");
-            return 0;
+            return -1; // To indict not find
         }
 
         return Needs[need];

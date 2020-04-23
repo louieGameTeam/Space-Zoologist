@@ -12,13 +12,20 @@ public class NeedSystemManager : MonoBehaviour
 
     public void RegisterPopulation(Population population, NeedType need)
     {
+        Debug.Log($"Registering {population} with {need}");
+
         if (!systems.ContainsKey(need))
         {
-            Debug.Log($"Trying to register a population to a non-existant system: {need}");
-            return;
+            Debug.Log($"Adding new system: {need}");
+
+            FoodDistributionSystem system = default;
+            system.Initialize(need);
+
+            systems.Add(need, system);
         }
         systems[need].RegisterPopulation(population);
     }
+
     public void UnregisterPopulation(Population population, NeedType need)
     {
         systems[need].UnregisterPopulation(population);
@@ -31,5 +38,20 @@ public class NeedSystemManager : MonoBehaviour
     public void AddSystem(INeedSystem needSystem)
     {
         systems.Add(needSystem.Need, needSystem);
+    }
+
+    public void UpdateSystem(NeedType need)
+    {
+        if (!systems.ContainsKey(need))
+        {
+            Debug.Log($"Adding new system: {need}");
+
+            FoodDistributionSystem system = default;
+            system.Initialize(need);
+
+            systems.Add(need, system);
+        }
+
+        systems[need].Update();
     }
 }

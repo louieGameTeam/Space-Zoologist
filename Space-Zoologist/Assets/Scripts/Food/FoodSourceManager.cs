@@ -2,62 +2,121 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//public class FoodSourceManager : MonoBehaviour
-//{
-//    //Food source manager will be keeping references to the food sources and telling the food dis. sys 
-//    //and environmental interactions sys. to update when they need to
+public class FoodSourceManager : MonoBehaviour
+{
+    private List<FoodSource> foodSources = new List<FoodSource>();
 
-//    //dictionary(?) of all active food source instances
-//    private IDictionary<int, FoodSource> foodSourceDict = new Dictionary<int, FoodSource>();
-//    private int currIndex = 0;
+    // A ref to other managers
+    [SerializeField] private PopulationManager popMan = default;
+    [SerializeField] private NeedSystemManager needMan = default;
 
-//    // Food distribution system
-//    private RealisticFoodDistributionSystem foodDis = new RealisticFoodDistributionSystem();
+    // For demo
+    public int foodListSize { get => this.foodSources.Count; }
+    public float getTotalFood()
+    {
+        float totalFood = 0f;
 
-//    //Should we have instantiation functions for different food sources? and how to organize it all --maybe a table
+        foreach(FoodSource foodSource in this.foodSources)
+        {
+            totalFood += foodSource.getOutput();
+        }
 
-//    // This is a refference of all the food sources objects that will be given when the manager is initiate
-//    public List<FoodSource> allFoodSources;
+        return totalFood;
+    }
+    // end
+
+    private void Start()
+    {
+        // Add any food source that existed at start time.
+        this.foodSources.AddRange(FindObjectsOfType<FoodSource>());
+
+        foreach(FoodSource foodSource in foodSources)
+        {
+            this.needMan.UpdateSystem(foodSource.Type);
+        }
+    }
+
+    public void CreateFoodSource(FoodSourceType type, Vector2Int origin)
+    {
+        GameObject gameObject = new GameObject();
+        gameObject.transform.parent = this.transform;
+        gameObject.AddComponent<FoodSource>();
+        gameObject.GetComponent<FoodSource>().Initialize(type, origin);
+
+        // Manually add new pop to list
+        this.foodSources.Add(gameObject.GetComponent<FoodSource>());
+        this.needMan.UpdateSystem(gameObject.GetComponent<FoodSource>().Type);
+    }
+
+    public List<FoodSource> getFoodByType(NeedType need)
+    {
+        List<FoodSource> foods = new List<FoodSource>();
+
+        foreach(FoodSource foodSource in this.foodSources)
+        {
+            if(foodSource.Type == need)
+            {
+                foods.Add(foodSource);
+            }
+        }
+
+        return foods;
+    }
+
+    //    //Food source manager will be keeping references to the food sources and telling the food dis. sys 
+    //    //and environmental interactions sys. to update when they need to
+
+    //    //dictionary(?) of all active food source instances
+    //    private IDictionary<int, FoodSource> foodSourceDict = new Dictionary<int, FoodSource>();
+    //    private int currIndex = 0;
+
+    //    // Food distribution system
+    //    private RealisticFoodDistributionSystem foodDis = new RealisticFoodDistributionSystem();
+
+    //    //Should we have instantiation functions for different food sources? and how to organize it all --maybe a table
+
+    //    // This is a refference of all the food sources objects that will be given when the manager is initiate
+    //    public List<FoodSource> allFoodSources;
 
 
-//    private List<FoodSource> getAllFoodSourceByType(string type)
-//    {
-//        List<FoodSource> foodSourcesByType = new List<FoodSource>();
+    //    private List<FoodSource> getAllFoodSourceByType(string type)
+    //    {
+    //        List<FoodSource> foodSourcesByType = new List<FoodSource>();
 
-//        foreach (FoodSource foodSource in this.allFoodSources)
-//        {
-//            if (foodSource.getFoodType() == type)
-//            {
-//                foodSourcesByType.Add(foodSource);
-//            }
-//        }
+    //        foreach (FoodSource foodSource in this.allFoodSources)
+    //        {
+    //            if (foodSource.getFoodType() == type)
+    //            {
+    //                foodSourcesByType.Add(foodSource);
+    //            }
+    //        }
 
-//        return foodSourcesByType;
-//    }
+    //        return foodSourcesByType;
+    //    }
 
 
-//    public int add(FoodSource newFoodSource)
-//    {
-//        currIndex++;
-//        foodSourceDict.Add(currIndex, newFoodSource);
+    //    public int add(FoodSource newFoodSource)
+    //    {
+    //        currIndex++;
+    //        foodSourceDict.Add(currIndex, newFoodSource);
 
-//        // TODO : tell food dist and food env to update
-//        updateFoodSource(newFoodSource);
+    //        // TODO : tell food dist and food env to update
+    //        updateFoodSource(newFoodSource);
 
-//        return currIndex;
-//    }
+    //        return currIndex;
+    //    }
 
-//    public void delete(int index)
-//    {
-//        foodSourceDict.Remove(index);
+    //    public void delete(int index)
+    //    {
+    //        foodSourceDict.Remove(index);
 
-//        // TODO : tell food dist and food env to update
-//        updateFoodSource(foodSourceDict[index]);
-//    }
+    //        // TODO : tell food dist and food env to update
+    //        updateFoodSource(foodSourceDict[index]);
+    //    }
 
-//    private void updateFoodSource(FoodSource foodSource)
-//    {
-//        List<FoodSource> foodSourcesToDistribute = getAllFoodSourceByType(foodSource.getFoodType());
-//        this.foodDis.update(foodSourcesToDistribute);
-//    }
-//}
+    //    private void updateFoodSource(FoodSource foodSource)
+    //    {
+    //        List<FoodSource> foodSourcesToDistribute = getAllFoodSourceByType(foodSource.getFoodType());
+    //        this.foodDis.update(foodSourcesToDistribute);
+    //    }
+}
