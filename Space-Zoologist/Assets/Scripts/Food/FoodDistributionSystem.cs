@@ -71,7 +71,7 @@ public class FoodDistributionSystem : INeedSystem
     }
 
 
-    // NOTE: not need for this since all pop that is registered to this system can consume this food
+    // NOTE: no need for this since all pop that is registered to this system can consume this food
     // Get list of populations that can consume given food source in given list of population
     private List<Population> getPopulationsThatConsumeFoodSource(List<Population> allPopulations, FoodSource foodSource)
     {
@@ -79,14 +79,14 @@ public class FoodDistributionSystem : INeedSystem
 
         foreach (Population population in allPopulations)
         {
-            // TODO: check in population can consume foodSourceType. (Population)
+            // TODO: check if population can consume foodSourceType. (Population)
             if (population.GetNeedValue(foodSource.Type) != -1)
             {
                 canConsumePopulations.Add(population);
             }
 
             // Reset food source need value
-            population.UpdateNeed(foodSource.Type, 0f);
+            population.ResetNeed(foodSource.Type);
         }
 
         return canConsumePopulations;

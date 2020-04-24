@@ -51,13 +51,18 @@ public class Population : MonoBehaviour
     {
         if (Needs.ContainsKey(need))
         {
-            Needs[need] = value;
+            Needs[need] += value;
             // UpdateGrowthConditions();
         }
         else
         {
             Debug.Log("Need not found");
         }
+    }
+
+    public void ResetNeed(NeedType need)
+    {
+        Needs[need] = 0f;
     }
 
     /// <summary>
