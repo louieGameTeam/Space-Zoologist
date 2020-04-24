@@ -452,7 +452,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 797c908817f8a48babd838d2cd82c7c5, type: 2}
   - {fileID: 11400000, guid: 0ba84753d3af547d193e987dbd6b6741, type: 2}
   - {fileID: 11400000, guid: ae5367bf9bf244ce690460fa5c765a1b, type: 2}
-  - {fileID: 11400000, guid: 2845c5374552a48e9ad133cfad4d4f10, type: 2}
   - {fileID: 11400000, guid: 20baf0437fc6241a99de26c617afd64b, type: 2}
   StoreContent: {fileID: 45656415}
   PopupDisplay: {fileID: 1316687855}
@@ -2394,13 +2393,13 @@ MonoBehaviour:
   - {fileID: 1809568897}
   terrainTiles:
   - {fileID: 11400000, guid: 714afed5ce3372547a7f6bc4f9ffef49, type: 2}
-  - {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
-  - {fileID: 11400000, guid: 25490f4b3a6e5b54d9f00393e90881e6, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
   - {fileID: 11400000, guid: 89a14f3ed2f2a9e4b92fcb521dbe1ec2, type: 2}
   - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
-  - {fileID: 11400000, guid: d7f5d3bc3a8557d4d9280a3874180775, type: 2}
-  - {fileID: 11400000, guid: 7c49bdb5181dfc24bad1a92c083c9734, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!156049354 &1472282618
 Grid:
   m_ObjectHideFlags: 0
@@ -3111,10 +3110,10 @@ MonoBehaviour:
   coloringMethod: {fileID: 1936870399646672439, guid: 18b7f00f391383a41809647754e60aca,
     type: 3}
   managedTerrainTiles:
-  - {fileID: 11400000, guid: 25490f4b3a6e5b54d9f00393e90881e6, type: 2}
+  - {fileID: 0}
   linkedTerrainTiles:
   - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
-  - {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
 --- !u!483693784 &1809568896
 TilemapRenderer:
@@ -3508,11 +3507,11 @@ MonoBehaviour:
   tilePlacementController: {fileID: 1472282617}
   floatingObjectManager: {fileID: 1369818677}
   Tiles:
-  - {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
-  - {fileID: 11400000, guid: 25490f4b3a6e5b54d9f00393e90881e6, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
   - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
-  - {fileID: 11400000, guid: 7c49bdb5181dfc24bad1a92c083c9734, type: 2}
+  - {fileID: 0}
   StartPreview:
     m_PersistentCalls:
       m_Calls:
