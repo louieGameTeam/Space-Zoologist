@@ -9,11 +9,12 @@ public enum NeedCondition { Bad, Neutral, Good }
 [CreateAssetMenu]
 public class SpeciesNeed : ScriptableObject
 {
+    public NeedType Type => type;
+    public int Severity => severity;
+
     [SerializeField] private NeedType type = default;
-    public NeedType Type { get => type; }
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
-    public int Severity { get => severity; }
     [SerializeField] private List<NeedCondition> conditions = default;
     [SerializeField] private List<float> thresholds = default;
 
@@ -27,26 +28,15 @@ public class SpeciesNeed : ScriptableObject
         // If there is only one condition, return it.
         if (conditions.Count == 1) return conditions[0];
 
-        NeedCondition needCondition = NeedCondition.Neutral;
-
-        // Below or above threshold.
-        if (value <= this.thresholds[0])
+        for (var i = 0; i < this.thresholds.Count; i++)
         {
-            needCondition = this.conditions[0];
-        }
-        else if (value >= this.thresholds[this.thresholds.Count - 1])
-        {
-            needCondition = this.conditions[this.thresholds.Count - 1];
-        }
-        // Between threshold values.
-        for (int i = 1; i < this.thresholds.Count - 2; i++)
-        {
-            if ((value >= this.thresholds[i]) && (value < this.thresholds[i + 1]))
+            if (value < this.thresholds[i])
             {
-                needCondition = this.conditions[i];
+                return this.conditions[i];
             }
         }
-        return needCondition;
+
+        return this.conditions[this.thresholds.Count];
     }
 
     public void OnValidate()
