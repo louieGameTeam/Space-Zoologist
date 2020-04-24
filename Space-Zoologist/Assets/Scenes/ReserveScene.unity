@@ -616,12 +616,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17d6e5e302d14a4a9fa87e7c91985d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePreview: {fileID: 562015238}
   selectableTiles:
   - {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
   - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
   isBlockMode: 0
   displayText: 
+  canvas: {fileID: 0}
 --- !u!114 &562015238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,8 +634,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22faf734e56d7164680af8fc4a4a62c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testTile: {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
-  currentCamera: {fileID: 519420031}
 --- !u!1 &727699097
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9549afc7087a6b14aaec260caad611d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  needSystemManager: {fileID: 0}
 --- !u!1 &934348229
 GameObject:
   m_ObjectHideFlags: 0
