@@ -16,7 +16,7 @@ public class Population : MonoBehaviour
 
     private void Awake()
     {
-        this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position), null);
+        //this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position), FindObjectOfType<NeedSystemManager>());
     }
 
     /// <summary>
@@ -29,6 +29,7 @@ public class Population : MonoBehaviour
     {
         this.species = species;
         this.origin = origin;
+        this.Count = 1;
 
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         if (needSystemManager)

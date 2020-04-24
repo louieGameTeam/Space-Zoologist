@@ -10,6 +10,8 @@ public class NeedSystemManager : MonoBehaviour
 
     private Dictionary<NeedType, INeedSystem> systems = new Dictionary<NeedType, INeedSystem>();
 
+    [SerializeField] public FoodSourceManager foodMan = default;
+
     public void RegisterPopulation(Population population, NeedType need)
     {
         Debug.Log($"Registering {population} with {need}");
@@ -18,7 +20,7 @@ public class NeedSystemManager : MonoBehaviour
         {
             Debug.Log($"Adding new system: {need}");
 
-            FoodDistributionSystem system = default;
+            FoodDistributionSystem system = new FoodDistributionSystem();
             system.Initialize(need);
 
             systems.Add(need, system);
@@ -46,12 +48,17 @@ public class NeedSystemManager : MonoBehaviour
         {
             Debug.Log($"Adding new system: {need}");
 
-            FoodDistributionSystem system = default;
+            FoodDistributionSystem system = new FoodDistributionSystem();
             system.Initialize(need);
 
             systems.Add(need, system);
         }
 
-        systems[need].Update();
+        // Update for food sources
+        if(need == NeedType.SpaceMaple)
+        {
+            Debug.Log($"update system: {need}");
+            systems[need].Update(foodMan.getFoodByType(need));
+        }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PopulationManager : MonoBehaviour
 {
     private List<Population> populations = new List<Population>();
-    [SerializeField] private NeedSystemManager needSystemManager = default;
+    [SerializeField] public NeedSystemManager needSystemManager = default;
 
     // For demo
     public int popListSize { get => this.populations.Count; }

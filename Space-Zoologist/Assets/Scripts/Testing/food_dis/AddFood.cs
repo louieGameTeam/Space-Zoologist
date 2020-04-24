@@ -7,12 +7,14 @@ using UnityEngine.Events;
 public class AddFood : MonoBehaviour
 {
     public GameObject managers;
-    public FoodSourceManager foodSourceManager;
+    private FoodSourceManager foodSourceManager;
     public FoodSourceType type;
+    public GameObject foodPrefab;
+
 
     private void Awake()
     {
-        managers = GameObject.Find("Managers");
+        //managers = GameObject.Find("Managers");
         foodSourceManager = managers.GetComponent<FoodSourceManager>();
     }
 
@@ -28,8 +30,7 @@ public class AddFood : MonoBehaviour
 
     }
 
-    public GameObject foodPrefab;
-
+    
     private void addFood()
     {
         Instantiate(foodPrefab, new Vector3(Random.Range(-3.0f, 7.0f), Random.Range(-5.0f, 3.0f), 0), Quaternion.identity);

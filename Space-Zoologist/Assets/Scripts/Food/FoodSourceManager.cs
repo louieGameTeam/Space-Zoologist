@@ -7,8 +7,8 @@ public class FoodSourceManager : MonoBehaviour
     private List<FoodSource> foodSources = new List<FoodSource>();
 
     // A ref to other managers
-    [SerializeField] private PopulationManager popMan = default;
-    [SerializeField] private NeedSystemManager needMan = default;
+    [SerializeField] public PopulationManager popMan = default;
+    [SerializeField] public NeedSystemManager needMan = default;
 
     // For demo
     public int foodListSize { get => this.foodSources.Count; }

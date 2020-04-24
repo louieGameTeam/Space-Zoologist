@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class AddPop : MonoBehaviour
 {
     public GameObject managers;
-    public PopulationManager populationManager;
+    private PopulationManager populationManager;
     public Species specie;
+    public GameObject popPrefab;
 
     private void Awake()
     {
-        managers = GameObject.Find("Managers");
+        //managers = GameObject.Find("Managers");
         populationManager = managers.GetComponent<PopulationManager>();
     }
 
@@ -27,7 +28,7 @@ public class AddPop : MonoBehaviour
 
     }
 
-    public GameObject popPrefab;
+    
 
     private void addPop()
     {

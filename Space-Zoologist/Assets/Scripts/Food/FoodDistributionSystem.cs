@@ -17,7 +17,7 @@ using UnityEngine;
  *  - TPS test with all access.
  */
 
-public class FoodDistributionSystem : MonoBehaviour, INeedSystem
+public class FoodDistributionSystem : INeedSystem
 {
     private NeedType need;
     private List<Population> populations = new List<Population>();
@@ -26,7 +26,6 @@ public class FoodDistributionSystem : MonoBehaviour, INeedSystem
     {
         this.need = need;
     }
-
 
     public NeedType Need => this.need;
 
@@ -40,13 +39,8 @@ public class FoodDistributionSystem : MonoBehaviour, INeedSystem
         this.populations.Remove(population);
     }
 
-    public void Update()
+    public void Update(List<FoodSource> foods)
     {
-        FoodSourceManager foodMan = default;
-        foodMan = FindObjectOfType<FoodSourceManager>();
-
-
-        List<FoodSource> foods = foodMan.getFoodByType(this.need);
         testerUpdate(foods, this.populations);
     }
 

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3244225895161862598}
   - component: {fileID: 3244225895161862597}
-  - component: {fileID: 8990324129072148108}
   m_Layer: 0
   m_Name: SpaceMaple
   m_TagString: FoodSource
@@ -82,16 +81,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8990324129072148108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3244225895161862595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c5e32c44a11483a9156eaaabeb666a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: {fileID: 11400000, guid: 8b92b300d609e45abb50c2e12bf8a7a7, type: 2}
