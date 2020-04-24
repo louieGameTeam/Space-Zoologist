@@ -14,8 +14,7 @@ public class StoreItemSO : ScriptableObject
     public string StoreItemCategory { get => itemCategory; set => itemCategory = value; }
     [SerializeField] private Sprite sprite = default;
     public Sprite Sprite { get => sprite; set => sprite = value; }
-    // Using item identifier to classify items generally (e.g., all terrain tiles identified as "Terrain")
-    // TODO: change to enum when enums are formalized
+    // Identifier for internal comparison between systems (e.g., 'Sand' used to compare to 'Sand' tile type)
     [SerializeField] private string itemIdentifier;
     public string ItemIdentifier { get => itemIdentifier; set => itemIdentifier = value; }
 }

@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Create a SetupItemPreviewEvent and add this method to send a sprite that follows the cursor until StopFollowing is invoked
+/// </summary>
 [System.Serializable]
 public class SetupItemPreviewEvent : UnityEvent<Sprite> { }
 public class SpriteFollowCursor : MonoBehaviour

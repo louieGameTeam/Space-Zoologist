@@ -3,13 +3,12 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 // TODO: if cursor over any HUD, prevent clicking through them
-// TODO: rework to be more flexible like how store display should be
 // Listens to events and pulls the data it needs to display so lots of references 
 public class HUD : MonoBehaviour
 {
     [SerializeField] private GameObject StoreDisplay = default;
     [SerializeField] private ReserveStore StoreManager = default;
-    [SerializeField] private PlayerInformation PlayerInfo = default;
+    [SerializeField] private PlayerInfo PlayerInfo = default;
     [SerializeField] private TilePlacementController tilePlacementController = default;
     [SerializeField] private GameObject PlayerFundsDisplay = default;
     private StoreItemSO ItemToBuy = default;
@@ -18,45 +17,43 @@ public class HUD : MonoBehaviour
     {
         if (this.StoreDisplay.activeSelf)
         {
-            // Can use numTilesPlaced to determine if purchase cancelled
+            this.HandlePlayerHUD();
+        }
+    }
+
+    private void HandlePlayerHUD()
+    {
+        // Can use numTilesPlaced to determine if purchase cancelled
             if (this.ItemToBuy != null)
             {
-                float totalCost = this.ItemToBuy.ItemCost * 1f; // this.tilePlacementController.numTilesPlaced
-                this.UpdatePlayerFundsDisplay(totalCost, this.PlayerInfo.PlayerFunds);
+                float totalCost = 0;
+                if (this.ItemToBuy.StoreItemCategory.Equals("Tiles"))
+                {   
+                    totalCost = this.ItemToBuy.ItemCost * this.tilePlacementController.PlacedTileCount();
+                }
+                else 
+                {
+                    totalCost = this.ItemToBuy.ItemCost * 1f;
+                }
+                this.UpdatePlayerFundsDisplay(totalCost);
             }
             else
             {
-                this.UpdatePlayerFundsDisplay(0f, this.PlayerInfo.PlayerFunds);
+                this.UpdatePlayerFundsDisplay(0f);
             }
-        }
-        else
-        {
-            this.PlayerFundsDisplay.SetActive(false);
-        }
     }
 
     public void DisplayStore()
     {
-        this.CloseSelection();
-        if (!this.StoreDisplay.activeSelf)
-        {
-            string storeSelectionClicked = EventSystem.current.currentSelectedGameObject.name;
-            this.StoreManager.SetupDisplay(storeSelectionClicked);
-            this.StoreDisplay.SetActive(true);
-            this.PlayerFundsDisplay.SetActive(true);
-            this.UpdatePlayerFundsDisplay(totalCost: 0f, this.PlayerInfo.PlayerFunds);
-        }
+        this.StoreDisplay.SetActive(!this.StoreDisplay.activeSelf);
+        this.PlayerFundsDisplay.SetActive(!this.PlayerFundsDisplay.activeSelf);
     }
 
-    public void CloseSelection()
+    public void DisplaySelection()
     {
-        this.StoreDisplay.SetActive(false);
-        this.ItemToBuy = null;
-    }
-
-    public void ClearPlayerFundsDisplay()
-    {
-        this.ItemToBuy = null;
+        string storeSelectionClicked = EventSystem.current.currentSelectedGameObject.name;
+        this.StoreManager.SetupDisplay(storeSelectionClicked);
+        this.UpdatePlayerFundsDisplay(totalCost: 0f);   
     }
 
     public void UpdateItemToBuy(GameObject itemSelected)
@@ -64,17 +61,17 @@ public class HUD : MonoBehaviour
         this.ItemToBuy = itemSelected.GetComponent<StoreItem>().ItemInformation;
     }
 
-    public void UpdatePlayerFundsDisplay(float totalCost, float playerFunds)
+    private void UpdatePlayerFundsDisplay(float totalCost)
     {
         if (totalCost > 0 && this.ItemToBuy != null)
         {
             // TODO: test if caching the GetComponent and changign it works
-            this.PlayerFundsDisplay.GetComponent<Text>().text = "Funds: " + playerFunds +
+            this.PlayerFundsDisplay.GetComponent<Text>().text = "$" + this.PlayerInfo.Funds +
             "(-" + totalCost + ")";
         }
         else
         {
-            this.PlayerFundsDisplay.GetComponent<Text>().text = "Funds: " + playerFunds;
+            this.PlayerFundsDisplay.GetComponent<Text>().text = "$" + this.PlayerInfo.Funds;
         }
     }
 }

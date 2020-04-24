@@ -16,13 +16,13 @@ public class StoreItem : MonoBehaviour
         this.gameObject.GetComponent<Image>().sprite = this.ItemInformation.Sprite;
     }
 
-    public GameObject SetupStoreItemExtendedDisplay(GameObject extendedDisplay, Transform extendedContentDisplay)
+    public GameObject SetupStoreItemExtendedDisplay(GameObject extendedDisplay, GameObject extendedDisplayView)
     {
-        GameObject newItem = Instantiate(extendedDisplay, extendedContentDisplay);
-        extendedDisplay.transform.GetChild(0).GetComponent<Text>().text = this.ItemInformation.ItemName;
-        extendedDisplay.transform.GetChild(1).GetComponent<Text>().text = this.ItemInformation.ItemCost.ToString();
-        extendedDisplay.transform.GetChild(2).GetComponent<Text>().text = this.ItemInformation.StoreItemDescription;
-        extendedDisplay.transform.GetChild(3).GetComponent<Image>().sprite = this.ItemInformation.Sprite;
+        GameObject newItem = Instantiate(extendedDisplay, extendedDisplayView.transform);
+        newItem.transform.position = new Vector2(extendedDisplayView.transform.position.x, this.gameObject.transform.position.y);
+        newItem.transform.GetChild(0).GetComponent<Text>().text = this.ItemInformation.ItemName;
+        newItem.transform.GetChild(1).GetComponent<Text>().text = "$" + this.ItemInformation.ItemCost.ToString();
+        newItem.transform.GetChild(2).GetComponent<Text>().text = this.ItemInformation.StoreItemDescription;
         return newItem;
     }
 }
