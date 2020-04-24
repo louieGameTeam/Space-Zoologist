@@ -6,10 +6,10 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// A manager for managing how the reserve is "separated" for each population.
 /// </summary>
-public class ReservePartitionManager : MonoBehaviour
+public class ReservePartitionManagert : MonoBehaviour
 {
     //singleton
-    public static ReservePartitionManager ins;
+    public static ReservePartitionManagert ins;
 
     //may change
     public const int maxPop = 64;
@@ -58,7 +58,7 @@ public class ReservePartitionManager : MonoBehaviour
     public void Start()
     {
         FindEnclosedAreas();
-        GetComponent<AtmosphereTester>().Graph();
+        //GetComponent<AtmosphereTester>().Graph();
     }
 
     public void Update()
@@ -145,7 +145,7 @@ public class ReservePartitionManager : MonoBehaviour
 
             //check if tilemap has tile and if pop can access the tile (e.g. some cannot move through water)
             TerrainTile tile = GTT.GetTerrainTileAtLocation(cur);
-            if (tile != null && pop.Species.accessibleTerrain.Contains(tile.type))
+            if (tile != null && pop.Species.AccessibleTerrain.Contains(tile.type))
             {
                 if (pop.name == "Dirt") { print(pop.name + " accesses " + tile.name + " of type " +  tile.type); }
                 //save the Vector3Int since it is already checked

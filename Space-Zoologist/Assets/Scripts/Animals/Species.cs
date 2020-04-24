@@ -13,7 +13,7 @@ public class Species : ScriptableObject
     public Sprite Sprite { get => sprite; }
 
     public float Size;
-    public List<TileType> accessibleTerrain;
+    public List<TileType> AccessibleTerrain;
 
     // Values
     [SerializeField] private string speciesName = default;
