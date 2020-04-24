@@ -95,6 +95,7 @@ public class TilePlacementController : MonoBehaviour
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
     }
+<<<<<<< HEAD
 
     public void ConfirmPlacement()
     {
@@ -112,6 +113,8 @@ public class TilePlacementController : MonoBehaviour
         triedToPlaceTiles.Clear();
     }
 
+=======
+>>>>>>> a67e9d83ba7a5d61fc5be82fdff1c2e7185e595a
     public void StopPreview()
     {
         isPreviewing = false;
