@@ -16,7 +16,7 @@ public class Population : MonoBehaviour
 
     private void Awake()
     {
-        this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position), null);
+        //this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position), FindObjectOfType<NeedSystemManager>());
     }
 
     /// <summary>
@@ -29,6 +29,7 @@ public class Population : MonoBehaviour
     {
         this.species = species;
         this.origin = origin;
+        this.Count = 1;
 
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         if (needSystemManager)
@@ -50,13 +51,18 @@ public class Population : MonoBehaviour
     {
         if (Needs.ContainsKey(need))
         {
-            Needs[need] = value;
+            Needs[need] += value;
             // UpdateGrowthConditions();
         }
         else
         {
             Debug.Log("Need not found");
         }
+    }
+
+    public void ResetNeed(NeedType need)
+    {
+        Needs[need] = 0f;
     }
 
     /// <summary>
@@ -69,7 +75,7 @@ public class Population : MonoBehaviour
         if (!Needs.ContainsKey(need))
         {
             Debug.Log($"Tried to access nonexistent need '{need}' in a { SpeciesName } population");
-            return 0;
+            return -1; // To indict not find
         }
 
         return Needs[need];

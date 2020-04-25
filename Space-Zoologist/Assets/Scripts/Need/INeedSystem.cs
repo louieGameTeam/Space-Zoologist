@@ -23,6 +23,9 @@ public interface INeedSystem
     /// The need that the system calculates and updates.
     /// </summary>
     NeedType Need { get; }
+
+    // TODO: need to make a generic Update that takes any type of needs
+    void Update(List<FoodSource> needSources);
 }
 
 
