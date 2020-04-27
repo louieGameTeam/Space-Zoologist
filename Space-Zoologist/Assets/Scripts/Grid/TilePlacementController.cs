@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 
 public class TilePlacementController : MonoBehaviour
 {
-    // Can be either pen or block mode.
     public bool isBlockMode { get; set; } = false;
     public TerrainTile selectedTile { get; set; } = default;
     public Vector3Int mouseCellPosition { get { return currentMouseCellPosition; } }
@@ -20,8 +19,9 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int lastPlacedTile;
     private bool isFirstTile;
     public Tilemap[] allTilemaps { get { return tilemaps; } }
+    [SerializeField] private String terrainTileFileDirectory = "/Assets/ScriptableObjects/Tiles";
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
-    [SerializeField] private TerrainTile[] terrainTiles = default;
+    private TerrainTile[] terrainTiles = default;
     private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles 
     private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
@@ -34,6 +34,7 @@ public class TilePlacementController : MonoBehaviour
 
     private void Awake()
     {
+        terrainTiles = Resources.LoadAll(terrainTileFileDirectory).Cast<TerrainTile>().ToArray();
         tileSystem = FindObjectOfType<TileSystem>();
         grid = GetComponent<Grid>();
         foreach (TerrainTile terrainTile in terrainTiles)
@@ -217,7 +218,7 @@ public class TilePlacementController : MonoBehaviour
         PlaceTile(currentMouseCellPosition, selectedTile);
     }
 
-    private void UpdatePreviewBlock() //TODO Resolve lag when moving back and forth
+    private void UpdatePreviewBlock()
     {
         if (isFirstTile)
         {
@@ -235,7 +236,7 @@ public class TilePlacementController : MonoBehaviour
                 supposedTiles.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
             }
         }
-        foreach (Vector3Int existingTile in addedTiles.Keys) // Forcing removal of all tiles not in bound to avoid leftover tile not being removed due to lagging, possible optimization
+        foreach (Vector3Int existingTile in addedTiles.Keys) // Forcing removal of all tiles not in bound to avoid leftover tile not being removed due to lagging and tick skipping, possible optimization
         {
             if (!supposedTiles.Contains(existingTile))
             {
