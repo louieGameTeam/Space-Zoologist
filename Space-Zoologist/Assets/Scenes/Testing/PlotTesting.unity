@@ -723,7 +723,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 9.557933
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1448,14 +1448,6 @@ MonoBehaviour:
   - {fileID: 343861019}
   - {fileID: 491326604}
   - {fileID: 956153729}
-  terrainTiles:
-  - {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
-  - {fileID: 11400000, guid: 25490f4b3a6e5b54d9f00393e90881e6, type: 2}
-  - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
-  - {fileID: 11400000, guid: 89a14f3ed2f2a9e4b92fcb521dbe1ec2, type: 2}
-  - {fileID: 11400000, guid: d7f5d3bc3a8557d4d9280a3874180775, type: 2}
-  - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
-  - {fileID: 11400000, guid: 7c49bdb5181dfc24bad1a92c083c9734, type: 2}
 --- !u!114 &1180561310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,12 +1460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17d6e5e302d14a4a9fa87e7c91985d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectableTiles:
-  - {fileID: 11400000, guid: 89c5fb00683fe574ca2eedb41851a8dc, type: 2}
-  - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
-  - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
-  - {fileID: 11400000, guid: 25490f4b3a6e5b54d9f00393e90881e6, type: 2}
-  - {fileID: 11400000, guid: 7c49bdb5181dfc24bad1a92c083c9734, type: 2}
+  selectableTiles: 0000000001000000020000000300000004000000
   isBlockMode: 0
   displayText: 'Press the numbers keys to switch tiles.
 
