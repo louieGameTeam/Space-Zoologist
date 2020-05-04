@@ -6,6 +6,19 @@ using UnityEngine.Tilemaps;
 public class AtmosphereTester : MonoBehaviour
 {
     public Tilemap mask;
+
+    public void Start()
+    {
+        GetComponent<EnclosureSystem>().FindEnclosedAreas();
+        InvokeRepeating("UpdateAtmosphere", 1.0f, 1.0f);
+    }
+
+    private void UpdateAtmosphere()
+    {
+        GetComponent<EnclosureSystem>().UpdateSurroundingAtmosphere(0,0,100,100);
+        Graph();
+    }
+
     public void Graph()
     {
         List<AtmosphericComposition> Atmospheres = EnclosureSystem.ins.Atmospheres;
@@ -21,18 +34,20 @@ public class AtmosphereTester : MonoBehaviour
         //find max density and calculate density for each tile
         foreach (KeyValuePair<Vector3Int, byte> pair in EnclosureSystem.ins.PositionToAtmosphere)
         {
-            //skip walls
-            if (pair.Value == 255) {
-                mask.SetTileFlags(pair.Key, TileFlags.None);
-                mask.SetColor(pair.Key, Color.black);
-                continue;
-            }
 
             //By default the flag is TileFlags.LockColor
             mask.SetTileFlags(pair.Key, TileFlags.None);
 
-            //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
-            mask.SetColor(pair.Key, colors[pair.Value]);
+            //skip walls
+            if (pair.Value == 255)
+            {
+                mask.SetColor(pair.Key, Color.black);
+            }
+            else
+            {
+                //set color of tile, based on gasXYZ
+                mask.SetColor(pair.Key, colors[pair.Value]);
+            }
         }
     }
 }
