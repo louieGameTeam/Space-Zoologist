@@ -1256,8 +1256,8 @@ GameObject:
   m_Component:
   - component: {fileID: 145205999}
   - component: {fileID: 145205998}
-  - component: {fileID: 145205997}
   - component: {fileID: 145205996}
+  - component: {fileID: 145205997}
   - component: {fileID: 145206000}
   m_Layer: 0
   m_Name: RPM+DM
@@ -1278,8 +1278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546726a53d9084cf298a26b80ad8e018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PDMDemo: 0
-  mask: {fileID: 1741506836}
 --- !u!114 &145205997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1289,11 +1287,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 145205995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01e7c86bea0c6489d85120b9ead0ba24, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dc1a1a38a0193b46956797608201aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  food: {fileID: 0}
-  RPMDemo: 0
 --- !u!114 &145205998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1303,13 +1299,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 145205995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65dafabcd133f4d5b9dd0a3f46c4b333, type: 3}
+  m_Script: {fileID: 11500000, guid: 320d3a1b49d9e93499e06413cacdbe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gasX: 0.33
-  gasY: 0.33
-  gasZ: 0.33
-  temp: 35
+  popOnStartUp: []
 --- !u!4 &145205999
 Transform:
   m_ObjectHideFlags: 0
@@ -1394,6 +1387,7 @@ MonoBehaviour:
   - {fileID: 1986790530}
   - {fileID: 1605498283}
   - {fileID: 1798475086}
+  terrainTiles: []
 --- !u!114 &474126902
 MonoBehaviour:
   m_ObjectHideFlags: 0

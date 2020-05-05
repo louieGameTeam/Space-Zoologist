@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
   m_Name: TestJetter
   m_EditorClassIdentifier: 
-  Size: 1
-  accessibleTerrain: 04000000
   speciesName: Jetter
   dominance: 5
   growthFactor: 4
   needs:
   - {fileID: 11400000, guid: a426098c7fe04e24296cdc6be2cc4c70, type: 2}
-  sprite: {fileID: 0}
+  size: 1
+  accessibleTerrain: 04000000

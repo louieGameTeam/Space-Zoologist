@@ -11,7 +11,7 @@ public class ReservePartitionManager : MonoBehaviour
     //singleton
     public static ReservePartitionManager ins;
 
-    //may change
+    //maximum number of populations allowed
     public const int maxPop = 64;
 
     public List<Population> Pops { get; private set; }
@@ -49,6 +49,10 @@ public class ReservePartitionManager : MonoBehaviour
         accessMap = new Dictionary<Vector3Int, long>();
         _tileSystem = FindObjectOfType<TileSystem>();
         reference = _tileSystem.GetComponent<TilePlacementController>().allTilemaps[0];
+    }
+
+    public void Start()
+    {
         foreach (Population pop in popOnStartUp)
         {
             AddPopulation(pop);
@@ -64,7 +68,7 @@ public class ReservePartitionManager : MonoBehaviour
         {
             //ignore their old id and assign it a new one
             int id = openID.Dequeue();
-            //since IDs after 63 are recycled, we need to do clean up old values
+            //since IDs after maxPop-1 are recycled ids, we need to do clean up old values
             if (id == lastRecycledID) CleanupAccessMapForRecycledID();
             PopToID.Add(pop, id);
             Pops.Add(pop);
@@ -72,6 +76,7 @@ public class ReservePartitionManager : MonoBehaviour
             //generate the map with the new id  
             GenerateMap(pop);
             if (PopDensityManager.ins != null) PopDensityManager.ins.AddPop(pop);
+            
         }
     }
 

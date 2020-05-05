@@ -23,9 +23,6 @@ public class PopDensityManager : MonoBehaviour
 
     Dictionary<Population, int> spaces;
 
-    //if in demo
-    public bool PDMDemo;
-
     public void Awake()
     {
         //singleton
@@ -43,22 +40,15 @@ public class PopDensityManager : MonoBehaviour
         popDensityMap = new Dictionary<Vector3Int, long>();
     }
 
-    public void Start()
+    public Dictionary<Vector3Int, long> GetPopDensityMap()
     {
-        Invoke("Init", 0.3f);
+        return popDensityMap;
     }
 
     /// <summary>
-    /// Initialize variables from rpm and generate new density map
-    /// Has to be separate from start to allow populations to be added to the rpm
+    /// Add a population to the Population Density System.
     /// </summary>
-    public void Init()
-    {
-        //graph the density map if in demo
-        if (PDMDemo)
-            Graph();
-    }
-
+    /// <param name="pop">The population to be added.</param>
     public void AddPop(Population pop)
     {
         if (!rpm.Pops.Contains(pop))
@@ -72,13 +62,19 @@ public class PopDensityManager : MonoBehaviour
             GenerateDensityMap(pop);
         }
     }
+
+    /// <summary>
+    /// Remove a population from the Population Density System.
+    /// </summary>
+    /// <param name="pop">The population to be removed.</param>
     public void RemovePop(Population pop)
     {
         popsByID.Remove(rpm.PopToID[pop]);
     }
 
     /// <summary>
-    /// Exclusive to RPM. Cleanup the bits occupied by the recycled IDs.
+    /// Used by Reserve Partition Manager. Do not call this function yourself.
+    /// Cleanups the bits occupied by the recycled IDs.
     /// </summary>
     /// <param name="recycledID"></param>
     public void CleanupDensityMap(int[] recycledID)
@@ -125,21 +121,9 @@ public class PopDensityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Generate the Density Map, only called by running Init()
+    /// Generate the Density Map for a population. Would only be called when adding a population.
     /// </summary>
-    //(2r^2 + 2r + 1) * O(n) algorithm, significantly more expensive if radius is big
-    private void GenerateDensityMap()
-    {
-        popDensityMap = new Dictionary<Vector3Int, long>();
-
-        List<Population> pops = rpm.Pops;
-
-        foreach (Population pop in pops)
-        {
-            GenerateDensityMap(pop);
-        }
-    }
-
+    /// <param name="pop"></param>
     private void GenerateDensityMap(Population pop)
     {
         //find the number of accessible tiles
@@ -198,7 +182,11 @@ public class PopDensityManager : MonoBehaviour
         spaces.Add(pop, space);
     }
 
-    //(2r^2 + 2r + 1) * O(n) algorithm, significantly more expensive if radius is big
+    /// <summary>
+    /// Get the density score of a population, significantly more expensive if the accessible area is big
+    /// </summary>
+    /// <param name="pop"></param>
+    /// <returns></returns>
     public float GetDensityScore(Population pop)
     {
         //not initialized
@@ -258,46 +246,58 @@ public class PopDensityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Mask for showing the demo.
+    /// Update all affected population after the given population changes Count.
     /// </summary>
-    public Tilemap mask;
-
-    /// <summary>
-    /// Graphing for demo purposes, may be worked into the game as a sort of inspection mode?
-    /// </summary>
-    public void Graph()
+    /// <param name="changedPopulation">The population that updated its Count.</param>
+    public void UpdateAffectedPopulations(Population changedPopulation)
     {
-        //colors
-        Dictionary<Vector3Int, float> col = new Dictionary<Vector3Int, float>();
+        HashSet<int> AffectedPopulations = new HashSet<int>();
 
-        //max density for color comparison
-        float maxDensity = -1;
+        //TODO changedPopulation.density = GetDensityScore(changedPopulation);
 
-        //find max density and calculate density for each tile
-        foreach (KeyValuePair<Vector3Int, long> pair in popDensityMap)
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+        List<Vector3Int> accessed = new List<Vector3Int>();
+        List<Vector3Int> unaccessible = new List<Vector3Int>();
+        Vector3Int cur;
+
+        //starting location
+        Vector3Int location = rpm.WorldToCell(changedPopulation.transform.position);
+        stack.Push(location);
+
+        //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
+        while (stack.Count > 0)
         {
-            //calculate density
-            float density = GetPopDensityAt(pair.Key);
+            //next point
+            cur = stack.Pop();
 
-            col.Add(pair.Key, density);
-
-            if (density > maxDensity)
+            if (accessed.Contains(cur) || unaccessible.Contains(cur))
             {
-                maxDensity = density;
+                //checked before, move on
+                continue;
+            }
+
+            if (rpm.CanAccess(changedPopulation, cur))
+            {
+                //save the Vector3Int since it is already checked
+                accessed.Add(cur);
+
+                for (int i = 0; i < ReservePartitionManager.maxPop; i++) {
+                    if (!AffectedPopulations.Contains(i) && ((popDensityMap[cur] >> i) & 1L) == 1L) {
+                        //TODO popsByID[i].density = GetDensityScore(popsByID[i]);
+                    }
+                }
+
+                //check all 4 tiles around, may be too expensive/awaiting optimization
+                stack.Push(cur + Vector3Int.left);
+                stack.Push(cur + Vector3Int.up);
+                stack.Push(cur + Vector3Int.right);
+                stack.Push(cur + Vector3Int.down);
+            }
+            else
+            {
+                //save the Vector3Int since it is already checked
+                unaccessible.Add(cur);
             }
         }
-
-        //set color based on the fraction density/maxdensity
-        foreach (KeyValuePair<Vector3Int, float> pair in col)
-        {
-            //By default the flag is TileFlags.LockColor
-            mask.SetTileFlags(pair.Key, TileFlags.None);
-
-            //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
-            mask.SetColor(pair.Key, new Color(pair.Value / maxDensity, 1 - pair.Value / maxDensity, 0, 255.0f / 255));
-        }
-
-        //debug
-        print(maxDensity);
     }
 }

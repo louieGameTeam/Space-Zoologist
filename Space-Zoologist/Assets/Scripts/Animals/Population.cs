@@ -17,6 +17,7 @@ public class Population : MonoBehaviour
     private void Awake()
     {
         this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position), null);
+        Count = 100; //TODO to be removed, for Density testing
     }
 
     /// <summary>
