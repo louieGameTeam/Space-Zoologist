@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: TestMadle
+  m_Name: Madle
   m_EditorClassIdentifier: 
   speciesName: Madle
-  dominance: 8
+  dominance: 10
   growthFactor: 2
   needs:
-  - {fileID: 11400000, guid: d62a82625602c4442b457d80c3679103, type: 2}
-  sprite: {fileID: 0}
+  - {fileID: 11400000, guid: 617105db510b2314fa21c6a3f72637b3, type: 2}
+  size: 8
+  accessibleTerrain: 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,28 +8,40 @@ using UnityEngine;
 public class NeedSystemManager : MonoBehaviour
 {
 
-    private Dictionary<NeedType, INeedSystem> systems = new Dictionary<NeedType, INeedSystem>();
-
-    public void RegisterPopulation(Population population, NeedType need)
+    private void Start()
     {
-        if (!systems.ContainsKey(need))
+        foreach (NeedSystem needSystem in FindObjectsOfType<NeedSystem>())
         {
-            Debug.Log($"Trying to register a population to a non-existant system: {need}");
-            return;
+            systems.Add(needSystem.NeedName, needSystem);
         }
-        systems[need].RegisterPopulation(population);
     }
-    public void UnregisterPopulation(Population population, NeedType need)
+
+    private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
+
+    public void RegisterPopulationNeeds(Population population)
     {
-        systems[need].UnregisterPopulation(population);
+        foreach (Need need in population.Species.Needs)
+        {
+            Debug.Assert(systems.ContainsKey(need.NeedName), $"No {need.NeedName } system");
+            systems[need.NeedName].AddPopulation(population);
+        }
+    }
+
+    public void UnregisterPopulationNeeds(Population population)
+    {
+        foreach (Need need in population.Species.Needs)
+        {
+            Debug.Assert(systems.ContainsKey(need.NeedName));
+            systems[need.NeedName].RemovePopulation(population);
+        }
     }
 
     /// <summary>
-    /// Add a system to be managed. Allows 
+    /// Add a system to be managed.
     /// </summary>
     /// <param name="needSystem">The system to add</param>
-    public void AddSystem(INeedSystem needSystem)
+    public void AddSystem(NeedSystem needSystem)
     {
-        systems.Add(needSystem.Need, needSystem);
+        systems.Add(needSystem.NeedName, needSystem);
     }
 }

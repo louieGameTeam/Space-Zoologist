@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoodSourceManager : MonoBehaviour
+public class AridBushSystem : NeedSystem
 {
-
-    private List<FoodSource> foodSources = new List<FoodSource>();
+    public override void UpdateSystem()
+    {
+        foreach (Population population in populations)
+        {
+            population.UpdateNeed(NeedName, Random.value);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        foodSources.AddRange(FindObjectsOfType<FoodSource>());
+        
     }
 
     // Update is called once per frame

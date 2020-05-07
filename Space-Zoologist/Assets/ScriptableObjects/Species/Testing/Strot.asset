@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: SpaceMapleSeeds
+  m_Name: Strot
   m_EditorClassIdentifier: 
-  speciesName: SpaceMapleSeeds
-  dominance: 0
-  growthFactor: 1
-  needs: []
-  sprite: {fileID: 21300000, guid: bfb0f39abf5480f42ac22061ac170060, type: 3}
+  speciesName: Strot
+  dominance: 2
+  growthFactor: 3
+  needs:
+  - {fileID: 11400000, guid: e0c93aa61e45ee645a06b3d8bd4e1cca, type: 2}
+  - {fileID: 11400000, guid: 617105db510b2314fa21c6a3f72637b3, type: 2}
+  size: 2
+  accessibleTerrain: 
