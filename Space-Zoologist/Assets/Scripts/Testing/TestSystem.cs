@@ -7,11 +7,11 @@ public class TestSystem : MonoBehaviour, INeedSystem
 {
 
     private List<Population> Populations = new List<Population>();
-    [SerializeField] private NeedType need = default;
-    public NeedType Need { get => need; }
+    [SerializeField] private NeedName need = default;
+    public NeedName Need { get => need; }
     [SerializeField] private Text populationsText = default;
 
-    NeedType INeedSystem.Need => Need;
+    NeedName INeedSystem.Need => Need;
 
     public void RegisterPopulation(Population population)
     {

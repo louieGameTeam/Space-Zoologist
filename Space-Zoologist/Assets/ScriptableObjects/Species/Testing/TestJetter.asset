@@ -13,8 +13,20 @@ MonoBehaviour:
   m_Name: TestJetter
   m_EditorClassIdentifier: 
   speciesName: Jetter
-  dominance: 5
-  growthFactor: 4
+  dominance: 5.08
+  growthFactor: 5.91
   needs:
   - {fileID: 11400000, guid: a426098c7fe04e24296cdc6be2cc4c70, type: 2}
-  sprite: {fileID: 0}
+  - {fileID: 11400000, guid: d62a82625602c4442b457d80c3679103, type: 2}
+  - {fileID: 11400000, guid: d62a82625602c4442b457d80c3679103, type: 2}
+  - {fileID: 11400000, guid: ad3d8089dc2024d0aa495d947674be29, type: 2}
+  - {fileID: 11400000, guid: ad3d8089dc2024d0aa495d947674be29, type: 2}
+  BehaviorSets:
+  - BehaviorSet: 0
+    behaviors: 0000000000000000
+  - BehaviorSet: 2
+    behaviors: 0000000000000000
+  - BehaviorSet: 3
+    behaviors: 00000000000000000000000000000000
+  size: 0
+  accessibleTerrain: 

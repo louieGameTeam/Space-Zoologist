@@ -7,10 +7,9 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
+    private Dictionary<NeedName, INeedSystem> systems = new Dictionary<NeedName, INeedSystem>();
 
-    private Dictionary<NeedType, INeedSystem> systems = new Dictionary<NeedType, INeedSystem>();
-
-    public void RegisterPopulation(Population population, NeedType need)
+    public void RegisterPopulation(Population population, NeedName need)
     {
         if (!systems.ContainsKey(need))
         {
@@ -19,7 +18,7 @@ public class NeedSystemManager : MonoBehaviour
         }
         systems[need].RegisterPopulation(population);
     }
-    public void UnregisterPopulation(Population population, NeedType need)
+    public void UnregisterPopulation(Population population, NeedName need)
     {
         systems[need].UnregisterPopulation(population);
     }

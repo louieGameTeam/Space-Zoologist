@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3892d2c258bc5ec4aab8b27abd2c2a78, type: 3}
-  m_Name: Sand
+  m_Name: Apple
   m_EditorClassIdentifier: 
-  needType: 0
+  needType: 3
   _name: 0
   severity: 1
-  conditions: 0200000000000000
-  thresholds:
-  - 0
-  behavior: {r: 0, g: 0, b: 0, a: 0.98039216}
+  conditions: 02000000
+  thresholds: []

@@ -9,6 +9,6 @@ public class Tester_NeedTest : MonoBehaviour
 
     private void OnValidate()
     {
-        Debug.Log(species.GetNeedCondition(NeedType.GasX, currentValue));
+        Debug.Log(species.GetNeedCondition(NeedName.GasX, currentValue));
     }
 }

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3892d2c258bc5ec4aab8b27abd2c2a78, type: 3}
   m_Name: GasX
   m_EditorClassIdentifier: 
-  type: 0
+  needType: 2
+  _name: 0
   severity: 1
-  conditions: 
+  conditions: 02000000
   thresholds: []
+  behavior: {r: 0, g: 0, b: 0, a: 0}

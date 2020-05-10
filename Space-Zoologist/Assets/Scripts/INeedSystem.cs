@@ -22,7 +22,7 @@ public interface INeedSystem
     /// <summary>
     /// The need that the system calculates and updates.
     /// </summary>
-    NeedType Need { get; }
+    NeedName Need { get; }
 }
 
 

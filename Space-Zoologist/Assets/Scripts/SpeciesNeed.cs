@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public enum NeedType { GasX, GasY, GasZ, SpaceMaple, LeafyBush, Sand, Grass, Dirt, Stone, RedLiquid, YellowLiquid, BlueLiquid }
+public enum NeedType {Terrain, Liquid, Atmosphere, Food}
+public enum NeedName { GasX, GasY, GasZ, SpaceMaple, LeafyBush, Sand, Grass, Dirt, Stone, RedLiquid, YellowLiquid, BlueLiquid }
 public enum NeedCondition { Bad, Neutral, Good }
 
 [CreateAssetMenu]
 public class SpeciesNeed : ScriptableObject
-{
-    public NeedType Type => type;
+{   
+    public NeedType NType => needType;
+    public NeedName Name => _name;
     public int Severity => severity;
 
-    [SerializeField] private NeedType type = default;
+    [SerializeField] private NeedType needType = default;
+    [SerializeField] private NeedName _name = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
     [SerializeField] private List<NeedCondition> conditions = default;
