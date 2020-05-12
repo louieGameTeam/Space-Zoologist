@@ -1,7 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-// TODO rework logic to not create new this.gameObject for every item
 public class StoreItemPopupDisplayLogic : MonoBehaviour
 {
     [Header("Add children UI components")]

@@ -3,13 +3,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// Interacts with store systems to setup store display and player funds display
+/// Interacts with store systems and different controllers to setup store display and player funds display
 /// </summary>
 public class StoreDisplayLogic : MonoBehaviour
 {
     [SerializeField] private GameObject playerFundsDisplay = default;
     [SerializeField] private GameObject SellPopupDisplay = default;
-    [SerializeField] private StoreManager StoreManager = default;
+    [SerializeField] private StoreItemManager StoreItemManager = default;
     [SerializeField] private PlayerInfo PlayerInfo = default;
     [SerializeField] private GameObject storeItemController = default;
     private StoreItemController itemController = default;
@@ -67,10 +67,12 @@ public class StoreDisplayLogic : MonoBehaviour
         }
     }
 
-    // Gets the name of the button clicked and then store manager compares to category of available items 
+    /// <summary>
+    /// Gets the name of the button clicked and then store manager compares to category of available items 
+    /// </summary>
     public void SetupDisplay()
     {
         string storeSelection = EventSystem.current.currentSelectedGameObject.name;
-        this.StoreManager.DisplaySelection(storeSelection);
+        this.StoreItemManager.DisplayCategory(storeSelection);
     }
 }

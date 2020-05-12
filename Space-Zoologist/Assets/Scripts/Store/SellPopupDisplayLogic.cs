@@ -16,10 +16,15 @@ public class SellPopupDisplayLogic : MonoBehaviour
         this.itemName.text = itemData.ItemName;
         this.itemCost.text = "$" + (itemData.ItemCost/2).ToString();
         this.itemDescription.text = itemData.StoreItemDescription;
+        this.SetPopupPosition(objectToSell);
         this.gameObject.SetActive(true);
     }
 
-    // TODO add playerfunds back
+    private void SetPopupPosition(GameObject objectToSell)
+    {
+        this.gameObject.transform.position = new Vector2(objectToSell.transform.position.x, objectToSell.transform.position.y + 1.5f);
+    }
+
     public void SellObject()
     {
         this.ObjectToSell.SetActive(false);

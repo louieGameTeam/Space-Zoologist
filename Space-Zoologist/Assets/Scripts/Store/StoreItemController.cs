@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class StoreItemController : MonoBehaviour, IHandler
 {
-    [SerializeField] private StoreManager StoreManager = default;
+    [SerializeField] private StoreItemManager StoreItemManager = default;
     [Tooltip("Should be attached to the Grid GameObject")]
     [SerializeField] private  TilePlacementController tilePlacementController = default;
     [Tooltip("Under Plot GameObject")]
@@ -110,7 +110,7 @@ public class StoreItemController : MonoBehaviour, IHandler
 
     private void TryToPurchaseItem()
     {
-        bool purchaseSuccessful = this.StoreManager.BuyItem(this.StoreItemSelected, this.NumObjectsToBuy);
+        bool purchaseSuccessful = this.StoreItemManager.BuyItem(this.StoreItemSelected, this.NumObjectsToBuy);
         if (purchaseSuccessful && !this.IsPlacingTile)
         {
             this.floatingObjectManager.CreateNewFloatingObject(this.StoreItemSelected);

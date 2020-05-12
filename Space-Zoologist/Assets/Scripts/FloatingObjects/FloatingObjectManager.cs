@@ -54,4 +54,5 @@ public class FloatingObjectManager : MonoBehaviour, ISetupSelectable
     {
         item.GetComponent<SelectableSprite>().SetupItemSelectedHandler(this.ItemSelected);
     }
+    
 }

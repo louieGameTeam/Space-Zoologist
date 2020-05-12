@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Managers store items and displays the correct ones
 /// </summary>
-public class StoreManager : MonoBehaviour, ISetupSelectable
+public class StoreItemManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] private GameObject StoreItemPrefab = default;
     [SerializeField] private GameObject StoreContent = default;
@@ -72,11 +72,11 @@ public class StoreManager : MonoBehaviour, ISetupSelectable
         return isPurchaseSuccessful;
     }
 
-    public void DisplaySelection(string selection)
+    public void DisplayCategory(string category)
     {
         foreach (GameObject storeItem in this.AvailableItems)
         {
-            if (storeItem.GetComponent<StoreItemData>().ItemData.StoreItemCategory.Equals(selection))
+            if (storeItem.GetComponent<StoreItemData>().ItemData.StoreItemCategory.Equals(category))
             {
                 storeItem.SetActive(true);
             }
