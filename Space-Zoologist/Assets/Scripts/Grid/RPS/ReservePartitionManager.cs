@@ -8,23 +8,35 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class ReservePartitionManager : MonoBehaviour
 {
-    //singleton
+    // Singleton
     public static ReservePartitionManager ins;
 
-    //maximum number of populations allowed
-    public const int maxPop = 64;
+    // Maximum number of populations allowed
+    public const int maxPopulation = 64;
 
+    // The list of populations, not guaranteed to be ordered
     public List<Population> Pops { get; private set; }
-    private Queue<int> openID;
+
+    // A dictionary that stores populations' id
     public Dictionary<Population, int> PopToID { get; private set; }
-    private Dictionary<Vector3Int, long> accessMap;
 
-    TileSystem _tileSystem; //GetTerrainTile API from Virgil
-    Tilemap reference; //a reference tilemap for converting cell position
+    // A list of opened ids for use
+    private Queue<int> openID;
+    private int lastRecycledID;
 
-    [SerializeField] List<Population> popOnStartUp = default;
+    // A map that represents the reserve and who can access each tile
+    // The long is a bit mask with the bit (IDth bit) representing a population
+    public Dictionary<Vector3Int, long> AccessMap { get; private set; }
 
-    int lastRecycledID;
+    // Amount of accessible area for each population
+    public Dictionary<Population, int> Spaces { get; private set; }
+
+    // Amount of shared population with each population <id, <id, shared tiles> >
+    public Dictionary<int, long[]> SharedSpaces { get; private set; }
+
+    /// <summary> A list of populations to be loaded on startup. </summary>
+    [SerializeField] List<Population> populationsOnStartUp = default;
+
 
     public void Awake()
     {
@@ -37,45 +49,45 @@ public class ReservePartitionManager : MonoBehaviour
             ins = this;
         }
 
-        //long mask is limited to 64 bits
+        // long mask is limited to 64 bits
         openID = new Queue<int>();
-        lastRecycledID = maxPop - 1; //63
-        for (int i = maxPop - 1; i >= 0; i--)
+        lastRecycledID = maxPopulation - 1; // 63
+        for (int i = maxPopulation - 1; i >= 0; i--)
         {
             openID.Enqueue(i);
         }
         Pops = new List<Population>();
         PopToID = new Dictionary<Population, int>();
-        accessMap = new Dictionary<Vector3Int, long>();
-        _tileSystem = FindObjectOfType<TileSystem>();
-        reference = _tileSystem.GetComponent<TilePlacementController>().allTilemaps[0];
+        AccessMap = new Dictionary<Vector3Int, long>();
+        Spaces = new Dictionary<Population, int>();
+        SharedSpaces = new Dictionary<int, long[]>();
     }
 
     public void Start()
     {
-        foreach (Population pop in popOnStartUp)
+        foreach (Population population in populationsOnStartUp)
         {
-            AddPopulation(pop);
+            AddPopulation(population);
         }
     }
 
     ///<summary>
     ///Add a population to the RPM.
     ///</summary>
-    public void AddPopulation(Population pop)
+    public void AddPopulation(Population population)
     {
-        if (!Pops.Contains(pop))
+        if (!Pops.Contains(population))
         {
-            //ignore their old id and assign it a new one
+            // ignore their old id and assign it a new one
             int id = openID.Dequeue();
-            //since IDs after maxPop-1 are recycled ids, we need to do clean up old values
+            // since IDs after maxPopulation-1 are recycled ids, we need to do clean up old values
             if (id == lastRecycledID) CleanupAccessMapForRecycledID();
-            PopToID.Add(pop, id);
-            Pops.Add(pop);
+            PopToID.Add(population, id);
+            Pops.Add(population);
 
-            //generate the map with the new id  
-            GenerateMap(pop);
-            if (PopDensityManager.ins != null) PopDensityManager.ins.AddPop(pop);
+            // generate the map with the new id  
+            GenerateMap(population);
+            if (PopulationDensitySystem.ins != null) PopulationDensitySystem.ins.AddPop(population);
             
         }
     }
@@ -83,12 +95,12 @@ public class ReservePartitionManager : MonoBehaviour
     ///<summary>
     ///Remove a population from the RPM.
     ///</summary>
-    public void RemovePopulation(Population pop)
+    public void RemovePopulation(Population population)
     {
-        if (PopDensityManager.ins != null) PopDensityManager.ins.RemovePop(pop);
-        Pops.Remove(pop);
-        openID.Enqueue(PopToID[pop]);
-        PopToID.Remove(pop); //free ID
+        if (PopulationDensitySystem.ins != null) PopulationDensitySystem.ins.RemovePop(population);
+        Pops.Remove(population);
+        openID.Enqueue(PopToID[population]);
+        PopToID.Remove(population); // free ID
     }
 
     ///<summary>
@@ -98,53 +110,55 @@ public class ReservePartitionManager : MonoBehaviour
     {
         foreach (int id in openID)
         {
-            foreach (Vector3Int loc in accessMap.Keys)
+            foreach (Vector3Int loc in AccessMap.Keys)
             {
-                //set the values to 0 through bit masking
-                accessMap[loc] &= ~(1L << id);
+                // set the values to 0 through bit masking
+                AccessMap[loc] &= ~(1L << id);
             }
             lastRecycledID = id;
         }
-        if (PopDensityManager.ins != null) PopDensityManager.ins.CleanupDensityMap(openID.ToArray());
     }
+
     ///<summary>
     ///Populate the access map for a population with depth first search.
     ///</summary>
-    private void GenerateMap(Population pop)
+    private void GenerateMap(Population population)
     {
-        if (!Pops.Contains(pop))
+        if (!Pops.Contains(population))
         {
-            AddPopulation(pop);
+            AddPopulation(population);
         }
         Stack<Vector3Int> stack = new Stack<Vector3Int>();
-        List<Vector3Int> accessible = new List<Vector3Int>();
-        List<Vector3Int> unaccessible = new List<Vector3Int>();
+        HashSet<Vector3Int> accessible = new HashSet<Vector3Int>();
+        HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
 
-        //starting location
-        Vector3Int location = reference.WorldToCell(pop.transform.position);
+        // starting location
+        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
         stack.Push(location);
 
-        //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
+        TileSystem _tileSystem = FindObjectOfType<TileSystem>();
+
+        // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
         while (stack.Count > 0)
         {
-            //next point
+            // next point
             cur = stack.Pop();
 
             if (accessible.Contains(cur) || unaccessible.Contains(cur))
             {
-                //checked before, move on
+                // checked before, move on
                 continue;
             }
 
-            //check if tilemap has tile and if pop can access the tile (e.g. some cannot move through water)
+            // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
             TerrainTile tile = _tileSystem.GetTerrainTileAtLocation(cur);
-            if (tile != null && pop.Species.AccessibleTerrain.Contains(tile.type))
+            if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
             {
-                //save the Vector3Int since it is already checked
+                // save the accessible location
                 accessible.Add(cur);
 
-                //check all 4 tiles around, may be too expensive/awaiting optimization
+                // check all 4 tiles around, may be too expensive/awaiting optimization
                 stack.Push(cur + Vector3Int.left);
                 stack.Push(cur + Vector3Int.up);
                 stack.Push(cur + Vector3Int.right);
@@ -152,26 +166,50 @@ public class ReservePartitionManager : MonoBehaviour
             }
             else
             {
-                //save the Vector3Int since it is already checked
+                // save the Vector3Int since it is already checked
                 unaccessible.Add(cur);
             }
         }
 
+        long[] SharedTiles = new long[maxPopulation];
+
         foreach (Vector3Int pos in accessible)
         {
-            if (!accessMap.ContainsKey(pos))
+            if (!AccessMap.ContainsKey(pos))
             {
-                accessMap.Add(pos, 0L);
+                AccessMap.Add(pos, 0L);
             }
-            //set the pop.getID()th bit in accessMap[pos] to 1
-            accessMap[pos] |= 1L << PopToID[pop];
+            // set the population.getID()th bit in AccessMap[pos] to 1
+            AccessMap[pos] |= 1L << PopToID[population];
+
+            // Collect info on how the population's space overlaps with others
+            for (int i = 0; i < maxPopulation; i++) {
+                SharedTiles[i] += (AccessMap[pos] >> i) & 1L;
+            }
+        }
+
+        // Store the info on overlapping space
+        Spaces[population] = accessible.Count;
+        int id = PopToID[population];
+        SharedSpaces[id] = SharedTiles;
+
+        // Update the new info for pre-existing populations
+        for (int i = 0; i < SharedSpaces[id].Length; i++) {
+            if (SharedSpaces[id][i] != 0) {
+                SharedSpaces[i][id] = SharedSpaces[id][i];
+            }
         }
     }
 
-    public List<Vector3Int> GetLocationWithAccess(Population population)
+    /// <summary>
+    /// Get a list of all locations that can be accessed by this population.
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
+    public List<Vector3Int> GetLocationsWithAccess(Population population)
     {
         List<Vector3Int> list = new List<Vector3Int>();
-        foreach (KeyValuePair<Vector3Int, long> position in accessMap)
+        foreach (KeyValuePair<Vector3Int, long> position in AccessMap)
         {
             if (CanAccess(population, position.Key))
             {
@@ -186,43 +224,43 @@ public class ReservePartitionManager : MonoBehaviour
     ///</summary>
     public void UpdateAccessMap()
     {
-        accessMap = new Dictionary<Vector3Int, long>();
-        foreach (Population pop in Pops)
+        AccessMap = new Dictionary<Vector3Int, long>();
+        foreach (Population population in Pops)
         {
-            GenerateMap(pop);
+            GenerateMap(population);
         }
     }
 
     ///<summary>
     ///Check if a population can access toWorldPos.
     ///</summary>
-    public bool CanAccess(Population pop, Vector3 toWorldPos)
+    public bool CanAccess(Population population, Vector3 toWorldPos)
     {
-        //convert to map position
-        Vector3Int mapPos = reference.WorldToCell(toWorldPos);
+        // convert to map position
+        Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
 
-        return CanAccess(pop, mapPos);
+        return CanAccess(population, mapPos);
     }
 
     ///<summary>
     ///Check if a population can access CellPos.
     ///</summary>
-    public bool CanAccess(Population pop, Vector3Int CellPos)
+    public bool CanAccess(Population population, Vector3Int CellPos)
     {
-        //convert to map position
+        // convert to map position
         Vector3Int mapPos = CellPos;
 
-        //if accessible
-        //check if the nth bit is set (i.e. accessible for the pop)
-        if (accessMap.ContainsKey(mapPos))
+        // if accessible
+        // check if the nth bit is set (i.e. accessible for the population)
+        if (AccessMap.ContainsKey(mapPos))
         {
-            if (((accessMap[mapPos] >> PopToID[pop]) & 1L) == 1L)
+            if (((AccessMap[mapPos] >> PopToID[population]) & 1L) == 1L)
             {
                 return true;
             }
         }
 
-        //pop can't access the position
+        // population can't access the position
         return false;
     }
 
@@ -232,23 +270,14 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         List<Population> accessible = new List<Population>();
-        foreach (Population pop in Pops)
+        foreach (Population population in Pops)
         {
-            //utilize CanAccess()
-            if (CanAccess(pop, toWorldPos))
+            // utilize CanAccess()
+            if (CanAccess(population, toWorldPos))
             {
-                accessible.Add(pop);
+                accessible.Add(population);
             }
         }
         return accessible;
     }
-
-    /// <summary>
-    /// Converts a world position to cell position using the reference tilemap.
-    /// </summary>
-    public Vector3Int WorldToCell(Vector3 worldPos)
-    {
-        return reference.WorldToCell(worldPos);
-    }
-
 }

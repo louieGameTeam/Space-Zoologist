@@ -61,7 +61,7 @@ public class EnclosureSystem : MonoBehaviour
     // Have enclosed area been initialized?
     bool initialized = false;
 
-    //singleton
+    // Singleton
     public static EnclosureSystem ins;
 
     private AtmosphericComposition GlobalAtmosphere;

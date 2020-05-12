@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public enum NeedType { GasX, GasY, GasZ, SpaceMaple, LeafyBush, Sand, Grass, Dirt, Stone, RedLiquid, YellowLiquid, BlueLiquid }
+public enum NeedType { GasX, GasY, GasZ, SpaceMaple, LeafyBush, Sand, Grass, Dirt, Stone, RedLiquid, YellowLiquid, BlueLiquid, Density }
 public enum NeedCondition { Bad, Neutral, Good }
 
 [CreateAssetMenu]

@@ -40,7 +40,7 @@ public class Tester : MonoBehaviour
         }
         string end = "";
         end += $"Total Output: {info.TotalOutput}\n";
-        end += $"Position on Tilemap: {ReservePartitionManager.ins.WorldToCell(transform.position)}\n";
+        end += $"Position on Tilemap: {(transform.position)}\n";
         end += $"Terrain raw value: {info.RawValues[0]}, {info.Conditions[0]}\n";
         foreach (KeyValuePair<string,int> kp in counts){
             end += $"{kp.Key}: {kp.Value}\n";

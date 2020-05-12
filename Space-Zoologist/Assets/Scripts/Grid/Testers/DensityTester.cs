@@ -29,10 +29,10 @@ public class DensityTester : MonoBehaviour
         float maxDensity = -1;
 
         //find max density and calculate density for each tile
-        foreach (KeyValuePair<Vector3Int, long> pair in PopDensityManager.ins.GetPopDensityMap())
+        foreach (KeyValuePair<Vector3Int, long> pair in ReservePartitionManager.ins.AccessMap)
         {
             //calculate density
-            float density = PopDensityManager.ins.GetPopDensityAt(pair.Key);
+            float density = PopulationDensitySystem.ins.GetPopDensityAt(pair.Key);
 
             col.Add(pair.Key, density);
 
