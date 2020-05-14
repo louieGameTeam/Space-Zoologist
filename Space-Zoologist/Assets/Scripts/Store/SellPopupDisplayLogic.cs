@@ -12,7 +12,7 @@ public class SellPopupDisplayLogic : MonoBehaviour
     public void UpdateObjectToSell(GameObject objectToSell)
     {
         this.ObjectToSell = objectToSell;
-        StoreItemSO itemData = objectToSell.GetComponent<StoreItemData>().ItemData;
+        StoreItemSO itemData = objectToSell.GetComponent<ItemData>().StoreItemData;
         this.itemName.text = itemData.ItemName;
         this.itemCost.text = "$" + (itemData.ItemCost/2).ToString();
         this.itemDescription.text = itemData.StoreItemDescription;

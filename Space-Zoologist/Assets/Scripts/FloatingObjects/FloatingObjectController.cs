@@ -25,6 +25,6 @@ public class FloatingObjectController : MonoBehaviour, IHandler
     
     public void ItemSold()
     {
-        this.playerInfo.Funds += this.ItemSelected.GetComponent<StoreItemData>().ItemData.ItemCost/2;
+        this.playerInfo.Funds += this.ItemSelected.GetComponent<ItemData>().StoreItemData.ItemCost/2;
     }
 }

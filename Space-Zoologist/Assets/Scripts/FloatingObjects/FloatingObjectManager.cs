@@ -24,7 +24,7 @@ public class FloatingObjectManager : MonoBehaviour, ISetupSelectable
     }
 
     // Generic way of creating pooled object and initializing it with data
-    public void CreateNewFloatingObject(StoreItemData item)
+    public void CreateNewFloatingObject(ItemData item)
     {
         GameObject placedItem = GetPooledObject();
         if (placedItem == null)
@@ -34,8 +34,8 @@ public class FloatingObjectManager : MonoBehaviour, ISetupSelectable
         }
         placedItem.transform.SetParent(this.gameObject.transform);
         placedItem.transform.position = new Vector3(this.CurrentCamera.ScreenToWorldPoint(Input.mousePosition).x, this.CurrentCamera.ScreenToWorldPoint(Input.mousePosition).y, 0);
-        placedItem.GetComponent<SpriteRenderer>().sprite = item.ItemData.Sprite;
-        placedItem.GetComponent<StoreItemData>().ItemData = item.ItemData;
+        placedItem.GetComponent<SpriteRenderer>().sprite = item.StoreItemData.Sprite;
+        placedItem.GetComponent<ItemData>().StoreItemData = item.StoreItemData;
         this.SetupItemSelectedHandler(placedItem, this.ItemSelected);
         placedItem.SetActive(true);
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Managers store items and displays the correct ones
+/// Creates and sells store items and manages which one's are active
 /// </summary>
 public class StoreItemManager : MonoBehaviour, ISetupSelectable
 {
@@ -33,7 +33,7 @@ public class StoreItemManager : MonoBehaviour, ISetupSelectable
     public void AddItem(StoreItemSO itemData)
     {
         GameObject newStoreItem = Instantiate(this.StoreItemPrefab, this.StoreContent.transform);
-        newStoreItem.GetComponent<StoreItemData>().ItemData = itemData;
+        newStoreItem.GetComponent<ItemData>().StoreItemData = itemData;
         newStoreItem.GetComponent<Image>().sprite = itemData.Sprite;
         this.SetupItemSelectedHandler(newStoreItem, this.ItemSelectedEvent);
         this.AvailableItems.Add(newStoreItem);
@@ -52,12 +52,12 @@ public class StoreItemManager : MonoBehaviour, ISetupSelectable
     /// <param name="itemToBuy"></param>
     /// <param name="numCopies"></param>
     /// <returns></returns>
-    public bool BuyItem(StoreItemData itemToBuy, int numCopies)
+    public bool BuyItem(ItemData itemToBuy, int numCopies)
     {
         bool isPurchaseSuccessful = false;
         if (itemToBuy != null)
         {
-            float totalCost = itemToBuy.ItemData.ItemCost * numCopies;
+            float totalCost = itemToBuy.StoreItemData.ItemCost * numCopies;
             // Check if the player has enough funds
             if (totalCost > 0 && totalCost <= this.playerInformation.Funds)
             {
@@ -76,7 +76,7 @@ public class StoreItemManager : MonoBehaviour, ISetupSelectable
     {
         foreach (GameObject storeItem in this.AvailableItems)
         {
-            if (storeItem.GetComponent<StoreItemData>().ItemData.StoreItemCategory.Equals(category))
+            if (storeItem.GetComponent<ItemData>().StoreItemData.StoreItemCategory.Equals(category))
             {
                 storeItem.SetActive(true);
             }

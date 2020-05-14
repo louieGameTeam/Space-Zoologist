@@ -18,7 +18,7 @@ public class StoreItemController : MonoBehaviour, IHandler
     public UnityEvent StopPreview = new UnityEvent();
 
     private TerrainTile TileToPlace = default;
-    private StoreItemData StoreItemSelected = null;
+    private ItemData StoreItemSelected = null;
     private bool IsPlacingTile = false;
     private bool IsPreviewingStoreItem = false;
     private bool IsPlacing = false;
@@ -98,11 +98,11 @@ public class StoreItemController : MonoBehaviour, IHandler
             // if previewing tiles but no tiles placed yet
             if (this.IsPlacingTile && this.NumObjectsToBuy == 0)
             {
-                ItemPreviewingInfo = "(-" +this.StoreItemSelected.ItemData.ItemCost + ")";
+                ItemPreviewingInfo = "(-" +this.StoreItemSelected.StoreItemData.ItemCost + ")";
             }
             else
             {
-                ItemPreviewingInfo = "(-" + this.NumObjectsToBuy * this.StoreItemSelected.ItemData.ItemCost + ")";
+                ItemPreviewingInfo = "(-" + this.NumObjectsToBuy * this.StoreItemSelected.StoreItemData.ItemCost + ")";
             }
         }
         return ItemPreviewingInfo;
@@ -130,14 +130,14 @@ public class StoreItemController : MonoBehaviour, IHandler
     // TODO refactor when tilesystem and store identification more finalized
     private void SetupStoreItemPreview(GameObject itemSelected)
     {
-        this.StoreItemSelected = itemSelected.GetComponent<StoreItemData>();
+        this.StoreItemSelected = itemSelected.GetComponent<ItemData>();
         this.IsPreviewingStoreItem = true;
-        if (this.StoreItemSelected.ItemData.StoreItemCategory.Equals("Tiles"))
+        if (this.StoreItemSelected.StoreItemData.StoreItemCategory.Equals("Tiles"))
         {
             this.IsPlacingTile = true;
             foreach (TerrainTile tileToPlace in this.Tiles)
             {
-                if (tileToPlace.type.ToString().Equals(this.StoreItemSelected.ItemData.ItemIdentifier))
+                if (tileToPlace.type.ToString().Equals(this.StoreItemSelected.StoreItemData.ItemIdentifier))
                 {
                     this.TileToPlace = tileToPlace;
                 }
