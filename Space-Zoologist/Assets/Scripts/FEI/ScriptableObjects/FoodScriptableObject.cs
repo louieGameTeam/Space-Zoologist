@@ -13,7 +13,7 @@ public class FoodScriptableObject : ScriptableObject
     [SerializeField] private float base_output = 0;
     public float BaseOutput { get => base_output; }
 
-    //radius to be read
+    // radius to be read
     [Tooltip("Radius of terrain and liquid tiles to read from. Synonymous to how far the plant's root reaches in real life. Warning: Setting this beyond 100 may cause significant lag!")]
     [SerializeField] private int radius = 0;
     public int Radius { get => radius; }
@@ -21,21 +21,21 @@ public class FoodScriptableObject : ScriptableObject
 
     [Tooltip("Scriptable Objects that store details on each specific needs. Drag and drop SO into the field and values will be updated spontaneously. To remove an" +
         " SO, set it to null.")]
-    //Range scriptable objects to read in from
+    // Range scriptable objects to read in from
     [SerializeField]private NeedScriptableObject[] needs;
     public NeedScriptableObject[] Needs { get => needs; }
 
 
-    //custom dictionary visible in inspector
+    // custom dictionary visible in inspector
     [Serializable]
     public struct Dict
     {
         public TileType type;
-        public int value; //value of tile
+        public int value; // value of tile
     }
     [SerializeField] private Dict[] tileVal;
 
-    //Workaround: dictionary to be initialized
+    // Workaround: dictionary to be initialized
     public Dictionary<TileType, int> TileDic { get; private set; }
 
 
@@ -48,23 +48,23 @@ public class FoodScriptableObject : ScriptableObject
     public float TotalSeverity { get => totalSeverity; }
 
 
-    //Gets called when value of scriptable object changes in the inspector, makes editing easier
+    // Gets called when value of scriptable object changes in the inspector, makes editing easier
     private void OnValidate(){
         if(tileVal.Length != 5)
             tileVal = new Dict[5];
         for (int i = 0; i < tileVal.Length; i++) {
             tileVal[i].type = (TileType)i;
         }
-        //initialize the dictionary
+        // initialize the dictionary
         TileDic = new Dictionary<TileType, int>();
         for (int i = 0; i < tileVal.Length; i++)
         {
             TileDic.Add(tileVal[i].type, tileVal[i].value);
         }
 
-        //sorting to make the interface cleaner
+        // sorting to make the interface cleaner
         List<NeedScriptableObject> temp = new List<NeedScriptableObject>(needs);
-        temp.RemoveAll(item => item == null); //remove items that are null
+        temp.RemoveAll(item => item == null); // remove items that are null
         temp.Sort();
         needs = temp.ToArray();
 
@@ -76,7 +76,7 @@ public class FoodScriptableObject : ScriptableObject
             types[i] = needs[i].Type;
             severities[i] = needs[i].Severity;
 
-            //negative weight will serve be for determining harmful environment to the plant
+            // negative weight will serve be for determining harmful environment to the plant
             if (severities[i] > 0)
             {
                 totalSeverity += severities[i];

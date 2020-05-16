@@ -31,21 +31,21 @@ public class AtmosphereTester : MonoBehaviour
             colors[i] = new Color(Atmospheres[i].GasX, Atmospheres[i].GasY, Atmospheres[i].GasZ);
         }
 
-        //find max density and calculate density for each tile
+        // find max density and calculate density for each tile
         foreach (KeyValuePair<Vector3Int, byte> pair in EnclosureSystem.ins.PositionToAtmosphere)
         {
 
-            //By default the flag is TileFlags.LockColor
+            // By default the flag is TileFlags.LockColor
             mask.SetTileFlags(pair.Key, TileFlags.None);
 
-            //skip walls
+            // skip walls
             if (pair.Value == 255)
             {
                 mask.SetColor(pair.Key, Color.black);
             }
             else
             {
-                //set color of tile, based on gasXYZ
+                // set color of tile, based on gasXYZ
                 mask.SetColor(pair.Key, colors[pair.Value]);
             }
         }

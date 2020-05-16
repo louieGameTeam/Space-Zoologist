@@ -11,9 +11,6 @@ public class PopulationDensitySystem : MonoBehaviour
     // Singleton
     public static PopulationDensitySystem ins;
 
-    // Dictionary<ID, population> initialized from rpm
-    Dictionary<int, Population> popsByID;
-
     private void Awake()
     {
         // Singleton
@@ -25,35 +22,6 @@ public class PopulationDensitySystem : MonoBehaviour
         {
             ins = this;
         }
-        popsByID = new Dictionary<int, Population>();
-    }
-
-    /// <summary>
-    /// Do not do this yourself. Add a population to the Population Density System.
-    /// Only called by the Reserve Partition Manager.
-    /// </summary>
-    /// <param name="pop">The population to be added.</param>
-    public void AddPop(Population pop)
-    {
-        if (!ReservePartitionManager.ins.Pops.Contains(pop))
-        {
-            Debug.LogError("Population " + pop.name + " is not a part of RPM!");
-            return;
-        }
-        else
-        {
-            popsByID.Add(ReservePartitionManager.ins.PopToID[pop], pop);
-        }
-    }
-
-    /// <summary>
-    /// Do not do this yourself. Remove a population from the Population Density System.
-    /// Only called by the Reserve Partition Manager.
-    /// </summary>
-    /// <param name="pop">The population to be removed.</param>
-    public void RemovePop(Population pop)
-    {
-        popsByID.Remove(ReservePartitionManager.ins.PopToID[pop]);
     }
 
     /// <summary>
@@ -72,13 +40,13 @@ public class PopulationDensitySystem : MonoBehaviour
             {
                 // Initialize and error catch
                 Population cur;
-                if (popsByID.ContainsKey(i))
-                    cur = popsByID[i];
+                if (ReservePartitionManager.ins.PopulationByID.ContainsKey(i))
+                    cur = ReservePartitionManager.ins.PopulationByID[i];
                 else
                     continue;
 
                 // The pop lives there, add its weight/tile to density
-                if (popsByID.ContainsKey(i) && ReservePartitionManager.ins.CanAccess(cur, pos))
+                if (ReservePartitionManager.ins.PopulationByID.ContainsKey(i) && ReservePartitionManager.ins.CanAccess(cur, pos))
                 {
                     // Weight per tile
                     density += cur.Species.Size * cur.Count / ReservePartitionManager.ins.Spaces[cur];
@@ -101,10 +69,10 @@ public class PopulationDensitySystem : MonoBehaviour
     {
         // For easier access
         ReservePartitionManager rpm = ReservePartitionManager.ins;
-        int curID = rpm.PopToID[pop];
+        int curID = rpm.PopulationToID[pop];
 
         // Not initialized
-        if (!rpm.Pops.Contains(pop))
+        if (!rpm.Populations.Contains(pop))
             return -1;
 
 
@@ -113,7 +81,7 @@ public class PopulationDensitySystem : MonoBehaviour
 
         // Sum up the total size based on the initialized values in rpm
         for (int i = 0; i < ReservePartitionManager.maxPopulation; i++) {
-            Population other = popsByID[i];
+            Population other = rpm.PopulationByID[i];
             long sharedSpace = rpm.SharedSpaces[curID][i];
             if (sharedSpace != 0) {
                 totalSize += other.Count * other.Species.Size * rpm.SharedSpaces[curID][i] * sharedSpace / rpm.Spaces[other];
@@ -133,17 +101,17 @@ public class PopulationDensitySystem : MonoBehaviour
     {
         // For easier access
         ReservePartitionManager rpm = ReservePartitionManager.ins;
-        int curID = rpm.PopToID[changedPopulation];
+        int curID = rpm.PopulationToID[changedPopulation];
 
         // Not initialized
-        if (!rpm.Pops.Contains(changedPopulation))
+        if (!rpm.Populations.Contains(changedPopulation))
             return;
 
         // Sum up the total size based on the initialized values in rpm
         for (int i = 0; i < ReservePartitionManager.maxPopulation; i++)
         {
             // Current population. Note: Could be changedPopulation
-            Population cur = popsByID[i];
+            Population cur = rpm.PopulationByID[i];
             long sharedSpace = rpm.SharedSpaces[curID][i];
             if (sharedSpace != 0)
             {

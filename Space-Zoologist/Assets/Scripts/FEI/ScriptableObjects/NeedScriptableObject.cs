@@ -17,7 +17,7 @@ public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptable
 	[Range(1.0f, 10.0f)]
 	[SerializeField] private int severity = 1;
 	public int Severity { get => severity; }
-    //public enum NeedCondition { Bad, Neutral, Good } as defined in SpeciesNeed.cs
+    // public enum NeedCondition { Bad, Neutral, Good } as defined in SpeciesNeed.cs
     [SerializeField] private List<NeedCondition> conditions = default;
 	[SerializeField] private List<float> thresholds = default;
 
@@ -87,7 +87,7 @@ public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptable
     }
 
 
-    //to be sorted in FSO
+    // to be sorted in FSO
     public int CompareTo(NeedScriptableObject other) {
         if (type < other.type)
         {
@@ -97,7 +97,7 @@ public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptable
         {
             return 1;
         }
-        else { //type == other.type
+        else { // type == other.type
             if (severity < other.severity)
             {
                 return -1;
@@ -106,7 +106,7 @@ public class NeedScriptableObject : ScriptableObject, IComparable<NeedScriptable
             {
                 return 1;
             }
-            else //type and severity are both equal
+            else // type and severity are both equal
             {
                 return 0;
             }

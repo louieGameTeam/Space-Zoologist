@@ -11,7 +11,7 @@ public class Species : ScriptableObject
     public float GrowthFactor => growthFactor;
     public List<SpeciesNeed> Needs => needs;
     public float Size => size;
-    public List<TileType> AccessibleTerrain => accessibleTerrain;
+    public List<TileType> AccessibleTerrain =>accessibleTerrain;
 
     // Values
     [SerializeField] private string speciesName = default;
@@ -24,6 +24,10 @@ public class Species : ScriptableObject
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
 
+    public void OnValidate()
+    {
+        //AccessibleTerrain = new HashSet<TileType>(accessibleTerrain);
+    }
 
     /// <summary>
     /// Get the condition of a need given its current value.

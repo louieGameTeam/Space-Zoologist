@@ -5,21 +5,21 @@ using UnityEngine.Tilemaps;
 
 public class FoodSource : MonoBehaviour
 {
-    //using enum to create a dropdown list
+    // using enum to create a dropdown list
     public enum FoodTypes { SpaceMaple, Food2, Food3, Food4, Food5 };
     [SerializeField] private FoodTypes type = default;
     public FoodTypes Type { get => type; }
 
-    //ScriptableObject to read from
+    // ScriptableObject to read from
     [SerializeField] private FoodScriptableObject species = default;
     public FoodScriptableObject Species { get => species; }
 
     // For debugging, might be removed later
-    //How much of each need is provided, raw value of needs
+    // How much of each need is provided, raw value of needs
     [SerializeField] private float[] rawValues;
     public float[] RawValues { get => rawValues; }
 
-    //How well each need is provided
+    // How well each need is provided
     [SerializeField] private NeedCondition[] conditions;
     public NeedCondition[] Conditions { get => conditions; }
 
@@ -52,28 +52,28 @@ public class FoodSource : MonoBehaviour
         float[] weights = species.Severities;
         PlantNeedType[] types = species.Types;
 
-        //TODO Implement liquid
+        // TODO Implement liquid
         for (int i = 0; i < weights.Length; i++)
         {
             if (weights[i] > 0)
-            { //Lazy evaluation, only detect if it matters
-                //Determine need values
+            { // Lazy evaluation, only detect if it matters
+                // Determine need values
                 switch (types[i])
                 {
                     case PlantNeedType.Terrain:
-                        //get tiles around the food source and return as an array of integers
+                        // get tiles around the food source and return as an array of integers
                         TerrainTile[] terrainTiles = FoodUtils.GetTiles(transform.position, species.Radius).ToArray();
 
-                        //quick check for no tiles read
+                        // quick check for no tiles read
                         if (terrainTiles.Length == 0) { rawValues[i] = 0; break; }
 
                         List<TileType> tiles = new List<TileType>();
                         foreach (TerrainTile tile in terrainTiles)
                         {
-                            tiles.Add(tile.type);//TileType tile.type is defined in TerrainNeedScriptableObject
+                            tiles.Add(tile.type);// TileType tile.type is defined in TerrainNeedScriptableObject
                         }
 
-                        //imported from TerrainNeedScriptableObject
+                        // imported from TerrainNeedScriptableObject
                         float value = 0;
                         for (int ind = 0; ind < tiles.Count; ind++)
                         {
@@ -83,35 +83,35 @@ public class FoodSource : MonoBehaviour
                             }
                             catch (KeyNotFoundException)
                             {
-                                //tiles is not contained in tileValue
+                                // tiles is not contained in tileValue
                                 Debug.LogError("Tile not found in TileDic.");
                             }
                         }
 
-                        //maybe consider swapping tiles.length for (1+2*radius+2*radius*radius) i.e. 1, 5, 13, 25, ...
-                        //because less space might suggest worse terrain for plant (as its roots have to be more crammed and get less resource overall)
+                        // maybe consider swapping tiles.length for (1+2*radius+2*radius*radius) i.e. 1, 5, 13, 25, ...
+                        // because less space might suggest worse terrain for plant (as its roots have to be more crammed and get less resource overall)
                         float avgValue = value / tiles.Count;
                         rawValues[i] = avgValue;
                         break;
                     case PlantNeedType.GasX:
-                        //Read value from some class that handles atmosphere
+                        // Read value from some class that handles atmosphere
                         rawValues[i] = atm.GasX;
                         break;
                     case PlantNeedType.GasY:
-                        //Read value from some class that handles atmosphere
+                        // Read value from some class that handles atmosphere
                         rawValues[i] = atm.GasY;
                         break;
                     case PlantNeedType.GasZ:
-                        //Read value from some class that handles atmosphere
+                        // Read value from some class that handles atmosphere
                         rawValues[i] = atm.GasZ;
                         break;
                     case PlantNeedType.Temperature:
-                        //Read value from some class that handles temperature
+                        // Read value from some class that handles temperature
                         rawValues[i] = atm.Temp;
                         break;
                     case PlantNeedType.RLiquid:
-                        //TODO
-                        //get liquid tiles around the food source and return as an array of tiles
+                        // TODO
+                        // get liquid tiles around the food source and return as an array of tiles
                         float[,] RLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
 
                         conditions[i] = NeedCondition.Bad;
@@ -122,10 +122,10 @@ public class FoodSource : MonoBehaviour
                                 rawValues[i] = RLiquid[r, 0];
                             }
                         }
-                        continue; //already calculated condition
+                        continue; // already calculated condition
                     case PlantNeedType.YLiquid:
-                        //TODO
-                        //get liquid tiles around the food source and return as an array of tiles
+                        // TODO
+                        // get liquid tiles around the food source and return as an array of tiles
                         float[,] YLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
 
                         conditions[i] = NeedCondition.Bad;
@@ -138,10 +138,10 @@ public class FoodSource : MonoBehaviour
                                 rawValues[i] = YLiquid[r, 0];
                             }
                         }
-                        continue; //already calculated condition
+                        continue; // already calculated condition
                     case PlantNeedType.BLiquid:
-                        //TODO
-                        //get liquid tiles around the food source and return as an array of tiles
+                        // TODO
+                        // get liquid tiles around the food source and return as an array of tiles
                         float[,] BLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
 
                         conditions[i] = NeedCondition.Bad;
@@ -154,7 +154,7 @@ public class FoodSource : MonoBehaviour
                                 rawValues[i] = BLiquid[r, 0];
                             }
                         }
-                        continue; //already calculated condition
+                        continue; // already calculated condition
                     default:
                         Debug.LogError("Error: No need name matches.");
                         rawValues[i] = 0;
@@ -164,7 +164,7 @@ public class FoodSource : MonoBehaviour
             }
         }
 
-        //calculate output based on conditions
+        // calculate output based on conditions
         totalOutput = FoodUtils.CalculateOutput(species, conditions);
     }
 }

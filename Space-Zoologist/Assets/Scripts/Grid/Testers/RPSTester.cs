@@ -19,17 +19,17 @@ public class RPSTester : MonoBehaviour
     {
         List<Vector3Int> list = GetComponent<ReservePartitionManager>().GetLocationsWithAccess(population);
 
-        //set color based on the fraction density/maxdensity
+        // set color based on the fraction density/maxdensity
         foreach (Vector3Int pos in list)
         {
-            //By default the flag is TileFlags.LockColor
+            // By default the flag is TileFlags.LockColor
             mask.SetTileFlags(pos, TileFlags.None);
 
-            //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
+            // set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
             mask.SetColor(pos, new Color(0, 1, 0, 255.0f / 255));
         }
 
-        //debug
+        // debug
         print(list.Count);
     }
 }

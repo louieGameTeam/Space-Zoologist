@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//temporary game manager class for storing values
-//should be a singleton
+// temporary game manager class for storing values
+// should be a singleton
 public class WorldAtmosphere : MonoBehaviour
 {
     [Range(0f, 1f)] [SerializeField] float gasX = 0;

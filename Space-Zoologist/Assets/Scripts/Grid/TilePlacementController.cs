@@ -23,7 +23,7 @@ public class TilePlacementController : MonoBehaviour
     [SerializeField] private TerrainTile[] terrainTiles = default;
     private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles 
     private Dictionary<Vector3Int, List<TerrainTile>> allAddedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles placed
-    private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
+    private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All tiles removed
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
@@ -228,7 +228,7 @@ public class TilePlacementController : MonoBehaviour
         PlaceTile(currentMouseCellPosition, selectedTile);
     }
 
-    private void UpdatePreviewBlock() //TODO Resolve lag when moving back and forth
+    private void UpdatePreviewBlock() // TODO Resolve lag when moving back and forth
     {
         if (isFirstTile)
         {

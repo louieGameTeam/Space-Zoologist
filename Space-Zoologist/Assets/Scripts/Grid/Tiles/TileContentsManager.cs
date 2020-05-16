@@ -214,7 +214,7 @@ public class TileContentsManager : MonoBehaviour
             {
                 tileContents[tileLocation] = new float[] { n0, n1, n2 };
                 ChangeColor(tileLocation);
-                //TODO call user to enter parameters
+                // TODO call user to enter parameters
             }
             isPlacedTileNew = false;
         }

@@ -22,16 +22,16 @@ public class DensityTester : MonoBehaviour
     /// </summary>
     public void Graph()
     {
-        //colors
+        // colors
         Dictionary<Vector3Int, float> col = new Dictionary<Vector3Int, float>();
 
-        //max density for color comparison
+        // max density for color comparison
         float maxDensity = -1;
 
-        //find max density and calculate density for each tile
+        // find max density and calculate density for each tile
         foreach (KeyValuePair<Vector3Int, long> pair in ReservePartitionManager.ins.AccessMap)
         {
-            //calculate density
+            // calculate density
             float density = PopulationDensitySystem.ins.GetPopDensityAt(pair.Key);
 
             col.Add(pair.Key, density);
@@ -42,17 +42,17 @@ public class DensityTester : MonoBehaviour
             }
         }
 
-        //set color based on the fraction density/maxdensity
+        // set color based on the fraction density/maxdensity
         foreach (KeyValuePair<Vector3Int, float> pair in col)
         {
-            //By default the flag is TileFlags.LockColor
+            // By default the flag is TileFlags.LockColor
             mask.SetTileFlags(pair.Key, TileFlags.None);
 
-            //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
+            // set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
             mask.SetColor(pair.Key, new Color(pair.Value / maxDensity, 1 - pair.Value / maxDensity, 0, 255.0f / 255));
         }
 
-        //debug
+        // debug
         print(maxDensity);
     }
 }
