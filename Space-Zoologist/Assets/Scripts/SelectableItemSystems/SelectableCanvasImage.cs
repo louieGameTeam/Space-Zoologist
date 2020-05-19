@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handles canvas object selection through ItemSelectedEvent (UnityEvent<GameObject>)

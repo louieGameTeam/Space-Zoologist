@@ -13,6 +13,7 @@ public class Species : ScriptableObject
     public List<SpeciesNeed> Needs => needs;
     public float Size => size;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
+    public Sprite Sprite => sprite;
 
     // Values
     [SerializeField] private string speciesName = default;
@@ -26,7 +27,7 @@ public class Species : ScriptableObject
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
-    
+    [SerializeField] private Sprite sprite = default;
 
 
     /// <summary>

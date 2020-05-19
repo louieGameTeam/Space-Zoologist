@@ -9,28 +9,23 @@ public class FloatingObjectManager : MonoBehaviour, ISetupSelectable
     [SerializeField] private int NumberOfObjectsToPool = 10;
     private List<GameObject> PooledObjects = new List<GameObject>();
     public ItemSelectedEvent ItemSelected = new ItemSelectedEvent(); 
+    private PoolingSystem PoolSystem = default;
 
     public void Start()
     {
-        this.AddPooledObjects();
-    }
-
-    private void AddPooledObjects()
-    {
-        for (int i = 0; i < this.NumberOfObjectsToPool; i++)
-        {
-            PooledObjects.Add(Instantiate(this.FloatingObjectPreview, this.transform));
-        }
+        this.PoolSystem = this.gameObject.AddComponent(typeof(PoolingSystem)) as PoolingSystem;
+        this.PooledObjects = this.PoolSystem.AddPooledObjects(this.NumberOfObjectsToPool, this.FloatingObjectPreview);
     }
 
     // Generic way of creating pooled object and initializing it with data
     public void CreateNewFloatingObject(ItemData item)
     {
-        GameObject placedItem = GetPooledObject();
+        GameObject placedItem = this.PoolSystem.GetPooledObject(this.PooledObjects);
         if (placedItem == null)
         {
-            this.AddPooledObjects();
-            placedItem = GetPooledObject();
+            // May take up a lot of memory?
+            this.PooledObjects.AddRange(this.PoolSystem.AddPooledObjects(this.NumberOfObjectsToPool, this.FloatingObjectPreview));
+            placedItem = this.PoolSystem.GetPooledObject(this.PooledObjects);
         }
         placedItem.transform.SetParent(this.gameObject.transform);
         placedItem.transform.position = new Vector3(this.CurrentCamera.ScreenToWorldPoint(Input.mousePosition).x, this.CurrentCamera.ScreenToWorldPoint(Input.mousePosition).y, 0);
@@ -38,16 +33,6 @@ public class FloatingObjectManager : MonoBehaviour, ISetupSelectable
         placedItem.GetComponent<ItemData>().StoreItemData = item.StoreItemData;
         this.SetupItemSelectedHandler(placedItem, this.ItemSelected);
         placedItem.SetActive(true);
-    }
-
-    private GameObject GetPooledObject()
-    {
-        for (int i = 0; i < this.PooledObjects.Count; i++) {
-            if (!this.PooledObjects[i].activeInHierarchy) {
-            return this.PooledObjects[i];
-            }
-        }
-        return null;
     }
 
     public void SetupItemSelectedHandler(GameObject item, ItemSelectedEvent itemSelected)

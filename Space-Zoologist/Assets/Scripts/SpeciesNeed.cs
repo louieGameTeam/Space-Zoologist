@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using UnityEngine.UI;
 
 public enum NeedType {Terrain, Liquid, Atmosphere, Food}
 public enum NeedName { GasX, GasY, GasZ, SpaceMaple, LeafyBush, Sand, Grass, Dirt, Stone, RedLiquid, YellowLiquid, BlueLiquid }
@@ -13,6 +13,7 @@ public class SpeciesNeed : ScriptableObject
     public NeedType NType => needType;
     public NeedName Name => _name;
     public int Severity => severity;
+    public Sprite Sprite => sprite;
 
     [SerializeField] private NeedType needType = default;
     [SerializeField] private NeedName _name = default;
@@ -20,6 +21,7 @@ public class SpeciesNeed : ScriptableObject
     [SerializeField] private int severity = 1;
     [SerializeField] private List<NeedCondition> conditions = default;
     [SerializeField] private List<float> thresholds = default;
+    [SerializeField] private Sprite sprite = default;
 
     /// <summary>
     /// Compares a value with the condition thresholds and returns the associated condition.
