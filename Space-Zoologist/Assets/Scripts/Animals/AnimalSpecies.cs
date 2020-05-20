@@ -7,9 +7,9 @@ public class AnimalSpecies : ScriptableObject
 {
     // Getters
     public string SpeciesName => speciesName;
-    public float Dominance => dominance;
+    public int Dominance => dominance;
     public float GrowthFactor => growthFactor;
-    public List<Need> Needs => needs;
+    public Dictionary<string, Need> Needs => needs;
     public float Size => size;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
 
@@ -19,44 +19,17 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int dominance = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
-    [SerializeField] private List<Need> needs = default;
+    [SerializeField] private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    [SerializeField] private List<Need> needsList = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
 
-
-    /// <summary>
-    /// Get the condition of a need given its current value.
-    /// </summary>
-    /// <param name="needType">The need to get the condition of</param>
-    /// <param name="value">The value of the need</param>
-    /// <returns></returns>
-    public NeedCondition GetNeedCondition(string needType, float value)
+    private void OnEnable()
     {
-        foreach(Need need in needs)
+        foreach (Need need in needsList)
         {
-            if (need.NeedName == needType)
-            {
-                return need.GetCondition(value);
-            }
+            needs.Add(need.NeedName, need);
         }
-        throw new System.ArgumentException("needName not found in needs list");
-    }
-
-    /// <summary>
-    /// Get the severity of a given need.
-    /// </summary>
-    /// <param name="needType">The need to get the severity of</param>
-    /// <returns></returns>
-    public float GetNeedSeverity(string needType)
-    {
-        foreach (Need need in needs)
-        {
-            if (need.NeedName == needType)
-            {
-                return need.Severity;
-            }
-        }
-        throw new System.ArgumentException("needName not found in needs list");
     }
 }

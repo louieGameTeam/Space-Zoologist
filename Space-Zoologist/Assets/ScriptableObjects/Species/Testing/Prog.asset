@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: Madle
+  m_Name: Prog
   m_EditorClassIdentifier: 
-  speciesName: Madle
-  dominance: 10
-  growthFactor: 2
+  speciesName: Prog
+  dominance: 5
+  growthFactor: 0
   needsList:
   - {fileID: 11400000, guid: 617105db510b2314fa21c6a3f72637b3, type: 2}
-  size: 8
-  accessibleTerrain: 02000000
+  - {fileID: 11400000, guid: e0c93aa61e45ee645a06b3d8bd4e1cca, type: 2}
+  size: 0
+  accessibleTerrain: 0000000001000000

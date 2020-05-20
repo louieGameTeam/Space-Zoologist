@@ -7,29 +7,20 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
-
-    private void Start()
-    {
-        foreach (NeedSystem needSystem in FindObjectsOfType<NeedSystem>())
-        {
-            systems.Add(needSystem.NeedName, needSystem);
-        }
-    }
-
     private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
 
     public void RegisterPopulationNeeds(Population population)
     {
-        foreach (Need need in population.Species.Needs)
+        foreach (Need need in population.Species.Needs.Values)
         {
-            Debug.Assert(systems.ContainsKey(need.NeedName), $"No {need.NeedName } system");
+            Debug.Assert(systems.ContainsKey(need.NeedName), $"No { need.NeedName } system");
             systems[need.NeedName].AddPopulation(population);
         }
     }
 
     public void UnregisterPopulationNeeds(Population population)
     {
-        foreach (Need need in population.Species.Needs)
+        foreach (Need need in population.Species.Needs.Values)
         {
             Debug.Assert(systems.ContainsKey(need.NeedName));
             systems[need.NeedName].RemovePopulation(population);

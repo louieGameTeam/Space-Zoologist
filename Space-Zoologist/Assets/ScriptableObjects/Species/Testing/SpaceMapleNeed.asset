@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: Madle
+  m_Script: {fileID: 11500000, guid: 4c9a88cb154945e4ab4ae22724758827, type: 3}
+  m_Name: SpaceMapleNeed
   m_EditorClassIdentifier: 
-  speciesName: Madle
-  dominance: 10
-  growthFactor: 2
-  needsList:
-  - {fileID: 11400000, guid: 617105db510b2314fa21c6a3f72637b3, type: 2}
-  size: 8
-  accessibleTerrain: 02000000
+  needName: SpaceMaple
+  severity: 10
+  conditions: 000000000100000002000000
+  thresholds:
+  - 3
+  - 10

@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: Madle
+  m_Script: {fileID: 11500000, guid: a2e246c1e6eb3ff478dc3d5aab1c0b2e, type: 3}
+  m_Name: AridBush
   m_EditorClassIdentifier: 
-  speciesName: Madle
-  dominance: 10
-  growthFactor: 2
-  needsList:
-  - {fileID: 11400000, guid: 617105db510b2314fa21c6a3f72637b3, type: 2}
-  size: 8
-  accessibleTerrain: 02000000
+  speciesName: AridBush
+  needs:
+  - {fileID: 0}
+  rootRadius: 0
+  baseOutput: 20

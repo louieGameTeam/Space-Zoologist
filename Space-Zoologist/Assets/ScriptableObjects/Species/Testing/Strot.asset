@@ -15,8 +15,8 @@ MonoBehaviour:
   speciesName: Strot
   dominance: 2
   growthFactor: 3
-  needs:
-  - {fileID: 11400000, guid: e0c93aa61e45ee645a06b3d8bd4e1cca, type: 2}
+  needsList:
   - {fileID: 11400000, guid: 617105db510b2314fa21c6a3f72637b3, type: 2}
+  - {fileID: 11400000, guid: e0c93aa61e45ee645a06b3d8bd4e1cca, type: 2}
   size: 2
-  accessibleTerrain: 
+  accessibleTerrain: 0100000002000000

@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c9a88cb154945e4ab4ae22724758827, type: 3}
-  m_Name: AridBush
+  m_Script: {fileID: 11500000, guid: c4ed08f436813d040a000f64f66f8d4a, type: 3}
+  m_Name: LevelData
   m_EditorClassIdentifier: 
-  needName: AridBush
-  severity: 1
-  conditions: 0000000002000000
-  thresholds:
-  - 2
+  foodSources:
+  - {fileID: 11400000, guid: d295faeac89ba6747b62ee6ab6b36988, type: 2}
+  - {fileID: 11400000, guid: 732875359ec006944a6015fa7cac21da, type: 2}

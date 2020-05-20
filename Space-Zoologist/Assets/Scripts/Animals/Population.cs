@@ -11,12 +11,17 @@ public class Population : MonoBehaviour
     public AnimalSpecies Species { get => species; }
     private Dictionary<string, float> needsValues = new Dictionary<string, float>();
     public Dictionary<string, float> NeedsValues => needsValues;
-    public int Count { get; private set; }
-    private Vector2Int origin = Vector2Int.zero;
+    [SerializeField] private int count = 0;
+    public int Count => count;
+    public float Dominance => count * species.Dominance;
+    private Vector2 origin = Vector2.zero;
 
     private void Awake()
     {
-        this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position));
+        if (this.species)
+        {
+            this.Initialize(species, transform.position, count);
+        }
     }
 
     /// <summary>
@@ -25,17 +30,23 @@ public class Population : MonoBehaviour
     /// <param name="species">The species of the population</param>
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
-    public void Initialize(AnimalSpecies species, Vector2Int origin)
+    public void Initialize(AnimalSpecies species, Vector2 origin, int count)
     {
         this.species = species;
         this.origin = origin;
+        this.count = count;
 
-        this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
+        this.transform.position = origin;
 
-        foreach(Need need in species.Needs)
+        foreach (Need need in species.Needs.Values)
         {
             needsValues.Add(need.NeedName, 0);
         }
+    }
+
+    public void AddAnimals(int count)
+    {
+        this.count += count;
     }
 
     /// <summary>
@@ -61,7 +72,6 @@ public class Population : MonoBehaviour
         return needsValues[need];
     }
 
-    // TODO: Implement
     /// <summary>
     /// Gets need conditions for each need based on the current values and sends them along with the need's severity to the growth formula system.
     /// </summary>

@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class NeedSystem : MonoBehaviour
+abstract public class NeedSystem
 {
-    public string NeedName => needName;
-    [SerializeField] protected string needName = default;
-    protected HashSet<Population> populations = new HashSet<Population>();
-    virtual public bool AddPopulation(Population population)
+    public string NeedName { get; private set; }
+    protected List<Population> populations = new List<Population>();
+
+    public NeedSystem(string needName)
     {
-        return populations.Add(population);
+        NeedName = needName;
+    }
+
+    virtual public void AddPopulation(Population population)
+    {
+        populations.Add(population);
     }
     virtual public bool RemovePopulation(Population population)
     {
