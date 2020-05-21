@@ -45,6 +45,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
         newEntry.GetComponent<SpeciesData>().Data = species;
         this.TestingStuff(newEntry);
         this.SetupItemSelectedHandler(newEntry, this.OnItemSelectedEvent);
+        // For searching by GameObject name
         newEntry.name = species.SpeciesName;
         this.JournalEntries.Add(newEntry);
         newEntry.SetActive(true);
@@ -61,6 +62,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
         entry.GetComponent<SelectableCanvasImage>().SetupItemSelectedHandler(itemSelected);
     }
 
+    // Searching by actual GameObject name
     public void SearchJournal(string speciesSearch)
     {
         if (speciesSearch.Equals(""))
