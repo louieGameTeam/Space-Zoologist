@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public class NeedSystemsTester : MonoBehaviour
 {
@@ -32,7 +30,7 @@ public class NeedSystemsTester : MonoBehaviour
     {
 
         rpm.UpdateAccessMap();
-        foodSourceManager.UpdateFoodDistributionSystem();
+        foodSourceManager.UpdateFoodSources();
     }
 
     private void Update()
@@ -49,7 +47,7 @@ public class NeedSystemsTester : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            foodSourceManager.UpdateFoodDistributionSystem();
+            foodSourceManager.UpdateFoodSources();
         }
 
         if (Input.GetKeyUp(KeyCode.UpArrow))

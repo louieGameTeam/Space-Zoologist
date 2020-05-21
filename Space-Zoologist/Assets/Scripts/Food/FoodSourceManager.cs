@@ -9,22 +9,24 @@ public class FoodSourceManager : MonoBehaviour
     [SerializeField] private ReservePartitionManager rpm = default;
     private List<FoodSource> foodSources = new List<FoodSource>();
     // Having food distribution system in FoodSourceManager is questionable
-    private FoodDistributionSystem foodDistributionSystem = null;
+    private Dictionary<FoodSourceSpecies, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<FoodSourceSpecies, FoodSourceNeedSystem>();
     
 
     [SerializeField] private GameObject foodSourcePrefab = default;
 
     private void Awake()
     {
-        foodDistributionSystem = new FoodDistributionSystem(levelData, rpm);
-        //AddFoodSources(FindObjectsOfType<FoodSource>());
+        foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSources)
+        {
+            FoodSourceNeedSystem foodSourceNeedSystem = new FoodSourceNeedSystem(foodSourceSpecies.SpeciesName, rpm);
+            foodSourceNeedSystems.Add(foodSourceSpecies, foodSourceNeedSystem);
+        }
     }
 
     private void Start()
     {
-        foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodDistributionSystem.FoodSourceNeedSystems)
+        foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
         {
-            //Debug.Log($"Adding {foodSourceNeedSystem.NeedName} FoodSourceNeedSystem to NeedSystemManager");
             needSystemManager.AddSystem(foodSourceNeedSystem);
         }
     }
@@ -35,25 +37,15 @@ public class FoodSourceManager : MonoBehaviour
         newFoodSourceGameObject.name = species.SpeciesName;
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
         foodSource.InitializeFoodSource(species, position);
-        this.AddFoodSource(foodSource);
-    }
-
-    public void AddFoodSource(FoodSource foodSource)
-    {
-        //Debug.Log($"Added {foodSource.Species.name} FoodSource to FoodSourceManager");
         foodSources.Add(foodSource);
-        foodDistributionSystem.AddFoodSource(foodSource);
+        foodSourceNeedSystems[foodSource.Species].AddFoodSource(foodSource);
     }
 
-    public void AddFoodSources(IEnumerable<FoodSource> newFoodSources)
+    public void UpdateFoodSources()
     {
-        foodSources.AddRange(newFoodSources);
-        foodDistributionSystem.AddFoodSources(newFoodSources);
-    }
-
-    // This is also very questionable
-    public void UpdateFoodDistributionSystem()
-    {
-        foodDistributionSystem.UpdateSystems();
+        foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
+        {
+            foodSourceNeedSystem.UpdateSystem();
+        }
     }
 }
