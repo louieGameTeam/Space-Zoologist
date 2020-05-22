@@ -25,7 +25,7 @@ public class NeedsPopupManager : MonoBehaviour, ISetupSelectable
         {
             GameObject discoveredNeed = Instantiate(this.NeedsPopupPrefab, this.NeedsDiscoveredContent.transform);
             discoveredNeed.GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(need);
-            discoveredNeed.GetComponent<ItemData>().JournalItemData = need;
+            discoveredNeed.GetComponent<ItemData>().SpeciesNeedItemData = need;
             this.SetupItemSelectedHandler(discoveredNeed, this.NeedSelected);
         }
     }

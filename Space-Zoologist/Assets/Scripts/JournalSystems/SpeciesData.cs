@@ -5,7 +5,5 @@ using UnityEngine;
 // Holds information about each species in game
 public class SpeciesData : MonoBehaviour
 {
-    public Species Data {get; set;}
-    public List<SpeciesNeed> DiscoveredNeeds {get; set;}
-    public string Description {get; set;}
+    public JournalEntry JournalData { get; set;}
 }

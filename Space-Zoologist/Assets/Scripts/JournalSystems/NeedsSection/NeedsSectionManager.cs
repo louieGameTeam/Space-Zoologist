@@ -28,11 +28,25 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
         }  
     }
 
+    public void DisplayNewNeed(GameObject need)
+    {
+        SpeciesNeed speciesNeed = need.GetComponent<ItemData>().SpeciesNeedItemData;
+        foreach(GameObject newNeed in this.AllNeedsDisplay)
+        {
+            if (!newNeed.activeSelf)
+            {
+                newNeed.SetActive(true);
+                newNeed.GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(speciesNeed);
+                break;
+            }
+        }
+    }
+
     public void SetupDiscoveredNeeds(GameObject species)
     {
         SpeciesData speciesData = species.GetComponent<SpeciesData>();
         int i = 0;
-        foreach(SpeciesNeed needToDisplay in speciesData.DiscoveredNeeds)
+        foreach(SpeciesNeed needToDisplay in speciesData.JournalData.DiscoveredNeeds)
         {
             this.AllNeedsDisplay[i].GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(needToDisplay);
             i++;
@@ -47,6 +61,6 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
     // Could be refactored if more display properties need to be changed
     public void ChangeNeedNameText(GameObject need)
     {
-        this.NeedNameText.text = need.GetComponent<ItemData>().JournalItemData.Name.ToString();
+        this.NeedNameText.text = need.GetComponent<ItemData>().SpeciesNeedItemData.Name.ToString();
     }
 }

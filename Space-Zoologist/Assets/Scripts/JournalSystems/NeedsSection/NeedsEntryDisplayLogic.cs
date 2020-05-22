@@ -9,7 +9,7 @@ public class NeedsEntryDisplayLogic : MonoBehaviour
     {
         this.gameObject.SetActive(true);
         this.Sprite.sprite = need.Sprite;
-        this.gameObject.GetComponent<ItemData>().JournalItemData = need;
+        this.gameObject.GetComponent<ItemData>().SpeciesNeedItemData = need;
         this.NeedName.text = need.Name.ToString();
     }
 }

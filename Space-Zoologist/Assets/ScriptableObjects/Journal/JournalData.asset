@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dd1177cc37a461c922471e0c63055e, type: 3}
-  m_Name: TestItem
+  m_Script: {fileID: 11500000, guid: 1e32c00e0e8a14934afa581a389bd9bd, type: 3}
+  m_Name: JournalData
   m_EditorClassIdentifier: 
-  itemName: Heater
-  itemCost: 10
-  itemDescription: Heat up the temperature in a ten tile radius
-  itemCategory: {r: 0.18222678, g: 0.4245283, b: 0.24367534, a: 1}
-  sprite: {fileID: 0}
+  Entries:
+  - {fileID: 11400000, guid: b898d971d40294160b950374c3b84eb4, type: 2}

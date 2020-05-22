@@ -5,8 +5,8 @@ public class DescriptionDisplayLogic : MonoBehaviour
 {
     [SerializeField] Text Description = default;
 
-    public void InitializeDescription(GameObject species)
+    public void InitializeSpeciesDescription(GameObject species)
     {
-        this.Description.text = species.GetComponent<SpeciesData>().Description;
+        this.Description.text = species.GetComponent<SpeciesData>().JournalData.DiscoveredSpeciesEntryText;
     }
 }

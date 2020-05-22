@@ -5,23 +5,22 @@ using UnityEngine;
 /// <summary>
 /// Add new species and search for existing ones
 /// </summary>
+/// TODO setup so species are first added from existing journal entries (and create connections between GameObject and JournalEntrySO)
+/// and then added by creating a new journal entry SO
 public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] private GameObject SpeciesDisplayPrefab = default;
     [SerializeField] private GameObject SpeciesContent = default;
-    [Expandable] public List<Species> ResearchedSpecies = default;
-    [Header("For testing")]
-    [SerializeField] List<SpeciesNeed> TestDiscoveredNeeds = default;
-    [SerializeField] string TestDescription = default;
+    [SerializeField] JournalData JournalEntriesData = default;
     private List<GameObject> JournalEntries = new List<GameObject>();
     [Header("Populate Needs Section")]
     public ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
 
     public void Start()
     {
-        foreach (Species species in this.ResearchedSpecies)
+        foreach (JournalEntry entry in this.JournalEntriesData.Entries)
         {
-            this.AddNewEntryFromSpecies(species);
+            this.AddNewEntryFromSpecies(entry.DiscoveredSpecies);
         }
     }
 
@@ -30,7 +29,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
         SpeciesData speciesData = null;
         if (species.TryGetComponent(out speciesData))
         {
-            this.AddNewEntryFromSpecies(speciesData.Data);
+            this.AddNewEntryFromSpecies(speciesData.JournalData.DiscoveredSpecies);
         }
         else
         {
@@ -42,19 +41,11 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
     {   
         GameObject newEntry = Instantiate(this.SpeciesDisplayPrefab, this.SpeciesContent.transform);
         newEntry.GetComponent<SpeciesEntryDisplayLogic>().Initialize(species);
-        newEntry.GetComponent<SpeciesData>().Data = species;
-        this.TestingStuff(newEntry);
         this.SetupItemSelectedHandler(newEntry, this.OnItemSelectedEvent);
         // For searching by GameObject name
         newEntry.name = species.SpeciesName;
         this.JournalEntries.Add(newEntry);
         newEntry.SetActive(true);
-    }
-
-    public void TestingStuff(GameObject newEntry)
-    {
-        newEntry.GetComponent<SpeciesData>().DiscoveredNeeds = this.TestDiscoveredNeeds;
-        newEntry.GetComponent<SpeciesData>().Description = this.TestDescription;
     }
 
     public void SetupItemSelectedHandler(GameObject entry, ItemSelectedEvent itemSelected)
