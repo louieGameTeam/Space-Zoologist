@@ -7,6 +7,6 @@ public class DescriptionDisplayLogic : MonoBehaviour
 
     public void InitializeSpeciesDescription(GameObject species)
     {
-        this.Description.text = species.GetComponent<SpeciesData>().JournalData.DiscoveredSpeciesEntryText;
+        this.Description.text = species.GetComponent<SpeciesJournalData>().JournalEntry.DiscoveredSpeciesEntryText;
     }
 }

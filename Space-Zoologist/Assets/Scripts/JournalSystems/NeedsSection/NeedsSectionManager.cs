@@ -44,13 +44,13 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
 
     public void SetupDiscoveredNeeds(GameObject species)
     {
-        SpeciesData speciesData = species.GetComponent<SpeciesData>();
-        int i = 0;
-        foreach(SpeciesNeed needToDisplay in speciesData.JournalData.DiscoveredNeeds)
-        {
-            this.AllNeedsDisplay[i].GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(needToDisplay);
-            i++;
-        }
+        SpeciesJournalData speciesData = species.GetComponent<SpeciesJournalData>();
+        // int i = 0;
+        // foreach(SpeciesNeed needToDisplay in speciesData.JournalEntry.DiscoveredNeeds)
+        // {
+        //     this.AllNeedsDisplay[i].GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(needToDisplay);
+        //     i++;
+        // }
     }
 
     public void SetupItemSelectedHandler(GameObject item, ItemSelectedEvent action)

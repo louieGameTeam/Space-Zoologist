@@ -1,9 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "JournalData", menuName = "Journal/JournalData")]
-public class JournalData : ScriptableObject
+[System.Serializable]
+public class JournalData 
 {
-    [Expandable] public List<JournalEntry> Entries = default;
+    public Dictionary<string, JournalEntry> Entries = default;
+
+    public JournalData(JournalData data)
+    {
+        this.Entries = new Dictionary<string, JournalEntry>();
+        foreach(KeyValuePair<string, JournalEntry> entry in data.Entries)
+        {
+            this.Entries.Add(entry.Key, entry.Value);
+        }
+    }
+
+    public JournalData(List<JournalEntry> entries)
+    {
+        this.Entries = new Dictionary<string, JournalEntry>();
+        foreach(JournalEntry entry in entries)
+        {
+            this.Entries.Add(entry.DiscoveredSpecies, entry);
+        }
+    }
+
 }

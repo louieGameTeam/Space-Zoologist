@@ -21,7 +21,7 @@ public class SpeciesPopupManager : MonoBehaviour, ISetupSelectable
         {
             GameObject discoveredSpecies = Instantiate(this.SpeciesPopupPrefab, this.SpeciesDiscoveredContent.transform);
             discoveredSpecies.GetComponent<SpeciesEntryDisplayLogic>().Initialize(species);
-            discoveredSpecies.GetComponent<SpeciesData>().JournalData.DiscoveredSpecies = species;
+            discoveredSpecies.GetComponent<SpeciesJournalData>().JournalEntry.DiscoveredSpecies = species.SpeciesName;
             this.SetupItemSelectedHandler(discoveredSpecies, this.SpeciesSelected);
         }
     }
