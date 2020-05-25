@@ -507,7 +507,6 @@ public class EnclosureSystem : MonoBehaviour
                     {
                         atmosphere += Atmospheres[containedAtmosphere[i]];
                     }
-
                 }
                 else
                 {
