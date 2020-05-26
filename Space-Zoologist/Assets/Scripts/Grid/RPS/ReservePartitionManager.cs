@@ -38,6 +38,7 @@ public class ReservePartitionManager : MonoBehaviour
     /// <summary> A list of populations to be loaded on startup. </summary>
     [SerializeField] List<Population> populationsOnStartUp = default;
 
+    public Dictionary<Population, int[]> TypesOfTerrain;
 
     private void Awake()
     {
@@ -64,6 +65,7 @@ public class ReservePartitionManager : MonoBehaviour
         AccessMap = new Dictionary<Vector3Int, long>();
         Spaces = new Dictionary<Population, int>();
         SharedSpaces = new Dictionary<int, long[]>();
+        TypesOfTerrain = new Dictionary<Population, int[]>();
     }
 
     private void Start()
@@ -91,6 +93,7 @@ public class ReservePartitionManager : MonoBehaviour
             PopulationByID.Add(id, population);
             Populations.Add(population);
 
+            TypesOfTerrain.Add(population, new int[(int)TileType.TypesOfTiles]);
             // generate the map with the new id  
             GenerateMap(population);
             
@@ -103,9 +106,11 @@ public class ReservePartitionManager : MonoBehaviour
     public void RemovePopulation(Population population)
     {
         Populations.Remove(population);
+        TypesOfTerrain.Remove(population);
         openID.Enqueue(PopulationToID[population]);
         PopulationByID.Remove(PopulationToID[population]);  // free ID
         PopulationToID.Remove(population);  // free ID
+        
     }
 
     /// <summary>
@@ -171,6 +176,8 @@ public class ReservePartitionManager : MonoBehaviour
             {
                 // save the accessible location
                 accessible.Add(cur);
+
+                TypesOfTerrain[population][(int)tile.type]++;
 
                 if (!AccessMap.ContainsKey(cur))
                 {
@@ -341,5 +348,15 @@ public class ReservePartitionManager : MonoBehaviour
             }
         }
         return accessible;
+    }
+
+    /// <summary>
+    /// Returns the number of each types of tile the population has access to. The position in the array represent the type,
+    /// with the same order as the enum TileType.
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
+    public int[] GetTypesOfTiles(Population population) {
+        return TypesOfTerrain[population];
     }
 }
