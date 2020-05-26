@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
+// TODO figure out where to stor the need description data
 public class NeedsEntryDisplayLogic : MonoBehaviour
 {
     [SerializeField] Text NeedName = default;
@@ -8,8 +9,7 @@ public class NeedsEntryDisplayLogic : MonoBehaviour
     public void SetupDisplay(SpeciesNeed need)
     {
         this.gameObject.SetActive(true);
-        this.Sprite.sprite = need.Sprite;
-        this.gameObject.GetComponent<ItemData>().SpeciesNeedItemData = need;
         this.NeedName.text = need.Name.ToString();
+        this.Sprite.sprite = need.Sprite;
     }
 }

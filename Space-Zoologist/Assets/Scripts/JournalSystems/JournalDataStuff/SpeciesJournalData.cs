@@ -2,5 +2,5 @@
 
 public class SpeciesJournalData : MonoBehaviour
 {
-    public JournalEntry JournalEntry { get; set;}
+    public JournalEntry JournalEntry { get; set; }
 }

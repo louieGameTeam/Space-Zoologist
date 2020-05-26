@@ -9,4 +9,9 @@ public class DescriptionDisplayLogic : MonoBehaviour
     {
         this.Description.text = species.GetComponent<SpeciesJournalData>().JournalEntry.DiscoveredSpeciesEntryText;
     }
+
+    public void InitializeNeedsDescription(GameObject need)
+    {
+        this.Description.text = need.GetComponent<NeedData>().Description;
+    }
 }

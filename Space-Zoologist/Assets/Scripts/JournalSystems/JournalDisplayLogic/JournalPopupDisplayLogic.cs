@@ -9,7 +9,7 @@ public class JournalPopupDisplayLogic : MonoBehaviour
     [SerializeField] ToggleGroup SpeciesToggle = default;
     public void RemoveSelfFromList(GameObject item)
     {
-        Destroy(item);
+        item.SetActive(false);
     }
 
     public void UpdatePopupActiveSelf()

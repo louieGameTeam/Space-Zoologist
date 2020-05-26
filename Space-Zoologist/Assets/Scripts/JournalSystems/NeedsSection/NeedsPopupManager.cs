@@ -13,6 +13,7 @@ public class NeedsPopupManager : MonoBehaviour, ISetupSelectable
     [SerializeField] List<SpeciesNeed> NeedsPlaceholder = default;
     [Header("RemoveSelfFromList and whatever else should happen")]
     public ItemSelectedEvent NeedSelected = new ItemSelectedEvent();
+    private List<GameObject> NeedsThatCanBeAdded = new List<GameObject>();
 
     public void Start()
     {
@@ -24,14 +25,34 @@ public class NeedsPopupManager : MonoBehaviour, ISetupSelectable
         foreach (var need in this.NeedsPlaceholder)
         {
             GameObject discoveredNeed = Instantiate(this.NeedsPopupPrefab, this.NeedsDiscoveredContent.transform);
+            discoveredNeed.GetComponent<NeedData>().Need = need;
             discoveredNeed.GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(need);
-            discoveredNeed.GetComponent<ItemData>().SpeciesNeedItemData = need;
             this.SetupItemSelectedHandler(discoveredNeed, this.NeedSelected);
+            // For filtering
+            discoveredNeed.name = need.Name.ToString();
+            NeedsThatCanBeAdded.Add(discoveredNeed);
         }
     }
 
     public void SetupItemSelectedHandler(GameObject item, ItemSelectedEvent action)
     {
         item.GetComponent<SelectableCanvasImage>().SetupItemSelectedHandler(action);
+    }
+
+    // If need already added as need in species journal data, don't show it as a need that can be added
+    public void FilterPotentialNeeds(GameObject speciesSelected)
+    {
+        JournalEntry speciesJournalData = speciesSelected.GetComponent<SpeciesJournalData>().JournalEntry;
+        foreach(GameObject need in this.NeedsThatCanBeAdded)
+        {
+            if (speciesJournalData.DiscoveredNeeds.Contains(need.name))
+            {
+                need.SetActive(false);
+            }
+            else
+            {
+                need.SetActive(true);
+            }
+        }
     }
 }

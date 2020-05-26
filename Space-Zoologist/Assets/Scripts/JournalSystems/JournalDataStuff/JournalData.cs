@@ -3,7 +3,7 @@
 [System.Serializable]
 public class JournalData 
 {
-    public Dictionary<string, JournalEntry> Entries = default;
+    public Dictionary<string, JournalEntry> Entries;
 
     public JournalData(JournalData data)
     {
@@ -23,4 +23,8 @@ public class JournalData
         }
     }
 
+    public JournalData()
+    {
+        this.Entries = new Dictionary<string, JournalEntry>();
+    }
 }
