@@ -2,21 +2,28 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-// TODO setup need selection and toggles
+/// <summary>
+/// Uses the SpeciesJournalData from the currently selected species to update and manage the species needs data
+/// </summary>
+/// TODO 1: refactor and clearly comment logic and update documentation
+/// TODO 2: Setup research and need removal
 public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] GameObject NeedsContainer = default;
     [SerializeField] GameObject NeedDisplayPrefab = default;
     [SerializeField] Text NeedNameText = default;
     [SerializeField] SpeciesNeedReferenceData SpeciesNeedReferenceData = default;
+    [SerializeField] InputField DescriptionText = default;
     [Header("For testing")]
     private List<GameObject> AllNeedsDisplay = new List<GameObject>();
     private JournalEntry DisplayedEntry = default;
     public ItemSelectedEvent NeedSelected = new ItemSelectedEvent();
+    // Toggle group wasn't working, making our own for now
+    // Works well for determining which item is currently selected
+    private List<Toggle> m_Toggles = new List<Toggle>();
 
     public void Start()
     {
-        this.NeedSelected.AddListener(this.ChangeNeedNameText);
         this.InstantiateNeedObjects();     
     }
 
@@ -28,6 +35,7 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
             newNeedDisplay.SetActive(false);
             this.SetupItemSelectedHandler(newNeedDisplay, this.NeedSelected);
             this.AllNeedsDisplay.Add(newNeedDisplay);
+            this.m_Toggles.Add(newNeedDisplay.GetComponent<Toggle>());
         }  
     }
 
@@ -42,22 +50,10 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
         {
             SpeciesNeed needData = this.SpeciesNeedReferenceData.AllNeeds[needToDisplay];
             this.AllNeedsDisplay[i].GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(needData);
-            this.SetupNeedData(this.AllNeedsDisplay[i], needToDisplay, needData, speciesData);
+            NeedData need = this.AllNeedsDisplay[i].GetComponent<NeedData>();
+            need.Need = needData;
+            this.InitializeNeedDescription(need);
             i++;
-        }
-    }
-
-    private void SetupNeedData(GameObject needDisplay, string needToDisplay, SpeciesNeed needData, SpeciesJournalData speciesJournalData)
-    {
-        NeedData need = needDisplay.GetComponent<NeedData>();
-        need.Need = needData;
-        if (speciesJournalData.JournalEntry.DiscoveredNeedsEntryText.ContainsKey(needToDisplay))
-        {
-            need.Description = speciesJournalData.JournalEntry.DiscoveredNeedsEntryText[needToDisplay];
-        }
-        else
-        {
-            need.Description = "Write something here!";
         }
     }
     // update DisplayedEntry needs data. Assume need has been filtered to be unique
@@ -72,8 +68,18 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
                 newNeed.GetComponent<NeedData>().Need = speciesNeed;
                 newNeed.GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(speciesNeed);
                 this.DisplayedEntry.DiscoveredNeeds.Add(speciesNeed.Name.ToString());
+                this.InitializeNeedDescription(newNeed.GetComponent<NeedData>());
                 break;
             }
+        }
+    }
+
+    private void InitializeNeedDescription(NeedData need)
+    {
+        need.Description = "";
+        if (this.DisplayedEntry.DiscoveredNeedsEntryText.ContainsKey(need.Need.Name.ToString()))
+        {
+            need.Description = this.DisplayedEntry.DiscoveredNeedsEntryText[need.Need.Name.ToString()];
         }
     }
 
@@ -88,10 +94,42 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
         {
             need.SetActive(false);
         }
+        foreach(Toggle toggle in this.m_Toggles)
+        {
+            toggle.isOn = false;
+        }
+        this.NeedNameText.text = "";
     }
 
     public void ChangeNeedNameText(GameObject need)
     {
-       
+       this.NeedNameText.text = need.GetComponent<NeedData>().Need.Name.ToString();
+    }
+
+    // Find currently selected need, update it's current description data and update journal entry description data
+    public void UpdateNeedDescription(string description)
+    {
+        foreach(Toggle entry in this.m_Toggles)
+        {
+            if (entry.isOn)
+            {
+                NeedData need = entry.gameObject.GetComponent<NeedData>();
+                need.Description = description;
+                if (this.DisplayedEntry.DiscoveredNeedsEntryText.ContainsKey(need.Need.Name.ToString()))
+                {
+                    this.DisplayedEntry.DiscoveredNeedsEntryText[need.Need.Name.ToString()] = description;
+                }
+                else
+                {
+                    this.DisplayedEntry.DiscoveredNeedsEntryText.Add(need.Need.Name.ToString(), description);
+                }
+                break;
+            }
+        }
+    }
+
+    public void PrintEntryData(GameObject needSelected)
+    {
+        // Debug.Log("Current entry: " + this.DisplayedEntry.DiscoveredSpecies);
     }
 }

@@ -22,4 +22,13 @@ public class SelectableCanvasImage : MonoBehaviour
     {
         this.OnItemSelectedEvent.Invoke(this.gameObject);
     }
+
+    // Toggle groups trigger when value is changed, so this is triggered twice everytime a toggle new toggle is selected
+    public void ItemSelected(bool toggledOn)
+    {
+        if(toggledOn)
+        {
+            this.OnItemSelectedEvent.Invoke(this.gameObject);
+        }
+    }
 }

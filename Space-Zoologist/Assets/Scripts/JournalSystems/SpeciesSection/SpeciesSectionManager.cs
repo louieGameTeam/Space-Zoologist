@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// Add new entries and search for existing ones
 /// </summary>
-/// 4 TODO refactor so everything works with new JournalData setup
 public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] private GameObject SpeciesDisplayPrefab = default;
@@ -16,7 +15,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
     private List<GameObject> JournalEntriesDisplay = new List<GameObject>();
     [Header("What should happen when a species is clicked")]
     public ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
-
+    private List<Toggle> m_Toggles = new List<Toggle>();
     // Load Journal data and populate Journal with entries
     public void Start()
     {
@@ -41,7 +40,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
         SpeciesJournalData speciesData = null;
         if (species.TryGetComponent(out speciesData))
         {
-            Species s = SpeciesData.FindSpecies(speciesData.JournalEntry.DiscoveredSpecies);
+            Species s = this.SpeciesData.FindSpecies(speciesData.JournalEntry.DiscoveredSpecies);
             this.JournalEntries.Entries.Add(speciesData.JournalEntry.DiscoveredSpecies, speciesData.JournalEntry);
             this.CreateJournalEntryDisplay(speciesData.JournalEntry);
         }
@@ -58,6 +57,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
         newEntry.GetComponent<SpeciesEntryDisplayLogic>().Initialize(species);
         this.SetupItemSelectedHandler(newEntry, this.OnItemSelectedEvent);
         newEntry.GetComponent<SpeciesJournalData>().JournalEntry = entry;
+        this.m_Toggles.Add(newEntry.GetComponent<Toggle>());
         // For searching by GameObject name
         newEntry.name = species.SpeciesName;
         newEntry.SetActive(true);
@@ -99,5 +99,26 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
         }
     }
 
+    // Update the correct journal entry's specie's description
+    public void UpdateSpeciesDescription(string description)
+    {
+        foreach(Toggle entry in this.m_Toggles)
+        {
+            if (entry.isOn)
+            {
+                SpeciesJournalData journalData = entry.gameObject.GetComponent<SpeciesJournalData>();
+                journalData.JournalEntry.DiscoveredSpeciesEntryText = description;
+            }
+        }
+    }
 
+    public void PrintEntryData(GameObject entrySelected)
+    {
+        string test = "Discovered needs:";
+        foreach(string need in entrySelected.GetComponent<SpeciesJournalData>().JournalEntry.DiscoveredNeeds)
+        {
+            test += " " + need;
+        }
+        // Debug.Log(test);
+    }
 }
