@@ -11,6 +11,7 @@ public class AnimalSpecies : ScriptableObject
     public Dictionary<string, Need> Needs => needs;
     public float Size => size;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
+    public Sprite Icon => icon;
 
     // Values
     [SerializeField] private string speciesName = default;
@@ -23,6 +24,7 @@ public class AnimalSpecies : ScriptableObject
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
+    [SerializeField] private Sprite icon = default;
 
     private void OnEnable()
     {

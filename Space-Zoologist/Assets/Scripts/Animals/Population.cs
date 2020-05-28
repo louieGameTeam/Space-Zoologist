@@ -7,13 +7,14 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour
 {
-    [SerializeField] private AnimalSpecies species = default;
-    public AnimalSpecies Species { get => species; }
-    private Dictionary<string, float> needsValues = new Dictionary<string, float>();
     public Dictionary<string, float> NeedsValues => needsValues;
-    [SerializeField] private int count = 0;
+    public AnimalSpecies Species { get => species; }
     public int Count => count;
     public float Dominance => count * species.Dominance;
+
+    [SerializeField] private AnimalSpecies species = default;
+    [SerializeField] private int count = 0;
+    private Dictionary<string, float> needsValues = new Dictionary<string, float>();
     private Vector2 origin = Vector2.zero;
 
     private void Awake()
@@ -44,6 +45,10 @@ public class Population : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Increases the number of animals in the population by the given count.
+    /// </summary>
+    /// <param name="count">The number of animals to add to the population</param>
     public void AddAnimals(int count)
     {
         this.count += count;

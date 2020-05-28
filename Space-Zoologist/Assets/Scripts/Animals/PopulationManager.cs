@@ -21,10 +21,10 @@ public class PopulationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Create a new population of the given species at the given origin.
+    /// Create a new population of the given species at the given position.
     /// </summary>
     /// <param name="species">The species of the population</param>
-    /// <param name="origin">The origin point of the population</param>
+    /// <param name="position">The origin point of the population</param>
     public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
         GameObject newPopulationGameObject = Instantiate(populationGameObject, position, Quaternion.identity, this.transform);
@@ -36,6 +36,12 @@ public class PopulationManager : MonoBehaviour
         rpm.AddPopulation(population);
     }
 
+    /// <summary>
+    /// Add animals to the accessible area containing the given position. If there is already a population, add the animals to it, else create a new population.
+    /// </summary>
+    /// <param name="species">The species of the animals to be added</param>
+    /// <param name="count">The number of animals to add</param>
+    /// <param name="position">The position to add them</param>
     public void AddAnimals(AnimalSpecies species, int count, Vector3 position)
     {
         // If a population of the species already exists in this area, just combine with it, otherwise, make a new one

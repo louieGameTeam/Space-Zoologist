@@ -10,13 +10,12 @@ public class FoodSourceManager : MonoBehaviour
     private List<FoodSource> foodSources = new List<FoodSource>();
     // Having food distribution system in FoodSourceManager is questionable
     private Dictionary<FoodSourceSpecies, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<FoodSourceSpecies, FoodSourceNeedSystem>();
-    
 
     [SerializeField] private GameObject foodSourcePrefab = default;
 
     private void Awake()
     {
-        foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSources)
+        foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
         {
             FoodSourceNeedSystem foodSourceNeedSystem = new FoodSourceNeedSystem(foodSourceSpecies.SpeciesName, rpm);
             foodSourceNeedSystems.Add(foodSourceSpecies, foodSourceNeedSystem);

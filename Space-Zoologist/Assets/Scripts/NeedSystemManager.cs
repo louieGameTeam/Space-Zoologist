@@ -28,7 +28,7 @@ public class NeedSystemManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a system to be managed.
+    /// Add a system so that populations can register with it via it's need name.
     /// </summary>
     /// <param name="needSystem">The system to add</param>
     public void AddSystem(NeedSystem needSystem)
