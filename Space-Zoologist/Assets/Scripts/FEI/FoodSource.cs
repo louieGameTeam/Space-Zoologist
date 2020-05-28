@@ -29,18 +29,18 @@ public class FoodSource : MonoBehaviour
     public WorldAtmosphere atm;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        if (species == null)
+        {
+            throw new System.NullReferenceException("Error: species is not set");
+        }
+
         int numNeeds = species.Needs.Length;
         rawValues = new float[numNeeds];
         conditions = new NeedCondition[numNeeds];
         totalOutput = 0;
 
-        if (species == null) {
-            throw new System.NullReferenceException("Error: species is not set");
-        }
-
-        DetectEnvironment();
     }
 
     /// <summary>
@@ -51,6 +51,7 @@ public class FoodSource : MonoBehaviour
         NeedScriptableObject[] needs = species.Needs;
         float[] weights = species.Severities;
         PlantNeedType[] types = species.Types;
+        TileSystem tileSystem = FindObjectOfType<TileSystem>();
 
         // TODO Implement liquid
         for (int i = 0; i < weights.Length; i++)
@@ -62,24 +63,24 @@ public class FoodSource : MonoBehaviour
                 {
                     case PlantNeedType.Terrain:
                         // get tiles around the food source and return as an array of integers
-                        TerrainTile[] terrainTiles = FoodUtils.GetTiles(transform.position, species.Radius).ToArray();
+                        List<TerrainTile> terrainTiles = FoodUtils.GetAllTilesWithinRadius(transform.position, species.Radius);
 
                         // quick check for no tiles read
-                        if (terrainTiles.Length == 0) { rawValues[i] = 0; break; }
+                        if (terrainTiles.Count == 0) { rawValues[i] = 0; break; }
 
                         List<TileType> tiles = new List<TileType>();
                         foreach (TerrainTile tile in terrainTiles)
                         {
-                            tiles.Add(tile.type);// TileType tile.type is defined in TerrainNeedScriptableObject
+                            tiles.Add(tile.type); // TileType tile.type is defined in TerrainNeedScriptableObject
                         }
 
                         // imported from TerrainNeedScriptableObject
-                        float value = 0;
+                        float total_value = 0;
                         for (int ind = 0; ind < tiles.Count; ind++)
                         {
                             try
                             {
-                                value += species.TileDic[tiles[ind]];
+                                total_value += species.TileDic[tiles[ind]];
                             }
                             catch (KeyNotFoundException)
                             {
@@ -88,72 +89,47 @@ public class FoodSource : MonoBehaviour
                             }
                         }
 
-                        // maybe consider swapping tiles.length for (1+2*radius+2*radius*radius) i.e. 1, 5, 13, 25, ...
-                        // because less space might suggest worse terrain for plant (as its roots have to be more crammed and get less resource overall)
-                        float avgValue = value / tiles.Count;
-                        rawValues[i] = avgValue;
+                        // maybe consider swapping tiles.length with (1+2*radius+2*radius^2) i.e. 1, 5, 13, 25, ..., i.e. the max number of tiles the plant can reach
+                        // the latter suggests that less space might mean worse terrain for plant (as its roots have to be more crammed and get less resource overall)
+                        rawValues[i] = total_value / (1 + 2 * species.Radius + 2 * species.Radius * species.Radius);
                         break;
+
+                    // NullReferenceError if no atmosphere here (plant shouldn't exist here in the first place)
                     case PlantNeedType.GasX:
                         // Read value from some class that handles atmosphere
-                        rawValues[i] = atm.GasX;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).GasX;
                         break;
                     case PlantNeedType.GasY:
                         // Read value from some class that handles atmosphere
-                        rawValues[i] = atm.GasY;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).GasY;
                         break;
                     case PlantNeedType.GasZ:
                         // Read value from some class that handles atmosphere
-                        rawValues[i] = atm.GasZ;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).GasZ;
                         break;
                     case PlantNeedType.Temperature:
                         // Read value from some class that handles temperature
-                        rawValues[i] = atm.Temp;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).Temperature;
                         break;
                     case PlantNeedType.RLiquid:
-                        // TODO
-                        // get liquid tiles around the food source and return as an array of tiles
-                        float[,] RLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
+                    case PlantNeedType.YLiquid:
+                    case PlantNeedType.BLiquid:
+                        // Assuming that RYB is consecutive, this shouldn't change. 0 = R, 1 = Y, 2 = B
+                        int color = types[i] - PlantNeedType.RLiquid;
 
+                        // get liquid tiles around the food source and return as an array of tiles
+                        Dictionary<float[], float>.KeyCollection liquids = tileSystem.DistancesToClosestTilesOfEachBody(tileSystem.WorldToCell(transform.position), ReservePartitionManager.ins.Liquid, species.Radius).Keys;
                         conditions[i] = NeedCondition.Bad;
-                        for (int r = 0; r < RLiquid.GetLength(0); r++) {
-                            NeedCondition temp = needs[i].GetCondition(RLiquid[r, 0]);
+
+                        // liquid_body is a body of liquid of size 3 that contains [R, Y, B] values
+                        foreach(float[] liquid_body in liquids) {
+                            NeedCondition temp = needs[i].GetCondition(liquid_body[color]);  
                             if (temp > conditions[i]) {
                                 conditions[i] = temp;
-                                rawValues[i] = RLiquid[r, 0];
+                                rawValues[i] = liquid_body[color];
                             }
                         }
-                        continue; // already calculated condition
-                    case PlantNeedType.YLiquid:
-                        // TODO
-                        // get liquid tiles around the food source and return as an array of tiles
-                        float[,] YLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
-
-                        conditions[i] = NeedCondition.Bad;
-                        for (int r = 0; r < YLiquid.GetLength(0); r++)
-                        {
-                            NeedCondition temp = needs[i].GetCondition(YLiquid[r, 1]);
-                            if (temp > conditions[i])
-                            {
-                                conditions[i] = temp;
-                                rawValues[i] = YLiquid[r, 0];
-                            }
-                        }
-                        continue; // already calculated condition
-                    case PlantNeedType.BLiquid:
-                        // TODO
-                        // get liquid tiles around the food source and return as an array of tiles
-                        float[,] BLiquid = new float[,] { { 1, 1, 0 }, { 0.5f, 0.5f, 0.5f }, { 0.2f, 0.8f, 0.4f } };
-
-                        conditions[i] = NeedCondition.Bad;
-                        for (int r = 0; r < BLiquid.GetLength(0); r++)
-                        {
-                            NeedCondition temp = needs[i].GetCondition(BLiquid[r, 2]);
-                            if (temp > conditions[i])
-                            {
-                                conditions[i] = temp;
-                                rawValues[i] = BLiquid[r, 0];
-                            }
-                        }
+                        
                         continue; // already calculated condition
                     default:
                         Debug.LogError("Error: No need name matches.");

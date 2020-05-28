@@ -31,10 +31,10 @@ public class TileSystem : MonoBehaviour
     /// <returns></returns>
     public TerrainTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
-        // --TEMP--
-        TerrainTile tileOnTerrain = (TerrainTile)tilemaps[1].GetTile(cellLocation);
-        if (tileOnTerrain != null) return tileOnTerrain;
-        // --TEMP--
+        //// --TEMP--
+        //TerrainTile tileOnTerrain = (TerrainTile)tilemaps[1].GetTile(cellLocation);
+        //if (tileOnTerrain != null) return tileOnTerrain;
+        //// --TEMP--
 
         SortedDictionary<int, TerrainTile> existingTiles = new SortedDictionary<int, TerrainTile>();
 

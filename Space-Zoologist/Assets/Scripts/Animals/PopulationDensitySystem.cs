@@ -71,8 +71,8 @@ public class PopulationDensitySystem : MonoBehaviour
         ReservePartitionManager rpm = ReservePartitionManager.ins;
         int curID = rpm.PopulationToID[pop];
 
-        // Not initialized
-        if (!rpm.Populations.Contains(pop))
+        // Not initialized or does not have space to live
+        if (!rpm.Populations.Contains(pop)|| ReservePartitionManager.ins.Spaces[pop] == 0)
             return -1;
 
 

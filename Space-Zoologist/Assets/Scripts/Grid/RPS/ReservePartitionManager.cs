@@ -40,6 +40,8 @@ public class ReservePartitionManager : MonoBehaviour
 
     public Dictionary<Population, int[]> TypesOfTerrain;
 
+    public TerrainTile Liquid;
+
     private void Awake()
     {
         // Variable initializations

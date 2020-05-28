@@ -34,7 +34,7 @@ public class FoodUtils : MonoBehaviour
     /// <summary>
     /// Get TerrainTiles at world_pos with a radius of radius.
     /// </summary>
-    public static List<TerrainTile> GetTiles(Vector3 world_pos, int radius)
+    public static List<TerrainTile> GetAllTilesWithinRadius(Vector3 world_pos, int radius)
     {
         TileSystem api = FindObjectOfType<TileSystem>();
 

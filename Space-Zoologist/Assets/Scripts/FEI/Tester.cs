@@ -8,7 +8,6 @@ public class Tester : MonoBehaviour
 {
     public FoodSource info;
     public Dictionary<string, int> counts;
-    public Tilemap from;
     public Text text;
     public Dictionary<string, string> nameSwap;
     
@@ -16,6 +15,8 @@ public class Tester : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        EnclosureSystem.ins.FindEnclosedAreas();
+
         // detects the environment every 0.2 second
         InvokeRepeating("UpdateDebugMenu", 0, 0.2f);
     }
@@ -26,12 +27,12 @@ public class Tester : MonoBehaviour
     public void UpdateDebugMenu()
     {
         info.DetectEnvironment();
-        List<TerrainTile> ts = FoodUtils.GetTiles(transform.position, info.Species.Radius);
+        List<TerrainTile> ts = FoodUtils.GetAllTilesWithinRadius(transform.position, info.Species.Radius);
         counts = new Dictionary<string, int>();
         for (int i = 0; i < ts.Count; i++)
         {
             if (counts.ContainsKey(ts[i].name)) {
-                counts[ts[i].name] += 1;
+                counts[ts[i].name] += 1;    
             }
             else
             {

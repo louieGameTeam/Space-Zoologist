@@ -97,17 +97,10 @@ public class EnclosureSystem : MonoBehaviour
     /// <returns></returns>
     public AtmosphericComposition GetAtmosphericComposition(Vector3Int position)
     {
-        return Atmospheres[ PositionToAtmosphere[ position ] ];
-    }
-
-    /// <summary>
-    /// Gets the atmospheric temperature at a given position.
-    /// </summary>
-    /// <param name="position"></param>
-    /// <returns></returns>
-    public float GetTemperature(Vector3Int position)
-    {
-        return Atmospheres[ PositionToAtmosphere[ position ] ].Temperature;
+        if (PositionToAtmosphere.ContainsKey(position))
+            return Atmospheres[PositionToAtmosphere[position]];
+        else
+            return null;
     }
 
     /// <summary>
