@@ -1,7 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-// TODO figure out where to stor the need description data
 public class NeedsEntryDisplayLogic : MonoBehaviour
 {
     [SerializeField] Text NeedName = default;

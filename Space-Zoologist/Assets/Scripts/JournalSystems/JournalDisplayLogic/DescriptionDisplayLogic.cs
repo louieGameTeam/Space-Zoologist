@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class DescriptionDisplayLogic : MonoBehaviour
 {
+    // Two different descriptions used so both On End Edit event can be assigned two different actions
     [SerializeField] GameObject NeedsDescriptionDisplay = default;
     private InputField NeedsDescription = default;
     [SerializeField] GameObject SpeciesDescriptionDisplay = default;

@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Very similar to Species Popup Manager
-// TODO setup add need popup so it can only come up when a species is selected and it adds the need to the list of discovered needs
 // TODO fix visual display issues
-public class NeedsPopupManager : MonoBehaviour, ISetupSelectable
+public class DiscoveredNeedsManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] GameObject NeedsDiscoveredContent = default;
     [SerializeField] GameObject NeedsPopupPrefab = default;
     [Header("For testing")]
-    [SerializeField] List<SpeciesNeed> NeedsPlaceholder = default;
+    [SerializeField] List<SpeciesNeed> LevelNeedsPlaceholder = default;
     [Header("RemoveSelfFromList and whatever else should happen")]
     public ItemSelectedEvent NeedSelected = new ItemSelectedEvent();
-    private List<GameObject> NeedsThatCanBeAdded = new List<GameObject>();
+    private List<GameObject> DiscoveredNeeds = new List<GameObject>();
 
     public void Start()
     {
@@ -22,7 +21,7 @@ public class NeedsPopupManager : MonoBehaviour, ISetupSelectable
 
     public void AddDiscoveredNeeds()
     {
-        foreach (var need in this.NeedsPlaceholder)
+        foreach (var need in this.LevelNeedsPlaceholder)
         {
             GameObject discoveredNeed = Instantiate(this.NeedsPopupPrefab, this.NeedsDiscoveredContent.transform);
             discoveredNeed.GetComponent<NeedData>().Need = need;
@@ -30,7 +29,7 @@ public class NeedsPopupManager : MonoBehaviour, ISetupSelectable
             this.SetupItemSelectedHandler(discoveredNeed, this.NeedSelected);
             // For filtering
             discoveredNeed.name = need.Name.ToString();
-            NeedsThatCanBeAdded.Add(discoveredNeed);
+            DiscoveredNeeds.Add(discoveredNeed);
         }
     }
 
@@ -43,7 +42,7 @@ public class NeedsPopupManager : MonoBehaviour, ISetupSelectable
     public void FilterPotentialNeeds(GameObject speciesSelected)
     {
         JournalEntry speciesJournalData = speciesSelected.GetComponent<SpeciesJournalData>().JournalEntry;
-        foreach(GameObject need in this.NeedsThatCanBeAdded)
+        foreach(GameObject need in this.DiscoveredNeeds)
         {
             if (speciesJournalData.DiscoveredNeeds.Contains(need.name))
             {

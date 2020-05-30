@@ -16,10 +16,12 @@ public class DiscoveredSpeciesManager : MonoBehaviour, ISetupSelectable
         this.AddDiscoveredSpecies();
     }
 
+    // Filters out species that have already been discovered
     public void AddDiscoveredSpecies()
     {
         foreach (var species in this.LevelSpeciesPlaceholder)
         {
+            // Journal data exists, need to filter
             if (this.speciesSectionManager.journalEntries != null)
             {
                 if (!this.speciesSectionManager.journalEntries.Entries.ContainsKey(species.SpeciesName))
@@ -31,11 +33,10 @@ public class DiscoveredSpeciesManager : MonoBehaviour, ISetupSelectable
                     Debug.Log("Species \"" + species.SpeciesName + "\" already exists in journal");
                 }
             }
+            // No journal data yet, just add
             else
             {
-
                 this.CreateNewDisplayObject(species);
-                Debug.Log("No species added yet! Adding first species!");
             }
         }
     }

@@ -5,6 +5,7 @@ public class JournalData
 {
     public Dictionary<string, JournalEntry> Entries;
 
+    // For loading previous journal data
     public JournalData(JournalData data)
     {
         this.Entries = new Dictionary<string, JournalEntry>();
@@ -14,6 +15,7 @@ public class JournalData
         }
     }
 
+    // For testing
     public JournalData(List<JournalEntry> entries)
     {
         this.Entries = new Dictionary<string, JournalEntry>();

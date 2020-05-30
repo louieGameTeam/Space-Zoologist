@@ -16,6 +16,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
     [Header("What should happen when a species is clicked")]
     public ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
     private List<Toggle> m_Toggles = new List<Toggle>();
+
     // Load Journal data and populate Journal with entries
     public void Start()
     {
@@ -106,19 +107,8 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
         {
             if (entry.isOn)
             {
-                SpeciesJournalData journalData = entry.gameObject.GetComponent<SpeciesJournalData>();
-                journalData.JournalEntry.DiscoveredSpeciesEntryText = description;
+                entry.gameObject.GetComponent<SpeciesJournalData>().JournalEntry.DiscoveredSpeciesEntryText = description;
             }
         }
-    }
-
-    public void PrintEntryData(GameObject entrySelected)
-    {
-        string test = "Discovered needs:";
-        foreach(string need in entrySelected.GetComponent<SpeciesJournalData>().JournalEntry.DiscoveredNeeds)
-        {
-            test += " " + need;
-        }
-        // Debug.Log(test);
     }
 }
