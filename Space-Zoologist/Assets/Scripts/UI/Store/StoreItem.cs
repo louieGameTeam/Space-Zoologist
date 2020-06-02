@@ -1,28 +1,32 @@
-﻿using UnityEngine.UI;
+using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class StoreItem : MonoBehaviour
+public class StoreItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public StoreItemSO ItemInformation { get; set; }
+    public StoreItemSO item { get; private set; }
 
-    public void InitializeStoreItem(StoreItemSO itemInfo)
+    [SerializeField] Image itemImage = default;
+    [SerializeField] Image highlightImage = default;
+
+    public void Initialize(StoreItemSO item)
     {
-        this.ItemInformation = itemInfo;
-        this.SetupStoreItemSmallDisplay();
+        this.item = item;
+        this.itemImage.sprite = item.Sprite;
     }
 
-    private void SetupStoreItemSmallDisplay()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        this.gameObject.GetComponent<Image>().sprite = this.ItemInformation.Sprite;
+        Debug.Log(item.ItemName);
     }
 
-    public GameObject SetupStoreItemExtendedDisplay(GameObject extendedDisplay, GameObject extendedDisplayView)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        GameObject newItem = Instantiate(extendedDisplay, extendedDisplayView.transform);
-        newItem.transform.position = new Vector2(extendedDisplayView.transform.position.x, this.gameObject.transform.position.y);
-        newItem.transform.GetChild(0).GetComponent<Text>().text = this.ItemInformation.ItemName;
-        newItem.transform.GetChild(1).GetComponent<Text>().text = "$" + this.ItemInformation.ItemCost.ToString();
-        newItem.transform.GetChild(2).GetComponent<Text>().text = this.ItemInformation.StoreItemDescription;
-        return newItem;
+        highlightImage.enabled = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        highlightImage.enabled = false;
     }
 }

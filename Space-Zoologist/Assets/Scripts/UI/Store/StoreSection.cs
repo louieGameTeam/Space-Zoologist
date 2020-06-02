@@ -9,6 +9,7 @@ public class StoreSection : MonoBehaviour
     [SerializeField] Text sectionTitle = default;
     [SerializeField] GameObject itemGrid = default;
     [SerializeField] GameObject itemCellPrefab = default;
+    private StoreMenu storeMenu = default;
 
     void Start()
     {
@@ -20,15 +21,16 @@ public class StoreSection : MonoBehaviour
         
     }
 
-    public void Initialize(string sectionCategory)
+    public void Initialize(string sectionCategory, StoreMenu storeMenu)
     {
         this.sectionCategory = sectionCategory;
         this.sectionTitle.text = sectionCategory;
+        this.storeMenu = storeMenu;
     }
 
     public void AddItem(StoreItemSO item)
     {
         GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid.transform);
-        newItemCellGO.GetComponent<Image>().sprite = item.Sprite;
+        newItemCellGO.GetComponent<StoreItem>().Initialize(item);
     }
 }
