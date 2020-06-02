@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Uses the SpeciesJournalData from the currently selected species entry to update and manage the species needs data
@@ -11,14 +12,12 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
     [SerializeField] GameObject NeedDisplayPrefab = default;
     [SerializeField] SpeciesNeedReferenceData SpeciesNeedReferenceData = default;
     [SerializeField] Text NeedNameText = default;
-    [SerializeField] ResearchSectionManager researchSectionManager = default;
     private List<GameObject> AllNeedsDisplay = new List<GameObject>();
-    private JournalEntry DisplayedEntry = default;
+    // Update the JournalData for the SelectedSpecies whenever a change is made
+    private JournalEntry SelectedSpeciesJournalData = default;
     public ItemSelectedEvent NeedSelected = new ItemSelectedEvent();
-    // Toggle group wasn't working, making our own for now
-    // Works well for determining which item is currently selected
+    public ItemSelectedEvent CheckResearch = new ItemSelectedEvent();
     private List<Toggle> m_Toggles = new List<Toggle>();
-
     public void Start()
     {
         this.InstantiateNeedObjects();    
@@ -37,16 +36,17 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
     }
 
     // Add discovered needs and update NeedData's reference to saved descriptions
-    public void SetupDiscoveredNeeds(GameObject species)
+    public void SetupSelectedSpeciesNeeds(GameObject species)
     {
-        this.ClearPreviousNeeds();
+        this.ClearPreviousChanges();
         SpeciesJournalData speciesData = species.GetComponent<SpeciesJournalData>();
-        this.DisplayedEntry = speciesData.JournalEntry;
+        this.SelectedSpeciesJournalData = speciesData.JournalEntry;
+
         int i = 0;
-        foreach(string needToDisplay in speciesData.JournalEntry.DiscoveredNeeds)
+        foreach(var needToDisplay in speciesData.JournalEntry.DiscoveredNeeds)
         {
             // Use SpeciesNeedReferenceData to turn the string into the Need 
-            SpeciesNeed speciesNeed = this.SpeciesNeedReferenceData.AllNeeds[needToDisplay];
+            SpeciesNeed speciesNeed = this.SpeciesNeedReferenceData.FindNeed(needToDisplay.Key);
             this.AllNeedsDisplay[i].GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(speciesNeed);
             // Update the current NeedData 
             NeedData need = this.AllNeedsDisplay[i].GetComponent<NeedData>();
@@ -67,7 +67,7 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
                 SpeciesNeed speciesNeed = needPopup.GetComponent<NeedData>().Need;
                 newNeed.GetComponent<NeedData>().Need = speciesNeed;
                 newNeed.GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(speciesNeed);
-                this.DisplayedEntry.DiscoveredNeeds.Add(speciesNeed.Name.ToString());
+                this.SelectedSpeciesJournalData.DiscoveredNeeds.Add(speciesNeed.Name.ToString(), new JournalNeedResearch(speciesNeed.Name.ToString()));
                 this.InitializeNeedDescription(newNeed.GetComponent<NeedData>());
                 break;
             }
@@ -78,9 +78,9 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
     public void InitializeNeedDescription(NeedData need)
     {
         need.Description = "";
-        if (this.DisplayedEntry.DiscoveredNeedsEntryText.ContainsKey(need.Need.Name.ToString()))
+        if (this.SelectedSpeciesJournalData.DiscoveredNeeds.ContainsKey(need.Need.Name.ToString()))
         {
-            need.Description = this.DisplayedEntry.DiscoveredNeedsEntryText[need.Need.Name.ToString()];
+            need.Description = this.SelectedSpeciesJournalData.DiscoveredNeeds[need.Need.Name.ToString()].NeedDescription;
         }
     }
 
@@ -90,7 +90,7 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
     }
 
     // Turn off display gameobjects and set all toggles off
-    private void ClearPreviousNeeds()
+    private void ClearPreviousChanges()
     {
         foreach(GameObject need in this.AllNeedsDisplay)
         {
@@ -111,47 +111,55 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
     // Find currently selected need, update it's current description data, and update journal entry description data
     public void UpdateNeedDescription(string description)
     {
-        foreach(Toggle entry in this.m_Toggles)
+        GameObject entry = this.FindSelectedNeed();
+        if (entry != null)
         {
-            if (entry.isOn)
+            NeedData need = entry.gameObject.GetComponent<NeedData>();
+            need.Description = description;
+            if (this.SelectedSpeciesJournalData.DiscoveredNeeds.ContainsKey(need.Need.Name.ToString()))
             {
-                NeedData need = entry.gameObject.GetComponent<NeedData>();
-                need.Description = description;
-                if (this.DisplayedEntry.DiscoveredNeedsEntryText.ContainsKey(need.Need.Name.ToString()))
-                {
-                    this.DisplayedEntry.DiscoveredNeedsEntryText[need.Need.Name.ToString()] = description;
-                }
-                else
-                {
-                    this.DisplayedEntry.DiscoveredNeedsEntryText.Add(need.Need.Name.ToString(), description);
-                }
-                break;
+                this.SelectedSpeciesJournalData.DiscoveredNeeds[need.Need.Name.ToString()].NeedDescription = description;
             }
-        }
+            else
+            {
+                JournalNeedResearch newNeed = new JournalNeedResearch(need.Need.Name.ToString());
+                newNeed.NeedDescription = description;
+                this.SelectedSpeciesJournalData.DiscoveredNeeds.Add(need.Need.Name.ToString(), newNeed);
+            }        
+        }  
     }
 
     // Updates DisplayedEntry data and turns off GameObject
     public void RemoveSelectedNeed()
     {
-        foreach(Toggle entry in this.m_Toggles)
+        GameObject entry = this.FindSelectedNeed();
+        if (entry != null)
         {
-            if (entry.isOn)
-            {
-                NeedData need = entry.gameObject.GetComponent<NeedData>();
-                this.DisplayedEntry.RemoveNeed(need.Need.Name.ToString());
-                entry.gameObject.SetActive(false);
-            }
+            NeedData need = entry.gameObject.GetComponent<NeedData>();
+            this.SelectedSpeciesJournalData.DiscoveredNeeds.Remove(need.Need.Name.ToString());
+            entry.gameObject.SetActive(false);
         }
     }
 
     public void ResearchSelectedNeed()
     {
+        GameObject entry = this.FindSelectedNeed();
+        if (entry != null)
+        {
+            this.CheckResearch.Invoke(entry.gameObject);
+        }
+    }
+
+    // If an object is not selected, but an icon is clicked, null should be checked and nothing should
+    private GameObject FindSelectedNeed()
+    {
         foreach(Toggle entry in this.m_Toggles)
         {
             if (entry.isOn)
             {
-                this.researchSectionManager.CanResearch(entry.gameObject);
+                return entry.gameObject;
             }
         }
+        return null;
     }
 }

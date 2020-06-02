@@ -28,4 +28,9 @@ public class DescriptionDisplayLogic : MonoBehaviour
         this.NeedsDescriptionDisplay.SetActive(true);
         this.SpeciesDescriptionDisplay.SetActive(false);
     }
+
+    public void ClearNeedDescription()
+    {
+        this.NeedsDescription.text = "";
+    }
 }

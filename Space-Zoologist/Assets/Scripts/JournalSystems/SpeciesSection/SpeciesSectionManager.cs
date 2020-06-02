@@ -5,22 +5,23 @@ using UnityEngine;
 /// <summary>
 /// Add new entries and search for existing ones
 /// </summary>
+/// TODO figure out how to ensure JournalEntries is updated before saving
 public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] private GameObject SpeciesDisplayPrefab = default;
     [SerializeField] private GameObject SpeciesContent = default;
+    [Header("For translating need strings to need SO")]
     [SerializeField] private SpeciesReferenceData SpeciesData = default;
-    public JournalData journalEntries => this.JournalEntries;
-    private JournalData JournalEntries = default;
+    public JournalData JournalEntries { get; private set; }
     private List<GameObject> JournalEntriesDisplay = new List<GameObject>();
-    [Header("What should happen when a species is clicked")]
+    [Header("Invoked when a species is clicked")]
     public ItemSelectedEvent OnItemSelectedEvent = new ItemSelectedEvent();
     private List<Toggle> m_Toggles = new List<Toggle>();
 
     // Load Journal data and populate Journal with entries
     public void Start()
     {
-        // this.JournalEntries = SaveSystem.LoadJournal();
+        this.JournalEntries = SaveSystem.LoadJournal();
         if (this.JournalEntries != null)
         {
             foreach(KeyValuePair<string, JournalEntry> entry in this.JournalEntries.Entries)
@@ -110,5 +111,21 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
                 entry.gameObject.GetComponent<SpeciesJournalData>().JournalEntry.DiscoveredSpeciesEntryText = description;
             }
         }
+    }
+
+    void OnApplicationQuit()
+    {
+        foreach(GameObject entries in this.JournalEntriesDisplay)
+        {
+            JournalEntry a = entries.GetComponent<SpeciesJournalData>().JournalEntry;
+            this.JournalEntries.Entries[a.DiscoveredSpecies] = a;
+            Debug.Log(a.DiscoveredSpecies);
+            foreach (var item in this.JournalEntries.Entries[a.DiscoveredSpecies].DiscoveredNeeds)
+            {
+                Debug.Log(item.Value.NeedName);
+                Debug.Log(item.Value.NeedDescription);
+            }
+        }
+        SaveSystem.SaveJournal(this.JournalEntries);
     }
 }

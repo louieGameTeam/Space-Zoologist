@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO 1 figure out how researching data should be tracked and stored
-// TODO 2 figure out how research should work if need removed
-// TODO 3 figure out how research works behind the scenes
+// TODO 1 figure out how research should work if need removed
+// TODO 2 figure out how research works behind the scenes
 public class ResearchSectionManager : MonoBehaviour
 {
     [SerializeField] GameObject NeedDisplayPrefab = default;
@@ -51,7 +50,6 @@ public class ResearchSectionManager : MonoBehaviour
         }
     }
 
-    // TODO figure out how to determine if a need can be researched
     public void CanResearch(GameObject need)
     {
         NeedData needData = need.GetComponent<NeedData>();

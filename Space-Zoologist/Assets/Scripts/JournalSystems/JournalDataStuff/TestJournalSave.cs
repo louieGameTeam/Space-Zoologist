@@ -1,25 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class TestJournalSave : MonoBehaviour
 {
+
     public void CreateAndSaveJournal()
     {
-        JournalEntry entrya = new JournalEntry("strot");
-        JournalEntry entryb = new JournalEntry("prog");
-        List<string> needs = new List<string>();
-        needs.Add("gasx");
-        needs.Add("apple");
+        JournalEntry entrya = new JournalEntry("Madle");
+        JournalEntry entryb = new JournalEntry("Prog");
 
-        entrya.DiscoveredNeeds = needs;
-        entrya.DiscoveredSpeciesEntryText = "likes to have lots of water and apples";
-        entrya.DiscoveredNeedsEntryText.Add("gasx", "needs x amount");
-        entrya.DiscoveredNeedsEntryText.Add("apple", "needs y amount");
+        JournalNeedResearch a = new JournalNeedResearch("SpaceMaple");
+        entrya.DiscoveredNeeds.Add("SpaceMaple", a);
+        a = new JournalNeedResearch("GasX");
+        entrya.DiscoveredNeeds.Add("GasX", a);
 
-        entryb.DiscoveredNeeds = needs;
-        entryb.DiscoveredSpeciesEntryText = "likes to have lots of water and apples";
-        entryb.DiscoveredNeedsEntryText.Add("gasx", "needs x amount");
-        entryb.DiscoveredNeedsEntryText.Add("apple", "needs y amount");
+        a = new JournalNeedResearch("RedLiquid");
+        entryb.DiscoveredNeeds.Add("RedLiquid", a);
+        a = new JournalNeedResearch("Sand");
+        entryb.DiscoveredNeeds.Add("Sand", a);
+
+        entrya.DiscoveredSpeciesEntryText = "likes to have lots of water and SpaceMaples";
+        entrya.DiscoveredNeeds["SpaceMaple"].NeedDescription = "needs x amount";
+        entrya.DiscoveredNeeds["GasX"].NeedDescription = "needs y amount";
+
+        entryb.DiscoveredSpeciesEntryText = "likes to have lots of water and SpaceMaples";
+        entryb.DiscoveredNeeds["RedLiquid"].NeedDescription = "needs x amount";
+        entryb.DiscoveredNeeds["Sand"].NeedDescription = "needs y temperature";
 
         List<JournalEntry> entries = new List<JournalEntry>();
         entries.Add(entrya);
@@ -31,10 +38,18 @@ public class TestJournalSave : MonoBehaviour
     public void LoadAndTestJournal()
     {
         JournalData journal = SaveSystem.LoadJournal();
-        Debug.Log(journal.Entries["strot"].DiscoveredNeedsEntryText["gasx"]);
-        Debug.Log(journal.Entries["strot"].DiscoveredNeedsEntryText);
-        Debug.Log(journal.Entries["prog"].DiscoveredSpeciesEntryText);
-        Debug.Log(journal.Entries["prog"].DiscoveredNeedsEntryText["apple"]);
+        Debug.Log("Madle");
+        foreach (var item in journal.Entries["Madle"].DiscoveredNeeds)
+        {
+            Debug.Log(item.Value.NeedName);
+            Debug.Log(item.Value.NeedDescription);
+        }
+        Debug.Log("Prog");
+        foreach (var item in journal.Entries["Prog"].DiscoveredNeeds)
+        {
+            Debug.Log(item.Value.NeedName);
+            Debug.Log(item.Value.NeedDescription);
+        }
 
     }
 }

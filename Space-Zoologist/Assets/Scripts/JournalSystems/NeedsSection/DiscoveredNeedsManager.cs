@@ -44,7 +44,7 @@ public class DiscoveredNeedsManager : MonoBehaviour, ISetupSelectable
         JournalEntry speciesJournalData = speciesSelected.GetComponent<SpeciesJournalData>().JournalEntry;
         foreach(GameObject need in this.DiscoveredNeeds)
         {
-            if (speciesJournalData.DiscoveredNeeds.Contains(need.name))
+            if (speciesJournalData.DiscoveredNeeds.ContainsKey(need.name))
             {
                 need.SetActive(false);
             }

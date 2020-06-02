@@ -22,9 +22,9 @@ public class DiscoveredSpeciesManager : MonoBehaviour, ISetupSelectable
         foreach (var species in this.LevelSpeciesPlaceholder)
         {
             // Journal data exists, need to filter
-            if (this.speciesSectionManager.journalEntries != null)
+            if (this.speciesSectionManager.JournalEntries != null)
             {
-                if (!this.speciesSectionManager.journalEntries.Entries.ContainsKey(species.SpeciesName))
+                if (!this.speciesSectionManager.JournalEntries.Entries.ContainsKey(species.SpeciesName))
                 {
                     this.CreateNewDisplayObject(species);
                 }
