@@ -7,9 +7,9 @@ public class LevelData : ScriptableObject
 {
     public List<FoodSourceSpecies> FoodSourceSpecies => foodSources;
     public List<AnimalSpecies> AnimalSpecies => animalSpecies;
-    public List<StoreItemSO> StoreItems => storeItems;
+    public List<StoreItem> StoreItems => storeItems;
 
     [SerializeField] private List<FoodSourceSpecies> foodSources = default;
     [SerializeField] private List<AnimalSpecies> animalSpecies = default;
-    [SerializeField] private List<StoreItemSO> storeItems = default;
+    [SerializeField] private List<StoreItem> storeItems = default;
 }

@@ -1,32 +1,21 @@
-using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class StoreItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+// Modify as needed
+[CreateAssetMenu]
+public class StoreItem : ScriptableObject
 {
-    public StoreItemSO item { get; private set; }
+    public string ItemName { get => itemName; set => itemName = value; }
+    public float ItemCost { get => itemCost; set => itemCost = value; }
+    public string StoreItemDescription { get => itemDescription; set => itemDescription = value; }
+    public string StoreItemCategory { get => itemCategory; set => itemCategory = value; }
+    public Sprite Sprite { get => sprite; set => sprite = value; }
+    public string ItemIdentifier { get => itemIdentifier; set => itemIdentifier = value; }
 
-    [SerializeField] Image itemImage = default;
-    [SerializeField] Image highlightImage = default;
-
-    public void Initialize(StoreItemSO item)
-    {
-        this.item = item;
-        this.itemImage.sprite = item.Sprite;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log(item.ItemName);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        highlightImage.enabled = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        highlightImage.enabled = false;
-    }
+    [SerializeField] private string itemName = default;
+    [SerializeField] private float itemCost = default;
+    [SerializeField] private string itemDescription = default;
+    [SerializeField] private string itemCategory = default;
+    [SerializeField] private Sprite sprite = default;
+    // Identifier for internal comparison between systems (e.g., 'Sand' used to compare to 'Sand' tile type)
+    [SerializeField] private string itemIdentifier;
 }

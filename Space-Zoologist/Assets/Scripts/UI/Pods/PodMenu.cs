@@ -35,10 +35,10 @@ public class PodMenu : MonoBehaviour
         {
             if (!PointOverMenu(Input.mousePosition) && !selectedSpecies)
             {
-                gameObject.SetActive(false); // ------------------------------------------------------------------------------------------------ ISSUE HERE. Don't activate/deactive a script from within the script
+                gameObject.SetActive(false); // --------------------------------------------------------------- ISSUE HERE. Don't activate/deactive a script from within the script
             }
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonUp(1))
         {
             DeselectSpecies();
         }
@@ -50,7 +50,7 @@ public class PodMenu : MonoBehaviour
         cursorItem.Begin(animalSpecies.Icon, OnCursorItemClick);
     }
 
-    public void DeselectSpecies()
+    private void DeselectSpecies()
     {
         selectedSpecies = null;
         if (cursorItem.isActiveAndEnabled)
@@ -67,11 +67,11 @@ public class PodMenu : MonoBehaviour
     public void OnCursorItemClick(PointerEventData pointerEventData)
     {
         // If in CursorItem mode and the cursor is clicked while over the menu
-        if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, pointerEventData.position))
+        if (PointOverMenu(pointerEventData.position))
         {
             DeselectSpecies();
         }
-        else
+        else if (pointerEventData.button == PointerEventData.InputButton.Left)
         {
             Vector3 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
             populationManager.AddAnimals(selectedSpecies, 1, position);

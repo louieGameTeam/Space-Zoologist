@@ -9,28 +9,25 @@ public class StoreSection : MonoBehaviour
     [SerializeField] Text sectionTitle = default;
     [SerializeField] GameObject itemGrid = default;
     [SerializeField] GameObject itemCellPrefab = default;
-    private StoreMenu storeMenu = default;
 
-    void Start()
-    {
-        
-    }
+    public delegate void ItemSelectedHandler(StoreItem item);
+    public event ItemSelectedHandler onItemSelected;
 
-    void Update()
-    {
-        
-    }
-
-    public void Initialize(string sectionCategory, StoreMenu storeMenu)
+    public void Initialize(string sectionCategory, ItemSelectedHandler itemSelectedHandler)
     {
         this.sectionCategory = sectionCategory;
         this.sectionTitle.text = sectionCategory;
-        this.storeMenu = storeMenu;
+        this.onItemSelected += itemSelectedHandler;
     }
 
-    public void AddItem(StoreItemSO item)
+    public void AddItem(StoreItem item)
     {
         GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid.transform);
-        newItemCellGO.GetComponent<StoreItem>().Initialize(item);
+        newItemCellGO.GetComponent<StoreItemCell>().Initialize(item, OnItemSelected);
+    }
+
+    public void OnItemSelected(StoreItem item)
+    {
+        onItemSelected.Invoke(item);
     }
 }

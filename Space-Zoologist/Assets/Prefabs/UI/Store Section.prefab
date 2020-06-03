@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1028, y: 66.37}
+  m_SizeDelta: {x: 1026, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &997044969594215579
 CanvasRenderer:
@@ -112,7 +112,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1029, y: 300}
+  m_SizeDelta: {x: 1026, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &992991863535216282
 MonoBehaviour:
@@ -135,8 +135,8 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 0
+  m_Spacing: {x: 10, y: 20}
+  m_Constraint: 1
   m_ConstraintCount: 5
 --- !u!222 &4481732457812075887
 CanvasRenderer:
@@ -156,8 +156,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6908766796117283242}
   - component: {fileID: 4639002368079835074}
-  - component: {fileID: 8643201690137943502}
-  - component: {fileID: 8015123117163604634}
+  - component: {fileID: 1269951937019328864}
+  - component: {fileID: 834634092618853433}
   m_Layer: 5
   m_Name: Store Section
   m_TagString: Untagged
@@ -181,10 +181,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 308}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1026, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4639002368079835074
 MonoBehaviour:
@@ -202,7 +202,7 @@ MonoBehaviour:
   itemGrid: {fileID: 6358554769037953029}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
---- !u!114 &8643201690137943502
+--- !u!114 &1269951937019328864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,14 +220,14 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &8015123117163604634
+--- !u!114 &834634092618853433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

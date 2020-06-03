@@ -9,22 +9,30 @@ public class StoreMenu : MonoBehaviour
     [SerializeField] GameObject storeSectionPrefab = default;
     [SerializeField] CursorItem cursorItem = default;
     [SerializeField] Transform sectionsContainer = default;
+    RectTransform rectTransform = default;
+
+    StoreItem selectedStoreItem = null;
 
     private Dictionary<string, StoreSection> storeSections = new Dictionary<string, StoreSection>();
 
-    public void OnSelectItem(StoreItemSO item)
-    {
-        cursorItem.Begin(item.Sprite, OnCursorItemClick);
-    }
-
     public void OnCursorItemClick(PointerEventData pointerEventData)
     {
-
+        if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, pointerEventData.position))
+        {
+            DeselectItem();
+        }
+        else
+        {
+            Vector3 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
+            // Do something here
+        }
     }
 
     private void Awake()
     {
-        foreach (StoreItemSO storeItem in levelData.StoreItems)
+        rectTransform = GetComponent<RectTransform>();
+
+        foreach (StoreItem storeItem in levelData.StoreItems)
         {
             if (!storeSections.ContainsKey(storeItem.StoreItemCategory))
             {
@@ -35,9 +43,17 @@ public class StoreMenu : MonoBehaviour
 
     private void Start()
     {
-        foreach (StoreItemSO storeItem in levelData.StoreItems)
+        foreach (StoreItem storeItem in levelData.StoreItems)
         {
             storeSections[storeItem.StoreItemCategory].AddItem(storeItem);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonUp(1))
+        {
+            DeselectItem();
         }
     }
 
@@ -46,7 +62,22 @@ public class StoreMenu : MonoBehaviour
         GameObject newStoreSectionGO = Instantiate(storeSectionPrefab);
         newStoreSectionGO.transform.SetParent(sectionsContainer, false);
         StoreSection newStoreSection = newStoreSectionGO.GetComponent<StoreSection>();
-        newStoreSection.Initialize(sectionCategory, this);
+        newStoreSection.Initialize(sectionCategory, OnSelectItem);
         storeSections.Add(sectionCategory, newStoreSection);
+    }
+
+    private void OnSelectItem(StoreItem item)
+    {
+        selectedStoreItem = item;
+        cursorItem.Begin(item.Sprite, OnCursorItemClick);
+    }
+
+    private void DeselectItem()
+    {
+        selectedStoreItem = null;
+        if (cursorItem.isActiveAndEnabled)
+        {
+            cursorItem.Stop(OnCursorItemClick);
+        }
     }
 }
