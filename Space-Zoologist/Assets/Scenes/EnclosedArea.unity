@@ -1275,9 +1275,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 145205995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 546726a53d9084cf298a26b80ad8e018, type: 3}
+  m_Script: {fileID: 11500000, guid: 320d3a1b49d9e93499e06413cacdbe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  populationsOnStartUp: []
+  Liquid: {fileID: 11400000, guid: f70a1e9d3bb064b9583acd688cbe18b4, type: 2}
 --- !u!114 &145205997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,7 +1304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320d3a1b49d9e93499e06413cacdbe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popOnStartUp: []
+  populationsOnStartUp: []
+  Liquid: {fileID: 0}
 --- !u!4 &145205999
 Transform:
   m_ObjectHideFlags: 0

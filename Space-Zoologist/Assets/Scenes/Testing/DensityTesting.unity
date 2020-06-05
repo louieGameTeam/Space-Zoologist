@@ -3910,6 +3910,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1487033933}
   - component: {fileID: 1487033932}
+  - component: {fileID: 1487033934}
   - component: {fileID: 1487033931}
   m_Layer: 0
   m_Name: RPM
@@ -3927,11 +3928,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1487033930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beb300b45d5b34ef18fb800272c4b941, type: 3}
+  m_Script: {fileID: 11500000, guid: b91c541783bd347bfba5e129f46fdcd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mask: {fileID: 311193658}
-  population: {fileID: 451499759}
 --- !u!114 &1487033932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3944,7 +3944,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320d3a1b49d9e93499e06413cacdbe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popOnStartUp: []
+  populationsOnStartUp:
+  - {fileID: 451499759}
+  Liquid: {fileID: 0}
 --- !u!4 &1487033933
 Transform:
   m_ObjectHideFlags: 0
@@ -3959,6 +3961,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1487033934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487033930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db69a42b96103442a7dfeaf1585f502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1550401698
 GameObject:
   m_ObjectHideFlags: 0
