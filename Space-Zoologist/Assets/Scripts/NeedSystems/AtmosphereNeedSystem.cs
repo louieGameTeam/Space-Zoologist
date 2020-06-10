@@ -20,9 +20,20 @@ public class AtmoshpereNeedSystem : NeedSystem
         foreach (Population population in populations)
         {
             // Get the atmospheric composition of a population 
-            var atmosphericComposition = enclosureSystem.GetAtmosphericComposition(Vector3Int.FloorToInt(population.transform.position));
+            AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(Vector3Int.FloorToInt(population.transform.position));
 
-            Debug.Log(atmosphericComposition);
+            float[] composition = atmosphericComposition.GeComposition();
+            Debug.Log(composition);
+
+            foreach (var (value, index) in composition.WithIndex())
+            {
+                string needName = ((AtmoshpereComponent)index).ToString();
+
+                if (population.NeedsValues.ContainsKey(needName))
+                {
+                    population.UpdateNeed(needName, value);
+                }
+            }
         }
     }
 }
