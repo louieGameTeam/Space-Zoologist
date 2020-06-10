@@ -8,7 +8,6 @@ public class ResearchSectionManager : MonoBehaviour
 {
     [SerializeField] GameObject NeedDisplayPrefab = default;
     [SerializeField] GameObject ResearchContainer = default;
-    [SerializeField] GameObject ResearchPopup = default;
     public ItemSelectedEvent MouseEnterEvent = new ItemSelectedEvent();
     public UnityEvent MouseExitEvent = new UnityEvent(); 
 

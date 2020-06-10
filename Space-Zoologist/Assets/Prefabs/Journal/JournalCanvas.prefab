@@ -1515,7 +1515,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedsContainer: {fileID: 729423586076610106}
   NeedDisplayPrefab: {fileID: 3927112233494348143}
-  SpeciesNeedReferenceData: {fileID: 0}
+  SpeciesNeedReferenceData: {fileID: 11400000, guid: dbe416cb8be274dfaabe0e802bdc63e9,
+    type: 2}
   NeedNameText: {fileID: 729423587713420998}
   NeedSelected:
     m_PersistentCalls:
@@ -2675,7 +2676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpeciesDisplayPrefab: {fileID: 2672369194947780484}
   SpeciesContent: {fileID: 729423587147247256}
-  SpeciesData: {fileID: 0}
+  SpeciesData: {fileID: 11400000, guid: 1aa74eb2457ec4414b23f29e59d0b7b9, type: 2}
   OnItemSelectedEvent:
     m_PersistentCalls:
       m_Calls:

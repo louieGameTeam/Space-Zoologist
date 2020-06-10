@@ -10,6 +10,7 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] GameObject NeedsContainer = default;
     [SerializeField] GameObject NeedDisplayPrefab = default;
+    [Header("For translating need strings to need SO")]
     [SerializeField] SpeciesNeedReferenceData SpeciesNeedReferenceData = default;
     [SerializeField] Text NeedNameText = default;
     private List<GameObject> AllNeedsDisplay = new List<GameObject>();

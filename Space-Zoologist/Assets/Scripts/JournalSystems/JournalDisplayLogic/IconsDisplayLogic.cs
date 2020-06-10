@@ -4,8 +4,7 @@ public class IconsDisplayLogic : MonoBehaviour
 {
     [SerializeField] GameObject AddNeedIcon = default;
     [SerializeField] GameObject RemoveNeedIcon = default;
-    [SerializeField] GameObject ResearchNeedIcon = default;
-    [SerializeField] GameObject ResearchedNeedIcon = default;
+    //[SerializeField] GameObject ResearchNeedIcon = default;
 
     public void UpdateNeedIcons(GameObject needSelected)
     {

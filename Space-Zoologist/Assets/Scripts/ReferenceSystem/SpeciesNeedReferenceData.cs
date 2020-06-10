@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeciesNeedReferenceData : MonoBehaviour
+[CreateAssetMenu(fileName = "SpeciesNeedReference", menuName = "ReferenceData/SpeciesNeedReference")]
+public class SpeciesNeedReferenceData : ScriptableObject
 {
     [SerializeField] private List<SpeciesNeed> AddAllNeeds = new List<SpeciesNeed>();
     public Dictionary<string, SpeciesNeed> AllNeeds = new Dictionary<string, SpeciesNeed>();
-
-    public void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
 
     public SpeciesNeed FindNeed(string need)
     {

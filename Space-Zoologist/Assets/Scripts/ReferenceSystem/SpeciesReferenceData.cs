@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeciesReferenceData : MonoBehaviour
+[CreateAssetMenu(fileName = "SpeciesReference", menuName = "ReferenceData/SpeciesReference")]
+public class SpeciesReferenceData : ScriptableObject
 {
     // Using singleton pattern so Species can be easily indexed by name
     [SerializeField] private List<Species> AddAllSpecies = new List<Species>();
     public Dictionary<string, Species> AllSpecies = new Dictionary<string, Species>();
-
-    public void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
 
     public Species FindSpecies(string species)
     {

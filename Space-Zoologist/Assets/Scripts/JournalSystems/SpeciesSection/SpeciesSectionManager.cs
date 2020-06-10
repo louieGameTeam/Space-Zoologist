@@ -9,7 +9,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] private GameObject SpeciesDisplayPrefab = default;
     [SerializeField] private GameObject SpeciesContent = default;
-    [Header("For translating need strings to need SO")]
+    [Header("For translating species strings to species SO")]
     [SerializeField] private SpeciesReferenceData SpeciesData = default;
     public JournalData JournalEntries { get; private set; }
     private List<GameObject> JournalEntriesDisplay = new List<GameObject>();
@@ -53,7 +53,7 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
 
     public void CreateJournalEntryDisplay(JournalEntry entry)
     {   
-        Species species = SpeciesData.FindSpecies(entry.DiscoveredSpecies);
+        Species species = this.SpeciesData.FindSpecies(entry.DiscoveredSpecies);
         GameObject newEntry = Instantiate(this.SpeciesDisplayPrefab, this.SpeciesContent.transform);
         newEntry.GetComponent<SpeciesEntryDisplayLogic>().Initialize(species);
         this.SetupItemSelectedHandler(newEntry, this.OnItemSelectedEvent);
