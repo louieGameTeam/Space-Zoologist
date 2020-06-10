@@ -35,6 +35,7 @@ public class TileSystem : MonoBehaviour
 
         foreach (Tilemap tilemap in tilemaps)
         {
+            Debug.Log(tilemap.GetTile(cellLocation));
             TerrainTile tileOnLayer = (TerrainTile)tilemap.GetTile(cellLocation);
             if (tileOnLayer != null)
             {
