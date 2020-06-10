@@ -17,7 +17,7 @@ public class RPSTester : MonoBehaviour
 
     public void Graph()
     {
-        List<Vector3Int> list = GetComponent<ReservePartitionManager>().GetLocationWithAccess(population);
+        List<Vector3Int> list = GetComponent<ReservePartitionManager>().GetLocationsWithAccess(population);
 
         //set color based on the fraction density/maxdensity
         foreach (Vector3Int pos in list)

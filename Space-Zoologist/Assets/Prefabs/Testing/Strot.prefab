@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3244225895161862598}
   - component: {fileID: 3244225895161862597}
+  - component: {fileID: 3244225895161862596}
   m_Layer: 0
   m_Name: Strot
-  m_TagString: Population
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,3 +82,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3244225895161862596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3244225895161862595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae677deaf40481478862dc03f504dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  species: {fileID: 11400000, guid: 28f1943e1ff85434cb4be2b79e610a2d, type: 2}

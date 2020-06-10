@@ -1,48 +1,71 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PopulationManager : MonoBehaviour
 {
-    private List<Population> populations = new List<Population>();
-    [SerializeField] public NeedSystemManager needSystemManager = default;
+    public List<Population> Populations => populations;
 
-    // For demo
-    public int popListSize { get => this.populations.Count; }
-    // end
+    private List<Population> populations = new List<Population>();
+    [SerializeField] private NeedSystemManager needSystemManager = default;
+    [SerializeField] private GameObject populationGameObject = default;
+    [SerializeField] private ReservePartitionManager rpm = default;
+    [SerializeField] private PopulationDensitySystem populationDensitySystem = default;
+
+    private Dictionary<Population, Dictionary<string, NeedSystem>> populationNeedSystems = new Dictionary<Population, Dictionary<string, NeedSystem>>();
+
 
     private void Start()
     {
-        // Add any populations that existed at start time.
-        this.populations.AddRange(FindObjectsOfType<Population>());
+        // Add Density, atomsphere/tempeture and terrain NeedSystem
+        needSystemManager.AddSystem(new DensityNeedSystem(rpm, FindObjectOfType<PopulationDensitySystem>()));
+        needSystemManager.AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
+        needSystemManager.AddSystem(new TerrianNeedSystem(rpm));
 
-        foreach (Population pop in this.populations)
+        populations.AddRange(FindObjectsOfType<Population>());
+        foreach (Population population in populations)
         {
-            foreach (SpeciesNeed need in pop.Species.Needs)
-            {
-                this.needSystemManager.UpdateSystem(need.Type);
-            }
+            needSystemManager.RegisterPopulationNeeds(population);
+            populationDensitySystem.AddPop(population);
         }
     }
 
     /// <summary>
-    /// Create a new population of the given species at the given origin.
+    /// Create a new population of the given species at the given position.
     /// </summary>
     /// <param name="species">The species of the population</param>
-    /// <param name="origin">The origin point of the population</param>
-    public void CreatePopulation(Species species, Vector2Int origin)
+    /// <param name="position">The origin point of the population</param>
+    public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
-        GameObject gameObject = new GameObject();
-        gameObject.transform.parent = this.transform;
-        gameObject.name = species.SpeciesName;
-        gameObject.AddComponent<Population>();
-        gameObject.GetComponent<Population>().Initialize(species, origin, needSystemManager);
+        GameObject newPopulationGameObject = Instantiate(populationGameObject, position, Quaternion.identity, this.transform);
+        newPopulationGameObject.name = species.SpeciesName;
+        Population population = newPopulationGameObject.GetComponent<Population>();
+        population.Initialize(species, position, count);
+        this.populations.Add(population);
+        needSystemManager.RegisterPopulationNeeds(population);
+        rpm.AddPopulation(population);
+        populationDensitySystem.AddPop(population);
+    }
 
-        // Manually add new pop to list
-        this.populations.Add(gameObject.GetComponent<Population>());
-        foreach (SpeciesNeed need in gameObject.GetComponent<Population>().Species.Needs)
+    /// <summary>
+    /// Add animals to the accessible area containing the given position. If there is already a population, add the animals to it, else create a new population.
+    /// </summary>
+    /// <param name="species">The species of the animals to be added</param>
+    /// <param name="count">The number of animals to add</param>
+    /// <param name="position">The position to add them</param>
+    public void AddAnimals(AnimalSpecies species, int count, Vector3 position)
+    {
+        // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
+
+        List<Population> localPopulations = rpm.GetPopulationsWithAccessTo(position);
+        Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
+        if (preexistingPopulation)
         {
-            this.needSystemManager.UpdateSystem(need.Type);
-        }
+            preexistingPopulation.AddAnimals(count);
+        } // TODO: update systems related to population count change ^
+        else
+        {
+            CreatePopulation(species, count, position);
+        } // TODO: update systems related to new population
     }
 }

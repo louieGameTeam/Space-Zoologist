@@ -7,16 +7,22 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour
 {
-    [SerializeField] private Species species = default;
-    public Species Species { get => species; }
-    public string SpeciesName { get => species.SpeciesName; }
-    private Dictionary<NeedType, float> Needs = new Dictionary<NeedType, float>();
-    public int Count { get; private set; }
-    private Vector2Int origin = Vector2Int.zero;
+    public Dictionary<string, float> NeedsValues => needsValues;
+    public AnimalSpecies Species { get => species; }
+    public int Count => count;
+    public float Dominance => count * species.Dominance;
+
+    [SerializeField] private AnimalSpecies species = default;
+    [SerializeField] private int count = 0;
+    private Dictionary<string, float> needsValues = new Dictionary<string, float>();
+    private Vector2 origin = Vector2.zero;
 
     private void Awake()
     {
-        //this.Initialize(species, Vector2Int.RoundToInt((Vector2) transform.position), FindObjectOfType<NeedSystemManager>());
+        if (this.species)
+        {
+            this.Initialize(species, transform.position, count);
+        }
     }
 
     /// <summary>
@@ -25,21 +31,27 @@ public class Population : MonoBehaviour
     /// <param name="species">The species of the population</param>
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
-    public void Initialize(Species species, Vector2Int origin, NeedSystemManager needSystemManager)
+    public void Initialize(AnimalSpecies species, Vector2 origin, int count)
     {
         this.species = species;
         this.origin = origin;
-        this.Count = 1;
+        this.count = count;
 
-        this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
-        if (needSystemManager)
+        this.transform.position = origin;
+
+        foreach (Need need in species.Needs.Values)
         {
-            foreach (SpeciesNeed need in Species.Needs)
-            {
-                Needs.Add(need.Type, 0);
-                needSystemManager.RegisterPopulation(this, need.Type);
-            }
+            needsValues.Add(need.NeedName, 0);
         }
+    }
+
+    /// <summary>
+    /// Increases the number of animals in the population by the given count.
+    /// </summary>
+    /// <param name="count">The number of animals to add to the population</param>
+    public void AddAnimals(int count)
+    {
+        this.count += count;
     }
 
     /// <summary>
@@ -47,22 +59,11 @@ public class Population : MonoBehaviour
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    public void UpdateNeed(NeedType need, float value)
+    public void UpdateNeed(string need, float value)
     {
-        if (Needs.ContainsKey(need))
-        {
-            Needs[need] += value;
-            // UpdateGrowthConditions();
-        }
-        else
-        {
-            Debug.Log("Need not found");
-        }
-    }
-
-    public void ResetNeed(NeedType need)
-    {
-        Needs[need] = 0f;
+        Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        needsValues[need] = value;
+        // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }
 
     /// <summary>
@@ -70,18 +71,12 @@ public class Population : MonoBehaviour
     /// </summary>
     /// <param name="need">The need to get the value of</param>
     /// <returns></returns>
-    public float GetNeedValue(NeedType need)
+    public float GetNeedValue(string need)
     {
-        if (!Needs.ContainsKey(need))
-        {
-            Debug.Log($"Tried to access nonexistent need '{need}' in a { SpeciesName } population");
-            return -1; // To indict not find
-        }
-
-        return Needs[need];
+        Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        return needsValues[need];
     }
 
-    // TODO: Implement
     /// <summary>
     /// Gets need conditions for each need based on the current values and sends them along with the need's severity to the growth formula system.
     /// </summary>

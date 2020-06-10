@@ -6,14 +6,14 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// A manager for calculating the population density of each population.
 /// </summary>
-public class PopDensityManager : MonoBehaviour
+public class PopulationDensitySystem : MonoBehaviour
 {
     //singleton
-    public static PopDensityManager ins;
+    public static PopulationDensitySystem ins;
 
 
     //for easy access, equivalent to ReservePartitionManager.ins
-    ReservePartitionManager rpm;
+    [SerializeField] private ReservePartitionManager rpm = default;
 
     //Dictionary<ID, population> initialized from rpm
     Dictionary<int, Population> popsByID;
@@ -37,7 +37,7 @@ public class PopDensityManager : MonoBehaviour
         {
             ins = this;
         }
-        rpm = ReservePartitionManager.ins;
+        //rpm = FindObjectOfType<ReservePartitionManager>();
         popsByID = new Dictionary<int, Population>();
         spaces = new Dictionary<Population, int>();
         popDensityMap = new Dictionary<Vector3Int, long>();
@@ -61,20 +61,20 @@ public class PopDensityManager : MonoBehaviour
 
     public void AddPop(Population pop)
     {
-        if (!rpm.Pops.Contains(pop))
+        if (!rpm.Populations.Contains(pop))
         {
             Debug.LogError("Population " + pop.name + " is not a part of RPM!");
             return;
         }
         else
         {
-            popsByID.Add(rpm.PopToID[pop], pop);
+            popsByID.Add(rpm.PopulationToID[pop], pop);
             GenerateDensityMap(pop);
         }
     }
     public void RemovePop(Population pop)
     {
-        popsByID.Remove(rpm.PopToID[pop]);
+        popsByID.Remove(rpm.PopulationToID[pop]);
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public class PopDensityManager : MonoBehaviour
                 if (popsByID.ContainsKey(i) && ((popDensityMap[pos] >> i) & 1L) == 1L)
                 {
                     Population cur = popsByID[i];
-                    print(cur.Species.Size * cur.Count / spaces[cur]);
+                    //print(cur.Species.Size * cur.Count / spaces[cur]);
                     //weight per tile
                     density += cur.Species.Size * cur.Count / spaces[cur];
                 }
@@ -132,7 +132,7 @@ public class PopDensityManager : MonoBehaviour
     {
         popDensityMap = new Dictionary<Vector3Int, long>();
 
-        List<Population> pops = rpm.Pops;
+        List<Population> pops = rpm.Populations;
 
         foreach (Population pop in pops)
         {
@@ -151,7 +151,7 @@ public class PopDensityManager : MonoBehaviour
         Vector3Int cur;
 
         //starting location
-        Vector3Int location = rpm.WorldToCell(pop.transform.position);
+        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
         stack.Push(location);
 
         //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
@@ -174,11 +174,11 @@ public class PopDensityManager : MonoBehaviour
                 space++;
                 if (popDensityMap.ContainsKey(cur))
                 {
-                    popDensityMap[cur] |= 1L << rpm.PopToID[pop];
+                    popDensityMap[cur] |= 1L << rpm.PopulationToID[pop];
                 }
                 else
                 {
-                    popDensityMap.Add(cur, 1L << rpm.PopToID[pop]);
+                    popDensityMap.Add(cur, 1L << rpm.PopulationToID[pop]);
                 }
 
                 //check all 4 tiles around, may be too expensive/awaiting optimization
@@ -202,7 +202,7 @@ public class PopDensityManager : MonoBehaviour
     public float GetDensityScore(Population pop)
     {
         //not initialized
-        if (!rpm.Pops.Contains(pop))
+        if (!rpm.Populations.Contains(pop))
             return -1;
 
 
@@ -215,7 +215,7 @@ public class PopDensityManager : MonoBehaviour
         Vector3Int cur;
 
         //starting location
-        Vector3Int location = rpm.WorldToCell(pop.transform.position);
+        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
         stack.Push(location);
 
         //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
