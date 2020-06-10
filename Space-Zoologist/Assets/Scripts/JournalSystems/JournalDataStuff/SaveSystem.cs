@@ -7,8 +7,8 @@ public static class SaveSystem {
     public static void SaveJournal(JournalData journal)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Path.Combine("/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/JournalSystems/JournalDataStuff", "journal.bin");
-        using (FileStream stream = new FileStream(path, FileMode.Append))
+        string path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "journal.bin");
+        using (FileStream stream = File.Open(path, FileMode.Create))
         {
             JournalData data = new JournalData(journal);
             formatter.Serialize(stream, data);
@@ -18,7 +18,7 @@ public static class SaveSystem {
 
     public static JournalData LoadJournal()
     {
-        string path = Path.Combine("/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/JournalSystems/JournalDataStuff", "journal.bin");
+        string path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "journal.bin");
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();

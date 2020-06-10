@@ -35,13 +35,12 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
         }  
     }
 
-    // Add discovered needs and update NeedData's reference to saved descriptions
+    // Add discovered needs and update's reference to saved descriptions
     public void SetupSelectedSpeciesNeeds(GameObject species)
     {
         this.ClearPreviousChanges();
         SpeciesJournalData speciesData = species.GetComponent<SpeciesJournalData>();
         this.SelectedSpeciesJournalData = speciesData.JournalEntry;
-
         int i = 0;
         foreach(var needToDisplay in speciesData.JournalEntry.DiscoveredNeeds)
         {
@@ -155,7 +154,7 @@ public class NeedsSectionManager : MonoBehaviour, ISetupSelectable
     {
         foreach(Toggle entry in this.m_Toggles)
         {
-            if (entry.isOn)
+            if (entry.isOn && entry.gameObject.activeSelf)
             {
                 return entry.gameObject;
             }

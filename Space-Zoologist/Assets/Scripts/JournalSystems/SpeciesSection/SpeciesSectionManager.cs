@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// Add new entries and search for existing ones
 /// </summary>
-/// TODO figure out how to ensure JournalEntries is updated before saving
 public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] private GameObject SpeciesDisplayPrefab = default;
@@ -115,16 +114,11 @@ public class SpeciesSectionManager : MonoBehaviour, ISetupSelectable
 
     void OnApplicationQuit()
     {
+        Debug.Log("Saving data");
         foreach(GameObject entries in this.JournalEntriesDisplay)
         {
             JournalEntry a = entries.GetComponent<SpeciesJournalData>().JournalEntry;
             this.JournalEntries.Entries[a.DiscoveredSpecies] = a;
-            Debug.Log(a.DiscoveredSpecies);
-            foreach (var item in this.JournalEntries.Entries[a.DiscoveredSpecies].DiscoveredNeeds)
-            {
-                Debug.Log(item.Value.NeedName);
-                Debug.Log(item.Value.NeedDescription);
-            }
         }
         SaveSystem.SaveJournal(this.JournalEntries);
     }

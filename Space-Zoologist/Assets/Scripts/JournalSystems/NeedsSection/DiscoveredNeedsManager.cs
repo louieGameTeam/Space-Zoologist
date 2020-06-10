@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Very similar to Species Popup Manager
-// TODO fix visual display issues
 public class DiscoveredNeedsManager : MonoBehaviour, ISetupSelectable
 {
     [SerializeField] GameObject NeedsDiscoveredContent = default;
@@ -13,10 +12,13 @@ public class DiscoveredNeedsManager : MonoBehaviour, ISetupSelectable
     [Header("RemoveSelfFromList and whatever else should happen")]
     public ItemSelectedEvent NeedSelected = new ItemSelectedEvent();
     private List<GameObject> DiscoveredNeeds = new List<GameObject>();
+    private GameObject EntrySelected = default;
 
+    // Disabled on startup
     public void Start()
     {
         this.AddDiscoveredNeeds();
+        this.gameObject.SetActive(false);
     }
 
     public void AddDiscoveredNeeds()
@@ -38,9 +40,14 @@ public class DiscoveredNeedsManager : MonoBehaviour, ISetupSelectable
         item.GetComponent<SelectableCanvasImage>().SetupItemSelectedHandler(action);
     }
 
+    public void FilterPotentialNeeds()
+    {
+        this.FilterPotentialNeeds(this.EntrySelected);
+    }
     // If need already added as need in species journal data, don't show it as a need that can be added
     public void FilterPotentialNeeds(GameObject speciesSelected)
     {
+        this.EntrySelected = speciesSelected;
         JournalEntry speciesJournalData = speciesSelected.GetComponent<SpeciesJournalData>().JournalEntry;
         foreach(GameObject need in this.DiscoveredNeeds)
         {
