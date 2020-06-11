@@ -32,13 +32,11 @@ public class TileSystem : MonoBehaviour
     public TerrainTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
         SortedDictionary<int, TerrainTile> existingTiles = new SortedDictionary<int, TerrainTile>();
-
         foreach (Tilemap tilemap in tilemaps)
         {
-            Debug.Log(tilemap.GetTile(cellLocation));
-            TerrainTile tileOnLayer = (TerrainTile)tilemap.GetTile(cellLocation);
-            if (tileOnLayer != null)
-            {
+            var returnedTile = tilemap.GetTile(cellLocation);
+            if (returnedTile != null && returnedTile.GetType().Equals(typeof(TerrainTile))) {
+                TerrainTile tileOnLayer = (TerrainTile)returnedTile;
                 if (tileOnLayer.isRepresentative)
                 {
                     existingTiles.Add(tileOnLayer.priority, tileOnLayer);
