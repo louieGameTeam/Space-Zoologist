@@ -17,11 +17,14 @@ public class AtmoshpereNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
+        enclosureSystem.FindEnclosedAreas();
+
         foreach (Population population in populations)
         {
             // Get the atmospheric composition of a population 
             AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(Vector3Int.FloorToInt(population.transform.position));
 
+            // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
             float[] composition = atmosphericComposition.GeComposition();
             Debug.Log(composition);
 

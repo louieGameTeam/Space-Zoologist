@@ -8,10 +8,10 @@ public class LevelData : ScriptableObject
     public List<FoodSourceSpecies> FoodSourceSpecies => foodSources;
     public List<AnimalSpecies> AnimalSpecies => animalSpecies;
     public List<StoreItem> StoreItems => storeItems;
-    public List<AtmosphericComposition> AtmosphericCompositions => atmosphericCompositions;
+    public AtmosphericComposition GlobalAtmosphere => globalAtmosphere;
 
     [SerializeField] private List<FoodSourceSpecies> foodSources = default;
     [SerializeField] private List<AnimalSpecies> animalSpecies = default;
     [SerializeField] private List<StoreItem> storeItems = default;
-    [SerializeField] private List<AtmosphericComposition> atmosphericCompositions;
+    [SerializeField] private AtmosphericComposition globalAtmosphere = new AtmosphericComposition(1,2,3,90);
 }

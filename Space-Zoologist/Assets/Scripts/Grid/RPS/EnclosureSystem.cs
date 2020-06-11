@@ -24,11 +24,12 @@ public class AtmosphericComposition
         gasX = gasY = gasZ = temperature = 0;
     }
 
-    public AtmosphericComposition(float _gasX, float _gasY, float _gasZ, float temperature)
+    public AtmosphericComposition(float _gasX, float _gasY, float _gasZ, float _temperature)
     {
         gasX = _gasX;
         gasY = _gasY;
         gasZ = _gasZ;
+        temperature = _temperature;
     }
 
     public AtmosphericComposition(AtmosphericComposition from)
@@ -74,6 +75,9 @@ public class EnclosureSystem : MonoBehaviour
 
     TileSystem _tileSystem; // GetTerrainTile API from Virgil
 
+    // To read global atmoshpere
+    [SerializeField] private LevelData levelData = default;
+
     // Have enclosed area been initialized?
     bool initialized = false;
 
@@ -99,7 +103,7 @@ public class EnclosureSystem : MonoBehaviour
 
         PositionToAtmosphere = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
-        GlobalAtmosphere = new AtmosphericComposition();
+        GlobalAtmosphere = levelData.GlobalAtmosphere;
         _tileSystem = FindObjectOfType<TileSystem>();
     }
 

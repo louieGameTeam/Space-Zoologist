@@ -33,6 +33,9 @@ public class TerrianNeedSystem : NeedSystem
     }
 }
 
+/// <summary>
+/// To use .WithIdex
+/// </summary>
 public static class ForeachExtension
 {
     public static  IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self)
