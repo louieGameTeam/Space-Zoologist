@@ -15,7 +15,7 @@ public class AtmosphereTester : MonoBehaviour
 
     private void UpdateAtmosphere()
     {
-        GetComponent<EnclosureSystem>().UpdateSurroundingAtmosphere(-8,-10,111,118);
+        GetComponent<EnclosureSystem>().FindEnclosedAreas();
         Graph();
     }
 

@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class DummyPop {
-    public int population = 100;
-}
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// A manager for managing how the reserve is "separated" for each population.
@@ -13,6 +10,12 @@ public class DummyRPS : MonoBehaviour
 {
     // Singleton
     public static DummyRPS ins;
+
+    TileType[,] map;
+
+    public const int mapsize = 100;
+
+    public Tilemap tilemap;
 
     // Maximum number of populations allowed
     public const int maxPopulation = 64;
@@ -49,7 +52,7 @@ public class DummyRPS : MonoBehaviour
     {
         // Variable initializations
         if (ins != null && this != ins)
-        {
+         {
             Destroy(this);
         }
         else
@@ -71,6 +74,16 @@ public class DummyRPS : MonoBehaviour
         Spaces = new Dictionary<Population, int>();
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
+
+        // Generate a map full of dirt
+        map = new TileType[mapsize, mapsize];
+        for (int i = 0; i < mapsize; i++)
+        {
+            for (int j = 0; j < mapsize; j++)
+            {
+                map[i, j] = TileType.Dirt;
+            }
+        }
     }
 
     private void Start()
@@ -158,10 +171,8 @@ public class DummyRPS : MonoBehaviour
         long[] SharedTiles = new long[maxPopulation];
 
         // starting location
-        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
+        Vector3Int location = tilemap.WorldToCell(population.transform.position);
         stack.Push(location);
-
-        TileSystem _tileSystem = FindObjectOfType<TileSystem>();
 
         // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
         while (stack.Count > 0)
@@ -169,20 +180,20 @@ public class DummyRPS : MonoBehaviour
             // next point
             cur = stack.Pop();
 
-            if (accessible.Contains(cur) || unaccessible.Contains(cur))
+            if (accessible.Contains(cur) || unaccessible.Contains(cur)|| cur.x < 0 || cur.y < 0 || cur.x >= mapsize || cur.y >= mapsize)
             {
                 // checked before, move on
                 continue;
             }
 
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
-            TerrainTile tile = _tileSystem.GetTerrainTileAtLocation(cur);
-            if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
+            TileType tiletype = map[cur.x,cur.y];
+            if (population.Species.AccessibleTerrain.Contains(tiletype))
             {
                 // save the accessible location
                 accessible.Add(cur);
 
-                TypesOfTerrain[population][(int)tile.type]++;
+                TypesOfTerrain[population][(int)tiletype]++;
 
                 if (!AccessMap.ContainsKey(cur))
                 {
@@ -304,7 +315,7 @@ public class DummyRPS : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+        Vector3Int mapPos = tilemap.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -333,7 +344,7 @@ public class DummyRPS : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+        Vector3Int cellPos = tilemap.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)

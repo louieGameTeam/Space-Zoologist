@@ -188,6 +188,7 @@ public class ReservePartitionManager : MonoBehaviour
                 AccessMap[cur] |= 1L << PopulationToID[population];
 
                 // Collect info on how the population's space overlaps with others
+                // ~ 20% of algorithm cost
                 for (int i = 0; i < Populations.Count; i++)
                 {
                     SharedTiles[i] += (AccessMap[cur] >> PopulationToID[Populations[i]]) & 1L;
