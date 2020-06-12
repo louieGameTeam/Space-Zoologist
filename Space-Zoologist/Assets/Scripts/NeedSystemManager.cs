@@ -51,12 +51,20 @@ public class NeedSystemManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Temporary update for the density, terrain and atmpshpere need system 
+    /// Update all the need system that is mark "dirty"
     /// </summary>
     public void UpdateSystems()
     {
-        systems["Density"].UpdateSystem();
-        systems["Terrian"].UpdateSystem();
-        systems["Atmoshpere"].UpdateSystem();
+        // Systems should only update when the state is "dirty"
+        foreach (KeyValuePair<string, NeedSystem> entry in systems)
+        {
+            NeedSystem system = entry.Value;
+
+            if(system.isDirty)
+            {
+                system.UpdateSystem();
+                //Debug.Log(String.Format("Updating {0}", system.NeedName));
+            }
+        }
     }
 }

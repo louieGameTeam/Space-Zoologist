@@ -27,7 +27,6 @@ public class NeedSystemsTester : MonoBehaviour
 
     void Start()
     {
-
         rpm.UpdateAccessMap();
         foodSourceManager.UpdateFoodSources();
     }

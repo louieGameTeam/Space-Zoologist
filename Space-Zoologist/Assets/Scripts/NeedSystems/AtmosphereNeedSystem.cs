@@ -26,8 +26,7 @@ public class AtmoshpereNeedSystem : NeedSystem
 
             // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
             float[] composition = atmosphericComposition.GeComposition();
-            Debug.Log(composition);
-
+            
             foreach (var (value, index) in composition.WithIndex())
             {
                 string needName = ((AtmoshpereComponent)index).ToString();

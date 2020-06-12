@@ -10,7 +10,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GameObject populationGameObject = default;
     [SerializeField] private ReservePartitionManager rpm = default;
-    [SerializeField] private PopulationDensitySystem populationDensitySystem = default;
+    //[SerializeField] private PopulationDensitySystem populationDensitySystem = default;
 
     private Dictionary<Population, Dictionary<string, NeedSystem>> populationNeedSystems = new Dictionary<Population, Dictionary<string, NeedSystem>>();
 
@@ -18,7 +18,7 @@ public class PopulationManager : MonoBehaviour
     private void Start()
     {
         // Add Density, atomsphere/tempeture and terrain NeedSystem
-        needSystemManager.AddSystem(new DensityNeedSystem(rpm, FindObjectOfType<PopulationDensitySystem>()));
+        needSystemManager.AddSystem(new DensityNeedSystem(rpm, FindObjectOfType<TileSystem>()));
         needSystemManager.AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
         needSystemManager.AddSystem(new TerrianNeedSystem(rpm));
 
@@ -26,7 +26,7 @@ public class PopulationManager : MonoBehaviour
         foreach (Population population in populations)
         {
             needSystemManager.RegisterPopulationNeeds(population);
-            populationDensitySystem.AddPop(population);
+            //populationDensitySystem.AddPop(population);
         }
     }
 
@@ -42,9 +42,9 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.Initialize(species, position, count);
         this.populations.Add(population);
-        needSystemManager.RegisterPopulationNeeds(population);
         rpm.AddPopulation(population);
-        populationDensitySystem.AddPop(population);
+        needSystemManager.RegisterPopulationNeeds(population);
+        //populationDensitySystem.AddPop(population);
     }
 
     /// <summary>

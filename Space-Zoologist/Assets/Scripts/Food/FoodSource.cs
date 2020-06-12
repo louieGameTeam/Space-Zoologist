@@ -11,6 +11,9 @@ public class FoodSource: MonoBehaviour
     public float FoodOutput => species.BaseOutput;// CalculateOutput(); // ---------------------------Testing, change back later
     public Vector2 Position { get; private set; } = Vector2.zero;
 
+    // Food source's environmental needs
+    private Dictionary<string, float> needsValues = new Dictionary<string, float>();
+
     [SerializeField] private FoodSourceSpecies species = default;
 
     private float neutralMultiplier = 0.5f;
@@ -65,8 +68,20 @@ public class FoodSource: MonoBehaviour
                     break;
             }
             float needSeverity = species.Needs[needType].Severity;
-            output += multiplier + (needSeverity / severityTotal) * species.BaseOutput;
+            output += multiplier * (needSeverity / severityTotal) * species.BaseOutput;
         }
         return output;
+    }
+
+    /// <summary>
+    /// Update the given need of the population with the given value.
+    /// </summary>
+    /// <param name="need">The need to update</param>
+    /// <param name="value">The need's new value</param>
+    public void UpdateNeed(string need, float value)
+    {
+        Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        needsValues[need] = value;
+        // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }
 }

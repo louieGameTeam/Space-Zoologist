@@ -538,8 +538,8 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         Atmospheres = newAtmospheres;
-        print("Number of Atmospheres = " + Atmospheres.Count);
-        print("Detected Number of Atmospheres = " + atmNum);
+        //print("Number of Atmospheres = " + Atmospheres.Count);
+        //print("Detected Number of Atmospheres = " + atmNum);
         initialized = true;
     }
 }

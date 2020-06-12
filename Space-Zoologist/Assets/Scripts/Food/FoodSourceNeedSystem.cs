@@ -109,6 +109,9 @@ public class FoodSourceNeedSystem : NeedSystem
             float amountAcquiredPerIndividual = foodAcquired / population.Count;
             population.UpdateNeed(this.NeedName, amountAcquiredPerIndividual);
         }
+
+        // Done update not dirty any more
+        isDirty = false;
     }
 
     public void AddFoodSource(FoodSource foodSource)
