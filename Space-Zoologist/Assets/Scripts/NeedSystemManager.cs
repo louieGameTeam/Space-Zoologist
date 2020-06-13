@@ -10,6 +10,17 @@ public class NeedSystemManager : MonoBehaviour
 {
     private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
 
+    /// <summary>
+    /// Initialize the universal need systems
+    /// </summary>
+    private void Awake()
+    {
+        // Add Density, atomsphere/tempeture and terrain NeedSystem
+        AddSystem(new DensityNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+        AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
+        AddSystem(new TerrianNeedSystem(FindObjectOfType<ReservePartitionManager>()));
+    }
+
     public void RegisterPopulationNeeds(Population population)
     {
         foreach (Need need in population.Species.Needs.Values)

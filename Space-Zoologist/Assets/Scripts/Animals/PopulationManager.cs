@@ -17,16 +17,10 @@ public class PopulationManager : MonoBehaviour
 
     private void Start()
     {
-        // Add Density, atomsphere/tempeture and terrain NeedSystem
-        needSystemManager.AddSystem(new DensityNeedSystem(rpm, FindObjectOfType<TileSystem>()));
-        needSystemManager.AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
-        needSystemManager.AddSystem(new TerrianNeedSystem(rpm));
-
         populations.AddRange(FindObjectsOfType<Population>());
         foreach (Population population in populations)
         {
             needSystemManager.RegisterPopulationNeeds(population);
-            //populationDensitySystem.AddPop(population);
         }
     }
 
@@ -44,7 +38,6 @@ public class PopulationManager : MonoBehaviour
         this.populations.Add(population);
         rpm.AddPopulation(population);
         needSystemManager.RegisterPopulationNeeds(population);
-        //populationDensitySystem.AddPop(population);
     }
 
     /// <summary>
