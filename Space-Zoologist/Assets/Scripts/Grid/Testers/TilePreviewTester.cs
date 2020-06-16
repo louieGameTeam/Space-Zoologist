@@ -60,5 +60,6 @@ public class TilePreviewTester : MonoBehaviour
         {
             tilePlacementController.isBlockMode = !tilePlacementController.isBlockMode;
         }
+        //Debug.Log(tilePlacementController.PlacedTileCount());
     }
 }
