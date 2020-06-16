@@ -7,9 +7,9 @@ public enum TileType { Stone, Sand, Dirt, Grass, Liquid };
 [CreateAssetMenu]
 public class TerrainTile : RuleTile<TerrainTile.Neighbor> 
 {
-	public Tilemap targetTilemap;
-	public List<Tilemap> replacementTilemap;
-	public List<Tilemap> constraintTilemap;
+	[HideInInspector] public Tilemap targetTilemap;
+	[HideInInspector] public List<Tilemap> replacementTilemap;
+	[HideInInspector] public List<Tilemap> constraintTilemap;
 	public TileType type;
 	public GridUtils.TileLayer targetLayer;
 	public List<GridUtils.TileLayer> replacementLayers;
@@ -26,7 +26,7 @@ public class TerrainTile : RuleTile<TerrainTile.Neighbor>
 	{
 		switch (neighbor)
 		{
-			case Neighbor.Other: return other != null;
+			case Neighbor.Other: return other == this || other == null;
 			case Neighbor.Any: return other == this || other != null;
 		}
 		return base.RuleMatch(neighbor, other);

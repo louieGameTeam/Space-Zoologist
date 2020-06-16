@@ -33,10 +33,10 @@ public class TilePlacementController : MonoBehaviour
 
     private void Awake()
     {
-        terrainTiles = Resources.LoadAll("Tiles",typeof(TerrainTile)).Cast<TerrainTile>().ToArray();
+        terrainTiles = Resources.LoadAll("Tiles",typeof(TerrainTile)).Cast<TerrainTile>().ToArray(); // Load tiles form resources
         tileSystem = FindObjectOfType<TileSystem>();
         grid = GetComponent<Grid>();
-        foreach (TerrainTile terrainTile in terrainTiles)
+        foreach (TerrainTile terrainTile in terrainTiles)// Construct list of tiles and their corresponding layers
         {
             terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
             terrainTile.constraintTilemap.Clear();
@@ -50,7 +50,7 @@ public class TilePlacementController : MonoBehaviour
                 terrainTile.replacementTilemap.Add(tilemaps[(int)layer]);
             }
         }
-        foreach (Tilemap tilemap in tilemaps)
+        foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
             if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
             {
@@ -68,7 +68,7 @@ public class TilePlacementController : MonoBehaviour
 
     void Update()
     {
-        if (isPreviewing)
+        if (isPreviewing) // Update for preview
         {
             Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
             currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
@@ -90,7 +90,7 @@ public class TilePlacementController : MonoBehaviour
     public void StartPreview(TileType newTile)
     {
         isPreviewing = true;
-        foreach(TerrainTile tile in terrainTiles)
+        foreach(TerrainTile tile in terrainTiles) // Assign tiles to be added
         {
             if (tile.type == newTile)
             {
@@ -123,6 +123,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
+        // Clear all dics
         referencedTiles.Clear();
         removedTileColors.Clear();
         addedTiles.Clear();
@@ -134,7 +135,7 @@ public class TilePlacementController : MonoBehaviour
         return addedTiles.Count();
     }
 
-    public void RevertChanges()
+    public void RevertChanges() // Go through each change and revert back to original
     {
         foreach (Vector3Int changedTileLocation in triedToPlaceTiles)
         {
@@ -174,7 +175,7 @@ public class TilePlacementController : MonoBehaviour
         StopPreview();
     }
 
-    public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles)
+    public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles) // Update color for linked tiles.
     {
         foreach (TerrainTile tile in referencedTiles)
         {
@@ -205,7 +206,7 @@ public class TilePlacementController : MonoBehaviour
             PlaceTile(currentMouseCellPosition);
             return;
         }
-        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile))
+        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill gaps
         {
             if (currentMouseCellPosition.x == lastPlacedTile.x)// Handles divide by zero exception
             {
@@ -326,7 +327,7 @@ public class TilePlacementController : MonoBehaviour
         return false;
     }
 
-    private bool PlaceTile(Vector3Int cellLocation, bool checkPlacable = true)
+    private bool PlaceTile(Vector3Int cellLocation, bool checkPlacable = true) //Main function controls tile placement
     {
         if (IsPlacable(cellLocation) || !checkPlacable)
         {
