@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: AridBush
   m_EditorClassIdentifier: 
   speciesName: AridBush
-  needs:
-  - {fileID: 0}
-  rootRadius: 0
+  rootRadius: 3
   baseOutput: 20
+  needsList:
+  - {fileID: 11400000, guid: d81198ac431e346dfb7f17f196782e7e, type: 2}
+  - {fileID: 11400000, guid: 26504452d447e4321b342bd5324e985d, type: 2}
+  - {fileID: 11400000, guid: 9c71b37dbd70644b79c6af24c8756e26, type: 2}
+  - {fileID: 11400000, guid: 3edddd341f53e473d8124a92698f08bd, type: 2}
+  - {fileID: 11400000, guid: d97e3d3f39e2a4977bb0f71ebfb1cce4, type: 2}

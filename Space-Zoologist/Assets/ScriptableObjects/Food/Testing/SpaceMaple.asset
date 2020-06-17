@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: SpaceMaple
   m_EditorClassIdentifier: 
   speciesName: SpaceMaple
-  needs:
-  - {fileID: 0}
-  rootRadius: 0
+  rootRadius: 3
   baseOutput: 10
+  needsList:
+  - {fileID: 11400000, guid: d81198ac431e346dfb7f17f196782e7e, type: 2}
+  - {fileID: 11400000, guid: 26504452d447e4321b342bd5324e985d, type: 2}
+  - {fileID: 11400000, guid: 9c71b37dbd70644b79c6af24c8756e26, type: 2}
+  - {fileID: 11400000, guid: 3edddd341f53e473d8124a92698f08bd, type: 2}

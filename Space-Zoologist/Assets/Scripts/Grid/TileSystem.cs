@@ -330,7 +330,10 @@ public class TileSystem : MonoBehaviour
                 scanLocation.y = y;
 
                 TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
-                typesOfTileWithinRadius[(int)tile.type]++;
+                if (tile)
+                {
+                    typesOfTileWithinRadius[(int)tile.type]++;
+                }
             }
         }
         return typesOfTileWithinRadius;

@@ -18,37 +18,41 @@ public class NeedSystemManager : MonoBehaviour
         // Add Density, atomsphere/tempeture and terrain NeedSystem
         AddSystem(new DensityNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
         AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
-        AddSystem(new TerrianNeedSystem(FindObjectOfType<ReservePartitionManager>()));
+        AddSystem(new TerrianNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
     }
 
-    public void RegisterPopulationNeeds(Population population)
+    /// <summary>
+    /// Register a Population or FoodSource with the systems using the strings need names.b
+    /// </summary>
+    /// <param name="life">This could be a Population or FoodSource since they both inherit from Life</param>
+    public void RegisterWithNeedSystems(Life life)
     {
-        foreach (Need need in population.Species.Needs.Values)
+        foreach (string need in life.NeedsValues.Keys)
         {
             // Check if need is a atmoshpere or a terrian need
-            if (Enum.IsDefined(typeof(AtmoshpereComponent), need.NeedName))
+            if (Enum.IsDefined(typeof(AtmoshpereComponent), need))
             {
-                systems["Atmoshpere"].AddPopulation(population);
+                systems["Atmoshpere"].AddPopulation(life);
             }
-            else if (Enum.IsDefined(typeof(TileType), need.NeedName))
+            else if (Enum.IsDefined(typeof(TileType), need))
             {
-                systems["Terrian"].AddPopulation(population);
+                systems["Terrian"].AddPopulation(life);
             }
             else
             {
                 // Foodsource need here
-                Debug.Assert(systems.ContainsKey(need.NeedName), $"No { need.NeedName } system");
-                systems[need.NeedName].AddPopulation(population);
+                Debug.Assert(systems.ContainsKey(need), $"No { need } system");
+                systems[need].AddPopulation(life);
             }
         }
     }
 
-    public void UnregisterPopulationNeeds(Population population)
+    public void UnregisterPopulationNeeds(Life life)
     {
-        foreach (Need need in population.Species.Needs.Values)
+        foreach (string need in life.NeedsValues.Keys)
         {
-            Debug.Assert(systems.ContainsKey(need.NeedName));
-            systems[need.NeedName].RemovePopulation(population);
+            Debug.Assert(systems.ContainsKey(need));
+            systems[need].RemovePopulation(life);
         }
     }
 

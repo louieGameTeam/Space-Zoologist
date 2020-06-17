@@ -2,28 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class FoodSource: MonoBehaviour
+/// <summary>
+/// A runtime instance of a food source
+/// </summary>
+public class FoodSource: Life
 {
     public FoodSourceSpecies Species => species;
-    public Dictionary<string, float> needValues = new Dictionary<string, float>();
-    public float FoodOutput => species.BaseOutput;// CalculateOutput(); // ---------------------------Testing, change back later
+    public float FoodOutput => CalculateOutput();
     public Vector2 Position { get; private set; } = Vector2.zero;
-
-    // Food source's environmental needs
-    private Dictionary<string, float> needsValues = new Dictionary<string, float>();
 
     [SerializeField] private FoodSourceSpecies species = default;
 
     private float neutralMultiplier = 0.5f;
     private float goodMultiplier = 1.0f;
 
-    private void Start()
+    private void Awake()
     {
         if (species)
         {
-            InitializeNeedValues();
+            InitializeFoodSource(species,transform.position);
         }
     }
 
@@ -37,7 +34,7 @@ public class FoodSource: MonoBehaviour
     private void InitializeNeedValues()
     {
         foreach (string needType in species.Needs.Keys) {
-            needValues.Add(needType, 0);
+            needsValues.Add(needType, 0);
         }
     }
 
@@ -49,7 +46,7 @@ public class FoodSource: MonoBehaviour
         {
             severityTotal += need.Severity;
         }
-        foreach (KeyValuePair<string, float> needValuePair in needValues)
+        foreach (KeyValuePair<string, float> needValuePair in needsValues)
         {
             string needType = needValuePair.Key;
             float needValue = needValuePair.Value;
@@ -78,7 +75,7 @@ public class FoodSource: MonoBehaviour
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    public void UpdateNeed(string need, float value)
+    public override void UpdateNeed(string need, float value)
     {
         Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         needsValues[need] = value;

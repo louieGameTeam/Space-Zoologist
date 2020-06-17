@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A runtime instance of a species.
+/// A runtime instance of a population.
 /// </summary>
-public class Population : MonoBehaviour
+public class Population : Life
 {
-    public Dictionary<string, float> NeedsValues => needsValues;
     public AnimalSpecies Species { get => species; }
     public int Count => count;
     public float Dominance => count * species.Dominance;
 
     [SerializeField] private AnimalSpecies species = default;
     [SerializeField] private int count = 0;
-    private Dictionary<string, float> needsValues = new Dictionary<string, float>();
     private Vector2 origin = Vector2.zero;
 
     private void Awake()
@@ -59,7 +57,7 @@ public class Population : MonoBehaviour
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    public void UpdateNeed(string need, float value)
+    public override void UpdateNeed(string need, float value)
     {
         Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         needsValues[need] = value;

@@ -11,16 +11,17 @@ public class FoodSourceSpecies : ScriptableObject
     public int BaseOutput => baseOutput;
 
     [SerializeField] private string speciesName = default;
-    //[SerializeField] private List<Need> needs = default;
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int baseOutput = default;
     [SerializeField] private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    [SerializeField] private List<Need> needsList = default;
+
 
     private void OnEnable()
     {
-        //foreach (Need need in needs)
-        //{
-        //    //Needs.Add(need.NeedName, need); // TODO: Setup food source need sytem
-        //}
+        foreach (Need need in needsList)
+        {
+            Needs.Add(need.NeedName, need); // TODO: Setup food source need sytem
+        }
     }
 }

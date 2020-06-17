@@ -18,6 +18,7 @@ public class NeedSystemsTester : MonoBehaviour
     [SerializeField] private ReservePartitionManager rpm = default;
 
     [SerializeField] private Text populationStats = default;
+    [SerializeField] private Text foodSourceStats = default;
 
     [SerializeField] private List<AnimalSpecies> availableSpecies = null;
     [SerializeField] private List<FoodSourceSpecies> availableFoodSourceSpecies = null;
@@ -45,8 +46,8 @@ public class NeedSystemsTester : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            foodSourceManager.UpdateFoodSources();
             needSystemManager.UpdateSystems();
+            foodSourceManager.UpdateFoodSources();
         }
 
         if (Input.GetKeyUp(KeyCode.UpArrow))
@@ -66,5 +67,17 @@ public class NeedSystemsTester : MonoBehaviour
             populationStatsText += "\n";
         }
         populationStats.text = populationStatsText;
+
+        string foodSourceStatsText = "";
+        foreach (FoodSource foodSource in foodSourceManager.FoodSources)
+        {
+            foodSourceStatsText += $"***{ foodSource.Species.SpeciesName }; Food output: {foodSource.FoodOutput}***\n";
+            foreach (KeyValuePair<string, float> needValue in foodSource.NeedsValues)
+            {
+                foodSourceStatsText += $"- {needValue.Key}: { needValue.Value } -- Condition: {foodSource.Species.Needs[needValue.Key].GetCondition(needValue.Value)}\n";
+            }
+            foodSourceStatsText += "\n";
+        }
+        foodSourceStats.text = foodSourceStatsText;
     }
 }

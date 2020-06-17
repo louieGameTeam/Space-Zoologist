@@ -11,35 +11,23 @@ abstract public class NeedSystem
 {
     public string NeedName { get; private set; }
     public bool isDirty = default;
-    protected List<Population> populations = new List<Population>();
-    protected List<FoodSource> foodSources = new List<FoodSource>();
+    protected List<Life> lives = new List<Life>();
 
     public NeedSystem(string needName)
     {
         NeedName = needName;
     }
 
-    virtual public void AddPopulation(Population population)
+    virtual public void AddPopulation(Life life)
     {
         isDirty = true;
-        populations.Add(population);
+        lives.Add(life);
     }
 
-    virtual public bool RemovePopulation(Population population)
+    virtual public bool RemovePopulation(Life life)
     {
         isDirty = true;
-        return populations.Remove(population);
-    }
-
-    virtual public void AddFoodSource(FoodSource foodSource)
-    {
-        foodSources.Add(foodSource);
-        isDirty = true;
-    }
-
-    virtual public bool RemoveFoodSource(FoodSource foodSource)
-    {
-        return foodSources.Remove(foodSource);
+        return lives.Remove(life);
     }
 
     abstract public void UpdateSystem();

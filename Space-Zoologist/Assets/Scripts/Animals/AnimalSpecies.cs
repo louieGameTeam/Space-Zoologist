@@ -19,7 +19,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int dominance = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
-    [SerializeField] private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
     [SerializeField] private List<Need> needsList = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;

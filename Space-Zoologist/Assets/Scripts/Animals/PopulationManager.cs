@@ -20,7 +20,7 @@ public class PopulationManager : MonoBehaviour
         populations.AddRange(FindObjectsOfType<Population>());
         foreach (Population population in populations)
         {
-            needSystemManager.RegisterPopulationNeeds(population);
+            needSystemManager.RegisterWithNeedSystems(population);
         }
     }
 
@@ -37,7 +37,7 @@ public class PopulationManager : MonoBehaviour
         population.Initialize(species, position, count);
         this.populations.Add(population);
         rpm.AddPopulation(population);
-        needSystemManager.RegisterPopulationNeeds(population);
+        needSystemManager.RegisterWithNeedSystems(population);
     }
 
     /// <summary>

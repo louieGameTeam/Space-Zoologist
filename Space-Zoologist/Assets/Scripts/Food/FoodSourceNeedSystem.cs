@@ -31,7 +31,7 @@ public class FoodSourceNeedSystem : NeedSystem
         {
             populationsWithAccess.Add(foodSource, new HashSet<Population>());
             amountFoodRemaining.Add(foodSource, foodSource.FoodOutput);
-            foreach (Population population in populations)
+            foreach (Population population in lives)
             {
                 if (!accessibleFoodSources.ContainsKey(population))
                 {
@@ -64,7 +64,7 @@ public class FoodSourceNeedSystem : NeedSystem
         // Foreach population, if it is in good condition from the food available to it, then take its portion and update its need,
         // else, add it to the set of populations that will not have enough. The populations without enough will then split what is 
         // remaining based on the ratio of their dominance to the localRemainingDominance for each of their FoodSources.
-        foreach (Population population in populations)
+        foreach (Population population in lives)
         {
             float availableFood = 0.0f;
             float amountRequiredPerIndividualForGoodCondition = population.Species.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);

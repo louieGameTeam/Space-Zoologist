@@ -6,9 +6,11 @@ using System.Linq;
 public class TerrianNeedSystem : NeedSystem
 {
     private readonly ReservePartitionManager rpm = null;
-    public TerrianNeedSystem(ReservePartitionManager rpm, string needName = "Terrian") : base(needName)
+    private TileSystem tileSystem = null;
+    public TerrianNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Terrian") : base(needName)
     {
         this.rpm = rpm;
+        this.tileSystem = tileSystem;
     }
 
     /// <summary>
@@ -16,17 +18,38 @@ public class TerrianNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     { 
-        foreach (Population population in populations)
-        {
-            var terrianCountsByType = rpm.GetTypesOfTiles(population);
-
-            foreach (var (count, index) in terrianCountsByType.WithIndex())
+        foreach (Life life in lives)
+        { 
+            // Call different get tile function for Popultation and FoodSource
+            if (life.GetType() == typeof(Population))
             {
-                string needName = ((TileType)index).ToString();
+                var terrianCountsByType = rpm.GetTypesOfTiles((Population)life);
 
-                if(population.NeedsValues.ContainsKey(needName))
+                foreach (var (count, index) in terrianCountsByType.WithIndex())
                 {
-                    population.UpdateNeed(needName, count);
+                    string needName = ((TileType)index).ToString();
+
+                    if (life.NeedsValues.ContainsKey(needName))
+                    {
+                        life.UpdateNeed(needName, count);
+                    }
+                }
+            }
+            else if(life.GetType() == typeof(FoodSource))
+            {
+                FoodSource foodSource = (FoodSource)life;
+                var terrianCounts = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(life.transform.position), foodSource.Species.RootRadius);
+
+                Debug.Log(terrianCounts);
+
+                foreach (var (count, index) in terrianCounts.WithIndex())
+                {
+                    string needName = ((TileType)index).ToString();
+
+                    if (life.NeedsValues.ContainsKey(needName))
+                    {
+                        life.UpdateNeed(needName, count);
+                    }
                 }
             }
         }

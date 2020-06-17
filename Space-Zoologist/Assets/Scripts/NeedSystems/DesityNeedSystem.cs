@@ -296,10 +296,10 @@ public class DensityNeedSystem : NeedSystem
         this.populationDensitySystem = new PopulationDensitySystem(rpm, tileSystem);
     }
 
-    public override void AddPopulation(Population population)
+    public override void AddPopulation(Life population)
     {
         base.AddPopulation(population);
-        populationDensitySystem.AddPop(population);
+        populationDensitySystem.AddPop((Population)population);
     }
 
     /// <summary>
@@ -307,7 +307,7 @@ public class DensityNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
-       foreach (Population population in populations)
+       foreach (Population population in lives)
        {
             float density = populationDensitySystem.GetDensityScore(population);
             population.UpdateNeed("Density", density);

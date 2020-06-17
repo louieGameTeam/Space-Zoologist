@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FoodSourceManager : MonoBehaviour
 {
+    public List<FoodSource> FoodSources => foodSources;
+
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private LevelData levelData = default;
     [SerializeField] private ReservePartitionManager rpm = default;
@@ -24,9 +26,16 @@ public class FoodSourceManager : MonoBehaviour
 
     private void Start()
     {
+        foodSources.AddRange(FindObjectsOfType<FoodSource>());
         foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
         {
             needSystemManager.AddSystem(foodSourceNeedSystem);
+        }
+
+        // Register with NeedSystemManager
+        foreach (FoodSource foodSource in foodSources)
+        {
+            needSystemManager.RegisterWithNeedSystems(foodSource);
         }
     }
 
@@ -38,6 +47,9 @@ public class FoodSourceManager : MonoBehaviour
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
         foodSourceNeedSystems[foodSource.Species].AddFoodSource(foodSource);
+
+        // Register with NeedSystemManager
+        needSystemManager.RegisterWithNeedSystems(foodSource);
     }
 
     public void UpdateFoodSources()
