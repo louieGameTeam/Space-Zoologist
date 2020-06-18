@@ -40,8 +40,6 @@ public class TerrianNeedSystem : NeedSystem
                 FoodSource foodSource = (FoodSource)life;
                 var terrianCounts = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(life.transform.position), foodSource.Species.RootRadius);
 
-                Debug.Log(terrianCounts);
-
                 foreach (var (count, index) in terrianCounts.WithIndex())
                 {
                     string needName = ((TileType)index).ToString();
