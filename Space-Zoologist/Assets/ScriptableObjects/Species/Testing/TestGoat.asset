@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: TestGoat
+  m_EditorClassIdentifier: 
+  speciesName: Goat
+  dominance: 0
+  growthFactor: 0
+  needs:
+  - {fileID: 11400000, guid: ad3d8089dc2024d0aa495d947674be29, type: 2}
+  - {fileID: 11400000, guid: ad3d8089dc2024d0aa495d947674be29, type: 2}
+  - {fileID: 11400000, guid: d62a82625602c4442b457d80c3679103, type: 2}
+  NeedBehaviorSet:
+  - NeedType: 3
+    behavior: 0
+  - NeedType: 2
+    behavior: 3
+  size: 0
+  accessibleTerrain: 0300000001000000
+  sprite: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
