@@ -95,7 +95,6 @@ public class ReservePartitionManager : MonoBehaviour
             PopulationByID.Add(id, population);
             Populations.Add(population);
 
-            TypesOfTerrain.Add(population, new int[(int)TileType.TypesOfTiles]);
             // generate the map with the new id  
             GenerateMap(population);
             
@@ -153,6 +152,8 @@ public class ReservePartitionManager : MonoBehaviour
 
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
+
+        TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
 
         // starting location
         Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
@@ -217,6 +218,117 @@ public class ReservePartitionManager : MonoBehaviour
         // Update the new info for pre-existing populations
         for (int i = 0; i < SharedSpaces[id].Length; i++) {
             if (PopulationByID.ContainsKey(i) && SharedSpaces[id][i] != 0) {
+                SharedSpaces[i][id] = SharedSpaces[id][i];
+            }
+        }
+    }
+
+    /// <summary>
+    /// Populate the access map for a population with scanline fill.
+    /// </summary>
+    /// <param name="population">The population to be generated, assumed to be in Populations</param>
+    private void ScanlineGenerateMap(Population population)
+    {
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+        HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
+        Vector3Int cur;
+        bool openAbove, openBelow;
+
+        // Number of shared tiles
+        long[] SharedTiles = new long[maxPopulation];
+
+        TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
+
+        // starting location
+        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
+        stack.Push(location);
+
+        TileSystem _tileSystem = FindObjectOfType<TileSystem>();
+
+
+        // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
+        while (stack.Count > 0)
+        {
+            // next point
+            cur = stack.Pop();
+
+            if (accessed.Contains(cur))
+            {
+                // checked before, move on
+                continue;
+            }
+
+            // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
+            Vector3Int left = cur + Vector3Int.left;
+            TerrainTile tile = _tileSystem.GetTerrainTileAtLocation(left);
+            while (tile != null && !accessed.Contains(cur) && population.Species.AccessibleTerrain.Contains(tile.type)) {
+                cur = left;
+                left = cur + Vector3Int.left;
+                tile = _tileSystem.GetTerrainTileAtLocation(left);
+            }
+
+            openAbove = openBelow = false;
+
+            Vector3Int right = cur + Vector3Int.right;
+            tile = _tileSystem.GetTerrainTileAtLocation(cur);
+            while (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
+            {
+                // save the accessible location
+                accessed.Add(cur);
+
+                TypesOfTerrain[population][(int)tile.type]++;
+
+                // populate the access map
+                if (!AccessMap.ContainsKey(cur))
+                {
+                    AccessMap.Add(cur, 0L);
+                }
+                AccessMap[cur] |= 1L << PopulationToID[population];
+
+                // Collect info on how the population's space overlaps with others
+                for (int i = 0; i < Populations.Count; i++)
+                {
+                    SharedTiles[i] += (AccessMap[cur] >> PopulationToID[Populations[i]]) & 1L;
+                }
+
+                // Save the left most tile of every scannable section from the line above or below
+                if (!openAbove && !accessed.Contains(cur + Vector3Int.up) && population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up).type))
+                {
+                    stack.Push(cur + Vector3Int.up);
+                    openAbove = true;
+                }
+                else if (openAbove && !population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up).type)) {
+                    openAbove = false;
+                }
+
+                if (!openBelow && !accessed.Contains(cur + Vector3Int.down) && population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down).type))
+                {
+                    stack.Push(cur + Vector3Int.down);
+                    openBelow = true;
+                }
+                else if (openBelow && !population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down).type))
+                {
+                    openBelow = false;
+                }
+
+                cur = right;
+                right = cur + Vector3Int.right;
+                tile = _tileSystem.GetTerrainTileAtLocation(cur);
+            }
+        }
+
+        // Amount of accessible area
+        Spaces[population] = accessed.Count;
+
+        // Store the info on overlapping space
+        int id = PopulationToID[population];
+        SharedSpaces[id] = SharedTiles;
+
+        // Update the new info for pre-existing populations
+        for (int i = 0; i < SharedSpaces[id].Length; i++)
+        {
+            if (PopulationByID.ContainsKey(i) && SharedSpaces[id][i] != 0)
+            {
                 SharedSpaces[i][id] = SharedSpaces[id][i];
             }
         }
