@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Liquid
-  m_Shader: {fileID: -6465566751694194690, guid: cb8eae8c91de5594380963394d65f281,
+  m_Name: LiquidSurface
+  m_Shader: {fileID: -6465566751694194690, guid: 2fe3bb5786ad3c4408a4ca823f5d2932,
     type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,12 +20,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_BC78C276:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: acfcd75b0178c1145bfe1ca0d55b3f2e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -39,10 +43,6 @@ Material:
     m_Floats:
     - _EnableExternalAlpha: 0
     m_Colors:
-    - Color_E580470F: {r: 0.99524164, g: 1, b: 0.8915094, a: 0}
-    - Vector2_10F16CC4: {r: 2, g: 2, b: 0, a: 0}
-    - Vector2_7CA99A88: {r: 3.05, g: 0.29, b: 0, a: 0}
-    - Vector4_16D0E0A0: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
