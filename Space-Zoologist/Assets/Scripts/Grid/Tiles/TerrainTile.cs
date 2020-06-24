@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -19,11 +19,13 @@ public class TerrainTile : RuleTile<TerrainTile.Neighbor>
 	public bool isRepresentative;
 	public bool isMergingAttributes;
 	public int priority;
+
 	public class Neighbor : RuleTile.TilingRule.Neighbor
 	{
 		public const int Sibing = 3;
 		public const int Any = 4;
 	}
+
 	public override bool RuleMatch(int neighbor, TileBase other)
 	{
 		switch (neighbor)

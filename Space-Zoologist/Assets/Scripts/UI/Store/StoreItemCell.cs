@@ -4,18 +4,18 @@ using UnityEngine.EventSystems;
 
 public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public StoreItem item { get; private set; }
+    public Item item { get; private set; }
 
     [SerializeField] Image itemImage = default;
     [SerializeField] Image highlightImage = default;
 
-    public delegate void ItemSelectedHandler(StoreItem item);
+    public delegate void ItemSelectedHandler(Item item);
     public event ItemSelectedHandler onSelected;
 
-    public void Initialize(StoreItem item, ItemSelectedHandler itemSelectedHandler)
+    public void Initialize(Item item, ItemSelectedHandler itemSelectedHandler)
     {
         this.item = item;
-        this.itemImage.sprite = item.Sprite;
+        this.itemImage.sprite = item.Icon;
         this.onSelected += itemSelectedHandler;
     }
 

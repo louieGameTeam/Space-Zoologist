@@ -36,6 +36,7 @@ public class Population : MonoBehaviour
         this.species = species;
         this.origin = origin;
         this.count = count;
+        GetComponent<SpriteRenderer>().sprite = species.Representation;
 
         this.transform.position = origin;
 
