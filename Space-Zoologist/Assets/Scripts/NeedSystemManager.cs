@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
+    [SerializeField] private LevelData levelData = default;
+
     private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
 
     /// <summary>
@@ -19,6 +21,18 @@ public class NeedSystemManager : MonoBehaviour
         AddSystem(new DensityNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
         AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
         AddSystem(new TerrianNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+
+        //// Add SpeciesNeedSystems
+        //foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
+        //{
+        //    AddSystem(new SpeciesNeedSystem(animalSpecies.name, FindObjectOfType<ReservePartitionManager>()));
+        //}
+
+        //// Add FoodSourceNeedSystems to NeedSystemManager
+        //foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
+        //{
+        //    AddSystem(foodSourceNeedSystem);
+        //}
     }
 
     /// <summary>
@@ -43,6 +57,7 @@ public class NeedSystemManager : MonoBehaviour
                 // Foodsource need here
                 Debug.Assert(systems.ContainsKey(need), $"No { need } system");
                 systems[need].AddPopulation(life);
+                //Debug.Log($"Register {need} in {life}");
             }
         }
     }
@@ -67,19 +82,20 @@ public class NeedSystemManager : MonoBehaviour
 
     /// <summary>
     /// Update all the need system that is mark "dirty"
-    /// </summary>
+    /// </summary>  
+    /// <remarks>
+    /// The order of the NeedSystems' update metter,
+    /// this should be their relative order(temp) :
+    /// Terrian/Atmosphere -> Species -> FoodSource -> Density
+    /// This order can be gerenteed in how NeedSystems is add to the manager in Awake()
+    /// </remarks>
     public void UpdateSystems()
     {
-        // Systems should only update when the state is "dirty"
+        // TODO: Systems should only update when the state is "dirty"
         foreach (KeyValuePair<string, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;
-
-            if(system.isDirty)
-            {
-                system.UpdateSystem();
-                //Debug.Log(String.Format("Updating {0}", system.NeedName));
-            }
+            system.UpdateSystem();
         }
     }
 }

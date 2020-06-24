@@ -47,7 +47,6 @@ public class NeedSystemsTester : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             needSystemManager.UpdateSystems();
-            foodSourceManager.UpdateFoodSources();
         }
 
         if (Input.GetKeyUp(KeyCode.UpArrow))
@@ -59,7 +58,7 @@ public class NeedSystemsTester : MonoBehaviour
         string populationStatsText = "";
         foreach (Population population in populationManager.Populations)
         {
-            populationStatsText += $"***{ population.Species.SpeciesName }; Count: {population.Count}; Dominance: {population.Dominance}***\n";
+            populationStatsText += $"***{ population.Species.SpeciesName } {population.GetInstanceID()}; Count: {population.Count}; Dominance: {population.Dominance}***\n";
             foreach (KeyValuePair<string, float> needValue in population.NeedsValues)
             {
                 populationStatsText += $"- {needValue.Key}: { needValue.Value } -- Condition: {population.Species.Needs[needValue.Key].GetCondition(needValue.Value)}\n";

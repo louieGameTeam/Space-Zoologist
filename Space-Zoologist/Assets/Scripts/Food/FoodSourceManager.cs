@@ -15,8 +15,10 @@ public class FoodSourceManager : MonoBehaviour
 
     [SerializeField] private GameObject foodSourcePrefab = default;
 
+    // TODO: 
     private void Awake()
     {
+        // Add new FoodSourceNeedSystem
         foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
         {
             FoodSourceNeedSystem foodSourceNeedSystem = new FoodSourceNeedSystem(foodSourceSpecies.SpeciesName, rpm);
@@ -26,13 +28,16 @@ public class FoodSourceManager : MonoBehaviour
 
     private void Start()
     {
+        // Get all FoodSource at start of level
         foodSources.AddRange(FindObjectsOfType<FoodSource>());
+
+        // Add FoodSourceNeedSystems to NeedSystemManager
         foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
         {
             needSystemManager.AddSystem(foodSourceNeedSystem);
         }
 
-        // Register with NeedSystemManager
+        // Register Foodsource with NeedSystem via NeedSystemManager
         foreach (FoodSource foodSource in foodSources)
         {
             needSystemManager.RegisterWithNeedSystems(foodSource);

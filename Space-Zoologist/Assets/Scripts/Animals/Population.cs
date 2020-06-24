@@ -41,6 +41,9 @@ public class Population : Life
         {
             needsValues.Add(need.NeedName, 0);
         }
+
+        // Add need for species to NeedSystemManager
+
     }
 
     /// <summary>
