@@ -6,19 +6,8 @@ using UnityEngine.Tilemaps;
 // Modified https://greenday96.blogspot.com/2018/10/c-4-aa-star-simple-4-way-algorithm.html
 
 /*
-TODO modify https://gmamaladze.wordpress.com/2013/07/25/hashset-that-preserves-insertion-order-or-net-implementation-of-linkedhashset/
-to replace openList
-
-openList operations:
-- add less memory used
-- count no improvement
-- min improved to O(1)
-- remove(item) improved to O(1)
-- first: return either first object in linked list or null if empty, improved to O(1)
-- front insert (i think) improved to O(1)
-- find(object) improved to O(1)
-
-TODO remove all firstOrDefault and replace with list.count == 0 check then list[0]
+TODO use this one instead https://github.com/RonenNess/Unity-2d-pathfinding
+and improve by following https://www.youtube.com/watch?v=3Dw5d7PlcTM&t=737s
 
 */
 
@@ -35,12 +24,12 @@ public class Location
 
 public class AnimalPathfinding : MonoBehaviour
 {
-
-    public Location FindPath(MovementData movementData, Vector3 vectorStart, Vector3 vectorTarget)
+    public Location FindPath(Population population, Vector3 vectorStart, Vector3 vectorTarget)
     {
+
         // Convert start and end to location using WorldToCell
-        var start = new Location() { X = movementData.WorldToCell(vectorStart).x, Y = movementData.WorldToCell(vectorStart).y };
-        var target = new Location() { X = movementData.WorldToCell(vectorTarget).x, Y = movementData.WorldToCell(vectorTarget).y };
+        var start = new Location() { X = population.WorldToCell(vectorStart).x, Y = population.WorldToCell(vectorStart).y };
+        var target = new Location() { X = population.WorldToCell(vectorTarget).x, Y = population.WorldToCell(vectorTarget).y };
         // Debug.Log("Start Coordinate (" + start.X + ", " + start.Y + ")");
         // Debug.Log("End Coordinate (" + target.X + ", " + target.Y + ")");
 
@@ -67,7 +56,7 @@ public class AnimalPathfinding : MonoBehaviour
             if (closedList.FirstOrDefault(l => l.X == target.X && l.Y == target.Y) != null)
                 break;
 
-            List<Location> adjacentSquares = GetWalkableSurroundingSquares(current.X, current.Y, movementData.PopulationInfo, openList);
+            List<Location> adjacentSquares = GetWalkableSurroundingSquares(current.X, current.Y, population, openList);
             g = current.G + 1;
 
             foreach (var adjacentSquare in adjacentSquares)

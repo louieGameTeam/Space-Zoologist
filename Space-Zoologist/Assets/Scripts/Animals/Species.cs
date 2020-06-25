@@ -1,7 +1,6 @@
-using System.Collections;
+using UnityEditor.Animations;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 [CreateAssetMenu]
 public class Species : ScriptableObject
@@ -11,11 +10,14 @@ public class Species : ScriptableObject
     public float Dominance => dominance;
     public float GrowthFactor => growthFactor;
     public List<SpeciesNeed> Needs => needs;
+    public List<BehaviorScriptTranslation> Behaviors => needBehaviorSet;
     public float Size => size;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Sprite Sprite => sprite;
+    public AnimatorController AnimatorController => animatorController;
 
     // Values
+    [SerializeField] private AnimatorController animatorController = default;
     [SerializeField] private string speciesName = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private float dominance = default;
@@ -23,7 +25,7 @@ public class Species : ScriptableObject
     [SerializeField] private float growthFactor = default;
     [SerializeField] private List<SpeciesNeed> needs = default;
     [Header("Behavior displayed when need isn't being met")]
-    [SerializeField] private List<Behavior> NeedBehaviorSet = default;
+    [SerializeField] private List<BehaviorScriptTranslation> needBehaviorSet = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
@@ -80,33 +82,33 @@ public class Species : ScriptableObject
         }
 
         // Ensure there is a behavior for each needType
-        while (this.NeedBehaviorSet.Count < numBehaviors)
+        while (this.needBehaviorSet.Count < numBehaviors)
         {
-            this.NeedBehaviorSet.Add(new Behavior());
+            this.needBehaviorSet.Add(new BehaviorScriptTranslation());
         }
-        while (this.NeedBehaviorSet.Count > numBehaviors)
+        while (this.needBehaviorSet.Count > numBehaviors)
         {
-            this.NeedBehaviorSet.RemoveAt(this.NeedBehaviorSet.Count - 1);
+            this.needBehaviorSet.RemoveAt(this.needBehaviorSet.Count - 1);
         }
         int i = 0;
         // Give each behavior set the unique need type name. Prevents changing names
         foreach (NeedType needType in uniqueTypes)
         {
-            this.NeedBehaviorSet[i].NeedType = needType;
+            this.needBehaviorSet[i].NeedType = needType;
             i++;
         }
         
         // Ensure there are no duplicate behaviors when behaviors are being chosen
         HashSet<string> usedBehaviors = new HashSet<string>(); 
-        foreach (Behavior behavior in this.NeedBehaviorSet)
+        foreach (BehaviorScriptTranslation behavior in this.needBehaviorSet)
         {
-            if (!usedBehaviors.Contains(behavior.behavior.ToString()))
+            if (!usedBehaviors.Contains(behavior.behaviorScriptName.ToString()))
             {
-                usedBehaviors.Add(behavior.behavior.ToString());
+                usedBehaviors.Add(behavior.behaviorScriptName.ToString());
             }
             else
             {
-                behavior.behavior = AnimalBehavior.None;
+                behavior.behaviorScriptName = BehaviorScriptName.None;
             }
         }
     }

@@ -111,9 +111,9 @@ public class PopDensityManager : MonoBehaviour
                 if (popsByID.ContainsKey(i) && ((popDensityMap[pos] >> i) & 1L) == 1L)
                 {
                     Population cur = popsByID[i];
-                    print(cur.Species.Size * cur.Count / spaces[cur]);
+                    print(cur.Species.Size * cur.animalPopulation.Count / spaces[cur]);
                     //weight per tile
-                    density += cur.Species.Size * cur.Count / spaces[cur];
+                    density += cur.Species.Size * cur.animalPopulation.Count / spaces[cur];
                 }
             }
             return density;
