@@ -316,6 +316,29 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Check if populationA's and populationB's accessible area overlaps.
+    /// </summary>
+    /// <param name="populationA">Ususally the consumer population</param>
+    /// <param name="populationB">Ususally the consumed population</param>
+    /// <remarks><c>populationA</c> and <c>populationB</c> is interchangeable</remarks>
+    /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
+    public bool CanAccessPopulation(Population populationA, Population populationB)
+    {
+        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
+        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
+
+        foreach (Vector3Int cellPos in AccessibleArea_A)
+        {
+            if (AccessibleArea_B.Contains(cellPos))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Go through Populations and return a list of populations that has access to the tile corresponding to toWorldPos.
     /// </summary>
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)

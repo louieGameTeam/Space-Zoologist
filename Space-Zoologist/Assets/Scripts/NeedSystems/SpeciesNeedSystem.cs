@@ -50,7 +50,7 @@ public class SpeciesNeedSystem : NeedSystem
                 {
                     accessiblePopulation.Add(live, new HashSet<Population>());
                 }
-                if (rpm.CanAccess(live, population.transform.position))
+                if (rpm.CanAccessPopulation(live, population))
                 {
                     accessiblePopulation[live].Add(population);
                     populationsWithAccess[population].Add(live);
@@ -74,14 +74,19 @@ public class SpeciesNeedSystem : NeedSystem
         // Holds the populations that will not have enough food to give them a good condition.
         HashSet<Population> populationsWithNotEnough = new HashSet<Population>();
 
+        // Holds the ratio of population count of the consumed population to each consumer population
+        // accessibleAreaRatio[consumer][consumed]
+        Dictionary<Population, Dictionary<Population, float>> accessibleAreaRatio = new Dictionary<Population, Dictionary<Population, float>>();
+
         // Foreach population, if it is in good condition from the food available to it, then take its portion and update its need,
         // else, add it to the set of populations that will not have enough. The populations without enough will then split what is 
         // remaining based on the ratio of their dominance to the localRemainingDominance for each of their FoodSources.
         foreach (Population life in lives)
         {
-            float availableFood = 0.0f;
+            int availableFood = 0;
             float amountRequiredPerIndividualForGoodCondition = life.Species.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);
             float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * life.Count;
+
             foreach (Population population in accessiblePopulation[life])
             {
                 // All area consumed population has access to
@@ -89,19 +94,23 @@ public class SpeciesNeedSystem : NeedSystem
                 // Where both the consumer and consumed population has access to
                 List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)life,cell)).ToList();
 
-                float accessibleAreaRatio = overlapArea.Count / accessibleArea.Count;
-                int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio);
-                availableFood += accessiblePopulationCout * (population.Dominance / totalLocalDominance[population]);
+                accessibleAreaRatio.Add(life, new Dictionary<Population, float>());
+
+                accessibleAreaRatio[life][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
+                int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[life][population]);
+                availableFood += (int)Math.Floor(accessiblePopulationCout * (life.Dominance / totalLocalDominance[population]));
+
+                Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availableFood}");
             }
 
             // If the food available to the Population is more than enough, only take enough and update its need.
             if (availableFood >= amountRequiredForGoodCondition)
             {
-                float foodToTakeRatio = amountRequiredForGoodCondition / availableFood;
                 float totalFoodAcquired = 0.0f;
                 foreach (Population population in accessiblePopulation[life])
                 {
-                    float foodAcquired = foodToTakeRatio * population.Count * (life.Dominance / totalLocalDominance[population]);
+                    // Take as much as the amount it needs to be in good condition
+                    float foodAcquired = amountRequiredForGoodCondition;
                     amountPopulationCountRemaining[population] -= foodAcquired;
                     totalFoodAcquired += foodAcquired;
                     localDominanceRemaining[population] -= life.Dominance;
@@ -123,8 +132,14 @@ public class SpeciesNeedSystem : NeedSystem
             float foodAcquired = 0.0f;
             foreach (Population population in accessiblePopulation[life])
             {
+                //// All area consumed population has access to
+                //List<Vector3Int> accessibleArea = rpm.GetLocationsWithAccess(population);
+                //// Where both the consumer and consumed population has access to
+                //List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)life, cell)).ToList();
+                //float accessibleAreaRatio = (float)overlapArea.Count / (float)accessibleArea.Count;
+
                 float dominanceRatio = life.Dominance / localDominanceRemaining[population];
-                foodAcquired += dominanceRatio * amountPopulationCountRemaining[population];
+                foodAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[life][population] * amountPopulationCountRemaining[population]);
                 Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {foodAcquired} food from {population.Species.SpeciesName} {population.GetInstanceID()}");
             }
             float amountAcquiredPerIndividual = foodAcquired / life.Count;
