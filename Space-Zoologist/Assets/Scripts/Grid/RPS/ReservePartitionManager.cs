@@ -96,7 +96,7 @@ public class ReservePartitionManager : MonoBehaviour
             Populations.Add(population);
 
             // generate the map with the new id  
-            GenerateMap(population);
+            ScanlineGenerateMap(population);
             
         }
     }
@@ -140,7 +140,7 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Populate the access map for a population with depth first search.
+    /// [deprecated] Populate the access map for a population with depth first search. 15-20% slower than scanline flood fill
     /// </summary>
     /// <param name="population">The population to be generated, assumed to be in Populations</param>
     private void GenerateMap(Population population)
@@ -149,7 +149,7 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> accessible = new HashSet<Vector3Int>();
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
-
+        
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
 
@@ -224,7 +224,7 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Populate the access map for a population with scanline fill.
+    /// Populate the access map for a population with scanline flood fill.
     /// </summary>
     /// <param name="population">The population to be generated, assumed to be in Populations</param>
     private void ScanlineGenerateMap(Population population)
@@ -251,12 +251,6 @@ public class ReservePartitionManager : MonoBehaviour
         {
             // next point
             cur = stack.Pop();
-
-            if (accessed.Contains(cur))
-            {
-                // checked before, move on
-                continue;
-            }
 
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
             Vector3Int left = cur + Vector3Int.left;
@@ -292,21 +286,21 @@ public class ReservePartitionManager : MonoBehaviour
                 }
 
                 // Save the left most tile of every scannable section from the line above or below
-                if (!openAbove && !accessed.Contains(cur + Vector3Int.up) && population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up).type))
+                if (!openAbove && !accessed.Contains(cur + Vector3Int.up) && _tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up) != null && population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up).type))
                 {
                     stack.Push(cur + Vector3Int.up);
                     openAbove = true;
                 }
-                else if (openAbove && !population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up).type)) {
+                else if (openAbove && (_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up) == null || !population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.up).type))) {
                     openAbove = false;
                 }
 
-                if (!openBelow && !accessed.Contains(cur + Vector3Int.down) && population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down).type))
+                if (!openBelow && !accessed.Contains(cur + Vector3Int.down) && _tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down) != null && population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down).type))
                 {
                     stack.Push(cur + Vector3Int.down);
                     openBelow = true;
                 }
-                else if (openBelow && !population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down).type))
+                else if (openBelow && (_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down) == null || !population.Species.AccessibleTerrain.Contains(_tileSystem.GetTerrainTileAtLocation(cur + Vector3Int.down).type)))
                 {
                     openBelow = false;
                 }
@@ -342,7 +336,7 @@ public class ReservePartitionManager : MonoBehaviour
         AccessMap = new Dictionary<Vector3Int, long>();
         foreach (Population population in Populations)
         {
-            GenerateMap(population);
+            ScanlineGenerateMap(population);
         }
     }
 
@@ -376,7 +370,7 @@ public class ReservePartitionManager : MonoBehaviour
         // Most intuitive implementation: recalculate map for all affected populations
         foreach (Population population in AffectedPopulations) {
             CleanupAccessMap(PopulationToID[population]);
-            GenerateMap(population);
+            ScanlineGenerateMap(population);
         }
     }
 
