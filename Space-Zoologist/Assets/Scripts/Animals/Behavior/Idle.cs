@@ -13,6 +13,7 @@ public class Idle : Behavior
 
     protected override void Update()
     {
+        base.Update();
         if (base.Animal.BehaviorsData.IdleTimeBetweenBehaviors < this.IdleTime)
         {
             this.IdleTime = 0f;

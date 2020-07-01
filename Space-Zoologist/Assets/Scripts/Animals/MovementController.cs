@@ -1,39 +1,57 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Takes in a path and moves sprite through it.
 /// </summary>
 public class MovementController : MonoBehaviour
 {
+    [Header("For testing, grid should be created by rpm")]
+    [SerializeField] private AnimalPathfinding.Pathfinding pathfinder = default;
+    [SerializeField] private Tilemap testingMap = default;
     private Animal Animal { get; set; }
-    private Location PathToDestination { get; set; }
+    private AnimalPathfinding.Node PathToDestination { get; set; }
     private Vector3 NextPathTile { get; set; }
+    TileSystem _tileSystem; //GetTerrainTile API from Virgil
 
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
+         _tileSystem = FindObjectOfType<TileSystem>();
     }
 
-    public Location GetLocationPath(Vector3 start, Vector3 end) 
+    // TODO this shouldn't be needed and should instead be a part of the pathfinding system.
+    // The pathfinding system should always have the most updated map in grid format
+    public void GetPath(AnimalPathfinding.Node start, AnimalPathfinding.Node end, System.Action<AnimalPathfinding.Node, bool> callback) 
     {
-        return Animal.Pathfinder.FindPath(Animal.PopulationInfo, start, end);
+        // Debug.Log("Start cell position: ");
+        // Debug.Log("("+start.gridX+","+start.gridY+")");
+        // Debug.Log("End cell position: ");
+        // Debug.Log("("+end.gridX+","+end.gridY+")");
+        AnimalPathfinding.PathRequestManager.RequestPath(start, end, callback, this.Animal.PopulationInfo.grid);
     }
 
-    public Location MoveAlongLocationPath(Location pathToDestination)
+    /// <summary>
+    /// Function to be called in Update. When the NextPathNode is reached, the direction and movement are upated and the next node in the path is returned.
+    /// </summary>
+    /// <param name="pathToDestination"></param>
+    /// <returns></returns>
+    public AnimalPathfinding.Node MoveAlongLocationPath(AnimalPathfinding.Node pathToDestination)
     {
-        if (this.NextSpotReached(this.NextPathTile, this.transform.position))
+        if (this.NextPathNodeReached(this.NextPathTile, this.transform.position))
         {
-            // The destination has been reached
-            if (pathToDestination.Parent == null)
+            // The path wasn't properly found or the destination has been reached
+            if (pathToDestination == null || pathToDestination.parent == null)
             {
                 return null;
             }
             // Update to the next path tile and sprite stuff
             else
             {
-                pathToDestination = pathToDestination.Parent;
-                this.NextPathTile = new Vector3(pathToDestination.X + 0.5f, pathToDestination.Y + 0.5f, 0);
+                pathToDestination = pathToDestination.parent;
+                this.NextPathTile = new Vector3(pathToDestination.gridX + 0.5f, pathToDestination.gridY + 0.5f, 0);
+                //Debug.Log("("+pathToDestination.gridX+"),"+"("+pathToDestination.gridY+")");
                 // After the next path tile has been chosen, update your direction
                 this.HandleDirectionChange(this.transform.position, this.NextPathTile);
                 // Then determine your movement
@@ -51,7 +69,7 @@ public class MovementController : MonoBehaviour
         return pathToDestination;
     }
 
-    private bool NextSpotReached(Vector3 destination, Vector3 currentLocation)
+    private bool NextPathNodeReached(Vector3 destination, Vector3 currentLocation)
     {
         return currentLocation.x < destination.x + .5f && currentLocation.x > destination.x - .5f &&
         currentLocation.y < destination.y + .5f && currentLocation.y > destination.y - .5f;
@@ -67,7 +85,7 @@ public class MovementController : MonoBehaviour
     private void HandleDirectionChange(Vector3 currentPosition, Vector3 nextTile)
     {
         Vector3 direction = (nextTile - currentPosition).normalized;
-        float angle = Vector3.Angle(Vector3.up, direction);
+        int angle = (int)Vector3.Angle(Vector3.up, direction);
         // Moving left. Subtracting 360 and making the angle positive makes it easy to determine what the angle of direction is
         if (direction.x <= 0)
         {

@@ -7,7 +7,6 @@ public class Animal : MonoBehaviour
 {
     public BehaviorsData BehaviorsData { get; private set; }
     public Population PopulationInfo { get; private set; }
-    public AnimalPathfinding Pathfinder { get; private set; }
 
     private Animator Animator = null;
     private Behavior CurrentBehavior { get; set; }
@@ -27,7 +26,6 @@ public class Animal : MonoBehaviour
     {
         this.BehaviorsData = data;
         this.PopulationInfo = population;
-        this.Pathfinder = population.Pathfinder;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
         this.BehaviorComponents = new Dictionary<string, Behavior>();
         foreach (Behavior behaviorComponent in this.gameObject.GetComponents<Behavior>())
@@ -44,7 +42,7 @@ public class Animal : MonoBehaviour
         // TODO replace with Caleb's increased random probability function
         System.Random rand = new System.Random();
         string chosenBehavior = this.PopulationInfo.CurrentBehaviors[rand.Next(this.PopulationInfo.CurrentBehaviors.Count)].ToString();
-        Debug.Log("Behavior chosen: " + chosenBehavior);
+        //Debug.Log("Behavior chosen: " + chosenBehavior);
         this.CurrentBehavior = this.BehaviorComponents[chosenBehavior];
         this.OnBehaviorFinished = ChooseNextBehavior;
         this.CurrentBehavior.EnterBehavior(this.OnBehaviorFinished);

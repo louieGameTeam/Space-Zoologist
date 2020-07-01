@@ -10,7 +10,7 @@ public class Population : MonoBehaviour
     // TODO refactor into static utitlity
     public Tilemap TilemapReference { get; set; }
     // Defined at runtime or added when a pod is used based off pods
-    [SerializeField] public List<GameObject> animalPopulation = default;
+    [SerializeField] public List<GameObject> AnimalPopulation = default;
 
     [SerializeField] private GameObject AnimalPrefab = default;
     [SerializeField] private Species species = default;
@@ -24,9 +24,7 @@ public class Population : MonoBehaviour
     private Dictionary<NeedName, float> Needs = new Dictionary<NeedName, float>();
     private Vector2Int origin = Vector2Int.zero;
 
-    private List<GameObject> AnimalObjects = default;
-    public AnimalPathfinding Pathfinder { get; private set; }
-    public List<Vector3Int> AccessibleLocations { get; set; }
+    public AnimalPathfinding.Grid grid { get; set; }
 
     private void Awake()
     {
@@ -35,15 +33,14 @@ public class Population : MonoBehaviour
 
     private void Start()
     {
-        this.TilemapReference = GameObject.Find("Background").GetComponent<Tilemap>();
-        this.Pathfinder = this.gameObject.GetComponent<AnimalPathfinding>();
+        this.TilemapReference = GameObject.Find("Terrain").GetComponent<Tilemap>();
         this.InitializeExisitingAnimals();
     }
 
     private void InitializeExisitingAnimals()
     {
         int i = 0;
-        foreach (GameObject animal in this.animalPopulation)
+        foreach (GameObject animal in this.AnimalPopulation)
         {
             this.AddComponentByName(Species.Behaviors, animal);
             animal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[i]);
@@ -67,7 +64,7 @@ public class Population : MonoBehaviour
         }
         // TODO population instantiation should likely come from an populationdata object which should already have this defined
         // - the pods will contain populations which we'll likely want to specify certain aspects of
-        while (this.AnimalsBehaviorData.Count < this.animalPopulation.Count)
+        while (this.AnimalsBehaviorData.Count < this.AnimalPopulation.Count)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
         }
@@ -82,7 +79,11 @@ public class Population : MonoBehaviour
     {
         ReservePartitionManager.ins.AddPopulation(this);
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
-        this.AccessibleLocations = ReservePartitionManager.ins.GetLocationWithAccess(this);
+        // TODO determine what format accessible locations should be in and have RPM return that instead.
+        List<Vector3Int> accessibleLocation = ReservePartitionManager.ins.GetLocationWithAccess(this);
+        bool[,] tileGrid = new bool[TilemapReference.size.x,TilemapReference.size.y];
+        // TODO translate between accessibleLocations and grid locations
+        grid = new AnimalPathfinding.Grid(tileGrid);
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
@@ -99,7 +100,7 @@ public class Population : MonoBehaviour
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         this.AddComponentByName(Species.Behaviors, newAnimal);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        animalPopulation.Add(newAnimal);
+        AnimalPopulation.Add(newAnimal);
     }
 
     // No way to dynamially add scripts by name, have to use if statements and add to this everytime new component is defined
@@ -187,11 +188,11 @@ public class Population : MonoBehaviour
     // Ensure there are enough behavior data scripts mapped to the population size
     void OnValidate()
     {
-        while (this.AnimalsBehaviorData.Count < this.animalPopulation.Count)
+        while (this.AnimalsBehaviorData.Count < this.AnimalPopulation.Count)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
         }
-        while (this.AnimalsBehaviorData.Count > this.animalPopulation.Count)
+        while (this.AnimalsBehaviorData.Count > this.AnimalPopulation.Count)
         {
             this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
         }

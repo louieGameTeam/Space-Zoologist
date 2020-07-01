@@ -12,6 +12,8 @@ public abstract class Behavior : MonoBehaviour
     // Use Animal to access the BehaviorData, Pathfinder, and PopulationInfo.AccessibleLocations
     protected Animal Animal { get; set; }
     protected MovementController Controller { get; set; }
+    protected AnimalPathfinding.Node PathToDestination { get; set; }
+    protected bool isCalculatingPath { get; set; }
 
     /// <summary>
     /// Disables the behavior component right away. All behaviors should call base.Awake first in overriden method.
@@ -21,6 +23,7 @@ public abstract class Behavior : MonoBehaviour
         // This script is attached after the initial start is called for scripts, so these dependencies will already be available in Awake.
         this.Animal = this.gameObject.GetComponent<Animal>();
         this.Controller = this.gameObject.GetComponent<MovementController>();
+        this.isCalculatingPath = false;
         this.enabled = false;
     }
 
@@ -33,11 +36,46 @@ public abstract class Behavior : MonoBehaviour
     }
 
     /// <summary>
-    /// Implement some sort of behavior logic
+    /// Implement some sort of behavior logic. Idles while path is being calculated.
     /// </summary>
     protected virtual void Update()
     {
+        
+    }
 
+    /// <summary>
+    /// Callback given to CalculatePath for when the path finishes being calculated.
+    /// Consider modifying the else to calculate a different path if a path isn't found.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="pathFound"></param>
+    protected virtual void PathFound(AnimalPathfinding.Node path, bool pathFound)
+    {
+        if (pathFound)
+        {
+            this.PathToDestination = path;
+            this.isCalculatingPath = false;
+        }
+        else
+        {
+            Debug.Log("Issue with pathfinding, exiting behavior");
+            this.ExitBehavior();
+        }
+    }
+
+    /// <summary>
+    /// Should be called in every update before path is used.
+    /// </summary>
+    /// <returns></returns>
+    protected bool IsCalculatingPath()
+    {
+        if (this.isCalculatingPath)
+        {
+            // Debug.Log("IsBlocked");
+            this.Animal.BehaviorsData.MovementStatus = Movement.idle;
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -46,6 +84,7 @@ public abstract class Behavior : MonoBehaviour
     public virtual void EnterBehavior(BehaviorFinished callback)
     {
         this.enabled = true;
+        this.isCalculatingPath = true;
         this.Callback = callback;
     }
 
