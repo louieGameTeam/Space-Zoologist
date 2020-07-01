@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Idle : Behavior
-{   
+{
     private float IdleTime = 0f;
 
     protected override void Awake()

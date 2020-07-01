@@ -29,19 +29,26 @@ public class Animal : MonoBehaviour
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
         this.BehaviorComponents = new Dictionary<string, Behavior>();
         foreach (Behavior behaviorComponent in this.gameObject.GetComponents<Behavior>())
-        {   
+        {
             // Debug.Log("Behavior mapped: " +  behaviorComponent.GetType().ToString());
-            this.BehaviorComponents.Add(behaviorComponent.GetType().ToString(), behaviorComponent); 
+            this.BehaviorComponents.Add(behaviorComponent.GetType().ToString(), behaviorComponent);
         }
         this.ChooseNextBehavior();
     }
 
-    // Gets a random beaviorScriptName from currentBehaviors in BehaviorData and then uses the BehaviorComponents dictionary to get out the hashed component
+    // Gets a random behaviorScriptName from currentBehaviors in BehaviorData and then uses the BehaviorComponents dictionary to get out the hashed component
     private void ChooseNextBehavior()
     {
         // TODO replace with Caleb's increased random probability function
         System.Random rand = new System.Random();
-        string chosenBehavior = this.PopulationInfo.CurrentBehaviors[rand.Next(this.PopulationInfo.CurrentBehaviors.Count)].ToString();
+        if (this.PopulationInfo.CurrentBehaviors.Count == 0)
+        {
+            Debug.Log("No behaviors to choose from");
+            return;
+        }
+        int randNum = rand.Next(this.PopulationInfo.CurrentBehaviors.Count);
+        Debug.Log("Random number: " + randNum);
+        string chosenBehavior = this.PopulationInfo.CurrentBehaviors[randNum].ToString();
         //Debug.Log("Behavior chosen: " + chosenBehavior);
         this.CurrentBehavior = this.BehaviorComponents[chosenBehavior];
         this.OnBehaviorFinished = ChooseNextBehavior;

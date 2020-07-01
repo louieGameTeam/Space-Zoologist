@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class Population : MonoBehaviour
 {
     // TODO refactor into static utitlity
-    public Tilemap TilemapReference { get; set; }
+    [SerializeField] Tilemap TilemapReference = default;
     // Defined at runtime or added when a pod is used based off pods
     [SerializeField] public List<GameObject> AnimalPopulation = default;
 
@@ -17,7 +17,7 @@ public class Population : MonoBehaviour
 
     // Data can be accessed by going through the animals themselves
     [SerializeField] private List<BehaviorsData> AnimalsBehaviorData = default;
-    
+
     public List<BehaviorScriptName> CurrentBehaviors { get; set; }
     public Species Species { get => species; }
     public string SpeciesName { get => Species.SpeciesName; }
@@ -33,11 +33,10 @@ public class Population : MonoBehaviour
 
     private void Start()
     {
-        this.TilemapReference = GameObject.Find("Terrain").GetComponent<Tilemap>();
-        this.InitializeExisitingAnimals();
+        this.InitializeExistingAnimals();
     }
 
-    private void InitializeExisitingAnimals()
+    private void InitializeExistingAnimals()
     {
         int i = 0;
         foreach (GameObject animal in this.AnimalPopulation)
@@ -58,10 +57,6 @@ public class Population : MonoBehaviour
     {
         this.species = species;
         this.origin = origin;
-        for (int i=0; i<populationSize; i++)
-        {
-            this.InstantiateAnimal(this.AnimalsBehaviorData[i]);
-        }
         // TODO population instantiation should likely come from an populationdata object which should already have this defined
         // - the pods will contain populations which we'll likely want to specify certain aspects of
         while (this.AnimalsBehaviorData.Count < this.AnimalPopulation.Count)
@@ -69,6 +64,10 @@ public class Population : MonoBehaviour
             this.AnimalsBehaviorData.Add(new BehaviorsData());
         }
         this.InitializePopulationData();
+        for (int i=0; i<populationSize; i++)
+        {
+            this.InstantiateAnimal(this.AnimalsBehaviorData[i]);
+        }
     }
 
     // Can be initialized at runtime if the species is defined or later when a pod is used
@@ -81,12 +80,14 @@ public class Population : MonoBehaviour
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         // TODO determine what format accessible locations should be in and have RPM return that instead.
         List<Vector3Int> accessibleLocation = ReservePartitionManager.ins.GetLocationWithAccess(this);
+        Debug.Log(TilemapReference.size.x);
         bool[,] tileGrid = new bool[TilemapReference.size.x,TilemapReference.size.y];
         // TODO translate between accessibleLocations and grid locations
         grid = new AnimalPathfinding.Grid(tileGrid);
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
+            Debug.Log("Behavior added");
             this.CurrentBehaviors.Add(data.behaviorScriptName);
         }
         foreach (SpeciesNeed need in Species.Needs)

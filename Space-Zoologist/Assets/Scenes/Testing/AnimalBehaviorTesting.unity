@@ -3528,7 +3528,7 @@ PrefabInstance:
     - target: {fileID: 5640349517002934508, guid: 5aebadafd3bf644b3a37b8d58e2acac2,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[0].Speed
-      value: 3.81
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 5aebadafd3bf644b3a37b8d58e2acac2,
         type: 3}
@@ -3563,7 +3563,7 @@ PrefabInstance:
     - target: {fileID: 5640349517002934508, guid: 5aebadafd3bf644b3a37b8d58e2acac2,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[0].IdleTimeBetweenBehaviors
-      value: 1.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 5aebadafd3bf644b3a37b8d58e2acac2,
         type: 3}
@@ -7247,6 +7247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed7d11313c934f0ebeaffd1fe07584a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testingMap: {fileID: 0}
 --- !u!4 &1099935765 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3127976671735019294, guid: 5aebadafd3bf644b3a37b8d58e2acac2,
