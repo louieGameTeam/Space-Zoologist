@@ -6,16 +6,22 @@ using UnityEngine;
 public class FoodSourceSpecies : ScriptableObject
 {
     public string SpeciesName => speciesName;
-    public Dictionary<string, Need> Needs { get; private set; } = new Dictionary<string, Need>();
+    public Dictionary<string, Need> Needs => needs;
     public int RootRadius => rootRadius;
     public int BaseOutput => baseOutput;
-    public Sprite FoodsourceSprite => foodsourceSprite;
 
     [SerializeField] private string speciesName = default;
-    [SerializeField] private List<Need> needs = default;
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int baseOutput = default;
+    [SerializeField] private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    [SerializeField] private List<Need> needsList = default;
 
-    // This should later be made into a dynamic representation that changes based on the condition of the foodsource's needs.
-    [SerializeField] private Sprite foodsourceSprite = default;
+
+    private void OnEnable()
+    {
+        foreach (Need need in needsList)
+        {
+            Needs.Add(need.NeedName, need); // TODO: Setup food source need sytem
+        }
+    }
 }
