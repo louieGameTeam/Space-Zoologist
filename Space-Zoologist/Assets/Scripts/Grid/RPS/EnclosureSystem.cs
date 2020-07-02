@@ -113,12 +113,18 @@ public class EnclosureSystem : MonoBehaviour
         return false;
     }
 
-    
+
     /// <summary>
+    /// [Disabled: Use FindEnclosedAreas() instead.]
     /// Update the surrounding atmospheres of the position. Only used when adding or removing walls.
     /// </summary>
     /// <param name="positions">Positions where the walls are placed or removed.</param>
     public void UpdateSurroundingAtmosphere(int minx, int miny, int maxx, int maxy) {
+        // Redirect to FindEnclosedAreas() before this function works efficiently
+        FindEnclosedAreas();
+        return;
+
+
         // If not initialized or have more than , initialize instead
         if (!initialized || Atmospheres.Count >= 120)
         {
@@ -481,11 +487,13 @@ public class EnclosureSystem : MonoBehaviour
             // a new atmosphere was added
             if (newAtmosphere && !initialized)
             {
+                // first initialization: create a random atmosphere
                 atmNum++;
                 newAtmospheres.Add(new AtmosphericComposition(Random.value, Random.value, Random.value, Random.value * 100));
             }
             else if (newAtmosphere && initialized)
             {
+                // Not initialization: update atmospheres based on contacts
                 atmNum++;
                 AtmosphericComposition atmosphere;
                 if (containedAtmosphere.Contains(0))
@@ -511,6 +519,7 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         Atmospheres = newAtmospheres;
+        // These two should always be equal:
         print("Number of Atmospheres = " + Atmospheres.Count);
         print("Detected Number of Atmospheres = " + atmNum);
         initialized = true;

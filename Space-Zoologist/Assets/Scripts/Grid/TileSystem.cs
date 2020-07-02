@@ -24,6 +24,17 @@ public class TileSystem : MonoBehaviour
         return grid.WorldToCell(worldPosition);
     }
 
+    public Vector3Int GetOrigin() {
+        foreach (Tilemap map in tilemaps) {
+            if (map.name == "Terrain") {
+                print(map.origin);
+                print(map.GetTile(map.origin));
+                return map.origin;
+            }
+        }
+        return new Vector3Int(-99,-99,-99);
+    }
+    
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
     /// </summary>

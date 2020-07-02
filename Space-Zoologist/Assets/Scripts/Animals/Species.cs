@@ -13,6 +13,9 @@ public class Species : ScriptableObject
     public float Size => size;
     public List<TileType> AccessibleTerrain =>accessibleTerrain;
 
+    // TODO Temporary for representation prototype
+    public Dictionary<TileType, byte> TilePreference = default;
+
     // Values
     [SerializeField] private string speciesName = default;
     [Range(0.0f, 10.0f)]
@@ -27,6 +30,13 @@ public class Species : ScriptableObject
     public void OnValidate()
     {
         //AccessibleTerrain = new HashSet<TileType>(accessibleTerrain);
+        TilePreference = new Dictionary<TileType, byte>();
+        TilePreference[TileType.Dirt] = 0;
+        TilePreference[TileType.Sand] = 2;
+        TilePreference[TileType.Rock] = 2;
+        TilePreference[TileType.Grass] = 1;
+        TilePreference[TileType.Liquid] = 4;
+        TilePreference[TileType.Wall] = 99;
     }
 
     /// <summary>

@@ -8,37 +8,48 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class ReservePartitionManager : MonoBehaviour
 {
-    // Singleton
+    /// <summary> Singleton instance. </summary>
     public static ReservePartitionManager ins;
 
-    // Maximum number of populations allowed
+    /// <summary> Maximum number of populations allowed. </summary>
     public const int maxPopulation = 64;
 
-    // The list of populations, not guaranteed to be ordered
+    /// <summary> The list of populations, not guaranteed to be sorted. </summary>
     public List<Population> Populations { get; private set; }
 
-    // A two-way dictionary that stores populations' id
+    // Two way dictionary for population-id exchange
+    /// <summary> A dictionary that stores id by population. </summary>
     public Dictionary<Population, int> PopulationToID { get; private set; }
+    /// <summary> A dictionary that stores population by id. </summary>
     public Dictionary<int, Population> PopulationByID { get; private set; }
 
     // A list of opened ids for use
     private Queue<int> openID;
     private int lastRecycledID;
 
-    // A map that represents the reserve and who can access each tile
-    // The long is a bit mask with the bit (IDth bit) representing a population
+    /// <summary> A map that represents the reserve and who can access each tile
+    /// The long is a bit mask with the bit (IDth bit) representing a population. </summary>
     public Dictionary<Vector3Int, long> AccessMap { get; private set; }
 
-    // Amount of accessible area for each population
+    /// <summary> Amount of accessible tiles for each population. </summary>
     public Dictionary<Population, int> Spaces { get; private set; }
 
-    // Amount of shared space with each population <id, <id, shared tiles> >
+    /// <summary> Amount of shared tiles between each pair of populations. Ordered by [id, [id, shared tiles]]. </summary>
     public Dictionary<int, long[]> SharedSpaces { get; private set; }
 
     /// <summary> A list of populations to be loaded on startup. </summary>
     [SerializeField] List<Population> populationsOnStartUp = default;
 
+    /// <summary>
+    /// The number of each type of terrain that the population has access to.
+    /// Order is as the order of appearance in TileType definition. i.e. int[0] = # of rocks, etc.
+    /// </summary>
     public Dictionary<Population, int[]> TypesOfTerrain;
+
+    /// <summary>
+    /// Stores how much a population would prefer to travel through each tile on the map.
+    /// </summary>
+    public Dictionary<Vector3Int, byte[]> PopulationPreference;
 
     public TerrainTile Liquid;
 
@@ -54,7 +65,6 @@ public class ReservePartitionManager : MonoBehaviour
             ins = this;
         }
 
-        // long mask is limited to 64 bits
         openID = new Queue<int>();
         lastRecycledID = maxPopulation - 1; // 63
         for (int i = maxPopulation - 1; i >= 0; i--)
@@ -68,6 +78,7 @@ public class ReservePartitionManager : MonoBehaviour
         Spaces = new Dictionary<Population, int>();
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
+        PopulationPreference = new Dictionary<Vector3Int, byte[]>();
     }
 
     private void Start()
@@ -149,6 +160,9 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> accessible = new HashSet<Vector3Int>();
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
+
+        // id of the current population
+        int id = PopulationToID[population];
         
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
@@ -156,8 +170,8 @@ public class ReservePartitionManager : MonoBehaviour
         TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
 
         // starting location
-        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
-        stack.Push(location);
+        Vector3Int origin = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
+        stack.Push(origin);
 
         TileSystem _tileSystem = FindObjectOfType<TileSystem>();
 
@@ -181,6 +195,11 @@ public class ReservePartitionManager : MonoBehaviour
                 accessible.Add(cur);
 
                 TypesOfTerrain[population][(int)tile.type]++;
+
+                if (!PopulationPreference.ContainsKey(cur)) {
+                    PopulationPreference[cur] = new byte[maxPopulation];
+                }
+                PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
 
                 if (!AccessMap.ContainsKey(cur))
                 {
@@ -212,7 +231,6 @@ public class ReservePartitionManager : MonoBehaviour
         Spaces[population] = accessible.Count;
 
         // Store the info on overlapping space
-        int id = PopulationToID[population];
         SharedSpaces[id] = SharedTiles;
 
         // Update the new info for pre-existing populations
@@ -224,7 +242,7 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Populate the access map for a population with scanline flood fill.
+    /// Populate the access map for a population with scanline flood fill. 15-20% faster than 4 way flood fill.
     /// </summary>
     /// <param name="population">The population to be generated, assumed to be in Populations</param>
     private void ScanlineGenerateMap(Population population)
@@ -234,14 +252,18 @@ public class ReservePartitionManager : MonoBehaviour
         Vector3Int cur;
         bool openAbove, openBelow;
 
+        // id of the current population
+        int id = PopulationToID[population];
+
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
 
+        // Save the amount of tiles by terrain reached by the population (used for need systems)
         TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
 
-        // starting location
-        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
-        stack.Push(location);
+        // Starting location
+        Vector3Int origin = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
+        stack.Push(origin);
 
         TileSystem _tileSystem = FindObjectOfType<TileSystem>();
 
@@ -252,7 +274,7 @@ public class ReservePartitionManager : MonoBehaviour
             // next point
             cur = stack.Pop();
 
-            // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
+            // go left while possible
             Vector3Int left = cur + Vector3Int.left;
             TerrainTile tile = _tileSystem.GetTerrainTileAtLocation(left);
             while (tile != null && !accessed.Contains(cur) && population.Species.AccessibleTerrain.Contains(tile.type)) {
@@ -261,8 +283,10 @@ public class ReservePartitionManager : MonoBehaviour
                 tile = _tileSystem.GetTerrainTileAtLocation(left);
             }
 
+            // whether the tile above or below is fill-able
             openAbove = openBelow = false;
 
+            // fill the right tile while possible
             Vector3Int right = cur + Vector3Int.right;
             tile = _tileSystem.GetTerrainTileAtLocation(cur);
             while (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
@@ -270,7 +294,15 @@ public class ReservePartitionManager : MonoBehaviour
                 // save the accessible location
                 accessed.Add(cur);
 
+                // data for need system
                 TypesOfTerrain[population][(int)tile.type]++;
+
+                // save how much a population would prefer to travel through the tile
+                if (!PopulationPreference.ContainsKey(cur))
+                {
+                    PopulationPreference[cur] = new byte[maxPopulation];
+                }
+                PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
 
                 // populate the access map
                 if (!AccessMap.ContainsKey(cur))
@@ -279,7 +311,7 @@ public class ReservePartitionManager : MonoBehaviour
                 }
                 AccessMap[cur] |= 1L << PopulationToID[population];
 
-                // Collect info on how the population's space overlaps with others
+                // Collect info on the population's overlapping space with others
                 for (int i = 0; i < Populations.Count; i++)
                 {
                     SharedTiles[i] += (AccessMap[cur] >> PopulationToID[Populations[i]]) & 1L;
@@ -305,6 +337,7 @@ public class ReservePartitionManager : MonoBehaviour
                     openBelow = false;
                 }
 
+                // move right
                 cur = right;
                 right = cur + Vector3Int.right;
                 tile = _tileSystem.GetTerrainTileAtLocation(cur);
@@ -315,10 +348,9 @@ public class ReservePartitionManager : MonoBehaviour
         Spaces[population] = accessed.Count;
 
         // Store the info on overlapping space
-        int id = PopulationToID[population];
         SharedSpaces[id] = SharedTiles;
 
-        // Update the new info for pre-existing populations
+        // Update the new area info for pre-existing populations
         for (int i = 0; i < SharedSpaces[id].Length; i++)
         {
             if (PopulationByID.ContainsKey(i) && SharedSpaces[id][i] != 0)
@@ -393,7 +425,6 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TODO Considering to remove this function and use RPM with cell position only
     /// Check if a population can access toWorldPos.
     /// </summary>
     public bool CanAccess(Population population, Vector3 toWorldPos)
@@ -429,21 +460,11 @@ public class ReservePartitionManager : MonoBehaviour
     {
         // convert to map position
         Vector3Int cellPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
-
-        List<Population> accessible = new List<Population>();
-        foreach (Population population in Populations)
-        {
-            // utilize CanAccess()
-            if (CanAccess(population, cellPos))
-            {
-                accessible.Add(population);
-            }
-        }
-        return accessible;
+        return GetPopulationsWithAccessTo(cellPos);
     }
 
     /// <summary>
-    /// Go through Populations and return a list of populations that has access to the tile corresponding to toWorldPos.
+    /// Go through Populations and return a list of populations that has access to the tile corresponding to cellPos.
     /// </summary>
     public List<Population> GetPopulationsWithAccessTo(Vector3Int cellPos)
     {

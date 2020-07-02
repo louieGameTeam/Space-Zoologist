@@ -11,8 +11,8 @@ public class FoodSource : MonoBehaviour
     public FoodTypes Type { get => type; }
 
     // ScriptableObject to read from
-    [SerializeField] private FoodScriptableObject species = default;
-    public FoodScriptableObject Species { get => species; }
+    [SerializeField] private FoodSpecies species = default;
+    public FoodSpecies Species { get => species; }
 
     // For debugging, might be removed later
     // How much of each need is provided, raw value of needs
@@ -25,8 +25,6 @@ public class FoodSource : MonoBehaviour
 
     [SerializeField] private float totalOutput;
     public float TotalOutput { get => totalOutput; }
-
-    public WorldAtmosphere atm;
 
     // Start is called before the first frame update
     void Awake()
@@ -48,7 +46,7 @@ public class FoodSource : MonoBehaviour
     /// </summary>
     public void DetectEnvironment()
     {
-        NeedScriptableObject[] needs = species.Needs;
+        PlantNeed[] needs = species.Needs;
         float[] weights = species.Severities;
         PlantNeedType[] types = species.Types;
         TileSystem tileSystem = FindObjectOfType<TileSystem>();
@@ -71,10 +69,10 @@ public class FoodSource : MonoBehaviour
                         List<TileType> tiles = new List<TileType>();
                         foreach (TerrainTile tile in terrainTiles)
                         {
-                            tiles.Add(tile.type); // TileType tile.type is defined in TerrainNeedScriptableObject
+                            tiles.Add(tile.type); // TileType tile.type is defined in TerrainPlantNeed
                         }
 
-                        // imported from TerrainNeedScriptableObject
+                        // imported from TerrainPlantNeed
                         float total_value = 0;
                         for (int ind = 0; ind < tiles.Count; ind++)
                         {
