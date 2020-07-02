@@ -15,7 +15,7 @@ public class FoodSourceManager : MonoBehaviour
 
     [SerializeField] private GameObject foodSourcePrefab = default;
 
-    // TODO: 
+    // Create FoodSourceNeedSystems for each food species
     private void Awake()
     {
         // Add new FoodSourceNeedSystem
@@ -52,20 +52,23 @@ public class FoodSourceManager : MonoBehaviour
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
         foodSourceNeedSystems[foodSource.Species].AddFoodSource(foodSource);
+
+        // Register with NeedSystemManager
+        needSystemManager.RegisterWithNeedSystems(foodSource);
     }
 
     public void CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
     {
-        FoodSourceSpecies foodSourceSpecies = null;
-        if (!nameSpeciesMapping.TryGetValue(foodsourceSpeciesID, out foodSourceSpecies))
-        {
-            throw new System.ArgumentException("foodsourceSpeciesID was not found in the FoodsourceManager's foodsources");
-        }
+        //FoodSourceSpecies foodSourceSpecies = null;
+        ////if (!nameSpeciesMapping.TryGetValue(foodsourceSpeciesID, out foodSourceSpecies))
+        ////{
+        ////    throw new System.ArgumentException("foodsourceSpeciesID was not found in the FoodsourceManager's foodsources");
+        ////}
 
-        CreateFoodSource(foodSourceSpecies, position);
+        //CreateFoodSource(foodSourceSpecies, position);
 
-        // Register with NeedSystemManager
-        needSystemManager.RegisterWithNeedSystems(foodSource);
+        //// Register with NeedSystemManager
+        //needSystemManager.RegisterWithNeedSystems(foodSource);
     }
 
     public void UpdateFoodSources()

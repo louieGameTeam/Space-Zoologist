@@ -9,27 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-<<<<<<< HEAD:Space-Zoologist/Assets/ScriptableObjects/Species/Animals/Madle/Madle.asset
-  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: Madle
-  m_EditorClassIdentifier: 
-  speciesName: Madle
-  dominance: 10
-  growthFactor: 5.87
-  needsList:
-  - {fileID: 11400000, guid: 617105db510b2314fa21c6a3f72637b3, type: 2}
-  size: 10
-  accessibleTerrain: 0200000001000000
-  icon: {fileID: 21300000, guid: 1052a3381dd215349bd618d155d3d9fd, type: 3}
-  representation: {fileID: 21300000, guid: 1052a3381dd215349bd618d155d3d9fd, type: 3}
-=======
-  m_Script: {fileID: 11500000, guid: 4c9a88cb154945e4ab4ae22724758827, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e8f82eb2ed2645dc85f7f19e12276d8, type: 3}
   m_Name: GasZNeed
   m_EditorClassIdentifier: 
   needName: GasZ
   severity: 1
   conditions: 000000000100000002000000
   thresholds:
-  - 2
-  - 4
->>>>>>> Ethan:Space-Zoologist/Assets/ScriptableObjects/Needs/GasZNeed.asset
+  - 5
+  - 6

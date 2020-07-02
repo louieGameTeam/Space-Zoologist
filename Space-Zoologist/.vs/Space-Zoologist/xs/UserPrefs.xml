@@ -1,14 +1,13 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Store/ReserveStore.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Food/FoodSource.cs">
     <Files>
-      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="81" Column="6" />
-      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" Line="15" Column="1" />
-      <File FileName="Assets/Scripts/Store/PlayerController.cs" Line="80" Column="58" />
-      <File FileName="Assets/Scripts/HUD/HUD.cs" Line="9" Column="5" />
-      <File FileName="Assets/Scripts/Journal/JournalSystem.cs" Line="78" Column="12" />
-      <File FileName="Assets/Scripts/SelectableItems/ISelectable.cs" Line="17" Column="5" />
-      <File FileName="Assets/Scripts/Store/StoreItemSO.cs" Line="3" Column="20" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="391" Column="10" />
+      <File FileName="Assets/Scripts/Animals/AnimalSpecies.cs" Line="35" Column="33" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="8" Column="37" />
+      <File FileName="Assets/Scripts/Food/FoodSourceManager.cs" Line="51" Column="73" />
+      <File FileName="Assets/Scripts/Animals/PopulationManager.cs" Line="54" Column="50" />
+      <File FileName="Assets/Scripts/UI/Store/Testing/NeedTesting/NeedSystemsTester.cs" Line="23" Column="66" />
+      <File FileName="Assets/Scripts/Food/FoodSourceSpecies.cs" Line="21" Column="6" />
+      <File FileName="Assets/Scripts/Food/FoodSource.cs" Line="17" Column="41" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,27 +16,39 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Animals" expanded="True" />
+                <Node name="Food" expanded="True">
+                  <Node name="FoodSource.cs" selected="True" />
+                </Node>
                 <Node name="Grid" expanded="True" />
-                <Node name="HUD" expanded="True" />
-                <Node name="Journal" expanded="True" />
                 <Node name="Player" expanded="True" />
                 <Node name="SelectableItems" expanded="True" />
-                <Node name="Store" expanded="True">
-                  <Node name="ReserveStore.cs" selected="True" />
+                <Node name="UI" expanded="True">
+                  <Node name="Store" expanded="True">
+                    <Node name="Testing" expanded="True">
+                      <Node name="NeedTesting" expanded="True" />
+                    </Node>
+                  </Node>
                 </Node>
-                <Node name="Testing" expanded="True" />
               </Node>
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>need</Value>
+          <Value>needs</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4a2ddd7e-272f-401c-af4d-87407364af7d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1c4e19e9-68f7-4239-96b1-8e29d18debb1" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/ethanchiang/Downloads/Space-Zoologist-FoodDistribution/Space-Zoologist/Assets/Scripts/Animals/AnimalSpecies.cs" relfile="Assets/Scripts/Animals/AnimalSpecies.cs" line="37" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

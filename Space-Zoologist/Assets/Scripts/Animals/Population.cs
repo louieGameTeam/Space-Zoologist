@@ -56,15 +56,6 @@ public class Population : Life
     }
 
     /// <summary>
-    /// Increases the number of animals in the population by the given count.
-    /// </summary>
-    /// <param name="count">The number of animals to add to the population</param>
-    public void AddAnimals(int count)
-    {
-        this.count += count;
-    }
-
-    /// <summary>
     /// Update the given need of the population with the given value.
     /// </summary>
     /// <param name="need">The need to update</param>
