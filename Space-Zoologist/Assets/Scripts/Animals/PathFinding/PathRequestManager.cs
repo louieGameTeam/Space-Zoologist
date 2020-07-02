@@ -16,17 +16,34 @@ namespace AnimalPathfinding
 
         bool isProcessingPath;
 
-        static PathRequestManager instance;
+        public static PathRequestManager instance;
 
         void Awake()
         {
-            instance = this;
+             if (instance != null && this != instance)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                instance = this;
+            }
             pathfinding = GetComponent<Pathfinding>();
         }
 
-        public static void RequestPath(Node start, Node end, Action<Node, bool> callback, Grid grid)
+        public static void RequestPath(Vector3Int start, Vector3Int end, Action<Node, bool> callback, Grid grid)
         {
-            PathRequest newRequest = new PathRequest(start, end, callback, grid);
+            // Debug.Log("Start map position: ");
+            // Debug.Log("("+start.x+","+start.y+")");
+            // Debug.Log("End map position: ");
+            // Debug.Log("("+end.x+","+end.y+")");
+            AnimalPathfinding.Node nodeStart = MapToGridUtil.ins.CellToGrid(start, grid);
+            AnimalPathfinding.Node nodeEnd = MapToGridUtil.ins.CellToGrid(end, grid);
+            // Debug.Log("Start grid position: ");
+            // Debug.Log("("+nodeStart.gridX+","+nodeStart.gridY+")");
+            // Debug.Log("End grid position: ");
+            // Debug.Log("("+nodeEnd.gridX+","+nodeEnd.gridY+")");
+            PathRequest newRequest = new PathRequest(nodeStart, nodeEnd, callback, grid);
             instance.pathRequestQueue.Enqueue(newRequest);
             instance.TryProcessNext();
         }

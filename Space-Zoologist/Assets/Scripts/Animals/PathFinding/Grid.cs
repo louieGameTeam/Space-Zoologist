@@ -3,7 +3,7 @@
  * Based on code and tutorial by Sebastian Lague (https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ).
  *   
  * Author: Ronen Ness.
- * Since: 2016. 
+ * Since: 2016.
 */
 using System.Collections.Generic;
 
@@ -169,6 +169,11 @@ namespace AnimalPathfinding
                     }
                     break;
             }
+        }
+
+        public Node GetNode(int x, int y)
+        {
+            return nodes[x, y];
         }
 
 

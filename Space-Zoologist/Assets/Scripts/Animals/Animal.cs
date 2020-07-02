@@ -47,9 +47,8 @@ public class Animal : MonoBehaviour
             return;
         }
         int randNum = rand.Next(this.PopulationInfo.CurrentBehaviors.Count);
-        Debug.Log("Random number: " + randNum);
         string chosenBehavior = this.PopulationInfo.CurrentBehaviors[randNum].ToString();
-        //Debug.Log("Behavior chosen: " + chosenBehavior);
+        // Debug.Log("Behavior chosen: " + chosenBehavior);
         this.CurrentBehavior = this.BehaviorComponents[chosenBehavior];
         this.OnBehaviorFinished = ChooseNextBehavior;
         this.CurrentBehavior.EnterBehavior(this.OnBehaviorFinished);
@@ -62,7 +61,10 @@ public class Animal : MonoBehaviour
 
     public void UpdateAnimations()
     {
-        this.Animator.SetInteger("Movement", (int)this.BehaviorsData.MovementStatus);
-        this.Animator.SetInteger("Direction", (int)this.BehaviorsData.CurrentDirection);
+        if (this.Animator != null && this.BehaviorsData != null)
+        {
+            this.Animator.SetInteger("Movement", (int)this.BehaviorsData.MovementStatus);
+            this.Animator.SetInteger("Direction", (int)this.BehaviorsData.CurrentDirection);
+        }
     }
 }

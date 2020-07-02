@@ -11,7 +11,7 @@ public abstract class Behavior : MonoBehaviour
     private BehaviorFinished Callback { get; set; }
     // Use Animal to access the BehaviorData, Pathfinder, and PopulationInfo.AccessibleLocations
     protected Animal Animal { get; set; }
-    protected MovementController Controller { get; set; }
+    protected MovementController MovementController { get; set; }
     protected AnimalPathfinding.Node PathToDestination { get; set; }
     protected bool isCalculatingPath { get; set; }
 
@@ -22,7 +22,7 @@ public abstract class Behavior : MonoBehaviour
     {
         // This script is attached after the initial start is called for scripts, so these dependencies will already be available in Awake.
         this.Animal = this.gameObject.GetComponent<Animal>();
-        this.Controller = this.gameObject.GetComponent<MovementController>();
+        this.MovementController = this.gameObject.GetComponent<MovementController>();
         this.isCalculatingPath = false;
         this.enabled = false;
     }
@@ -32,7 +32,7 @@ public abstract class Behavior : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
-        
+
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public abstract class Behavior : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -54,6 +54,7 @@ public abstract class Behavior : MonoBehaviour
         if (pathFound)
         {
             this.PathToDestination = path;
+            this.MovementController.AssignPath(path);
             this.isCalculatingPath = false;
         }
         else

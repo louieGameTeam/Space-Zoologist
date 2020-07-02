@@ -1,56 +1,48 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
 
 /// <summary>
 /// Takes in a path and moves sprite through it.
 /// </summary>
 public class MovementController : MonoBehaviour
 {
-    [Header("For testing, grid should be created by rpm")]
-    [SerializeField] private AnimalPathfinding.Pathfinding pathfinder = default;
-    [SerializeField] private Tilemap testingMap = default;
     private Animal Animal { get; set; }
     private AnimalPathfinding.Node PathToDestination { get; set; }
     private Vector3 NextPathTile { get; set; }
-    TileSystem _tileSystem; //GetTerrainTile API from Virgil
+    public bool DestinationReached = true;
+    // private Vector3 NextPathTile { get; set; }
 
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
-         _tileSystem = FindObjectOfType<TileSystem>();
     }
 
-    // TODO this shouldn't be needed and should instead be a part of the pathfinding system.
-    // The pathfinding system should always have the most updated map in grid format
-    public void GetPath(AnimalPathfinding.Node start, AnimalPathfinding.Node end, System.Action<AnimalPathfinding.Node, bool> callback) 
+    public void AssignPath(AnimalPathfinding.Node pathToDestination)
     {
-        // Debug.Log("Start cell position: ");
-        // Debug.Log("("+start.gridX+","+start.gridY+")");
-        // Debug.Log("End cell position: ");
-        // Debug.Log("("+end.gridX+","+end.gridY+")");
-        AnimalPathfinding.PathRequestManager.RequestPath(start, end, callback, this.Animal.PopulationInfo.grid);
+        this.PathToDestination = pathToDestination;
+        this.NextPathTile = MapToGridUtil.ins.GridToCell(pathToDestination, 0.5f);
+        this.DestinationReached = false;
     }
 
     /// <summary>
-    /// Function to be called in Update. When the NextPathNode is reached, the direction and movement are upated and the next node in the path is returned.
+    /// Called in update to move towards destination. Returns true when destination reached.
     /// </summary>
-    /// <param name="pathToDestination"></param>
     /// <returns></returns>
-    public AnimalPathfinding.Node MoveAlongLocationPath(AnimalPathfinding.Node pathToDestination)
+    public void MoveTowardsDestination()
     {
         if (this.NextPathNodeReached(this.NextPathTile, this.transform.position))
         {
-            // The path wasn't properly found or the destination has been reached
-            if (pathToDestination == null || pathToDestination.parent == null)
+            // The destination has been reached
+            if (this.PathToDestination == null || this.PathToDestination.parent == null)
             {
-                return null;
+                this.DestinationReached = true;
+                return;
             }
             // Update to the next path tile and sprite stuff
             else
             {
-                pathToDestination = pathToDestination.parent;
-                this.NextPathTile = new Vector3(pathToDestination.gridX + 0.5f, pathToDestination.gridY + 0.5f, 0);
+                this.PathToDestination = this.PathToDestination.parent;
+                // Need to translate back from grid to cell
+                this.NextPathTile = MapToGridUtil.ins.GridToCell(this.PathToDestination, 0.5f);
                 //Debug.Log("("+pathToDestination.gridX+"),"+"("+pathToDestination.gridY+")");
                 // After the next path tile has been chosen, update your direction
                 this.HandleDirectionChange(this.transform.position, this.NextPathTile);
@@ -66,7 +58,6 @@ public class MovementController : MonoBehaviour
             }
         }
         this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.Animal.BehaviorsData.Speed);
-        return pathToDestination;
     }
 
     private bool NextPathNodeReached(Vector3 destination, Vector3 currentLocation)

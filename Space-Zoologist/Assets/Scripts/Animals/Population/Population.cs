@@ -7,8 +7,6 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class Population : MonoBehaviour
 {
-    // TODO refactor into static utitlity
-    [SerializeField] Tilemap TilemapReference = default;
     // Defined at runtime or added when a pod is used based off pods
     [SerializeField] public List<GameObject> AnimalPopulation = default;
 
@@ -24,27 +22,12 @@ public class Population : MonoBehaviour
     private Dictionary<NeedName, float> Needs = new Dictionary<NeedName, float>();
     private Vector2Int origin = Vector2Int.zero;
 
-    public AnimalPathfinding.Grid grid { get; set; }
+    public AnimalPathfinding.Grid grid { get; private set; }
+    public List<Vector3Int>  AccessibleLocations { get; private set; }
 
     private void Awake()
     {
         this.CurrentBehaviors = new List<BehaviorScriptName>();
-    }
-
-    private void Start()
-    {
-        this.InitializeExistingAnimals();
-    }
-
-    private void InitializeExistingAnimals()
-    {
-        int i = 0;
-        foreach (GameObject animal in this.AnimalPopulation)
-        {
-            this.AddComponentByName(Species.Behaviors, animal);
-            animal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[i]);
-            i++;
-        }
     }
 
     /// <summary>
@@ -57,6 +40,7 @@ public class Population : MonoBehaviour
     {
         this.species = species;
         this.origin = origin;
+        this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
         // TODO population instantiation should likely come from an populationdata object which should already have this defined
         // - the pods will contain populations which we'll likely want to specify certain aspects of
         while (this.AnimalsBehaviorData.Count < this.AnimalPopulation.Count)
@@ -77,13 +61,9 @@ public class Population : MonoBehaviour
     public void InitializePopulationData()
     {
         ReservePartitionManager.ins.AddPopulation(this);
-        this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
-        // TODO determine what format accessible locations should be in and have RPM return that instead.
-        List<Vector3Int> accessibleLocation = ReservePartitionManager.ins.GetLocationWithAccess(this);
-        Debug.Log(TilemapReference.size.x);
-        bool[,] tileGrid = new bool[TilemapReference.size.x,TilemapReference.size.y];
-        // TODO translate between accessibleLocations and grid locations
-        grid = new AnimalPathfinding.Grid(tileGrid);
+        this.AccessibleLocations = ReservePartitionManager.ins.GetLocationWithAccess(this);
+        // TODO test translations between accessibleLocations and grid locations
+        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, MapToGridUtil.ins.map);
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
@@ -93,6 +73,17 @@ public class Population : MonoBehaviour
         foreach (SpeciesNeed need in Species.Needs)
         {
             Needs.Add(need.Name, 0);
+        }
+    }
+
+    public void InitializeExistingAnimals()
+    {
+        int i = 0;
+        foreach (GameObject animal in this.AnimalPopulation)
+        {
+            this.AddComponentByName(Species.Behaviors, animal);
+            animal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[i]);
+            i++;
         }
     }
 
@@ -178,12 +169,6 @@ public class Population : MonoBehaviour
     public void FilterBehaviors()
     {
         throw new System.NotImplementedException();
-    }
-
-    // TODO refactor into static utitlity
-    public Vector3Int WorldToCell(Vector3 position)
-    {
-        return this.TilemapReference.WorldToCell(position);
     }
 
     // Ensure there are enough behavior data scripts mapped to the population size

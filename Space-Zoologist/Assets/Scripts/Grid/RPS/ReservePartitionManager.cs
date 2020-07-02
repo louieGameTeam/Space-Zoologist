@@ -172,6 +172,24 @@ public class ReservePartitionManager : MonoBehaviour
         return list;
     }
 
+    // Will need to make the grid the size of the max tilemap size
+    public AnimalPathfinding.Grid GetGridWithAccess(Population population, Tilemap temp)
+    {
+        bool[,] tileGrid = new bool[temp.size.x, temp.size.y];
+        foreach (KeyValuePair<Vector3Int, long> position in accessMap) {
+            //Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
+            if (CanAccess(population, position.Key))
+            {
+                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = true;
+            }
+            else
+            {
+                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = false;
+            }
+        }
+        return new AnimalPathfinding.Grid(tileGrid);
+    }
+
     ///<summary>
     ///Update the access map for every population in Pops.
     ///</summary>

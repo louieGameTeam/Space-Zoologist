@@ -1,20 +1,21 @@
 ﻿/**
  * Provide simple path-finding algorithm with tile weight support.
  * Based on code and tutorial by Sebastian Lague (https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ).
- *   
+ *
  * Author: Ronen Ness.
- * Since: 2016. 
+ * Since: 2016.
 */
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Tilemaps;
 
+// TODO use hashset to mark visited vector locations on get neighbor, remove grid
 namespace AnimalPathfinding
 {
     /// <summary>
     /// Main class to find the best path to walk from A to B.
-    /// 
+    ///
     /// Usage example:
     /// Grid grid = new Grid(width, height, tiles_costs);
     /// </summary>
@@ -36,14 +37,7 @@ namespace AnimalPathfinding
 			Manhattan
         }
 
-        [SerializeField] Tilemap testingMap = default;
-        private PathRequestManager requestManager { get; set; }
-        public bool ignoreWeights { get; private set; }
-        
-        public void Start()
-        {
-            this.requestManager = this.gameObject.GetComponent<PathRequestManager>();
-        }
+        private bool ignoreWeights = true;
 
         public void StartPathFind(Node start, Node targetPos, Grid grid)
         {
@@ -66,8 +60,9 @@ namespace AnimalPathfinding
             if (!startNode.walkable && targetNode.walkable)
             {
                 yield return null;
-                requestManager.FinishedProcessPath(path, path==null);
+                PathRequestManager.instance.FinishedProcessPath(path, path==null);
             }
+
             Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);
             HashSet<Node> closedSet = new HashSet<Node>();
             openSet.Add(startNode);
@@ -104,7 +99,7 @@ namespace AnimalPathfinding
 
             yield return null;
             bool pathSuccessfullyFound = (path != null) ? true : false;
-            requestManager.FinishedProcessPath(path, pathSuccessfullyFound);
+            PathRequestManager.instance.FinishedProcessPath(path, pathSuccessfullyFound);
         }
 
         // Need to reverse linked list so the animals can follow it from their current location
@@ -116,20 +111,25 @@ namespace AnimalPathfinding
             Vector2 directionOld = Vector2.zero;
             while(curr.parent != null)
             {
-                Vector2 directionNew = new Vector2(curr.gridX - curr.parent.gridX, curr.gridY - curr.parent.gridY);
-                if (directionNew != directionOld) {  
-                    next = curr.parent;
-                    curr.parent = prev;
-                    prev = curr;
-                    curr = next; 
-                    prev.gridX += testingMap.origin.x;
-                    prev.gridY += testingMap.origin.y;
-                }
-                else
-                {
-                    curr = curr.parent;
-                }
-                directionOld = directionNew;
+                // Vector2 directionNew = new Vector2(curr.gridX - curr.parent.gridX, curr.gridY - curr.parent.gridY);
+                // if (directionNew != directionOld) {
+                //     next = curr.parent;
+                //     curr.parent = prev;
+                //     prev = curr;
+                //     curr = next;
+                //     // prev.gridX += MapToGridUtil.ins.map.origin.x;
+                //     // prev.gridY += MapToGridUtil.ins.map.origin.y;
+                // }
+                // else
+                // {
+                //     curr = curr.parent;
+                // }
+                // directionOld = directionNew;
+
+                next = curr.parent;
+                curr.parent = prev;
+                prev = curr;
+                curr = next;
             }
             return prev;
         }
@@ -144,7 +144,7 @@ namespace AnimalPathfinding
         {
             int dstX = System.Math.Abs(nodeA.gridX - nodeB.gridX);
             int dstY = System.Math.Abs(nodeA.gridY - nodeB.gridY);
-            return (dstX > dstY) ? 
+            return (dstX > dstY) ?
                 14 * dstY + 10 * (dstX - dstY) :
                 14 * dstX + 10 * (dstY - dstX);
         }

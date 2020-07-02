@@ -13,12 +13,10 @@ public class RandomMovement : Behavior
     // Base is called last, enabling the component and thus enabling Update.
     public override void EnterBehavior(BehaviorFinished callback)
     {
-        // TODO figure out what format to use for pathfinding grid
-        // var r = new System.Random();
-        // int locationIndex = r.Next(0, Animal.PopulationInfo.AccessibleLocations.Count);
-        // Vector3Int end = Animal.PopulationInfo.AccessibleLocations.ElementAt(locationIndex);
-        // base.Controller.GetPath(new AnimalPathfinding.Node(0, base.Animal.PopulationInfo.WorldToCell(transform.position).x, base.Animal.PopulationInfo.WorldToCell(transform.position).y),
-        //  new AnimalPathfinding.Node(0, end.x, end.y), base.PathFound);
+        var r = new System.Random();
+        int locationIndex = r.Next(0, Animal.PopulationInfo.AccessibleLocations.Count);
+        Vector3Int end = Animal.PopulationInfo.AccessibleLocations[locationIndex];
+        AnimalPathfinding.PathRequestManager.RequestPath(MapToGridUtil.ins.WorldToCell(this.transform.position), end, base.PathFound, base.Animal.PopulationInfo.grid);
         base.EnterBehavior(callback);
     }
     // Default behavior moves along a random path
@@ -26,8 +24,8 @@ public class RandomMovement : Behavior
     {
         if (!base.IsCalculatingPath())
         {
-            this.PathToDestination = base.Controller.MoveAlongLocationPath(this.PathToDestination);
-            if (this.PathToDestination == null)
+            base.MovementController.MoveTowardsDestination();
+            if (base.MovementController.DestinationReached)
             {
                 base.ExitBehavior();
             }

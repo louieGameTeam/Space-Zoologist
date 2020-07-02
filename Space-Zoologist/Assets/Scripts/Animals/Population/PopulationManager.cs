@@ -39,6 +39,7 @@ public class PopulationManager : MonoBehaviour
     public void SetupExistingPopulation(Population population)
     {
         population.InitializePopulationData();
+        population.InitializeExistingAnimals();
         foreach (SpeciesNeed need in population.Species.Needs)
         {
             needSystemManager.RegisterPopulation(population, need.Name);
