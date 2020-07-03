@@ -22,11 +22,12 @@ public class AtmosphericComposition
         gasX = gasY = gasZ = temperature = 0;
     }
 
-    public AtmosphericComposition(float _gasX, float _gasY, float _gasZ, float temperature)
+    public AtmosphericComposition(float _gasX, float _gasY, float _gasZ, float _temperature)
     {
         gasX = _gasX;
         gasY = _gasY;
         gasZ = _gasZ;
+        temperature = _temperature;
     }
 
     public AtmosphericComposition(AtmosphericComposition from)
@@ -47,6 +48,16 @@ public class AtmosphericComposition
     {
         return new AtmosphericComposition((lhs.gasX + rhs.gasX)/2.0f, (lhs.gasY + rhs.gasY) / 2.0f,
             (lhs.gasZ + rhs.gasZ) / 2.0f, (lhs.temperature + rhs.temperature) / 2.0f);
+    }
+
+    // return a new atmosphere from lhs and rhs in proportion
+    public static AtmosphericComposition Combine(AtmosphericComposition lhs, int lhs_size, AtmosphericComposition rhs, int rhs_size) {
+        int total_size = lhs_size + rhs_size;
+        float lhs_prop = lhs_size / total_size;
+        float rhs_prop = rhs_size / total_size;
+
+        return new AtmosphericComposition(lhs.gasX * lhs_prop + rhs.gasX * rhs_prop, lhs.gasY * lhs_prop + rhs.gasY * rhs_prop,
+            lhs.gasZ * lhs_prop + rhs.gasZ * rhs_prop, lhs.temperature * lhs_prop + rhs.temperature * rhs_prop);
     }
 
     public override string ToString() {
@@ -86,6 +97,8 @@ public class EnclosureSystem : MonoBehaviour
 
         PositionToAtmosphere = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
+
+        // The global atmosphere, default to be 0,0,0,0.
         GlobalAtmosphere = new AtmosphericComposition();
         _tileSystem = FindObjectOfType<TileSystem>();
     }
@@ -420,6 +433,9 @@ public class EnclosureSystem : MonoBehaviour
         // and iterate through stack and assign atmosphere number
         byte atmNum = 1;
 
+        // number of tiles in an atmosphere
+        int numTiles = 0;
+
         // iterate until no tile left in walls
         while (walls.Count > 0)
         {
@@ -462,6 +478,8 @@ public class EnclosureSystem : MonoBehaviour
 
                         newAtmosphere = true;
                         PositionToAtmosphere[cur] = atmNum;
+
+                        numTiles++;
 
                         // check all 4 tiles around, may be too expensive/awaiting optimization
                         stack.Push(cur + Vector3Int.left);
@@ -516,6 +534,9 @@ public class EnclosureSystem : MonoBehaviour
                 }
                 newAtmospheres.Add(atmosphere);
             }
+
+
+            numTiles = 0;
         }
 
         Atmospheres = newAtmospheres;

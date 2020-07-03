@@ -45,6 +45,15 @@ public class PathfindTester : MonoBehaviour
             Vector3Int pos = node.pos;
             queue.Remove(node);
             visited.Add(node.pos);
+            List<Node> toRemove = new List<Node>();
+            foreach (Node n in queue) {
+                if (n.pos == pos && n != node) {
+                    toRemove.Add(n);
+                }
+            }
+            foreach (Node n in toRemove) {
+                queue.Remove(n);
+            }
             if (pos != end)
             {
                 if (!visited.Contains(pos+Vector3Int.up) && rpm.CanAccess(pop, pos + Vector3Int.up) && rpm.PopulationPreference.ContainsKey(pos + Vector3Int.up))

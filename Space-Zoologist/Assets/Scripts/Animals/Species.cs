@@ -35,7 +35,7 @@ public class Species : ScriptableObject
         TilePreference[TileType.Sand] = 2;
         TilePreference[TileType.Rock] = 2;
         TilePreference[TileType.Grass] = 1;
-        TilePreference[TileType.Liquid] = 4;
+        TilePreference[TileType.Liquid] = 10;
         TilePreference[TileType.Wall] = 99;
     }
 

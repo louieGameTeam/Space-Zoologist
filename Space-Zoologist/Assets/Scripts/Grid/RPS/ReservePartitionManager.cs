@@ -44,7 +44,7 @@ public class ReservePartitionManager : MonoBehaviour
     /// The number of each type of terrain that the population has access to.
     /// Order is as the order of appearance in TileType definition. i.e. int[0] = # of rocks, etc.
     /// </summary>
-    public Dictionary<Population, int[]> TypesOfTerrain;
+    private Dictionary<Population, int[]> TypesOfTerrain;
 
     /// <summary>
     /// Stores how much a population would prefer to travel through each tile on the map.
@@ -464,7 +464,7 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Go through Populations and return a list of populations that has access to the tile corresponding to cellPos.
+    /// Go through Populations and return a list of populations that have access to the tile corresponding to cellPos.
     /// </summary>
     public List<Population> GetPopulationsWithAccessTo(Vector3Int cellPos)
     {
@@ -488,5 +488,15 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns></returns>
     public int[] GetTypesOfTiles(Population population) {
         return TypesOfTerrain[population];
+    }
+
+    public byte GetPreference(Population population, Vector3Int cellPos) {
+        if (!PopulationPreference.ContainsKey(cellPos) || PopulationPreference[cellPos][PopulationToID[population]] == 0)
+        {
+            return 255;
+        }
+        else {
+            return PopulationPreference[cellPos][PopulationToID[population]];
+        }
     }
 }
