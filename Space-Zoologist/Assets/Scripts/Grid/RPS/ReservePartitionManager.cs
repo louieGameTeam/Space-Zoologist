@@ -302,7 +302,8 @@ public class ReservePartitionManager : MonoBehaviour
                 {
                     PopulationPreference[cur] = new byte[maxPopulation];
                 }
-                PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
+                if(population.Species.TilePreference.ContainsKey(tile.type))
+                    PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
 
                 // populate the access map
                 if (!AccessMap.ContainsKey(cur))
@@ -490,6 +491,12 @@ public class ReservePartitionManager : MonoBehaviour
         return TypesOfTerrain[population];
     }
 
+    /// <summary>
+    /// Get a population's preference on a cell position.
+    /// </summary>
+    /// <param name="population"></param>
+    /// <param name="cellPos"></param>
+    /// <returns></returns>
     public byte GetPreference(Population population, Vector3Int cellPos) {
         if (!PopulationPreference.ContainsKey(cellPos) || PopulationPreference[cellPos][PopulationToID[population]] == 0)
         {

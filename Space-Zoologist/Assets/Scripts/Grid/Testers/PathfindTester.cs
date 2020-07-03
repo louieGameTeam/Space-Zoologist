@@ -45,24 +45,29 @@ public class PathfindTester : MonoBehaviour
             Vector3Int pos = node.pos;
             queue.Remove(node);
             visited.Add(node.pos);
-            List<Node> toRemove = new List<Node>();
+
+            // remove any node 
+            LinkedList<Node> toRemove = new LinkedList<Node>();
             foreach (Node n in queue) {
                 if (n.pos == pos && n != node) {
-                    toRemove.Add(n);
+                    toRemove.AddLast(n);
                 }
             }
             foreach (Node n in toRemove) {
                 queue.Remove(n);
             }
+
             if (pos != end)
             {
-                if (!visited.Contains(pos+Vector3Int.up) && rpm.CanAccess(pop, pos + Vector3Int.up) && rpm.PopulationPreference.ContainsKey(pos + Vector3Int.up))
+                // if adjacent tiles are not visited and can be accessed, add it to queue
+                // new cost of node is 'original cost' + 'preference of tile'
+                if (!visited.Contains(pos+Vector3Int.up) && rpm.CanAccess(pop, pos + Vector3Int.up))
                     queue.Add(new Node(pos + Vector3Int.up, end, node.cost + rpm.PopulationPreference[pos+Vector3Int.up][id], node));
-                if (!visited.Contains(pos + Vector3Int.left) && rpm.CanAccess(pop, pos + Vector3Int.left) && rpm.PopulationPreference.ContainsKey(pos + Vector3Int.left))
+                if (!visited.Contains(pos + Vector3Int.left) && rpm.CanAccess(pop, pos + Vector3Int.left))
                     queue.Add(new Node(pos + Vector3Int.left, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.left][id], node));
-                if (!visited.Contains(pos + Vector3Int.down) && rpm.CanAccess(pop, pos + Vector3Int.down) && rpm.PopulationPreference.ContainsKey(pos + Vector3Int.down))
+                if (!visited.Contains(pos + Vector3Int.down) && rpm.CanAccess(pop, pos + Vector3Int.down))
                     queue.Add(new Node(pos + Vector3Int.down, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.down][id], node));
-                if (!visited.Contains(pos + Vector3Int.right) && rpm.CanAccess(pop, pos + Vector3Int.right) && rpm.PopulationPreference.ContainsKey(pos + Vector3Int.right))
+                if (!visited.Contains(pos + Vector3Int.right) && rpm.CanAccess(pop, pos + Vector3Int.right))
                     queue.Add(new Node(pos + Vector3Int.right, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.right][id], node));
             }
             else {
@@ -99,7 +104,7 @@ class Node: IComparable<Node> {
         prev = previous;
         goal = cur_goal;
         cost = cur_cost;
-        dist = Vector3Int.Distance(position, goal);
+        dist = Vector3Int.Distance(position, goal)*10;
     }
     public int CompareTo(Node a) {
         if (cost + dist < a.cost + a.dist)

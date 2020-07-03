@@ -31,12 +31,12 @@ public class Species : ScriptableObject
     {
         //AccessibleTerrain = new HashSet<TileType>(accessibleTerrain);
         TilePreference = new Dictionary<TileType, byte>();
-        TilePreference[TileType.Dirt] = 0;
-        TilePreference[TileType.Sand] = 2;
-        TilePreference[TileType.Rock] = 2;
-        TilePreference[TileType.Grass] = 1;
-        TilePreference[TileType.Liquid] = 10;
-        TilePreference[TileType.Wall] = 99;
+        TilePreference[TileType.Dirt] = 10;
+        TilePreference[TileType.Sand] = 20;
+        TilePreference[TileType.Rock] = 15;
+        TilePreference[TileType.Grass] = 10;
+        TilePreference[TileType.Liquid] = 200;
+        TilePreference[TileType.Wall] = 255;
     }
 
     /// <summary>
