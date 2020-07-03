@@ -10,13 +10,36 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GameObject populationGameObject = default;
     [SerializeField] private ReservePartitionManager rpm = default;
+    //[SerializeField] private PopulationDensitySystem populationDensitySystem = default;
+
+    [SerializeField] private LevelData levelData = default;
+
+    private Dictionary<AnimalSpecies, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<AnimalSpecies, SpeciesNeedSystem>();
+
+    private void Awake()
+    {
+        // Add new FoodSourceNeedSystem
+        foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
+        {
+            SpeciesNeedSystem speciesNeedSystem = new SpeciesNeedSystem(animalSpecies.SpeciesName, rpm);
+            speciesNeedSystems.Add(animalSpecies, speciesNeedSystem);
+        }
+    }
 
     private void Start()
     {
         populations.AddRange(FindObjectsOfType<Population>());
+
+        // Add SpeicesNeedSystems to NeedSystemManager
+        foreach (SpeciesNeedSystem speciesNeedSystem in speciesNeedSystems.Values)
+        {
+            needSystemManager.AddSystem(speciesNeedSystem);
+        }
+
+        // Register with manager
         foreach (Population population in populations)
         {
-            needSystemManager.RegisterPopulationNeeds(population);
+            needSystemManager.RegisterWithNeedSystems(population);
         }
     }
 
@@ -32,8 +55,11 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.Initialize(species, position, count);
         this.populations.Add(population);
-        needSystemManager.RegisterPopulationNeeds(population);
         rpm.AddPopulation(population);
+        speciesNeedSystems[population.Species].AddPopulation(population);
+
+        // Register with NeedSystemManager
+        needSystemManager.RegisterWithNeedSystems(population);
     }
 
     /// <summary>

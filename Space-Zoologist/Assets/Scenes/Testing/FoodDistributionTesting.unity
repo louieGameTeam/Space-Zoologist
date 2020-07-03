@@ -1935,6 +1935,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &533537346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 533537348}
+  - component: {fileID: 533537347}
+  m_Layer: 0
+  m_Name: EnclosureSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &533537347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533537346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc1a1a38a0193b46956797608201aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
+--- !u!4 &533537348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533537346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3607244, y: -0.17142999, z: -2.5498354}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &643818402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,7 +2386,7 @@ MonoBehaviour:
     Up Arrow:
     Cycle through populations/foodsources
 
-    Space: Update FoodDistribution'
+    Space: Update Need systems'
 --- !u!222 &1113216840
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2381,7 +2425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needSystemManager: {fileID: 1713842794}
-  levelData: {fileID: 11400000, guid: 74114b01085bf7c448405353ea54b005, type: 2}
+  levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
   rpm: {fileID: 1983086360}
   foodSourcePrefab: {fileID: 8671077070872712137, guid: 6551f0ab8d9b6234291fc0acd54bd64e,
     type: 3}
@@ -2799,6 +2843,7 @@ RectTransform:
   m_Children:
   - {fileID: 504400017}
   - {fileID: 643818403}
+  - {fileID: 2071534742}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2957,6 +3002,7 @@ MonoBehaviour:
   populationGameObject: {fileID: 2271143050646240502, guid: 2684919613425e34d815583d801a54b9,
     type: 3}
   rpm: {fileID: 1983086360}
+  levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
 --- !u!4 &1612534149
 Transform:
   m_ObjectHideFlags: 0
@@ -3027,9 +3073,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1713842793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea013f1d24bde6043a775df3f770578d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fc47336d459e4489a2d48b7cf7ba142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
 --- !u!4 &1713842795
 Transform:
   m_ObjectHideFlags: 0
@@ -3203,7 +3250,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
   - {fileID: 11400000, guid: 89a14f3ed2f2a9e4b92fcb521dbe1ec2, type: 2}
   - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
-  - {fileID: 11400000, guid: d7f5d3bc3a8557d4d9280a3874180775, type: 2}
+  - {fileID: 11400000, guid: 19b18820db81e411f97bb71e83d98b6a, type: 2}
 --- !u!156049354 &1830548604
 Grid:
   m_ObjectHideFlags: 0
@@ -3245,7 +3292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320d3a1b49d9e93499e06413cacdbe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popOnStartUp: []
+  populationsOnStartUp: []
+  Liquid: {fileID: 0}
 --- !u!4 &1983086361
 Transform:
   m_ObjectHideFlags: 0
@@ -3289,18 +3337,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf84bef694cdf6429b2c9b73d32f3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  needSystemManager: {fileID: 1713842794}
   populationManager: {fileID: 1612534148}
   foodSourceManager: {fileID: 1390993631}
-  needSystemManager: {fileID: 1713842794}
-  levelData: {fileID: 11400000, guid: 74114b01085bf7c448405353ea54b005, type: 2}
   rpm: {fileID: 1983086360}
   populationStats: {fileID: 643818404}
+  foodSourceStats: {fileID: 2071534743}
   availableSpecies:
-  - {fileID: 11400000, guid: db9958fc89d98a64c92615122ad9c320, type: 2}
-  - {fileID: 11400000, guid: 3c68543cf6c278646835aeba257628dd, type: 2}
+  - {fileID: 11400000, guid: 290b051ee23124062af3524bb7c2ecc7, type: 2}
+  - {fileID: 11400000, guid: 70e788cfcfe4147aba974a0201fd1326, type: 2}
   availableFoodSourceSpecies:
-  - {fileID: 11400000, guid: 732875359ec006944a6015fa7cac21da, type: 2}
-  - {fileID: 11400000, guid: d295faeac89ba6747b62ee6ab6b36988, type: 2}
+  - {fileID: 11400000, guid: 2e4e49565d58a49ea985d20d4119acb6, type: 2}
 --- !u!4 &1997176698
 Transform:
   m_ObjectHideFlags: 0
@@ -3432,6 +3479,83 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2071534741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2071534742}
+  - component: {fileID: 2071534744}
+  - component: {fileID: 2071534743}
+  m_Layer: 5
+  m_Name: FoodSource Stats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2071534742
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071534741}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1429260644}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 385, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &2071534743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071534741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &2071534744
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071534741}
+  m_CullTransparentMesh: 0
 --- !u!1 &2141210576
 GameObject:
   m_ObjectHideFlags: 0

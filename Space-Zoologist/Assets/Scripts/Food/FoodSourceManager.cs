@@ -4,30 +4,43 @@ using UnityEngine;
 
 public class FoodSourceManager : MonoBehaviour
 {
+    public List<FoodSource> FoodSources => foodSources;
+
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private LevelData levelData = default;
     [SerializeField] private ReservePartitionManager rpm = default;
     private List<FoodSource> foodSources = new List<FoodSource>();
+    // Having food distribution system in FoodSourceManager is questionable
     private Dictionary<FoodSourceSpecies, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<FoodSourceSpecies, FoodSourceNeedSystem>();
-    private Dictionary<string, FoodSourceSpecies> nameSpeciesMapping = new Dictionary<string, FoodSourceSpecies>();
 
     [SerializeField] private GameObject foodSourcePrefab = default;
 
+    // Create FoodSourceNeedSystems for each food species
     private void Awake()
     {
-        foreach (FoodSourceSpecies species in levelData.FoodSourceSpecies)
+        // Add new FoodSourceNeedSystem
+        foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
         {
-            FoodSourceNeedSystem needSystem = new FoodSourceNeedSystem(species.SpeciesName, rpm);
-            foodSourceNeedSystems.Add(species, needSystem);
-            nameSpeciesMapping.Add(species.SpeciesName, species);
+            FoodSourceNeedSystem foodSourceNeedSystem = new FoodSourceNeedSystem(foodSourceSpecies.SpeciesName, rpm);
+            foodSourceNeedSystems.Add(foodSourceSpecies, foodSourceNeedSystem);
         }
     }
 
     private void Start()
     {
-        foreach (FoodSourceNeedSystem needSystem in foodSourceNeedSystems.Values)
+        // Get all FoodSource at start of level
+        foodSources.AddRange(FindObjectsOfType<FoodSource>());
+
+        // Add FoodSourceNeedSystems to NeedSystemManager
+        foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
         {
-            needSystemManager.AddSystem(needSystem);
+            needSystemManager.AddSystem(foodSourceNeedSystem);
+        }
+
+        // Register Foodsource with NeedSystem via NeedSystemManager
+        foreach (FoodSource foodSource in foodSources)
+        {
+            needSystemManager.RegisterWithNeedSystems(foodSource);
         }
     }
 
@@ -39,24 +52,30 @@ public class FoodSourceManager : MonoBehaviour
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
         foodSourceNeedSystems[foodSource.Species].AddFoodSource(foodSource);
+
+        // Register with NeedSystemManager
+        needSystemManager.RegisterWithNeedSystems(foodSource);
     }
 
     public void CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
     {
-        FoodSourceSpecies foodSourceSpecies = null;
-        if (!nameSpeciesMapping.TryGetValue(foodsourceSpeciesID, out foodSourceSpecies))
-        {
-            throw new System.ArgumentException("foodsourceSpeciesID was not found in the FoodsourceManager's foodsources");
-        }
+        //FoodSourceSpecies foodSourceSpecies = null;
+        ////if (!nameSpeciesMapping.TryGetValue(foodsourceSpeciesID, out foodSourceSpecies))
+        ////{
+        ////    throw new System.ArgumentException("foodsourceSpeciesID was not found in the FoodsourceManager's foodsources");
+        ////}
 
-        CreateFoodSource(foodSourceSpecies, position);
+        //CreateFoodSource(foodSourceSpecies, position);
+
+        //// Register with NeedSystemManager
+        //needSystemManager.RegisterWithNeedSystems(foodSource);
     }
 
     public void UpdateFoodSources()
     {
-        foreach (FoodSourceNeedSystem needSystem in foodSourceNeedSystems.Values)
+        foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
         {
-            needSystem.UpdateSystem();
+            foodSourceNeedSystem.UpdateSystem();
         }
     }
 }
