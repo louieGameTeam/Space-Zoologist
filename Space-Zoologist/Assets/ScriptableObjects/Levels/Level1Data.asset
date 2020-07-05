@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ed08f436813d040a000f64f66f8d4a, type: 3}
+  m_Name: Level1Data
+  m_EditorClassIdentifier: 
+  startingBalance: 0
+  foodSources:
+  - {fileID: 11400000, guid: d295faeac89ba6747b62ee6ab6b36988, type: 2}
+  - {fileID: 11400000, guid: 732875359ec006944a6015fa7cac21da, type: 2}
+  animalSpecies:
+  - {fileID: 11400000, guid: db9958fc89d98a64c92615122ad9c320, type: 2}
+  - {fileID: 11400000, guid: 3c68543cf6c278646835aeba257628dd, type: 2}
+  items:
+  - {fileID: 11400000, guid: cef0695fb9db4174d939ba9e8cf6de19, type: 2}
+  - {fileID: 11400000, guid: 404143142ebf4654887dda64b736dbba, type: 2}
+  - {fileID: 11400000, guid: ba4d9e68192adee4d93a72a7568fcc7b, type: 2}
+  - {fileID: 11400000, guid: b131ca77df6ade348a7c8742d1f51715, type: 2}
+  - {fileID: 11400000, guid: ce7aac1a7a38249449b52aa75f7610f4, type: 2}
+  - {fileID: 11400000, guid: 37c2e0384cb992f418c3d8925c95653b, type: 2}

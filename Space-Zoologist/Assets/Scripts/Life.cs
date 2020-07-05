@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The abstract class both Population and FoodSource will inherit from
+/// The abstract class both Population and FoodSource will inherit from.
+/// Meanly so that they can tab into the NeedSystems
 /// </summary>
 abstract public class Life: MonoBehaviour
 {

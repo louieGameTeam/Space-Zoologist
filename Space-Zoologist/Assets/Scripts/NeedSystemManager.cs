@@ -51,6 +51,7 @@ public class NeedSystemManager : MonoBehaviour
             else if (Enum.IsDefined(typeof(TileType), need))
             {
                 systems["Terrian"].AddPopulation(life);
+                Debug.Log($"Registed {life} with Terrian ({need}) NeedSystem");
             }
             else
             {

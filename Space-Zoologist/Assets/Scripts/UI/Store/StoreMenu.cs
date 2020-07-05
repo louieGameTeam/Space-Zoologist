@@ -3,81 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Handles the store menu's logic.
+/// </summary>
 public class StoreMenu : MonoBehaviour
 {
+    [Header("Dependencies")]
     [SerializeField] LevelData levelData = default;
-    [SerializeField] GameObject storeSectionPrefab = default;
+    [SerializeField] List<StoreSection> sections = default;
     [SerializeField] CursorItem cursorItem = default;
-    [SerializeField] Transform sectionsContainer = default;
+    [SerializeField] GameObject storeSectionPrefab = default;
     RectTransform rectTransform = default;
 
-    StoreItem selectedStoreItem = null;
-
-    private Dictionary<string, StoreSection> storeSections = new Dictionary<string, StoreSection>();
-
-    public void OnCursorItemClick(PointerEventData pointerEventData)
-    {
-        if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, pointerEventData.position))
-        {
-            DeselectItem();
-        }
-        else
-        {
-            Vector3 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
-            // Do something here
-        }
-    }
+    Item selectedStoreItem = null;
+    Dictionary<string, StoreSection> storeSections = new Dictionary<string, StoreSection>();
+    TilePlacementController tilePlacementController = default;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-
-        foreach (StoreItem storeItem in levelData.StoreItems)
+        tilePlacementController = FindObjectOfType<TilePlacementController>();
+        foreach (StoreSection storeSection in sections)
         {
-            if (!storeSections.ContainsKey(storeItem.StoreItemCategory))
-            {
-                MakeSection(storeItem.StoreItemCategory);
-            }
+            storeSections.Add(storeSection.ItemType, storeSection);
+            storeSection.gameObject.SetActive(false);
         }
     }
 
     private void Start()
     {
-        foreach (StoreItem storeItem in levelData.StoreItems)
+        // Initialize store sections with their items.
+        foreach (Item item in levelData.Items)
         {
-            storeSections[storeItem.StoreItemCategory].AddItem(storeItem);
+            storeSections[item.Type].gameObject.SetActive(true);
+            storeSections[item.Type].AddItem(item);
         }
     }
 
-    private void Update()
+    public void OnCursorItemClick(PointerEventData pointerEventData)
     {
-        if (Input.GetMouseButtonUp(1))
+        // Detects if the click is within the bounds of the main menu.
+        // Ideally there'd be a way to detect when cursor item clicks are done over any menu so that you can't click through menus to place items.
+        if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, pointerEventData.position))
         {
-            DeselectItem();
-        }
-    }
-
-    private void MakeSection(string sectionCategory)
-    {
-        GameObject newStoreSectionGO = Instantiate(storeSectionPrefab);
-        newStoreSectionGO.transform.SetParent(sectionsContainer, false);
-        StoreSection newStoreSection = newStoreSectionGO.GetComponent<StoreSection>();
-        newStoreSection.Initialize(sectionCategory, OnSelectItem);
-        storeSections.Add(sectionCategory, newStoreSection);
-    }
-
-    private void OnSelectItem(StoreItem item)
-    {
-        selectedStoreItem = item;
-        cursorItem.Begin(item.Sprite, OnCursorItemClick);
-    }
-
-    private void DeselectItem()
-    {
-        selectedStoreItem = null;
-        if (cursorItem.isActiveAndEnabled)
-        {
-            cursorItem.Stop(OnCursorItemClick);
+            
         }
     }
 }

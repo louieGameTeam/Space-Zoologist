@@ -20,17 +20,19 @@ public class AnimalSpecies : ScriptableObject
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    [SerializeField] private List<Need> needsList = default;
+    [SerializeField] private List<NeedData> needsList = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
 
+
     private void OnEnable()
     {
-        foreach (Need need in needsList)
+        foreach (NeedData needData in needsList)
         {
-            needs.Add(need.NeedName, need);
+            // Use the NeedData to create Need
+            Needs.Add(needData.NeedName, new Need(needData));
         }
     }
 }

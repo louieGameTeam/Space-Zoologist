@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using System;
 
-public enum NeedCondition { Bad, Neutral, Good }
+using UnityEngine; // For Mathf, TODO: try to replace with the C# built-in version
 
-[CreateAssetMenu]
-public class Need : ScriptableObject
+public class Need
 {
     public string NeedName => needName;
     public int Severity => severity;
 
-    [SerializeField] private string needName = default;
-    [Range(1.0f, 10.0f)]
-    [SerializeField] private int severity = 1;
-    [SerializeField] private List<NeedCondition> conditions = default;
-    [SerializeField] private List<float> thresholds = default;
+    private string needName = default;
+    private int severity = 1;
+    private List<NeedCondition> conditions = default;
+    private List<float> thresholds = default;
+
+
+    public Need(NeedData needData)
+    {
+        this.needName = needData.NeedName;
+        this.severity = needData.Severity;
+        this.conditions = needData.Conditions;
+        this.thresholds = needData.Thresholds;
+    }
 
     /// <summary>
     /// Returns what condition the need is in based on the given need value.
