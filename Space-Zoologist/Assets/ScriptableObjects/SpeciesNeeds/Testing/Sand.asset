@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3892d2c258bc5ec4aab8b27abd2c2a78, type: 3}
   m_Name: Sand
   m_EditorClassIdentifier: 
-  type: 5
+  needType: 0
+  _name: 5
   severity: 1
-  conditions: 02000000
-  thresholds: []
+  conditions: 0200000000000000
+  thresholds:
+  - 0
+  sprite: {fileID: 8610565575992400378, guid: 5c45237c93acfef4cb4b168592ffd344, type: 3}

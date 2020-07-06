@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum TileType { Rock, Sand, Dirt, Grass, Liquid };
+public enum TileType { Stone, Sand, Dirt, Grass, Liquid };
 [CreateAssetMenu]
-public class TerrainTile : RuleTile<TerrainTile.Neighbor> 
+public class TerrainTile : RuleTile<TerrainTile.Neighbor>
 {
 	public Tilemap targetTilemap;
 	public List<Tilemap> replacementTilemap;
 	public List<Tilemap> constraintTilemap;
 	public TileType type;
+	public string TileName;
 	public GridUtils.TileLayer targetLayer;
 	public List<GridUtils.TileLayer> replacementLayers;
 	public List<GridUtils.TileLayer> constraintLayers;

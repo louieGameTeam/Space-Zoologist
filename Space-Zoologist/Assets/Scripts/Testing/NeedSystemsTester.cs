@@ -19,7 +19,7 @@ public class NeedSystemsTester : MonoBehaviour
         }
         foreach(Species s in species)
         {
-            populationManager.CreatePopulation(s, Vector2Int.zero);
+            populationManager.CreatePopulation(s, Vector2Int.zero, 1);
         }
     }
 }

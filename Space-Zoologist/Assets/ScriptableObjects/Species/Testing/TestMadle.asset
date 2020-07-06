@@ -17,4 +17,9 @@ MonoBehaviour:
   growthFactor: 2
   needs:
   - {fileID: 11400000, guid: d62a82625602c4442b457d80c3679103, type: 2}
-  sprite: {fileID: 0}
+  BehaviorSets:
+  - BehaviorSet: 2
+    behaviors: 
+  size: 0
+  accessibleTerrain: 01000000
+  sprite: {fileID: 21300000, guid: 1052a3381dd215349bd618d155d3d9fd, type: 3}

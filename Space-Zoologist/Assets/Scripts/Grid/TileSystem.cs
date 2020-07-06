@@ -7,11 +7,23 @@ public class TileSystem : MonoBehaviour
 {
     // Start is called before the first frame update
     private Tilemap[] tilemaps;
+    private Grid grid;
 
     private void Awake()
     {
         tilemaps = GetComponent<TilePlacementController>().allTilemaps;
+        grid = GetComponent<Grid>();
     }
+    /// <summary>
+    /// Convert a world position to cell positions on the grid.
+    /// </summary>
+    /// <param name="worldPosition"></param>
+    /// <returns></returns>
+    public Vector3Int WorldToCell(Vector3 worldPosition)
+    {
+        return grid.WorldToCell(worldPosition);
+    }
+
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
     /// </summary>
@@ -20,12 +32,11 @@ public class TileSystem : MonoBehaviour
     public TerrainTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
         SortedDictionary<int, TerrainTile> existingTiles = new SortedDictionary<int, TerrainTile>();
-
         foreach (Tilemap tilemap in tilemaps)
         {
-            TerrainTile tileOnLayer = (TerrainTile)tilemap.GetTile(cellLocation);
-            if (tileOnLayer != null)
-            {
+            var returnedTile = tilemap.GetTile(cellLocation);
+            if (returnedTile != null && returnedTile.GetType().Equals(typeof(TerrainTile))) {
+                TerrainTile tileOnLayer = (TerrainTile)returnedTile;
                 if (tileOnLayer.isRepresentative)
                 {
                     existingTiles.Add(tileOnLayer.priority, tileOnLayer);
@@ -41,6 +52,7 @@ public class TileSystem : MonoBehaviour
             return null;
         }
     }
+
     /// <summary>
     /// Whether a tile exists at given location, regardless to overlapping
     /// </summary>
@@ -51,6 +63,7 @@ public class TileSystem : MonoBehaviour
     {
         return tile.targetTilemap.GetTile(cellLocation) == tile;
     }
+
     /// <summary>
     /// Returns contents within a tile, e.g. Liquid Composition. If tile has no content, returns null.
     /// </summary>
@@ -71,6 +84,7 @@ public class TileSystem : MonoBehaviour
         }
         return null;
     }
+
     /// <summary>
     /// Returns the cell location of the tile closest to the given center. List contains multiple if more than one tile at same distance.
     /// </summary>
@@ -127,6 +141,7 @@ public class TileSystem : MonoBehaviour
         }
         return closestTiles;
     }
+
     /// <summary>
     /// Returns distance of cloest tiles with different tile contents. e.g.Liquid composition
     /// </summary>
@@ -255,6 +270,7 @@ public class TileSystem : MonoBehaviour
         }
         return -1;
     }
+
     /// <summary>
     /// Returns a list of locations of all tiles in a certain range
     /// </summary>
@@ -289,6 +305,7 @@ public class TileSystem : MonoBehaviour
         }
         return tileLocations;
     }
+
     /// <summary>
     /// Whether any of given tile is within a given range. 
     /// </summary>
@@ -305,6 +322,7 @@ public class TileSystem : MonoBehaviour
         }
         return true;
     }
+
     private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
@@ -320,6 +338,7 @@ public class TileSystem : MonoBehaviour
         }
         return false;
     }
+
     private bool IsTileInAnyOfEight(int distanceX, int distanceY,Vector3Int subjectCellLocation, TerrainTile tile)
     {
         if (IsTileInAnyOfFour(distanceX, distanceY, subjectCellLocation, tile))
@@ -342,6 +361,7 @@ public class TileSystem : MonoBehaviour
         }
         return false;
     }
+
     private List<Vector3Int> TileCellLocationsInFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
@@ -359,6 +379,7 @@ public class TileSystem : MonoBehaviour
         }
         return results;
     }
+
     private List<Vector3Int> TileCellLocationsInEight(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceY, subjectCellLocation.y + distanceX, subjectCellLocation.z);

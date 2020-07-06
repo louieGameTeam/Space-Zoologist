@@ -10,6 +10,7 @@ public class TilePlacementController : MonoBehaviour
     // Can be either pen or block mode.
     public bool isBlockMode { get; set; } = false;
     public TerrainTile selectedTile { get; set; } = default;
+    public Vector3Int mouseCellPosition { get { return currentMouseCellPosition; } }
     [SerializeField] private Camera currentCamera = default;
     private bool isPreviewing { get; set; } = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
@@ -22,7 +23,6 @@ public class TilePlacementController : MonoBehaviour
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     [SerializeField] private TerrainTile[] terrainTiles = default;
     private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles 
-    private Dictionary<Vector3Int, List<TerrainTile>> allAddedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles placed
     private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
@@ -31,6 +31,7 @@ public class TilePlacementController : MonoBehaviour
     private TileSystem tileSystem;
     private int lastCornerX;
     private int lastCornerY;
+
     private void Awake()
     {
         tileSystem = FindObjectOfType<TileSystem>();
@@ -64,13 +65,14 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
     void Update()
     {
         if (isPreviewing)
         {
             Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
             currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
-            if (currentMouseCellPosition != lastMouseCellPosition)
+            if (currentMouseCellPosition != lastMouseCellPosition || isFirstTile)
             {
                 if (isBlockMode)
                 {
@@ -84,6 +86,7 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
     public void StartPreview(TerrainTile newTile)
     {
         isPreviewing = true;
@@ -91,21 +94,6 @@ public class TilePlacementController : MonoBehaviour
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
-    }
-    public void ConfirmPlacement()
-    {
-        foreach (Tilemap tilemap1 in tilemaps)
-        {
-            if (tilemap1.TryGetComponent(out TileContentsManager tilecContentsManager))
-            {
-                tilecContentsManager.FinishPlacement();
-            }
-        }
-        allAddedTiles.Clear();
-        removedTileColors.Clear();
-        addedTiles.Clear();
-        removedTiles.Clear();
-        triedToPlaceTiles.Clear();
     }
     public void StopPreview()
     {
@@ -126,15 +114,23 @@ public class TilePlacementController : MonoBehaviour
                 placedTileColorManager.SetTileColor(vector3Int, selectedTile);
             }
         }
+        removedTileColors.Clear();
         addedTiles.Clear();
+        removedTiles.Clear();
+        triedToPlaceTiles.Clear();
     }
+    public int PlacedTileCount()
+    {
+        return addedTiles.Count();
+    }
+
     public void RevertChanges()
     {
         foreach (Vector3Int changedTileLocation in triedToPlaceTiles)
         {
-            if (allAddedTiles.ContainsKey(changedTileLocation))
+            if (addedTiles.ContainsKey(changedTileLocation))
             {
-                foreach (TerrainTile addedTile in allAddedTiles[changedTileLocation])
+                foreach (TerrainTile addedTile in addedTiles[changedTileLocation])
                 {
                     addedTile.targetTilemap.SetTile(changedTileLocation, null);
                 }
@@ -166,8 +162,8 @@ public class TilePlacementController : MonoBehaviour
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
         StopPreview();
-        allAddedTiles.Clear();
     }
+
     public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles)
     {
         if (colorLinkedTiles.Keys.Contains(selectedTile))
@@ -188,6 +184,7 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
     private void UpdatePreviewPen()
     {
         if (isFirstTile)
@@ -219,6 +216,7 @@ public class TilePlacementController : MonoBehaviour
         }
         PlaceTile(currentMouseCellPosition, selectedTile);
     }
+
     private void UpdatePreviewBlock() //TODO Resolve lag when moving back and forth
     {
         if (isFirstTile)
@@ -311,6 +309,7 @@ public class TilePlacementController : MonoBehaviour
         }
         return false;
     }
+
     private bool PlaceTile(Vector3Int cellLocation, TerrainTile placedTile, bool checkPlacable = true)
     {
         Tilemap targetTilemap = placedTile.targetTilemap;
@@ -360,6 +359,7 @@ public class TilePlacementController : MonoBehaviour
             return false;
         }
     }
+
     private void RestoreReplacedTile (Vector3Int cellLocation)
     {
         foreach (TerrainTile addedTile in addedTiles[cellLocation])
@@ -384,6 +384,7 @@ public class TilePlacementController : MonoBehaviour
             removedTileColors.Remove(cellLocation);
         }
     }
+
     private void AddNewTile(Vector3Int cellLocation, TerrainTile tile)
     {
         triedToPlaceTiles.Add(cellLocation);
@@ -395,14 +396,6 @@ public class TilePlacementController : MonoBehaviour
         {
             addedTiles[cellLocation].Add(tile);
         }
-        if (!allAddedTiles.ContainsKey(cellLocation))
-        {
-            allAddedTiles.Add(cellLocation, new List<TerrainTile> { tile });
-        }
-        else
-        {
-            allAddedTiles[cellLocation].Add(tile);
-        }
         tile.targetTilemap.SetTile(cellLocation, tile);
         PlaceAuxillaryTile(cellLocation, tile);
         if (tile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
@@ -410,6 +403,7 @@ public class TilePlacementController : MonoBehaviour
             tileAttributes.MergeTile(cellLocation, tile, addedTiles.Keys.ToList());
         }
     }
+
     private void ReplaceTile(Tilemap replacedTilemap, Vector3Int cellLocation)
     {
         TerrainTile removedTile = (TerrainTile)replacedTilemap.GetTile(cellLocation);
@@ -435,6 +429,7 @@ public class TilePlacementController : MonoBehaviour
         }
         replacedTilemap.SetTile(cellLocation, null);
     }
+
     private void PlaceAuxillaryTile(Vector3Int cellLocation, TerrainTile tile)
     {
         foreach (TerrainTile auxillaryTile in tile.auxillaryTiles)
@@ -447,17 +442,10 @@ public class TilePlacementController : MonoBehaviour
             {
                 addedTiles[cellLocation].Add(auxillaryTile);
             }
-            if (!allAddedTiles.ContainsKey(cellLocation))
-            {
-                allAddedTiles.Add(cellLocation, new List<TerrainTile> { auxillaryTile });
-            }
-            else
-            {
-                allAddedTiles[cellLocation].Add(auxillaryTile);
-            }
             auxillaryTile.targetTilemap.SetTile(cellLocation, auxillaryTile);
         }
     }
+
     private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile, Tilemap targetTilemap)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
@@ -469,4 +457,5 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
 }
