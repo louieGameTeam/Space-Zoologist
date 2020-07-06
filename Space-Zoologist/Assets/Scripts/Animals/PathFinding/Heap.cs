@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
+/// <summary>
+/// Generic heap data structure.
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Heap<T> where T : IHeapItem<T>
 {
     private T[] items;

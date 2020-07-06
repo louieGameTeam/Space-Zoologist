@@ -6,13 +6,16 @@ public class PopulationManager : MonoBehaviour
 {
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GameObject PopulationPrefab = default;
-    [SerializeField] List<Population> Populations = default;
+    [SerializeField] List<GameObject> Populations = default;
 
     public void Start()
     {
-        foreach (Population population in this.Populations)
+        foreach (GameObject population in this.Populations)
         {
-            this.SetupExistingPopulation(population);
+            if (population.activeSelf)
+            {
+                this.SetupExistingPopulation(population.GetComponent<Population>());
+            }
         }
     }
 
@@ -28,7 +31,7 @@ public class PopulationManager : MonoBehaviour
         newPopulation.name = species.SpeciesName;
         Population newPop = newPopulation.GetComponent<Population>();
         newPop.InitializeNewPopulation(species, origin, populationSize);
-        this.Populations.Add(newPop);
+        this.Populations.Add(newPopulation);
         foreach (SpeciesNeed need in species.Needs)
         {
             needSystemManager.RegisterPopulation(newPop, need.Name);

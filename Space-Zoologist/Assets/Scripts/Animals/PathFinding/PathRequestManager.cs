@@ -6,7 +6,7 @@ using System;
 namespace AnimalPathfinding
 {
     /// <summary>
-    /// Queues up requests instead of attempting to handle them all at once.
+    /// Queues up requests to spread calculations across frames.
     /// </summary>
     public class PathRequestManager : MonoBehaviour
     {
@@ -31,14 +31,22 @@ namespace AnimalPathfinding
             pathfinding = GetComponent<Pathfinding>();
         }
 
-        public static void RequestPath(Vector3Int start, Vector3Int end, Action<Node, bool> callback, Grid grid)
+        /// <summary>
+        /// Used by behaviors to calculate a path between 2 points on a grid (2d array calculated by RPM). 
+        /// Callback invoked after path has been calculated, returning the path and true if successful.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="callback">Defined in base.Behavior: PathFound</param>
+        /// <param name="grid"></param>
+        public static void RequestPath(Vector3Int start, Vector3Int end, Action<List<Vector3>, bool> callback, Grid grid)
         {
             // Debug.Log("Start map position: ");
             // Debug.Log("("+start.x+","+start.y+")");
             // Debug.Log("End map position: ");
             // Debug.Log("("+end.x+","+end.y+")");
-            AnimalPathfinding.Node nodeStart = MapToGridUtil.ins.CellToGrid(start, grid);
-            AnimalPathfinding.Node nodeEnd = MapToGridUtil.ins.CellToGrid(end, grid);
+            AnimalPathfinding.Node nodeStart = TilemapUtil.ins.CellToGrid(start, grid);
+            AnimalPathfinding.Node nodeEnd = TilemapUtil.ins.CellToGrid(end, grid);
             // Debug.Log("Start grid position: ");
             // Debug.Log("("+nodeStart.gridX+","+nodeStart.gridY+")");
             // Debug.Log("End grid position: ");
@@ -58,7 +66,12 @@ namespace AnimalPathfinding
             }
         }
 
-        public void FinishedProcessPath(Node path, bool success)
+        /// <summary>
+        /// Called by Pathfinding once a path has been calculated.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="success"></param>
+        public void FinishedProcessPath(List<Vector3> path, bool success)
         {
             currentPathRequest.callback(path, success);
             isProcessingPath = false;
@@ -69,10 +82,10 @@ namespace AnimalPathfinding
         {
             public Node pathStart;
             public Node pathEnd;
-            public Action<Node, bool> callback;
+            public Action<List<Vector3>, bool> callback;
             public Grid grid;
 
-            public PathRequest(Node pathStart, Node pathEnd, Action<Node, bool> callback, Grid grid)
+            public PathRequest(Node pathStart, Node pathEnd, Action<List<Vector3>, bool> callback, Grid grid)
             {
                 this.pathStart = pathStart;
                 this.pathEnd = pathEnd;

@@ -75,7 +75,7 @@ public class Species : ScriptableObject
         foreach (SpeciesNeed need in this.Needs)
         {
             if (!uniqueTypes.Contains(need.NType))
-            {  
+            {
                 uniqueTypes.Add(need.NType);
                 numBehaviors++;
             }
@@ -97,9 +97,9 @@ public class Species : ScriptableObject
             this.needBehaviorSet[i].NeedType = needType;
             i++;
         }
-        
+
         // Ensure there are no duplicate behaviors when behaviors are being chosen
-        HashSet<string> usedBehaviors = new HashSet<string>(); 
+        HashSet<string> usedBehaviors = new HashSet<string>();
         foreach (BehaviorScriptTranslation behavior in this.needBehaviorSet)
         {
             if (!usedBehaviors.Contains(behavior.behaviorScriptName.ToString()))

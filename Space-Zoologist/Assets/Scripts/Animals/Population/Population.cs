@@ -7,21 +7,21 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class Population : MonoBehaviour
 {
-    // Defined at runtime or added when a pod is used based off pods
+    // Defined at runtime or added when a pod is used
     [SerializeField] public List<GameObject> AnimalPopulation = default;
-
     [SerializeField] private GameObject AnimalPrefab = default;
     [SerializeField] private Species species = default;
-
-    // Data can be accessed by going through the animals themselves
+    // Data can be accessed via scripts by going through the animals themselves. This is for editing in editor
     [SerializeField] private List<BehaviorsData> AnimalsBehaviorData = default;
 
-    public List<BehaviorScriptName> CurrentBehaviors { get; set; }
+    // updated in FilterBehaviors function
+    public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
     public Species Species { get => species; }
     public string SpeciesName { get => Species.SpeciesName; }
     private Dictionary<NeedName, float> Needs = new Dictionary<NeedName, float>();
     private Vector2Int origin = Vector2Int.zero;
 
+    // 2d array based off of accessible locations for a populations pathfinding
     public AnimalPathfinding.Grid grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
@@ -36,20 +36,17 @@ public class Population : MonoBehaviour
     /// <param name="species">The species of the population</param>
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
+    ///  TODO population instantiation should likely come from an populationdata object with more fields
     public void InitializeNewPopulation(Species species, Vector2Int origin, int populationSize)
     {
         this.species = species;
         this.origin = origin;
         this.transform.position = GridUtils.Vector2IntToVector3Int(origin);
-        // TODO population instantiation should likely come from an populationdata object which should already have this defined
         // - the pods will contain populations which we'll likely want to specify certain aspects of
-        while (this.AnimalsBehaviorData.Count < this.AnimalPopulation.Count)
-        {
-            this.AnimalsBehaviorData.Add(new BehaviorsData());
-        }
         this.InitializePopulationData();
         for (int i=0; i<populationSize; i++)
         {
+            this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.InstantiateAnimal(this.AnimalsBehaviorData[i]);
         }
     }
@@ -62,12 +59,11 @@ public class Population : MonoBehaviour
     {
         ReservePartitionManager.ins.AddPopulation(this);
         this.AccessibleLocations = ReservePartitionManager.ins.GetLocationWithAccess(this);
-        // TODO test translations between accessibleLocations and grid locations
-        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, MapToGridUtil.ins.map);
+        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
-            Debug.Log("Behavior added");
+            // Debug.Log("Behavior added");
             this.CurrentBehaviors.Add(data.behaviorScriptName);
         }
         foreach (SpeciesNeed need in Species.Needs)
@@ -81,41 +77,19 @@ public class Population : MonoBehaviour
         int i = 0;
         foreach (GameObject animal in this.AnimalPopulation)
         {
-            this.AddComponentByName(Species.Behaviors, animal);
-            animal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[i]);
-            i++;
+            if (animal.activeSelf)
+            {
+                animal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[i]);
+                i++;
+            }
         }
     }
 
     public void InstantiateAnimal(BehaviorsData data)
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
-        this.AddComponentByName(Species.Behaviors, newAnimal);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
-    }
-
-    // No way to dynamially add scripts by name, have to use if statements and add to this everytime new component is defined
-    private void AddComponentByName(List<BehaviorScriptTranslation> components, GameObject newAnimal)
-    {
-        foreach (BehaviorScriptTranslation component in components)
-        {
-            switch(component.behaviorScriptName)
-            {
-                case BehaviorScriptName.RandomMovement:
-                    newAnimal.AddComponent<RandomMovement>();
-                    break;
-                case BehaviorScriptName.Idle:
-                    newAnimal.AddComponent<Idle>();
-                    break;
-                case BehaviorScriptName.Eating:
-                    newAnimal.AddComponent<Eating>();
-                    break;
-                default:
-                    Debug.Log("No component with the type found");
-                    break;
-            }
-        }
     }
 
     /// <summary>

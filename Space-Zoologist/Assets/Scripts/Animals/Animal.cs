@@ -28,6 +28,11 @@ public class Animal : MonoBehaviour
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
         this.BehaviorComponents = new Dictionary<string, Behavior>();
+        foreach (BehaviorScriptTranslation component in this.PopulationInfo.Species.Behaviors)
+        {
+            this.AddBehaviorByName(component);
+        }
+        // TODO test if this can be done in the above loop
         foreach (Behavior behaviorComponent in this.gameObject.GetComponents<Behavior>())
         {
             // Debug.Log("Behavior mapped: " +  behaviorComponent.GetType().ToString());
@@ -35,6 +40,8 @@ public class Animal : MonoBehaviour
         }
         this.ChooseNextBehavior();
     }
+
+    //TODO make addBehavior function
 
     // Gets a random behaviorScriptName from currentBehaviors in BehaviorData and then uses the BehaviorComponents dictionary to get out the hashed component
     private void ChooseNextBehavior()
@@ -65,6 +72,24 @@ public class Animal : MonoBehaviour
         {
             this.Animator.SetInteger("Movement", (int)this.BehaviorsData.MovementStatus);
             this.Animator.SetInteger("Direction", (int)this.BehaviorsData.CurrentDirection);
+        }
+    }
+
+    // No way to dynamically add scripts by name, have to use if statements and add to this everytime new behavior is defined
+    // TODO need to check if a behavior has been added already
+    public void AddBehaviorByName(BehaviorScriptTranslation component)
+    {
+        switch(component.behaviorScriptName)
+        {
+            case BehaviorScriptName.RandomMovement:
+                this.gameObject.AddComponent<RandomMovement>();
+                break;
+            case BehaviorScriptName.Idle:
+                this.gameObject.AddComponent<Idle>();
+                break;
+            default:
+                Debug.Log("No component with the type found");
+                break;
         }
     }
 }

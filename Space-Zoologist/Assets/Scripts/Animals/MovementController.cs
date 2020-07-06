@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
-
+using System.Collections.Generic;
 /// <summary>
-/// Takes in a path and moves sprite through it.
+/// Takes in a path (List<Vector3>) and moves the attached gameobject through it.
 /// </summary>
 public class MovementController : MonoBehaviour
 {
     private Animal Animal { get; set; }
-    private AnimalPathfinding.Node PathToDestination { get; set; }
+    private List<Vector3> PathToDestination { get; set; }
+    private int PathIndex = 0;
     private Vector3 NextPathTile { get; set; }
-    public bool DestinationReached = true;
+    public bool DestinationReached { get; private set; }
     // private Vector3 NextPathTile { get; set; }
 
     public void Start()
@@ -16,11 +17,16 @@ public class MovementController : MonoBehaviour
         this.Animal = this.gameObject.GetComponent<Animal>();
     }
 
-    public void AssignPath(AnimalPathfinding.Node pathToDestination)
+    /// <summary>
+    /// Called before update to assign a path.
+    /// </summary>
+    /// <param name="pathToDestination"></param>
+    public void AssignPath(List<Vector3> pathToDestination)
     {
         this.PathToDestination = pathToDestination;
-        this.NextPathTile = MapToGridUtil.ins.GridToCell(pathToDestination, 0.5f);
+        this.NextPathTile = TilemapUtil.ins.GridToWorld(pathToDestination[0], 0.5f);
         this.DestinationReached = false;
+        this.UpdateVisualLogic();
     }
 
     /// <summary>
@@ -29,50 +35,63 @@ public class MovementController : MonoBehaviour
     /// <returns></returns>
     public void MoveTowardsDestination()
     {
-        if (this.NextPathNodeReached(this.NextPathTile, this.transform.position))
+        if (this.PathToDestination.Count == 0)
         {
-            // The destination has been reached
-            if (this.PathToDestination == null || this.PathToDestination.parent == null)
+            this.PathIndex = 0;
+            this.DestinationReached = true;
+            return;
+        }
+        if (this.NextPathVectorReached(this.NextPathTile, this.transform.position))
+        {
+            this.PathIndex++;
+            // Destination reached
+            if (this.PathIndex == this.PathToDestination.Count)
             {
+                this.PathIndex = 0;
                 this.DestinationReached = true;
                 return;
             }
-            // Update to the next path tile and sprite stuff
+            // Update to the next path tile and visual logic stuff
             else
             {
-                this.PathToDestination = this.PathToDestination.parent;
-                // Need to translate back from grid to cell
-                this.NextPathTile = MapToGridUtil.ins.GridToCell(this.PathToDestination, 0.5f);
-                //Debug.Log("("+pathToDestination.gridX+"),"+"("+pathToDestination.gridY+")");
-                // After the next path tile has been chosen, update your direction
-                this.HandleDirectionChange(this.transform.position, this.NextPathTile);
-                // Then determine your movement
-                if (this.Animal.BehaviorsData.Speed > this.Animal.BehaviorsData.RunThreshold)
-                {
-                    this.Animal.BehaviorsData.MovementStatus = Movement.running;
-                }
-                else
-                {
-                    this.Animal.BehaviorsData.MovementStatus = Movement.walking;
-                }
+                // Need to translate back from grid to world
+                this.NextPathTile = TilemapUtil.ins.GridToWorld(this.PathToDestination[this.PathIndex], 0.5f);
+                // Debug.Log("("+this.NextPathTile.x+"),"+"("+this.NextPathTile.y+")");
+                this.UpdateVisualLogic();
             }
         }
         this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.Animal.BehaviorsData.Speed);
     }
 
-    private bool NextPathNodeReached(Vector3 destination, Vector3 currentLocation)
+    private void UpdateVisualLogic()
     {
-        return currentLocation.x < destination.x + .5f && currentLocation.x > destination.x - .5f &&
-        currentLocation.y < destination.y + .5f && currentLocation.y > destination.y - .5f;
+        this.HandleDirectionChange(this.transform.position, this.NextPathTile);
+        if (this.Animal.BehaviorsData.Speed > this.Animal.BehaviorsData.RunThreshold)
+        {
+            this.Animal.BehaviorsData.MovementStatus = Movement.running;
+        }
+        else
+        {
+            this.Animal.BehaviorsData.MovementStatus = Movement.walking;
+        }
     }
 
-    // This can be modified for different movements potentially
+    // Can modify pointReachedOffset to have more precise movement towards each destination point
+    private bool NextPathVectorReached(Vector3 destination, Vector3 currentLocation)
+    {
+        float pointReachedOffset = 0.5f;
+        return currentLocation.x < destination.x + pointReachedOffset && currentLocation.x > destination.x - pointReachedOffset &&
+        currentLocation.y < destination.y + pointReachedOffset && currentLocation.y > destination.y - pointReachedOffset;
+    }
+
+    // Can be modified for different movements potentially
     private Vector3 MoveTowardsTile(Vector3 currentPosition, Vector3 pathTile, float movementSpeed)
     {
         float step = movementSpeed * Time.deltaTime;
         return Vector3.MoveTowards(currentPosition, pathTile, step);
     }
 
+    // Can be modified for different angles of direction change
     private void HandleDirectionChange(Vector3 currentPosition, Vector3 nextTile)
     {
         Vector3 direction = (nextTile - currentPosition).normalized;
@@ -98,7 +117,7 @@ public class MovementController : MonoBehaviour
                 this.Animal.BehaviorsData.CurrentDirection = Direction.left;
             }
         }
-        else if (direction.x >= 0)
+        else if (direction.x > 0)
         {
             if (angle < 45)
             {

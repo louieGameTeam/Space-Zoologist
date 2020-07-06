@@ -1,14 +1,14 @@
 ﻿/**
  * Represent a single node in the pathfinding grid.
  * Based on code and tutorial by Sebastian Lague (https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ).
- *   
+ *
  * Author: Ronen Ness.
- * Since: 2016. 
+ * Since: 2016.
 */
 
 namespace AnimalPathfinding
 {
-    
+
     /// <summary>
     /// Represent a single node in the pathfinding grid.
     /// </summary>
@@ -27,7 +27,7 @@ namespace AnimalPathfinding
         public int HeapIndex { get; set; }
 
         /// <summary>
-        /// Create the grid node.
+        /// Create weighted grid node.
         /// </summary>
         /// <param name="_price">Price to walk on this node (set to 1.0f to ignore).</param>
         /// <param name="_gridX">Node x index.</param>
@@ -41,7 +41,7 @@ namespace AnimalPathfinding
         }
 
         /// <summary>
-        /// Create the grid node.
+        /// Create unweighted grid node.
         /// </summary>
         /// <param name="_walkable">Is this tile walkable?</param>
         /// <param name="_gridX">Node x index.</param>

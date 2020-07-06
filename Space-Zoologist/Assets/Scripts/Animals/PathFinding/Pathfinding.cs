@@ -8,17 +8,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Tilemaps;
 
-// TODO use hashset to mark visited vector locations on get neighbor, remove grid
 namespace AnimalPathfinding
 {
     /// <summary>
-    /// Main class to find the best path to walk from A to B.
-    ///
-    /// Usage example:
-    /// Grid grid = new Grid(width, height, tiles_costs);
+    /// Used by PathRequestManager to start a coroutine which calculates the path from point A to B on a grid (2d array).
     /// </summary>
+    /// Improvements: Caching paths between visited nodes on the grid
     public class Pathfinding : MonoBehaviour
     {
         /// <summary>
@@ -56,11 +52,11 @@ namespace AnimalPathfinding
         {
             Node startNode = startPos;
             Node targetNode = targetPos;
-            Node path = null;
+            List<Vector3> path = new List<Vector3>();
             if (!startNode.walkable && targetNode.walkable)
             {
                 yield return null;
-                PathRequestManager.instance.FinishedProcessPath(path, path==null);
+                PathRequestManager.instance.FinishedProcessPath(path, false);
             }
 
             Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);
@@ -70,14 +66,14 @@ namespace AnimalPathfinding
             while (openSet.currentItemCount > 0)
             {
                 Node currentNode = openSet.RemoveFirst();
-                closedSet.Add(currentNode);
                 if (currentNode == targetNode)
                 {
-                    path = SetupPathFound(currentNode);
+                    path = SetupPathFound(currentNode, startPos);
                     break;
                 }
+                closedSet.Add(currentNode);
 
-                foreach (Node neighbour in grid.GetNeighbours(currentNode, DistanceType.Euclidean))
+                foreach (Node neighbour in grid.GetNeighbours(currentNode, DistanceType.Manhattan))
                 {
                     if (!neighbour.walkable || closedSet.Contains(neighbour))
                     {
@@ -98,40 +94,28 @@ namespace AnimalPathfinding
             }
 
             yield return null;
-            bool pathSuccessfullyFound = (path != null) ? true : false;
+            bool pathSuccessfullyFound = (path.Count > 0) ? true : false;
             PathRequestManager.instance.FinishedProcessPath(path, pathSuccessfullyFound);
         }
 
-        // Need to reverse linked list so the animals can follow it from their current location
-        private Node SetupPathFound(Node pathFound)
+        private List<Vector3> SetupPathFound(Node nodePath, Node start)
         {
-            Node prev = null, curr = pathFound, next = null;
-
-            // Simplify path by skipping nodes that don't change the direction
+            List<Vector3> path = new List<Vector3>();
             Vector2 directionOld = Vector2.zero;
-            while(curr.parent != null)
+            while(nodePath.parent != null && nodePath != start)
             {
-                // Vector2 directionNew = new Vector2(curr.gridX - curr.parent.gridX, curr.gridY - curr.parent.gridY);
-                // if (directionNew != directionOld) {
-                //     next = curr.parent;
-                //     curr.parent = prev;
-                //     prev = curr;
-                //     curr = next;
-                //     // prev.gridX += MapToGridUtil.ins.map.origin.x;
-                //     // prev.gridY += MapToGridUtil.ins.map.origin.y;
-                // }
-                // else
-                // {
-                //     curr = curr.parent;
-                // }
-                // directionOld = directionNew;
-
-                next = curr.parent;
-                curr.parent = prev;
-                prev = curr;
-                curr = next;
+                // Simplify path by skipping nodes that don't change the direction
+                Vector2 directionNew = new Vector2(nodePath.gridX - nodePath.parent.gridX, nodePath.gridY - nodePath.parent.gridY);
+                if (directionNew != directionOld) {
+                    path.Add(new Vector3(nodePath.gridX, nodePath.gridY, 0));
+                    //TilemapUtil.ins.map.SetColor(TilemapUtil.ins.GridToWorld(new Vector3(nodePath.gridX, nodePath.gridY, 0)), Color.green);
+                }
+                directionOld = directionNew;
+                nodePath = nodePath.parent;
             }
-            return prev;
+            // Could potentially optimize from O(2n) to O(n) if linked list kept track of length. Could then add paths backwards to predefined list<vector3> length
+            path.Reverse();
+            return path;
         }
 
         /// <summary>

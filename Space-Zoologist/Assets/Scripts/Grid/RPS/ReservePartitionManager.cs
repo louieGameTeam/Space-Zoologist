@@ -68,7 +68,7 @@ public class ReservePartitionManager : MonoBehaviour
             PopToID.Add(pop, id);
             Pops.Add(pop);
 
-            //generate the map with the new id  
+            //generate the map with the new id
             GenerateMap(pop);
             if (PopDensityManager.ins != null) PopDensityManager.ins.AddPop(pop);
         }
@@ -181,6 +181,7 @@ public class ReservePartitionManager : MonoBehaviour
             if (CanAccess(population, position.Key))
             {
                 tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = true;
+                // Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
             }
             else
             {
