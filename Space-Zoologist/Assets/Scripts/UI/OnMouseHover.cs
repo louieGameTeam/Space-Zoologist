@@ -1,25 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 /// <summary>
 /// Add to any GameObjecto setup hover display
 /// </summary>
 public class OnMouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private GameObject DisplayToAppear;
+    public ItemSelectedEvent MouseEnterEvent = new ItemSelectedEvent();
+    public UnityEvent MouseExitEvent = new UnityEvent(); 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        this.DisplayToAppear.SetActive(true);
+        this.MouseEnterEvent.Invoke(this.gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        this.DisplayToAppear.SetActive(false);
-    }
-
-    public void InitializeDisplay(GameObject display)
-    {
-        this.DisplayToAppear = display;
+        this.MouseExitEvent.Invoke();
     }
 }

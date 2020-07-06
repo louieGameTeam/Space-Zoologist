@@ -285,16 +285,34 @@ public class ReservePartitionManager : MonoBehaviour
         return list;
     }
 
-    /// <summary>
-    /// TODO Considering to remove this function and use RPM with cell position only
-    /// Check if a population can access toWorldPos.
-    /// </summary>
-    public bool CanAccess(Population population, Vector3 toWorldPos)
+    // Will need to make the grid the size of the max tilemap size
+    public AnimalPathfinding.Grid GetGridWithAccess(Population population, Tilemap temp)
     {
-        // convert to map position
-        Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
-        return CanAccess(population, mapPos);
+        bool[,] tileGrid = new bool[temp.size.x, temp.size.y];
+        foreach (KeyValuePair<Vector3Int, long> position in AccessMap) {
+            //Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
+            if (CanAccess(population, position.Key))
+            {
+                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = true;
+                // Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
+            }
+            else
+            {
+                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = false;
+            }
+        }
+        return new AnimalPathfinding.Grid(tileGrid);
     }
+
+    // ///<summary>
+    // ///Update the access map for every population in Pops.
+    // ///</summary>
+    // public void UpdateAccessMap()
+    // {
+    //     // convert to map position
+    //     Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+    //     return CanAccess(population, mapPos);
+    // }
 
     /// <summary>
     /// Check if a population can access CellPos.
