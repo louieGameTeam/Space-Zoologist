@@ -61,7 +61,7 @@ public class PopulationDensitySystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the density score of a population, significantly more expensive if the accessible area is big
+    /// Get the density score of a population.
     /// </summary>
     /// <param name="pop"></param>
     /// <returns></returns>
@@ -94,7 +94,7 @@ public class PopulationDensitySystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Update all affected population after the given population changes Count.
+    /// [Obsolete due to updates to need systems] Update all affected population after the given population changes Count.
     /// </summary>
     /// <param name="changedPopulation">The population that updated its Count.</param>
     public void UpdateAffectedPopulations(Population changedPopulation)

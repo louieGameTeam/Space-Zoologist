@@ -67,19 +67,29 @@ public class AtmosphericComposition
 
 public class EnclosureSystem : MonoBehaviour
 {
-    public Dictionary<Vector3Int, byte> PositionToAtmosphere { get; private set; }
+    /// <summary> Singleton instance. </summary>
+    public static EnclosureSystem ins;
+   
+    /// <summary>
+    /// The list of atmospheres contained in the reserve. Use GetAtmosphericCompositionAt() to get atmosphere from location.
+    /// </summary>
     public List<AtmosphericComposition> Atmospheres { get; private set; }
 
-    TileSystem _tileSystem; // GetTerrainTile API from Virgil
+    // The global atmosphere, always Atmospheres[0].
+    private AtmosphericComposition GlobalAtmosphere;
+
+    /// <summary>
+    /// A dictionary that maps location to atmosphere for fast access.
+    /// </summary>
+    public Dictionary<Vector3Int, byte> PositionToAtmosphere { get; private set; }
+
+    // GetTerrainTile API from Virgil
+    TileSystem _tileSystem;
 
     // Have enclosed area been initialized?
     bool initialized = false;
 
-    // Singleton
-    public static EnclosureSystem ins;
 
-    // The global atmosphere
-    private AtmosphericComposition GlobalAtmosphere;
 
     /// <summary>
     /// Variable initialization on awake.
@@ -108,7 +118,7 @@ public class EnclosureSystem : MonoBehaviour
     /// </summary>
     /// <param name="position">The position at which to get the atmopheric conditions</param>
     /// <returns></returns>
-    public AtmosphericComposition GetAtmosphericComposition(Vector3Int position)
+    public AtmosphericComposition GetAtmosphericCompositionAt(Vector3Int position)
     {
         if (PositionToAtmosphere.ContainsKey(position))
             return Atmospheres[PositionToAtmosphere[position]];
