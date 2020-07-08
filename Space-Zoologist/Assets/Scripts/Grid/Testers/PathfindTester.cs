@@ -61,14 +61,14 @@ public class PathfindTester : MonoBehaviour
             {
                 // if adjacent tiles are not visited and can be accessed, add it to queue
                 // new cost of node is 'original cost' + 'preference of tile'
-                if (!visited.Contains(pos+Vector3Int.up) && rpm.CanAccess(pop, pos + Vector3Int.up))
-                    queue.Add(new Node(pos + Vector3Int.up, end, node.cost + rpm.PopulationPreference[pos+Vector3Int.up][id], node));
-                if (!visited.Contains(pos + Vector3Int.left) && rpm.CanAccess(pop, pos + Vector3Int.left))
-                    queue.Add(new Node(pos + Vector3Int.left, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.left][id], node));
-                if (!visited.Contains(pos + Vector3Int.down) && rpm.CanAccess(pop, pos + Vector3Int.down))
-                    queue.Add(new Node(pos + Vector3Int.down, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.down][id], node));
-                if (!visited.Contains(pos + Vector3Int.right) && rpm.CanAccess(pop, pos + Vector3Int.right))
-                    queue.Add(new Node(pos + Vector3Int.right, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.right][id], node));
+                //if (!visited.Contains(pos+Vector3Int.up) && rpm.CanAccess(pop, pos + Vector3Int.up))
+                //    queue.Add(new Node(pos + Vector3Int.up, end, node.cost + rpm.PopulationPreference[pos+Vector3Int.up][id], node));
+                //if (!visited.Contains(pos + Vector3Int.left) && rpm.CanAccess(pop, pos + Vector3Int.left))
+                //    queue.Add(new Node(pos + Vector3Int.left, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.left][id], node));
+                //if (!visited.Contains(pos + Vector3Int.down) && rpm.CanAccess(pop, pos + Vector3Int.down))
+                //    queue.Add(new Node(pos + Vector3Int.down, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.down][id], node));
+                //if (!visited.Contains(pos + Vector3Int.right) && rpm.CanAccess(pop, pos + Vector3Int.right))
+                //    queue.Add(new Node(pos + Vector3Int.right, end, node.cost + rpm.PopulationPreference[pos + Vector3Int.right][id], node));
             }
             else {
                 found = true;

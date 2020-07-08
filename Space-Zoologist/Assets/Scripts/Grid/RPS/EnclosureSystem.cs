@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AtmoshpereComponent { GasX, GasY, GasZ, Temperature };
+
 /// <summary>
 /// A class that represents the atmospheric composition of an area.
 /// </summary>
@@ -62,6 +64,16 @@ public class AtmosphericComposition
 
     public override string ToString() {
         return "gasX = " + gasX + " gasY = " + gasY + " gasZ = " + gasZ + " Temp = " + temperature;
+    }
+
+    /// <summary>
+    /// Get the composition of the atmoshpere including temerature, in the order of AtmoshpereComponent enum
+    /// </summary>
+    /// <returns></returns>
+    public float[] GeComposition()
+    {
+        float[] composition = { gasX, gasY, gasZ, temperature };
+        return composition;
     }
 }
 

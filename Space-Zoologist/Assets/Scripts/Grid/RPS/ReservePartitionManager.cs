@@ -161,7 +161,7 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
 
-        float range = population.Species.range;
+        float range = population.Species.Range;
 
         // id of the current population
         int id = PopulationToID[population];
@@ -202,10 +202,10 @@ public class ReservePartitionManager : MonoBehaviour
 
                 TypesOfTerrain[population][(int)tile.type]++;
 
-                if (!PopulationPreference.ContainsKey(cur)) {
-                    PopulationPreference[cur] = new byte[maxPopulation];
-                }
-                PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
+                //if (!PopulationPreference.ContainsKey(cur)) {
+                //    PopulationPreference[cur] = new byte[maxPopulation];
+                //}
+                //PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
 
                 if (!AccessMap.ContainsKey(cur))
                 {
@@ -308,7 +308,7 @@ public class ReservePartitionManager : MonoBehaviour
                 {
                     PopulationPreference[cur] = new byte[maxPopulation];
                 }
-                if(population.Species.TilePreference.ContainsKey(tile.type))
+                if (population.Species.TilePreference.ContainsKey(tile.type))
                     PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
 
                 // populate the access map
@@ -431,6 +431,26 @@ public class ReservePartitionManager : MonoBehaviour
         return list;
     }
 
+    // Will need to make the grid the size of the max tilemap size
+    public AnimalPathfinding.Grid GetGridWithAccess(Population population, Tilemap temp)
+    {
+        bool[,] tileGrid = new bool[temp.size.x, temp.size.y];
+        foreach (KeyValuePair<Vector3Int, long> position in AccessMap)
+        {
+            //Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
+            if (CanAccess(population, position.Key))
+            {
+                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = true;
+                // Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
+            }
+            else
+            {
+                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = false;
+            }
+        }
+        return new AnimalPathfinding.Grid(tileGrid);
+    }
+
     /// <summary>
     /// Check if a population can access toWorldPos.
     /// </summary>
@@ -457,6 +477,29 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         // population can't access the position
+        return false;
+    }
+
+    /// <summary>
+    /// Check if populationA's and populationB's accessible area overlaps.
+    /// </summary>
+    /// <param name="populationA">Ususally the consumer population</param>
+    /// <param name="populationB">Ususally the consumed population</param>
+    /// <remarks><c>populationA</c> and <c>populationB</c> is interchangeable</remarks>
+    /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
+    public bool CanAccessPopulation(Population populationA, Population populationB)
+    {
+        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
+        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
+
+        foreach (Vector3Int cellPos in AccessibleArea_A)
+        {
+            if (AccessibleArea_B.Contains(cellPos))
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -503,13 +546,13 @@ public class ReservePartitionManager : MonoBehaviour
     /// <param name="population"></param>
     /// <param name="cellPos"></param>
     /// <returns></returns>
-    public byte GetPreference(Population population, Vector3Int cellPos) {
-        if (!PopulationPreference.ContainsKey(cellPos) || PopulationPreference[cellPos][PopulationToID[population]] == 0)
-        {
-            return 255;
-        }
-        else {
-            return PopulationPreference[cellPos][PopulationToID[population]];
-        }
-    }
+    //public byte GetPreference(Population population, Vector3Int cellPos) {
+    //    if (!PopulationPreference.ContainsKey(cellPos) || PopulationPreference[cellPos][PopulationToID[population]] == 0)
+    //    {
+    //        return 255;
+    //    }
+    //    else {
+    //        return PopulationPreference[cellPos][PopulationToID[population]];
+    //    }
+    //}
 }

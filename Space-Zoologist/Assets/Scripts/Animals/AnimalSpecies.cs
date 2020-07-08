@@ -16,6 +16,9 @@ public class AnimalSpecies : ScriptableObject
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
     public Sprite Representation => representation;
+    public float Range => range; // TODO temporary for RPM
+    public Dictionary<TileType, byte> TilePreference = default;
+
 
     public AnimatorController AnimatorController => animatorController;
 
@@ -34,6 +37,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
+    [SerializeField] private float range = 25;
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
