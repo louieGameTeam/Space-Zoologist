@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -55,10 +55,6 @@ public class TilePreviewTester : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             tilePlacementController.RevertChanges();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            tilePlacementController.ConfirmPlacement();
         }
         if (Input.GetKeyUp(KeyCode.B))
         {

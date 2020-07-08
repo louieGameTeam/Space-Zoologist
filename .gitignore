@@ -12,6 +12,10 @@
 sysinfo.txt
 # Unity3D generated meta files
 *.pidb.meta
+#Ignore all .meta file
+.meta
+#But not source file with postfix. which is everything but a folder
+!.*.meta
 
 ###
 # VS/MD solution and project files
@@ -43,3 +47,7 @@ Thumbs.db
 *.ide-wal
 *.ide-shm
 *.ide
+*.meta
+*.asset
+*.asset
+Space-Zoologist/Assets/ScriptableObjects/Species/Animals/Strot/Strot.asset
