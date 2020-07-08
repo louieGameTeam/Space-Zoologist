@@ -13,6 +13,8 @@ public class Species : ScriptableObject
     public float Size => size;
     public List<TileType> AccessibleTerrain =>accessibleTerrain;
 
+    public float range; // TODO temporary for RPM
+
     // TODO Temporary for representation prototype
     public Dictionary<TileType, byte> TilePreference = default;
 
@@ -37,6 +39,7 @@ public class Species : ScriptableObject
         TilePreference[TileType.Grass] = 10;
         TilePreference[TileType.Liquid] = 200;
         TilePreference[TileType.Wall] = 255;
+        range = 25;
     }
 
     /// <summary>

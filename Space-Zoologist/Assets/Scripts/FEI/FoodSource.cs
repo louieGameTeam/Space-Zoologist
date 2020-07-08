@@ -11,8 +11,8 @@ public class FoodSource : MonoBehaviour
     public FoodTypes Type { get => type; }
 
     // ScriptableObject to read from
-    [SerializeField] private FoodSpecies species = default;
-    public FoodSpecies Species { get => species; }
+    [SerializeField] private PlantSpecies species = default;
+    public PlantSpecies Species { get => species; }
 
     // For debugging, might be removed later
     // How much of each need is provided, raw value of needs
@@ -95,19 +95,19 @@ public class FoodSource : MonoBehaviour
                     // NullReferenceError if no atmosphere here (plant shouldn't exist here in the first place)
                     case PlantNeedType.GasX:
                         // Read value from some class that handles atmosphere
-                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).GasX;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericCompositionAt(tileSystem.WorldToCell(transform.position)).GasX;
                         break;
                     case PlantNeedType.GasY:
                         // Read value from some class that handles atmosphere
-                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).GasY;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericCompositionAt(tileSystem.WorldToCell(transform.position)).GasY;
                         break;
                     case PlantNeedType.GasZ:
                         // Read value from some class that handles atmosphere
-                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).GasZ;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericCompositionAt(tileSystem.WorldToCell(transform.position)).GasZ;
                         break;
                     case PlantNeedType.Temperature:
                         // Read value from some class that handles temperature
-                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericComposition(tileSystem.WorldToCell(transform.position)).Temperature;
+                        rawValues[i] = EnclosureSystem.ins.GetAtmosphericCompositionAt(tileSystem.WorldToCell(transform.position)).Temperature;
                         break;
                     case PlantNeedType.RLiquid:
                     case PlantNeedType.YLiquid:

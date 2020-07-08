@@ -107,7 +107,7 @@ public class ReservePartitionManager : MonoBehaviour
             Populations.Add(population);
 
             // generate the map with the new id  
-            ScanlineGenerateMap(population);
+            GenerateMap(population);
             
         }
     }
@@ -161,6 +161,8 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
 
+        float range = population.Species.range;
+
         // id of the current population
         int id = PopulationToID[population];
         
@@ -184,6 +186,10 @@ public class ReservePartitionManager : MonoBehaviour
             if (accessible.Contains(cur) || unaccessible.Contains(cur))
             {
                 // checked before, move on
+                continue;
+            }
+            else if (Vector3Int.Distance(origin, cur) > range) {
+                unaccessible.Add(cur);
                 continue;
             }
 
@@ -369,7 +375,7 @@ public class ReservePartitionManager : MonoBehaviour
         AccessMap = new Dictionary<Vector3Int, long>();
         foreach (Population population in Populations)
         {
-            ScanlineGenerateMap(population);
+            GenerateMap(population);
         }
     }
 
@@ -403,7 +409,7 @@ public class ReservePartitionManager : MonoBehaviour
         // Most intuitive implementation: recalculate map for all affected populations
         foreach (Population population in AffectedPopulations) {
             CleanupAccessMap(PopulationToID[population]);
-            ScanlineGenerateMap(population);
+            GenerateMap(population);
         }
     }
 

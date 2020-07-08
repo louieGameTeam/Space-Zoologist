@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 /// <summary>
 /// The scriptable object that stores all info shared by the plant species.
 /// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "Food/Species", order = 1)]
-public class FoodSpecies : ScriptableObject
+public class PlantSpecies : ScriptableObject
 {
     [Tooltip("Amount of output if all needs are moderately met.")]
     [SerializeField] private float base_output = 0;
