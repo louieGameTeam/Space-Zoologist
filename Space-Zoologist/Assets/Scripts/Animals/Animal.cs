@@ -7,7 +7,7 @@ public class Animal : MonoBehaviour
 {
     public BehaviorsData BehaviorsData { get; private set; }
     public Population PopulationInfo { get; private set; }
-
+    public System.Random random { get; private set; }
     private Animator Animator = null;
     private Behavior CurrentBehavior { get; set; }
     private BehaviorFinished OnBehaviorFinished { get; set; }
@@ -16,6 +16,7 @@ public class Animal : MonoBehaviour
 
     public void Start()
     {
+        random = new System.Random();
         if (!this.gameObject.TryGetComponent(out this.Animator))
         {
             this.Animator = null;
