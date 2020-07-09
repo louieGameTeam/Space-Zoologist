@@ -50,11 +50,11 @@ public class TilemapUtil : MonoBehaviour
     /// <returns></returns>
     public Vector3 GridToWorld(Vector3 node, float pathOffset)
     {
-        return new Vector3(node.x + pathOffset + TilemapUtil.ins.largestMap.origin.x, node.y + pathOffset + TilemapUtil.ins.largestMap.origin.y, 0);
+        return new Vector3(node.x + pathOffset + largestMap.origin.x, node.y + pathOffset + largestMap.origin.y, 0);
     }
 
     public Vector3Int GridToWorld(Vector3 node)
     {
-        return new Vector3Int((int)(node.x + TilemapUtil.ins.largestMap.origin.x), (int)(node.y + TilemapUtil.ins.largestMap.origin.y), 0);
+        return new Vector3Int((int)(node.x + largestMap.origin.x), (int)(node.y + largestMap.origin.y), 0);
     }
 }

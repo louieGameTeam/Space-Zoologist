@@ -8,15 +8,16 @@ using UnityEngine;
 public class Population : Life
 {
     public AnimalSpecies Species { get => species; }
-    public int Count => count;
-    public float Dominance => count * species.Dominance;
+    public int Count { get => this.AnimalPopulation.Count; }
+    public float Dominance => Count * species.Dominance;
 
     [SerializeField] private AnimalSpecies species = default;
-    [SerializeField] private int count = 0;
-    // Defined at runtime or added when a pod is used
-    [SerializeField] public List<GameObject> AnimalPopulation = default;
     [SerializeField] private GameObject AnimalPrefab = default;
+    // Defined at runtime or added when a pod is used
+    [Header("Add existing animals")]
+    [SerializeField] public List<GameObject> AnimalPopulation = default;
     // Data can be accessed via scripts by going through the animals themselves. This is for editing in editor
+    [Header("Updated through OnValidate")]
     [SerializeField] private List<BehaviorsData> AnimalsBehaviorData = default;
 
     // updated in FilterBehaviors function
@@ -50,7 +51,7 @@ public class Population : Life
         for (int i=0; i<populationSize; i++)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
-            this.InstantiateAnimal(this.AnimalsBehaviorData[i]);
+            this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
     }
 
@@ -88,20 +89,11 @@ public class Population : Life
         }
     }
 
-    public void InstantiateAnimal(BehaviorsData data)
+    public void AddAnimal(BehaviorsData data)
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
-    }
-
-    /// <summary>
-    /// Increases the number of animals in the population by the given count.
-    /// </summary>
-    /// <param name="count">The number of animals to add to the population</param>
-    public void AddAnimals(int count)
-    {
-        this.count += count;
     }
 
     /// <summary>

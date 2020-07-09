@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 abstract public class Life: MonoBehaviour
 {
-    public string SpeciesName;
+    public string SpeciesName { get; set; }
     public Dictionary<string, float> NeedsValues => needsValues;
 
     protected Dictionary<string, float> needsValues = new Dictionary<string, float>();

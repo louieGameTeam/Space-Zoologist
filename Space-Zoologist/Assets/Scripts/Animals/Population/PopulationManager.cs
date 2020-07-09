@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PopulationManager : MonoBehaviour
 {
-    public List<Population> Populations => populations;
+    // FindObjectOfType<Population> to populate
+    private List<Population> ExistingPopulations = new List<Population>();
+    public List<Population> Populations => ExistingPopulations;
 
-    private List<Population> populations = new List<Population>();
     [SerializeField] private NeedSystemManager needSystemManager = default;
-    [SerializeField] private GameObject populationGameObject = default;
+    [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private ReservePartitionManager rpm = default;
-    //[SerializeField] private PopulationDensitySystem populationDensitySystem = default;
-
     [SerializeField] private LevelData levelData = default;
 
     private Dictionary<AnimalSpecies, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<AnimalSpecies, SpeciesNeedSystem>();
@@ -31,7 +30,7 @@ public class PopulationManager : MonoBehaviour
 
     private void Start()
     {
-        populations.AddRange(FindObjectsOfType<Population>());
+        ExistingPopulations.AddRange(FindObjectsOfType<Population>());
 
         // Add SpeicesNeedSystems to NeedSystemManager
         foreach (SpeciesNeedSystem speciesNeedSystem in speciesNeedSystems.Values)
@@ -40,12 +39,12 @@ public class PopulationManager : MonoBehaviour
         }
 
         // Register with manager
-        foreach (Population population in populations)
+        foreach (Population population in ExistingPopulations)
         {
             needSystemManager.RegisterWithNeedSystems(population);
         }
 
-        foreach (Population population in this.populations)
+        foreach (Population population in this.ExistingPopulations)
         {
             this.SetupExistingPopulation(population);
         }
@@ -58,11 +57,11 @@ public class PopulationManager : MonoBehaviour
     /// <param name="position">The origin point of the population</param>
     public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
-        GameObject newPopulationGameObject = Instantiate(populationGameObject, position, Quaternion.identity, this.transform);
+        GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.InitializeNewPopulation(species, position, count);
-        this.populations.Add(population);
+        this.ExistingPopulations.Add(population);
         rpm.AddPopulation(population);
         speciesNeedSystems[population.Species].AddPopulation(population);
 
@@ -84,7 +83,7 @@ public class PopulationManager : MonoBehaviour
         Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
         if (preexistingPopulation)
         {
-            preexistingPopulation.AddAnimals(count);
+            // preexistingPopulation.AddAnimals(count);
         } // TODO: update systems related to population count change ^
         else
         {

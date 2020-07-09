@@ -7,7 +7,6 @@ public class Animal : MonoBehaviour
 {
     public BehaviorsData BehaviorsData { get; private set; }
     public Population PopulationInfo { get; private set; }
-    public System.Random random { get; private set; }
     private Animator Animator = null;
     private Behavior CurrentBehavior { get; set; }
     private BehaviorFinished OnBehaviorFinished { get; set; }
@@ -16,7 +15,6 @@ public class Animal : MonoBehaviour
 
     public void Start()
     {
-        random = new System.Random();
         if (!this.gameObject.TryGetComponent(out this.Animator))
         {
             this.Animator = null;
@@ -42,19 +40,17 @@ public class Animal : MonoBehaviour
         this.ChooseNextBehavior();
     }
 
-    //TODO make addBehavior function
-
     // Gets a random behaviorScriptName from currentBehaviors in BehaviorData and then uses the BehaviorComponents dictionary to get out the hashed component
     private void ChooseNextBehavior()
     {
         // TODO replace with Caleb's increased random probability function
-        System.Random rand = new System.Random();
+        System.Random random = new System.Random();
         if (this.PopulationInfo.CurrentBehaviors.Count == 0)
         {
             Debug.Log("No behaviors to choose from");
             return;
         }
-        int randNum = rand.Next(this.PopulationInfo.CurrentBehaviors.Count);
+        int randNum = random.Next(this.PopulationInfo.CurrentBehaviors.Count);
         string chosenBehavior = this.PopulationInfo.CurrentBehaviors[randNum].ToString();
         // Debug.Log("Behavior chosen: " + chosenBehavior);
         this.CurrentBehavior = this.BehaviorComponents[chosenBehavior];
