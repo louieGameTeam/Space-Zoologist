@@ -12,6 +12,7 @@ public class FoodSourceManager : MonoBehaviour
     private List<FoodSource> foodSources = new List<FoodSource>();
     // Having food distribution system in FoodSourceManager is questionable
     private Dictionary<FoodSourceSpecies, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<FoodSourceSpecies, FoodSourceNeedSystem>();
+    private Dictionary<string, FoodSourceSpecies> foodSourceMapping = new Dictionary<string, FoodSourceSpecies>();
 
     [SerializeField] private GameObject foodSourcePrefab = default;
 
@@ -21,6 +22,7 @@ public class FoodSourceManager : MonoBehaviour
         // Add new FoodSourceNeedSystem
         foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
         {
+            foodSourceMapping.Add(foodSourceSpecies.SpeciesName, foodSourceSpecies);
             FoodSourceNeedSystem foodSourceNeedSystem = new FoodSourceNeedSystem(foodSourceSpecies.SpeciesName, rpm);
             foodSourceNeedSystems.Add(foodSourceSpecies, foodSourceNeedSystem);
         }
@@ -46,6 +48,7 @@ public class FoodSourceManager : MonoBehaviour
 
     public void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {
+        Debug.Log("Food source created");
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
         newFoodSourceGameObject.name = species.SpeciesName;
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
@@ -59,16 +62,12 @@ public class FoodSourceManager : MonoBehaviour
 
     public void CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
     {
-        //FoodSourceSpecies foodSourceSpecies = null;
-        ////if (!nameSpeciesMapping.TryGetValue(foodsourceSpeciesID, out foodSourceSpecies))
-        ////{
-        ////    throw new System.ArgumentException("foodsourceSpeciesID was not found in the FoodsourceManager's foodsources");
-        ////}
-
-        //CreateFoodSource(foodSourceSpecies, position);
-
-        //// Register with NeedSystemManager
-        //needSystemManager.RegisterWithNeedSystems(foodSource);
+        FoodSourceSpecies foodSourceSpecies = null;
+        if (!foodSourceMapping.TryGetValue(foodsourceSpeciesID, out foodSourceSpecies))
+        {
+           throw new System.ArgumentException("foodsourceSpeciesID was not found in the FoodsourceManager's foodsources");
+        }
+        CreateFoodSource(foodSourceSpecies, position);
     }
 
     public void UpdateFoodSources()

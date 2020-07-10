@@ -16,8 +16,8 @@ public class LevelData : ScriptableObject
     public AtmosphericComposition GlobalAtmosphere => globalAtmosphere;
 
     [SerializeField] private int startingBalance = default;
-    [SerializeField] private List<FoodSourceSpecies> foodSources = default;
-    [SerializeField] private List<AnimalSpecies> animalSpecies = default;
-    [SerializeField] private List<Item> items = default;
+    [Expandable] public List<FoodSourceSpecies> foodSources = default;
+    [Expandable] public List<AnimalSpecies> animalSpecies = default;
+    [Expandable] public List<Item> items = default;
     [SerializeField] private AtmosphericComposition globalAtmosphere = new AtmosphericComposition(1,2,3,90);
 }

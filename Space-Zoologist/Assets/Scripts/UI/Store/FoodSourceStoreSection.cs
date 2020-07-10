@@ -19,6 +19,7 @@ public class FoodSourceStoreSection : StoreSection
         base.OnCursorPointerUp(eventData);
         if (eventData.button == PointerEventData.InputButton.Left)
         {
+            Debug.Log("Food source placed: " + eventData.button.ToString());
             foodSourceManager.CreateFoodSource(selectedItem.ID, Camera.main.ScreenToWorldPoint(eventData.position));
             playerBalance.RuntimeValue -= selectedItem.Price;
         }

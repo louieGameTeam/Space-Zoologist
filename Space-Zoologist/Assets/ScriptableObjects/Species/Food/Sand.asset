@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
-  m_Name: LevelData
+  m_Script: {fileID: 11500000, guid: eb43224d6f3ee97448552e334a6e0c8f, type: 3}
+  m_Name: Sand
   m_EditorClassIdentifier: 
-  startingBalance: 0
-  foodSources: []
-  animalSpecies: []
-  items: []
+  id: Sand
+  type: Terrain
+  itemName: Sand
+  price: 1
+  description: 
+  icon: {fileID: 0}

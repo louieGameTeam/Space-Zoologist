@@ -46,7 +46,7 @@ public class StoreMenu : MonoBehaviour
         // Ideally there'd be a way to detect when cursor item clicks are done over any menu so that you can't click through menus to place items.
         if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, pointerEventData.position))
         {
-            
+
         }
     }
 }

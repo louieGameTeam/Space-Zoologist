@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// A runtime instance of a food source
@@ -28,6 +29,7 @@ public class FoodSource: Life
     {
         this.species = species;
         this.Position = position;
+        this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
     }
 

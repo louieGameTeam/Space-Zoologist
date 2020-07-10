@@ -58,7 +58,7 @@ public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
         onClick -= clickHandler;
         onPointerDown -= pointerDownHandler;
         onPointerUp -= pointerUpHandler;
-        image.enabled = false;
+        if (image != null) image.enabled = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
