@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class TilePreviewTester : MonoBehaviour
 {
     private TilePlacementController tilePlacementController;
-    [SerializeField] private List<TerrainTile> selectableTiles = default;
+    [SerializeField] private List<TileType> selectableTiles = default;
     [SerializeField] bool isBlockMode = default;
-    private TerrainTile selectedTile = default;
+    private TileType selectedTile = default;
 
     [TextArea]
     [SerializeField] string displayText = default;
@@ -60,5 +60,6 @@ public class TilePreviewTester : MonoBehaviour
         {
             tilePlacementController.isBlockMode = !tilePlacementController.isBlockMode;
         }
+        //Debug.Log(tilePlacementController.PlacedTileCount());
     }
 }

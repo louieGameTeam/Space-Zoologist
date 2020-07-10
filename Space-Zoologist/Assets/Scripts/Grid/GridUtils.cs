@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridUtils
 {
-
+    // Used to assign which layer 
     public enum TileLayer
     {
         BaseLayer,
@@ -13,7 +13,8 @@ public class GridUtils
         Liquid,
         LiquidSurface,
         LiquidTexture,
-        Grass
+        Grass,
+        Edge
     }
     private static float[,] defautInterpolationArray = { { 1f, 1f, 1f }, { 1f, 1f, 0f }, { 1f, 0f, 0f }, { 1f, 0.565f, 0f }, { 0.153f, 0.443f, 0.698f }, { 0f, 0.561f, 0.357f }, { 0.439f, 0.212f, 0.588f }, { 0f, 0f, 0f } }; // RYB interpolation cube based on https://ieeexplore.ieee.org/document/5673980
     // public static readonly float[,] interpolationArray = new float[,] { { 1f, 1f, 1f }, { 1f, 1f, 0f }, { 1f, 0f, 0f }, { 1f, 0.5f, 0f }, { 0.163f, 0.373f, 0.6f }, { 0f, 0.66f, 0.2f }, { 0.5f, 0f, 0.5f }, { 0.2f, 0.094f, 0f } }; // Alternative based on https://ieeexplore.ieee.org/document/1382898
