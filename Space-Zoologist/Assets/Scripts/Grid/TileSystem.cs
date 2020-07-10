@@ -6,13 +6,22 @@ using UnityEngine.Tilemaps;
 public class TileSystem : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Tilemap[] tilemaps;
+    private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;
 
     private void Awake()
     {
-        tilemaps = GetComponent<TilePlacementController>().allTilemaps;
         grid = GetComponent<Grid>();
+        Tilemap[] unorderedTilemaps = GetComponent<TilePlacementController>().allTilemaps;
+        Dictionary<Tilemap, int> tilemapLayerOrderPairs = new Dictionary<Tilemap, int>();
+        foreach (Tilemap tilemap in unorderedTilemaps)
+        {
+            tilemapLayerOrderPairs.Add(tilemap, tilemap.GetComponent<TilemapRenderer>().sortingOrder);
+        }
+        foreach (KeyValuePair<Tilemap, int> pair in tilemapLayerOrderPairs.OrderByDescending(key => key.Value))
+        {
+            tilemaps.Add(pair.Key);
+        }
     }
     /// <summary>
     /// Convert a world position to cell positions on the grid.
@@ -31,8 +40,6 @@ public class TileSystem : MonoBehaviour
     /// <returns></returns>
     public TerrainTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
-        SortedDictionary<int, TerrainTile> existingTiles = new SortedDictionary<int, TerrainTile>();
-
         foreach (Tilemap tilemap in tilemaps)
         {
             TerrainTile tileOnLayer = (TerrainTile)tilemap.GetTile(cellLocation);
@@ -40,18 +47,11 @@ public class TileSystem : MonoBehaviour
             {
                 if (tileOnLayer.isRepresentative)
                 {
-                    existingTiles.Add(tileOnLayer.priority, tileOnLayer);
+                    return tileOnLayer;
                 }
             }
         }
-        if (existingTiles.Count > 0)
-        {
-            return existingTiles.Last().Value;
-        }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     /// <summary>
