@@ -42,9 +42,9 @@ public class TileSystem : MonoBehaviour
     {
         foreach (Tilemap tilemap in tilemaps)
         {
-            TerrainTile tileOnLayer = (TerrainTile)tilemap.GetTile(cellLocation);
-            if (tileOnLayer != null)
-            {
+            var returnedTile = tilemap.GetTile(cellLocation);
+            if (returnedTile != null && returnedTile.GetType().Equals(typeof(TerrainTile))) {
+                TerrainTile tileOnLayer = (TerrainTile)returnedTile;
                 if (tileOnLayer.isRepresentative)
                 {
                     return tileOnLayer;
@@ -305,6 +305,38 @@ public class TileSystem : MonoBehaviour
             }
         }
         return tileLocations;
+    }
+
+    /// <summary>
+    /// Return the count of different types of tiles within a radius range of a given cell location
+    /// </summary>
+    /// <param name="centerCellLocation">The location of the center cell</param>
+    /// <param name="scanRange">The radius range to look for</param>
+    public int[] CountOfTilesInRange(Vector3Int centerCellLocation, int scanRange)
+    {
+        int[] typesOfTileWithinRadius = new int[(int)TileType.TypesOfTiles];
+        Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
+        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        {
+            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            {
+                float distance = Mathf.Sqrt(x * x + y * y);
+                if (distance > scanRange)
+                {
+                    continue;
+                }
+                
+                scanLocation.x = x;
+                scanLocation.y = y;
+
+                TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
+                if (tile)
+                {
+                    typesOfTileWithinRadius[(int)tile.type]++;
+                }
+            }
+        }
+        return typesOfTileWithinRadius;
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
@@ -30,6 +30,8 @@ public class TilePlacementController : MonoBehaviour
     private TileSystem tileSystem;
     private int lastCornerX;
     private int lastCornerY;
+    // The mapping of tile item IDs to terrain tiles
+    private  Dictionary<string, TerrainTile> itemIDTerrainTileMapping = new Dictionary<string, TerrainTile>();
 
     private void Awake()
     {
@@ -49,6 +51,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 terrainTile.replacementTilemap.Add(tilemaps[(int)layer]);
             }
+            itemIDTerrainTileMapping.Add(terrainTile.TileName, terrainTile);
         }
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
@@ -87,16 +90,24 @@ public class TilePlacementController : MonoBehaviour
         }
     }
 
-    public void StartPreview(TileType newTile)
+    /// <summary>
+    /// Start tile placement preview.
+    /// </summary>
+    /// <param name="tileID">The ID of the tile to preview its placement.</param>
+    public void StartPreview(string tileID)
+    {
+        TerrainTile terrainTile = null;
+        if (!itemIDTerrainTileMapping.TryGetValue(tileID, out terrainTile))
+        {
+            throw new System.ArgumentException("tileName was not found in the TilePlacementController's tiles");
+        }
+        StartPreview(terrainTile);
+    }
+
+    public void StartPreview(TerrainTile tile)
     {
         isPreviewing = true;
-        foreach(TerrainTile tile in terrainTiles) // Assign tiles to be added
-        {
-            if (tile.type == newTile)
-            {
-                referencedTiles.Add(tile);
-            }
-        }
+        selectedTile = tile;
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
