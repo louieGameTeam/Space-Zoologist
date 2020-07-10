@@ -46,7 +46,7 @@ public class TilePreviewTester : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            tilePlacementController.StartPreview(selectedTile);
+            //tilePlacementController.StartPreview(selectedTile);
         }
         if (Input.GetMouseButtonUp(0))
         {

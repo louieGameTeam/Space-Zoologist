@@ -99,15 +99,16 @@ public class TilePlacementController : MonoBehaviour
         TerrainTile terrainTile = null;
         if (!itemIDTerrainTileMapping.TryGetValue(tileID, out terrainTile))
         {
-            throw new System.ArgumentException("tileName was not found in the TilePlacementController's tiles");
+            throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
         }
         StartPreview(terrainTile);
     }
 
     public void StartPreview(TerrainTile tile)
     {
+        Debug.Log("Tile being placed");
         isPreviewing = true;
-        selectedTile = tile;
+        // selectedTile = tile;
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
