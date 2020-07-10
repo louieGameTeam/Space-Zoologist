@@ -25,12 +25,12 @@ public class TilePreviewTester : MonoBehaviour
 
     private void Start()
     {
-        var text = canvas.gameObject.AddComponent<Text>();
+/*        var text = canvas.gameObject.AddComponent<Text>();
         text.text = displayText;
 
         Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
         text.font = ArialFont;
-        text.material = ArialFont.material;
+        text.material = ArialFont.material;*/
 
         tilePlacementController.isBlockMode = isBlockMode;
     }

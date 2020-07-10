@@ -30,8 +30,6 @@ public class TilePlacementController : MonoBehaviour
     private TileSystem tileSystem;
     private int lastCornerX;
     private int lastCornerY;
-    // The mapping of tile item IDs to terrain tiles
-    private  Dictionary<string, TerrainTile> itemIDTerrainTileMapping = new Dictionary<string, TerrainTile>();
 
     private void Awake()
     {
@@ -51,7 +49,6 @@ public class TilePlacementController : MonoBehaviour
             {
                 terrainTile.replacementTilemap.Add(tilemaps[(int)layer]);
             }
-            itemIDTerrainTileMapping.Add(terrainTile.TileName, terrainTile);
         }
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
@@ -97,21 +94,28 @@ public class TilePlacementController : MonoBehaviour
     public void StartPreview(string tileID)
     {
         TerrainTile terrainTile = null;
-        if (!itemIDTerrainTileMapping.TryGetValue(tileID, out terrainTile))
+        if (!Enum.IsDefined(typeof(TileType), tileID))
         {
             throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
         }
-        StartPreview(terrainTile);
+        StartPreview((TileType)Enum.Parse(typeof(TileType),tileID));
     }
 
-    public void StartPreview(TerrainTile tile)
+    public void StartPreview(TileType newTile)
     {
-        Debug.Log("Tile being placed");
-        isPreviewing = true;
-        // selectedTile = tile;
-        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
-        dragStartPosition = grid.WorldToCell(mouseWorldPosition);
-        isFirstTile = true;
+        {
+            isPreviewing = true;
+            foreach (TerrainTile tile in terrainTiles)
+            {
+                if (tile.type == newTile)
+                {
+                    referencedTiles.Add(tile);
+                }
+            }
+            Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+            dragStartPosition = grid.WorldToCell(mouseWorldPosition);
+            isFirstTile = true;
+        }
     }
     public void StopPreview()
     {
