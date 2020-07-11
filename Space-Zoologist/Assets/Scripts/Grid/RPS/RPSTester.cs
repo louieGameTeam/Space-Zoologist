@@ -26,7 +26,7 @@ public class RPSTester : MonoBehaviour
             mask.SetTileFlags(pos, TileFlags.None);
 
             //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
-            mask.SetColor(pos, new Color(0, 1, 0, 255.0f / 255));
+            //mask.SetColor(pos, new Color(0, 1, 0, 255.0f / 255));
         }
 
         //debug

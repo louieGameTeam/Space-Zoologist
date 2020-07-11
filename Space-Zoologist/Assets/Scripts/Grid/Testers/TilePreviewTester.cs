@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class TilePreviewTester : MonoBehaviour
 {
     private TilePlacementController tilePlacementController;
-    [SerializeField] private List<TerrainTile> selectableTiles = default;
+    [SerializeField] private List<TileType> selectableTiles = default;
     [SerializeField] bool isBlockMode = default;
-    private TerrainTile selectedTile = default;
+    private TileType selectedTile = default;
 
     [TextArea]
     [SerializeField] string displayText = default;
@@ -25,12 +25,12 @@ public class TilePreviewTester : MonoBehaviour
 
     private void Start()
     {
-        var text = canvas.gameObject.AddComponent<Text>();
+/*        var text = canvas.gameObject.AddComponent<Text>();
         text.text = displayText;
 
         Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
         text.font = ArialFont;
-        text.material = ArialFont.material;
+        text.material = ArialFont.material;*/
 
         tilePlacementController.isBlockMode = isBlockMode;
     }
@@ -46,7 +46,7 @@ public class TilePreviewTester : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            tilePlacementController.StartPreview(selectedTile);
+            //tilePlacementController.StartPreview(selectedTile);
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -60,5 +60,6 @@ public class TilePreviewTester : MonoBehaviour
         {
             tilePlacementController.isBlockMode = !tilePlacementController.isBlockMode;
         }
+        //Debug.Log(tilePlacementController.PlacedTileCount());
     }
 }

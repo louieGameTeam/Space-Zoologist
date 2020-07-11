@@ -6,7 +6,6 @@ using UnityEngine.UI;
 /// Create a SetupItemPreviewEvent and add this method to send a sprite that follows the cursor until StopFollowing is invoked
 /// </summary>
 [System.Serializable]
-public class SetupItemPreviewEvent : UnityEvent<Sprite> { }
 public class SpriteFollowCursor : MonoBehaviour
 {
     [SerializeField] float InterpolationValue = 0.5f;
@@ -25,9 +24,9 @@ public class SpriteFollowCursor : MonoBehaviour
     /// Takes the sprite off of the GameObject and attaches it to presized GameObject
     /// </summary>
     /// <param name="GameObjectSprite"></param>
-    public void SetupSpriteToFollow(Sprite sprite)
+    public void SetupSpriteToFollow(GameObject sprite)
     {
-        this.gameObject.GetComponent<Image>().sprite = sprite;
+        this.gameObject.GetComponent<Image>().sprite = sprite.GetComponent<Image>().sprite;
         //this.gameObject.transform.position = Input.mousePosition;
         this.gameObject.SetActive(true);
         this.Following = true;
