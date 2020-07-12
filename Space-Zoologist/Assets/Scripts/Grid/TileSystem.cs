@@ -43,6 +43,7 @@ public class TileSystem : MonoBehaviour
     public TerrainTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
         SortedDictionary<int, TerrainTile> existingTiles = new SortedDictionary<int, TerrainTile>();
+
         foreach (Tilemap tilemap in tilemaps)
         {
             var returnedTile = tilemap.GetTile(cellLocation);

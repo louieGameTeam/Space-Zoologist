@@ -51,6 +51,7 @@ public class TilePlacementController : MonoBehaviour
             {
                 terrainTile.replacementTilemap.Add(tilemaps[(int)layer]);
             }
+
             itemIDTerrainTileMapping.Add(terrainTile.TileName, terrainTile);
         }
         foreach (Tilemap tilemap in tilemaps)

@@ -9,14 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ffe280807a1c4ffda491a3e201b9443, type: 3}
   m_Name: TestStrot
   m_EditorClassIdentifier: 
+  animatorController: {fileID: 0}
   speciesName: Strot
-  dominance: 2
-  growthFactor: 10
-  needs:
-  - {fileID: 11400000, guid: d62a82625602c4442b457d80c3679103, type: 2}
-  - {fileID: 11400000, guid: a426098c7fe04e24296cdc6be2cc4c70, type: 2}
+  dominance: 0
+  growthFactor: 1
+  needsList: []
+  needBehaviorSet: []
   size: 1
-  accessibleTerrain: 01000000
+  accessibleTerrain: 02000000
+  icon: {fileID: 0}
+  range: 25
+  representation: {fileID: 0}

@@ -1,17 +1,10 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/TilePlacementController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Animals/Population/Population.cs">
     <Files>
-      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="65" Column="1" />
-      <File FileName="Assets/Scripts/Animals/AnimalSpecies.cs" Line="19" Column="56" />
-      <File FileName="Assets/Scripts/Grid/Testers/DensityTester.cs" Line="35" Column="29" />
-      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="111" Column="13" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="47" Column="1" />
-      <File FileName="Assets/Scripts/Needs/NeedSystems/SpeciesNeedSystem.cs" Line="53" Column="1" />
-      <File FileName="Assets/Scripts/Grid/Testers/PathfindTester.cs" Line="74" Column="30" />
-      <File FileName="Assets/Scripts/Needs/NeedSystems/DesityNeedSystem.cs" Line="142" Column="75" />
-      <File FileName="Assets/Scripts/Animals/Population/PopulationDensitySystem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Needs/NeedSystem.cs" Line="10" Column="23" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="43" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="423" Column="52" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="50" Column="83" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="54" Column="1" />
+      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="2" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,12 +13,14 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Animals" expanded="True">
-                  <Node name="Population" expanded="True" />
+                  <Node name="Population" expanded="True">
+                    <Node name="Population.cs" selected="True" />
+                  </Node>
                 </Node>
                 <Node name="Grid" expanded="True">
                   <Node name="RPS" expanded="True" />
                   <Node name="Testers" expanded="True" />
-                  <Node name="TilePlacementController.cs" selected="True" />
+                  <Node name="Tiles" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="NeedSystems" expanded="True" />
@@ -39,7 +34,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6a2331c7-ca88-4f7a-8961-0c19cf598b4d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8a9a9bc6-0ecc-4312-8dfd-b554be115bba" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -87,6 +87,8 @@ public class AnimalSpecies : ScriptableObject
 
     public void OnValidate()
     {
+        TilePreference = new Dictionary<TileType, byte>();
+        TilePreference.Add(TileType.Dirt, 1);
         // Calculate number of behaviors based off of unique need types
         HashSet <NeedType> uniqueTypes = new HashSet<NeedType>();
         int numBehaviors = 0;

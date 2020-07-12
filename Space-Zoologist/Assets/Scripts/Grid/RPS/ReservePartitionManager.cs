@@ -202,10 +202,13 @@ public class ReservePartitionManager : MonoBehaviour
 
                 TypesOfTerrain[population][(int)tile.type]++;
 
-                //if (!PopulationPreference.ContainsKey(cur)) {
-                //    PopulationPreference[cur] = new byte[maxPopulation];
-                //}
-                //PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
+                // save how much a population would prefer to travel through the tile
+                if (!PopulationPreference.ContainsKey(cur))
+                {
+                    PopulationPreference[cur] = new byte[maxPopulation];
+                }
+                if (population.Species.TilePreference.ContainsKey(tile.type))
+                    PopulationPreference[cur][id] = population.Species.TilePreference[tile.type];
 
                 if (!AccessMap.ContainsKey(cur))
                 {
