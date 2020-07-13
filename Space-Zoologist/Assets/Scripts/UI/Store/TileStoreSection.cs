@@ -10,7 +10,7 @@ public class TileStoreSection : StoreSection
 {
     [Header("Tile Store Section")]
     [SerializeField] TilePlacementController tilePlacementController = default;
-    [SerializeField] UpdateNeedsSystems testingUpdates = default;
+    [SerializeField] NeedSystemUpdater testingUpdates = default;
 
     private int startingBalance = 0;
     private bool isPlacing = false;
@@ -75,7 +75,7 @@ public class TileStoreSection : StoreSection
         {
             FinishPlacing();
             testingUpdates.UpdateAccessibleLocations();
-            testingUpdates.UnPauseAllAnimals();
+            testingUpdates.UnpauseAllAnimals();
         }
     }
 

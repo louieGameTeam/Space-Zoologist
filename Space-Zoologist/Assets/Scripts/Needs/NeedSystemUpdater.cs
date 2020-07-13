@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpdateNeedsSystems : MonoBehaviour
+public class NeedSystemUpdater : MonoBehaviour
 {
     [SerializeField] PopulationManager AllAnimals = default;
 
@@ -17,7 +17,7 @@ public class UpdateNeedsSystems : MonoBehaviour
         }
     }
 
-    public void UnPauseAllAnimals()
+    public void UnpauseAllAnimals()
     {
         foreach (Population population in this.AllAnimals.Populations)
         {
@@ -28,6 +28,8 @@ public class UpdateNeedsSystems : MonoBehaviour
         }
     }
 
+    // TODO what should be done when a population is split?
+    // if the population location is no longer on accessible area?
     public void UpdateAccessibleLocations()
     {
         ReservePartitionManager.ins.UpdateAccessMap();
