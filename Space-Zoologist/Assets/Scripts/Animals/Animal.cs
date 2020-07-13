@@ -40,6 +40,13 @@ public class Animal : MonoBehaviour
         this.ChooseNextBehavior();
     }
 
+    // TODO figure out what else should be reset (probability will be one)
+    public void ResetBehavior()
+    {
+        this.CurrentBehavior.ExitBehavior();
+        this.ChooseNextBehavior();
+    }
+
     // Gets a random behaviorScriptName from currentBehaviors in BehaviorData and then uses the BehaviorComponents dictionary to get out the hashed component
     private void ChooseNextBehavior()
     {

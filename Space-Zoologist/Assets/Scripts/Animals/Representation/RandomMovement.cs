@@ -14,6 +14,11 @@ public class RandomMovement : Behavior
         base.Awake();
     }
 
+    public override void ExitBehavior()
+    {
+        base.ExitBehavior();
+    }
+
     // ERROR ArgumentOutOfRangeException: means the population gameobject's start location isn't in an accessible area
     // Use the Animal reference in base to access to behavior data.
     // Base is called last, enabling the component and thus enabling Update.

@@ -10,6 +10,7 @@ public class MovementController : MonoBehaviour
     private int PathIndex = 0;
     private Vector3 NextPathTile { get; set; }
     public bool DestinationReached { get; private set; }
+    public bool IsPaused = false;
     // private Vector3 NextPathTile { get; set; }
 
     public void Start()
@@ -26,6 +27,7 @@ public class MovementController : MonoBehaviour
         this.PathToDestination = pathToDestination;
         this.NextPathTile = TilemapUtil.ins.GridToWorld(pathToDestination[0], 0.5f);
         this.DestinationReached = false;
+        this.PathIndex = 0;
         this.UpdateVisualLogic();
     }
 
@@ -35,6 +37,11 @@ public class MovementController : MonoBehaviour
     /// <returns></returns>
     public void MoveTowardsDestination()
     {
+        if (IsPaused)
+        {
+            this.Animal.BehaviorsData.MovementStatus = Movement.idle;
+            return;
+        }
         if (this.PathToDestination.Count == 0)
         {
             this.PathIndex = 0;
