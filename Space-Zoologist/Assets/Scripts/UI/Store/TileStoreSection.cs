@@ -57,7 +57,7 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerDown(PointerEventData eventData)
     {
         base.OnCursorPointerDown(eventData);
-        if (eventData.button == PointerEventData.InputButton.Left && !isPlacing)
+        if (eventData.button == PointerEventData.InputButton.Left && !isPlacing && !UIUtility.ins.IsCursorOverUI(eventData))
         {
             StartPlacing();
         }
@@ -80,6 +80,7 @@ public class TileStoreSection : StoreSection
     /// </summary>
     public override void OnItemSelectionCanceled()
     {
+        Debug.Log("Tile placement cancelled");
         base.OnItemSelectionCanceled();
         CancelPlacing();
     }

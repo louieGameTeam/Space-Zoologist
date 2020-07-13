@@ -93,7 +93,6 @@ public class TilePlacementController : MonoBehaviour
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
     public void StartPreview(string tileID)
     {
-        TerrainTile terrainTile = null;
         if (!Enum.IsDefined(typeof(TileType), tileID))
         {
             throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");

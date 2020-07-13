@@ -20,7 +20,6 @@ public class RandomMovement : Behavior
     public override void EnterBehavior(BehaviorFinished callback)
     {
         int locationIndex =  this.random.Next(0, Animal.PopulationInfo.AccessibleLocations.Count);
-        // Debug.Log("Random location: " + locationIndex);
         Vector3Int end = Animal.PopulationInfo.AccessibleLocations[locationIndex];
         // PathRequestManager is static
         AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), end, base.PathFound, base.Animal.PopulationInfo.grid);

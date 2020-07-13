@@ -10,7 +10,6 @@ public class PopulationManager : MonoBehaviour
 
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GameObject PopulationPrefab = default;
-    [SerializeField] private ReservePartitionManager rpm = default;
     [SerializeField] private LevelData levelData = default;
 
     private Dictionary<AnimalSpecies, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<AnimalSpecies, SpeciesNeedSystem>();
@@ -22,7 +21,7 @@ public class PopulationManager : MonoBehaviour
         {
             foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
             {
-                SpeciesNeedSystem speciesNeedSystem = new SpeciesNeedSystem(animalSpecies.SpeciesName, rpm);
+                SpeciesNeedSystem speciesNeedSystem = new SpeciesNeedSystem(animalSpecies.SpeciesName, ReservePartitionManager.ins);
                 speciesNeedSystems.Add(animalSpecies, speciesNeedSystem);
             }
         }
@@ -57,12 +56,13 @@ public class PopulationManager : MonoBehaviour
     /// <param name="position">The origin point of the population</param>
     public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
+        Debug.Log("Population created");
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.InitializeNewPopulation(species, position, count);
         this.ExistingPopulations.Add(population);
-        rpm.AddPopulation(population);
+        ReservePartitionManager.ins.AddPopulation(population);
         speciesNeedSystems[population.Species].AddPopulation(population);
 
         // Register with NeedSystemManager
@@ -79,10 +79,11 @@ public class PopulationManager : MonoBehaviour
     {
         // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
 
-        List<Population> localPopulations = rpm.GetPopulationsWithAccessTo(position);
+        List<Population> localPopulations = ReservePartitionManager.ins.GetPopulationsWithAccessTo(position);
         Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
         if (preexistingPopulation)
         {
+            Debug.Log("Preexisting population");
             // preexistingPopulation.AddAnimals(count);
         } // TODO: update systems related to population count change ^
         else

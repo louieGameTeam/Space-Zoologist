@@ -40,10 +40,12 @@ public class StoreMenu : MonoBehaviour
         }
     }
 
+    // Disconnect from this and the store sections and Pod menu is too simple so same logic doesn't work here.
     public void OnCursorItemClick(PointerEventData pointerEventData)
     {
         // Detects if the click is within the bounds of the main menu.
         // Ideally there'd be a way to detect when cursor item clicks are done over any menu so that you can't click through menus to place items.
+        Debug.Log("On click");
         if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, pointerEventData.position))
         {
 
