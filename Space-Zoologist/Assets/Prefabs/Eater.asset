@@ -10,22 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: sandLiq
+  m_Name: Eater
   m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
   speciesName: 
   dominance: 0
   growthFactor: 0
-<<<<<<< Updated upstream:Space-Zoologist/Assets/Prefabs/sandLiq.asset
-  needs: []
-=======
   needsList:
   - {fileID: 11400000, guid: 9a1045da3f394491a8e995ad579e7c47, type: 2}
-  - {fileID: 11400000, guid: 019b40e5f7aa64389b24086e2bc3c208, type: 2}
   needBehaviorSet:
   - NeedType: 0
-    behaviorScriptName: 1
-  - NeedType: 2
-    behaviorScriptName: 3
->>>>>>> Stashed changes:Space-Zoologist/Assets/ScriptableObjects/Species/Animals/Goat.asset
+    behaviorScriptName: 0
   size: 0
   accessibleTerrain: 01000000
+  icon: {fileID: 0}
+  representation: {fileID: 0}

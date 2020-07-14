@@ -7664,6 +7664,89 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 09d5ec6ca3b9042b68f87a59a18ed357,
         type: 2}
+<<<<<<< Updated upstream
+=======
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalPopulation.Array.data[1]
+      value: 
+      objectReference: {fileID: 366220854}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalPopulation.Array.data[2]
+      value: 
+      objectReference: {fileID: 908697331}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalPopulation.Array.data[3]
+      value: 
+      objectReference: {fileID: 2099706645}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[1].CurrentDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[1].Speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[1].RunThreshold
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[2].CurrentDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[2].Speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[2].RunThreshold
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[3].CurrentDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[3].Speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[3].RunThreshold
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[0].IdleTimeBetweenBehaviors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[1].IdleTimeBetweenBehaviors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[2].IdleTimeBetweenBehaviors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalsBehaviorData.Array.data[3].IdleTimeBetweenBehaviors
+      value: 1
+      objectReference: {fileID: 0}
+>>>>>>> Stashed changes
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2684919613425e34d815583d801a54b9, type: 3}
 --- !u!4 &1416411145 stripped
@@ -7682,7 +7765,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1487033933}
   - component: {fileID: 1487033932}
-  - component: {fileID: 1487033931}
   m_Layer: 0
   m_Name: RPM
   m_TagString: Untagged
@@ -7690,20 +7772,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1487033931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487033930}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beb300b45d5b34ef18fb800272c4b941, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask: {fileID: 160268942}
-  population: {fileID: 0}
 --- !u!114 &1487033932
 MonoBehaviour:
   m_ObjectHideFlags: 0

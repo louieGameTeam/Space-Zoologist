@@ -87,6 +87,9 @@ public class Animal : MonoBehaviour
             case BehaviorScriptName.Idle:
                 this.gameObject.AddComponent<Idle>();
                 break;
+            case BehaviorScriptName.GetFood:
+                this.gameObject.AddComponent<GetFood>();
+                break;
             default:
                 Debug.Log("No component with the type found");
                 break;

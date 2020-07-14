@@ -1,10 +1,25 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
+<<<<<<< Updated upstream
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Animals/Population/Population.cs">
     <Files>
       <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="423" Column="52" />
       <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="50" Column="83" />
       <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="54" Column="1" />
       <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="2" Column="1" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Animals/AnimalTraits.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Animals/AnimalSpecies.cs" Line="14" Column="9" />
+      <File FileName="Assets/Scripts/Animals/Animal.cs" Line="80" Column="10" />
+      <File FileName="Assets/Scripts/Animals/Representation/Idle.cs" Line="28" Column="2" />
+      <File FileName="Assets/Scripts/Animals/Representation/RandomMovement.cs" Line="34" Column="28" />
+      <File FileName="Assets/Scripts/Animals/Representation/BehaviorScriptTranslation.cs" Line="6" Column="68" />
+      <File FileName="Assets/Scripts/Animals/Representation/Behavior.cs" Line="15" Column="27" />
+      <File FileName="Assets/Scripts/Animals/Representation/GetFood.cs" Line="30" Column="95" />
+      <File FileName="Assets/Scripts/Needs/NeedSystem.cs" />
+      <File FileName="Assets/Scripts/Animals/Representation/MovementController.cs" Line="36" Column="22" />
+      <File FileName="Assets/Scripts/Animals/AnimalTraits.cs" Line="5" Column="25" />
+>>>>>>> Stashed changes
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,9 +28,21 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Animals" expanded="True">
+<<<<<<< Updated upstream
                   <Node name="Population" expanded="True">
                     <Node name="Population.cs" selected="True" />
                   </Node>
+=======
+                  <Node name="Population" expanded="True" />
+                  <Node name="Representation" expanded="True" />
+                  <Node name="AnimalTraits.cs" selected="True" />
+                </Node>
+                <Node name="Grid" expanded="True">
+                  <Node name="RPS" expanded="True" />
+                </Node>
+                <Node name="Needs" expanded="True">
+                  <Node name="FoodSystem" expanded="True" />
+>>>>>>> Stashed changes
                 </Node>
                 <Node name="Grid" expanded="True">
                   <Node name="RPS" expanded="True" />
@@ -34,7 +61,11 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+<<<<<<< Updated upstream
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8a9a9bc6-0ecc-4312-8dfd-b554be115bba" />
+=======
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d05a5dd5-df2d-4d8b-a4d4-8c79206bbe84" />
+>>>>>>> Stashed changes
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

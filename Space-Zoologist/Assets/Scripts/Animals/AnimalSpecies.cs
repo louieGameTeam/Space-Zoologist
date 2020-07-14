@@ -44,10 +44,11 @@ public class AnimalSpecies : ScriptableObject
 
     private void OnEnable()
     {
-        foreach (Need need in needsList)
-        {
-            needs.Add(need.NeedName, need);
-        }
+        // TODO This is redundant with OnValidate() and introduces a bug
+        //foreach (Need need in needsList)
+        //{
+        //    needs.Add(need.NeedName, need);
+        //}
     }
 
     /// <summary>
