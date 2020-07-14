@@ -58,8 +58,8 @@ public abstract class Behavior : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Path not found, exiting behavior");
-            this.ExitBehavior();
+            Debug.Log("Path not found, exiting behavior without callback");
+            this.enabled = false;
         }
     }
 
@@ -85,11 +85,6 @@ public abstract class Behavior : MonoBehaviour
     {
         this.enabled = true;
         this.isCalculatingPath = true;
-        if (callback == null)
-        {
-            Debug.Log("Issue with entering behavior");
-            return;
-        }
         this.Callback = callback;
     }
 
@@ -106,7 +101,7 @@ public abstract class Behavior : MonoBehaviour
         }
         else
         {
-            Debug.Log("Issue with exiting behavior");
+            Debug.Log("Callback null, behavior exited");
         }
     }
 }

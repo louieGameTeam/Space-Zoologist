@@ -43,8 +43,11 @@ public class Animal : MonoBehaviour
     // TODO figure out what else should be reset (probability will be one)
     public void ResetBehavior()
     {
-        this.CurrentBehavior.ExitBehavior();
-        this.ChooseNextBehavior();
+        if (this.gameObject.activeSelf)
+        {
+            this.CurrentBehavior.ExitBehavior();
+            this.ChooseNextBehavior();
+        }
     }
 
     // Gets a random behaviorScriptName from currentBehaviors in BehaviorData and then uses the BehaviorComponents dictionary to get out the hashed component
@@ -59,9 +62,8 @@ public class Animal : MonoBehaviour
         }
         int randNum = random.Next(this.PopulationInfo.CurrentBehaviors.Count);
         string chosenBehavior = this.PopulationInfo.CurrentBehaviors[randNum].ToString();
-        // Debug.Log("Behavior chosen: " + chosenBehavior);
         this.CurrentBehavior = this.BehaviorComponents[chosenBehavior];
-        this.OnBehaviorFinished = ChooseNextBehavior;
+        this.OnBehaviorFinished = this.ChooseNextBehavior;
         this.CurrentBehavior.EnterBehavior(this.OnBehaviorFinished);
     }
 
