@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c32aff9e162a6f4e82761c95d0b1911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coloringMethod: {fileID: 949791966848937740, guid: 75744000348baaf41a81f2773b4face6,
+  coloringMethod: {fileID: 949791966848937740, guid: c5c83dfbd92594d699bbe29ea298402b,
     type: 3}
   managedTerrainTiles:
   - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
@@ -542,22 +542,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473133747598921222}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d17d6e5e302d14a4a9fa87e7c91985d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectableTiles: 0000000001000000020000000300000004000000
   isBlockMode: 0
-  displayText: 'Press the numbers keys to switch tiles.
-
-
-    Press ''B'' to switch
-    between block and pen modes.
-
-
-    Esc to cancel.'
-  canvas: {fileID: 0}
 --- !u!114 &1473133747598921219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1066,13 +1057,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c32aff9e162a6f4e82761c95d0b1911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coloringMethod: {fileID: 1936870399646672439, guid: 18b7f00f391383a41809647754e60aca,
+  coloringMethod: {fileID: 1936870399646672439, guid: 7e08bb17903634b15aa23f9920e4a736,
     type: 3}
   managedTerrainTiles:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e9c7d63c9d53c4522949fd66c3f424de, type: 2}
   linkedTerrainTiles:
   - {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 98b93f958d51344119ff15bbecb069f4, type: 2}
   - {fileID: 11400000, guid: 9ed9debc640bf2f4da00ed2a42cab8ba, type: 2}
 --- !u!114 &1473133748515397151
 MonoBehaviour:
@@ -1330,7 +1321,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 15a63afe5d5574cc5b375276de95927f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1491,7 +1482,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 7b16e10877eb444f78012ea13d7f4224, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
