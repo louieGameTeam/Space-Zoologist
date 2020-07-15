@@ -19,6 +19,7 @@ public class StoreSection : MonoBehaviour
     [SerializeField] private GameObject itemCellPrefab = default;
     [SerializeField] private CursorItem cursorItem = default;
     [SerializeField] protected IntVariable playerBalance = default;
+    [SerializeField] protected RectTransform StoreMenuRectTransform = default;
 
     protected Item selectedItem = null;
 
@@ -69,7 +70,7 @@ public class StoreSection : MonoBehaviour
     /// <param name="eventData"></param>
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
-        
+
     }
 
     private void OnDisable()

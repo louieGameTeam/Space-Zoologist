@@ -69,11 +69,12 @@ public class PodMenu : MonoBehaviour
         // If in CursorItem mode and the cursor is clicked while over the menu
         if (PointOverMenu(pointerEventData.position))
         {
+            Debug.Log("Clicked over UI");
             DeselectSpecies();
         }
         else if (pointerEventData.button == PointerEventData.InputButton.Left)
         {
-            Vector3 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
+            Vector2 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
             populationManager.AddAnimals(selectedSpecies, 1, position);
         }
     }

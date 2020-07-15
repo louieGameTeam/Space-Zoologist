@@ -14,13 +14,17 @@ public class RandomMovement : Behavior
         base.Awake();
     }
 
+    public override void ExitBehavior()
+    {
+        base.ExitBehavior();
+    }
+
     // ERROR ArgumentOutOfRangeException: means the population gameobject's start location isn't in an accessible area
     // Use the Animal reference in base to access to behavior data.
     // Base is called last, enabling the component and thus enabling Update.
     public override void EnterBehavior(BehaviorFinished callback)
     {
         int locationIndex =  this.random.Next(0, Animal.PopulationInfo.AccessibleLocations.Count);
-        // Debug.Log("Random location: " + locationIndex);
         Vector3Int end = Animal.PopulationInfo.AccessibleLocations[locationIndex];
         // PathRequestManager is static
         AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), end, base.PathFound, base.Animal.PopulationInfo.grid);

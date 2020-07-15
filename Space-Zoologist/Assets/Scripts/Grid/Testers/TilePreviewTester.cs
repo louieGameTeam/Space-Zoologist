@@ -11,10 +11,6 @@ public class TilePreviewTester : MonoBehaviour
     [SerializeField] bool isBlockMode = default;
     private TileType selectedTile = default;
 
-    [TextArea]
-    [SerializeField] string displayText = default;
-
-    [SerializeField] private Canvas canvas = default;
     
     void Awake()
     {
@@ -25,13 +21,6 @@ public class TilePreviewTester : MonoBehaviour
 
     private void Start()
     {
-/*        var text = canvas.gameObject.AddComponent<Text>();
-        text.text = displayText;
-
-        Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-        text.font = ArialFont;
-        text.material = ArialFont.material;*/
-
         tilePlacementController.isBlockMode = isBlockMode;
     }
 
@@ -46,7 +35,7 @@ public class TilePreviewTester : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            //tilePlacementController.StartPreview(selectedTile);
+            tilePlacementController.StartPreview(selectedTile.ToString());
         }
         if (Input.GetMouseButtonUp(0))
         {

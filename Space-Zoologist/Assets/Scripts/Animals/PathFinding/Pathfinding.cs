@@ -34,6 +34,7 @@ namespace AnimalPathfinding
         }
 
         private bool ignoreWeights = true;
+        // Prevent infinite searches
 
         public void StartPathFind(Node start, Node targetPos, Grid grid)
         {
@@ -53,7 +54,7 @@ namespace AnimalPathfinding
             Node startNode = startPos;
             Node targetNode = targetPos;
             List<Vector3> path = new List<Vector3>();
-            if (!startNode.walkable && targetNode.walkable)
+            if (!startNode.walkable && targetNode.walkable || startNode.Equals(targetNode))
             {
                 yield return null;
                 PathRequestManager.instance.FinishedProcessPath(path, false);
@@ -62,7 +63,6 @@ namespace AnimalPathfinding
             Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);
             HashSet<Node> closedSet = new HashSet<Node>();
             openSet.Add(startNode);
-
             while (openSet.currentItemCount > 0)
             {
                 Node currentNode = openSet.RemoveFirst();

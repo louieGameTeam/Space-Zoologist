@@ -93,29 +93,21 @@ public class TilePlacementController : MonoBehaviour
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
     public void StartPreview(string tileID)
     {
-        TerrainTile terrainTile = null;
         if (!Enum.IsDefined(typeof(TileType), tileID))
         {
             throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
         }
-        StartPreview((TileType)Enum.Parse(typeof(TileType),tileID));
-    }
-
-    public void StartPreview(TileType newTile)
-    {
+        isPreviewing = true;
+        foreach (TerrainTile tile in terrainTiles)
         {
-            isPreviewing = true;
-            foreach (TerrainTile tile in terrainTiles)
+            if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
             {
-                if (tile.type == newTile)
-                {
-                    referencedTiles.Add(tile);
-                }
+                referencedTiles.Add(tile);
             }
-            Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
-            dragStartPosition = grid.WorldToCell(mouseWorldPosition);
-            isFirstTile = true;
         }
+        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+        dragStartPosition = grid.WorldToCell(mouseWorldPosition);
+        isFirstTile = true;
     }
     public void StopPreview()
     {

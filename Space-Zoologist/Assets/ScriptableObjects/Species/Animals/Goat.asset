@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: Goat
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
-  speciesName: 
+  speciesName: Goat
   dominance: 0
   growthFactor: 0
-  needsList: []
-  needBehaviorSet: []
+  needsList:
+  - {fileID: 11400000, guid: 71e42b9268b184e4698bf0ed6722016b, type: 2}
+  needBehaviorSet:
+  - NeedType: 0
+    behaviorScriptName: 0
   size: 0
-  accessibleTerrain: 01000000
+  accessibleTerrain: 020000000100000003000000
   icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
   representation: {fileID: 0}

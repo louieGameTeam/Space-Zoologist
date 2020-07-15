@@ -67,8 +67,7 @@ public class Population : Life
     public void InitializePopulationData()
     {
         ReservePartitionManager.ins.AddPopulation(this);
-        this.AccessibleLocations = ReservePartitionManager.ins.GetLocationsWithAccess(this);
-        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
+        this.UpdateAccessibleArea();
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
@@ -79,6 +78,15 @@ public class Population : Life
         {
             Needs.Add(need.Value.NeedName, 0);
         }
+    }
+
+    /// <summary>
+    /// Grabs the updated accessible area and then resets the behavior for all of the animals.
+    /// </summary>
+    public void UpdateAccessibleArea()
+    {
+        this.AccessibleLocations = ReservePartitionManager.ins.GetLocationsWithAccess(this);
+        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
     }
 
     public void InitializeExistingAnimals()

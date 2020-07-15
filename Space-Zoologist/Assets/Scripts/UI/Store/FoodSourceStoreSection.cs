@@ -17,9 +17,8 @@ public class FoodSourceStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left && !UIUtility.ins.IsCursorOverUI(eventData))
         {
-            Debug.Log("Food source placed: " + eventData.button.ToString());
             foodSourceManager.CreateFoodSource(selectedItem.ID, Camera.main.ScreenToWorldPoint(eventData.position));
             playerBalance.RuntimeValue -= selectedItem.Price;
         }
