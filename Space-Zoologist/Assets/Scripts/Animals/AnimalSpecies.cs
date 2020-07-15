@@ -27,7 +27,7 @@ public class AnimalSpecies : ScriptableObject
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    [SerializeField] private List<Need> needsList = default;
+    [SerializeField] private List<NeedConstructData> needsList = default;
     [Header("Behavior displayed when need isn't being met")]
     [SerializeField] private List<BehaviorScriptTranslation> needBehaviorSet = default;
     [Range(0.0f, 10.0f)]
@@ -40,9 +40,10 @@ public class AnimalSpecies : ScriptableObject
 
     private void OnEnable()
     {
-        foreach (Need need in needsList)
+        foreach (NeedConstructData needData in needsList)
         {
-            needs.Add(need.NeedName, need);
+            // Use the NeedData to create Need
+            Needs.Add(needData.NeedName, new Need(needData));
         }
     }
 
@@ -86,7 +87,7 @@ public class AnimalSpecies : ScriptableObject
         // Calculate number of behaviors based off of unique need types
         HashSet <NeedType> uniqueTypes = new HashSet<NeedType>();
         int numBehaviors = 0;
-        foreach (Need need in this.needsList)
+        foreach (Need need in this.needs.Values)
         {
             if (!uniqueTypes.Contains(need.NType))
             {

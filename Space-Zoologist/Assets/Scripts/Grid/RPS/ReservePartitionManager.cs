@@ -38,7 +38,10 @@ public class ReservePartitionManager : MonoBehaviour
     /// <summary> A list of populations to be loaded on startup. </summary>
     [SerializeField] List<Population> populationsOnStartUp = default;
 
+
     public Dictionary<Population, int[]> TypesOfTerrain;
+
+    public Dictionary<Population, bool> PopulationAccessbilityStatus;
 
     public TerrainTile Liquid;
 
@@ -68,6 +71,7 @@ public class ReservePartitionManager : MonoBehaviour
         Spaces = new Dictionary<Population, int>();
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
+        PopulationAccessbilityStatus = new Dictionary<Population, bool>();
     }
 
     private void Start()
@@ -219,6 +223,9 @@ public class ReservePartitionManager : MonoBehaviour
                 SharedSpaces[i][id] = SharedSpaces[id][i];
             }
         }
+
+        // Set accessbility status
+        PopulationAccessbilityStatus[population] = true;
     }
 
     /// <summary>
@@ -315,13 +322,24 @@ public class ReservePartitionManager : MonoBehaviour
     // }
 
     /// <summary>
+    /// TODO Considering to remove this function and use RPM with cell position only
+    /// Check if a population can access toWorldPos.
+    /// </summary>
+    public bool CanAccess(Population population, Vector3 toWorldPos)
+    {
+        // convert to map position
+        Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+        return CanAccess(population, mapPos);
+    }
+
+    /// <summary>
     /// Check if a population can access CellPos.
     /// </summary>
     public bool CanAccess(Population population, Vector3Int cellPos)
     {
         // if accessible
         // check if the nth bit is set (i.e. accessible for the population)
-        if (AccessMap.ContainsKey(cellPos))
+         if (AccessMap.ContainsKey(cellPos))
         {
             if (((AccessMap[cellPos] >> PopulationToID[population]) & 1L) == 1L)
             {

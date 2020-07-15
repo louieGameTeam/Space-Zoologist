@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class TerrianNeedSystem : NeedSystem
+public class TerrainNeedSystem : NeedSystem
 {
     private readonly ReservePartitionManager rpm = null;
     private TileSystem tileSystem = null;
-    public TerrianNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Terrian") : base(needName)
+    public TerrainNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Terrian") : base(needName)
     {
         this.rpm = rpm;
         this.tileSystem = tileSystem;
@@ -18,7 +18,7 @@ public class TerrianNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     { 
-        foreach (Life life in lives)
+        foreach (Life life in Consumers)
         { 
             // Call different get tile function for Popultation and FoodSource
             if (life.GetType() == typeof(Population))

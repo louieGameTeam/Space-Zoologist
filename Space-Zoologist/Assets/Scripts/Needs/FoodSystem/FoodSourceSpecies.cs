@@ -16,7 +16,7 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int baseOutput = default;
     [SerializeField] private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    [SerializeField] private List<Need> needsList = default;
+    [SerializeField] private List<NeedConstructData> needsList = default;
     [SerializeField] private Item FoodSource = default;
 
 
@@ -26,9 +26,9 @@ public class FoodSourceSpecies : ScriptableObject
         {
             return;
         }
-        foreach (Need need in needsList)
+        foreach (NeedConstructData needConstructData in needsList)
         {
-            Needs.Add(need.NeedName, need); // TODO: Setup food source need sytem
+            Needs.Add(needConstructData.NeedName, new Need(needConstructData)); // TODO: Setup food source need sytem
         }
     }
 }

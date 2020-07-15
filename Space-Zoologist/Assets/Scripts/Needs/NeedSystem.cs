@@ -11,23 +11,23 @@ abstract public class NeedSystem
 {
     public string NeedName { get; private set; }
     public bool isDirty = default;
-    protected List<Life> lives = new List<Life>();
+    protected List<Life> Consumers = new List<Life>();
 
     public NeedSystem(string needName)
     {
         NeedName = needName;
     }
 
-    virtual public void AddPopulation(Life life)
+    virtual public void AddConsumer(Life life)
     {
         isDirty = true;
-        lives.Add(life);
+        Consumers.Add(life);
     }
 
-    virtual public bool RemovePopulation(Life life)
+    virtual public bool RemoveConsumer(Life life)
     {
         isDirty = true;
-        return lives.Remove(life);
+        return Consumers.Remove(life);
     }
 
     abstract public void UpdateSystem();

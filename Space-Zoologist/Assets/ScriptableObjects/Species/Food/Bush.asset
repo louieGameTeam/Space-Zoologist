@@ -13,6 +13,25 @@ MonoBehaviour:
   m_Name: Bush
   m_EditorClassIdentifier: 
   speciesName: Bush
-  rootRadius: 0
-  baseOutput: 0
-  needsList: []
+  rootRadius: 5
+  baseOutput: 10
+  needsList:
+  - needType: 4
+    severity: 1
+    conditions: 000000000100000002000000
+    thresholds:
+    - 3
+    - 5
+  - needType: 2
+    severity: 1
+    conditions: 000000000100000002000000
+    thresholds:
+    - 3
+    - 9
+  - needType: 3
+    severity: 1
+    conditions: 000000000100000002000000
+    thresholds:
+    - 5
+    - 7
+  FoodSource: {fileID: 11400000, guid: b63cac9feff8a4b0f89cedf9db1d134f, type: 2}

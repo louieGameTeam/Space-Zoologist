@@ -12,17 +12,19 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private LevelData levelData = default;
 
-    private Dictionary<AnimalSpecies, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<AnimalSpecies, SpeciesNeedSystem>();
+    private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
+    // AnimalSpecies to string name
+    private Dictionary<string, AnimalSpecies> animalSpecies = new Dictionary<string, AnimalSpecies>();
 
     private void Awake()
     {
         // Add new FoodSourceNeedSystem
         if (levelData != null)
         {
-            foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
+            // Fill string to AnimalSpecies Dictionary
+            foreach (AnimalSpecies species in levelData.AnimalSpecies)
             {
-                SpeciesNeedSystem speciesNeedSystem = new SpeciesNeedSystem(animalSpecies.SpeciesName, ReservePartitionManager.ins);
-                speciesNeedSystems.Add(animalSpecies, speciesNeedSystem);
+                animalSpecies.Add(species.SpeciesName, species);
             }
         }
     }
@@ -31,10 +33,13 @@ public class PopulationManager : MonoBehaviour
     {
         ExistingPopulations.AddRange(FindObjectsOfType<Population>());
 
-        // Add SpeicesNeedSystems to NeedSystemManager
-        foreach (SpeciesNeedSystem speciesNeedSystem in speciesNeedSystems.Values)
+        // Get the SpeicesNeedSystems from NeedSystemManager
+        foreach (NeedSystem system in needSystemManager.Systems.Values)
         {
-            needSystemManager.AddSystem(speciesNeedSystem);
+            if (animalSpecies.ContainsKey(system.NeedName))
+            {
+                speciesNeedSystems.Add(system.NeedName, (SpeciesNeedSystem)system);
+            }
         }
 
         // Register with manager
@@ -62,8 +67,8 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.InitializeNewPopulation(species, position, count);
         this.ExistingPopulations.Add(population);
-        ReservePartitionManager.ins.AddPopulation(population);
-        speciesNeedSystems[population.Species].AddPopulation(population);
+        rpm.AddPopulation(population);
+        speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
 
         // Register with NeedSystemManager
         needSystemManager.RegisterWithNeedSystems(population);
