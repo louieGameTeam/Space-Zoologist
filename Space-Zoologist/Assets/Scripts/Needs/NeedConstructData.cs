@@ -2,9 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: need to find a way to make this more non-tech-friendly
-public enum NeedType { SpaceMaple, Density, Dirt, Sand, GasX, Strot, Bush };
+// Each NeedType holds a list of unique needs
+public enum NeedType { Terrain, Atmosphere, Density, Food, Liquid };
 public enum NeedCondition { Bad, Neutral, Good }
+
+[System.Serializable]
+public class NeedTypeConstructData
+{
+    public NeedType NeedType => needType;
+    public List<NeedConstructData> Needs => needs;
+
+    [SerializeField] private NeedType needType = default;
+    [SerializeField] List<NeedConstructData> needs = default;
+}
 
 /// <summary>
 /// A data object that holds the information to create a Need object.
@@ -15,13 +25,12 @@ public enum NeedCondition { Bad, Neutral, Good }
 [System.Serializable]
 public class NeedConstructData
 {
-    public string NeedName => needType.ToString();
-    public NeedType NeedType => needType;
+    public string NeedName => needName;
     public int Severity => severity;
     public List<NeedCondition> Conditions => conditions;
     public List<float> Thresholds => thresholds;
 
-    [SerializeField] private NeedType needType = default;
+    [SerializeField] private string needName = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
     [SerializeField] private List<NeedCondition> conditions = default;

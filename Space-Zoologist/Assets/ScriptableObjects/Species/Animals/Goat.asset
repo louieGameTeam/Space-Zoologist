@@ -17,7 +17,12 @@ MonoBehaviour:
   dominance: 0
   growthFactor: 0
   needsList:
-  - {fileID: 11400000, guid: 71e42b9268b184e4698bf0ed6722016b, type: 2}
+  - needType: 0
+    needs:
+    - needName: 
+      severity: 0
+      conditions: 
+      thresholds: []
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 0

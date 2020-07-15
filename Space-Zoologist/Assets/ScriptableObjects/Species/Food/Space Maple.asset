@@ -17,18 +17,21 @@ MonoBehaviour:
   baseOutput: 10
   needsList:
   - needType: 4
+    needName: LiquidX
     severity: 1
     conditions: 000000000100000002000000
     thresholds:
     - 1
     - 5
   - needType: 2
+    needName: Density
     severity: 1
     conditions: 000000000100000002000000
     thresholds:
     - 5
     - 9
   - needType: 3
+    needName: NutrientX
     severity: 1
     conditions: 000000000100000002000000
     thresholds:

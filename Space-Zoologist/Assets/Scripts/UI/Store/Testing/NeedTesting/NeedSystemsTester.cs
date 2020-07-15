@@ -36,12 +36,12 @@ public class NeedSystemsTester : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            populationManager.AddAnimals(availableSpecies[selectedAnimalSpecies], 1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            populationManager.AddAnimals(availableSpecies[selectedAnimalSpecies], 1, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
         }
 
         if (Input.GetMouseButtonUp(1))
         {
-            foodSourceManager.CreateFoodSource(availableFoodSourceSpecies[selectedFoodSpecies], Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            foodSourceManager.CreateFoodSource(availableFoodSourceSpecies[selectedFoodSpecies], new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
         }
 
         if (Input.GetKeyUp(KeyCode.Space))

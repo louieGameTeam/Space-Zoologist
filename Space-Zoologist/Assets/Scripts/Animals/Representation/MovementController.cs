@@ -121,7 +121,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.left;
+                this.Animal.BehaviorsData.CurrentDirection = Direction.right;
             }
         }
         else if (direction.x > 0)
@@ -136,7 +136,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.right;
+                this.Animal.BehaviorsData.CurrentDirection = Direction.left;
             }
         }
     }

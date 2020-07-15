@@ -20,9 +20,9 @@ public class Need
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
 
-    public Need(NeedConstructData needConstructData)
+    public Need(NeedType needType, NeedConstructData needConstructData)
     {
-        this.needType = needConstructData.NeedType;
+        this.needType = needType;
         this.needName = needConstructData.NeedName;
         this.severity = needConstructData.Severity;
         this.conditions = needConstructData.Conditions;

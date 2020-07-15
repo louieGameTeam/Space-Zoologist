@@ -16,7 +16,7 @@ public class StoreMenu : MonoBehaviour
     RectTransform rectTransform = default;
 
     Item selectedStoreItem = null;
-    Dictionary<string, StoreSection> storeSections = new Dictionary<string, StoreSection>();
+    Dictionary<NeedType, StoreSection> storeSections = new Dictionary<NeedType, StoreSection>();
     TilePlacementController tilePlacementController = default;
 
     private void Awake()

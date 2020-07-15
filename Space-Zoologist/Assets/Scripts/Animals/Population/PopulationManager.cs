@@ -11,7 +11,6 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private LevelData levelData = default;
-    [SerializeField] private ReservePartitionManager rpm = default;
 
     private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
     // AnimalSpecies to string name
@@ -68,7 +67,7 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.InitializeNewPopulation(species, position, count);
         this.ExistingPopulations.Add(population);
-        rpm.AddPopulation(population);
+        ReservePartitionManager.ins.AddPopulation(population);
         speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
 
         // Register with NeedSystemManager

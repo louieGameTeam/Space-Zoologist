@@ -62,16 +62,7 @@ public class FoodSourceManager : MonoBehaviour
 
     public void CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
     {
-        //FoodSourceSpecies foodSourceSpecies = null;
-        ////if (!nameSpeciesMapping.TryGetValue(foodsourceSpeciesID, out foodSourceSpecies))
-        ////{
-        ////    throw new System.ArgumentException("foodsourceSpeciesID was not found in the FoodsourceManager's foodsources");
-        ////}
-
-        //CreateFoodSource(foodSourceSpecies, position);
-
-        //// Register with NeedSystemManager
-        //needSystemManager.RegisterWithNeedSystems(foodSource);
+        CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
     }
 
     public void UpdateFoodSources()

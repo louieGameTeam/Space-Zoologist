@@ -27,6 +27,7 @@ public class Population : Life
 
     // 2d array based off of accessible locations for a populations pathfinding
     public AnimalPathfinding.Grid grid { get; private set; }
+    // TODO when accessible locations becomes nothing, add a warning so the player can respond.
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
     private void Awake()

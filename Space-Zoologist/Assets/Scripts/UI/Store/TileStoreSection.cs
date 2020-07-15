@@ -58,7 +58,12 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerDown(PointerEventData eventData)
     {
         base.OnCursorPointerDown(eventData);
-        if (eventData.button == PointerEventData.InputButton.Left && !isPlacing && !UIUtility.ins.IsCursorOverUI(eventData))
+        if (UIUtility.ins.IsCursorOverUI(eventData))
+        {
+            base.OnItemSelectionCanceled();
+            return;
+        }
+        if (eventData.button == PointerEventData.InputButton.Left && !isPlacing)
         {
             StartPlacing();
             testingUpdates.PauseAllAnimals();

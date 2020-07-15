@@ -56,8 +56,9 @@ namespace AnimalPathfinding
             List<Vector3> path = new List<Vector3>();
             if (!startNode.walkable && targetNode.walkable || startNode.Equals(targetNode))
             {
+                path.Add(new Vector3(targetNode.gridX, targetNode.gridY, 0));
                 yield return null;
-                PathRequestManager.instance.FinishedProcessPath(path, false);
+                PathRequestManager.instance.FinishedProcessPath(path, true);
             }
 
             Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);
