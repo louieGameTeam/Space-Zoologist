@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public enum NeedType {Terrain, Liquid, Atmosphere, Food}
-public enum NeedCondition { Bad, Neutral, Good }
+//public enum NeedType {Terrain, Liquid, Atmosphere, Food}
+//public enum NeedCondition { Bad, Neutral, Good }
 
-[CreateAssetMenu]
-public class Need : ScriptableObject
+public class Need
 {
     public string NeedName => needName;
     public int Severity => severity;
@@ -20,6 +19,16 @@ public class Need : ScriptableObject
     [SerializeField] private List<NeedCondition> conditions = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
+
+    public Need(NeedConstructData needConstructData)
+    {
+        this.needType = needConstructData.NeedType;
+        this.needName = needConstructData.NeedName;
+        this.severity = needConstructData.Severity;
+        this.conditions = needConstructData.Conditions;
+        this.thresholds = needConstructData.Thresholds;
+    }
+
     /// <summary>
     /// Returns what condition the need is in based on the given need value.
     /// </summary>

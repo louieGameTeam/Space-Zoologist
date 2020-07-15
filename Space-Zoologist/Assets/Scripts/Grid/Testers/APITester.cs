@@ -23,7 +23,7 @@ public class APITester : MonoBehaviour
         Vector3Int currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
         //Debug.Log(currentMouseCellPosition);
         TerrainTile tile = tileSystem.GetTerrainTileAtLocation(currentMouseCellPosition);
-        Debug.Log(tileSystem.GetTerrainTileAtLocation(currentMouseCellPosition));
+        //Debug.Log(tileSystem.GetTerrainTileAtLocation(currentMouseCellPosition));
         //float[] comp = getTerrainTile.GetTileContentsAtLocation(currentMouseCellPosition, tile);
         //Debug.Log((comp[0], comp[1], comp[2]));
         //Debug.Log(getTerrainTile.CellLocationsOfClosestTiles(currentMouseCellPosition, liquid));

@@ -8,31 +8,37 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
-    [SerializeField] private LevelData levelData = default;
+    public Dictionary<string, NeedSystem> Systems => systems;
 
+    [SerializeField] private LevelData levelData = default;
     private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
 
     /// <summary>
     /// Initialize the universal need systems
     /// </summary>
+    /// <remarks>Terrian -> FoodSource/Species -> Density, this order has to be fixed</remarks>
     private void Awake()
     {
-        // Add Density, atomsphere/tempeture and terrain NeedSystem
-        AddSystem(new DensityNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+        // Referrance to the RPM
+        ReservePartitionManager rpm = FindObjectOfType<ReservePartitionManager>();
+
+        // Add enviormental NeedSystem
         AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
-        AddSystem(new TerrianNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+        AddSystem(new TerrainNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
 
-        //// Add SpeciesNeedSystems
-        //foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
-        //{
-        //    AddSystem(new SpeciesNeedSystem(animalSpecies.name, FindObjectOfType<ReservePartitionManager>()));
-        //}
+        // Add new FoodSourceNeedSystem
+        foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
+        {
+            AddSystem(new FoodSourceNeedSystem(rpm, foodSourceSpecies.SpeciesName));
+        }
+        // Add new FoodSourceNeedSystem
+        foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
+        {
+            AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));
+        }
 
-        //// Add FoodSourceNeedSystems to NeedSystemManager
-        //foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
-        //{
-        //    AddSystem(foodSourceNeedSystem);
-        //}
+        // Add Density NeedSystem
+        AddSystem(new DensityNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
     }
 
     /// <summary>
@@ -46,18 +52,19 @@ public class NeedSystemManager : MonoBehaviour
             // Check if need is a atmoshpere or a terrian need
             if (Enum.IsDefined(typeof(AtmoshpereComponent), need))
             {
-                systems["Atmoshpere"].AddPopulation(life);
+                systems["Atmoshpere"].AddConsumer(life);
             }
             else if (Enum.IsDefined(typeof(TileType), need))
             {
-                systems["Terrian"].AddPopulation(life);
+                systems["Terrian"].AddConsumer(life);
+                Debug.Log($"Registed {life} with Terrian ({need}) NeedSystem");
             }
             else
             {
                 // Foodsource need here
                 Debug.Assert(systems.ContainsKey(need), $"No { need } system");
-                systems[need].AddPopulation(life);
-                //Debug.Log($"Register {need} in {life}");
+                systems[need].AddConsumer(life);
+                Debug.Log($"Register {life} with {need} system");
             }
         }
     }
@@ -67,7 +74,7 @@ public class NeedSystemManager : MonoBehaviour
         foreach (string need in life.NeedsValues.Keys)
         {
             Debug.Assert(systems.ContainsKey(need));
-            systems[need].RemovePopulation(life);
+            systems[need].RemoveConsumer(life);
         }
     }
 
@@ -95,7 +102,11 @@ public class NeedSystemManager : MonoBehaviour
         foreach (KeyValuePair<string, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;
-            system.UpdateSystem();
+
+            if (system.isDirty)
+            {
+                system.UpdateSystem();
+            }
         }
     }
 }

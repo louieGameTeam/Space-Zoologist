@@ -19,14 +19,14 @@ public class AtmoshpereNeedSystem : NeedSystem
     {
         enclosureSystem.FindEnclosedAreas();
 
-        foreach (Life life in lives)
+        foreach (Life life in Consumers)
         {
             // Get the atmospheric composition of a population 
             AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(Vector3Int.FloorToInt(life.transform.position));
 
             // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
             float[] composition = atmosphericComposition.GeComposition();
-            
+
             foreach (var (value, index) in composition.WithIndex())
             {
                 string needName = ((AtmoshpereComponent)index).ToString();

@@ -53,6 +53,11 @@ public class Population : Life
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
+
+        foreach (Need need in species.Needs.Values)
+        {
+            needsValues.Add(need.NeedName, 0);
+        }
     }
 
     // Can be initialized at runtime if the species is defined or later when a pod is used

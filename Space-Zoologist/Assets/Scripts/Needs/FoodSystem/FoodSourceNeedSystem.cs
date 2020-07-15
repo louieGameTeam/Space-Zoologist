@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+// TODO: have consumer take food one after another
+// TODO: have a way to determine if a full reset of the accessible list
+
 public class FoodSourceNeedSystem : NeedSystem
 {
     private List<FoodSource> foodSources = new List<FoodSource>();
     private readonly ReservePartitionManager rpm = null;
-    public FoodSourceNeedSystem(string needName, ReservePartitionManager rpm) : base(needName)
+
+    // Holds which FoodSources each population has access to.
+    private Dictionary<Population, HashSet<FoodSource>> accessibleFoodSources = new Dictionary<Population, HashSet<FoodSource>>();
+    // Holds which populations have access to each FoodSource, the opposite of accessibleFoodSources.
+    private Dictionary<FoodSource, HashSet<Population>> populationsWithAccess = new Dictionary<FoodSource, HashSet<Population>>();
+
+    public FoodSourceNeedSystem(ReservePartitionManager rpm, string needName) : base(needName)
     {
         this.rpm = rpm;
     }
@@ -17,33 +26,31 @@ public class FoodSourceNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
-        if (foodSources.Count == 0) return;
+        if (foodSources.Count == 0 || Consumers.Count == 0) return;
 
-        // Holds which FoodSources each population has access to.
-        Dictionary<Population, HashSet<FoodSource>> accessibleFoodSources = new Dictionary<Population, HashSet<FoodSource>>();
-        // Holds which populations have access to each FoodSource, the opposite of accessibleFoodSources.
-        Dictionary<FoodSource, HashSet<Population>> populationsWithAccess = new Dictionary<FoodSource, HashSet<Population>>();
-        // Holds how much food each FoodSource has left after Populations take from them.
-        Dictionary<FoodSource, float> amountFoodRemaining = new Dictionary<FoodSource, float>();
-
-        // Initialize accessibleFoodSources, populationsWithAccess, amd amountFoodRemaining.
-        foreach (FoodSource foodSource in foodSources)
+        // When accessbility of population changes a full reset should be triggered
+        foreach (Population population in Consumers)
         {
-            populationsWithAccess.Add(foodSource, new HashSet<Population>());
-            amountFoodRemaining.Add(foodSource, foodSource.FoodOutput);
-            foreach (Population population in lives)
+            if (rpm.PopulationAccessbilityStatus[population])
             {
-                if (!accessibleFoodSources.ContainsKey(population))
+                Debug.Log($"{population} triggered a accessible list reset");
+
+                foreach (FoodSource foodSource in foodSources)
                 {
-                    accessibleFoodSources.Add(population, new HashSet<FoodSource>());
+                    if (rpm.CanAccess(population, foodSource.Position))
+                    {
+                        accessibleFoodSources[population].Add(foodSource);
+                        populationsWithAccess[foodSource].Add(population);
+                    }
                 }
-                if (rpm.CanAccess(population, new Vector3Int((int)foodSource.Position.x, (int)foodSource.Position.y, 0)))
-                {
-                    accessibleFoodSources[population].Add(foodSource);
-                    populationsWithAccess[foodSource].Add(population);
-                }
+                rpm.PopulationAccessbilityStatus[population] = false;
             }
         }
+
+        // TODO: this dictionaries could be part of rpm
+
+        // Holds how much food each FoodSource has left after Populations take from them.
+        Dictionary<FoodSource, float> amountFoodRemaining = new Dictionary<FoodSource, float>();
 
         // Holds the sum of the Dominance of all Populations that have access to the FoodSource for each FoodSource.
         Dictionary<FoodSource, float> totalLocalDominance = new Dictionary<FoodSource, float>();
@@ -56,6 +63,9 @@ public class FoodSourceNeedSystem : NeedSystem
             float total = populationsWithAccess[foodSource].Sum(p => p.Dominance);
             totalLocalDominance.Add(foodSource, total);
             localDominanceRemaining.Add(foodSource, total);
+
+            // Reset amountFoodRemaining to initial food output 
+            amountFoodRemaining.Add(foodSource, foodSource.FoodOutput);
         }
 
         // Holds the populations that will not have enough food to give them a good condition.
@@ -64,7 +74,7 @@ public class FoodSourceNeedSystem : NeedSystem
         // Foreach population, if it is in good condition from the food available to it, then take its portion and update its need,
         // else, add it to the set of populations that will not have enough. The populations without enough will then split what is 
         // remaining based on the ratio of their dominance to the localRemainingDominance for each of their FoodSources.
-        foreach (Population population in lives)
+        foreach (Population population in Consumers)
         {
             float availableFood = 0.0f;
             float amountRequiredPerIndividualForGoodCondition = population.Species.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);
@@ -111,11 +121,37 @@ public class FoodSourceNeedSystem : NeedSystem
         }
 
         // Done update not dirty any more
-        isDirty = false;
+        //isDirty = false;
     }
 
     public void AddFoodSource(FoodSource foodSource)
     {
         foodSources.Add(foodSource);
+
+        populationsWithAccess.Add(foodSource, new HashSet<Population>());
+        foreach (Population population in Consumers)
+        {
+            if (rpm.CanAccess(population, foodSource.Position))
+            {
+                accessibleFoodSources[population].Add(foodSource);
+                populationsWithAccess[foodSource].Add(population);
+            }
+        }
+    }
+
+    public override void AddConsumer(Life life)
+    {
+        base.AddConsumer(life);
+
+        Population population = (Population)life;
+        accessibleFoodSources.Add(population, new HashSet<FoodSource>());
+        foreach (FoodSource foodSource in foodSources)
+        {
+            if (rpm.CanAccess(population, foodSource.Position))
+            {
+                accessibleFoodSources[population].Add(foodSource);
+                populationsWithAccess[foodSource].Add(population);
+            }
+        }
     }
 }
