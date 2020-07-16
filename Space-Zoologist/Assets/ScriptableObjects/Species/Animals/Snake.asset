@@ -14,20 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: 2c658f184238347a39f6d91eb93056ef, type: 2}
   speciesName: Snake
-  dominance: 0
+  dominance: 10
   growthFactor: 0
-  needsList:
-  - needType: 3
-    needs:
-    - needName: Strot
-      severity: 0
-      conditions: 
-      thresholds: []
   needBehaviorSet:
   - NeedType: 0
-    behaviorScriptName: 0
+    behaviorScriptName: 1
   size: 0
   accessibleTerrain: 0100000003000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
-  representation: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263,
-    type: 3}
+  needsList:
+  - needType: 3
+    needs:
+    - needName: Space Maple
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 1
+      - 5
+  - needType: 5
+    needs:
+    - needName: Strot
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 1
+      - 5
+  - needType: 2
+    needs:
+    - needName: Density
+      severity: 1
+      conditions: 020000000100000000000000
+      thresholds:
+      - 1
+      - 5
+  representation: {fileID: 0}
