@@ -18,7 +18,7 @@ MonoBehaviour:
   growthFactor: 3
   needBehaviorSet:
   - NeedType: 0
-    behaviorScriptName: 0
+    behaviorScriptName: 1
   size: 2
   accessibleTerrain: 0100000004000000
   icon: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c, type: 3}
@@ -26,16 +26,18 @@ MonoBehaviour:
   - needType: 0
     needs:
     - needName: Sand
-      severity: 0
-      conditions: 0000000002000000
+      severity: 1
+      conditions: 000000000100000002000000
       thresholds:
-      - 10
+      - 50
+      - 100
   - needType: 3
     needs:
-    - needName: Bush
-      severity: 0
-      conditions: 0000000002000000
+    - needName: Space Maple
+      severity: 1
+      conditions: 000000000100000002000000
       thresholds:
       - 5
+      - 10
   representation: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c,
     type: 3}

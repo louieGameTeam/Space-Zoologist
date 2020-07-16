@@ -45,11 +45,26 @@ MonoBehaviour:
       thresholds:
       - 1
       - 5
+    - needName: Temperature
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 75
+      - 80
   - needType: 2
     needs:
     - needName: Density
       severity: 1
-      conditions: 0000000002000000
+      conditions: 020000000100000000000000
       thresholds:
-      - 4
+      - 1
+      - 5
+  - needType: 3
+    needs:
+    - needName: Space Maple
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 5
+      - 10
   representation: {fileID: 0}

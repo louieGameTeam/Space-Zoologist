@@ -13,14 +13,21 @@ MonoBehaviour:
   m_Name: Space Maple
   m_EditorClassIdentifier: 
   speciesName: Space Maple
-  rootRadius: 3
+  rootRadius: 5
   baseOutput: 10
   needsList:
   - needType: 0
     needs:
-    - needName: Dirt
-      severity: 0
-      conditions: 0000000002000000
+    - needName: Sand
+      severity: 1
+      conditions: 000000000100000002000000
       thresholds:
-      - 10
+      - 3
+      - 6
+    - needName: Dirt
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 6
+      - 9
   FoodSource: {fileID: 11400000, guid: 33c4785eeea134363b476230dcb191b9, type: 2}
