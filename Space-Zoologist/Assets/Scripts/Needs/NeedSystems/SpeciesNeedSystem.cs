@@ -169,9 +169,9 @@ public class SpeciesNeedSystem : NeedSystem
     {
         base.AddConsumer(life);
 
-        Population population = (Population)life;
-        accessiblePopulation.Add(population, new HashSet<Population>());
-        foreach (Population consumer in populations)
+        Population consumer = (Population)life;
+        accessiblePopulation.Add(consumer, new HashSet<Population>());
+        foreach (Population population in populations)
         {
             if (rpm.CanAccessPopulation(consumer, population))
             {
