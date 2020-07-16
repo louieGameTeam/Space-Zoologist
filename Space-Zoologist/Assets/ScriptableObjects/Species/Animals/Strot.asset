@@ -12,35 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
   m_Name: Strot
   m_EditorClassIdentifier: 
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: e28c40730e812434993f5de4a67f674f, type: 2}
   speciesName: Strot
   dominance: 2
   growthFactor: 3
   needsList:
-  - needType: 2
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 5
-    - 8
+  - needType: 0
+    needs:
+    - needName: Sand
+      severity: 0
+      conditions: 
+      thresholds: []
   - needType: 3
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 5
-    - 7
-  - needType: 6
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 3
-    - 5
+    needs:
+    - needName: Bush
+      severity: 0
+      conditions: 
+      thresholds: []
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 0
-  - NeedType: 0
-    behaviorScriptName: 0
   size: 2
-  accessibleTerrain: 0100000002000000
-  icon: {fileID: 21300000, guid: acfcd75b0178c1145bfe1ca0d55b3f2e, type: 3}
-  representation: {fileID: 0}
+  accessibleTerrain: 0100000004000000
+  icon: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c, type: 3}
+  representation: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c,
+    type: 3}

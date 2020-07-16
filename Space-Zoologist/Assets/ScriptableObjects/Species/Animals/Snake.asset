@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: Goat
+  m_Name: Snake
   m_EditorClassIdentifier: 
-  animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
-  speciesName: Goat
+  animatorController: {fileID: 9100000, guid: 2c658f184238347a39f6d91eb93056ef, type: 2}
+  speciesName: Snake
   dominance: 0
   growthFactor: 0
   needsList:
-  - needType: 0
+  - needType: 3
     needs:
-    - needName: Sand
+    - needName: Strot
       severity: 0
       conditions: 
       thresholds: []
@@ -27,6 +27,7 @@ MonoBehaviour:
   - NeedType: 0
     behaviorScriptName: 0
   size: 0
-  accessibleTerrain: 020000000100000003000000
-  icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
-  representation: {fileID: 0}
+  accessibleTerrain: 0100000003000000
+  icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
+  representation: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263,
+    type: 3}

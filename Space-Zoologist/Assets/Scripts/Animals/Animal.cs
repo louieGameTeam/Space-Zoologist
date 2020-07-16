@@ -18,6 +18,7 @@ public class Animal : MonoBehaviour
         if (!this.gameObject.TryGetComponent(out this.Animator))
         {
             this.Animator = null;
+            Debug.Log("Animator component not attached");
         }
     }
 
