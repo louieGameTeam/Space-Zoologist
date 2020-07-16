@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Each NeedType holds a list of unique needs
-public enum NeedType { Terrain, Atmosphere, Density, Food, Liquid };
+public enum NeedType { Terrain, Atmosphere, Density, Food, Liquid, Species };
 public enum NeedCondition { Bad, Neutral, Good }
 
 [System.Serializable]
 public class NeedTypeConstructData
 {
+
+    public NeedTypeConstructData(NeedType needType)
+    {
+        this.needType = needType;
+    }
+
+
     public NeedType NeedType => needType;
     public List<NeedConstructData> Needs => needs;
 
@@ -19,9 +26,6 @@ public class NeedTypeConstructData
 /// <summary>
 /// A data object that holds the information to create a Need object.
 /// </summary>
-/// <remarks>
-/// 
-/// </remarks>
 [System.Serializable]
 public class NeedConstructData
 {

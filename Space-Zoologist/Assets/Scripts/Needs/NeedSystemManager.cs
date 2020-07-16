@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
+    // Singleton
+    public static NeedSystemManager ins;
+
     public Dictionary<string, NeedSystem> Systems => systems;
 
     [SerializeField] private LevelData levelData = default;
@@ -19,12 +22,23 @@ public class NeedSystemManager : MonoBehaviour
     /// <remarks>Terrian -> FoodSource/Species -> Density, this order has to be fixed</remarks>
     private void Awake()
     {
+        if (ins != null && this != ins)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            ins = this;
+        }
+
         // Referrance to the RPM
-        ReservePartitionManager rpm = FindObjectOfType<ReservePartitionManager>();
+        ReservePartitionManager rpm = ReservePartitionManager.ins;
+        EnclosureSystem enclosureSystem = FindObjectOfType<EnclosureSystem>();
+        TileSystem tileSystem = FindObjectOfType<TileSystem>();
 
         // Add enviormental NeedSystem
-        AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
-        AddSystem(new TerrainNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+        AddSystem(new AtmoshpereNeedSystem(enclosureSystem));
+        AddSystem(new TerrainNeedSystem(rpm, tileSystem));
 
         // Add new FoodSourceNeedSystem
         foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
@@ -34,11 +48,11 @@ public class NeedSystemManager : MonoBehaviour
         // Add new FoodSourceNeedSystem
         foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
         {
-            AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));
+            AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));    
         }
 
         // Add Density NeedSystem
-        AddSystem(new DensityNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+        AddSystem(new DensityNeedSystem(rpm, tileSystem));
     }
 
     /// <summary>
@@ -47,12 +61,13 @@ public class NeedSystemManager : MonoBehaviour
     /// <param name="life">This could be a Population or FoodSource since they both inherit from Life</param>
     public void RegisterWithNeedSystems(Life life)
     {
-        foreach (string need in life.NeedsValues.Keys)
+        foreach (string need in life.GetNeedValues().Keys)
         {
             // Check if need is a atmoshpere or a terrian need
             if (Enum.IsDefined(typeof(AtmoshpereComponent), need))
             {
                 systems["Atmoshpere"].AddConsumer(life);
+                Debug.Log($"{life} registered with AtmoshpererNS ({need})");
             }
             else if (Enum.IsDefined(typeof(TileType), need))
             {
@@ -71,7 +86,7 @@ public class NeedSystemManager : MonoBehaviour
 
     public void UnregisterPopulationNeeds(Life life)
     {
-        foreach (string need in life.NeedsValues.Keys)
+        foreach (string need in life.GetNeedValues().Keys)
         {
             Debug.Assert(systems.ContainsKey(need));
             systems[need].RemoveConsumer(life);

@@ -29,7 +29,7 @@ public class TerrainNeedSystem : NeedSystem
                 {
                     string needName = ((TileType)index).ToString();
 
-                    if (life.NeedsValues.ContainsKey(needName))
+                    if (life.GetNeedValues().ContainsKey(needName))
                     {
                         life.UpdateNeed(needName, count);
                     }
@@ -38,13 +38,13 @@ public class TerrainNeedSystem : NeedSystem
             else if(life.GetType() == typeof(FoodSource))
             {
                 FoodSource foodSource = (FoodSource)life;
-                var terrianCounts = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(life.transform.position), foodSource.Species.RootRadius);
+                var terrianCounts = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(life.GetPosition()), foodSource.Species.RootRadius);
 
                 foreach (var (count, index) in terrianCounts.WithIndex())
                 {
                     string needName = ((TileType)index).ToString();
 
-                    if (life.NeedsValues.ContainsKey(needName))
+                    if (life.GetNeedValues().ContainsKey(needName))
                     {
                         life.UpdateNeed(needName, count);
                     }

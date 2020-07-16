@@ -5,11 +5,14 @@ using UnityEngine;
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
-public class Population : Life
+public class Population : MonoBehaviour, Life
 {
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;
+
+    public Dictionary<string, float> NeedsValues => needsValues;
+    protected Dictionary<string, float> needsValues = new Dictionary<string, float>();
 
     [SerializeField] private AnimalSpecies species = default;
     [SerializeField] private GameObject AnimalPrefab = default;
@@ -57,7 +60,8 @@ public class Population : Life
 
         foreach (Need need in species.Needs.Values)
         {
-            needsValues.Add(need.NeedName, 0);
+            //needsValues.Add(need.NeedName, 0);
+            //Debug.Log($"Add {need.NeedName} NeedValue to {this.species.SpeciesName}");
         }
     }
 
@@ -78,6 +82,8 @@ public class Population : Life
         foreach (KeyValuePair<string, Need> need in Species.Needs)
         {
             Needs.Add(need.Value.NeedName, 0);
+            needsValues.Add(need.Value.NeedName, 0);
+            Debug.Log($"Add {need.Value.NeedName} NeedValue to {this.species.SpeciesName}");
         }
     }
 
@@ -115,7 +121,7 @@ public class Population : Life
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    public override void UpdateNeed(string need, float value)
+    public void UpdateNeed(string need, float value)
     {
         Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         needsValues[need] = value;
@@ -162,6 +168,16 @@ public class Population : Life
         {
             this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
         }
+    }
+
+    public Dictionary<string, float> GetNeedValues()
+    {
+        return this.NeedsValues;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return this.gameObject.transform.position;
     }
 }
 

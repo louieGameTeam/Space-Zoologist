@@ -17,24 +17,13 @@ MonoBehaviour:
   baseOutput: 10
   needsList:
   - needType: 4
-    needName: LiquidX
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 1
-    - 5
+    needs:
+    - needName: 
+      severity: 0
+      conditions: 
+      thresholds: []
   - needType: 2
-    needName: Density
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 5
-    - 9
+    needs: []
   - needType: 3
-    needName: NutrientX
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 5
-    - 7
+    needs: []
   FoodSource: {fileID: 11400000, guid: 33c4785eeea134363b476230dcb191b9, type: 2}

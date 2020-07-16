@@ -6,11 +6,14 @@ using UnityEngine.UI;
 /// <summary>
 /// A runtime instance of a food source
 /// </summary>
-public class FoodSource: Life
+public class FoodSource: MonoBehaviour, Life
 {
     public FoodSourceSpecies Species => species;
     public float FoodOutput => CalculateOutput();
     public Vector2 Position { get; private set; } = Vector2.zero;
+
+    public Dictionary<string, float> NeedsValues => needsValues;
+    protected Dictionary<string, float> needsValues = new Dictionary<string, float>();
 
     [SerializeField] private FoodSourceSpecies species = default;
 
@@ -77,10 +80,20 @@ public class FoodSource: Life
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    public override void UpdateNeed(string need, float value)
+    public void UpdateNeed(string need, float value)
     {
         Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         needsValues[need] = value;
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
+    }
+
+    public Dictionary<string, float> GetNeedValues()
+    {
+        return this.NeedsValues;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return this.gameObject.transform.position;
     }
 }

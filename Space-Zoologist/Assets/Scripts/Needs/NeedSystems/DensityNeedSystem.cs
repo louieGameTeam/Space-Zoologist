@@ -287,12 +287,12 @@ public class PopulationDensitySystem
 public class DensityNeedSystem : NeedSystem
 {
     private readonly ReservePartitionManager rpm = null;
-    //private readonly TileSystem tileSystem = null;
+    private readonly TileSystem tileSystem = null;
     private PopulationDensitySystem populationDensitySystem = null;
     public DensityNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Density") : base(needName)
     {
         this.rpm = rpm;
-        //this.tileSystem = tileSystem;
+        this.tileSystem = tileSystem;
         this.populationDensitySystem = new PopulationDensitySystem(rpm, tileSystem);
     }
 
