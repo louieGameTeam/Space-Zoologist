@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NeedSystemUpdater : MonoBehaviour
-{
-    [SerializeField] PopulationManager AllAnimals = default;
-
+{ 
     public void PauseAllAnimals()
     {
-        foreach (Population population in this.AllAnimals.Populations)
+        foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -19,7 +17,7 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public void UnpauseAllAnimals()
     {
-        foreach (Population population in this.AllAnimals.Populations)
+        foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -33,7 +31,7 @@ public class NeedSystemUpdater : MonoBehaviour
     public void UpdateAccessibleLocations()
     {
         ReservePartitionManager.ins.UpdateAccessMap();
-        foreach (Population population in this.AllAnimals.Populations)
+        foreach (Population population in PopulationManager.ins.Populations)
         {
             population.UpdateAccessibleArea();
             foreach (GameObject animal in population.AnimalPopulation)
@@ -41,5 +39,11 @@ public class NeedSystemUpdater : MonoBehaviour
                 animal.GetComponent<Animal>().ResetBehavior();
             }
         }
+    }
+
+    // Temp update
+    private void FixedUpdate()
+    {
+        NeedSystemManager.ins.UpdateSystems();
     }
 }

@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The manager of all the population instances
+/// </summary>
 public class PopulationManager : MonoBehaviour
 {
+    // Singleton
+    public static PopulationManager ins;
+
     // FindObjectOfType<Population> to populate
     private List<Population> ExistingPopulations = new List<Population>();
     public List<Population> Populations => ExistingPopulations;
 
-    [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private LevelData levelData = default;
 
@@ -18,6 +23,15 @@ public class PopulationManager : MonoBehaviour
 
     private void Awake()
     {
+        if (ins != null && this != ins)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            ins = this;
+        }
+
         // Add new FoodSourceNeedSystem
         if (levelData != null)
         {
@@ -34,7 +48,7 @@ public class PopulationManager : MonoBehaviour
         ExistingPopulations.AddRange(FindObjectsOfType<Population>());
 
         // Get the SpeicesNeedSystems from NeedSystemManager
-        foreach (NeedSystem system in needSystemManager.Systems.Values)
+        foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
         {
             if (animalSpecies.ContainsKey(system.NeedName))
             {
@@ -43,10 +57,11 @@ public class PopulationManager : MonoBehaviour
         }
 
         // Register with manager
-        foreach (Population population in ExistingPopulations)
-        {
-            needSystemManager.RegisterWithNeedSystems(population);
-        }
+        //foreach (Population population in ExistingPopulations)
+        //{
+        //    NeedSystemManager.ins.RegisterWithNeedSystems(population);
+        //    Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
+        //}
 
         foreach (Population population in this.ExistingPopulations)
         {
@@ -71,7 +86,7 @@ public class PopulationManager : MonoBehaviour
         speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
 
         // Register with NeedSystemManager
-        needSystemManager.RegisterWithNeedSystems(population);
+        NeedSystemManager.ins.RegisterWithNeedSystems(population);
     }
 
     /// <summary>
@@ -89,7 +104,7 @@ public class PopulationManager : MonoBehaviour
         if (preexistingPopulation)
         {
             Debug.Log("Preexisting population");
-            // preexistingPopulation.AddAnimals(count);
+            preexistingPopulation.AddAnimal(new BehaviorsData());
         } // TODO: update systems related to population count change ^
         else
         {
@@ -102,9 +117,9 @@ public class PopulationManager : MonoBehaviour
     {
         population.InitializePopulationData();
         population.InitializeExistingAnimals();
-        // foreach (SpeciesNeed need in population.Species.Needs)
-        // {
-        //     needSystemManager.RegisterPopulation(population, need.Name);
-        // }
+
+        // Register with NS
+        NeedSystemManager.ins.RegisterWithNeedSystems(population);
+        Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
     }
 }

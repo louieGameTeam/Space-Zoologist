@@ -12,11 +12,6 @@ public class NeedSystemsTester : MonoBehaviour
         public AnimalSpecies species = default;
     }
 
-    [SerializeField] private NeedSystemManager needSystemManager = default;
-    [SerializeField] private PopulationManager populationManager = default;
-    [SerializeField] private FoodSourceManager foodSourceManager = default;
-    [SerializeField] private ReservePartitionManager rpm = default;
-
     [SerializeField] private Text populationStats = default;
     [SerializeField] private Text foodSourceStats = default;
 
@@ -28,35 +23,35 @@ public class NeedSystemsTester : MonoBehaviour
 
     void Start()
     {
-        rpm.UpdateAccessMap();
-        foodSourceManager.UpdateFoodSources();
+        //rpm.UpdateAccessMap();
+        //foodSourceManager.UpdateFoodSources();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
-        {
-            populationManager.AddAnimals(availableSpecies[selectedAnimalSpecies], 1, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
-        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    populationManager.AddAnimals(availableSpecies[selectedAnimalSpecies], 1, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
+        //}
 
-        if (Input.GetMouseButtonUp(1))
-        {
-            foodSourceManager.CreateFoodSource(availableFoodSourceSpecies[selectedFoodSpecies], new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
-        }
+        //if (Input.GetMouseButtonUp(1))
+        //{
+        //    foodSourceManager.CreateFoodSource(availableFoodSourceSpecies[selectedFoodSpecies], new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
+        //}
 
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            needSystemManager.UpdateSystems();
-        }
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    needSystemManager.UpdateSystems();
+        //}
 
-        if (Input.GetKeyUp(KeyCode.UpArrow))
-        {
-            selectedAnimalSpecies = (selectedAnimalSpecies + 1) % availableSpecies.Count;
-            selectedFoodSpecies = (selectedFoodSpecies + 1) % availableFoodSourceSpecies.Count;
-        }
+        //if (Input.GetKeyUp(KeyCode.UpArrow))
+        //{
+        //    selectedAnimalSpecies = (selectedAnimalSpecies + 1) % availableSpecies.Count;
+        //    selectedFoodSpecies = (selectedFoodSpecies + 1) % availableFoodSourceSpecies.Count;
+        //}
 
         string populationStatsText = "";
-        foreach (Population population in populationManager.Populations)
+        foreach (Population population in PopulationManager.ins.Populations)
         {
             populationStatsText += $"***{ population.Species.SpeciesName } {population.GetInstanceID()}; Count: {population.Count}; Dominance: {population.Dominance}***\n";
             foreach (KeyValuePair<string, float> needValue in population.NeedsValues)
@@ -68,7 +63,7 @@ public class NeedSystemsTester : MonoBehaviour
         populationStats.text = populationStatsText;
 
         string foodSourceStatsText = "";
-        foreach (FoodSource foodSource in foodSourceManager.FoodSources)
+        foreach (FoodSource foodSource in FoodSourceManager.ins.FoodSources)
         {
             foodSourceStatsText += $"***{ foodSource.Species.SpeciesName }; Food output: {foodSource.FoodOutput}***\n";
             foreach (KeyValuePair<string, float> needValue in foodSource.NeedsValues)

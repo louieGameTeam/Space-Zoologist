@@ -14,19 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
   speciesName: Goat
-  dominance: 0
+  dominance: 5
   growthFactor: 0
-  needsList:
-  - needType: 0
-    needs:
-    - needName: Sand
-      severity: 0
-      conditions: 
-      thresholds: []
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 0
   size: 0
   accessibleTerrain: 020000000100000003000000
   icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
+  needsList:
+  - needType: 0
+    needs:
+    - needName: Sand
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+      - 40
+    - needName: Dirt
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+      - 40
+  - needType: 1
+    needs:
+    - needName: GasZ
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 1
+      - 5
   representation: {fileID: 0}

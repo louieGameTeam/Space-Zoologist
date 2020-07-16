@@ -26,14 +26,23 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int dominance = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
-    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    [SerializeField] private List<NeedTypeConstructData> needsList = default;
+    
     [Header("Behavior displayed when need isn't being met")]
     [SerializeField] private List<BehaviorScriptTranslation> needBehaviorSet = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
+
+    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    [SerializeField] private List<NeedTypeConstructData> needsList = new List<NeedTypeConstructData>()
+    {
+        new NeedTypeConstructData(NeedType.Atmosphere),
+        new NeedTypeConstructData(NeedType.Terrain),
+        new NeedTypeConstructData(NeedType.Density),
+        new NeedTypeConstructData(NeedType.Food),
+        new NeedTypeConstructData(NeedType.Species),
+    };
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
@@ -46,6 +55,7 @@ public class AnimalSpecies : ScriptableObject
             {
                 // Use the NeedData to create Need
                 Needs.Add(need.NeedName, new Need(needData.NeedType, need));
+                Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
             }
         }
         while (this.needBehaviorSet.Count < 1)

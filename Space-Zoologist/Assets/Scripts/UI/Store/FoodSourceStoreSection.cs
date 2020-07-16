@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class FoodSourceStoreSection : StoreSection
 {
-    [Header("Food Source Store Section")]
-    [SerializeField] FoodSourceManager foodSourceManager = default;
+    //[Header("Food Source Store Section")]
+    //[SerializeField] FoodSourceManager foodSourceManager = default;
 
     /// <summary>
     /// Handles the click release on the cursor item.
@@ -24,7 +24,7 @@ public class FoodSourceStoreSection : StoreSection
         }
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            foodSourceManager.CreateFoodSource(selectedItem.ID, Camera.main.ScreenToWorldPoint(eventData.position));
+            FoodSourceManager.ins.CreateFoodSource(selectedItem.ID, Camera.main.ScreenToWorldPoint(eventData.position));
             playerBalance.RuntimeValue -= selectedItem.Price;
         }
     }

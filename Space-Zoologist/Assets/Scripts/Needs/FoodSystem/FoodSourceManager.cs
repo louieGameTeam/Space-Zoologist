@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class FoodSourceManager : MonoBehaviour
 {
+    // Singleton
+    public static FoodSourceManager ins;
+
     public List<FoodSource> FoodSources => foodSources;
 
-    [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private LevelData levelData = default;
-    [SerializeField] private ReservePartitionManager rpm = default;
     private List<FoodSource> foodSources = new List<FoodSource>();
     // Having food distribution system in FoodSourceManager is questionable
     private Dictionary<string, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<string, FoodSourceNeedSystem>();
@@ -19,6 +20,15 @@ public class FoodSourceManager : MonoBehaviour
 
     private void Awake()
     {
+        if(ins != null && this != ins)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            ins = this;
+        }
+
         // Fill string to FoodSourceSpecies Dictionary
         foreach (FoodSourceSpecies species in levelData.FoodSourceSpecies)
         {
@@ -29,7 +39,7 @@ public class FoodSourceManager : MonoBehaviour
     private void Start()
     {
         // Get the FoodSourceNeedSystems from NeedSystemManager
-        foreach (NeedSystem system in needSystemManager.Systems.Values)
+        foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
         {
             if (foodSourceSpecies.ContainsKey(system.NeedName))
             {
@@ -43,11 +53,11 @@ public class FoodSourceManager : MonoBehaviour
         // Register Foodsource with NeedSystem via NeedSystemManager
         foreach (FoodSource foodSource in foodSources)
         {
-            needSystemManager.RegisterWithNeedSystems(foodSource);
+            NeedSystemManager.ins.RegisterWithNeedSystems(foodSource);
         }
     }
 
-    public void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
+    private void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
         newFoodSourceGameObject.name = species.SpeciesName;
@@ -57,7 +67,7 @@ public class FoodSourceManager : MonoBehaviour
         foodSourceNeedSystems[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
 
         // Register with NeedSystemManager
-        needSystemManager.RegisterWithNeedSystems(foodSource);
+        NeedSystemManager.ins.RegisterWithNeedSystems(foodSource);
     }
 
     public void CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
@@ -65,6 +75,7 @@ public class FoodSourceManager : MonoBehaviour
         CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
     }
 
+    // Deprecated
     public void UpdateFoodSources()
     {
         foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
