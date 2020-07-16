@@ -32,11 +32,13 @@ public class NeedSystemManager : MonoBehaviour
         }
 
         // Referrance to the RPM
-        ReservePartitionManager rpm = FindObjectOfType<ReservePartitionManager>();
+        ReservePartitionManager rpm = ReservePartitionManager.ins;
+        EnclosureSystem enclosureSystem = FindObjectOfType<EnclosureSystem>();
+        TileSystem tileSystem = FindObjectOfType<TileSystem>();
 
         // Add enviormental NeedSystem
-        AddSystem(new AtmoshpereNeedSystem(FindObjectOfType<EnclosureSystem>()));
-        AddSystem(new TerrainNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+        AddSystem(new AtmoshpereNeedSystem(enclosureSystem));
+        AddSystem(new TerrainNeedSystem(rpm, tileSystem));
 
         // Add new FoodSourceNeedSystem
         foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
@@ -50,7 +52,7 @@ public class NeedSystemManager : MonoBehaviour
         }
 
         // Add Density NeedSystem
-        AddSystem(new DensityNeedSystem(FindObjectOfType<ReservePartitionManager>(), FindObjectOfType<TileSystem>()));
+        AddSystem(new DensityNeedSystem(rpm, tileSystem));
     }
 
     /// <summary>
