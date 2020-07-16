@@ -16,10 +16,6 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] private LevelData levelData = default;
     private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
 
-    /// <summary>
-    /// Initialize the universal need systems
-    /// </summary>
-    /// <remarks>Terrian -> FoodSource/Species -> Density, this order has to be fixed</remarks>
     private void Awake()
     {
         if (ins != null && this != ins)
@@ -30,10 +26,17 @@ public class NeedSystemManager : MonoBehaviour
         {
             ins = this;
         }
+    }
 
+    /// <summary>
+    /// Initialize the universal need systems
+    /// </summary>
+    /// <remarks>Terrian -> FoodSource/Species -> Density, this order has to be fixed</remarks>
+    private void Start()
+    {
         // Referrance to the RPM
         ReservePartitionManager rpm = ReservePartitionManager.ins;
-        EnclosureSystem enclosureSystem = FindObjectOfType<EnclosureSystem>();
+        EnclosureSystem enclosureSystem = EnclosureSystem.ins;
         TileSystem tileSystem = FindObjectOfType<TileSystem>();
 
         // Add enviormental NeedSystem

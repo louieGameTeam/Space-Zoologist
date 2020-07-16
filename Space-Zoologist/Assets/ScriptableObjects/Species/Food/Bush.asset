@@ -16,25 +16,11 @@ MonoBehaviour:
   rootRadius: 5
   baseOutput: 10
   needsList:
-  - needType: 4
-    needName: LiquidX
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 3
-    - 5
-  - needType: 2
-    needName: Density
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 3
-    - 9
-  - needType: 3
-    needName: NutrientX
-    severity: 1
-    conditions: 000000000100000002000000
-    thresholds:
-    - 5
-    - 7
+  - needType: 0
+    needs:
+    - needName: Sand
+      severity: 0
+      conditions: 0000000002000000
+      thresholds:
+      - 5
   FoodSource: {fileID: 11400000, guid: b63cac9feff8a4b0f89cedf9db1d134f, type: 2}

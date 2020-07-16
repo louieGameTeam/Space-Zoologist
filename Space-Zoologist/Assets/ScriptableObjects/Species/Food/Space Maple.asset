@@ -16,14 +16,11 @@ MonoBehaviour:
   rootRadius: 3
   baseOutput: 10
   needsList:
-  - needType: 4
+  - needType: 0
     needs:
-    - needName: 
+    - needName: Dirt
       severity: 0
-      conditions: 
-      thresholds: []
-  - needType: 2
-    needs: []
-  - needType: 3
-    needs: []
+      conditions: 0000000002000000
+      thresholds:
+      - 10
   FoodSource: {fileID: 11400000, guid: 33c4785eeea134363b476230dcb191b9, type: 2}

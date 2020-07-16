@@ -45,4 +45,11 @@ MonoBehaviour:
       thresholds:
       - 1
       - 5
+  - needType: 2
+    needs:
+    - needName: Density
+      severity: 1
+      conditions: 0000000002000000
+      thresholds:
+      - 4
   representation: {fileID: 0}

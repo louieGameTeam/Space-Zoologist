@@ -16,18 +16,20 @@ MonoBehaviour:
   speciesName: Snake
   dominance: 0
   growthFactor: 0
-  needsList:
-  - needType: 3
-    needs:
-    - needName: Strot
-      severity: 0
-      conditions: 
-      thresholds: []
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 0
   size: 0
   accessibleTerrain: 0100000003000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
+  needsList:
+  - needType: 3
+    needs:
+    - needName: Strot
+      severity: 0
+      conditions: 000000000100000002000000
+      thresholds:
+      - 2
+      - 4
   representation: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263,
     type: 3}

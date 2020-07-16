@@ -17,9 +17,9 @@ public class TerrainNeedSystem : NeedSystem
     /// Get the terrian each population as access to and updates the associated need in the Population's needs
     /// </summary>
     public override void UpdateSystem()
-    { 
+    {
         foreach (Life life in Consumers)
-        { 
+        {
             // Call different get tile function for Popultation and FoodSource
             if (life.GetType() == typeof(Population))
             {
