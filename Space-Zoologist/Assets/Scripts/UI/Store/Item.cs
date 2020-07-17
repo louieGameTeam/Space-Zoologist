@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // Modify as needed
@@ -17,4 +18,39 @@ public class Item : ScriptableObject
     [SerializeField] private int price = default;
     [SerializeField] private string description = default;
     [SerializeField] private Sprite icon = default;
+
+    public void SetupData(string id, string type, string name, int price)
+    {
+        this.id = id;
+        if (type.Equals("Terrain", StringComparison.OrdinalIgnoreCase))
+        {
+            this.type = NeedType.Terrain;
+        }
+        if (type.Equals("Atmosphere", StringComparison.OrdinalIgnoreCase))
+        {
+            this.type = NeedType.Atmosphere;
+        }
+        if (type.Equals("Density", StringComparison.OrdinalIgnoreCase))
+        {
+            this.type = NeedType.Density;
+        }
+        if (type.Equals("Food", StringComparison.OrdinalIgnoreCase))
+        {
+            this.type = NeedType.Food;
+        }
+        if (type.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
+        {
+            this.type = NeedType.Liquid;
+        }
+        if (type.Equals("Species", StringComparison.OrdinalIgnoreCase))
+        {
+            this.type = NeedType.Species;
+        }
+        if (type.Equals("Temperature", StringComparison.OrdinalIgnoreCase))
+        {
+            this.type = NeedType.Temperature;
+        }
+        this.itemName = name;
+        this.price = price;
+    }
 }

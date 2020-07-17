@@ -31,4 +31,13 @@ public class FoodSourceSpecies : ScriptableObject
             }
         }
     }
+
+    public void SetupData(string name, int rootRadius, int output, List<NeedTypeConstructData> needs)
+    {
+        this.needsList = new List<NeedTypeConstructData>();
+        this.speciesName = name;
+        this.rootRadius = rootRadius;
+        this.baseOutput = output;
+        this.needsList = needs;
+    }
 }

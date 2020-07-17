@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Animations;
+using System;
 
 [CreateAssetMenu]
 public class AnimalSpecies : ScriptableObject
@@ -26,7 +27,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int dominance = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
-    
+
     [Header("Behavior displayed when need isn't being met")]
     [SerializeField] private List<BehaviorScriptTranslation> needBehaviorSet = default;
     [Range(0.0f, 10.0f)]
@@ -58,59 +59,42 @@ public class AnimalSpecies : ScriptableObject
                 Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
             }
         }
-        while (this.needBehaviorSet.Count < 1)
-        {
-            this.needBehaviorSet.Add(new BehaviorScriptTranslation());
-        }
-        while (this.needBehaviorSet.Count > 1)
-        {
-            this.needBehaviorSet.RemoveAt(this.needBehaviorSet.Count - 1);
-        }
     }
-
-    public void OnValidate()
+    public void SetupData(string name, int dominance, float growthFactor, List<string> accessibleTerrain, List<NeedTypeConstructData> needsList)
     {
-        // // Calculate number of behaviors based off of unique need types
-        // HashSet <NeedType> uniqueTypes = new HashSet<NeedType>();
-        // int numBehaviors = 0;
-        // foreach (Need need in this.needs.Values)
-        // {
-        //     if (!uniqueTypes.Contains(need.NType))
-        //     {
-        //         uniqueTypes.Add(need.NType);
-        //         numBehaviors++;
-        //     }
-        // }
-
-        // // Ensure there is a behavior for each needType
-        // while (this.needBehaviorSet.Count < 0)
-        // {
-        //     this.needBehaviorSet.Add(new BehaviorScriptTranslation());
-        // }
-        // while (this.needBehaviorSet.Count > 1)
-        // {
-        //     this.needBehaviorSet.RemoveAt(this.needBehaviorSet.Count - 1);
-        // }
-        // // int i = 0;
-        // // Give each behavior set the unique need type name. Prevents changing names
-        // foreach (NeedType needType in uniqueTypes)
-        // {
-        //     this.needBehaviorSet[i].NeedType = needType;
-        //     i++;
-        // }
-
-        // // Ensure there are no duplicate behaviors when behaviors are being chosen
-        // HashSet<string> usedBehaviors = new HashSet<string>();
-        // foreach (BehaviorScriptTranslation behavior in this.needBehaviorSet)
-        // {
-        //     if (!usedBehaviors.Contains(behavior.behaviorScriptName.ToString()))
-        //     {
-        //         usedBehaviors.Add(behavior.behaviorScriptName.ToString());
-        //     }
-        //     else
-        //     {
-        //         behavior.behaviorScriptName = BehaviorScriptName.None;
-        //     }
-        // }
+        // TODO setup behaviors and accessible terrain
+        this.speciesName = name;
+        this.dominance = dominance;
+        this.growthFactor = growthFactor;
+        this.accessibleTerrain = new List<TileType>();
+        foreach(string tileType in accessibleTerrain)
+        {
+            if (tileType.Equals("Sand", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Sand);
+            }
+            if (tileType.Equals("Grass", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Grass);
+            }
+            if (tileType.Equals("Dirt", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Dirt);
+            }
+            if (tileType.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Liquid);
+            }
+            if (tileType.Equals("Rock", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Rock);
+            }
+            if (tileType.Equals("Wall", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Wall);
+            }
+        }
+        //this.accessibleTerrain = accessibleTerrain;
+        this.needsList = needsList;
     }
 }

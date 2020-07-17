@@ -26,45 +26,17 @@ MonoBehaviour:
   - needType: 0
     needs:
     - needName: Sand
-      severity: 1
+      severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
       - 40
-    - needName: Dirt
-      severity: 1
+    - needName: GasX
+      severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
-      - 40
+      - 20
   - needType: 1
-    needs:
-    - needName: GasZ
-      severity: 1
-      conditions: 000000000100000002000000
-      thresholds:
-      - 1
-      - 5
-    - needName: Temperature
-      severity: 1
-      conditions: 000000000100000002000000
-      thresholds:
-      - 75
-      - 80
-  - needType: 2
-    needs:
-    - needName: Density
-      severity: 1
-      conditions: 020000000100000000000000
-      thresholds:
-      - 1
-      - 5
-  - needType: 3
-    needs:
-    - needName: Space Maple
-      severity: 1
-      conditions: 000000000100000002000000
-      thresholds:
-      - 5
-      - 10
+    needs: []
   representation: {fileID: 0}

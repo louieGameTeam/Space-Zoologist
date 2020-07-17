@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 // Each NeedType holds a list of unique needs
-public enum NeedType { Terrain, Atmosphere, Density, Food, Liquid, Species };
+public enum NeedType { Terrain, Atmosphere, Density, Food, Liquid, Species, Temperature };
 public enum NeedCondition { Bad, Neutral, Good }
 
 [System.Serializable]
@@ -16,12 +16,44 @@ public class NeedTypeConstructData
         needs = new List<NeedConstructData>();
     }
 
+    public NeedTypeConstructData(string needType)
+    {
+        if (needType.Equals("Terrain", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Terrain;
+        }
+        if (needType.Equals("Atmosphere", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Atmosphere;
+        }
+        if (needType.Equals("Density", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Density;
+        }
+        if (needType.Equals("Food", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Food;
+        }
+        if (needType.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Liquid;
+        }
+        if (needType.Equals("Species", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Species;
+        }
+        if (needType.Equals("Temperature", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Temperature;
+        }
+        needs = new List<NeedConstructData>();
+    }
 
     public NeedType NeedType => needType;
     public List<NeedConstructData> Needs => needs;
 
     [SerializeField] private NeedType needType = default;
-    [SerializeField] List<NeedConstructData> needs = default;
+    [SerializeField] public List<NeedConstructData> needs = default;
 }
 
 /// <summary>
@@ -43,19 +75,21 @@ public class NeedConstructData
 
     public NeedConstructData(string name, int severity, List<string> conditions, List<float> thresholds)
     {
+        this.conditions = new List<NeedCondition>();
+        this.thresholds = new List<float>();
         this.needName = name;
         this.severity = severity;
         foreach(string condition in conditions)
         {
-            if (NeedCondition.Good == (NeedCondition)Enum.Parse(typeof(NeedCondition), condition))
+            if (condition.Equals("Good", StringComparison.OrdinalIgnoreCase))
             {
                 this.conditions.Add(NeedCondition.Good);
             }
-            if (NeedCondition.Neutral == (NeedCondition)Enum.Parse(typeof(NeedCondition), condition))
+            if (condition.Equals("Neutral", StringComparison.OrdinalIgnoreCase))
             {
                 this.conditions.Add(NeedCondition.Neutral);
             }
-            if (NeedCondition.Bad == (NeedCondition)Enum.Parse(typeof(NeedCondition), condition))
+            if (condition.Equals("Bad", StringComparison.OrdinalIgnoreCase))
             {
                 this.conditions.Add(NeedCondition.Bad);
             }
