@@ -43,7 +43,7 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Initialize()
     {
         ExistingPopulations.AddRange(FindObjectsOfType<Population>());
 
@@ -57,11 +57,11 @@ public class PopulationManager : MonoBehaviour
         }
 
         // Register with manager
-        //foreach (Population population in ExistingPopulations)
-        //{
-        //    NeedSystemManager.ins.RegisterWithNeedSystems(population);
-        //    Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
-        //}
+        foreach (Population population in ExistingPopulations)
+        {
+            NeedSystemManager.ins.RegisterWithNeedSystems(population);
+            //Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
+        }
 
         foreach (Population population in this.ExistingPopulations)
         {
@@ -120,6 +120,6 @@ public class PopulationManager : MonoBehaviour
 
         // Register with NS
         NeedSystemManager.ins.RegisterWithNeedSystems(population);
-        Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
+        //Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
     }
 }

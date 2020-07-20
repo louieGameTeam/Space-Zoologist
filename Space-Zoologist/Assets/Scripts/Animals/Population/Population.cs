@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -58,11 +59,11 @@ public class Population : MonoBehaviour, Life
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
 
-        foreach (Need need in species.Needs.Values)
-        {
-            //needsValues.Add(need.NeedName, 0);
-            //Debug.Log($"Add {need.NeedName} NeedValue to {this.species.SpeciesName}");
-        }
+        //foreach (Need need in species.Needs.Values)
+        //{
+        //    needsValues.Add(need.NeedName, 0);
+        //    Debug.Log($"Add {need.NeedName} NeedValue to {this.species.SpeciesName}");
+        //}
     }
 
     // Can be initialized at runtime if the species is defined or later when a pod is used
@@ -83,7 +84,7 @@ public class Population : MonoBehaviour, Life
         {
             Needs.Add(need.Value.NeedName, 0);
             needsValues.Add(need.Value.NeedName, 0);
-            Debug.Log($"Add {need.Value.NeedName} NeedValue to {this.species.SpeciesName}");
+            //Debug.Log($"Add {need.Value.NeedName} NeedValue to {this.species.SpeciesName}");
         }
     }
 
@@ -109,11 +110,28 @@ public class Population : MonoBehaviour, Life
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        var name = collision.gameObject.name;
+    }
+
     public void AddAnimal(BehaviorsData data)
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
+
+        // Making the NS of this pop's need dirty (Density, FoodSource and Species)
+        foreach (string needName in this.needsValues.Keys)
+        {
+            if (!Enum.IsDefined(typeof(AtmoshpereComponent), needName) && !Enum.IsDefined(typeof(TileType), needName))
+            {
+                NeedSystemManager.ins.Systems[needName].isDirty = true;
+            }
+        }
+
+        // Mark SpeciesNS of this pop type dirty
+        NeedSystemManager.ins.Systems[this.species.SpeciesName].isDirty = true;
     }
 
     /// <summary>

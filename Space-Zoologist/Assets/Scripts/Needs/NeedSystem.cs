@@ -11,6 +11,7 @@ abstract public class NeedSystem
 {
     public string NeedName { get; private set; }
     public bool isDirty = default;
+    
     protected List<Life> Consumers = new List<Life>();
 
     public NeedSystem(string needName)
@@ -20,14 +21,14 @@ abstract public class NeedSystem
 
     virtual public void AddConsumer(Life life)
     {
-        isDirty = true;
-        Consumers.Add(life);
+        this.isDirty = true;
+        this.Consumers.Add(life);
     }
 
     virtual public bool RemoveConsumer(Life life)
     {
-        isDirty = true;
-        return Consumers.Remove(life);
+        this.isDirty = true;
+        return this.Consumers.Remove(life);
     }
 
     abstract public void UpdateSystem();

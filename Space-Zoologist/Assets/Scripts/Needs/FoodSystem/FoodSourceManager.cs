@@ -36,8 +36,8 @@ public class FoodSourceManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
+    public void Initialize()
+    { 
         // Get the FoodSourceNeedSystems from NeedSystemManager
         foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
         {

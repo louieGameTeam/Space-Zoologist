@@ -289,6 +289,7 @@ public class DensityNeedSystem : NeedSystem
     private readonly ReservePartitionManager rpm = null;
     private readonly TileSystem tileSystem = null;
     private PopulationDensitySystem populationDensitySystem = null;
+
     public DensityNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Density") : base(needName)
     {
         this.rpm = rpm;
@@ -307,10 +308,18 @@ public class DensityNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
+        if (this.Consumers.Count == 0)
+        {
+            this.isDirty = false;
+            return;
+        }
+
         foreach (Population population in Consumers)
         {
             float density = populationDensitySystem.GetDensityScore(population);
             population.UpdateNeed("Density", density);
+
+            this.isDirty = false;
         }
     }
 }
