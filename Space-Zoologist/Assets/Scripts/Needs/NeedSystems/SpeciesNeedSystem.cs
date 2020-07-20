@@ -31,7 +31,11 @@ public class SpeciesNeedSystem : NeedSystem
     {
 
         // Stop update if there is no population to distribut
-        if (populations.Count == 0 || Consumers.Count == 0) return;
+        if (populations.Count == 0 || Consumers.Count == 0)
+        {
+            this.isDirty = false;
+            return;
+        }
 
         // When accessbility of population changes a full reset should be triggered
         foreach (Population consumer in Consumers)
@@ -147,7 +151,7 @@ public class SpeciesNeedSystem : NeedSystem
         }
 
         // Done update not dirty any more
-        //isDirty = false;
+        this.isDirty = false;
     }
 
     public void AddPopulation(Population population)
@@ -163,6 +167,8 @@ public class SpeciesNeedSystem : NeedSystem
                 populationsWithAccess[population].Add(consumer);
             }
         }
+
+        this.isDirty = true;
     }
 
     public override void AddConsumer(Life life)
@@ -179,5 +185,7 @@ public class SpeciesNeedSystem : NeedSystem
                 populationsWithAccess[population].Add(consumer);
             }
         }
+
+        this.isDirty = true;
     }
 }

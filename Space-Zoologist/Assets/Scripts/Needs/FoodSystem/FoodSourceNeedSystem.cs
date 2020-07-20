@@ -26,7 +26,11 @@ public class FoodSourceNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
-        if (foodSources.Count == 0 || Consumers.Count == 0) return;
+        if (foodSources.Count == 0 || Consumers.Count == 0)
+        {
+            this.isDirty = false;
+            return;
+        }
 
         // When accessbility of population changes a full reset should be triggered
         foreach (Population population in Consumers)
@@ -121,7 +125,7 @@ public class FoodSourceNeedSystem : NeedSystem
         }
 
         // Done update not dirty any more
-        //isDirty = false;
+        isDirty = false;
     }
 
     public void AddFoodSource(FoodSource foodSource)
@@ -137,6 +141,8 @@ public class FoodSourceNeedSystem : NeedSystem
                 populationsWithAccess[foodSource].Add(population);
             }
         }
+
+        this.isDirty = true;
     }
 
     public override void AddConsumer(Life life)

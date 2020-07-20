@@ -18,9 +18,9 @@ MonoBehaviour:
   needsList:
   - needType: 0
     needs:
-    - needName: Sand
-      severity: 0
+    - needName: Dirt
+      severity: 5
       conditions: 0000000002000000
       thresholds:
-      - 5
+      - 10
   FoodSource: {fileID: 11400000, guid: b63cac9feff8a4b0f89cedf9db1d134f, type: 2}

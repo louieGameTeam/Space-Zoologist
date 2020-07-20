@@ -34,13 +34,13 @@ public class NeedSystemManager : MonoBehaviour
     /// <remarks>Terrian -> FoodSource/Species -> Density, this order has to be fixed</remarks>
     private void Start()
     {
-        // Referrance to the RPM
+        // Referrance supprot systems
         ReservePartitionManager rpm = ReservePartitionManager.ins;
         EnclosureSystem enclosureSystem = EnclosureSystem.ins;
         TileSystem tileSystem = FindObjectOfType<TileSystem>();
 
         // Add enviormental NeedSystem
-        AddSystem(new AtmoshpereNeedSystem(enclosureSystem));
+        AddSystem(new AtmosphereNeedSystem(enclosureSystem));
         AddSystem(new TerrainNeedSystem(rpm, tileSystem));
 
         // Add new FoodSourceNeedSystem
@@ -56,6 +56,10 @@ public class NeedSystemManager : MonoBehaviour
 
         // Add Density NeedSystem
         AddSystem(new DensityNeedSystem(rpm, tileSystem));
+
+        // TODO: call FS/S NS setup
+        FoodSourceManager.ins.Initialize();
+        PopulationManager.ins.Initialize();
     }
 
     /// <summary>
@@ -69,20 +73,20 @@ public class NeedSystemManager : MonoBehaviour
             // Check if need is a atmoshpere or a terrian need
             if (Enum.IsDefined(typeof(AtmoshpereComponent), need))
             {
-                systems["Atmoshpere"].AddConsumer(life);
-                Debug.Log($"{life} registered with AtmoshpererNS ({need})");
+                systems["Atmosphere"].AddConsumer(life);
+                //Debug.Log($"{life} registered with AtmoshpererNS ({need})");
             }
             else if (Enum.IsDefined(typeof(TileType), need))
             {
-                systems["Terrian"].AddConsumer(life);
-                Debug.Log($"Registed {life} with Terrian ({need}) NeedSystem");
+                systems["Terrain"].AddConsumer(life);
+                //Debug.Log($"Registed {life} with Terrian ({need}) NeedSystem");
             }
             else
             {
                 // Foodsource need here
                 Debug.Assert(systems.ContainsKey(need), $"No { need } system");
                 systems[need].AddConsumer(life);
-                Debug.Log($"Register {life} with {need} system");
+                //Debug.Log($"Register {life} with {need} system");
             }
         }
     }
@@ -123,7 +127,12 @@ public class NeedSystemManager : MonoBehaviour
 
             if (system.isDirty)
             {
+                Debug.Log($"Updating {system.NeedName} NS");
                 system.UpdateSystem();
+            }
+            else
+            {
+
             }
         }
     }

@@ -7,7 +7,7 @@ public class TerrainNeedSystem : NeedSystem
 {
     private readonly ReservePartitionManager rpm = null;
     private TileSystem tileSystem = null;
-    public TerrainNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Terrian") : base(needName)
+    public TerrainNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Terrain") : base(needName)
     {
         this.rpm = rpm;
         this.tileSystem = tileSystem;
@@ -18,6 +18,12 @@ public class TerrainNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
+        if (this.Consumers.Count == 0)
+        {
+            this.isDirty = false;
+            return;
+        }
+
         foreach (Life life in Consumers)
         {
             // Call different get tile function for Popultation and FoodSource
@@ -51,6 +57,8 @@ public class TerrainNeedSystem : NeedSystem
                 }
             }
         }
+
+        this.isDirty = false;
     }
 }
 

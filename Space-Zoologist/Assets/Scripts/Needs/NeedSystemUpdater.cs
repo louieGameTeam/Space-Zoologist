@@ -2,10 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Hanldes the update of NS and pausing animal repersentation
+/// </summary>
 public class NeedSystemUpdater : MonoBehaviour
-{ 
+{
+    public bool isInStore = default;
+
+    // Singleton
+    public static NeedSystemUpdater ins;
+
+    private void Awake()
+    {
+        if (ins != null && this != ins)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            ins = this;
+        }
+    }
+
     public void PauseAllAnimals()
     {
+        isInStore = true;
+
         foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
@@ -17,6 +39,8 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public void UnpauseAllAnimals()
     {
+        isInStore = false;
+
         foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
@@ -44,6 +68,9 @@ public class NeedSystemUpdater : MonoBehaviour
     // Temp update
     private void FixedUpdate()
     {
-        NeedSystemManager.ins.UpdateSystems();
+        if(!isInStore)
+        {
+            NeedSystemManager.ins.UpdateSystems();
+        }
     }
 }

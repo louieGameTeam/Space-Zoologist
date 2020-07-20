@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class AtmoshpereNeedSystem : NeedSystem
+public class AtmosphereNeedSystem : NeedSystem
 {
     //private readonly ReservePartitionManager rpm = null;
     private readonly EnclosureSystem enclosureSystem = null;
-    public AtmoshpereNeedSystem(EnclosureSystem enclosureSystem, string needName = "Atmoshpere") : base(needName)
+    public AtmosphereNeedSystem(EnclosureSystem enclosureSystem, string needName = "Atmosphere") : base(needName)
     {
         this.enclosureSystem = enclosureSystem;
     }
@@ -17,6 +17,12 @@ public class AtmoshpereNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
+        if (this.Consumers.Count == 0)
+        {
+            this.isDirty = false;
+            return;
+        }
+
         enclosureSystem.FindEnclosedAreas();
 
         foreach (Life life in Consumers)
@@ -37,5 +43,7 @@ public class AtmoshpereNeedSystem : NeedSystem
                 }
             }
         }
+
+        this.isDirty = false;
     }
 }

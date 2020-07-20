@@ -56,7 +56,7 @@ public class AnimalSpecies : ScriptableObject
             {
                 // Use the NeedData to create Need
                 Needs.Add(need.NeedName, new Need(needData.NeedType, need));
-                Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
+                //Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
             }
         }
     }
