@@ -173,7 +173,20 @@ namespace AnimalPathfinding
 
         public Node GetNode(int x, int y)
         {
+            if (!IsAccessible(x, y))
+            {
+                return null;
+            }
             return nodes[x, y];
+        }
+
+        public bool IsAccessible(int x, int y)
+        {
+            if (x >= nodes.GetLength(0) || y >= nodes.GetLength(1) || x < 0 || y < 0)
+            {
+                return false;
+            }
+            return nodes[x, y].walkable;
         }
 
         /// <summary>

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO refactor so automotan movement can be switched to when needed
 public delegate void BehaviorFinished();
 public class Animal : MonoBehaviour
 {
+    [SerializeField] bool AutomotonTesting = false;
     public BehaviorsData BehaviorsData { get; private set; }
     public Population PopulationInfo { get; private set; }
     private Animator Animator = null;
@@ -27,6 +29,11 @@ public class Animal : MonoBehaviour
         this.BehaviorsData = data;
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
+        if (this.AutomotonTesting)
+        {
+            this.gameObject.GetComponent<AutomatonMovement>().Initialize(population);
+            return;
+        }
         this.BehaviorComponents = new Dictionary<string, Behavior>();
         foreach (BehaviorScriptTranslation component in this.PopulationInfo.Species.Behaviors)
         {
@@ -44,6 +51,10 @@ public class Animal : MonoBehaviour
     // TODO figure out what else should be reset (probability will be one)
     public void ResetBehavior()
     {
+        if (this.AutomotonTesting)
+        {
+            return;
+        }
         if (this.gameObject.activeSelf)
         {
             this.CurrentBehavior.ExitBehavior();

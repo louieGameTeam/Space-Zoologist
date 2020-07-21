@@ -57,4 +57,65 @@ public class TilemapUtil : MonoBehaviour
     {
         return new Vector3Int((int)(node.x + largestMap.origin.x), (int)(node.y + largestMap.origin.y), 0);
     }
+
+    public bool CanAccess(AnimalPathfinding.Node node, AnimalPathfinding.Grid grid)
+    {
+        return grid.GetNode(node.gridX, node.gridY).walkable;
+    }
+
+    // Using direction, starting location, and grid, determine if the next spot on the grid is accessible
+    public bool DirectionAllowed(Direction direction, Vector3 startingLocation, AnimalPathfinding.Grid grid)
+    {
+        bool isAllowed = false;
+        AnimalPathfinding.Node currentSpot = this.CellToGrid(this.WorldToCell(startingLocation), grid);
+        if (currentSpot == null)
+        {
+            Debug.Log("Node outside of range");
+            return false;
+        }
+        switch(direction)
+        {
+            case Direction.up:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX, currentSpot.gridY + 1);
+                break;
+            }
+            case Direction.down:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX, currentSpot.gridY - 1);
+                break;
+            }
+            case Direction.left:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY);
+                break;
+            }
+            case Direction.right:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY);
+                break;
+            }
+            case Direction.upRight:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY + 1);
+                break;
+            }
+            case Direction.upLeft:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY + 1);
+                break;
+            }
+            case Direction.downRight:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY - 1);
+                break;
+            }
+            case Direction.downLeft:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY - 1);
+                break;
+            }
+        }
+        return isAllowed;
+    }
 }

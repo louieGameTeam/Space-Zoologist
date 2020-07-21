@@ -28,7 +28,7 @@ public class MovementController : MonoBehaviour
         this.NextPathTile = TilemapUtil.ins.GridToWorld(pathToDestination[0], 0.5f);
         this.DestinationReached = false;
         this.PathIndex = 0;
-        this.UpdateVisualLogic();
+        this.UpdateVisualLogic(this.NextPathTile);
     }
 
     /// <summary>
@@ -64,23 +64,61 @@ public class MovementController : MonoBehaviour
                 // Need to translate back from grid to world
                 this.NextPathTile = TilemapUtil.ins.GridToWorld(this.PathToDestination[this.PathIndex], 0.5f);
                 // Debug.Log("("+this.NextPathTile.x+"),"+"("+this.NextPathTile.y+")");
-                this.UpdateVisualLogic();
+                this.UpdateVisualLogic(this.NextPathTile);
             }
         }
         this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.Animal.BehaviorsData.Speed);
     }
 
-    private void UpdateVisualLogic()
+    public void MoveInDirection(Direction direction)
     {
-        this.HandleDirectionChange(this.transform.position, this.NextPathTile);
-        if (this.Animal.BehaviorsData.Speed > this.Animal.BehaviorsData.RunThreshold)
+        Vector3 vectorDirection = new Vector3(0, 0, 0);
+        float speed = this.Animal.BehaviorsData.Speed * Time.deltaTime;
+        switch(direction)
         {
-            this.Animal.BehaviorsData.MovementStatus = Movement.running;
+            case Direction.up:
+            {
+                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + speed , 0);
+                break;
+            }
+            case Direction.down:
+            {
+                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -speed, 0);
+                break;
+            }
+            case Direction.left:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y, 0);
+                break;
+            }
+            case Direction.right:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y, 0);
+                break;
+            }
+            case Direction.upRight:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y + speed, 0);
+                break;
+            }
+            case Direction.upLeft:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + -speed,this.transform.position.y + speed, 0);
+                break;
+            }
+            case Direction.downRight:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + speed,this.transform.position.y + -speed, 0);
+                break;
+            }
+            case Direction.downLeft:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + -speed,this.transform.position.y + -speed, 0);
+                break;
+            }
         }
-        else
-        {
-            this.Animal.BehaviorsData.MovementStatus = Movement.walking;
-        }
+        this.UpdateVisualLogic(vectorDirection);
+        this.transform.position = vectorDirection;
     }
 
     // Can modify pointReachedOffset to have more precise movement towards each destination point
@@ -98,6 +136,19 @@ public class MovementController : MonoBehaviour
         return Vector3.MoveTowards(currentPosition, pathTile, step);
     }
 
+    public void UpdateVisualLogic(Vector3 destination)
+    {
+        this.HandleDirectionChange(this.transform.position, destination);
+        if (this.Animal.BehaviorsData.Speed > this.Animal.BehaviorsData.RunThreshold)
+        {
+            this.Animal.BehaviorsData.MovementStatus = Movement.running;
+        }
+        else
+        {
+            this.Animal.BehaviorsData.MovementStatus = Movement.walking;
+        }
+    }
+
     // Can be modified for different angles of direction change
     private void HandleDirectionChange(Vector3 currentPosition, Vector3 nextTile)
     {
@@ -111,11 +162,11 @@ public class MovementController : MonoBehaviour
             {
                 angle *= -1;
             }
-            if (angle > 315)
+            if (angle > 310)
             {
                 this.Animal.BehaviorsData.CurrentDirection = Direction.up;
             }
-            else if (angle < 225)
+            else if (angle < 230)
             {
                 this.Animal.BehaviorsData.CurrentDirection = Direction.down;
             }
@@ -126,11 +177,11 @@ public class MovementController : MonoBehaviour
         }
         else if (direction.x > 0)
         {
-            if (angle < 45)
+            if (angle < 50)
             {
                 this.Animal.BehaviorsData.CurrentDirection = Direction.up;
             }
-            else if (angle > 135)
+            else if (angle > 130)
             {
                 this.Animal.BehaviorsData.CurrentDirection = Direction.down;
             }
