@@ -134,6 +134,20 @@ public class Population : MonoBehaviour, Life
         NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
     }
 
+    public void RemoveAniaml(int count)
+    {
+        // TODO: remove animal
+
+        foreach (string needName in this.needsValues.Keys)
+        {
+            if (!Enum.IsDefined(typeof(AtmoshpereComponent), needName) && !Enum.IsDefined(typeof(TileType), needName))
+            {
+                NeedSystemManager.ins.Systems[needName].MarkAsDirty();
+            }
+        }
+        NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
+    }
+
     /// <summary>
     /// Update the given need of the population with the given value.
     /// </summary>
