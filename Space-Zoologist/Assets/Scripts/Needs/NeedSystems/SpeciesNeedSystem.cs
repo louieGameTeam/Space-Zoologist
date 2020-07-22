@@ -24,6 +24,25 @@ public class SpeciesNeedSystem : NeedSystem
         this.rpm = rpm;
     }
 
+    public override bool CheckState()
+    {
+        // Checks on consumer
+        if (base.CheckState())
+        {
+            return true;
+        }
+
+        foreach (Population consumedSource in this.populations)
+        {
+            if(rpm.PopulationAccessbilityStatus[consumedSource])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// Updates and updates the associated need in the Population's needs
     /// </summary>
@@ -42,7 +61,7 @@ public class SpeciesNeedSystem : NeedSystem
         {
             if (rpm.PopulationAccessbilityStatus[consumer])
             {
-                Debug.Log($"{consumer} triggered a reset");
+                //Debug.Log($"{consumer} triggered a reset");
 
                 foreach (Population consumed in populations)
                 {
@@ -52,7 +71,7 @@ public class SpeciesNeedSystem : NeedSystem
                         populationsWithAccess[consumed].Add(consumer);
                     }
                 }
-                rpm.PopulationAccessbilityStatus[consumer] = false;
+                //rpm.PopulationAccessbilityStatus[consumer] = false;
             }
         }
 
