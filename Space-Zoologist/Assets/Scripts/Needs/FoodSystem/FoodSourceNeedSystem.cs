@@ -16,11 +16,12 @@ public class FoodSourceNeedSystem : NeedSystem
     // Holds which populations have access to each FoodSource, the opposite of accessibleFoodSources.
     private Dictionary<FoodSource, HashSet<Population>> populationsWithAccess = new Dictionary<FoodSource, HashSet<Population>>();
 
+    private Dictionary<FoodSource, int[]> ConsumedFoodSourceAcceiableTerrain = new Dictionary<FoodSource, int[]>();
+
     public FoodSourceNeedSystem(ReservePartitionManager rpm, string needName) : base(needName)
     {
         this.rpm = rpm;
     }
-
 
     public override bool CheckState()
     {
@@ -29,6 +30,17 @@ public class FoodSourceNeedSystem : NeedSystem
             return true;
         }
 
+        foreach(FoodSource foodSource in this.foodSources)
+        {
+            var preTerrain = this.ConsumedFoodSourceAcceiableTerrain[foodSource];
+            var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius);
+
+            if (!preTerrain.SequenceEqual(curTerrain))
+            {
+                this.ConsumedFoodSourceAcceiableTerrain[foodSource] = curTerrain;
+                return true;
+            }
+        }
 
         return false;
     }
@@ -152,6 +164,12 @@ public class FoodSourceNeedSystem : NeedSystem
                 accessibleFoodSources[population].Add(foodSource);
                 populationsWithAccess[foodSource].Add(population);
             }
+        }
+
+        // Add current accessible terrain info
+        if (!this.ConsumedFoodSourceAcceiableTerrain.ContainsKey(foodSource))
+        {
+            this.ConsumedFoodSourceAcceiableTerrain.Add(foodSource, TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius));
         }
 
         this.isDirty = true;

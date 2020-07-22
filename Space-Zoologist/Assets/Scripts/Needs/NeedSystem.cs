@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// Abstract class that all NeedSystems will inherit from. Every need system will have a list of populations 
@@ -67,7 +68,7 @@ abstract public class NeedSystem
                 var preTerrain = this.FoodSourceAcceiableTerrain[(FoodSource)consumer];
                 var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(((FoodSource)consumer).GetPosition()), ((FoodSource)consumer).Species.RootRadius);
 
-                if (preTerrain.Equals(curTerrain))
+                if (!preTerrain.SequenceEqual(curTerrain))
                 {
                     this.FoodSourceAcceiableTerrain[(FoodSource)consumer] = curTerrain;
                     return true;
