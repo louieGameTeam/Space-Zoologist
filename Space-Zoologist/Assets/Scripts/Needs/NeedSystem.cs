@@ -64,9 +64,10 @@ abstract public class NeedSystem
                 // TODO: Check if a food source's accessiable terrain has changed
                 //return true;
 
+                var preTerrain = this.FoodSourceAcceiableTerrain[(FoodSource)consumer];
                 var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(((FoodSource)consumer).GetPosition()), ((FoodSource)consumer).Species.RootRadius);
 
-                if (!this.FoodSourceAcceiableTerrain[(FoodSource)consumer].Equals(curTerrain))
+                if (preTerrain.Equals(curTerrain))
                 {
                     this.FoodSourceAcceiableTerrain[(FoodSource)consumer] = curTerrain;
                     return true;
