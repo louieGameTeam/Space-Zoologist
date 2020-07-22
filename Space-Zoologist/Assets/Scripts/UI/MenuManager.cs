@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
     {
         if (currentMenu != menu)
         {
-            Debug.Log("In store");
+            //Debug.Log("In store");
             NeedSystemUpdater.ins.isInStore = true;
 
             if (currentMenu)
@@ -22,7 +22,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Exit Store");
+            //Debug.Log("Exit Store");
             NeedSystemUpdater.ins.isInStore = false;
 
             currentMenu = null;

@@ -12,6 +12,7 @@ public class FoodSourceManager : MonoBehaviour
     [SerializeField] private LevelData levelData = default;
     private List<FoodSource> foodSources = new List<FoodSource>();
     // Having food distribution system in FoodSourceManager is questionable
+    // TODO: remove this, this is in the NeedSystemManager
     private Dictionary<string, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<string, FoodSourceNeedSystem>();
     // FoodSourceSpecies to string name
     private Dictionary<string, FoodSourceSpecies> foodSourceSpecies = new Dictionary<string, FoodSourceSpecies>();

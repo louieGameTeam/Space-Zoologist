@@ -227,23 +227,6 @@ public class ReservePartitionManager : MonoBehaviour
 
         // Set accessbility status
         PopulationAccessbilityStatus[population] = true;
-
-        // Mark all NS dirty
-        foreach (string needName in population.NeedsValues.Keys)
-        {
-            if (Enum.IsDefined(typeof(AtmoshpereComponent), needName))
-            {
-                NeedSystemManager.ins.Systems["Atmosphere"].isDirty = true;
-            }
-            else if (Enum.IsDefined(typeof(TileType), needName))
-            {
-                NeedSystemManager.ins.Systems["Terrain"].isDirty = true;
-            }
-            else
-            {
-                NeedSystemManager.ins.Systems[needName].isDirty = true;
-            }
-        }
     }
 
     /// <summary>

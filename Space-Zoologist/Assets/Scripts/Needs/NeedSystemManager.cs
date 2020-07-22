@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -125,15 +126,22 @@ public class NeedSystemManager : MonoBehaviour
         {
             NeedSystem system = entry.Value;
 
-            if (system.isDirty)
+            if (system.IsDirty)
             {
-                Debug.Log($"Updating {system.NeedName} NS");
+                Debug.Log($"Updating {system.NeedName} NS by dirty flag");
                 system.UpdateSystem();
             }
-            else
+            else if(system.CheckState())
             {
-
+                Debug.Log($"Updating {system.NeedName} NS by dirty pre-check");
+                system.UpdateSystem();
             }
+        }
+
+        // Reset pop accessibility status
+        foreach (Population pop in ReservePartitionManager.ins.PopulationAccessbilityStatus.Keys.ToList())
+        {
+            ReservePartitionManager.ins.PopulationAccessbilityStatus[pop] = false;
         }
     }
 }

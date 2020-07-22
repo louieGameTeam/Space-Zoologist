@@ -26,9 +26,7 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public void PauseAllAnimals()
     {
-        isInStore = true;
-
-        foreach (Population population in PopulationManager.ins.Populations)
+       foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -39,8 +37,6 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public void UnpauseAllAnimals()
     {
-        isInStore = false;
-
         foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)

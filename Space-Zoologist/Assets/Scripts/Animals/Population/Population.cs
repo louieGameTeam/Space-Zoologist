@@ -126,12 +126,12 @@ public class Population : MonoBehaviour, Life
         {
             if (!Enum.IsDefined(typeof(AtmoshpereComponent), needName) && !Enum.IsDefined(typeof(TileType), needName))
             {
-                NeedSystemManager.ins.Systems[needName].isDirty = true;
+                NeedSystemManager.ins.Systems[needName].MarkAsDirty();
             }
         }
 
         // Mark SpeciesNS of this pop type dirty
-        NeedSystemManager.ins.Systems[this.species.SpeciesName].isDirty = true;
+        NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
     }
 
     /// <summary>

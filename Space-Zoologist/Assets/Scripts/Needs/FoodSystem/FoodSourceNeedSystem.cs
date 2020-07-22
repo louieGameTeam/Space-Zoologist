@@ -21,6 +21,18 @@ public class FoodSourceNeedSystem : NeedSystem
         this.rpm = rpm;
     }
 
+
+    public override bool CheckState()
+    {
+        if (base.CheckState())
+        {
+            return true;
+        }
+
+
+        return false;
+    }
+
     /// <summary>
     /// Updates how much all the registered populations take from all of the FoodSourceNeedSystem's food sources and updates the associated need in the Population's needs
     /// </summary>
@@ -37,7 +49,7 @@ public class FoodSourceNeedSystem : NeedSystem
         {
             if (rpm.PopulationAccessbilityStatus[population])
             {
-                Debug.Log($"{population} triggered a accessible list reset");
+                //Debug.Log($"{population} triggered a accessible list reset");
 
                 foreach (FoodSource foodSource in foodSources)
                 {
@@ -47,7 +59,7 @@ public class FoodSourceNeedSystem : NeedSystem
                         populationsWithAccess[foodSource].Add(population);
                     }
                 }
-                rpm.PopulationAccessbilityStatus[population] = false;
+                //rpm.PopulationAccessbilityStatus[population] = false;
             }
         }
 
