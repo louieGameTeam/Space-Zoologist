@@ -16,8 +16,7 @@ abstract public class NeedSystem
     protected bool isDirty = default;
     protected List<Life> Consumers = new List<Life>();
 
-    protected Dictionary<FoodSource, int[]> FoodSourceAccessableTerrain = new Dictionary<FoodSource, int[]>();
-
+    // Accessiblity dirty flag
     protected Dictionary<Life, bool> ConsumerAccessiblityStatus = new Dictionary<Life, bool>();
 
     public NeedSystem(string needName)

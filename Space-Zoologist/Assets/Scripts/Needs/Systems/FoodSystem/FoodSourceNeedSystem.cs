@@ -30,6 +30,7 @@ public class FoodSourceNeedSystem : NeedSystem
             return true;
         }
 
+        // Check consumed source status
         foreach(FoodSource foodSource in this.foodSources)
         {
             if (foodSource.GetAccessibilityStatus())

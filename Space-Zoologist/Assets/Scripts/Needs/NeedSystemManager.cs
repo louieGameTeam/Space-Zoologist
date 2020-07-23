@@ -32,7 +32,7 @@ public class NeedSystemManager : MonoBehaviour
     /// <summary>
     /// Initialize the universal need systems
     /// </summary>
-    /// <remarks>Terrian -> FoodSource/Species -> Density, this order has to be fixed</remarks>
+    /// <remarks>Terrian/Atmoshpere -> FoodSource/Species -> Density, this order has to be fixed</remarks>
     private void Start()
     {
         // Referrance supprot systems

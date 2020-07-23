@@ -27,7 +27,7 @@ public interface Life
     void UpdateNeed(string need, float value);
 
     /// <summary>
-    /// Get the accessibility
+    /// Get the accessibility status, true if accessibility or accessible terrain had changed
     /// </summary>
     bool GetAccessibilityStatus();
 }

@@ -108,6 +108,11 @@ public class FoodSource: MonoBehaviour, Life
         var preTerrain = this.accessibleTerrian;
         var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
 
-        return !preTerrain.SequenceEqual(curTerrain);
+        if(!preTerrain.SequenceEqual(curTerrain))
+        {
+            this.accessibleTerrian = curTerrain;
+        }
+
+        return false;
     }
 }
