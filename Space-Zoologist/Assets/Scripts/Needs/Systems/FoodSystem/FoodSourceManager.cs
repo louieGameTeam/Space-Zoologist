@@ -57,6 +57,8 @@ public class FoodSourceManager : MonoBehaviour
             NeedSystemManager.ins.RegisterWithNeedSystems(foodSource);
         }
     }
+    // UPdateSystem runs through all food sources and has them calculate and send their output to the populations
+
 
     private void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {

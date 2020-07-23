@@ -7,13 +7,14 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemUpdater : MonoBehaviour
 {
-    public bool isInStore = default;
+    public bool isInStore { get; set; }
 
     // Singleton
     public static NeedSystemUpdater ins;
 
     private void Awake()
     {
+        isInStore = false;
         if (ins != null && this != ins)
         {
             Destroy(this);

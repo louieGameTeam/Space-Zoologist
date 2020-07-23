@@ -58,12 +58,6 @@ public class Population : MonoBehaviour, Life
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
-
-        //foreach (Need need in species.Needs.Values)
-        //{
-        //    needsValues.Add(need.NeedName, 0);
-        //    Debug.Log($"Add {need.NeedName} NeedValue to {this.species.SpeciesName}");
-        //}
     }
 
     // Can be initialized at runtime if the species is defined or later when a pod is used
@@ -120,7 +114,11 @@ public class Population : MonoBehaviour, Life
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
+        this.MarkNeedsDirty();
+    }
 
+    private void MarkNeedsDirty()
+    {
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
         foreach (string needName in this.needsValues.Keys)
         {

@@ -16,7 +16,7 @@ abstract public class NeedSystem
     protected bool isDirty = default;
     protected List<Life> Consumers = new List<Life>();
 
-    protected Dictionary<FoodSource, int[]> FoodSourceAcceiableTerrain = new Dictionary<FoodSource, int[]>();
+    protected Dictionary<FoodSource, int[]> FoodSourceAccessableTerrain = new Dictionary<FoodSource, int[]>();
 
     public NeedSystem(string needName)
     {
@@ -35,9 +35,9 @@ abstract public class NeedSystem
 
         if(life.GetType() == typeof(FoodSource))
         {
-            if (!this.FoodSourceAcceiableTerrain.ContainsKey((FoodSource)life))
+            if (!this.FoodSourceAccessableTerrain.ContainsKey((FoodSource)life))
             {
-                this.FoodSourceAcceiableTerrain.Add((FoodSource)life, TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(((FoodSource)life).GetPosition()), ((FoodSource)life).Species.RootRadius));
+                this.FoodSourceAccessableTerrain.Add((FoodSource)life, TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(((FoodSource)life).GetPosition()), ((FoodSource)life).Species.RootRadius));
             }
         }
     }
@@ -48,7 +48,7 @@ abstract public class NeedSystem
         return this.Consumers.Remove(life);
     }
 
-    // Check state has changed
+    // If any consumer is dirty then recalculate the whole system
     virtual public bool CheckState()
     {
         foreach (Life consumer in this.Consumers)
@@ -62,15 +62,14 @@ abstract public class NeedSystem
             }
             else if(consumer.GetType() == typeof(FoodSource))
             {
-                // TODO: Check if a food source's accessiable terrain has changed
+                // Check if a food source's accessiable terrain has changed
                 //return true;
-
-                var preTerrain = this.FoodSourceAcceiableTerrain[(FoodSource)consumer];
+                var preTerrain = this.FoodSourceAccessableTerrain[(FoodSource)consumer];
                 var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(((FoodSource)consumer).GetPosition()), ((FoodSource)consumer).Species.RootRadius);
 
                 if (!preTerrain.SequenceEqual(curTerrain))
                 {
-                    this.FoodSourceAcceiableTerrain[(FoodSource)consumer] = curTerrain;
+                    this.FoodSourceAccessableTerrain[(FoodSource)consumer] = curTerrain;
                     return true;
                 }
             }

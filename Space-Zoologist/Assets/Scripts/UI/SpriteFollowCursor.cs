@@ -8,7 +8,6 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SpriteFollowCursor : MonoBehaviour
 {
-    [SerializeField] float InterpolationValue = 0.5f;
     private bool Following;
 
     // Update is called once per frame
