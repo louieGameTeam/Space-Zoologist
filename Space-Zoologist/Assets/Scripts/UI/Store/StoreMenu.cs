@@ -11,11 +11,8 @@ public class StoreMenu : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] LevelData levelData = default;
     [SerializeField] List<StoreSection> sections = default;
-    [SerializeField] CursorItem cursorItem = default;
-    [SerializeField] GameObject storeSectionPrefab = default;
     RectTransform rectTransform = default;
 
-    Item selectedStoreItem = null;
     Dictionary<NeedType, StoreSection> storeSections = new Dictionary<NeedType, StoreSection>();
     TilePlacementController tilePlacementController = default;
 

@@ -58,7 +58,6 @@ public class NeedSystemManager : MonoBehaviour
         // Add Density NeedSystem
         AddSystem(new DensityNeedSystem(rpm, tileSystem));
 
-        // TODO: call FS/S NS setup
         FoodSourceManager.ins.Initialize();
         PopulationManager.ins.Initialize();
     }
@@ -85,7 +84,7 @@ public class NeedSystemManager : MonoBehaviour
             }
             else
             {
-                // Foodsource need here
+                // Foodsource and species need here
                 Debug.Assert(systems.ContainsKey(need), $"No { need } system");
                 systems[need].AddConsumer(life);
                 //Debug.Log($"Register {life} with {need} system");
@@ -122,7 +121,6 @@ public class NeedSystemManager : MonoBehaviour
     /// </remarks>
     public void UpdateSystems()
     {
-        // TODO: Systems should only update when the state is "dirty"
         foreach (KeyValuePair<string, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;
@@ -145,4 +143,5 @@ public class NeedSystemManager : MonoBehaviour
             ReservePartitionManager.ins.PopulationAccessbilityStatus[pop] = false;
         }
     }
+
 }
