@@ -32,12 +32,8 @@ public class FoodSourceNeedSystem : NeedSystem
 
         foreach(FoodSource foodSource in this.foodSources)
         {
-            var preTerrain = this.ConsumedFoodSourceAcceiableTerrain[foodSource];
-            var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius);
-
-            if (!preTerrain.SequenceEqual(curTerrain))
+            if (foodSource.GetAccessibilityStatus())
             {
-                this.ConsumedFoodSourceAcceiableTerrain[foodSource] = curTerrain;
                 return true;
             }
         }

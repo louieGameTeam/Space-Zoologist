@@ -25,4 +25,9 @@ public interface Life
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
     void UpdateNeed(string need, float value);
+
+    /// <summary>
+    /// Get the accessibility
+    /// </summary>
+    bool GetAccessibilityStatus();
 }

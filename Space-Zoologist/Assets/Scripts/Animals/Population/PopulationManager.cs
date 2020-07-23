@@ -17,6 +17,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private LevelData levelData = default;
 
+    // Hold all the SpeciesNS for later to add as consumed source
     private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
     // AnimalSpecies to string name
     private Dictionary<string, AnimalSpecies> animalSpecies = new Dictionary<string, AnimalSpecies>();
@@ -77,12 +78,18 @@ public class PopulationManager : MonoBehaviour
     public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
         Debug.Log("Population created");
+
+        // Create population
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.InitializeNewPopulation(species, position, count);
         this.ExistingPopulations.Add(population);
+
+        // Add to RPM
         ReservePartitionManager.ins.AddPopulation(population);
+
+        // Add to NS as consumed source
         speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
 
         // Register with NeedSystemManager

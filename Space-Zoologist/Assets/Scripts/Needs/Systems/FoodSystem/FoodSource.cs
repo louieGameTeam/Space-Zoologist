@@ -1,4 +1,6 @@
 using System.Collections;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +22,8 @@ public class FoodSource: MonoBehaviour, Life
     private float neutralMultiplier = 0.5f;
     private float goodMultiplier = 1.0f;
 
+    private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
+
     private void Awake()
     {
         if (species)
@@ -34,6 +38,8 @@ public class FoodSource: MonoBehaviour, Life
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
+
+        this.accessibleTerrian = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 
     private void InitializeNeedValues()
@@ -95,5 +101,13 @@ public class FoodSource: MonoBehaviour, Life
     public Vector3 GetPosition()
     {
         return this.gameObject.transform.position;
+    }
+
+    public bool GetAccessibilityStatus()
+    {
+        var preTerrain = this.accessibleTerrian;
+        var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+
+        return !preTerrain.SequenceEqual(curTerrain);
     }
 }

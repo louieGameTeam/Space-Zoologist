@@ -34,7 +34,7 @@ public class SpeciesNeedSystem : NeedSystem
 
         foreach (Population consumedSource in this.populations)
         {
-            if(rpm.PopulationAccessbilityStatus[consumedSource])
+            if(consumedSource.GetAccessibilityStatus())
             {
                 return true;
             }

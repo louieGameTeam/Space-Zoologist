@@ -114,17 +114,12 @@ public class Population : MonoBehaviour, Life
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
-        this.MarkNeedsDirty();
-    }
-
-<<<<<<< HEAD
+     
         this.MarkNSDirtyDueToAddCount();
     }
 
+    // Mark Density, FoodSource and Species related to this pop dirty
     private void MarkNSDirtyDueToAddCount()
-=======
-    private void MarkNeedsDirty()
->>>>>>> 114ab8a52bfd636bcbdcba5330e2bd69d5b54ce6
     {
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
         foreach (string needName in this.needsValues.Keys)
@@ -139,18 +134,12 @@ public class Population : MonoBehaviour, Life
         NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
     }
 
-    public void RemoveAniaml(int count)
+    public void RemoveAniamls(int count)
     {
-        // TODO: remove animal
+        // Remoe Animal
+        this.AnimalPopulation.RemoveRange(0, count);
 
-        foreach (string needName in this.needsValues.Keys)
-        {
-            if (!Enum.IsDefined(typeof(AtmoshpereComponent), needName) && !Enum.IsDefined(typeof(TileType), needName))
-            {
-                NeedSystemManager.ins.Systems[needName].MarkAsDirty();
-            }
-        }
-        NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
+        this.MarkNSDirtyDueToAddCount();
     }
 
     /// <summary>
@@ -215,6 +204,11 @@ public class Population : MonoBehaviour, Life
     public Vector3 GetPosition()
     {
         return this.gameObject.transform.position;
+    }
+
+    public bool GetAccessibilityStatus()
+    {
+        return ReservePartitionManager.ins.PopulationAccessbilityStatus[this];
     }
 }
 

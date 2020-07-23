@@ -58,6 +58,7 @@ public class NeedSystemManager : MonoBehaviour
         // Add Density NeedSystem
         AddSystem(new DensityNeedSystem(rpm, tileSystem));
 
+        // Intitialize the managers after NS's are added
         FoodSourceManager.ins.Initialize();
         PopulationManager.ins.Initialize();
     }
