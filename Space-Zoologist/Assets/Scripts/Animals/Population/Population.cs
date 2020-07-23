@@ -121,6 +121,11 @@ public class Population : MonoBehaviour, Life
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
 
+        this.MarkNSDirtyDueToAddCount();
+    }
+
+    private void MarkNSDirtyDueToAddCount()
+    {
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
         foreach (string needName in this.needsValues.Keys)
         {

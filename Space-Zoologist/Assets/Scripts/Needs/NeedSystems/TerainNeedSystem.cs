@@ -26,6 +26,8 @@ public class TerrainNeedSystem : NeedSystem
 
         foreach (Life life in Consumers)
         {
+            // TODO: factor out the foreach
+
             // Call different get tile function for Popultation and FoodSource
             if (life.GetType() == typeof(Population))
             {

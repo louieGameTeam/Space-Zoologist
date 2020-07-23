@@ -69,6 +69,7 @@ public class NeedSystemManager : MonoBehaviour
     /// <param name="life">This could be a Population or FoodSource since they both inherit from Life</param>
     public void RegisterWithNeedSystems(Life life)
     {
+        // TODO: different way to check need type
         foreach (string need in life.GetNeedValues().Keys)
         {
             // Check if need is a atmoshpere or a terrian need
