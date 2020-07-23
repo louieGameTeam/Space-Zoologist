@@ -8,31 +8,26 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour, Life
 {
+    [SerializeField] private AnimalSpecies species = default;
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;
 
     public Dictionary<string, float> NeedsValues => needsValues;
-    protected Dictionary<string, float> needsValues = new Dictionary<string, float>();
-
-    [SerializeField] private AnimalSpecies species = default;
-    [SerializeField] private GameObject AnimalPrefab = default;
-    // Defined at runtime or added when a pod is used
-    [Header("Add existing animals")]
-    [SerializeField] public List<GameObject> AnimalPopulation = default;
-    // Data can be accessed via scripts by going through the animals themselves. This is for editing in editor
-    [Header("Updated through OnValidate")]
-    [SerializeField] private List<BehaviorsData> AnimalsBehaviorData = default;
-
-    // updated in FilterBehaviors function
-    public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-    private Dictionary<string, float> Needs = new Dictionary<string, float>();
-    private Vector3 origin = Vector3.zero;
-
-    // 2d array based off of accessible locations for a populations pathfinding
+    private Dictionary<string, float> needsValues = new Dictionary<string, float>();
     public AnimalPathfinding.Grid grid { get; private set; }
     // TODO when accessible locations becomes nothing, add a warning so the player can respond.
     public List<Vector3Int>  AccessibleLocations { get; private set; }
+    public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
+
+    [Header("Add existing animals")]
+    [SerializeField] public List<GameObject> AnimalPopulation = default;
+    [SerializeField] private GameObject AnimalPrefab = default;
+    [Header("Updated through OnValidate")]
+    [SerializeField] private List<BehaviorsData> AnimalsBehaviorData = default;
+
+    private Dictionary<string, float> Needs = new Dictionary<string, float>();
+    private Vector3 origin = Vector3.zero;
 
     private void Awake()
     {
@@ -52,12 +47,12 @@ public class Population : MonoBehaviour, Life
         this.origin = origin;
         this.transform.position = origin;
         // - the pods will contain populations which we'll likely want to specify certain aspects of
-        this.InitializePopulationData();
         for (int i=0; i<populationSize; i++)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
+        this.InitializePopulationData();
     }
 
     // Can be initialized at runtime if the species is defined or later when a pod is used
@@ -127,8 +122,6 @@ public class Population : MonoBehaviour, Life
                 NeedSystemManager.ins.Systems[needName].MarkAsDirty();
             }
         }
-
-        // Mark SpeciesNS of this pop type dirty
         NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
     }
 
@@ -136,14 +129,7 @@ public class Population : MonoBehaviour, Life
     {
         // TODO: remove animal
 
-        foreach (string needName in this.needsValues.Keys)
-        {
-            if (!Enum.IsDefined(typeof(AtmoshpereComponent), needName) && !Enum.IsDefined(typeof(TileType), needName))
-            {
-                NeedSystemManager.ins.Systems[needName].MarkAsDirty();
-            }
-        }
-        NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
+        this.MarkNeedsDirty();
     }
 
     /// <summary>

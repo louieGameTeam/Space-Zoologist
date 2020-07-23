@@ -440,6 +440,7 @@ public class EnclosureSystem : MonoBehaviour
         // Step 2: Loop through walls and push every adjacent tile into the stack
         // and iterate through stack and assign atmosphere number
         byte atmNum = 1;
+        // number of tiles in an atmosphere
 
         // iterate until no tile left in walls
         while (walls.Count > 0)

@@ -102,9 +102,6 @@ public class Animal : MonoBehaviour
             case BehaviorScriptName.RandomMovement:
                 this.gameObject.AddComponent<RandomMovement>();
                 break;
-            case BehaviorScriptName.Idle:
-                this.gameObject.AddComponent<Idle>();
-                break;
             default:
                 Debug.Log("No component with the type found");
                 break;

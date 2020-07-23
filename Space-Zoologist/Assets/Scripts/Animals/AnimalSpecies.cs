@@ -16,8 +16,10 @@ public class AnimalSpecies : ScriptableObject
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
+    public float Range => range;
     public Sprite Representation => representation;
-
+    // TODO setup tile weights for species
+    public Dictionary<TileType, byte> TilePreference = default;
     public AnimatorController AnimatorController => animatorController;
 
     // Values
@@ -28,6 +30,7 @@ public class AnimalSpecies : ScriptableObject
     [Range(1.0f, 10.0f)]
     [SerializeField] private float growthFactor = default;
 
+    [SerializeField] private float range = default;
     [Header("Behavior displayed when need isn't being met")]
     [SerializeField] private List<BehaviorScriptTranslation> needBehaviorSet = default;
     [Range(0.0f, 10.0f)]
