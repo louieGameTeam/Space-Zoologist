@@ -107,7 +107,7 @@ public class SpeciesNeedSystem : NeedSystem
         foreach (Population life in Consumers)
         {
             int availablePopulationCount = 0;
-            float amountRequiredPerIndividualForGoodCondition = life.Species.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);
+            float amountRequiredPerIndividualForGoodCondition = life.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);
             float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * life.Count;
 
             foreach (Population population in accessiblePopulation[life])

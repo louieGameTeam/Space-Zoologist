@@ -5,6 +5,7 @@ using System.Linq;
 //public enum NeedType {Terrain, Liquid, Atmosphere, Food}
 //public enum NeedCondition { Bad, Neutral, Good }
 
+[System.Serializable]
 public class Need
 {
     public string NeedName => needName;
@@ -12,6 +13,7 @@ public class Need
     public NeedType NType => needType;
     public Sprite Sprite => sprite;
 
+    [SerializeField] public float Value = default;
     [SerializeField] private NeedType needType = default;
     [SerializeField] private string needName = default;
     [Range(1.0f, 10.0f)]
@@ -46,7 +48,6 @@ public class Need
                 return this.conditions[i];
             }
         }
-
         return this.conditions[this.thresholds.Count];
     }
 

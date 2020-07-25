@@ -105,7 +105,7 @@ public class FoodSourceNeedSystem : NeedSystem
         foreach (Population population in Consumers)
         {
             float availableFood = 0.0f;
-            float amountRequiredPerIndividualForGoodCondition = population.Species.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);
+            float amountRequiredPerIndividualForGoodCondition = population.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);
             float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * population.Count;
             foreach (FoodSource foodSource in accessibleFoodSources[population])
             {

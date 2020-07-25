@@ -11,7 +11,7 @@ public interface Life
     /// Returns a reference to the NeedValues
     /// </summary>
     /// <returns>A reference</returns>
-    Dictionary<string, float> GetNeedValues();
+    Dictionary<string, Need> GetNeedValues();
 
     /// <summary>
     /// Gets the position of the transform of the game object
