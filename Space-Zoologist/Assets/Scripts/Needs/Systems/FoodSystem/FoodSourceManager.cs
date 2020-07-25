@@ -11,9 +11,8 @@ public class FoodSourceManager : MonoBehaviour
 
     [SerializeField] private LevelData levelData = default;
     private List<FoodSource> foodSources = new List<FoodSource>();
-    // Having food distribution system in FoodSourceManager is questionable
-    // TODO: remove this, this is in the NeedSystemManager
-    private Dictionary<string, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<string, FoodSourceNeedSystem>();
+    // A reference to the food source need system
+    private FoodSourceNeedSystem foodSourceNeedSystems = default;
     // FoodSourceSpecies to string name
     private Dictionary<string, FoodSourceSpecies> foodSourceSpecies = new Dictionary<string, FoodSourceSpecies>();
 
@@ -38,15 +37,8 @@ public class FoodSourceManager : MonoBehaviour
     }
 
     public void Initialize()
-    { 
-        // Get the FoodSourceNeedSystems from NeedSystemManager
-        foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
-        {
-            if (foodSourceSpecies.ContainsKey(system.NeedName))
-            {
-                foodSourceNeedSystems.Add(system.NeedName, (FoodSourceNeedSystem)system);
-            }
-        }
+    {
+        this.foodSourceNeedSystems = (FoodSourceNeedSystem)NeedSystemManager.ins.Systems["FoodSource"];
 
         // Get all FoodSource at start of level
         foodSources.AddRange(FindObjectsOfType<FoodSource>());
@@ -57,8 +49,6 @@ public class FoodSourceManager : MonoBehaviour
             NeedSystemManager.ins.RegisterWithNeedSystems(foodSource);
         }
     }
-    // UPdateSystem runs through all food sources and has them calculate and send their output to the populations
-
 
     private void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {
@@ -67,23 +57,16 @@ public class FoodSourceManager : MonoBehaviour
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
-        foodSourceNeedSystems[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
-
+        
         // Register with NeedSystemManager
         NeedSystemManager.ins.RegisterWithNeedSystems(foodSource);
+
+        // Add food source as comsuned source to FS NS
+        this.foodSourceNeedSystems.AddFoodSource(foodSource);
     }
 
     public void CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
     {
         CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
-    }
-
-    // Deprecated
-    public void UpdateFoodSources()
-    {
-        foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
-        {
-            foodSourceNeedSystem.UpdateSystem();
-        }
     }
 }

@@ -38,7 +38,7 @@ public class NeedSystemManager : MonoBehaviour
         // Referrance supprot systems
         ReservePartitionManager rpm = ReservePartitionManager.ins;
         EnclosureSystem enclosureSystem = EnclosureSystem.ins;
-        TileSystem tileSystem = FindObjectOfType<TileSystem>();
+        TileSystem tileSystem = TileSystem.ins;
 
         // Add enviormental NeedSystem
         AddSystem(new AtmosphereNeedSystem(enclosureSystem));
@@ -69,7 +69,7 @@ public class NeedSystemManager : MonoBehaviour
     /// <param name="life">This could be a Population or FoodSource since they both inherit from Life</param>
     public void RegisterWithNeedSystems(Life life)
     {
-        // TODO: different way to check need type
+        // TODO: Register to NS by NeedType
         foreach (string need in life.GetNeedValues().Keys)
         {
             // Check if need is a atmoshpere or a terrian need
