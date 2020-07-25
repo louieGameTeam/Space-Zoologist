@@ -94,7 +94,7 @@ public class Population : MonoBehaviour, Life
     private void HandleGrowth()
     {
         float rate = this.GrowthCalculator.GrowthRate;
-        if (rate < 0) rate *= -1;
+        if (rate == 0) return;
         if (this.TimeSinceUpdate > rate)
         {
             this.TimeSinceUpdate = 0;
@@ -195,7 +195,7 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void UpdateGrowthConditions()
     {
-        this.GrowthCalculator.CalculateGrowth(this);
+        if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
         Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 

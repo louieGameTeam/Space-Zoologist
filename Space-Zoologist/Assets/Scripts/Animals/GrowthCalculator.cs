@@ -13,7 +13,7 @@ public class GrowthCalculator
 
     public GrowthCalculator()
     {
-        this.GrowthRate = 10000000;
+        this.GrowthRate = 0;
         this.GrowthStatus = GrowthStatus.stabalized;
     }
 
