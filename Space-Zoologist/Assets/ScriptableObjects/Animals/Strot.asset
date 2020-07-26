@@ -15,11 +15,12 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: e28c40730e812434993f5de4a67f674f, type: 2}
   speciesName: Strot
   dominance: 2
-  growthFactor: 3
+  growthRate: 30
+  range: 0
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 1
-  size: 2
+  size: 8
   accessibleTerrain: 0100000004000000
   icon: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c, type: 3}
   needsList:

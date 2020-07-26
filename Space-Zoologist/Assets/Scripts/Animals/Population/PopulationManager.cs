@@ -15,12 +15,9 @@ public class PopulationManager : MonoBehaviour
     public List<Population> Populations => ExistingPopulations;
 
     [SerializeField] private GameObject PopulationPrefab = default;
-    [SerializeField] private LevelData levelData = default;
 
     // Hold all the SpeciesNS for later to add as consumed source
-    private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
-    // AnimalSpecies to string name
-    private Dictionary<string, AnimalSpecies> animalSpecies = new Dictionary<string, AnimalSpecies>();
+    private SpeciesNeedSystem speciesNeedSystem = default;
 
     private void Awake()
     {
@@ -32,42 +29,39 @@ public class PopulationManager : MonoBehaviour
         {
             ins = this;
         }
-
-        // Add new FoodSourceNeedSystem
-        if (levelData != null)
-        {
-            // Fill string to AnimalSpecies Dictionary
-            foreach (AnimalSpecies species in levelData.AnimalSpecies)
-            {
-                animalSpecies.Add(species.SpeciesName, species);
-            }
-        }
     }
 
     public void Initialize()
     {
         ExistingPopulations.AddRange(FindObjectsOfType<Population>());
 
-        // Get the SpeicesNeedSystems from NeedSystemManager
-        foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
-        {
-            if (animalSpecies.ContainsKey(system.NeedName))
-            {
-                speciesNeedSystems.Add(system.NeedName, (SpeciesNeedSystem)system);
-            }
-        }
-
-        // Register with manager
-        foreach (Population population in ExistingPopulations)
-        {
-            NeedSystemManager.ins.RegisterWithNeedSystems(population);
-            //Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
-        }
+        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.ins.Systems["Species"];
 
         foreach (Population population in this.ExistingPopulations)
         {
             this.SetupExistingPopulation(population);
         }
+    }
+
+    private void UnclearFunction()
+    {
+        // TODO what is this doing?
+        //Dictionary<string, AnimalSpecies> animalSpeciesMapping = new Dictionary<string, AnimalSpecies>();
+        //if (levelData != null)
+        //{
+        //    // Fill string to AnimalSpecies Dictionary
+        //    foreach (AnimalSpecies species in levelData.AnimalSpecies)
+        //    {
+        //        animalSpeciesMapping.Add(species.SpeciesName, species);
+        //    }
+        //}
+        //foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
+        //{
+        //    if (animalSpeciesMapping.ContainsKey(system.NeedName))
+        //    {
+        //        speciesNeedSystems.Add(system.NeedName, (SpeciesNeedSystem)system);
+        //    }
+        //}
     }
 
     /// <summary>
@@ -86,14 +80,8 @@ public class PopulationManager : MonoBehaviour
         population.InitializeNewPopulation(species, position, count);
         this.ExistingPopulations.Add(population);
 
-        // Add to RPM
-        ReservePartitionManager.ins.AddPopulation(population);
-
-        // Add to NS as consumed source
-        speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
-
-        // Register with NeedSystemManager
-        NeedSystemManager.ins.RegisterWithNeedSystems(population);
+        
+        this.HandlePopulationRegistration(population);
     }
 
     /// <summary>
@@ -105,28 +93,32 @@ public class PopulationManager : MonoBehaviour
     public void AddAnimals(AnimalSpecies species, int count, Vector3 position)
     {
         // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
-
         List<Population> localPopulations = ReservePartitionManager.ins.GetPopulationsWithAccessTo(position);
         Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
         if (preexistingPopulation)
         {
             Debug.Log("Preexisting population");
             preexistingPopulation.AddAnimal(new BehaviorsData());
-        } // TODO: update systems related to population count change ^
+        }
         else
         {
             CreatePopulation(species, count, position);
-        } // TODO: update systems related to new population
+        }
     }
 
-    // TODO how to register with need system
-    public void SetupExistingPopulation(Population population)
+    // TODO determine what else needs to happen with an existing population
+    private void SetupExistingPopulation(Population population)
     {
         population.InitializePopulationData();
         population.InitializeExistingAnimals();
+        this.HandlePopulationRegistration(population);
+    }
 
-        // Register with NS
+    // TODO figure out a better name for what this function is doing: registering the population with various lists and systems
+    private void HandlePopulationRegistration(Population population)
+    {
+        ReservePartitionManager.ins.AddPopulation(population);
+        this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.ins.RegisterWithNeedSystems(population);
-        //Debug.Log($"Registering {population.Species.SpeciesName} with NS at Start");
     }
 }

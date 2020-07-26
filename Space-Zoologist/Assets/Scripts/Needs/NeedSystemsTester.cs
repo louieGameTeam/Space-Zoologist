@@ -14,9 +14,9 @@ public class NeedSystemsTester : MonoBehaviour
         foreach (Population population in PopulationManager.ins.Populations)
         {
             populationStatsText += $"***{ population.Species.SpeciesName } {population.GetInstanceID()}; Count: {population.Count}; Dominance: {population.Dominance}***\n";
-            foreach (KeyValuePair<string, float> needValue in population.NeedsValues)
+            foreach (KeyValuePair<string, Need> needValue in population.Needs)
             {
-                populationStatsText += $"- {needValue.Key}: { needValue.Value } -- Condition: {population.Species.Needs[needValue.Key].GetCondition(needValue.Value)}\n";
+                populationStatsText += $"- {needValue.Key}: { needValue.Value.NeedValue } -- Condition: {population.Needs[needValue.Key].GetCondition(needValue.Value.NeedValue)}\n";
             }
             populationStatsText += "\n";
         }
@@ -26,9 +26,9 @@ public class NeedSystemsTester : MonoBehaviour
         foreach (FoodSource foodSource in FoodSourceManager.ins.FoodSources)
         {
             foodSourceStatsText += $"***{ foodSource.Species.SpeciesName }; Food output: {foodSource.FoodOutput}***\n";
-            foreach (KeyValuePair<string, float> needValue in foodSource.NeedsValues)
+            foreach (KeyValuePair<string, Need> needValue in foodSource.Needs)
             {
-                foodSourceStatsText += $"- {needValue.Key}: { needValue.Value } -- Condition: {foodSource.Species.Needs[needValue.Key].GetCondition(needValue.Value)}\n";
+                foodSourceStatsText += $"- {needValue.Key}: { needValue.Value.NeedValue } -- Condition: {foodSource.Needs[needValue.Key].GetCondition(needValue.Value.NeedValue)}\n";
             }
             foodSourceStatsText += "\n";
         }

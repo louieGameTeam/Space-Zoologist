@@ -38,14 +38,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private Sprite icon = default;
 
     [SerializeField]
-    private List<NeedTypeConstructData> needsList = new List<NeedTypeConstructData>()
-    {
-        new NeedTypeConstructData(NeedType.Atmosphere),
-        new NeedTypeConstructData(NeedType.Terrain),
-        new NeedTypeConstructData(NeedType.Density),
-        new NeedTypeConstructData(NeedType.Food),
-        new NeedTypeConstructData(NeedType.Species),
-    };
+    private List<NeedTypeConstructData> needsList = new List<NeedTypeConstructData>();
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;

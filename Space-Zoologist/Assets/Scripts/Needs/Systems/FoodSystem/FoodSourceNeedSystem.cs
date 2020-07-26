@@ -21,7 +21,7 @@ public class FoodSourceNeedSystem : NeedSystem
     // Food name to food calculators
     private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
 
-    public FoodSourceNeedSystem(ReservePartitionManager rpm, string needName) : base(needName)
+    public FoodSourceNeedSystem(ReservePartitionManager rpm, string needName = "FoodSource") : base(needName)
     {
         this.rpm = rpm;
     }
@@ -77,22 +77,61 @@ public class FoodSourceNeedSystem : NeedSystem
             {
                 var foodDistributionOutput = foodSourceCalculator.CalculateDistribution();
 
-                foreach (Population consumer in foodDistributionOutput.Keys)
+                // foodDistributionOutput returns null is not thing to be updated
+                if (foodDistributionOutput != null)
                 {
-                    consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
+                    foreach (Population consumer in foodDistributionOutput.Keys)
+                    {
+                        consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
+                    }
                 }
             }
         }
+
+        this.isDirty = false;
     }
 
     public void AddFoodSource(FoodSource foodSource)
     {
+        if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
+        {
+            this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(rpm, foodSource.Species.SpeciesName));
+        }
+
         this.foodSourceCalculators[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
     }
 
     public override void AddConsumer(Life life)
     {
-        // TODO: Add consumer to each food source Ns based on its need string name
-        //foreach ()
+        foreach (Need need in life.GetNeedValues().Values)
+        {
+            // Check if the need is a 'FoodSource' type
+            if (need.NeedType == "FoodSource")
+            {
+                // Create a food source calculator for this food source,
+                // if not already exist
+                if (!this.foodSourceCalculators.ContainsKey(need.NeedName))
+                {
+                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(rpm, need.NeedName));
+                }
+
+                // Add consumer to food source calculator
+                this.foodSourceCalculators[need.NeedName].AddConsumer((Population)life);
+            }
+        }
+    }
+
+    public override bool RemoveConsumer(Life life)
+    {
+        foreach (Need need in life.GetNeedValues().Values)
+        {
+            // Check if the need is a 'FoodSource' type
+            if (need.NeedType == "FoodSource")
+            {
+                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoverConsumer((Population)life), "Remove conumer failed!");
+            }
+        }
+
+        return true;
     }
 }

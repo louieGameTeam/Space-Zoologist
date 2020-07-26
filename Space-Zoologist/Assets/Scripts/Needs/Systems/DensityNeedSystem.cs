@@ -29,8 +29,6 @@ public class PopulationDensitySystem
     //if in demo
     public bool PDMDemo = default;
 
-    //private TileSystem tileSystem = null;
-
     /// <summary>
     /// Initialize variables from rpm and generate new density map
     /// Has to be separate from start to allow populations to be added to the rpm
@@ -323,4 +321,3 @@ public class DensityNeedSystem : NeedSystem
         }
     }
 }
-

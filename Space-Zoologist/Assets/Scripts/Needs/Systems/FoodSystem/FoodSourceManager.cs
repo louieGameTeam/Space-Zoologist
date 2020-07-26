@@ -8,9 +8,9 @@ public class FoodSourceManager : MonoBehaviour
     public static FoodSourceManager ins;
 
     public List<FoodSource> FoodSources => foodSources;
+    private List<FoodSource> foodSources = new List<FoodSource>();
 
     [SerializeField] private LevelData levelData = default;
-    private List<FoodSource> foodSources = new List<FoodSource>();
     // A reference to the food source need system
     private FoodSourceNeedSystem foodSourceNeedSystems = default;
     // FoodSourceSpecies to string name
@@ -47,6 +47,7 @@ public class FoodSourceManager : MonoBehaviour
         foreach (FoodSource foodSource in foodSources)
         {
             NeedSystemManager.ins.RegisterWithNeedSystems(foodSource);
+            this.foodSourceNeedSystems.AddFoodSource(foodSource);
         }
     }
 

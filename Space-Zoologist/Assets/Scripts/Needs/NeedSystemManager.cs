@@ -44,16 +44,20 @@ public class NeedSystemManager : MonoBehaviour
         AddSystem(new AtmosphereNeedSystem(enclosureSystem));
         AddSystem(new TerrainNeedSystem(rpm, tileSystem));
 
+        AddSystem(new FoodSourceNeedSystem(rpm));
+        AddSystem(new SpeciesNeedSystem(rpm));
+
         // Add new FoodSourceNeedSystem
-        foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
-        {
-            AddSystem(new FoodSourceNeedSystem(rpm, foodSourceSpecies.SpeciesName));
-        }
+        //foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
+        //{
+        //    AddSystem(new FoodSourceNeedSystem(rpm, foodSourceSpecies.SpeciesName));
+        //}
+
         // Add new FoodSourceNeedSystem
-        foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
-        {
-            AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));    
-        }
+        //foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
+        //{
+        //    AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));    
+        //}
 
         // Add Density NeedSystem
         AddSystem(new DensityNeedSystem(rpm, tileSystem));
@@ -69,36 +73,20 @@ public class NeedSystemManager : MonoBehaviour
     /// <param name="life">This could be a Population or FoodSource since they both inherit from Life</param>
     public void RegisterWithNeedSystems(Life life)
     {
-        // TODO: Register to NS by NeedType
-        foreach (string need in life.GetNeedValues().Keys)
+        // Register to NS by NeedType (string)
+        foreach (Need need in life.GetNeedValues().Values)
         {
-            // Check if need is a atmoshpere or a terrian need
-            if (Enum.IsDefined(typeof(AtmoshpereComponent), need))
-            {
-                systems["Atmosphere"].AddConsumer(life);
-                //Debug.Log($"{life} registered with AtmoshpererNS ({need})");
-            }
-            else if (Enum.IsDefined(typeof(TileType), need))
-            {
-                systems["Terrain"].AddConsumer(life);
-                //Debug.Log($"Registed {life} with Terrian ({need}) NeedSystem");
-            }
-            else
-            {
-                // Foodsource and species need here
-                Debug.Assert(systems.ContainsKey(need), $"No { need } system");
-                systems[need].AddConsumer(life);
-                //Debug.Log($"Register {life} with {need} system");
-            }
+            Debug.Assert(systems.ContainsKey(need.NeedType), $"No { need.NeedType } system");
+            systems[need.NeedType].AddConsumer(life);
         }
     }
 
     public void UnregisterPopulationNeeds(Life life)
     {
-        foreach (string need in life.GetNeedValues().Keys)
+        foreach (Need need in life.GetNeedValues().Values)
         {
-            Debug.Assert(systems.ContainsKey(need));
-            systems[need].RemoveConsumer(life);
+            Debug.Assert(systems.ContainsKey(need.NeedType), $"No { need } system");
+            systems[need.NeedType].RemoveConsumer(life);
         }
     }
 

@@ -151,14 +151,13 @@ public class Population : MonoBehaviour, Life
     private void MarkNeedsDirty()
     {
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
-        foreach (string needName in this.needs.Keys)
+        foreach (Need need in this.needs.Values)
         {
-            if (!Enum.IsDefined(typeof(AtmoshpereComponent), needName) && !Enum.IsDefined(typeof(TileType), needName))
+            if (need.NeedType != "Atmosphere" && need.NeedType != "Terrain")
             {
-                NeedSystemManager.ins.Systems[needName].MarkAsDirty();
+                NeedSystemManager.ins.Systems[need.NeedType].MarkAsDirty();
             }
         }
-        NeedSystemManager.ins.Systems[this.species.SpeciesName].MarkAsDirty();
     }
 
     // TODO remove using PoolingSystem
@@ -175,7 +174,7 @@ public class Population : MonoBehaviour, Life
     public void UpdateNeed(string need, float value)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        this.needs[need].Value = value;
+        this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }
 
@@ -187,7 +186,7 @@ public class Population : MonoBehaviour, Life
     public float GetNeedValue(string need)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        return this.needs[need].Value;
+        return this.needs[need].NeedValue;
     }
 
     /// <summary>
@@ -260,5 +259,10 @@ public class Population : MonoBehaviour, Life
     public Vector3 GetPosition()
     {
         return this.gameObject.transform.position;
+    }
+
+    public bool GetAccessibilityStatus()
+    {
+        return ReservePartitionManager.ins.PopulationAccessbilityStatus[this];
     }
 }

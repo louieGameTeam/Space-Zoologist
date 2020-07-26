@@ -5,15 +5,14 @@ using System.Linq;
 public class FoodSourceCalculator 
 {
     public string FoodSourceName => this.foodSourceName;
+    public List<FoodSource> FoodSources => this.foodSources;
+    public List<Population> Consumers => this.consumers;
+    public bool IsDirty => this.isDirty;
+
     private string foodSourceName = default;
     private readonly ReservePartitionManager rpm = null;
-
-    public List<FoodSource> FoodSources => this.foodSources;
     private List<FoodSource> foodSources = new List<FoodSource>();
-    public List<Population> Consumers => this.consumers;
     private List<Population> consumers = new List<Population>();
-
-    public bool IsDirty => this.isDirty;
     private bool isDirty = default;
 
     // Holds which FoodSources each population has access to.
@@ -88,7 +87,7 @@ public class FoodSourceCalculator
         foreach (Population population in consumers)
         {
             float availableFood = 0.0f;
-            float amountRequiredPerIndividualForGoodCondition = population.Species.Needs[this.foodSourceName].GetThreshold(NeedCondition.Good, -1, false);
+            float amountRequiredPerIndividualForGoodCondition = population.Needs[this.foodSourceName].GetThreshold(NeedCondition.Good, -1, false);
             float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * population.Count;
             foreach (FoodSource foodSource in accessibleFoodSources[population])
             {
@@ -169,6 +168,11 @@ public class FoodSourceCalculator
 
     public void AddConsumer(Population population)
     {
+        if (this.consumers.Contains(population))
+        {
+            return;
+        }
+
         this.consumers.Add(population);
 
         //Population population = (Population)life;
@@ -181,5 +185,14 @@ public class FoodSourceCalculator
                 populationsWithAccess[foodSource].Add(population);
             }
         }
+
+        this.isDirty = true;
+    }
+
+    public bool RemoverConsumer(Population population)
+    {
+        this.isDirty = true;
+
+        return this.consumers.Remove(population);
     }
 }

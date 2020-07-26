@@ -15,11 +15,12 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: 2c658f184238347a39f6d91eb93056ef, type: 2}
   speciesName: Snake
   dominance: 10
-  growthFactor: 0
+  growthRate: 30
+  range: 0
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 1
-  size: 0
+  size: 2
   accessibleTerrain: 0100000003000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
   needsList:
