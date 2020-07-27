@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[CreateAssetMenu]
+/// <summary>
+/// Parses and inputs data from a csv file into the LevelData object
+/// </summary>
+[CreateAssetMenu(fileName="LevelDataLoader", menuName="Scene Data/Level Data Loader")]
 public class LevelDataLoader : ScriptableObject
 {
     [Header("Click to reload, checkmark will not appear")]
     [SerializeField] private bool ReloadData = false;
     [Header("Change to load different level data")]
     [SerializeField] int Level = 1;
-    [SerializeField] float StartingBalance = 0f;
-    [Expandable] public List<FoodSourceSpecies> FoodSources = default;
-    [Expandable] public List<AnimalSpecies> Species = default;
-    [Expandable] public List<Item> Items = default;
+    [Expandable] public LevelData levelData = default;
 
     public void OnValidate()
     {
@@ -27,23 +27,23 @@ public class LevelDataLoader : ScriptableObject
             string[] data = speciesData.text.Trim().Split(new char[] { '\n'});
             int currentSpeciesIndex = 0, currentFoodSourceIndex = 0, currentItemIndex = 0;
             string[] row = data[0].Trim().Split(new char[] { ',' });
-            float.TryParse(row[5], out this.StartingBalance);
+            int.TryParse(row[5], out levelData.startingBalance);
             for (int i=1; i<data.Length; i++)
             {
                 row = data[i].Trim().Split(new char[] { ',' });
                 // Create new needType object and parse the needs
-                if (row[0].Equals("FoodSource", StringComparison.OrdinalIgnoreCase) && currentFoodSourceIndex < FoodSources.Count)
+                if (row[0].Equals("FoodSource", StringComparison.OrdinalIgnoreCase) && currentFoodSourceIndex < levelData.foodSources.Count)
                 {
                     currentFoodSourceIndex = this.ParseFoodSources(data, row, i, currentFoodSourceIndex);
                     // Small runtime improvement
                     i+=3;
                 }
-                if (row[0].Equals("Species", StringComparison.OrdinalIgnoreCase) && currentSpeciesIndex < Species.Count)
+                if (row[0].Equals("Species", StringComparison.OrdinalIgnoreCase) && currentSpeciesIndex < levelData.animalSpecies.Count)
                 {
                     currentSpeciesIndex = this.ParseSpecies(data, row, i, currentSpeciesIndex);
                     i+=3;
                 }
-                if (row[0].Equals("Item", StringComparison.OrdinalIgnoreCase) && currentItemIndex < Items.Count)
+                if (row[0].Equals("Item", StringComparison.OrdinalIgnoreCase) && currentItemIndex < levelData.items.Count)
                 {
                     currentItemIndex = this.ParseItems(row, data[i + 1].Trim().Split(new char[] { ',' }), currentItemIndex);
                 }
@@ -58,7 +58,7 @@ public class LevelDataLoader : ScriptableObject
         int.TryParse(row[3], out rootRadius);
         int output;
         int.TryParse(row[5], out output);
-        FoodSources[currentFoodSourceIndex].SetupData(name, rootRadius, output, LoadNeedsData(data, i+3));
+        levelData.foodSources[currentFoodSourceIndex].SetupData(name, rootRadius, output, LoadNeedsData(data, i+3));
         currentFoodSourceIndex++;
         return currentFoodSourceIndex;
     }
@@ -67,7 +67,7 @@ public class LevelDataLoader : ScriptableObject
     {
         int price;
         int.TryParse(row2[1], out price);
-        Items[currentItemIndex].SetupData(row1[2], row1[4], row1[6], price);
+        levelData.items[currentItemIndex].SetupData(row1[2], row1[4], row1[6], price);
         currentItemIndex++;
         return currentItemIndex;
     }
@@ -93,7 +93,7 @@ public class LevelDataLoader : ScriptableObject
             }
         }
         // Needs
-        Species[currentSpeciesIndex].SetupData(name, dominance, growthFactor, terrain, LoadNeedsData(data, i+3));
+        levelData.animalSpecies[currentSpeciesIndex].SetupData(name, dominance, growthFactor, terrain, LoadNeedsData(data, i+3));
         currentSpeciesIndex++;
         return currentSpeciesIndex;
     }

@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour, Life
 {
-    [SerializeField] private AnimalSpecies species = default;
+    [Expandable] public AnimalSpecies species = default;
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;

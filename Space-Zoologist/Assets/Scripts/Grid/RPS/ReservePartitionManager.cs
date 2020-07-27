@@ -46,6 +46,8 @@ public class ReservePartitionManager : MonoBehaviour
 
     public TerrainTile Liquid;
 
+    private TileSystem tileSystem = default;
+
     private void Awake()
     {
         // Variable initializations
@@ -73,6 +75,7 @@ public class ReservePartitionManager : MonoBehaviour
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
         PopulationAccessbilityStatus = new Dictionary<Population, bool>();
+        this.tileSystem = FindObjectOfType<TileSystem>();
     }
 
     private void Start()
@@ -101,9 +104,9 @@ public class ReservePartitionManager : MonoBehaviour
             Populations.Add(population);
 
             TypesOfTerrain.Add(population, new int[(int)TileType.TypesOfTiles]);
-            // generate the map with the new id  
+            // generate the map with the new id
             GenerateMap(population);
-            
+
         }
     }
 
@@ -117,7 +120,7 @@ public class ReservePartitionManager : MonoBehaviour
         openID.Enqueue(PopulationToID[population]);
         PopulationByID.Remove(PopulationToID[population]);  // free ID
         PopulationToID.Remove(population);  // free ID
-        
+
     }
 
     /// <summary>
@@ -160,10 +163,10 @@ public class ReservePartitionManager : MonoBehaviour
         long[] SharedTiles = new long[maxPopulation];
 
         // starting location
-        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
+        Vector3Int location = this.tileSystem.WorldToCell(population.transform.position);
         stack.Push(location);
 
-        TileSystem _tileSystem = FindObjectOfType<TileSystem>();
+        TileSystem _tileSystem = this.tileSystem;
 
         // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
         while (stack.Count > 0)
@@ -312,16 +315,6 @@ public class ReservePartitionManager : MonoBehaviour
         return new AnimalPathfinding.Grid(tileGrid);
     }
 
-    // ///<summary>
-    // ///Update the access map for every population in Pops.
-    // ///</summary>
-    // public void UpdateAccessMap()
-    // {
-    //     // convert to map position
-    //     Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
-    //     return CanAccess(population, mapPos);
-    // }
-
     /// <summary>
     /// TODO Considering to remove this function and use RPM with cell position only
     /// Check if a population can access toWorldPos.
@@ -329,7 +322,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+        Vector3Int mapPos = this.tileSystem.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -381,7 +374,7 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+        Vector3Int cellPos = this.tileSystem.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)

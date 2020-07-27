@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-public enum GrowthStatus {increasing, stabalized, decreasing}
-/*
-    Use conditions of each need to determine
-    1. if the population is increasing, stabalized, or decreasing
-    2. at what rate the population size is changing
-*/
+public enum GrowthStatus {increasing, stabilized, decreasing}
+
+/// <summary>
+/// Determines the rate and status of growth for each population based off of their most severe need that isn't being met
+/// </summary>
 public class GrowthCalculator
 {
     public GrowthStatus GrowthStatus { get; private set; }
@@ -14,7 +13,7 @@ public class GrowthCalculator
     public GrowthCalculator()
     {
         this.GrowthRate = 0;
-        this.GrowthStatus = GrowthStatus.stabalized;
+        this.GrowthStatus = GrowthStatus.stabilized;
     }
 
     public void CalculateGrowth(Population population)
@@ -38,13 +37,13 @@ public class GrowthCalculator
         }
         if (worstSeverity == 5 || worstSeverity == 6)
         {
-            this.GrowthStatus = GrowthStatus.stabalized;
+            this.GrowthStatus = GrowthStatus.stabilized;
             this.GrowthRate = 0;
         }
         else if (worstSeverity > 6)
         {
             this.GrowthStatus = GrowthStatus.decreasing;
-            // 15, 30, 45, 60 depending on how severe
+            // 15, 30, 45, 60 seconds depending on how severe
             this.GrowthRate = (6 - worstSeverity) * 15 + 75;
         }
         else

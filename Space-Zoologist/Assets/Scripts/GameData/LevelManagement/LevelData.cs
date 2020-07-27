@@ -4,9 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// Contains all the starting data of a particular level.
-/// Note: Instead of having the data of each level stored in a scriptable object like this, the data could be stored in the its related components in each level's scene.
 /// </summary>
-[CreateAssetMenu(fileName = "LevelData", menuName = "ScriptableObjects/LevelDataScriptableObject")]
+[CreateAssetMenu(fileName="LevelData", menuName="Scene Data/LevelData")]
 public class LevelData : ScriptableObject
 {
     public int StartingBalance => startingBalance;
@@ -15,7 +14,7 @@ public class LevelData : ScriptableObject
     public List<Item> Items => items;
     public AtmosphericComposition GlobalAtmosphere => globalAtmosphere;
 
-    [SerializeField] private int startingBalance = default;
+    [SerializeField] public int startingBalance = default;
     [Expandable] public List<FoodSourceSpecies> foodSources = default;
     [Expandable] public List<AnimalSpecies> animalSpecies = default;
     [Expandable] public List<Item> items = default;

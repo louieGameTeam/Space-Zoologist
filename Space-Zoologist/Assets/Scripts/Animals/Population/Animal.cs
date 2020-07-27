@@ -55,7 +55,7 @@ public class Animal : MonoBehaviour
         {
             return;
         }
-        if (this.gameObject.activeSelf)
+        if (this.gameObject.activeSelf && this.CurrentBehavior != null)
         {
             this.CurrentBehavior.ExitBehavior();
             this.ChooseNextBehavior();
