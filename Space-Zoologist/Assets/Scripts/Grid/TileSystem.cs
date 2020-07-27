@@ -353,6 +353,51 @@ public class TileSystem : MonoBehaviour
     }
 
     /// <summary>
+    /// Scan from all the liquid tiles withint a radius range and return all different liquid compositions
+    /// </summary>
+    /// <param name="centerCellLocation">The location of the center cell</param>
+    /// <param name="scanRange">The radius range to look for</param>
+    /// <returns>A list of the composistions, null is there is no liquid within range</returns>
+    public List<float[]> GetLiquidCompositionWithinRange(Vector3Int centerCellLocation, int scanRange)
+    {
+        List<float[]> liquidCompositions = new List<float[]>();
+
+        Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
+        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        {
+            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            {
+                float distance = Mathf.Sqrt(x * x + y * y);
+                if (distance > scanRange)
+                {
+                    continue;
+                }
+
+                scanLocation.x = x;
+                scanLocation.y = y;
+
+                TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
+                if (tile.type == TileType.Liquid)
+                {
+                    float[] composition = this.GetTileContentsAtLocation(scanLocation, tile);
+
+                    if (!liquidCompositions.Contains(composition))
+                    {
+                        liquidCompositions.Add(composition);
+                    }
+                }
+            }
+        }
+
+        if (liquidCompositions.Count == 0)
+        {
+            return null;
+        }
+
+        return liquidCompositions;
+    }
+
+    /// <summary>
     /// Whether any of given tile is within a given range. 
     /// </summary>
     /// <param name="centerCellLocation">The cell location to calculate range from</param>

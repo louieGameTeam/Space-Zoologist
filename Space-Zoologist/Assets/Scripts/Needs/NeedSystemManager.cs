@@ -43,6 +43,7 @@ public class NeedSystemManager : MonoBehaviour
         // Add enviormental NeedSystem
         AddSystem(new AtmosphereNeedSystem(enclosureSystem));
         AddSystem(new TerrainNeedSystem(rpm, tileSystem));
+        AddSystem(new LiquidNeedSystem(tileSystem));
 
         AddSystem(new FoodSourceNeedSystem(rpm));
         AddSystem(new SpeciesNeedSystem(rpm));

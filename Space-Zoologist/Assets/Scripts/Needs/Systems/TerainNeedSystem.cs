@@ -58,6 +58,10 @@ public class TerrainNeedSystem : NeedSystem
                     }
                 }
             }
+            else
+            {
+                Debug.Assert(true, "Consumer type error!");
+            }
         }
 
         this.isDirty = false;
