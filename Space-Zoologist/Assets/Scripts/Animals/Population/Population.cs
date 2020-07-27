@@ -1,33 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
-public class Population : Life
+public class Population : MonoBehaviour, Life
 {
+    [SerializeField] private AnimalSpecies species = default;
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;
 
-    [SerializeField] private AnimalSpecies species = default;
-    [SerializeField] private GameObject AnimalPrefab = default;
-    // Defined at runtime or added when a pod is used
+    public Dictionary<string, Need> Needs => needs;
+    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    public AnimalPathfinding.Grid grid { get; private set; }
+    // TODO when accessible locations becomes nothing, add a warning so the player can respond.
+    public List<Vector3Int> AccessibleLocations { get; private set; }
+    public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
+
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
-    // Data can be accessed via scripts by going through the animals themselves. This is for editing in editor
+    [SerializeField] private GameObject AnimalPrefab = default;
     [Header("Updated through OnValidate")]
     [SerializeField] private List<BehaviorsData> AnimalsBehaviorData = default;
+    [Header("Modify values and thresholds for testing")]
+    // Initialized when InitializePopulationDataCalled and updates the Need Dictionary OnValidate
+    [SerializeField] private List<Need> NeedEditorTesting = default;
 
-    // updated in FilterBehaviors function
-    public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-    private Dictionary<string, float> Needs = new Dictionary<string, float>();
     private Vector3 origin = Vector3.zero;
-
-    // 2d array based off of accessible locations for a populations pathfinding
-    public AnimalPathfinding.Grid grid { get; private set; }
-    public List<Vector3Int>  AccessibleLocations { get; private set; }
+    private GrowthCalculator GrowthCalculator = new GrowthCalculator();
+    public float TimeSinceUpdate = 0f;
 
     private void Awake()
     {
@@ -47,17 +51,12 @@ public class Population : Life
         this.origin = origin;
         this.transform.position = origin;
         // - the pods will contain populations which we'll likely want to specify certain aspects of
-        this.InitializePopulationData();
-        for (int i=0; i<populationSize; i++)
+        for (int i = 0; i < populationSize; i++)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
-
-        foreach (Need need in species.Needs.Values)
-        {
-            needsValues.Add(need.NeedName, 0);
-        }
+        this.InitializePopulationData();
     }
 
     // Can be initialized at runtime if the species is defined or later when a pod is used
@@ -74,10 +73,44 @@ public class Population : Life
             // Debug.Log("Behavior added");
             this.CurrentBehaviors.Add(data.behaviorScriptName);
         }
-        foreach (KeyValuePair<string, Need> need in Species.Needs)
+        this.needs = this.Species.SetupNeeds();
+        this.SetupNeedTesting();
+    }
+
+    private void SetupNeedTesting()
+    {
+        this.NeedEditorTesting = new List<Need>();
+        foreach (KeyValuePair<string, Need> need in this.needs)
         {
-            Needs.Add(need.Value.NeedName, 0);
+            this.NeedEditorTesting.Add(need.Value);
         }
+    }
+
+    private void Update()
+    {
+        this.HandleGrowth();
+    }
+
+    private void HandleGrowth()
+    {
+        float rate = this.GrowthCalculator.GrowthRate;
+        if (rate == 0) return;
+        if (this.TimeSinceUpdate > rate)
+        {
+            this.TimeSinceUpdate = 0;
+            switch (this.GrowthCalculator.GrowthStatus)
+            {
+                case GrowthStatus.increasing:
+                    this.TestAddAnimal();
+                    break;
+                case GrowthStatus.decreasing:
+                    this.TestRemoveAnimal();
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.TimeSinceUpdate += Time.deltaTime;
     }
 
     /// <summary>
@@ -102,11 +135,35 @@ public class Population : Life
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        var name = collision.gameObject.name;
+    }
+
     public void AddAnimal(BehaviorsData data)
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
+        this.MarkNeedsDirty();
+    }
+
+    private void MarkNeedsDirty()
+    {
+        // Making the NS of this pop's need dirty (Density, FoodSource and Species)
+        foreach (Need need in this.needs.Values)
+        {
+            if (need.NeedType != "Atmosphere" && need.NeedType != "Terrain")
+            {
+                NeedSystemManager.ins.Systems[need.NeedType].MarkAsDirty();
+            }
+        }
+    }
+
+    // TODO remove using PoolingSystem
+    public void RemoveAnimal(int count)
+    {
+        this.MarkNeedsDirty();
     }
 
     /// <summary>
@@ -114,10 +171,10 @@ public class Population : Life
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    public override void UpdateNeed(string need, float value)
+    public void UpdateNeed(string need, float value)
     {
-        Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        needsValues[need] = value;
+        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }
 
@@ -128,8 +185,8 @@ public class Population : Life
     /// <returns></returns>
     public float GetNeedValue(string need)
     {
-        Debug.Assert(needsValues.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        return needsValues[need];
+        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        return this.needs[need].NeedValue;
     }
 
     /// <summary>
@@ -137,7 +194,22 @@ public class Population : Life
     /// </summary>
     public void UpdateGrowthConditions()
     {
-        throw new System.NotImplementedException();
+        if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
+        Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
+    }
+
+    private void TestAddAnimal()
+    {
+        this.AnimalsBehaviorData.Add(new BehaviorsData());
+        GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
+        newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
+        AnimalPopulation.Add(newAnimal);
+    }
+
+    public void TestRemoveAnimal()
+    {
+        Destroy(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
+        this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
     }
 
     // TODO setup filter for adding/removing behaviors from this.CurrentBehaviors according to populations condition
@@ -161,6 +233,36 @@ public class Population : Life
         {
             this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
         }
+        this.UpdateNeeds();
+        if (this.GrowthCalculator != null)
+        {
+            this.UpdateGrowthConditions();
+        }
+    }
+
+    private void UpdateNeeds()
+    {
+        if (this.NeedEditorTesting != null)
+        {
+            foreach (Need need in this.NeedEditorTesting)
+            {
+                this.needs[need.NeedName] = need;
+            }
+        }
+    }
+
+    public Dictionary<string, Need> GetNeedValues()
+    {
+        return this.Needs;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return this.gameObject.transform.position;
+    }
+
+    public bool GetAccessibilityStatus()
+    {
+        return ReservePartitionManager.ins.PopulationAccessbilityStatus[this];
     }
 }
-

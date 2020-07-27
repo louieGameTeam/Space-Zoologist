@@ -7,8 +7,6 @@
 */
 using System.Collections.Generic;
 
-// TODO setup translation between max tilemap location and grid location using tilemap.source to offset
-// This grid size can be optimized to be smaller based off of animals accessible area
 namespace AnimalPathfinding
 {
     /// <summary>
@@ -18,10 +16,10 @@ namespace AnimalPathfinding
     public class Grid
     {
         // nodes in grid
-        public Node[,] nodes;
+        private Node[,] nodes;
 
         // grid size
-        int gridSizeX, gridSizeY;
+        private int gridSizeX, gridSizeY;
         public int MaxGridSize { get => gridSizeX * gridSizeY; }
 
         /// <summary>
@@ -36,7 +34,7 @@ namespace AnimalPathfinding
         public Grid(float[,] tiles_costs)
         {
             // create nodes
-            CreateNodes(tiles_costs.GetLength(0), tiles_costs.GetLength(1));
+            CreateGrid(tiles_costs.GetLength(0), tiles_costs.GetLength(1));
 
             // init nodes
             for (int x = 0; x < gridSizeX; x++)
@@ -55,7 +53,7 @@ namespace AnimalPathfinding
         public Grid(bool[,] walkable_tiles)
         {
             // create nodes
-            CreateNodes(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
+            CreateGrid(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
 
             // init nodes
             for (int x = 0; x < gridSizeX; x++)
@@ -72,7 +70,7 @@ namespace AnimalPathfinding
         /// </summary>
         /// <param name="width">Nodes grid width.</param>
         /// <param name="height">Nodes grid height.</param>
-        private void CreateNodes(int width, int height)
+        private void CreateGrid(int width, int height)
         {
             gridSizeX = width;
             gridSizeY = height;
@@ -91,7 +89,7 @@ namespace AnimalPathfinding
                 gridSizeX != tiles_costs.GetLength(0) ||
                 gridSizeY != tiles_costs.GetLength(1))
             {
-                CreateNodes(tiles_costs.GetLength(0), tiles_costs.GetLength(1));
+                CreateGrid(tiles_costs.GetLength(0), tiles_costs.GetLength(1));
             }
 
             // update nodes
@@ -116,7 +114,7 @@ namespace AnimalPathfinding
                 gridSizeX != walkable_tiles.GetLength(0) ||
                 gridSizeY != walkable_tiles.GetLength(1))
             {
-                CreateNodes(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
+                CreateGrid(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
             }
 
             // update grid
@@ -173,7 +171,20 @@ namespace AnimalPathfinding
 
         public Node GetNode(int x, int y)
         {
+            if (!IsAccessible(x, y))
+            {
+                return null;
+            }
             return nodes[x, y];
+        }
+
+        public bool IsAccessible(int x, int y)
+        {
+            if (x >= nodes.GetLength(0) || y >= nodes.GetLength(1) || x < 0 || y < 0)
+            {
+                return false;
+            }
+            return nodes[x, y].walkable;
         }
 
         /// <summary>
@@ -184,7 +195,7 @@ namespace AnimalPathfinding
         /// <param name="y">The y coordinate.</param>
         /// <param name="node">Node.</param>
         /// <param name="neighbours">Neighbours.</param>
-        Node AddNodeNeighbour(int x, int y, Node node)
+        private Node AddNodeNeighbour(int x, int y, Node node)
         {
             if (x == 0 && y == 0)
             {

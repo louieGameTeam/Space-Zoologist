@@ -215,6 +215,8 @@ public class TileContentsManager : MonoBehaviour
                 tileContents[tileLocation] = new float[] { n0, n1, n2 };
                 ChangeColor(tileLocation);
                 //TODO call user to enter parameters
+
+                //Debug.Log($"Placed liquid {n0}:{n1}:{n2}");
             }
             isPlacedTileNew = false;
         }

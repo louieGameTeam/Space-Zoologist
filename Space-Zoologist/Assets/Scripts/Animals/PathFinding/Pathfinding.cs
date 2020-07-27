@@ -4,6 +4,8 @@
  *
  * Author: Ronen Ness.
  * Since: 2016.
+ * Improved on above design by adding heap optimization and PathRequestManager according to Sebastian tutorial series.
+ * Further optimization/improvements may start here: https://www.youtube.com/watch?v=Tb-rM3wGwv4
 */
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,13 +53,19 @@ namespace AnimalPathfinding
         /// <returns>List of grid nodes that represent the path to walk.</returns>
         IEnumerator FindPath(Node startPos, Node targetPos, Grid grid)
         {
+            if (startPos == null || targetPos == null || grid == null)
+            {
+                yield return null;
+                PathRequestManager.instance.FinishedProcessPath(null, false);
+            }
             Node startNode = startPos;
             Node targetNode = targetPos;
             List<Vector3> path = new List<Vector3>();
             if (!startNode.walkable && targetNode.walkable || startNode.Equals(targetNode))
             {
+                path.Add(new Vector3(targetNode.gridX, targetNode.gridY, 0));
                 yield return null;
-                PathRequestManager.instance.FinishedProcessPath(path, false);
+                PathRequestManager.instance.FinishedProcessPath(path, true);
             }
 
             Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);

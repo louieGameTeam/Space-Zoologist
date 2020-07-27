@@ -10,7 +10,6 @@ public class TileStoreSection : StoreSection
 {
     [Header("Tile Store Section")]
     [SerializeField] TilePlacementController tilePlacementController = default;
-    [SerializeField] NeedSystemUpdater testingUpdates = default;
 
     private int startingBalance = 0;
     private bool isPlacing = false;
@@ -58,10 +57,14 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerDown(PointerEventData eventData)
     {
         base.OnCursorPointerDown(eventData);
-        if (eventData.button == PointerEventData.InputButton.Left && !isPlacing && !UIUtility.ins.IsCursorOverUI(eventData))
+        if (UIUtility.ins.IsCursorOverUI(eventData))
+        {
+            base.OnItemSelectionCanceled();
+            return;
+        }
+        if (eventData.button == PointerEventData.InputButton.Left && !isPlacing)
         {
             StartPlacing();
-            testingUpdates.PauseAllAnimals();
         }
     }
 
@@ -74,8 +77,6 @@ public class TileStoreSection : StoreSection
         if (eventData.button == PointerEventData.InputButton.Left && isPlacing)
         {
             FinishPlacing();
-            testingUpdates.UpdateAccessibleLocations();
-            testingUpdates.UnpauseAllAnimals();
         }
     }
 

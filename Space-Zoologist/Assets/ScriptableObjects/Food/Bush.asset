@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
+  m_Name: Bush
+  m_EditorClassIdentifier: 
+  speciesName: Bush
+  rootRadius: 5
+  baseOutput: 6
+  needsList:
+  - needType: 0
+    needs:
+    - needName: Dirt
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+  - needType: 4
+    needs:
+    - needName: MineralX
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+    - needName: MineralY
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+    - needName: MineralZ
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+  FoodSource: {fileID: 11400000, guid: b63cac9feff8a4b0f89cedf9db1d134f, type: 2}

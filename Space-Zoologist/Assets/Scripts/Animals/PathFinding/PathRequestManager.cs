@@ -20,7 +20,7 @@ namespace AnimalPathfinding
 
         void Awake()
         {
-             if (instance != null && this != instance)
+            if (instance != null && this != instance)
             {
                 Destroy(this);
             }
@@ -41,6 +41,11 @@ namespace AnimalPathfinding
         /// <param name="grid"></param>
         public static void RequestPath(Vector3Int start, Vector3Int end, Action<List<Vector3>, bool> callback, Grid grid)
         {
+            if (instance == null)
+            {
+                Debug.Log("PathRequestManager not attached to GameObject, Pathfinding will not work");
+                return;
+            }
             // Debug.Log("Start map position: ");
             // Debug.Log("("+start.x+","+start.y+")");
             // Debug.Log("End map position: ");

@@ -1,41 +1,24 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/NeedSystems/SpeciesNeedSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/TileStoreSection.cs">
     <Files>
-      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="95" Column="6" />
-      <File FileName="Assets/Scripts/UI/Store/Testing/NeedTesting/NeedSystemsTester.cs" Line="16" Column="42" />
-      <File FileName="Assets/Scripts/Animals/AnimalSpecies.cs" Line="6" Column="14" />
-      <File FileName="Assets/Scripts/Animals/Life.cs" Line="11" Column="43" />
-      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="342" Column="1" />
-      <File FileName="Assets/Scripts/Animals/Population/PopulationManager.cs" Line="44" Column="10" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="32" Column="53" />
-      <File FileName="Assets/Scripts/Needs/FoodSystem/FoodSourceManager.cs" Line="28" Column="1" />
-      <File FileName="Assets/Scripts/Needs/NeedSystems/AtmosphereNeedSystem.cs" Line="8" Column="59" />
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="117" Column="33" />
-      <File FileName="Assets/Scripts/Needs/FoodSystem/FoodSourceNeedSystem.cs" Line="143" Column="6" />
-      <File FileName="Assets/Scripts/Needs/NeedSystems/SpeciesNeedSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="100" Column="1" />
+      <File FileName="Assets/Scripts/Needs/NeedSystem.cs" Line="16" Column="38" />
+      <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" Line="8" Column="42" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="97" Column="14" />
+      <File FileName="Assets/Scripts/Grid/Tiles/TerrainTile.cs" Line="9" Column="2" />
+      <File FileName="Assets/Scripts/Grid/Tiles/TileContentsManager.cs" Line="206" Column="28" />
+      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="95" Column="6" />
+      <File FileName="Assets/Scripts/UI/Store/StoreItemCell.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/Item.cs" Line="51" Column="38" />
+      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>needData.NeedName</Value>
-          <Value>SpeciesName</Value>
-          <Value>(int)terrainTile.targetLayer</Value>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ade34eae-baf7-46bd-affa-1b65ee18bc9e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1d6e87ac-f467-469f-8ea9-b4a7e22aee3f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Needs/NeedSystems/AtmosphereNeedSystem.cs" relfile="Assets/Scripts/Needs/NeedSystems/AtmosphereNeedSystem.cs" line="28" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

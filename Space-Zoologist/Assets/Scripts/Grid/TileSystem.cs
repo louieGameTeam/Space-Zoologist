@@ -5,12 +5,25 @@ using UnityEngine.Tilemaps;
 
 public class TileSystem : MonoBehaviour
 {
+    // Singleton
+    public static TileSystem ins;
+
+
     // Start is called before the first frame update
     private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;
 
     private void Awake()
     {
+        if (ins != null && this != ins)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            ins = this;
+        }
+
         grid = GetComponent<Grid>();
         Tilemap[] unorderedTilemaps = GetComponent<TilePlacementController>().allTilemaps;
         Dictionary<Tilemap, int> tilemapLayerOrderPairs = new Dictionary<Tilemap, int>();
@@ -337,6 +350,51 @@ public class TileSystem : MonoBehaviour
             }
         }
         return typesOfTileWithinRadius;
+    }
+
+    /// <summary>
+    /// Scan from all the liquid tiles withint a radius range and return all different liquid compositions
+    /// </summary>
+    /// <param name="centerCellLocation">The location of the center cell</param>
+    /// <param name="scanRange">The radius range to look for</param>
+    /// <returns>A list of the composistions, null is there is no liquid within range</returns>
+    public List<float[]> GetLiquidCompositionWithinRange(Vector3Int centerCellLocation, int scanRange)
+    {
+        List<float[]> liquidCompositions = new List<float[]>();
+
+        Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
+        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        {
+            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            {
+                float distance = Mathf.Sqrt(x * x + y * y);
+                if (distance > scanRange)
+                {
+                    continue;
+                }
+
+                scanLocation.x = x;
+                scanLocation.y = y;
+
+                TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
+                if (tile.type == TileType.Liquid)
+                {
+                    float[] composition = this.GetTileContentsAtLocation(scanLocation, tile);
+
+                    if (!liquidCompositions.Contains(composition))
+                    {
+                        liquidCompositions.Add(composition);
+                    }
+                }
+            }
+        }
+
+        if (liquidCompositions.Count == 0)
+        {
+            return null;
+        }
+
+        return liquidCompositions;
     }
 
     /// <summary>

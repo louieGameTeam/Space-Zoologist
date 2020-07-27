@@ -10,10 +10,10 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class StoreSection : MonoBehaviour
 {
-    public string ItemType => itemType;
+    public NeedType ItemType => itemType;
 
     [Header("Characteristics")]
-    [SerializeField] private string itemType = default;
+    [SerializeField] private NeedType itemType = default;
     [Header("Dependencies")]
     [SerializeField] private GameObject itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;

@@ -5,24 +5,27 @@ using System.Linq;
 //public enum NeedType {Terrain, Liquid, Atmosphere, Food}
 //public enum NeedCondition { Bad, Neutral, Good }
 
+[System.Serializable]
 public class Need
 {
     public string NeedName => needName;
     public int Severity => severity;
-    public NeedType NType => needType;
+    public string NeedType => needType.ToString();
     public Sprite Sprite => sprite;
+    public float NeedValue => this.neeedValue;
 
     [SerializeField] private NeedType needType = default;
     [SerializeField] private string needName = default;
+    [SerializeField] private float neeedValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
     [SerializeField] private List<NeedCondition> conditions = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
 
-    public Need(NeedConstructData needConstructData)
+    public Need(NeedType needType, NeedConstructData needConstructData)
     {
-        this.needType = needConstructData.NeedType;
+        this.needType = needType;
         this.needName = needConstructData.NeedName;
         this.severity = needConstructData.Severity;
         this.conditions = needConstructData.Conditions;
@@ -46,7 +49,6 @@ public class Need
                 return this.conditions[i];
             }
         }
-
         return this.conditions[this.thresholds.Count];
     }
 
@@ -117,5 +119,10 @@ public class Need
                 thresholds[i + 1] = thresholds[i] + 1;
             }
         }
+    }
+
+    public void UpdateNeedValue(float value)
+    {
+        this.neeedValue = value;
     }
 }

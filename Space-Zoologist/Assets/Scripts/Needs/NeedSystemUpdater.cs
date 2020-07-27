@@ -2,13 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Hanldes the update of NS and pausing animal repersentation
+/// </summary>
 public class NeedSystemUpdater : MonoBehaviour
 {
-    [SerializeField] PopulationManager AllAnimals = default;
+    public bool isInStore { get; set; }
+
+    // Singleton
+    public static NeedSystemUpdater ins;
+
+    private void Awake()
+    {
+        isInStore = false;
+        if (ins != null && this != ins)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            ins = this;
+        }
+    }
 
     public void PauseAllAnimals()
     {
-        foreach (Population population in this.AllAnimals.Populations)
+       foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -19,7 +38,7 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public void UnpauseAllAnimals()
     {
-        foreach (Population population in this.AllAnimals.Populations)
+        foreach (Population population in PopulationManager.ins.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -33,13 +52,22 @@ public class NeedSystemUpdater : MonoBehaviour
     public void UpdateAccessibleLocations()
     {
         ReservePartitionManager.ins.UpdateAccessMap();
-        foreach (Population population in this.AllAnimals.Populations)
+        foreach (Population population in PopulationManager.ins.Populations)
         {
             population.UpdateAccessibleArea();
             foreach (GameObject animal in population.AnimalPopulation)
             {
                 animal.GetComponent<Animal>().ResetBehavior();
             }
+        }
+    }
+
+    // Temp update
+    private void FixedUpdate()
+    {
+        if(!isInStore)
+        {
+            NeedSystemManager.ins.UpdateSystems();
         }
     }
 }

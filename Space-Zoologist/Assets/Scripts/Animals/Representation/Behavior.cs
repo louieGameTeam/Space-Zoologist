@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-// TODO create more behaviors, e.g., circle object, pace between objects, seek object, etc.
-// TODO determine how behavior modifiers (e.g., speed, direction, etc.) should be handled.
 
 /// <summary>
 /// Provides base functionality for entering and exiting behavior and calculating a path.
@@ -58,8 +56,7 @@ public abstract class Behavior : MonoBehaviour
         }
         else
         {
-            Debug.Log("Path not found, exiting behavior without callback");
-            this.enabled = false;
+            this.ExitBehavior();
         }
     }
 

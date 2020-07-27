@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Animations;
+using System;
 
 [CreateAssetMenu]
 public class AnimalSpecies : ScriptableObject
@@ -8,15 +9,16 @@ public class AnimalSpecies : ScriptableObject
     // Getters
     public string SpeciesName => speciesName;
     public int Dominance => dominance;
-    public float GrowthFactor => growthFactor;
-    public Dictionary<string, Need> Needs => needs;
+    public float GrowthRate => growthRate;
     public float Size => size;
     public List<BehaviorScriptTranslation> Behaviors => needBehaviorSet;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
+    public float Range => range;
     public Sprite Representation => representation;
-
+    // TODO setup tile weights for species
+    public Dictionary<TileType, byte> TilePreference = default;
     public AnimatorController AnimatorController => animatorController;
 
     // Values
@@ -24,10 +26,10 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private string speciesName = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private int dominance = default;
-    [Range(1.0f, 10.0f)]
-    [SerializeField] private float growthFactor = default;
-    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    [SerializeField] private List<NeedConstructData> needsList = default;
+    [Range(30f, 120f)]
+    [SerializeField] private float growthRate = 30f;
+
+    [SerializeField] private float range = default;
     [Header("Behavior displayed when need isn't being met")]
     [SerializeField] private List<BehaviorScriptTranslation> needBehaviorSet = default;
     [Range(0.0f, 10.0f)]
@@ -35,96 +37,61 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
 
+    [SerializeField]
+    private List<NeedTypeConstructData> needsList = new List<NeedTypeConstructData>();
+
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
 
-    private void OnEnable()
+    public Dictionary<string, Need> SetupNeeds()
     {
-        foreach (NeedConstructData needData in needsList)
+        Dictionary<string, Need> needs = new Dictionary<string, Need>();
+        foreach (NeedTypeConstructData needData in needsList)
         {
-            // Use the NeedData to create Need
-            Needs.Add(needData.NeedName, new Need(needData));
+            foreach (NeedConstructData need in needData.Needs)
+            {
+                // Use the NeedData to create Need
+                needs.Add(need.NeedName, new Need(needData.NeedType, need));
+                //Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
+            }
         }
+        return needs;
     }
-
-    /// <summary>
-    /// Get the condition of a need given its current value.
-    /// </summary>
-    /// <param name="NeedName">The need to get the condition of</param>
-    /// <param name="value">The value of the need</param>
-    /// <returns></returns>
-    // public NeedCondition GetNeedCondition(NeedName NeedName, float value)
-    // {
-    //     foreach(SpeciesNeed need in needs)
-    //     {
-    //         if (need.Name == NeedName)
-    //         {
-    //             return need.GetCondition(value);
-    //         }
-    //     }
-    //     throw new System.ArgumentException("needName not found in needs list");
-    // }
-
-    /// <summary>
-    /// Get the severity of a given need.
-    /// </summary>
-    /// <param name="NeedName">The need to get the severity of</param>
-    /// <returns></returns>
-    // public float GetNeedSeverity(NeedName NeedName)
-    // {
-    //     foreach (SpeciesNeed need in needs)
-    //     {
-    //         if (need.Name == NeedName)
-    //         {
-    //             return need.Severity;
-    //         }
-    //     }
-    //     throw new System.ArgumentException("needName not found in needs list");
-    // }
-
-    public void OnValidate()
+    public void SetupData(string name, int dominance, float growthRate, List<string> accessibleTerrain, List<NeedTypeConstructData> needsList)
     {
-        // Calculate number of behaviors based off of unique need types
-        HashSet <NeedType> uniqueTypes = new HashSet<NeedType>();
-        int numBehaviors = 0;
-        foreach (Need need in this.needs.Values)
+        // TODO setup behaviors and accessible terrain
+        this.speciesName = name;
+        this.dominance = dominance;
+        this.growthRate = growthRate;
+        this.accessibleTerrain = new List<TileType>();
+        foreach (string tileType in accessibleTerrain)
         {
-            if (!uniqueTypes.Contains(need.NType))
+            if (tileType.Equals("Sand", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueTypes.Add(need.NType);
-                numBehaviors++;
+                this.accessibleTerrain.Add(TileType.Sand);
+            }
+            if (tileType.Equals("Grass", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Grass);
+            }
+            if (tileType.Equals("Dirt", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Dirt);
+            }
+            if (tileType.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Liquid);
+            }
+            if (tileType.Equals("Rock", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Rock);
+            }
+            if (tileType.Equals("Wall", StringComparison.OrdinalIgnoreCase))
+            {
+                this.accessibleTerrain.Add(TileType.Wall);
             }
         }
-
-        // Ensure there is a behavior for each needType
-        while (this.needBehaviorSet.Count < numBehaviors)
-        {
-            this.needBehaviorSet.Add(new BehaviorScriptTranslation());
-        }
-        while (this.needBehaviorSet.Count > numBehaviors)
-        {
-            this.needBehaviorSet.RemoveAt(this.needBehaviorSet.Count - 1);
-        }
-        int i = 0;
-        // Give each behavior set the unique need type name. Prevents changing names
-        foreach (NeedType needType in uniqueTypes)
-        {
-            this.needBehaviorSet[i].NeedType = needType;
-            i++;
-        }
-
-        // Ensure there are no duplicate behaviors when behaviors are being chosen
-        HashSet<string> usedBehaviors = new HashSet<string>();
-        foreach (BehaviorScriptTranslation behavior in this.needBehaviorSet)
-        {
-            if (!usedBehaviors.Contains(behavior.behaviorScriptName.ToString()))
-            {
-                usedBehaviors.Add(behavior.behaviorScriptName.ToString());
-            }
-            else
-            {
-                behavior.behaviorScriptName = BehaviorScriptName.None;
-            }
-        }
+        //this.accessibleTerrain = accessibleTerrain;
+        this.needsList = needsList;
     }
 }

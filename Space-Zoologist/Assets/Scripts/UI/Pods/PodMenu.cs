@@ -35,7 +35,7 @@ public class PodMenu : MonoBehaviour
         {
             if (!PointOverMenu(Input.mousePosition) && !selectedSpecies)
             {
-                gameObject.SetActive(false); // --------------------------------------------------------------- ISSUE HERE. Don't activate/deactive a script from within the script
+                // Debug.Log("Pod issue");
             }
         }
         if (Input.GetMouseButtonUp(1))

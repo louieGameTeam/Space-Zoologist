@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class FoodSourceStoreSection : StoreSection
 {
-    [Header("Food Source Store Section")]
-    [SerializeField] FoodSourceManager foodSourceManager = default;
+    //[Header("Food Source Store Section")]
+    //[SerializeField] FoodSourceManager foodSourceManager = default;
 
     /// <summary>
     /// Handles the click release on the cursor item.
@@ -17,9 +17,14 @@ public class FoodSourceStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (eventData.button == PointerEventData.InputButton.Left && !UIUtility.ins.IsCursorOverUI(eventData))
+        if (UIUtility.ins.IsCursorOverUI(eventData))
         {
-            foodSourceManager.CreateFoodSource(selectedItem.ID, Camera.main.ScreenToWorldPoint(eventData.position));
+            base.OnItemSelectionCanceled();
+            return;
+        }
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            FoodSourceManager.ins.CreateFoodSource(selectedItem.ID, Camera.main.ScreenToWorldPoint(eventData.position));
             playerBalance.RuntimeValue -= selectedItem.Price;
         }
     }
