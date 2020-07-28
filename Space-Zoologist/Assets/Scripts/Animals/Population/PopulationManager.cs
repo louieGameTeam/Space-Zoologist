@@ -79,7 +79,7 @@ public class PopulationManager : MonoBehaviour
         Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
         if (preexistingPopulation)
         {
-            Debug.Log("Preexisting population");
+            //Debug.Log("Preexisting population");
             preexistingPopulation.AddAnimal(new BehaviorsData());
         }
         else
