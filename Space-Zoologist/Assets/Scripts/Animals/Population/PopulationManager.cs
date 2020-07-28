@@ -9,14 +9,15 @@ public class PopulationManager : MonoBehaviour
 {
     // Singleton
     public static PopulationManager ins;
+    public List<Population> Populations => ExistingPopulations;
 
     // FindObjectOfType<Population> to populate
     private List<Population> ExistingPopulations = new List<Population>();
-    public List<Population> Populations => ExistingPopulations;
 
     [SerializeField] private GameObject PopulationPrefab = default;
 
-    // Hold all the SpeciesNS for later to add as consumed source
+    // Hold all the SpeciesNS for later
+    // to add new pop as consumed source
     private SpeciesNeedSystem speciesNeedSystem = default;
 
     private void Awake()
@@ -31,37 +32,19 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Manual set up, to be called after NSManager is initalized
+    /// </summary>
     public void Initialize()
     {
         ExistingPopulations.AddRange(FindObjectsOfType<Population>());
 
-        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.ins.Systems["Species"];
+        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.ins.Systems[NeedType.Species];
 
         foreach (Population population in this.ExistingPopulations)
         {
             this.SetupExistingPopulation(population);
         }
-    }
-
-    private void UnclearFunction()
-    {
-        // TODO what is this doing?
-        //Dictionary<string, AnimalSpecies> animalSpeciesMapping = new Dictionary<string, AnimalSpecies>();
-        //if (levelData != null)
-        //{
-        //    // Fill string to AnimalSpecies Dictionary
-        //    foreach (AnimalSpecies species in levelData.AnimalSpecies)
-        //    {
-        //        animalSpeciesMapping.Add(species.SpeciesName, species);
-        //    }
-        //}
-        //foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
-        //{
-        //    if (animalSpeciesMapping.ContainsKey(system.NeedName))
-        //    {
-        //        speciesNeedSystems.Add(system.NeedName, (SpeciesNeedSystem)system);
-        //    }
-        //}
     }
 
     /// <summary>
@@ -79,7 +62,6 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         population.InitializeNewPopulation(species, position, count);
         this.ExistingPopulations.Add(population);
-
         
         this.HandlePopulationRegistration(population);
     }

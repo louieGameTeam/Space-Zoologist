@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Hadnles need value update for all  `Terrain` type needs
+/// </summary>
 public class TerrainNeedSystem : NeedSystem
 {
+    // For `Population` consumers
     private readonly ReservePartitionManager rpm = null;
+    // For `FoodSource` consumers
     private TileSystem tileSystem = null;
-    public TerrainNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Terrain") : base(needName)
+
+    public TerrainNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, NeedType needType = NeedType.Terrain) : base(needType)
     {
         this.rpm = rpm;
         this.tileSystem = tileSystem;
     }
 
     /// <summary>
-    /// Get the terrian each population as access to and updates the associated need in the Population's needs
+    /// Get the terrian conposition of the consumers and update the need values
     /// </summary>
     public override void UpdateSystem()
     {
+        // Unmark dirty when there is not consumer then exit
         if (this.Consumers.Count == 0)
         {
             this.isDirty = false;
@@ -26,41 +33,32 @@ public class TerrainNeedSystem : NeedSystem
 
         foreach (Life life in Consumers)
         {
-            // TODO: factor out the foreach
+            int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
 
-            // Call different get tile function for Popultation and FoodSource
+            // Call different get terrain info function for Popultation and FoodSource
             if (life.GetType() == typeof(Population))
             {
-                var terrianCountsByType = rpm.GetTypesOfTiles((Population)life);
-
-                foreach (var (count, index) in terrianCountsByType.WithIndex())
-                {
-                    string needName = ((TileType)index).ToString();
-
-                    if (life.GetNeedValues().ContainsKey(needName))
-                    {
-                        life.UpdateNeed(needName, count);
-                    }
-                }
+                terrainCountsByType = rpm.GetTypesOfTiles((Population)life);
             }
             else if(life.GetType() == typeof(FoodSource))
             {
                 FoodSource foodSource = (FoodSource)life;
-                var terrianCounts = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(life.GetPosition()), foodSource.Species.RootRadius);
-
-                foreach (var (count, index) in terrianCounts.WithIndex())
-                {
-                    string needName = ((TileType)index).ToString();
-
-                    if (life.GetNeedValues().ContainsKey(needName))
-                    {
-                        life.UpdateNeed(needName, count);
-                    }
-                }
+                terrainCountsByType = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(life.GetPosition()), foodSource.Species.RootRadius);
             }
             else
             {
                 Debug.Assert(true, "Consumer type error!");
+            }
+
+            // Update need values
+            foreach (var (count, index) in terrainCountsByType.WithIndex())
+            {
+                string needName = ((TileType)index).ToString();
+
+                if (life.GetNeedValues().ContainsKey(needName))
+                {
+                    life.UpdateNeed(needName, count);
+                }
             }
         }
 
@@ -69,7 +67,7 @@ public class TerrainNeedSystem : NeedSystem
 }
 
 /// <summary>
-/// To use .WithIdex
+/// To use .WithIndex
 /// </summary>
 public static class ForeachExtension
 {

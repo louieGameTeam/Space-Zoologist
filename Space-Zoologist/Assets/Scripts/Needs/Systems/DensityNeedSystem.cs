@@ -282,16 +282,17 @@ public class PopulationDensitySystem
     }
 }
 
+/// <summary>
+/// Handles density need value updates
+/// </summary>
 public class DensityNeedSystem : NeedSystem
 {
     private readonly ReservePartitionManager rpm = null;
-    private readonly TileSystem tileSystem = null;
     private PopulationDensitySystem populationDensitySystem = null;
 
-    public DensityNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, string needName = "Density") : base(needName)
+    public DensityNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, NeedType needType = NeedType.Density) : base(needType)
     {
         this.rpm = rpm;
-        this.tileSystem = tileSystem;
         this.populationDensitySystem = new PopulationDensitySystem(rpm, tileSystem);
     }
 

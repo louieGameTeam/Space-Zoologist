@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Handles need value update for all `Atmosphere` type needs
+/// </summary>
 public class AtmosphereNeedSystem : NeedSystem
 {
-    //private readonly ReservePartitionManager rpm = null;
     private readonly EnclosureSystem enclosureSystem = null;
-    public AtmosphereNeedSystem(EnclosureSystem enclosureSystem, string needName = "Atmosphere") : base(needName)
+
+    public AtmosphereNeedSystem(EnclosureSystem enclosureSystem, NeedType needType = NeedType.Atmosphere) : base(needType)
     {
         this.enclosureSystem = enclosureSystem;
     }
@@ -23,6 +26,7 @@ public class AtmosphereNeedSystem : NeedSystem
             return;
         }
 
+        // Update enclosure system before getting values
         enclosureSystem.FindEnclosedAreas();
 
         foreach (Life life in Consumers)

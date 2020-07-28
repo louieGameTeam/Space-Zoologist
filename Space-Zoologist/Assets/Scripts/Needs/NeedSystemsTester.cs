@@ -8,7 +8,7 @@ public class NeedSystemsTester : MonoBehaviour
     [SerializeField] private Text populationStats = default;
     [SerializeField] private Text foodSourceStats = default;
 
-    private void Update()
+    public void Update()
     {
         string populationStatsText = "";
         foreach (Population population in PopulationManager.ins.Populations)

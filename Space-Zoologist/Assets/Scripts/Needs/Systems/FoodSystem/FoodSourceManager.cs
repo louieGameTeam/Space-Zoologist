@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manager of all the FoodSource instance
+/// </summary>
 public class FoodSourceManager : MonoBehaviour
 {
     // Singleton
     public static FoodSourceManager ins;
-
     public List<FoodSource> FoodSources => foodSources;
+
     private List<FoodSource> foodSources = new List<FoodSource>();
 
     [SerializeField] private LevelData levelData = default;
@@ -15,7 +18,6 @@ public class FoodSourceManager : MonoBehaviour
     private FoodSourceNeedSystem foodSourceNeedSystems = default;
     // FoodSourceSpecies to string name
     private Dictionary<string, FoodSourceSpecies> foodSourceSpecies = new Dictionary<string, FoodSourceSpecies>();
-
     [SerializeField] private GameObject foodSourcePrefab = default;
 
     private void Awake()
@@ -38,7 +40,7 @@ public class FoodSourceManager : MonoBehaviour
 
     public void Initialize()
     {
-        this.foodSourceNeedSystems = (FoodSourceNeedSystem)NeedSystemManager.ins.Systems["FoodSource"];
+        this.foodSourceNeedSystems = (FoodSourceNeedSystem)NeedSystemManager.ins.Systems[NeedType.FoodSource];
 
         // Get all FoodSource at start of level
         foodSources.AddRange(FindObjectsOfType<FoodSource>());
@@ -51,6 +53,7 @@ public class FoodSourceManager : MonoBehaviour
         }
     }
 
+    // TODO: combine two version into one
     private void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Calculates food distribution of a certain food type
+/// </summary>
 public class FoodSourceCalculator 
 {
     public string FoodSourceName => this.foodSourceName;

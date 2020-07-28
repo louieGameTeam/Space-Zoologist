@@ -5,12 +5,15 @@ using System.Linq;
 
 public enum LiquidComposition { MineralX, MineralY, MineralZ };
 
+/// <summary>
+/// Handles liquid need value updates
+/// </summary>
 public class LiquidNeedSystem : NeedSystem
 {
     // TODO: Find the right helper system
     private readonly TileSystem tileSystem = default;
 
-    public LiquidNeedSystem(TileSystem tileSystem, string needName = "Liquid") : base(needName)
+    public LiquidNeedSystem(TileSystem tileSystem, NeedType needType = NeedType.Liquid) : base(needType)
     {
         this.tileSystem = tileSystem;
     }
@@ -46,7 +49,6 @@ public class LiquidNeedSystem : NeedSystem
             }
             else if (life.GetType() == typeof(FoodSource))
             {
-                // TODO: Get all liquid composition with in range
                 FoodSource foodSource = (FoodSource)life;
                 List<float[]> liquidCompositions = tileSystem.GetLiquidCompositionWithinRange(Vector3Int.FloorToInt(life.GetPosition()), foodSource.Species.RootRadius);
 

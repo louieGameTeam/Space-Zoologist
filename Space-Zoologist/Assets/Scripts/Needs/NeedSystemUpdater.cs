@@ -12,6 +12,8 @@ public class NeedSystemUpdater : MonoBehaviour
     // Singleton
     public static NeedSystemUpdater ins;
 
+    private NeedSystemsTester NSTester = default;  
+
     private void Awake()
     {
         isInStore = false;
@@ -23,6 +25,11 @@ public class NeedSystemUpdater : MonoBehaviour
         {
             ins = this;
         }
+    }
+
+    private void Start()
+    {
+        this.NSTester = FindObjectOfType<NeedSystemsTester>();
     }
 
     public void PauseAllAnimals()
@@ -69,5 +76,7 @@ public class NeedSystemUpdater : MonoBehaviour
         {
             NeedSystemManager.ins.UpdateSystems();
         }
+
+        this.NSTester.Update();
     }
 }

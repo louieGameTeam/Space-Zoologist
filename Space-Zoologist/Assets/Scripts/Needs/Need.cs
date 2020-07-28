@@ -10,7 +10,7 @@ public class Need
 {
     public string NeedName => needName;
     public int Severity => severity;
-    public string NeedType => needType.ToString();
+    public NeedType NeedType => needType;
     public Sprite Sprite => sprite;
     public float NeedValue => this.neeedValue;
 
