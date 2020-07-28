@@ -38,6 +38,12 @@ MonoBehaviour:
       thresholds:
       - 10
       - 20
+    - needName: Dirt
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+      - 20
   - needType: 4
     needs:
     - needName: MineralX
