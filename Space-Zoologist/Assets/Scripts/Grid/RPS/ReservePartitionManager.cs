@@ -165,6 +165,9 @@ public class ReservePartitionManager : MonoBehaviour
 
         TileSystem _tileSystem = FindObjectOfType<TileSystem>();
 
+        // Clear TypesOfTerrain for given population
+        this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
+
         // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
         while (stack.Count > 0)
         {
