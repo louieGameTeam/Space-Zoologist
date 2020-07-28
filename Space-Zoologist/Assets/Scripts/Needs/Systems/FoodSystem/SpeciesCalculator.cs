@@ -53,6 +53,16 @@ public class SpeciesCalculator
         this.isDirty = true;
     }
 
+    public bool RemovePopulation(Population population)
+    {
+        this.isDirty = true;
+
+        Debug.Assert(!this.populations.Remove(population), "Population removal failure!");
+        Debug.Assert(!this.populationsWithAccess.Remove(population), "REmoval of cosumed pop from populationsWithAccess failed");
+
+        return true;
+    }
+
     public void AddConsumer(Population consumer)
     {
         if (this.consumers.Contains(consumer))
@@ -80,7 +90,10 @@ public class SpeciesCalculator
     {
         this.isDirty = true;
 
-        return this.consumers.Remove(population);
+        Debug.Assert(!this.consumers.Remove(population), "Consumer removal failure!");
+        Debug.Assert(!this.accessiblePopulation.Remove(population), "Removal of consumer from accessiblePopulation failed");
+
+        return true;
     }
 
     public Dictionary<Population, float> CalculateDistribution()
