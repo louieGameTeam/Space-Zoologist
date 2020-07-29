@@ -428,7 +428,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &379368119
 MonoBehaviour:
@@ -442,7 +442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc1a1a38a0193b46956797608201aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
 --- !u!1 &387577289
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,7 +846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26fec6d600a584107a0137ea49b1dd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.3
+  WASDSpeed: 0.5
+  dragSpeed: 2
   zoomLerpSpeed: 5
 --- !u!1001 &1318458701
 PrefabInstance:
@@ -1158,7 +1158,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1466716734
 MonoBehaviour:
@@ -1447,7 +1447,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1771389580 stripped
 GameObject:
@@ -1472,6 +1472,50 @@ MonoBehaviour:
   - {fileID: 1234295343}
   - {fileID: 207607230}
   - {fileID: 492325047}
+--- !u!1 &1834079989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1834079991}
+  - component: {fileID: 1834079990}
+  m_Layer: 0
+  m_Name: LevelData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1834079990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834079989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5fddaa2072f642548f2acfc0c5f8743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
+--- !u!4 &1834079991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834079989}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 287.38754, y: 286.6964, z: -1215.698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2116678116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,8 +1547,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   populationStats: {fileID: 1757411124}
   foodSourceStats: {fileID: 475681837}
-  availableSpecies: []
-  availableFoodSourceSpecies: []
 --- !u!4 &2116678118
 Transform:
   m_ObjectHideFlags: 0
@@ -1517,7 +1559,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &849827785816954314
 PrefabInstance:
@@ -7041,7 +7083,7 @@ Transform:
   - {fileID: 1473133748668602156}
   - {fileID: 2260257884385287245}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1473133748932875491
 GameObject:
@@ -7257,6 +7299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   largestMap: {fileID: 1473133748500844471}
+  MaxWidth: 0
+  MaxHeight: 0
 --- !u!4 &6865833327336801168
 Transform:
   m_ObjectHideFlags: 0
@@ -7271,7 +7315,7 @@ Transform:
   - {fileID: 6865833327945000382}
   - {fileID: 6865833328043497282}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6865833327336801171
 GameObject:
@@ -7303,7 +7347,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PopulationPrefab: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
     type: 3}
-  levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
 --- !u!1 &6865833327658264099
 GameObject:
   m_ObjectHideFlags: 0
@@ -7349,6 +7392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   largestMap: {fileID: 1473133748500844471}
+  MaxWidth: 0
+  MaxHeight: 0
 --- !u!4 &6865833328043497282
 Transform:
   m_ObjectHideFlags: 0

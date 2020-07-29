@@ -7,11 +7,13 @@ public class NeedSystemsTester : MonoBehaviour
 
     [SerializeField] private Text populationStats = default;
     [SerializeField] private Text foodSourceStats = default;
+    [SerializeField] PopulationManager PopulationManager = default;
+    [SerializeField] FoodSourceManager FoodSourceManager = default;
 
     private void Update()
     {
         string populationStatsText = "";
-        foreach (Population population in PopulationManager.ins.Populations)
+        foreach (Population population in PopulationManager.Populations)
         {
             populationStatsText += $"***{ population.Species.SpeciesName } {population.GetInstanceID()}; Count: {population.Count}; Dominance: {population.Dominance}***\n";
             foreach (KeyValuePair<string, Need> needValue in population.Needs)
@@ -23,7 +25,7 @@ public class NeedSystemsTester : MonoBehaviour
         populationStats.text = populationStatsText;
 
         string foodSourceStatsText = "";
-        foreach (FoodSource foodSource in FoodSourceManager.ins.FoodSources)
+        foreach (FoodSource foodSource in FoodSourceManager.FoodSources)
         {
             foodSourceStatsText += $"***{ foodSource.Species.SpeciesName }; Food output: {foodSource.FoodOutput}***\n";
             foreach (KeyValuePair<string, Need> needValue in foodSource.Needs)

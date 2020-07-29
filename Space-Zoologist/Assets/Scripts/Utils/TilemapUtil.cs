@@ -10,7 +10,8 @@ public class TilemapUtil : MonoBehaviour
 
     [Header("Should hold largest tilemap")]
     [SerializeField] public Tilemap largestMap = default;
-
+    [SerializeField] public int MaxWidth = default;
+    [SerializeField] public int MaxHeight = default;
     public void Awake()
     {
         if (ins != null && this != ins)

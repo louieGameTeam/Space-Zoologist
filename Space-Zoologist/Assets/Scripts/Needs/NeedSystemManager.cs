@@ -9,25 +9,14 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
-    // Singleton
-    public static NeedSystemManager ins;
 
     public Dictionary<string, NeedSystem> Systems => systems;
 
-    [SerializeField] private LevelData levelData = default;
     private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
-
-    private void Awake()
-    {
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
-    }
+    [SerializeField] PopulationManager PopulationManager = default;
+    [SerializeField] FoodSourceManager FoodSourceManager = default;
+    [SerializeField] EnclosureSystem EnclosureSystem = default;
+    [SerializeField] LevelDataReference levelDataReference = default;
 
     /// <summary>
     /// Initialize the universal need systems
@@ -37,29 +26,27 @@ public class NeedSystemManager : MonoBehaviour
     {
         // Referrance supprot systems
         ReservePartitionManager rpm = ReservePartitionManager.ins;
-        EnclosureSystem enclosureSystem = EnclosureSystem.ins;
-        TileSystem tileSystem = FindObjectOfType<TileSystem>();
 
         // Add enviormental NeedSystem
-        AddSystem(new AtmosphereNeedSystem(enclosureSystem));
-        AddSystem(new TerrainNeedSystem(rpm, tileSystem));
+        AddSystem(new AtmosphereNeedSystem(EnclosureSystem));
+        AddSystem(new TerrainNeedSystem(rpm, TileSystem.ins));
 
         // Add new FoodSourceNeedSystem
-        foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
+        foreach (FoodSourceSpecies foodSourceSpecies in levelDataReference.LevelData.FoodSourceSpecies)
         {
             AddSystem(new FoodSourceNeedSystem(rpm, foodSourceSpecies.SpeciesName));
         }
         // Add new FoodSourceNeedSystem
-        foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
+        foreach (AnimalSpecies animalSpecies in levelDataReference.LevelData.AnimalSpecies)
         {
-            AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));    
+            AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));
         }
 
         // Add Density NeedSystem
-        AddSystem(new DensityNeedSystem(rpm, tileSystem));
+        AddSystem(new DensityNeedSystem(rpm, TileSystem.ins));
 
-        FoodSourceManager.ins.Initialize();
-        PopulationManager.ins.Initialize();
+        FoodSourceManager.Initialize();
+        PopulationManager.Initialize();
     }
 
     /// <summary>
@@ -111,7 +98,7 @@ public class NeedSystemManager : MonoBehaviour
 
     /// <summary>
     /// Update all the need system that is mark "dirty"
-    /// </summary>  
+    /// </summary>
     /// <remarks>
     /// The order of the NeedSystems' update metter,
     /// this should be their relative order(temp) :

@@ -132,7 +132,6 @@ public class PopulationDensitySystem
         Vector3Int cur;
 
         //starting location
-        //Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
         Vector3Int location = tileSystem.WorldToCell(pop.transform.position);
         stack.Push(location);
 
@@ -197,7 +196,6 @@ public class PopulationDensitySystem
         Vector3Int cur;
 
         //starting location
-        //Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
         Vector3Int location = tileSystem.WorldToCell(pop.transform.position);
         stack.Push(location);
 

@@ -23,11 +23,13 @@ public class LevelDataLoader : ScriptableObject
             Debug.Log("Species Data reloaded");
             this.ReloadData = false;
             // Parse through all level data
-            TextAsset speciesData = Resources.Load<TextAsset>(Path.Combine("Data", "Level" + Level));
+            TextAsset speciesData = Resources.Load<TextAsset>(Path.Combine("LevelData", "Level" + Level));
             string[] data = speciesData.text.Trim().Split(new char[] { '\n'});
             int currentSpeciesIndex = 0, currentFoodSourceIndex = 0, currentItemIndex = 0;
             string[] row = data[0].Trim().Split(new char[] { ',' });
-            int.TryParse(row[5], out levelData.startingBalance);
+            int temp;
+            int.TryParse(row[5], out temp);
+            levelData.startingBalance.RuntimeValue = temp;
             for (int i=1; i<data.Length; i++)
             {
                 row = data[i].Trim().Split(new char[] { ',' });

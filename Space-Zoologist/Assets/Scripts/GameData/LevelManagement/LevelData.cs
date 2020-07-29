@@ -8,13 +8,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName="LevelData", menuName="Scene Data/LevelData")]
 public class LevelData : ScriptableObject
 {
-    public int StartingBalance => startingBalance;
+    public IntVariable StartingBalance => startingBalance;
     public List<FoodSourceSpecies> FoodSourceSpecies => foodSources;
     public List<AnimalSpecies> AnimalSpecies => animalSpecies;
     public List<Item> Items => items;
     public AtmosphericComposition GlobalAtmosphere => globalAtmosphere;
 
-    [SerializeField] public int startingBalance = default;
+    [SerializeField] public IntVariable startingBalance = default;
+    [SerializeField] public int MapWidth = default;
+    [SerializeField] public int MapHeight = default;
     [Expandable] public List<FoodSourceSpecies> foodSources = default;
     [Expandable] public List<AnimalSpecies> animalSpecies = default;
     [Expandable] public List<Item> items = default;

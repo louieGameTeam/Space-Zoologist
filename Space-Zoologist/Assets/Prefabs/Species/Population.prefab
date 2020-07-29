@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5640349517002934508}
   m_Layer: 0
   m_Name: Population
-  m_TagString: Untagged
+  m_TagString: Population
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: {fileID: 0}
+  AutomotonTesting: 0
+  AnimalPopulation: []
   AnimalPrefab: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
     type: 3}
-  AnimalPopulation: []
   AnimalsBehaviorData: []
+  NeedEditorTesting: []
+  TimeSinceUpdate: 0

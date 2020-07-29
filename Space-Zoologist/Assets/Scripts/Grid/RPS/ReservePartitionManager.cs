@@ -36,17 +36,11 @@ public class ReservePartitionManager : MonoBehaviour
     // Amount of shared space with each population <id, <id, shared tiles> >
     public Dictionary<int, long[]> SharedSpaces { get; private set; }
 
-    /// <summary> A list of populations to be loaded on startup. </summary>
-    [SerializeField] List<Population> populationsOnStartUp = default;
-
-
     public Dictionary<Population, int[]> TypesOfTerrain;
 
     public Dictionary<Population, bool> PopulationAccessbilityStatus;
 
     public TerrainTile Liquid;
-
-    private TileSystem tileSystem = default;
 
     private void Awake()
     {
@@ -75,16 +69,6 @@ public class ReservePartitionManager : MonoBehaviour
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
         PopulationAccessbilityStatus = new Dictionary<Population, bool>();
-        this.tileSystem = FindObjectOfType<TileSystem>();
-    }
-
-    private void Start()
-    {
-        // Load pre-existing populations
-        foreach (Population population in populationsOnStartUp)
-        {
-            AddPopulation(population);
-        }
     }
 
     /// <summary>
@@ -163,10 +147,10 @@ public class ReservePartitionManager : MonoBehaviour
         long[] SharedTiles = new long[maxPopulation];
 
         // starting location
-        Vector3Int location = this.tileSystem.WorldToCell(population.transform.position);
+        Vector3Int location = TileSystem.ins.WorldToCell(population.transform.position);
         stack.Push(location);
 
-        TileSystem _tileSystem = this.tileSystem;
+        TileSystem _tileSystem = TileSystem.ins;
 
         // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
         while (stack.Count > 0)
@@ -322,7 +306,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = this.tileSystem.WorldToCell(toWorldPos);
+        Vector3Int mapPos = TileSystem.ins.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -374,7 +358,7 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = this.tileSystem.WorldToCell(toWorldPos);
+        Vector3Int cellPos = TileSystem.ins.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)

@@ -41,6 +41,10 @@ public class AutomatonMovement : MonoBehaviour
     // If animal walked predetermined number of tiles or animal cannot move in specified direction, update based off seed.
     public void Update()
     {
+        if (this.population == null)
+        {
+            return;
+        }
         if (this.numTilesWalked >= this.NumTiles || !TilemapUtil.ins.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
         {
             this.UpdateDirection();

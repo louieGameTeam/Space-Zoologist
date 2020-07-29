@@ -5,31 +5,32 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
+    [SerializeField] GameObject PlayerBalance = default;
+    [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
 
     public void OnToggleMenu(GameObject menu)
     {
         if (currentMenu != menu)
         {
-            //Debug.Log("In store");
-            NeedSystemUpdater.ins.isInStore = true;
-
             if (currentMenu)
             {
                 currentMenu.SetActive(false);
             }
+            this.PlayerBalance.SetActive(true);
             menu.SetActive(true);
             currentMenu = menu;
-            NeedSystemUpdater.ins.PauseAllAnimals();
+            NeedSystemUpdater.isInStore = true;
+            NeedSystemUpdater.PauseAllAnimals();
 
         }
         else
         {
-            //Debug.Log("Exit Store");
-            NeedSystemUpdater.ins.isInStore = false;
-            NeedSystemUpdater.ins.UpdateAccessibleLocations();
-            NeedSystemUpdater.ins.UnpauseAllAnimals();
+            NeedSystemUpdater.isInStore = false;
+            NeedSystemUpdater.UpdateAccessibleLocations();
+            NeedSystemUpdater.UnpauseAllAnimals();
             currentMenu = null;
             menu.SetActive(false);
+            this.PlayerBalance.SetActive(false);
         }
     }
 }

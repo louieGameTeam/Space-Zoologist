@@ -4,28 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PodMenu : MonoBehaviour
+public class PodMenu : MonoBehaviour, IValidatePlacement
 {
-    [SerializeField] LevelData levelData = default;
     [SerializeField] PopulationManager populationManager = default;
     [SerializeField] GameObject podButtonPrefab = default;
     [SerializeField] Transform PodItemContainer = default;
     [SerializeField] CursorItem cursorItem = default;
+    [SerializeField] LevelDataReference LevelDataReference = default;
+    public List<GameObject> Pods { get; set; }
     RectTransform rectTransform = default;
     AnimalSpecies selectedSpecies = null;
 
     private void Awake()
     {
+        this.Pods = new List<GameObject>();
         rectTransform = GetComponent<RectTransform>();
     }
 
     void Start()
     {
-        foreach (AnimalSpecies species in levelData.AnimalSpecies)
+        foreach (AnimalSpecies species in LevelDataReference.LevelData.AnimalSpecies)
         {
-            GameObject newPodItem = Instantiate(podButtonPrefab, PodItemContainer);
-            PodItem podItem = newPodItem.GetComponent<PodItem>();
-            podItem.Initialize(species, this);
+            this.AddPod(species);
         }
     }
 
@@ -44,13 +44,21 @@ public class PodMenu : MonoBehaviour
         }
     }
 
+    public void AddPod(AnimalSpecies species)
+    {
+        GameObject newPodItem = Instantiate(podButtonPrefab, PodItemContainer);
+        PodItem podItem = newPodItem.GetComponent<PodItem>();
+        this.Pods.Add(newPodItem);
+        podItem.Initialize(species, this);
+    }
+
     public void OnSelectSpecies(AnimalSpecies animalSpecies)
     {
         selectedSpecies = animalSpecies;
         cursorItem.Begin(animalSpecies.Icon, OnCursorItemClick);
     }
 
-    private void DeselectSpecies()
+    public void DeselectSpecies()
     {
         selectedSpecies = null;
         if (cursorItem.isActiveAndEnabled)
@@ -75,8 +83,31 @@ public class PodMenu : MonoBehaviour
         else if (pointerEventData.button == PointerEventData.InputButton.Left)
         {
             Vector2 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
+            if (!this.IsPlacementValid(position))
+            {
+                Debug.Log("Cannot place item that location");
+                return;
+            }
             populationManager.AddAnimals(selectedSpecies, 1, position);
         }
+    }
+
+    public bool IsPlacementValid(Vector3 mouseWorldPosition)
+    {
+        if (mouseWorldPosition.x >= 0 && mouseWorldPosition.y >= 0
+        && mouseWorldPosition.x <= TilemapUtil.ins.MaxWidth && mouseWorldPosition.y <= TilemapUtil.ins.MaxHeight)
+        {
+            Vector3Int mouseGridPosition = TilemapUtil.ins.WorldToCell(mouseWorldPosition);
+            TerrainTile tile = TileSystem.ins.GetTerrainTileAtLocation(mouseGridPosition);
+            foreach (TileType acceptablTerrain in this.selectedSpecies.AccessibleTerrain)
+            {
+                if (tile.type.Equals(acceptablTerrain))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private bool PointOverMenu(Vector3 point)

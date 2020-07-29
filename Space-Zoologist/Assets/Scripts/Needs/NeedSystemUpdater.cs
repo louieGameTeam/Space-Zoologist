@@ -7,27 +7,13 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemUpdater : MonoBehaviour
 {
+    [SerializeField] NeedSystemManager NeedSystemManager = default;
+    [SerializeField] PopulationManager PopulationManager = default;
     public bool isInStore { get; set; }
-
-    // Singleton
-    public static NeedSystemUpdater ins;
-
-    private void Awake()
-    {
-        isInStore = false;
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
-    }
 
     public void PauseAllAnimals()
     {
-       foreach (Population population in PopulationManager.ins.Populations)
+       foreach (Population population in PopulationManager.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -38,7 +24,7 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public void UnpauseAllAnimals()
     {
-        foreach (Population population in PopulationManager.ins.Populations)
+        foreach (Population population in PopulationManager.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -52,7 +38,7 @@ public class NeedSystemUpdater : MonoBehaviour
     public void UpdateAccessibleLocations()
     {
         ReservePartitionManager.ins.UpdateAccessMap();
-        foreach (Population population in PopulationManager.ins.Populations)
+        foreach (Population population in PopulationManager.Populations)
         {
             population.UpdateAccessibleArea();
             foreach (GameObject animal in population.AnimalPopulation)
@@ -67,7 +53,7 @@ public class NeedSystemUpdater : MonoBehaviour
     {
         if(!isInStore)
         {
-            NeedSystemManager.ins.UpdateSystems();
+            NeedSystemManager.UpdateSystems();
         }
     }
 }

@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
@@ -12,23 +10,33 @@ public class StoreSection : MonoBehaviour
 {
     public NeedType ItemType => itemType;
 
-    [Header("Characteristics")]
-    [SerializeField] private NeedType itemType = default;
-    [Header("Dependencies")]
-    [SerializeField] private GameObject itemGrid = default;
+    protected NeedType itemType = default;
+    [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
     [SerializeField] private CursorItem cursorItem = default;
-    [SerializeField] protected IntVariable playerBalance = default;
-    [SerializeField] protected RectTransform StoreMenuRectTransform = default;
+    protected IntVariable playerBalance = default;
+    [SerializeField] LevelDataReference LevelDataReference = default;
 
     protected Item selectedItem = null;
+    protected virtual void Start()
+    {
+        LevelData levelData = LevelDataReference.LevelData;
+        this.playerBalance = levelData.StartingBalance;
+        foreach (Item item in levelData.Items)
+        {
+            if (item.Type.Equals(itemType))
+            {
+                this.AddItem(item);
+            }
+        }
+    }
 
     /// <summary>
     /// Add item to the section.
     /// </summary>
     public void AddItem(Item item)
     {
-        GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid.transform);
+        GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid);
         newItemCellGO.GetComponent<StoreItemCell>().Initialize(item, OnItemSelected);
     }
 
@@ -38,6 +46,10 @@ public class StoreSection : MonoBehaviour
     /// <param name="item">The item that was selected.</param>
     public virtual void OnItemSelected(Item item)
     {
+        if (!this.CanAfford(item))
+        {
+            return;
+        }
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         selectedItem = item;
     }
@@ -49,10 +61,24 @@ public class StoreSection : MonoBehaviour
 
     public void OnCursorItemClicked(PointerEventData eventData)
     {
+        if (!this.CanAfford(this.selectedItem))
+        {
+            return;
+        }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnItemSelectionCanceled();
         }
+    }
+
+    private bool CanAfford(Item item)
+    {
+        if (item.Price > this.playerBalance.RuntimeValue)
+        {
+            OnItemSelectionCanceled();
+            return false;
+        }
+        return true;
     }
 
     /// <summary>

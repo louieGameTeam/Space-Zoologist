@@ -7,33 +7,23 @@ using UnityEngine;
 /// </summary>
 public class PopulationManager : MonoBehaviour
 {
-    // Singleton
-    public static PopulationManager ins;
-
     // FindObjectOfType<Population> to populate
     private List<Population> ExistingPopulations = new List<Population>();
     public List<Population> Populations => ExistingPopulations;
-
+    [SerializeField] public NeedSystemManager NeedSystemManager = default;
+    [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
-    [SerializeField] private LevelData levelData = default;
-
-    private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
-
-    private void Awake()
-    {
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
-    }
+    [SerializeField] public bool AutomotonTesting = false;
+    // What is this doing?
+    //private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
 
     public void Initialize()
     {
-        ExistingPopulations.AddRange(FindObjectsOfType<Population>());
+        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
+        foreach (GameObject population in populations)
+        {
+            this.ExistingPopulations.Add(population.GetComponent<Population>());
+        }
         this.UnclearFunction();
 
         foreach (Population population in this.ExistingPopulations)
@@ -46,21 +36,21 @@ public class PopulationManager : MonoBehaviour
     {
         // TODO what is this doing?
         Dictionary<string, AnimalSpecies> animalSpeciesMapping = new Dictionary<string, AnimalSpecies>();
-        if (levelData != null)
+        if (LevelDataReference.LevelData != null)
         {
             // Fill string to AnimalSpecies Dictionary
-            foreach (AnimalSpecies species in levelData.AnimalSpecies)
+            foreach (AnimalSpecies species in LevelDataReference.LevelData.AnimalSpecies)
             {
                 animalSpeciesMapping.Add(species.SpeciesName, species);
             }
         }
-        foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
-        {
-            if (animalSpeciesMapping.ContainsKey(system.NeedName))
-            {
-                speciesNeedSystems.Add(system.NeedName, (SpeciesNeedSystem)system);
-            }
-        }
+        // foreach (NeedSystem system in NeedSystemManager.ins.Systems.Values)
+        // {
+        //     if (animalSpeciesMapping.ContainsKey(system.NeedName))
+        //     {
+        //         speciesNeedSystems.Add(system.NeedName, (SpeciesNeedSystem)system);
+        //     }
+        // }
     }
 
     /// <summary>
@@ -74,7 +64,8 @@ public class PopulationManager : MonoBehaviour
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
-        population.InitializeNewPopulation(species, position, count);
+        population.AutomotonTesting = this.AutomotonTesting;
+        population.InitializeNewPopulation(species, position, count, NeedSystemManager);
         this.ExistingPopulations.Add(population);
         this.HandlePopulationRegistration(population);
     }
@@ -104,7 +95,8 @@ public class PopulationManager : MonoBehaviour
     // TODO determine what else needs to happen with an existing population
     private void SetupExistingPopulation(Population population)
     {
-        population.InitializePopulationData();
+        population.AutomotonTesting = this.AutomotonTesting;
+        population.InitializePopulationData(NeedSystemManager);
         population.InitializeExistingAnimals();
         this.HandlePopulationRegistration(population);
     }
@@ -113,7 +105,7 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         ReservePartitionManager.ins.AddPopulation(population);
-        speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
-        NeedSystemManager.ins.RegisterWithNeedSystems(population);
+        // speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
+        NeedSystemManager.RegisterWithNeedSystems(population);
     }
 }

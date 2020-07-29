@@ -55,8 +55,7 @@ public class CameraController : MonoBehaviour
             xValue = WASDSpeed;
         }
         Vector3 newPosition = new Vector3(transform.position.x + xValue, transform.position.y + yValue, -10);
-        if (newPosition.x < TilemapUtil.ins.largestMap.origin.x || newPosition.y < TilemapUtil.ins.largestMap.origin.y
-        || newPosition.x > TilemapUtil.ins.largestMap.origin.x + TilemapUtil.ins.largestMap.size.x || newPosition.y > TilemapUtil.ins.largestMap.origin.y + TilemapUtil.ins.largestMap.size.y)
+        if (!this.IsValidLocation(newPosition))
         {
             return;
         }
@@ -65,22 +64,26 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouse()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(2))
         {
             dragOrigin = Input.mousePosition;
             return;
         }
 
-        if (!Input.GetMouseButton(1)) return;
+        if (!Input.GetMouseButton(2)) return;
 
         Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
         Vector3 newPosition = new Vector3(this.transform.position.x + pos.x * dragSpeed * -1, this.transform.position.y + pos.y * dragSpeed * -1, -10);
-        if (newPosition.x < TilemapUtil.ins.largestMap.origin.x || newPosition.y < TilemapUtil.ins.largestMap.origin.y
-        || newPosition.x > TilemapUtil.ins.largestMap.origin.x + TilemapUtil.ins.largestMap.size.x || newPosition.y > TilemapUtil.ins.largestMap.origin.y + TilemapUtil.ins.largestMap.size.y)
+        if (!this.IsValidLocation(newPosition))
         {
             return;
         }
-
         this.transform.position = newPosition;
+    }
+
+    private bool IsValidLocation(Vector3 newPosition)
+    {
+        return (newPosition.x >= 0 && newPosition.y >= 0
+        && newPosition.x <= TilemapUtil.ins.MaxWidth && newPosition.y <= TilemapUtil.ins.MaxHeight);
     }
 }
