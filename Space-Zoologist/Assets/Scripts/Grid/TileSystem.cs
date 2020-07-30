@@ -8,7 +8,6 @@ public class TileSystem : MonoBehaviour
     // Singleton
     public static TileSystem ins;
 
-
     // Start is called before the first frame update
     private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;

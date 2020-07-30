@@ -101,4 +101,9 @@ public abstract class Behavior : MonoBehaviour
             Debug.Log("Callback null, behavior exited");
         }
     }
+
+    public void QuitBehavior()
+    {
+        this.enabled = false;
+    }
 }

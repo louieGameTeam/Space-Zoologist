@@ -7,34 +7,14 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemUpdater : MonoBehaviour
 {
+    [SerializeField] NeedSystemManager NeedSystemManager = default;
+    [SerializeField] PopulationManager PopulationManager = default;
+    [SerializeField] NeedSystemsTester needSystemsTester = default;
     public bool isInStore { get; set; }
-
-    // Singleton
-    public static NeedSystemUpdater ins;
-
-    private NeedSystemsTester NSTester = default;  
-
-    private void Awake()
-    {
-        isInStore = false;
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
-    }
-
-    private void Start()
-    {
-        this.NSTester = FindObjectOfType<NeedSystemsTester>();
-    }
 
     public void PauseAllAnimals()
     {
-       foreach (Population population in PopulationManager.ins.Populations)
+       foreach (Population population in PopulationManager.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -45,7 +25,7 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public void UnpauseAllAnimals()
     {
-        foreach (Population population in PopulationManager.ins.Populations)
+        foreach (Population population in PopulationManager.Populations)
         {
             foreach (GameObject animal in population.AnimalPopulation)
             {
@@ -58,16 +38,16 @@ public class NeedSystemUpdater : MonoBehaviour
     // if the population location is no longer on accessible area?
     public void UpdateAccessibleLocations()
     {
-        // TODO: temply commented out
-        //ReservePartitionManager.ins.UpdateAccessMap();
-        //foreach (Population population in PopulationManager.ins.Populations)
-        //{
-        //    population.UpdateAccessibleArea();
-        //    foreach (GameObject animal in population.AnimalPopulation)
-        //    {
-        //        animal.GetComponent<Animal>().ResetBehavior();
-        //    }
-        //}
+
+        ReservePartitionManager.ins.UpdateAccessMap();
+        foreach (Population population in PopulationManager.Populations)
+        {
+            population.UpdateAccessibleArea();
+            foreach (GameObject animal in population.AnimalPopulation)
+            {
+                animal.GetComponent<Animal>().ResetBehavior();
+            }
+        }
     }
 
     // Temp update
@@ -75,9 +55,9 @@ public class NeedSystemUpdater : MonoBehaviour
     {
         if(!isInStore)
         {
-            NeedSystemManager.ins.UpdateSystems();
+            NeedSystemManager.UpdateSystems();
         }
 
-        this.NSTester.Update();
+        this.needSystemsTester.Update();
     }
 }

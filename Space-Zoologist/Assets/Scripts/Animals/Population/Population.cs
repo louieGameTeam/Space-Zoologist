@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
+// TODO figure out how to refactor the MarkNeedsDirty so that NeedSystemManager isn't a dependency
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
 public class Population : MonoBehaviour, Life
 {
-    [SerializeField] private AnimalSpecies species = default;
+    [Expandable] public AnimalSpecies species = default;
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;
@@ -19,6 +20,8 @@ public class Population : MonoBehaviour, Life
     // TODO when accessible locations becomes nothing, add a warning so the player can respond.
     public List<Vector3Int> AccessibleLocations { get; private set; }
     public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
+    // TODO remove this and all dependencies once framework in place, add as actual movement
+    public bool AutomotonTesting { get; set; }
 
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
@@ -31,6 +34,7 @@ public class Population : MonoBehaviour, Life
 
     private Vector3 origin = Vector3.zero;
     private GrowthCalculator GrowthCalculator = new GrowthCalculator();
+    private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
 
     private void Awake()
@@ -45,8 +49,9 @@ public class Population : MonoBehaviour, Life
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
     ///  TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager)
     {
+        this.NeedSystemManager = needSystemManager;
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
@@ -56,15 +61,16 @@ public class Population : MonoBehaviour, Life
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
-        this.InitializePopulationData();
+        this.InitializePopulationData(needSystemManager);
     }
 
     // Can be initialized at runtime if the species is defined or later when a pod is used
     /// <summary>
     /// Adds populations to rpm, gets accessible locations, gets behaviors scripts, and adds needs
     /// </summary>
-    public void InitializePopulationData()
+    public void InitializePopulationData(NeedSystemManager needSystemManager)
     {
+        this.NeedSystemManager = needSystemManager;
         ReservePartitionManager.ins.AddPopulation(this);
         this.UpdateAccessibleArea();
         this.CurrentBehaviors = new List<BehaviorScriptName>();
@@ -144,6 +150,12 @@ public class Population : MonoBehaviour, Life
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
+        // TODO remove when behavior framework setup
+        if (this.AutomotonTesting)
+        {
+            Debug.Log("Automotan activated");
+            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
+        }
         AnimalPopulation.Add(newAnimal);
         this.MarkNeedsDirty();
     }
@@ -155,9 +167,16 @@ public class Population : MonoBehaviour, Life
         {
             if (need.NeedType != NeedType.Atmosphere && need.NeedType != NeedType.Terrain)
             {
-                NeedSystemManager.ins.Systems[need.NeedType].MarkAsDirty();
+                this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
             }
         }
+        // Debug.Log("Current Need Systems: ");
+        // foreach(KeyValuePair<string, NeedSystem> needSystem in NeedSystemManager.ins.Systems)
+        // {
+        //     Debug.Log(needSystem.Key);
+        // }
+        // Debug.Log("Attempting to add: " + this.species.SpeciesName);
+        this.NeedSystemManager.Systems[NeedType.Species].MarkAsDirty();
     }
 
     // TODO remove using PoolingSystem
@@ -203,6 +222,11 @@ public class Population : MonoBehaviour, Life
         this.AnimalsBehaviorData.Add(new BehaviorsData());
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
+        if (this.AutomotonTesting)
+        {
+            Debug.Log("Automotan activated");
+            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
+        }
         AnimalPopulation.Add(newAnimal);
     }
 

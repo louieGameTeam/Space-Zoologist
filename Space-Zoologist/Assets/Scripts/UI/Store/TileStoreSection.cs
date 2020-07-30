@@ -8,16 +8,23 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class TileStoreSection : StoreSection
 {
-    [Header("Tile Store Section")]
-    [SerializeField] TilePlacementController tilePlacementController = default;
+    [SerializeField] private TilePlacementController tilePlacementController = default;
+    [Header("Only needed if tutorial level")]
+    [SerializeField] private TutorialTesting tutorial = default;
 
-    private int startingBalance = 0;
+    private IntVariable startingBalance;
     private bool isPlacing = false;
     private int numTilesPlaced = 0;
 
     private void Awake()
     {
-        startingBalance = base.playerBalance.RuntimeValue;
+        base.itemType = NeedType.Terrain;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        Debug.Assert(tilePlacementController != null);
     }
 
     /// <summary>
@@ -27,7 +34,7 @@ public class TileStoreSection : StoreSection
     {
         numTilesPlaced = 0;
         isPlacing = true;
-        startingBalance = base.playerBalance.RuntimeValue;
+        startingBalance = base.playerBalance;
         tilePlacementController.StartPreview(selectedItem.ID);
     }
 
@@ -38,7 +45,7 @@ public class TileStoreSection : StoreSection
     {
         isPlacing = false;
         tilePlacementController.RevertChanges();
-        base.playerBalance.RuntimeValue = startingBalance;
+        base.playerBalance = startingBalance;
     }
 
     /// <summary>
@@ -48,7 +55,11 @@ public class TileStoreSection : StoreSection
     {
         isPlacing = false;
         tilePlacementController.StopPreview();
-        playerBalance.RuntimeValue = startingBalance - numTilesPlaced * selectedItem.Price;
+        playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
+        if (tutorial != null)
+        {
+            tutorial.TriggerDialogueOnce();
+        }
     }
 
     /// <summary>
@@ -95,7 +106,7 @@ public class TileStoreSection : StoreSection
          if (isPlacing)
          {
             numTilesPlaced = tilePlacementController.PlacedTileCount();
-            playerBalance.RuntimeValue = startingBalance - numTilesPlaced * selectedItem.Price;
+            playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
          }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TilePlacementController : MonoBehaviour
+public class TilePlacementController : MonoBehaviour, IValidatePlacement
 {
     public bool isBlockMode { get; set; } = false;
     public Vector3Int mouseCellPosition { get { return currentMouseCellPosition; } }
@@ -27,15 +27,12 @@ public class TilePlacementController : MonoBehaviour
     private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
-    private TileSystem tileSystem;
     private int lastCornerX;
     private int lastCornerY;
 
     private void Awake()
     {
         terrainTiles = Resources.LoadAll("Tiles",typeof(TerrainTile)).Cast<TerrainTile>().ToArray(); // Load tiles form resources
-        tileSystem = FindObjectOfType<TileSystem>();
-        grid = GetComponent<Grid>();
         foreach (TerrainTile terrainTile in terrainTiles)// Construct list of tiles and their corresponding layers
         {
             terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
@@ -66,11 +63,21 @@ public class TilePlacementController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        grid = GetComponent<Grid>();
+    }
+
     void Update()
     {
         if (isPreviewing) // Update for preview
         {
             Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+            if (!IsPlacementValid(mouseWorldPosition))
+            {
+                Debug.Log("Cannot place item that location");
+                return;
+            }
             currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
             if (currentMouseCellPosition != lastMouseCellPosition || isFirstTile)
             {
@@ -87,12 +94,22 @@ public class TilePlacementController : MonoBehaviour
         }
     }
 
+    public bool IsPlacementValid(Vector3 mouseWorldPosition)
+    {
+        return (mouseWorldPosition.x <= TilemapUtil.ins.MaxWidth && mouseWorldPosition.x >= 0 && mouseWorldPosition.y <= TilemapUtil.ins.MaxHeight && mouseWorldPosition.y >= 0);
+    }
+
     /// <summary>
     /// Start tile placement preview.
     /// </summary>
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
     public void StartPreview(string tileID)
     {
+        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+        if (!IsPlacementValid(mouseWorldPosition))
+        {
+            return;
+        }
         if (!Enum.IsDefined(typeof(TileType), tileID))
         {
             throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
@@ -105,7 +122,6 @@ public class TilePlacementController : MonoBehaviour
                 referencedTiles.Add(tile);
             }
         }
-        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
     }
@@ -196,7 +212,7 @@ public class TilePlacementController : MonoBehaviour
                     {
                         foreach (TerrainTile managedTile in tileColorManager.managedTiles)
                         {
-                            foreach (Vector3Int affectedTileLocation in tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
+                            foreach (Vector3Int affectedTileLocation in TileSystem.ins.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
                             {
                                 tileColorManager.SetTileColor(affectedTileLocation, managedTile);
                             }
@@ -381,7 +397,7 @@ public class TilePlacementController : MonoBehaviour
             }
 
             // Terrain changed, mark TerrainNS dirty
-            NeedSystemManager.ins.Systems[NeedType.Terrain].MarkAsDirty();
+            //NeedSystemManager.ins.Systems[NeedType.Terrain].MarkAsDirty();
 
             return true;
         }

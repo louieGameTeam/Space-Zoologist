@@ -7,39 +7,24 @@ using UnityEngine;
 /// </summary>
 public class PopulationManager : MonoBehaviour
 {
-    // Singleton
-    public static PopulationManager ins;
-    public List<Population> Populations => ExistingPopulations;
-
     // FindObjectOfType<Population> to populate
     private List<Population> ExistingPopulations = new List<Population>();
-
+    public List<Population> Populations => ExistingPopulations;
+    [SerializeField] public NeedSystemManager NeedSystemManager = default;
+    [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
+    [SerializeField] public bool AutomotonTesting = false;
+    // What is this doing?
+    //private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
 
-    // Hold all the SpeciesNS for later
-    // to add new pop as consumed source
-    private SpeciesNeedSystem speciesNeedSystem = default;
-
-    private void Awake()
-    {
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
-    }
-
-    /// <summary>
-    /// Manual set up, to be called after NSManager is initalized
-    /// </summary>
     public void Initialize()
     {
-        ExistingPopulations.AddRange(FindObjectsOfType<Population>());
+        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
+        foreach (GameObject population in populations)
+        {
+            this.ExistingPopulations.Add(population.GetComponent<Population>());
+        }
 
-        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.ins.Systems[NeedType.Species];
 
         foreach (Population population in this.ExistingPopulations)
         {
@@ -60,7 +45,8 @@ public class PopulationManager : MonoBehaviour
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
-        population.InitializeNewPopulation(species, position, count);
+        population.AutomotonTesting = this.AutomotonTesting;
+        population.InitializeNewPopulation(species, position, count, NeedSystemManager);
         this.ExistingPopulations.Add(population);
         
         this.HandlePopulationRegistration(population);
@@ -91,7 +77,8 @@ public class PopulationManager : MonoBehaviour
     // TODO determine what else needs to happen with an existing population
     private void SetupExistingPopulation(Population population)
     {
-        population.InitializePopulationData();
+        population.AutomotonTesting = this.AutomotonTesting;
+        population.InitializePopulationData(NeedSystemManager);
         population.InitializeExistingAnimals();
         this.HandlePopulationRegistration(population);
     }
@@ -100,7 +87,8 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         ReservePartitionManager.ins.AddPopulation(population);
-        this.speciesNeedSystem.AddPopulation(population);
-        NeedSystemManager.ins.RegisterWithNeedSystems(population);
+
+        // speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
+        NeedSystemManager.RegisterWithNeedSystems(population);
     }
 }
