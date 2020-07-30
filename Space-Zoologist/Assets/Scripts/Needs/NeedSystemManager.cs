@@ -39,8 +39,8 @@ public class NeedSystemManager : MonoBehaviour
         TileSystem tileSystem = TileSystem.ins;
 
         // Add enviormental NeedSystem
-        AddSystem(new AtmosphereNeedSystem(enclosureSystem));
         AddSystem(new TerrainNeedSystem(rpm, tileSystem));
+        AddSystem(new AtmosphereNeedSystem(enclosureSystem));
         AddSystem(new LiquidNeedSystem(tileSystem));
 
         // FoodSource and Species NS
@@ -119,6 +119,10 @@ public class NeedSystemManager : MonoBehaviour
         {
             ReservePartitionManager.ins.PopulationAccessbilityStatus[pop] = false;
         }
+
+        // Reset food source accessibility status
+        // Note: this is the ideal place to do it be will need a equivilant of PopulationAccessbilityStatus in RPM
+        FoodSourceManager.ins.UpdateAccessibleTerrainInfoForAll();
     }
 
 }

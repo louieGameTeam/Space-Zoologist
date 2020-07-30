@@ -13,7 +13,8 @@ abstract public class NeedSystem
     public NeedType NeedType { get; private set; }
     public bool IsDirty => this.isDirty;
 
-    protected bool isDirty = default;
+    // Dirty flag is on to force intial update
+    protected bool isDirty = true;
     protected List<Life> Consumers = new List<Life>();
 
     public NeedSystem(NeedType needType)

@@ -92,6 +92,8 @@ public class FoodSourceNeedSystem : NeedSystem
         }
 
         this.foodSourceCalculators[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
+
+        this.isDirty = true;
     }
 
     public override void AddConsumer(Life life)
@@ -112,6 +114,8 @@ public class FoodSourceNeedSystem : NeedSystem
                 this.foodSourceCalculators[need.NeedName].AddConsumer((Population)life);
             }
         }
+
+        this.isDirty = true;
     }
 
     public override bool RemoveConsumer(Life life)
@@ -124,6 +128,8 @@ public class FoodSourceNeedSystem : NeedSystem
                 Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoverConsumer((Population)life), "Remove conumer failed!");
             }
         }
+
+        this.isDirty = true;
 
         return true;
     }

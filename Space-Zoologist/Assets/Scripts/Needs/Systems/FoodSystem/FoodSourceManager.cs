@@ -73,4 +73,16 @@ public class FoodSourceManager : MonoBehaviour
     {
         CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
     }
+
+    /// <summary>
+    /// Update accessible terrain info for all food sources,
+    /// called when all NS updates are done
+    /// </summary>
+    public void UpdateAccessibleTerrainInfoForAll()
+    {
+        foreach (FoodSource foodSource in this.foodSources)
+        {
+            foodSource.UpdateAccessibleTerrainInfo();
+        }
+    }
 }

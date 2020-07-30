@@ -71,6 +71,8 @@ public class SpeciesNeedSystem : NeedSystem
         }
 
         this.speciesCalculators[population.Species.SpeciesName].AddPopulation(population);
+
+        this.isDirty = true;
     }
 
     public override void AddConsumer(Life life)
@@ -91,6 +93,8 @@ public class SpeciesNeedSystem : NeedSystem
                 this.speciesCalculators[need.NeedName].AddConsumer((Population)life);
             }
         }
+
+        this.isDirty = true;
     }
 
     public override void UpdateSystem()

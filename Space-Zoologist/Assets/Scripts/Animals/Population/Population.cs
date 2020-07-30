@@ -195,7 +195,7 @@ public class Population : MonoBehaviour, Life
     public void UpdateGrowthConditions()
     {
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
-        Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
+        //Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
     private void TestAddAnimal()

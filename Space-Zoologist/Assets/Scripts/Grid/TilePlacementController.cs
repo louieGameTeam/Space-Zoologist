@@ -379,6 +379,10 @@ public class TilePlacementController : MonoBehaviour
                     lastPlacedTile = cellLocation;
                     isFirstTile = false;
             }
+
+            // Terrain changed, mark TerrainNS dirty
+            NeedSystemManager.ins.Systems[NeedType.Terrain].MarkAsDirty();
+
             return true;
         }
         else

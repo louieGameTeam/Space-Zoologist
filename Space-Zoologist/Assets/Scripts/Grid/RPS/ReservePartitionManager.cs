@@ -257,13 +257,19 @@ public class ReservePartitionManager : MonoBehaviour
             UnaffectedID.Add(PopulationToID[population]);
         }
 
-        foreach (Vector3Int position in positions) {
-            if (!AccessMap.ContainsKey(position)) {
+        foreach (Vector3Int position in positions)
+        {
+            if (!AccessMap.ContainsKey(position))
+            {
                 continue;
-            } else {
+            }
+            else
+            {
                 long mask = AccessMap[position];
-                for (int i = 0; i < UnaffectedID.Count; i++) {
-                    if (((mask >> UnaffectedID[i]) & 1L) == 1L) {
+                for (int i = 0; i < UnaffectedID.Count; i++)
+                {
+                    if (((mask >> UnaffectedID[i]) & 1L) == 1L)
+                    {
                         AffectedPopulations.Add(PopulationByID[UnaffectedID[i]]);
                         UnaffectedID.RemoveAt(i);
                     }
@@ -272,7 +278,8 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         // Most intuitive implementation: recalculate map for all affected populations
-        foreach (Population population in AffectedPopulations) {
+        foreach (Population population in AffectedPopulations)
+        {
             CleanupAccessMap(PopulationToID[population]);
             GenerateMap(population);
         }
