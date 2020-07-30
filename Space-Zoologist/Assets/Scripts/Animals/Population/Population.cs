@@ -21,7 +21,6 @@ public class Population : MonoBehaviour, Life
     public List<Vector3Int>  AccessibleLocations { get; private set; }
     public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
     // TODO remove this and all dependencies once framework in place, add as actual movement
-    public bool AutomotonTesting { get; set; }
 
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
@@ -33,13 +32,14 @@ public class Population : MonoBehaviour, Life
     [SerializeField] private List<Need> NeedEditorTesting = default;
 
     private Vector3 origin = Vector3.zero;
-    private GrowthCalculator GrowthCalculator = new GrowthCalculator();
+    private GrowthCalculator GrowthCalculator = default;
     private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
 
     private void Awake()
     {
         this.CurrentBehaviors = new List<BehaviorScriptName>();
+        this.GrowthCalculator = new GrowthCalculator();
     }
 
     /// <summary>
@@ -150,12 +150,6 @@ public class Population : MonoBehaviour, Life
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        // TODO remove when behavior framework setup
-        if (this.AutomotonTesting)
-        {
-            Debug.Log("Automotan activated");
-            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
-        }
         AnimalPopulation.Add(newAnimal);
         this.MarkNeedsDirty();
     }
@@ -222,11 +216,6 @@ public class Population : MonoBehaviour, Life
         this.AnimalsBehaviorData.Add(new BehaviorsData());
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
-        if (this.AutomotonTesting)
-        {
-            Debug.Log("Automotan activated");
-            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
-        }
         AnimalPopulation.Add(newAnimal);
     }
 
@@ -257,9 +246,9 @@ public class Population : MonoBehaviour, Life
         {
             this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
         }
-        this.UpdateNeeds();
         if (this.GrowthCalculator != null)
         {
+            this.UpdateNeeds();
             this.UpdateGrowthConditions();
         }
     }

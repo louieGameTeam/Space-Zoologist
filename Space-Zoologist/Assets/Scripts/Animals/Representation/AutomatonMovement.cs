@@ -12,7 +12,7 @@ public class AutomatonMovement : MonoBehaviour
     [SerializeField] int NumTiles = 3;
     [SerializeField] int MaxNumTiles = 6;
     private MovementController movementController = default;
-    private int numTilesWalked = 0;
+    private int numTilesMoved = 0;
 
     private Population population = default;
     private List<int> DirectionSeed = default;
@@ -45,51 +45,66 @@ public class AutomatonMovement : MonoBehaviour
         {
             return;
         }
-        if (this.numTilesWalked >= this.NumTiles || !TilemapUtil.ins.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
+        if (this.numTilesMoved >= this.NumTiles || !this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
         {
-            this.UpdateDirection();
+            if (!this.TryToUpdateDirection())
+            {
+                this.movementController.StandStill();
+                return;
+            }
             this.UpdateTilesToMove();
         }
-        this.UpdateNumTilesWalked();
+        this.UpdateNumTilesMoved();
         this.movementController.MoveInDirection(this.CurrentDirection);
     }
 
 
-    private void UpdateNumTilesWalked()
+    private void UpdateNumTilesMoved()
     {
         AnimalPathfinding.Node currentTile = TilemapUtil.ins.CellToGrid(TilemapUtil.ins.WorldToCell(this.transform.position), population.grid);
         if (this.previousTile != currentTile)
         {
             this.previousTile = currentTile;
-            this.numTilesWalked++;
+            this.numTilesMoved++;
         }
     }
 
     // Keep track of CurrentSeedIndex, iterate through seed (looping back around)
-    // until a direction is found
-    private void UpdateDirection()
+    // until a direction is found or no viable direction can be found
+    private bool TryToUpdateDirection()
     {
         int count = 0;
-        CurrentDirectionSeedIndex++;
-        if (CurrentDirectionSeedIndex == 8)
+        CurrentDirectionSeedIndex = IncrementSeedIndex(CurrentDirectionSeedIndex);
+        while (!this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
         {
-            CurrentDirectionSeedIndex = 0;
-        }
-        while (!TilemapUtil.ins.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
-        {
-            CurrentDirectionSeedIndex++;
-            if (CurrentDirectionSeedIndex == 8)
-            {
-                CurrentDirectionSeedIndex = 0;
-            }
+            CurrentDirectionSeedIndex = IncrementSeedIndex(CurrentDirectionSeedIndex);
             count++;
             if (count > 8)
             {
-                Debug.Log("Animal unable to move");
                 break;
             }
         }
-        this.CurrentDirection = (Direction)DirectionSeed[CurrentDirectionSeedIndex];
+        // nowhere for the animal to move
+        if (count > 8)
+        {
+            this.CurrentDirection = Direction.down;
+            return false;
+        }
+        else
+        {
+            this.CurrentDirection = (Direction)DirectionSeed[CurrentDirectionSeedIndex];
+            return true;
+        }
+    }
+
+    private int IncrementSeedIndex(int currentDirectionSeedIndex)
+    {
+        currentDirectionSeedIndex++;
+        if (currentDirectionSeedIndex == 8)
+        {
+            currentDirectionSeedIndex = 0;
+        }
+        return currentDirectionSeedIndex;
     }
 
     private void UpdateTilesToMove()
@@ -100,7 +115,7 @@ public class AutomatonMovement : MonoBehaviour
             this.TilesMovedIndex = 0;
         }
         this.NumTiles = this.TilesToMoveSeed[this.TilesMovedIndex];
-        this.numTilesWalked = 0;
+        this.numTilesMoved = 0;
     }
 
     private List<int> GenerateDirectionSeed()
@@ -131,5 +146,61 @@ public class AutomatonMovement : MonoBehaviour
             }
         }
         return seed.ToList();
+    }
+
+    // Using direction, starting location, and grid, determine if the next spot on the grid is accessible
+    public bool DirectionAllowed(Direction direction, Vector3 startingLocation, AnimalPathfinding.Grid grid)
+    {
+        bool isAllowed = false;
+        AnimalPathfinding.Node currentSpot = TilemapUtil.ins.CellToGrid(TilemapUtil.ins.WorldToCell(startingLocation), grid);
+        if (currentSpot == null)
+        {
+            // Debug.Log("Node outside of range");
+            return false;
+        }
+        switch(direction)
+        {
+            case Direction.up:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX, currentSpot.gridY + 1);
+                break;
+            }
+            case Direction.down:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX, currentSpot.gridY - 1);
+                break;
+            }
+            case Direction.left:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY);
+                break;
+            }
+            case Direction.right:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY);
+                break;
+            }
+            case Direction.upRight:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY + 1);
+                break;
+            }
+            case Direction.upLeft:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY + 1);
+                break;
+            }
+            case Direction.downRight:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY - 1);
+                break;
+            }
+            case Direction.downLeft:
+            {
+                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY - 1);
+                break;
+            }
+        }
+        return isAllowed;
     }
 }

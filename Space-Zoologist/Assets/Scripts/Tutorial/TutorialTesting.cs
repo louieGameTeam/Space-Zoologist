@@ -62,7 +62,6 @@ public class TutorialTesting : MonoBehaviour
         }
         else if (!this.Triggers[3] && PopulationManager.Populations.Count == 2)
         {
-            PopulationManager.Populations[1].AutomotonTesting = true;
             this.podMenu.DeselectSpecies();
             this.Triggers[3] = true;
             this.podMenu.Pods[1].SetActive(false);

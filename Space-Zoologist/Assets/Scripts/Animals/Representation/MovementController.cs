@@ -72,6 +72,11 @@ public class MovementController : MonoBehaviour
 
     public void MoveInDirection(Direction direction)
     {
+        if (IsPaused)
+        {
+            this.Animal.BehaviorsData.MovementStatus = Movement.idle;
+            return;
+        }
         Vector3 vectorDirection = new Vector3(0, 0, 0);
         float speed = this.Animal.BehaviorsData.Speed * Time.deltaTime;
         switch(direction)
@@ -119,6 +124,12 @@ public class MovementController : MonoBehaviour
         }
         this.UpdateVisualLogic(vectorDirection);
         this.transform.position = vectorDirection;
+    }
+
+    public void StandStill()
+    {
+        this.Animal.BehaviorsData.MovementStatus = Movement.idle;
+        this.Animal.BehaviorsData.CurrentDirection = Direction.down;
     }
 
     // Can modify pointReachedOffset to have more precise movement towards each destination point

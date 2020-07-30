@@ -288,12 +288,12 @@ public class ReservePartitionManager : MonoBehaviour
             //Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
             if (CanAccess(population, position.Key))
             {
-                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = true;
+                tileGrid[position.Key.x, position.Key.y] = true;
                 // Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
             }
             else
             {
-                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = false;
+                tileGrid[position.Key.x, position.Key.y] = false;
             }
         }
         return new AnimalPathfinding.Grid(tileGrid);
