@@ -328,9 +328,9 @@ public class TileSystem : MonoBehaviour
     {
         int[] typesOfTileWithinRadius = new int[(int)TileType.TypesOfTiles];
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        foreach (int x in GridUtils.Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            foreach (int y in GridUtils.Range(-scanRange, scanRange))
             {
                 float distance = Mathf.Sqrt(x * x + y * y);
                 if (distance > scanRange)
@@ -338,8 +338,8 @@ public class TileSystem : MonoBehaviour
                     continue;
                 }
                 
-                scanLocation.x = x;
-                scanLocation.y = y;
+                scanLocation.x = x + centerCellLocation.x;
+                scanLocation.y = y + centerCellLocation.y;
 
                 TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
                 if (tile)
@@ -362,9 +362,9 @@ public class TileSystem : MonoBehaviour
         List<float[]> liquidCompositions = new List<float[]>();
 
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        foreach (int x in GridUtils.Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            foreach (int y in GridUtils.Range(-scanRange, scanRange))
             {
                 float distance = Mathf.Sqrt(x * x + y * y);
                 if (distance > scanRange)
@@ -372,17 +372,21 @@ public class TileSystem : MonoBehaviour
                     continue;
                 }
 
-                scanLocation.x = x;
-                scanLocation.y = y;
+                scanLocation.x = x + centerCellLocation.x;
+                scanLocation.y = y + centerCellLocation.y;
 
                 TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
-                if (tile.type == TileType.Liquid)
-                {
-                    float[] composition = this.GetTileContentsAtLocation(scanLocation, tile);
 
-                    if (!liquidCompositions.Contains(composition))
+                if (tile)
+                {
+                    if (tile.type == TileType.Liquid)
                     {
-                        liquidCompositions.Add(composition);
+                        float[] composition = this.GetTileContentsAtLocation(scanLocation, tile);
+
+                        if (!liquidCompositions.Contains(composition))
+                        {
+                            liquidCompositions.Add(composition);
+                        }
                     }
                 }
             }
