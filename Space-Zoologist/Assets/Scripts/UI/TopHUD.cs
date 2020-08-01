@@ -9,8 +9,14 @@ using UnityEngine.UI;
 public class TopHUD : MonoBehaviour
 {
     // Shared scriptable object variable holding the current player balance.
-    [SerializeField] private IntVariable playerBalance = default;
+    private IntVariable playerBalance = default;
     [SerializeField] private Text playerBalanceText = default;
+    [SerializeField] LevelDataReference LevelDataReference = default;
+
+    private void Start()
+    {
+        this.playerBalance = LevelDataReference.LevelData.StartingBalance;
+    }
 
     private void Update()
     {

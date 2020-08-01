@@ -23,6 +23,8 @@ public class FoodSource: MonoBehaviour, Life
     private float goodMultiplier = 1.0f;
 
     private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
+    private bool hasAccessibleTerrainChanged = default;
+    private bool hasAccessibleTerrainChecked = default;
 
     private void Awake()
     {
@@ -101,16 +103,51 @@ public class FoodSource: MonoBehaviour, Life
         return this.gameObject.transform.position;
     }
 
+    /// <summary>
+    /// Checks accessible terrain info, ie terrain tile composition
+    /// </summary>
+    /// <remarks>
+    /// Actual checking will only be done once per universial NS update loop,
+    /// since terrain will not change during that time
+    /// </remarks>
+    /// <returns>True is accessible terrain had changed, false otherwise</returns>
     public bool GetAccessibilityStatus()
     {
+        // Return result if have checked
+        if (this.hasAccessibleTerrainChecked)
+        {
+            return this.hasAccessibleTerrainChanged;
+        }
+
         var preTerrain = this.accessibleTerrian;
         var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
 
+        // Accessible terrain had changed
         if(!preTerrain.SequenceEqual(curTerrain))
         {
-            this.accessibleTerrian = curTerrain;
+            this.hasAccessibleTerrainChanged = true;
+            this.hasAccessibleTerrainChecked = true;
+        }
+        else
+        {
+            this.hasAccessibleTerrainChecked = true;
         }
 
-        return false;
+        return this.hasAccessibleTerrainChanged;
+    }
+
+    /// <summary>
+    /// Updates the accessible terrain info
+    /// </summary>
+    public void UpdateAccessibleTerrainInfo()
+    {
+        if (this.hasAccessibleTerrainChanged)
+        {
+            this.accessibleTerrian = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        }
+
+        // Reset flags
+        this.hasAccessibleTerrainChecked = false;
+        this.hasAccessibleTerrainChanged = false;
     }
 }

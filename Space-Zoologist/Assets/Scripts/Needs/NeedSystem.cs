@@ -10,18 +10,16 @@ using System.Linq;
 /// </summary>
 abstract public class NeedSystem
 {
-    public string NeedName { get; private set; }
+    public NeedType NeedType { get; private set; }
     public bool IsDirty => this.isDirty;
 
-    protected bool isDirty = default;
+    // Dirty flag is on to force intial update
+    protected bool isDirty = true;
     protected List<Life> Consumers = new List<Life>();
 
-    // Accessiblity dirty flag
-    protected Dictionary<Life, bool> ConsumerAccessiblityStatus = new Dictionary<Life, bool>();
-
-    public NeedSystem(string needName)
+    public NeedSystem(NeedType needType)
     {
-        NeedName = needName;
+        NeedType = needType;
     }
 
     /// <summary>
@@ -37,11 +35,6 @@ abstract public class NeedSystem
     {
         this.isDirty = true;
         this.Consumers.Add(life);
-
-        if (!this.ConsumerAccessiblityStatus.ContainsKey(life))
-        {
-            this.ConsumerAccessiblityStatus.Add(life, false);
-        }
     }
 
     virtual public bool RemoveConsumer(Life life)

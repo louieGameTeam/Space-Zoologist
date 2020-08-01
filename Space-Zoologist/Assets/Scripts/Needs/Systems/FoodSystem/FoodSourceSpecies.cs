@@ -10,7 +10,9 @@ public class FoodSourceSpecies : ScriptableObject
     public int RootRadius => rootRadius;
     public int BaseOutput => baseOutput;
     public Item FoodSourceItem => FoodSource;
+    public List<TileType> AccessibleTerrain => accessibleTerrain;
 
+    [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private string speciesName = default;
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int baseOutput = default;

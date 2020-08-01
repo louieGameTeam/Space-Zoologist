@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
+/// <summary>
+/// Calculates food distribution of a certain food type
+/// </summary>
 public class FoodSourceCalculator 
 {
     public string FoodSourceName => this.foodSourceName;
@@ -166,6 +170,16 @@ public class FoodSourceCalculator
         this.isDirty = true;
     }
 
+    public bool RemoveFoodSource(FoodSource foodSource)
+    {
+        this.isDirty = true;
+
+        Debug.Assert(!this.foodSources.Remove(foodSource), "FoodSource removal failure");
+        Debug.Assert(!this.populationsWithAccess.Remove(foodSource), "Removal of foodsource in populationsWithAccess failed!");
+
+        return true;
+    }
+
     public void AddConsumer(Population population)
     {
         if (this.consumers.Contains(population))
@@ -193,6 +207,9 @@ public class FoodSourceCalculator
     {
         this.isDirty = true;
 
-        return this.consumers.Remove(population);
+        Debug.Assert(!this.consumers.Remove(population), "Consumer removal failure");
+        Debug.Assert(!this.accessibleFoodSources.Remove(population), "Removal of consumer in AccessibleFoodSources failed!");
+
+        return true;
     }
 }

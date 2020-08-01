@@ -17,7 +17,7 @@ public class SpeciesNeedSystem : NeedSystem
     // Species name to food calculators
     private Dictionary<string, SpeciesCalculator> speciesCalculators = new Dictionary<string, SpeciesCalculator>();
 
-    public SpeciesNeedSystem(ReservePartitionManager rpm, string needName = "Species") : base(needName)
+    public SpeciesNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.Species) : base(needType)
     {
         this.rpm = rpm;
     }
@@ -71,6 +71,8 @@ public class SpeciesNeedSystem : NeedSystem
         }
 
         this.speciesCalculators[population.Species.SpeciesName].AddPopulation(population);
+
+        this.isDirty = true;
     }
 
     public override void AddConsumer(Life life)
@@ -78,7 +80,7 @@ public class SpeciesNeedSystem : NeedSystem
         foreach (Need need in life.GetNeedValues().Values)
         {
             // Check if the need is a 'FoodSource' type
-            if (need.NeedType == "Species")
+            if (need.NeedType == NeedType.FoodSource)
             {
                 // Create a food source calculator for this food source,
                 // if not already exist
@@ -91,6 +93,8 @@ public class SpeciesNeedSystem : NeedSystem
                 this.speciesCalculators[need.NeedName].AddConsumer((Population)life);
             }
         }
+
+        this.isDirty = true;
     }
 
     public override void UpdateSystem()

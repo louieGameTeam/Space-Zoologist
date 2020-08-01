@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-// TODO: have consumer take food one after another
-// TODO: have a way to determine if a full reset of the accessible list
-
+/// <summary>
+/// Handles neeed value updates of all the `FoodSource` type need
+/// </summary>
 public class FoodSourceNeedSystem : NeedSystem
 {
     //private List<FoodSource> foodSources = new List<FoodSource>();
     private readonly ReservePartitionManager rpm = null;
 
-    // Holds which FoodSources each population has access to.
-    //private Dictionary<Population, HashSet<FoodSource>> accessibleFoodSources = new Dictionary<Population, HashSet<FoodSource>>();
-    // Holds which populations have access to each FoodSource, the opposite of accessibleFoodSources.
-    //private Dictionary<FoodSource, HashSet<Population>> populationsWithAccess = new Dictionary<FoodSource, HashSet<Population>>();
-
-    //private 
-
     // Food name to food calculators
     private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
 
-    public FoodSourceNeedSystem(ReservePartitionManager rpm, string needName = "FoodSource") : base(needName)
+    public FoodSourceNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.FoodSource) : base(needType)
     {
         this.rpm = rpm;
     }
@@ -99,6 +92,8 @@ public class FoodSourceNeedSystem : NeedSystem
         }
 
         this.foodSourceCalculators[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
+
+        this.isDirty = true;
     }
 
     public override void AddConsumer(Life life)
@@ -106,7 +101,7 @@ public class FoodSourceNeedSystem : NeedSystem
         foreach (Need need in life.GetNeedValues().Values)
         {
             // Check if the need is a 'FoodSource' type
-            if (need.NeedType == "FoodSource")
+            if (need.NeedType == NeedType.FoodSource)
             {
                 // Create a food source calculator for this food source,
                 // if not already exist
@@ -119,6 +114,8 @@ public class FoodSourceNeedSystem : NeedSystem
                 this.foodSourceCalculators[need.NeedName].AddConsumer((Population)life);
             }
         }
+
+        this.isDirty = true;
     }
 
     public override bool RemoveConsumer(Life life)
@@ -126,11 +123,13 @@ public class FoodSourceNeedSystem : NeedSystem
         foreach (Need need in life.GetNeedValues().Values)
         {
             // Check if the need is a 'FoodSource' type
-            if (need.NeedType == "FoodSource")
+            if (need.NeedType == NeedType.FoodSource)
             {
                 Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoverConsumer((Population)life), "Remove conumer failed!");
             }
         }
+
+        this.isDirty = true;
 
         return true;
     }

@@ -36,13 +36,13 @@ public class ReservePartitionManager : MonoBehaviour
     // Amount of shared space with each population <id, <id, shared tiles> >
     public Dictionary<int, long[]> SharedSpaces { get; private set; }
 
-    /// <summary> A list of populations to be loaded on startup. </summary>
-    [SerializeField] List<Population> populationsOnStartUp = default;
-
-
     public Dictionary<Population, int[]> TypesOfTerrain;
 
-    public Dictionary<Population, bool> PopulationAccessbilityStatus;
+    public Dictionary<Population, bool> PopulationAccessbilityStatus => this.populationAccessbilityStatus;
+    private Dictionary<Population, bool> populationAccessbilityStatus;
+
+    public Dictionary<Population, List<float[]>> PopulationAccessibleLiquid => this.PopulationAccessibleLiquid;
+    private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
 
     public TerrainTile Liquid;
 
@@ -72,16 +72,8 @@ public class ReservePartitionManager : MonoBehaviour
         Spaces = new Dictionary<Population, int>();
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
-        PopulationAccessbilityStatus = new Dictionary<Population, bool>();
-    }
-
-    private void Start()
-    {
-        // Load pre-existing populations
-        foreach (Population population in populationsOnStartUp)
-        {
-            AddPopulation(population);
-        }
+        populationAccessbilityStatus = new Dictionary<Population, bool>();
+        populationAccessibleLiquid = new Dictionary<Population, List<float[]>>();
     }
 
     /// <summary>
@@ -101,9 +93,9 @@ public class ReservePartitionManager : MonoBehaviour
             Populations.Add(population);
 
             TypesOfTerrain.Add(population, new int[(int)TileType.TypesOfTiles]);
-            // generate the map with the new id  
+            // generate the map with the new id
             GenerateMap(population);
-            
+
         }
     }
 
@@ -117,7 +109,7 @@ public class ReservePartitionManager : MonoBehaviour
         openID.Enqueue(PopulationToID[population]);
         PopulationByID.Remove(PopulationToID[population]);  // free ID
         PopulationToID.Remove(population);  // free ID
-        
+
     }
 
     /// <summary>
@@ -160,10 +152,13 @@ public class ReservePartitionManager : MonoBehaviour
         long[] SharedTiles = new long[maxPopulation];
 
         // starting location
-        Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(population.transform.position);
+        Vector3Int location = TileSystem.ins.WorldToCell(population.transform.position);
         stack.Push(location);
 
-        TileSystem _tileSystem = FindObjectOfType<TileSystem>();
+        TileSystem _tileSystem = TileSystem.ins;
+
+        // Clear TypesOfTerrain for given population
+        this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
 
         // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
         while (stack.Count > 0)
@@ -179,6 +174,23 @@ public class ReservePartitionManager : MonoBehaviour
 
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
             TerrainTile tile = _tileSystem.GetTerrainTileAtLocation(cur);
+
+            // Get liquid tile info
+            if (tile != null && tile.type == TileType.Liquid)
+            {
+                float[] composition = _tileSystem.GetTileContentsAtLocation(cur, tile);
+
+                if (!this.populationAccessibleLiquid.ContainsKey(population))
+                {
+                    this.populationAccessibleLiquid.Add(population, new List<float[]>());
+                }
+
+                if (!this.populationAccessibleLiquid[population].Contains(composition))
+                {
+                    this.populationAccessibleLiquid[population].Add(composition);
+                }
+            }
+
             if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
             {
                 // save the accessible location
@@ -226,7 +238,7 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         // Set accessbility status
-        PopulationAccessbilityStatus[population] = true;
+        this.populationAccessbilityStatus[population] = true;
     }
 
     /// <summary>
@@ -254,13 +266,19 @@ public class ReservePartitionManager : MonoBehaviour
             UnaffectedID.Add(PopulationToID[population]);
         }
 
-        foreach (Vector3Int position in positions) {
-            if (!AccessMap.ContainsKey(position)) {
+        foreach (Vector3Int position in positions)
+        {
+            if (!AccessMap.ContainsKey(position))
+            {
                 continue;
-            } else {
+            }
+            else
+            {
                 long mask = AccessMap[position];
-                for (int i = 0; i < UnaffectedID.Count; i++) {
-                    if (((mask >> UnaffectedID[i]) & 1L) == 1L) {
+                for (int i = 0; i < UnaffectedID.Count; i++)
+                {
+                    if (((mask >> UnaffectedID[i]) & 1L) == 1L)
+                    {
                         AffectedPopulations.Add(PopulationByID[UnaffectedID[i]]);
                         UnaffectedID.RemoveAt(i);
                     }
@@ -269,7 +287,8 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         // Most intuitive implementation: recalculate map for all affected populations
-        foreach (Population population in AffectedPopulations) {
+        foreach (Population population in AffectedPopulations)
+        {
             CleanupAccessMap(PopulationToID[population]);
             GenerateMap(population);
         }
@@ -312,16 +331,6 @@ public class ReservePartitionManager : MonoBehaviour
         return new AnimalPathfinding.Grid(tileGrid);
     }
 
-    // ///<summary>
-    // ///Update the access map for every population in Pops.
-    // ///</summary>
-    // public void UpdateAccessMap()
-    // {
-    //     // convert to map position
-    //     Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
-    //     return CanAccess(population, mapPos);
-    // }
-
     /// <summary>
     /// TODO Considering to remove this function and use RPM with cell position only
     /// Check if a population can access toWorldPos.
@@ -329,7 +338,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+        Vector3Int mapPos = TileSystem.ins.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -381,7 +390,7 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = FindObjectOfType<TileSystem>().WorldToCell(toWorldPos);
+        Vector3Int cellPos = TileSystem.ins.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)
@@ -420,5 +429,18 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns></returns>
     public int[] GetTypesOfTiles(Population population) {
         return TypesOfTerrain[population];
+    }
+
+    public List<float[]> GetLiquidComposition(Population population)
+    {
+        // Probably don't need to do this
+        this.GenerateMap(population);
+
+        if (!this.populationAccessibleLiquid.ContainsKey(population))
+        {
+            return null;
+        }
+
+        return this.populationAccessibleLiquid[population];
     }
 }

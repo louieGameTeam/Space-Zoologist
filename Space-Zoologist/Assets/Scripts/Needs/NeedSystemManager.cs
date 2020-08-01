@@ -9,25 +9,15 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
-    // Singleton
-    public static NeedSystemManager ins;
 
-    public Dictionary<string, NeedSystem> Systems => systems;
 
-    [SerializeField] private LevelData levelData = default;
-    private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
+    public Dictionary<NeedType, NeedSystem> Systems => systems;
 
-    private void Awake()
-    {
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
-    }
+    private Dictionary<NeedType, NeedSystem> systems = new Dictionary<NeedType, NeedSystem>();
+    [SerializeField] PopulationManager PopulationManager = default;
+    [SerializeField] FoodSourceManager FoodSourceManager = default;
+    [SerializeField] EnclosureSystem EnclosureSystem = default;
+    [SerializeField] LevelDataReference levelDataReference = default;
 
     /// <summary>
     /// Initialize the universal need systems
@@ -37,35 +27,23 @@ public class NeedSystemManager : MonoBehaviour
     {
         // Referrance supprot systems
         ReservePartitionManager rpm = ReservePartitionManager.ins;
-        EnclosureSystem enclosureSystem = EnclosureSystem.ins;
-        TileSystem tileSystem = TileSystem.ins;
 
         // Add enviormental NeedSystem
-        AddSystem(new AtmosphereNeedSystem(enclosureSystem));
-        AddSystem(new TerrainNeedSystem(rpm, tileSystem));
-        AddSystem(new LiquidNeedSystem(tileSystem));
+        AddSystem(new AtmosphereNeedSystem(EnclosureSystem));
+        AddSystem(new TerrainNeedSystem(rpm, TileSystem.ins));
+        AddSystem(new LiquidNeedSystem(rpm, TileSystem.ins));
 
+
+        // FoodSource and Species NS
         AddSystem(new FoodSourceNeedSystem(rpm));
         AddSystem(new SpeciesNeedSystem(rpm));
 
-        // Add new FoodSourceNeedSystem
-        //foreach (FoodSourceSpecies foodSourceSpecies in levelData.FoodSourceSpecies)
-        //{
-        //    AddSystem(new FoodSourceNeedSystem(rpm, foodSourceSpecies.SpeciesName));
-        //}
-
-        // Add new FoodSourceNeedSystem
-        //foreach (AnimalSpecies animalSpecies in levelData.AnimalSpecies)
-        //{
-        //    AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));    
-        //}
-
         // Add Density NeedSystem
-        AddSystem(new DensityNeedSystem(rpm, tileSystem));
+        AddSystem(new DensityNeedSystem(rpm, TileSystem.ins));
 
-        // Intitialize the managers after NS's are added
-        FoodSourceManager.ins.Initialize();
-        PopulationManager.ins.Initialize();
+
+        FoodSourceManager.Initialize();
+        PopulationManager.Initialize();
     }
 
     /// <summary>
@@ -97,12 +75,19 @@ public class NeedSystemManager : MonoBehaviour
     /// <param name="needSystem">The system to add</param>
     public void AddSystem(NeedSystem needSystem)
     {
-        systems.Add(needSystem.NeedName, needSystem);
+        if (!this.systems.ContainsKey(needSystem.NeedType))
+        {
+            systems.Add(needSystem.NeedType, needSystem);
+        }
+        else
+        {
+            Debug.Log($"{needSystem.NeedType} need system already existed");
+        }
     }
 
     /// <summary>
     /// Update all the need system that is mark "dirty"
-    /// </summary>  
+    /// </summary>
     /// <remarks>
     /// The order of the NeedSystems' update metter,
     /// this should be their relative order(temp) :
@@ -111,18 +96,18 @@ public class NeedSystemManager : MonoBehaviour
     /// </remarks>
     public void UpdateSystems()
     {
-        foreach (KeyValuePair<string, NeedSystem> entry in systems)
+        foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;
 
             if (system.IsDirty)
             {
-                Debug.Log($"Updating {system.NeedName} NS by dirty flag");
+                Debug.Log($"Updating {system.NeedType} NS by dirty flag");
                 system.UpdateSystem();
             }
             else if(system.CheckState())
             {
-                Debug.Log($"Updating {system.NeedName} NS by dirty pre-check");
+                Debug.Log($"Updating {system.NeedType} NS by dirty pre-check");
                 system.UpdateSystem();
             }
         }
@@ -132,6 +117,10 @@ public class NeedSystemManager : MonoBehaviour
         {
             ReservePartitionManager.ins.PopulationAccessbilityStatus[pop] = false;
         }
+
+        // Reset food source accessibility status
+        // Note: this is the ideal place to do it be will need a equivilant of PopulationAccessbilityStatus in RPM
+        FoodSourceManager.UpdateAccessibleTerrainInfoForAll();
     }
 
 }

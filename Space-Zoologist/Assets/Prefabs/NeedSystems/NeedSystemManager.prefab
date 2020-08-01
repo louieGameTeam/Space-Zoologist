@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6524156106776480850}
   - component: {fileID: 6524156106776480851}
-  - component: {fileID: 7132130964336530178}
   m_Layer: 0
   m_Name: NeedSystemManager
   m_TagString: Untagged
@@ -44,16 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea013f1d24bde6043a775df3f770578d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
---- !u!114 &7132130964336530178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6524156106776480848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e3741b51b27e49489fc0b6b7a515df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  PopulationManager: {fileID: 0}
+  FoodSourceManager: {fileID: 0}
+  EnclosureSystem: {fileID: 0}
+  levelDataReference: {fileID: 0}

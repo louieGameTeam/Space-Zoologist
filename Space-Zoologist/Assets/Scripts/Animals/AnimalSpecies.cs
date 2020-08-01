@@ -26,7 +26,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private string speciesName = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private int dominance = default;
-    [Range(30f, 120f)]
+    [Range(10f, 120f)]
     [SerializeField] private float growthRate = 30f;
 
     [SerializeField] private float range = default;
