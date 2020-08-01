@@ -19,8 +19,8 @@ MonoBehaviour:
   range: 5
   needBehaviorSet:
   - NeedType: 0
-    behaviorScriptName: 1
-  size: 0
+    behaviorScriptName: 0
+  size: 1
   accessibleTerrain: 020000000100000003000000
   icon: {fileID: 8374688669493378222, guid: aebae20484dd24a95a352f36d97bff06, type: 3}
   needsList:
@@ -76,12 +76,4 @@ MonoBehaviour:
       thresholds:
       - 7
       - 15
-  - needType: 2
-    needs:
-    - needName: Density
-      severity: 2
-      conditions: 020000000100000000000000
-      thresholds:
-      - 2
-      - 5
   representation: {fileID: 0}

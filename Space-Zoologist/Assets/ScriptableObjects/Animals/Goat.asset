@@ -19,9 +19,9 @@ MonoBehaviour:
   range: 8.28
   needBehaviorSet:
   - NeedType: 0
-    behaviorScriptName: 1
-  size: 0
-  accessibleTerrain: 0200000003000000
+    behaviorScriptName: 0
+  size: 5
+  accessibleTerrain: 020000000300000001000000
   icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
   needsList:
   - needType: 0
@@ -50,18 +50,18 @@ MonoBehaviour:
       severity: 2
       conditions: 0000000001000000020000000100000000000000
       thresholds:
-      - 1
-      - 3
-      - 5
-      - 7
+      - 0.1
+      - 0.3
+      - 0.5
+      - 0.7
     - needName: MineralZ
-      severity: 2
+      severity: 5
       conditions: 0000000001000000020000000100000000000000
       thresholds:
-      - 1
-      - 3
-      - 5
-      - 7
+      - 0.1
+      - 0.3
+      - 0.5
+      - 0.7
   - needType: 3
     needs:
     - needName: Space Maple

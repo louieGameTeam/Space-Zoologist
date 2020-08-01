@@ -19,8 +19,8 @@ MonoBehaviour:
   range: 5
   needBehaviorSet:
   - NeedType: 0
-    behaviorScriptName: 1
-  size: 0
+    behaviorScriptName: 0
+  size: 5
   accessibleTerrain: 020000000100000003000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
   needsList:
@@ -62,26 +62,12 @@ MonoBehaviour:
       - 3
       - 5
       - 7
-  - needType: 3
+  - needType: 5
     needs:
-    - needName: Space Maple
+    - needName: Strot
       severity: 2
       conditions: 000000000100000002000000
       thresholds:
       - 7
       - 15
-    - needName: Bush
-      severity: 2
-      conditions: 000000000100000002000000
-      thresholds:
-      - 7
-      - 15
-  - needType: 2
-    needs:
-    - needName: Density
-      severity: 2
-      conditions: 020000000100000000000000
-      thresholds:
-      - 2
-      - 5
   representation: {fileID: 0}
