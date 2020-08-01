@@ -38,15 +38,35 @@ public class LiquidNeedSystem : NeedSystem
                 // TODO: Get composition from helper system
 
                 List<float[]> liquidCompositions = rpm.GetLiquidComposition((Population)life);
+                int highScore = 0;
+
                 // Check is there is found composition
                 if (liquidCompositions != null)
                 {
+                    liquidCompositionToUpdate = liquidCompositions[0];
+
                     foreach (float[] composition in liquidCompositions)
                     {
-
                         // TODO: Decide which liquid source to take from
+                        int curScore = 0;
 
-                        liquidCompositionToUpdate = composition;
+                        Population population = (Population)life;
+
+                        foreach (var (value, index) in composition.WithIndex())
+                        {
+                            string needName = ((LiquidComposition)index).ToString();
+
+                            if (population.GetNeedValues().ContainsKey(needName))
+                            {
+                                curScore += ((int)(population.Needs[needName].GetCondition(value))) * population.Needs[needName].Severity;
+                            }
+                        }
+
+                        if (curScore > highScore)
+                        {
+                            liquidCompositionToUpdate = composition;
+                            highScore = curScore;
+                        }
                     }
                 }
                 else
