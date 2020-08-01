@@ -14,12 +14,14 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] public bool AutomotonTesting = false;
-    // What is this doing?
-    //private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();
+
+    private SpeciesNeedSystem speciesNeedSystem = null;
 
     public void Initialize()
     {
         GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
+        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
+
         foreach (GameObject population in populations)
         {
             this.ExistingPopulations.Add(population.GetComponent<Population>());
@@ -88,7 +90,7 @@ public class PopulationManager : MonoBehaviour
     {
         ReservePartitionManager.ins.AddPopulation(population);
 
-        // speciesNeedSystems[population.Species.SpeciesName].AddPopulation(population);
+        this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
     }
 }

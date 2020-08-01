@@ -65,7 +65,7 @@ public class FoodSourceManager : MonoBehaviour
         foodSources.Add(foodSource);
 
         //Debug.Log("Food source being added: " + foodSource.Species.SpeciesName);
-        //foodSourceNeedSystems[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
+        this.foodSourceNeedSystems.AddFoodSource(foodSource);
 
         // Register with NeedSystemManager
         NeedSystemManager.RegisterWithNeedSystems(foodSource);
