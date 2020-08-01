@@ -237,7 +237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 277, y: 98.5}
+  m_AnchoredPosition: {x: 308, y: 130}
   m_SizeDelta: {x: 274.4, y: 208.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223625531
@@ -431,8 +431,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 272, y: -132}
-  m_SizeDelta: {x: 272.2, y: 182.1}
+  m_AnchoredPosition: {x: 306.9, y: -109.3}
+  m_SizeDelta: {x: 272.2, y: 250.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &387577291
 MonoBehaviour:
@@ -1368,8 +1368,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 133.29999, y: -91.05}
-  m_SizeDelta: {x: 266.6, y: 182.1}
+  m_AnchoredPosition: {x: 136.10004, y: -125.349976}
+  m_SizeDelta: {x: 272.2, y: 250.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1757411123
 CanvasRenderer:
@@ -7315,6 +7315,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89,
         type: 2}
+    - target: {fileID: 6874327554880135011, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: foodSourcePrefab
+      value: 
+      objectReference: {fileID: 8671077070872712137, guid: d92a30a7c5d43471ea1985c8867892e1,
+        type: 3}
     - target: {fileID: 8582389809603506210, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: PopulationManager
