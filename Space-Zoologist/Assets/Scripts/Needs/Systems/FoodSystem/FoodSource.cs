@@ -43,7 +43,6 @@ public class FoodSource: MonoBehaviour, Life
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
         this.TileSystem = FindObjectOfType<TileSystem>();
-
         this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 

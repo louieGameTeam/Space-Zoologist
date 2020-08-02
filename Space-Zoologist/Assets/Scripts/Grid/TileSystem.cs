@@ -5,24 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class TileSystem : MonoBehaviour
 {
-    // Singleton
-    //public static TileSystem ins;
-
     // Start is called before the first frame update
     private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;
 
     private void Awake()
     {
-        //if (ins != null && this != ins)
-        //{
-        //    Destroy(this);
-        //}
-        //else
-        //{
-        //    ins = this;
-        //}
-
         grid = GetComponent<Grid>();
         Tilemap[] unorderedTilemaps = GetComponent<TilePlacementController>().allTilemaps;
         Dictionary<Tilemap, int> tilemapLayerOrderPairs = new Dictionary<Tilemap, int>();
@@ -35,6 +23,7 @@ public class TileSystem : MonoBehaviour
             tilemaps.Add(pair.Key);
         }
     }
+
     /// <summary>
     /// Convert a world position to cell positions on the grid.
     /// </summary>

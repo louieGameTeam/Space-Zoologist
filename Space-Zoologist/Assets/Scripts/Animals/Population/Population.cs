@@ -168,7 +168,7 @@ public class Population : MonoBehaviour, Life
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
         foreach (Need need in this.needs.Values)
         {
-            if (need.NeedType != NeedType.Atmosphere && need.NeedType != NeedType.Terrain)
+            if (need.NeedType != NeedType.Atmosphere && need.NeedType != NeedType.Terrain && need.NeedType != NeedType.Liquid)
             {
                 this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
             }
