@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class TileSystem : MonoBehaviour
 {
     // Singleton
-    public static TileSystem ins;
+    //public static TileSystem ins;
 
     // Start is called before the first frame update
     private List<Tilemap> tilemaps = new List<Tilemap>();
@@ -14,14 +14,14 @@ public class TileSystem : MonoBehaviour
 
     private void Awake()
     {
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
+        //if (ins != null && this != ins)
+        //{
+        //    Destroy(this);
+        //}
+        //else
+        //{
+        //    ins = this;
+        //}
 
         grid = GetComponent<Grid>();
         Tilemap[] unorderedTilemaps = GetComponent<TilePlacementController>().allTilemaps;

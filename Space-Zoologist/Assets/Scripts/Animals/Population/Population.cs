@@ -37,6 +37,8 @@ public class Population : MonoBehaviour, Life
     private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
 
+    private ReservePartitionManager ReservePartitionManager = default;
+
     private void Awake()
     {
         this.CurrentBehaviors = new List<BehaviorScriptName>();
@@ -71,7 +73,8 @@ public class Population : MonoBehaviour, Life
     public void InitializePopulationData(NeedSystemManager needSystemManager)
     {
         this.NeedSystemManager = needSystemManager;
-        ReservePartitionManager.ins.AddPopulation(this);
+        this.ReservePartitionManager = FindObjectOfType<ReservePartitionManager>();
+        ReservePartitionManager.AddPopulation(this);
         this.UpdateAccessibleArea();
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
@@ -124,8 +127,8 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void UpdateAccessibleArea()
     {
-        this.AccessibleLocations = ReservePartitionManager.ins.GetLocationsWithAccess(this);
-        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
+        this.AccessibleLocations = ReservePartitionManager.GetLocationsWithAccess(this);
+        this.grid = ReservePartitionManager.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
     }
 
     public void InitializeExistingAnimals()
@@ -170,12 +173,7 @@ public class Population : MonoBehaviour, Life
                 this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
             }
         }
-        // Debug.Log("Current Need Systems: ");
-        // foreach(KeyValuePair<string, NeedSystem> needSystem in NeedSystemManager.ins.Systems)
-        // {
-        //     Debug.Log(needSystem.Key);
-        // }
-        // Debug.Log("Attempting to add: " + this.species.SpeciesName);
+
         this.NeedSystemManager.Systems[NeedType.Species].MarkAsDirty();
     }
 
@@ -287,6 +285,6 @@ public class Population : MonoBehaviour, Life
 
     public bool GetAccessibilityStatus()
     {
-        return ReservePartitionManager.ins.PopulationAccessbilityStatus[this];
+        return ReservePartitionManager.PopulationAccessbilityStatus[this];
     }
 }

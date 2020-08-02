@@ -11,6 +11,8 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
     [SerializeField] Transform PodItemContainer = default;
     [SerializeField] CursorItem cursorItem = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
+    [SerializeField] TileSystem TileSystem = default;
+
     public List<GameObject> Pods { get; set; }
     RectTransform rectTransform = default;
     AnimalSpecies selectedSpecies = null;
@@ -98,7 +100,7 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
         && mouseWorldPosition.x <= TilemapUtil.ins.MaxWidth && mouseWorldPosition.y <= TilemapUtil.ins.MaxHeight)
         {
             Vector3Int mouseGridPosition = TilemapUtil.ins.WorldToCell(mouseWorldPosition);
-            TerrainTile tile = TileSystem.ins.GetTerrainTileAtLocation(mouseGridPosition);
+            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(mouseGridPosition);
             foreach (TileType acceptablTerrain in this.selectedSpecies.AccessibleTerrain)
             {
                 if (tile.type.Equals(acceptablTerrain))

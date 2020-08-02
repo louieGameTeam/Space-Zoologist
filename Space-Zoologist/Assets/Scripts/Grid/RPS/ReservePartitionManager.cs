@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 public class ReservePartitionManager : MonoBehaviour
 {
     // Singleton
-    public static ReservePartitionManager ins;
+    //public static ReservePartitionManager ins;
 
     // Maximum number of populations allowed
     public const int maxPopulation = 64;
@@ -45,18 +45,19 @@ public class ReservePartitionManager : MonoBehaviour
     private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
 
     public TerrainTile Liquid;
+    [SerializeField] private TileSystem TileSystem = default;
 
     private void Awake()
     {
         // Variable initializations
-        if (ins != null && this != ins)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            ins = this;
-        }
+        //if (ins != null && this != ins)
+        //{
+        //    Destroy(this);
+        //}
+        //else
+        //{
+        //    ins = this;
+        //}
 
         // long mask is limited to 64 bits
         openID = new Queue<int>();
@@ -152,10 +153,10 @@ public class ReservePartitionManager : MonoBehaviour
         long[] SharedTiles = new long[maxPopulation];
 
         // starting location
-        Vector3Int location = TileSystem.ins.WorldToCell(population.transform.position);
+        Vector3Int location = this.TileSystem.WorldToCell(population.transform.position);
         stack.Push(location);
 
-        TileSystem _tileSystem = TileSystem.ins;
+        TileSystem _tileSystem = this.TileSystem;
 
         // Clear TypesOfTerrain for given population
         this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
@@ -338,7 +339,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = TileSystem.ins.WorldToCell(toWorldPos);
+        Vector3Int mapPos = this.TileSystem.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -390,7 +391,7 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = TileSystem.ins.WorldToCell(toWorldPos);
+        Vector3Int cellPos = this.TileSystem.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)
@@ -433,9 +434,6 @@ public class ReservePartitionManager : MonoBehaviour
 
     public List<float[]> GetLiquidComposition(Population population)
     {
-        // Probably don't need to do this
-        this.GenerateMap(population);
-
         if (!this.populationAccessibleLiquid.ContainsKey(population))
         {
             return null;

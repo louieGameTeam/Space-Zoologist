@@ -7356,6 +7356,16 @@ PrefabInstance:
       propertyPath: levelDataReference
       value: 
       objectReference: {fileID: 923949444}
+    - target: {fileID: 8743428314657368663, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: TileSystem
+      value: 
+      objectReference: {fileID: 1473133748547035361}
+    - target: {fileID: 8743428314657368663, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: ReservePartitionManager
+      value: 
+      objectReference: {fileID: 1661281791}
     m_RemovedComponents:
     - {fileID: 4694716191194936582, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
@@ -7478,6 +7488,7 @@ MonoBehaviour:
   PopulationPrefab: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
     type: 3}
   AutomotonTesting: 1
+  ReservePartitionManager: {fileID: 0}
 --- !u!1 &6865833327658264099
 GameObject:
   m_ObjectHideFlags: 0
