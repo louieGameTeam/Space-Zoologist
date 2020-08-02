@@ -97,6 +97,16 @@ public class SpeciesNeedSystem : NeedSystem
         this.isDirty = true;
     }
 
+    public override void MarkAsDirty()
+    {
+        base.MarkAsDirty();
+
+        foreach (SpeciesCalculator speciesCalculator in this.speciesCalculators.Values)
+        {
+            speciesCalculator.MarkDirty();
+        }
+    }
+
     public override void UpdateSystem()
     {
         foreach (SpeciesCalculator speciesCalculator in this.speciesCalculators.Values)

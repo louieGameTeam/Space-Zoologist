@@ -133,4 +133,14 @@ public class FoodSourceNeedSystem : NeedSystem
 
         return true;
     }
+
+    public override void MarkAsDirty()
+    {
+        base.MarkAsDirty();
+
+        foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
+        {
+            foodSourceCalculator.MarkDirty();
+        }
+    }
 }
