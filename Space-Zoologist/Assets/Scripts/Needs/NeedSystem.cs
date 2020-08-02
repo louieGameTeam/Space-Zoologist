@@ -26,7 +26,7 @@ abstract public class NeedSystem
     /// Mark this system dirty
     /// </summary>
     /// <remarks>Any one can mark a system dirty, but only the system can unmark itself</remarks>
-    public void MarkAsDirty()
+    virtual public void MarkAsDirty()
     {
         this.isDirty = true;
     }
