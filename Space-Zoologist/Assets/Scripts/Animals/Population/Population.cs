@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 
 // TODO figure out how to refactor the MarkNeedsDirty so that NeedSystemManager isn't a dependency
+// TODO figure out how to prevent animal's sprite from changing direction erratically
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
@@ -17,10 +18,8 @@ public class Population : MonoBehaviour, Life
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
     public AnimalPathfinding.Grid grid { get; private set; }
-    // TODO when accessible locations becomes nothing, add a warning so the player can respond.
     public List<Vector3Int>  AccessibleLocations { get; private set; }
     public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-    // TODO remove this and all dependencies once framework in place, add as actual movement
 
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
@@ -35,6 +34,7 @@ public class Population : MonoBehaviour, Life
     private GrowthCalculator GrowthCalculator = default;
     private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
+    public bool IssueWithAccessibleArea = false;
 
     private void Awake()
     {
@@ -70,7 +70,7 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void InitializePopulationData(NeedSystemManager needSystemManager)
     {
-        this.NeedSystemManager = needSystemManager;
+        if (this.NeedSystemManager == null) this.NeedSystemManager = needSystemManager;
         ReservePartitionManager.ins.AddPopulation(this);
         this.UpdateAccessibleArea();
         this.CurrentBehaviors = new List<BehaviorScriptName>();
@@ -125,7 +125,33 @@ public class Population : MonoBehaviour, Life
     public void UpdateAccessibleArea()
     {
         this.AccessibleLocations = ReservePartitionManager.ins.GetLocationsWithAccess(this);
-        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
+        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.MaxWidth, TilemapUtil.ins.MaxHeight );
+        if (this.AccessibleLocations.Count < 6)
+        {
+            this.IssueWithAccessibleArea = true;
+            this.PauseAnimals();
+        }
+        else
+        {
+            this.IssueWithAccessibleArea = false;
+            this.UnpauseAnimals();
+        }
+    }
+
+    public void PauseAnimals()
+    {
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            animal.GetComponent<MovementController>().IsPaused = true;
+        }
+    }
+
+    public void UnpauseAnimals()
+    {
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            animal.GetComponent<MovementController>().IsPaused = false;
+        }
     }
 
     public void InitializeExistingAnimals()
@@ -164,12 +190,6 @@ public class Population : MonoBehaviour, Life
                 this.NeedSystemManager.Systems[needName].MarkAsDirty();
             }
         }
-        // Debug.Log("Current Need Systems: ");
-        // foreach(KeyValuePair<string, NeedSystem> needSystem in NeedSystemManager.ins.Systems)
-        // {
-        //     Debug.Log(needSystem.Key);
-        // }
-        // Debug.Log("Attempting to add: " + this.species.SpeciesName);
         this.NeedSystemManager.Systems[this.species.SpeciesName].MarkAsDirty();
     }
 

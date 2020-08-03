@@ -43,7 +43,6 @@ public class Animal : MonoBehaviour
         // this.ChooseNextBehavior();
     }
 
-    // TODO figure out what else should be reset (probability will be one)
     public void ResetBehavior()
     {
         if (this.gameObject.activeSelf && this.CurrentBehavior != null)

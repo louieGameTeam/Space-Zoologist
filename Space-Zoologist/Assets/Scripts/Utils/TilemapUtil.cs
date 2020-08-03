@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// TODO refactor/possibly remove now that the tilemap translates directly to the grid
 /// <summary>
-/// For translating between vector3Int to location on 2d grid array
+/// Translating between world position and grid cell location and highlights the boundaries
 /// </summary>
 public class TilemapUtil : MonoBehaviour
 {
     public static TilemapUtil ins;
+    public int MaxWidth { get => LevelDataReference.LevelData.MapWidth; }
+    public int MaxHeight { get => LevelDataReference.LevelData.MapHeight; }
+    [SerializeField] private LevelDataReference LevelDataReference = default;
+    [SerializeField] private TilePlacementController TilePlacementController = default;
+    [Header("Shows shaded perimeter when true")]
+    [SerializeField] private bool DesigningLevel = true;
 
-    [Header("Should hold largest tilemap")]
-    [SerializeField] public Tilemap largestMap = default;
-    [SerializeField] public int MaxWidth = default;
-    [SerializeField] public int MaxHeight = default;
-    public void Awake()
+    [Header("Used for WorldToCell function")]
+    [SerializeField] public Tilemap referenceTilemap = default;
+
+    private void Awake()
     {
         if (ins != null && this != ins)
         {
@@ -25,43 +29,39 @@ public class TilemapUtil : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (this.DesigningLevel) this.ShadeOutsidePerimeter();
+    }
+
     /// <summary>
-    /// Converts a world position to cell position using the largest reference tilemap.
+    /// Converts a world position to cell position using a reference tilemap.
     /// </summary>
     public Vector3Int WorldToCell(Vector3 worldPos)
     {
-        return largestMap.WorldToCell(worldPos);
+        return referenceTilemap.WorldToCell(worldPos);
     }
 
     /// <summary>
-    /// Translates cell location to 2d array location using the largest map as reference.
+    /// Indicates where the perimeter for placing items is at
     /// </summary>
-    /// <param name="location"></param>
-    /// <param name="grid"></param>
-    /// <returns></returns>
-    public AnimalPathfinding.Node CellToGrid(Vector3Int location, AnimalPathfinding.Grid grid)
+    private void ShadeOutsidePerimeter()
     {
-        return grid.GetNode(location.x, location.y);
+        for (int x=-1; x<this.MaxWidth + 1; x++)
+        {
+            this.ShadeSquare(x, -1, Color.red);
+            this.ShadeSquare(x, this.MaxHeight, Color.red);
+        }
+        for (int y=-1; y<this.MaxHeight + 1; y++)
+        {
+            this.ShadeSquare(-1, y, Color.red);
+            this.ShadeSquare(this.MaxWidth, y, Color.red);
+        }
     }
 
-    /// <summary>
-    /// Translates node from 2d array back to world position.
-    /// </summary>
-    /// <param name="node"></param>
-    /// <param name="pathOffset"></param>
-    /// <returns></returns>
-    public Vector3 GridToWorld(Vector3 node, float pathOffset)
+    private void ShadeSquare(int x, int y, Color color)
     {
-        return new Vector3(node.x + pathOffset, node.y + pathOffset, 0);
-    }
-
-    public Vector3Int GridToWorld(Vector3 node)
-    {
-        return new Vector3Int((int)(node.x), (int)(node.y), 0);
-    }
-
-    public bool CanAccess(AnimalPathfinding.Node node, AnimalPathfinding.Grid grid)
-    {
-        return grid.GetNode(node.gridX, node.gridY).walkable;
+        Vector3Int cellToShade = new Vector3Int(x, y, 0);
+        referenceTilemap.SetColor(cellToShade, color);
     }
 }

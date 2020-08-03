@@ -438,12 +438,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!224 &203752368 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5984210444622369484, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 1346366395}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &284932540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2687,7 +2681,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 31
+      m_TileSpriteIndex: 32
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2767,11 +2761,11 @@ Tilemap:
   - m_RefCount: 15
     m_Data: {fileID: -2657622170025962153, guid: 441771a373ba2434b994a5ff796b68ee,
       type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -7423293838942054712, guid: 441771a373ba2434b994a5ff796b68ee,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 6153560468827928664, guid: 441771a373ba2434b994a5ff796b68ee,
       type: 3}
@@ -3951,9 +3945,8 @@ MonoBehaviour:
   - And as you might expect, food is also a necessity for most of the species that
     you will be observing. Try placing some food for the goat by accessing the food
     menu (purple tree with fruit on it) in the lower left hand corner.
-  - "Good job! When you purchase and place the proper resources for the animal, their
-    conditions will improve and their populations will begin to grow. Let\u2019s
-    wait a few moments while the goat\u2019s population increases."
+  - 'Good job! When you purchase and place the proper resources for a species, their
+    conditions will improve and their population will begin to grow. '
   - "Now that the goat population is thriving, let's try introducing another species
     to the area. Use the skills you\u2019ve picked up to figure out what needs to
     happen before the snake can be introduced."
@@ -4953,47 +4946,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b8234909d50f4bbe80178a1766c6faa, type: 3}
---- !u!224 &1346366396 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 849827786020162387, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 1346366395}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1346366397 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 849827785137881021, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 1346366395}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1346366399 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 849827785551453064, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 1346366395}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1346366400 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 849827784489429125, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 1346366395}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1346366401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1346366399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c144a105b5d4fbe9babddf326f7f94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIElements:
-  - {fileID: 1346366400}
-  - {fileID: 203752368}
-  - {fileID: 1346366397}
-  - {fileID: 1346366396}
 --- !u!114 &1346366403 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 849827784489429144, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -5088,9 +5040,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7894e58905742a498c7aeafaa3eaf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  largestMap: {fileID: 284932543}
-  MaxWidth: 18
-  MaxHeight: 10
+  LevelDataReference: {fileID: 508238547}
+  TilePlacementController: {fileID: 1595268510}
+  DesigningLevel: 1
+  referenceTilemap: {fileID: 284932543}
 --- !u!114 &1422399185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6010,36 +5963,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031046832}
   m_CullTransparentMesh: 0
---- !u!1 &2110792155
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2110792156}
-  m_Layer: 0
-  m_Name: ReserveLevel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2110792156
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110792155}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5595.3125}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2113145957
 GameObject:
   m_ObjectHideFlags: 0

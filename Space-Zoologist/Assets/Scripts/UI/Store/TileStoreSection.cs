@@ -24,7 +24,9 @@ public class TileStoreSection : StoreSection
     protected override void Start()
     {
         base.Start();
+        startingBalance = base.playerBalance;
         Debug.Assert(tilePlacementController != null);
+        Debug.Assert(startingBalance != null);
     }
 
     /// <summary>
@@ -68,7 +70,7 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerDown(PointerEventData eventData)
     {
         base.OnCursorPointerDown(eventData);
-        if (UIUtility.ins.IsCursorOverUI(eventData))
+        if (base.IsCursorOverUI(eventData))
         {
             base.OnItemSelectionCanceled();
             return;

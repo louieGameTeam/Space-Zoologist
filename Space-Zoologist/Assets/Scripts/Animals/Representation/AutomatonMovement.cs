@@ -19,8 +19,9 @@ public class AutomatonMovement : MonoBehaviour
     private int CurrentDirectionSeedIndex = 0;
     private List<int> TilesToMoveSeed = default;
     private int TilesMovedIndex = 0;
-    private Direction CurrentDirection = default;
+    private Direction CurrentDirection = Direction.down;
     private AnimalPathfinding.Node previousTile = default;
+    private List<Vector3> PathToFollow = default;
 
     public void Awake()
     {
@@ -41,15 +42,20 @@ public class AutomatonMovement : MonoBehaviour
     // If animal walked predetermined number of tiles or animal cannot move in specified direction, update based off seed.
     public void Update()
     {
-        if (this.population == null)
+        if (this.population == null || this.movementController.IsPaused)
         {
+            return;
+        }
+        if (!this.movementController.DestinationReached)
+        {
+            this.movementController.MoveTowardsDestination();
             return;
         }
         if (this.numTilesMoved >= this.NumTiles || !this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
         {
             if (!this.TryToUpdateDirection())
             {
-                this.movementController.StandStill();
+                AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), this.population.AccessibleLocations[0], this.SetupPathfinding, this.population.grid);
                 return;
             }
             this.UpdateTilesToMove();
@@ -58,10 +64,18 @@ public class AutomatonMovement : MonoBehaviour
         this.movementController.MoveInDirection(this.CurrentDirection);
     }
 
+    private void SetupPathfinding(List<Vector3> path, bool pathFound)
+    {
+        // TODO figure out what to do if you can't pathfind.. Keep trying to pathfind? Notify player?
+        Debug.Log("Animal stuck, setting up pathfinding");
+        Debug.Assert(pathFound == true);
+        this.movementController.AssignPath(path);
+        this.PathToFollow = path;
+    }
 
     private void UpdateNumTilesMoved()
     {
-        AnimalPathfinding.Node currentTile = TilemapUtil.ins.CellToGrid(TilemapUtil.ins.WorldToCell(this.transform.position), population.grid);
+        AnimalPathfinding.Node currentTile = population.grid.GetNode(TilemapUtil.ins.WorldToCell(this.transform.position).x, TilemapUtil.ins.WorldToCell(this.transform.position).y);
         if (this.previousTile != currentTile)
         {
             this.previousTile = currentTile;
@@ -152,7 +166,7 @@ public class AutomatonMovement : MonoBehaviour
     public bool DirectionAllowed(Direction direction, Vector3 startingLocation, AnimalPathfinding.Grid grid)
     {
         bool isAllowed = false;
-        AnimalPathfinding.Node currentSpot = TilemapUtil.ins.CellToGrid(TilemapUtil.ins.WorldToCell(startingLocation), grid);
+        AnimalPathfinding.Node currentSpot = population.grid.GetNode(TilemapUtil.ins.WorldToCell(this.transform.position).x, TilemapUtil.ins.WorldToCell(this.transform.position).y);
         if (currentSpot == null)
         {
             // Debug.Log("Node outside of range");

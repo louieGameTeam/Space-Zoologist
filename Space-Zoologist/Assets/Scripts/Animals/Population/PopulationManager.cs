@@ -11,7 +11,7 @@ public class PopulationManager : MonoBehaviour
     private List<Population> ExistingPopulations = new List<Population>();
     public List<Population> Populations => ExistingPopulations;
     [SerializeField] public NeedSystemManager NeedSystemManager = default;
-    [SerializeField] private LevelDataReference LevelDataReference = default;
+    [SerializeField] public LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     // What is this doing?
     //private Dictionary<string, SpeciesNeedSystem> speciesNeedSystems = new Dictionary<string, SpeciesNeedSystem>();

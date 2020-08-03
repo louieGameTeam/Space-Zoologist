@@ -26,7 +26,7 @@ public class FoodSourceStoreSection : StoreSection, IValidatePlacement
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (UIUtility.ins.IsCursorOverUI(eventData))
+        if (base.IsCursorOverUI(eventData))
         {
             base.OnItemSelectionCanceled();
             return;

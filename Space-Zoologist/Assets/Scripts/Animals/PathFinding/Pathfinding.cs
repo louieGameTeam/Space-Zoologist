@@ -55,6 +55,7 @@ namespace AnimalPathfinding
         {
             if (startPos == null || targetPos == null || grid == null)
             {
+                Debug.Log("Issue with pathfinding a");
                 yield return null;
                 PathRequestManager.instance.FinishedProcessPath(null, false);
             }
@@ -103,6 +104,10 @@ namespace AnimalPathfinding
 
             yield return null;
             bool pathSuccessfullyFound = (path.Count > 0) ? true : false;
+            if (!pathSuccessfullyFound)
+            {
+                Debug.Log("Issue with pathfinding b");
+            }
             PathRequestManager.instance.FinishedProcessPath(path, pathSuccessfullyFound);
         }
 

@@ -428,6 +428,13 @@ MonoBehaviour:
     type: 3}
   PodItemContainer: {fileID: 849827784864194469}
   cursorItem: {fileID: 849827785033568024}
+  LevelDataReference: {fileID: 0}
+  UIElements:
+  - {fileID: 849827784489429125}
+  - {fileID: 5984210444622369484}
+  - {fileID: 7404874211397134526}
+  - {fileID: 849827785137881021}
+  - {fileID: 4315307563784645222}
 --- !u!1 &849827784755492519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,6 +1120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerBalance: {fileID: 849827786020162386}
+  NeedSystemUpdater: {fileID: 0}
 --- !u!1 &849827785566768624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBalanceText: {fileID: 849827785016326674}
+  LevelDataReference: {fileID: 0}
 --- !u!1 &849827786080042452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +1997,15 @@ MonoBehaviour:
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
   cursorItem: {fileID: 849827785033568024}
-  playerBalance: {fileID: 0}
+  UIElements:
+  - {fileID: 5984210444622369484}
+  - {fileID: 849827784489429125}
+  - {fileID: 7404874211397134526}
+  - {fileID: 849827785137881021}
+  - {fileID: 4315307563784645222}
+  LevelDataReference: {fileID: 0}
+  tilePlacementController: {fileID: 0}
+  tutorial: {fileID: 0}
 --- !u!1 &5639818431083076508
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,7 +2582,9 @@ MonoBehaviour:
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
   cursorItem: {fileID: 849827785033568024}
-  playerBalance: {fileID: 0}
+  UIElements: []
+  LevelDataReference: {fileID: 0}
+  FoodSourceManager: {fileID: 0}
 --- !u!1 &7079002999532370842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2661,7 +2680,10 @@ MonoBehaviour:
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
   cursorItem: {fileID: 849827785033568024}
-  playerBalance: {fileID: 0}
+  UIElements: []
+  LevelDataReference: {fileID: 0}
+  tilePlacementController: {fileID: 0}
+  tutorial: {fileID: 0}
 --- !u!1 &7717456860105885580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,4 +2776,11 @@ MonoBehaviour:
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
   cursorItem: {fileID: 849827785033568024}
-  playerBalance: {fileID: 0}
+  UIElements:
+  - {fileID: 849827784489429125}
+  - {fileID: 5984210444622369484}
+  - {fileID: 7404874211397134526}
+  - {fileID: 849827785137881021}
+  - {fileID: 4315307563784645222}
+  LevelDataReference: {fileID: 0}
+  FoodSourceManager: {fileID: 0}

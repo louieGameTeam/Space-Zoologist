@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+
+// TODO If animal becomes stuck in one location, pathfind to an accessible location and start over.
 /// <summary>
 /// Takes in a path (List<Vector3>) and moves the attached gameobject through it.
 /// </summary>
@@ -16,6 +18,7 @@ public class MovementController : MonoBehaviour
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
+        this.DestinationReached = true;
     }
 
     /// <summary>
@@ -25,7 +28,7 @@ public class MovementController : MonoBehaviour
     public void AssignPath(List<Vector3> pathToDestination)
     {
         this.PathToDestination = pathToDestination;
-        this.NextPathTile = TilemapUtil.ins.GridToWorld(pathToDestination[0], 0.5f);
+        this.NextPathTile = new Vector3(this.PathToDestination[0].x + 0.5f, this.PathToDestination[0].y + 0.5f, 0);
         this.DestinationReached = false;
         this.PathIndex = 0;
         this.UpdateVisualLogic(this.NextPathTile);
@@ -62,7 +65,7 @@ public class MovementController : MonoBehaviour
             else
             {
                 // Need to translate back from grid to world
-                this.NextPathTile = TilemapUtil.ins.GridToWorld(this.PathToDestination[this.PathIndex], 0.5f);
+                this.NextPathTile = new Vector3(this.PathToDestination[this.PathIndex].x + 0.5f, this.PathToDestination[this.PathIndex].y + 0.5f, 0);
                 // Debug.Log("("+this.NextPathTile.x+"),"+"("+this.NextPathTile.y+")");
                 this.UpdateVisualLogic(this.NextPathTile);
             }
