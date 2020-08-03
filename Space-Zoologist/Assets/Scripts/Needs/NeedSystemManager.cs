@@ -112,13 +112,9 @@ public class NeedSystemManager : MonoBehaviour
         }
 
         // Reset pop accessibility status
-        foreach (Population pop in ReservePartitionManager.PopulationAccessbilityStatus.Keys.ToList())
-        {
-            ReservePartitionManager.PopulationAccessbilityStatus[pop] = false;
-        }
+        PopulationManager.ResetAccessibilityStatus(); 
 
         // Reset food source accessibility status
-        // Note: this is the ideal place to do it be will need a equivilant of PopulationAccessbilityStatus in RPM
         FoodSourceManager.UpdateAccessibleTerrainInfoForAll();
     }
 

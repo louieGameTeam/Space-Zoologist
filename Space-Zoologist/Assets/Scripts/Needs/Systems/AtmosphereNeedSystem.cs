@@ -31,21 +31,21 @@ public class AtmosphereNeedSystem : NeedSystem
 
         foreach (Life life in Consumers)
         {
-            // Get the atmospheric composition of a population 
-            // AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(Vector3Int.FloorToInt(life.GetPosition()));
+            //// Get the atmospheric composition of a population 
+            //AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(Vector3Int.FloorToInt(life.GetPosition()));
 
-            // // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
-            // float[] composition = atmosphericComposition.GeComposition();
+            //// THe composition is a list of float value in the order of the AtmoshpereComponent Enum
+            //float[] composition = atmosphericComposition.GeComposition();
 
-            // foreach (var (value, index) in composition.WithIndex())
-            // {
-            //     string needName = ((AtmoshpereComponent)index).ToString();
+            //foreach (var (value, index) in composition.WithIndex())
+            //{
+            //    string needName = ((AtmoshpereComponent)index).ToString();
 
-            //     if (life.GetNeedValues().ContainsKey(needName))
-            //     {
-            //         life.UpdateNeed(needName, value);
-            //     }
-            // }
+            //    if (life.GetNeedValues().ContainsKey(needName))
+            //    {
+            //        life.UpdateNeed(needName, value);
+            //    }
+            //}
         }
 
         this.isDirty = false;

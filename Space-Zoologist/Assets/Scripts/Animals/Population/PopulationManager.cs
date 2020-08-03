@@ -93,4 +93,12 @@ public class PopulationManager : MonoBehaviour
         this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
     }
+
+    public void ResetAccessibilityStatus()
+    {
+        foreach (Population population in this.ExistingPopulations)
+        {
+            ReservePartitionManager.PopulationAccessbilityStatus[population] = false;
+        }
+    }
 }
