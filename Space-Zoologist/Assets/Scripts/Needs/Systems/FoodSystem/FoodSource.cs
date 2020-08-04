@@ -1,4 +1,6 @@
 using System.Collections;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,11 +22,17 @@ public class FoodSource: MonoBehaviour, Life
     private float neutralMultiplier = 0.5f;
     private float goodMultiplier = 1.0f;
 
+    private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
+    private bool hasAccessibleTerrainChanged = default;
+    private bool hasAccessibleTerrainChecked = default;
+
+    private TileSystem TileSystem = default;
+
     private void Awake()
     {
         if (species)
         {
-            InitializeFoodSource(species,transform.position);
+            InitializeFoodSource(species, transform.position);
         }
     }
 
@@ -34,6 +42,8 @@ public class FoodSource: MonoBehaviour, Life
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
+        this.TileSystem = FindObjectOfType<TileSystem>();
+        this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 
     private void InitializeNeedValues()
@@ -52,7 +62,7 @@ public class FoodSource: MonoBehaviour, Life
         foreach (KeyValuePair<string, Need> needValuePair in this.needs)
         {
             string needType = needValuePair.Key;
-            float needValue = needValuePair.Value.Value;
+            float needValue = needValuePair.Value.NeedValue;
             NeedCondition condition = this.needs[needType].GetCondition(needValue);
             float multiplier = 0;
             switch (condition)
@@ -76,12 +86,12 @@ public class FoodSource: MonoBehaviour, Life
     /// <summary>
     /// Update the given need of the population with the given value.
     /// </summary>
-    /// <param name="need">The need to update</param>
+    /// <param name="need">The need to update</param>Z
     /// <param name="value">The need's new value</param>
     public void UpdateNeed(string need, float value)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } food source has no need { need }");
-        this.needs[need].Value = value;
+        this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }
 
@@ -93,5 +103,53 @@ public class FoodSource: MonoBehaviour, Life
     public Vector3 GetPosition()
     {
         return this.gameObject.transform.position;
+    }
+
+    /// <summary>
+    /// Checks accessible terrain info, ie terrain tile composition
+    /// </summary>
+    /// <remarks>
+    /// Actual checking will only be done once per universial NS update loop,
+    /// since terrain will not change during that time
+    /// </remarks>
+    /// <returns>True is accessible terrain had changed, false otherwise</returns>
+    public bool GetAccessibilityStatus()
+    {
+        // Return result if have checked
+        if (this.hasAccessibleTerrainChecked)
+        {
+            return this.hasAccessibleTerrainChanged;
+        }
+
+        var preTerrain = this.accessibleTerrian;
+        var curTerrain = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+
+        // Accessible terrain had changed
+        if(!preTerrain.SequenceEqual(curTerrain))
+        {
+            this.hasAccessibleTerrainChanged = true;
+            this.hasAccessibleTerrainChecked = true;
+        }
+        else
+        {
+            this.hasAccessibleTerrainChecked = true;
+        }
+
+        return this.hasAccessibleTerrainChanged;
+    }
+
+    /// <summary>
+    /// Updates the accessible terrain info
+    /// </summary>
+    public void UpdateAccessibleTerrainInfo()
+    {
+        if (this.hasAccessibleTerrainChanged)
+        {
+            this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        }
+
+        // Reset flags
+        this.hasAccessibleTerrainChecked = false;
+        this.hasAccessibleTerrainChanged = false;
     }
 }

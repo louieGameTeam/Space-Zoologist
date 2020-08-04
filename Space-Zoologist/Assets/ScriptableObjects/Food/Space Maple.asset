@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accessibleTerrain: 0200000003000000
   speciesName: Space Maple
-  rootRadius: 5
+  rootRadius: 10
   baseOutput: 10
   needsList:
   - needType: 0
@@ -26,6 +26,20 @@ MonoBehaviour:
       - 3
       - 6
     - needName: Dirt
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 6
+      - 9
+  - needType: 1
+    needs:
+    - needName: GasX
+      severity: 1
+      conditions: 000000000100000002000000
+      thresholds:
+      - 3
+      - 6
+    - needName: GasY
       severity: 1
       conditions: 000000000100000002000000
       thresholds:

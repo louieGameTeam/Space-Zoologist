@@ -10,7 +10,7 @@ public class NeedSystemsTester : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
 
-    private void Update()
+    public void Update()
     {
         string populationStatsText = "";
         foreach (Population population in PopulationManager.Populations)
@@ -18,7 +18,7 @@ public class NeedSystemsTester : MonoBehaviour
             populationStatsText += $"***{ population.Species.SpeciesName } {population.GetInstanceID()}; Count: {population.Count}; Dominance: {population.Dominance}***\n";
             foreach (KeyValuePair<string, Need> needValue in population.Needs)
             {
-                populationStatsText += $"- {needValue.Key}: { needValue.Value } -- Condition: {population.Needs[needValue.Key].GetCondition(needValue.Value.Value)}\n";
+                populationStatsText += $"- {needValue.Key}: { needValue.Value.NeedValue } -- Condition: {population.Needs[needValue.Key].GetCondition(needValue.Value.NeedValue)}\n";
             }
             populationStatsText += "\n";
         }
@@ -30,7 +30,7 @@ public class NeedSystemsTester : MonoBehaviour
             foodSourceStatsText += $"***{ foodSource.Species.SpeciesName }; Food output: {foodSource.FoodOutput}***\n";
             foreach (KeyValuePair<string, Need> needValue in foodSource.Needs)
             {
-                foodSourceStatsText += $"- {needValue.Key}: { needValue.Value } -- Condition: {foodSource.Needs[needValue.Key].GetCondition(needValue.Value.Value)}\n";
+                foodSourceStatsText += $"- {needValue.Key}: { needValue.Value.NeedValue } -- Condition: {foodSource.Needs[needValue.Key].GetCondition(needValue.Value.NeedValue)}\n";
             }
             foodSourceStatsText += "\n";
         }

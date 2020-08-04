@@ -10,40 +10,36 @@ using UnityEngine;
 public class NeedSystemManager : MonoBehaviour
 {
 
-    public Dictionary<string, NeedSystem> Systems => systems;
 
-    private Dictionary<string, NeedSystem> systems = new Dictionary<string, NeedSystem>();
+    public Dictionary<NeedType, NeedSystem> Systems => systems;
+
+    private Dictionary<NeedType, NeedSystem> systems = new Dictionary<NeedType, NeedSystem>();
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
     [SerializeField] LevelDataReference levelDataReference = default;
+    [SerializeField] TileSystem TileSystem = default;
+    [SerializeField] ReservePartitionManager ReservePartitionManager = default;
 
     /// <summary>
     /// Initialize the universal need systems
     /// </summary>
-    /// <remarks>Terrian -> FoodSource/Species -> Density, this order has to be fixed</remarks>
+    /// <remarks>Terrian/Atmoshpere -> FoodSource/Species -> Density, this order has to be fixed</remarks>
     private void Start()
     {
-        // Referrance supprot systems
-        ReservePartitionManager rpm = ReservePartitionManager.ins;
-
         // Add enviormental NeedSystem
         AddSystem(new AtmosphereNeedSystem(EnclosureSystem));
-        AddSystem(new TerrainNeedSystem(rpm, TileSystem.ins));
+        AddSystem(new TerrainNeedSystem(ReservePartitionManager, TileSystem));
+        AddSystem(new LiquidNeedSystem(ReservePartitionManager, TileSystem));
 
-        // Add new FoodSourceNeedSystem
-        foreach (FoodSourceSpecies foodSourceSpecies in levelDataReference.LevelData.FoodSourceSpecies)
-        {
-            AddSystem(new FoodSourceNeedSystem(rpm, foodSourceSpecies.SpeciesName));
-        }
-        // Add new FoodSourceNeedSystem
-        foreach (AnimalSpecies animalSpecies in levelDataReference.LevelData.AnimalSpecies)
-        {
-            AddSystem(new SpeciesNeedSystem(rpm, animalSpecies.SpeciesName));
-        }
+
+        // FoodSource and Species NS
+        AddSystem(new FoodSourceNeedSystem(ReservePartitionManager));
+        AddSystem(new SpeciesNeedSystem(ReservePartitionManager));
 
         // Add Density NeedSystem
-        AddSystem(new DensityNeedSystem(rpm, TileSystem.ins));
+        AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
+
 
         FoodSourceManager.Initialize();
         PopulationManager.Initialize();
@@ -55,35 +51,20 @@ public class NeedSystemManager : MonoBehaviour
     /// <param name="life">This could be a Population or FoodSource since they both inherit from Life</param>
     public void RegisterWithNeedSystems(Life life)
     {
-        foreach (string need in life.GetNeedValues().Keys)
+        // Register to NS by NeedType (string)
+        foreach (Need need in life.GetNeedValues().Values)
         {
-            // Check if need is a atmoshpere or a terrian need
-            if (Enum.IsDefined(typeof(AtmoshpereComponent), need))
-            {
-                systems["Atmosphere"].AddConsumer(life);
-                //Debug.Log($"{life} registered with AtmoshpererNS ({need})");
-            }
-            else if (Enum.IsDefined(typeof(TileType), need))
-            {
-                systems["Terrain"].AddConsumer(life);
-                //Debug.Log($"Registed {life} with Terrian ({need}) NeedSystem");
-            }
-            else
-            {
-                // Foodsource and species need here
-                Debug.Assert(systems.ContainsKey(need), $"No { need } system");
-                systems[need].AddConsumer(life);
-                //Debug.Log($"Register {life} with {need} system");
-            }
+            Debug.Assert(systems.ContainsKey(need.NeedType), $"No { need.NeedType } system");
+            systems[need.NeedType].AddConsumer(life);
         }
     }
 
     public void UnregisterPopulationNeeds(Life life)
     {
-        foreach (string need in life.GetNeedValues().Keys)
+        foreach (Need need in life.GetNeedValues().Values)
         {
-            Debug.Assert(systems.ContainsKey(need));
-            systems[need].RemoveConsumer(life);
+            Debug.Assert(systems.ContainsKey(need.NeedType), $"No { need } system");
+            systems[need.NeedType].RemoveConsumer(life);
         }
     }
 
@@ -93,7 +74,14 @@ public class NeedSystemManager : MonoBehaviour
     /// <param name="needSystem">The system to add</param>
     public void AddSystem(NeedSystem needSystem)
     {
-        systems.Add(needSystem.NeedName, needSystem);
+        if (!this.systems.ContainsKey(needSystem.NeedType))
+        {
+            systems.Add(needSystem.NeedType, needSystem);
+        }
+        else
+        {
+            Debug.Log($"{needSystem.NeedType} need system already existed");
+        }
     }
 
     /// <summary>
@@ -107,27 +95,27 @@ public class NeedSystemManager : MonoBehaviour
     /// </remarks>
     public void UpdateSystems()
     {
-        foreach (KeyValuePair<string, NeedSystem> entry in systems)
+        foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;
 
             if (system.IsDirty)
             {
-                Debug.Log($"Updating {system.NeedName} NS by dirty flag");
+                Debug.Log($"Updating {system.NeedType} NS by dirty flag");
                 system.UpdateSystem();
             }
             else if(system.CheckState())
             {
-                Debug.Log($"Updating {system.NeedName} NS by dirty pre-check");
+                Debug.Log($"Updating {system.NeedType} NS by dirty pre-check");
                 system.UpdateSystem();
             }
         }
 
         // Reset pop accessibility status
-        foreach (Population pop in ReservePartitionManager.ins.PopulationAccessbilityStatus.Keys.ToList())
-        {
-            ReservePartitionManager.ins.PopulationAccessbilityStatus[pop] = false;
-        }
+        PopulationManager.ResetAccessibilityStatus(); 
+
+        // Reset food source accessibility status
+        FoodSourceManager.UpdateAccessibleTerrainInfoForAll();
     }
 
 }

@@ -3,46 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-// TODO: have consumer take food one after another
-// TODO: have a way to determine if a full reset of the accessible list
-
+/// <summary>
+/// Handles neeed value updates of all the `FoodSource` type need
+/// </summary>
 public class FoodSourceNeedSystem : NeedSystem
 {
-    private List<FoodSource> foodSources = new List<FoodSource>();
+    //private List<FoodSource> foodSources = new List<FoodSource>();
     private readonly ReservePartitionManager rpm = null;
 
-    // Holds which FoodSources each population has access to.
-    private Dictionary<Population, HashSet<FoodSource>> accessibleFoodSources = new Dictionary<Population, HashSet<FoodSource>>();
-    // Holds which populations have access to each FoodSource, the opposite of accessibleFoodSources.
-    private Dictionary<FoodSource, HashSet<Population>> populationsWithAccess = new Dictionary<FoodSource, HashSet<Population>>();
+    // Food name to food calculators
+    private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
 
-    private Dictionary<FoodSource, int[]> ConsumedFoodSourceAcceiableTerrain = new Dictionary<FoodSource, int[]>();
-
-    public FoodSourceNeedSystem(ReservePartitionManager rpm, string needName) : base(needName)
+    public FoodSourceNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.FoodSource) : base(needType)
     {
         this.rpm = rpm;
     }
 
     public override bool CheckState()
     {
-        if (base.CheckState())
-        {
-            return true;
-        }
+        bool needUpdate = false;
 
-        foreach(FoodSource foodSource in this.foodSources)
+        foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
-            var preTerrain = this.ConsumedFoodSourceAcceiableTerrain[foodSource];
-            var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius);
-
-            if (!preTerrain.SequenceEqual(curTerrain))
+            // Check if consumer is dirty
+            foreach (Population consumer in foodSourceCalculator.Consumers)
             {
-                this.ConsumedFoodSourceAcceiableTerrain[foodSource] = curTerrain;
-                return true;
+                if (consumer.GetAccessibilityStatus())
+                {
+                    foodSourceCalculator.MarkDirty();
+                    needUpdate = true;
+                    break;
+                }
+            }
+
+            // If consumer is already dirty check next food source calculator
+            if (needUpdate)
+            {
+                break;
+            }
+            // Check if food source is dirty
+            else
+            {
+                foreach (FoodSource foodSource in foodSourceCalculator.FoodSources)
+                {
+                    if (foodSource.GetAccessibilityStatus())
+                    {
+                        foodSourceCalculator.MarkDirty();
+                        needUpdate = true;
+                        break;
+                    }
+                }
             }
         }
 
-        return false;
+        return needUpdate;
     }
 
     /// <summary>
@@ -50,144 +64,85 @@ public class FoodSourceNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
-        if (foodSources.Count == 0 || Consumers.Count == 0)
+        foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
-            this.isDirty = false;
-            return;
-        }
-
-        // When accessbility of population changes a full reset should be triggered
-        foreach (Population population in Consumers)
-        {
-            if (rpm.PopulationAccessbilityStatus[population])
+            if (foodSourceCalculator.IsDirty)
             {
-                //Debug.Log($"{population} triggered a accessible list reset");
+                var foodDistributionOutput = foodSourceCalculator.CalculateDistribution();
 
-                foreach (FoodSource foodSource in foodSources)
+                // foodDistributionOutput returns null is not thing to be updated
+                if (foodDistributionOutput != null)
                 {
-                    if (rpm.CanAccess(population, foodSource.Position))
+                    foreach (Population consumer in foodDistributionOutput.Keys)
                     {
-                        accessibleFoodSources[population].Add(foodSource);
-                        populationsWithAccess[foodSource].Add(population);
+                        consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
                     }
                 }
-                //rpm.PopulationAccessbilityStatus[population] = false;
+
+                Debug.Log($"{foodSourceCalculator.FoodSourceName} calculator updated");
             }
         }
 
-        // TODO: this dictionaries could be part of rpm
-
-        // Holds how much food each FoodSource has left after Populations take from them.
-        Dictionary<FoodSource, float> amountFoodRemaining = new Dictionary<FoodSource, float>();
-
-        // Holds the sum of the Dominance of all Populations that have access to the FoodSource for each FoodSource.
-        Dictionary<FoodSource, float> totalLocalDominance = new Dictionary<FoodSource, float>();
-        // Holds the remaining Dominance of each FoodSource after populations have already taken their share of food.
-        Dictionary<FoodSource, float> localDominanceRemaining = new Dictionary<FoodSource, float>();
-
-        // Initialize totalLocalDominance and localDominanceRemaining.
-        foreach (FoodSource foodSource in foodSources)
-        {
-            float total = populationsWithAccess[foodSource].Sum(p => p.Dominance);
-            totalLocalDominance.Add(foodSource, total);
-            localDominanceRemaining.Add(foodSource, total);
-
-            // Reset amountFoodRemaining to initial food output 
-            amountFoodRemaining.Add(foodSource, foodSource.FoodOutput);
-        }
-
-        // Holds the populations that will not have enough food to give them a good condition.
-        HashSet<Population> populationsWithNotEnough = new HashSet<Population>();
-
-        // Foreach population, if it is in good condition from the food available to it, then take its portion and update its need,
-        // else, add it to the set of populations that will not have enough. The populations without enough will then split what is 
-        // remaining based on the ratio of their dominance to the localRemainingDominance for each of their FoodSources.
-        foreach (Population population in Consumers)
-        {
-            float availableFood = 0.0f;
-            float amountRequiredPerIndividualForGoodCondition = population.Needs[base.NeedName].GetThreshold(NeedCondition.Good, -1, false);
-            float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * population.Count;
-            foreach (FoodSource foodSource in accessibleFoodSources[population])
-            {
-                availableFood += foodSource.FoodOutput * (population.Dominance / totalLocalDominance[foodSource]);
-            }
-
-            // If the food available to the Population is more than enough, only take enough and update its need.
-            if (availableFood >= amountRequiredForGoodCondition)
-            {
-                float foodToTakeRatio = amountRequiredForGoodCondition / availableFood;
-                float totalFoodAcquired = 0.0f;
-                foreach (FoodSource foodSource in accessibleFoodSources[population])
-                {
-                    float foodAcquired = foodToTakeRatio * foodSource.FoodOutput * (population.Dominance / totalLocalDominance[foodSource]);
-                    amountFoodRemaining[foodSource] -= foodAcquired;
-                    totalFoodAcquired += foodAcquired;
-                    localDominanceRemaining[foodSource] -= population.Dominance;
-                    //Debug.Log($"{population.Species.SpeciesName} population took {foodAcquired} food from foodsource at {foodSource.Position}");
-                }
-                float foodAcquiredPerIndividual = totalFoodAcquired / population.Count;
-                population.UpdateNeed(NeedName, foodAcquiredPerIndividual);
-            }
-            // Otherwise, add to the set of populationsWithNotEnough to be processed later.
-            else
-            {
-                populationsWithNotEnough.Add(population);
-            }
-        }
-
-        // For those Populations who will not have enough to be in good condition, split what food remains from each FoodSource.
-        foreach (Population population in populationsWithNotEnough)
-        {
-            float foodAcquired = 0.0f;
-            foreach (FoodSource foodSource in accessibleFoodSources[population])
-            {
-                float dominanceRatio = population.Dominance / localDominanceRemaining[foodSource];
-                foodAcquired += dominanceRatio * amountFoodRemaining[foodSource];
-            }
-            float amountAcquiredPerIndividual = foodAcquired / population.Count;
-            population.UpdateNeed(this.NeedName, amountAcquiredPerIndividual);
-        }
-
-        // Done update not dirty any more
-        isDirty = false;
+        this.isDirty = false;
     }
 
     public void AddFoodSource(FoodSource foodSource)
     {
-        foodSources.Add(foodSource);
-
-        populationsWithAccess.Add(foodSource, new HashSet<Population>());
-        foreach (Population population in Consumers)
+        if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
         {
-            if (rpm.CanAccess(population, foodSource.Position))
-            {
-                accessibleFoodSources[population].Add(foodSource);
-                populationsWithAccess[foodSource].Add(population);
-            }
+            this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(rpm, foodSource.Species.SpeciesName));
         }
 
-        // Add current accessible terrain info
-        if (!this.ConsumedFoodSourceAcceiableTerrain.ContainsKey(foodSource))
-        {
-            this.ConsumedFoodSourceAcceiableTerrain.Add(foodSource, TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius));
-        }
+        this.foodSourceCalculators[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
 
         this.isDirty = true;
     }
 
     public override void AddConsumer(Life life)
     {
-        base.AddConsumer(life);
-
-        Population population = (Population)life;
-        accessibleFoodSources.Add(population, new HashSet<FoodSource>());
-        foreach (FoodSource foodSource in foodSources)
+        foreach (Need need in life.GetNeedValues().Values)
         {
-            if (rpm.CanAccess(population, foodSource.Position))
+            // Check if the need is a 'FoodSource' type
+            if (need.NeedType == NeedType.FoodSource)
             {
-                accessibleFoodSources[population].Add(foodSource);
-                populationsWithAccess[foodSource].Add(population);
+                // Create a food source calculator for this food source,
+                // if not already exist
+                if (!this.foodSourceCalculators.ContainsKey(need.NeedName))
+                {
+                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(rpm, need.NeedName));
+                }
+
+                // Add consumer to food source calculator
+                this.foodSourceCalculators[need.NeedName].AddConsumer((Population)life);
             }
+        }
+
+        this.isDirty = true;
+    }
+
+    public override bool RemoveConsumer(Life life)
+    {
+        foreach (Need need in life.GetNeedValues().Values)
+        {
+            // Check if the need is a 'FoodSource' type
+            if (need.NeedType == NeedType.FoodSource)
+            {
+                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoverConsumer((Population)life), "Remove conumer failed!");
+            }
+        }
+
+        this.isDirty = true;
+
+        return true;
+    }
+
+    public override void MarkAsDirty()
+    {
+        base.MarkAsDirty();
+
+        foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
+        {
+            foodSourceCalculator.MarkDirty();
         }
     }
 }

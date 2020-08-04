@@ -34,9 +34,9 @@ public class Item : ScriptableObject
         {
             this.type = NeedType.Density;
         }
-        if (type.Equals("Food", StringComparison.OrdinalIgnoreCase))
+        if (type.Equals("FoodSource", StringComparison.OrdinalIgnoreCase))
         {
-            this.type = NeedType.Food;
+            this.type = NeedType.FoodSource;
         }
         if (type.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
         {

@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manager of all the FoodSource instance
+/// </summary>
 // TODO refactor to use reference util instead of foodSourceSpecies and refactor current food source subscription logic flow
 public class FoodSourceManager : MonoBehaviour
 {
     public List<FoodSource> FoodSources => foodSources;
 
     private List<FoodSource> foodSources = new List<FoodSource>();
-    // Having food distribution system in FoodSourceManager is questionable
-    // TODO: remove this, this is in the NeedSystemManager
-    private Dictionary<string, FoodSourceNeedSystem> foodSourceNeedSystems = new Dictionary<string, FoodSourceNeedSystem>();
+
+    [SerializeField] private LevelData levelData = default;
+    // A reference to the food source need system
+    private FoodSourceNeedSystem foodSourceNeedSystems = default;
     // FoodSourceSpecies to string name
     private Dictionary<string, FoodSourceSpecies> foodSourceSpecies = new Dictionary<string, FoodSourceSpecies>();
-
     [SerializeField] private GameObject foodSourcePrefab = default;
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
@@ -21,7 +24,12 @@ public class FoodSourceManager : MonoBehaviour
     private void Start()
     {
         // Fill string to FoodSourceSpecies Dictionary
-        foreach (FoodSourceSpecies species in LevelDataReference.LevelData.FoodSourceSpecies)
+        //foreach (FoodSourceSpecies species in LevelDataReference.LevelData.FoodSourceSpecies)
+        //{
+        //    foodSourceSpecies.Add(species.SpeciesName, species);
+        //}
+
+        foreach (FoodSourceSpecies species in this.levelData.FoodSourceSpecies)
         {
             foodSourceSpecies.Add(species.SpeciesName, species);
         }
@@ -30,16 +38,11 @@ public class FoodSourceManager : MonoBehaviour
     public void Initialize()
     {
         // Get the FoodSourceNeedSystems from NeedSystemManager
-        foreach (NeedSystem system in NeedSystemManager.Systems.Values)
-        {
-            if (foodSourceSpecies.ContainsKey(system.NeedName))
-            {
-                foodSourceNeedSystems.Add(system.NeedName, (FoodSourceNeedSystem)system);
-            }
-        }
+        this.foodSourceNeedSystems = (FoodSourceNeedSystem)NeedSystemManager.Systems[NeedType.FoodSource];
 
         // Get all FoodSource at start of level
         GameObject[] foods = GameObject.FindGameObjectsWithTag("FoodSource");
+
         foreach(GameObject food in foods)
         {
             foodSources.Add(food.GetComponent<FoodSource>());
@@ -51,9 +54,8 @@ public class FoodSourceManager : MonoBehaviour
             NeedSystemManager.RegisterWithNeedSystems(foodSource);
         }
     }
-    // UPdateSystem runs through all food sources and has them calculate and send their output to the populations
 
-
+    // TODO: combine two version into one
     private void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
@@ -61,13 +63,9 @@ public class FoodSourceManager : MonoBehaviour
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
-        Debug.Log("Current food need systems: ");
-        foreach(KeyValuePair<string, FoodSourceNeedSystem> foodNeedSystem in this.foodSourceNeedSystems)
-        {
-            Debug.Log(foodNeedSystem.Key);
-        }
-        Debug.Log("Food source being added: " + foodSource.Species.SpeciesName);
-        //foodSourceNeedSystems[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
+
+        //Debug.Log("Food source being added: " + foodSource.Species.SpeciesName);
+        this.foodSourceNeedSystems.AddFoodSource(foodSource);
 
         // Register with NeedSystemManager
         NeedSystemManager.RegisterWithNeedSystems(foodSource);
@@ -78,17 +76,21 @@ public class FoodSourceManager : MonoBehaviour
         CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
     }
 
+    // TODO: not sure what this does
     public void UpdateFoodSourceSpecies(FoodSourceSpecies species)
     {
         this.foodSourceSpecies.Add(species.SpeciesName, species);
     }
 
-    // Deprecated
-    public void UpdateFoodSources()
+    /// <summary>
+    /// Update accessible terrain info for all food sources,
+    /// called when all NS updates are done
+    /// </summary>
+    public void UpdateAccessibleTerrainInfoForAll()
     {
-        foreach (FoodSourceNeedSystem foodSourceNeedSystem in foodSourceNeedSystems.Values)
+        foreach (FoodSource foodSource in this.foodSources)
         {
-            foodSourceNeedSystem.UpdateSystem();
+            foodSource.UpdateAccessibleTerrainInfo();
         }
     }
 }

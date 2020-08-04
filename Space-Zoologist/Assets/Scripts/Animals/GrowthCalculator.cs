@@ -22,7 +22,7 @@ public class GrowthCalculator
         int totalSeverity = 0;
         foreach(KeyValuePair<string, Need> need in population.Needs)
         {
-            switch(need.Value.GetCondition(need.Value.Value))
+            switch(need.Value.GetCondition(need.Value.NeedValue))
             {
                 case NeedCondition.Bad:
                     if (need.Value.Severity > worstSeverity)

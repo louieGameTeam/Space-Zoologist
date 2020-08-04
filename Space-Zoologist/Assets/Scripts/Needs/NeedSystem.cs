@@ -4,26 +4,29 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// Abstract class that all NeedSystems will inherit from. Every need system will have a list of populations 
+/// Abstract class that all NeedSystems will inherit from. Every need system will have a list of consumers (Life) 
 /// that have the need that the need system is in charge of, and keeps this need up to date for all of its 
-/// populations.
+/// consumers.
 /// </summary>
 abstract public class NeedSystem
 {
-    public string NeedName { get; private set; }
+    public NeedType NeedType { get; private set; }
     public bool IsDirty => this.isDirty;
 
-    protected bool isDirty = default;
+    // Dirty flag is on to force intial update
+    protected bool isDirty = true;
     protected List<Life> Consumers = new List<Life>();
 
-    protected Dictionary<FoodSource, int[]> FoodSourceAccessableTerrain = new Dictionary<FoodSource, int[]>();
-
-    public NeedSystem(string needName)
+    public NeedSystem(NeedType needType)
     {
-        NeedName = needName;
+        NeedType = needType;
     }
 
-    public void MarkAsDirty()
+    /// <summary>
+    /// Mark this system dirty
+    /// </summary>
+    /// <remarks>Any one can mark a system dirty, but only the system can unmark itself</remarks>
+    virtual public void MarkAsDirty()
     {
         this.isDirty = true;
     }
@@ -32,14 +35,6 @@ abstract public class NeedSystem
     {
         this.isDirty = true;
         this.Consumers.Add(life);
-
-        if(life.GetType() == typeof(FoodSource))
-        {
-            if (!this.FoodSourceAccessableTerrain.ContainsKey((FoodSource)life))
-            {
-                this.FoodSourceAccessableTerrain.Add((FoodSource)life, TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(((FoodSource)life).GetPosition()), ((FoodSource)life).Species.RootRadius));
-            }
-        }
     }
 
     virtual public bool RemoveConsumer(Life life)
@@ -48,34 +43,14 @@ abstract public class NeedSystem
         return this.Consumers.Remove(life);
     }
 
-    // If any consumer is dirty then recalculate the whole system
+    // Check the evnoirmental state of the consumers, currently only terrain
     virtual public bool CheckState()
     {
         foreach (Life consumer in this.Consumers)
         {
-            if(consumer.GetType() == typeof(Population))
+            if (consumer.GetAccessibilityStatus())
             {
-                if (ReservePartitionManager.ins.PopulationAccessbilityStatus[(Population)consumer])
-                {
-                    return true;
-                }
-            }
-            else if(consumer.GetType() == typeof(FoodSource))
-            {
-                // Check if a food source's accessiable terrain has changed
-                //return true;
-                var preTerrain = this.FoodSourceAccessableTerrain[(FoodSource)consumer];
-                var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(((FoodSource)consumer).GetPosition()), ((FoodSource)consumer).Species.RootRadius);
-
-                if (!preTerrain.SequenceEqual(curTerrain))
-                {
-                    this.FoodSourceAccessableTerrain[(FoodSource)consumer] = curTerrain;
-                    return true;
-                }
-            }
-            else
-            {
-                Debug.Assert(true, "Consumer type error");
+                return true;
             }
         }
 

@@ -74,6 +74,9 @@ public class EnclosureSystem : MonoBehaviour
     public List<AtmosphericComposition> Atmospheres { get; private set; }
 
     [SerializeField] private LevelDataReference LevelDataReference = default;
+    [SerializeField] private LevelData levelData = default;
+    [SerializeField] private TileSystem TileSystem = default;
+
     // Have enclosed area been initialized?
     bool initialized = false;
 
@@ -92,7 +95,8 @@ public class EnclosureSystem : MonoBehaviour
 
     private void Start()
     {
-        GlobalAtmosphere = LevelDataReference.LevelData.GlobalAtmosphere;
+        //GlobalAtmosphere = LevelDataReference.LevelData.GlobalAtmosphere;
+        GlobalAtmosphere = this.levelData.GlobalAtmosphere;
     }
 
     /// <summary>
@@ -149,8 +153,8 @@ public class EnclosureSystem : MonoBehaviour
         Stack<Vector3Int> walls = new Stack<Vector3Int>();
 
         // starting location, may be changed later for better performance
-        Vector3Int cur = TileSystem.ins.WorldToCell(new Vector3(minx, miny, 0));
-        TerrainTile curTile = TileSystem.ins.GetTerrainTileAtLocation(cur);
+        Vector3Int cur = this.TileSystem.WorldToCell(new Vector3(minx, miny, 0));
+        TerrainTile curTile = this.TileSystem.GetTerrainTileAtLocation(cur);
         if (curTile != null)
         {
             if (curTile.type == TileType.Wall)
@@ -180,7 +184,7 @@ public class EnclosureSystem : MonoBehaviour
             }
 
             // check if tilemap has tile
-            TerrainTile tile = TileSystem.ins.GetTerrainTileAtLocation(cur);
+            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
             if (tile != null)
             {
                 if (tile.type != TileType.Wall)
@@ -265,7 +269,7 @@ public class EnclosureSystem : MonoBehaviour
                 }
 
                 // check if tilemap has tile
-                TerrainTile tile = TileSystem.ins.GetTerrainTileAtLocation(cur);
+                TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
                 if (tile != null)
                 {
                     if (tile.type != TileType.Wall)
@@ -367,7 +371,7 @@ public class EnclosureSystem : MonoBehaviour
         int p = -100;
         while (p < 100)
         {
-            if (TileSystem.ins.GetTerrainTileAtLocation(TileSystem.ins.WorldToCell(new Vector3(p, 0, 0))) != null)
+            if (this.TileSystem.GetTerrainTileAtLocation(this.TileSystem.WorldToCell(new Vector3(p, 0, 0))) != null)
             {
                 break;
             }
@@ -378,7 +382,7 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         // outer most position
-        Vector3Int cur = TileSystem.ins.WorldToCell(new Vector3(p, 0, 0));
+        Vector3Int cur = this.TileSystem.WorldToCell(new Vector3(p, 0, 0));
         stack.Push(cur);
 
         // iterate until no tile left in stack
@@ -394,7 +398,7 @@ public class EnclosureSystem : MonoBehaviour
             }
 
             // check if tilemap has tile
-            TerrainTile tile = TileSystem.ins.GetTerrainTileAtLocation(cur);
+            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
             if (tile != null)
             {
                 if (tile.type != TileType.Wall)
@@ -457,7 +461,7 @@ public class EnclosureSystem : MonoBehaviour
                 }
 
                 // check if tilemap has tile
-                TerrainTile tile = TileSystem.ins.GetTerrainTileAtLocation(cur);
+                TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
                 if (tile != null)
                 {
                     if (tile.type != TileType.Wall)

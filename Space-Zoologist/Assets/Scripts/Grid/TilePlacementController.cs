@@ -29,6 +29,7 @@ public class TilePlacementController : MonoBehaviour, IValidatePlacement
     private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
     private int lastCornerX;
     private int lastCornerY;
+    [SerializeField] private TileSystem TileSystem = default;
 
     private void Awake()
     {
@@ -212,7 +213,7 @@ public class TilePlacementController : MonoBehaviour, IValidatePlacement
                     {
                         foreach (TerrainTile managedTile in tileColorManager.managedTiles)
                         {
-                            foreach (Vector3Int affectedTileLocation in TileSystem.ins.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
+                            foreach (Vector3Int affectedTileLocation in this.TileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
                             {
                                 tileColorManager.SetTileColor(affectedTileLocation, managedTile);
                             }
@@ -395,6 +396,10 @@ public class TilePlacementController : MonoBehaviour, IValidatePlacement
                     lastPlacedTile = cellLocation;
                     isFirstTile = false;
             }
+
+            // Terrain changed, mark TerrainNS dirty
+            //NeedSystemManager.ins.Systems[NeedType.Terrain].MarkAsDirty();
+
             return true;
         }
         else

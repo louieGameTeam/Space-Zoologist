@@ -37,14 +37,8 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
 
-    [SerializeField] private List<NeedTypeConstructData> needsList = new List<NeedTypeConstructData>()
-    {
-        new NeedTypeConstructData(NeedType.Atmosphere),
-        new NeedTypeConstructData(NeedType.Terrain),
-        new NeedTypeConstructData(NeedType.Density),
-        new NeedTypeConstructData(NeedType.Food),
-        new NeedTypeConstructData(NeedType.Species),
-    };
+    [SerializeField]
+    private List<NeedTypeConstructData> needsList = new List<NeedTypeConstructData>();
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
@@ -70,7 +64,7 @@ public class AnimalSpecies : ScriptableObject
         this.dominance = dominance;
         this.growthRate = growthRate;
         this.accessibleTerrain = new List<TileType>();
-        foreach(string tileType in accessibleTerrain)
+        foreach (string tileType in accessibleTerrain)
         {
             if (tileType.Equals("Sand", StringComparison.OrdinalIgnoreCase))
             {

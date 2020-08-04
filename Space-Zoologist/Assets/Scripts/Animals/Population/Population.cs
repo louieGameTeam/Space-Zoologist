@@ -36,6 +36,8 @@ public class Population : MonoBehaviour, Life
     public float TimeSinceUpdate = 0f;
     public bool IssueWithAccessibleArea = false;
 
+    private ReservePartitionManager ReservePartitionManager = default;
+
     private void Awake()
     {
         this.CurrentBehaviors = new List<BehaviorScriptName>();
@@ -56,7 +58,7 @@ public class Population : MonoBehaviour, Life
         this.origin = origin;
         this.transform.position = origin;
         // - the pods will contain populations which we'll likely want to specify certain aspects of
-        for (int i=0; i<populationSize; i++)
+        for (int i = 0; i < populationSize; i++)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
@@ -71,7 +73,8 @@ public class Population : MonoBehaviour, Life
     public void InitializePopulationData(NeedSystemManager needSystemManager)
     {
         if (this.NeedSystemManager == null) this.NeedSystemManager = needSystemManager;
-        ReservePartitionManager.ins.AddPopulation(this);
+        this.ReservePartitionManager = FindObjectOfType<ReservePartitionManager>();
+        ReservePartitionManager.AddPopulation(this);
         this.UpdateAccessibleArea();
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
@@ -183,14 +186,14 @@ public class Population : MonoBehaviour, Life
     private void MarkNeedsDirty()
     {
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
-        foreach (string needName in this.needs.Keys)
+        foreach (Need need in this.needs.Values)
         {
-            if (!Enum.IsDefined(typeof(AtmoshpereComponent), needName) && !Enum.IsDefined(typeof(TileType), needName))
+            if (need.NeedType != NeedType.Atmosphere && need.NeedType != NeedType.Terrain && need.NeedType != NeedType.Liquid)
             {
-                this.NeedSystemManager.Systems[needName].MarkAsDirty();
+                this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
             }
         }
-        this.NeedSystemManager.Systems[this.species.SpeciesName].MarkAsDirty();
+        this.NeedSystemManager.Systems[NeedType.Species].MarkAsDirty();
     }
 
     // TODO remove using PoolingSystem
@@ -207,7 +210,7 @@ public class Population : MonoBehaviour, Life
     public void UpdateNeed(string need, float value)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        this.needs[need].Value = value;
+        this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }
 
@@ -219,7 +222,7 @@ public class Population : MonoBehaviour, Life
     public float GetNeedValue(string need)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        return this.needs[need].Value;
+        return this.needs[need].NeedValue;
     }
 
     /// <summary>
@@ -228,7 +231,7 @@ public class Population : MonoBehaviour, Life
     public void UpdateGrowthConditions()
     {
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
-        Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
+        //Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
     private void TestAddAnimal()
@@ -293,5 +296,9 @@ public class Population : MonoBehaviour, Life
     {
         return this.gameObject.transform.position;
     }
-}
 
+    public bool GetAccessibilityStatus()
+    {
+        return ReservePartitionManager.PopulationAccessbilityStatus[this];
+    }
+}

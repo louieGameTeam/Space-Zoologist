@@ -10,12 +10,13 @@ public class Need
 {
     public string NeedName => needName;
     public int Severity => severity;
-    public NeedType NType => needType;
+    public NeedType NeedType => needType;
     public Sprite Sprite => sprite;
+    public float NeedValue => this.neeedValue;
 
-    [SerializeField] public float Value = default;
     [SerializeField] private NeedType needType = default;
     [SerializeField] private string needName = default;
+    [SerializeField] private float neeedValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
     [SerializeField] private List<NeedCondition> conditions = default;
@@ -118,5 +119,10 @@ public class Need
                 thresholds[i + 1] = thresholds[i] + 1;
             }
         }
+    }
+
+    public void UpdateNeedValue(float value)
+    {
+        this.neeedValue = value;
     }
 }
