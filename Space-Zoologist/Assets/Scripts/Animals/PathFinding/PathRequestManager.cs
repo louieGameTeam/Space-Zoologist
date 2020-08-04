@@ -46,12 +46,20 @@ namespace AnimalPathfinding
                 Debug.Log("PathRequestManager not attached to GameObject, Pathfinding will not work");
                 return;
             }
+            // for (int x=0; x<30; x++)
+            // {
+            //     for (int y=0; y<20; y++)
+            //     {
+            //         Debug.Log("(" + x + ", " + y + ") can access: " + grid.nodes[x, y].walkable);
+            //     }
+            // }
+            // Debug.Log("Grid Size: " + grid.nodes.GetLength(0) +" x " + grid.nodes.GetLength(1));
             // Debug.Log("Start map position: ");
             // Debug.Log("("+start.x+","+start.y+")");
             // Debug.Log("End map position: ");
             // Debug.Log("("+end.x+","+end.y+")");
-            AnimalPathfinding.Node nodeStart = TilemapUtil.ins.CellToGrid(start, grid);
-            AnimalPathfinding.Node nodeEnd = TilemapUtil.ins.CellToGrid(end, grid);
+            AnimalPathfinding.Node nodeStart = grid.GetNode(start.x, start.y);
+            AnimalPathfinding.Node nodeEnd = grid.GetNode(end.x, end.y);
             // Debug.Log("Start grid position: ");
             // Debug.Log("("+nodeStart.gridX+","+nodeStart.gridY+")");
             // Debug.Log("End grid position: ");

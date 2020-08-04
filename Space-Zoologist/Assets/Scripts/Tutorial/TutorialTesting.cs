@@ -34,6 +34,7 @@ public class TutorialTesting : MonoBehaviour
         //TODO: what this is doing?
         //NeedSystemManager.AddSystem(new FoodSourceNeedSystem(ReservePartitionManager.ins, ItemToAdd[0].ItemName));
         NeedSystemManager.AddSystem(new FoodSourceNeedSystem(ReservePartitionManager, NeedType.FoodSource));
+
         this.TriggerDialogue(0);
     }
 
@@ -65,7 +66,6 @@ public class TutorialTesting : MonoBehaviour
         }
         else if (!this.Triggers[3] && PopulationManager.Populations.Count == 2)
         {
-            PopulationManager.Populations[1].AutomotonTesting = true;
             this.podMenu.DeselectSpecies();
             this.Triggers[3] = true;
             this.podMenu.Pods[1].SetActive(false);
@@ -103,25 +103,5 @@ public class TutorialTesting : MonoBehaviour
             FoodSourceManager.UpdateFoodSourceSpecies(foodSourceToAdd);
         }
         this.SectionToAddTo[index].AddItem(ItemToAdd[index]);
-    }
-
-    private void ShadeOutsidePerimeter()
-    {
-        for (int x=-2; x<TilemapUtil.ins.MaxWidth + 2; x++)
-        {
-            this.ShadeSquare(x, -2, Color.red);
-            this.ShadeSquare(x, TilemapUtil.ins.MaxHeight + 1, Color.red);
-        }
-        for (int y=-2; y<TilemapUtil.ins.MaxHeight + 2; y++)
-        {
-            this.ShadeSquare(-2, y, Color.red);
-            this.ShadeSquare(TilemapUtil.ins.MaxWidth + 1, y, Color.red);
-        }
-    }
-
-    private void ShadeSquare(int x, int y, Color color)
-    {
-        Vector3Int cellToShade = new Vector3Int(x, y, 0);
-        baseLayer.SetColor(cellToShade, color);
     }
 }

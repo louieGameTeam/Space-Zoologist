@@ -314,20 +314,32 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     // Will need to make the grid the size of the max tilemap size
-    public AnimalPathfinding.Grid GetGridWithAccess(Population population, Tilemap temp)
+    public AnimalPathfinding.Grid GetGridWithAccess(Population population, int mapWidth, int mapHeight)
     {
-        bool[,] tileGrid = new bool[temp.size.x, temp.size.y];
+        // Debug.Log("Setting up pathfinding grid");
+        bool[,] tileGrid = new bool[mapWidth, mapHeight];
         foreach (KeyValuePair<Vector3Int, long> position in AccessMap) {
-            //Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
+            //Debug.Log("(" + (position.Key.x) + ", " + (position.Key.y) + ")");
             if (CanAccess(population, position.Key))
             {
-                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = true;
-                // Debug.Log("(" + (position.Key.x + (temp.origin.x * -1))+ ", " + (position.Key.y + (temp.origin.y * -1)) + ")");
+                // Debug.Log("(" + position.Key.x + ", " + position.Key.y + ")");
+                tileGrid[position.Key.x, position.Key.y] = true;
             }
             else
             {
-                tileGrid[position.Key.x + (temp.origin.x * -1), position.Key.y + (temp.origin.y * -1)] = false;
+                tileGrid[position.Key.x, position.Key.y] = false;
             }
+        }
+        // Setup boundaries for movement
+        for (int x=0; x<mapWidth; x++)
+        {
+            tileGrid[x, 0] = false;
+            tileGrid[x, mapHeight - 1] = false;
+        }
+        for (int y=0; y<mapHeight; y++)
+        {
+            tileGrid[0, y] = false;
+            tileGrid[mapWidth - 1, y] = false;
         }
         return new AnimalPathfinding.Grid(tileGrid);
     }

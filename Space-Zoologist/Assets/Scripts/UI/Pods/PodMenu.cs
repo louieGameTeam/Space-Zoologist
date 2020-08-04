@@ -14,13 +14,12 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
     [SerializeField] TileSystem TileSystem = default;
 
     public List<GameObject> Pods { get; set; }
-    RectTransform rectTransform = default;
+    [SerializeField] List<RectTransform> UIElements = default;
     AnimalSpecies selectedSpecies = null;
 
     private void Awake()
     {
         this.Pods = new List<GameObject>();
-        rectTransform = GetComponent<RectTransform>();
     }
 
     void Start()
@@ -33,13 +32,6 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!PointOverMenu(Input.mousePosition) && !selectedSpecies)
-            {
-                // Debug.Log("Pod issue");
-            }
-        }
         if (Input.GetMouseButtonUp(1))
         {
             DeselectSpecies();
@@ -77,7 +69,7 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
     public void OnCursorItemClick(PointerEventData pointerEventData)
     {
         // If in CursorItem mode and the cursor is clicked while over the menu
-        if (PointOverMenu(pointerEventData.position))
+        if (IsCursorOverUI(pointerEventData))
         {
             Debug.Log("Clicked over UI");
             DeselectSpecies();
@@ -112,8 +104,15 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
         return false;
     }
 
-    private bool PointOverMenu(Vector3 point)
+    public bool IsCursorOverUI(PointerEventData eventData)
     {
-        return RectTransformUtility.RectangleContainsScreenPoint(rectTransform, point);
+        foreach (RectTransform UIElement in this.UIElements)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(UIElement, eventData.position))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

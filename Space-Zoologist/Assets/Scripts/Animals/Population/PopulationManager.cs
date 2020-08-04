@@ -11,12 +11,13 @@ public class PopulationManager : MonoBehaviour
     private List<Population> ExistingPopulations = new List<Population>();
     public List<Population> Populations => ExistingPopulations;
     [SerializeField] public NeedSystemManager NeedSystemManager = default;
-    [SerializeField] private LevelDataReference LevelDataReference = default;
+    [SerializeField] public LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] public bool AutomotonTesting = false;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
 
     private SpeciesNeedSystem speciesNeedSystem = null;
+
 
     public void Initialize()
     {
@@ -47,7 +48,6 @@ public class PopulationManager : MonoBehaviour
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
-        population.AutomotonTesting = this.AutomotonTesting;
         population.InitializeNewPopulation(species, position, count, NeedSystemManager);
         this.ExistingPopulations.Add(population);
         
@@ -79,7 +79,6 @@ public class PopulationManager : MonoBehaviour
     // TODO determine what else needs to happen with an existing population
     private void SetupExistingPopulation(Population population)
     {
-        population.AutomotonTesting = this.AutomotonTesting;
         population.InitializePopulationData(NeedSystemManager);
         population.InitializeExistingAnimals();
         this.HandlePopulationRegistration(population);

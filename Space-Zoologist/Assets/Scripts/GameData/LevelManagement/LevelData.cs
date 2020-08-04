@@ -14,7 +14,7 @@ public class LevelData : ScriptableObject
     public List<Item> Items => items;
     public AtmosphericComposition GlobalAtmosphere => globalAtmosphere;
 
-    [SerializeField] public IntVariable startingBalance = default;
+    [Expandable] public IntVariable startingBalance = default;
     [SerializeField] public int MapWidth = default;
     [SerializeField] public int MapHeight = default;
     [Expandable] public List<FoodSourceSpecies> foodSources = default;

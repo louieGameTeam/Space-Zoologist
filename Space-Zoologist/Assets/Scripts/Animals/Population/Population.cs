@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 
 // TODO figure out how to refactor the MarkNeedsDirty so that NeedSystemManager isn't a dependency
+// TODO figure out how to prevent animal's sprite from changing direction erratically
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
@@ -17,11 +18,8 @@ public class Population : MonoBehaviour, Life
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
     public AnimalPathfinding.Grid grid { get; private set; }
-    // TODO when accessible locations becomes nothing, add a warning so the player can respond.
-    public List<Vector3Int> AccessibleLocations { get; private set; }
+    public List<Vector3Int>  AccessibleLocations { get; private set; }
     public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-    // TODO remove this and all dependencies once framework in place, add as actual movement
-    public bool AutomotonTesting { get; set; }
 
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
@@ -33,15 +31,17 @@ public class Population : MonoBehaviour, Life
     [SerializeField] private List<Need> NeedEditorTesting = default;
 
     private Vector3 origin = Vector3.zero;
-    private GrowthCalculator GrowthCalculator = new GrowthCalculator();
+    private GrowthCalculator GrowthCalculator = default;
     private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
+    public bool IssueWithAccessibleArea = false;
 
     private ReservePartitionManager ReservePartitionManager = default;
 
     private void Awake()
     {
         this.CurrentBehaviors = new List<BehaviorScriptName>();
+        this.GrowthCalculator = new GrowthCalculator();
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void InitializePopulationData(NeedSystemManager needSystemManager)
     {
-        this.NeedSystemManager = needSystemManager;
+        if (this.NeedSystemManager == null) this.NeedSystemManager = needSystemManager;
         this.ReservePartitionManager = FindObjectOfType<ReservePartitionManager>();
         ReservePartitionManager.AddPopulation(this);
         this.UpdateAccessibleArea();
@@ -127,8 +127,34 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void UpdateAccessibleArea()
     {
-        this.AccessibleLocations = ReservePartitionManager.GetLocationsWithAccess(this);
-        this.grid = ReservePartitionManager.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
+        this.AccessibleLocations = ReservePartitionManager.ins.GetLocationsWithAccess(this);
+        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.MaxWidth, TilemapUtil.ins.MaxHeight );
+        if (this.AccessibleLocations.Count < 6)
+        {
+            this.IssueWithAccessibleArea = true;
+            this.PauseAnimals();
+        }
+        else
+        {
+            this.IssueWithAccessibleArea = false;
+            this.UnpauseAnimals();
+        }
+    }
+
+    public void PauseAnimals()
+    {
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            animal.GetComponent<MovementController>().IsPaused = true;
+        }
+    }
+
+    public void UnpauseAnimals()
+    {
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            animal.GetComponent<MovementController>().IsPaused = false;
+        }
     }
 
     public void InitializeExistingAnimals()
@@ -153,12 +179,6 @@ public class Population : MonoBehaviour, Life
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        // TODO remove when behavior framework setup
-        if (this.AutomotonTesting)
-        {
-            Debug.Log("Automotan activated");
-            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
-        }
         AnimalPopulation.Add(newAnimal);
         this.MarkNeedsDirty();
     }
@@ -173,7 +193,6 @@ public class Population : MonoBehaviour, Life
                 this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
             }
         }
-
         this.NeedSystemManager.Systems[NeedType.Species].MarkAsDirty();
     }
 
@@ -220,11 +239,6 @@ public class Population : MonoBehaviour, Life
         this.AnimalsBehaviorData.Add(new BehaviorsData());
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
-        if (this.AutomotonTesting)
-        {
-            Debug.Log("Automotan activated");
-            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
-        }
         AnimalPopulation.Add(newAnimal);
     }
 
@@ -255,9 +269,9 @@ public class Population : MonoBehaviour, Life
         {
             this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
         }
-        this.UpdateNeeds();
         if (this.GrowthCalculator != null)
         {
+            this.UpdateNeeds();
             this.UpdateGrowthConditions();
         }
     }

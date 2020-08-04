@@ -2,17 +2,22 @@
 using UnityEngine.Tilemaps;
 
 /// <summary>
-/// For translating between vector3Int to location on 2d grid array
+/// Translating between world position and grid cell location and highlights the boundaries
 /// </summary>
 public class TilemapUtil : MonoBehaviour
 {
     public static TilemapUtil ins;
+    public int MaxWidth { get => LevelDataReference.LevelData.MapWidth; }
+    public int MaxHeight { get => LevelDataReference.LevelData.MapHeight; }
+    [SerializeField] private LevelDataReference LevelDataReference = default;
+    [SerializeField] private TilePlacementController TilePlacementController = default;
+    [Header("Shows shaded perimeter when true")]
+    [SerializeField] private bool DesigningLevel = true;
 
-    [Header("Should hold largest tilemap")]
-    [SerializeField] public Tilemap largestMap = default;
-    [SerializeField] public int MaxWidth = default;
-    [SerializeField] public int MaxHeight = default;
-    public void Awake()
+    [Header("Used for WorldToCell function")]
+    [SerializeField] public Tilemap referenceTilemap = default;
+
+    private void Awake()
     {
         if (ins != null && this != ins)
         {
@@ -24,99 +29,39 @@ public class TilemapUtil : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (this.DesigningLevel) this.ShadeOutsidePerimeter();
+    }
+
     /// <summary>
-    /// Converts a world position to cell position using the largest reference tilemap.
+    /// Converts a world position to cell position using a reference tilemap.
     /// </summary>
     public Vector3Int WorldToCell(Vector3 worldPos)
     {
-        return largestMap.WorldToCell(worldPos);
+        return referenceTilemap.WorldToCell(worldPos);
     }
 
     /// <summary>
-    /// Translates cell location to 2d array location using the largest map as reference.
+    /// Indicates where the perimeter for placing items is at
     /// </summary>
-    /// <param name="location"></param>
-    /// <param name="grid"></param>
-    /// <returns></returns>
-    public AnimalPathfinding.Node CellToGrid(Vector3Int location, AnimalPathfinding.Grid grid)
+    private void ShadeOutsidePerimeter()
     {
-        return grid.GetNode(location.x + (largestMap.origin.x * -1), location.y + (largestMap.origin.y * -1));
-    }
-
-    /// <summary>
-    /// Translates node from 2d array back to world position.
-    /// </summary>
-    /// <param name="node"></param>
-    /// <param name="pathOffset"></param>
-    /// <returns></returns>
-    public Vector3 GridToWorld(Vector3 node, float pathOffset)
-    {
-        return new Vector3(node.x + pathOffset + largestMap.origin.x, node.y + pathOffset + largestMap.origin.y, 0);
-    }
-
-    public Vector3Int GridToWorld(Vector3 node)
-    {
-        return new Vector3Int((int)(node.x + largestMap.origin.x), (int)(node.y + largestMap.origin.y), 0);
-    }
-
-    public bool CanAccess(AnimalPathfinding.Node node, AnimalPathfinding.Grid grid)
-    {
-        return grid.GetNode(node.gridX, node.gridY).walkable;
-    }
-
-    // Using direction, starting location, and grid, determine if the next spot on the grid is accessible
-    public bool DirectionAllowed(Direction direction, Vector3 startingLocation, AnimalPathfinding.Grid grid)
-    {
-        bool isAllowed = false;
-        AnimalPathfinding.Node currentSpot = this.CellToGrid(this.WorldToCell(startingLocation), grid);
-        if (currentSpot == null)
+        for (int x=-1; x<this.MaxWidth + 1; x++)
         {
-            Debug.Log("Node outside of range");
-            return false;
+            this.ShadeSquare(x, -1, Color.red);
+            this.ShadeSquare(x, this.MaxHeight, Color.red);
         }
-        switch(direction)
+        for (int y=-1; y<this.MaxHeight + 1; y++)
         {
-            case Direction.up:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX, currentSpot.gridY + 1);
-                break;
-            }
-            case Direction.down:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX, currentSpot.gridY - 1);
-                break;
-            }
-            case Direction.left:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY);
-                break;
-            }
-            case Direction.right:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY);
-                break;
-            }
-            case Direction.upRight:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY + 1);
-                break;
-            }
-            case Direction.upLeft:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY + 1);
-                break;
-            }
-            case Direction.downRight:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX + 1, currentSpot.gridY - 1);
-                break;
-            }
-            case Direction.downLeft:
-            {
-                isAllowed = grid.IsAccessible(currentSpot.gridX - 1, currentSpot.gridY - 1);
-                break;
-            }
+            this.ShadeSquare(-1, y, Color.red);
+            this.ShadeSquare(this.MaxWidth, y, Color.red);
         }
-        return isAllowed;
+    }
+
+    private void ShadeSquare(int x, int y, Color color)
+    {
+        Vector3Int cellToShade = new Vector3Int(x, y, 0);
+        referenceTilemap.SetColor(cellToShade, color);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(fileName="Scene Navigator", menuName="Scene Data/Scene Navigator")]
 public class SceneNavigator : ScriptableObject
 {
-    [SerializeField] public List<Level> Levels = default;
+    [Expandable] public List<Level> Levels = default;
 
     public void LoadLevel(string levelName)
     {
