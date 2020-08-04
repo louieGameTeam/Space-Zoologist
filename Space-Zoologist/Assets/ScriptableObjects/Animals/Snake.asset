@@ -21,7 +21,7 @@ MonoBehaviour:
   - NeedType: 0
     behaviorScriptName: 0
   size: 5
-  accessibleTerrain: 020000000100000003000000
+  accessibleTerrain: 01000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
   needsList:
   - needType: 0
@@ -32,18 +32,12 @@ MonoBehaviour:
       thresholds:
       - 10
       - 40
-    - needName: Grass
-      severity: 5
-      conditions: 000000000100000002000000
-      thresholds:
-      - 10
-      - 20
     - needName: Dirt
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
-      - 20
+      - 40
   - needType: 4
     needs:
     - needName: MineralX
@@ -70,4 +64,12 @@ MonoBehaviour:
       thresholds:
       - 7
       - 15
+  - needType: 2
+    needs:
+    - needName: Density
+      severity: 2
+      conditions: 020000000100000000000000
+      thresholds:
+      - 1
+      - 2
   representation: {fileID: 0}

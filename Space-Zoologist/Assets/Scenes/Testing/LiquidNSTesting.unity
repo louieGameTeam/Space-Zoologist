@@ -396,6 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelDataReference: {fileID: 923949444}
   levelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
+  TileSystem: {fileID: 1473133748547035361}
 --- !u!1 &387577289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,6 +1329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
+  TileSystem: {fileID: 1473133748547035361}
 --- !u!224 &1718686027 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 849827784489429125, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -1709,6 +1711,11 @@ PrefabInstance:
       propertyPath: LevelDataReference
       value: 
       objectReference: {fileID: 923949444}
+    - target: {fileID: 849827784489429144, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: TileSystem
+      value: 
+      objectReference: {fileID: 1473133748547035361}
     - target: {fileID: 849827785016326674, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_Text
@@ -1814,6 +1821,11 @@ PrefabInstance:
       propertyPath: FoodSourceManager
       value: 
       objectReference: {fileID: 5562594959048827313}
+    - target: {fileID: 4731764134846842071, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: TileSystem
+      value: 
+      objectReference: {fileID: 1473133748547035361}
     - target: {fileID: 7079002998952295262, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: foodSourceManager
@@ -7000,6 +7012,7 @@ MonoBehaviour:
   - {fileID: 1473133747567685824}
   - {fileID: 1473133748002335534}
   - {fileID: 1902875452838640423}
+  TileSystem: {fileID: 1473133748547035361}
 --- !u!156049354 &1473133748547035357
 Grid:
   m_ObjectHideFlags: 0
@@ -7336,6 +7349,11 @@ PrefabInstance:
       propertyPath: needSystemsTester
       value: 
       objectReference: {fileID: 2116678117}
+    - target: {fileID: 8582389809603506210, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: ReservePartitionManager
+      value: 
+      objectReference: {fileID: 1661281791}
     - target: {fileID: 8743428314657368663, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: PopulationManager
@@ -7488,7 +7506,7 @@ MonoBehaviour:
   PopulationPrefab: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
     type: 3}
   AutomotonTesting: 1
-  ReservePartitionManager: {fileID: 0}
+  ReservePartitionManager: {fileID: 1661281791}
 --- !u!1 &6865833327658264099
 GameObject:
   m_ObjectHideFlags: 0

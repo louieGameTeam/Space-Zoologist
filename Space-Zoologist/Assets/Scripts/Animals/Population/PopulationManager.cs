@@ -90,8 +90,8 @@ public class PopulationManager : MonoBehaviour
     {
         ReservePartitionManager.AddPopulation(population);
 
-        this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
+        this.speciesNeedSystem.AddPopulation(population);
     }
 
     public void ResetAccessibilityStatus()
