@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class TutorialTesting : MonoBehaviour
 {
+    [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
@@ -32,7 +33,7 @@ public class TutorialTesting : MonoBehaviour
         this.ShadeOutsidePerimeter();
         //TODO: what this is doing?
         //NeedSystemManager.AddSystem(new FoodSourceNeedSystem(ReservePartitionManager.ins, ItemToAdd[0].ItemName));
-        NeedSystemManager.AddSystem(new FoodSourceNeedSystem(ReservePartitionManager.ins, NeedType.FoodSource));
+        NeedSystemManager.AddSystem(new FoodSourceNeedSystem(ReservePartitionManager, NeedType.FoodSource));
         this.TriggerDialogue(0);
     }
 
@@ -91,7 +92,7 @@ public class TutorialTesting : MonoBehaviour
         // TODO: only need to add a system once
         // Creating new need calculator is hanlde when a new consumer or source is added
         //NeedSystemManager.AddSystem(new SpeciesNeedSystem(ReservePartitionManager.ins, speciesToIntroduce.SpeciesName));
-        NeedSystemManager.AddSystem(new SpeciesNeedSystem(ReservePartitionManager.ins, NeedType.Species));
+        NeedSystemManager.AddSystem(new SpeciesNeedSystem(ReservePartitionManager, NeedType.Species));
         this.podMenu.AddPod(speciesToIntroduce);
     }
 

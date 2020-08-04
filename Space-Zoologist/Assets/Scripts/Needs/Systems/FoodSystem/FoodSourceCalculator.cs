@@ -50,7 +50,7 @@ public class FoodSourceCalculator
         {
             if (rpm.PopulationAccessbilityStatus[population])
             {
-                //Debug.Log($"{population} triggered a accessible list reset");
+                Debug.Log($"{population} triggered a accessible list reset");
 
                 foreach (FoodSource foodSource in foodSources)
                 {

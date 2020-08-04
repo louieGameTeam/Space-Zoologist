@@ -14,6 +14,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] public bool AutomotonTesting = false;
+    [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
 
     private SpeciesNeedSystem speciesNeedSystem = null;
 
@@ -26,7 +27,6 @@ public class PopulationManager : MonoBehaviour
         {
             this.ExistingPopulations.Add(population.GetComponent<Population>());
         }
-
 
         foreach (Population population in this.ExistingPopulations)
         {
@@ -63,7 +63,7 @@ public class PopulationManager : MonoBehaviour
     public void AddAnimals(AnimalSpecies species, int count, Vector3 position)
     {
         // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
-        List<Population> localPopulations = ReservePartitionManager.ins.GetPopulationsWithAccessTo(position);
+        List<Population> localPopulations = ReservePartitionManager.GetPopulationsWithAccessTo(position);
         Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
         if (preexistingPopulation)
         {
@@ -88,9 +88,17 @@ public class PopulationManager : MonoBehaviour
     // TODO figure out a better name for what this function is doing: registering the population with various lists and systems
     private void HandlePopulationRegistration(Population population)
     {
-        ReservePartitionManager.ins.AddPopulation(population);
+        ReservePartitionManager.AddPopulation(population);
 
         this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
+    }
+
+    public void ResetAccessibilityStatus()
+    {
+        foreach (Population population in this.ExistingPopulations)
+        {
+            ReservePartitionManager.PopulationAccessbilityStatus[population] = false;
+        }
     }
 }

@@ -26,11 +26,13 @@ public class FoodSource: MonoBehaviour, Life
     private bool hasAccessibleTerrainChanged = default;
     private bool hasAccessibleTerrainChecked = default;
 
+    private TileSystem TileSystem = default;
+
     private void Awake()
     {
         if (species)
         {
-            InitializeFoodSource(species,transform.position);
+            InitializeFoodSource(species, transform.position);
         }
     }
 
@@ -40,8 +42,8 @@ public class FoodSource: MonoBehaviour, Life
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
-
-        this.accessibleTerrian = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        this.TileSystem = FindObjectOfType<TileSystem>();
+        this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 
     private void InitializeNeedValues()
@@ -120,7 +122,7 @@ public class FoodSource: MonoBehaviour, Life
         }
 
         var preTerrain = this.accessibleTerrian;
-        var curTerrain = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        var curTerrain = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
 
         // Accessible terrain had changed
         if(!preTerrain.SequenceEqual(curTerrain))
@@ -143,7 +145,7 @@ public class FoodSource: MonoBehaviour, Life
     {
         if (this.hasAccessibleTerrainChanged)
         {
-            this.accessibleTerrian = TileSystem.ins.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+            this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
         }
 
         // Reset flags

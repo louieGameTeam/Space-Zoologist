@@ -78,6 +78,8 @@ public class FoodSourceNeedSystem : NeedSystem
                         consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
                     }
                 }
+
+                Debug.Log($"{foodSourceCalculator.FoodSourceName} calculator updated");
             }
         }
 
@@ -132,5 +134,15 @@ public class FoodSourceNeedSystem : NeedSystem
         this.isDirty = true;
 
         return true;
+    }
+
+    public override void MarkAsDirty()
+    {
+        base.MarkAsDirty();
+
+        foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
+        {
+            foodSourceCalculator.MarkDirty();
+        }
     }
 }

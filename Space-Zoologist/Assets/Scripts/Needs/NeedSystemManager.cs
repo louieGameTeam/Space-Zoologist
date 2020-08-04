@@ -18,6 +18,8 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] FoodSourceManager FoodSourceManager = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
     [SerializeField] LevelDataReference levelDataReference = default;
+    [SerializeField] TileSystem TileSystem = default;
+    [SerializeField] ReservePartitionManager ReservePartitionManager = default;
 
     /// <summary>
     /// Initialize the universal need systems
@@ -25,21 +27,18 @@ public class NeedSystemManager : MonoBehaviour
     /// <remarks>Terrian/Atmoshpere -> FoodSource/Species -> Density, this order has to be fixed</remarks>
     private void Start()
     {
-        // Referrance supprot systems
-        ReservePartitionManager rpm = ReservePartitionManager.ins;
-
         // Add enviormental NeedSystem
         AddSystem(new AtmosphereNeedSystem(EnclosureSystem));
-        AddSystem(new TerrainNeedSystem(rpm, TileSystem.ins));
-        AddSystem(new LiquidNeedSystem(rpm, TileSystem.ins));
+        AddSystem(new TerrainNeedSystem(ReservePartitionManager, TileSystem));
+        AddSystem(new LiquidNeedSystem(ReservePartitionManager, TileSystem));
 
 
         // FoodSource and Species NS
-        AddSystem(new FoodSourceNeedSystem(rpm));
-        AddSystem(new SpeciesNeedSystem(rpm));
+        AddSystem(new FoodSourceNeedSystem(ReservePartitionManager));
+        AddSystem(new SpeciesNeedSystem(ReservePartitionManager));
 
         // Add Density NeedSystem
-        AddSystem(new DensityNeedSystem(rpm, TileSystem.ins));
+        AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
 
 
         FoodSourceManager.Initialize();
@@ -113,13 +112,9 @@ public class NeedSystemManager : MonoBehaviour
         }
 
         // Reset pop accessibility status
-        foreach (Population pop in ReservePartitionManager.ins.PopulationAccessbilityStatus.Keys.ToList())
-        {
-            ReservePartitionManager.ins.PopulationAccessbilityStatus[pop] = false;
-        }
+        PopulationManager.ResetAccessibilityStatus(); 
 
         // Reset food source accessibility status
-        // Note: this is the ideal place to do it be will need a equivilant of PopulationAccessbilityStatus in RPM
         FoodSourceManager.UpdateAccessibleTerrainInfoForAll();
     }
 

@@ -10,6 +10,8 @@ public class NeedSystemUpdater : MonoBehaviour
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] NeedSystemsTester needSystemsTester = default;
+    [SerializeField] ReservePartitionManager ReservePartitionManager = default;
+
     public bool isInStore { get; set; }
 
     public void PauseAllAnimals()
@@ -39,7 +41,7 @@ public class NeedSystemUpdater : MonoBehaviour
     public void UpdateAccessibleLocations()
     {
 
-        ReservePartitionManager.ins.UpdateAccessMap();
+        ReservePartitionManager.UpdateAccessMap();
         foreach (Population population in PopulationManager.Populations)
         {
             population.UpdateAccessibleArea();
