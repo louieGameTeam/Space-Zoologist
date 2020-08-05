@@ -179,7 +179,6 @@ public class Population : MonoBehaviour, Life
 
     public void AddAnimal(BehaviorsData data)
     {
-        Debug.Log("Animal added");
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         if (newAnimal == null)
         {
@@ -243,7 +242,6 @@ public class Population : MonoBehaviour, Life
 
     private void TestAddAnimal()
     {
-        Debug.Log("Test Animal added");
         this.AnimalsBehaviorData.Add(new BehaviorsData());
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);

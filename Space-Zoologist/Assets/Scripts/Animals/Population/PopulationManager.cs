@@ -41,8 +41,6 @@ public class PopulationManager : MonoBehaviour
     /// <param name="position">The origin point of the population</param>
     public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
-        Debug.Log("Population created");
-
         // Create population
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
@@ -68,7 +66,6 @@ public class PopulationManager : MonoBehaviour
         Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
         if (preexistingPopulation)
         {
-            //Debug.Log("Preexisting population");
             preexistingPopulation.AddAnimal(new BehaviorsData());
         }
         else
