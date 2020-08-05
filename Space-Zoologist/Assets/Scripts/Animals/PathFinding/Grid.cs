@@ -16,7 +16,7 @@ namespace AnimalPathfinding
     public class Grid
     {
         // nodes in grid
-        private Node[,] nodes;
+        public Node[,] nodes;
 
         // grid size
         private int gridSizeX, gridSizeY;
@@ -171,7 +171,7 @@ namespace AnimalPathfinding
 
         public Node GetNode(int x, int y)
         {
-            if (!IsAccessible(x, y))
+            if (x >= nodes.GetLength(0) || y >= nodes.GetLength(1) || x < 0 || y < 0)
             {
                 return null;
             }

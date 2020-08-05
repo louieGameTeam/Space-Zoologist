@@ -28,7 +28,7 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if consumer is dirty
             foreach (Population consumer in foodSourceCalculator.Consumers)
             {
-                if (consumer.GetAccessibilityStatus())
+                if (rpm.PopulationAccessbilityStatus[consumer])
                 {
                     foodSourceCalculator.MarkDirty();
                     needUpdate = true;
@@ -93,7 +93,7 @@ public class FoodSourceNeedSystem : NeedSystem
             this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(rpm, foodSource.Species.SpeciesName));
         }
 
-        this.foodSourceCalculators[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
+        this.foodSourceCalculators[foodSource.Species.SpeciesName].AddSource(foodSource);
 
         this.isDirty = true;
     }
@@ -127,7 +127,7 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if the need is a 'FoodSource' type
             if (need.NeedType == NeedType.FoodSource)
             {
-                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoverConsumer((Population)life), "Remove conumer failed!");
+                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoveConsumer((Population)life), "Remove conumer failed!");
             }
         }
 

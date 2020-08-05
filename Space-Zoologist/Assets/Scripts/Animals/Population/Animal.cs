@@ -28,31 +28,21 @@ public class Animal : MonoBehaviour
         this.BehaviorsData = data;
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
-        this.BehaviorComponents = new Dictionary<string, Behavior>();
-        foreach (BehaviorScriptTranslation component in this.PopulationInfo.Species.Behaviors)
-        {
-            this.AddBehaviorByName(component);
-        }
-        // TODO test if this can be done in the above loop
-        foreach (Behavior behaviorComponent in this.gameObject.GetComponents<Behavior>())
-        {
-            // Debug.Log("Behavior mapped: " +  behaviorComponent.GetType().ToString());
-            this.BehaviorComponents.Add(behaviorComponent.GetType().ToString(), behaviorComponent);
-        }
-        this.ChooseNextBehavior();
-    }
-
-    public void StartAutomotanMovement()
-    {
-        if (this.CurrentBehavior != null) 
-        {
-            this.CurrentBehavior.QuitBehavior();
-            Debug.Log("Entering Automoton");
-        }
         this.gameObject.GetComponent<AutomatonMovement>().Initialize(this.PopulationInfo);
+        // this.BehaviorComponents = new Dictionary<string, Behavior>();
+        // foreach (BehaviorScriptTranslation component in this.PopulationInfo.Species.Behaviors)
+        // {
+        //     this.AddBehaviorByName(component);
+        // }
+        // // TODO test if this can be done in the above loop
+        // foreach (Behavior behaviorComponent in this.gameObject.GetComponents<Behavior>())
+        // {
+        //     // Debug.Log("Behavior mapped: " +  behaviorComponent.GetType().ToString());
+        //     this.BehaviorComponents.Add(behaviorComponent.GetType().ToString(), behaviorComponent);
+        // }
+        // this.ChooseNextBehavior();
     }
 
-    // TODO figure out what else should be reset (probability will be one)
     public void ResetBehavior()
     {
         if (this.gameObject.activeSelf && this.CurrentBehavior != null)

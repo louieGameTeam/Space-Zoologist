@@ -18,10 +18,7 @@ public class NeedSystemUpdater : MonoBehaviour
     {
        foreach (Population population in PopulationManager.Populations)
         {
-            foreach (GameObject animal in population.AnimalPopulation)
-            {
-                animal.GetComponent<MovementController>().IsPaused = true;
-            }
+            population.PauseAnimals();
         }
     }
 
@@ -29,10 +26,11 @@ public class NeedSystemUpdater : MonoBehaviour
     {
         foreach (Population population in PopulationManager.Populations)
         {
-            foreach (GameObject animal in population.AnimalPopulation)
+            if (population.IssueWithAccessibleArea)
             {
-                animal.GetComponent<MovementController>().IsPaused = false;
+                continue;
             }
+            population.UnpauseAnimals();
         }
     }
 
@@ -40,11 +38,11 @@ public class NeedSystemUpdater : MonoBehaviour
     // if the population location is no longer on accessible area?
     public void UpdateAccessibleLocations()
     {
-
         ReservePartitionManager.UpdateAccessMap();
         foreach (Population population in PopulationManager.Populations)
         {
-            population.UpdateAccessibleArea();
+            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
+            ReservePartitionManager.GetGridWithAccess(population));
             foreach (GameObject animal in population.AnimalPopulation)
             {
                 animal.GetComponent<Animal>().ResetBehavior();
@@ -59,7 +57,10 @@ public class NeedSystemUpdater : MonoBehaviour
         {
             NeedSystemManager.UpdateSystems();
         }
-
-        this.needSystemsTester.Update();
+        else
+        {
+            // continually pauses all animals in case any are added. Will need a better way to handle this once behavior framework figured out.
+            this.PauseAllAnimals();
+        }
     }
 }

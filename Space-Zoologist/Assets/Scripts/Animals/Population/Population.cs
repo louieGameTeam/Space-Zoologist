@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 
 // TODO figure out how to refactor the MarkNeedsDirty so that NeedSystemManager isn't a dependency
+// TODO figure out how to prevent animal's sprite from changing direction erratically
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
@@ -17,11 +18,8 @@ public class Population : MonoBehaviour, Life
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
     public AnimalPathfinding.Grid grid { get; private set; }
-    // TODO when accessible locations becomes nothing, add a warning so the player can respond.
-    public List<Vector3Int> AccessibleLocations { get; private set; }
+    public List<Vector3Int>  AccessibleLocations { get; private set; }
     public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-    // TODO remove this and all dependencies once framework in place, add as actual movement
-    public bool AutomotonTesting { get; set; }
 
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
@@ -33,15 +31,17 @@ public class Population : MonoBehaviour, Life
     [SerializeField] private List<Need> NeedEditorTesting = default;
 
     private Vector3 origin = Vector3.zero;
-    private GrowthCalculator GrowthCalculator = new GrowthCalculator();
+    private GrowthCalculator GrowthCalculator = default;
     private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
+    public bool IssueWithAccessibleArea = false;
 
     private ReservePartitionManager ReservePartitionManager = default;
 
     private void Awake()
     {
         this.CurrentBehaviors = new List<BehaviorScriptName>();
+        this.GrowthCalculator = new GrowthCalculator();
     }
 
     /// <summary>
@@ -51,31 +51,27 @@ public class Population : MonoBehaviour, Life
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
     ///  TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
     {
         this.NeedSystemManager = needSystemManager;
+        this.ReservePartitionManager = reservePartitionManager;
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
-        // - the pods will contain populations which we'll likely want to specify certain aspects of
         for (int i = 0; i < populationSize; i++)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
-        this.InitializePopulationData(needSystemManager);
     }
 
-    // Can be initialized at runtime if the species is defined or later when a pod is used
     /// <summary>
-    /// Adds populations to rpm, gets accessible locations, gets behaviors scripts, and adds needs
+    /// Sets up population's behavior and need data
     /// </summary>
-    public void InitializePopulationData(NeedSystemManager needSystemManager)
+    public void InitializePopulationData(NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
     {
         this.NeedSystemManager = needSystemManager;
-        this.ReservePartitionManager = FindObjectOfType<ReservePartitionManager>();
-        ReservePartitionManager.AddPopulation(this);
-        this.UpdateAccessibleArea();
+        this.ReservePartitionManager = reservePartitionManager;
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
@@ -125,10 +121,36 @@ public class Population : MonoBehaviour, Life
     /// <summary>
     /// Grabs the updated accessible area and then resets the behavior for all of the animals.
     /// </summary>
-    public void UpdateAccessibleArea()
+    public void UpdateAccessibleArea(List<Vector3Int> accessibleLocations, AnimalPathfinding.Grid grid)
     {
-        this.AccessibleLocations = ReservePartitionManager.GetLocationsWithAccess(this);
-        this.grid = ReservePartitionManager.GetGridWithAccess(this, TilemapUtil.ins.largestMap);
+        this.AccessibleLocations = accessibleLocations;
+        this.grid = grid;
+        if (this.AccessibleLocations.Count < 6)
+        {
+            this.IssueWithAccessibleArea = true;
+            this.PauseAnimals();
+        }
+        else
+        {
+            this.IssueWithAccessibleArea = false;
+            this.UnpauseAnimals();
+        }
+    }
+
+    public void PauseAnimals()
+    {
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            animal.GetComponent<MovementController>().IsPaused = true;
+        }
+    }
+
+    public void UnpauseAnimals()
+    {
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            animal.GetComponent<MovementController>().IsPaused = false;
+        }
     }
 
     public void InitializeExistingAnimals()
@@ -152,18 +174,12 @@ public class Population : MonoBehaviour, Life
     public void AddAnimal(BehaviorsData data)
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
-        newAnimal.GetComponent<Animal>().Initialize(this, data);
-        // TODO remove when behavior framework setup
-        if (this.AutomotonTesting)
-        {
-            Debug.Log("Automotan activated");
-            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
-        }
         AnimalPopulation.Add(newAnimal);
+        newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.MarkNeedsDirty();
     }
 
-    private void MarkNeedsDirty()
+    public void MarkNeedsDirty()
     {
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
         foreach (Need need in this.needs.Values)
@@ -173,7 +189,6 @@ public class Population : MonoBehaviour, Life
                 this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
             }
         }
-
         this.NeedSystemManager.Systems[NeedType.Species].MarkAsDirty();
     }
 
@@ -220,11 +235,6 @@ public class Population : MonoBehaviour, Life
         this.AnimalsBehaviorData.Add(new BehaviorsData());
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
-        if (this.AutomotonTesting)
-        {
-            Debug.Log("Automotan activated");
-            newAnimal.GetComponent<Animal>().StartAutomotanMovement();
-        }
         AnimalPopulation.Add(newAnimal);
     }
 
@@ -255,9 +265,9 @@ public class Population : MonoBehaviour, Life
         {
             this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
         }
-        this.UpdateNeeds();
         if (this.GrowthCalculator != null)
         {
+            this.UpdateNeeds();
             this.UpdateGrowthConditions();
         }
     }

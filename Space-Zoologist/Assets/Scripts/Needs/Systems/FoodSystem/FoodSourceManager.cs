@@ -11,7 +11,6 @@ public class FoodSourceManager : MonoBehaviour
     public List<FoodSource> FoodSources => foodSources;
     private List<FoodSource> foodSources = new List<FoodSource>();
 
-    [SerializeField] private LevelData levelData = default;
     // A reference to the food source need system
     private FoodSourceNeedSystem foodSourceNeedSystems = default;
     // FoodSourceSpecies to string name
@@ -28,7 +27,7 @@ public class FoodSourceManager : MonoBehaviour
         //    foodSourceSpecies.Add(species.SpeciesName, species);
         //}
 
-        foreach (FoodSourceSpecies species in this.levelData.FoodSourceSpecies)
+        foreach (FoodSourceSpecies species in this.LevelDataReference.LevelData.FoodSourceSpecies)
         {
             foodSourceSpecies.Add(species.SpeciesName, species);
         }

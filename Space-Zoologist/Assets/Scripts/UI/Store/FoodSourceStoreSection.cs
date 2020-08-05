@@ -6,20 +6,16 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Store section for food source items.
 /// </summary>
-public class FoodSourceStoreSection : StoreSection, IValidatePlacement
+public class FoodSourceStoreSection : StoreSection
 {
     [SerializeField] FoodSourceManager FoodSourceManager = default;
     [SerializeField] TileSystem TileSystem = default;
 
-    private void Awake()
+    public override void Initialize()
     {
         base.itemType = NeedType.FoodSource;
-    }
-
-    protected override void Start()
-    {
         Debug.Assert(ReferenceUtil.ins != null);
-        base.Start();
+        base.Initialize();
     }
 
     /// <summary>
@@ -28,7 +24,7 @@ public class FoodSourceStoreSection : StoreSection, IValidatePlacement
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (UIUtility.ins.IsCursorOverUI(eventData))
+        if (base.IsCursorOverUI(eventData))
         {
             base.OnItemSelectionCanceled();
             return;
@@ -46,7 +42,7 @@ public class FoodSourceStoreSection : StoreSection, IValidatePlacement
         }
     }
 
-    public bool IsPlacementValid(Vector3 mousePosition)
+    public override bool IsPlacementValid(Vector3 mousePosition)
     {
         if (mousePosition.x >= 0 && mousePosition.y >= 0
         && mousePosition.x <= TilemapUtil.ins.MaxWidth && mousePosition.y <= TilemapUtil.ins.MaxHeight)

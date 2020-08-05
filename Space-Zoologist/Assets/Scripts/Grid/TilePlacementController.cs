@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TilePlacementController : MonoBehaviour, IValidatePlacement
+public class TilePlacementController : MonoBehaviour
 {
     public bool isBlockMode { get; set; } = false;
     public Vector3Int mouseCellPosition { get { return currentMouseCellPosition; } }

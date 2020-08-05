@@ -5,7 +5,7 @@ using System;
 
 using UnityEngine;
 
-public class SpeciesCalculator
+public class SpeciesCalculator : NeedCalculator
 {
     public string SpeciesName => this.speciesName;
     public List<Population> Consumers => this.consumers;
@@ -36,8 +36,10 @@ public class SpeciesCalculator
         this.isDirty = true;
     }
 
-    public void AddPopulation(Population population)
+    public void AddSource(Life source)
     {
+        Population population = (Population)source;
+
         this.populations.Add(population);
 
         populationsWithAccess.Add(population, new HashSet<Population>());
@@ -53,12 +55,24 @@ public class SpeciesCalculator
         this.isDirty = true;
     }
 
-    public bool RemovePopulation(Population population)
+    public bool RemoveSource(Life source)
     {
-        this.isDirty = true;
+        Population population = (Population)source;
 
         Debug.Assert(!this.populations.Remove(population), "Population removal failure!");
         Debug.Assert(!this.populationsWithAccess.Remove(population), "REmoval of cosumed pop from populationsWithAccess failed");
+
+        this.isDirty = true;
+
+        return true;
+    }
+
+    public bool RemoveConsumer(Population consumer)
+    {
+        this.isDirty = true;
+
+        Debug.Assert(!this.consumers.Remove(consumer), "Consumer removal failure!");
+        Debug.Assert(!this.accessiblePopulation.Remove(consumer), "Removal of consumer from accessiblePopulation failed");
 
         return true;
     }
@@ -84,16 +98,6 @@ public class SpeciesCalculator
         }
 
         this.isDirty = true;
-    }
-
-    public bool RemoverConsumer(Population population)
-    {
-        this.isDirty = true;
-
-        Debug.Assert(!this.consumers.Remove(population), "Consumer removal failure!");
-        Debug.Assert(!this.accessiblePopulation.Remove(population), "Removal of consumer from accessiblePopulation failed");
-
-        return true;
     }
 
     public Dictionary<Population, float> CalculateDistribution()
@@ -224,6 +228,4 @@ public class SpeciesCalculator
 
         return this.distributAmount;
     }
-
-
 }

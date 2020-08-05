@@ -16,15 +16,13 @@ public class TileStoreSection : StoreSection
     private bool isPlacing = false;
     private int numTilesPlaced = 0;
 
-    private void Awake()
+    public override void Initialize()
     {
         base.itemType = NeedType.Terrain;
-    }
-
-    protected override void Start()
-    {
-        base.Start();
+        base.Initialize();
+        startingBalance = base.playerBalance;
         Debug.Assert(tilePlacementController != null);
+        Debug.Assert(startingBalance != null);
     }
 
     /// <summary>
@@ -68,7 +66,7 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerDown(PointerEventData eventData)
     {
         base.OnCursorPointerDown(eventData);
-        if (UIUtility.ins.IsCursorOverUI(eventData))
+        if (base.IsCursorOverUI(eventData))
         {
             base.OnItemSelectionCanceled();
             return;
@@ -103,10 +101,10 @@ public class TileStoreSection : StoreSection
 
     private void Update()
     {
-         if (isPlacing)
-         {
-            numTilesPlaced = tilePlacementController.PlacedTileCount();
-            playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
-         }
+        if (isPlacing)
+        {
+        numTilesPlaced = tilePlacementController.PlacedTileCount();
+        playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
+        }
     }
 }

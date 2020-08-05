@@ -1,24 +1,35 @@
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
-
+// TODO figure out why can't click on items sometimes
 /// <summary>
 /// A section of items in the store. Subclass for specific behavior regarding what happens after an item is selected.
 /// </summary>
-public class StoreSection : MonoBehaviour
+public class StoreSection : MonoBehaviour, IStoreMenu
 {
     public NeedType ItemType => itemType;
 
     protected NeedType itemType = default;
+    [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
-    [SerializeField] private CursorItem cursorItem = default;
+    protected CursorItem cursorItem = default;
+    protected List<RectTransform> UIElements = default;
     protected IntVariable playerBalance = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
+    protected LevelDataReference LevelDataReference = default;
 
     protected Item selectedItem = null;
-    protected virtual void Start()
+
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements)
+    {
+        this.LevelDataReference = levelData;
+        this.cursorItem = cursorItem;
+        this.UIElements = UIElements;
+    }
+
+    public virtual void Initialize()
     {
         LevelData levelData = LevelDataReference.LevelData;
         this.playerBalance = levelData.StartingBalance;
@@ -48,6 +59,7 @@ public class StoreSection : MonoBehaviour
     {
         if (!this.CanAfford(item))
         {
+            Debug.Log("Selection cancelled");
             return;
         }
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
@@ -73,6 +85,11 @@ public class StoreSection : MonoBehaviour
 
     private bool CanAfford(Item item)
     {
+        if (this.playerBalance == null)
+        {
+            Debug.Log("Null playerbalance reference");
+            return false;
+        }
         if (item.Price > this.playerBalance.RuntimeValue)
         {
             OnItemSelectionCanceled();
@@ -99,8 +116,25 @@ public class StoreSection : MonoBehaviour
 
     }
 
+    public virtual bool IsPlacementValid(Vector3 mousePosition)
+    {
+        return false;
+    }
+
     private void OnDisable()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+    }
+
+    public bool IsCursorOverUI(PointerEventData eventData)
+    {
+        foreach (RectTransform UIElement in this.UIElements)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(UIElement, eventData.position))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

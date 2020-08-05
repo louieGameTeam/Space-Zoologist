@@ -55,13 +55,14 @@ namespace AnimalPathfinding
         {
             if (startPos == null || targetPos == null || grid == null)
             {
+                Debug.Log("Issue with pathfinding a");
                 yield return null;
                 PathRequestManager.instance.FinishedProcessPath(null, false);
             }
             Node startNode = startPos;
             Node targetNode = targetPos;
             List<Vector3> path = new List<Vector3>();
-            if (!startNode.walkable && targetNode.walkable || startNode.Equals(targetNode))
+            if ((!startNode.walkable && targetNode.walkable) || startNode.Equals(targetNode))
             {
                 path.Add(new Vector3(targetNode.gridX, targetNode.gridY, 0));
                 yield return null;
@@ -103,6 +104,10 @@ namespace AnimalPathfinding
 
             yield return null;
             bool pathSuccessfullyFound = (path.Count > 0) ? true : false;
+            if (!pathSuccessfullyFound)
+            {
+                Debug.Log("Issue with pathfinding b");
+            }
             PathRequestManager.instance.FinishedProcessPath(path, pathSuccessfullyFound);
         }
 

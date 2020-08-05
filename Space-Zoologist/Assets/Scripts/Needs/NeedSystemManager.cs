@@ -9,8 +9,6 @@ using UnityEngine;
 /// </summary>
 public class NeedSystemManager : MonoBehaviour
 {
-
-
     public Dictionary<NeedType, NeedSystem> Systems => systems;
 
     private Dictionary<NeedType, NeedSystem> systems = new Dictionary<NeedType, NeedSystem>();
@@ -72,7 +70,7 @@ public class NeedSystemManager : MonoBehaviour
     /// Add a system so that populations can register with it via it's need name.
     /// </summary>
     /// <param name="needSystem">The system to add</param>
-    public void AddSystem(NeedSystem needSystem)
+    private void AddSystem(NeedSystem needSystem)
     {
         if (!this.systems.ContainsKey(needSystem.NeedType))
         {

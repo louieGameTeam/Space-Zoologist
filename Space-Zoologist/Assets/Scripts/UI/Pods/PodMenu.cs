@@ -4,27 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PodMenu : MonoBehaviour, IValidatePlacement
+public class PodMenu : MonoBehaviour, IStoreMenu
 {
-    [SerializeField] PopulationManager populationManager = default;
+    [Header("Handled by Prefab")]
     [SerializeField] GameObject podButtonPrefab = default;
     [SerializeField] Transform PodItemContainer = default;
-    [SerializeField] CursorItem cursorItem = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
+    [Header("Dependencies")]
+    [SerializeField] PopulationManager populationManager = default;
     [SerializeField] TileSystem TileSystem = default;
+    private CursorItem cursorItem = default;
+    private LevelDataReference LevelDataReference = default;
 
     public List<GameObject> Pods { get; set; }
-    RectTransform rectTransform = default;
+    private List<RectTransform> UIElements = default;
     AnimalSpecies selectedSpecies = null;
 
-    private void Awake()
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements)
     {
-        this.Pods = new List<GameObject>();
-        rectTransform = GetComponent<RectTransform>();
+        this.LevelDataReference = levelData;
+        this.cursorItem = cursorItem;
+        this.UIElements = UIElements;
     }
 
-    void Start()
+    public void Initialize()
     {
+        this.Pods = new List<GameObject>();
         foreach (AnimalSpecies species in LevelDataReference.LevelData.AnimalSpecies)
         {
             this.AddPod(species);
@@ -33,13 +37,6 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!PointOverMenu(Input.mousePosition) && !selectedSpecies)
-            {
-                // Debug.Log("Pod issue");
-            }
-        }
         if (Input.GetMouseButtonUp(1))
         {
             DeselectSpecies();
@@ -77,7 +74,7 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
     public void OnCursorItemClick(PointerEventData pointerEventData)
     {
         // If in CursorItem mode and the cursor is clicked while over the menu
-        if (PointOverMenu(pointerEventData.position))
+        if (IsCursorOverUI(pointerEventData))
         {
             Debug.Log("Clicked over UI");
             DeselectSpecies();
@@ -112,8 +109,15 @@ public class PodMenu : MonoBehaviour, IValidatePlacement
         return false;
     }
 
-    private bool PointOverMenu(Vector3 point)
+    public bool IsCursorOverUI(PointerEventData eventData)
     {
-        return RectTransformUtility.RectangleContainsScreenPoint(rectTransform, point);
+        foreach (RectTransform UIElement in this.UIElements)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(UIElement, eventData.position))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
