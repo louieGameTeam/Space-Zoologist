@@ -7,21 +7,29 @@ using System.Collections.Generic;
 /// <summary>
 /// A section of items in the store. Subclass for specific behavior regarding what happens after an item is selected.
 /// </summary>
-public class StoreSection : MonoBehaviour
+public class StoreSection : MonoBehaviour, IStoreMenu
 {
     public NeedType ItemType => itemType;
 
     protected NeedType itemType = default;
+    [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
-    [SerializeField] private CursorItem cursorItem = default;
-    [Header("UI elements that shouldn't be clicked through")]
-    [SerializeField] List<RectTransform> UIElements = default;
+    protected CursorItem cursorItem = default;
+    protected List<RectTransform> UIElements = default;
     protected IntVariable playerBalance = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
+    protected LevelDataReference LevelDataReference = default;
 
     protected Item selectedItem = null;
-    protected virtual void Start()
+
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements)
+    {
+        this.LevelDataReference = levelData;
+        this.cursorItem = cursorItem;
+        this.UIElements = UIElements;
+    }
+
+    public virtual void Initialize()
     {
         LevelData levelData = LevelDataReference.LevelData;
         this.playerBalance = levelData.StartingBalance;
@@ -106,6 +114,11 @@ public class StoreSection : MonoBehaviour
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
 
+    }
+
+    public virtual bool IsPlacementValid(Vector3 mousePosition)
+    {
+        return false;
     }
 
     private void OnDisable()

@@ -13,6 +13,9 @@ public class MovementController : MonoBehaviour
     private Vector3 NextPathTile { get; set; }
     public bool DestinationReached { get; private set; }
     public bool IsPaused = false;
+    // Animal doesn't change direction until they've moved a certain distance in that direction
+    private float ChangeDirectionThreshold = 0.5f;
+    private float ChangeDirectionMovement = 0f;
     // private Vector3 NextPathTile { get; set; }
 
     public void Start()
@@ -125,7 +128,15 @@ public class MovementController : MonoBehaviour
                 break;
             }
         }
-        this.UpdateVisualLogic(vectorDirection);
+        if (this.ChangeDirectionMovement < this.ChangeDirectionThreshold)
+        {
+            this.ChangeDirectionMovement += Vector3.Distance(this.transform.position, vectorDirection);
+        }
+        else
+        {
+            this.UpdateVisualLogic(vectorDirection);
+            this.ChangeDirectionMovement = 0f;
+        }
         this.transform.position = vectorDirection;
     }
 

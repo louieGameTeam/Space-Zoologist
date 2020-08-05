@@ -38,11 +38,11 @@ public class NeedSystemUpdater : MonoBehaviour
     // if the population location is no longer on accessible area?
     public void UpdateAccessibleLocations()
     {
-
         ReservePartitionManager.UpdateAccessMap();
         foreach (Population population in PopulationManager.Populations)
         {
-            population.UpdateAccessibleArea();
+            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
+            ReservePartitionManager.GetGridWithAccess(population));
             foreach (GameObject animal in population.AnimalPopulation)
             {
                 animal.GetComponent<Animal>().ResetBehavior();

@@ -7,6 +7,24 @@ public class MenuManager : MonoBehaviour
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalance = default;
     [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
+    [SerializeField] List<StoreSection> StoreMenus = default;
+    // PodMenu had original different design so could refactor to align with store sections but works for now
+    [SerializeField] PodMenu PodMenu = default;
+    [Header("Shared menu dependencies")]
+    [SerializeField] LevelDataReference LevelDataReference = default;
+    [SerializeField] CursorItem CursorItem = default;
+    [SerializeField] List<RectTransform> UIElements = default;
+
+    public void Start()
+    {
+        foreach (IStoreMenu storeMenu in this.StoreMenus)
+        {
+            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements);
+            storeMenu.Initialize();
+        }
+        PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements);
+        PodMenu.Initialize();
+    }
 
     public void OnToggleMenu(GameObject menu)
     {

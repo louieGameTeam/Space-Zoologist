@@ -74,7 +74,6 @@ public class EnclosureSystem : MonoBehaviour
     public List<AtmosphericComposition> Atmospheres { get; private set; }
 
     [SerializeField] private LevelDataReference LevelDataReference = default;
-    [SerializeField] private LevelData levelData = default;
     [SerializeField] private TileSystem TileSystem = default;
 
     // Have enclosed area been initialized?
@@ -96,7 +95,7 @@ public class EnclosureSystem : MonoBehaviour
     private void Start()
     {
         //GlobalAtmosphere = LevelDataReference.LevelData.GlobalAtmosphere;
-        GlobalAtmosphere = this.levelData.GlobalAtmosphere;
+        GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
     }
 
     /// <summary>

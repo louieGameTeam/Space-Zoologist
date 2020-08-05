@@ -4,26 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PodMenu : MonoBehaviour, IValidatePlacement
+public class PodMenu : MonoBehaviour, IStoreMenu
 {
-    [SerializeField] PopulationManager populationManager = default;
+    [Header("Handled by Prefab")]
     [SerializeField] GameObject podButtonPrefab = default;
     [SerializeField] Transform PodItemContainer = default;
-    [SerializeField] CursorItem cursorItem = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
+    [Header("Dependencies")]
+    [SerializeField] PopulationManager populationManager = default;
     [SerializeField] TileSystem TileSystem = default;
+    private CursorItem cursorItem = default;
+    private LevelDataReference LevelDataReference = default;
 
     public List<GameObject> Pods { get; set; }
-    [SerializeField] List<RectTransform> UIElements = default;
+    private List<RectTransform> UIElements = default;
     AnimalSpecies selectedSpecies = null;
 
-    private void Awake()
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements)
     {
-        this.Pods = new List<GameObject>();
+        this.LevelDataReference = levelData;
+        this.cursorItem = cursorItem;
+        this.UIElements = UIElements;
     }
 
-    void Start()
+    public void Initialize()
     {
+        this.Pods = new List<GameObject>();
         foreach (AnimalSpecies species in LevelDataReference.LevelData.AnimalSpecies)
         {
             this.AddPod(species);

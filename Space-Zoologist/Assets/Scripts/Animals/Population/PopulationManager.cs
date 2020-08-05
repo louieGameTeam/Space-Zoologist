@@ -48,10 +48,12 @@ public class PopulationManager : MonoBehaviour
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
-        population.InitializeNewPopulation(species, position, count, NeedSystemManager);
         this.ExistingPopulations.Add(population);
-        
+        // Initialize the basic population data, register the population, then initialize the specific population data, then initialize the animals
+        population.InitializeNewPopulation(species, position, count, NeedSystemManager, ReservePartitionManager);
+        population.InitializePopulationData(NeedSystemManager, ReservePartitionManager);
         this.HandlePopulationRegistration(population);
+        population.InitializeExistingAnimals();
     }
 
     /// <summary>
@@ -76,19 +78,20 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    // TODO determine what else needs to happen with an existing population
+    // register the existing population, initialize it's specific data, then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
-        population.InitializePopulationData(NeedSystemManager);
-        population.InitializeExistingAnimals();
         this.HandlePopulationRegistration(population);
+        population.InitializePopulationData(NeedSystemManager, ReservePartitionManager);
+        population.InitializeExistingAnimals();
     }
 
-    // TODO figure out a better name for what this function is doing: registering the population with various lists and systems
+    // Registers the population with all all of the systems that care about it
     private void HandlePopulationRegistration(Population population)
     {
-        ReservePartitionManager.AddPopulation(population);
-
+        this.ReservePartitionManager.AddPopulation(population);
+        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
+            ReservePartitionManager.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
     }

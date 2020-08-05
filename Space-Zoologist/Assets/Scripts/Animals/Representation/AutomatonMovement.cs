@@ -42,41 +42,32 @@ public class AutomatonMovement : MonoBehaviour
     // If animal walked predetermined number of tiles or animal cannot move in specified direction, update based off seed.
     public void Update()
     {
-        if (this.population == null || this.movementController.IsPaused)
+        if (this.population == null|| this.movementController.IsPaused)
         {
             return;
         }
-        if (!this.movementController.DestinationReached)
+        if (this.numTilesMoved >= this.NumTiles)
         {
-            this.movementController.MoveTowardsDestination();
-            return;
-        }
-        if (this.numTilesMoved >= this.NumTiles || !this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
-        {
-            if (!this.TryToUpdateDirection())
-            {
-                AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), this.population.AccessibleLocations[0], this.SetupPathfinding, this.population.grid);
-                return;
-            }
             this.UpdateTilesToMove();
         }
-        this.UpdateNumTilesMoved();
+        this.CheckSurroundings();
         this.movementController.MoveInDirection(this.CurrentDirection);
     }
 
-    private void SetupPathfinding(List<Vector3> path, bool pathFound)
-    {
-        // TODO figure out what to do if you can't pathfind.. Keep trying to pathfind? Notify player?
-        Debug.Log("Animal stuck, setting up pathfinding");
-        Debug.Assert(pathFound == true);
-        this.movementController.AssignPath(path);
-        this.PathToFollow = path;
-    }
-
-    private void UpdateNumTilesMoved()
+    // Check directions and respond to new surroundings
+    private void CheckSurroundings()
     {
         AnimalPathfinding.Node currentTile = population.grid.GetNode(TilemapUtil.ins.WorldToCell(this.transform.position).x, TilemapUtil.ins.WorldToCell(this.transform.position).y);
-        if (this.previousTile != currentTile)
+        if (!this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
+        {
+            if (!this.TryToUpdateDirection())
+            {
+                // Debug.Log("No valid directions found, pausing movement");
+                this.movementController.IsPaused = true;
+                //AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), this.population.AccessibleLocations[0], this.SetupPathfinding, this.population.grid);
+            }
+        }
+        if (currentTile != this.previousTile)
         {
             this.previousTile = currentTile;
             this.numTilesMoved++;
@@ -130,6 +121,19 @@ public class AutomatonMovement : MonoBehaviour
         }
         this.NumTiles = this.TilesToMoveSeed[this.TilesMovedIndex];
         this.numTilesMoved = 0;
+    }
+
+    private void SetupPathfinding(List<Vector3> path, bool pathFound)
+    {
+        // TODO figure out what to do if you can't pathfind.. Keep trying to pathfind? Notify player?
+        if (!pathFound)
+        {
+            Debug.Log("Issue with pathfinding");
+            return;
+        }
+        Debug.Log("Animal stuck, setting up pathfinding");
+        this.movementController.AssignPath(path);
+        this.PathToFollow = path;
     }
 
     private List<int> GenerateDirectionSeed()

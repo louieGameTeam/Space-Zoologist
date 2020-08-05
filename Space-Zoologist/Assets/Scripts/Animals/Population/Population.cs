@@ -51,31 +51,27 @@ public class Population : MonoBehaviour, Life
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
     ///  TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
     {
         this.NeedSystemManager = needSystemManager;
+        this.ReservePartitionManager = reservePartitionManager;
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
-        // - the pods will contain populations which we'll likely want to specify certain aspects of
         for (int i = 0; i < populationSize; i++)
         {
             this.AnimalsBehaviorData.Add(new BehaviorsData());
             this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
-        this.InitializePopulationData(needSystemManager);
     }
 
-    // Can be initialized at runtime if the species is defined or later when a pod is used
     /// <summary>
-    /// Adds populations to rpm, gets accessible locations, gets behaviors scripts, and adds needs
+    /// Sets up population's behavior and need data
     /// </summary>
-    public void InitializePopulationData(NeedSystemManager needSystemManager)
+    public void InitializePopulationData(NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
     {
-        if (this.NeedSystemManager == null) this.NeedSystemManager = needSystemManager;
-        this.ReservePartitionManager = FindObjectOfType<ReservePartitionManager>();
-        ReservePartitionManager.AddPopulation(this);
-        this.UpdateAccessibleArea();
+        this.NeedSystemManager = needSystemManager;
+        this.ReservePartitionManager = reservePartitionManager;
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
@@ -125,10 +121,10 @@ public class Population : MonoBehaviour, Life
     /// <summary>
     /// Grabs the updated accessible area and then resets the behavior for all of the animals.
     /// </summary>
-    public void UpdateAccessibleArea()
+    public void UpdateAccessibleArea(List<Vector3Int> accessibleLocations, AnimalPathfinding.Grid grid)
     {
-        this.AccessibleLocations = ReservePartitionManager.ins.GetLocationsWithAccess(this);
-        this.grid = ReservePartitionManager.ins.GetGridWithAccess(this, TilemapUtil.ins.MaxWidth, TilemapUtil.ins.MaxHeight );
+        this.AccessibleLocations = accessibleLocations;
+        this.grid = grid;
         if (this.AccessibleLocations.Count < 6)
         {
             this.IssueWithAccessibleArea = true;
@@ -178,12 +174,12 @@ public class Population : MonoBehaviour, Life
     public void AddAnimal(BehaviorsData data)
     {
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
-        newAnimal.GetComponent<Animal>().Initialize(this, data);
         AnimalPopulation.Add(newAnimal);
+        newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.MarkNeedsDirty();
     }
 
-    private void MarkNeedsDirty()
+    public void MarkNeedsDirty()
     {
         // Making the NS of this pop's need dirty (Density, FoodSource and Species)
         foreach (Need need in this.needs.Values)
