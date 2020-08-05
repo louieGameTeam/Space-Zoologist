@@ -18,7 +18,6 @@ public class PopulationManager : MonoBehaviour
 
     private SpeciesNeedSystem speciesNeedSystem = null;
 
-
     public void Initialize()
     {
         GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");

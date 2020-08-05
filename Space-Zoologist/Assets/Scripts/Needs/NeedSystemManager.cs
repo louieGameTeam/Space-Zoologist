@@ -15,7 +15,6 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
-    [SerializeField] LevelDataReference levelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
 

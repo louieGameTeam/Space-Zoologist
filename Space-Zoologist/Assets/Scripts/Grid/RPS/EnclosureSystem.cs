@@ -7,12 +7,13 @@ public enum AtmoshpereComponent { GasX, GasY, GasZ, Temperature };
 /// <summary>
 /// A class that represents the atmospheric composition of an area.
 /// </summary>
+[System.Serializable]
 public class AtmosphericComposition
 {
-    private float gasX = 0.0f;
-    private float gasY = 0.0f;
-    private float gasZ = 0.0f;
-    private float temperature = 0.0f;
+    [SerializeField] private float gasX = 0.0f;
+    [SerializeField] private float gasY = 0.0f;
+    [SerializeField] private float gasZ = 0.0f;
+    [SerializeField] private float temperature = 0.0f;
 
     public float GasX { get => gasX; }
     public float GasY { get => gasY; }

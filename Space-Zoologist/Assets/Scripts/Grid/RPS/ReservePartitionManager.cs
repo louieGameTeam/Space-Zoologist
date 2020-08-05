@@ -318,16 +318,18 @@ public class ReservePartitionManager : MonoBehaviour
     {
         // Debug.Log("Setting up pathfinding grid");
         bool[,] tileGrid = new bool[TilemapUtil.ins.MaxWidth, TilemapUtil.ins.MaxHeight];
-        foreach (KeyValuePair<Vector3Int, long> position in AccessMap) {
-            //Debug.Log("(" + (position.Key.x) + ", " + (position.Key.y) + ")");
-            if (CanAccess(population, position.Key))
+        for (int x=0; x<TilemapUtil.ins.MaxWidth; x++)
+        {
+            for (int y=0; y<TilemapUtil.ins.MaxHeight; y++)
             {
-                // Debug.Log("(" + position.Key.x + ", " + position.Key.y + ")");
-                tileGrid[position.Key.x, position.Key.y] = true;
-            }
-            else
-            {
-                tileGrid[position.Key.x, position.Key.y] = false;
+                if (CanAccess(population, new Vector3Int(x, y, 0)))
+                {
+                    tileGrid[x, y] = true;
+                }
+                else
+                {
+                    tileGrid[x, y] = false;
+                }
             }
         }
         // Setup boundaries for movement

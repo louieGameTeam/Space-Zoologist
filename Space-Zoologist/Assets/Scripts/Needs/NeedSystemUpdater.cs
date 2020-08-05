@@ -9,7 +9,6 @@ public class NeedSystemUpdater : MonoBehaviour
 {
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
-    [SerializeField] NeedSystemsTester needSystemsTester = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
 
     public bool isInStore { get; set; }

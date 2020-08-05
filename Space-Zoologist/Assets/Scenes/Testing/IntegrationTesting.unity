@@ -166,8 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelDataReference: {fileID: 856622804}
-  TilePlacementController: {fileID: 1232840825}
-  DesigningLevel: 1
+  DesigningLevel: 0
   referenceTilemap: {fileID: 2051854691}
 --- !u!4 &30332232
 Transform:
@@ -1489,12 +1488,12 @@ PrefabInstance:
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.53
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.48
+      value: -5.6
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
@@ -1545,6 +1544,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Animal (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
@@ -5655,12 +5659,12 @@ PrefabInstance:
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.01
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.39
+      value: -5.6
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
@@ -5730,12 +5734,12 @@ PrefabInstance:
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.85
+      value: 12.3
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.49
+      value: -5.4
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
@@ -5786,6 +5790,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Animal (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
@@ -5839,12 +5848,12 @@ PrefabInstance:
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.22
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.2
+      value: -5.9
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
@@ -5895,6 +5904,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Animal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}

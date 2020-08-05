@@ -10,7 +10,6 @@ public class TilemapUtil : MonoBehaviour
     public int MaxWidth { get => LevelDataReference.LevelData.MapWidth; }
     public int MaxHeight { get => LevelDataReference.LevelData.MapHeight; }
     [SerializeField] private LevelDataReference LevelDataReference = default;
-    [SerializeField] private TilePlacementController TilePlacementController = default;
     [Header("Shows shaded perimeter when true")]
     [SerializeField] private bool DesigningLevel = true;
 
@@ -59,7 +58,7 @@ public class TilemapUtil : MonoBehaviour
         }
     }
 
-    private void ShadeSquare(int x, int y, Color color)
+    public void ShadeSquare(int x, int y, Color color)
     {
         Vector3Int cellToShade = new Vector3Int(x, y, 0);
         referenceTilemap.SetColor(cellToShade, color);
