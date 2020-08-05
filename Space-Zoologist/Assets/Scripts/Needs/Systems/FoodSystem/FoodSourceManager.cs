@@ -9,7 +9,6 @@ using UnityEngine;
 public class FoodSourceManager : MonoBehaviour
 {
     public List<FoodSource> FoodSources => foodSources;
-
     private List<FoodSource> foodSources = new List<FoodSource>();
 
     [SerializeField] private LevelData levelData = default;
