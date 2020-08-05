@@ -295,6 +295,9 @@ public class Population : MonoBehaviour, Life
 
     public bool GetAccessibilityStatus()
     {
+
+
+
         return ReservePartitionManager.PopulationAccessbilityStatus[this];
     }
 }

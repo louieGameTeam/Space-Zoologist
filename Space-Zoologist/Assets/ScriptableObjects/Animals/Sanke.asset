@@ -10,22 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: Snake
+  m_Name: Sanke
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: 2c658f184238347a39f6d91eb93056ef, type: 2}
   speciesName: Snake
-  dominance: 3
-  growthRate: 20
-  range: 5
+  dominance: 5
+  growthRate: 60.5
+  range: 8.28
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 0
   size: 5
-<<<<<<< HEAD
-  accessibleTerrain: 01000000
-=======
-  accessibleTerrain: 0300000001000000
->>>>>>> aed7866bdca4e717f6fa3d5f4f4adc33349c8f5d
+  accessibleTerrain: 020000000300000001000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
   needsList:
   - needType: 0
@@ -36,33 +32,45 @@ MonoBehaviour:
       thresholds:
       - 10
       - 40
+    - needName: Grass
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 10
+      - 20
     - needName: Dirt
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
-      - 40
+      - 20
   - needType: 4
     needs:
     - needName: MineralX
       severity: 2
       conditions: 0000000001000000020000000100000000000000
       thresholds:
-      - 1
-      - 3
-      - 5
-      - 7
+      - 0.1
+      - 0.3
+      - 0.5
+      - 0.7
     - needName: MineralZ
-      severity: 2
+      severity: 5
       conditions: 0000000001000000020000000100000000000000
       thresholds:
-      - 1
-      - 3
-      - 5
-      - 7
-  - needType: 5
+      - 0.1
+      - 0.3
+      - 0.5
+      - 0.7
+  - needType: 3
     needs:
-    - needName: Strot
+    - needName: Space Maple
+      severity: 2
+      conditions: 000000000100000002000000
+      thresholds:
+      - 7
+      - 15
+    - needName: Bush
       severity: 2
       conditions: 000000000100000002000000
       thresholds:
@@ -74,6 +82,14 @@ MonoBehaviour:
       severity: 2
       conditions: 020000000100000000000000
       thresholds:
-      - 1
       - 2
+      - 5
+  - needType: 5
+    needs:
+    - needName: Strot
+      severity: 2
+      conditions: 000000000100000002000000
+      thresholds:
+      - 2
+      - 5
   representation: {fileID: 0}
