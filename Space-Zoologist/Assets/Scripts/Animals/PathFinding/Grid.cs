@@ -6,6 +6,7 @@
  * Since: 2016.
 */
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace AnimalPathfinding
 {
@@ -17,9 +18,10 @@ namespace AnimalPathfinding
     {
         // nodes in grid
         public Node[,] nodes;
+        public UnityEngine.Grid grid = default;
 
         // grid size
-        private int gridSizeX, gridSizeY;
+        public int gridSizeX, gridSizeY;
         public int MaxGridSize { get => gridSizeX * gridSizeY; }
 
         /// <summary>
@@ -50,8 +52,9 @@ namespace AnimalPathfinding
         /// Create a new grid without tile prices, eg with just walkable / unwalkable tiles.
         /// </summary>
         /// <param name="walkable_tiles">A 2d array representing which tiles are walkable and which are not.</param>
-        public Grid(bool[,] walkable_tiles)
+        public Grid(bool[,] walkable_tiles, UnityEngine.Grid grid)
         {
+            this.grid = grid;
             // create nodes
             CreateGrid(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
 
@@ -167,6 +170,16 @@ namespace AnimalPathfinding
                     }
                     break;
             }
+        }
+
+        public Node GetNode(Vector3 worldPosition)
+        {
+            Vector3Int cellPos = this.grid.WorldToCell(worldPosition);
+            if (cellPos.x >= nodes.GetLength(0) || cellPos.y >= nodes.GetLength(1) || cellPos.x < 0 || cellPos.y < 0)
+            {
+                return null;
+            }
+            return nodes[cellPos.x, cellPos.y];
         }
 
         public Node GetNode(int x, int y)

@@ -54,7 +54,7 @@ public class AutomatonMovement : MonoBehaviour
     // If on new tile then respond to new surroundings
     private void CheckSurroundings()
     {
-        AnimalPathfinding.Node currentTile = population.grid.GetNode(TilemapUtil.ins.WorldToCell(this.transform.position).x, TilemapUtil.ins.WorldToCell(this.transform.position).y);
+        AnimalPathfinding.Node currentTile = population.grid.GetNode(this.transform.position);
         if (currentTile != this.previousTile)
         {
             this.previousTile = currentTile;

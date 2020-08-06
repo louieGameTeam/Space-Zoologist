@@ -24,11 +24,11 @@ public class RandomMovement : Behavior
     // Base is called last, enabling the component and thus enabling Update.
     public override void EnterBehavior(BehaviorFinished callback)
     {
-        int locationIndex = this.random.Next(0, Animal.PopulationInfo.AccessibleLocations.Count);
-        Vector3Int end = Animal.PopulationInfo.AccessibleLocations[locationIndex];
-        // PathRequestManager is static
-        AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), end, base.PathFound, base.Animal.PopulationInfo.grid);
-        base.EnterBehavior(callback);
+        // int locationIndex = this.random.Next(0, Animal.PopulationInfo.AccessibleLocations.Count);
+        // Vector3Int end = Animal.PopulationInfo.AccessibleLocations[locationIndex];
+        // // PathRequestManager is static
+        // AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), end, base.PathFound, base.Animal.PopulationInfo.grid);
+        // base.EnterBehavior(callback);
     }
     // Default behavior moves along a random path
     protected override void Update()

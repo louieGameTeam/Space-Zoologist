@@ -94,9 +94,9 @@ public class PodMenu : MonoBehaviour, IStoreMenu
     public bool IsPlacementValid(Vector3 mouseWorldPosition)
     {
         if (mouseWorldPosition.x >= 0 && mouseWorldPosition.y >= 0
-        && mouseWorldPosition.x <= TilemapUtil.ins.MaxWidth && mouseWorldPosition.y <= TilemapUtil.ins.MaxHeight)
+        && mouseWorldPosition.x <= LevelDataReference.MapWidth && mouseWorldPosition.y <= LevelDataReference.MapHeight)
         {
-            Vector3Int mouseGridPosition = TilemapUtil.ins.WorldToCell(mouseWorldPosition);
+            Vector3Int mouseGridPosition = this.TileSystem.WorldToCell(mouseWorldPosition);
             TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(mouseGridPosition);
             foreach (TileType acceptablTerrain in this.selectedSpecies.AccessibleTerrain)
             {

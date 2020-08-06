@@ -15,6 +15,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] public bool AutomotonTesting = false;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
+    [SerializeField] private GridSystem GridSystem = default;
 
     private SpeciesNeedSystem speciesNeedSystem = null;
 
@@ -86,8 +87,8 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         this.ReservePartitionManager.AddPopulation(population);
-        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
-            ReservePartitionManager.GetGridWithAccess(population));
+        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
+        GridSystem.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
     }

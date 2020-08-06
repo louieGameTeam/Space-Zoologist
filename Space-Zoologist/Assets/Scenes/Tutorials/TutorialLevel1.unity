@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -318,6 +318,7 @@ Transform:
   - {fileID: 1914012207}
   - {fileID: 696363652}
   - {fileID: 1228623304}
+  - {fileID: 816277448}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3876,12 +3877,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
+  TileSystem: {fileID: 1595268512}
 --- !u!224 &807543077 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3584745817606081329, guid: 2b8234909d50f4bbe80178a1766c6faa,
     type: 3}
   m_PrefabInstance: {fileID: 1346366395}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &816277447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 816277448}
+  - component: {fileID: 816277449}
+  m_Layer: 0
+  m_Name: GridSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &816277448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816277447}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 136620444}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &816277449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816277447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a938cfc2bb8f4cbeac86158c272f6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grid: {fileID: 1595268514}
+  LevelDataReference: {fileID: 508238547}
+  RPM: {fileID: 696363653}
 --- !u!114 &954492369 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4731764134846842071, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -3923,6 +3971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4478dfc029b4643be8f565b36a1a437c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ReservePartitionManager: {fileID: 0}
   NeedSystemManager: {fileID: 8743428313621944119}
   PopulationManager: {fileID: 6865833325980303504}
   FoodSourceManager: {fileID: 612302610}
@@ -3990,6 +4039,16 @@ PrefabInstance:
       propertyPath: AutomotonTesting
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6865833327104224962, guid: bb06fd24f82d741aca954f0960422d94,
+        type: 3}
+      propertyPath: GridSystem
+      value: 
+      objectReference: {fileID: 816277449}
+    - target: {fileID: 6865833327104224962, guid: bb06fd24f82d741aca954f0960422d94,
+        type: 3}
+      propertyPath: ReservePartitionManager
+      value: 
+      objectReference: {fileID: 696363653}
     - target: {fileID: 6865833327857552241, guid: bb06fd24f82d741aca954f0960422d94,
         type: 3}
       propertyPath: m_Name
@@ -4082,6 +4141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelDataReference: {fileID: 508238547}
+  TileSystem: {fileID: 1595268512}
 --- !u!4 &1228623304
 Transform:
   m_ObjectHideFlags: 0
@@ -4525,6 +4585,11 @@ PrefabInstance:
       propertyPath: LevelDataReference
       value: 
       objectReference: {fileID: 508238547}
+    - target: {fileID: 849827784489429144, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: TileSystem
+      value: 
+      objectReference: {fileID: 1595268512}
     - target: {fileID: 849827784864194468, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_Name
@@ -4621,6 +4686,11 @@ PrefabInstance:
       propertyPath: NeedSystemUpdater
       value: 
       objectReference: {fileID: 1675248372}
+    - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: LevelDataReference
+      value: 
+      objectReference: {fileID: 508238547}
     - target: {fileID: 849827785566768625, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4786,6 +4856,11 @@ PrefabInstance:
       propertyPath: FoodSourceManager
       value: 
       objectReference: {fileID: 612302610}
+    - target: {fileID: 4731764134846842071, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: TileSystem
+      value: 
+      objectReference: {fileID: 1595268512}
     - target: {fileID: 5050333255684313850, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_IsActive
@@ -5005,7 +5080,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422399183}
-  - component: {fileID: 1422399184}
   - component: {fileID: 1422399185}
   m_Layer: 0
   m_Name: Utils
@@ -5028,22 +5102,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1422399184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422399182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7894e58905742a498c7aeafaa3eaf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LevelDataReference: {fileID: 508238547}
-  TilePlacementController: {fileID: 1595268510}
-  DesigningLevel: 1
-  referenceTilemap: {fileID: 284932543}
 --- !u!114 &1422399185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5413,6 +5471,8 @@ MonoBehaviour:
   - {fileID: 1283748554}
   - {fileID: 413003261}
   - {fileID: 502230406}
+  TileSystem: {fileID: 1595268512}
+  GridSystem: {fileID: 816277449}
 --- !u!4 &1595268511
 Transform:
   m_ObjectHideFlags: 0
@@ -5536,6 +5596,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeedSystemManager: {fileID: 8743428313621944119}
   PopulationManager: {fileID: 6865833325980303504}
+  ReservePartitionManager: {fileID: 696363653}
+  GridSystem: {fileID: 816277449}
 --- !u!1 &1914012205
 GameObject:
   m_ObjectHideFlags: 0
@@ -6189,6 +6251,7 @@ MonoBehaviour:
   WASDSpeed: 0.35
   dragSpeed: 3
   zoomLerpSpeed: 5
+  LevelDataReference: {fileID: 508238547}
 --- !u!114 &2122435669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6488,4 +6551,5 @@ MonoBehaviour:
   PopulationManager: {fileID: 6865833325980303504}
   FoodSourceManager: {fileID: 612302610}
   EnclosureSystem: {fileID: 1228623303}
-  levelDataReference: {fileID: 508238547}
+  TileSystem: {fileID: 1595268512}
+  ReservePartitionManager: {fileID: 696363653}
