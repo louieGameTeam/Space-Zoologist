@@ -114,7 +114,7 @@ public class FoodSourceCalculator : NeedCalculator
         // When accessbility of population changes a full reset should be triggered
         foreach (Population population in consumers)
         {
-            if (rpm.PopulationAccessbilityStatus[population])
+            if (population.HasAccessibilityChanged)
             {
                 Debug.Log($"{population} triggered a accessible list reset");
 

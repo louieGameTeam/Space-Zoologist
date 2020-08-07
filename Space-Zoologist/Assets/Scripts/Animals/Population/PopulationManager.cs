@@ -81,9 +81,9 @@ public class PopulationManager : MonoBehaviour
     // register the existing population, initialize it's specific data, then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
-        this.HandlePopulationRegistration(population);
         population.InitializePopulationData(NeedSystemManager, ReservePartitionManager);
         population.InitializeExistingAnimals();
+        this.HandlePopulationRegistration(population);
     }
 
     // Registers the population with all all of the systems that care about it
@@ -100,7 +100,7 @@ public class PopulationManager : MonoBehaviour
     {
         foreach (Population population in this.ExistingPopulations)
         {
-            ReservePartitionManager.PopulationAccessbilityStatus[population] = false;
+            population.HasAccessibilityChanged = false;
         }
     }
 }

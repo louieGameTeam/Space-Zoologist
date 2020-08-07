@@ -32,11 +32,12 @@ public class Population : MonoBehaviour, Life
 
     private Vector3 origin = Vector3.zero;
     private GrowthCalculator GrowthCalculator = default;
-    private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
     public bool IssueWithAccessibleArea = false;
 
-    private ReservePartitionManager ReservePartitionManager = default;
+    private NeedSystemManager NeedSystemManager = default;
+
+    public bool HasAccessibilityChanged = default;
 
     private void Awake()
     {
@@ -54,7 +55,6 @@ public class Population : MonoBehaviour, Life
     public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
     {
         this.NeedSystemManager = needSystemManager;
-        this.ReservePartitionManager = reservePartitionManager;
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
@@ -71,7 +71,6 @@ public class Population : MonoBehaviour, Life
     public void InitializePopulationData(NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
     {
         this.NeedSystemManager = needSystemManager;
-        this.ReservePartitionManager = reservePartitionManager;
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
@@ -295,9 +294,6 @@ public class Population : MonoBehaviour, Life
 
     public bool GetAccessibilityStatus()
     {
-
-
-
-        return ReservePartitionManager.PopulationAccessbilityStatus[this];
+        return this.HasAccessibilityChanged;
     }
 }

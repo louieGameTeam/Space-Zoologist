@@ -28,7 +28,7 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if consumer is dirty
             foreach (Population consumer in foodSourceCalculator.Consumers)
             {
-                if (rpm.PopulationAccessbilityStatus[consumer])
+                if (consumer.GetAccessibilityStatus())
                 {
                     foodSourceCalculator.MarkDirty();
                     needUpdate = true;

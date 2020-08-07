@@ -113,7 +113,7 @@ public class SpeciesCalculator : NeedCalculator
         // When accessbility of population changes a full reset should be triggered
         foreach (Population consumer in Consumers)
         {
-            if (rpm.PopulationAccessbilityStatus[consumer])
+            if (consumer.HasAccessibilityChanged)
             {
                 //Debug.Log($"{consumer} triggered a reset");
 
