@@ -50,8 +50,8 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the specific population data, then initialize the animals
-        population.InitializeNewPopulation(species, position, count, NeedSystemManager, ReservePartitionManager);
-        population.InitializePopulationData(NeedSystemManager, ReservePartitionManager);
+        population.InitializeNewPopulation(species, position, count, NeedSystemManager);
+        population.InitializePopulationData(NeedSystemManager);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
     }
@@ -81,7 +81,7 @@ public class PopulationManager : MonoBehaviour
     // register the existing population, initialize it's specific data, then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
-        population.InitializePopulationData(NeedSystemManager, ReservePartitionManager);
+        population.InitializePopulationData(NeedSystemManager);
         population.InitializeExistingAnimals();
         this.HandlePopulationRegistration(population);
     }

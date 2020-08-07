@@ -52,7 +52,7 @@ public class Population : MonoBehaviour, Life
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
     ///  TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager)
     {
         this.NeedSystemManager = needSystemManager;
         this.species = species;
@@ -68,7 +68,7 @@ public class Population : MonoBehaviour, Life
     /// <summary>
     /// Sets up population's behavior and need data
     /// </summary>
-    public void InitializePopulationData(NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
+    public void InitializePopulationData(NeedSystemManager needSystemManager)
     {
         this.NeedSystemManager = needSystemManager;
         this.CurrentBehaviors = new List<BehaviorScriptName>();
