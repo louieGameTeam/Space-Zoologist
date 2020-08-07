@@ -21,75 +21,27 @@ MonoBehaviour:
   - NeedType: 0
     behaviorScriptName: 0
   size: 5
-  accessibleTerrain: 020000000300000001000000
+  accessibleTerrain: 0100000003000000
   icon: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c, type: 3}
   needsList:
-  - needType: 0
+  - needType: 1
     needs:
-    - needName: Sand
+    - needName: GasX
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
       - 40
-    - needName: Grass
+    - needName: GasY
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
       - 20
-    - needName: Dirt
+    - needName: GasZ
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
       - 20
-  - needType: 4
-    needs:
-    - needName: MineralX
-      severity: 2
-      conditions: 0000000001000000020000000100000000000000
-      thresholds:
-      - 0.1
-      - 0.3
-      - 0.5
-      - 0.7
-    - needName: MineralZ
-      severity: 5
-      conditions: 0000000001000000020000000100000000000000
-      thresholds:
-      - 0.1
-      - 0.3
-      - 0.5
-      - 0.7
-  - needType: 3
-    needs:
-    - needName: Space Maple
-      severity: 2
-      conditions: 000000000100000002000000
-      thresholds:
-      - 7
-      - 15
-    - needName: Bush
-      severity: 2
-      conditions: 000000000100000002000000
-      thresholds:
-      - 7
-      - 15
-  - needType: 2
-    needs:
-    - needName: Density
-      severity: 2
-      conditions: 020000000100000000000000
-      thresholds:
-      - 2
-      - 5
-  - needType: 5
-    needs:
-    - needName: Strot
-      severity: 2
-      conditions: 000000000100000002000000
-      thresholds:
-      - 2
-      - 5
   representation: {fileID: 0}

@@ -21,7 +21,7 @@ MonoBehaviour:
   - NeedType: 0
     behaviorScriptName: 0
   size: 5
-  accessibleTerrain: 020000000300000001000000
+  accessibleTerrain: 01000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
   needsList:
   - needType: 0
@@ -33,12 +33,6 @@ MonoBehaviour:
       - 10
       - 40
     - needName: Grass
-      severity: 5
-      conditions: 000000000100000002000000
-      thresholds:
-      - 10
-      - 20
-    - needName: Dirt
       severity: 5
       conditions: 000000000100000002000000
       thresholds:

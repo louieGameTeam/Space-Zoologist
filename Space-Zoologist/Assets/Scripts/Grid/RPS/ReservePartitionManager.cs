@@ -38,9 +38,6 @@ public class ReservePartitionManager : MonoBehaviour
 
     public Dictionary<Population, int[]> TypesOfTerrain;
 
-    public Dictionary<Population, bool> PopulationAccessbilityStatus => this.populationAccessbilityStatus;
-    private Dictionary<Population, bool> populationAccessbilityStatus;
-
     public Dictionary<Population, List<float[]>> PopulationAccessibleLiquid => this.PopulationAccessibleLiquid;
     private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
 
@@ -73,7 +70,6 @@ public class ReservePartitionManager : MonoBehaviour
         Spaces = new Dictionary<Population, int>();
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
-        populationAccessbilityStatus = new Dictionary<Population, bool>();
         populationAccessibleLiquid = new Dictionary<Population, List<float[]>>();
     }
 
@@ -239,7 +235,7 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         // Set accessbility status
-        this.populationAccessbilityStatus[population] = true;
+        population.HasAccessibilityChanged = true;
     }
 
     /// <summary>

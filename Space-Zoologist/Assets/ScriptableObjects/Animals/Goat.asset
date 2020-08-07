@@ -84,9 +84,9 @@ MonoBehaviour:
       thresholds:
       - 2
       - 5
-  - needType: 5
+  - needType: 1
     needs:
-    - needName: Strot
+    - needName: GasX
       severity: 2
       conditions: 000000000100000002000000
       thresholds:
