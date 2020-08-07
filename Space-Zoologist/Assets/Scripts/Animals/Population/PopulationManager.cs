@@ -96,11 +96,11 @@ public class PopulationManager : MonoBehaviour
         this.speciesNeedSystem.AddPopulation(population);
     }
 
-    public void ResetAccessibilityStatus()
+    public void UdateAllPopulationStateForChecking()
     {
         foreach (Population population in this.ExistingPopulations)
         {
-            population.HasAccessibilityChanged = false;
+            population.UpdatePopulationStateForChecking();
         }
     }
 }

@@ -110,7 +110,7 @@ public class NeedSystemManager : MonoBehaviour
         }
 
         // Reset pop accessibility status
-        PopulationManager.ResetAccessibilityStatus(); 
+        PopulationManager.UdateAllPopulationStateForChecking(); 
 
         // Reset food source accessibility status
         FoodSourceManager.UpdateAccessibleTerrainInfoForAll();

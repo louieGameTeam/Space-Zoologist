@@ -31,7 +31,7 @@ public class SpeciesNeedSystem : NeedSystem
             // Check if consumer is dirty
             foreach (Population consumer in speciesCalculator.Consumers)
             {
-                if (consumer.GetAccessibilityStatus())
+                if (consumer.GetAccessibilityStatus() || consumer.Count != consumer.PrePopulationCount)
                 {
                     speciesCalculator.MarkDirty();
                     needUpdate = true;
@@ -49,7 +49,7 @@ public class SpeciesNeedSystem : NeedSystem
             {
                 foreach (Population population in speciesCalculator.Populations)
                 {
-                    if (population.HasAccessibilityChanged)
+                    if (population.GetAccessibilityStatus() || population.Count != population.PrePopulationCount)
                     {
                         speciesCalculator.MarkDirty();
                         needUpdate = true;

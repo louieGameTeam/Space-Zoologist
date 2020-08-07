@@ -24,6 +24,25 @@ public class DensityNeedSystem : NeedSystem
         densityCalculator.AddPop((Population)population);
     }
 
+    public override bool CheckState()
+    {
+        if (base.CheckState())
+        {
+            return true;
+        }
+
+        // Check if the population's count has changed
+        foreach (Population consumer in this.Consumers) // Consumer of the density NS is always `Population`
+        {
+            if (consumer.PrePopulationCount != consumer.Count)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// Updates the density score of all the registered population and updates the associated need in the Population's needs
     /// </summary>

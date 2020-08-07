@@ -38,6 +38,8 @@ public class Population : MonoBehaviour, Life
     private NeedSystemManager NeedSystemManager = default;
 
     public bool HasAccessibilityChanged = default;
+    public int PrePopulationCount => this.prePopulationCount;
+    private int prePopulationCount = default;
 
     private void Awake()
     {
@@ -163,6 +165,8 @@ public class Population : MonoBehaviour, Life
                 i++;
             }
         }
+
+        this.prePopulationCount = this.AnimalPopulation.Count;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -175,7 +179,7 @@ public class Population : MonoBehaviour, Life
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         AnimalPopulation.Add(newAnimal);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        this.MarkNeedsDirty();
+        //this.MarkNeedsDirty();
     }
 
     public void MarkNeedsDirty()
@@ -295,5 +299,11 @@ public class Population : MonoBehaviour, Life
     public bool GetAccessibilityStatus()
     {
         return this.HasAccessibilityChanged;
+    }
+
+    public void UpdatePopulationStateForChecking()
+    {
+        this.HasAccessibilityChanged = false;
+        this.prePopulationCount = this.AnimalPopulation.Count;
     }
 }
