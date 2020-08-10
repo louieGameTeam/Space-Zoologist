@@ -145,6 +145,7 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
         List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
+        List<float[]> newLiquidCompositions = new List<float[]>();
 
         if (!this.AccessibleArea.ContainsKey(population))
         {
@@ -188,10 +189,12 @@ public class ReservePartitionManager : MonoBehaviour
                     this.populationAccessibleLiquid.Add(population, new List<float[]>());
                 }
 
-                if (!this.populationAccessibleLiquid[population].Contains(composition))
+                if (!population.HasAccessibilityChanged && !this.populationAccessibleLiquid[population].Contains(composition))
                 {
-                    this.populationAccessibleLiquid[population].Add(composition);
+                    population.HasAccessibilityChanged = true;
                 }
+
+                newLiquidCompositions.Add(composition);
             }
 
             if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
@@ -202,11 +205,11 @@ public class ReservePartitionManager : MonoBehaviour
                 // save to accessible location
                 newAccessibleLocations.Add(cur);
 
-                if (!this.AccessibleArea[population].Contains(cur))
+                if (!population.HasAccessibilityChanged && !this.AccessibleArea[population].Contains(cur))
                 {
                     population.HasAccessibilityChanged = true;
                 }
-
+                
                 TypesOfTerrain[population][(int)tile.type]++;
 
                 if (!AccessMap.ContainsKey(cur))
@@ -252,6 +255,7 @@ public class ReservePartitionManager : MonoBehaviour
         if(population.HasAccessibilityChanged)
         {
             this.AccessibleArea[population] = newAccessibleLocations;
+            this.populationAccessibleLiquid[population] = newLiquidCompositions;
         }
     }
 
@@ -459,7 +463,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     public List<float[]> GetLiquidComposition(Population population)
     {
-        if (!this.populationAccessibleLiquid.ContainsKey(population))
+        if (!this.populationAccessibleLiquid.ContainsKey(population) || this.PopulationAccessibleLiquid[population].Count == 0)
         {
             return null;
         }
