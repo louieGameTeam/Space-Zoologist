@@ -179,26 +179,12 @@ public class Population : MonoBehaviour, Life
         GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
         AnimalPopulation.Add(newAnimal);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        //this.MarkNeedsDirty();
-    }
-
-    public void MarkNeedsDirty()
-    {
-        // Making the NS of this pop's need dirty (Density, FoodSource and Species)
-        foreach (Need need in this.needs.Values)
-        {
-            if (need.NeedType != NeedType.Atmosphere && need.NeedType != NeedType.Terrain && need.NeedType != NeedType.Liquid)
-            {
-                this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
-            }
-        }
-        this.NeedSystemManager.Systems[NeedType.Species].MarkAsDirty();
     }
 
     // TODO remove using PoolingSystem
     public void RemoveAnimal(int count)
     {
-        this.MarkNeedsDirty();
+        // TODO: Remove pop
     }
 
     /// <summary>
