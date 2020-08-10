@@ -19,7 +19,6 @@ public class Population : MonoBehaviour, Life
     public AnimalPathfinding.Grid grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
     public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [SerializeField] private GameObject AnimalPrefab = default;

@@ -35,7 +35,7 @@ public class FoodSourceStoreSection : StoreSection
             if (!IsPlacementValid(mousePosition))
             {
                 Debug.Log("Cannot place item that location");
-                //return;
+                return;
             }
             FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
             playerBalance.RuntimeValue -= selectedItem.Price;
@@ -44,8 +44,8 @@ public class FoodSourceStoreSection : StoreSection
 
     public override bool IsPlacementValid(Vector3 mousePosition)
     {
-        if (mousePosition.x >= 0 && mousePosition.y >= 0
-        && mousePosition.x <= LevelDataReference.MapWidth && mousePosition.y <= LevelDataReference.MapHeight)
+        if (mousePosition.x > 0 && mousePosition.y > 0
+        && mousePosition.x < LevelDataReference.MapWidth && mousePosition.y < LevelDataReference.MapHeight)
         {
             Vector3Int mouseGridPosition = this.TileSystem.WorldToCell(mousePosition);
             TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(mouseGridPosition);

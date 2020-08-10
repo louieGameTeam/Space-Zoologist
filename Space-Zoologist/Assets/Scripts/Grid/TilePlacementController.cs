@@ -99,9 +99,19 @@ public class TilePlacementController : MonoBehaviour
 
     public bool IsPlacementValid(Vector3 mousePosition)
     {
-        this.PlacementPaused = (mousePosition.x < GridSystem.GridWidth - 1 && mousePosition.y < GridSystem.GridHeight - 1 &&
-        mousePosition.x > 0 && mousePosition.y > 0);
-        return this.PlacementPaused;
+        if (this.GridSystem.CheckPopulationHomeLocations(mousePosition))
+        {
+            this.PlacementPaused = true;
+            return false;;
+        }
+        if (!(mousePosition.x < GridSystem.GridWidth - 1 && mousePosition.y < GridSystem.GridHeight - 1 &&
+        mousePosition.x > 0 && mousePosition.y > 0))
+        {
+            this.PlacementPaused = true;
+            return false;
+        }
+        this.PlacementPaused = false;
+        return true;
     }
 
     /// <summary>

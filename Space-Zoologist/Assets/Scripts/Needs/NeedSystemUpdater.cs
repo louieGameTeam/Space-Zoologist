@@ -51,7 +51,7 @@ public class NeedSystemUpdater : MonoBehaviour
     }
 
     // Temp update
-    private void FixedUpdate()
+    private void Update()
     {
         if(!isInStore)
         {

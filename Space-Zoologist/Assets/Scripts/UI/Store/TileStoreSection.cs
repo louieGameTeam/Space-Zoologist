@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class TileStoreSection : StoreSection
 {
     [SerializeField] private TilePlacementController tilePlacementController = default;
+    [SerializeField] private NeedSystemManager NeedSystemManager = default;
     [Header("Only needed if tutorial level")]
     [SerializeField] private TutorialTesting tutorial = default;
 

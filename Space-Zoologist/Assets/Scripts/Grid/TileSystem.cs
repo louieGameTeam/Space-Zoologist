@@ -43,14 +43,18 @@ public class TileSystem : MonoBehaviour
     {
         foreach (Tilemap tilemap in tilemaps)
         {
-            var returnedTile = tilemap.GetTile(cellLocation);
-            if (returnedTile != null && returnedTile.GetType().Equals(typeof(TerrainTile))) {
-                TerrainTile tileOnLayer = (TerrainTile)returnedTile;
-                if (tileOnLayer.isRepresentative)
-                {
-                    return tileOnLayer;
-                }
+            var returnedTile = tilemap.GetTile<TerrainTile>(cellLocation);
+            if (returnedTile != null && returnedTile.isRepresentative)
+            {
+                return returnedTile;
             }
+            // if (returnedTile != null && returnedTile.GetType().Equals(typeof(TerrainTile))) {
+            //     TerrainTile tileOnLayer = (TerrainTile)returnedTile;
+            //     if (tileOnLayer.isRepresentative)
+            //     {
+            //         return tileOnLayer;
+            //     }
+            // }
         }
         return null;
     }

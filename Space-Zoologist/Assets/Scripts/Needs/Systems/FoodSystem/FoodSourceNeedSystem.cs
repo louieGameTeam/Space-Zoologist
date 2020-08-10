@@ -22,41 +22,47 @@ public class FoodSourceNeedSystem : NeedSystem
     public override bool CheckState()
     {
         bool needUpdate = false;
-
         foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
-            // Check if consumer is dirty
-            foreach (Population consumer in foodSourceCalculator.Consumers)
-            {
-                if (rpm.PopulationAccessbilityStatus[consumer])
-                {
-                    foodSourceCalculator.MarkDirty();
-                    needUpdate = true;
-                    break;
-                }
-            }
-
-            // If consumer is already dirty check next food source calculator
+            needUpdate = this.CheckFoodSourcesConsumers(foodSourceCalculator);
+            // If consumer is already dirty check next food source calculator, otherwise check the terrain
             if (needUpdate)
             {
-                break;
+                continue;
             }
-            // Check if food source is dirty
             else
             {
-                foreach (FoodSource foodSource in foodSourceCalculator.FoodSources)
-                {
-                    if (foodSource.GetAccessibilityStatus())
-                    {
-                        foodSourceCalculator.MarkDirty();
-                        needUpdate = true;
-                        break;
-                    }
-                }
+                needUpdate = this.CheckFoodSourcesTerrain(foodSourceCalculator);
             }
         }
-
         return needUpdate;
+    }
+
+    private bool CheckFoodSourcesConsumers(FoodSourceCalculator foodSourceCalculator)
+    {
+        foreach (Population consumer in foodSourceCalculator.Consumers)
+        {
+            if (rpm.PopulationAccessbilityStatus[consumer])
+            {
+                foodSourceCalculator.MarkDirty();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // foodSource.GetAccessibilityStatus() is Expensive!
+    private bool CheckFoodSourcesTerrain(FoodSourceCalculator foodSourceCalculator)
+    {
+        foreach (FoodSource foodSource in foodSourceCalculator.FoodSources)
+        {
+            if (foodSource.GetAccessibilityStatus())
+            {
+                foodSourceCalculator.MarkDirty();
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -69,7 +75,6 @@ public class FoodSourceNeedSystem : NeedSystem
             if (foodSourceCalculator.IsDirty)
             {
                 var foodDistributionOutput = foodSourceCalculator.CalculateDistribution();
-
                 // foodDistributionOutput returns null is not thing to be updated
                 if (foodDistributionOutput != null)
                 {
@@ -78,11 +83,9 @@ public class FoodSourceNeedSystem : NeedSystem
                         consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
                     }
                 }
-
                 Debug.Log($"{foodSourceCalculator.FoodSourceName} calculator updated");
             }
         }
-
         this.isDirty = false;
     }
 

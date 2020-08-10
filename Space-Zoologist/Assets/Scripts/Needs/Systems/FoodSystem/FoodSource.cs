@@ -109,7 +109,7 @@ public class FoodSource: MonoBehaviour, Life
     /// Checks accessible terrain info, ie terrain tile composition
     /// </summary>
     /// <remarks>
-    /// Actual checking will only be done once per universial NS update loop,
+    /// Actual checking will only be done once per universal NS update loop,
     /// since terrain will not change during that time
     /// </remarks>
     /// <returns>True is accessible terrain had changed, false otherwise</returns>
