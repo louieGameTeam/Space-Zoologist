@@ -154,6 +154,9 @@ public class TilePlacementController : MonoBehaviour
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
+
+        // Set terrain modified flag
+        this.TileSystem.HasTerrainChanged = true;
     }
     public int PlacedTileCount()
     {

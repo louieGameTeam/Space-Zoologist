@@ -114,6 +114,9 @@ public class NeedSystemManager : MonoBehaviour
 
         // Reset food source accessibility status
         FoodSourceManager.UpdateAccessibleTerrainInfoForAll();
+
+        // Reset terrain modified flag
+        TileSystem.HasTerrainChanged = false;
     }
 
 }

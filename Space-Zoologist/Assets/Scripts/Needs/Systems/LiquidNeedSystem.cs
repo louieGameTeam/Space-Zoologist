@@ -40,6 +40,12 @@ public class LiquidNeedSystem : NeedSystem
                 // Check is there is found composition
                 if (liquidCompositions != null)
                 {
+                    if (liquidCompositions.Count == 0)
+                    {
+                        this.isDirty = false;
+                        return;
+                    }
+
                     liquidCompositionToUpdate = liquidCompositions[0];
 
                     foreach (float[] composition in liquidCompositions)

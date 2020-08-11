@@ -177,7 +177,7 @@ public class SpeciesCalculator : NeedCalculator
                 int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[life][population]);
                 availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (life.Dominance / totalLocalDominance[population]));
 
-                Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availablePopulationCount}");
+                //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availablePopulationCount}");
             }
 
             // If the food available to the Population is more than enough, only take enough and update its need.
@@ -191,7 +191,7 @@ public class SpeciesCalculator : NeedCalculator
                     amountPopulationCountRemaining[population] -= populationCountAcquired;
                     totalPopulationCountAcquired += populationCountAcquired;
                     localDominanceRemaining[population] -= life.Dominance;
-                    Debug.Log($"{life.Species.SpeciesName} population took {populationCountAcquired} food from foodsource at {population.Species.SpeciesName}");
+                    //Debug.Log($"{life.Species.SpeciesName} population took {populationCountAcquired} food from foodsource at {population.Species.SpeciesName}");
                 }
                 float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
                 this.distributAmount[life] = populationCountAcquiredPerIndividual;
