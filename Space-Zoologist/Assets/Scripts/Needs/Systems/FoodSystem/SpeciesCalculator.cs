@@ -125,7 +125,6 @@ public class SpeciesCalculator : NeedCalculator
                         populationsWithAccess[consumed].Add(consumer);
                     }
                 }
-                //rpm.PopulationAccessbilityStatus[consumer] = false;
             }
         }
 
