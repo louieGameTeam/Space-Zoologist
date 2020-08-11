@@ -34,9 +34,6 @@ public class LiquidNeedSystem : NeedSystem
         {
             if (life.GetType() == typeof(Population))
             {
-                // TODO: Get all liquid composition with accessible area
-                // TODO: Get composition from helper system
-
                 List<float[]> liquidCompositions = rpm.GetLiquidComposition((Population)life);
                 int highScore = 0;
 
