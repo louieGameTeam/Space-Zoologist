@@ -463,7 +463,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     public List<float[]> GetLiquidComposition(Population population)
     {
-        if (!this.populationAccessibleLiquid.ContainsKey(population) || this.PopulationAccessibleLiquid[population].Count == 0)
+        if (!this.populationAccessibleLiquid.ContainsKey(population))
         {
             return null;
         }

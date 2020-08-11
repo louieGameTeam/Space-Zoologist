@@ -529,6 +529,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Population
       objectReference: {fileID: 0}
+    - target: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3127976671735019294, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1631,6 +1636,11 @@ PrefabInstance:
       propertyPath: LevelDataReference
       value: 
       objectReference: {fileID: 856622804}
+    - target: {fileID: 6874327554880135011, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8582389809603506210, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: PopulationManager
@@ -1651,6 +1661,11 @@ PrefabInstance:
       propertyPath: NeedSystemsTester
       value: 
       objectReference: {fileID: 1153382562}
+    - target: {fileID: 8582389809603506210, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8743428314657368663, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: PopulationManager
@@ -1681,6 +1696,11 @@ PrefabInstance:
       propertyPath: ReservePartitionManager
       value: 
       objectReference: {fileID: 1103326418}
+    - target: {fileID: 8743428314657368663, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4694716191194936582, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
@@ -4043,7 +4063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fddaa2072f642548f2acfc0c5f8743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelData: {fileID: 11400000, guid: 8906e326536fd43adaa6c80aa6345e89, type: 2}
+  LevelData: {fileID: 11400000, guid: b7772717ccc174e598f2298534517b2e, type: 2}
 --- !u!4 &856622805
 Transform:
   m_ObjectHideFlags: 0
