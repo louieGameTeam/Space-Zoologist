@@ -30,13 +30,16 @@ public class Population : MonoBehaviour, Life
 
     private Vector3 origin = Vector3.zero;
     private GrowthCalculator GrowthCalculator = default;
-    private NeedSystemManager NeedSystemManager = default;
     public float TimeSinceUpdate = 0f;
     public bool IssueWithAccessibleArea = false;
     public System.Random random = new System.Random();
 
-    private ReservePartitionManager ReservePartitionManager = default;
+    public bool HasAccessibilityChanged = default;
+    public int PrePopulationCount => this.prePopulationCount;
+    private int prePopulationCount = default;
+
     private PoolingSystem PoolingSystem = default;
+
 
     private void Awake()
     {
@@ -52,10 +55,9 @@ public class Population : MonoBehaviour, Life
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
     ///  TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager)
     {
         this.NeedSystemManager = needSystemManager;
-        this.ReservePartitionManager = reservePartitionManager;
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
@@ -72,10 +74,9 @@ public class Population : MonoBehaviour, Life
     /// <summary>
     /// Sets up population's behavior and need data
     /// </summary>
-    public void InitializePopulationData(NeedSystemManager needSystemManager, ReservePartitionManager reservePartitionManager)
+    public void InitializePopulationData(NeedSystemManager needSystemManager)
     {
         this.NeedSystemManager = needSystemManager;
-        this.ReservePartitionManager = reservePartitionManager;
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {
@@ -169,6 +170,8 @@ public class Population : MonoBehaviour, Life
                 i++;
             }
         }
+
+        this.prePopulationCount = this.AnimalPopulation.Count;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -185,26 +188,12 @@ public class Population : MonoBehaviour, Life
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        this.MarkNeedsDirty();
-    }
-
-    public void MarkNeedsDirty()
-    {
-        // Making the NS of this pop's need dirty (Density, FoodSource and Species)
-        foreach (Need need in this.needs.Values)
-        {
-            if (need.NeedType != NeedType.Atmosphere && need.NeedType != NeedType.Terrain && need.NeedType != NeedType.Liquid)
-            {
-                this.NeedSystemManager.Systems[need.NeedType].MarkAsDirty();
-            }
-        }
-        this.NeedSystemManager.Systems[NeedType.Species].MarkAsDirty();
     }
 
     // TODO set inactive but do not remove
     public void RemoveAnimal(int count)
     {
-        this.MarkNeedsDirty();
+        // TODO: Remove pop
     }
 
     /// <summary>
@@ -303,6 +292,12 @@ public class Population : MonoBehaviour, Life
 
     public bool GetAccessibilityStatus()
     {
-        return ReservePartitionManager.PopulationAccessbilityStatus[this];
+        return this.HasAccessibilityChanged;
+    }
+
+    public void UpdatePopulationStateForChecking()
+    {
+        this.HasAccessibilityChanged = false;
+        this.prePopulationCount = this.AnimalPopulation.Count;
     }
 }

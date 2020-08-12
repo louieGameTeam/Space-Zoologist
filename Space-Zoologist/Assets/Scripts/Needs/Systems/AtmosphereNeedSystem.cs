@@ -39,12 +39,12 @@ public class AtmosphereNeedSystem : NeedSystem
 
             foreach (var (value, index) in composition.WithIndex())
             {
-               string needName = ((AtmoshpereComponent)index).ToString();
+                string needName = ((AtmoshpereComponent)index).ToString();
 
-               if (life.GetNeedValues().ContainsKey(needName))
-               {
-                   life.UpdateNeed(needName, value);
-               }
+                if (life.GetNeedValues().ContainsKey(needName))
+                {
+                    life.UpdateNeed(needName, value);
+                }
             }
         }
 

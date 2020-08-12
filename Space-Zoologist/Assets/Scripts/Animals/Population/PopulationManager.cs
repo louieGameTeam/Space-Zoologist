@@ -48,8 +48,8 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the specific population data, then initialize the animals
-        population.InitializeNewPopulation(species, position, count, NeedSystemManager, ReservePartitionManager);
-        population.InitializePopulationData(NeedSystemManager, ReservePartitionManager);
+        population.InitializeNewPopulation(species, position, count, NeedSystemManager);
+        population.InitializePopulationData(NeedSystemManager);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
     }
@@ -78,26 +78,27 @@ public class PopulationManager : MonoBehaviour
     // register the existing population, initialize it's specific data, then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
-        this.HandlePopulationRegistration(population);
-        population.InitializePopulationData(NeedSystemManager, ReservePartitionManager);
+        population.InitializePopulationData(NeedSystemManager);
         population.InitializeExistingAnimals();
+        this.HandlePopulationRegistration(population);
     }
 
     // Registers the population with all all of the systems that care about it
     private void HandlePopulationRegistration(Population population)
     {
         this.ReservePartitionManager.AddPopulation(population);
-        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
+        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
+        this.ReservePartitionManager.GetGridWithAccess(population));
+        this.NeedSystemManager.RegisterWithNeedSystems(population);
         GridSystem.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
-        NeedSystemManager.RegisterWithNeedSystems(population);
     }
 
-    public void ResetAccessibilityStatus()
+    public void UdateAllPopulationStateForChecking()
     {
         foreach (Population population in this.ExistingPopulations)
         {
-            ReservePartitionManager.PopulationAccessbilityStatus[population] = false;
+            population.UpdatePopulationStateForChecking();
         }
     }
 }

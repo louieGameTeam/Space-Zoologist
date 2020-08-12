@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Calculates food distribution of a certain food type
 /// </summary>
-public class FoodSourceCalculator 
+public class FoodSourceCalculator : NeedCalculator
 {
     public string FoodSourceName => this.foodSourceName;
     public List<FoodSource> FoodSources => this.foodSources;
@@ -37,6 +37,72 @@ public class FoodSourceCalculator
         this.isDirty = true;
     }
 
+
+    public void AddConsumer(Population consumer)
+    {
+        if (this.consumers.Contains(consumer))
+        {
+            return;
+        }
+
+        this.consumers.Add(consumer);
+
+        //Population population = (Population)life;
+        accessibleFoodSources.Add(consumer, new HashSet<FoodSource>());
+        foreach (FoodSource foodSource in foodSources)
+        {
+            if (rpm.CanAccess(consumer, foodSource.Position))
+            {
+                accessibleFoodSources[consumer].Add(foodSource);
+                populationsWithAccess[foodSource].Add(consumer);
+            }
+        }
+
+        this.isDirty = true;
+    }
+
+    public void AddSource(Life source)
+    {
+        FoodSource foodSource = (FoodSource)source;
+
+        this.foodSources.Add(foodSource);
+
+        populationsWithAccess.Add(foodSource, new HashSet<Population>());
+        foreach (Population population in Consumers)
+        {
+            if (rpm.CanAccess(population, foodSource.Position))
+            {
+                accessibleFoodSources[population].Add(foodSource);
+                populationsWithAccess[foodSource].Add(population);
+            }
+        }
+
+        this.isDirty = true;
+    }
+
+    public bool RemoveSource(Life source)
+    {
+        FoodSource foodSource = (FoodSource)source;
+
+        this.isDirty = true;
+
+        Debug.Assert(!this.foodSources.Remove(foodSource), "FoodSource removal failure");
+        Debug.Assert(!this.populationsWithAccess.Remove(foodSource), "Removal of foodsource in populationsWithAccess failed!");
+
+        return true;
+    }
+
+    public bool RemoveConsumer(Population consumer)
+    {
+        this.isDirty = true;
+
+        // Assert would not be included in depolyment built
+        Debug.Assert(!this.consumers.Remove(consumer), "Consumer removal failure");
+        Debug.Assert(!this.accessibleFoodSources.Remove(consumer), "Removal of consumer in AccessibleFoodSources failed!");
+
+        return true;
+    }
+
     public Dictionary<Population, float> CalculateDistribution()
     {
         if (foodSources.Count == 0 || consumers.Count == 0)
@@ -48,7 +114,7 @@ public class FoodSourceCalculator
         // When accessbility of population changes a full reset should be triggered
         foreach (Population population in consumers)
         {
-            if (rpm.PopulationAccessbilityStatus[population])
+            if (population.HasAccessibilityChanged)
             {
                 Debug.Log($"{population} triggered a accessible list reset");
 
@@ -149,67 +215,6 @@ public class FoodSourceCalculator
         // Done update not dirty any more
         isDirty = false;
 
-        // TODO return calculated values
         return this.distributedFood;
-    }
-
-    public void AddFoodSource(FoodSource foodSource)
-    {
-        this.foodSources.Add(foodSource);
-
-        populationsWithAccess.Add(foodSource, new HashSet<Population>());
-        foreach (Population population in Consumers)
-        {
-            if (rpm.CanAccess(population, foodSource.Position))
-            {
-                accessibleFoodSources[population].Add(foodSource);
-                populationsWithAccess[foodSource].Add(population);
-            }
-        }
-
-        this.isDirty = true;
-    }
-
-    public bool RemoveFoodSource(FoodSource foodSource)
-    {
-        this.isDirty = true;
-
-        Debug.Assert(!this.foodSources.Remove(foodSource), "FoodSource removal failure");
-        Debug.Assert(!this.populationsWithAccess.Remove(foodSource), "Removal of foodsource in populationsWithAccess failed!");
-
-        return true;
-    }
-
-    public void AddConsumer(Population population)
-    {
-        if (this.consumers.Contains(population))
-        {
-            return;
-        }
-
-        this.consumers.Add(population);
-
-        //Population population = (Population)life;
-        accessibleFoodSources.Add(population, new HashSet<FoodSource>());
-        foreach (FoodSource foodSource in foodSources)
-        {
-            if (rpm.CanAccess(population, foodSource.Position))
-            {
-                accessibleFoodSources[population].Add(foodSource);
-                populationsWithAccess[foodSource].Add(population);
-            }
-        }
-
-        this.isDirty = true;
-    }
-
-    public bool RemoverConsumer(Population population)
-    {
-        this.isDirty = true;
-
-        Debug.Assert(!this.consumers.Remove(population), "Consumer removal failure");
-        Debug.Assert(!this.accessibleFoodSources.Remove(population), "Removal of consumer in AccessibleFoodSources failed!");
-
-        return true;
     }
 }

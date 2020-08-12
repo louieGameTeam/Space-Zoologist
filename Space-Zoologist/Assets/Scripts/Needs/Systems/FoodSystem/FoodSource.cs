@@ -115,6 +115,12 @@ public class FoodSource: MonoBehaviour, Life
     /// <returns>True is accessible terrain had changed, false otherwise</returns>
     public bool GetAccessibilityStatus()
     {
+        // No need to check if terrain was not modified
+        if (!this.TileSystem.HasTerrainChanged)
+        {
+            return false;
+        }
+
         // Return result if have checked
         if (this.hasAccessibleTerrainChecked)
         {

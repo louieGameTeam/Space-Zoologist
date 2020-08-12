@@ -31,7 +31,7 @@ public class SpeciesNeedSystem : NeedSystem
             // Check if consumer is dirty
             foreach (Population consumer in speciesCalculator.Consumers)
             {
-                if (rpm.PopulationAccessbilityStatus[consumer])
+                if (consumer.GetAccessibilityStatus() || consumer.Count != consumer.PrePopulationCount)
                 {
                     speciesCalculator.MarkDirty();
                     needUpdate = true;
@@ -49,7 +49,7 @@ public class SpeciesNeedSystem : NeedSystem
             {
                 foreach (Population population in speciesCalculator.Populations)
                 {
-                    if (rpm.PopulationAccessbilityStatus[population])
+                    if (population.GetAccessibilityStatus() || population.Count != population.PrePopulationCount)
                     {
                         speciesCalculator.MarkDirty();
                         needUpdate = true;
@@ -70,7 +70,7 @@ public class SpeciesNeedSystem : NeedSystem
             this.speciesCalculators.Add(population.Species.SpeciesName, new SpeciesCalculator(rpm, population.Species.SpeciesName));
         }
 
-        this.speciesCalculators[population.Species.SpeciesName].AddPopulation(population);
+        this.speciesCalculators[population.Species.SpeciesName].AddSource(population);
 
         this.isDirty = true;
     }
@@ -79,8 +79,8 @@ public class SpeciesNeedSystem : NeedSystem
     {
         foreach (Need need in life.GetNeedValues().Values)
         {
-            // Check if the need is a 'FoodSource' type
-            if (need.NeedType == NeedType.FoodSource)
+            // Check if the need is a 'Species' type
+            if (need.NeedType == NeedType.Species)
             {
                 // Create a food source calculator for this food source,
                 // if not already exist

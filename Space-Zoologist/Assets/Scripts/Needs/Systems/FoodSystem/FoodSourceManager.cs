@@ -9,7 +9,6 @@ using UnityEngine;
 public class FoodSourceManager : MonoBehaviour
 {
     public List<FoodSource> FoodSources => foodSources;
-
     private List<FoodSource> foodSources = new List<FoodSource>();
 
     // A reference to the food source need system
