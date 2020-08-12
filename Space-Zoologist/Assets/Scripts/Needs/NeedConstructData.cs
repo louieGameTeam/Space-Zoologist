@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 // Each NeedType holds a list of unique needs
-public enum NeedType { Terrain, Atmosphere, Density, FoodSource, Liquid, Species, Temperature };
+public enum NeedType { Terrain, Atmosphere, Density, FoodSource, Liquid, Species, Temperature, Symbiosis };
 public enum NeedCondition { Bad, Neutral, Good }
 
 [System.Serializable]
@@ -45,6 +45,10 @@ public class NeedTypeConstructData
         if (needType.Equals("Temperature", StringComparison.OrdinalIgnoreCase))
         {
             this.needType = NeedType.Temperature;
+        }
+        if (needType.Equals("Symbiosis", StringComparison.OrdinalIgnoreCase))
+        {
+            this.needType = NeedType.Symbiosis;
         }
         needs = new List<NeedConstructData>();
     }
