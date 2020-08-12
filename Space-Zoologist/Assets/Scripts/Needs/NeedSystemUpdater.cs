@@ -10,7 +10,9 @@ public class NeedSystemUpdater : MonoBehaviour
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] NeedSystemsTester NeedSystemsTester = default;
+
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
+    [SerializeField] GridSystem GridSystem = default;
 
     public bool isInStore { get; set; }
 
@@ -41,8 +43,8 @@ public class NeedSystemUpdater : MonoBehaviour
         ReservePartitionManager.UpdateAccessMap();
         foreach (Population population in PopulationManager.Populations)
         {
-            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
-            ReservePartitionManager.GetGridWithAccess(population));
+            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
+        GridSystem.GetGridWithAccess(population));
             foreach (GameObject animal in population.AnimalPopulation)
             {
                 animal.GetComponent<Animal>().ResetBehavior();
@@ -51,7 +53,7 @@ public class NeedSystemUpdater : MonoBehaviour
     }
 
     // Temp update
-    private void FixedUpdate()
+    private void Update()
     {
         if(!isInStore)
         {

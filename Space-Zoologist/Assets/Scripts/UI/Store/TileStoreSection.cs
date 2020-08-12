@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class TileStoreSection : StoreSection
 {
     [SerializeField] private TilePlacementController tilePlacementController = default;
+    [SerializeField] private NeedSystemManager NeedSystemManager = default;
     [Header("Only needed if tutorial level")]
     [SerializeField] private TutorialTesting tutorial = default;
 
@@ -75,7 +76,7 @@ public class TileStoreSection : StoreSection
         }
         if (eventData.button == PointerEventData.InputButton.Left && !isPlacing)
         {
-            StartPlacing();
+            this.StartPlacing();
         }
     }
 
@@ -105,8 +106,15 @@ public class TileStoreSection : StoreSection
     {
         if (isPlacing)
         {
-        numTilesPlaced = tilePlacementController.PlacedTileCount();
-        playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
+            if (this.tilePlacementController.PlacementPaused)
+            {
+                return;
+            }
+            else
+            {
+                numTilesPlaced = tilePlacementController.PlacedTileCount();
+                playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
+            }
         }
     }
 }

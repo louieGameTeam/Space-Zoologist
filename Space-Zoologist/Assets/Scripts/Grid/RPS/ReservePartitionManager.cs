@@ -47,14 +47,6 @@ public class ReservePartitionManager : MonoBehaviour
     private void Awake()
     {
         // Variable initializations
-        //if (ins != null && this != ins)
-        //{
-        //    Destroy(this);
-        //}
-        //else
-        //{
-        //    ins = this;
-        //}
 
         // long mask is limited to 64 bits
         openID = new Queue<int>();
@@ -328,37 +320,6 @@ public class ReservePartitionManager : MonoBehaviour
             }
         }
         return list;
-    }
-
-    // Will need to make the grid the size of the max tilemap size
-    public AnimalPathfinding.Grid GetGridWithAccess(Population population)
-    {
-        // Debug.Log("Setting up pathfinding grid");
-        bool[,] tileGrid = new bool[TilemapUtil.ins.MaxWidth, TilemapUtil.ins.MaxHeight];
-        foreach (KeyValuePair<Vector3Int, long> position in AccessMap) {
-            //Debug.Log("(" + (position.Key.x) + ", " + (position.Key.y) + ")");
-            if (CanAccess(population, position.Key))
-            {
-                // Debug.Log("(" + position.Key.x + ", " + position.Key.y + ")");
-                tileGrid[position.Key.x, position.Key.y] = true;
-            }
-            else
-            {
-                tileGrid[position.Key.x, position.Key.y] = false;
-            }
-        }
-        // Setup boundaries for movement
-        for (int x=0; x<TilemapUtil.ins.MaxWidth; x++)
-        {
-            tileGrid[x, 0] = false;
-            tileGrid[x, TilemapUtil.ins.MaxHeight - 1] = false;
-        }
-        for (int y=0; y<TilemapUtil.ins.MaxHeight; y++)
-        {
-            tileGrid[0, y] = false;
-            tileGrid[TilemapUtil.ins.MaxWidth - 1, y] = false;
-        }
-        return new AnimalPathfinding.Grid(tileGrid);
     }
 
     /// <summary>

@@ -15,7 +15,6 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
-    [SerializeField] LevelDataReference levelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
 
@@ -96,7 +95,6 @@ public class NeedSystemManager : MonoBehaviour
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;
-
             if (system.IsDirty)
             {
                 Debug.Log($"Updating {system.NeedType} NS by dirty flag");

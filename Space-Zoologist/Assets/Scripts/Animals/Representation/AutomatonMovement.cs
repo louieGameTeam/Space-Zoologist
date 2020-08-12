@@ -23,12 +23,6 @@ public class AutomatonMovement : MonoBehaviour
     private AnimalPathfinding.Node previousTile = default;
     private List<Vector3> PathToFollow = default;
 
-    public void Awake()
-    {
-        this.DirectionSeed = GenerateDirectionSeed();
-        this.TilesToMoveSeed = GenerateTilesToMoveSeed(MaxNumTiles);
-    }
-
     public void Start()
     {
         this.movementController = this.gameObject.GetComponent<MovementController>();
@@ -37,12 +31,15 @@ public class AutomatonMovement : MonoBehaviour
     public void Initialize(Population population)
     {
         this.population = population;
+        this.DirectionSeed = GenerateDirectionSeed();
+        this.TilesToMoveSeed = GenerateTilesToMoveSeed(MaxNumTiles);
+        this.CheckSurroundings();
     }
 
     // If animal walked predetermined number of tiles or animal cannot move in specified direction, update based off seed.
     public void Update()
     {
-        if (this.population == null|| this.movementController.IsPaused)
+        if (this.population == null || this.movementController.IsPaused)
         {
             return;
         }
@@ -54,123 +51,35 @@ public class AutomatonMovement : MonoBehaviour
         this.movementController.MoveInDirection(this.CurrentDirection);
     }
 
-    // Check directions and respond to new surroundings
+    // If on new tile then respond to new surroundings
     private void CheckSurroundings()
     {
-        AnimalPathfinding.Node currentTile = population.grid.GetNode(TilemapUtil.ins.WorldToCell(this.transform.position).x, TilemapUtil.ins.WorldToCell(this.transform.position).y);
-        if (!this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
-        {
-            if (!this.TryToUpdateDirection())
-            {
-                // Debug.Log("No valid directions found, pausing movement");
-                this.movementController.IsPaused = true;
-                //AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), this.population.AccessibleLocations[0], this.SetupPathfinding, this.population.grid);
-            }
-        }
+        AnimalPathfinding.Node currentTile = population.grid.GetNode(this.transform.position);
         if (currentTile != this.previousTile)
         {
             this.previousTile = currentTile;
             this.numTilesMoved++;
+            this.RespondToNewSurroundings(currentTile);
         }
     }
 
-    // Keep track of CurrentSeedIndex, iterate through seed (looping back around)
-    // until a direction is found or no viable direction can be found
-    private bool TryToUpdateDirection()
+    // TODO setup pathfinding back to an accessiblearea for when the animal gets stuck or kill them...
+    private void RespondToNewSurroundings(AnimalPathfinding.Node newTile)
     {
-        int count = 0;
-        CurrentDirectionSeedIndex = IncrementSeedIndex(CurrentDirectionSeedIndex);
-        while (!this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], this.transform.position, this.population.grid))
+        if (!this.DirectionAllowed(this.CurrentDirection, newTile, this.population.grid))
         {
-            CurrentDirectionSeedIndex = IncrementSeedIndex(CurrentDirectionSeedIndex);
-            count++;
-            if (count > 8)
+            if (!this.TryToUpdateDirection(newTile))
             {
-                break;
+                this.movementController.IsPaused = true;
+                //AnimalPathfinding.PathRequestManager.RequestPath(TilemapUtil.ins.WorldToCell(this.transform.position), this.population.AccessibleLocations[0], this.SetupPathfinding, this.population.grid);
             }
         }
-        // nowhere for the animal to move
-        if (count > 8)
-        {
-            this.CurrentDirection = Direction.down;
-            return false;
-        }
-        else
-        {
-            this.CurrentDirection = (Direction)DirectionSeed[CurrentDirectionSeedIndex];
-            return true;
-        }
-    }
-
-    private int IncrementSeedIndex(int currentDirectionSeedIndex)
-    {
-        currentDirectionSeedIndex++;
-        if (currentDirectionSeedIndex == 8)
-        {
-            currentDirectionSeedIndex = 0;
-        }
-        return currentDirectionSeedIndex;
-    }
-
-    private void UpdateTilesToMove()
-    {
-        this.TilesMovedIndex++;
-        if (this.TilesMovedIndex >= this.TilesToMoveSeed.Count)
-        {
-            this.TilesMovedIndex = 0;
-        }
-        this.NumTiles = this.TilesToMoveSeed[this.TilesMovedIndex];
-        this.numTilesMoved = 0;
-    }
-
-    private void SetupPathfinding(List<Vector3> path, bool pathFound)
-    {
-        // TODO figure out what to do if you can't pathfind.. Keep trying to pathfind? Notify player?
-        if (!pathFound)
-        {
-            Debug.Log("Issue with pathfinding");
-            return;
-        }
-        Debug.Log("Animal stuck, setting up pathfinding");
-        this.movementController.AssignPath(path);
-        this.PathToFollow = path;
-    }
-
-    private List<int> GenerateDirectionSeed()
-    {
-        HashSet<int> seed = new HashSet<int>();
-        System.Random random = new System.Random();
-        while (seed.Count < 8)
-        {
-            int r = random.Next(0, 8);
-            if (!seed.Contains(r))
-            {
-                seed.Add(r);
-            }
-        }
-        return seed.ToList();
-    }
-
-    private List<int> GenerateTilesToMoveSeed(int count)
-    {
-        HashSet<int> seed = new HashSet<int>();
-        System.Random random = new System.Random();
-        while (seed.Count < count)
-        {
-            int r = random.Next(1, count + 1);
-            if (!seed.Contains(r))
-            {
-                seed.Add(r);
-            }
-        }
-        return seed.ToList();
     }
 
     // Using direction, starting location, and grid, determine if the next spot on the grid is accessible
-    public bool DirectionAllowed(Direction direction, Vector3 startingLocation, AnimalPathfinding.Grid grid)
+    public bool DirectionAllowed(Direction direction, AnimalPathfinding.Node currentSpot, AnimalPathfinding.Grid grid)
     {
         bool isAllowed = false;
-        AnimalPathfinding.Node currentSpot = population.grid.GetNode(TilemapUtil.ins.WorldToCell(this.transform.position).x, TilemapUtil.ins.WorldToCell(this.transform.position).y);
         if (currentSpot == null)
         {
             // Debug.Log("Node outside of range");
@@ -220,5 +129,86 @@ public class AutomatonMovement : MonoBehaviour
             }
         }
         return isAllowed;
+    }
+
+    // Keep track of CurrentSeedIndex, iterate through seed (looping back around)
+    // until a direction is found or no viable direction can be found
+    private bool TryToUpdateDirection(AnimalPathfinding.Node currentTile)
+    {
+        int count = 0;
+        while (!this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], currentTile, this.population.grid))
+        {
+            CurrentDirectionSeedIndex = IncrementSeedIndex(CurrentDirectionSeedIndex);
+            count++;
+            if (count > 8)
+            {
+                this.CurrentDirection = Direction.down;
+                return false;
+            }
+        }
+        this.CurrentDirection = (Direction)DirectionSeed[CurrentDirectionSeedIndex];
+        return true;
+    }
+
+    private int IncrementSeedIndex(int currentDirectionSeedIndex)
+    {
+        currentDirectionSeedIndex++;
+        if (currentDirectionSeedIndex >= 8)
+        {
+            currentDirectionSeedIndex = 0;
+        }
+        return currentDirectionSeedIndex;
+    }
+
+    private void UpdateTilesToMove()
+    {
+        this.TilesMovedIndex++;
+        if (this.TilesMovedIndex >= this.TilesToMoveSeed.Count)
+        {
+            this.TilesMovedIndex = 0;
+        }
+        this.NumTiles = this.TilesToMoveSeed[this.TilesMovedIndex];
+        this.numTilesMoved = 0;
+    }
+
+    private void SetupPathfinding(List<Vector3> path, bool pathFound)
+    {
+        // TODO figure out what to do if you can't pathfind.. Keep trying to pathfind? Notify player?
+        if (!pathFound)
+        {
+            Debug.Log("Issue with pathfinding");
+            return;
+        }
+        Debug.Log("Animal stuck, setting up pathfinding");
+        this.movementController.AssignPath(path);
+        this.PathToFollow = path;
+    }
+
+    private List<int> GenerateDirectionSeed()
+    {
+        HashSet<int> seed = new HashSet<int>();
+        while (seed.Count < 8)
+        {
+            int r = this.population.random.Next(0, 8);
+            if (!seed.Contains(r))
+            {
+                seed.Add(r);
+            }
+        }
+        return seed.ToList();
+    }
+
+    private List<int> GenerateTilesToMoveSeed(int count)
+    {
+        HashSet<int> seed = new HashSet<int>();
+        while (seed.Count < count)
+        {
+            int r = this.population.random.Next(1, count + 1);
+            if (!seed.Contains(r))
+            {
+                seed.Add(r);
+            }
+        }
+        return seed.ToList();
     }
 }

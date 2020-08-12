@@ -15,9 +15,9 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] public bool AutomotonTesting = false;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
+    [SerializeField] private GridSystem GridSystem = default;
 
     private SpeciesNeedSystem speciesNeedSystem = null;
-
 
     public void Initialize()
     {
@@ -42,8 +42,6 @@ public class PopulationManager : MonoBehaviour
     /// <param name="position">The origin point of the population</param>
     public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
-        Debug.Log("Population created");
-
         // Create population
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
@@ -69,7 +67,6 @@ public class PopulationManager : MonoBehaviour
         Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
         if (preexistingPopulation)
         {
-            //Debug.Log("Preexisting population");
             preexistingPopulation.AddAnimal(new BehaviorsData());
         }
         else
@@ -93,6 +90,7 @@ public class PopulationManager : MonoBehaviour
         population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
         this.ReservePartitionManager.GetGridWithAccess(population));
         this.NeedSystemManager.RegisterWithNeedSystems(population);
+        GridSystem.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
     }
 

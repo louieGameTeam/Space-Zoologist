@@ -9,6 +9,7 @@ public class TilePlacementController : MonoBehaviour
 {
     public bool isBlockMode { get; set; } = false;
     public Vector3Int mouseCellPosition { get { return currentMouseCellPosition; } }
+    public bool PlacementPaused { get; private set; }
     [SerializeField] private Camera currentCamera = default;
     private bool isPreviewing { get; set; } = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
@@ -30,6 +31,7 @@ public class TilePlacementController : MonoBehaviour
     private int lastCornerX;
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
+    [SerializeField] private GridSystem GridSystem = default;
 
     private void Awake()
     {
@@ -74,12 +76,12 @@ public class TilePlacementController : MonoBehaviour
         if (isPreviewing) // Update for preview
         {
             Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
-            if (!IsPlacementValid(mouseWorldPosition))
+            currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
+            if (!this.IsPlacementValid(currentMouseCellPosition))
             {
-                Debug.Log("Cannot place item that location");
                 return;
             }
-            currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
+            this.PlacementPaused = false;
             if (currentMouseCellPosition != lastMouseCellPosition || isFirstTile)
             {
                 if (isBlockMode)
@@ -95,9 +97,21 @@ public class TilePlacementController : MonoBehaviour
         }
     }
 
-    public bool IsPlacementValid(Vector3 mouseWorldPosition)
+    public bool IsPlacementValid(Vector3 mousePosition)
     {
-        return (mouseWorldPosition.x <= TilemapUtil.ins.MaxWidth && mouseWorldPosition.x >= 0 && mouseWorldPosition.y <= TilemapUtil.ins.MaxHeight && mouseWorldPosition.y >= 0);
+        if (this.GridSystem.CheckPopulationHomeLocations(mousePosition))
+        {
+            this.PlacementPaused = true;
+            return false;;
+        }
+        if (!(mousePosition.x < GridSystem.GridWidth - 1 && mousePosition.y < GridSystem.GridHeight - 1 &&
+        mousePosition.x > 0 && mousePosition.y > 0))
+        {
+            this.PlacementPaused = true;
+            return false;
+        }
+        this.PlacementPaused = false;
+        return true;
     }
 
     /// <summary>
@@ -107,7 +121,8 @@ public class TilePlacementController : MonoBehaviour
     public void StartPreview(string tileID)
     {
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
-        if (!IsPlacementValid(mouseWorldPosition))
+        dragStartPosition = grid.WorldToCell(mouseWorldPosition);
+        if (!this.IsPlacementValid(dragStartPosition))
         {
             return;
         }
@@ -123,7 +138,6 @@ public class TilePlacementController : MonoBehaviour
                 referencedTiles.Add(tile);
             }
         }
-        dragStartPosition = grid.WorldToCell(mouseWorldPosition);
         isFirstTile = true;
     }
     public void StopPreview()

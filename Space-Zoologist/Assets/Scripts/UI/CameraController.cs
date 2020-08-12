@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] float dragSpeed = 2;
     [SerializeField] private float zoomLerpSpeed = 5f;
+    [SerializeField] private LevelDataReference LevelDataReference = default;
 
     private Camera cam = default;
     private float targetZoom;
@@ -84,6 +85,6 @@ public class CameraController : MonoBehaviour
     private bool IsValidLocation(Vector3 newPosition)
     {
         return (newPosition.x >= 0 && newPosition.y >= 0
-        && newPosition.x <= TilemapUtil.ins.MaxWidth && newPosition.y <= TilemapUtil.ins.MaxHeight);
+        && newPosition.x <= LevelDataReference.MapWidth && newPosition.y <= LevelDataReference.MapHeight);
     }
 }
