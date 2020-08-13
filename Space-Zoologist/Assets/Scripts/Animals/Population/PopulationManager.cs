@@ -78,8 +78,8 @@ public class PopulationManager : MonoBehaviour
     // register the existing population, initialize it's specific data, then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
-        this.HandlePopulationRegistration(population);
         population.InitializePopulationData();
+        this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
     }
 
