@@ -31,10 +31,12 @@ public class Population : MonoBehaviour, Life
     private Vector3 origin = Vector3.zero;
     private GrowthCalculator GrowthCalculator = default;
     public float TimeSinceUpdate = 0f;
+    [HideInInspector]
     public bool IssueWithAccessibleArea = false;
     public System.Random random = new System.Random();
 
-    public bool HasAccessibilityChanged = default;
+    [HideInInspector]
+    public bool HasAccessibilityChanged = false;
     public int PrePopulationCount => this.prePopulationCount;
     private int prePopulationCount = default;
 
@@ -55,9 +57,8 @@ public class Population : MonoBehaviour, Life
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
     ///  TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, NeedSystemManager needSystemManager)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize)
     {
-        this.NeedSystemManager = needSystemManager;
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
@@ -68,15 +69,13 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation[i].SetActive(true);
             this.AnimalsBehaviorData.Add(new BehaviorsData());
         }
-        this.MarkNeedsDirty();
     }
 
     /// <summary>
     /// Sets up population's behavior and need data
     /// </summary>
-    public void InitializePopulationData(NeedSystemManager needSystemManager)
+    public void InitializePopulationData()
     {
-        this.NeedSystemManager = needSystemManager;
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
         {

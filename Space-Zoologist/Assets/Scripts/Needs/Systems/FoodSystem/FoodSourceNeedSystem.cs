@@ -51,7 +51,7 @@ public class FoodSourceNeedSystem : NeedSystem
     {
         foreach (Population consumer in foodSourceCalculator.Consumers)
         {
-            if (rpm.PopulationAccessbilityStatus[consumer])
+            if (consumer.GetAccessibilityStatus())
             {
                 foodSourceCalculator.MarkDirty();
                 return true;
