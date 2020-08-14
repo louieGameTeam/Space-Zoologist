@@ -80,7 +80,7 @@ public class SymbiosisNeedSystem : NeedSystem
         foreach (Need need in life.GetNeedValues().Values)
         {
             // Check if the need is a 'Species' type
-            if (need.NeedType == NeedType.Species)
+            if (need.NeedType == NeedType.Symbiosis)
             {
                 // Create a food source calculator for this food source,
                 // if not already exist

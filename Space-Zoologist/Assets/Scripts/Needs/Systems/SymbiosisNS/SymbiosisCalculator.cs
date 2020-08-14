@@ -213,7 +213,7 @@ public class SymbiosisCalculator : NeedCalculator
 
                 float dominanceRatio = life.Dominance / localDominanceRemaining[population];
                 totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[life][population] * amountPopulationCountRemaining[population]);
-                Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {totalPopulationCountAcquired} pop count from {population.Species.SpeciesName} {population.GetInstanceID()}");
+                //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {totalPopulationCountAcquired} pop count from {population.Species.SpeciesName} {population.GetInstanceID()}");
             }
             float amountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
             this.distributAmount[life] = amountAcquiredPerIndividual;
