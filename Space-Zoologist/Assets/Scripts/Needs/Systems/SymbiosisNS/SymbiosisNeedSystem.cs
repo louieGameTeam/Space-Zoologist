@@ -9,15 +9,15 @@ using System; // Math.Floor()
 /// </summary>
 /// <param name="lives">A list of <c>Life</c> consumer populations, in this system is grenteed to be only <c>Population</c></param>
 /// <param name="populations">A internal list of <c>Population</c> as consumed animal populations</param>
-public class SpeciesNeedSystem : NeedSystem
+public class SymbiosisNeedSystem : NeedSystem
 {
     private List<Population> populations = new List<Population>();
     private readonly ReservePartitionManager rpm = null;
 
     // Species name to food calculators
-    private Dictionary<string, SpeciesCalculator> speciesCalculators = new Dictionary<string, SpeciesCalculator>();
+    private Dictionary<string, SymbiosisCalculator> symbiosisCalculators = new Dictionary<string, SymbiosisCalculator>();
 
-    public SpeciesNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.Species) : base(needType)
+    public SymbiosisNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.Species) : base(needType)
     {
         this.rpm = rpm;
     }
@@ -26,14 +26,14 @@ public class SpeciesNeedSystem : NeedSystem
     {
         bool needUpdate = false;
 
-        foreach (SpeciesCalculator speciesCalculator in this.speciesCalculators.Values)
+        foreach (SymbiosisCalculator symbiosisCalculator in this.symbiosisCalculators.Values)
         {
             // Check if consumer is dirty
-            foreach (Population consumer in speciesCalculator.Consumers)
+            foreach (Population consumer in symbiosisCalculator.Consumers)
             {
                 if (consumer.GetAccessibilityStatus() || consumer.Count != consumer.PrePopulationCount)
                 {
-                    speciesCalculator.MarkDirty();
+                    symbiosisCalculator.MarkDirty();
                     needUpdate = true;
                     break;
                 }
@@ -47,11 +47,11 @@ public class SpeciesNeedSystem : NeedSystem
             // Check if consumed population is dirty
             else
             {
-                foreach (Population population in speciesCalculator.Populations)
+                foreach (Population population in symbiosisCalculator.Populations)
                 {
                     if (population.GetAccessibilityStatus() || population.Count != population.PrePopulationCount)
                     {
-                        speciesCalculator.MarkDirty();
+                        symbiosisCalculator.MarkDirty();
                         needUpdate = true;
                         break;
                     }
@@ -65,12 +65,12 @@ public class SpeciesNeedSystem : NeedSystem
    
     public void AddPopulation(Population population)
     {
-        if (!this.speciesCalculators.ContainsKey(population.Species.SpeciesName))
+        if (!this.symbiosisCalculators.ContainsKey(population.Species.SpeciesName))
         {
-            this.speciesCalculators.Add(population.Species.SpeciesName, new SpeciesCalculator(rpm, population.Species.SpeciesName));
+            this.symbiosisCalculators.Add(population.Species.SpeciesName, new SymbiosisCalculator(rpm, population.Species.SpeciesName));
         }
 
-        this.speciesCalculators[population.Species.SpeciesName].AddSource(population);
+        this.symbiosisCalculators[population.Species.SpeciesName].AddSource(population);
 
         this.isDirty = true;
     }
@@ -84,13 +84,13 @@ public class SpeciesNeedSystem : NeedSystem
             {
                 // Create a food source calculator for this food source,
                 // if not already exist
-                if (!this.speciesCalculators.ContainsKey(need.NeedName))
+                if (!this.symbiosisCalculators.ContainsKey(need.NeedName))
                 {
-                    this.speciesCalculators.Add(need.NeedName, new SpeciesCalculator(rpm, need.NeedName));
+                    this.symbiosisCalculators.Add(need.NeedName, new SymbiosisCalculator(rpm, need.NeedName));
                 }
 
                 // Add consumer to food source calculator
-                this.speciesCalculators[need.NeedName].AddConsumer((Population)life);
+                this.symbiosisCalculators[need.NeedName].AddConsumer((Population)life);
             }
         }
 
@@ -101,31 +101,28 @@ public class SpeciesNeedSystem : NeedSystem
     {
         base.MarkAsDirty();
 
-        foreach (SpeciesCalculator speciesCalculator in this.speciesCalculators.Values)
+        foreach (SymbiosisCalculator SymbiosisCalculator in this.symbiosisCalculators.Values)
         {
-            speciesCalculator.MarkDirty();
+            SymbiosisCalculator.MarkDirty();
         }
     }
 
     public override void UpdateSystem()
     {
-        foreach (SpeciesCalculator speciesCalculator in this.speciesCalculators.Values)
+        foreach (SymbiosisCalculator SymbiosisCalculator in this.symbiosisCalculators.Values)
         {
-            if (speciesCalculator.IsDirty)
+            if (SymbiosisCalculator.IsDirty)
             {
-                var distribution = speciesCalculator.CalculateDistribution();
+                var distribution = SymbiosisCalculator.CalculateDistribution();
 
                 // distibution returns null when not thing to be updated
                 if (distribution != null)
                 {
                     foreach (Population consumer in distribution.Keys)
                     {
-                        consumer.UpdateNeed(speciesCalculator.SpeciesName, distribution[consumer]);
+                        consumer.UpdateNeed(SymbiosisCalculator.SpeciesName, distribution[consumer]);
                     }
                 }
-
-                // Call on calculator to remove pop count from consumer pop
-                speciesCalculator.RemoveAnimalFromConsumedPopulation();
             }
         }
 
