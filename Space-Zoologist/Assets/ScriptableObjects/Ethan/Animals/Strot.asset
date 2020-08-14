@@ -46,12 +46,14 @@ MonoBehaviour:
       thresholds:
       - 10
       - 40
-  - needType: 4
+  - needType: 7
     needs:
-    - needName: MineralX
+    - needName: Goat
       severity: 5
-      conditions: 000000000100000002000000
+      conditions: 0000000001000000020000000100000000000000
       thresholds:
-      - 10
-      - 40
+      - 1
+      - 3
+      - 5
+      - 7
   representation: {fileID: 0}
