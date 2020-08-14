@@ -7,21 +7,23 @@ using UnityEngine.UI;
 public class AtmosphereMachineValues : MonoBehaviour
 {
     [SerializeField] Text MachineValue = default;
-    int StartingValue = default;
+    [SerializeField] public AtmosphereComponent AtmosphereComponent = default;
+    [HideInInspector]
+    public float StartingValue = default;
 
     public void UpdateStartingValue()
     {
-        this.StartingValue = Int32.Parse(this.MachineValue.text);
+        this.StartingValue = float.Parse(this.MachineValue.text);
     }
 
-    public void RevertStartingValue()
+    public void ApplyStartingValue()
     {
         this.MachineValue.text = this.StartingValue.ToString();
     }
 
     public void IncrementValue()
     {
-        int value = Int32.Parse(this.MachineValue.text);
+        float value = float.Parse(this.MachineValue.text);
         if (value < 100)
         {
             value++;
@@ -31,7 +33,7 @@ public class AtmosphereMachineValues : MonoBehaviour
 
     public void DecrementValue()
     {
-        int value = Int32.Parse(this.MachineValue.text);
+        float value = float.Parse(this.MachineValue.text);
         if (value > 0)
         {
             value--;

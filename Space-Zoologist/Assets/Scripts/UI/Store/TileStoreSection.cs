@@ -19,7 +19,7 @@ public class TileStoreSection : StoreSection
 
     public override void Initialize()
     {
-        base.itemType = NeedType.Terrain;
+        base.itemType = ItemType.Terrain;
         base.Initialize();
         startingBalance = base.playerBalance;
         Debug.Assert(tilePlacementController != null);

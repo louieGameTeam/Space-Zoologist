@@ -9,9 +9,9 @@ using System.Collections.Generic;
 /// </summary>
 public class StoreSection : MonoBehaviour, IStoreMenu
 {
-    public NeedType ItemType => itemType;
+    public ItemType ItemType => itemType;
 
-    protected NeedType itemType = default;
+    protected ItemType itemType = default;
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;

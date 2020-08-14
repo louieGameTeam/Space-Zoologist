@@ -13,7 +13,7 @@ public class FoodSourceStoreSection : StoreSection
 
     public override void Initialize()
     {
-        base.itemType = NeedType.FoodSource;
+        base.itemType = ItemType.Food;
         Debug.Assert(ReferenceUtil.ins != null);
         base.Initialize();
     }
