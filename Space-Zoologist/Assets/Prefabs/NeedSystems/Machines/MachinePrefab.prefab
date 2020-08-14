@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2794700013922382191}
   - component: {fileID: 604624962172018305}
-  - component: {fileID: 2948395318960117136}
   - component: {fileID: -784060338634904542}
   m_Layer: 0
-  m_Name: AtmosphereMachinePrefab
+  m_Name: MachinePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,18 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2948395318960117136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 647726722904301470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373dc1dc9696444789e52f251e1cbf9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &-784060338634904542
 BoxCollider2D:
   m_ObjectHideFlags: 0

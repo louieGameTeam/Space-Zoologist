@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AtmosphereMachineValues : MonoBehaviour
+public enum MachineValueType {X, Y, Z}
+public class MachineValues : MonoBehaviour
 {
     [SerializeField] Text MachineValue = default;
-    [SerializeField] public AtmosphereComponent AtmosphereComponent = default;
+    public MachineValueType MachineValueType = default;
     [HideInInspector]
     public float StartingValue = default;
 

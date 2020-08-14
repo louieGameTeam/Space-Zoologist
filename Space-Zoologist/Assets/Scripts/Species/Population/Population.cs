@@ -62,9 +62,11 @@ public class Population : MonoBehaviour, Life
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
-        this.PoolingSystem.AddPooledObjects(this.AnimalPopulation, populationSize + 5, this.AnimalPrefab);
+        this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         for (int i = 0; i < populationSize; i++)
         {
+            GameObject newAnimal = Instantiate(this.AnimalPrefab, this.transform);
+            this.AnimalPopulation.Add(newAnimal);
             // PopulationManager will explicitly initialize a new population's animal at the very end
             this.AnimalPopulation[i].SetActive(true);
             this.AnimalsBehaviorData.Add(new BehaviorsData());
@@ -183,7 +185,7 @@ public class Population : MonoBehaviour, Life
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         if (newAnimal == null)
         {
-            this.PoolingSystem.AddPooledObjects(this.AnimalPopulation, 5, this.AnimalPrefab);
+            this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
         newAnimal.GetComponent<Animal>().Initialize(this, data);

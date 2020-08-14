@@ -104,10 +104,18 @@ public class EnclosureSystem : MonoBehaviour
     /// <returns></returns>
     public AtmosphericComposition GetAtmosphericComposition(Vector3 worldPosition)
     {
-        Debug.Log("Num atmospheres: " + this.Atmospheres.Count);
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (PositionToAtmosphere.ContainsKey(position))
             return Atmospheres[PositionToAtmosphere[position]];
+        else
+            throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
+    }
+
+    public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
+    {
+        Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
+        if (PositionToAtmosphere.ContainsKey(position))
+            Atmospheres[PositionToAtmosphere[position]] = atmosphericComposition;
         else
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
     }

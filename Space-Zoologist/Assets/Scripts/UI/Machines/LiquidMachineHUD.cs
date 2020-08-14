@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AtmosphereMachineHUD : MonoBehaviour
+public class LiquidMachineHUD : MonoBehaviour
 {
     [SerializeField] List<MachineValues> MachineValues = default;
-    AtmosphereMachine CurrentMachine = default;
+    LiquidMachine CurrentMachine = default;
 
-    public void Initialize(AtmosphericComposition atmosphericComposition, AtmosphereMachine currentMachine)
+    public void Initialize(float[] liquidComposition, LiquidMachine currentMachine)
     {
         this.CurrentMachine = currentMachine;
         foreach (MachineValues atm in this.MachineValues)
@@ -16,13 +16,13 @@ public class AtmosphereMachineHUD : MonoBehaviour
             switch(atm.MachineValueType)
             {
                 case(MachineValueType.X):
-                    atm.StartingValue = atmosphericComposition.GasX;
+                    atm.StartingValue = liquidComposition[0];
                     break;
                 case(MachineValueType.Y):
-                    atm.StartingValue = atmosphericComposition.GasY;
+                    atm.StartingValue = liquidComposition[1];
                     break;
                 case(MachineValueType.Z):
-                    atm.StartingValue = atmosphericComposition.GasZ;
+                    atm.StartingValue = liquidComposition[2];
                     break;
             }
             atm.ApplyStartingValue();
@@ -30,28 +30,28 @@ public class AtmosphereMachineHUD : MonoBehaviour
     }
 
     /// <summary>
-    /// Update the atmosphere with the current HUD values
+    /// Update the Liquid with the current HUD values
     /// </summary>
     public void UpdateStartingValues()
     {
-        AtmosphericComposition atmosphericComposition = new AtmosphericComposition();
+        float[] liquidComposition = new float[3];
         foreach (MachineValues atm in this.MachineValues)
         {
             atm.UpdateStartingValue();
             switch(atm.MachineValueType)
             {
                 case(MachineValueType.X):
-                    atmosphericComposition.GasX = atm.StartingValue;
+                    liquidComposition[0] = atm.StartingValue;
                     break;
                 case(MachineValueType.Y):
-                    atmosphericComposition.GasY = atm.StartingValue;
+                    liquidComposition[1] = atm.StartingValue;
                     break;
                 case(MachineValueType.Z):
-                    atmosphericComposition.GasZ = atm.StartingValue;
+                    liquidComposition[2] = atm.StartingValue;
                     break;
             }
         }
-        this.CurrentMachine.UpdateAtmosphere(atmosphericComposition);
+        this.CurrentMachine.UpdateLiquid(liquidComposition);
     }
 
     public void ApplyStartingValues()

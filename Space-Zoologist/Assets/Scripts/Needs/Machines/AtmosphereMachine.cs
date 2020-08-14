@@ -34,8 +34,8 @@ public class AtmosphereMachine : MonoBehaviour
     }
 
     // TODO figure out how you can update the atmosphere of an enclosed area
-    public void UpdateAtmosphere()
+    public void UpdateAtmosphere(AtmosphericComposition atmosphericComposition)
     {
-        // this.EnclosureSystem.UpdateSurroundingAtmosphere()
+        this.EnclosureSystem.UpdateAtmosphereComposition(this.transform.position, atmosphericComposition);
     }
 }
