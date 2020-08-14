@@ -78,8 +78,8 @@ public class PopulationManager : MonoBehaviour
     // register the existing population, initialize it's specific data, then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
-        population.InitializePopulationData();
         this.HandlePopulationRegistration(population);
+        population.InitializePopulationData();
         population.InitializeExistingAnimals();
     }
 
@@ -87,7 +87,8 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         this.ReservePartitionManager.AddPopulation(population);
-        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), GridSystem.GetGridWithAccess(population));
+        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
+        GridSystem.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
     }

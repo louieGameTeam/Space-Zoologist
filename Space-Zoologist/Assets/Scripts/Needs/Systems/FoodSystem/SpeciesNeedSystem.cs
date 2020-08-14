@@ -123,9 +123,6 @@ public class SpeciesNeedSystem : NeedSystem
                         consumer.UpdateNeed(speciesCalculator.SpeciesName, distribution[consumer]);
                     }
                 }
-
-                // Call on calculator to remove pop count from consumer pop
-                speciesCalculator.RemoveAnimalFromConsumedPopulation();
             }
         }
 

@@ -4,7 +4,6 @@ using System;
 using UnityEngine;
 
 // TODO figure out how to refactor the MarkNeedsDirty so that NeedSystemManager isn't a dependency
-// TODO figure out how to prevent animal's sprite from changing direction erratically
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
@@ -20,7 +19,6 @@ public class Population : MonoBehaviour, Life
     public AnimalPathfinding.Grid grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
     public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [SerializeField] private GameObject AnimalPrefab = default;
@@ -42,10 +40,14 @@ public class Population : MonoBehaviour, Life
     public int PrePopulationCount => this.prePopulationCount;
     private int prePopulationCount = default;
 
+    private PoolingSystem PoolingSystem = default;
+
+
     private void Awake()
     {
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         this.GrowthCalculator = new GrowthCalculator();
+        this.PoolingSystem = this.GetComponent<PoolingSystem>();
     }
 
     /// <summary>
@@ -60,10 +62,12 @@ public class Population : MonoBehaviour, Life
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
+        this.PoolingSystem.AddPooledObjects(this.AnimalPopulation, populationSize + 5, this.AnimalPrefab);
         for (int i = 0; i < populationSize; i++)
         {
+            // PopulationManager will explicitly initialize a new population's animal at the very end
+            this.AnimalPopulation[i].SetActive(true);
             this.AnimalsBehaviorData.Add(new BehaviorsData());
-            this.AddAnimal(this.AnimalsBehaviorData[i]);
         }
     }
 
@@ -121,6 +125,7 @@ public class Population : MonoBehaviour, Life
     /// <summary>
     /// Grabs the updated accessible area and then resets the behavior for all of the animals.
     /// </summary>
+    /// Could improve by checking what shape the accessible area is in
     public void UpdateAccessibleArea(List<Vector3Int> accessibleLocations, AnimalPathfinding.Grid grid)
     {
         this.AccessibleLocations = accessibleLocations;
@@ -175,12 +180,16 @@ public class Population : MonoBehaviour, Life
 
     public void AddAnimal(BehaviorsData data)
     {
-        GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
-        AnimalPopulation.Add(newAnimal);
+        GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
+        if (newAnimal == null)
+        {
+            this.PoolingSystem.AddPooledObjects(this.AnimalPopulation, 5, this.AnimalPrefab);
+            newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
+        }
         newAnimal.GetComponent<Animal>().Initialize(this, data);
     }
 
-    // TODO remove using PoolingSystem
+    // TODO set inactive but do not remove
     public void RemoveAnimal(int count)
     {
         // TODO: Remove pop
@@ -228,8 +237,7 @@ public class Population : MonoBehaviour, Life
 
     public void TestRemoveAnimal()
     {
-        Destroy(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
-        this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
+        this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
     }
 
     // TODO setup filter for adding/removing behaviors from this.CurrentBehaviors according to populations condition
