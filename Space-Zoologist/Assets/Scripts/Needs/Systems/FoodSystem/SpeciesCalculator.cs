@@ -171,61 +171,61 @@ public class SpeciesCalculator : NeedCalculator
         // Foreach population, if it is in good condition from the food available to it, then take its portion and update its need,
         // else, add it to the set of populations that will not have enough. The populations without enough will then split what is 
         // remaining based on the ratio of their dominance to the localRemainingDominance for each of their FoodSources.
-        foreach (Population life in Consumers)
+        foreach (Population consumer in Consumers)
         {
             int availablePopulationCount = 0;
-            float amountRequiredPerIndividualForGoodCondition = life.Needs[this.speciesName].GetThreshold(NeedCondition.Good, -1, false);
-            float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * life.Count;
+            float amountRequiredPerIndividualForGoodCondition = consumer.Needs[this.speciesName].GetThreshold(NeedCondition.Good, -1, false);
+            float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * consumer.Count;
 
-            foreach (Population population in accessiblePopulation[life])
+            foreach (Population population in accessiblePopulation[consumer])
             {
                 // All area consumed population has access to
                 List<Vector3Int> accessibleArea = rpm.GetLocationsWithAccess(population);
                 // Where both the consumer and consumed population has access to
-                List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)life, cell)).ToList();
+                List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)consumer, cell)).ToList();
 
-                accessibleAreaRatio.Add(life, new Dictionary<Population, float>());
+                accessibleAreaRatio.Add(consumer, new Dictionary<Population, float>());
 
-                accessibleAreaRatio[life][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
-                int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[life][population]);
-                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (life.Dominance / totalLocalDominance[population]));
+                accessibleAreaRatio[consumer][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
+                int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[consumer][population]);
+                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (consumer.Dominance / totalLocalDominance[population]));
             }
 
             // If the food available to the Population is more than enough, only take enough and update its need.
             if (availablePopulationCount >= amountRequiredForGoodCondition)
             {
                 float totalPopulationCountAcquired = 0.0f;
-                foreach (Population population in accessiblePopulation[life])
+                foreach (Population population in accessiblePopulation[consumer])
                 {
                     // Take as much as the amount it needs to be in good condition
                     amountPopulationCountRemaining[population] -= amountRequiredForGoodCondition;
                     totalPopulationCountAcquired += amountRequiredForGoodCondition;
-                    newDistributedAmount[population] += (int)totalPopulationCountAcquired;
-                    localDominanceRemaining[population] -= life.Dominance;
+                    newDistributedAmount[consumer] += (int)totalPopulationCountAcquired;
+                    localDominanceRemaining[population] -= consumer.Dominance;
                 }
-                float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
-                this.amountConsumerWasDistributed[life] = populationCountAcquiredPerIndividual;
+                float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / consumer.Count;
+                this.amountConsumerWasDistributed[consumer] = populationCountAcquiredPerIndividual;
             }
             // Otherwise, add to the set of populationsWithNotEnough to be processed later.
             else
             {
-                populationsWithNotEnough.Add(life);
+                populationsWithNotEnough.Add(consumer);
             }
         }
 
         // For those Populations who will not have enough to be in good condition, split what food remains from each FoodSource.
-        foreach (Population life in populationsWithNotEnough)
+        foreach (Population consumer in populationsWithNotEnough)
         {
             float totalPopulationCountAcquired = 0.0f;
-            foreach (Population population in accessiblePopulation[life])
+            foreach (Population population in accessiblePopulation[consumer])
             {
-                float dominanceRatio = life.Dominance / localDominanceRemaining[population];
-                totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[life][population] * amountPopulationCountRemaining[population]);
-                newDistributedAmount[population] += (int)totalPopulationCountAcquired;
+                float dominanceRatio = consumer.Dominance / localDominanceRemaining[population];
+                totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[consumer][population] * amountPopulationCountRemaining[population]);
+                newDistributedAmount[consumer] += (int)totalPopulationCountAcquired;
                 //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {totalPopulationCountAcquired} pop count from {population.Species.SpeciesName} {population.GetInstanceID()}");
             }
-            float amountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
-            this.amountConsumerWasDistributed[life] = amountAcquiredPerIndividual;
+            float amountAcquiredPerIndividual = totalPopulationCountAcquired / consumer.Count;
+            this.amountConsumerWasDistributed[consumer] = amountAcquiredPerIndividual;
         }
 
         // Done update not dirty any more
