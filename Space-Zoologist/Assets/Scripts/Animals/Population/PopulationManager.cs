@@ -18,11 +18,13 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GridSystem GridSystem = default;
 
     private SpeciesNeedSystem speciesNeedSystem = null;
+    private SymbiosisNeedSystem symbiosisNeedSystem = null;
 
     public void Initialize()
     {
         GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
         this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
+        this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
 
         foreach (GameObject population in populations)
         {
@@ -90,6 +92,7 @@ public class PopulationManager : MonoBehaviour
         population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
         GridSystem.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
+        this.symbiosisNeedSystem.AddPopulation(population);
         NeedSystemManager.RegisterWithNeedSystems(population);
     }
 

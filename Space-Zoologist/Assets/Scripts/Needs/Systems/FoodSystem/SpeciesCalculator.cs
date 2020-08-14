@@ -149,6 +149,10 @@ public class SpeciesCalculator : NeedCalculator
         Dictionary<Population, float> localDominanceRemaining = new Dictionary<Population, float>();
 
         Dictionary<Population, int> newDistributedAmount = new Dictionary<Population, int>();
+        foreach (Population population in this.populations)
+        {
+            newDistributedAmount[population] = 0;
+        }
 
         // Initialize totalLocalDominance and localDominanceRemaining.
         foreach (Population population in populations)
@@ -200,7 +204,7 @@ public class SpeciesCalculator : NeedCalculator
                     // Take as much as the amount it needs to be in good condition
                     amountPopulationCountRemaining[population] -= amountRequiredForGoodCondition;
                     totalPopulationCountAcquired += amountRequiredForGoodCondition;
-                    newDistributedAmount[consumer] += (int)totalPopulationCountAcquired;
+                    newDistributedAmount[population] += (int)totalPopulationCountAcquired;
                     localDominanceRemaining[population] -= consumer.Dominance;
                 }
                 float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / consumer.Count;
@@ -221,7 +225,7 @@ public class SpeciesCalculator : NeedCalculator
             {
                 float dominanceRatio = consumer.Dominance / localDominanceRemaining[population];
                 totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[consumer][population] * amountPopulationCountRemaining[population]);
-                newDistributedAmount[consumer] += (int)totalPopulationCountAcquired;
+                newDistributedAmount[population] += (int)totalPopulationCountAcquired;
                 //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {totalPopulationCountAcquired} pop count from {population.Species.SpeciesName} {population.GetInstanceID()}");
             }
             float amountAcquiredPerIndividual = totalPopulationCountAcquired / consumer.Count;
