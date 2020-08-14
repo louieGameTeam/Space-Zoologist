@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0300431448e1c6488fa0aa4ad31aa7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasTerrainChanged: 0
 --- !u!114 &135368110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2305,27 +2306,27 @@ PrefabInstance:
         type: 3}
       propertyPath: UIElements.Array.data[0]
       value: 
-      objectReference: {fileID: 662968415}
+      objectReference: {fileID: 810608779}
     - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: UIElements.Array.data[1]
       value: 
-      objectReference: {fileID: 662968414}
+      objectReference: {fileID: 760122971}
     - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: UIElements.Array.data[2]
       value: 
-      objectReference: {fileID: 662968413}
+      objectReference: {fileID: 662968421}
     - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: UIElements.Array.data[3]
       value: 
-      objectReference: {fileID: 662968421}
+      objectReference: {fileID: 662968419}
     - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: UIElements.Array.data[4]
       value: 
-      objectReference: {fileID: 662968419}
+      objectReference: {fileID: 662968418}
     - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: UIElements.Array.data[5]
@@ -2554,7 +2555,7 @@ PrefabInstance:
     - target: {fileID: 5050333255684313850, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5097762108773641126, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
@@ -3294,18 +3295,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 662968411}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &662968414 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 849827786020162387, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 662968411}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &662968415 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 849827785137881021, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 662968411}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &662968416 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4731764134846842071, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -3451,6 +3440,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
     type: 3}
   m_PrefabInstance: {fileID: 713529160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &760122971 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 849827785016326685, guid: 2b8234909d50f4bbe80178a1766c6faa,
+    type: 3}
+  m_PrefabInstance: {fileID: 662968411}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &764128405
 GameObject:
@@ -4011,7 +4006,7 @@ MonoBehaviour:
   LevelDataReference: {fileID: 1870373115}
   PopulationPrefab: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
     type: 3}
-  AutomotonTesting: 0
+  AutomotonTesting: 1
   ReservePartitionManager: {fileID: 1021518976}
   GridSystem: {fileID: 1228270578}
 --- !u!4 &1051037410
@@ -10422,7 +10417,7 @@ PrefabInstance:
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[0].Speed
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
@@ -10433,7 +10428,7 @@ PrefabInstance:
         type: 3}
       propertyPath: species
       value: 
-      objectReference: {fileID: 11400000, guid: 10caef092bf1a42c5a712f44ac1c9285,
+      objectReference: {fileID: 11400000, guid: 4fc91e10b303a49faaeffe6f232fefef,
         type: 2}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
@@ -10453,12 +10448,12 @@ PrefabInstance:
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[1].CurrentDirection
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[1].Speed
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
@@ -10468,12 +10463,12 @@ PrefabInstance:
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[2].CurrentDirection
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[2].Speed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
@@ -10483,18 +10478,24 @@ PrefabInstance:
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[3].CurrentDirection
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[3].Speed
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
       propertyPath: AnimalsBehaviorData.Array.data[3].RunThreshold
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: AnimalPrefab
+      value: 
+      objectReference: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2684919613425e34d815583d801a54b9, type: 3}
 --- !u!4 &1728212931 stripped
@@ -10717,6 +10718,11 @@ PrefabInstance:
       propertyPath: GridSystem
       value: 
       objectReference: {fileID: 1228270578}
+    - target: {fileID: 8582389809603506210, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: NeedSystemsTester
+      value: 
+      objectReference: {fileID: 1935708310}
     - target: {fileID: 8743428314657368663, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: PopulationManager

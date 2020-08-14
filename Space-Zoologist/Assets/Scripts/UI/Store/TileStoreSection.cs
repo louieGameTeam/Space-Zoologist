@@ -59,6 +59,8 @@ public class TileStoreSection : StoreSection
         {
             tutorial.TriggerDialogueOnce();
         }
+
+        // TODO: Send meesgae 'terrain changed'
     }
 
     /// <summary>

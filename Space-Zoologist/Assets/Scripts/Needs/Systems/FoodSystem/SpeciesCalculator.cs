@@ -5,7 +5,7 @@ using System;
 
 using UnityEngine;
 
-public class SpeciesCalculator
+public class SpeciesCalculator : NeedCalculator
 {
     public string SpeciesName => this.speciesName;
     public List<Population> Consumers => this.consumers;
@@ -36,8 +36,10 @@ public class SpeciesCalculator
         this.isDirty = true;
     }
 
-    public void AddPopulation(Population population)
+    public void AddSource(Life source)
     {
+        Population population = (Population)source;
+
         this.populations.Add(population);
 
         populationsWithAccess.Add(population, new HashSet<Population>());
@@ -53,12 +55,24 @@ public class SpeciesCalculator
         this.isDirty = true;
     }
 
-    public bool RemovePopulation(Population population)
+    public bool RemoveSource(Life source)
     {
-        this.isDirty = true;
+        Population population = (Population)source;
 
         Debug.Assert(!this.populations.Remove(population), "Population removal failure!");
         Debug.Assert(!this.populationsWithAccess.Remove(population), "REmoval of cosumed pop from populationsWithAccess failed");
+
+        this.isDirty = true;
+
+        return true;
+    }
+
+    public bool RemoveConsumer(Population consumer)
+    {
+        this.isDirty = true;
+
+        Debug.Assert(!this.consumers.Remove(consumer), "Consumer removal failure!");
+        Debug.Assert(!this.accessiblePopulation.Remove(consumer), "Removal of consumer from accessiblePopulation failed");
 
         return true;
     }
@@ -86,16 +100,6 @@ public class SpeciesCalculator
         this.isDirty = true;
     }
 
-    public bool RemoverConsumer(Population population)
-    {
-        this.isDirty = true;
-
-        Debug.Assert(!this.consumers.Remove(population), "Consumer removal failure!");
-        Debug.Assert(!this.accessiblePopulation.Remove(population), "Removal of consumer from accessiblePopulation failed");
-
-        return true;
-    }
-
     public Dictionary<Population, float> CalculateDistribution()
     {
 
@@ -109,7 +113,7 @@ public class SpeciesCalculator
         // When accessbility of population changes a full reset should be triggered
         foreach (Population consumer in Consumers)
         {
-            if (rpm.PopulationAccessbilityStatus[consumer])
+            if (consumer.HasAccessibilityChanged)
             {
                 //Debug.Log($"{consumer} triggered a reset");
 
@@ -121,7 +125,6 @@ public class SpeciesCalculator
                         populationsWithAccess[consumed].Add(consumer);
                     }
                 }
-                //rpm.PopulationAccessbilityStatus[consumer] = false;
             }
         }
 
@@ -173,7 +176,7 @@ public class SpeciesCalculator
                 int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[life][population]);
                 availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (life.Dominance / totalLocalDominance[population]));
 
-                Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availablePopulationCount}");
+                //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availablePopulationCount}");
             }
 
             // If the food available to the Population is more than enough, only take enough and update its need.
@@ -187,7 +190,7 @@ public class SpeciesCalculator
                     amountPopulationCountRemaining[population] -= populationCountAcquired;
                     totalPopulationCountAcquired += populationCountAcquired;
                     localDominanceRemaining[population] -= life.Dominance;
-                    Debug.Log($"{life.Species.SpeciesName} population took {populationCountAcquired} food from foodsource at {population.Species.SpeciesName}");
+                    //Debug.Log($"{life.Species.SpeciesName} population took {populationCountAcquired} food from foodsource at {population.Species.SpeciesName}");
                 }
                 float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
                 this.distributAmount[life] = populationCountAcquiredPerIndividual;
@@ -224,6 +227,4 @@ public class SpeciesCalculator
 
         return this.distributAmount;
     }
-
-
 }

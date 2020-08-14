@@ -24,7 +24,16 @@ public class FoodSourceNeedSystem : NeedSystem
         bool needUpdate = false;
         foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
-            needUpdate = this.CheckFoodSourcesConsumers(foodSourceCalculator);
+            // Check if consumer is dirty
+            foreach (Population consumer in foodSourceCalculator.Consumers)
+            {
+                if (consumer.GetAccessibilityStatus() || consumer.Count != consumer.PrePopulationCount)
+                {
+                    foodSourceCalculator.MarkDirty();
+                    needUpdate = true;
+                    break;
+                }
+            }
             // If consumer is already dirty check next food source calculator, otherwise check the terrain
             if (needUpdate)
             {
@@ -42,7 +51,7 @@ public class FoodSourceNeedSystem : NeedSystem
     {
         foreach (Population consumer in foodSourceCalculator.Consumers)
         {
-            if (rpm.PopulationAccessbilityStatus[consumer])
+            if (consumer.GetAccessibilityStatus())
             {
                 foodSourceCalculator.MarkDirty();
                 return true;
@@ -96,7 +105,7 @@ public class FoodSourceNeedSystem : NeedSystem
             this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(rpm, foodSource.Species.SpeciesName));
         }
 
-        this.foodSourceCalculators[foodSource.Species.SpeciesName].AddFoodSource(foodSource);
+        this.foodSourceCalculators[foodSource.Species.SpeciesName].AddSource(foodSource);
 
         this.isDirty = true;
     }
@@ -130,7 +139,7 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if the need is a 'FoodSource' type
             if (need.NeedType == NeedType.FoodSource)
             {
-                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoverConsumer((Population)life), "Remove conumer failed!");
+                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoveConsumer((Population)life), "Remove conumer failed!");
             }
         }
 

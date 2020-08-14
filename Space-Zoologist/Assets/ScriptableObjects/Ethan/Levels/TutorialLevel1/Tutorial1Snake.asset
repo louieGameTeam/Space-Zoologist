@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Tutorial1Snake
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: 2c658f184238347a39f6d91eb93056ef, type: 2}
+  speciesName: Snake
+  dominance: 7
+  growthRate: 30
+  range: 12.42
+  needBehaviorSet: []
+  size: 0
+  accessibleTerrain: 01000000
+  icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
+  needsList:
+  - needType: 3
+    needs:
+    - needName: Fruit Tree
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 30
+      - 50
+  representation: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263,
+    type: 3}

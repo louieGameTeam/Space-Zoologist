@@ -1,34 +1,21 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/Systems/DensityCalculator.cs">
     <Files>
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="115" Column="55" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" Line="82" Column="88" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="163" Column="26" />
-      <File FileName="Assets/Scripts/Animals/Population/PopulationManager.cs" Line="96" Column="1" />
-      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="339" Column="17" />
+      <File FileName="Assets/Scripts/Animals/Population/PopulationManager.cs" Line="98" Column="1" />
+      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="287" Column="45" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="16" Column="68" />
+      <File FileName="Assets/Scripts/Needs/Systems/DensityNeedSystem.cs" Line="59" Column="56" />
+      <File FileName="Assets/Scripts/Needs/Systems/AtmosphereNeedSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/DensityCalculator.cs" Line="198" Column="18" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange)</Value>
-          <Value>tile.type</Value>
-          <Value>curTerrain</Value>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1d6e87ac-f467-469f-8ea9-b4a7e22aee3f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2497af0f-3839-40b1-bb4b-ae08818f3aeb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
+      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="375" column="1" />
       <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="373" column="1" />
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="371" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

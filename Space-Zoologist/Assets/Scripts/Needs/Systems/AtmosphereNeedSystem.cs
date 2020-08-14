@@ -41,10 +41,10 @@ public class AtmosphereNeedSystem : NeedSystem
             {
                string needName = ((AtmosphereComponent)index).ToString();
 
-               if (life.GetNeedValues().ContainsKey(needName))
-               {
-                   life.UpdateNeed(needName, value);
-               }
+                if (life.GetNeedValues().ContainsKey(needName))
+                {
+                    life.UpdateNeed(needName, value);
+                }
             }
         }
 

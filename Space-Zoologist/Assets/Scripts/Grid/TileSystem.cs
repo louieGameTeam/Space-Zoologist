@@ -9,6 +9,8 @@ public class TileSystem : MonoBehaviour
     private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;
 
+    public bool HasTerrainChanged = default;
+
     private void Awake()
     {
         grid = GetComponent<Grid>();

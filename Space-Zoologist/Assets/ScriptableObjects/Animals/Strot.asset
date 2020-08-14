@@ -14,66 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: e28c40730e812434993f5de4a67f674f, type: 2}
   speciesName: Strot
-  dominance: 3
-  growthRate: 20
-  range: 5
+  dominance: 5
+  growthRate: 60.5
+  range: 8.28
   needBehaviorSet:
   - NeedType: 0
     behaviorScriptName: 0
-  size: 1
-  accessibleTerrain: 0400000001000000
-  icon: {fileID: 8374688669493378222, guid: aebae20484dd24a95a352f36d97bff06, type: 3}
+  size: 5
+  accessibleTerrain: 0100000003000000
+  icon: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c, type: 3}
   needsList:
-  - needType: 0
+  - needType: 1
     needs:
-    - needName: Sand
+    - needName: GasX
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
       - 40
-    - needName: Grass
+    - needName: GasY
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
       - 20
-    - needName: Dirt
+    - needName: GasZ
       severity: 5
       conditions: 000000000100000002000000
       thresholds:
       - 10
       - 20
-  - needType: 4
-    needs:
-    - needName: MineralX
-      severity: 2
-      conditions: 0000000001000000020000000100000000000000
-      thresholds:
-      - 1
-      - 3
-      - 5
-      - 7
-    - needName: MineralZ
-      severity: 2
-      conditions: 0000000001000000020000000100000000000000
-      thresholds:
-      - 1
-      - 3
-      - 5
-      - 7
-  - needType: 3
-    needs:
-    - needName: Space Maple
-      severity: 2
-      conditions: 000000000100000002000000
-      thresholds:
-      - 7
-      - 15
-    - needName: Bush
-      severity: 2
-      conditions: 000000000100000002000000
-      thresholds:
-      - 7
-      - 15
   representation: {fileID: 0}

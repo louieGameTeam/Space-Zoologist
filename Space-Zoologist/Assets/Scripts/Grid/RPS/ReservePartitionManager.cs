@@ -30,16 +30,13 @@ public class ReservePartitionManager : MonoBehaviour
     // The long is a bit mask with the bit (IDth bit) representing a population
     public Dictionary<Vector3Int, long> AccessMap { get; private set; }
 
-    // Amount of accessible area for each population
-    public Dictionary<Population, int> Spaces { get; private set; }
+    // Accessible area for each population
+    public Dictionary<Population, List<Vector3Int>> AccessibleArea { get; private set; }
 
     // Amount of shared space with each population <id, <id, shared tiles> >
     public Dictionary<int, long[]> SharedSpaces { get; private set; }
 
     public Dictionary<Population, int[]> TypesOfTerrain;
-
-    public Dictionary<Population, bool> PopulationAccessbilityStatus => this.populationAccessbilityStatus;
-    private Dictionary<Population, bool> populationAccessbilityStatus;
 
     public Dictionary<Population, List<float[]>> PopulationAccessibleLiquid => this.PopulationAccessibleLiquid;
     private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
@@ -62,10 +59,9 @@ public class ReservePartitionManager : MonoBehaviour
         PopulationToID = new Dictionary<Population, int>();
         PopulationByID = new Dictionary<int, Population>();
         AccessMap = new Dictionary<Vector3Int, long>();
-        Spaces = new Dictionary<Population, int>();
+        AccessibleArea = new Dictionary<Population, List<Vector3Int>>();
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
-        populationAccessbilityStatus = new Dictionary<Population, bool>();
         populationAccessibleLiquid = new Dictionary<Population, List<float[]>>();
     }
 
@@ -140,6 +136,13 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> accessible = new HashSet<Vector3Int>();
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
+        List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
+        List<float[]> newLiquidCompositions = new List<float[]>();
+
+        if (!this.AccessibleArea.ContainsKey(population))
+        {
+            this.AccessibleArea.Add(population, new List<Vector3Int>());
+        }
 
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
@@ -178,10 +181,12 @@ public class ReservePartitionManager : MonoBehaviour
                     this.populationAccessibleLiquid.Add(population, new List<float[]>());
                 }
 
-                if (!this.populationAccessibleLiquid[population].Contains(composition))
+                if (!population.HasAccessibilityChanged && !this.populationAccessibleLiquid[population].Contains(composition))
                 {
-                    this.populationAccessibleLiquid[population].Add(composition);
+                    population.HasAccessibilityChanged = true;
                 }
+
+                newLiquidCompositions.Add(composition);
             }
 
             if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
@@ -189,6 +194,14 @@ public class ReservePartitionManager : MonoBehaviour
                 // save the accessible location
                 accessible.Add(cur);
 
+                // save to accessible location
+                newAccessibleLocations.Add(cur);
+
+                if (!population.HasAccessibilityChanged && !this.AccessibleArea[population].Contains(cur))
+                {
+                    population.HasAccessibilityChanged = true;
+                }
+                
                 TypesOfTerrain[population][(int)tile.type]++;
 
                 if (!AccessMap.ContainsKey(cur))
@@ -217,7 +230,7 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         // Amount of accessible area
-        Spaces[population] = accessible.Count;
+        //Spaces[population] = accessible.Count;
 
         // Store the info on overlapping space
         int id = PopulationToID[population];
@@ -230,8 +243,12 @@ public class ReservePartitionManager : MonoBehaviour
             }
         }
 
-        // Set accessbility status
-        this.populationAccessbilityStatus[population] = true;
+        // Update space
+        if(population.HasAccessibilityChanged)
+        {
+            this.AccessibleArea[population] = newAccessibleLocations;
+            this.populationAccessibleLiquid[population] = newLiquidCompositions;
+        }
     }
 
     /// <summary>
