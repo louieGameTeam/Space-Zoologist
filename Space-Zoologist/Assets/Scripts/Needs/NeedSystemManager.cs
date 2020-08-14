@@ -37,6 +37,8 @@ public class NeedSystemManager : MonoBehaviour
         // Add Density NeedSystem
         AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
 
+        // Add Symbiosis NeedSystem
+        AddSystem(new SymbiosisNeedSystem(ReservePartitionManager));
 
         FoodSourceManager.Initialize();
         PopulationManager.Initialize();

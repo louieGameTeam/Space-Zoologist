@@ -1,20 +1,37 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Animals/Population/Population.cs">
     <Files>
-      <File FileName="Assets/Scripts/Needs/Systems/SymbiosisNS/SymbiosisCalculator.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/SymbiosisNS/SymbiosisNeedSystem.cs" Line="41" Column="1" />
-      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="11" Column="46" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemUpdater.cs" Line="10" Column="35" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemsTester.cs" Line="23" Column="41" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="57" Column="1" />
-      <File FileName="Assets/Scripts/Animals/Population/PopulationManager.cs" Line="68" Column="35" />
-      <File FileName="Assets/Scripts/Animals/Representation/AutomatonMovement.cs" Line="50" Column="1" />
-      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="345" Column="1" />
+      <File FileName="Assets/Scripts/Animals/Population/PopulationManager.cs" Line="63" Column="27" />
+      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="14" Column="47" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/SpeciesCalculator.cs" Line="224" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/SpeciesNeedSystem.cs" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="41" Column="32" />
+      <File FileName="Assets/Scripts/Needs/Systems/SymbiosisNS/SymbiosisNeedSystem.cs" Line="18" Column="44" />
+      <File FileName="Assets/Scripts/Needs/Systems/SymbiosisNS/SymbiosisCalculator.cs" Line="20" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
+          <Node name="Space-Zoologist" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Animals" expanded="True">
+                  <Node name="Population" expanded="True">
+                    <Node name="Population.cs" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="Needs" expanded="True">
+                  <Node name="Systems" expanded="True">
+                    <Node name="FoodSystem" expanded="True" />
+                    <Node name="SymbiosisNS" expanded="True" />
+                  </Node>
+                </Node>
+                <Node name="UI" expanded="True">
+                  <Node name="Pods" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -30,9 +47,8 @@
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6dd6d68f-2b45-4a7d-a58b-2cdeec81b829" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="375" column="1" />
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="373" column="1" />
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Animals/Population/PopulationManager.cs" relfile="Assets/Scripts/Animals/Population/PopulationManager.cs" line="66" column="1" />
+      <Breakpoint file="/Users/ethanchiang/Downloads/Space-Zoologist-Merging/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="375" column="1" />
+      <Breakpoint file="/Users/ethanchiang/Downloads/Space-Zoologist-Merging/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="373" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

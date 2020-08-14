@@ -17,7 +17,7 @@ public class SymbiosisNeedSystem : NeedSystem
     // Species name to food calculators
     private Dictionary<string, SymbiosisCalculator> symbiosisCalculators = new Dictionary<string, SymbiosisCalculator>();
 
-    public SymbiosisNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.Species) : base(needType)
+    public SymbiosisNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.Symbiosis) : base(needType)
     {
         this.rpm = rpm;
     }
