@@ -308,14 +308,12 @@ public class Population : MonoBehaviour, Life
 
     public bool GetAccessibilityStatus()
     {
-        
-
         return this.HasAccessibilityChanged;
     }
 
     public void UpdatePopulationStateForChecking()
     {
         this.HasAccessibilityChanged = false;
-        this.prePopulationCount = this.AnimalPopulation.Count;
+        this.prePopulationCount = this.Count;
     }
 }
