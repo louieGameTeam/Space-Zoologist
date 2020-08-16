@@ -97,6 +97,7 @@ public class NeedSystemManager : MonoBehaviour
         // Update populations' accessible map when terrain was modified
         if (this.TileSystem.HasTerrainChanged)
         {
+            // TODO: Update population's accessible map only for changed terrain
             this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.chagnedTiles);
         }
 

@@ -107,7 +107,9 @@ public class ReservePartitionManager : MonoBehaviour
     /// <param name="id">The id (bit) to be cleaned on AccessMap</param>
     void CleanupAccessMap(int id)
     {
-        foreach (Vector3Int loc in AccessMap.Keys)
+        List<Vector3Int> accessMapKeys = new List<Vector3Int>(AccessMap.Keys);
+
+        foreach (Vector3Int loc in accessMapKeys)
         {
             // set the values to 0 through bit masking
             AccessMap[loc] &= ~(1L << id);
@@ -130,6 +132,7 @@ public class ReservePartitionManager : MonoBehaviour
     /// Populate the access map for a population with depth first search.
     /// </summary>
     /// <param name="population">The population to be generated, assumed to be in Populations</param>
+    /// <remarks>When this is called that means the terrain had changed for sure</remarks>
     private void GenerateMap(Population population)
     {
         Stack<Vector3Int> stack = new Stack<Vector3Int>();
@@ -181,11 +184,6 @@ public class ReservePartitionManager : MonoBehaviour
                     this.populationAccessibleLiquid.Add(population, new List<float[]>());
                 }
 
-                if (!population.HasAccessibilityChanged && !this.populationAccessibleLiquid[population].Contains(composition))
-                {
-                    population.HasAccessibilityChanged = true;
-                }
-
                 newLiquidCompositions.Add(composition);
             }
 
@@ -196,11 +194,6 @@ public class ReservePartitionManager : MonoBehaviour
 
                 // save to accessible location
                 newAccessibleLocations.Add(cur);
-
-                if (!population.HasAccessibilityChanged && !this.AccessibleArea[population].Contains(cur))
-                {
-                    population.HasAccessibilityChanged = true;
-                }
                 
                 TypesOfTerrain[population][(int)tile.type]++;
 
@@ -227,6 +220,8 @@ public class ReservePartitionManager : MonoBehaviour
                 // save the Vector3Int since it is already checked
                 unaccessible.Add(cur);
             }
+
+            population.HasAccessibilityChanged = true;
         }
 
         // Amount of accessible area
