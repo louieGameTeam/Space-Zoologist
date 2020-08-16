@@ -94,6 +94,12 @@ public class NeedSystemManager : MonoBehaviour
     /// </remarks>
     public void UpdateSystems()
     {
+        // Update populations' accessible map when terrain was modified
+        if (this.TileSystem.HasTerrainChanged)
+        {
+            this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.chagnedTiles);
+        }
+
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;
