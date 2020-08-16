@@ -267,7 +267,7 @@ public class ReservePartitionManager : MonoBehaviour
     /// Update any populations that have access to the given positions.
     /// </summary>
     /// <param name="positions">The tiles that were updated (added wall, river, etc.)</param>
-    public void UpdateAccessMapChangedAt(Vector3Int[] positions)
+    public void UpdateAccessMapChangedAt(List<Vector3Int> positions)
     {
         List<int> UnaffectedID = new List<int>();
         HashSet<Population> AffectedPopulations = new HashSet<Population>();
