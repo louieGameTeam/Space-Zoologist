@@ -11,7 +11,8 @@ public class Population : MonoBehaviour, Life
 {
     [Expandable] public AnimalSpecies species = default;
     public AnimalSpecies Species { get => species; }
-    public int Count { get => this.AnimalPopulation.Count; }
+    // Temply modified
+    public int Count { get => this.GetActiveAnimalCount(); }
     public float Dominance => Count * species.Dominance;
 
     public Dictionary<string, Need> Needs => needs;
@@ -48,6 +49,22 @@ public class Population : MonoBehaviour, Life
         this.CurrentBehaviors = new List<BehaviorScriptName>();
         this.GrowthCalculator = new GrowthCalculator();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
+    }
+
+    // Temp get active animal count
+    private int GetActiveAnimalCount()
+    {
+        int count = 0;
+
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            if (animal.activeSelf)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     /// <summary>
@@ -189,10 +206,10 @@ public class Population : MonoBehaviour, Life
         newAnimal.GetComponent<Animal>().Initialize(this, data);
     }
 
-    // TODO set inactive but do not remove
+    // Set animal to be inactive
     public void RemoveAnimal(int count)
     {
-        // TODO: Remove pop
+        // TODO set inactive but do not remove
     }
 
     /// <summary>
@@ -291,6 +308,8 @@ public class Population : MonoBehaviour, Life
 
     public bool GetAccessibilityStatus()
     {
+        
+
         return this.HasAccessibilityChanged;
     }
 
