@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PodMenu : MonoBehaviour, IStoreMenu
+public class PodMenu : MonoBehaviour
 {
     [Header("Handled by Prefab")]
     [SerializeField] GameObject podButtonPrefab = default;
     [SerializeField] Transform PodItemContainer = default;
     [Header("Dependencies")]
     [SerializeField] PopulationManager populationManager = default;
-    [SerializeField] TileSystem TileSystem = default;
+    private TileSystem TileSystem = default;
     private CursorItem cursorItem = default;
     private LevelDataReference LevelDataReference = default;
 
@@ -19,11 +19,12 @@ public class PodMenu : MonoBehaviour, IStoreMenu
     private List<RectTransform> UIElements = default;
     AnimalSpecies selectedSpecies = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, TileSystem tileSystem)
     {
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
+        this.TileSystem = tileSystem;
     }
 
     public void Initialize()

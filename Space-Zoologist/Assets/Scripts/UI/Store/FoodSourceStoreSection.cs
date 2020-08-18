@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 public class FoodSourceStoreSection : StoreSection
 {
     [SerializeField] FoodSourceManager FoodSourceManager = default;
-    [SerializeField] TileSystem TileSystem = default;
 
     public override void Initialize()
     {

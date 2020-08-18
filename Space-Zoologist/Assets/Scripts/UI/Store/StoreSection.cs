@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// <summary>
 /// A section of items in the store. Subclass for specific behavior regarding what happens after an item is selected.
 /// </summary>
-public class StoreSection : MonoBehaviour, IStoreMenu
+public class StoreSection : MonoBehaviour
 {
     public ItemType ItemType => itemType;
 
@@ -19,14 +19,16 @@ public class StoreSection : MonoBehaviour, IStoreMenu
     protected List<RectTransform> UIElements = default;
     protected IntVariable playerBalance = default;
     protected LevelDataReference LevelDataReference = default;
+    protected TileSystem TileSystem = default;
 
     protected Item selectedItem = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, TileSystem tileSystem)
     {
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
+        this.TileSystem = tileSystem;
     }
 
     public virtual void Initialize()

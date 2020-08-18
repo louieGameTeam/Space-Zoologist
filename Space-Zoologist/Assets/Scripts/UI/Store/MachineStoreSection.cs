@@ -41,6 +41,10 @@ public class MachineStoreSection : StoreSection
 
     public override bool IsPlacementValid(Vector3 mousePosition)
     {
+        if (base.selectedItem.Type.Equals("Liquid"))
+        {
+            
+        }
         return (mousePosition.x > 1 && mousePosition.y > 1
         && mousePosition.x < LevelDataReference.MapWidth - 1 && mousePosition.y < LevelDataReference.MapHeight - 1);
     }
