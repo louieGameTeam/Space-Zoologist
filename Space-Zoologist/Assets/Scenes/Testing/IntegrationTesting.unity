@@ -493,6 +493,12 @@ Transform:
   m_Father: {fileID: 298637983}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &198646094 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 849827786362132749, guid: 2b8234909d50f4bbe80178a1766c6faa,
+    type: 3}
+  m_PrefabInstance: {fileID: 662968411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &298637982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,7 +2312,7 @@ PrefabInstance:
         type: 3}
       propertyPath: UIElements.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 198646094}
     - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: UIElements.Array.data[1]
@@ -2331,12 +2337,17 @@ PrefabInstance:
         type: 3}
       propertyPath: UIElements.Array.data[5]
       value: 
-      objectReference: {fileID: 662968418}
+      objectReference: {fileID: 1101946259}
     - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: StoreMenus.Array.data[2]
       value: 
       objectReference: {fileID: 1101946256}
+    - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: TileSystem
+      value: 
+      objectReference: {fileID: 135368109}
     - target: {fileID: 849827785566768625, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4556,6 +4567,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf770ffacee02429d88200211825b21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1101946259 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8706798662832375765, guid: 2b8234909d50f4bbe80178a1766c6faa,
+    type: 3}
+  m_PrefabInstance: {fileID: 662968411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1132068314
 GameObject:
   m_ObjectHideFlags: 0

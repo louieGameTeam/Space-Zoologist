@@ -40,4 +40,9 @@ public class PoolingSystem : MonoBehaviour
         }
         return null;
     }
+
+    public void ReturnObjectToPool(GameObject gameObject)
+    {
+        this.PooledObjects.Add(gameObject);
+    }
 }

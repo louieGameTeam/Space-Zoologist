@@ -112,10 +112,10 @@ public class Population : MonoBehaviour, Life
             switch (this.GrowthCalculator.GrowthStatus)
             {
                 case GrowthStatus.increasing:
-                    this.TestAddAnimal();
+                    this.AddAnimal();
                     break;
                 case GrowthStatus.decreasing:
-                    this.TestRemoveAnimal();
+                    this.RemoveAnimal();
                     break;
                 default:
                     break;
@@ -180,8 +180,10 @@ public class Population : MonoBehaviour, Life
         var name = collision.gameObject.name;
     }
 
-    public void AddAnimal(BehaviorsData data)
+    public void AddAnimal()
     {
+        BehaviorsData data = new BehaviorsData();
+        this.AnimalsBehaviorData.Add(data);
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         if (newAnimal == null)
         {
@@ -191,10 +193,13 @@ public class Population : MonoBehaviour, Life
         newAnimal.GetComponent<Animal>().Initialize(this, data);
     }
 
-    // TODO set inactive but do not remove
-    public void RemoveAnimal(int count)
+    // removes last animal in list and last behavior
+    public void RemoveAnimal()
     {
-        // TODO: Remove pop
+        this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
+        this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
+        this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
+        this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
     }
 
     /// <summary>
@@ -206,7 +211,7 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
-        // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
+        Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
     /// <summary>
@@ -227,19 +232,6 @@ public class Population : MonoBehaviour, Life
     {
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
         //Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
-    }
-
-    private void TestAddAnimal()
-    {
-        this.AnimalsBehaviorData.Add(new BehaviorsData());
-        GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
-        newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
-        AnimalPopulation.Add(newAnimal);
-    }
-
-    public void TestRemoveAnimal()
-    {
-        this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
     }
 
     // TODO setup filter for adding/removing behaviors from this.CurrentBehaviors according to populations condition
@@ -272,6 +264,15 @@ public class Population : MonoBehaviour, Life
 
     private void UpdateNeeds()
     {
+        int i=0;
+        foreach (KeyValuePair<string, Need> need in this.needs)
+        {
+            if (this.NeedEditorTesting[i].NeedName.Equals(need.Key))
+            {
+                this.NeedEditorTesting[i] = need.Value;
+            }
+            i++;
+        }
         if (this.NeedEditorTesting != null)
         {
             foreach (Need need in this.NeedEditorTesting)
