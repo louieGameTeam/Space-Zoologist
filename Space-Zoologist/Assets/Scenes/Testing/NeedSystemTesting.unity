@@ -273,8 +273,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300.59998, y: -118.5}
-  m_SizeDelta: {x: 300, y: 237}
+  m_AnchoredPosition: {x: 300.59998, y: -75}
+  m_SizeDelta: {x: 300, y: 324}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78922559
 MonoBehaviour:
@@ -346,8 +346,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -118.5}
-  m_SizeDelta: {x: 300, y: 237}
+  m_AnchoredPosition: {x: 150, y: -162}
+  m_SizeDelta: {x: 300, y: 324}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &131135716
 CanvasRenderer:
@@ -422,6 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HasTerrainChanged: 0
+  chagnedTiles: []
 --- !u!114 &135368110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1824,8 +1825,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -150, y: -118.72}
-  m_SizeDelta: {x: 300, y: 236.55}
+  m_AnchoredPosition: {x: -150, y: -75.223}
+  m_SizeDelta: {x: 300, y: 149.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &483941271
 PrefabInstance:
@@ -9468,8 +9469,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 299.2, y: 118.5}
-  m_SizeDelta: {x: 300, y: 237}
+  m_AnchoredPosition: {x: 302, y: 162}
+  m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1351010591
 MonoBehaviour:
@@ -9735,6 +9736,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Population
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3127976671735019294, guid: 2684919613425e34d815583d801a54b9,
         type: 3}

@@ -31,5 +31,27 @@ MonoBehaviour:
       conditions: 000000000100000002000000
       thresholds:
       - 1
-      - 2
+      - 3
+  - needType: 0
+    needs:
+    - needName: Sand
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 20
+      - 30
+    - needName: Grass
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 20
+      - 30
+  - needType: 2
+    needs:
+    - needName: Density
+      severity: 5
+      conditions: 000000000100000002000000
+      thresholds:
+      - 20
+      - 30
   representation: {fileID: 0}
