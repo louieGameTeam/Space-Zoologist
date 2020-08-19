@@ -6,13 +6,11 @@ using UnityEngine;
 public delegate void BehaviorFinished();
 public class Animal : MonoBehaviour
 {
-    public BehaviorsData BehaviorsData { get; private set; }
+    public MovementData BehaviorsData { get; private set; }
     public Population PopulationInfo { get; private set; }
     private Animator Animator = null;
-    private Behavior CurrentBehavior { get; set; }
     private BehaviorFinished OnBehaviorFinished { get; set; }
-    // Behavior components hashed to their name
-    private Dictionary<string, Behavior> BehaviorComponents { get; set; }
+    public MovementController MovementController {get; set; }
 
     public void Start()
     {
@@ -21,14 +19,15 @@ public class Animal : MonoBehaviour
             this.Animator = null;
             Debug.Log("Animator component not attached");
         }
+        this.MovementController = this.gameObject.GetComponent<MovementController>();
     }
 
-    public void Initialize(Population population, BehaviorsData data)
+    public void Initialize(Population population, MovementData data)
     {
         this.BehaviorsData = data;
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
-        this.gameObject.GetComponent<AutomatonMovement>().Initialize(this.PopulationInfo);
+        // this.gameObject.GetComponent<AutomatonMovement>().Initialize(this.PopulationInfo);
         // this.BehaviorComponents = new Dictionary<string, Behavior>();
         // foreach (BehaviorScriptTranslation component in this.PopulationInfo.Species.Behaviors)
         // {
@@ -45,56 +44,44 @@ public class Animal : MonoBehaviour
 
     public void ResetBehavior()
     {
-        if (this.gameObject.activeSelf && this.CurrentBehavior != null)
-        {
-            this.CurrentBehavior.ExitBehavior();
-            this.ChooseNextBehavior();
-        }
+        // if (this.gameObject.activeSelf && this.CurrentBehavior != null)
+        // {
+        //     this.CurrentBehavior.ExitBehavior();
+        //     this.ChooseNextBehavior();
+        // }
     }
 
     // Gets a random behaviorScriptName from currentBehaviors in BehaviorData and then uses the BehaviorComponents dictionary to get out the hashed component
-    private void ChooseNextBehavior()
-    {
-        // TODO replace with Caleb's increased random probability function
-        System.Random random = new System.Random();
-        if (this.PopulationInfo.CurrentBehaviors.Count == 0)
-        {
-            Debug.Log("No behaviors to choose from");
-            return;
-        }
-        int randNum = random.Next(this.PopulationInfo.CurrentBehaviors.Count);
-        string chosenBehavior = this.PopulationInfo.CurrentBehaviors[randNum].ToString();
-        this.CurrentBehavior = this.BehaviorComponents[chosenBehavior];
-        this.OnBehaviorFinished = this.ChooseNextBehavior;
-        this.CurrentBehavior.EnterBehavior(this.OnBehaviorFinished);
-    }
+    // private void ChooseNextBehavior()
+    // {
+    //     // TODO replace with Caleb's increased random probability function
+    //     System.Random random = new System.Random();
+    //     if (this.PopulationInfo.CurrentBehaviors.Count == 0)
+    //     {
+    //         Debug.Log("No behaviors to choose from");
+    //         return;
+    //     }
+    //     int randNum = random.Next(this.PopulationInfo.CurrentBehaviors.Count);
+    //     string chosenBehavior = this.PopulationInfo.CurrentBehaviors[randNum].ToString();
+    //     this.CurrentBehavior = this.BehaviorComponents[chosenBehavior];
+    //     this.OnBehaviorFinished = this.ChooseNextBehavior;
+    //     this.CurrentBehavior.EnterBehavior(this.OnBehaviorFinished);
+    // }
 
-    void Update()
+    public void SetAnimatorTrigger(string triggerName)
     {
-        this.UpdateAnimations();
+        Animator.SetTrigger(triggerName);
     }
-
-    public void UpdateAnimations()
+    public void SetAnimatorBool(string boolName, bool value)
     {
-        if (this.Animator != null && this.BehaviorsData != null)
-        {
-            this.Animator.SetInteger("Movement", (int)this.BehaviorsData.MovementStatus);
-            this.Animator.SetInteger("Direction", (int)this.BehaviorsData.CurrentDirection);
-        }
+        Animator.SetBool(boolName, value);
     }
-
-    // No way to dynamically add scripts by name, have to use if statements and add to this everytime new behavior is defined
-    // TODO need to check if a behavior has been added already
-    public void AddBehaviorByName(BehaviorScriptTranslation component)
+    public void SetAnimatorInt(string intName, int value)
     {
-        switch(component.behaviorScriptName)
-        {
-            case BehaviorScriptName.RandomMovement:
-                this.gameObject.AddComponent<RandomMovement>();
-                break;
-            default:
-                Debug.Log("No component with the type found");
-                break;
-        }
+        Animator.SetInteger(intName, value);
+    }
+    public void SetAnimatorFloat(string floatName, float value)
+    {
+        Animator.SetFloat(floatName, value);
     }
 }

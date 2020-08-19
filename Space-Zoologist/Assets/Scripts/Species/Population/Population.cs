@@ -23,7 +23,7 @@ public class Population : MonoBehaviour, Life
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [SerializeField] private GameObject AnimalPrefab = default;
     [Header("Updated through OnValidate")]
-    [SerializeField] private List<BehaviorsData> AnimalsBehaviorData = default;
+    [SerializeField] private List<MovementData> AnimalsBehaviorData = default;
     [Header("Modify values and thresholds for testing")]
     // Initialized when InitializePopulationDataCalled and updates the Need Dictionary OnValidate
     [SerializeField] private List<Need> NeedEditorTesting = default;
@@ -69,7 +69,7 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation.Add(newAnimal);
             // PopulationManager will explicitly initialize a new population's animal at the very end
             this.AnimalPopulation[i].SetActive(true);
-            this.AnimalsBehaviorData.Add(new BehaviorsData());
+            this.AnimalsBehaviorData.Add(new MovementData());
         }
     }
 
@@ -182,7 +182,7 @@ public class Population : MonoBehaviour, Life
 
     public void AddAnimal()
     {
-        BehaviorsData data = new BehaviorsData();
+        MovementData data = new MovementData();
         this.AnimalsBehaviorData.Add(data);
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         if (newAnimal == null)
@@ -249,7 +249,7 @@ public class Population : MonoBehaviour, Life
     {
         while (this.AnimalsBehaviorData.Count < this.AnimalPopulation.Count)
         {
-            this.AnimalsBehaviorData.Add(new BehaviorsData());
+            this.AnimalsBehaviorData.Add(new MovementData());
         }
         while (this.AnimalsBehaviorData.Count > this.AnimalPopulation.Count)
         {

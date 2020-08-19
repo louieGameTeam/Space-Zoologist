@@ -37,6 +37,41 @@ public class MovementController : MonoBehaviour
         this.UpdateVisualLogic(this.NextPathTile);
     }
 
+
+    /// <summary>
+    /// Callback given to CalculatePath for when the path finishes being calculated.
+    /// Consider modifying the else to do something else if a path isn't found.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="pathFound"></param>
+    // public virtual void PathFound(List<Vector3> path, bool pathFound)
+    // {
+    //     if (pathFound)
+    //     {
+    //         this.AssignPath(path);
+    //         this.isCalculatingPath = false;
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Path not found, exiting behavior without callback");
+    //         this.isCalculatingPath = false;
+    //     }
+    // }
+
+    // /// <summary>
+    // /// Should be called in every update before path is used.
+    // /// </summary>
+    // /// <returns></returns>
+    // public bool IsCalculatingPath()
+    // {
+    //     if (this.isCalculatingPath)
+    //     {
+    //         Animal.MovementData.Speed = 0;
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
     /// <summary>
     /// Called in update to move towards destination. Returns true when destination reached.
     /// </summary>

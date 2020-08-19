@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public enum Movement { idle = 0, walking = 1, running = 2, eating = 3 }
 public enum Direction { up = 0, down = 1, left = 2, right = 3, upRight = 4, upLeft = 5, downRight = 6, downLeft = 7 }
 [System.Serializable]
-public class BehaviorsData
+public class MovementData
 {
     public Movement MovementStatus = Movement.idle;
     public Direction CurrentDirection = Direction.down;
