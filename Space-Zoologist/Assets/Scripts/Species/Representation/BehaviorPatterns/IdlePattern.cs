@@ -14,7 +14,6 @@ public class IdlePattern : BehaviorPattern
     // Default behavior moves along a random path
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
-        // TODO 2
         if (this.TimeElapsed > 5f)
         {
             return true;

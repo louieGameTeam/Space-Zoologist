@@ -101,7 +101,7 @@ public class DensityCalculator
                     Population cur = popsByID[i];
                     //print(cur.Species.Size * cur.Count / spaces[cur]);
                     //weight per tile
-                    density += cur.Species.Size * cur.Count / spaces[cur];
+                    density += cur.Species.Size * cur.Count / spaces[cur] * 100;
                 }
             }
             return density;

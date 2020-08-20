@@ -5,10 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "IdleRandom", menuName = "SpeciesBehaviorTrigger/IdleRandom")]
 public class IdleRandomTrigger : SpecieBehaviorTrigger
 {
-    [SerializeField]
-    private float refreshPeriod = 3;
-    [SerializeField]
-    private float elapsedTime = 0;
 
     protected override List<GameObject> AnimalSelection(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
     {

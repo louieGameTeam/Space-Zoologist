@@ -19,6 +19,7 @@ public class BehaviorPattern : MonoBehaviour
         animalData.animal = gameObject.GetComponent<Animal>();
         animalData.callback = callBack;
         animalData.collaboratingAnimals = collaboratingAnimals;
+        // Debug.Log(gameObject.name + " is trying to be initial");
         AnimalsToAnimalData.Add(gameObject, animalData);
         EnterPattern(gameObject);
     }
@@ -94,6 +95,7 @@ public class BehaviorPattern : MonoBehaviour
     protected virtual void ForceExit(GameObject gameObject)
     {
         gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
+        // Debug.Log(gameObject.name + " has been forced exited");
         AnimalsToAnimalData.Remove(gameObject);
     }
     public struct AnimalData

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public enum GrowthStatus {increasing, stabilized, decreasing}
+public enum GrowthStatus {declining, stagnate, growing}
 
 /// <summary>
 /// Determines the rate and status of growth for each population based off of their most severe need that isn't being met
@@ -13,43 +13,53 @@ public class GrowthCalculator
     public GrowthCalculator()
     {
         this.GrowthRate = 0;
-        this.GrowthStatus = GrowthStatus.stabilized;
+        this.GrowthStatus = GrowthStatus.stagnate;
     }
 
+    /*
+        bad > 0 declining
+        bad == 0 && good == 0 stagnate
+        bad == 0 && good > 0 growing
+        start with a rate of 60 and take off the rate of severity
+    */
     public void CalculateGrowth(Population population)
     {
-        int worstSeverity = 0;
-        int totalSeverity = 0;
+        int neutralConditionCount = 0;
+        int badConditionModifier = 0;
         foreach(KeyValuePair<string, Need> need in population.Needs)
         {
             switch(need.Value.GetCondition(need.Value.NeedValue))
             {
                 case NeedCondition.Bad:
-                    if (need.Value.Severity > worstSeverity)
-                    {
-                        worstSeverity = need.Value.Severity;
-                    }
-                    totalSeverity += need.Value.Severity;
+                    badConditionModifier += need.Value.Severity;
+                    break;
+                case NeedCondition.Neutral:
+                neutralConditionCount++;
+                    break;
+                case NeedCondition.Good:
                     break;
                 default:
                     break;
             }
+            if (neutralConditionCount == population.Needs.Count)
+            {
+                this.GrowthStatus = GrowthStatus.stagnate;
+            }
+            else if (badConditionModifier > 0)
+            {
+                this.GrowthStatus = GrowthStatus.declining;
+                this.GrowthRate = population.Species.GrowthRate - badConditionModifier;
+                if (this.GrowthRate < 10)
+                {
+                    this.GrowthRate = 10;
+                }
+            }
+            else
+            {
+                this.GrowthStatus = GrowthStatus.growing;
+                this.GrowthRate = population.Species.GrowthRate;
+            }
         }
-        if (worstSeverity == 5 || worstSeverity == 6)
-        {
-            this.GrowthStatus = GrowthStatus.stabilized;
-            this.GrowthRate = 0;
-        }
-        else if (worstSeverity > 6)
-        {
-            this.GrowthStatus = GrowthStatus.decreasing;
-            // 15, 30, 45, 60 seconds depending on how severe
-            this.GrowthRate = (6 - worstSeverity) * 15 + 75;
-        }
-        else
-        {
-            this.GrowthStatus = GrowthStatus.increasing;
-            this.GrowthRate = population.Species.GrowthRate + totalSeverity;
-        }
+
     }
 }

@@ -85,7 +85,7 @@ public class AnimalSpecies : ScriptableObject
                 Dictionary<NeedCondition, SpecieBehaviorTrigger> needBehaviors = new Dictionary<NeedCondition, SpecieBehaviorTrigger>();
                 foreach (NeedBehavior needBehavior in need.Conditions)
                 {
-                    if (!needBehaviors.ContainsKey(needBehavior.Condition) && needBehavior.Behavior != null)
+                    if (!needBehaviors.ContainsKey(needBehavior.Condition))
                     {
                         needBehaviors.Add(needBehavior.Condition, needBehavior.Behavior);
                     }

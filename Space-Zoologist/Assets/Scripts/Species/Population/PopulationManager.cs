@@ -12,7 +12,6 @@ public class PopulationManager : MonoBehaviour
     private List<Population> ExistingPopulations = new List<Population>();
     [SerializeField] private NeedSystemManager NeedSystemManager = default;
     [SerializeField] private BehaviorPatternUpdater BehaviorPatternUpdater = default;
-    [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
@@ -61,19 +60,19 @@ public class PopulationManager : MonoBehaviour
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public void AddAnimals(AnimalSpecies species, int count, Vector3 position)
+    public void UpdatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
         // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
         List<Population> localPopulations = ReservePartitionManager.GetPopulationsWithAccessTo(position);
-        Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
-        if (preexistingPopulation)
+        foreach(Population preexistingPopulation in localPopulations)
         {
-            preexistingPopulation.AddAnimal();
+            if (preexistingPopulation.Species.SpeciesName.Equals(species.SpeciesName))
+            {
+                preexistingPopulation.AddAnimal();
+                return;
+            }
         }
-        else
-        {
-            CreatePopulation(species, count, position);
-        }
+        CreatePopulation(species, count, position);
     }
 
     // register the existing population then initialize the animals

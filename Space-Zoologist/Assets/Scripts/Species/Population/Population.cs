@@ -27,10 +27,10 @@ public class Population : MonoBehaviour, Life
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [Header("Lowest Priority Behaviors")]
-    [SerializeField] public List<SpecieBehaviorTrigger> DefaultBehaviors = default;
+    [Expandable] public List<SpecieBehaviorTrigger> DefaultBehaviors = default;
     [Header("Modify values and thresholds for testing")]
+    [SerializeField] private float TimeSinceUpdate = 0f;
     [SerializeField] private List<Need> NeedEditorTesting = default;
-    [Header("For reference only")]
     [SerializeField] private List<MovementData> AnimalsMovementData = default;
 
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
@@ -38,7 +38,6 @@ public class Population : MonoBehaviour, Life
 
     private Vector3 origin = Vector3.zero;
     private GrowthCalculator GrowthCalculator = new GrowthCalculator();
-    private float TimeSinceUpdate = 0f;
     private PoolingSystem PoolingSystem = default;
     private int prePopulationCount = default;
     private PopulationBehaviorManager PopulationBehaviorManager = default;
@@ -87,6 +86,7 @@ public class Population : MonoBehaviour, Life
         this.SetupNeeds();
     }
 
+    // TODO parse need names and potential behaviors and InitializeBehaviors with that instead of needs.
     private void SetupNeeds()
     {
         this.needs = this.Species.SetupNeeds();
@@ -113,10 +113,10 @@ public class Population : MonoBehaviour, Life
             this.TimeSinceUpdate = 0;
             switch (this.GrowthCalculator.GrowthStatus)
             {
-                case GrowthStatus.increasing:
+                case GrowthStatus.growing:
                     this.AddAnimal();
                     break;
-                case GrowthStatus.decreasing:
+                case GrowthStatus.declining:
                     this.RemoveAnimal(1);
                     break;
                 default:
@@ -211,7 +211,9 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
+        Debug.Log("Need: " + need + " is now in " + this.needs[need].GetCondition(value) + " condition");
         this.FilterBehaviors(need, this.needs[need].GetCondition(value));
+        this.UpdateGrowthConditions();
         //Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
@@ -232,12 +234,13 @@ public class Population : MonoBehaviour, Life
     public void UpdateGrowthConditions()
     {
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
-        //Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
+        Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
     /// <summary>
     /// Updates the needs behaviors based on the need's current condition
     /// </summary>
+    /// Currently filtering behaviors using null, may want to change.
     public void FilterBehaviors(string need, NeedCondition needCondition)
     {
         if (this.PopulationBehaviorManager.ActiveBehaviors.ContainsKey(need))
@@ -259,13 +262,14 @@ public class Population : MonoBehaviour, Life
         }
         if (this.GrowthCalculator != null)
         {
-            this.UpdateNeeds();
+            this.UpdateEditorNeeds();
             this.UpdateGrowthConditions();
         }
     }
 
-    private void UpdateNeeds()
+    private void UpdateEditorNeeds()
     {
+        // Debug.Log("Needs updated with editor");
         int i=0;
         foreach (KeyValuePair<string, Need> need in this.needs)
         {

@@ -48,9 +48,9 @@ public class AnimalBehaviorManager : MonoBehaviour
         {
             pattern.QueueForForceExit(this.gameObject, isDriven);
         }
-        foreach (BehaviorData data in activeBehaviors)
+        for (int i=activeBehaviors.Count - 1; i>=0; i--)
         {
-            data.ForceExitCallback.Invoke(this.gameObject);
+            activeBehaviors[i].ForceExitCallback.Invoke(this.gameObject);
         }
         activeBehaviors.Clear();
     }
