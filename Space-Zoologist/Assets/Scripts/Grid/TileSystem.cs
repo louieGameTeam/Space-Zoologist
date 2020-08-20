@@ -9,7 +9,8 @@ public class TileSystem : MonoBehaviour
     private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;
 
-    public bool HasTerrainChanged = default;
+    public bool HasTerrainChanged = false;
+    public List<Vector3Int> chagnedTiles = new List<Vector3Int>();
 
     private void Awake()
     {

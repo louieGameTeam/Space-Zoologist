@@ -37,6 +37,8 @@ public class NeedSystemManager : MonoBehaviour
         // Add Density NeedSystem
         AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
 
+        // Add Symbiosis NeedSystem
+        AddSystem(new SymbiosisNeedSystem(ReservePartitionManager));
 
         FoodSourceManager.Initialize();
         PopulationManager.Initialize();
@@ -92,6 +94,13 @@ public class NeedSystemManager : MonoBehaviour
     /// </remarks>
     public void UpdateSystems()
     {
+        // Update populations' accessible map when terrain was modified
+        if (this.TileSystem.HasTerrainChanged)
+        {
+            // TODO: Update population's accessible map only for changed terrain
+            this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.chagnedTiles);
+        }
+
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             NeedSystem system = entry.Value;

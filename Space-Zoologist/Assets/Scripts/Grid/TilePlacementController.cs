@@ -125,6 +125,7 @@ public class TilePlacementController : MonoBehaviour
         }
         isFirstTile = true;
     }
+
     public void StopPreview()
     {
         isPreviewing = false;
@@ -147,16 +148,19 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
+
+        // Set terrain modified flag
+        this.TileSystem.HasTerrainChanged = true;
+        this.TileSystem.chagnedTiles.AddRange(addedTiles.Keys.ToList());
+
         // Clear all dics
         referencedTiles.Clear();
         removedTileColors.Clear();
         addedTiles.Clear();
         removedTiles.Clear();
         triedToPlaceTiles.Clear();
-
-        // Set terrain modified flag
-        this.TileSystem.HasTerrainChanged = true;
     }
+
     public int PlacedTileCount()
     {
         return addedTiles.Count();

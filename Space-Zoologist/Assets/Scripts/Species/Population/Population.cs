@@ -14,7 +14,8 @@ public class Population : MonoBehaviour, Life
     [Expandable] public AnimalSpecies species = default;
     [SerializeField] private GameObject AnimalPrefab = default;
     public AnimalSpecies Species { get => species; }
-    public int Count { get => this.AnimalPopulation.Count; }
+    // Temply modified
+    public int Count { get => this.GetActiveAnimalCount(); }
     public float Dominance => Count * species.Dominance;
 
     public Dictionary<string, Need> Needs => needs;
@@ -65,6 +66,22 @@ public class Population : MonoBehaviour, Life
         }
     }
 
+    // Temp get active animal count
+    private int GetActiveAnimalCount()
+    {
+        int count = 0;
+
+        foreach(GameObject animal in this.AnimalPopulation)
+        {
+            if (animal.activeSelf)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     /// <summary>
     /// Initialize the population as the given species at the given origin after runtime.
     /// </summary>
@@ -77,6 +94,7 @@ public class Population : MonoBehaviour, Life
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
+
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         for (int i = 0; i < populationSize; i++)
         {
@@ -118,7 +136,7 @@ public class Population : MonoBehaviour, Life
                     this.AddAnimal();
                     break;
                 case GrowthStatus.decreasing:
-                    this.RemoveAnimal();
+                    this.RemoveAnimal(1);
                     break;
                 default:
                     break;
@@ -195,7 +213,7 @@ public class Population : MonoBehaviour, Life
     }
 
     // removes last animal in list and last behavior
-    public void RemoveAnimal()
+    public void RemoveAnimal(int count)
     {
         this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
         this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
@@ -238,6 +256,19 @@ public class Population : MonoBehaviour, Life
     {
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
         //Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
+    }
+
+    //private void TestAddAnimal()
+    //{
+    //    this.AnimalsBehaviorData.Add(new BehaviorsData());
+    //    GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
+    //    newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
+    //    AnimalPopulation.Add(newAnimal);
+    //}
+
+    public void TestRemoveAnimal()
+    {
+        this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
     }
 
     // TODO setup filter for adding/removing behaviors from this.CurrentBehaviors according to populations condition
@@ -306,6 +337,6 @@ public class Population : MonoBehaviour, Life
     public void UpdatePopulationStateForChecking()
     {
         this.HasAccessibilityChanged = false;
-        this.prePopulationCount = this.AnimalPopulation.Count;
+        this.prePopulationCount = this.Count;
     }
 }
