@@ -12,14 +12,15 @@ public class Need
     public int Severity => severity;
     public NeedType NeedType => needType;
     public Sprite Sprite => sprite;
-    public float NeedValue => this.neeedValue;
+    public float NeedValue => this.needValue;
+    public List<NeedBehavior> Behaviors => this.conditions;
 
     [SerializeField] private NeedType needType = default;
     [SerializeField] private string needName = default;
-    [SerializeField] private float neeedValue = default;
+    [SerializeField] private float needValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
-    [SerializeField] private List<NeedCondition> conditions = default;
+    [SerializeField] private List<NeedBehavior> conditions = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
 
@@ -30,6 +31,7 @@ public class Need
         this.severity = needConstructData.Severity;
         this.conditions = needConstructData.Conditions;
         this.thresholds = needConstructData.Thresholds;
+        this.conditions = needConstructData.Conditions;
     }
 
     /// <summary>
@@ -40,18 +42,19 @@ public class Need
     public NeedCondition GetCondition(float value)
     {
         // If there is only one condition, return it.
-        if (conditions.Count == 1) return conditions[0];
+        if (conditions.Count == 1) return conditions[0].Condition;
 
         for (var i = 0; i < this.thresholds.Count; i++)
         {
             if (value < this.thresholds[i])
             {
-                return this.conditions[i];
+                return this.conditions[i].Condition;
             }
         }
-        return this.conditions[this.thresholds.Count];
+        return this.conditions[this.thresholds.Count].Condition;
     }
 
+    // TODO what is this doing
     /// <summary>
     /// 
     /// </summary>
@@ -60,20 +63,28 @@ public class Need
     /// <returns></returns>
     public float GetThreshold(NeedCondition needCondition, int occurrence = 0, bool top = true)
     {
-        if (!conditions.Contains(needCondition))
+        int count = 0;
+        foreach(NeedBehavior needBehavior in this.conditions)
+        {
+            if (needBehavior.Condition.Equals(needCondition))
+            {
+                count++;
+            }
+        }
+        if (count == 0)
         {
             throw new System.ArgumentException($"Tried to access {needCondition.ToString()} condition in {needName} need, but the need does not have the condition.");
         }
 
         // Get the number of occurrences of the specified need condition in the need's list of need conditions
-        int numOccurrences = conditions.Sum(item => item == needCondition ? 1 : 0);
+        int numOccurrences = count;
         int sign = System.Math.Sign(occurrence);
         int occurrenceIndex = sign < 0 ? numOccurrences + occurrence : occurrence;
         occurrenceIndex = Mathf.Clamp(occurrenceIndex, 0, numOccurrences);
         List<int> conditionIndices = new List<int>();
         for (int i = 0; i < conditions.Count; i++)
         {
-            if (conditions[i] == needCondition)
+            if (conditions[i].Condition == needCondition)
             {
                 conditionIndices.Add(i);
             }
@@ -93,7 +104,7 @@ public class Need
     {
         if (conditions.Count == 0)
         {
-            conditions.Add(NeedCondition.Good);
+            conditions.Add(new NeedBehavior(NeedCondition.Good));
         }
 
         while (conditions.Count < thresholds.Count + 1)
@@ -123,6 +134,6 @@ public class Need
 
     public void UpdateNeedValue(float value)
     {
-        this.neeedValue = value;
+        this.needValue = value;
     }
 }

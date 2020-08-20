@@ -64,18 +64,18 @@ public class NeedConstructData
 {
     public string NeedName => needName;
     public int Severity => severity;
-    public List<NeedCondition> Conditions => conditions;
+    public List<NeedBehavior> Conditions => conditions;
     public List<float> Thresholds => thresholds;
 
     [SerializeField] private string needName = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
-    [SerializeField] private List<NeedCondition> conditions = default;
+    [SerializeField] private List<NeedBehavior> conditions = default;
     [SerializeField] private List<float> thresholds = default;
 
     public NeedConstructData(string name, int severity, List<string> conditions, List<float> thresholds)
     {
-        this.conditions = new List<NeedCondition>();
+        this.conditions = new List<NeedBehavior>();
         this.thresholds = new List<float>();
         this.needName = name;
         this.severity = severity;
@@ -83,15 +83,15 @@ public class NeedConstructData
         {
             if (condition.Equals("Good", StringComparison.OrdinalIgnoreCase))
             {
-                this.conditions.Add(NeedCondition.Good);
+                this.conditions.Add(new NeedBehavior(NeedCondition.Good));
             }
             if (condition.Equals("Neutral", StringComparison.OrdinalIgnoreCase))
             {
-                this.conditions.Add(NeedCondition.Neutral);
+                this.conditions.Add(new NeedBehavior(NeedCondition.Neutral));
             }
             if (condition.Equals("Bad", StringComparison.OrdinalIgnoreCase))
             {
-                this.conditions.Add(NeedCondition.Bad);
+                this.conditions.Add(new NeedBehavior(NeedCondition.Bad));
             }
         }
         this.thresholds = thresholds;

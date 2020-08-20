@@ -11,6 +11,7 @@ public class PopulationManager : MonoBehaviour
     private List<Population> ExistingPopulations = new List<Population>();
     public List<Population> Populations => ExistingPopulations;
     [SerializeField] public NeedSystemManager NeedSystemManager = default;
+    [SerializeField] private BehaviorPatternUpdater BehaviorPatternUpdater = default;
     [SerializeField] public LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] public bool AutomotonTesting = false;
@@ -47,9 +48,8 @@ public class PopulationManager : MonoBehaviour
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
-        // Initialize the basic population data, register the population, then initialize the specific population data, then initialize the animals
+        // Initialize the basic population data, register the population, then initialize the animals and their behaviors
         population.InitializeNewPopulation(species, position, count);
-        population.InitializePopulationData();
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
     }
@@ -79,7 +79,6 @@ public class PopulationManager : MonoBehaviour
     private void SetupExistingPopulation(Population population)
     {
         this.HandlePopulationRegistration(population);
-        population.InitializePopulationData();
         population.InitializeExistingAnimals();
     }
 
@@ -87,10 +86,11 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         this.ReservePartitionManager.AddPopulation(population);
-        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
-        GridSystem.GetGridWithAccess(population));
+        population.UpdateAccessibleArea(this.ReservePartitionManager.GetLocationsWithAccess(population),
+        this.GridSystem.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
-        NeedSystemManager.RegisterWithNeedSystems(population);
+        this.NeedSystemManager.RegisterWithNeedSystems(population);
+        this.BehaviorPatternUpdater.RegisterPopulation(population);
     }
 
     public void UdateAllPopulationStateForChecking()

@@ -1,21 +1,39 @@
-﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/Systems/DensityCalculator.cs">
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Species/Population/Population.cs">
     <Files>
-      <File FileName="Assets/Scripts/Animals/Population/PopulationManager.cs" Line="98" Column="1" />
-      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="287" Column="45" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="16" Column="68" />
-      <File FileName="Assets/Scripts/Needs/Systems/DensityNeedSystem.cs" Line="59" Column="56" />
-      <File FileName="Assets/Scripts/Needs/Systems/AtmosphereNeedSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/DensityCalculator.cs" Line="198" Column="18" />
+      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="7" Column="14" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemUpdater.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="47" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Space-Zoologist" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Assets" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="Needs" expanded="True" />
+                  <Node name="Species" expanded="True">
+                    <Node name="Population" expanded="True">
+                      <Node name="Population.cs" selected="True" />
+                    </Node>
+                    <Node name="Representation" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2497af0f-3839-40b1-bb4b-ae08818f3aeb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="375" column="1" />
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="373" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="375" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="373" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

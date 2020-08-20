@@ -16,6 +16,7 @@ public class MovementController : MonoBehaviour
     // Animal doesn't change direction until they've moved a certain distance in that direction
     private float ChangeDirectionThreshold = 0.5f;
     private float ChangeDirectionMovement = 0f;
+    public bool HasPath = false;
     // private Vector3 NextPathTile { get; set; }
 
     public void Start()
@@ -28,49 +29,20 @@ public class MovementController : MonoBehaviour
     /// Called before update to assign a path.
     /// </summary>
     /// <param name="pathToDestination"></param>
-    public void AssignPath(List<Vector3> pathToDestination)
+    public void AssignPath(List<Vector3> pathToDestination, bool pathFound)
     {
+        this.HasPath = pathFound;
+        if (!pathFound)
+        {
+            Debug.Log("Error path not found");
+            return;
+        }
         this.PathToDestination = pathToDestination;
         this.NextPathTile = new Vector3(this.PathToDestination[0].x + 0.5f, this.PathToDestination[0].y + 0.5f, 0);
         this.DestinationReached = false;
         this.PathIndex = 0;
         this.UpdateVisualLogic(this.NextPathTile);
     }
-
-
-    /// <summary>
-    /// Callback given to CalculatePath for when the path finishes being calculated.
-    /// Consider modifying the else to do something else if a path isn't found.
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="pathFound"></param>
-    // public virtual void PathFound(List<Vector3> path, bool pathFound)
-    // {
-    //     if (pathFound)
-    //     {
-    //         this.AssignPath(path);
-    //         this.isCalculatingPath = false;
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Path not found, exiting behavior without callback");
-    //         this.isCalculatingPath = false;
-    //     }
-    // }
-
-    // /// <summary>
-    // /// Should be called in every update before path is used.
-    // /// </summary>
-    // /// <returns></returns>
-    // public bool IsCalculatingPath()
-    // {
-    //     if (this.isCalculatingPath)
-    //     {
-    //         Animal.MovementData.Speed = 0;
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     /// <summary>
     /// Called in update to move towards destination. Returns true when destination reached.

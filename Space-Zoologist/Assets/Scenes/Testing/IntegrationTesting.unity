@@ -4242,6 +4242,51 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &957276799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 957276800}
+  - component: {fileID: 957276801}
+  m_Layer: 0
+  m_Name: BehaviorPatternUpdater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &957276800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957276799}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.3610883, y: 1.4827684, z: -815.6836}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2111625124}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &957276801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957276799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111eb3ad57f04c548aa453096a787a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviorPatterns: []
+  isPaused: 0
 --- !u!1 &965074120
 GameObject:
   m_ObjectHideFlags: 0
@@ -4389,6 +4434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeedSystemManager: {fileID: 1849927150}
+  BehaviorPatternUpdater: {fileID: 957276801}
   LevelDataReference: {fileID: 1870373115}
   PopulationPrefab: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
     type: 3}
@@ -10798,6 +10844,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
+      propertyPath: DefaultBehaviors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
       propertyPath: AnimalPopulation.Array.data[0]
       value: 
       objectReference: {fileID: 1996958380}
@@ -10888,6 +10939,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: DefaultBehaviors.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 547e74c02e47a47ffa268a476f996ed6,
+        type: 2}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: TestingBehaviors
+      value: 
+      objectReference: {fileID: 1228270578}
+    - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
+        type: 3}
+      propertyPath: DefaultBehaviors.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: da9485d05a49e4f0e83aef92b6a346d7,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2684919613425e34d815583d801a54b9, type: 3}
 --- !u!4 &1728212931 stripped
@@ -12871,6 +12939,7 @@ Transform:
   - {fileID: 1051037410}
   - {fileID: 2133832463}
   - {fileID: 1553672138}
+  - {fileID: 957276800}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

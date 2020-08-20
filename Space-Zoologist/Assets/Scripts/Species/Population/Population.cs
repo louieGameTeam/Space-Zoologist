@@ -9,45 +9,60 @@ using UnityEngine;
 /// </summary>
 public class Population : MonoBehaviour, Life
 {
+    [SerializeField] public GridSystem TestingBehaviors = default;
+
     [Expandable] public AnimalSpecies species = default;
+    [SerializeField] private GameObject AnimalPrefab = default;
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;
 
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    public Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> NeedBehaviors => needBehaviors;
+    private Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>>();
     public AnimalPathfinding.Grid grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
-    public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
+    [Header("Lowest Priority Behaviors")]
+    public List<SpecieBehaviorTrigger> DefaultBehaviors = default;
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
-    [SerializeField] private GameObject AnimalPrefab = default;
-    [Header("Updated through OnValidate")]
+    [Header("For reference only")]
     [SerializeField] private List<MovementData> AnimalsBehaviorData = default;
     [Header("Modify values and thresholds for testing")]
-    // Initialized when InitializePopulationDataCalled and updates the Need Dictionary OnValidate
     [SerializeField] private List<Need> NeedEditorTesting = default;
 
     private Vector3 origin = Vector3.zero;
-    private GrowthCalculator GrowthCalculator = default;
+    private GrowthCalculator GrowthCalculator = new GrowthCalculator();
     public float TimeSinceUpdate = 0f;
     [HideInInspector]
-    public bool IssueWithAccessibleArea = false;
     public System.Random random = new System.Random();
 
     [HideInInspector]
     public bool HasAccessibilityChanged = false;
+    private PoolingSystem PoolingSystem = default;
     public int PrePopulationCount => this.prePopulationCount;
     private int prePopulationCount = default;
-
-    private PoolingSystem PoolingSystem = default;
-
+    private SpecieBehaviorManager SpecieBehaviorManager = default;
 
     private void Awake()
     {
-        this.CurrentBehaviors = new List<BehaviorScriptName>();
-        this.GrowthCalculator = new GrowthCalculator();
+        this.SpecieBehaviorManager = this.GetComponent<SpecieBehaviorManager>();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
+        if (this.species != null)
+        {
+            this.SetupNeeds();
+        }
+    }
+
+    private void Start()
+    {
+        int i=0;
+        foreach(SpecieBehaviorTrigger behaviorPattern in this.DefaultBehaviors)
+        {
+            this.SpecieBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
+            i++;
+        }
     }
 
     /// <summary>
@@ -69,27 +84,15 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation.Add(newAnimal);
             // PopulationManager will explicitly initialize a new population's animal at the very end
             this.AnimalPopulation[i].SetActive(true);
-            this.AnimalsBehaviorData.Add(new MovementData());
         }
+        this.SetupNeeds();
     }
 
-    /// <summary>
-    /// Sets up population's behavior and need data
-    /// </summary>
-    public void InitializePopulationData()
+    private void SetupNeeds()
     {
-        this.CurrentBehaviors = new List<BehaviorScriptName>();
-        foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
-        {
-            // Debug.Log("Behavior added");
-            this.CurrentBehaviors.Add(data.behaviorScriptName);
-        }
         this.needs = this.Species.SetupNeeds();
-        this.SetupNeedTesting();
-    }
-
-    private void SetupNeedTesting()
-    {
+        this.needBehaviors = this.Species.SetupBehaviors(this.needs);
+        this.SpecieBehaviorManager.InitializeBehaviors(this.needs);
         this.NeedEditorTesting = new List<Need>();
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
@@ -134,12 +137,11 @@ public class Population : MonoBehaviour, Life
         this.grid = grid;
         if (this.AccessibleLocations.Count < 6)
         {
-            this.IssueWithAccessibleArea = true;
+            Debug.Log("Issue with accessibility area");
             this.PauseAnimals();
         }
         else
         {
-            this.IssueWithAccessibleArea = false;
             this.UnpauseAnimals();
         }
     }
@@ -162,16 +164,15 @@ public class Population : MonoBehaviour, Life
 
     public void InitializeExistingAnimals()
     {
-        int i = 0;
         foreach (GameObject animal in this.AnimalPopulation)
         {
             if (animal.activeSelf)
             {
-                animal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[i]);
-                i++;
+                MovementData data = new MovementData();
+                this.AnimalsBehaviorData.Add(data);
+                animal.GetComponent<Animal>().Initialize(this, data);
             }
         }
-
         this.prePopulationCount = this.AnimalPopulation.Count;
     }
 
@@ -211,7 +212,12 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
-        Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
+        // update the ActiveBehavior with the associated Needs behaviors for that condition
+        if (this.SpecieBehaviorManager.ActiveBehaviors.ContainsKey(need))
+        {
+            this.SpecieBehaviorManager.ActiveBehaviors[need] = this.needBehaviors[this.needs[need]][this.needs[need].GetCondition(value)];
+        }
+        //Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
     /// <summary>

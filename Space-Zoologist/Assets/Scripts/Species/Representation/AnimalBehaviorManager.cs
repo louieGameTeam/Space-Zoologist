@@ -6,6 +6,7 @@ using System;
 
 public class AnimalBehaviorManager : MonoBehaviour
 {
+    [Header("For testing purposes")]
     public List<BehaviorData> activeBehaviors = new List<BehaviorData>();
     public List<BehaviorPattern> activeBehaviorPatterns = new List<BehaviorPattern>();
     [SerializeField]
