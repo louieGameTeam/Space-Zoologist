@@ -193,6 +193,7 @@ public class SpeciesCalculator : NeedCalculator
                 accessibleAreaRatio[consumer][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
                 int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[consumer][population]);
                 availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (consumer.Dominance / totalLocalDominance[population]));
+                //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availablePopulationCount}");
             }
 
             // If the food available to the Population is more than enough, only take enough and update its need.
@@ -234,8 +235,6 @@ public class SpeciesCalculator : NeedCalculator
 
         // Done update not dirty any more
         this.isDirty = false;
-
-        this.distributedAmount = newDistributedAmount;
 
         return this.amountConsumerWasDistributed;
     }

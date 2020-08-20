@@ -46,10 +46,6 @@ public class NeedTypeConstructData
         {
             this.needType = NeedType.Temperature;
         }
-        if (needType.Equals("Symbiosis", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.Symbiosis;
-        }
         needs = new List<NeedConstructData>();
     }
 

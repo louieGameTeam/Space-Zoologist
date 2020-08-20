@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 public class TileStoreSection : StoreSection
 {
     [SerializeField] private TilePlacementController tilePlacementController = default;
-    [SerializeField] private NeedSystemManager NeedSystemManager = default;
     [Header("Only needed if tutorial level")]
     [SerializeField] private TutorialTesting tutorial = default;
 
@@ -19,7 +18,7 @@ public class TileStoreSection : StoreSection
 
     public override void Initialize()
     {
-        base.itemType = NeedType.Terrain;
+        base.itemType = ItemType.Terrain;
         base.Initialize();
         startingBalance = base.playerBalance;
         Debug.Assert(tilePlacementController != null);

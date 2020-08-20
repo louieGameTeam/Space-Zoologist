@@ -36,15 +36,21 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    public bool CheckPopulationHomeLocations(Vector3 mousePosition)
+    public bool IsPopulationHomeLocations(Vector3 mousePosition)
     {
         return this.PopulationHomeLocations.Contains(this.Grid.WorldToCell(mousePosition));
+    }
+
+    public bool IsWithinGridBouds(Vector3 mousePosition)
+    {
+        return (mousePosition.x < GridWidth - 1 && mousePosition.y < GridHeight - 1 &&
+        mousePosition.x > 0 && mousePosition.y > 0);
     }
 
     // Will need to make the grid the size of the max tilemap size
     public AnimalPathfinding.Grid GetGridWithAccess(Population population)
     {
-        // Debug.Log("Setting up pathfinding grid");
+        Debug.Log("Setting up pathfinding grid");
         bool[,] tileGrid = new bool[GridWidth, GridHeight];
         for (int x=0; x<GridWidth; x++)
         {
@@ -87,7 +93,7 @@ public class GridSystem : MonoBehaviour
             for (int j=-1; j<=1; j++)
             {
                 Vector3Int loc = new Vector3Int(x + i, y + j, 0);
-                //this.TerrainTilemap.SetColor(loc, Color.green);
+                this.TerrainTilemap.SetColor(loc, Color.green);
                 if (!populationHomeLocations.Contains(loc))
                 {
                     populationHomeLocations.Add(loc);

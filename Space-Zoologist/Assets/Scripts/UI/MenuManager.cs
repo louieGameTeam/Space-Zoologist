@@ -14,15 +14,16 @@ public class MenuManager : MonoBehaviour
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] List<RectTransform> UIElements = default;
+    [SerializeField] TileSystem TileSystem = default;
 
     public void Start()
     {
-        foreach (IStoreMenu storeMenu in this.StoreMenus)
+        foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements);
+            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.TileSystem);
             storeMenu.Initialize();
         }
-        PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements);
+        PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.TileSystem);
         PodMenu.Initialize();
     }
 

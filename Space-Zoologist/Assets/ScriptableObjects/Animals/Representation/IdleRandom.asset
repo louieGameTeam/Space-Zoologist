@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9657db3234c398e4ea867aaa530b6cb4, type: 3}
+  m_Name: IdleRandom
+  m_EditorClassIdentifier: 
+  behaviorData:
+    behaviorName: 
+    behaviorTypes: 
+    priority: 0
+  maxAffectedNumber: 0
+  maxAffectedPortion: 0
+  numberTriggerdPerLoop: 1
+  behaviorPatterns:
+  - {fileID: 4269465700119403223, guid: b286f3c4c2bee467197b0b1af78f21ff, type: 3}
+  refreshPeriod: 3
+  elapsedTime: 0

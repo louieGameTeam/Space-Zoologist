@@ -6,11 +6,8 @@ using UnityEngine.UI;
 
 public class TutorialTesting : MonoBehaviour
 {
-    [SerializeField] ReservePartitionManager ReservePartitionManager = default;
-    [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
-    [SerializeField] Tilemap baseLayer = default;
     [SerializeField] PodMenu podMenu = default;
     [SerializeField] List<Item> ItemToAdd = default;
     [SerializeField] FoodSourceSpecies foodSourceToAdd = default;
@@ -30,10 +27,6 @@ public class TutorialTesting : MonoBehaviour
 
     private void Start()
     {
-        //TODO: what this is doing?
-        //NeedSystemManager.AddSystem(new FoodSourceNeedSystem(ReservePartitionManager.ins, ItemToAdd[0].ItemName));
-        // NeedSystemManager.AddSystem(new FoodSourceNeedSystem(ReservePartitionManager, NeedType.FoodSource));
-
         this.TriggerDialogue(0);
     }
 
@@ -88,10 +81,6 @@ public class TutorialTesting : MonoBehaviour
 
     public void AddSpecies()
     {
-        // TODO: only need to add a system once
-        // Creating new need calculator is hanlde when a new consumer or source is added
-        //NeedSystemManager.AddSystem(new SpeciesNeedSystem(ReservePartitionManager.ins, speciesToIntroduce.SpeciesName));
-        // NeedSystemManager.AddSystem(new SpeciesNeedSystem(ReservePartitionManager, NeedType.Species));
         this.podMenu.AddPod(speciesToIntroduce);
     }
 

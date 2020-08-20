@@ -1,19 +1,20 @@
 using System;
 using UnityEngine;
 
+public enum ItemType {Food, Terrain, Machine}
 // Modify as needed
 [CreateAssetMenu]
 public class Item : ScriptableObject
 {
     public string ID => id;
-    public NeedType Type => type;
+    public ItemType Type => type;
     public string ItemName => itemName;
     public int Price => price;
     public string Description => description;
     public Sprite Icon => icon;
 
     [SerializeField] private string id = default;
-    [SerializeField] private NeedType type = default;
+    [SerializeField] private ItemType type = default;
     [SerializeField] private string itemName = default;
     [SerializeField] private int price = default;
     [SerializeField] private string description = default;
@@ -24,31 +25,19 @@ public class Item : ScriptableObject
         this.id = id;
         if (type.Equals("Terrain", StringComparison.OrdinalIgnoreCase))
         {
-            this.type = NeedType.Terrain;
+            this.type = ItemType.Terrain;
         }
         if (type.Equals("Atmosphere", StringComparison.OrdinalIgnoreCase))
         {
-            this.type = NeedType.Atmosphere;
-        }
-        if (type.Equals("Density", StringComparison.OrdinalIgnoreCase))
-        {
-            this.type = NeedType.Density;
-        }
-        if (type.Equals("FoodSource", StringComparison.OrdinalIgnoreCase))
-        {
-            this.type = NeedType.FoodSource;
+            this.type = ItemType.Machine;
         }
         if (type.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
         {
-            this.type = NeedType.Liquid;
+            this.type = ItemType.Machine;
         }
-        if (type.Equals("Species", StringComparison.OrdinalIgnoreCase))
+        if (type.Equals("Food", StringComparison.OrdinalIgnoreCase))
         {
-            this.type = NeedType.Species;
-        }
-        if (type.Equals("Temperature", StringComparison.OrdinalIgnoreCase))
-        {
-            this.type = NeedType.Temperature;
+            this.type = ItemType.Food;
         }
         this.itemName = name;
         this.price = price;

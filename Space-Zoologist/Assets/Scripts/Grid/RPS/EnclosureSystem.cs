@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AtmoshpereComponent { GasX, GasY, GasZ, Temperature };
+// TODO refactor out temperature
+public enum AtmosphereComponent { GasX, GasY, GasZ, Temperature };
 
 /// <summary>
 /// A class that represents the atmospheric composition of an area.
@@ -10,52 +11,49 @@ public enum AtmoshpereComponent { GasX, GasY, GasZ, Temperature };
 [System.Serializable]
 public class AtmosphericComposition
 {
-    [SerializeField] private float gasX = 0.0f;
-    [SerializeField] private float gasY = 0.0f;
-    [SerializeField] private float gasZ = 0.0f;
+    [SerializeField] public float GasX = 0.0f;
+    [SerializeField] public float GasY = 0.0f;
+    [SerializeField] public float GasZ = 0.0f;
     [SerializeField] private float temperature = 0.0f;
 
-    public float GasX { get => gasX; }
-    public float GasY { get => gasY; }
-    public float GasZ { get => gasZ; }
     public float Temperature { get => temperature; }
 
     public AtmosphericComposition()
     {
-        gasX = gasY = gasZ = temperature = 0;
+        GasX = GasY = GasZ = temperature = 0;
     }
 
-    public AtmosphericComposition(float _gasX, float _gasY, float _gasZ, float _temperature)
+    public AtmosphericComposition(float _GasX, float _GasY, float _GasZ, float _temperature)
     {
-        gasX = _gasX;
-        gasY = _gasY;
-        gasZ = _gasZ;
+        GasX = _GasX;
+        GasY = _GasY;
+        GasZ = _GasZ;
         temperature = _temperature;
     }
 
     public AtmosphericComposition(AtmosphericComposition from)
     {
-        gasX = from.gasX; gasY = from.gasY; gasZ = from.gasZ; temperature = from.temperature;
+        GasX = from.GasX; GasY = from.GasY; GasZ = from.GasZ; temperature = from.temperature;
     }
 
     public AtmosphericComposition Copy(AtmosphericComposition from)
     {
-        gasX = from.gasX;
-        gasY = from.gasY;
-        gasZ = from.gasZ;
+        GasX = from.GasX;
+        GasY = from.GasY;
+        GasZ = from.GasZ;
         temperature = from.temperature;
         return this;
     }
 
     public static AtmosphericComposition operator +(AtmosphericComposition lhs, AtmosphericComposition rhs)
     {
-        return new AtmosphericComposition((lhs.gasX + rhs.gasX) / 2.0f, (lhs.gasY + rhs.gasY) / 2.0f,
-            (lhs.gasZ + rhs.gasZ) / 2.0f, (lhs.temperature + rhs.temperature) / 2.0f);
+        return new AtmosphericComposition((lhs.GasX + rhs.GasX) / 2.0f, (lhs.GasY + rhs.GasY) / 2.0f,
+            (lhs.GasZ + rhs.GasZ) / 2.0f, (lhs.temperature + rhs.temperature) / 2.0f);
     }
 
     public override string ToString()
     {
-        return "gasX = " + gasX + " gasY = " + gasY + " gasZ = " + gasZ + " Temp = " + temperature;
+        return "GasX = " + GasX + " GasY = " + GasY + " GasZ = " + GasZ + " Temp = " + temperature;
     }
 
     /// <summary>
@@ -64,7 +62,7 @@ public class AtmosphericComposition
     /// <returns></returns>
     public float[] GeComposition()
     {
-        float[] composition = { gasX, gasY, gasZ, temperature };
+        float[] composition = { GasX, GasY, GasZ, temperature };
         return composition;
     }
 }
@@ -95,8 +93,8 @@ public class EnclosureSystem : MonoBehaviour
 
     private void Start()
     {
-        //GlobalAtmosphere = LevelDataReference.LevelData.GlobalAtmosphere;
         GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
+        this.FindEnclosedAreas();
     }
 
     /// <summary>
@@ -104,10 +102,20 @@ public class EnclosureSystem : MonoBehaviour
     /// </summary>
     /// <param name="position">The position at which to get the atmopheric conditions</param>
     /// <returns></returns>
-    public AtmosphericComposition GetAtmosphericComposition(Vector3Int position)
+    public AtmosphericComposition GetAtmosphericComposition(Vector3 worldPosition)
     {
+        Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (PositionToAtmosphere.ContainsKey(position))
             return Atmospheres[PositionToAtmosphere[position]];
+        else
+            throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
+    }
+
+    public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
+    {
+        Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
+        if (PositionToAtmosphere.ContainsKey(position))
+            Atmospheres[PositionToAtmosphere[position]] = atmosphericComposition;
         else
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
     }
@@ -367,22 +375,8 @@ public class EnclosureSystem : MonoBehaviour
         // walls
         Stack<Vector3Int> walls = new Stack<Vector3Int>();
 
-        // starting location, may be changed later for better performance
-        int p = -100;
-        while (p < 100)
-        {
-            if (this.TileSystem.GetTerrainTileAtLocation(this.TileSystem.WorldToCell(new Vector3(p, 0, 0))) != null)
-            {
-                break;
-            }
-            else
-            {
-                p++;
-            }
-        }
-
         // outer most position
-        Vector3Int cur = this.TileSystem.WorldToCell(new Vector3(p, 0, 0));
+        Vector3Int cur = this.TileSystem.WorldToCell(new Vector3(1, 1, 0));
         stack.Push(cur);
 
         // iterate until no tile left in stack

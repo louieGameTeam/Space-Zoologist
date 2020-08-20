@@ -9,7 +9,6 @@ public class NeedSystemUpdater : MonoBehaviour
 {
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
-    [SerializeField] NeedSystemsTester NeedSystemsTester = default;
 
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] GridSystem GridSystem = default;
