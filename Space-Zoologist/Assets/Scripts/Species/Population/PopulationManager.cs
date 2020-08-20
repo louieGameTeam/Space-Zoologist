@@ -7,14 +7,13 @@ using UnityEngine;
 /// </summary>
 public class PopulationManager : MonoBehaviour
 {
-    // FindObjectOfType<Population> to populate
-    private List<Population> ExistingPopulations = new List<Population>();
+    // FindTag population to populate
     public List<Population> Populations => ExistingPopulations;
-    [SerializeField] public NeedSystemManager NeedSystemManager = default;
+    private List<Population> ExistingPopulations = new List<Population>();
+    [SerializeField] private NeedSystemManager NeedSystemManager = default;
     [SerializeField] private BehaviorPatternUpdater BehaviorPatternUpdater = default;
-    [SerializeField] public LevelDataReference LevelDataReference = default;
+    [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private GameObject PopulationPrefab = default;
-    [SerializeField] public bool AutomotonTesting = false;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
 
@@ -77,7 +76,7 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    // register the existing population, initialize it's specific data, then initialize the animals
+    // register the existing population then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
         this.HandlePopulationRegistration(population);

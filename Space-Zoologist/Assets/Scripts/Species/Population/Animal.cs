@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO refactor so automotan movement can be switched to when needed
-public delegate void BehaviorFinished();
 public class Animal : MonoBehaviour
 {
-    public MovementData BehaviorsData { get; private set; }
+    public MovementData MovementData { get; private set; }
     public Population PopulationInfo { get; private set; }
     private Animator Animator = null;
-    private BehaviorFinished OnBehaviorFinished { get; set; }
     public MovementController MovementController {get; set; }
 
     public void Start()
@@ -24,10 +21,9 @@ public class Animal : MonoBehaviour
 
     public void Initialize(Population population, MovementData data)
     {
-        this.BehaviorsData = data;
+        this.MovementData = data;
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
-
     }
 
     public void SetAnimatorTrigger(string triggerName)

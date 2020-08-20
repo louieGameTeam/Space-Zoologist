@@ -4,14 +4,16 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-// TODO ensure UpdateNeed is called in the beginning so the wrong behaviors don't get displayed
+// TODO figure out a better way to initialize starting behaviors - likely need to ensure animal's condition is calculated first and then this is initialized
 public enum Availability { Free, Concurrent, Override, Occupied }
-public class SpecieBehaviorManager : MonoBehaviour
+public class PopulationBehaviorManager : MonoBehaviour
 {
-    [Header("For testing purposes")]
     public Dictionary<string, SpecieBehaviorTrigger> ActiveBehaviors = new Dictionary<string, SpecieBehaviorTrigger>();
     private Population population = default;
     public Dictionary<GameObject, List<string>> animalToActiveBehaviors = new Dictionary<GameObject, List<string>>();
+    // Remove when finished testing
+    [Header("For reference only")]
+    [SerializeField] private List<SpecieBehaviorTrigger> activeBehaviors = default;
     public bool isPaused = false;
 
     private void Start()
@@ -38,8 +40,11 @@ public class SpecieBehaviorManager : MonoBehaviour
     {
         if (!isPaused)
         {
+            // TODO figure out a better way to filter the activebehaviors for testing
+            activeBehaviors.Clear();
             foreach (KeyValuePair<string, SpecieBehaviorTrigger> specieBehaviorTrigger in this.ActiveBehaviors)
             {
+                activeBehaviors.Add(specieBehaviorTrigger.Value);
                 Trigger(specieBehaviorTrigger.Value);
             }
         }
