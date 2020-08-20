@@ -92,7 +92,7 @@ public class FoodSourceNeedSystem : NeedSystem
                         consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
                     }
                 }
-                Debug.Log($"{foodSourceCalculator.FoodSourceName} calculator updated");
+                //Debug.Log($"{foodSourceCalculator.FoodSourceName} calculator updated");
             }
         }
         this.isDirty = false;

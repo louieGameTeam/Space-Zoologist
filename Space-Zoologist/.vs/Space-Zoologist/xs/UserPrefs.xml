@@ -1,21 +1,61 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/Systems/DensityCalculator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs">
     <Files>
-      <File FileName="Assets/Scripts/Animals/Population/PopulationManager.cs" Line="98" Column="1" />
-      <File FileName="Assets/Scripts/Animals/Population/Population.cs" Line="287" Column="45" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="16" Column="68" />
-      <File FileName="Assets/Scripts/Needs/Systems/DensityNeedSystem.cs" Line="59" Column="56" />
-      <File FileName="Assets/Scripts/Needs/Systems/AtmosphereNeedSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/DensityCalculator.cs" Line="198" Column="18" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="117" Column="10" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="157" Column="33" />
+      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="224" Column="1" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemUpdater.cs" Line="38" Column="60" />
+      <File FileName="Assets/Scripts/Needs/Systems/DensityCalculator.cs" Line="204" Column="1" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="31" Column="6" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="261" Column="8" />
+      <File FileName="Assets/Scripts/Needs/Need.cs" Line="61" Column="88" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="160" Column="103" />
+      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" Line="44" Column="65" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Space-Zoologist" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Grid" expanded="True">
+                  <Node name="RPS" expanded="True" />
+                </Node>
+                <Node name="Needs" expanded="True">
+                  <Node name="Systems" expanded="True">
+                    <Node name="FoodSystem" expanded="True" />
+                    <Node name="SymbiosisNS" expanded="True" />
+                  </Node>
+                </Node>
+                <Node name="Species" expanded="True">
+                  <Node name="Population" expanded="True" />
+                  <Node name="Representation" expanded="True" />
+                </Node>
+                <Node name="UI" expanded="True">
+                  <Node name="Pods" expanded="True" />
+                  <Node name="Store" expanded="True">
+                    <Node name="FoodSourceStoreSection.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>ReservePartitionManager.GetLocationsWithAccess(population)</Value>
+          <Value>GridSystem.GetGridWithAccess(population)</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2497af0f-3839-40b1-bb4b-ae08818f3aeb" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="80891c57-cd3c-46a2-b577-fc78e88ef9a3" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="375" column="1" />
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/TileSystem.cs" relfile="Assets/Scripts/Grid/TileSystem.cs" line="373" column="1" />
+      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" relfile="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" line="49" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
