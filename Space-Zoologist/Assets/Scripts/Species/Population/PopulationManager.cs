@@ -7,13 +7,12 @@ using UnityEngine;
 /// </summary>
 public class PopulationManager : MonoBehaviour
 {
-    // FindObjectOfType<Population> to populate
-    private List<Population> ExistingPopulations = new List<Population>();
+    // FindTag population to populate
     public List<Population> Populations => ExistingPopulations;
-    [SerializeField] public NeedSystemManager NeedSystemManager = default;
-    [SerializeField] public LevelDataReference LevelDataReference = default;
+    private List<Population> ExistingPopulations = new List<Population>();
+    [SerializeField] private NeedSystemManager NeedSystemManager = default;
+    [SerializeField] private BehaviorPatternUpdater BehaviorPatternUpdater = default;
     [SerializeField] private GameObject PopulationPrefab = default;
-    [SerializeField] public bool AutomotonTesting = false;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
 
@@ -49,9 +48,8 @@ public class PopulationManager : MonoBehaviour
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
-        // Initialize the basic population data, register the population, then initialize the specific population data, then initialize the animals
+        // Initialize the basic population data, register the population, then initialize the animals and their behaviors
         population.InitializeNewPopulation(species, position, count);
-        population.InitializePopulationData();
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
     }
@@ -62,26 +60,25 @@ public class PopulationManager : MonoBehaviour
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public void AddAnimals(AnimalSpecies species, int count, Vector3 position)
+    public void UpdatePopulation(AnimalSpecies species, int count, Vector3 position)
     {
         // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
         List<Population> localPopulations = ReservePartitionManager.GetPopulationsWithAccessTo(position);
-        Population preexistingPopulation = localPopulations.Find(p => p.Species == species);
-        if (preexistingPopulation)
+        foreach(Population preexistingPopulation in localPopulations)
         {
-            preexistingPopulation.AddAnimal();
+            if (preexistingPopulation.Species.SpeciesName.Equals(species.SpeciesName))
+            {
+                preexistingPopulation.AddAnimal();
+                return;
+            }
         }
-        else
-        {
-            CreatePopulation(species, count, position);
-        }
+        CreatePopulation(species, count, position);
     }
 
-    // register the existing population, initialize it's specific data, then initialize the animals
+    // register the existing population then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
         this.HandlePopulationRegistration(population);
-        population.InitializePopulationData();
         population.InitializeExistingAnimals();
     }
 
@@ -89,11 +86,12 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         this.ReservePartitionManager.AddPopulation(population);
-        population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
-        GridSystem.GetGridWithAccess(population));
+        population.UpdateAccessibleArea(this.ReservePartitionManager.GetLocationsWithAccess(population),
+        this.GridSystem.GetGridWithAccess(population));
         this.speciesNeedSystem.AddPopulation(population);
+        this.NeedSystemManager.RegisterWithNeedSystems(population);
+        this.BehaviorPatternUpdater.RegisterPopulation(population);
         this.symbiosisNeedSystem.AddPopulation(population);
-        NeedSystemManager.RegisterWithNeedSystems(population);
     }
 
     public void UdateAllPopulationStateForChecking()

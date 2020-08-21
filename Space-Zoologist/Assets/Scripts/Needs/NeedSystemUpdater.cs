@@ -27,10 +27,6 @@ public class NeedSystemUpdater : MonoBehaviour
     {
         foreach (Population population in PopulationManager.Populations)
         {
-            if (population.IssueWithAccessibleArea)
-            {
-                continue;
-            }
             population.UnpauseAnimals();
         }
     }
@@ -43,11 +39,7 @@ public class NeedSystemUpdater : MonoBehaviour
         foreach (Population population in PopulationManager.Populations)
         {
             population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
-        GridSystem.GetGridWithAccess(population));
-            foreach (GameObject animal in population.AnimalPopulation)
-            {
-                animal.GetComponent<Animal>().ResetBehavior();
-            }
+            GridSystem.GetGridWithAccess(population));
         }
     }
 

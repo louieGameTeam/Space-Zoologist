@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4839607305319048995}
   - component: {fileID: 4986328870799398474}
   - component: {fileID: 9088252945850295853}
-  - component: {fileID: 3804064214880215839}
+  - component: {fileID: 7749847081138537288}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Untagged
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsPaused: 0
---- !u!114 &3804064214880215839
+--- !u!114 &7749847081138537288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,8 +138,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4839607305319048993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d547478d81f0d4fc7a6ea0a718362553, type: 3}
+  m_Script: {fileID: 11500000, guid: 67c66e4efd672b84083474d9bf715c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumTiles: 3
-  MaxNumTiles: 6
+  activeBehaviors: []
+  activeBehaviorPatterns: []
+  animalBehaviorTriggers: []
+  startUpTrigger: {fileID: 0}

@@ -3,68 +3,63 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-// TODO figure out how to refactor the MarkNeedsDirty so that NeedSystemManager isn't a dependency
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
 public class Population : MonoBehaviour, Life
 {
-    [Expandable] public AnimalSpecies species = default;
     public AnimalSpecies Species { get => species; }
-    // Temply modified
-    public int Count { get => this.GetActiveAnimalCount(); }
+    public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;
-
-    public Dictionary<string, Need> Needs => needs;
-    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    public AnimalPathfinding.Grid grid { get; private set; }
-    public List<Vector3Int>  AccessibleLocations { get; private set; }
-    public List<BehaviorScriptName> CurrentBehaviors { get; private set; }
-    [Header("Add existing animals")]
-    [SerializeField] public List<GameObject> AnimalPopulation = default;
-    [SerializeField] private GameObject AnimalPrefab = default;
-    [Header("Updated through OnValidate")]
-    [SerializeField] private List<MovementData> AnimalsBehaviorData = default;
-    [Header("Modify values and thresholds for testing")]
-    // Initialized when InitializePopulationDataCalled and updates the Need Dictionary OnValidate
-    [SerializeField] private List<Need> NeedEditorTesting = default;
-
-    private Vector3 origin = Vector3.zero;
-    private GrowthCalculator GrowthCalculator = default;
-    public float TimeSinceUpdate = 0f;
-    [HideInInspector]
-    public bool IssueWithAccessibleArea = false;
-    public System.Random random = new System.Random();
-
+    public int PrePopulationCount => this.prePopulationCount;
     [HideInInspector]
     public bool HasAccessibilityChanged = false;
-    public int PrePopulationCount => this.prePopulationCount;
-    private int prePopulationCount = default;
+    public System.Random random = new System.Random();
 
+    public Dictionary<string, Need> Needs => needs;
+    public Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> NeedBehaviors => needBehaviors;
+    public AnimalPathfinding.Grid grid { get; private set; }
+    public List<Vector3Int>  AccessibleLocations { get; private set; }
+
+    [SerializeField] public GridSystem TestingBehaviors = default;
+    [Expandable] public AnimalSpecies species = default;
+    [SerializeField] private GameObject AnimalPrefab = default;
+    [Header("Add existing animals")]
+    [SerializeField] public List<GameObject> AnimalPopulation = default;
+    [Header("Lowest Priority Behaviors")]
+    [Expandable] public List<SpecieBehaviorTrigger> DefaultBehaviors = default;
+    [Header("Modify values and thresholds for testing")]
+    [SerializeField] private float TimeSinceUpdate = 0f;
+    [SerializeField] private List<Need> NeedEditorTesting = default;
+    [SerializeField] private List<MovementData> AnimalsMovementData = default;
+
+    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    private Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>>();
+
+    private Vector3 origin = Vector3.zero;
+    private GrowthCalculator GrowthCalculator = new GrowthCalculator();
     private PoolingSystem PoolingSystem = default;
-
+    private int prePopulationCount = default;
+    private PopulationBehaviorManager PopulationBehaviorManager = default;
 
     private void Awake()
     {
-        this.CurrentBehaviors = new List<BehaviorScriptName>();
-        this.GrowthCalculator = new GrowthCalculator();
+        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
+        if (this.species != null)
+        {
+            this.SetupNeeds();
+        }
     }
 
-    // Temp get active animal count
-    private int GetActiveAnimalCount()
+    private void Start()
     {
-        int count = 0;
-
-        foreach(GameObject animal in this.AnimalPopulation)
+        int i=0;
+        foreach(SpecieBehaviorTrigger behaviorPattern in this.DefaultBehaviors)
         {
-            if (animal.activeSelf)
-            {
-                count++;
-            }
+            this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
+            i++;
         }
-
-        return count;
     }
 
     /// <summary>
@@ -87,27 +82,16 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation.Add(newAnimal);
             // PopulationManager will explicitly initialize a new population's animal at the very end
             this.AnimalPopulation[i].SetActive(true);
-            this.AnimalsBehaviorData.Add(new MovementData());
         }
+        this.SetupNeeds();
     }
 
-    /// <summary>
-    /// Sets up population's behavior and need data
-    /// </summary>
-    public void InitializePopulationData()
+    // TODO parse need names and potential behaviors and InitializeBehaviors with that instead of needs.
+    private void SetupNeeds()
     {
-        this.CurrentBehaviors = new List<BehaviorScriptName>();
-        foreach (BehaviorScriptTranslation data in this.Species.Behaviors)
-        {
-            // Debug.Log("Behavior added");
-            this.CurrentBehaviors.Add(data.behaviorScriptName);
-        }
         this.needs = this.Species.SetupNeeds();
-        this.SetupNeedTesting();
-    }
-
-    private void SetupNeedTesting()
-    {
+        this.needBehaviors = this.Species.SetupBehaviors(this.needs);
+        this.PopulationBehaviorManager.InitializeBehaviors(this.needs);
         this.NeedEditorTesting = new List<Need>();
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
@@ -129,10 +113,10 @@ public class Population : MonoBehaviour, Life
             this.TimeSinceUpdate = 0;
             switch (this.GrowthCalculator.GrowthStatus)
             {
-                case GrowthStatus.increasing:
+                case GrowthStatus.growing:
                     this.AddAnimal();
                     break;
-                case GrowthStatus.decreasing:
+                case GrowthStatus.declining:
                     this.RemoveAnimal(1);
                     break;
                 default:
@@ -152,12 +136,11 @@ public class Population : MonoBehaviour, Life
         this.grid = grid;
         if (this.AccessibleLocations.Count < 6)
         {
-            this.IssueWithAccessibleArea = true;
+            Debug.Log("Issue with accessibility area");
             this.PauseAnimals();
         }
         else
         {
-            this.IssueWithAccessibleArea = false;
             this.UnpauseAnimals();
         }
     }
@@ -180,16 +163,15 @@ public class Population : MonoBehaviour, Life
 
     public void InitializeExistingAnimals()
     {
-        int i = 0;
         foreach (GameObject animal in this.AnimalPopulation)
         {
             if (animal.activeSelf)
             {
-                animal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[i]);
-                i++;
+                MovementData data = new MovementData();
+                this.AnimalsMovementData.Add(data);
+                animal.GetComponent<Animal>().Initialize(this, data);
             }
         }
-
         this.prePopulationCount = this.AnimalPopulation.Count;
     }
 
@@ -201,7 +183,7 @@ public class Population : MonoBehaviour, Life
     public void AddAnimal()
     {
         MovementData data = new MovementData();
-        this.AnimalsBehaviorData.Add(data);
+        this.AnimalsMovementData.Add(data);
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         if (newAnimal == null)
         {
@@ -214,7 +196,7 @@ public class Population : MonoBehaviour, Life
     // removes last animal in list and last behavior
     public void RemoveAnimal(int count)
     {
-        this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
+        this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
         this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
         this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
         this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
@@ -229,7 +211,10 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
-        Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
+        Debug.Log("Need: " + need + " is now in " + this.needs[need].GetCondition(value) + " condition");
+        this.FilterBehaviors(need, this.needs[need].GetCondition(value));
+        this.UpdateGrowthConditions();
+        //Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
     /// <summary>
@@ -249,52 +234,42 @@ public class Population : MonoBehaviour, Life
     public void UpdateGrowthConditions()
     {
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
-        //Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
+        Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
-    //private void TestAddAnimal()
-    //{
-    //    this.AnimalsBehaviorData.Add(new BehaviorsData());
-    //    GameObject newAnimal = Instantiate(this.AnimalPrefab, this.gameObject.transform);
-    //    newAnimal.GetComponent<Animal>().Initialize(this, this.AnimalsBehaviorData[this.AnimalsBehaviorData.Count - 1]);
-    //    AnimalPopulation.Add(newAnimal);
-    //}
-
-    public void TestRemoveAnimal()
-    {
-        this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
-    }
-
-    // TODO setup filter for adding/removing behaviors from this.CurrentBehaviors according to populations condition
     /// <summary>
-    /// Adds and removes behaviors based on each need's current condition and severity.
-    /// Multiple behaviors can also be added for increased representation.
+    /// Updates the needs behaviors based on the need's current condition
     /// </summary>
-    public void FilterBehaviors()
+    /// Currently filtering behaviors using null, may want to change.
+    public void FilterBehaviors(string need, NeedCondition needCondition)
     {
-        throw new System.NotImplementedException();
+        if (this.PopulationBehaviorManager.ActiveBehaviors.ContainsKey(need))
+        {
+            this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needBehaviors[this.needs[need]][needCondition];
+        }
     }
 
     // Ensure there are enough behavior data scripts mapped to the population size
     void OnValidate()
     {
-        while (this.AnimalsBehaviorData.Count < this.AnimalPopulation.Count)
+        while (this.AnimalsMovementData.Count < this.AnimalPopulation.Count)
         {
-            this.AnimalsBehaviorData.Add(new MovementData());
+            this.AnimalsMovementData.Add(new MovementData());
         }
-        while (this.AnimalsBehaviorData.Count > this.AnimalPopulation.Count)
+        while (this.AnimalsMovementData.Count > this.AnimalPopulation.Count)
         {
-            this.AnimalsBehaviorData.RemoveAt(this.AnimalsBehaviorData.Count - 1);
+            this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
         }
         if (this.GrowthCalculator != null)
         {
-            this.UpdateNeeds();
+            this.UpdateEditorNeeds();
             this.UpdateGrowthConditions();
         }
     }
 
-    private void UpdateNeeds()
+    private void UpdateEditorNeeds()
     {
+        // Debug.Log("Needs updated with editor");
         int i=0;
         foreach (KeyValuePair<string, Need> need in this.needs)
         {

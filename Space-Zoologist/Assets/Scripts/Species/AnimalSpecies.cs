@@ -11,7 +11,6 @@ public class AnimalSpecies : ScriptableObject
     public int Dominance => dominance;
     public float GrowthRate => growthRate;
     public float Size => size;
-    public List<BehaviorScriptTranslation> Behaviors => needBehaviorSet;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
@@ -30,8 +29,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private float growthRate = 30f;
 
     [SerializeField] private float range = default;
-    [Header("Behavior displayed when need isn't being met")]
-    [SerializeField] private List<BehaviorScriptTranslation> needBehaviorSet = default;
+
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
@@ -57,6 +55,47 @@ public class AnimalSpecies : ScriptableObject
         }
         return needs;
     }
+
+    public List<SpecieBehaviorTrigger> GetBehaviors()
+    {
+        List<SpecieBehaviorTrigger> behaviors = new List<SpecieBehaviorTrigger>();
+        foreach (NeedTypeConstructData needData in needsList)
+        {
+            foreach (NeedConstructData need in needData.Needs)
+            {
+                foreach (NeedBehavior needBehavior in need.Conditions)
+                {
+                    if (needBehavior.Behavior != null)
+                    {
+                        behaviors.Add(needBehavior.Behavior);
+                    }
+                }
+            }
+        }
+        return behaviors;
+    }
+
+    public Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> SetupBehaviors(Dictionary<string, Need> needs)
+    {
+        Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> needBehaviorDict = new Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>>();
+        foreach (NeedTypeConstructData needData in needsList)
+        {
+            foreach (NeedConstructData need in needData.Needs)
+            {
+                Dictionary<NeedCondition, SpecieBehaviorTrigger> needBehaviors = new Dictionary<NeedCondition, SpecieBehaviorTrigger>();
+                foreach (NeedBehavior needBehavior in need.Conditions)
+                {
+                    if (!needBehaviors.ContainsKey(needBehavior.Condition))
+                    {
+                        needBehaviors.Add(needBehavior.Condition, needBehavior.Behavior);
+                    }
+                }
+                needBehaviorDict.Add(needs[need.NeedName], needBehaviors);
+            }
+        }
+        return needBehaviorDict;
+    }
+
     public void SetupData(string name, int dominance, float growthRate, List<string> accessibleTerrain, List<NeedTypeConstructData> needsList)
     {
         // TODO setup behaviors and accessible terrain

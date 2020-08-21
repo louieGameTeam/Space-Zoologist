@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-// TODO If animal becomes stuck in one location, pathfind to an accessible location and start over.
+// TODO refactor MoveInDirection
 /// <summary>
-/// Takes in a path (List<Vector3>) and moves the attached gameobject through it.
+/// Takes in a path (List<Vector3>) and moves the attached gameobject through it or moves in a specified direction.
 /// </summary>
 public class MovementController : MonoBehaviour
 {
+    public bool DestinationReached { get; private set; }
+    public bool HasPath = false;
+    public bool IsPaused = false;
+
     private Animal Animal { get; set; }
     private List<Vector3> PathToDestination { get; set; }
     private int PathIndex = 0;
     private Vector3 NextPathTile { get; set; }
-    public bool DestinationReached { get; private set; }
-    public bool IsPaused = false;
     // Animal doesn't change direction until they've moved a certain distance in that direction
     private float ChangeDirectionThreshold = 0.5f;
     private float ChangeDirectionMovement = 0f;
-    // private Vector3 NextPathTile { get; set; }
 
     public void Start()
     {
@@ -28,49 +29,20 @@ public class MovementController : MonoBehaviour
     /// Called before update to assign a path.
     /// </summary>
     /// <param name="pathToDestination"></param>
-    public void AssignPath(List<Vector3> pathToDestination)
+    public void AssignPath(List<Vector3> pathToDestination, bool pathFound)
     {
+        this.HasPath = pathFound;
+        if (!pathFound)
+        {
+            Debug.Log("Error path not found");
+            return;
+        }
         this.PathToDestination = pathToDestination;
         this.NextPathTile = new Vector3(this.PathToDestination[0].x + 0.5f, this.PathToDestination[0].y + 0.5f, 0);
         this.DestinationReached = false;
         this.PathIndex = 0;
         this.UpdateVisualLogic(this.NextPathTile);
     }
-
-
-    /// <summary>
-    /// Callback given to CalculatePath for when the path finishes being calculated.
-    /// Consider modifying the else to do something else if a path isn't found.
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="pathFound"></param>
-    // public virtual void PathFound(List<Vector3> path, bool pathFound)
-    // {
-    //     if (pathFound)
-    //     {
-    //         this.AssignPath(path);
-    //         this.isCalculatingPath = false;
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Path not found, exiting behavior without callback");
-    //         this.isCalculatingPath = false;
-    //     }
-    // }
-
-    // /// <summary>
-    // /// Should be called in every update before path is used.
-    // /// </summary>
-    // /// <returns></returns>
-    // public bool IsCalculatingPath()
-    // {
-    //     if (this.isCalculatingPath)
-    //     {
-    //         Animal.MovementData.Speed = 0;
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     /// <summary>
     /// Called in update to move towards destination. Returns true when destination reached.
@@ -80,7 +52,7 @@ public class MovementController : MonoBehaviour
     {
         if (IsPaused)
         {
-            this.Animal.BehaviorsData.MovementStatus = Movement.idle;
+            this.Animal.MovementData.MovementStatus = Movement.idle;
             return;
         }
         if (this.PathToDestination.Count == 0)
@@ -108,18 +80,18 @@ public class MovementController : MonoBehaviour
                 this.UpdateVisualLogic(this.NextPathTile);
             }
         }
-        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.Animal.BehaviorsData.Speed);
+        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.Animal.MovementData.Speed);
     }
 
     public void MoveInDirection(Direction direction)
     {
         if (IsPaused)
         {
-            this.Animal.BehaviorsData.MovementStatus = Movement.idle;
+            this.Animal.MovementData.MovementStatus = Movement.idle;
             return;
         }
         Vector3 vectorDirection = new Vector3(0, 0, 0);
-        float speed = this.Animal.BehaviorsData.Speed * Time.deltaTime;
+        float speed = this.Animal.MovementData.Speed * Time.deltaTime;
         switch(direction)
         {
             case Direction.up:
@@ -177,8 +149,8 @@ public class MovementController : MonoBehaviour
 
     public void StandStill()
     {
-        this.Animal.BehaviorsData.MovementStatus = Movement.idle;
-        this.Animal.BehaviorsData.CurrentDirection = Direction.down;
+        this.Animal.MovementData.MovementStatus = Movement.idle;
+        this.Animal.MovementData.CurrentDirection = Direction.down;
     }
 
     // Can modify pointReachedOffset to have more precise movement towards each destination point
@@ -199,13 +171,13 @@ public class MovementController : MonoBehaviour
     public void UpdateVisualLogic(Vector3 destination)
     {
         this.HandleDirectionChange(this.transform.position, destination);
-        if (this.Animal.BehaviorsData.Speed > this.Animal.BehaviorsData.RunThreshold)
+        if (this.Animal.MovementData.Speed > this.Animal.MovementData.RunThreshold)
         {
-            this.Animal.BehaviorsData.MovementStatus = Movement.running;
+            this.Animal.MovementData.MovementStatus = Movement.running;
         }
         else
         {
-            this.Animal.BehaviorsData.MovementStatus = Movement.walking;
+            this.Animal.MovementData.MovementStatus = Movement.walking;
         }
     }
 
@@ -224,30 +196,30 @@ public class MovementController : MonoBehaviour
             }
             if (angle > 310)
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.up;
+                this.Animal.MovementData.CurrentDirection = Direction.up;
             }
             else if (angle < 230)
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.down;
+                this.Animal.MovementData.CurrentDirection = Direction.down;
             }
             else
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.right;
+                this.Animal.MovementData.CurrentDirection = Direction.right;
             }
         }
         else if (direction.x > 0)
         {
             if (angle < 50)
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.up;
+                this.Animal.MovementData.CurrentDirection = Direction.up;
             }
             else if (angle > 130)
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.down;
+                this.Animal.MovementData.CurrentDirection = Direction.down;
             }
             else
             {
-                this.Animal.BehaviorsData.CurrentDirection = Direction.left;
+                this.Animal.MovementData.CurrentDirection = Direction.left;
             }
         }
     }

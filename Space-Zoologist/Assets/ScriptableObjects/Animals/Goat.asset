@@ -17,9 +17,6 @@ MonoBehaviour:
   dominance: 5
   growthRate: 60.5
   range: 8.28
-  needBehaviorSet:
-  - NeedType: 0
-    behaviorScriptName: 0
   size: 5
   accessibleTerrain: 020000000300000001000000
   icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
@@ -28,19 +25,37 @@ MonoBehaviour:
     needs:
     - needName: Sand
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 1
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
       thresholds:
       - 10
       - 40
     - needName: Grass
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 10
       - 20
     - needName: Dirt
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 10
       - 20
@@ -48,7 +63,17 @@ MonoBehaviour:
     needs:
     - needName: MineralX
       severity: 2
-      conditions: 0000000001000000020000000100000000000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 0.1
       - 0.3
@@ -56,7 +81,17 @@ MonoBehaviour:
       - 0.7
     - needName: MineralZ
       severity: 5
-      conditions: 0000000001000000020000000100000000000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 0.1
       - 0.3
@@ -66,13 +101,25 @@ MonoBehaviour:
     needs:
     - needName: Space Maple
       severity: 2
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 7
       - 15
     - needName: Bush
       severity: 2
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 7
       - 15
@@ -80,7 +127,13 @@ MonoBehaviour:
     needs:
     - needName: Density
       severity: 2
-      conditions: 020000000100000000000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 2
       - 5
@@ -88,7 +141,13 @@ MonoBehaviour:
     needs:
     - needName: GasX
       severity: 2
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 0
+        Behavior: {fileID: 0}
       thresholds:
       - 2
       - 5

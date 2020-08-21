@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Common interface for the Population and FoodSource
+/// Common interface for the Population and FoodSource objects that interact with the NeedSystems
 /// </summary>
 public interface Life
 {

@@ -14,6 +14,10 @@ public class SpecieBehaviorTrigger : ScriptableObject
     public List<BehaviorPattern> behaviorPatterns = default;
     protected Dictionary<GameObject, int> animalsToSteps = new Dictionary<GameObject, int>();
     protected StepCompletedCallBack stepCompletedCallback;
+    [SerializeField]
+    private float refreshPeriod = 3;
+    [SerializeField]
+    private float elapsedTime = 0;
     /// <summary>
     /// Called every refreshPeriod
     /// </summary>
@@ -46,14 +50,19 @@ public class SpecieBehaviorTrigger : ScriptableObject
     /// <returns></returns>
     public virtual bool IsConditionSatisfied()
     {
-        return true;
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > refreshPeriod)
+        {
+            return true;
+        }
+        return false;
     }
     /// <summary>
     /// Called after IsConditionSatisfied() returns true. Reset condition satisfied if necessary
     /// </summary>
     public virtual void ResetCondition()
     {
-
+        elapsedTime = 0;
     }
     /// <summary>
     /// Select animals to process, if not selecting specific animals, use BehaviorUtils.SelectAnimals for fast selection select

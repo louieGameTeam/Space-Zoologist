@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3127976671735019294}
   - component: {fileID: 5640349517002934508}
   - component: {fileID: 8032438024919221209}
+  - component: {fileID: 6784010835390794884}
   m_Layer: 0
   m_Name: Population
   m_TagString: Population
@@ -52,6 +53,7 @@ MonoBehaviour:
   NeedEditorTesting: []
   TimeSinceUpdate: 0
   IssueWithAccessibleArea: 0
+  HasAccessibilityChanged: 0
 --- !u!114 &8032438024919221209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,3 +66,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21f44fc9162c434c95eefb155aa8d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6784010835390794884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2623145373019258570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6c2c38391c4c44c96ecc0a939d3080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviorTriggers: []
+  animals: []
+  isPaused: 0

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IdleRandom", menuName = "SpeciesBehaviorTrigger/IdleRandom")]
-public class IdleRandomTrigger : SpecieBehaviorTrigger
+[CreateAssetMenu(fileName = "CrazyTrigger", menuName = "SpeciesBehaviorTrigger/CrazyTrigger")]
+public class CrazyTrigger : SpecieBehaviorTrigger
 {
 
     protected override List<GameObject> AnimalSelection(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)

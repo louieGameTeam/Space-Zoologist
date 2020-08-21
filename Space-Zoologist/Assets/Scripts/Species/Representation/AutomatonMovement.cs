@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO figure out how this can be refactored for behaviors
 /// <summary>
 /// Animals will attempt to move NumSteps based off of the seeded directions given.
 /// The seeded directions determine what order directions should be tried.
@@ -180,7 +181,7 @@ public class AutomatonMovement : MonoBehaviour
             return;
         }
         Debug.Log("Animal stuck, setting up pathfinding");
-        this.movementController.AssignPath(path);
+        this.movementController.AssignPath(path, pathFound);
         this.PathToFollow = path;
     }
 

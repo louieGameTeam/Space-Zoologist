@@ -9,18 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9657db3234c398e4ea867aaa530b6cb4, type: 3}
-  m_Name: IdleRandom
+  m_Script: {fileID: 11500000, guid: 8f23f09323b6946e8b7a0d852bc684d1, type: 3}
+  m_Name: CrazyTrigger
   m_EditorClassIdentifier: 
   behaviorData:
-    behaviorName: IdleRandomTrigger
+    behaviorName: CrazyTrigger
     behaviorTypes: 01000000
-    priority: 1
+    priority: 0
   maxAffectedNumber: 3
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 0
   behaviorPatterns:
-  - {fileID: 4269465700119403223, guid: b286f3c4c2bee467197b0b1af78f21ff, type: 3}
-  - {fileID: 2498865982141510231, guid: 27f172a9386f44ef8a203497c7bc00b2, type: 3}
+  - {fileID: 8799705808366803439, guid: f7a72c51d89f14d19867080dcc20c8e0, type: 3}
   refreshPeriod: 3
   elapsedTime: 0
