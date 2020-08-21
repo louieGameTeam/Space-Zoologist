@@ -22,7 +22,6 @@ public class AutomatonMovement : MonoBehaviour
     private int TilesMovedIndex = 0;
     private Direction CurrentDirection = Direction.down;
     private AnimalPathfinding.Node previousTile = default;
-    private List<Vector3> PathToFollow = default;
 
     public void Start()
     {
@@ -182,7 +181,6 @@ public class AutomatonMovement : MonoBehaviour
         }
         Debug.Log("Animal stuck, setting up pathfinding");
         this.movementController.AssignPath(path, pathFound);
-        this.PathToFollow = path;
     }
 
     private List<int> GenerateDirectionSeed()

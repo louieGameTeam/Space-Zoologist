@@ -83,6 +83,14 @@ public class NeedSystemManager : MonoBehaviour
         }
     }
 
+    public void ForceUpdateSystems()
+    {
+        foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
+        {
+            entry.Value.UpdateSystem();
+        }
+    }
+
     /// <summary>
     /// Update all the need system that is mark "dirty"
     /// </summary>

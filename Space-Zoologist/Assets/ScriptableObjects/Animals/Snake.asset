@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Snake
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: 2c658f184238347a39f6d91eb93056ef, type: 2}
+  speciesName: Snake
+  dominance: 5
+  growthRate: 30
+  range: 8.28
+  size: 5
+  accessibleTerrain: 0100000003000000
+  icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
+  needsList:
+  - needType: 5
+    needs:
+    - needName: Strot
+      severity: 5
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 7729b945e169746339c49996e9bfc345, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 90f13e6c481fc409a8cad6c213dbc7d1, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 45eeab27fd9fb4d41b99b0f3f33c3e46, type: 2}
+      thresholds:
+      - 3
+      - 5
+    - needName: Goat
+      severity: 5
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 7729b945e169746339c49996e9bfc345, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 90f13e6c481fc409a8cad6c213dbc7d1, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 45eeab27fd9fb4d41b99b0f3f33c3e46, type: 2}
+      thresholds:
+      - 10
+      - 40
+  - needType: 4
+    needs:
+    - needName: MineralX
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 9e56c0206592d4bf893cd3c1687ee4fb, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+      thresholds:
+      - 0.1
+      - 0.3
+      - 0.5
+      - 0.7
+    - needName: MineralZ
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 9e56c0206592d4bf893cd3c1687ee4fb, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+      thresholds:
+      - 0.1
+      - 0.3
+      - 0.5
+      - 0.7
+  - needType: 1
+    needs:
+    - needName: GasY
+      severity: 10
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 27e7f99b8959e4c9ab66dee5dc0925e1, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 973f86f5f5ff54638893e890e56f4bb3, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 523bf0d67b41549dfb34f15ad26110f4, type: 2}
+      thresholds:
+      - 1
+      - 5
+    - needName: GasX
+      severity: 10
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 27e7f99b8959e4c9ab66dee5dc0925e1, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 973f86f5f5ff54638893e890e56f4bb3, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 523bf0d67b41549dfb34f15ad26110f4, type: 2}
+      thresholds:
+      - 5
+      - 10
+  representation: {fileID: 0}

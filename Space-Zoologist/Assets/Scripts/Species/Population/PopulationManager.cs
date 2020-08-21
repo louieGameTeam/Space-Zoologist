@@ -34,6 +34,7 @@ public class PopulationManager : MonoBehaviour
         {
             this.SetupExistingPopulation(population);
         }
+        this.NeedSystemManager.ForceUpdateSystems();
     }
 
     /// <summary>

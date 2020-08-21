@@ -45,15 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae677deaf40481478862dc03f504dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasAccessibilityChanged: 0
+  TestingBehaviors: {fileID: 0}
   species: {fileID: 0}
-  AnimalPopulation: []
   AnimalPrefab: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
     type: 3}
-  AnimalsBehaviorData: []
-  NeedEditorTesting: []
+  AnimalPopulation: []
+  DefaultBehaviors: []
   TimeSinceUpdate: 0
-  IssueWithAccessibleArea: 0
-  HasAccessibilityChanged: 0
+  NeedEditorTesting: []
+  AnimalsMovementData: []
 --- !u!114 &8032438024919221209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +79,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6c2c38391c4c44c96ecc0a939d3080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviorTriggers: []
-  animals: []
   isPaused: 0

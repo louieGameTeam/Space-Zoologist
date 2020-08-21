@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: IdleRandomBehavior
+  m_EditorClassIdentifier: Assembly-CSharp::IdleRandomTrigger
+  behaviorData:
+    behaviorName: IdleRandomTrigger
+    behaviorTypes: 01000000
+    priority: 0
+  maxAffectedNumber: 6
+  maxAffectedPortion: 1
+  numberTriggerdPerLoop: 1
+  behaviorPatterns:
+  - {fileID: 2498865982141510231, guid: 27f172a9386f44ef8a203497c7bc00b2, type: 3}
+  - {fileID: -7666405586187839307, guid: b286f3c4c2bee467197b0b1af78f21ff, type: 3}
+  refreshPeriod: 3
+  elapsedTime: 0.8311824
