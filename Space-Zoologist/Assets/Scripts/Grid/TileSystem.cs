@@ -36,7 +36,24 @@ public class TileSystem : MonoBehaviour
     {
         return grid.WorldToCell(worldPosition);
     }
-
+    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int vector3Int)
+    {
+        TerrainTile terrainTile = GetTerrainTileAtLocation(vector3Int);
+    }
+    public List<Vector3Int> GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile terrainTile, List<Vector3Int> countedTiles)
+    {
+        List<Vector3Int> tilesToAdd = new List<Vector3Int>();
+        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
+        {
+            if (
+                !countedTiles.Contains(tileToCheck) &&
+                terrainTile.targetTilemap.GetTile(tileToCheck) == terrainTile &&
+                GetTerrainTileAtLocation(cellLocation) != null)
+            {
+                countedTiles.Add(tileToCheck);
+            }
+        }
+    }
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
     /// </summary>

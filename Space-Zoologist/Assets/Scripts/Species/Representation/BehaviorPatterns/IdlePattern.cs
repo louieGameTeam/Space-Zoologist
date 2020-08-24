@@ -7,7 +7,7 @@ public class IdlePattern : BehaviorPattern
 {
     private float TimeElapsed = 0f;
 
-    protected override void EnterPattern(GameObject gameObject)
+    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         this.TimeElapsed = 0f;
     }

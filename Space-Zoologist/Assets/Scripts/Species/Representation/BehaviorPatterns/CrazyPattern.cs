@@ -8,7 +8,7 @@ public class CrazyPattern : BehaviorPattern
     private float TimeElapsed = 0f;
     private float Spinner = 1f;
 
-    protected override void EnterPattern(GameObject gameObject)
+    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         this.TimeElapsed = 0f;
     }

@@ -189,7 +189,7 @@ public class TileContentsManager : MonoBehaviour
         }
         return neighborTileStatus.Same;
     }
-    private void GetNeighborCellLocations(Vector3Int cellLocation,List<Vector3Int> addedTiles)
+    private void GetNeighborCellLocations(Vector3Int cellLocation, List<Vector3Int> addedTiles)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {

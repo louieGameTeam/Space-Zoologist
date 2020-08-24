@@ -20,13 +20,14 @@ public class BehaviorPattern : MonoBehaviour
         animalData.callback = callBack;
         animalData.collaboratingAnimals = collaboratingAnimals;
         AnimalsToAnimalData.Add(gameObject, animalData);
-        EnterPattern(gameObject);
+        EnterPattern(gameObject, animalData);
     }
     /// <summary>
     /// Excutes once after initialization, override if you have additional initializations
     /// </summary>
     /// <param name="gameObject"></param>
-    protected virtual void EnterPattern(GameObject gameObject)
+    /// <param name="animalData"></param>
+    protected virtual void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
 
     }
@@ -69,7 +70,7 @@ public class BehaviorPattern : MonoBehaviour
     /// </summary>
     /// <param name="gameObject"></param>
     /// <param name="isCallingCallback">Set to false when force exiting without completion, leave as default</param>
-    public virtual void ExitPattern(GameObject gameObject)
+    protected virtual void ExitPattern(GameObject gameObject)
     {
         gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
         AnimalsToAnimalData[gameObject].callback?.Invoke(gameObject, AnimalsToAnimalData[gameObject].collaboratingAnimals);
