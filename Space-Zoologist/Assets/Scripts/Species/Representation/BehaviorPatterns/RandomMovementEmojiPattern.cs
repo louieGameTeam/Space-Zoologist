@@ -6,7 +6,7 @@ public class RandomMovementEmojiPattern : BehaviorPattern
 {
     [SerializeField] Sprite Emoji = default;
     private System.Random random = new System.Random();
-    protected override void EnterPattern(GameObject gameObject)
+    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         int locationIndex = this.random.Next(0, AnimalsToAnimalData[gameObject].animal.PopulationInfo.AccessibleLocations.Count);
         Vector3Int end = AnimalsToAnimalData[gameObject].animal.PopulationInfo.AccessibleLocations[locationIndex];
