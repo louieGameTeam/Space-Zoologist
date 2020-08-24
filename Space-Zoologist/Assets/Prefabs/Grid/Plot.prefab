@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5823052738974498889}
   - component: {fileID: 6394335221493062204}
   - component: {fileID: 8512447136265682324}
+  - component: {fileID: 7112017748378069645}
   m_Layer: 0
   m_Name: Placeable Area
   m_TagString: Untagged
@@ -117,6 +118,18 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!114 &7112017748378069645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954044885949457719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbb7053f76e25142ab0fd419afcfd5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1473133747179600446
 GameObject:
   m_ObjectHideFlags: 0

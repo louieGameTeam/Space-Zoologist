@@ -36,7 +36,7 @@ public class TileSystem : MonoBehaviour
     {
         return grid.WorldToCell(worldPosition);
     }
-    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int vector3Int)
+/*    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int vector3Int)
     {
         TerrainTile terrainTile = GetTerrainTileAtLocation(vector3Int);
     }
@@ -53,7 +53,7 @@ public class TileSystem : MonoBehaviour
                 countedTiles.Add(tileToCheck);
             }
         }
-    }
+    }*/
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
     /// </summary>
