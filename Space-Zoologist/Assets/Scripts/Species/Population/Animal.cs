@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Animal : MonoBehaviour
 {
+    [SerializeField] public SpriteRenderer Overlay = default;
     public MovementData MovementData { get; private set; }
     public Population PopulationInfo { get; private set; }
     private Animator Animator = null;
@@ -23,6 +24,20 @@ public class Animal : MonoBehaviour
         this.MovementData = data;
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
+    }
+
+    void Update()
+    {
+        this.UpdateAnimations();
+    }
+
+    public void UpdateAnimations()
+    {
+        if (this.Animator != null && this.MovementData != null)
+        {
+            this.Animator.SetInteger("Movement", (int)this.MovementData.MovementStatus);
+            this.Animator.SetInteger("Direction", (int)this.MovementData.CurrentDirection);
+        }
     }
 
     public void SetAnimatorTrigger(string triggerName)

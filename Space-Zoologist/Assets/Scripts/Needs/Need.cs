@@ -43,7 +43,6 @@ public class Need
     {
         // If there is only one condition, return it.
         if (conditions.Count == 1) return conditions[0].Condition;
-
         for (var i = 0; i < this.thresholds.Count; i++)
         {
             if (value < this.thresholds[i])

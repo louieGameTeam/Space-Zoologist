@@ -4,32 +4,37 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-// TODO figure out a better way to initialize starting behaviors - likely need to ensure animal's condition is calculated first and then this is initialized
 public enum Availability { Free, Concurrent, Override, Occupied }
 public class PopulationBehaviorManager : MonoBehaviour
 {
     public Dictionary<string, SpecieBehaviorTrigger> ActiveBehaviors = new Dictionary<string, SpecieBehaviorTrigger>();
     private Population population = default;
-    public Dictionary<GameObject, List<string>> animalToActiveBehaviors = new Dictionary<GameObject, List<string>>();
-    // Remove when finished testing
-    [Header("For reference only")]
-    [SerializeField] private List<SpecieBehaviorTrigger> activeBehaviors = default;
-    public bool isPaused = false;
 
     private void Start()
     {
         this.population = this.gameObject.GetComponent<Population>();
     }
 
+    // If there's a bad condition behavior, initialize to that. Otherwise initialize to null.
     public void InitializeBehaviors(Dictionary<string, Need> _needs)
     {
         foreach (KeyValuePair<string, Need> needs in _needs)
         {
             foreach (NeedBehavior needBehavior in needs.Value.Behaviors)
             {
-                if (needs.Value.Behaviors[0].Behavior != null)
+                if (needBehavior.Condition.Equals(NeedCondition.Bad))
                 {
-                    this.ActiveBehaviors.Add(needs.Key, needs.Value.Behaviors[0].Behavior);
+                    if (!this.ActiveBehaviors.ContainsKey(needs.Key))
+                    {
+                        if (needBehavior.Behavior != null)
+                        {
+                            this.ActiveBehaviors.Add(needs.Key, needBehavior.Behavior);
+                        }
+                        else
+                        {
+                            this.ActiveBehaviors.Add(needs.Key, null);
+                        }
+                    }
                 }
             }
         }
@@ -38,19 +43,26 @@ public class PopulationBehaviorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isPaused)
+        if (this.population.AnimalPopulation.Count > 0 && !this.population.IsPaused)
         {
             // TODO figure out a better way to filter the activebehaviors for testing
-            activeBehaviors.Clear();
             foreach (KeyValuePair<string, SpecieBehaviorTrigger> specieBehaviorTrigger in this.ActiveBehaviors)
             {
-                activeBehaviors.Add(specieBehaviorTrigger.Value);
-                Trigger(specieBehaviorTrigger.Value);
+                if (specieBehaviorTrigger.Value != null && specieBehaviorTrigger.Value.IsConditionSatisfied())
+                {
+                    specieBehaviorTrigger.Value.ResetCondition();
+                    Trigger(specieBehaviorTrigger.Value);
+                }
             }
         }
     }
 
-    // TODO refactor animal.GetComponent out of this
+    /// <summary>
+    /// Checks if there are enough animals to perform behavior, then checks for conflicts between animals running a behavior and the triggered behavior,
+    /// then checks for all available animals and sends that list to the behavior
+    /// </summary>
+    /// <param name="trigger"></param>
+    /// TODO refactor animal.GetComponent out
     private void Trigger(SpecieBehaviorTrigger trigger)
     {
         int maxNumberApplicable = Mathf.Min(trigger.maxAffectedNumber, Mathf.RoundToInt(trigger.maxAffectedPortion * this.population.Count));
@@ -89,7 +101,7 @@ public class PopulationBehaviorManager : MonoBehaviour
                 bool isOverriding = true;
                 foreach (BehaviorData animalBehaviorData in activeBehaviors)
                 {
-                    if (animalBehaviorData.priority > trigger.behaviorData.priority) // Add lower priority to list
+                    if (animalBehaviorData.priority >= trigger.behaviorData.priority) // Add lower priority to list
                     {
                         isOverriding = false;
                         break;

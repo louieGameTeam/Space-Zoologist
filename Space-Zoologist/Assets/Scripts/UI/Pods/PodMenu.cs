@@ -88,7 +88,7 @@ public class PodMenu : MonoBehaviour
                 Debug.Log("Cannot place item that location");
                 return;
             }
-            populationManager.AddAnimals(selectedSpecies, 1, position);
+            populationManager.UpdatePopulation(selectedSpecies, 1, position);
         }
     }
 
