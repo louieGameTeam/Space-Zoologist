@@ -19,7 +19,6 @@ public class Animal : MonoBehaviour
         }
         this.MovementController = this.gameObject.GetComponent<MovementController>();
     }
-
     public void Initialize(Population population, MovementData data)
     {
         this.MovementData = data;

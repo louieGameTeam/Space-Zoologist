@@ -41,6 +41,7 @@ public class TilePlacementController : MonoBehaviour
             terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
             terrainTile.constraintTilemap.Clear();
             terrainTile.replacementTilemap.Clear();
+            terrainTile.ReferencePlaceableArea(); //Add PlaceableArea Tilemap reference to all tiles
             foreach (GridUtils.TileLayer layer in terrainTile.constraintLayers)
             {
                 terrainTile.constraintTilemap.Add(tilemaps[(int)layer]);

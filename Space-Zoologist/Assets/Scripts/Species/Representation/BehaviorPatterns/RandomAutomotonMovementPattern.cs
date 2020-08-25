@@ -19,10 +19,10 @@ public class RandomAutomotonMovementPattern : BehaviorPattern
     private int numTilesMoved = 0;
     private int totalTileMoved = 0;
 
-    protected override void EnterPattern(GameObject gameObject)
+    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        this.movementController = AnimalsToAnimalData[gameObject].animal.MovementController;
-        this.population = AnimalsToAnimalData[gameObject].animal.PopulationInfo;
+        this.movementController = animalData.animal.MovementController;
+        this.population = animalData.animal.PopulationInfo;
         if (!this.Initialized)
         {
             this.Initialized = true;
