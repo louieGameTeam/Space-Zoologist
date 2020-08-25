@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// Translates the tilemap into a 2d array for keeping track of object locations.
 /// </summary>
+/// PlaceableArea transparency can be increased or decreased when adding it
 public class GridSystem : MonoBehaviour
 {
     public int GridWidth => LevelDataReference.LevelData.MapWidth;
