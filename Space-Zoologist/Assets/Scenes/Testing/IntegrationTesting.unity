@@ -2140,6 +2140,16 @@ PrefabInstance:
       propertyPath: m_Text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 849827785033568024, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: GridAlign
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 849827785033568024, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: GridSystem
+      value: 
+      objectReference: {fileID: 1228270578}
     - target: {fileID: 849827785033568025, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_Color.r
@@ -2158,6 +2168,11 @@ PrefabInstance:
     - target: {fileID: 849827785033568025, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 849827785033568025, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: m_RaycastTarget
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 849827785033568027, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -2316,6 +2331,11 @@ PrefabInstance:
       propertyPath: TileSystem
       value: 
       objectReference: {fileID: 135368109}
+    - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: GridSystem
+      value: 
+      objectReference: {fileID: 1228270578}
     - target: {fileID: 849827785566768625, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -10462,7 +10482,11 @@ MonoBehaviour:
   Grid: {fileID: 135368112}
   LevelDataReference: {fileID: 1870373115}
   RPM: {fileID: 1021518976}
-  TerrainTilemap: {fileID: 1132068317}
+  PopulationManager: {fileID: 0}
+  AllTerrainTilemaps:
+  - {fileID: 1132068317}
+  - {fileID: 360448856}
+  - {fileID: 2036907317}
   ShadePerimeter: 0
 --- !u!4 &1228270579
 Transform:

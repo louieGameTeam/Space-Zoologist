@@ -13,14 +13,15 @@ public class MenuManager : MonoBehaviour
     [Header("Shared menu dependencies")]
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] CursorItem CursorItem = default;
-    [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] TileSystem TileSystem = default;
+    [SerializeField] GridSystem GridSystem = default;
+    [SerializeField] List<RectTransform> UIElements = default;
 
     public void Start()
     {
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.TileSystem);
+            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.TileSystem, this.GridSystem);
             storeMenu.Initialize();
         }
         PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.TileSystem);
@@ -35,21 +36,32 @@ public class MenuManager : MonoBehaviour
             {
                 currentMenu.SetActive(false);
             }
-            this.PlayerBalance.SetActive(true);
             menu.SetActive(true);
             currentMenu = menu;
-            NeedSystemUpdater.isInStore = true;
-            NeedSystemUpdater.PauseAllAnimals();
+            this.StoreToggledOn();
 
         }
         else
         {
-            NeedSystemUpdater.isInStore = false;
-            NeedSystemUpdater.UpdateAccessibleLocations();
-            NeedSystemUpdater.UnpauseAllAnimals();
             currentMenu = null;
             menu.SetActive(false);
-            this.PlayerBalance.SetActive(false);
+            this.StoreToggledOff();
         }
+    }
+
+    private void StoreToggledOn()
+    {
+        this.PlayerBalance.SetActive(true);
+        NeedSystemUpdater.isInStore = true;
+        NeedSystemUpdater.PauseAllAnimals();
+        this.GridSystem.UpdateAnimalCellGrid();
+    }
+
+    private void StoreToggledOff()
+    {
+        this.PlayerBalance.SetActive(false);
+        NeedSystemUpdater.isInStore = false;
+        NeedSystemUpdater.UpdateAccessibleLocations();
+        NeedSystemUpdater.UnpauseAllAnimals();
     }
 }

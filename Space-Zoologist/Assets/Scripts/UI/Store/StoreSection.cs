@@ -20,15 +20,17 @@ public class StoreSection : MonoBehaviour
     protected IntVariable playerBalance = default;
     protected LevelDataReference LevelDataReference = default;
     protected TileSystem TileSystem = default;
+    protected GridSystem GridSystem = default;
 
     protected Item selectedItem = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, TileSystem tileSystem)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, TileSystem tileSystem, GridSystem gridSystem)
     {
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.TileSystem = tileSystem;
+        this.GridSystem = gridSystem;
     }
 
     public virtual void Initialize()
