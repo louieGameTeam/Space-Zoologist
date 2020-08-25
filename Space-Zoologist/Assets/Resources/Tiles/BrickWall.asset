@@ -872,11 +872,12 @@ MonoBehaviour:
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
   replacementTilemap: []
-  constraintTilemap: []
+  constraintTilemap:
+  - {fileID: 0}
   type: 5
   TileName: Wall
   targetLayer: 8
   replacementLayers: 
-  constraintLayers: 
+  constraintLayers: 0900000001000000
   isRepresentative: 1
   isMergingAttributes: 0

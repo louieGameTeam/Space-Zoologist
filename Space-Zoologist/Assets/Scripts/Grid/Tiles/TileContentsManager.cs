@@ -26,6 +26,28 @@ public class TileContentsManager : MonoBehaviour
     {
         tilemap = GetComponent<Tilemap>();
     }
+    public void SetCompostion(Vector3Int cellLocation, float[] composition)
+    {
+        tileContents[cellLocation] = composition;
+        ChangeColor(cellLocation);
+    }
+    public void ModifyComposition(Vector3Int cellLocation, float[] changeInComposition)
+    {
+        for (int i = 0; i < changeInComposition.Length; i++)
+        {
+            if (tileContents[cellLocation][i] + changeInComposition[i] >= 1)
+            {
+                tileContents[cellLocation][i] = 1;
+                continue;
+            }
+            if (tileContents[cellLocation][i] + changeInComposition[i] <= 0)
+            {
+                tileContents[cellLocation][i] = 0;
+                continue;
+            }
+            tileContents[cellLocation][i] += changeInComposition[i];
+        }
+    }
     public void MergeTile (Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
     {
         terrainTile = tile;
@@ -189,13 +211,13 @@ public class TileContentsManager : MonoBehaviour
         }
         return neighborTileStatus.Same;
     }
-    private void GetNeighborCellLocations(Vector3Int cellLocation,List<Vector3Int> addedTiles)
+    private void GetNeighborCellLocations(Vector3Int cellLocation, List<Vector3Int> addedTiles)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
             if (
-                !neighborTiles.Contains(tileToCheck) && 
                 tilemap.GetTile(tileToCheck) == terrainTile &&
+                !neighborTiles.Contains(tileToCheck) &&
                 tileContents.ContainsKey(tileToCheck))
             {
                 neighborTiles.Add(tileToCheck);

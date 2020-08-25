@@ -11,6 +11,8 @@ public class TileSystem : MonoBehaviour
 
     public bool HasTerrainChanged = false;
     public List<Vector3Int> chagnedTiles = new List<Vector3Int>();
+    private List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
+    private List<Vector3Int> liquidBodyTilesAndContents = new List<Vector3Int>();
 
     private void Awake()
     {
@@ -36,7 +38,73 @@ public class TileSystem : MonoBehaviour
     {
         return grid.WorldToCell(worldPosition);
     }
-
+    /// <summary>
+    /// Returns all liquid tiles belong to the same liquid body at the given location
+    /// </summary>
+    /// <param name="vector3Int">Cell location of any liquid tile within the body to change</param>
+    /// <returns></returns>
+    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int vector3Int)
+    {
+        liquidBodyTiles.Clear();
+        TerrainTile terrainTile = GetTerrainTileAtLocation(vector3Int);
+        GetNeighborCellLocations(vector3Int, terrainTile);
+        return liquidBodyTiles;
+    }
+    private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile)
+    {
+        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
+        {
+            if (
+                tile.targetTilemap.GetTile(tileToCheck) == tile &&
+                GetTileContentsAtLocation(tileToCheck, tile) != null &&
+                !liquidBodyTiles.Contains(tileToCheck))
+            {
+                liquidBodyTiles.Add(tileToCheck);
+                GetNeighborCellLocations(tileToCheck, tile);
+            }
+        }
+    }
+    /// <summary>
+    /// Change the composition of all connecting liquid tiles of the selected location
+    /// </summary>
+    /// <param name="cellLocation">Cell location of any liquid tile within the body to change </param>
+    /// <param name="compostion">Composition that will either be added or used to modify original composition</param>
+    /// <param name="isSetting">When set to true, original composition will be replaced by input composition. When set to false, input composition will be added to original Composition</param>
+    public void ChangeLiquidBodyComposition(Vector3Int cellLocation, float[] compostion, bool isSetting)
+    {
+        liquidBodyTilesAndContents.Clear();
+        TerrainTile terrainTile = GetTerrainTileAtLocation(cellLocation);
+        GetNeighborCellLocationsAndAccessComposition(cellLocation, compostion, terrainTile, isSetting);
+    }
+    private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
+    {
+        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
+        {
+            if (
+                tile.targetTilemap.GetTile(tileToCheck) == tile &&
+                GetTileContentsAtLocation(tileToCheck, tile) != null &&
+                !liquidBodyTiles.Contains(tileToCheck))
+            {
+                liquidBodyTiles.Add(tileToCheck);
+                ChangeLiquidComposition(tileToCheck, composition, tile, isSetting);
+                GetNeighborCellLocationsAndAccessComposition(tileToCheck, composition, tile, isSetting);
+            }
+        }
+    }
+    private void ChangeLiquidComposition(Vector3Int cellLocation, float[] composition, TerrainTile terrainTile, bool isSetting)
+    {
+        if (terrainTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
+        {
+            if (isSetting)
+            {
+                tileAttributes.SetCompostion(cellLocation, composition);
+            }
+            else
+            {
+                tileAttributes.ModifyComposition(cellLocation, composition);
+            }
+        }
+    }
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
     /// </summary>
