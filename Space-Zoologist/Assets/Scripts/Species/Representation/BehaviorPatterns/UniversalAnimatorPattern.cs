@@ -24,14 +24,14 @@ public class UniversalAnimatorPattern : BehaviorPattern
     {
         if (!animalToAnimatorData[animal].StateChange)
         {
-            if (animalToAnimatorData[animal].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[gameObject].layerIndex).GetHashCode() != animalToAnimatorData[animal].initialState.GetHashCode())
+            if (animalToAnimatorData[animal].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[animal].layerIndex).GetHashCode() != animalToAnimatorData[animal].initialState.GetHashCode())
             {
                 animalToAnimatorData[animal].ToggleStateChange();
             }
         }
         else
         {
-            if(animalToAnimatorData[animal].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[gameObject].layerIndex).GetHashCode() == animalToAnimatorData[animal].initialState.GetHashCode())
+            if(animalToAnimatorData[animal].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[animal].layerIndex).GetHashCode() == animalToAnimatorData[animal].initialState.GetHashCode())
             {
                 return true;
             }
