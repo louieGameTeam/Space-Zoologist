@@ -17,9 +17,6 @@ MonoBehaviour:
   dominance: 5
   growthRate: 60.5
   range: 8.28
-  needBehaviorSet:
-  - NeedType: 0
-    behaviorScriptName: 0
   size: 5
   accessibleTerrain: 0100000003000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
@@ -28,7 +25,13 @@ MonoBehaviour:
     needs:
     - needName: Strot
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
       - 10
       - 40
@@ -36,31 +39,51 @@ MonoBehaviour:
     needs:
     - needName: MineralX
       severity: 2
-      conditions: 0000000001000000020000000100000000000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: ded07affa23fe41f398517423f60fff8, type: 2}
       thresholds:
       - 0.1
-      - 0.3
-      - 0.5
-      - 0.7
-    - needName: MineralZ
-      severity: 5
-      conditions: 0000000001000000020000000100000000000000
+      - 0.4
+    - needName: MineralY
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: ded07affa23fe41f398517423f60fff8, type: 2}
       thresholds:
       - 0.1
-      - 0.3
-      - 0.5
-      - 0.7
+      - 0.4
   - needType: 3
     needs:
     - needName: Space Maple
       severity: 2
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
       - 7
       - 15
     - needName: Bush
       severity: 2
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
       - 7
       - 15

@@ -17,9 +17,6 @@ MonoBehaviour:
   dominance: 5
   growthRate: 60.5
   range: 8.28
-  needBehaviorSet:
-  - NeedType: 0
-    behaviorScriptName: 0
   size: 5
   accessibleTerrain: 020000000300000001000000
   icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
@@ -28,19 +25,37 @@ MonoBehaviour:
     needs:
     - needName: Grass
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: e13580ca2c186441ea42fcc461524b8f, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 6a4366bcd80b749e1a0c994bf6f9a2ac, type: 2}
       thresholds:
       - 10
       - 40
     - needName: Dirt
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: e13580ca2c186441ea42fcc461524b8f, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 6a4366bcd80b749e1a0c994bf6f9a2ac, type: 2}
       thresholds:
       - 10
       - 40
     - needName: Sand
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: e13580ca2c186441ea42fcc461524b8f, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 6a4366bcd80b749e1a0c994bf6f9a2ac, type: 2}
       thresholds:
       - 10
       - 40
@@ -48,13 +63,25 @@ MonoBehaviour:
     needs:
     - needName: GasX
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 27e7f99b8959e4c9ab66dee5dc0925e1, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 973f86f5f5ff54638893e890e56f4bb3, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 523bf0d67b41549dfb34f15ad26110f4, type: 2}
       thresholds:
       - 10
       - 40
     - needName: GasZ
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 27e7f99b8959e4c9ab66dee5dc0925e1, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 973f86f5f5ff54638893e890e56f4bb3, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 523bf0d67b41549dfb34f15ad26110f4, type: 2}
       thresholds:
       - 10
       - 40
@@ -62,7 +89,13 @@ MonoBehaviour:
     needs:
     - needName: Density
       severity: 5
-      conditions: 020000000100000000000000
+      conditions:
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 9e56c0206592d4bf893cd3c1687ee4fb, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
       thresholds:
       - 1
       - 5
@@ -70,13 +103,25 @@ MonoBehaviour:
     needs:
     - needName: Space Maple
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
       - 3
       - 5
     - needName: Bush
       severity: 5
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
       - 3
       - 5

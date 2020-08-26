@@ -314,7 +314,7 @@ PrefabInstance:
         type: 3}
       propertyPath: species
       value: 
-      objectReference: {fileID: 11400000, guid: 4fc91e10b303a49faaeffe6f232fefef,
+      objectReference: {fileID: 11400000, guid: 10caef092bf1a42c5a712f44ac1c9285,
         type: 2}
     - target: {fileID: 5640349517002934508, guid: 2684919613425e34d815583d801a54b9,
         type: 3}
@@ -628,6 +628,18 @@ Transform:
   m_Father: {fileID: 1147658059}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &81937996 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8361821361980673661, guid: 710f4a1800ae14276b0dcce28c8ca936,
+    type: 3}
+  m_PrefabInstance: {fileID: 8361821362489878929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &133499083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16245,6 +16257,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15bcda7d05306474792cd5deae372627, type: 3}
+--- !u!1 &1616454612 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 849827785137881020, guid: 2b8234909d50f4bbe80178a1766c6faa,
+    type: 3}
+  m_PrefabInstance: {fileID: 729718197}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1621217278
 GameObject:
   m_ObjectHideFlags: 0
@@ -16471,12 +16489,6 @@ Transform:
   m_Father: {fileID: 833431537}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1843795729 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 849827786080042452, guid: 2b8234909d50f4bbe80178a1766c6faa,
-    type: 3}
-  m_PrefabInstance: {fileID: 729718197}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1843795730 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 849827786080042453, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -17937,11 +17949,41 @@ PrefabInstance:
         type: 3}
       propertyPath: HUD
       value: 
-      objectReference: {fileID: 1843795729}
+      objectReference: {fileID: 1616454612}
     - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
         type: 3}
       propertyPath: inspectorWindow
       value: 
       objectReference: {fileID: 351384308}
+    - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: inspectorButtonText
+      value: 
+      objectReference: {fileID: 81937996}
+    - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: needSystemUpdater
+      value: 
+      objectReference: {fileID: 1241784278}
+    - target: {fileID: 8361821361657802895, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleInspectMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 8361821361980673659, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: m_Name
+      value: InspectorBtnText
+      objectReference: {fileID: 0}
+    - target: {fileID: 8361821361980673661, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: m_Text
+      value: INSPECT:OFF
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103451996194111344, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: m_Text
+      value: InspectorText
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 710f4a1800ae14276b0dcce28c8ca936, type: 3}
