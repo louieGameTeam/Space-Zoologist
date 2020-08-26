@@ -36,7 +36,9 @@ public class FoodSourceStoreSection : StoreSection
                 Debug.Log("Cannot place item that location");
                 return;
             }
-            FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
+            Vector3Int mouseGridPosition = base.TileSystem.WorldToCell(mousePosition);
+            base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsItem = true;
+            base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Item = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
             playerBalance.RuntimeValue -= selectedItem.Price;
         }
     }
@@ -46,8 +48,13 @@ public class FoodSourceStoreSection : StoreSection
         if (mousePosition.x > 0 && mousePosition.y > 0
         && mousePosition.x < LevelDataReference.MapWidth && mousePosition.y < LevelDataReference.MapHeight)
         {
-            Vector3Int mouseGridPosition = this.TileSystem.WorldToCell(mousePosition);
-            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(mouseGridPosition);
+            Vector3Int mouseGridPosition = base.TileSystem.WorldToCell(mousePosition);
+            if (base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsItem)
+            {
+                base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Item.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
+                return false;
+            }
+            TerrainTile tile = base.TileSystem.GetTerrainTileAtLocation(mouseGridPosition);
             foreach (TileType acceptablTerrain in ReferenceUtil.ins.FoodReference.AllSpecies[selectedItem.ID].AccessibleTerrain)
             {
                 if (tile.type.Equals(acceptablTerrain))

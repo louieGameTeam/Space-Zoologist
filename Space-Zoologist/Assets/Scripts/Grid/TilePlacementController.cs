@@ -25,8 +25,8 @@ public class TilePlacementController : MonoBehaviour
     private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles 
     private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
-    private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
-    private List<Vector3Int> neighborTiles = new List<Vector3Int>();
+    private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile 
+    private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
     private int lastCornerX;
     private int lastCornerY;
@@ -78,11 +78,6 @@ public class TilePlacementController : MonoBehaviour
         {
             Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
             currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
-            if (!this.GridSystem.IsWithinGridBouds(dragStartPosition) || this.GridSystem.IsPopulationHomeLocations(dragStartPosition))
-            {
-                this.PlacementPaused = true;
-                return;
-            }
             this.PlacementPaused = false;
             if (currentMouseCellPosition != lastMouseCellPosition || isFirstTile)
             {
@@ -107,11 +102,6 @@ public class TilePlacementController : MonoBehaviour
     {
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         dragStartPosition = grid.WorldToCell(mouseWorldPosition);
-        if (!this.GridSystem.IsWithinGridBouds(dragStartPosition) || this.GridSystem.IsPopulationHomeLocations(dragStartPosition))
-        {
-            this.PlacementPaused = true;
-            return;
-        }
         if (!Enum.IsDefined(typeof(TileType), tileID))
         {
             throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
