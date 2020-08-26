@@ -12,6 +12,8 @@ public class Population : MonoBehaviour, Life
     public int Count { get => this.AnimalPopulation.Count; }
     public float Dominance => Count * species.Dominance;
     public int PrePopulationCount => this.prePopulationCount;
+    public Vector3 Origin => this.origin;
+    public bool IsPaused => this.isPaused;
     [HideInInspector]
     public bool HasAccessibilityChanged = false;
     public System.Random random = new System.Random();
@@ -21,7 +23,6 @@ public class Population : MonoBehaviour, Life
     public AnimalPathfinding.Grid grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
-    [SerializeField] public GridSystem TestingBehaviors = default;
     [Expandable] public AnimalSpecies species = default;
     [SerializeField] private GameObject AnimalPrefab = default;
     [Header("Add existing animals")]
@@ -41,6 +42,7 @@ public class Population : MonoBehaviour, Life
     private PoolingSystem PoolingSystem = default;
     private int prePopulationCount = default;
     private PopulationBehaviorManager PopulationBehaviorManager = default;
+    private bool isPaused = false;
 
     private void Awake()
     {
@@ -91,6 +93,7 @@ public class Population : MonoBehaviour, Life
     {
         this.needs = this.Species.SetupNeeds();
         this.needBehaviors = this.Species.SetupBehaviors(this.needs);
+        //this.PopulationBehaviorManager.isPaused = true;
         this.PopulationBehaviorManager.InitializeBehaviors(this.needs);
         this.NeedEditorTesting = new List<Need>();
         foreach (KeyValuePair<string, Need> need in this.needs)
@@ -107,7 +110,7 @@ public class Population : MonoBehaviour, Life
     private void HandleGrowth()
     {
         float rate = this.GrowthCalculator.GrowthRate;
-        if (rate == 0) return;
+        if (rate == 0 || this.isPaused) return;
         if (this.TimeSinceUpdate > rate)
         {
             this.TimeSinceUpdate = 0;
@@ -149,6 +152,7 @@ public class Population : MonoBehaviour, Life
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
+            this.isPaused = true;
             animal.GetComponent<MovementController>().IsPaused = true;
         }
     }
@@ -157,6 +161,7 @@ public class Population : MonoBehaviour, Life
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
+            this.isPaused = false;
             animal.GetComponent<MovementController>().IsPaused = false;
         }
     }
@@ -196,10 +201,17 @@ public class Population : MonoBehaviour, Life
     // removes last animal in list and last behavior
     public void RemoveAnimal(int count)
     {
-        this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
-        this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
-        this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
-        this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
+        if (this.AnimalPopulation.Count > 0)
+        {
+            this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
+            this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
+            this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
+            this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
+        }
+        if (this.AnimalPopulation.Count == 0)
+        {
+            Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
+        }
     }
 
     /// <summary>
@@ -211,7 +223,7 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
-        Debug.Log("Need: " + need + " is now in " + this.needs[need].GetCondition(value) + " condition");
+        // Debug.Log("Need: " + need + " is now in " + this.needs[need].GetCondition(value) + " condition");
         this.FilterBehaviors(need, this.needs[need].GetCondition(value));
         this.UpdateGrowthConditions();
         //Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
@@ -234,7 +246,7 @@ public class Population : MonoBehaviour, Life
     public void UpdateGrowthConditions()
     {
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
-        Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
+        // Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
     /// <summary>

@@ -21,13 +21,25 @@ MonoBehaviour:
     needs:
     - needName: Sand
       severity: 1
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 1
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
       thresholds:
       - 3
       - 6
     - needName: Dirt
       severity: 1
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 1
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
       thresholds:
       - 6
       - 9
@@ -35,13 +47,25 @@ MonoBehaviour:
     needs:
     - needName: GasX
       severity: 1
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 1
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
       thresholds:
       - 3
       - 6
     - needName: GasY
       severity: 1
-      conditions: 000000000100000002000000
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 1
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
       thresholds:
       - 6
       - 9
