@@ -14,6 +14,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     public List<BehaviorPattern> behaviorPatterns = default;
     protected Dictionary<GameObject, int> animalsToSteps = new Dictionary<GameObject, int>();
     protected StepCompletedCallBack stepCompletedCallback;
+    protected StepCompletedCallBack alternativeCallback;
     [SerializeField]
     private float refreshPeriod = 3;
     [SerializeField]
@@ -28,6 +29,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
         behaviorData.behaviorName = this.GetType().ToString();
         behaviorData.ForceExitCallback = OnForceExit;
         stepCompletedCallback = OnStepCompleted; // Setup Callback
+        alternativeCallback = OnAlternativeExit;
         List<GameObject> selectedAnimals = AnimalSelection(avalabilityToAnimals);
         foreach (GameObject animal in selectedAnimals) // Force exits all behaviors of the overridden animals
         {
@@ -105,7 +107,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
         if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed
         {
             //Debug.Log("Next");
-            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, collaboratingAnimals);
+            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
         }
         else
         {
@@ -130,6 +132,10 @@ public class SpecieBehaviorTrigger : ScriptableObject
     {
         animalsToSteps[animal]++;
         ProceedToNext(animal, collaboratingAnimals);
+    }
+    protected void OnAlternativeExit(GameObject animal, List<GameObject> collaboratingAnimals)
+    {
+
     }
     /// <summary>
     /// Define what needs to be done when this behavior is force exiting, usually just call remove behavior
@@ -165,7 +171,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
                         return;
                     }
                 }
-                // When the above loop completes wihout returning, it means that all animals are ready, then all animals should proceed to next step
+                // When the above loop completes without returning, it means that all animals are ready, then all animals should proceed to next step
                 foreach (GameObject otherAnimal in collaboratingAnimals) //Calls other animals to proceed without checking completion, which collaborating animals defaults to null
                 {
                     List<GameObject> otherAnimalCollabs = new List<GameObject>(collaboratingAnimals);
@@ -174,7 +180,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
                     ProceedToNext(otherAnimal, otherAnimalCollabs, true);
                 }
             }
-            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, collaboratingAnimals);
+            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
         }
         else
         {
@@ -183,7 +189,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     }
     /// <summary>
     /// Example alternative to ProceedToNext() that loops all behavior patterns when the list is finished
-    /// Make sure it has low priority in BehaviorData, in which can be overriden by other behaviors
+    /// Make sure it has low priority in BehaviorData, in which can be overridden by other behaviors
     /// Additionally, make sure OnForceExit() is set up properly, as well as all referenced behavior patterns
     /// </summary>
     /// <param name="animal"></param>
@@ -194,7 +200,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
         if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed
         {
             //Debug.Log("Next");
-            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, collaboratingAnimals);
+            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
         }
         else
         {
