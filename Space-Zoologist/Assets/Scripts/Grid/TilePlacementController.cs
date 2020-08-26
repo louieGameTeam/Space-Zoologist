@@ -32,7 +32,8 @@ public class TilePlacementController : MonoBehaviour
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private GridSystem GridSystem = default;
-
+    private GridSystem gridSystem;
+    private bool isCheckingItem = true;
     private void Awake()
     {
         terrainTiles = Resources.LoadAll("Tiles",typeof(TerrainTile)).Cast<TerrainTile>().ToArray(); // Load tiles form resources
@@ -65,6 +66,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
+        gridSystem = FindObjectOfType<GridSystem>();
     }
 
     private void Start()
@@ -371,7 +373,7 @@ public class TilePlacementController : MonoBehaviour
                     {
                         foreach (Tilemap constraintTilemap in tile.constraintTilemap)
                         {
-                            if (constraintTilemap.HasTile(cellLocation))
+                            if (constraintTilemap.HasTile(cellLocation) && IsTileFree(cellLocation))
                             {
                                 foreach (Tilemap replacingTilemap in tile.replacementTilemap)
                                 {
@@ -497,5 +499,13 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
-
+    private bool IsTileFree(Vector3Int cellLocation)
+    {
+        GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
+        if (cellData.ContainsAnimal == false && (cellData.ContainsItem == false || !isCheckingItem))
+        {
+            return true;
+        }
+        return false;
+    }
 }
