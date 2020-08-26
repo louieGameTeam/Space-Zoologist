@@ -54,7 +54,7 @@ public class FoodSourceManager : MonoBehaviour
     }
 
     // TODO: combine two version into one
-    private void CreateFoodSource(FoodSourceSpecies species, Vector2 position)
+    private GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
         newFoodSourceGameObject.name = species.SpeciesName;
@@ -67,11 +67,12 @@ public class FoodSourceManager : MonoBehaviour
 
         // Register with NeedSystemManager
         NeedSystemManager.RegisterWithNeedSystems(foodSource);
+        return newFoodSourceGameObject;
     }
 
-    public void CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
+    public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
     {
-        CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
+        return CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
     }
 
     // TODO: not sure what this does

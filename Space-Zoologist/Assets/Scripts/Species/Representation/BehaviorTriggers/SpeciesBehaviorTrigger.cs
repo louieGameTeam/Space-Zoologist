@@ -29,7 +29,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
         behaviorData.ForceExitCallback = OnForceExit;
         stepCompletedCallback = OnStepCompleted; // Setup Callback
         List<GameObject> selectedAnimals = AnimalSelection(avalabilityToAnimals);
-        foreach (GameObject animal in selectedAnimals) // Force exits all behaviors of the overriden animals
+        foreach (GameObject animal in selectedAnimals) // Force exits all behaviors of the overridden animals
         {
             if (avalabilityToAnimals[Availability.Override].Contains(animal))
             {

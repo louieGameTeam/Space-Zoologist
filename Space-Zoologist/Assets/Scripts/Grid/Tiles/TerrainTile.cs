@@ -17,6 +17,13 @@ public class TerrainTile : RuleTile<TerrainTile.Neighbor>
 	public List<GridUtils.TileLayer> constraintLayers;
 	public bool isRepresentative;
 	public bool isMergingAttributes;
+	public void ReferencePlaceableArea()
+	{
+		if (!constraintLayers.Contains(GridUtils.TileLayer.PlaceableArea))
+		{
+			constraintLayers.Add(GridUtils.TileLayer.PlaceableArea);
+		}
+	}
 	public class Neighbor : RuleTile.TilingRule.Neighbor
 	{
 		public const int Other = 3;

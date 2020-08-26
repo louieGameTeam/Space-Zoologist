@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+//public enum NeedType {Terrain, Liquid, Atmosphere, Food}
+//public enum NeedCondition { Bad, Neutral, Good }
 
 [System.Serializable]
 public class Need

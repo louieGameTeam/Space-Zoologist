@@ -27,7 +27,7 @@ public class AtmosphereNeedSystem : NeedSystem
         }
 
         // Update enclosure system before getting values
-        //enclosureSystem.FindEnclosedAreas();
+        enclosureSystem.FindEnclosedAreas();
 
         foreach (Life life in Consumers)
         {

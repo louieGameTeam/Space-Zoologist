@@ -89,6 +89,7 @@ public class PopulationManager : MonoBehaviour
         this.ReservePartitionManager.AddPopulation(population);
         population.UpdateAccessibleArea(this.ReservePartitionManager.GetLocationsWithAccess(population),
         this.GridSystem.GetGridWithAccess(population));
+        this.GridSystem.SetupPopulationHomeLocation(population.transform.position);
         this.speciesNeedSystem.AddPopulation(population);
         this.NeedSystemManager.RegisterWithNeedSystems(population);
         this.BehaviorPatternUpdater.RegisterPopulation(population);

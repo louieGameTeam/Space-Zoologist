@@ -201,8 +201,6 @@ public class DensityCalculator
         if (!rpm.Populations.Contains(pop))
             return -1;
 
-        
-
 
         //calculate the number of accessible tiles
         float density = 0;
