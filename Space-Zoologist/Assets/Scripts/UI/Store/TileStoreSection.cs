@@ -92,11 +92,11 @@ public class TileStoreSection : StoreSection
     }
 
     /// <summary>
-    /// Event when the item selection is cancelled.
+    /// Event when the item selection is canceled.
     /// </summary>
     public override void OnItemSelectionCanceled()
     {
-        //Debug.Log("Tile placement cancelled");
+        //Debug.Log("Tile placement canceled");
         base.OnItemSelectionCanceled();
         CancelPlacing();
     }
