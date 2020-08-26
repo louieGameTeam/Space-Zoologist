@@ -45,8 +45,9 @@ public class FoodSourceStoreSection : StoreSection
 
     public override bool IsPlacementValid(Vector3 mousePosition)
     {
-        if (mousePosition.x > 0 && mousePosition.y > 0
+        if ((mousePosition.x > 0 && mousePosition.y > 0
         && mousePosition.x < LevelDataReference.MapWidth && mousePosition.y < LevelDataReference.MapHeight)
+        && !(base.TileSystem.GetTerrainTileAtLocation(base.TileSystem.WorldToCell(mousePosition)).type.Equals(TileType.Liquid)))
         {
             Vector3Int mouseGridPosition = base.TileSystem.WorldToCell(mousePosition);
             if (base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsItem)

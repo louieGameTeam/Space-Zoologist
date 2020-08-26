@@ -21,7 +21,7 @@ public class AtmosphereMachine : MonoBehaviour
 
     void OnMouseDown()
     {
-        this.OpenHUD();
+        if (!this.AtmosphereHUDGameObject.activeSelf) this.OpenHUD();
     }
 
     public void OpenHUD()

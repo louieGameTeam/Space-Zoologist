@@ -51,6 +51,7 @@ public class Population : MonoBehaviour, Life
         if (this.species != null)
         {
             this.SetupNeeds();
+            this.origin = this.transform.position;
         }
     }
 
@@ -137,14 +138,12 @@ public class Population : MonoBehaviour, Life
     {
         this.AccessibleLocations = accessibleLocations;
         this.grid = grid;
-        if (this.AccessibleLocations.Count < 6)
+        foreach(GameObject animal in this.AnimalPopulation)
         {
-            Debug.Log("Issue with accessibility area");
-            this.PauseAnimals();
-        }
-        else
-        {
-            this.UnpauseAnimals();
+            if (!this.AccessibleLocations.Contains(this.grid.grid.WorldToCell(animal.transform.position)))
+            {
+                animal.transform.position = this.origin;
+            }
         }
     }
 
@@ -154,6 +153,7 @@ public class Population : MonoBehaviour, Life
         {
             this.isPaused = true;
             animal.GetComponent<MovementController>().IsPaused = true;
+            animal.GetComponent<MovementController>().TryToCancelDestination();
         }
     }
 
