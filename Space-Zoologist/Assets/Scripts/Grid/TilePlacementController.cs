@@ -32,7 +32,6 @@ public class TilePlacementController : MonoBehaviour
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private GridSystem GridSystem = default;
-    private GridSystem gridSystem;
     private bool isCheckingItem = true;
     private void Awake()
     {
@@ -54,6 +53,7 @@ public class TilePlacementController : MonoBehaviour
         }
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
+            List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
             if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
             {
                 foreach (TerrainTile tile in tileColorManager.linkedTiles)
@@ -64,9 +64,22 @@ public class TilePlacementController : MonoBehaviour
                     }
                     colorLinkedTiles[tile].Add(tilemap);
                 }
+                foreach(Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
+                {
+                    if (tilemap.HasTile(cellLocation))
+                    {
+                        if (!colorInitializeTiles.Contains(cellLocation))
+                        {
+                            colorInitializeTiles.Add(cellLocation);
+                        }
+                    }
+                }
             }
+            referencedTiles = terrainTiles.ToList();
+            RenderColorOfColorLinkedTiles(colorInitializeTiles);
+            referencedTiles.Clear();
         }
-        gridSystem = FindObjectOfType<GridSystem>();
+        
     }
 
     private void Start()
