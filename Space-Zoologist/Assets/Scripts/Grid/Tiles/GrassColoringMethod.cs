@@ -8,17 +8,17 @@ public class GrassColoringMethod : ColoringMethod
     private float[] gasComposition = new float[] { 0, 0, 0 };
     private float[] colorShitfDirt = new float[] { 0, 0.3f, 0.3f };
     private float[] colorShitfSand = new float[] { -0.2f, 0.4f, -0.1f };
-    LevelDataReference LevelDataReference;
+    LevelDataReference LevelDataReference = null;
     public override void SetColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
     {
-        if (LevelDataReference = null)
+        if (LevelDataReference == null)
         {
             LevelDataReference = FindObjectOfType<LevelDataReference>();
         }
         float[] originalGasComposition = new float[] { LevelDataReference.LevelData.GlobalAtmosphere.GasX, LevelDataReference.LevelData.GlobalAtmosphere.GasY, LevelDataReference.LevelData.GlobalAtmosphere.GasZ };
         for (int i = 0; i < 3; i++)
         {
-            gasComposition[i] = originalGasComposition[i] / Mathf.Max(gasComposition);
+            gasComposition[i] = originalGasComposition[i] / Mathf.Max(originalGasComposition);
         }
         TerrainTile liquid = linkedTiles[0];
         TerrainTile dirt = linkedTiles[1];
