@@ -38,7 +38,7 @@ MonoBehaviour:
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 10
+      - 0.5
     - needName: MineralY
       severity: 5
       conditions:
@@ -47,7 +47,7 @@ MonoBehaviour:
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 10
+      - 0.3
     - needName: MineralZ
       severity: 5
       conditions:
@@ -56,5 +56,5 @@ MonoBehaviour:
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 10
+      - 0.7
   FoodSource: {fileID: 11400000, guid: b63cac9feff8a4b0f89cedf9db1d134f, type: 2}
