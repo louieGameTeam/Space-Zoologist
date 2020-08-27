@@ -25,11 +25,7 @@ public class TilePlacementController : MonoBehaviour
     private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles
     private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
-<<<<<<< HEAD
-    private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile 
-=======
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
     private int lastCornerX;
@@ -375,11 +371,7 @@ public class TilePlacementController : MonoBehaviour
                     {
                         foreach (Tilemap constraintTilemap in tile.constraintTilemap)
                         {
-<<<<<<< HEAD
-                            if (constraintTilemap.HasTile(cellLocation))
-=======
                             if (constraintTilemap.HasTile(cellLocation) && IsTileFree(cellLocation))
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
                             {
                                 foreach (Tilemap replacingTilemap in tile.replacementTilemap)
                                 {

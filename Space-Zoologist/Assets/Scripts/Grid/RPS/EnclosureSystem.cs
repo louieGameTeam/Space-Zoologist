@@ -116,14 +116,8 @@ public class EnclosureSystem : MonoBehaviour
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (PositionToAtmosphere.ContainsKey(position))
         {
-<<<<<<< HEAD
-            this.GlobalAtmosphere = atmosphericComposition;
-            Atmospheres[PositionToAtmosphere[position]] = atmosphericComposition;
-            Debug.Log(GetAtmosphericComposition(worldPosition).ToString());
-=======
             Atmospheres[PositionToAtmosphere[position]] = atmosphericComposition;
             this.UpdateAtmosphere();
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         }
         else
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
@@ -372,7 +366,6 @@ public class EnclosureSystem : MonoBehaviour
         {
             newAtmospheres.Add(this.Atmospheres[PositionToAtmosphere[new Vector3Int(1, 1, 0)]]);
         }
-
 
 
         // Step 1: Populate tiles outside with 0 and find walls

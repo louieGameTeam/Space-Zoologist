@@ -16,16 +16,11 @@ public class GridSystem : MonoBehaviour
     [SerializeField] public Grid Grid = default;
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private ReservePartitionManager RPM = default;
-<<<<<<< HEAD
-    [SerializeField] private PopulationManager PopulationManager = default;
-    [SerializeField] private List<Tilemap> AllTerrainTilemaps = default;
-=======
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] private Tilemap TilePlacementValidation = default;
     [SerializeField] private TerrainTile Tile = default;
     [SerializeField] float transparency = default;
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
@@ -45,13 +40,6 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-    /// <summary>
-    /// Called when the store is opened
-    /// </summary>
-    public void UpdateAnimalCellGrid()
-    {
-=======
     private void Start()
     {
         this.PlacementValidation = this.gameObject.GetComponent<PlacementValidation>();
@@ -63,7 +51,6 @@ public class GridSystem : MonoBehaviour
     /// </summary>
     public void UpdateAnimalCellGrid()
     {
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         // Reset previous locations
         for (int i=0; i<this.CellGrid.GetLength(0); i++)
         {
@@ -146,39 +133,6 @@ public class GridSystem : MonoBehaviour
         this.HighlightHomeLocations();
     }
 
-<<<<<<< HEAD
-    // Showing how tiles can be counted
-    private void CountAllTiles()
-    {
-        foreach(Tilemap tilemap in this.AllTerrainTilemaps)
-        {
-            Debug.Log("Tilemap name: " + tilemap.name);
-            BoundsInt bounds = tilemap.cellBounds;
-            foreach (Vector3Int pos in bounds.allPositionsWithin)
-            {
-                TerrainTile tile = tilemap.GetTile<TerrainTile>(pos);
-                if (tile != null && pos.x < GridWidth - 1 && pos.y < GridHeight - 1 && pos.x > 0 && pos.y > 0)
-                {
-                    switch(tile.name)
-                    {
-                        case "Grass":
-                            this.TilemapData.NumGrassTiles++;
-                            break;
-                        case "Dirt":
-                            this.TilemapData.NumDirtTiles++;
-                            break;
-                        case "Sand":
-                            this.TilemapData.NumSandTiles++;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            Debug.Log("Num Grass Tiles: " + this.TilemapData.NumGrassTiles);
-            Debug.Log("Num Dirt Tiles: " + this.TilemapData.NumDirtTiles);
-            Debug.Log("Num Sand Tiles: " + this.TilemapData.NumSandTiles);
-=======
     public void HighlightHomeLocations()
     {
         foreach (Vector3Int location in this.PopulationHomeLocations)
@@ -192,7 +146,6 @@ public class GridSystem : MonoBehaviour
         foreach (Vector3Int location in this.PopulationHomeLocations)
         {
             this.TilePlacementValidation.SetTile(location, null);
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         }
     }
 
@@ -221,17 +174,6 @@ public class GridSystem : MonoBehaviour
     {
         public CellData(bool start)
         {
-<<<<<<< HEAD
-            this.ContainsItem = false;
-            this.ContainsAnimal = false;
-            this.Item = null;
-            this.Animal = null;
-            this.HomeLocation = false;
-        }
-
-        public bool ContainsItem { get; set; }
-        public GameObject Item { get; set; }
-=======
             this.ContainsFood = false;
             this.ContainsAnimal = false;
             this.Food = null;
@@ -245,7 +187,6 @@ public class GridSystem : MonoBehaviour
         public GameObject Machine { get; set; }
         public bool ContainsFood { get; set; }
         public GameObject Food { get; set; }
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         public bool ContainsAnimal { get; set; }
         public GameObject Animal { get; set; }
         public bool HomeLocation { get; set; }

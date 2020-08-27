@@ -81,10 +81,10 @@ public class InspectMode : MonoBehaviour
                 Debug.Log($"Found animal {this.gridSystem.CellGrid[cellPos.x, cellPos.y].Animal} @ {cellPos}");
             }
             // Selection is food source or item
-            else if(cellData.ContainsItem)
+            else if(cellData.ContainsFood)
             {
-                Debug.Log($"Foudn item {cellData.Item} @ {cellPos}");
-                this.DisplayFoodSourceStatus(cellData.Item.GetComponent<FoodSource>());
+                Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
+                this.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
             }
             // Selection is liquid tile
             else if(tile.type == TileType.Liquid)

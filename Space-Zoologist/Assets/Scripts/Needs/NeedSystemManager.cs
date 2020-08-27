@@ -91,14 +91,11 @@ public class NeedSystemManager : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-=======
     public void UpdateAccessMap()
     {
         this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.chagnedTiles);
     }
 
->>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
     /// <summary>
     /// Update all the need system that is mark "dirty"
     /// </summary>
