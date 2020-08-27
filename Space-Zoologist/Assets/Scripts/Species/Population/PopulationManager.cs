@@ -80,6 +80,7 @@ public class PopulationManager : MonoBehaviour
     private void SetupExistingPopulation(Population population)
     {
         this.HandlePopulationRegistration(population);
+        this.GridSystem.UnhighlightHomeLocations();
         population.InitializeExistingAnimals();
     }
 

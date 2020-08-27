@@ -37,6 +37,5 @@ public class AtmosphereMachine : MonoBehaviour
     public void UpdateAtmosphere(AtmosphericComposition atmosphericComposition)
     {
         this.EnclosureSystem.UpdateAtmosphereComposition(this.transform.position, atmosphericComposition);
-        Debug.Log(this.EnclosureSystem.GetAtmosphericComposition(this.gameObject.transform.position).ToString());
     }
 }

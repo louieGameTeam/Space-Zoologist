@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum ItemType {Food, Terrain, Machine}
+public enum ItemType {Food, Terrain, Machine, Pod}
 // Modify as needed
 [CreateAssetMenu]
 public class Item : ScriptableObject

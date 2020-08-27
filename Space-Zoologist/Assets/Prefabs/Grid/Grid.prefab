@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1473133747179600447}
   m_Layer: 0
-  m_Name: Plot
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,6 +162,7 @@ Transform:
   - {fileID: 5532461805899326274}
   - {fileID: 2157338063284553206}
   - {fileID: 2545352780394288584}
+  - {fileID: 8784827241532755117}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2130,3 +2131,69 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1 &7868057265044987766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8784827241532755117}
+  - component: {fileID: 9153907807574263306}
+  - component: {fileID: 2168900497874383283}
+  m_Layer: 0
+  m_Name: GridSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8784827241532755117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868057265044987766}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1473133747179600447}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9153907807574263306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868057265044987766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a938cfc2bb8f4cbeac86158c272f6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlacementValidation: {fileID: 0}
+  Grid: {fileID: 1473133747598921216}
+  LevelDataReference: {fileID: 0}
+  RPM: {fileID: 0}
+  TileSystem: {fileID: 1473133747598921276}
+  PopulationManager: {fileID: 0}
+  Tilemaps:
+  - {fileID: 1473133747569647978}
+  - {fileID: 1473133748515397149}
+  - {fileID: 1473133748771117976}
+--- !u!114 &2168900497874383283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868057265044987766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7586f8d0b56e84dc49d889cf768d4811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

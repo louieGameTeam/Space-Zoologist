@@ -6,8 +6,10 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Store section for tile items.
 /// </summary>
+/// Figure out how to handle case when more than one machine present after changes
 public class TileStoreSection : StoreSection
 {
+    [SerializeField] private EnclosureSystem EnclosureSystem = default;
     [SerializeField] private TilePlacementController tilePlacementController = default;
     [Header("Only needed if tutorial level")]
     [SerializeField] private TutorialTesting tutorial = default;
@@ -52,6 +54,7 @@ public class TileStoreSection : StoreSection
     private void FinishPlacing()
     {
         isPlacing = false;
+        this.EnclosureSystem.FindEnclosedAreas();
         tilePlacementController.StopPreview();
         playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
         if (tutorial != null)

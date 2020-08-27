@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// TODO figure out how to ensure proper placement
+// TODO ensure only one atmosphere machine placed per atmosphere and cleanup placement validation
 public class MachineStoreSection : StoreSection
 {
     [SerializeField] private EnclosureSystem EnclosureSystem = default;
-    [SerializeField] private ReservePartitionManager RPM = default;
+    [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GameObject AtmosphereMachineHUD = default;
     [SerializeField] GameObject LiquidMachineHUD = default;
     [SerializeField] GameObject MachinePrefab = default;
@@ -29,7 +29,7 @@ public class MachineStoreSection : StoreSection
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            if (!IsPlacementValid(mousePosition))
+            if (!base.GridSystem.PlacementValidation.IsItemPlacementValid(mousePosition, base.selectedItem))
             {
                 Debug.Log("Cannot place item that location");
                 return;
@@ -39,39 +39,22 @@ public class MachineStoreSection : StoreSection
         }
     }
 
-    public override bool IsPlacementValid(Vector3 mousePosition)
+    private void CreateMachine(Vector3 mousePosition)
     {
-        if (base.GridSystem.CellGrid[base.GridSystem.Grid.WorldToCell(mousePosition).x, base.GridSystem.Grid.WorldToCell(mousePosition).y].ContainsItem)
-        {
-            base.GridSystem.CellGrid[base.GridSystem.Grid.WorldToCell(mousePosition).x, base.GridSystem.Grid.WorldToCell(mousePosition).y].Item.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
-            return false;
-        }
-        if (base.selectedItem.ID.Equals("LiquidMachine"))
-        {
-            return (base.TileSystem.GetTerrainTileAtLocation(base.TileSystem.WorldToCell(mousePosition)).type.Equals(TileType.Liquid));
-        }
-        else
-        {
-            return (mousePosition.x > 1 && mousePosition.y > 1 && mousePosition.x < LevelDataReference.MapWidth - 1 && mousePosition.y < LevelDataReference.MapHeight - 1)
-            && !(base.TileSystem.GetTerrainTileAtLocation(base.TileSystem.WorldToCell(mousePosition)).type.Equals(TileType.Liquid));
-        }
-    }
-
-    private void CreateMachine(Vector3 position)
-    {
-        GameObject newMachineGameObject = Instantiate(this.MachinePrefab, position, Quaternion.identity, EnclosureSystem.transform);
+        GameObject newMachineGameObject = Instantiate(this.MachinePrefab, mousePosition, Quaternion.identity, EnclosureSystem.transform);
         newMachineGameObject.transform.position = new Vector3(newMachineGameObject.transform.position.x, newMachineGameObject.transform.position.y, 10);
         newMachineGameObject.name = base.selectedItem.name;
         newMachineGameObject.GetComponent<SpriteRenderer>().sprite = base.selectedItem.Icon;
+        Vector3Int position = base.GridSystem.Grid.WorldToCell(mousePosition);
+        base.GridSystem.CellGrid[position.x, position.y].ContainsMachine = true;
+        base.GridSystem.CellGrid[position.x, position.y].Machine = newMachineGameObject;
         if (base.selectedItem.ID.Equals("AtmosphereMachine"))
         {
             newMachineGameObject.AddComponent<AtmosphereMachine>().Initialize(this.EnclosureSystem, this.AtmosphereMachineHUD);
         }
         if (base.selectedItem.ID.Equals("LiquidMachine"))
         {
-            newMachineGameObject.AddComponent<LiquidMachine>().Initialize(base.TileSystem, this.LiquidMachineHUD);
+            newMachineGameObject.AddComponent<LiquidMachine>().Initialize(this.TileSystem, this.LiquidMachineHUD);
         }
-        base.GridSystem.CellGrid[base.GridSystem.Grid.WorldToCell(position).x, base.GridSystem.Grid.WorldToCell(position).y].ContainsItem = true;
-        base.GridSystem.CellGrid[base.GridSystem.Grid.WorldToCell(position).x, base.GridSystem.Grid.WorldToCell(position).y].Item = newMachineGameObject;
     }
 }
