@@ -16113,6 +16113,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1533208705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9103451996194111344, guid: 710f4a1800ae14276b0dcce28c8ca936,
+    type: 3}
+  m_PrefabInstance: {fileID: 8361821362489878929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1575860450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17830,6 +17842,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1843795730}
     m_Modifications:
+    - target: {fileID: 751440655914018421, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 678
+      objectReference: {fileID: 0}
     - target: {fileID: 4210859184002461516, guid: 710f4a1800ae14276b0dcce28c8ca936,
         type: 3}
       propertyPath: m_Name
@@ -17945,6 +17962,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InspectorWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 7853982621337351329, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
         type: 3}
       propertyPath: HUD
@@ -17965,6 +17987,26 @@ PrefabInstance:
       propertyPath: needSystemUpdater
       value: 
       objectReference: {fileID: 1241784278}
+    - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: gridSystem
+      value: 
+      objectReference: {fileID: 1912565927}
+    - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: tileSystem
+      value: 
+      objectReference: {fileID: 833431538}
+    - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: enclosureSystem
+      value: 
+      objectReference: {fileID: 1231078027}
+    - target: {fileID: 8361821361657802892, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: inspectorWindowText
+      value: 
+      objectReference: {fileID: 1533208705}
     - target: {fileID: 8361821361657802895, guid: 710f4a1800ae14276b0dcce28c8ca936,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -17984,6 +18026,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: InspectorText
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103451996194111344, guid: 710f4a1800ae14276b0dcce28c8ca936,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 48
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 710f4a1800ae14276b0dcce28c8ca936, type: 3}
