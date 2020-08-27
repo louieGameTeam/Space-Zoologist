@@ -68,6 +68,9 @@ public class Inspector : MonoBehaviour
     {
         if (this.isInInspectorMode && Input.GetMouseButtonDown(0))
         {
+            // Update animal locations
+            this.gridSystem.UpdateAnimalCellGrid();
+
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
             TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
@@ -78,7 +81,8 @@ public class Inspector : MonoBehaviour
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)
             {
-                Debug.Log($"Found animal {this.gridSystem.CellGrid[cellPos.x, cellPos.y].Animal} @ {cellPos}");
+                Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
+                this.DisplayAnimalStatus(cellData.Animal.GetComponent<Animal>());
             }
             // Selection is food source or item
             else if (cellData.ContainsFood)
@@ -99,6 +103,20 @@ public class Inspector : MonoBehaviour
                 Debug.Log($"Enclosed are @ {cellPos} selected");
             }
         }
+    }
+
+    private void DisplayAnimalStatus(Animal animal)
+    {
+        Population population = animal.PopulationInfo;
+
+        string displayText = $"{population.species.SpeciesName} Info: \n";
+
+        foreach (Need need in population.Needs.Values)
+        {
+            displayText += $"{need.NeedName} : {need.GetCondition(need.NeedValue)}\n";
+        }
+
+        this.inspectorWindowText.text = displayText;
     }
 
     private void DisplayFoodSourceStatus(FoodSource foodSource)
@@ -145,5 +163,6 @@ public class Inspector : MonoBehaviour
             displayText += $"{((LiquidComposition)index).ToString()} : {composition}\n";
         }
 
+        this.inspectorWindowText.text = displayText;
     }
 }
