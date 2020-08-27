@@ -18,8 +18,8 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
-    [SerializeField] private Tilemap PlaceableArea = default;
-    [SerializeField] private TerrainTile PlaceableTile = default;
+    [SerializeField] private Tilemap TilePlacementValidation = default;
+    [SerializeField] private TerrainTile Tile = default;
     [SerializeField] float transparency = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
@@ -135,16 +135,18 @@ public class GridSystem : MonoBehaviour
 
     public void HighlightHomeLocations()
     {
-        this.PlaceableArea.color = new Color(0, 255, 0, this.transparency);
         foreach (Vector3Int location in this.PopulationHomeLocations)
         {
-            this.PlaceableArea.SetTile(location, null);
+            this.TilePlacementValidation.SetTile(location, this.Tile);
         }
     }
 
     public void UnhighlightHomeLocations()
     {
-        this.PlaceableArea.color = new Color(0, 255, 0, 0f);
+        foreach (Vector3Int location in this.PopulationHomeLocations)
+        {
+            this.TilePlacementValidation.SetTile(location, null);
+        }
     }
 
     // Showing how tiles can be shaded

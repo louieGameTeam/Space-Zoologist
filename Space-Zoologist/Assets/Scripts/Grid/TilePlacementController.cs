@@ -505,6 +505,6 @@ public class TilePlacementController : MonoBehaviour
         //     return true;
         // }
         // return false;
-        return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine);
+        return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
     }
 }
