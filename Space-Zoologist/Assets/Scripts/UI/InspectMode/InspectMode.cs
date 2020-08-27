@@ -71,27 +71,47 @@ public class InspectMode : MonoBehaviour
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
             TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
+            GridSystem.CellData cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
 
             Debug.Log($"Mouse click at {cellPos}");
 
-            // Check if selection was anaiaml
-            if (this.gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsAnimal)
+            // Check if selection is anaiaml
+            if (cellData.ContainsAnimal)
             {
                 Debug.Log($"Found animal {this.gridSystem.CellGrid[cellPos.x, cellPos.y].Animal} @ {cellPos}");
             }
-            // Selection was liquid tile
+            // Selection is food source or item
+            else if(cellData.ContainsItem)
+            {
+                Debug.Log($"Foudn item {cellData.Item} @ {cellPos}");
+                this.DisplayFoodSourceStatus(cellData.Item.GetComponent<FoodSource>());
+            }
+            // Selection is liquid tile
             else if(tile.type == TileType.Liquid)
             {
                 Debug.Log($"Selected liquid tile @ {cellPos}");
-                this.DiplayLiquidCompisition(cellPos, tile);
+                this.DisplayLiquidCompisition(cellPos, tile);
             }
-            // Selection was enclosed area
+            // Selection is enclosed area
             else
             {
                 this.DislplayEnclosedArea(cellPos);
                 Debug.Log($"Enclosed are @ {cellPos} selected");
             }
         }
+    }
+
+    private void DisplayFoodSourceStatus(FoodSource foodSource)
+    {
+        string displayText = $"{foodSource.name} Info: \n";
+
+        foreach (Need need in foodSource.Needs.Values)
+        {
+            displayText += $"{need.NeedName} : {need.GetCondition(need.NeedValue)}\n";
+        }
+
+
+        this.inspectorWindowText.text = displayText;
     }
 
     private void DislplayEnclosedArea(Vector3Int cellPos)
@@ -114,7 +134,7 @@ public class InspectMode : MonoBehaviour
         this.inspectorWindowText.text = displayText;
     }
 
-    private void DiplayLiquidCompisition(Vector3Int cellPos, TerrainTile tile)
+    private void DisplayLiquidCompisition(Vector3Int cellPos, TerrainTile tile)
     {
         float[] compositions = this.tileSystem.GetTileContentsAtLocation(cellPos, tile);
 
