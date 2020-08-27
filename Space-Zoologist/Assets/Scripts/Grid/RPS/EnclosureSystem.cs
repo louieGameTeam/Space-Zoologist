@@ -116,9 +116,14 @@ public class EnclosureSystem : MonoBehaviour
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (PositionToAtmosphere.ContainsKey(position))
         {
+<<<<<<< HEAD
             this.GlobalAtmosphere = atmosphericComposition;
             Atmospheres[PositionToAtmosphere[position]] = atmosphericComposition;
             Debug.Log(GetAtmosphericComposition(worldPosition).ToString());
+=======
+            Atmospheres[PositionToAtmosphere[position]] = atmosphericComposition;
+            this.UpdateAtmosphere();
+>>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         }
         else
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
@@ -141,8 +146,9 @@ public class EnclosureSystem : MonoBehaviour
     /// Update the surrounding atmospheres of the position. Only used when adding or removing walls.
     /// </summary>
     /// <param name="positions">Positions where the walls are placed or removed.</param>
-    public void UpdateSurroundingAtmosphere(int minx, int miny, int maxx, int maxy)
+    public void UpdateAtmosphere()
     {
+        Debug.Log("Atmosphere updated");
         // If not initialized or have more than , initialize instead
         if (!initialized || Atmospheres.Count >= 120)
         {
@@ -165,7 +171,7 @@ public class EnclosureSystem : MonoBehaviour
         Stack<Vector3Int> walls = new Stack<Vector3Int>();
 
         // starting location, may be changed later for better performance
-        Vector3Int cur = this.TileSystem.WorldToCell(new Vector3(minx, miny, 0));
+        Vector3Int cur = new Vector3Int(1, 1, 0);
         TerrainTile curTile = this.TileSystem.GetTerrainTileAtLocation(cur);
         if (curTile != null)
         {
@@ -205,7 +211,7 @@ public class EnclosureSystem : MonoBehaviour
                     accessed.Add(cur);
 
                     // ignore global areas outside of range to reduce waste
-                    if (!WithinRange(cur, minx, miny, maxx, maxy) && PositionToAtmosphere[cur] == 0)
+                    if (PositionToAtmosphere[cur] == 0)
                     {
                         continue;
                     }
@@ -230,8 +236,7 @@ public class EnclosureSystem : MonoBehaviour
                     PositionToAtmosphere[cur] = 255;
                     unaccessible.Add(cur);
 
-                    if (WithinRange(cur, minx, miny, maxx, maxy))
-                        walls.Push(cur);
+                    walls.Push(cur);
                 }
             }
             else
@@ -290,7 +295,7 @@ public class EnclosureSystem : MonoBehaviour
                         accessed.Add(cur);
 
                         // ignore global areas outside of range to reduce waste
-                        if (!WithinRange(cur, minx, miny, maxx, maxy) && PositionToAtmosphere[cur] == 0)
+                        if (PositionToAtmosphere[cur] == 0)
                         {
                             continue;
                         }
@@ -315,8 +320,7 @@ public class EnclosureSystem : MonoBehaviour
                         // walls inside walls
                         PositionToAtmosphere[cur] = 255;
                         unaccessible.Add(cur);
-                        if (WithinRange(cur, minx, miny, maxx, maxy))
-                            walls.Push(cur);
+                        walls.Push(cur);
                     }
                 }
                 else
@@ -363,7 +367,12 @@ public class EnclosureSystem : MonoBehaviour
     {
         // temporary list of atmosphere
         List<AtmosphericComposition> newAtmospheres = new List<AtmosphericComposition>();
-        newAtmospheres.Add(GlobalAtmosphere);
+        if (!initialized) newAtmospheres.Add(GlobalAtmosphere);
+        else
+        {
+            newAtmospheres.Add(this.Atmospheres[PositionToAtmosphere[new Vector3Int(1, 1, 0)]]);
+        }
+
 
 
         // Step 1: Populate tiles outside with 0 and find walls

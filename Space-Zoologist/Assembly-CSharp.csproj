@@ -112,6 +112,7 @@
     <Compile Include="Assets\Scripts\Needs\Systems\SymbiosisNS\SymbiosisCalculator.cs" />
     <Compile Include="Assets\Scripts\Needs\Systems\SymbiosisNS\SymbiosisNeedSystem.cs" />
     <Compile Include="Assets\Scripts\Needs\Systems\TerainNeedSystem.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Species\AnimalSpecies.cs" />
     <Compile Include="Assets\Scripts\Species\Life.cs" />
     <Compile Include="Assets\Scripts\Species\PathFinding\Grid.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Assets\Scripts\Utils\CustomEditorGUI\ExpandableAttribute.cs" />
     <Compile Include="Assets\Scripts\Utils\GridUtils.cs" />
     <Compile Include="Assets\Scripts\Utils\IncreasingProbabilitySet.cs" />
+    <Compile Include="Assets\Scripts\Utils\PlacementValidation.cs" />
     <Compile Include="Assets\Scripts\Utils\PoolingSystem.cs" />
     <Compile Include="Assets\Scripts\Utils\ReferenceSystem\FoodReferenceData.cs" />
     <Compile Include="Assets\Scripts\Utils\ReferenceSystem\ReferenceUtil.cs" />

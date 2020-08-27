@@ -31,11 +31,12 @@ public class FoodSourceStoreSection : StoreSection
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            if (!IsPlacementValid(mousePosition))
+            if (!base.GridSystem.PlacementValidation.IsItemPlacementValid(mousePosition, base.selectedItem))
             {
                 Debug.Log("Cannot place item that location");
                 return;
             }
+<<<<<<< HEAD
             Vector3Int mouseGridPosition = base.TileSystem.WorldToCell(mousePosition);
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsItem = true;
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Item = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
@@ -65,4 +66,12 @@ public class FoodSourceStoreSection : StoreSection
         }
         return false;
     }
+=======
+            Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
+            base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsFood = true;
+            base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
+            playerBalance.RuntimeValue -= selectedItem.Price;
+        }
+    }
+>>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
 }

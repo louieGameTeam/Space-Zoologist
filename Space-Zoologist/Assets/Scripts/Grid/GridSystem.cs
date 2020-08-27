@@ -11,11 +11,21 @@ public class GridSystem : MonoBehaviour
 {
     public int GridWidth => LevelDataReference.LevelData.MapWidth;
     public int GridHeight => LevelDataReference.LevelData.MapHeight;
+    [HideInInspector]
+    public PlacementValidation PlacementValidation = default;
     [SerializeField] public Grid Grid = default;
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private ReservePartitionManager RPM = default;
+<<<<<<< HEAD
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] private List<Tilemap> AllTerrainTilemaps = default;
+=======
+    [SerializeField] private TileSystem TileSystem = default;
+    [SerializeField] private PopulationManager PopulationManager = default;
+    [SerializeField] private Tilemap TilePlacementValidation = default;
+    [SerializeField] private TerrainTile Tile = default;
+    [SerializeField] float transparency = default;
+>>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
@@ -35,11 +45,25 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     /// <summary>
     /// Called when the store is opened
     /// </summary>
     public void UpdateAnimalCellGrid()
     {
+=======
+    private void Start()
+    {
+        this.PlacementValidation = this.gameObject.GetComponent<PlacementValidation>();
+        this.PlacementValidation.Initialize(this, this.TileSystem, this.LevelDataReference);
+    }
+
+    /// <summary>
+    /// Called when the store is opened
+    /// </summary>
+    public void UpdateAnimalCellGrid()
+    {
+>>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         // Reset previous locations
         for (int i=0; i<this.CellGrid.GetLength(0); i++)
         {
@@ -119,8 +143,10 @@ public class GridSystem : MonoBehaviour
                 this.CellGrid[loc.x, loc.y].HomeLocation = true;
             }
         }
+        this.HighlightHomeLocations();
     }
 
+<<<<<<< HEAD
     // Showing how tiles can be counted
     private void CountAllTiles()
     {
@@ -152,6 +178,21 @@ public class GridSystem : MonoBehaviour
             Debug.Log("Num Grass Tiles: " + this.TilemapData.NumGrassTiles);
             Debug.Log("Num Dirt Tiles: " + this.TilemapData.NumDirtTiles);
             Debug.Log("Num Sand Tiles: " + this.TilemapData.NumSandTiles);
+=======
+    public void HighlightHomeLocations()
+    {
+        foreach (Vector3Int location in this.PopulationHomeLocations)
+        {
+            this.TilePlacementValidation.SetTile(location, this.Tile);
+        }
+    }
+
+    public void UnhighlightHomeLocations()
+    {
+        foreach (Vector3Int location in this.PopulationHomeLocations)
+        {
+            this.TilePlacementValidation.SetTile(location, null);
+>>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         }
     }
 
@@ -180,6 +221,7 @@ public class GridSystem : MonoBehaviour
     {
         public CellData(bool start)
         {
+<<<<<<< HEAD
             this.ContainsItem = false;
             this.ContainsAnimal = false;
             this.Item = null;
@@ -189,6 +231,21 @@ public class GridSystem : MonoBehaviour
 
         public bool ContainsItem { get; set; }
         public GameObject Item { get; set; }
+=======
+            this.ContainsFood = false;
+            this.ContainsAnimal = false;
+            this.Food = null;
+            this.Animal = null;
+            this.Machine = null;
+            this.HomeLocation = false;
+            this.ContainsMachine = false;
+        }
+
+        public bool ContainsMachine { get; set; }
+        public GameObject Machine { get; set; }
+        public bool ContainsFood { get; set; }
+        public GameObject Food { get; set; }
+>>>>>>> f6c9eaeded97730decbefda1e5e7f8c4ccccdbc6
         public bool ContainsAnimal { get; set; }
         public GameObject Animal { get; set; }
         public bool HomeLocation { get; set; }
