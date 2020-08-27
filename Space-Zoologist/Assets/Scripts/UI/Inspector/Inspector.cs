@@ -94,7 +94,7 @@ public class Inspector : MonoBehaviour
             else if (cellData.ContainsFood)
             {
                 this.UnHighlightAll();
-                this.HightLightFoodSource(cellData.Food);
+                this.HighLightFoodSource(cellData.Food);
                 Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
                 this.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
             }
@@ -160,7 +160,7 @@ public class Inspector : MonoBehaviour
         this.inspectorWindowText.text = displayText;
     }
 
-    private void HightLightFoodSource(GameObject foodSource)
+    private void HighLightFoodSource(GameObject foodSource)
     {
         foodSource.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSource;
@@ -169,6 +169,8 @@ public class Inspector : MonoBehaviour
     private void DisplayFoodSourceStatus(FoodSource foodSource)
     {
         string displayText = $"{foodSource.name} Info: \n";
+
+        displayText += $"Output: {foodSource.FoodOutput}\n";
 
         foreach (Need need in foodSource.Needs.Values)
         {
