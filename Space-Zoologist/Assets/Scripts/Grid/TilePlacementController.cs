@@ -22,17 +22,19 @@ public class TilePlacementController : MonoBehaviour
     public Tilemap[] allTilemaps { get { return tilemaps; } }
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     private TerrainTile[] terrainTiles = default;
-    private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles 
+    private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles
     private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
-    private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile 
+
+    private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
+
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
     private int lastCornerX;
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private GridSystem GridSystem = default;
-
+    private bool isCheckingItem = true;
     private void Awake()
     {
         terrainTiles = Resources.LoadAll("Tiles",typeof(TerrainTile)).Cast<TerrainTile>().ToArray(); // Load tiles form resources
@@ -371,7 +373,7 @@ public class TilePlacementController : MonoBehaviour
                     {
                         foreach (Tilemap constraintTilemap in tile.constraintTilemap)
                         {
-                            if (constraintTilemap.HasTile(cellLocation))
+                            if (constraintTilemap.HasTile(cellLocation) && IsTileFree(cellLocation))
                             {
                                 foreach (Tilemap replacingTilemap in tile.replacementTilemap)
                                 {
@@ -497,5 +499,14 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
-
+    private bool IsTileFree(Vector3Int cellLocation)
+    {
+        GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
+        // if (cellData.ContainsAnimal == false && (cellData.ContainsFood == false || !isCheckingItem || cellData.ContainsMachine == false))
+        // {
+        //     return true;
+        // }
+        // return false;
+        return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO refactor PodMenu to inherit same as other store menus
 public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
@@ -13,7 +14,6 @@ public class MenuManager : MonoBehaviour
     [Header("Shared menu dependencies")]
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] CursorItem CursorItem = default;
-    [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
     [SerializeField] List<RectTransform> UIElements = default;
 
@@ -21,10 +21,10 @@ public class MenuManager : MonoBehaviour
     {
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.TileSystem, this.GridSystem);
+            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem);
             storeMenu.Initialize();
         }
-        PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.TileSystem);
+        PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem);
         PodMenu.Initialize();
     }
 
@@ -48,13 +48,13 @@ public class MenuManager : MonoBehaviour
             this.StoreToggledOff();
         }
     }
-
     private void StoreToggledOn()
     {
         this.PlayerBalance.SetActive(true);
         NeedSystemUpdater.isInStore = true;
         NeedSystemUpdater.PauseAllAnimals();
         this.GridSystem.UpdateAnimalCellGrid();
+        this.GridSystem.HighlightHomeLocations();
     }
 
     private void StoreToggledOff()
@@ -63,5 +63,6 @@ public class MenuManager : MonoBehaviour
         NeedSystemUpdater.isInStore = false;
         NeedSystemUpdater.UpdateAccessibleLocations();
         NeedSystemUpdater.UnpauseAllAnimals();
+        this.GridSystem.UnhighlightHomeLocations();
     }
 }

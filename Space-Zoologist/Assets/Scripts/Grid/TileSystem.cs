@@ -47,6 +47,8 @@ public class TileSystem : MonoBehaviour
     {
         liquidBodyTiles.Clear();
         TerrainTile terrainTile = GetTerrainTileAtLocation(vector3Int);
+
+        liquidBodyTiles.Add(vector3Int);
         GetNeighborCellLocations(vector3Int, terrainTile);
         return liquidBodyTiles;
     }
@@ -68,13 +70,15 @@ public class TileSystem : MonoBehaviour
     /// Change the composition of all connecting liquid tiles of the selected location
     /// </summary>
     /// <param name="cellLocation">Cell location of any liquid tile within the body to change </param>
-    /// <param name="compostion">Composition that will either be added or used to modify original composition</param>
+    /// <param name="composition">Composition that will either be added or used to modify original composition</param>
     /// <param name="isSetting">When set to true, original composition will be replaced by input composition. When set to false, input composition will be added to original Composition</param>
-    public void ChangeLiquidBodyComposition(Vector3Int cellLocation, float[] compostion, bool isSetting)
+    public void ChangeLiquidBodyComposition(Vector3Int cellLocation, float[] composition, bool isSetting)
     {
         liquidBodyTilesAndContents.Clear();
         TerrainTile terrainTile = GetTerrainTileAtLocation(cellLocation);
-        GetNeighborCellLocationsAndAccessComposition(cellLocation, compostion, terrainTile, isSetting);
+        liquidBodyTilesAndContents.Add(cellLocation);
+        ChangeLiquidComposition(cellLocation, composition, terrainTile, isSetting);
+        GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {

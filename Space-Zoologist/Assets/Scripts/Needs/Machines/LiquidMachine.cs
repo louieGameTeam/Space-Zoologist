@@ -6,7 +6,7 @@ using UnityEngine;
 public class LiquidMachine : MonoBehaviour
 {
     private GameObject LiquidHUDGameObject = default;
-    private ReservePartitionManager ReservePartitionManager = default;
+    private TileSystem TileSystem = default;
     private LiquidMachineHUD LiquidMachineHUD = default;
 
     public void Start()
@@ -14,15 +14,15 @@ public class LiquidMachine : MonoBehaviour
         this.LiquidMachineHUD = this.LiquidHUDGameObject.GetComponent<LiquidMachineHUD>();
     }
 
-    public void Initialize(ReservePartitionManager reservePartitionManager, GameObject liquidMachineHUD)
+    public void Initialize(TileSystem tileSystem, GameObject liquidMachineHUD)
     {
-        this.ReservePartitionManager = reservePartitionManager;
+        this.TileSystem = tileSystem;
         this.LiquidHUDGameObject = liquidMachineHUD;
     }
 
     void OnMouseDown()
     {
-        this.OpenHUD();
+        if (!this.LiquidHUDGameObject.activeSelf) this.OpenHUD();
     }
 
     public void OpenHUD()
@@ -30,13 +30,14 @@ public class LiquidMachine : MonoBehaviour
         this.LiquidHUDGameObject.SetActive(!this.LiquidHUDGameObject.activeSelf);
         if (this.LiquidHUDGameObject.activeSelf)
         {
-            //this.LiquidMachineHUD.Initialize(this.ReservePartitionManager.PopulationAccessibleLiquid(this.gameObject.transform.position), this);
+            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(this.TileSystem.WorldToCell(this.gameObject.transform.position));
+            this.LiquidMachineHUD.Initialize(this.TileSystem.GetTileContentsAtLocation(this.TileSystem.WorldToCell(this.gameObject.transform.position), tile), this);
         }
     }
 
-    // TODO figure out how you can update the Liquid of an enclosed area
     public void UpdateLiquid(float[] liquidComposition)
     {
-        //this.ReservePartitionManager.UpdateLiquidComposition(this.transform.position, atmosphericComposition);
+        Debug.Log("Updating liquid");
+        this.TileSystem.ChangeLiquidBodyComposition(this.TileSystem.WorldToCell(this.gameObject.transform.position), liquidComposition, true);
     }
 }

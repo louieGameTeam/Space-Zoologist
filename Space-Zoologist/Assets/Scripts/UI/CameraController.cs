@@ -7,6 +7,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] float dragSpeed = 2;
     [SerializeField] private float zoomLerpSpeed = 5f;
+    [SerializeField] bool EdgeMovement = false;
+    [SerializeField] private float edgeSpeed = 5f;
+    [SerializeField] private float edgeBoundary = 10f;
     [SerializeField] private LevelDataReference LevelDataReference = default;
 
     private Camera cam = default;
@@ -25,6 +28,7 @@ public class CameraController : MonoBehaviour
         this.HandleKeyboard();
         this.HandleMouse();
         this.HandleZoom();
+        if (this.EdgeMovement) this.HandleEdgeScreen();
     }
 
     private void HandleZoom()
@@ -75,6 +79,34 @@ public class CameraController : MonoBehaviour
 
         Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
         Vector3 newPosition = new Vector3(this.transform.position.x + pos.x * dragSpeed * -1, this.transform.position.y + pos.y * dragSpeed * -1, -10);
+        if (!this.IsValidLocation(newPosition))
+        {
+            return;
+        }
+        this.transform.position = newPosition;
+    }
+
+    private void HandleEdgeScreen()
+    {
+        float x = 0;
+        float y = 0;
+        if (Input.mousePosition.x > Screen.width - edgeBoundary)
+        {
+            x += this.edgeSpeed * Time.deltaTime;
+        }
+        if (Input.mousePosition.x < 0 + edgeBoundary)
+        {
+            x -= this.edgeSpeed * Time.deltaTime;
+        }
+        if (Input.mousePosition.y > Screen.height - edgeBoundary)
+        {
+            y += this.edgeSpeed * Time.deltaTime;
+        }
+        if (Input.mousePosition.y < 0 + edgeBoundary)
+        {
+            y -= this.edgeSpeed * Time.deltaTime;
+        }
+        Vector3 newPosition = new Vector3(this.transform.position.x + x, this.transform.position.y + y, this.transform.position.z);
         if (!this.IsValidLocation(newPosition))
         {
             return;
