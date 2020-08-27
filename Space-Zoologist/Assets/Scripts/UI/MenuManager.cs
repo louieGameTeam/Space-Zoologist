@@ -48,17 +48,6 @@ public class MenuManager : MonoBehaviour
             this.StoreToggledOff();
         }
     }
-
-    public void CloseMenu()
-    {
-        if (currentMenu != null)
-        {
-            currentMenu.SetActive(false);
-            currentMenu = null;
-            this.StoreToggledOff();
-        }
-    }
-
     private void StoreToggledOn()
     {
         this.PlayerBalance.SetActive(true);

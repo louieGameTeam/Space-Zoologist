@@ -47,6 +47,7 @@ public class TileSystem : MonoBehaviour
     {
         liquidBodyTiles.Clear();
         TerrainTile terrainTile = GetTerrainTileAtLocation(vector3Int);
+
         liquidBodyTiles.Add(vector3Int);
         GetNeighborCellLocations(vector3Int, terrainTile);
         return liquidBodyTiles;

@@ -19,9 +19,11 @@ public class StoreSection : MonoBehaviour
     protected List<RectTransform> UIElements = default;
     protected IntVariable playerBalance = default;
     protected LevelDataReference LevelDataReference = default;
+
     protected GridSystem GridSystem = default;
 
     protected Item selectedItem = null;
+
 
     public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem)
     {

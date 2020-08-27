@@ -53,6 +53,7 @@ public class AtmosphereMachineHUD : MonoBehaviour
             }
         }
         this.CurrentMachine.UpdateAtmosphere(atmosphericComposition);
+        this.NeedSystemManager.ForceUpdateSystems();
     }
 
     public void ApplyStartingValues()
