@@ -12,11 +12,18 @@ public class InspectMode : MonoBehaviour
     private bool isInInspectorMode = false;
 
     [SerializeField] private Text inspectorButtonText = null;
+    // To pause/free animals
     [SerializeField] private NeedSystemUpdater needSystemUpdater = null;
 
+    [SerializeField] private GridSystem gridSystem = null;
+    [SerializeField] private TileSystem tileSystem = null;
+    [SerializeField] private EnclosureSystem enclosureSystem = null;
+
+    // To access other UI elements to toggle
     [SerializeField] private GameObject HUD = null;
-    // The window to display
+    // The inspector window 
     [SerializeField] private GameObject inspectorWindow = null;
+    [SerializeField] private Text inspectorWindowText = null;
 
     /// <summary>
     /// 
@@ -37,6 +44,7 @@ public class InspectMode : MonoBehaviour
         if (this.isInInspectorMode)
         {
             this.inspectorButtonText.text = "INSPECTOR:ON";
+            this.inspectorWindowText.text = "INSPECTOR";
             this.needSystemUpdater.PauseAllAnimals();
             this.inspectorWindow.SetActive(true);
             this.HUD.SetActive(false);
@@ -50,5 +58,72 @@ public class InspectMode : MonoBehaviour
         }
 
         //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
+    }
+
+    /// <summary>
+    /// Listens to mouse clicks and what was selected, then call functions to
+    /// display info on inspector window
+    /// </summary>
+    public void Update()
+    {
+        if (this.isInInspectorMode && Input.GetMouseButtonDown(0))
+        {
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
+            TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
+
+            Debug.Log($"Mouse click at {cellPos}");
+
+            // Check if selection was anaiaml
+            if (this.gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsAnimal)
+            {
+                Debug.Log($"Found animal {this.gridSystem.CellGrid[cellPos.x, cellPos.y].Animal} @ {cellPos}");
+            }
+            // Selection was liquid tile
+            else if(tile.type == TileType.Liquid)
+            {
+                Debug.Log($"Selected liquid tile @ {cellPos}");
+                this.DiplayLiquidCompisition(cellPos, tile);
+            }
+            // Selection was enclosed area
+            else
+            {
+                this.DislplayEnclosedArea(cellPos);
+                Debug.Log($"Enclosed are @ {cellPos} selected");
+            }
+        }
+    }
+
+    private void DislplayEnclosedArea(Vector3Int cellPos)
+    {
+        AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(cellPos);
+
+        // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
+        float[] composition = atmosphericComposition.GeComposition();
+
+        string displayText = "Enclosed Area Info: \n";
+
+
+        // Atmospheric info
+        displayText += "Atmospheric composition: \n";
+        foreach (var (value, index) in composition.WithIndex())
+        {
+            displayText += $"{((AtmosphereComponent)index).ToString()} : {value}\n";
+        }
+
+        this.inspectorWindowText.text = displayText;
+    }
+
+    private void DiplayLiquidCompisition(Vector3Int cellPos, TerrainTile tile)
+    {
+        float[] compositions = this.tileSystem.GetTileContentsAtLocation(cellPos, tile);
+
+        string displayText = "Liquid composition: \n";
+
+        foreach (var (composition, index) in compositions.WithIndex())
+        {
+            displayText += $"{((LiquidComposition)index).ToString()} : {composition}\n";
+        }
+
     }
 }
