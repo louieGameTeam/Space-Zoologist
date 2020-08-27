@@ -25,6 +25,9 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
 
+    private GameObject lastFoodSourceSelected = null;
+    private GameObject lastPopulationSelected = null;
+
     /// <summary>
     /// 
     /// </summary>
@@ -55,6 +58,7 @@ public class Inspector : MonoBehaviour
             this.needSystemUpdater.UnpauseAllAnimals();
             this.inspectorWindow.SetActive(false);
             this.HUD.SetActive(true);
+            this.UnHighlightAll();
         }
 
         //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
@@ -68,6 +72,9 @@ public class Inspector : MonoBehaviour
     {
         if (this.isInInspectorMode && Input.GetMouseButtonDown(0))
         {
+            // Update animal locations
+            this.gridSystem.UpdateAnimalCellGrid();
+
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
             TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
@@ -78,32 +85,92 @@ public class Inspector : MonoBehaviour
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)
             {
-                Debug.Log($"Found animal {this.gridSystem.CellGrid[cellPos.x, cellPos.y].Animal} @ {cellPos}");
+                this.UnHighlightAll();
+                this.HighlightPopulation(cellData.Animal);
+                Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
+                this.DisplayAnimalStatus(cellData.Animal.GetComponent<Animal>());
             }
             // Selection is food source or item
             else if (cellData.ContainsFood)
             {
+                this.UnHighlightAll();
+                this.HighLightFoodSource(cellData.Food);
                 Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
                 this.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
             }
             // Selection is liquid tile
             else if (tile.type == TileType.Liquid)
             {
+                this.UnHighlightAll();
                 Debug.Log($"Selected liquid tile @ {cellPos}");
                 this.DisplayLiquidCompisition(cellPos, tile);
             }
             // Selection is enclosed area
             else
             {
+                this.UnHighlightAll();
                 this.DislplayEnclosedArea(cellPos);
                 Debug.Log($"Enclosed are @ {cellPos} selected");
             }
         }
     }
 
+    private void UnHighlightAll()
+    {
+        if( this.lastFoodSourceSelected)
+        {
+            this.lastFoodSourceSelected.GetComponent<SpriteRenderer>().color = Color.white;
+            this.lastFoodSourceSelected = null;
+        }
+        if (this.lastPopulationSelected)
+        {
+            foreach (Transform child in this.lastPopulationSelected.transform)
+            {
+                child.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            this.lastPopulationSelected = null;
+        }
+    }
+
+    private void HighlightPopulation(GameObject animal)
+    {
+        GameObject population = animal.transform.parent.gameObject;
+
+        foreach (Transform child in population.transform)
+        {
+            child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+
+        this.lastPopulationSelected = population;
+    }
+
+    private void DisplayAnimalStatus(Animal animal)
+    {
+        Population population = animal.PopulationInfo;
+
+        string displayText = $"{population.species.SpeciesName} Info: \n";
+
+        displayText += $"Count: {population.Count}\n";
+
+        foreach (Need need in population.Needs.Values)
+        {
+            displayText += $"{need.NeedName} : {need.GetCondition(need.NeedValue)}\n";
+        }
+
+        this.inspectorWindowText.text = displayText;
+    }
+
+    private void HighLightFoodSource(GameObject foodSource)
+    {
+        foodSource.GetComponent<SpriteRenderer>().color = Color.blue;
+        this.lastFoodSourceSelected = foodSource;
+    }
+
     private void DisplayFoodSourceStatus(FoodSource foodSource)
     {
         string displayText = $"{foodSource.name} Info: \n";
+
+        displayText += $"Output: {foodSource.FoodOutput}\n";
 
         foreach (Need need in foodSource.Needs.Values)
         {
@@ -145,5 +212,6 @@ public class Inspector : MonoBehaviour
             displayText += $"{((LiquidComposition)index).ToString()} : {composition}\n";
         }
 
+        this.inspectorWindowText.text = displayText;
     }
 }
