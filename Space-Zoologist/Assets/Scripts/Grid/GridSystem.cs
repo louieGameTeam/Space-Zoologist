@@ -16,7 +16,6 @@ public class GridSystem : MonoBehaviour
     [SerializeField] public Grid Grid = default;
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private ReservePartitionManager RPM = default;
-
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] private Tilemap TilePlacementValidation = default;
@@ -134,41 +133,6 @@ public class GridSystem : MonoBehaviour
         this.HighlightHomeLocations();
     }
 
-
-    // Showing how tiles can be counted
-    private void CountAllTiles()
-    {
-        foreach(Tilemap tilemap in this.AllTerrainTilemaps)
-        {
-            Debug.Log("Tilemap name: " + tilemap.name);
-            BoundsInt bounds = tilemap.cellBounds;
-            foreach (Vector3Int pos in bounds.allPositionsWithin)
-            {
-                TerrainTile tile = tilemap.GetTile<TerrainTile>(pos);
-                if (tile != null && pos.x < GridWidth - 1 && pos.y < GridHeight - 1 && pos.x > 0 && pos.y > 0)
-                {
-                    switch(tile.name)
-                    {
-                        case "Grass":
-                            this.TilemapData.NumGrassTiles++;
-                            break;
-                        case "Dirt":
-                            this.TilemapData.NumDirtTiles++;
-                            break;
-                        case "Sand":
-                            this.TilemapData.NumSandTiles++;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            Debug.Log("Num Grass Tiles: " + this.TilemapData.NumGrassTiles);
-            Debug.Log("Num Dirt Tiles: " + this.TilemapData.NumDirtTiles);
-            Debug.Log("Num Sand Tiles: " + this.TilemapData.NumSandTiles);
-          }
-        }
-            
     public void HighlightHomeLocations()
     {
         foreach (Vector3Int location in this.PopulationHomeLocations)

@@ -368,7 +368,6 @@ public class EnclosureSystem : MonoBehaviour
         }
 
 
-
         // Step 1: Populate tiles outside with 0 and find walls
 
         // tiles to-process

@@ -91,7 +91,6 @@ public class NeedSystemManager : MonoBehaviour
         }
     }
 
-
     public void UpdateAccessMap()
     {
         this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.chagnedTiles);
