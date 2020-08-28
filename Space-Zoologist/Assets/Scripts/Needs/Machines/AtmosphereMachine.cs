@@ -21,7 +21,7 @@ public class AtmosphereMachine : MonoBehaviour
 
     void OnMouseDown()
     {
-        this.OpenHUD();
+        if (!this.AtmosphereHUDGameObject.activeSelf) this.OpenHUD();
     }
 
     public void OpenHUD()
@@ -37,6 +37,5 @@ public class AtmosphereMachine : MonoBehaviour
     public void UpdateAtmosphere(AtmosphericComposition atmosphericComposition)
     {
         this.EnclosureSystem.UpdateAtmosphereComposition(this.transform.position, atmosphericComposition);
-        Debug.Log(this.EnclosureSystem.GetAtmosphericComposition(this.gameObject.transform.position).ToString());
     }
 }

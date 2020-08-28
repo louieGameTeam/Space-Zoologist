@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class MovementController : MonoBehaviour
 {
     public bool DestinationReached { get; private set; }
+    public bool DestinationCancelled { get; private set; }
     public bool HasPath = false;
     public bool IsPaused = false;
 
@@ -54,9 +55,15 @@ public class MovementController : MonoBehaviour
         this.PathToDestination = pathToDestination;
         this.NextPathTile = new Vector3(this.PathToDestination[0].x + 0.5f, this.PathToDestination[0].y + 0.5f, 0);
         this.DestinationReached = false;
+        this.DestinationCancelled = false;
         this.PathIndex = 0;
         this.CalculateSpeed();
         this.UpdateVisualLogic(this.NextPathTile);
+    }
+
+    public void TryToCancelDestination()
+    {
+        if (this.HasPath) this.DestinationCancelled = true;
     }
 
     /// <summary>
