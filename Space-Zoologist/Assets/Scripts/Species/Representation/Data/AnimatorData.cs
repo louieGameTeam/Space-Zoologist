@@ -5,7 +5,6 @@ using UnityEngine;
 public class AnimatorData
 {
     public Animator animator;
-    public bool StateChange = false;
     public AnimatorStateInfo initialState;
     public int layerIndex;
 }

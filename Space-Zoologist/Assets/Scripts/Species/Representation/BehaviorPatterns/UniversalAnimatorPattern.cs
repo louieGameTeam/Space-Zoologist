@@ -26,10 +26,8 @@ public class UniversalAnimatorPattern : BehaviorPattern
     {
         if (animalToAnimatorData[animal].animator.GetBool("IsStateFinished"))
         {
-            Debug.Log("same");
             return true;
         }
-        Debug.Log("different");
         return false;
     }
     protected override void ExitPattern(GameObject gameObject)
