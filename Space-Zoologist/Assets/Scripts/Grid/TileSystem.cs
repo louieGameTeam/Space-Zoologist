@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 public class TileSystem : MonoBehaviour
 {
@@ -77,7 +78,8 @@ public class TileSystem : MonoBehaviour
         TerrainTile terrainTile = GetTerrainTileAtLocation(cellLocation);
         liquidBodyTilesAndContents.Add(cellLocation);
         ChangeLiquidComposition(cellLocation, composition, terrainTile, isSetting);
-        GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
+        RefreshTilemapColor(terrainTile.targetTilemap);
+        //GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {
@@ -483,7 +485,19 @@ public class TileSystem : MonoBehaviour
         }
         return true;
     }
-
+    public void RefreshTilemapColor(Tilemap tilemap)
+    {
+        if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
+        {
+            foreach (Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
+            {
+                if (tileAttributes.tileContents.ContainsKey(cellLocation))
+                {
+                    tileAttributes.RefreshAllColors();
+                }
+            }
+        }
+    }
     private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
