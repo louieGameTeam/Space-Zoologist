@@ -5,7 +5,6 @@ using UnityEngine;
 public class BehaviorPatternUpdater : MonoBehaviour
 {
     [SerializeField] GridSystem GridSystem = default;
-    [HideInInspector]
     public List<BehaviorPattern> behaviorPatterns = new List<BehaviorPattern>();
     public bool isPaused = false;
     // TODO manage pause for all behaviors
@@ -25,6 +24,7 @@ public class BehaviorPatternUpdater : MonoBehaviour
     {
         if (!behaviorPatterns.Contains(behaviorPattern))
         {
+            behaviorPattern.StartUp();
             behaviorPatterns.Add(behaviorPattern);
             behaviorPattern.SetupDependencies(this.GridSystem);
         }
