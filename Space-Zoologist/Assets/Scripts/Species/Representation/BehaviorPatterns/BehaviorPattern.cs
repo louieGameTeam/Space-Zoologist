@@ -9,6 +9,13 @@ public class BehaviorPattern : MonoBehaviour
     private List<GameObject> compeletedAnimals = new List<GameObject>(); //Lists to remove animals from updating before updating to avoid modifying while iterating
     private List<GameObject> alternativeCompletedAnimals = new List<GameObject>();
     private List<GameObject> forceRemoveAnimals = new List<GameObject>();
+    public virtual void StartUp()
+    {
+        AnimalsToAnimalData.Clear();
+        compeletedAnimals.Clear();
+        alternativeCompletedAnimals.Clear();
+        forceRemoveAnimals.Clear();
+    }
     /// <summary>
     /// Assign necessary data to this script
     /// </summary>
@@ -103,11 +110,14 @@ public class BehaviorPattern : MonoBehaviour
     protected virtual void ExitPattern(GameObject gameObject)
     {
         gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
-        AnimalsToAnimalData[gameObject].callback?.Invoke(gameObject, AnimalsToAnimalData[gameObject].collaboratingAnimals);
+        StepCompletedCallBack callback = AnimalsToAnimalData[gameObject].callback;
+        List<GameObject> collab = AnimalsToAnimalData[gameObject].collaboratingAnimals;
         AnimalsToAnimalData.Remove(gameObject);
+        callback.Invoke(gameObject, collab);
     }
     protected virtual void ExitPatternAlternative(GameObject gameObject)
     {
+        Debug.Log("exit");
         gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
         AnimalsToAnimalData[gameObject].alternativeCallback?.Invoke(gameObject, AnimalsToAnimalData[gameObject].collaboratingAnimals);
         AnimalsToAnimalData.Remove(gameObject);

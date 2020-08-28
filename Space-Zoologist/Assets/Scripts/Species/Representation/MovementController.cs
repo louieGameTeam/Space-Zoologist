@@ -18,13 +18,27 @@ public class MovementController : MonoBehaviour
     // Animal doesn't change direction until they've moved a certain distance in that direction
     private float ChangeDirectionThreshold = 0.5f;
     private float ChangeDirectionMovement = 0f;
-
+    private float bufferedSpeed = -1;
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
         this.DestinationReached = true;
     }
-
+    private float CalculateSpeed()
+    {
+        if (IsPaused)
+        {
+            return 0;
+        }
+        if (!this.Animal.MovementData.IsModifierChanged && bufferedSpeed != -1)
+        {
+            this.Animal.MovementData.Speed = bufferedSpeed;
+            return bufferedSpeed;
+        }
+        bufferedSpeed = Animal.MovementData.CalculateModifiedSpeed();
+        this.Animal.MovementData.Speed = bufferedSpeed;
+        return bufferedSpeed;
+    }
     /// <summary>
     /// Called before update to assign a path.
     /// </summary>
@@ -41,6 +55,7 @@ public class MovementController : MonoBehaviour
         this.NextPathTile = new Vector3(this.PathToDestination[0].x + 0.5f, this.PathToDestination[0].y + 0.5f, 0);
         this.DestinationReached = false;
         this.PathIndex = 0;
+        this.CalculateSpeed();
         this.UpdateVisualLogic(this.NextPathTile);
     }
 
@@ -58,6 +73,7 @@ public class MovementController : MonoBehaviour
         if (this.PathToDestination.Count == 0)
         {
             this.PathIndex = 0;
+
             this.DestinationReached = true;
             return;
         }
@@ -68,6 +84,8 @@ public class MovementController : MonoBehaviour
             if (this.PathIndex == this.PathToDestination.Count)
             {
                 this.PathIndex = 0;
+                this.bufferedSpeed = -1;
+                this.Animal.MovementData.Speed = 0;
                 this.DestinationReached = true;
                 return;
             }
@@ -80,7 +98,7 @@ public class MovementController : MonoBehaviour
                 this.UpdateVisualLogic(this.NextPathTile);
             }
         }
-        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.Animal.MovementData.Speed);
+        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, CalculateSpeed());
     }
 
     public void MoveInDirection(Direction direction)

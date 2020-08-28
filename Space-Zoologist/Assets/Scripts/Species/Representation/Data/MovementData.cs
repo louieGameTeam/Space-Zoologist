@@ -12,9 +12,66 @@ public class MovementData
 {
     public Movement MovementStatus = Movement.idle;
     public Direction CurrentDirection = Direction.down;
-
-    [SerializeField] public float Speed  = 1f;
-    [SerializeField] public float RunThreshold  = 2f;
-    [SerializeField] public float IdleTimeBetweenBehaviors = 0f;
+    [SerializeField] private Dictionary<string, float> TagsToMultiplicationSpeedModifiers = new Dictionary<string, float>();
+    [SerializeField] private Dictionary<string, float> TagsToAdditionSpeedModifiers = new Dictionary<string, float>();
+    [SerializeField] public float BaseSpeed = 3f; // The base speed before applying all the modifiers, usually does not change in runtime
+    [SerializeField] public float RunThreshold = 2f; // If the speed after applying all the modifiers exceeds this value, then animation will be shown as running
+    [SerializeField] public float Speed = 0f; // The actual speed the animal is moving
+    public bool IsModifierChanged = false;
+    /*Used for optimization. If modifier is unchanged, MovementController will use the buffered speed stored in its self without doing calculation every update.
+    This works based on the assumption that only the MovementController needs this information and Calling CalculateModifiedSpeed() in the MovementController will reset this value to false once done a new calculation.
+    If a new system need this information, try get it from the MovementController instead or other work around.*/
+    /// <summary>
+    /// Adds a new multiplication modifier
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="multiplier"></param>
+    public void AddMultiplicationSpeedModifiers(string tag, float multiplier)
+    {
+        IsModifierChanged = true;
+        if (TagsToMultiplicationSpeedModifiers.ContainsKey(tag))
+        {
+            TagsToMultiplicationSpeedModifiers[tag] = multiplier;
+        }
+        else
+        {
+            TagsToMultiplicationSpeedModifiers.Add(tag, multiplier);
+        }
+    }
+    /// <summary>
+    /// Adds a new Addition modifier. To subtract, just use a negative value
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="multiplier"></param>
+    public void AddAdditionSpeedModifiers(string tag, float adder)
+    {
+        IsModifierChanged = true;
+        if (TagsToAdditionSpeedModifiers.ContainsKey(tag))
+        {
+            TagsToAdditionSpeedModifiers[tag] = adder;
+        }
+        else
+        {
+            TagsToAdditionSpeedModifiers.Add(tag, adder);
+        }
+    }
+    /// <summary>
+    /// Returns the moving speed taking consideration all the modifiers. Additions first, then multiplications
+    /// </summary>
+    /// <returns></returns>
+    public float CalculateModifiedSpeed()
+    {
+        IsModifierChanged = false;
+        float multiplier = 1;
+        foreach (float value in TagsToMultiplicationSpeedModifiers.Values)
+        {
+            multiplier *= value;
+        }
+        float adder = 0;
+        foreach (float value in TagsToAdditionSpeedModifiers.Values)
+        {
+            adder += value;
+        }
+        return (BaseSpeed + adder) * multiplier; //Addition before multiplication
+    }
 }
-

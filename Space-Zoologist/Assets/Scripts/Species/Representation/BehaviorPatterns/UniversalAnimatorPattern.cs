@@ -32,6 +32,7 @@ public class UniversalAnimatorPattern : BehaviorPattern
     }
     protected override void ExitPattern(GameObject gameObject)
     {
+        animalToAnimatorData[gameObject].animator.SetBool("IsStateFinished", true);
         animalToAnimatorData.Remove(gameObject);
         base.ExitPattern(gameObject);
     }

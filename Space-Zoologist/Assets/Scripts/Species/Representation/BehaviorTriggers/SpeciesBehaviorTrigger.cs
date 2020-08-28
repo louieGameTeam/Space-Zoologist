@@ -135,7 +135,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     }
     protected void OnAlternativeExit(GameObject animal, List<GameObject> collaboratingAnimals)
     {
-
+        this.OnStepCompleted(animal, collaboratingAnimals);
     }
     /// <summary>
     /// Define what needs to be done when this behavior is force exiting, usually just call remove behavior
@@ -165,8 +165,10 @@ public class SpecieBehaviorTrigger : ScriptableObject
             if (!isDriven)// Avoids infinite loop
             {
                 foreach (GameObject otherAnimal in collaboratingAnimals)
-                {
-                    if (animalsToSteps[otherAnimal] != animalsToSteps[animal])
+                {/*
+                    Debug.Log(animalsToSteps.Count);
+                    Debug.Log(animalsToSteps[otherAnimal]);*/
+                    if (!animalsToSteps.ContainsKey(otherAnimal) || animalsToSteps[otherAnimal] != animalsToSteps[animal])
                     {
                         return;
                     }
@@ -180,6 +182,11 @@ public class SpecieBehaviorTrigger : ScriptableObject
                     ProceedToNext(otherAnimal, otherAnimalCollabs, true);
                 }
             }
+            foreach (int step in animalsToSteps.Values)
+            {
+                Debug.Log(step);
+            }
+            Debug.Log(isDriven);
             animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
         }
         else
@@ -195,7 +202,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     /// <param name="animal"></param>
     /// <param name="collaboratingAnimals"></param>
     /// <param name="isDriven"></param>
-    protected void LoopWhenFinished(GameObject animal, List<GameObject> collaboratingAnimals, bool isDriven = false) //Looping can be achieved by overriding this function, as well as synchronization among all animals
+    protected void LoopWhenFinished(GameObject animal, List<GameObject> collaboratingAnimals) //Looping can be achieved by overriding this function, as well as synchronization among all animals
     {
         if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed
         {
