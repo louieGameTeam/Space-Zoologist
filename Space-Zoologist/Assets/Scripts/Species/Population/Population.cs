@@ -249,6 +249,7 @@ public class Population : MonoBehaviour, Life
         // Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
+    // TODO figure out filter bug for behaviors
     /// <summary>
     /// Updates the needs behaviors based on the need's current condition
     /// </summary>

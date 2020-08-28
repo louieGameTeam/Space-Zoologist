@@ -83,11 +83,19 @@ public class NeedSystemManager : MonoBehaviour
         }
     }
 
-    public void ForceUpdateSystems()
+    public void UpdateAllSystems()
     {
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             entry.Value.UpdateSystem();
+        }
+    }
+
+    public void UpdateSystem(NeedType needType)
+    {
+        if (this.systems.ContainsKey(needType))
+        {
+            this.systems[needType].UpdateSystem();
         }
     }
 

@@ -20,6 +20,9 @@ public class MovementController : MonoBehaviour
     private float ChangeDirectionThreshold = 0.5f;
     private float ChangeDirectionMovement = 0f;
 
+    private float XOffset = 0.5f;
+    private float YOffset = 0.5f;
+
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();

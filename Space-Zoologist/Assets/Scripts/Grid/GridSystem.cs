@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// Setup function to give back home locations of given population
 /// <summary>
 /// Translates the tilemap into a 2d array for keeping track of object locations.
 /// </summary>
@@ -24,12 +25,10 @@ public class GridSystem : MonoBehaviour
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
-
-    private HashSet<Vector3Int> PopulationHomeLocations = default;
+    private HashSet<Vector3Int> PopulationHomeLocations = new HashSet<Vector3Int>();
 
     private void Awake()
     {
-        this.PopulationHomeLocations = new HashSet<Vector3Int>();
         this.CellGrid = new CellData[this.GridWidth, this.GridHeight];
         for (int i=0; i<this.GridWidth; i++)
         {
@@ -57,8 +56,11 @@ public class GridSystem : MonoBehaviour
             for (int j=0; j<this.CellGrid.GetLength(1); j++)
             {
                 this.CellGrid[i, j].ContainsAnimal = false;
+                this.CellGrid[i, j].HomeLocation = false;
             }
         }
+        // Could be broken up for better efficiency since iterating through population twice
+        this.PopulationHomeLocations = this.RecalculateHomeLocation();
         // Update locations and grab reference to animal GameObject (for future use)
         foreach (Population population in this.PopulationManager.Populations)
         {
@@ -115,30 +117,36 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    public void SetupPopulationHomeLocation(Vector3 populationLocation)
-    {
-        Vector3Int origin = this.Grid.WorldToCell(populationLocation);
-        for (int i=-1; i<=1; i++)
-        {
-            for (int j=-1; j<=1; j++)
-            {
-                Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
-                if (!this.PopulationHomeLocations.Contains(loc))
-                {
-                    this.PopulationHomeLocations.Add(loc);
-                }
-                this.CellGrid[loc.x, loc.y].HomeLocation = true;
-            }
-        }
-        this.HighlightHomeLocations();
-    }
-
+    // Resets and recalculates everytime in case a population dies
     public void HighlightHomeLocations()
     {
+        this.PopulationHomeLocations = this.RecalculateHomeLocation();
         foreach (Vector3Int location in this.PopulationHomeLocations)
         {
             this.TilePlacementValidation.SetTile(location, this.Tile);
         }
+    }
+
+    private HashSet<Vector3Int> RecalculateHomeLocation()
+    {
+        HashSet<Vector3Int> homeLocations = new HashSet<Vector3Int>();
+        foreach (Population population in this.PopulationManager.Populations)
+        {
+            Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
+            for (int i=-1; i<=1; i++)
+            {
+                for (int j=-1; j<=1; j++)
+                {
+                    Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
+                    if (!homeLocations.Contains(loc))
+                    {
+                        homeLocations.Add(loc);
+                        this.CellGrid[origin.x + i, origin.y + j].HomeLocation = true;
+                    }
+                }
+            }
+        }
+        return homeLocations;
     }
 
     public void UnhighlightHomeLocations()
@@ -179,8 +187,8 @@ public class GridSystem : MonoBehaviour
             this.Food = null;
             this.Animal = null;
             this.Machine = null;
-            this.HomeLocation = false;
             this.ContainsMachine = false;
+            this.HomeLocation = false;
         }
 
         public bool ContainsMachine { get; set; }

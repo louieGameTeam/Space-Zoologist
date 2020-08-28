@@ -35,7 +35,7 @@ public class MachineValues : MonoBehaviour
     public void DecrementValue()
     {
         float value = float.Parse(this.MachineValue.text);
-        if (value > 0)
+        if (value >= 1)
         {
             value--;
             this.MachineValue.text = value.ToString();

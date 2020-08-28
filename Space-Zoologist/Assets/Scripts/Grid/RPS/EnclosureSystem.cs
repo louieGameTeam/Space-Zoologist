@@ -142,7 +142,6 @@ public class EnclosureSystem : MonoBehaviour
     /// <param name="positions">Positions where the walls are placed or removed.</param>
     public void UpdateAtmosphere()
     {
-        Debug.Log("Atmosphere updated");
         // If not initialized or have more than , initialize instead
         if (!initialized || Atmospheres.Count >= 120)
         {

@@ -78,6 +78,10 @@ public class Inspector : MonoBehaviour
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
             TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
+            if (cellPos.x >= this.gridSystem.GridWidth - 1 || cellPos.y >= this.gridSystem.GridHeight - 1 || cellPos.x < 1 || cellPos.y < 1)
+            {
+                return;
+            }
             GridSystem.CellData cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
 
             Debug.Log($"Mouse click at {cellPos}");
@@ -148,7 +152,7 @@ public class Inspector : MonoBehaviour
     {
         Population population = animal.PopulationInfo;
 
-        string displayText = $"{population.species.SpeciesName} Info: \n";
+        string displayText = $"{population.species.SpeciesName}:\n";
 
         displayText += $"Count: {population.Count}\n";
 
@@ -188,7 +192,7 @@ public class Inspector : MonoBehaviour
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] composition = atmosphericComposition.GeComposition();
 
-        string displayText = "Enclosed Area Info: \n";
+        string displayText = "Enclosed Area:\n";
 
 
         // Atmospheric info
