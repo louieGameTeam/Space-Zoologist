@@ -93,7 +93,7 @@ public class BehaviorPattern : MonoBehaviour
     /// <returns></returns>
     protected virtual bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
     {
-        return true;
+        return false;
     }
     /// <summary>
     /// Actions taken upon completion of pattern. All following are generally necessary when exit. It is recommended to call base when overridden.
