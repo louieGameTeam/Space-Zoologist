@@ -6,12 +6,15 @@ using UnityEngine.EventSystems;
 
 public class PodMenu : MonoBehaviour
 {
+    public ItemType ItemType => itemType;
+
+    private ItemType itemType = default;
     [Header("Handled by Prefab")]
     [SerializeField] GameObject podButtonPrefab = default;
     [SerializeField] Transform PodItemContainer = default;
     [Header("Dependencies")]
     [SerializeField] PopulationManager populationManager = default;
-    private TileSystem TileSystem = default;
+    private GridSystem GridSystem = default;
     private CursorItem cursorItem = default;
     private LevelDataReference LevelDataReference = default;
 
@@ -19,12 +22,13 @@ public class PodMenu : MonoBehaviour
     private List<RectTransform> UIElements = default;
     AnimalSpecies selectedSpecies = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, TileSystem tileSystem)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem)
     {
+        this.itemType = ItemType.Pod;
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
-        this.TileSystem = tileSystem;
+        this.GridSystem = gridSystem;
     }
 
     public void Initialize()
@@ -83,31 +87,13 @@ public class PodMenu : MonoBehaviour
         else if (pointerEventData.button == PointerEventData.InputButton.Left)
         {
             Vector2 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
-            if (!this.IsPlacementValid(position))
+            if (!this.GridSystem.PlacementValidation.IsPodPlacementValid(position, selectedSpecies))
             {
                 Debug.Log("Cannot place item that location");
                 return;
             }
             populationManager.UpdatePopulation(selectedSpecies, 1, position);
         }
-    }
-
-    public bool IsPlacementValid(Vector3 mouseWorldPosition)
-    {
-        if (mouseWorldPosition.x >= 0 && mouseWorldPosition.y >= 0
-        && mouseWorldPosition.x <= LevelDataReference.MapWidth && mouseWorldPosition.y <= LevelDataReference.MapHeight)
-        {
-            Vector3Int mouseGridPosition = this.TileSystem.WorldToCell(mouseWorldPosition);
-            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(mouseGridPosition);
-            foreach (TileType acceptablTerrain in this.selectedSpecies.AccessibleTerrain)
-            {
-                if (tile.type.Equals(acceptablTerrain))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public bool IsCursorOverUI(PointerEventData eventData)

@@ -79,7 +79,6 @@ public class TileSystem : MonoBehaviour
         liquidBodyTilesAndContents.Add(cellLocation);
         ChangeLiquidComposition(cellLocation, composition, terrainTile, isSetting);
         RefreshTilemapColor(terrainTile.targetTilemap);
-        //GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {

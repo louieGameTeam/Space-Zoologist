@@ -18,6 +18,11 @@ public class RandomMovementEmojiPattern : BehaviorPattern
     {
         if (animalData.animal.MovementController.HasPath)
         {
+            if (animalData.animal.MovementController.DestinationCancelled)
+            {
+                Debug.Log("Pathfinding pattern force exited due to update");
+                return true;
+            }
             animalData.animal.MovementController.MoveTowardsDestination();
             if (animalData.animal.MovementController.DestinationReached)
             {

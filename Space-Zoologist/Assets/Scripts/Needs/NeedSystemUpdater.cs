@@ -31,14 +31,12 @@ public class NeedSystemUpdater : MonoBehaviour
         }
     }
 
-    // TODO what should be done when a population is split?
-    // if the population location is no longer on accessible area?
     public void UpdateAccessibleLocations()
     {
-        //ReservePartitionManager.UpdateAccessMap();
+        this.NeedSystemManager.UpdateAccessMap();
         foreach (Population population in PopulationManager.Populations)
         {
-            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population), 
+            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
             GridSystem.GetGridWithAccess(population));
         }
     }
