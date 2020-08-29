@@ -174,9 +174,10 @@ public class MovementController : MonoBehaviour
     // Can modify pointReachedOffset to have more precise movement towards each destination point
     private bool NextPathVectorReached(Vector3 destination, Vector3 currentLocation)
     {
-        float pointReachedOffset = 0.5f;
-        return currentLocation.x < destination.x + pointReachedOffset && currentLocation.x > destination.x - pointReachedOffset &&
-        currentLocation.y < destination.y + pointReachedOffset && currentLocation.y > destination.y - pointReachedOffset;
+        float pointReachedOffsetX = 0.5f;
+        float pointReachedOffsetY = 0.3f;
+        return currentLocation.x < destination.x + pointReachedOffsetX && currentLocation.x > destination.x - pointReachedOffsetX &&
+        currentLocation.y < destination.y + pointReachedOffsetY && currentLocation.y > destination.y - pointReachedOffsetY;
     }
 
     // Can be modified for different movements potentially

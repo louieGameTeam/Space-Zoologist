@@ -497,6 +497,16 @@ public class TileSystem : MonoBehaviour
                 }
             }
         }
+        else if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
+        {
+            foreach (Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
+            {
+                if (tilemap.HasTile(cellLocation))
+                {
+                    tileColorManager.SetTileColor(cellLocation, (TerrainTile)tilemap.GetTile(cellLocation));
+                }
+            }
+        }
     }
     private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
     {
