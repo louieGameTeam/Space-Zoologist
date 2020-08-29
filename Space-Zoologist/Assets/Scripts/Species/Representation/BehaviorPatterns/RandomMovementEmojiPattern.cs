@@ -20,13 +20,24 @@ public class RandomMovementEmojiPattern : BehaviorPattern
         {
             if (animalData.animal.MovementController.DestinationCancelled)
             {
-                Debug.Log("Pathfinding pattern force exited due to update");
-                return true;
+                return false;
             }
             animalData.animal.MovementController.MoveTowardsDestination();
             if (animalData.animal.MovementController.DestinationReached)
             {
                 AnimalsToAnimalData[animal].animal.Overlay.enabled = false;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
+    {
+        if (animalData.animal.MovementController.HasPath)
+        {
+            if (animalData.animal.MovementController.DestinationCancelled)
+            {
                 return true;
             }
         }

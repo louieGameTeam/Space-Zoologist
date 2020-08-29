@@ -33,13 +33,13 @@ public class AnimalBehaviorManager : MonoBehaviour
     /// <param name="behaviorPattern"></param>
     /// <param name="stepCompletedCallBack"></param>
     /// <param name="collaboratingAnimals"></param>
-    public void AddBehaviorPattern(BehaviorPattern behaviorPattern, StepCompletedCallBack stepCompletedCallBack, List<GameObject> collaboratingAnimals = null)
+    public void AddBehaviorPattern(BehaviorPattern behaviorPattern, StepCompletedCallBack stepCompletedCallBack, StepCompletedCallBack alternativeCallback, List<GameObject> collaboratingAnimals = null)
     {
         activeBehaviorPatterns.Add(behaviorPattern);
-        behaviorPattern.InitializePattern(this.gameObject, stepCompletedCallBack, collaboratingAnimals);
+        behaviorPattern.InitializePattern(this.gameObject, stepCompletedCallBack, alternativeCallback, collaboratingAnimals);
     }
     /// <summary>
-    /// Force exit behavior when overriden by other behaviors. Behavior Pattern handles its exit (Usually just call exit), and ForceExitCallback will be called for behaviors to exit
+    /// Force exit behavior when overridden by other behaviors. Behavior Pattern handles its exit (Usually just call exit), and ForceExitCallback will be called for behaviors to exit
     /// </summary>
     /// <param name="isDriven">A bool used to call all partners to stop, but do not reference its self back, just leave as default</param>
     public void ForceExit(bool isDriven = false)

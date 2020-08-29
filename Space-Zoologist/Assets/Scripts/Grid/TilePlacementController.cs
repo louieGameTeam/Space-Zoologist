@@ -84,6 +84,7 @@ public class TilePlacementController : MonoBehaviour
             RenderColorOfColorLinkedTiles(colorInitializeTiles);
             referencedTiles.Clear();
         }
+        
     }
 
     void Update()
@@ -514,11 +515,6 @@ public class TilePlacementController : MonoBehaviour
     private bool IsTileFree(Vector3Int cellLocation)
     {
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
-        // if (cellData.ContainsAnimal == false && (cellData.ContainsFood == false || !isCheckingItem || cellData.ContainsMachine == false))
-        // {
-        //     return true;
-        // }
-        // return false;
         return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
     }
 }

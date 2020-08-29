@@ -188,6 +188,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Animal
       objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048995, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 957094f884e76c24a90024e9981d970b, type: 2}
     - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -8548,8 +8553,8 @@ MonoBehaviour:
   Grid: {fileID: 2141259643}
   LevelDataReference: {fileID: 561890695}
   RPM: {fileID: 1278910462}
-  TerrainTilemap: {fileID: 720802090}
-  ShadePerimeter: 0
+  PopulationManager: {fileID: 0}
+  AllTerrainTilemaps: []
 --- !u!4 &1255722438
 Transform:
   m_ObjectHideFlags: 0

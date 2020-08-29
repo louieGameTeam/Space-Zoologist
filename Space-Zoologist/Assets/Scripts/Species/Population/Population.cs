@@ -265,14 +265,14 @@ public class Population : MonoBehaviour, Life
     // Ensure there are enough behavior data scripts mapped to the population size
     void OnValidate()
     {
-        while (this.AnimalsMovementData.Count < this.AnimalPopulation.Count)
-        {
-            this.AnimalsMovementData.Add(new MovementData());
-        }
-        while (this.AnimalsMovementData.Count > this.AnimalPopulation.Count)
-        {
-            this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
-        }
+        // while (this.AnimalsMovementData.Count < this.AnimalPopulation.Count)
+        // {
+        //     this.AnimalsMovementData.Add(new MovementData());
+        // }
+        // while (this.AnimalsMovementData.Count > this.AnimalPopulation.Count)
+        // {
+        //     this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
+        // }
         if (this.GrowthCalculator != null)
         {
             this.UpdateEditorNeeds();

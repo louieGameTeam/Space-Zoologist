@@ -65,6 +65,12 @@ public class AtmosphericComposition
         float[] composition = { GasX, GasY, GasZ, temperature };
         return composition;
     }
+
+    public float[] GetAtmosphereComposition()
+    {
+        float[] composition = { GasX, GasY, GasZ};
+        return composition;
+    }
 }
 
 public class EnclosureSystem : MonoBehaviour
@@ -105,10 +111,11 @@ public class EnclosureSystem : MonoBehaviour
     public AtmosphericComposition GetAtmosphericComposition(Vector3 worldPosition)
     {
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
-        if (PositionToAtmosphere.ContainsKey(position))
+        if (PositionToAtmosphere.ContainsKey(position) && PositionToAtmosphere[position] < Atmospheres.Count)
             return Atmospheres[PositionToAtmosphere[position]];
         else
-            throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
+            //Debug.Log("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
+            return null;
     }
 
     public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
@@ -118,6 +125,7 @@ public class EnclosureSystem : MonoBehaviour
         {
             Atmospheres[PositionToAtmosphere[position]] = atmosphericComposition;
             this.UpdateAtmosphere();
+            this.TileSystem.RefreshGrassTilemapColor();
         }
         else
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
