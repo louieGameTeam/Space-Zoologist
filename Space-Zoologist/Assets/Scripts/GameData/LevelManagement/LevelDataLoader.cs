@@ -29,7 +29,7 @@ public class LevelDataLoader : ScriptableObject
             string[] row = data[0].Trim().Split(new char[] { ',' });
             int temp;
             int.TryParse(row[5], out temp);
-            levelData.startingBalance.RuntimeValue = temp;
+            levelData.startingBalance = temp;
             for (int i=1; i<data.Length; i++)
             {
                 row = data[i].Trim().Split(new char[] { ',' });

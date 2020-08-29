@@ -35,7 +35,7 @@ public class MachineStoreSection : StoreSection
                 return;
             }
             CreateMachine(mousePosition);
-            playerBalance.RuntimeValue -= selectedItem.Price;
+            base.playerBalance.SubtractFromBalance(selectedItem.Price);
         }
     }
 
