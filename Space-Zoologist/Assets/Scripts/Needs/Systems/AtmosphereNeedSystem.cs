@@ -35,7 +35,7 @@ public class AtmosphereNeedSystem : NeedSystem
             AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(Vector3Int.FloorToInt(life.GetPosition()));
 
             // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
-            float[] composition = atmosphericComposition.GeComposition();
+            float[] composition = atmosphericComposition.GetComposition();
 
             foreach (var (value, index) in composition.WithIndex())
             {

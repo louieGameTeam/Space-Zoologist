@@ -24,14 +24,16 @@ public class Inspector : MonoBehaviour
     // The inspector window 
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
+    [SerializeField] private GameObject areaDropdown = null;
+    [SerializeField] private GameObject itemDropdown = null;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
+    private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
 
     /// <summary>
-    /// 
+    /// Toggle displays
     /// </summary>
-    /// <remarks>Player can only enter inspect mode when not in store</remarks>
     public void ToggleInspectMode()
     {
         // Cannot enter inspector mode while in istore
@@ -50,6 +52,8 @@ public class Inspector : MonoBehaviour
             this.inspectorWindowText.text = "INSPECTOR";
             this.needSystemUpdater.PauseAllAnimals();
             this.inspectorWindow.SetActive(true);
+            this.areaDropdown.SetActive(true);
+            this.itemDropdown.SetActive(true);
             this.HUD.SetActive(false);
         }
         else
@@ -57,6 +61,8 @@ public class Inspector : MonoBehaviour
             this.inspectorButtonText.text = "INSPECTOR:OFF";
             this.needSystemUpdater.UnpauseAllAnimals();
             this.inspectorWindow.SetActive(false);
+            this.areaDropdown.SetActive(false);
+            this.itemDropdown.SetActive(false);
             this.HUD.SetActive(true);
             this.UnHighlightAll();
         }
@@ -78,9 +84,21 @@ public class Inspector : MonoBehaviour
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
             TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
-            GridSystem.CellData cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
 
             Debug.Log($"Mouse click at {cellPos}");
+
+            GridSystem.CellData cellData;
+
+            // Handles index out of bound exception
+            if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
+            {
+                cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
+            }
+            else
+            {
+                Debug.Log("Grid location selected was out of bounds");
+                return;
+            }
 
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)
@@ -94,7 +112,7 @@ public class Inspector : MonoBehaviour
             else if (cellData.ContainsFood)
             {
                 this.UnHighlightAll();
-                this.HighLightFoodSource(cellData.Food);
+                this.HighlightFoodSource(cellData.Food);
                 Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
                 this.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
             }
@@ -106,9 +124,10 @@ public class Inspector : MonoBehaviour
                 this.DisplayLiquidCompisition(cellPos, tile);
             }
             // Selection is enclosed area
-            else
+            else if (tile && tile.type != TileType.Wall)
             {
                 this.UnHighlightAll();
+                this.HighlightEnclosedArea(cellPos);
                 this.DislplayEnclosedArea(cellPos);
                 Debug.Log($"Enclosed are @ {cellPos} selected");
             }
@@ -154,13 +173,13 @@ public class Inspector : MonoBehaviour
 
         foreach (Need need in population.Needs.Values)
         {
-            displayText += $"{need.NeedName} : {need.GetCondition(need.NeedValue)}\n";
+            displayText += $"{need.NeedName} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
         }
 
         this.inspectorWindowText.text = displayText;
     }
 
-    private void HighLightFoodSource(GameObject foodSource)
+    private void HighlightFoodSource(GameObject foodSource)
     {
         foodSource.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSource;
@@ -170,35 +189,60 @@ public class Inspector : MonoBehaviour
     {
         string displayText = $"{foodSource.name} Info: \n";
 
-        displayText += $"Output: {foodSource.FoodOutput}\n";
+        displayText += $"Output: {foodSource.FoodOutput}/{foodSource.Species.BaseOutput}\n";
 
         foreach (Need need in foodSource.Needs.Values)
         {
-            displayText += $"{need.NeedName} : {need.GetCondition(need.NeedValue)}\n";
+            displayText += $"{need.NeedName} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
         }
 
 
         this.inspectorWindowText.text = displayText;
     }
 
+    private void HighlightEnclosedArea(Vector3Int selectedLocation)
+    {
+
+    }
+
+    private void UnHighSignleTile(Vector3Int location)
+    {
+
+    }
+
     private void DislplayEnclosedArea(Vector3Int cellPos)
     {
-        AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(cellPos);
+        EnclosedArea enclosedArea = enclosureSystem.GetEnclosedArea(cellPos);
 
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
-        float[] composition = atmosphericComposition.GeComposition();
+        float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
+        float[] terrainComposition = enclosedArea.terrainComposition;
 
         string displayText = "Enclosed Area Info: \n";
 
 
         // Atmospheric info
         displayText += "Atmospheric composition: \n";
-        foreach (var (value, index) in composition.WithIndex())
+        foreach (var (value, index) in atmosphericComposition.WithIndex())
         {
             displayText += $"{((AtmosphereComponent)index).ToString()} : {value}\n";
         }
 
+        displayText += "\nTerrain: \n";
+        foreach (var (value, index) in terrainComposition.WithIndex())
+        {
+            displayText += $"{((TileType)index).ToString()} : {value}\n";
+        }
+
+        displayText += $"\n Population count: {enclosedArea.populations.Count}";
+        displayText += $"\n Food Source count: {enclosedArea.foodSources.Count}";
+
         this.inspectorWindowText.text = displayText;
+    }
+
+    private void HighlightSingleTile(Vector3Int location)
+    {
+
     }
 
     private void DisplayLiquidCompisition(Vector3Int cellPos, TerrainTile tile)
