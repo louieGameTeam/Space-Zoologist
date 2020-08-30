@@ -120,6 +120,7 @@ public class Inspector : MonoBehaviour
             else if (tile.type == TileType.Liquid)
             {
                 this.UnHighlightAll();
+                this.HighlightSingleTile(cellPos);
                 Debug.Log($"Selected liquid tile @ {cellPos}");
                 this.DisplayLiquidCompisition(cellPos, tile);
             }
