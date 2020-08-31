@@ -16,6 +16,8 @@ public class TileSystem : MonoBehaviour
     private List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTilesAndContents = new List<Vector3Int>();
 
+    [SerializeField] NeedSystemManager needSystemManager = default;
+
     private void Awake()
     {
         grid = GetComponent<Grid>();
@@ -79,7 +81,13 @@ public class TileSystem : MonoBehaviour
         TerrainTile terrainTile = GetTerrainTileAtLocation(cellLocation);
         liquidBodyTilesAndContents.Add(cellLocation);
         ChangeLiquidComposition(cellLocation, composition, terrainTile, isSetting);
+        GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
+
+        // Mark liquid NS dirty
+        this.needSystemManager.Systems[NeedType.Liquid].MarkAsDirty();
+
         RefreshTilemapColor(terrainTile.targetTilemap);
+
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {

@@ -6,7 +6,7 @@ public class AtmosphereMachine : MonoBehaviour
 {
     private GameObject AtmosphereHUDGameObject = default;
     private EnclosureSystem EnclosureSystem = default;
-    AtmosphereMachineHUD AtmosphereMachineHUD = default;
+    private AtmosphereMachineHUD AtmosphereMachineHUD = default;
 
     public void Start()
     {

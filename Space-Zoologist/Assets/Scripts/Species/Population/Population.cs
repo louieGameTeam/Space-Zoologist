@@ -23,6 +23,8 @@ public class Population : MonoBehaviour, Life
     public AnimalPathfinding.Grid grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
+    public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
+
     [Expandable] public AnimalSpecies species = default;
     [SerializeField] private GameObject AnimalPrefab = default;
     [Header("Add existing animals")]

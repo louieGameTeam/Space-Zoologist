@@ -45,6 +45,16 @@ public class GridSystem : MonoBehaviour
         this.PlacementValidation.Initialize(this, this.TileSystem, this.LevelDataReference);
     }
 
+    public bool isCellinGrid(int x, int y)
+    {
+        if (x < 0 || x >= this.GridWidth || y < 0 || y >= this.GridHeight)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Called when the store is opened
     /// </summary>
