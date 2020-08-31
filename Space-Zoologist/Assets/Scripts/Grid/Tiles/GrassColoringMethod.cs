@@ -12,12 +12,7 @@ public class GrassColoringMethod : ColoringMethod
 
     public override void SetColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
     {
-        AtmosphericComposition atmosphericComposition = this.EnclosureSystem.GetAtmosphericComposition(cellLocation);
-        if (atmosphericComposition == null)
-        {
-            return;
-        }
-        float[] newComposition = atmosphericComposition.GetAtmosphereComposition();
+        float[] newComposition = this.EnclosureSystem.GetAtmosphericComposition(cellLocation).ConvertAtmosphereComposition();
         for (int i = 0; i < 3; i++)
         {
             gasComposition[i] = newComposition[i] / Mathf.Max(newComposition);

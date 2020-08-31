@@ -21,7 +21,6 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] private Tilemap TilePlacementValidation = default;
     [SerializeField] private TerrainTile Tile = default;
-    [SerializeField] float transparency = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
@@ -81,6 +80,26 @@ public class GridSystem : MonoBehaviour
                 this.CellGrid[animalLocation.x, animalLocation.y].Animal = animal;
             }
         }
+    }
+
+    public Vector3Int[,] GetHomeLocations(Population population)
+    {
+        Vector3Int[,] homeLocations = new Vector3Int[3,3];
+        Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
+        int x = 0;
+        int y = 0;
+        for (int i=-1; i<=1; i++)
+        {
+            for (int j=-1; j<=1; j++)
+            {
+                Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
+                homeLocations[x, y] = loc;
+                y++;
+            }
+            x++;
+            y = 0;
+        }
+        return homeLocations;
     }
 
     public bool IsWithinGridBouds(Vector3 mousePosition)

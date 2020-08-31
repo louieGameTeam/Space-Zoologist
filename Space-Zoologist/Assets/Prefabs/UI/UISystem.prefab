@@ -1245,6 +1245,7 @@ GameObject:
   - component: {fileID: 849827786020162385}
   - component: {fileID: 849827786020162384}
   - component: {fileID: 7749954795905669484}
+  - component: {fileID: 6718686683552413925}
   m_Layer: 5
   m_Name: Top HUD
   m_TagString: Untagged
@@ -1321,6 +1322,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBalanceText: {fileID: 849827785016326674}
+--- !u!114 &6718686683552413925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849827786020162386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6d6a56fcdf7403194ea0f60ee8c422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &849827786080042452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,6 +2068,7 @@ MonoBehaviour:
   itemGrid: {fileID: 7160730307823729736}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
+  PlayerBalanceDisplay: {fileID: 0}
   EnclosureSystem: {fileID: 0}
   TileSystem: {fileID: 0}
   AtmosphereMachineHUD: {fileID: 8291602453812822007}
@@ -2342,6 +2356,7 @@ MonoBehaviour:
   itemGrid: {fileID: 3584745817606081329}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
+  PlayerBalanceDisplay: {fileID: 0}
   EnclosureSystem: {fileID: 0}
   tilePlacementController: {fileID: 0}
   tutorial: {fileID: 0}
@@ -2920,6 +2935,7 @@ MonoBehaviour:
   itemGrid: {fileID: 6049792258911183132}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
+  PlayerBalanceDisplay: {fileID: 0}
   FoodSourceManager: {fileID: 0}
 --- !u!1 &7079002999532370842
 GameObject:
@@ -3015,6 +3031,7 @@ MonoBehaviour:
   itemGrid: {fileID: 6049792260537311711}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
+  PlayerBalanceDisplay: {fileID: 0}
   EnclosureSystem: {fileID: 0}
   tilePlacementController: {fileID: 0}
   tutorial: {fileID: 0}
@@ -3109,6 +3126,7 @@ MonoBehaviour:
   itemGrid: {fileID: 6404569416529424978}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
+  PlayerBalanceDisplay: {fileID: 0}
   FoodSourceManager: {fileID: 0}
 --- !u!1 &8678661190160119822
 GameObject:

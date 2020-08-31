@@ -184,9 +184,9 @@ public class SpecieBehaviorTrigger : ScriptableObject
             }
             foreach (int step in animalsToSteps.Values)
             {
-                Debug.Log(step);
+                //Debug.Log(step);
             }
-            Debug.Log(isDriven);
+            //Debug.Log(isDriven);
             animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
         }
         else

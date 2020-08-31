@@ -6,13 +6,14 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
-    [SerializeField] PlayerBalance PlayerBalance = default;
     [SerializeField] GameObject PlayerBalanceHUD = default;
     [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
     // PodMenu had original different design so could refactor to align with store sections but works for now
     [SerializeField] PodMenu PodMenu = default;
     [Header("Shared menu dependencies")]
+    [SerializeField] PlayerBalance PlayerBalance = default;
+    [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] GridSystem GridSystem = default;
@@ -22,7 +23,7 @@ public class MenuManager : MonoBehaviour
     {
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance);
+            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay);
             storeMenu.Initialize();
         }
         PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem);

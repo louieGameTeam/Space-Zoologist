@@ -10,16 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
-  m_Name: Sanke
+  m_Name: Snake
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: 2c658f184238347a39f6d91eb93056ef, type: 2}
   speciesName: Snake
   dominance: 5
   growthRate: 60.5
   range: 8.28
-  needBehaviorSet:
-  - NeedType: 0
-    behaviorScriptName: 0
   size: 5
   accessibleTerrain: 0100000003000000
   icon: {fileID: -8543188241823652995, guid: dfd3e0e85d177461db8795af9ab4e263, type: 3}
@@ -28,7 +25,7 @@ MonoBehaviour:
     needs:
     - needName: Strot
       severity: 5
-      conditions: 000000000100000002000000
+      conditions: []
       thresholds:
       - 10
       - 40
@@ -36,7 +33,7 @@ MonoBehaviour:
     needs:
     - needName: MineralX
       severity: 2
-      conditions: 0000000001000000020000000100000000000000
+      conditions: []
       thresholds:
       - 0.1
       - 0.3
@@ -44,7 +41,7 @@ MonoBehaviour:
       - 0.7
     - needName: MineralZ
       severity: 5
-      conditions: 0000000001000000020000000100000000000000
+      conditions: []
       thresholds:
       - 0.1
       - 0.3
@@ -54,13 +51,13 @@ MonoBehaviour:
     needs:
     - needName: Space Maple
       severity: 2
-      conditions: 000000000100000002000000
+      conditions: []
       thresholds:
       - 7
       - 15
     - needName: Bush
       severity: 2
-      conditions: 000000000100000002000000
+      conditions: []
       thresholds:
       - 7
       - 15

@@ -32,7 +32,6 @@ public class TilePlacementController : MonoBehaviour
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private GridSystem GridSystem = default;
-    private bool isCheckingItem = true;
     private void Awake()
     {
         terrainTiles = Resources.LoadAll("Tiles",typeof(TerrainTile)).Cast<TerrainTile>().ToArray(); // Load tiles form resources

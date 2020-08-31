@@ -9,7 +9,7 @@ public class MovementController : MonoBehaviour
 {
     public bool DestinationReached { get; private set; }
     public bool DestinationCancelled { get; private set; }
-    public bool HasPath = false;
+    public bool HasPath { get; private set; }
     public bool IsPaused = false;
 
     private Animal Animal { get; set; }
@@ -20,14 +20,12 @@ public class MovementController : MonoBehaviour
     private float ChangeDirectionThreshold = 0.5f;
     private float ChangeDirectionMovement = 0f;
 
-    private float XOffset = 0.5f;
-    private float YOffset = 0.5f;
-
     private float bufferedSpeed = -1;
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
         this.DestinationReached = true;
+        this.HasPath = false;
     }
     private float CalculateSpeed()
     {
@@ -50,7 +48,6 @@ public class MovementController : MonoBehaviour
     /// <param name="pathToDestination"></param>
     public void AssignPath(List<Vector3> pathToDestination, bool pathFound)
     {
-        this.HasPath = pathFound;
         if (!pathFound)
         {
             Debug.Log("Error path not found");
@@ -61,8 +58,9 @@ public class MovementController : MonoBehaviour
         this.DestinationReached = false;
         this.DestinationCancelled = false;
         this.PathIndex = 0;
-        this.CalculateSpeed();
         this.UpdateVisualLogic(this.NextPathTile);
+        this.CalculateSpeed();
+        this.HasPath = true;
     }
 
     public void TryToCancelDestination()
@@ -84,7 +82,7 @@ public class MovementController : MonoBehaviour
         if (this.PathToDestination.Count == 0)
         {
             this.PathIndex = 0;
-
+            this.HasPath = false;
             this.DestinationReached = true;
             return;
         }
@@ -98,6 +96,7 @@ public class MovementController : MonoBehaviour
                 this.bufferedSpeed = -1;
                 this.Animal.MovementData.Speed = 0;
                 this.DestinationReached = true;
+                this.HasPath = false;
                 return;
             }
             // Update to the next path tile and visual logic stuff
@@ -109,7 +108,8 @@ public class MovementController : MonoBehaviour
                 this.UpdateVisualLogic(this.NextPathTile);
             }
         }
-        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, CalculateSpeed());
+        this.HasPath = true;
+        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.CalculateSpeed());
     }
 
     public void MoveInDirection(Direction direction)
@@ -173,6 +173,37 @@ public class MovementController : MonoBehaviour
             this.UpdateVisualLogic(vectorDirection);
             this.ChangeDirectionMovement = 0f;
         }
+        this.transform.position = vectorDirection;
+    }
+
+    public void ForceMoveInDirection(Direction direction)
+    {
+        Vector3 vectorDirection = new Vector3(0, 0, 0);
+        float speed = this.Animal.MovementData.BaseSpeed * Time.deltaTime;
+        switch(direction)
+        {
+            case Direction.up:
+            {
+                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + 0.05f, 0);
+                break;
+            }
+            case Direction.down:
+            {
+                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -0.05f, 0);
+                break;
+            }
+            case Direction.left:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + -0.05f, this.transform.position.y, 0);
+                break;
+            }
+            case Direction.right:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + 0.05f, this.transform.position.y, 0);
+                break;
+            }
+        }
+        this.UpdateVisualLogic(vectorDirection);
         this.transform.position = vectorDirection;
     }
 

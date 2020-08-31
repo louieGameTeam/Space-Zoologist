@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class TwoAnimalsComeTogether : BehaviorPattern
 {
-    [SerializeField] private float totalDistanceCutoff = 3;
-    [SerializeField] private float xDistanceCutoff = 1;
-    Dictionary<GameObject, float> animalsToLastDistance = new Dictionary<GameObject, float>();
-    Dictionary<GameObject, bool> animalsToIsClose = new Dictionary<GameObject, bool>();
+    [SerializeField] float OptimalDistance = 0.6f;
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        animalsToLastDistance.Add(gameObject, -1);
-        animalsToIsClose.Add(gameObject, false);
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), base.GridSystem.Grid.WorldToCell(animalData.collaboratingAnimals[0].transform.position), AnimalsToAnimalData[gameObject].animal.MovementController.AssignPath, AnimalsToAnimalData[gameObject].animal.PopulationInfo.grid);
+        Vector3Int homeLocation = base.GridSystem.Grid.WorldToCell(animalData.animal.PopulationInfo.transform.position);
+        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position),
+        homeLocation, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
@@ -20,62 +17,57 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         {
             animalData.animal.MovementController.MoveTowardsDestination();
         }
-        PathFindToOtherAnimal(animal, animalData.collaboratingAnimals[0]);
-        //Debug.Log(animalsToIsClose[animal] && animalData.animal.MovementController.DestinationReached);
-        if (animalsToIsClose[animal] && animalData.animal.MovementController.DestinationReached)
+        if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {
-            return true;
+            Debug.Log("Unable to reference collaborating animal");
+            return false;
+        }
+        // both animals have reached home location
+        if (AnimalsToAnimalData[animalData.collaboratingAnimals[0]].animal.MovementController.DestinationReached && animalData.animal.MovementController.DestinationReached)
+        {
+            return this.AnimalsLinedUp(animal, animalData.collaboratingAnimals[0], animalData);
         }
         return false;
     }
-    private void PathFindToOtherAnimal(GameObject animal1, GameObject animal2)
+
+    private bool AnimalsLinedUp(GameObject animal, GameObject collaboratingAnimal, AnimalData animalData)
     {
-        float distance = Mathf.Sqrt(Mathf.Pow(animal1.transform.position.x - animal2.transform.position.x, 2) - Mathf.Pow(animal1.transform.position.y - animal2.transform.position.y, 2));
-        if (distance < totalDistanceCutoff && !animalsToIsClose[animal1])
+        bool isLinedUp = true;
+        // first line up the y
+        if (animal.transform.position.y < collaboratingAnimal.transform.position.y - 0.1f)
         {
-            float x;
-            float y;
-            if (animal1.transform.position.x < animal2.transform.position.x)
-            {
-                x = animal1.transform.position.x + Mathf.Abs(animal1.transform.position.x - animal2.transform.position.x) / 2 - (xDistanceCutoff / 2);
-            }
-            else
-            {
-                x = animal1.transform.position.x - Mathf.Abs(animal1.transform.position.x - animal2.transform.position.x) / 2 + (xDistanceCutoff / 2);
-            }
-            if (animal1.transform.position.y < animal2.transform.position.y)
-            {
-                y = animal1.transform.position.y + Mathf.Abs(animal1.transform.position.y - animal2.transform.position.y) / 2;
-            }
-            else
-            {
-                y = animal1.transform.position.y - Mathf.Abs(animal1.transform.position.y - animal2.transform.position.y) / 2;
-            }
-            Vector3Int originalPos = base.GridSystem.Grid.WorldToCell(animal1.transform.position);
-            Vector3Int newPos = base.GridSystem.Grid.WorldToCell(new Vector3(x, y, animal1.transform.position.z));
-            for (int i = 0; i < 2; i++)
-            {
-                if (newPos[i] != originalPos[i])
-                {
-                    //Debug.Log("recalculate");
-                    AnimalPathfinding.PathRequestManager.RequestPath(originalPos, newPos, AnimalsToAnimalData[animal1].animal.MovementController.AssignPath, AnimalsToAnimalData[animal1].animal.PopulationInfo.grid);
-                    break;
-                }
-            }
-            animalsToIsClose[animal1] = true;
-            return;
+            animalData.animal.MovementController.ForceMoveInDirection(Direction.up);
+            Debug.Log("Moving up");
+            isLinedUp = false;
         }
-        if (animalsToLastDistance[animal1] != -1 && distance > animalsToLastDistance[animal1]) // correct path if moving further away
+        else if (animal.transform.position.y > collaboratingAnimal.transform.position.y + 0.1f)
         {
-            animalsToLastDistance[animal1] = distance;
-            AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(animal1.transform.position), base.GridSystem.Grid.WorldToCell(animal2.transform.position), AnimalsToAnimalData[animal1].animal.MovementController.AssignPath, AnimalsToAnimalData[animal1].animal.PopulationInfo.grid);
+            animalData.animal.MovementController.ForceMoveInDirection(Direction.down);
+            Debug.Log("Moving down");
+            isLinedUp = false;
         }
-        animalsToLastDistance[animal1] = distance;
-    }
-    protected override void ExitPattern(GameObject gameObject)
-    {
-        animalsToLastDistance.Remove(gameObject);
-        animalsToIsClose.Remove(gameObject);
-        base.ExitPattern(gameObject);
+        // move left animal more left if not far enough apart
+        if (animal.transform.position.x <= collaboratingAnimal.transform.position.x)
+        {
+            float distanceBetweenAnimals = collaboratingAnimal.transform.position.x - animal.transform.position.x;
+            if (!(distanceBetweenAnimals <= 1f && distanceBetweenAnimals >= .9f))
+            {
+                animalData.animal.MovementController.ForceMoveInDirection(Direction.left);
+                isLinedUp = false;
+                Debug.Log("Moving left");
+            }
+        }
+        // move right animal more right if not far enough apart
+        else if (animal.transform.position.x >= collaboratingAnimal.transform.position.x)
+        {
+            float distanceBetweenAnimals = animal.transform.position.x - collaboratingAnimal.transform.position.x;
+            if (!(distanceBetweenAnimals <= 1f && distanceBetweenAnimals >= .9f))
+            {
+                animalData.animal.MovementController.ForceMoveInDirection(Direction.right);
+                isLinedUp = false;
+                Debug.Log("Moving right");
+            }
+        }
+        return isLinedUp;
     }
 }

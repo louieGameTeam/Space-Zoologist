@@ -65,6 +65,12 @@ public class AtmosphericComposition
         float[] composition = { GasX, GasY, GasZ, temperature };
         return composition;
     }
+
+    public float[] ConvertAtmosphereComposition()
+    {
+        float[] composition = { GasX, GasY, GasZ};
+        return composition;
+    }
 }
 
 /// <summary>
@@ -195,9 +201,6 @@ public class EnclosureSystem : MonoBehaviour
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GridSystem gridSystem = default;
 
-    // Have enclosed area been initialized?
-    bool initialized = false;
-
     // The global atmosphere
     private AtmosphericComposition GlobalAtmosphere;
 
@@ -250,7 +253,7 @@ public class EnclosureSystem : MonoBehaviour
         if (positionToEnclosedArea.ContainsKey(position))
         {
             this.enclosedAreas[positionToEnclosedArea[position]].UpdateAtmosphericComposition(atmosphericComposition);
-
+            Debug.Log("updated enclosed area");
             // Mark Atmosphere NS dirty
             this.needSystemManager.Systems[NeedType.Atmosphere].MarkAsDirty();
         }
