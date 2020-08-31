@@ -91,8 +91,10 @@ public struct EnclosedArea
 
     public AtmosphericComposition atmosphericComposition;
     public float[] terrainComposition;
+    public List<Animal> animals;
     public List<Population> populations;
     public List<FoodSource> foodSources;
+    public byte id;
 
     private readonly GridSystem gridSystem;
 
@@ -103,14 +105,16 @@ public struct EnclosedArea
     /// <remarks>Using hash set for O(1)look up</remarks>
     public HashSet<Coordinate> coordinates;
 
-    public EnclosedArea(AtmosphericComposition atmosphericComposition, GridSystem gridSystem)
+    public EnclosedArea(AtmosphericComposition atmosphericComposition, GridSystem gridSystem, byte id)
     {
         this.atmosphericComposition = atmosphericComposition;
         this.terrainComposition = new float[(int)TileType.TypesOfTiles];
         this.gridSystem = gridSystem;
+        this.animals = new List<Animal>();
         this.coordinates = new HashSet<Coordinate>();
         this.populations = new List<Population>();
         this.foodSources = new List<FoodSource>();
+        this.id = id;
     }
 
     public void UpdateAtmosphericComposition(AtmosphericComposition atmosphericComposition)
@@ -123,7 +127,7 @@ public struct EnclosedArea
         return this.coordinates.Contains(coordinate);
     }
 
-    public void AddCoordinate(Coordinate coordinate, int tileType)
+    public void AddCoordinate(Coordinate coordinate, int tileType, AtmosphericComposition oldComposition)
     {
         if (gridSystem.isCellinGrid(coordinate.x, coordinate.y))
         {
@@ -131,11 +135,23 @@ public struct EnclosedArea
 
             if (cellData.ContainsAnimal)
             {
-                this.populations.Add(cellData.Animal.GetComponent<Population>());
+                this.animals.Add(cellData.Animal.GetComponent<Animal>());
+
+                Population population = cellData.Animal.GetComponent<Animal>().PopulationInfo;
+
+                if (!this.populations.Contains(population))
+                {
+                    this.populations.Add(population);
+                }
             }
             if (cellData.ContainsFood)
             {
                 this.foodSources.Add(cellData.Food.GetComponent<FoodSource>());
+            }
+
+            if (cellData.ContainsMachine && cellData.Machine.GetComponent<AtmosphereMachine>() != null)
+            {
+                this.atmosphericComposition = oldComposition;
             }
         }
 
@@ -165,7 +181,7 @@ public struct EnclosedArea
 }
 
 /// <summary>
-/// This system find and manages enclose areas
+/// This system finds and manages enclose areas
 /// </summary>
 public class EnclosureSystem : MonoBehaviour
 {
@@ -198,6 +214,8 @@ public class EnclosureSystem : MonoBehaviour
     private void Start()
     {
         GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
+        // TODO When this is called GridSystem might not be initlized,
+        // ie, cannot read from CellData
         this.FindEnclosedAreas();
     }
 
@@ -240,7 +258,6 @@ public class EnclosureSystem : MonoBehaviour
         {
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
         }
-
     }
 
     /// <summary>
@@ -255,8 +272,15 @@ public class EnclosureSystem : MonoBehaviour
         return false;
     }
 
-
-    private void FloodFill(Vector3Int cur, HashSet<Vector3Int> accessed, HashSet<Vector3Int> unaccessible, Stack<Vector3Int> walls, byte atmosphereCount)
+    /// <summary>
+    /// Recursive flood fill. 
+    /// </summary>
+    /// <param name="cur">Start location</param>
+    /// <param name="accessed">Accessed cells</param>
+    /// <param name="unaccessible">Unaccessible cells</param>
+    /// <param name="walls">wall cells</param>
+    /// <param name="atmosphereCount">index of the enclosed area</param>
+    private void FloodFill(Vector3Int cur, HashSet<Vector3Int> accessed, HashSet<Vector3Int> unaccessible, Stack<Vector3Int> walls, byte atmosphereCount, EnclosedArea enclosedArea, bool isUpdate)
     {
        
         if (accessed.Contains(cur) || unaccessible.Contains(cur))
@@ -274,13 +298,23 @@ public class EnclosureSystem : MonoBehaviour
                 // Mark the cell
                 accessed.Add(cur);
 
-                this.positionToEnclosedArea[cur] = atmosphereCount;
-                this.enclosedAreas[atmosphereCount].AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type);
+                // Updating enclosed area
+                if (isUpdate)
+                {
+                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.enclosedAreas[this.positionToEnclosedArea[cur]].atmosphericComposition);
+                }
+                // Initial round
+                else
+                {
+                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, null);
+                }
 
-                FloodFill(cur + Vector3Int.left, accessed, unaccessible, walls, atmosphereCount);
-                FloodFill(cur + Vector3Int.up, accessed, unaccessible, walls, atmosphereCount);
-                FloodFill(cur + Vector3Int.right, accessed, unaccessible, walls, atmosphereCount);
-                FloodFill(cur + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount);
+                this.positionToEnclosedArea[cur] = atmosphereCount;
+
+                FloodFill(cur + Vector3Int.left, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
+                FloodFill(cur + Vector3Int.up, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
+                FloodFill(cur + Vector3Int.right, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
+                FloodFill(cur + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
             }
             else
             {
@@ -295,13 +329,50 @@ public class EnclosureSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Update the System. Find enclosed spaces and populate positionToEnclosedArea, which gives the atmosphere of the tile.
+    /// Call this to find all the enclosed areas and create a EnclosedArea data structure to hold its information.
     /// </summary>
     /// <remarks>
     /// This is using a flood fill (https://en.wikipedia.org/wiki/Flood_fill) to find enclosed areas.
     /// Assumptions: the reserve is bordered by walls
     /// </remarks>
     public void FindEnclosedAreas()
+    {
+        // This has to be inside the map
+        Vector3Int startPos = this.TileSystem.WorldToCell(new Vector3(1,1,0));
+        // tiles to-process
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+        // non-wall tiles
+        HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
+        // wall or null tiles
+        HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
+        // walls
+        Stack<Vector3Int> walls = new Stack<Vector3Int>();
+
+        List<EnclosedArea> newEnclosedAreas = new List<EnclosedArea>();
+
+        // Initial flood fill
+        byte atmosphereCount = 0;
+        newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, atmosphereCount));
+        this.FloodFill(startPos, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], false);
+
+
+        while (walls.Count > 0)
+        {
+            atmosphereCount++;
+            newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, atmosphereCount));
+
+            startPos = walls.Pop();
+
+            this.FloodFill(startPos + Vector3Int.left, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], false);
+            this.FloodFill(startPos + Vector3Int.up, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], false);
+            this.FloodFill(startPos + Vector3Int.right, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], false);
+            this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], false);
+        }
+
+        this.enclosedAreas = newEnclosedAreas;
+    }
+
+    public void UpdateEnclosedAreas()
     {
         Vector3Int startPos = this.TileSystem.WorldToCell(new Vector3(1, 1, 0));
         // tiles to-process
@@ -313,26 +384,28 @@ public class EnclosureSystem : MonoBehaviour
         // walls
         Stack<Vector3Int> walls = new Stack<Vector3Int>();
 
-        this.enclosedAreas.Clear();
+        List<EnclosedArea> newEnclosedAreas = new List<EnclosedArea>();
 
         // Initial flood fill
         byte atmosphereCount = 0;
-        this.enclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem));
-        this.FloodFill(startPos, accessed, unaccessible, walls, atmosphereCount);
+        newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, atmosphereCount));
+        this.FloodFill(startPos, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], true);
 
 
         while (walls.Count > 0)
         {
             atmosphereCount++;
-            this.enclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem));
+            newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, atmosphereCount));
 
             startPos = walls.Pop();
 
-            this.FloodFill(startPos + Vector3Int.left, accessed, unaccessible, walls, atmosphereCount);
-            this.FloodFill(startPos + Vector3Int.up, accessed, unaccessible, walls, atmosphereCount);
-            this.FloodFill(startPos + Vector3Int.right, accessed, unaccessible, walls, atmosphereCount);
-            this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount);
+            this.FloodFill(startPos + Vector3Int.left, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], true);
+            this.FloodFill(startPos + Vector3Int.up, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], true);
+            this.FloodFill(startPos + Vector3Int.right, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], true);
+            this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], true);
         }
+
+        this.enclosedAreas = newEnclosedAreas;
     }
 
     /// <summary>

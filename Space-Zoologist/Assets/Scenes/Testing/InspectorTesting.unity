@@ -526,6 +526,7 @@ MonoBehaviour:
   - {fileID: 1454402095}
   - {fileID: 2036907317}
   - {fileID: 218324505}
+  - {fileID: 973723836}
   TileSystem: {fileID: 135368109}
   GridSystem: {fileID: 1228270578}
 --- !u!156049354 &135368112
@@ -7040,7 +7041,7 @@ PrefabInstance:
     - target: {fileID: 849827785137881021, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1028
+      value: -807
       objectReference: {fileID: 0}
     - target: {fileID: 849827785279203623, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
@@ -7167,6 +7168,11 @@ PrefabInstance:
       propertyPath: GridSystem
       value: 
       objectReference: {fileID: 1228270578}
+    - target: {fileID: 849827785551453070, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 181
+      objectReference: {fileID: 0}
     - target: {fileID: 849827785566768625, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -7918,12 +7924,12 @@ PrefabInstance:
     - target: {fileID: 8291602453551322907, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -420.99976
+      value: -421
       objectReference: {fileID: 0}
     - target: {fileID: 8291602453551322907, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15.999939
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 8291602453589846818, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
@@ -8928,6 +8934,7 @@ MonoBehaviour:
   LevelDataReference: {fileID: 1870373115}
   TileSystem: {fileID: 135368109}
   needSystemManager: {fileID: 1849927150}
+  gridSystem: {fileID: 1228270578}
 --- !u!1 &843918515 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8291602454289475955, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -20522,7 +20529,22 @@ PrefabInstance:
     - target: {fileID: 2578914747182262384, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1070
+      value: -862
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571803277106659740, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 754
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571803277106659743, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571803278230189476, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 5439406465811566746, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
@@ -20532,7 +20554,7 @@ PrefabInstance:
     - target: {fileID: 7509669528419789672, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1070
+      value: -855
       objectReference: {fileID: 0}
     - target: {fileID: 7533111986969932186, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
@@ -20542,7 +20564,7 @@ PrefabInstance:
     - target: {fileID: 7533111986969932186, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1070
+      value: -862
       objectReference: {fileID: 0}
     - target: {fileID: 9185174859483498113, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}

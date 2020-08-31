@@ -54,7 +54,7 @@ public class TileStoreSection : StoreSection
     private void FinishPlacing()
     {
         isPlacing = false;
-        this.EnclosureSystem.FindEnclosedAreas();
+        this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
         playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
         if (tutorial != null)

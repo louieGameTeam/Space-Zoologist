@@ -52,6 +52,7 @@ public class Inspector : MonoBehaviour
             this.inspectorWindowText.text = "INSPECTOR";
             this.needSystemUpdater.PauseAllAnimals();
             this.inspectorWindow.SetActive(true);
+            this.UpdateDropdownMenu();
             this.areaDropdown.SetActive(true);
             this.itemDropdown.SetActive(true);
             this.HUD.SetActive(false);
@@ -68,6 +69,11 @@ public class Inspector : MonoBehaviour
         }
 
         //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
+    }
+
+    private void UpdateDropdownMenu()
+    {
+        
     }
 
     /// <summary>
@@ -170,7 +176,7 @@ public class Inspector : MonoBehaviour
 
         string displayText = $"{population.species.SpeciesName} Info: \n";
 
-        displayText += $"Count: {population.Count}\n";
+        displayText += $"Count: {population.Count} [{population.GrowthStatus}]\n";
 
         foreach (Need need in population.Needs.Values)
         {
@@ -213,14 +219,15 @@ public class Inspector : MonoBehaviour
 
     private void DislplayEnclosedArea(Vector3Int cellPos)
     {
-        EnclosedArea enclosedArea = enclosureSystem.GetEnclosedArea(cellPos);
+        this.enclosureSystem.UpdateEnclosedAreas();
+
+        EnclosedArea enclosedArea = this.enclosureSystem.GetEnclosedArea(cellPos);
 
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
         float[] terrainComposition = enclosedArea.terrainComposition;
 
         string displayText = "Enclosed Area Info: \n";
-
 
         // Atmospheric info
         displayText += "Atmospheric composition: \n";
@@ -235,8 +242,10 @@ public class Inspector : MonoBehaviour
             displayText += $"{((TileType)index).ToString()} : {value}\n";
         }
 
-        displayText += $"\n Population count: {enclosedArea.populations.Count}";
-        displayText += $"\n Food Source count: {enclosedArea.foodSources.Count}";
+        displayText += "\n";
+        displayText += $"Population count: {enclosedArea.populations.Count}\n";
+        displayText += $"Total aniaml count: {enclosedArea.animals.Count}\n";
+        displayText += $"Food Source count: {enclosedArea.foodSources.Count}\n";
 
         this.inspectorWindowText.text = displayText;
     }
