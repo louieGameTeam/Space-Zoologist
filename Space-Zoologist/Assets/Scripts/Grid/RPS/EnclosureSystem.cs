@@ -214,7 +214,7 @@ public class EnclosureSystem : MonoBehaviour
         this.TileSystem = FindObjectOfType<TileSystem>();
     }
 
-    private void Start()
+    private void Start()    
     {
         // TODO When this is called GridSystem might not be initlized,
         // ie, cannot read from CellData
