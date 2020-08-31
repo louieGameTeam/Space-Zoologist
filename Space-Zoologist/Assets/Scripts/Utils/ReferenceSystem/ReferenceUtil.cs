@@ -6,8 +6,8 @@ using UnityEngine;
 public class ReferenceUtil : MonoBehaviour
 {
     public static ReferenceUtil ins;
-    [SerializeField] public SpeciesReferenceData SpecisReference = default;
-    [SerializeField] public FoodReferenceData FoodReference = default;
+    [Expandable] public SpeciesReferenceData SpecisReference = default;
+    [Expandable] public FoodReferenceData FoodReference = default;
 
     void Awake()
     {

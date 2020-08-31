@@ -2,9 +2,11 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 public class TileSystem : MonoBehaviour
 {
+    [SerializeField] Tilemap GrassTilemap = default;
     // Start is called before the first frame update
     private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;
@@ -83,6 +85,9 @@ public class TileSystem : MonoBehaviour
 
         // Mark liquid NS dirty
         this.needSystemManager.Systems[NeedType.Liquid].MarkAsDirty();
+
+        RefreshTilemapColor(terrainTile.targetTilemap);
+
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {
@@ -488,7 +493,41 @@ public class TileSystem : MonoBehaviour
         }
         return true;
     }
+    public void RefreshGrassTilemapColor()
+    {
+        if (this.GrassTilemap.TryGetComponent(out TileColorManager tileColorManager))
+        {
+            foreach (Vector3Int cellLocation in this.GrassTilemap.cellBounds.allPositionsWithin)
+            {
+                tileColorManager.SetTileColor(cellLocation, (TerrainTile)this.GrassTilemap.GetTile(cellLocation));
+            }
+        }
+    }
 
+    public void RefreshTilemapColor(Tilemap tilemap)
+    {
+        if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
+        {
+            foreach (Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
+            {
+                if (tileAttributes.tileContents.ContainsKey(cellLocation))
+                {
+                    tileAttributes.RefreshAllColors();
+                }
+            }
+        }
+        else if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
+        {
+            foreach (Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
+            {
+                if (tilemap.HasTile(cellLocation))
+                {
+                    Debug.Log("Trying to update");
+                    tileColorManager.SetTileColor(cellLocation, (TerrainTile)tilemap.GetTile(cellLocation));
+                }
+            }
+        }
+    }
     private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);

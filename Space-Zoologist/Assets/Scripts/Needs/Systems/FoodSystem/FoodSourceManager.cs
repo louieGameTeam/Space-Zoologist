@@ -21,12 +21,6 @@ public class FoodSourceManager : MonoBehaviour
 
     private void Start()
     {
-        // Fill string to FoodSourceSpecies Dictionary
-        //foreach (FoodSourceSpecies species in LevelDataReference.LevelData.FoodSourceSpecies)
-        //{
-        //    foodSourceSpecies.Add(species.SpeciesName, species);
-        //}
-
         foreach (FoodSourceSpecies species in this.LevelDataReference.LevelData.FoodSourceSpecies)
         {
             foodSourceSpecies.Add(species.SpeciesName, species);

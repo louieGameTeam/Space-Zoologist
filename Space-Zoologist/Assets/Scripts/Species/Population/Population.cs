@@ -251,6 +251,7 @@ public class Population : MonoBehaviour, Life
         // Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
+    // TODO figure out filter bug for behaviors
     /// <summary>
     /// Updates the needs behaviors based on the need's current condition
     /// </summary>
@@ -266,14 +267,14 @@ public class Population : MonoBehaviour, Life
     // Ensure there are enough behavior data scripts mapped to the population size
     void OnValidate()
     {
-        while (this.AnimalsMovementData.Count < this.AnimalPopulation.Count)
-        {
-            this.AnimalsMovementData.Add(new MovementData());
-        }
-        while (this.AnimalsMovementData.Count > this.AnimalPopulation.Count)
-        {
-            this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
-        }
+        // while (this.AnimalsMovementData.Count < this.AnimalPopulation.Count)
+        // {
+        //     this.AnimalsMovementData.Add(new MovementData());
+        // }
+        // while (this.AnimalsMovementData.Count > this.AnimalPopulation.Count)
+        // {
+        //     this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
+        // }
         if (this.GrowthCalculator != null)
         {
             this.UpdateEditorNeeds();

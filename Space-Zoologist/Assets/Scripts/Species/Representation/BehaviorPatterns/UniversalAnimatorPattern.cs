@@ -7,65 +7,33 @@ public class UniversalAnimatorPattern : BehaviorPattern
     public string AnimatorTriggerName;
     public string AnimatorLayerName;
     private Dictionary<GameObject, AnimatorData> animalToAnimatorData = new Dictionary<GameObject, AnimatorData>();
-    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
+    protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
-        animalToAnimatorData.Add(gameObject, new AnimatorData(gameObject.GetComponent<Animator>()));
-        if (animalToAnimatorData[gameObject].animator.layerCount != 1)
+        animalToAnimatorData.Add(animal, new AnimatorData());
+        animalToAnimatorData[animal].animator = animal.GetComponent<Animator>();
+        if (animalToAnimatorData[animal].animator.layerCount != 1)
         {
-            if (animalToAnimatorData[gameObject].animator.GetLayerIndex(AnimatorTriggerName) != -1)
+            if (animalToAnimatorData[animal].animator.GetLayerIndex(AnimatorTriggerName) != -1)
             {
-                animalToAnimatorData[gameObject].SetLayerIndex(animalToAnimatorData[gameObject].animator.GetLayerIndex(AnimatorTriggerName));
+                animalToAnimatorData[animal].layerIndex = animalToAnimatorData[animal].animator.GetLayerIndex(AnimatorTriggerName);
             }
         }
-        animalToAnimatorData[gameObject].SetInitialState(animalToAnimatorData[gameObject].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[gameObject].layerIndex));
+        animalToAnimatorData[animal].initialState = animalToAnimatorData[animal].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[animal].layerIndex);
+        animalData.animal.SetAnimatorBool("IsStateFinished", false);
         animalData.animal.SetAnimatorTrigger(AnimatorTriggerName);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
-        if (!animalToAnimatorData[animal].StateChange)
+        if (animalToAnimatorData[animal].animator.GetBool("IsStateFinished"))
         {
-            if (animalToAnimatorData[animal].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[gameObject].layerIndex).GetHashCode() != animalToAnimatorData[animal].initialState.GetHashCode())
-            {
-                animalToAnimatorData[animal].ToggleStateChange();
-            }
-        }
-        else
-        {
-            if(animalToAnimatorData[animal].animator.GetCurrentAnimatorStateInfo(animalToAnimatorData[gameObject].layerIndex).GetHashCode() == animalToAnimatorData[animal].initialState.GetHashCode())
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }
     protected override void ExitPattern(GameObject gameObject)
     {
+        animalToAnimatorData[gameObject].animator.SetBool("IsStateFinished", true);
         animalToAnimatorData.Remove(gameObject);
-    }
-    private struct AnimatorData
-    {
-        public Animator animator;
-        public bool StateChange;
-        public AnimatorStateInfo initialState;
-        public int layerIndex;
-        public AnimatorData(Animator animator)
-        {
-            this.animator = animator;
-            this.StateChange = false;
-            initialState = new AnimatorStateInfo();
-            layerIndex = 0;
-        }
-        public void SetLayerIndex(int index)
-        {
-            layerIndex = index;
-        }
-        public void SetInitialState(AnimatorStateInfo animatorStateInfo)
-        {
-            initialState = animatorStateInfo;
-        }
-        public void ToggleStateChange()
-        {
-            StateChange = true;
-        }
+        base.ExitPattern(gameObject);
     }
 }

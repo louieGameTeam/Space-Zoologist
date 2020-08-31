@@ -51,8 +51,14 @@ public class TilePlacementController : MonoBehaviour
                 terrainTile.replacementTilemap.Add(tilemaps[(int)layer]);
             }
         }
+    }
+
+    private void Start()
+    {
+        grid = GetComponent<Grid>();
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
+            List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
             if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
             {
                 foreach (TerrainTile tile in tileColorManager.linkedTiles)
@@ -63,13 +69,22 @@ public class TilePlacementController : MonoBehaviour
                     }
                     colorLinkedTiles[tile].Add(tilemap);
                 }
+                foreach(Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
+                {
+                    if (tilemap.HasTile(cellLocation))
+                    {
+                        if (!colorInitializeTiles.Contains(cellLocation))
+                        {
+                            colorInitializeTiles.Add(cellLocation);
+                        }
+                    }
+                }
             }
+            referencedTiles = terrainTiles.ToList();
+            RenderColorOfColorLinkedTiles(colorInitializeTiles);
+            referencedTiles.Clear();
         }
-    }
-
-    private void Start()
-    {
-        grid = GetComponent<Grid>();
+        
     }
 
     void Update()
@@ -500,11 +515,6 @@ public class TilePlacementController : MonoBehaviour
     private bool IsTileFree(Vector3Int cellLocation)
     {
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
-        // if (cellData.ContainsAnimal == false && (cellData.ContainsFood == false || !isCheckingItem || cellData.ContainsMachine == false))
-        // {
-        //     return true;
-        // }
-        // return false;
         return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
     }
 }

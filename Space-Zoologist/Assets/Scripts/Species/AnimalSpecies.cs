@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 using System;
 
 [CreateAssetMenu]
@@ -18,10 +17,10 @@ public class AnimalSpecies : ScriptableObject
     public Sprite Representation => representation;
     // TODO setup tile weights for species
     public Dictionary<TileType, byte> TilePreference = default;
-    public AnimatorController AnimatorController => animatorController;
+    public RuntimeAnimatorController AnimatorController => animatorController;
 
     // Values
-    [SerializeField] private AnimatorController animatorController = default;
+    [SerializeField] private RuntimeAnimatorController animatorController = default;
     [SerializeField] private string speciesName = default;
     [Range(0.0f, 10.0f)]
     [SerializeField] private int dominance = default;

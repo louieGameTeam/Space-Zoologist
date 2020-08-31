@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] MenuManager MenuManager = default;
+    [SerializeField] Inspector Inspector = default;
     [SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] List<GameObject> MachineHUDs = default;
     private Dictionary<KeyCode, GameObject> StoreBindings = new Dictionary<KeyCode, GameObject>();
@@ -52,6 +53,10 @@ public class PlayerController : MonoBehaviour
                     machineHUD.SetActive(false);
                 }
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            this.Inspector.ToggleInspectMode();
         }
     }
 }

@@ -8,18 +8,16 @@ using UnityEngine.UI;
 /// </summary>
 public class TopHUD : MonoBehaviour
 {
-    // Shared scriptable object variable holding the current player balance.
-    private IntVariable playerBalance = default;
     [SerializeField] private Text playerBalanceText = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
+    private PlayerBalance PlayerBalance = default;
 
-    private void Start()
+    public void SetupPlayerBalance(PlayerBalance playerBalance)
     {
-        this.playerBalance = LevelDataReference.LevelData.StartingBalance;
+        this.PlayerBalance = playerBalance;
     }
 
     private void Update()
     {
-        playerBalanceText.text = $"${playerBalance.RuntimeValue}";
+        playerBalanceText.text = $"${this.PlayerBalance.Balance}";
     }
 }

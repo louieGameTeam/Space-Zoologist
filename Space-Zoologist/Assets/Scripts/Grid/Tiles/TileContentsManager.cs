@@ -28,8 +28,13 @@ public class TileContentsManager : MonoBehaviour
     }
     public void SetCompostion(Vector3Int cellLocation, float[] composition)
     {
-        tileContents[cellLocation] = composition;
-        ChangeColor(cellLocation);
+        //tileContents[cellLocation] = new float[] { composition[0], composition[1], composition[2] };
+        for (int i = 0; i <3; i++)
+        {
+            tileContents[cellLocation][i] = composition[i];
+        }
+        TerrainTile tile = (TerrainTile)tilemap.GetTile(cellLocation);
+        ChangeColor(cellLocation, null, tile);
     }
     public void ModifyComposition(Vector3Int cellLocation, float[] changeInComposition)
     {
@@ -51,6 +56,7 @@ public class TileContentsManager : MonoBehaviour
     public void MergeTile (Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
     {
         terrainTile = tile;
+        float[] newcomp = new float[] { 0, 0, 0 };
         if (tile.isMergingAttributes)
         {
             switch (GetNeighborTileStatus(cellLocation))
@@ -59,7 +65,7 @@ public class TileContentsManager : MonoBehaviour
                     isPlacedTileNew = true;
                     if (!tileContents.ContainsKey(cellLocation))
                     {
-                        tileContents.Add(cellLocation, new float[] { 0, 0, 0 });
+                        tileContents.Add(cellLocation, newcomp);
                     }
                     if (!addedAttributes.ContainsKey(cellLocation))
                     {
@@ -176,11 +182,15 @@ public class TileContentsManager : MonoBehaviour
             }
         }
     }
-    private void ChangeColor(Vector3Int cellLocation)
+    private void ChangeColor(Vector3Int cellLocation, TileColorManager tileColorManager = null , TerrainTile tile = null)
     {
-        if(tilemap.TryGetComponent(out TileColorManager tileColorManager))
+        if(tileColorManager != null)
         {
-            tileColorManager.SetTileColor(cellLocation, terrainTile);
+            tileColorManager.SetTileColor(cellLocation, tile ?? terrainTile);
+        }
+        else if(tilemap.TryGetComponent(out TileColorManager colorManager))
+        {
+            colorManager.SetTileColor(cellLocation, tile ?? terrainTile);
         }
     }
     private neighborTileStatus GetNeighborTileStatus(Vector3Int cellLocation)
@@ -232,9 +242,10 @@ public class TileContentsManager : MonoBehaviour
             float n0 = (float)Random.Range(0, 100) / 100;
             float n1 = (float)Random.Range(0, 100) / 100;
             float n2 = (float)Random.Range(0, 100) / 100;
-            foreach(Vector3Int tileLocation in addedAttributes.Keys)
+            float[] newComp = new float[] { n0, n1, n2 };
+            foreach (Vector3Int tileLocation in addedAttributes.Keys)
             {
-                tileContents[tileLocation] = new float[] { n0, n1, n2 };
+                tileContents[tileLocation] = newComp;
                 ChangeColor(tileLocation);
                 //TODO call user to enter parameters
 
@@ -261,9 +272,15 @@ public class TileContentsManager : MonoBehaviour
     }
     public void RefreshAllColors()
     {
-        foreach (Vector3Int tileLocation in tilemap.cellBounds.allPositionsWithin)
+        if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
         {
-            ChangeColor(tileLocation);
+            foreach (Vector3Int tileLocation in tilemap.cellBounds.allPositionsWithin)
+            {
+                if (tileContents.ContainsKey(tileLocation))
+                {
+                    ChangeColor(tileLocation, tileColorManager);
+                }
+            }
         }
     }
 }

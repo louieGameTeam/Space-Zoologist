@@ -7,18 +7,27 @@ public class BehaviorPattern : MonoBehaviour
     public Dictionary<GameObject, AnimalData> AnimalsToAnimalData = new Dictionary<GameObject, AnimalData>(); // The dictionary that holds all animal gameObjects to their data. If you want custom data to be stored, add another dictionary like this one
     protected GridSystem GridSystem = default;
     private List<GameObject> compeletedAnimals = new List<GameObject>(); //Lists to remove animals from updating before updating to avoid modifying while iterating
+    private List<GameObject> alternativeCompletedAnimals = new List<GameObject>();
     private List<GameObject> forceRemoveAnimals = new List<GameObject>();
+    public virtual void StartUp()
+    {
+        AnimalsToAnimalData.Clear();
+        compeletedAnimals.Clear();
+        alternativeCompletedAnimals.Clear();
+        forceRemoveAnimals.Clear();
+    }
     /// <summary>
     /// Assign necessary data to this script
     /// </summary>
     /// <param name="gameObject"></param>
     /// <param name="callBack"></param>
     /// <param name="collaboratingAnimals"></param>
-    public void InitializePattern(GameObject gameObject, StepCompletedCallBack callBack, List<GameObject> collaboratingAnimals = null)
+    public void InitializePattern(GameObject gameObject, StepCompletedCallBack callBack, StepCompletedCallBack alternativeCallback, List<GameObject> collaboratingAnimals = null)
     {
         AnimalData animalData = new AnimalData();
         animalData.animal = gameObject.GetComponent<Animal>();
         animalData.callback = callBack;
+        animalData.alternativeCallback = alternativeCallback;
         animalData.collaboratingAnimals = collaboratingAnimals;
         // Debug.Log(gameObject.name + " is trying to be initial");
         AnimalsToAnimalData.Add(gameObject, animalData);
@@ -30,7 +39,7 @@ public class BehaviorPattern : MonoBehaviour
         this.GridSystem = gridSystem;
     }
     /// <summary>
-    /// Excutes once after initialization, override if you have additional initializations
+    /// Executes once after initialization, override if you have additional initializations
     /// </summary>
     /// <param name="gameObject"></param>
     /// <param name="animalData"></param>
@@ -50,19 +59,32 @@ public class BehaviorPattern : MonoBehaviour
         forceRemoveAnimals.Clear();
         foreach (GameObject animal in AnimalsToAnimalData.Keys)
         {
+
             if (IsPatternFinishedAfterUpdate(animal, AnimalsToAnimalData[animal]))
             {
                 compeletedAnimals.Add(animal);
+            }
+            if (IsAlternativeConditionSatisfied(animal, AnimalsToAnimalData[animal]))
+            {
+                // Debug.Log("Alternate exit condition satisfied");
+                alternativeCompletedAnimals.Add(animal);
+                continue;
             }
         }
         foreach (GameObject animal in compeletedAnimals)
         {
             ExitPattern(animal);
         }
+        foreach (GameObject animal in alternativeCompletedAnimals)
+        {
+            ExitPatternAlternative(animal);
+        }
+        alternativeCompletedAnimals.Clear();
         compeletedAnimals.Clear();
     }
+
     /// <summary>
-    /// Excuted every update, applies update and returns true if the pattern is completed
+    /// Executed every update, applies update and returns true if the pattern is completed
     /// </summary>
     /// <param name="animal"></param>
     /// <param name="animalData"></param>
@@ -71,16 +93,33 @@ public class BehaviorPattern : MonoBehaviour
     {
         return true;
     }
-
     /// <summary>
-    /// Actions taken upon compeletion of pattern. All following are generally necessary when exit. It is recommended to call base when overriden.
+    /// Return true if an alternative condition is satisfied (Do not update)
+    /// </summary>
+    /// <param name="animal"></param>
+    /// <param name="animalData"></param>
+    /// <returns></returns>
+    protected virtual bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
+    {
+        return false;
+    }
+    /// <summary>
+    /// Actions taken upon completion of pattern. All following are generally necessary when exit. It is recommended to call base when overridden.
     /// </summary>
     /// <param name="gameObject"></param>
     /// <param name="isCallingCallback">Set to false when force exiting without completion, leave as default</param>
     protected virtual void ExitPattern(GameObject gameObject)
     {
         gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
-        AnimalsToAnimalData[gameObject].callback?.Invoke(gameObject, AnimalsToAnimalData[gameObject].collaboratingAnimals);
+        StepCompletedCallBack callback = AnimalsToAnimalData[gameObject].callback;
+        List<GameObject> collab = AnimalsToAnimalData[gameObject].collaboratingAnimals;
+        AnimalsToAnimalData.Remove(gameObject);
+        callback.Invoke(gameObject, collab);
+    }
+    protected virtual void ExitPatternAlternative(GameObject gameObject)
+    {
+        gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
+        AnimalsToAnimalData[gameObject].alternativeCallback?.Invoke(gameObject, AnimalsToAnimalData[gameObject].collaboratingAnimals);
         AnimalsToAnimalData.Remove(gameObject);
     }
     public void QueueForForceExit(GameObject gameObject, bool isDriven = false)
@@ -96,7 +135,7 @@ public class BehaviorPattern : MonoBehaviour
 
     }
     /// <summary>
-    /// Called when behavior is overriden by other behaviors
+    /// Called when behavior is overridden by other behaviors
     /// </summary>
     /// <param name="gameObject"></param>
     protected virtual void ForceExit(GameObject gameObject)
@@ -109,6 +148,7 @@ public class BehaviorPattern : MonoBehaviour
     {
         public Animal animal;
         public StepCompletedCallBack callback;
+        public StepCompletedCallBack alternativeCallback;
         public List<GameObject> collaboratingAnimals;
     }
 }

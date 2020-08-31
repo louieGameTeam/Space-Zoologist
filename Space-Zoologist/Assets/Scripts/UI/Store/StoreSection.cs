@@ -17,24 +17,24 @@ public class StoreSection : MonoBehaviour
     [SerializeField] private GameObject itemCellPrefab = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
-    protected IntVariable playerBalance = default;
+    protected PlayerBalance playerBalance = default;
     protected LevelDataReference LevelDataReference = default;
     protected GridSystem GridSystem = default;
 
     protected Item selectedItem = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance)
     {
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
+        this.playerBalance = playerBalance;
     }
 
     public virtual void Initialize()
     {
         LevelData levelData = LevelDataReference.LevelData;
-        this.playerBalance = levelData.StartingBalance;
         foreach (Item item in levelData.Items)
         {
             if (item.Type.Equals(itemType))
@@ -59,11 +59,6 @@ public class StoreSection : MonoBehaviour
     /// <param name="item">The item that was selected.</param>
     public virtual void OnItemSelected(Item item)
     {
-        if (!this.CanAfford(item))
-        {
-            Debug.Log("Selection cancelled");
-            return;
-        }
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         selectedItem = item;
     }
@@ -87,12 +82,7 @@ public class StoreSection : MonoBehaviour
 
     private bool CanAfford(Item item)
     {
-        if (this.playerBalance == null)
-        {
-            Debug.Log("Null playerbalance reference");
-            return false;
-        }
-        if (item.Price > this.playerBalance.RuntimeValue)
+        if (item.Price > this.playerBalance.Balance)
         {
             OnItemSelectionCanceled();
             return false;
