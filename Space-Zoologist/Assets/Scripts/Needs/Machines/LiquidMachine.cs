@@ -37,7 +37,6 @@ public class LiquidMachine : MonoBehaviour
 
     public void UpdateLiquid(float[] liquidComposition)
     {
-        Debug.Log("Updating liquid");
         this.TileSystem.ChangeLiquidBodyComposition(this.TileSystem.WorldToCell(this.gameObject.transform.position), liquidComposition, true);
     }
 }

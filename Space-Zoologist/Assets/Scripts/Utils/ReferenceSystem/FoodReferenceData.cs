@@ -6,7 +6,7 @@ using UnityEngine;
 public class FoodReferenceData : ScriptableObject
 {
     // Using singleton pattern so Species can be easily indexed by name
-    [SerializeField] private List<FoodSourceSpecies> AddAllSpecies = new List<FoodSourceSpecies>();
+    [Expandable] public List<FoodSourceSpecies> AddAllSpecies = new List<FoodSourceSpecies>();
     public Dictionary<string, FoodSourceSpecies> AllSpecies = new Dictionary<string, FoodSourceSpecies>();
 
     public FoodSourceSpecies FindSpecies(string species)

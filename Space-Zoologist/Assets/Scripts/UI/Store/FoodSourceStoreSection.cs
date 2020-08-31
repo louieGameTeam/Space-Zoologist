@@ -39,7 +39,7 @@ public class FoodSourceStoreSection : StoreSection
             Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsFood = true;
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
-            playerBalance.RuntimeValue -= selectedItem.Price;
+            base.playerBalance.SubtractFromBalance(base.selectedItem.Price);
         }
     }
 }

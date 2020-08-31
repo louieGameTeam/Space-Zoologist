@@ -269,6 +269,7 @@ RectTransform:
   - {fileID: 849827786080042453}
   - {fileID: 849827785033568027}
   - {fileID: 8291602453551322907}
+  - {fileID: 5352345341677900947}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1114,15 +1115,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5f4a03a01b6204aa3da0214c80da52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerBalance: {fileID: 849827786020162386}
+  PlayerBalance: {fileID: 1348691577319237039}
+  PlayerBalanceHUD: {fileID: 849827786020162386}
   NeedSystemUpdater: {fileID: 0}
   StoreMenus:
   - {fileID: 2396430120672655071}
   - {fileID: 4731764134846842071}
+  - {fileID: 1456007084259798988}
   PodMenu: {fileID: 849827784489429144}
   LevelDataReference: {fileID: 0}
   CursorItem: {fileID: 849827785033568024}
-  TileSystem: {fileID: 0}
   GridSystem: {fileID: 0}
   UIElements:
   - {fileID: 849827784489429125}
@@ -1131,6 +1133,7 @@ MonoBehaviour:
   - {fileID: 849827785137881021}
   - {fileID: 849827786020162387}
   - {fileID: 4315307563784645222}
+  - {fileID: 8706798662832375765}
 --- !u!1 &849827785566768624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1321,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBalanceText: {fileID: 849827785016326674}
-  LevelDataReference: {fileID: 0}
 --- !u!1 &849827786080042452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,6 +1920,50 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!1 &4152640882653909549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5352345341677900947}
+  - component: {fileID: 1348691577319237039}
+  m_Layer: 0
+  m_Name: PlayerBalance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5352345341677900947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152640882653909549}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -641.996, y: 295.38928, z: -1236.8546}
+  m_LocalScale: {x: 3.1683168, y: 3.1683168, z: 3.1683168}
+  m_Children: []
+  m_Father: {fileID: 849827784352839328}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1348691577319237039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152640882653909549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff8e31271a97345a0ae41acee53d6462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelDataReference: {fileID: 0}
 --- !u!1 &4284022781370906081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,6 +2056,7 @@ MonoBehaviour:
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
   EnclosureSystem: {fileID: 0}
+  TileSystem: {fileID: 0}
   AtmosphereMachineHUD: {fileID: 8291602453812822007}
   LiquidMachineHUD: {fileID: 8291602454289475955}
   MachinePrefab: {fileID: 647726722904301470, guid: 17c8dc9aaf0fb4c6a96e3f57422a18e8,
@@ -2295,6 +2342,7 @@ MonoBehaviour:
   itemGrid: {fileID: 3584745817606081329}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
+  EnclosureSystem: {fileID: 0}
   tilePlacementController: {fileID: 0}
   tutorial: {fileID: 0}
 --- !u!1 &5639818431083076508
@@ -2967,6 +3015,7 @@ MonoBehaviour:
   itemGrid: {fileID: 6049792260537311711}
   itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
     type: 3}
+  EnclosureSystem: {fileID: 0}
   tilePlacementController: {fileID: 0}
   tutorial: {fileID: 0}
 --- !u!1 &7717456860105885580

@@ -15,7 +15,7 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
   speciesName: Goat
   dominance: 5
-  growthRate: 60
+  growthRate: 40
   range: 10
   size: 10
   accessibleTerrain: 020000000100000003000000
@@ -70,9 +70,9 @@ MonoBehaviour:
         Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
       - Condition: 2
         Behavior: {fileID: 11400000, guid: ded07affa23fe41f398517423f60fff8, type: 2}
-      - Condition: 1
+      - Condition: 2
         Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
-      - Condition: 0
+      - Condition: 2
         Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
       thresholds:
       - 0.1
@@ -84,13 +84,13 @@ MonoBehaviour:
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
-      - Condition: 1
+      - Condition: 0
         Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
-      - Condition: 2
+      - Condition: 0
         Behavior: {fileID: 11400000, guid: ded07affa23fe41f398517423f60fff8, type: 2}
       - Condition: 1
         Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
-      - Condition: 0
+      - Condition: 2
         Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
       thresholds:
       - 0.1

@@ -16,6 +16,7 @@ public class AnimalBehaviorTrigger : ScriptableObject
     public List<BehaviorPattern> behaviorPatterns = default;
     protected Dictionary<GameObject, int> animalsToSteps = new Dictionary<GameObject, int>();
     protected StepCompletedCallBack stepCompletedCallback;
+    protected StepCompletedCallBack alternativeCallback;
     /// <summary>
     /// Called by a event
     /// </summary>
@@ -88,7 +89,7 @@ public class AnimalBehaviorTrigger : ScriptableObject
     {
         if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed
         {
-            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback);
+            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback);
         }
         else
         {

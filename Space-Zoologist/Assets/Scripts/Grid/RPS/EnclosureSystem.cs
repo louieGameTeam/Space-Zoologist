@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -209,11 +209,13 @@ public class EnclosureSystem : MonoBehaviour
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
         this.enclosedAreas = new List<EnclosedArea>();
+        this.GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
+        // TODO Hard fix to reference issue
+        this.TileSystem = FindObjectOfType<TileSystem>();
     }
 
     private void Start()
     {
-        GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
         // TODO When this is called GridSystem might not be initlized,
         // ie, cannot read from CellData
         this.FindEnclosedAreas();
@@ -299,7 +301,7 @@ public class EnclosureSystem : MonoBehaviour
                 accessed.Add(cur);
 
                 // Updating enclosed area
-                if (isUpdate)
+                if (isUpdate && this.positionToEnclosedArea.ContainsKey(cur))
                 {
                     enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.enclosedAreas[this.positionToEnclosedArea[cur]].atmosphericComposition);
                 }
