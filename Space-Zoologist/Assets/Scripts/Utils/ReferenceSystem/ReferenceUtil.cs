@@ -6,7 +6,7 @@ using UnityEngine;
 public class ReferenceUtil : MonoBehaviour
 {
     public static ReferenceUtil ins;
-    [Expandable] public SpeciesReferenceData SpecisReference = default;
+    [Expandable] public SpeciesReferenceData SpeciesReference = default;
     [Expandable] public FoodReferenceData FoodReference = default;
 
     void Awake()

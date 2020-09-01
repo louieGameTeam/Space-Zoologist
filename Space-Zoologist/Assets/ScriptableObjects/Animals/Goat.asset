@@ -121,8 +121,8 @@ MonoBehaviour:
       - Condition: 2
         Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
-      - 7
-      - 15
+      - 3
+      - 10
   - needType: 2
     needs:
     - needName: Density
@@ -151,4 +151,15 @@ MonoBehaviour:
       thresholds:
       - 2
       - 5
+  - needType: 7
+    needs:
+    - needName: Strot
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 4023f3ff0e2b0487db4164c962f591bc, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 001c4c0405fcc481eba86e25f4e0673e, type: 2}
+      thresholds:
+      - 1
   representation: {fileID: 0}

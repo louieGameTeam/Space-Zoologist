@@ -15,6 +15,7 @@ public class GridSystem : MonoBehaviour
     [HideInInspector]
     public PlacementValidation PlacementValidation = default;
     [SerializeField] public Grid Grid = default;
+    [SerializeField] public FoodReferenceData FoodReferenceData = default;
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
@@ -41,7 +42,7 @@ public class GridSystem : MonoBehaviour
     private void Start()
     {
         this.PlacementValidation = this.gameObject.GetComponent<PlacementValidation>();
-        this.PlacementValidation.Initialize(this, this.TileSystem, this.LevelDataReference);
+        this.PlacementValidation.Initialize(this, this.TileSystem, this.LevelDataReference, this.FoodReferenceData);
     }
 
     public bool isCellinGrid(int x, int y)

@@ -106,6 +106,8 @@ public class Inspector : MonoBehaviour
                 return;
             }
 
+            //Debug.Log($"Mouse click at {cellPos}");
+
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)
             {

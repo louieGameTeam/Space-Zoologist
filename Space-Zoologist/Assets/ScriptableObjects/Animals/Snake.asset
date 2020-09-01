@@ -27,41 +27,35 @@ MonoBehaviour:
       severity: 5
       conditions:
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 7729b945e169746339c49996e9bfc345, type: 2}
-      - Condition: 1
-        Behavior: {fileID: 11400000, guid: 90f13e6c481fc409a8cad6c213dbc7d1, type: 2}
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
       - Condition: 2
-        Behavior: {fileID: 11400000, guid: 45eeab27fd9fb4d41b99b0f3f33c3e46, type: 2}
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
-      - 3
-      - 5
+      - 2
     - needName: Goat
       severity: 5
       conditions:
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 7729b945e169746339c49996e9bfc345, type: 2}
-      - Condition: 1
-        Behavior: {fileID: 11400000, guid: 90f13e6c481fc409a8cad6c213dbc7d1, type: 2}
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
       - Condition: 2
-        Behavior: {fileID: 11400000, guid: 45eeab27fd9fb4d41b99b0f3f33c3e46, type: 2}
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
       thresholds:
-      - 5
-      - 7
+      - 1
   - needType: 4
     needs:
     - needName: MineralX
       severity: 2
       conditions:
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+        Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
       - Condition: 1
-        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+        Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
       - Condition: 2
-        Behavior: {fileID: 11400000, guid: 9e56c0206592d4bf893cd3c1687ee4fb, type: 2}
+        Behavior: {fileID: 11400000, guid: ded07affa23fe41f398517423f60fff8, type: 2}
       - Condition: 1
-        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+        Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+        Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
       thresholds:
       - 0.1
       - 0.3
@@ -71,15 +65,15 @@ MonoBehaviour:
       severity: 2
       conditions:
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+        Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
       - Condition: 1
-        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+        Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
       - Condition: 2
-        Behavior: {fileID: 11400000, guid: 9e56c0206592d4bf893cd3c1687ee4fb, type: 2}
+        Behavior: {fileID: 11400000, guid: ded07affa23fe41f398517423f60fff8, type: 2}
       - Condition: 1
-        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+        Behavior: {fileID: 11400000, guid: 391f41a6336a94e289f75083a583b585, type: 2}
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+        Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
       thresholds:
       - 0.1
       - 0.3
@@ -111,4 +105,18 @@ MonoBehaviour:
       thresholds:
       - 5
       - 10
+  - needType: 2
+    needs:
+    - needName: Density
+      severity: 1
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 34b30a8a892164adc94e290a122babb5, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 9e56c0206592d4bf893cd3c1687ee4fb, type: 2}
+      thresholds:
+      - 1
+      - 3
   representation: {fileID: 0}

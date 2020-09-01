@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9657db3234c398e4ea867aaa530b6cb4, type: 3}
-  m_Name: TerrainGood_IdleRandom
+  m_Name: SymbiosisGood_IdleRandom
   m_EditorClassIdentifier: Assembly-CSharp::IdleRandomTrigger
   behaviorData:
     behaviorName: IdleRandomBehavior
@@ -20,6 +20,6 @@ MonoBehaviour:
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 1
   behaviorPatterns:
-  - {fileID: 6517820211179143171, guid: 8710a55f124d7431ab42332b8b3a0de3, type: 3}
+  - {fileID: 6517820211179143171, guid: cf6624735f6274daabd7339eaa96fcfb, type: 3}
   refreshPeriod: 3
-  elapsedTime: 1.593349
+  elapsedTime: 0.63664293

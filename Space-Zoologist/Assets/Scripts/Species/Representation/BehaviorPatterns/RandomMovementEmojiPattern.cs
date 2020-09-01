@@ -8,11 +8,11 @@ public class RandomMovementEmojiPattern : BehaviorPattern
     private System.Random random = new System.Random();
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        int locationIndex = this.random.Next(0, AnimalsToAnimalData[gameObject].animal.PopulationInfo.AccessibleLocations.Count);
-        Vector3Int end = AnimalsToAnimalData[gameObject].animal.PopulationInfo.AccessibleLocations[locationIndex];
-        AnimalsToAnimalData[gameObject].animal.Overlay.sprite = Emoji;
-        AnimalsToAnimalData[gameObject].animal.Overlay.enabled = true;
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, AnimalsToAnimalData[gameObject].animal.MovementController.AssignPath, AnimalsToAnimalData[gameObject].animal.PopulationInfo.grid);
+        int locationIndex = this.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
+        Vector3Int end = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+        animalData.animal.Overlay.sprite = Emoji;
+        animalData.animal.Overlay.enabled = true;
+        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
@@ -25,7 +25,7 @@ public class RandomMovementEmojiPattern : BehaviorPattern
             animalData.animal.MovementController.MoveTowardsDestination();
             if (animalData.animal.MovementController.DestinationReached)
             {
-                AnimalsToAnimalData[animal].animal.Overlay.enabled = false;
+                animalData.animal.Overlay.enabled = false;
                 return true;
             }
         }
@@ -38,9 +38,11 @@ public class RandomMovementEmojiPattern : BehaviorPattern
         {
             if (animalData.animal.MovementController.DestinationCancelled)
             {
+                animalData.animal.Overlay.enabled = false;
                 return true;
             }
         }
         return false;
     }
+
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TwoAnimalsComeTogether : BehaviorPattern
 {
-    [SerializeField] float OptimalDistance = 0.6f;
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         Vector3Int homeLocation = base.GridSystem.Grid.WorldToCell(animalData.animal.PopulationInfo.transform.position);
@@ -17,10 +16,14 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         {
             animalData.animal.MovementController.MoveTowardsDestination();
         }
+        else
+        {
+            // TODO make animal idle while waiting for other goat
+        }
         if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {
-            Debug.Log("Unable to reference collaborating animal");
-            return false;
+            // AlternativeConditionSatisfied but let that return
+            return true;
         }
         // both animals have reached home location
         if (AnimalsToAnimalData[animalData.collaboratingAnimals[0]].animal.MovementController.DestinationReached && animalData.animal.MovementController.DestinationReached)
@@ -30,34 +33,48 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         return false;
     }
 
+    protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
+    {
+        if (animalData.animal.MovementController.HasPath)
+        {
+            if (animalData.animal.MovementController.DestinationCancelled)
+            {
+                return true;
+            }
+        }
+        if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
+        {
+            Debug.Log("Unable to reference collaborating animal, exiting behavior");
+            return false;
+        }
+        return false;
+    }
+
     private bool AnimalsLinedUp(GameObject animal, GameObject collaboratingAnimal, AnimalData animalData)
     {
         bool isLinedUp = true;
-        // first line up the y
+        // line up the y with small threshold
         if (animal.transform.position.y < collaboratingAnimal.transform.position.y - 0.1f)
         {
             animalData.animal.MovementController.ForceMoveInDirection(Direction.up);
-            Debug.Log("Moving up");
             isLinedUp = false;
         }
         else if (animal.transform.position.y > collaboratingAnimal.transform.position.y + 0.1f)
         {
             animalData.animal.MovementController.ForceMoveInDirection(Direction.down);
-            Debug.Log("Moving down");
             isLinedUp = false;
         }
-        // move left animal more left if not far enough apart
+        // then move left animal more left if not far enough apart and vice versa
         if (animal.transform.position.x <= collaboratingAnimal.transform.position.x)
         {
             float distanceBetweenAnimals = collaboratingAnimal.transform.position.x - animal.transform.position.x;
+            // Seems to be the best distance
             if (!(distanceBetweenAnimals <= 1f && distanceBetweenAnimals >= .9f))
             {
                 animalData.animal.MovementController.ForceMoveInDirection(Direction.left);
                 isLinedUp = false;
-                Debug.Log("Moving left");
             }
         }
-        // move right animal more right if not far enough apart
         else if (animal.transform.position.x >= collaboratingAnimal.transform.position.x)
         {
             float distanceBetweenAnimals = animal.transform.position.x - collaboratingAnimal.transform.position.x;
@@ -65,7 +82,6 @@ public class TwoAnimalsComeTogether : BehaviorPattern
             {
                 animalData.animal.MovementController.ForceMoveInDirection(Direction.right);
                 isLinedUp = false;
-                Debug.Log("Moving right");
             }
         }
         return isLinedUp;

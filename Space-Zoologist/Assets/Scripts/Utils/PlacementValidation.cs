@@ -7,12 +7,14 @@ public class PlacementValidation : MonoBehaviour
     private GridSystem GridSystem = default;
     private TileSystem TileSystem = default;
     private LevelDataReference LevelDataReference = default;
+    private FoodReferenceData FoodReferenceData = default;
 
-    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData)
+    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, FoodReferenceData foodReferenceData)
     {
         this.GridSystem = gridSystem;
         this.TileSystem = tileSystem;
         this.LevelDataReference = levelData;
+        this.FoodReferenceData = foodReferenceData;
     }
 
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
@@ -87,7 +89,7 @@ public class PlacementValidation : MonoBehaviour
         // else food item so make sure terrain is good
         else
         {
-            foreach (TileType acceptablTerrain in ReferenceUtil.ins.FoodReference.AllSpecies[selectedItem.ID].AccessibleTerrain)
+            foreach (TileType acceptablTerrain in this.FoodReferenceData.FoodSources[selectedItem.ID].AccessibleTerrain)
             {
                 if (selectedTile.type.Equals(acceptablTerrain))
                 {
