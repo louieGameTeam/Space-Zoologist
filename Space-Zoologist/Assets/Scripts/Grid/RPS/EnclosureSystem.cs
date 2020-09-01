@@ -133,6 +133,8 @@ public struct EnclosedArea
         {
             GridSystem.CellData cellData = this.gridSystem.CellGrid[coordinate.x, coordinate.y];
 
+            this.coordinates.Add(coordinate);
+
             if (cellData.ContainsAnimal)
             {
                 this.animals.Add(cellData.Animal.GetComponent<Animal>());
@@ -188,7 +190,8 @@ public class EnclosureSystem : MonoBehaviour
     public Dictionary<Vector3Int, byte> positionToEnclosedArea { get; private set; }
     public List<AtmosphericComposition> Atmospheres { get; private set; }
 
-    public List<EnclosedArea> enclosedAreas { get; private set; }
+    public List<EnclosedArea> EnclosedAreas;
+    private List<EnclosedArea> internalEnclosedAreas;
 
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private TileSystem TileSystem = default;
@@ -208,7 +211,8 @@ public class EnclosureSystem : MonoBehaviour
     {
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
-        this.enclosedAreas = new List<EnclosedArea>();
+        this.internalEnclosedAreas = new List<EnclosedArea>();
+        this.EnclosedAreas = new List<EnclosedArea>();
         this.GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
         // TODO Hard fix to reference issue
         this.TileSystem = FindObjectOfType<TileSystem>();
@@ -231,7 +235,7 @@ public class EnclosureSystem : MonoBehaviour
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position))
         {
-            return this.enclosedAreas[positionToEnclosedArea[position]].atmosphericComposition;
+            return this.internalEnclosedAreas[positionToEnclosedArea[position]].atmosphericComposition;
         }
         else
         {
@@ -243,7 +247,7 @@ public class EnclosureSystem : MonoBehaviour
     {
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
 
-        return this.enclosedAreas[positionToEnclosedArea[position]];
+        return this.internalEnclosedAreas[positionToEnclosedArea[position]];
     }
 
     public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
@@ -251,7 +255,7 @@ public class EnclosureSystem : MonoBehaviour
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position))
         {
-            this.enclosedAreas[positionToEnclosedArea[position]].UpdateAtmosphericComposition(atmosphericComposition);
+            this.internalEnclosedAreas[positionToEnclosedArea[position]].UpdateAtmosphericComposition(atmosphericComposition);
 
             // Mark Atmosphere NS dirty
             this.needSystemManager.Systems[NeedType.Atmosphere].MarkAsDirty();
@@ -259,6 +263,23 @@ public class EnclosureSystem : MonoBehaviour
         else
         {
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
+        }
+    }
+
+    /// <summary>
+    /// This deletes enclosed areas that has nothing in it.
+    /// To fix issues with creating enclosed area for areas outside of the border walls
+    /// </summary>
+    private void updatePublicEnlcosedAreas()
+    {
+        this.EnclosedAreas.Clear();
+
+        foreach (EnclosedArea enclosedArea in this.internalEnclosedAreas)
+        {
+            if (enclosedArea.coordinates.Count != 0)
+            {
+                this.EnclosedAreas.Add(enclosedArea);
+            }
         }
     }
 
@@ -303,7 +324,7 @@ public class EnclosureSystem : MonoBehaviour
                 // Updating enclosed area
                 if (isUpdate && this.positionToEnclosedArea.ContainsKey(cur))
                 {
-                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.enclosedAreas[this.positionToEnclosedArea[cur]].atmosphericComposition);
+                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.internalEnclosedAreas[this.positionToEnclosedArea[cur]].atmosphericComposition);
                 }
                 // Initial round
                 else
@@ -371,7 +392,8 @@ public class EnclosureSystem : MonoBehaviour
             this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], false);
         }
 
-        this.enclosedAreas = newEnclosedAreas;
+        this.internalEnclosedAreas = newEnclosedAreas;
+        this.updatePublicEnlcosedAreas();
     }
 
     public void UpdateEnclosedAreas()
@@ -407,7 +429,8 @@ public class EnclosureSystem : MonoBehaviour
             this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], true);
         }
 
-        this.enclosedAreas = newEnclosedAreas;
+        this.internalEnclosedAreas = newEnclosedAreas;
+        this.updatePublicEnlcosedAreas();
     }
 
     /// <summary>
