@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: DensityBad_IdleRandom
   m_EditorClassIdentifier: Assembly-CSharp::IdleRandomTrigger
   behaviorData:
-    behaviorName: 
+    behaviorName: IdleRandomBehavior
     behaviorTypes: 0100000003000000
     priority: 2
-  maxAffectedNumber: 1
+  maxAffectedNumber: 2
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 1
   behaviorPatterns:
   - {fileID: 6517820211179143171, guid: eda2df2e786244da88767a5508a76e8c, type: 3}
   refreshPeriod: 3
-  elapsedTime: 0
+  elapsedTime: 1.708432

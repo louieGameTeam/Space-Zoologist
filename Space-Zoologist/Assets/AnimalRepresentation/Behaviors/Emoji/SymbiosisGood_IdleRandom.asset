@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: SymbiosisGood_IdleRandom
   m_EditorClassIdentifier: Assembly-CSharp::IdleRandomTrigger
   behaviorData:
-    behaviorName: 
+    behaviorName: IdleRandomBehavior
     behaviorTypes: 0100000003000000
     priority: 0
-  maxAffectedNumber: 1
+  maxAffectedNumber: 2
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 1
   behaviorPatterns:
   - {fileID: 6517820211179143171, guid: cf6624735f6274daabd7339eaa96fcfb, type: 3}
   refreshPeriod: 3
-  elapsedTime: 0
+  elapsedTime: 0.63664293
