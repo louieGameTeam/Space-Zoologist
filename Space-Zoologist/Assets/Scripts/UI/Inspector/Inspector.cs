@@ -84,7 +84,7 @@ public class Inspector : MonoBehaviour
             }
             GridSystem.CellData cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
 
-            Debug.Log($"Mouse click at {cellPos}");
+            //Debug.Log($"Mouse click at {cellPos}");
 
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)

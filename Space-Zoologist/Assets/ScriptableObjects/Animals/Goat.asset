@@ -151,4 +151,18 @@ MonoBehaviour:
       thresholds:
       - 2
       - 5
+  - needType: 7
+    needs:
+    - needName: Strot
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 4023f3ff0e2b0487db4164c962f591bc, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: 102005b2406134b5a8fc4ea91dfde4fe, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 001c4c0405fcc481eba86e25f4e0673e, type: 2}
+      thresholds:
+      - 2
+      - 5
   representation: {fileID: 0}
