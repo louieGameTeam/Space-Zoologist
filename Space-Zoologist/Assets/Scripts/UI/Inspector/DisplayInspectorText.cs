@@ -7,14 +7,12 @@ public class DisplayInspectorText : MonoBehaviour
 {
     [SerializeField] private Text inspectorWindowText;
 
-    public void DisplayAnimalStatus(Animal animal)
+    public void DisplayPopulationStatus(Population population)
     {
-        Population population = animal.PopulationInfo;
-
         string displayText = $"{population.species.SpeciesName} Info: \n";
 
         displayText += $"Count: {population.Count} [{population.GrowthStatus}]\n";
-
+        
         foreach (Need need in population.Needs.Values)
         {
             displayText += $"{need.NeedName} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";

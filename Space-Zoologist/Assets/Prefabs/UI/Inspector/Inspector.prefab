@@ -366,6 +366,11 @@ PrefabInstance:
       propertyPath: m_FontData.m_MinSize
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1521355209798371636, guid: 991805fd1254c45258a8351129b3f19f,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1876922505316674237, guid: 991805fd1254c45258a8351129b3f19f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -415,6 +420,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366335257084498523, guid: 991805fd1254c45258a8351129b3f19f,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366335257084498523, guid: 991805fd1254c45258a8351129b3f19f,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Text
+      value: Option C
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366335257084498523, guid: 991805fd1254c45258a8351129b3f19f,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: Option C
       objectReference: {fileID: 0}
     - target: {fileID: 7658208842633230778, guid: 991805fd1254c45258a8351129b3f19f,
         type: 3}
@@ -715,6 +735,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1521355209798371636, guid: 296900295dc4145d683a621e0ef29ddb,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1876922505316674237, guid: 296900295dc4145d683a621e0ef29ddb,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -754,6 +779,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366335257084498523, guid: 296900295dc4145d683a621e0ef29ddb,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366335257084498523, guid: 296900295dc4145d683a621e0ef29ddb,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: Option C
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366335257084498523, guid: 296900295dc4145d683a621e0ef29ddb,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Text
+      value: Option C
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366335257084498523, guid: 296900295dc4145d683a621e0ef29ddb,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: Option C
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 296900295dc4145d683a621e0ef29ddb, type: 3}

@@ -34,6 +34,9 @@ public class Inspector : MonoBehaviour
     private Dropdown itemsDropdown;
     private DisplayInspectorText inspectorWindowDisplayScript;
 
+    //TODO This does not feels right to be here
+    private List<Life> itemsInEnclosedArea = new List<Life>();
+
     private void Start()
     {
         this.enclosedAreaDropdown = this.areaDropdownMenu.GetComponent<Dropdown>();
@@ -87,6 +90,9 @@ public class Inspector : MonoBehaviour
     {
         this.enclosedAreaDropdown.options.Clear();
 
+        // Add empty option
+        this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Select an area" });
+
         foreach (EnclosedArea enclosedArea in this.enclosureSystem.EnclosedAreas)
         {
             this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Enclosed Area {enclosedArea.id}"});
@@ -95,20 +101,26 @@ public class Inspector : MonoBehaviour
 
     private void selectEnclosedArea(int selection)
     {
-        EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection];
+        EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection-1];
 
         Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
 
         this.itemsDropdown.options.Clear();
+        this.itemsInEnclosedArea.Clear();
+
+        this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
+
 
         foreach (Population population in enclosedAreaSelected.populations)
         {
             this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{population.Species.SpeciesName}" });
+            this.itemsInEnclosedArea.Add(population);
         }
 
         foreach (FoodSource foodSource in enclosedAreaSelected.foodSources)
         {
             this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{foodSource.Species.SpeciesName}" });
+            this.itemsInEnclosedArea.Add(foodSource);
         }
 
         this.inspectorWindowDisplayScript.DislplayEnclosedArea(enclosedAreaSelected);
@@ -116,7 +128,20 @@ public class Inspector : MonoBehaviour
 
     private void selectItem(int selection)
     {
+        Debug.Log($"selected item {selection} from dropdown");
 
+        Life itemSelected = this.itemsInEnclosedArea[selection-1];
+
+        if (itemSelected.GetType() == typeof(Population))
+        {
+            this.HighlightPopulation(((Population)itemSelected).gameObject);
+            this.inspectorWindowDisplayScript.DisplayPopulationStatus((Population)itemSelected);
+        }
+        if (itemSelected.GetType() == typeof(FoodSource))
+        {
+            this.HighlightFoodSource(((FoodSource)itemSelected).gameObject);
+            this.inspectorWindowDisplayScript.DisplayFoodSourceStatus((FoodSource)itemSelected);
+        }
     }
 
     /// <summary>
@@ -153,9 +178,9 @@ public class Inspector : MonoBehaviour
             if (cellData.ContainsAnimal)
             {
                 this.UnHighlightAll();
-                this.HighlightPopulation(cellData.Animal);
+                this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
                 //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
-                this.inspectorWindowDisplayScript.DisplayAnimalStatus(cellData.Animal.GetComponent<Animal>());
+                this.inspectorWindowDisplayScript.DisplayPopulationStatus(cellData.Animal.GetComponent<Animal>().PopulationInfo);
             }
             // Selection is food source or item
             else if (cellData.ContainsFood)
@@ -203,10 +228,8 @@ public class Inspector : MonoBehaviour
         }
     }
 
-    private void HighlightPopulation(GameObject animal)
+    private void HighlightPopulation(GameObject population)
     {
-        GameObject population = animal.transform.parent.gameObject;
-
         foreach (Transform child in population.transform)
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
