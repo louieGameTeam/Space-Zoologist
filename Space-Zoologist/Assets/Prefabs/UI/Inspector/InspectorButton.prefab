@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 3794719247340361497}
   - component: {fileID: 863347452159426475}
   - component: {fileID: 219071353018348763}
-  - component: {fileID: 8320696488541252284}
   m_Layer: 5
   m_Name: InspectorButton
   m_TagString: Untagged
@@ -196,7 +195,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8320696488541252284}
+      - m_Target: {fileID: 0}
         m_MethodName: ToggleInspectMode
         m_Mode: 1
         m_Arguments:
@@ -207,23 +206,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8320696488541252284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6233139278683710998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inspectorButtonText: {fileID: 6398883986360291194}
-  needSystemUpdater: {fileID: 0}
-  gridSystem: {fileID: 0}
-  tileSystem: {fileID: 0}
-  enclosureSystem: {fileID: 0}
-  HUD: {fileID: 0}
-  inspectorWindow: {fileID: 0}
-  inspectorWindowText: {fileID: 0}

@@ -15,7 +15,7 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: e28c40730e812434993f5de4a67f674f, type: 2}
   speciesName: Strot
   dominance: 5
-  growthRate: 60.5
+  growthRate: 10
   range: 8.28
   size: 5
   accessibleTerrain: 0100000003000000
@@ -26,9 +26,9 @@ MonoBehaviour:
     - needName: Snake
       severity: 5
       conditions:
-      - Condition: 2
+      - Condition: 0
         Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
-      - Condition: 1
+      - Condition: 2
         Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
