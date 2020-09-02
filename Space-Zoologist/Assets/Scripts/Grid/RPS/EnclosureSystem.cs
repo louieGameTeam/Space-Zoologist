@@ -74,7 +74,7 @@ public class AtmosphericComposition
 /// Members of this struct could be expended for future needs
 /// </remarks>
 [System.Serializable]
-public struct EnclosedArea
+public class EnclosedArea
 {
     // Data structure to hold a (x,y) coordinates
     public struct Coordinate
@@ -150,8 +150,7 @@ public struct EnclosedArea
             {
                 this.foodSources.Add(cellData.Food.GetComponent<FoodSource>());
             }
-
-            if (cellData.ContainsMachine && cellData.Machine.GetComponent<AtmosphereMachine>() != null)
+            if (cellData.ContainsMachine && cellData.Machine.GetComponent<AtmosphereMachine>() != null && oldComposition != null)
             {
                 this.atmosphericComposition = oldComposition;
             }
