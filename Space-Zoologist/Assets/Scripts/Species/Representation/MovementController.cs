@@ -38,6 +38,7 @@ public class MovementController : MonoBehaviour
         }
         bufferedSpeed = Animal.MovementData.CalculateModifiedSpeed();
         this.Animal.MovementData.Speed = bufferedSpeed;
+        HandleSpeedChange();
         return bufferedSpeed;
     }
     /// <summary>
@@ -197,6 +198,10 @@ public class MovementController : MonoBehaviour
     public void UpdateVisualLogic(Vector3 destination)
     {
         this.HandleDirectionChange(this.transform.position, destination);
+        this.HandleSpeedChange();
+    }
+    private void HandleSpeedChange()
+    {
         if (this.Animal.MovementData.Speed > this.Animal.MovementData.RunThreshold)
         {
             this.Animal.MovementData.MovementStatus = Movement.running;
@@ -206,7 +211,6 @@ public class MovementController : MonoBehaviour
             this.Animal.MovementData.MovementStatus = Movement.walking;
         }
     }
-
     // Can be modified for different angles of direction change
     private void HandleDirectionChange(Vector3 currentPosition, Vector3 nextTile)
     {

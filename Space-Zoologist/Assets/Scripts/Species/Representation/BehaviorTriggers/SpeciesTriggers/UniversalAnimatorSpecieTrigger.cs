@@ -6,6 +6,6 @@ public class UniversalAnimatorSpecieTrigger : SpecieBehaviorTrigger
 {
     protected override List<GameObject> AnimalSelection(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
     {
-        return BehaviorUtils.SelectAnimals(1, avalabilityToAnimals, SelectionType.All);
+        return BehaviorUtils.SelectAnimals(this.numberTriggerdPerLoop, avalabilityToAnimals, SelectionType.All);
     }
 }
