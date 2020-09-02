@@ -1,20 +1,16 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Inspector/Inspector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/TileStoreSection.cs">
     <Files>
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="118" Column="6" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="130" Column="6" />
+      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="398" Column="28" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="207" Column="62" />
       <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="11" Column="6" />
-      <File FileName="Assets/Scripts/UI/Machines/AtmosphereMachineHUD.cs" Line="13" Column="6" />
-      <File FileName="Assets/Scripts/UI/Store/PlayerBalance.cs" />
-      <File FileName="Assets/Scripts/Grid/GridSystem.cs" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" />
-      <File FileName="Assets/Scripts/Needs/Machines/AtmosphereMachine.cs" Line="11" Column="24" />
-      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/AtmosphereNeedSystem.cs" Line="30" Column="55" />
+      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="55" Column="54" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>this.enclosedAreas[positionToEnclosedArea[position]]</Value>
+          <Value>this.internalEnclosedAreas[this.positionToEnclosedArea[cur]]</Value>
           <Value>id</Value>
         </State>
       </Pad>
@@ -25,8 +21,8 @@
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="233fc31a-189f-4f98-bbf4-562814d7e7ac" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/RPS/EnclosureSystem.cs" relfile="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" line="281" column="1" />
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/RPS/EnclosureSystem.cs" relfile="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" line="279" column="1" />
+      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/RPS/EnclosureSystem.cs" relfile="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" line="122" column="1" />
+      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/RPS/EnclosureSystem.cs" relfile="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" line="155" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
