@@ -37,6 +37,8 @@ public class EatingPattern : UniversalAnimatorPattern
                 }
             }
         }
+        this.AnimatorTriggerName = this.Up;
+        base.EnterPattern(animal, animalData);
     }
     private string GetTriggerName(int i, int j)
     {
