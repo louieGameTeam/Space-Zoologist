@@ -11440,6 +11440,9 @@ MonoBehaviour:
   WASDSpeed: 0.3
   dragSpeed: 3
   zoomLerpSpeed: 5
+  EdgeMovement: 0
+  edgeSpeed: 5
+  edgeBoundary: 10
   LevelDataReference: {fileID: 458337383}
 --- !u!114 &907067004
 MonoBehaviour:
@@ -11490,7 +11493,7 @@ PrefabInstance:
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.93
+      value: -4.62
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
@@ -11546,6 +11549,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Animal
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048995, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 334bcc26dc550b04d983b78460e36ebe, type: 2}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2,
+        type: 3}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.96875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
@@ -12610,7 +12639,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13444,7 +13473,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0bb5a39b813d86140857623e66bbdea9, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13464,7 +13493,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 12
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -14581,12 +14610,12 @@ PrefabInstance:
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.76
+      value: 5.72
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.29
+      value: -1.46
       objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
@@ -14641,6 +14670,27 @@ PrefabInstance:
     - target: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2,
+        type: 3}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.96875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -14904,14 +14954,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a938cfc2bb8f4cbeac86158c272f6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlacementValidation: {fileID: 0}
   Grid: {fileID: 1268727965}
   LevelDataReference: {fileID: 458337383}
   RPM: {fileID: 852001126}
+  TileSystem: {fileID: 1268727962}
   PopulationManager: {fileID: 1629459767}
-  AllTerrainTilemaps:
-  - {fileID: 818005944}
-  - {fileID: 1230291685}
-  - {fileID: 934203450}
+  TilePlacementValidation: {fileID: 167395966}
+  Tile: {fileID: 0}
+  transparency: 0
 --- !u!4 &1631563607
 Transform:
   m_ObjectHideFlags: 0

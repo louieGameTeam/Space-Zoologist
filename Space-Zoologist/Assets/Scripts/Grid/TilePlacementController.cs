@@ -385,22 +385,23 @@ public class TilePlacementController : MonoBehaviour
                     {
                         foreach (Tilemap constraintTilemap in tile.constraintTilemap)
                         {
-                            if (constraintTilemap.HasTile(cellLocation) && IsTileFree(cellLocation))
+                            if (!constraintTilemap.HasTile(cellLocation) || !IsTileFree(cellLocation))
                             {
-                                foreach (Tilemap replacingTilemap in tile.replacementTilemap)
-                                {
-                                    if (replacingTilemap.HasTile(cellLocation))
-                                    {
-                                        ReplaceTile(replacingTilemap, cellLocation);
-                                    }
-                                }
-                                if (replacedTile != null)
-                                {
-                                    ReplaceTile(tile.targetTilemap, cellLocation);
-                                }
-                                AddNewTile(cellLocation, tile);
                                 break;
                             }
+                            foreach (Tilemap replacingTilemap in tile.replacementTilemap)
+                            {
+                                if (replacingTilemap.HasTile(cellLocation))
+                                {
+                                    ReplaceTile(replacingTilemap, cellLocation);
+                                }
+                            }
+                            if (replacedTile != null)
+                            {
+                                ReplaceTile(tile.targetTilemap, cellLocation);
+                            }
+                            AddNewTile(cellLocation, tile);
+                            break;
                         }
 
                     }

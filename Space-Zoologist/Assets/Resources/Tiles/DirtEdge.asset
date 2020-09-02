@@ -906,12 +906,12 @@ MonoBehaviour:
   targetTilemap: {fileID: 0}
   replacementTilemap:
   - {fileID: 0}
-  constraintTilemap: []
+  constraintTilemap:
+  - {fileID: 0}
   type: 2
   TileName: dirtEdge
   targetLayer: 7
   replacementLayers: 07000000
-  constraintLayers: 
+  constraintLayers: 09000000
   isRepresentative: 0
   isMergingAttributes: 0
-  priority: 0

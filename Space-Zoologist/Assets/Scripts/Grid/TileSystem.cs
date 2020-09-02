@@ -522,7 +522,6 @@ public class TileSystem : MonoBehaviour
             {
                 if (tilemap.HasTile(cellLocation))
                 {
-                    Debug.Log("Trying to update");
                     tileColorManager.SetTileColor(cellLocation, (TerrainTile)tilemap.GetTile(cellLocation));
                 }
             }
