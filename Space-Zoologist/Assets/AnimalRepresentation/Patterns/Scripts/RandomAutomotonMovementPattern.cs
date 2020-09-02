@@ -50,7 +50,7 @@ public class RandomAutomotonMovementPattern : BehaviorPattern
     // If on new tile then respond to new surroundings
     private void CheckSurroundings()
     {
-        AnimalPathfinding.Node currentTile = this.population.grid.GetNode(this.transform.position);
+        AnimalPathfinding.Node currentTile = this.population.Grid.GetNode(this.transform.position);
         if (currentTile != this.previousTile)
         {
             this.previousTile = currentTile;
@@ -62,7 +62,7 @@ public class RandomAutomotonMovementPattern : BehaviorPattern
 
     private void RespondToNewSurroundings(AnimalPathfinding.Node newTile)
     {
-        if (!this.DirectionAllowed(this.CurrentDirection, newTile, this.population.grid))
+        if (!this.DirectionAllowed(this.CurrentDirection, newTile, this.population.Grid))
         {
             if (!this.TryToUpdateDirection(newTile))
             {
@@ -132,7 +132,7 @@ public class RandomAutomotonMovementPattern : BehaviorPattern
     private bool TryToUpdateDirection(AnimalPathfinding.Node currentTile)
     {
         int count = 0;
-        while (!this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], currentTile, this.population.grid))
+        while (!this.DirectionAllowed((Direction)this.DirectionSeed[this.CurrentDirectionSeedIndex], currentTile, this.population.Grid))
         {
             CurrentDirectionSeedIndex = IncrementSeedIndex(CurrentDirectionSeedIndex);
             count++;

@@ -133,6 +133,88 @@ public class GridSystem : MonoBehaviour
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
     }
 
+    // iterate through CellData, if contains item of interest and locations accessible, calculate distance and keep track of closest item location
+    public Vector3Int FindClosestItem(Population population, GameObject animal, ItemType item)
+    {
+        Vector3Int itemLocation = new Vector3Int(-1, -1, -1);
+        float closestDistance = 10000f;
+        float localDistance = 0f;
+        for (int x=0; x<this.CellGrid.GetLength(0); x++)
+        {
+            for (int y=0; y<this.CellGrid.GetLength(1); y++)
+            {
+                if (this.CellGrid[x, y].ContainsFood && item.Equals(ItemType.Food) && population.Grid.IsAccessible(x, y))
+                {
+                    localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                    if (localDistance < closestDistance)
+                    {
+                        closestDistance = localDistance;
+                        itemLocation = new Vector3Int(x, y, 0);
+                    }
+                }
+                else if (this.CellGrid[x, y].ContainsMachine && item.Equals(ItemType.Machine) && population.Grid.IsAccessible(x, y))
+                {
+                    localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                    if (localDistance < closestDistance)
+                    {
+                        closestDistance = localDistance;
+                        itemLocation = new Vector3Int(x, y, 0);
+                    }
+                }
+                else if (item.Equals(ItemType.Terrain))
+                {
+                    // if contains liquid tile, check neighbors accessibility
+                    TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(new Vector3Int(x, y, 0));
+                    if (tile != null && tile.type == TileType.Liquid)
+                    {
+                        if (population.Grid.IsAccessible(x + 1, y))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x + 1, y, 0);
+                            }
+                        }
+                        if (population.Grid.IsAccessible(x - 1, y))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x - 1, y, 0);
+                            }
+                        }
+                        if (population.Grid.IsAccessible(x, y + 1))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x, y + 1, 0);
+                            }
+                        }
+                        if (population.Grid.IsAccessible(x, y - 1))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x, y - 1, 0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return itemLocation;
+    }
+
+    private float CalculateDistance(float x1, float y1, float x2, float y2)
+    {
+        return Mathf.Sqrt(Mathf.Pow(x2 - x1, 2) + Mathf.Pow(y2 - y1, 2));
+    }
+
     private void SetupMovementBoundaires(bool[,] tileGrid)
     {
         for (int x=0; x<GridWidth; x++)

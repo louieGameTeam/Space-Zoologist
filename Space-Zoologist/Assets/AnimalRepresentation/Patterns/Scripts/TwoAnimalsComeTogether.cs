@@ -8,7 +8,7 @@ public class TwoAnimalsComeTogether : BehaviorPattern
     {
         Vector3Int homeLocation = base.GridSystem.Grid.WorldToCell(animalData.animal.PopulationInfo.transform.position);
         AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position),
-        homeLocation, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.grid);
+        homeLocation, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
