@@ -84,6 +84,8 @@ public class MovementController : MonoBehaviour
             this.PathIndex = 0;
             this.HasPath = false;
             this.DestinationReached = true;
+            this.bufferedSpeed = -1;
+            this.Animal.MovementData.Speed = 0;
             return;
         }
         if (this.NextPathVectorReached(this.NextPathTile, this.transform.position))
@@ -120,7 +122,7 @@ public class MovementController : MonoBehaviour
             return;
         }
         Vector3 vectorDirection = new Vector3(0, 0, 0);
-        float speed = this.Animal.MovementData.Speed * Time.deltaTime;
+        float speed = this.CalculateSpeed() * Time.deltaTime;
         switch(direction)
         {
             case Direction.up:
@@ -231,7 +233,7 @@ public class MovementController : MonoBehaviour
     public void UpdateVisualLogic(Vector3 destination)
     {
         this.HandleDirectionChange(this.transform.position, destination);
-        if (this.Animal.MovementData.Speed > this.Animal.MovementData.RunThreshold)
+        if (this.CalculateSpeed() > this.Animal.MovementData.RunThreshold)
         {
             this.Animal.MovementData.MovementStatus = Movement.running;
         }

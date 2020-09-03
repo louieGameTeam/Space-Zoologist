@@ -201,13 +201,15 @@ public class Population : MonoBehaviour, Life
     }
 
     // removes last animal in list and last behavior
+    // TODO keep track of last removed animal and when there's no more active behaviors it can be set inactive
     public void RemoveAnimal(int count)
     {
         if (this.AnimalPopulation.Count > 0)
         {
+            Debug.Log("Animal removed");
             this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
-            this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
-            this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
+            //this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
+            //this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
         }
         if (this.AnimalPopulation.Count == 0)

@@ -23,7 +23,7 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {
             // AlternativeConditionSatisfied but let that return
-            return true;
+            return false;
         }
         // both animals have reached home location
         if (AnimalsToAnimalData[animalData.collaboratingAnimals[0]].animal.MovementController.DestinationReached && animalData.animal.MovementController.DestinationReached)
@@ -45,7 +45,7 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {
             Debug.Log("Unable to reference collaborating animal, exiting behavior");
-            return false;
+            return true;
         }
         return false;
     }

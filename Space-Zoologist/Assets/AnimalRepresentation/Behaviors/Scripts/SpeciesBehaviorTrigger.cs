@@ -120,8 +120,11 @@ public class SpecieBehaviorTrigger : ScriptableObject
     /// <param name="animal"></param>
     protected virtual void RemoveBehavior(GameObject animal)
     {
-        animalsToSteps.Remove(animal);
-        animal.GetComponent<AnimalBehaviorManager>().activeBehaviors.Remove(behaviorData);
+        if (animalsToSteps.ContainsKey(animal))
+        {
+            animalsToSteps.Remove(animal);
+            animal.GetComponent<AnimalBehaviorManager>().activeBehaviors.Remove(behaviorData);
+        }
     }
     /// <summary>
     /// Callback function which increases the step count and calls to proceeds to next step
@@ -133,9 +136,13 @@ public class SpecieBehaviorTrigger : ScriptableObject
         animalsToSteps[animal]++;
         ProceedToNext(animal, collaboratingAnimals);
     }
-    protected void OnAlternativeExit(GameObject animal, List<GameObject> collaboratingAnimals)
+    protected virtual void OnAlternativeExit(GameObject animal, List<GameObject> collaboratingAnimals)
     {
-        this.OnStepCompleted(animal, collaboratingAnimals);
+        this.RemoveBehavior(animal);
+        foreach(GameObject collaboratingAnimal in collaboratingAnimals)
+        {
+            this.RemoveBehavior(collaboratingAnimal);
+        }
     }
     /// <summary>
     /// Define what needs to be done when this behavior is force exiting, usually just call remove behavior
