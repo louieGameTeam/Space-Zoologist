@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,7 +68,7 @@ public class AtmosphericComposition
 
     public float[] ConvertAtmosphereComposition()
     {
-        float[] composition = { GasX, GasY, GasZ};
+        float[] composition = { GasX, GasY, GasZ };
         return composition;
     }
 }
@@ -80,7 +80,7 @@ public class AtmosphericComposition
 /// Members of this struct could be expended for future needs
 /// </remarks>
 [System.Serializable]
-public struct EnclosedArea
+public class EnclosedArea
 {
     // Data structure to hold a (x,y) coordinates
     public struct Coordinate
@@ -139,6 +139,8 @@ public struct EnclosedArea
         {
             GridSystem.CellData cellData = this.gridSystem.CellGrid[coordinate.x, coordinate.y];
 
+            this.coordinates.Add(coordinate);
+
             if (cellData.ContainsAnimal)
             {
                 this.animals.Add(cellData.Animal.GetComponent<Animal>());
@@ -154,8 +156,7 @@ public struct EnclosedArea
             {
                 this.foodSources.Add(cellData.Food.GetComponent<FoodSource>());
             }
-
-            if (cellData.ContainsMachine && cellData.Machine.GetComponent<AtmosphereMachine>() != null)
+            if (cellData.ContainsMachine && cellData.Machine.GetComponent<AtmosphereMachine>() != null && oldComposition != null)
             {
                 this.atmosphericComposition = oldComposition;
             }
@@ -172,7 +173,7 @@ public struct EnclosedArea
 
         foreach (Coordinate coordinate in this.coordinates)
         {
-            if(this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsAnimal)
+            if (this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsAnimal)
             {
                 this.populations.Add(this.gridSystem.CellGrid[coordinate.x, coordinate.y].Animal.GetComponent<Population>());
                 continue;
@@ -194,12 +195,16 @@ public class EnclosureSystem : MonoBehaviour
     public Dictionary<Vector3Int, byte> positionToEnclosedArea { get; private set; }
     public List<AtmosphericComposition> Atmospheres { get; private set; }
 
-    public List<EnclosedArea> enclosedAreas { get; private set; }
+    public List<EnclosedArea> EnclosedAreas;
+    private List<EnclosedArea> internalEnclosedAreas;
 
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GridSystem gridSystem = default;
+
+    // Have enclosed area been initialized?
+    bool initialized = false;
 
     // The global atmosphere
     private AtmosphericComposition GlobalAtmosphere;
@@ -211,12 +216,15 @@ public class EnclosureSystem : MonoBehaviour
     {
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
-        this.enclosedAreas = new List<EnclosedArea>();
+        this.internalEnclosedAreas = new List<EnclosedArea>();
+        this.EnclosedAreas = new List<EnclosedArea>();
+        this.GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
+        // TODO Hard fix to reference issue
+        this.TileSystem = FindObjectOfType<TileSystem>();
     }
 
     private void Start()
     {
-        GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
         // TODO When this is called GridSystem might not be initlized,
         // ie, cannot read from CellData
         this.FindEnclosedAreas();
@@ -232,7 +240,7 @@ public class EnclosureSystem : MonoBehaviour
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position))
         {
-            return this.enclosedAreas[positionToEnclosedArea[position]].atmosphericComposition;
+            return this.internalEnclosedAreas[positionToEnclosedArea[position]].atmosphericComposition;
         }
         else
         {
@@ -244,7 +252,7 @@ public class EnclosureSystem : MonoBehaviour
     {
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
 
-        return this.enclosedAreas[positionToEnclosedArea[position]];
+        return this.internalEnclosedAreas[positionToEnclosedArea[position]];
     }
 
     public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
@@ -252,14 +260,31 @@ public class EnclosureSystem : MonoBehaviour
         Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position))
         {
-            this.enclosedAreas[positionToEnclosedArea[position]].UpdateAtmosphericComposition(atmosphericComposition);
-            Debug.Log("updated enclosed area");
+            this.internalEnclosedAreas[positionToEnclosedArea[position]].UpdateAtmosphericComposition(atmosphericComposition);
+
             // Mark Atmosphere NS dirty
             this.needSystemManager.Systems[NeedType.Atmosphere].MarkAsDirty();
         }
         else
         {
             throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
+        }
+    }
+
+    /// <summary>
+    /// This deletes enclosed areas that has nothing in it.
+    /// To fix issues with creating enclosed area for areas outside of the border walls
+    /// </summary>
+    private void updatePublicEnlcosedAreas()
+    {
+        this.EnclosedAreas.Clear();
+
+        foreach (EnclosedArea enclosedArea in this.internalEnclosedAreas)
+        {
+            if (enclosedArea.coordinates.Count != 0)
+            {
+                this.EnclosedAreas.Add(enclosedArea);
+            }
         }
     }
 
@@ -285,7 +310,7 @@ public class EnclosureSystem : MonoBehaviour
     /// <param name="atmosphereCount">index of the enclosed area</param>
     private void FloodFill(Vector3Int cur, HashSet<Vector3Int> accessed, HashSet<Vector3Int> unaccessible, Stack<Vector3Int> walls, byte atmosphereCount, EnclosedArea enclosedArea, bool isUpdate)
     {
-       
+
         if (accessed.Contains(cur) || unaccessible.Contains(cur))
         {
             // checked before, move on
@@ -302,9 +327,9 @@ public class EnclosureSystem : MonoBehaviour
                 accessed.Add(cur);
 
                 // Updating enclosed area
-                if (isUpdate)
+                if (isUpdate && this.positionToEnclosedArea.ContainsKey(cur))
                 {
-                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.enclosedAreas[this.positionToEnclosedArea[cur]].atmosphericComposition);
+                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.internalEnclosedAreas[this.positionToEnclosedArea[cur]].atmosphericComposition);
                 }
                 // Initial round
                 else
@@ -341,7 +366,7 @@ public class EnclosureSystem : MonoBehaviour
     public void FindEnclosedAreas()
     {
         // This has to be inside the map
-        Vector3Int startPos = this.TileSystem.WorldToCell(new Vector3(1,1,0));
+        Vector3Int startPos = this.TileSystem.WorldToCell(new Vector3(1, 1, 0));
         // tiles to-process
         Stack<Vector3Int> stack = new Stack<Vector3Int>();
         // non-wall tiles
@@ -372,7 +397,8 @@ public class EnclosureSystem : MonoBehaviour
             this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], false);
         }
 
-        this.enclosedAreas = newEnclosedAreas;
+        this.internalEnclosedAreas = newEnclosedAreas;
+        this.updatePublicEnlcosedAreas();
     }
 
     public void UpdateEnclosedAreas()
@@ -408,411 +434,7 @@ public class EnclosureSystem : MonoBehaviour
             this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, newEnclosedAreas[atmosphereCount], true);
         }
 
-        this.enclosedAreas = newEnclosedAreas;
+        this.internalEnclosedAreas = newEnclosedAreas;
+        this.updatePublicEnlcosedAreas();
     }
-
-    /// <summary>
-    /// Update the surrounding atmospheres of the position. Only used when adding or removing walls.
-    /// </summary>
-    /// <param name="positions">Positions where the walls are placed or removed.</param>
-    //public void UpdateAtmosphere()
-    //{
-    //    Debug.Log("Atmosphere updated");
-    //    // If not initialized or have more than , initialize instead
-    //    if (!initialized || Atmospheres.Count >= 120)
-    //    {
-    //        FindEnclosedAreas();
-    //        return;
-    //    }
-
-    //    // Step 1: Populate tiles outside with 0 and find walls
-
-    //    // tiles to-process
-    //    Stack<Vector3Int> stack = new Stack<Vector3Int>();
-
-    //    // non-wall tiles
-    //    HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
-
-    //    // wall or null tiles
-    //    HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
-
-    //    // walls
-    //    Stack<Vector3Int> walls = new Stack<Vector3Int>();
-
-    //    // starting location, may be changed later for better performance
-    //    Vector3Int cur = new Vector3Int(1, 1, 0);
-    //    TerrainTile curTile = this.TileSystem.GetTerrainTileAtLocation(cur);
-    //    if (curTile != null)
-    //    {
-    //        if (curTile.type == TileType.Wall)
-    //        {
-    //            walls.Push(cur);
-    //        }
-    //        else
-    //        {
-    //            stack.Push(cur);
-    //        }
-    //    }
-
-    //    byte atmNum = (byte)Atmospheres.Count;
-    //    List<byte> containedAtmosphere = new List<byte>();
-    //    bool newAtmosphere = false;
-
-    //    // iterate until no tile left in stack
-    //    while (stack.Count > 0)
-    //    {
-    //        // next point
-    //        cur = stack.Pop();
-
-    //        if (accessed.Contains(cur) || unaccessible.Contains(cur))
-    //        {
-    //            // checked before, move on
-    //            continue;
-    //        }
-
-    //        // check if tilemap has tile
-    //        TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
-    //        if (tile != null)
-    //        {
-    //            if (tile.type != TileType.Wall)
-    //            {
-    //                // save the Vector3Int since it is already checked
-    //                accessed.Add(cur);
-
-    //                // ignore global areas outside of range to reduce waste
-    //                if (positionToEnclosedArea[cur] == 0)
-    //                {
-    //                    continue;
-    //                }
-
-    //                // save what used to be here
-    //                if (!containedAtmosphere.Contains(positionToEnclosedArea[cur]))
-    //                {
-    //                    containedAtmosphere.Add(positionToEnclosedArea[cur]);
-    //                }
-
-    //                // save the atmosphere here as the current one
-    //                positionToEnclosedArea[cur] = atmNum;
-
-    //                // check all 4 tiles around, may be too expensive/awaiting optimization
-    //                stack.Push(cur + Vector3Int.left);
-    //                stack.Push(cur + Vector3Int.up);
-    //                stack.Push(cur + Vector3Int.right);
-    //                stack.Push(cur + Vector3Int.down);
-    //            }
-    //            else
-    //            {
-    //                positionToEnclosedArea[cur] = 255;
-    //                unaccessible.Add(cur);
-
-    //                walls.Push(cur);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            // save the Vector3Int since it is already checked
-    //            unaccessible.Add(cur);
-    //        }
-    //    }
-
-    //    if (newAtmosphere)
-    //    {
-    //        Atmospheres.Add(new AtmosphericComposition(Atmospheres[containedAtmosphere[0]]));
-    //        for (int i = 1; i < containedAtmosphere.Count; i++)
-    //        {
-    //            Atmospheres[atmNum] += Atmospheres[containedAtmosphere[i]];
-    //        }
-    //    }
-
-    //    // Step 2: Loop through walls and push every adjacent tile into the stack
-    //    // and iterate through stack and assign atmosphere number
-    //    atmNum = (byte)Atmospheres.Count;
-
-    //    // iterate until no tile left in walls
-    //    while (walls.Count > 0)
-    //    {
-    //        // next point
-    //        cur = walls.Pop();
-
-    //        // check all 4 tiles around, may be too expensive/awaiting optimization
-    //        stack.Push(cur + Vector3Int.left);
-    //        stack.Push(cur + Vector3Int.up);
-    //        stack.Push(cur + Vector3Int.right);
-    //        stack.Push(cur + Vector3Int.down);
-
-    //        newAtmosphere = false;
-    //        containedAtmosphere = new List<byte>();
-
-    //        while (stack.Count > 0)
-    //        {
-    //            // next point
-    //            cur = stack.Pop();
-
-    //            if (accessed.Contains(cur) || unaccessible.Contains(cur))
-    //            {
-    //                // checked before, move on
-    //                continue;
-    //            }
-
-    //            // check if tilemap has tile
-    //            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
-    //            if (tile != null)
-    //            {
-    //                if (tile.type != TileType.Wall)
-    //                {
-    //                    // save the Vector3Int since it is already checked
-    //                    accessed.Add(cur);
-
-    //                    // ignore global areas outside of range to reduce waste
-    //                    if (positionToEnclosedArea[cur] == 0)
-    //                    {
-    //                        continue;
-    //                    }
-
-    //                    // wasn't a wall and the atmosphere wasn't already included
-    //                    if (positionToEnclosedArea[cur] != 255 && !containedAtmosphere.Contains(positionToEnclosedArea[cur]))
-    //                    {
-    //                        containedAtmosphere.Add(positionToEnclosedArea[cur]);
-    //                    }
-
-    //                    newAtmosphere = true;
-    //                    positionToEnclosedArea[cur] = atmNum;
-
-    //                    // check all 4 tiles around, may be too expensive/awaiting optimization
-    //                    stack.Push(cur + Vector3Int.left);
-    //                    stack.Push(cur + Vector3Int.up);
-    //                    stack.Push(cur + Vector3Int.right);
-    //                    stack.Push(cur + Vector3Int.down);
-    //                }
-    //                else
-    //                {
-    //                    // walls inside walls
-    //                    positionToEnclosedArea[cur] = 255;
-    //                    unaccessible.Add(cur);
-    //                    walls.Push(cur);
-    //                }
-    //            }
-    //            else
-    //            {
-    //                // save the Vector3Int since it is already checked
-    //                unaccessible.Add(cur);
-    //            }
-    //        }
-
-    //        // new atmosphere detected
-    //        if (newAtmosphere)
-    //        {
-    //            atmNum++;
-    //            AtmosphericComposition atmosphere;
-    //            if (containedAtmosphere.Contains(0))
-    //            {
-    //                // if contains the global atmosphere, no other atmospheres matters
-    //                atmosphere = Atmospheres[0];
-    //            }
-    //            else if (containedAtmosphere.Count > 0)
-    //            {
-    //                atmosphere = Atmospheres[containedAtmosphere[0]];
-    //                for (int i = 1; i < containedAtmosphere.Count; i++)
-    //                {
-    //                    atmosphere += Atmospheres[containedAtmosphere[i]];
-    //                }
-
-    //            }
-    //            else
-    //            {
-    //                // empty atmosphere if out of nowhere
-    //                atmosphere = new AtmosphericComposition();
-    //            }
-    //            Atmospheres.Add(atmosphere);
-    //        }
-    //    }
-    //}
-
-
-
-    //public void FindEnclosedAreas()
-    //{
-    //    // temporary list of atmosphere
-    //    List<AtmosphericComposition> newAtmospheres = new List<AtmosphericComposition>();
-
-    //    if (!this.initialized)
-    //    {
-    //        newAtmospheres.Add(this.GlobalAtmosphere);
-
-    //        // 
-    //        this.enclosedAreas.Add(new EnclosedArea(this.GlobalAtmosphere, this.gridSystem));
-    //    }
-    //    else
-    //    {
-    //        newAtmospheres.Add(this.Atmospheres[positionToEnclosedArea[new Vector3Int(1, 1, 0)]]);
-    //    }
-
-    //    // Step 1: Populate tiles outside with 0 and find walls
-
-    //    // tiles to-process
-    //    Stack<Vector3Int> stack = new Stack<Vector3Int>();
-
-    //    // non-wall tiles
-    //    HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
-
-    //    // wall or null tiles
-    //    HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
-
-    //    // walls
-    //    Stack<Vector3Int> walls = new Stack<Vector3Int>();
-
-    //    // outer most position
-    //    Vector3Int cur = this.TileSystem.WorldToCell(new Vector3(1, 1, 0));
-    //    stack.Push(cur);
-
-    //    // iterate until no tile left in stack
-    //    while (stack.Count > 0)
-    //    {
-    //        // next point
-    //        cur = stack.Pop();
-
-    //        if (accessed.Contains(cur) || unaccessible.Contains(cur))
-    //        {
-    //            // checked before, move on
-    //            continue;
-    //        }
-
-    //        // check if tilemap has tile
-    //        TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
-    //        if (tile != null)
-    //        {
-    //            if (tile.type != TileType.Wall)
-    //            {
-    //                // save the Vector3Int since it is already checked
-    //                accessed.Add(cur);
-
-    //                positionToEnclosedArea[cur] = 0;
-
-    //                // check all 4 tiles around, may be too expensive/awaiting optimization
-    //                stack.Push(cur + Vector3Int.left);
-    //                stack.Push(cur + Vector3Int.up);
-    //                stack.Push(cur + Vector3Int.right);
-    //                stack.Push(cur + Vector3Int.down);
-    //            }
-    //            else
-    //            {
-    //                walls.Push(cur);
-    //                unaccessible.Add(cur);
-    //                positionToEnclosedArea[cur] = 255;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            // save the Vector3Int since it is already checked
-    //            unaccessible.Add(cur);
-    //        }
-    //    }
-
-
-    //    // Step 2: Loop through walls and push every adjacent tile into the stack
-    //    // and iterate through stack and assign atmosphere number
-    //    byte atmNum = 1;
-    //    // number of tiles in an atmosphere
-
-    //    // iterate until no tile left in walls
-    //    while (walls.Count > 0)
-    //    {
-    //        // next point
-    //        cur = walls.Pop();
-
-    //        // check all 4 tiles around, may be too expensive/awaiting optimization
-    //        stack.Push(cur + Vector3Int.left);
-    //        stack.Push(cur + Vector3Int.up);
-    //        stack.Push(cur + Vector3Int.right);
-    //        stack.Push(cur + Vector3Int.down);
-
-    //        bool newAtmosphere = false;
-    //        List<byte> containedAtmosphere = new List<byte>();
-
-    //        while (stack.Count > 0)
-    //        {
-    //            // next point
-    //            cur = stack.Pop();
-
-    //            if (accessed.Contains(cur) || unaccessible.Contains(cur))
-    //            {
-    //                // checked before, move on
-    //                continue;
-    //            }
-
-    //            // check if tilemap has tile
-    //            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
-    //            if (tile != null)
-    //            {
-    //                if (tile.type != TileType.Wall)
-    //                {
-    //                    // save the Vector3Int since it is already checked
-    //                    accessed.Add(cur);
-
-    //                    if (positionToEnclosedArea.ContainsKey(cur) && positionToEnclosedArea[cur] != 255 && !containedAtmosphere.Contains(positionToEnclosedArea[cur]))
-    //                    {
-    //                        containedAtmosphere.Add(positionToEnclosedArea[cur]);
-    //                    }
-
-    //                    newAtmosphere = true;
-    //                    positionToEnclosedArea[cur] = atmNum;
-
-    //                    // check all 4 tiles around, may be too expensive/awaiting optimization
-    //                    stack.Push(cur + Vector3Int.left);
-    //                    stack.Push(cur + Vector3Int.up);
-    //                    stack.Push(cur + Vector3Int.right);
-    //                    stack.Push(cur + Vector3Int.down);
-    //                }
-    //                else
-    //                {
-    //                    // walls inside walls
-    //                    walls.Push(cur);
-    //                    unaccessible.Add(cur);
-    //                    positionToEnclosedArea[cur] = 255;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                // save the Vector3Int since it is already checked
-    //                unaccessible.Add(cur);
-    //            }
-    //        }
-
-    //        // a new atmosphere was added
-    //        if (newAtmosphere && !initialized)
-    //        {
-    //            atmNum++;
-    //            newAtmospheres.Add(new AtmosphericComposition(Random.value, Random.value, Random.value, Random.value * 100));
-    //        }
-    //        else if (newAtmosphere && initialized)
-    //        {
-    //            atmNum++;
-    //            AtmosphericComposition atmosphere;
-    //            if (containedAtmosphere.Contains(0))
-    //            {
-    //                // if contains the global atmosphere, no other atmospheres matters
-    //                atmosphere = Atmospheres[0];
-    //            }
-    //            else if (containedAtmosphere.Count > 0)
-    //            {
-    //                atmosphere = Atmospheres[containedAtmosphere[0]];
-    //                for (int i = 1; i < containedAtmosphere.Count; i++)
-    //                {
-    //                    atmosphere += Atmospheres[containedAtmosphere[i]];
-    //                }
-    //            }
-    //            else
-    //            {
-    //                // empty atmosphere if out of nowhere
-    //                atmosphere = new AtmosphericComposition();
-    //            }
-    //            newAtmospheres.Add(atmosphere);
-    //        }
-    //    }
-
-    //    Atmospheres = newAtmospheres;
-    //    //print("Number of Atmospheres = " + Atmospheres.Count);
-    //    //print("Detected Number of Atmospheres = " + atmNum);
-    //    initialized = true;
-    //}
 }

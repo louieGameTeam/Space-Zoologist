@@ -73,12 +73,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     /// <returns></returns>
     protected virtual List<GameObject> AnimalSelection (Dictionary<Availability, List<GameObject>> avalabilityToAnimals) // select all animals that is supposed to enter the behavior
     {
-        List<GameObject> animals = new List<GameObject>();
-        foreach (Availability availability in avalabilityToAnimals.Keys)
-        {
-            animals.AddRange(avalabilityToAnimals[availability]);
-        }
-        return animals;
+        return BehaviorUtils.SelectAnimals(this.numberTriggerdPerLoop, avalabilityToAnimals);
     }
     /// <summary>
     /// Initialization, mainly giving animals information of animals cooperating with them to perform a behavior

@@ -18,7 +18,7 @@ public class BehaviorUtils
     {
         foreach (BehaviorData animalBehaviorData in activeBehaviors)
         {
-            foreach (BehaviorType[] subArray in BehaviorUtils.exclusiveBehaviors)
+            foreach (BehaviorType[] subArray in exclusiveBehaviors)
             {
                 foreach (BehaviorType type1 in animalBehaviorData.behaviorTypes)
                 {
@@ -90,5 +90,23 @@ public class BehaviorUtils
         }
         selectedAnimals.Clear();
         return selectedAnimals;
+    }
+    public static bool IsTargetValueReached(float original, float target, float current)
+    {
+        if (target > original)
+        {
+            if (current < target)
+            {
+                return false;
+            }
+        }
+        else if(target < original)
+        {
+            if (current > target)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
