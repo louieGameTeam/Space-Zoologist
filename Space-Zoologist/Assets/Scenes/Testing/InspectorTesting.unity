@@ -485,6 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0300431448e1c6488fa0aa4ad31aa7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GrassTilemap: {fileID: 0}
   HasTerrainChanged: 0
   chagnedTiles: []
   needSystemManager: {fileID: 1849927150}
@@ -7258,6 +7259,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1348691577319237039, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: LevelDataReference
+      value: 
+      objectReference: {fileID: 1870373115}
     - target: {fileID: 1456007084259798988, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: EnclosureSystem
@@ -7437,6 +7443,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Padding.m_Top
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5352345341677900947, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5575625328587179807, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
@@ -8931,6 +8942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc1a1a38a0193b46956797608201aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnclosedAreas: []
   LevelDataReference: {fileID: 1870373115}
   TileSystem: {fileID: 135368109}
   needSystemManager: {fileID: 1849927150}
@@ -14058,6 +14070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuManager: {fileID: 781210986}
+  Inspector: {fileID: 0}
   StoreMenus:
   - {fileID: 2076028234}
   - {fileID: 304882886}
@@ -20085,13 +20098,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlacementValidation: {fileID: 0}
   Grid: {fileID: 135368112}
+  FoodReferenceData: {fileID: 0}
   LevelDataReference: {fileID: 1870373115}
   RPM: {fileID: 1021518976}
   TileSystem: {fileID: 135368109}
   PopulationManager: {fileID: 1051037409}
   TilePlacementValidation: {fileID: 535299731}
   Tile: {fileID: 11400000, guid: a8c58bbc857468c478c332d63c85a5ea, type: 2}
-  transparency: 0.1
 --- !u!4 &1228270579
 Transform:
   m_ObjectHideFlags: 0
@@ -20551,6 +20564,41 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: needSystemUpdater
+      value: 
+      objectReference: {fileID: 1849927151}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: gridSystem
+      value: 
+      objectReference: {fileID: 1228270578}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: tileSystem
+      value: 
+      objectReference: {fileID: 135368109}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: enclosureSystem
+      value: 
+      objectReference: {fileID: 843116188}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 662968414}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: areaDropdownMenu
+      value: 
+      objectReference: {fileID: 1629369939}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: itemDropdownMenu
+      value: 
+      objectReference: {fileID: 1629369938}
     - target: {fileID: 7509669528419789672, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
