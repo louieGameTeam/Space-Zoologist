@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,14 +24,31 @@ public class Inspector : MonoBehaviour
     // The inspector window 
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
+    [SerializeField] private GameObject areaDropdownMenu = null;
+    [SerializeField] private GameObject itemDropdownMenu = null;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
+    private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
+    private Dropdown enclosedAreaDropdown;
+    private Dropdown itemsDropdown;
+    private DisplayInspectorText inspectorWindowDisplayScript;
+
+    //TODO This does not feels right to be here
+    private List<Life> itemsInEnclosedArea = new List<Life>();
+
+    private void Start()
+    {
+        this.enclosedAreaDropdown = this.areaDropdownMenu.GetComponent<Dropdown>();
+        this.itemsDropdown = this.itemDropdownMenu.GetComponent<Dropdown>();
+        this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
+        this.itemsDropdown.onValueChanged.AddListener(selectItem);
+        this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
+    }
 
     /// <summary>
-    /// 
+    /// Toggle displays
     /// </summary>
-    /// <remarks>Player can only enter inspect mode when not in store</remarks>
     public void ToggleInspectMode()
     {
         // Cannot enter inspector mode while in istore
@@ -50,6 +67,9 @@ public class Inspector : MonoBehaviour
             this.inspectorWindowText.text = "INSPECTOR";
             this.needSystemUpdater.PauseAllAnimals();
             this.inspectorWindow.SetActive(true);
+            this.UpdateDropdownMenu();
+            this.areaDropdownMenu.SetActive(true);
+            this.itemDropdownMenu.SetActive(true);
             this.HUD.SetActive(false);
         }
         else
@@ -57,11 +77,71 @@ public class Inspector : MonoBehaviour
             this.inspectorButtonText.text = "INSPECTOR:OFF";
             this.needSystemUpdater.UnpauseAllAnimals();
             this.inspectorWindow.SetActive(false);
+            this.areaDropdownMenu.SetActive(false);
+            this.itemDropdownMenu.SetActive(false);
             this.HUD.SetActive(true);
             this.UnHighlightAll();
         }
 
         //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
+    }
+
+    private void UpdateDropdownMenu()
+    {
+        this.enclosedAreaDropdown.options.Clear();
+
+        // Add empty option
+        this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Select an area" });
+
+        foreach (EnclosedArea enclosedArea in this.enclosureSystem.EnclosedAreas)
+        {
+            this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Enclosed Area {enclosedArea.id}"});
+        }
+    }
+
+    private void selectEnclosedArea(int selection)
+    {
+        EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection-1];
+
+        Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
+
+        this.itemsDropdown.options.Clear();
+        this.itemsInEnclosedArea.Clear();
+
+        this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
+
+
+        foreach (Population population in enclosedAreaSelected.populations)
+        {
+            this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{population.Species.SpeciesName}" });
+            this.itemsInEnclosedArea.Add(population);
+        }
+
+        foreach (FoodSource foodSource in enclosedAreaSelected.foodSources)
+        {
+            this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{foodSource.Species.SpeciesName}" });
+            this.itemsInEnclosedArea.Add(foodSource);
+        }
+
+        this.inspectorWindowDisplayScript.DislplayEnclosedArea(enclosedAreaSelected);
+    }
+
+    private void selectItem(int selection)
+    {
+        Debug.Log($"selected item {selection} from dropdown");
+
+        Life itemSelected = this.itemsInEnclosedArea[selection-1];
+
+        if (itemSelected.GetType() == typeof(Population))
+        {
+            this.HighlightPopulation(((Population)itemSelected).gameObject);
+            this.inspectorWindowDisplayScript.DisplayPopulationStatus((Population)itemSelected);
+        }
+        if (itemSelected.GetType() == typeof(FoodSource))
+        {
+            this.HighlightFoodSource(((FoodSource)itemSelected).gameObject);
+            this.inspectorWindowDisplayScript.DisplayFoodSourceStatus((FoodSource)itemSelected);
+        }
     }
 
     /// <summary>
@@ -78,39 +158,55 @@ public class Inspector : MonoBehaviour
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
             TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
-            GridSystem.CellData cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
 
-            Debug.Log($"Mouse click at {cellPos}");
+            //Debug.Log($"Mouse click at {cellPos}");
+
+            GridSystem.CellData cellData;
+
+            // Handles index out of bound exception
+            if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
+            {
+                cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
+            }
+            else
+            {
+                Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
+                return;
+            }
 
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)
             {
                 this.UnHighlightAll();
-                this.HighlightPopulation(cellData.Animal);
-                Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
-                this.DisplayAnimalStatus(cellData.Animal.GetComponent<Animal>());
+                this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
+                //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
+                this.inspectorWindowDisplayScript.DisplayPopulationStatus(cellData.Animal.GetComponent<Animal>().PopulationInfo);
             }
             // Selection is food source or item
             else if (cellData.ContainsFood)
             {
                 this.UnHighlightAll();
-                this.HighLightFoodSource(cellData.Food);
-                Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
-                this.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
+                this.HighlightFoodSource(cellData.Food);
+                //Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
+                this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
             }
             // Selection is liquid tile
             else if (tile.type == TileType.Liquid)
             {
                 this.UnHighlightAll();
-                Debug.Log($"Selected liquid tile @ {cellPos}");
-                this.DisplayLiquidCompisition(cellPos, tile);
+                this.HighlightSingleTile(cellPos);
+                //Debug.Log($"Selected liquid tile @ {cellPos}");
+                float[] compositions = this.tileSystem.GetTileContentsAtLocation(cellPos, tile);
+                this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
             }
             // Selection is enclosed area
-            else
+            else if (tile && tile.type != TileType.Wall)
             {
                 this.UnHighlightAll();
-                this.DislplayEnclosedArea(cellPos);
-                Debug.Log($"Enclosed are @ {cellPos} selected");
+                this.HighlightEnclosedArea(cellPos);
+                this.enclosureSystem.UpdateEnclosedAreas();
+                this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedArea(cellPos));
+                //Debug.Log($"Enclosed are @ {cellPos} selected");
             }
         }
     }
@@ -132,10 +228,8 @@ public class Inspector : MonoBehaviour
         }
     }
 
-    private void HighlightPopulation(GameObject animal)
+    private void HighlightPopulation(GameObject population)
     {
-        GameObject population = animal.transform.parent.gameObject;
-
         foreach (Transform child in population.transform)
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
@@ -144,74 +238,27 @@ public class Inspector : MonoBehaviour
         this.lastPopulationSelected = population;
     }
 
-    private void DisplayAnimalStatus(Animal animal)
-    {
-        Population population = animal.PopulationInfo;
 
-        string displayText = $"{population.species.SpeciesName} Info: \n";
-
-        displayText += $"Count: {population.Count}\n";
-
-        foreach (Need need in population.Needs.Values)
-        {
-            displayText += $"{need.NeedName} : {need.GetCondition(need.NeedValue)}\n";
-        }
-
-        this.inspectorWindowText.text = displayText;
-    }
-
-    private void HighLightFoodSource(GameObject foodSource)
+    private void HighlightFoodSource(GameObject foodSource)
     {
         foodSource.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSource;
     }
 
-    private void DisplayFoodSourceStatus(FoodSource foodSource)
+    
+
+    private void HighlightEnclosedArea(Vector3Int selectedLocation)
     {
-        string displayText = $"{foodSource.name} Info: \n";
 
-        displayText += $"Output: {foodSource.FoodOutput}\n";
-
-        foreach (Need need in foodSource.Needs.Values)
-        {
-            displayText += $"{need.NeedName} : {need.GetCondition(need.NeedValue)}\n";
-        }
-
-
-        this.inspectorWindowText.text = displayText;
     }
 
-    private void DislplayEnclosedArea(Vector3Int cellPos)
+    private void UnHighSignleTile(Vector3Int location)
     {
-        AtmosphericComposition atmosphericComposition = enclosureSystem.GetAtmosphericComposition(cellPos);
 
-        // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
-        float[] composition = atmosphericComposition.GeComposition();
-
-        string displayText = "Enclosed Area Info: \n";
-
-
-        // Atmospheric info
-        displayText += "Atmospheric composition: \n";
-        foreach (var (value, index) in composition.WithIndex())
-        {
-            displayText += $"{((AtmosphereComponent)index).ToString()} : {value}\n";
-        }
-
-        this.inspectorWindowText.text = displayText;
     }
 
-    private void DisplayLiquidCompisition(Vector3Int cellPos, TerrainTile tile)
+    private void HighlightSingleTile(Vector3Int location)
     {
-        float[] compositions = this.tileSystem.GetTileContentsAtLocation(cellPos, tile);
 
-        string displayText = "Liquid composition: \n";
-
-        foreach (var (composition, index) in compositions.WithIndex())
-        {
-            displayText += $"{((LiquidComposition)index).ToString()} : {composition}\n";
-        }
-
-        this.inspectorWindowText.text = displayText;
     }
 }

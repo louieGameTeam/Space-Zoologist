@@ -6,12 +6,14 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
-    [SerializeField] GameObject PlayerBalance = default;
+    [SerializeField] GameObject PlayerBalanceHUD = default;
     [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
     // PodMenu had original different design so could refactor to align with store sections but works for now
     [SerializeField] PodMenu PodMenu = default;
     [Header("Shared menu dependencies")]
+    [SerializeField] PlayerBalance PlayerBalance = default;
+    [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] GridSystem GridSystem = default;
@@ -21,11 +23,12 @@ public class MenuManager : MonoBehaviour
     {
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem);
+            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay);
             storeMenu.Initialize();
         }
         PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem);
         PodMenu.Initialize();
+        this.PlayerBalanceHUD.GetComponent<TopHUD>().SetupPlayerBalance(this.PlayerBalance);
     }
 
     public void OnToggleMenu(GameObject menu)
@@ -61,7 +64,7 @@ public class MenuManager : MonoBehaviour
 
     private void StoreToggledOn()
     {
-        this.PlayerBalance.SetActive(true);
+        this.PlayerBalanceHUD.SetActive(true);
         NeedSystemUpdater.isInStore = true;
         NeedSystemUpdater.PauseAllAnimals();
         this.GridSystem.UpdateAnimalCellGrid();
@@ -70,7 +73,7 @@ public class MenuManager : MonoBehaviour
 
     private void StoreToggledOff()
     {
-        this.PlayerBalance.SetActive(false);
+        this.PlayerBalanceHUD.SetActive(false);
         NeedSystemUpdater.isInStore = false;
         NeedSystemUpdater.UpdateAccessibleLocations();
         NeedSystemUpdater.UnpauseAllAnimals();

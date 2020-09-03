@@ -15,26 +15,28 @@ public class StoreSection : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
+    protected CanvasObjectStrobe PlayerBalanceDisplay = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
-    protected IntVariable playerBalance = default;
+    protected PlayerBalance playerBalance = default;
     protected LevelDataReference LevelDataReference = default;
     protected GridSystem GridSystem = default;
 
     protected Item selectedItem = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance, CanvasObjectStrobe playerBalanceDisplay)
     {
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
+        this.playerBalance = playerBalance;
+        this.PlayerBalanceDisplay = playerBalanceDisplay;
     }
 
     public virtual void Initialize()
     {
         LevelData levelData = LevelDataReference.LevelData;
-        this.playerBalance = levelData.StartingBalance;
         foreach (Item item in levelData.Items)
         {
             if (item.Type.Equals(itemType))
@@ -61,7 +63,7 @@ public class StoreSection : MonoBehaviour
     {
         if (!this.CanAfford(item))
         {
-            Debug.Log("Selection cancelled");
+            this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
             return;
         }
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
@@ -77,23 +79,24 @@ public class StoreSection : MonoBehaviour
     {
         if (!this.CanAfford(this.selectedItem))
         {
+            this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
             return;
         }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnItemSelectionCanceled();
         }
+        else
+        {
+            this.playerBalance.SubtractFromBalance(selectedItem.Price);
+        }
     }
 
-    private bool CanAfford(Item item)
+    public bool CanAfford(Item item)
     {
-        if (this.playerBalance == null)
+        if (item.Price > this.playerBalance.Balance)
         {
-            Debug.Log("Null playerbalance reference");
-            return false;
-        }
-        if (item.Price > this.playerBalance.RuntimeValue)
-        {
+            Debug.Log("Too expensive");
             OnItemSelectionCanceled();
             return false;
         }
@@ -115,7 +118,11 @@ public class StoreSection : MonoBehaviour
     /// <param name="eventData"></param>
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
-
+        if (!this.CanAfford(this.selectedItem))
+        {
+            this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            return;
+        }
     }
 
     public virtual bool IsPlacementValid(Vector3 mousePosition)

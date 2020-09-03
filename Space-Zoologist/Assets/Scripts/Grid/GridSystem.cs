@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// Setup function to give back home locations of given population
 /// <summary>
 /// Translates the tilemap into a 2d array for keeping track of object locations.
 /// </summary>
@@ -14,22 +15,20 @@ public class GridSystem : MonoBehaviour
     [HideInInspector]
     public PlacementValidation PlacementValidation = default;
     [SerializeField] public Grid Grid = default;
+    [SerializeField] public FoodReferenceData FoodReferenceData = default;
     [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] private Tilemap TilePlacementValidation = default;
     [SerializeField] private TerrainTile Tile = default;
-    [SerializeField] float transparency = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
-
-    private HashSet<Vector3Int> PopulationHomeLocations = default;
+    private HashSet<Vector3Int> PopulationHomeLocations = new HashSet<Vector3Int>();
 
     private void Awake()
     {
-        this.PopulationHomeLocations = new HashSet<Vector3Int>();
         this.CellGrid = new CellData[this.GridWidth, this.GridHeight];
         for (int i=0; i<this.GridWidth; i++)
         {
@@ -43,7 +42,17 @@ public class GridSystem : MonoBehaviour
     private void Start()
     {
         this.PlacementValidation = this.gameObject.GetComponent<PlacementValidation>();
-        this.PlacementValidation.Initialize(this, this.TileSystem, this.LevelDataReference);
+        this.PlacementValidation.Initialize(this, this.TileSystem, this.LevelDataReference, this.FoodReferenceData);
+    }
+
+    public bool isCellinGrid(int x, int y)
+    {
+        if (x < 0 || x >= this.GridWidth || y < 0 || y >= this.GridHeight)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -57,8 +66,11 @@ public class GridSystem : MonoBehaviour
             for (int j=0; j<this.CellGrid.GetLength(1); j++)
             {
                 this.CellGrid[i, j].ContainsAnimal = false;
+                this.CellGrid[i, j].HomeLocation = false;
             }
         }
+        // Could be broken up for better efficiency since iterating through population twice
+        this.PopulationHomeLocations = this.RecalculateHomeLocation();
         // Update locations and grab reference to animal GameObject (for future use)
         foreach (Population population in this.PopulationManager.Populations)
         {
@@ -69,6 +81,26 @@ public class GridSystem : MonoBehaviour
                 this.CellGrid[animalLocation.x, animalLocation.y].Animal = animal;
             }
         }
+    }
+
+    public Vector3Int[,] GetHomeLocations(Population population)
+    {
+        Vector3Int[,] homeLocations = new Vector3Int[3,3];
+        Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
+        int x = 0;
+        int y = 0;
+        for (int i=-1; i<=1; i++)
+        {
+            for (int j=-1; j<=1; j++)
+            {
+                Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
+                homeLocations[x, y] = loc;
+                y++;
+            }
+            x++;
+            y = 0;
+        }
+        return homeLocations;
     }
 
     public bool IsWithinGridBouds(Vector3 mousePosition)
@@ -101,6 +133,88 @@ public class GridSystem : MonoBehaviour
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
     }
 
+    // iterate through CellData, if contains item of interest and locations accessible, calculate distance and keep track of closest item location
+    public Vector3Int FindClosestItem(Population population, GameObject animal, ItemType item)
+    {
+        Vector3Int itemLocation = new Vector3Int(-1, -1, -1);
+        float closestDistance = 10000f;
+        float localDistance = 0f;
+        for (int x=0; x<this.CellGrid.GetLength(0); x++)
+        {
+            for (int y=0; y<this.CellGrid.GetLength(1); y++)
+            {
+                if (this.CellGrid[x, y].ContainsFood && item.Equals(ItemType.Food) && population.Grid.IsAccessible(x, y))
+                {
+                    localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                    if (localDistance < closestDistance)
+                    {
+                        closestDistance = localDistance;
+                        itemLocation = new Vector3Int(x, y, 0);
+                    }
+                }
+                else if (this.CellGrid[x, y].ContainsMachine && item.Equals(ItemType.Machine) && population.Grid.IsAccessible(x, y))
+                {
+                    localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                    if (localDistance < closestDistance)
+                    {
+                        closestDistance = localDistance;
+                        itemLocation = new Vector3Int(x, y, 0);
+                    }
+                }
+                else if (item.Equals(ItemType.Terrain))
+                {
+                    // if contains liquid tile, check neighbors accessibility
+                    TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(new Vector3Int(x, y, 0));
+                    if (tile != null && tile.type == TileType.Liquid)
+                    {
+                        if (population.Grid.IsAccessible(x + 1, y))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x + 1, y, 0);
+                            }
+                        }
+                        if (population.Grid.IsAccessible(x - 1, y))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x - 1, y, 0);
+                            }
+                        }
+                        if (population.Grid.IsAccessible(x, y + 1))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x, y + 1, 0);
+                            }
+                        }
+                        if (population.Grid.IsAccessible(x, y - 1))
+                        {
+                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                            if (localDistance < closestDistance)
+                            {
+                                closestDistance = localDistance;
+                                itemLocation = new Vector3Int(x, y - 1, 0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return itemLocation;
+    }
+
+    private float CalculateDistance(float x1, float y1, float x2, float y2)
+    {
+        return Mathf.Sqrt(Mathf.Pow(x2 - x1, 2) + Mathf.Pow(y2 - y1, 2));
+    }
+
     private void SetupMovementBoundaires(bool[,] tileGrid)
     {
         for (int x=0; x<GridWidth; x++)
@@ -115,30 +229,36 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    public void SetupPopulationHomeLocation(Vector3 populationLocation)
-    {
-        Vector3Int origin = this.Grid.WorldToCell(populationLocation);
-        for (int i=-1; i<=1; i++)
-        {
-            for (int j=-1; j<=1; j++)
-            {
-                Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
-                if (!this.PopulationHomeLocations.Contains(loc))
-                {
-                    this.PopulationHomeLocations.Add(loc);
-                }
-                this.CellGrid[loc.x, loc.y].HomeLocation = true;
-            }
-        }
-        this.HighlightHomeLocations();
-    }
-
+    // Resets and recalculates everytime in case a population dies
     public void HighlightHomeLocations()
     {
+        this.PopulationHomeLocations = this.RecalculateHomeLocation();
         foreach (Vector3Int location in this.PopulationHomeLocations)
         {
             this.TilePlacementValidation.SetTile(location, this.Tile);
         }
+    }
+
+    private HashSet<Vector3Int> RecalculateHomeLocation()
+    {
+        HashSet<Vector3Int> homeLocations = new HashSet<Vector3Int>();
+        foreach (Population population in this.PopulationManager.Populations)
+        {
+            Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
+            for (int i=-1; i<=1; i++)
+            {
+                for (int j=-1; j<=1; j++)
+                {
+                    Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
+                    if (!homeLocations.Contains(loc))
+                    {
+                        homeLocations.Add(loc);
+                        this.CellGrid[origin.x + i, origin.y + j].HomeLocation = true;
+                    }
+                }
+            }
+        }
+        return homeLocations;
     }
 
     public void UnhighlightHomeLocations()
@@ -179,8 +299,8 @@ public class GridSystem : MonoBehaviour
             this.Food = null;
             this.Animal = null;
             this.Machine = null;
-            this.HomeLocation = false;
             this.ContainsMachine = false;
+            this.HomeLocation = false;
         }
 
         public bool ContainsMachine { get; set; }

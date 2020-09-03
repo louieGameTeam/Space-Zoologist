@@ -13,7 +13,6 @@ public class FoodSourceStoreSection : StoreSection
     public override void Initialize()
     {
         base.itemType = ItemType.Food;
-        Debug.Assert(ReferenceUtil.ins != null);
         base.Initialize();
     }
 
@@ -23,7 +22,7 @@ public class FoodSourceStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData))
+        if (base.IsCursorOverUI(eventData) || !base.CanAfford(base.selectedItem))
         {
             base.OnItemSelectionCanceled();
             return;
@@ -39,7 +38,6 @@ public class FoodSourceStoreSection : StoreSection
             Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsFood = true;
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
-            playerBalance.RuntimeValue -= selectedItem.Price;
         }
     }
 }

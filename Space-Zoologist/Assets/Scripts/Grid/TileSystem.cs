@@ -6,6 +6,7 @@ using System;
 
 public class TileSystem : MonoBehaviour
 {
+    [SerializeField] Tilemap GrassTilemap = default;
     // Start is called before the first frame update
     private List<Tilemap> tilemaps = new List<Tilemap>();
     private Grid grid;
@@ -14,6 +15,8 @@ public class TileSystem : MonoBehaviour
     public List<Vector3Int> chagnedTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTilesAndContents = new List<Vector3Int>();
+
+    [SerializeField] NeedSystemManager needSystemManager = default;
 
     private void Awake()
     {
@@ -78,7 +81,13 @@ public class TileSystem : MonoBehaviour
         TerrainTile terrainTile = GetTerrainTileAtLocation(cellLocation);
         liquidBodyTilesAndContents.Add(cellLocation);
         ChangeLiquidComposition(cellLocation, composition, terrainTile, isSetting);
+        GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
+
+        // Mark liquid NS dirty
+        this.needSystemManager.Systems[NeedType.Liquid].MarkAsDirty();
+
         RefreshTilemapColor(terrainTile.targetTilemap);
+
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {
@@ -484,6 +493,17 @@ public class TileSystem : MonoBehaviour
         }
         return true;
     }
+    public void RefreshGrassTilemapColor()
+    {
+        if (this.GrassTilemap.TryGetComponent(out TileColorManager tileColorManager))
+        {
+            foreach (Vector3Int cellLocation in this.GrassTilemap.cellBounds.allPositionsWithin)
+            {
+                tileColorManager.SetTileColor(cellLocation, (TerrainTile)this.GrassTilemap.GetTile(cellLocation));
+            }
+        }
+    }
+
     public void RefreshTilemapColor(Tilemap tilemap)
     {
         if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))

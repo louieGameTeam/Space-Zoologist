@@ -8,6 +8,7 @@ public enum MachineValueType {X, Y, Z}
 public class MachineValues : MonoBehaviour
 {
     [SerializeField] Text MachineValue = default;
+    [SerializeField] float ValueToIncrementBy = 1f;
     public MachineValueType MachineValueType = default;
     [HideInInspector]
     public float StartingValue = default;
@@ -25,9 +26,9 @@ public class MachineValues : MonoBehaviour
     public void IncrementValue()
     {
         float value = float.Parse(this.MachineValue.text);
-        if (value < 100)
+        if (value + ValueToIncrementBy <= 100)
         {
-            value++;
+            value += ValueToIncrementBy;
             this.MachineValue.text = value.ToString();
         }
     }
@@ -35,9 +36,9 @@ public class MachineValues : MonoBehaviour
     public void DecrementValue()
     {
         float value = float.Parse(this.MachineValue.text);
-        if (value > 0)
+        if (value - ValueToIncrementBy >= 0)
         {
-            value--;
+            value -= ValueToIncrementBy;
             this.MachineValue.text = value.ToString();
         }
     }

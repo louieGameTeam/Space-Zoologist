@@ -14,7 +14,7 @@ public class TileStoreSection : StoreSection
     [Header("Only needed if tutorial level")]
     [SerializeField] private TutorialTesting tutorial = default;
 
-    private IntVariable startingBalance;
+    private float startingBalance;
     private bool isPlacing = false;
     private int numTilesPlaced = 0;
 
@@ -22,9 +22,7 @@ public class TileStoreSection : StoreSection
     {
         base.itemType = ItemType.Terrain;
         base.Initialize();
-        startingBalance = base.playerBalance;
         Debug.Assert(tilePlacementController != null);
-        Debug.Assert(startingBalance != null);
     }
 
     /// <summary>
@@ -34,7 +32,7 @@ public class TileStoreSection : StoreSection
     {
         numTilesPlaced = 0;
         isPlacing = true;
-        startingBalance = base.playerBalance;
+        startingBalance = base.playerBalance.Balance;
         tilePlacementController.StartPreview(selectedItem.ID);
     }
 
@@ -45,7 +43,7 @@ public class TileStoreSection : StoreSection
     {
         isPlacing = false;
         tilePlacementController.RevertChanges();
-        base.playerBalance = startingBalance;
+        base.playerBalance.SetBalance(startingBalance);
     }
 
     /// <summary>
@@ -54,9 +52,9 @@ public class TileStoreSection : StoreSection
     private void FinishPlacing()
     {
         isPlacing = false;
-        this.EnclosureSystem.FindEnclosedAreas();
+        this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
-        playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
+        base.playerBalance.SubtractFromBalance(numTilesPlaced * selectedItem.Price);
         if (tutorial != null)
         {
             tutorial.TriggerDialogueOnce();
@@ -115,7 +113,7 @@ public class TileStoreSection : StoreSection
             else
             {
                 numTilesPlaced = tilePlacementController.PlacedTileCount();
-                playerBalance.RuntimeValue = startingBalance.RuntimeValue - numTilesPlaced * selectedItem.Price;
+                base.playerBalance.SubtractFromBalance(numTilesPlaced * selectedItem.Price);
             }
         }
     }

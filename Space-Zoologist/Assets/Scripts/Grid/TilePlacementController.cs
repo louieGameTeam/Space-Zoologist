@@ -32,7 +32,6 @@ public class TilePlacementController : MonoBehaviour
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private GridSystem GridSystem = default;
-    private bool isCheckingItem = true;
     private void Awake()
     {
         terrainTiles = Resources.LoadAll("Tiles",typeof(TerrainTile)).Cast<TerrainTile>().ToArray(); // Load tiles form resources
@@ -51,6 +50,11 @@ public class TilePlacementController : MonoBehaviour
                 terrainTile.replacementTilemap.Add(tilemaps[(int)layer]);
             }
         }
+    }
+
+    private void Start()
+    {
+        grid = GetComponent<Grid>();
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
             List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
@@ -80,11 +84,6 @@ public class TilePlacementController : MonoBehaviour
             referencedTiles.Clear();
         }
         
-    }
-
-    private void Start()
-    {
-        grid = GetComponent<Grid>();
     }
 
     void Update()
@@ -516,11 +515,6 @@ public class TilePlacementController : MonoBehaviour
     private bool IsTileFree(Vector3Int cellLocation)
     {
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
-        // if (cellData.ContainsAnimal == false && (cellData.ContainsFood == false || !isCheckingItem || cellData.ContainsMachine == false))
-        // {
-        //     return true;
-        // }
-        // return false;
         return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
     }
 }

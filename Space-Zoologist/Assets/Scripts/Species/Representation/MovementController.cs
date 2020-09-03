@@ -9,7 +9,7 @@ public class MovementController : MonoBehaviour
 {
     public bool DestinationReached { get; private set; }
     public bool DestinationCancelled { get; private set; }
-    public bool HasPath = false;
+    public bool HasPath { get; private set; }
     public bool IsPaused = false;
 
     private Animal Animal { get; set; }
@@ -19,11 +19,13 @@ public class MovementController : MonoBehaviour
     // Animal doesn't change direction until they've moved a certain distance in that direction
     private float ChangeDirectionThreshold = 0.5f;
     private float ChangeDirectionMovement = 0f;
+
     private float bufferedSpeed = -1;
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
         this.DestinationReached = true;
+        this.HasPath = false;
     }
     private float CalculateSpeed()
     {
@@ -38,7 +40,7 @@ public class MovementController : MonoBehaviour
         }
         bufferedSpeed = Animal.MovementData.CalculateModifiedSpeed();
         this.Animal.MovementData.Speed = bufferedSpeed;
-        HandleSpeedChange();
+        //HandleSpeedChange();
         return bufferedSpeed;
     }
     /// <summary>
@@ -47,7 +49,6 @@ public class MovementController : MonoBehaviour
     /// <param name="pathToDestination"></param>
     public void AssignPath(List<Vector3> pathToDestination, bool pathFound)
     {
-        this.HasPath = pathFound;
         if (!pathFound)
         {
             Debug.Log("Error path not found");
@@ -58,8 +59,9 @@ public class MovementController : MonoBehaviour
         this.DestinationReached = false;
         this.DestinationCancelled = false;
         this.PathIndex = 0;
-        this.CalculateSpeed();
         this.UpdateVisualLogic(this.NextPathTile);
+        this.CalculateSpeed();
+        this.HasPath = true;
     }
 
     public void TryToCancelDestination()
@@ -81,8 +83,10 @@ public class MovementController : MonoBehaviour
         if (this.PathToDestination.Count == 0)
         {
             this.PathIndex = 0;
-
+            this.HasPath = false;
             this.DestinationReached = true;
+            this.bufferedSpeed = -1;
+            this.Animal.MovementData.Speed = 0;
             return;
         }
         if (this.NextPathVectorReached(this.NextPathTile, this.transform.position))
@@ -95,6 +99,7 @@ public class MovementController : MonoBehaviour
                 this.bufferedSpeed = -1;
                 this.Animal.MovementData.Speed = 0;
                 this.DestinationReached = true;
+                this.HasPath = false;
                 return;
             }
             // Update to the next path tile and visual logic stuff
@@ -106,7 +111,8 @@ public class MovementController : MonoBehaviour
                 this.UpdateVisualLogic(this.NextPathTile);
             }
         }
-        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, CalculateSpeed());
+        this.HasPath = true;
+        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.CalculateSpeed());
     }
 
     public void MoveInDirection(Direction direction)
@@ -117,7 +123,7 @@ public class MovementController : MonoBehaviour
             return;
         }
         Vector3 vectorDirection = new Vector3(0, 0, 0);
-        float speed = this.Animal.MovementData.Speed * Time.deltaTime;
+        float speed = this.CalculateSpeed() * Time.deltaTime;
         switch(direction)
         {
             case Direction.up:
@@ -173,6 +179,37 @@ public class MovementController : MonoBehaviour
         this.transform.position = vectorDirection;
     }
 
+    public void ForceMoveInDirection(Direction direction)
+    {
+        Vector3 vectorDirection = new Vector3(0, 0, 0);
+        float speed = this.Animal.MovementData.BaseSpeed * Time.deltaTime;
+        switch(direction)
+        {
+            case Direction.up:
+            {
+                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + 0.05f, 0);
+                break;
+            }
+            case Direction.down:
+            {
+                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -0.05f, 0);
+                break;
+            }
+            case Direction.left:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + -0.05f, this.transform.position.y, 0);
+                break;
+            }
+            case Direction.right:
+            {
+                vectorDirection = new Vector3(this.transform.position.x + 0.05f, this.transform.position.y, 0);
+                break;
+            }
+        }
+        this.UpdateVisualLogic(vectorDirection);
+        this.transform.position = vectorDirection;
+    }
+
     public void StandStill()
     {
         this.Animal.MovementData.MovementStatus = Movement.idle;
@@ -198,11 +235,7 @@ public class MovementController : MonoBehaviour
     public void UpdateVisualLogic(Vector3 destination)
     {
         this.HandleDirectionChange(this.transform.position, destination);
-        this.HandleSpeedChange();
-    }
-    private void HandleSpeedChange()
-    {
-        if (this.Animal.MovementData.Speed > this.Animal.MovementData.RunThreshold)
+        if (this.CalculateSpeed() > this.Animal.MovementData.RunThreshold)
         {
             this.Animal.MovementData.MovementStatus = Movement.running;
         }
@@ -234,7 +267,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                this.Animal.MovementData.CurrentDirection = Direction.right;
+                this.Animal.MovementData.CurrentDirection = Direction.left;
             }
         }
         else if (direction.x > 0)
@@ -249,7 +282,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                this.Animal.MovementData.CurrentDirection = Direction.left;
+                this.Animal.MovementData.CurrentDirection = Direction.right;
             }
         }
     }

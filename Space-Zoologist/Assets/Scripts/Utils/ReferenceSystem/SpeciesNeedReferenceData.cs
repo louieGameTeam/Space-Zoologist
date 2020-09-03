@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SpeciesNeedReference", menuName = "ReferenceData/SpeciesNeedReference")]
 public class SpeciesNeedReferenceData : ScriptableObject
 {
-    [SerializeField] private List<Need> AddAllNeeds = new List<Need>();
+    [Expandable] public List<Need> AddAllNeeds = new List<Need>();
     public Dictionary<string, Need> AllNeeds = new Dictionary<string, Need>();
 
     public Need FindNeed(string need)

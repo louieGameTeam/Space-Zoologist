@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LiquidMachineHUD : MonoBehaviour
 {
+    [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] List<MachineValues> MachineValues = default;
     LiquidMachine CurrentMachine = default;
 
@@ -52,6 +53,7 @@ public class LiquidMachineHUD : MonoBehaviour
             }
         }
         this.CurrentMachine.UpdateLiquid(liquidComposition);
+        this.NeedSystemManager.UpdateSystem(NeedType.Liquid);
     }
 
     public void ApplyStartingValues()
