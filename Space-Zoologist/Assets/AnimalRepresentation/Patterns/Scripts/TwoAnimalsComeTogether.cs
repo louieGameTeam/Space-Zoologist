@@ -20,6 +20,10 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         {
             // TODO make animal idle while waiting for other goat
         }
+        if (!(animalData.collaboratingAnimals.Count > 0))
+        {
+            return false;
+        }
         if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {
             // AlternativeConditionSatisfied but let that return
@@ -41,6 +45,11 @@ public class TwoAnimalsComeTogether : BehaviorPattern
             {
                 return true;
             }
+        }
+        if (!(animalData.collaboratingAnimals.Count > 0))
+        {
+            Debug.Log("No collaborating animals to come together");
+            return true;
         }
         if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {

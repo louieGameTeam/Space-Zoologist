@@ -40,7 +40,7 @@ public class MovementController : MonoBehaviour
         }
         bufferedSpeed = Animal.MovementData.CalculateModifiedSpeed();
         this.Animal.MovementData.Speed = bufferedSpeed;
-        HandleSpeedChange();
+        //HandleSpeedChange();
         return bufferedSpeed;
     }
     /// <summary>
