@@ -8,13 +8,13 @@ public class SynchronizedBehaviorTrigger : SpecieBehaviorTrigger
     [SerializeField] private float[] synchronizedSteps;
     protected override List<GameObject> AnimalSelection(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
     {
-        return BehaviorUtils.SelectAnimals(base.numberTriggerdPerLoop, avalabilityToAnimals);
+        return BehaviorUtils.SelectAnimals(this.numberTriggerdPerLoop, avalabilityToAnimals);
     }
     protected override void ProceedToNext(GameObject animal, List<GameObject> collaboratingAnimals, bool isDriven = false)
     {
         if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed
         {
-            if (!isDriven && (synchronizedSteps == null || Array.Exists(synchronizedSteps, x => x == animalsToSteps[animal])))// Avoids infinite loop and select steps that 
+            if (!isDriven && (synchronizedSteps == null || synchronizedSteps.Length == 0 || Array.Exists(synchronizedSteps, x => x == animalsToSteps[animal])))// Avoids infinite loop and select steps that 
             {
                 foreach (GameObject otherAnimal in collaboratingAnimals)
                 {
@@ -29,14 +29,14 @@ public class SynchronizedBehaviorTrigger : SpecieBehaviorTrigger
                     List<GameObject> otherAnimalCollabs = new List<GameObject>(collaboratingAnimals);
                     otherAnimalCollabs.Add(animal);
                     otherAnimalCollabs.Remove(otherAnimal);
-                    ProceedToNext(otherAnimal, otherAnimalCollabs, true);
+                    this.ProceedToNext(otherAnimal, otherAnimalCollabs, true);
                 }
             }
             animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
         }
         else
         {
-            RemoveBehavior(animal);
+            base.RemoveBehavior(animal);
         }
     }
 }

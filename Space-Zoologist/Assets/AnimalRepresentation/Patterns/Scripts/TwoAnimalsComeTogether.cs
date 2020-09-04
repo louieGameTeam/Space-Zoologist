@@ -12,6 +12,8 @@ public class TwoAnimalsComeTogether : BehaviorPattern
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
+
+        Debug.Log((animalData.animal.MovementController.DestinationReached, animal.name));
         if (animalData.animal.MovementController.HasPath)
         {
             animalData.animal.MovementController.MoveTowardsDestination();
@@ -24,17 +26,18 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         {
             return false;
         }
-        if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
-        {
-            // AlternativeConditionSatisfied but let that return
-            return false;
-        }
+        /*        if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
+                {
+                    // AlternativeConditionSatisfied but let that return
+                    return false;
+                }*/
+        return animalData.animal.MovementController.DestinationReached;/*
         // both animals have reached home location
         if (AnimalsToAnimalData[animalData.collaboratingAnimals[0]].animal.MovementController.DestinationReached && animalData.animal.MovementController.DestinationReached)
         {
             return this.AnimalsLinedUp(animal, animalData.collaboratingAnimals[0], animalData);
         }
-        return false;
+        return false;*/
     }
 
     protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
@@ -51,11 +54,11 @@ public class TwoAnimalsComeTogether : BehaviorPattern
             Debug.Log("No collaborating animals to come together");
             return true;
         }
-        if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
+/*        if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {
             Debug.Log("Unable to reference collaborating animal, exiting behavior");
             return true;
-        }
+        }*/
         return false;
     }
 

@@ -24,7 +24,7 @@ public class MovementController : MonoBehaviour
     public void Start()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
-        this.DestinationReached = true;
+        this.DestinationReached = false;
         this.HasPath = false;
     }
     private float CalculateSpeed()
@@ -124,48 +124,48 @@ public class MovementController : MonoBehaviour
         }
         Vector3 vectorDirection = new Vector3(0, 0, 0);
         float speed = this.CalculateSpeed() * Time.deltaTime;
-        switch(direction)
+        switch (direction)
         {
             case Direction.up:
-            {
-                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + speed , 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + speed, 0);
+                    break;
+                }
             case Direction.down:
-            {
-                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -speed, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -speed, 0);
+                    break;
+                }
             case Direction.left:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y, 0);
+                    break;
+                }
             case Direction.right:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y, 0);
+                    break;
+                }
             case Direction.upRight:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y + speed, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y + speed, 0);
+                    break;
+                }
             case Direction.upLeft:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + -speed,this.transform.position.y + speed, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y + speed, 0);
+                    break;
+                }
             case Direction.downRight:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + speed,this.transform.position.y + -speed, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y + -speed, 0);
+                    break;
+                }
             case Direction.downLeft:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + -speed,this.transform.position.y + -speed, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y + -speed, 0);
+                    break;
+                }
         }
         if (this.ChangeDirectionMovement < this.ChangeDirectionThreshold)
         {
@@ -183,28 +183,28 @@ public class MovementController : MonoBehaviour
     {
         Vector3 vectorDirection = new Vector3(0, 0, 0);
         float speed = this.Animal.MovementData.BaseSpeed * Time.deltaTime;
-        switch(direction)
+        switch (direction)
         {
             case Direction.up:
-            {
-                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + 0.05f, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + 0.05f, 0);
+                    break;
+                }
             case Direction.down:
-            {
-                vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -0.05f, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -0.05f, 0);
+                    break;
+                }
             case Direction.left:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + -0.05f, this.transform.position.y, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + -0.05f, this.transform.position.y, 0);
+                    break;
+                }
             case Direction.right:
-            {
-                vectorDirection = new Vector3(this.transform.position.x + 0.05f, this.transform.position.y, 0);
-                break;
-            }
+                {
+                    vectorDirection = new Vector3(this.transform.position.x + 0.05f, this.transform.position.y, 0);
+                    break;
+                }
         }
         this.UpdateVisualLogic(vectorDirection);
         this.transform.position = vectorDirection;
