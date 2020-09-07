@@ -15,6 +15,21 @@ public class NeedSystemUpdater : MonoBehaviour
 
     public bool isInStore { get; set; }
 
+    private void Start()
+    {
+        EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
+        {
+            this.PauseAllAnimals();
+            this.isInStore = true;
+        });
+        EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
+        {
+            this.UnpauseAllAnimals();
+            this.isInStore = false;
+            this.UpdateAccessibleLocations();
+        });
+    }
+
     public void PauseAllAnimals()
     {
        foreach (Population population in PopulationManager.Populations)

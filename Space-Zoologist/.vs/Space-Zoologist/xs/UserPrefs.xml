@@ -1,15 +1,19 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/EventManager/EventManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/NeedSystemUpdater.cs">
     <Files>
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="440" Column="2" />
-      <File FileName="Assets/Scripts/Utils/EventManager/EventManager.cs" Line="21" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="110" Column="19" />
+      <File FileName="Assets/Scripts/Utils/EventManager/EventManager.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/UI/LogSystem/LogSystem.cs" Line="56" Column="10" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="68" Column="40" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemUpdater.cs" Line="21" Column="76" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="81" Column="47" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>this.internalEnclosedAreas[positionToEnclosedArea[position]]</Value>
-          <Value>id</Value>
-          <Value>this</Value>
+          <Value>this.positionToEnclosedArea[cur]</Value>
+          <Value>this.internalEnclosedAreas[this.positionToEnclosedArea[cur]]</Value>
+          <Value>this.positionToEnclosedArea[position]</Value>
         </State>
       </Pad>
     </Pads>
@@ -18,9 +22,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="233fc31a-189f-4f98-bbf4-562814d7e7ac" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Grid/RPS/EnclosureSystem.cs" relfile="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" line="257" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

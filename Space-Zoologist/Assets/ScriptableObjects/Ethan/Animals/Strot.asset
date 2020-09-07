@@ -26,15 +26,15 @@ MonoBehaviour:
     - needName: Snake
       severity: 5
       conditions:
-      - Condition: 2
+      - Condition: 0
         Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
-      - Condition: 1
+      - Condition: 2
         Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
       thresholds:
       - 1
-      - 3
+      - 2
   - needType: 0
     needs:
     - needName: Sand
