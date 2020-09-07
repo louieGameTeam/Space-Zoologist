@@ -71,6 +71,8 @@ public class Inspector : MonoBehaviour
             this.areaDropdownMenu.SetActive(true);
             this.itemDropdownMenu.SetActive(true);
             this.HUD.SetActive(false);
+
+            EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         }
         else
         {
@@ -81,6 +83,9 @@ public class Inspector : MonoBehaviour
             this.itemDropdownMenu.SetActive(false);
             this.HUD.SetActive(true);
             this.UnHighlightAll();
+
+            EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
+
         }
 
         //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
@@ -248,6 +253,11 @@ public class Inspector : MonoBehaviour
     
 
     private void HighlightEnclosedArea(Vector3Int selectedLocation)
+    {
+
+    }
+
+    private void UnhighlightEnclosedArea(Vector3Int selectedLocation)
     {
 
     }
