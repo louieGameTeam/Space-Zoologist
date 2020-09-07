@@ -7,7 +7,6 @@ public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalanceHUD = default;
-    [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
     // PodMenu had original different design so could refactor to align with store sections but works for now
     [SerializeField] PodMenu PodMenu = default;
@@ -65,18 +64,17 @@ public class MenuManager : MonoBehaviour
     private void StoreToggledOn()
     {
         this.PlayerBalanceHUD.SetActive(true);
-        NeedSystemUpdater.isInStore = true;
-        NeedSystemUpdater.PauseAllAnimals();
         this.GridSystem.UpdateAnimalCellGrid();
         this.GridSystem.HighlightHomeLocations();
+
+        EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
     }
 
     private void StoreToggledOff()
     {
         this.PlayerBalanceHUD.SetActive(false);
-        NeedSystemUpdater.isInStore = false;
-        NeedSystemUpdater.UpdateAccessibleLocations();
-        NeedSystemUpdater.UnpauseAllAnimals();
         this.GridSystem.UnhighlightHomeLocations();
+
+        EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }
 }
