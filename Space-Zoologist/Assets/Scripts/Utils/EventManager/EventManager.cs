@@ -8,7 +8,7 @@ public enum EventType {
     PopulationCountIncreased, PopulationCountDecreased, PopulationGrowing, PopulationDeclining, // Pass the population
     PopulationAccessibleAreaChanged, PopulationExtinct, // Pass the population
     FoodSourceTerrainChange, FoodSourceOutputChange, // Pass the food source
-    StoreOpened, StoreClosed,InspectorOpened, InspectorClosed, // Pass null is okay
+    StoreOpened, StoreClosed,InspectorOpened, InspectorClosed, LogOpened, LogClosed, // Pass null is okay
     NewPopulation, NewFoodSource, NewEnclosedArea, // Pass the created object
     TerrainChange, AtmosphereChange, LiquidChange, // Pass the enclosed area
 };
