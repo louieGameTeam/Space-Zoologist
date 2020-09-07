@@ -31,6 +31,11 @@ public class LogSystem : MonoBehaviour
     // Stores logs about enclosed area
     private Dictionary<EnclosedArea, List<LogEntry>> enclosedAreaLogs = default;
 
+    private bool isInLogSystem = false;
+
+    // Log window
+    [SerializeField] private GameObject logWindow = default;
+
     private void Awake()
     {
         this.worldLog = new List<LogEntry>();
@@ -43,6 +48,16 @@ public class LogSystem : MonoBehaviour
     {
         EventManager.Instance.SubscribeToEvent(EventType.PopulationCountIncreased, this.logPopulationIncrease);
         EventManager.Instance.SubscribeToEvent(EventType.PopulationCountDecreased, this.logPopulationDecrease);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("l"))
+        {
+            Debug.Log("open log");
+            this.logWindow.SetActive(!this.isInLogSystem);
+            this.isInLogSystem = !this.isInLogSystem;
+        }
     }
 
 
