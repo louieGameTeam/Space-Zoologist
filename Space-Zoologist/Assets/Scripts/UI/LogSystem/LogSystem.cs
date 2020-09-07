@@ -41,8 +41,8 @@ public class LogSystem : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationGrow, this.logPopulationIncrease);
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationDecline, this.logPopulationDecrease);
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountIncreased, this.logPopulationIncrease);
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountDecreased, this.logPopulationDecrease);
     }
 
 

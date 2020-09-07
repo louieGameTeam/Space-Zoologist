@@ -200,7 +200,7 @@ public class Population : MonoBehaviour, Life
         newAnimal.GetComponent<Animal>().Initialize(this, data);
 
         // Invoke a population growth event
-        EventManager.Instance.InvokeEvent(EventType.PopulationGrow, this);
+        EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }
 
     // removes last animal in list and last behavior
@@ -214,7 +214,7 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
 
             // Invoke a population decline event
-            EventManager.Instance.InvokeEvent(EventType.PopulationDecline, this);
+            EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
         }
         if (this.AnimalPopulation.Count == 0)
         {
