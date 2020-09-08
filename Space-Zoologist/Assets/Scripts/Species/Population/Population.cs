@@ -219,6 +219,8 @@ public class Population : MonoBehaviour, Life
         if (this.AnimalPopulation.Count == 0)
         {
             Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
+            // TODO Delete the population at another time, or else the reference will be lost
+            EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
         }
     }
 
