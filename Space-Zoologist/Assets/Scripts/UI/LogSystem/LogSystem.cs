@@ -11,7 +11,7 @@ public class LogSystem : MonoBehaviour
     /// <summary>
     /// Data structure to store info of a log entry
     /// </summary>
-    public class LogEntry
+    private class LogEntry
     {
         private string logTime;
         private string logText;
@@ -74,6 +74,14 @@ public class LogSystem : MonoBehaviour
         {
             this.handleLog(EventType.NewPopulation);
         });
+        this.eventManager.SubscribeToEvent(EventType.NewFoodSource, () =>
+        {
+            this.handleLog(EventType.NewFoodSource);
+        });
+        this.eventManager.SubscribeToEvent(EventType.NewEnclosedArea, () =>
+        {
+            this.handleLog(EventType.NewEnclosedArea);
+        });
     }
 
     private void handleLog(EventType eventType)
@@ -92,7 +100,15 @@ public class LogSystem : MonoBehaviour
         }
         else if (eventType == EventType.NewPopulation)
         {
-            this.logNewPopulationCreated((Population)EventManager.Instance.LastEventInvoker);
+            this.logNewCreation((Population)EventManager.Instance.LastEventInvoker);
+        }
+        else if (eventType == EventType.NewFoodSource)
+        {
+            this.logNewCreation((FoodSource)EventManager.Instance.LastEventInvoker);
+        }
+        else if (eventType == EventType.NewEnclosedArea)
+        {
+            this.logNewCreation((EnclosedArea)EventManager.Instance.LastEventInvoker);
         }
         else
         {
@@ -136,17 +152,50 @@ public class LogSystem : MonoBehaviour
         this.logWindowText.text = logText;
     }
 
-    private void logNewPopulationCreated(Population population)
+    private void logNewCreation(object creation)
     {
-        if (!this.populationLogs.ContainsKey(population))
+        if (creation.GetType() == typeof(Population))
         {
-            this.populationLogs.Add(population, new List<LogEntry>());
+            Population population = (Population)creation;
+
+            if (!this.populationLogs.ContainsKey(population))
+            {
+                this.populationLogs.Add(population, new List<LogEntry>());
+            }
+
+            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {population.species.SpeciesName} created");
+
+            this.populationLogs[population].Add(newLog);
+            this.worldLog.Add(newLog);
         }
+        else if (creation.GetType() == typeof(FoodSource))
+        {
+            FoodSource foodSource = (FoodSource)creation;
 
-        LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {population.species.SpeciesName} created");
+            if (!this.foodSourceLogs.ContainsKey(foodSource))
+            {
+                this.foodSourceLogs.Add(foodSource, new List<LogEntry>());
+            }
 
-        this.populationLogs[population].Add(newLog);
-        this.worldLog.Add(newLog);
+            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {foodSource.Species.SpeciesName} created");
+
+            this.foodSourceLogs[foodSource].Add(newLog);
+            this.worldLog.Add(newLog);
+        }
+        else if (creation.GetType() == typeof(EnclosedArea))
+        {
+            EnclosedArea enclosedArea = (EnclosedArea)creation;
+
+            if (!this.enclosedAreaLogs.ContainsKey(enclosedArea))
+            {
+                this.enclosedAreaLogs.Add(enclosedArea, new List<LogEntry>());
+            }
+
+            LogEntry newLog = new LogEntry(Time.time.ToString(), $"Enclosed area {enclosedArea.id} created");
+
+            this.enclosedAreaLogs[enclosedArea].Add(newLog);
+            this.worldLog.Add(newLog);
+        }
     }
 
     private void logPopulationIncrease(Population population)
