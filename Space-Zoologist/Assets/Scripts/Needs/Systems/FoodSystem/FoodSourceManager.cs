@@ -61,6 +61,9 @@ public class FoodSourceManager : MonoBehaviour
 
         // Register with NeedSystemManager
         NeedSystemManager.RegisterWithNeedSystems(foodSource);
+
+        EventManager.Instance.InvokeEvent(EventType.NewFoodSource, newFoodSourceGameObject.GetComponent<FoodSource>());
+
         return newFoodSourceGameObject;
     }
 
