@@ -38,12 +38,13 @@ public class LogSystem : MonoBehaviour
     private Dictionary<EnclosedArea, List<LogEntry>> enclosedAreaLogs = default;
 
     private bool isInLogSystem = false;
-    private EventType lastEventType = default; // Default is the enum at 0
 
     // Log window
     [SerializeField] private GameObject logWindow = default;
     // Log text
     [SerializeField] private Text logWindowText = default;
+
+    private EventManager eventManager;
 
     private void Awake()
     {
@@ -55,30 +56,53 @@ public class LogSystem : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountIncreased, () =>
+        this.eventManager = EventManager.Instance;
+
+        this.eventManager.SubscribeToEvent(EventType.PopulationCountIncreased, () =>
         {
-            this.lastEventType = EventType.PopulationCountIncreased;
-            this.handleLog();
+            this.handleLog(EventType.PopulationCountIncreased);
         });
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountDecreased, () =>
+        this.eventManager.SubscribeToEvent(EventType.PopulationCountDecreased, () =>
         {
-            this.lastEventType = EventType.PopulationCountDecreased;
-            this.handleLog();
+            this.handleLog(EventType.PopulationCountDecreased);
+        });
+        this.eventManager.SubscribeToEvent(EventType.PopulationExtinct, () =>
+        {
+            this.handleLog(EventType.PopulationExtinct);
+        });
+        this.eventManager.SubscribeToEvent(EventType.NewPopulation, () =>
+        {
+            this.handleLog(EventType.NewPopulation);
         });
     }
 
-    private void handleLog()
+    private void handleLog(EventType eventType)
     {
-        if (this.lastEventType == EventType.PopulationCountIncreased)
+        if (eventType == EventType.PopulationCountIncreased)
         {
             this.logPopulationIncrease((Population)EventManager.Instance.LastEventInvoker);
         }
-        else if (this.lastEventType == EventType.PopulationCountDecreased)
+        else if (eventType == EventType.PopulationCountDecreased)
         {
             this.logPopulationDecrease((Population)EventManager.Instance.LastEventInvoker);
         }
+        else if (eventType == EventType.PopulationExtinct)
+        {
+            this.logPopulationExtinct((Population)EventManager.Instance.LastEventInvoker);
+        }
+        else if (eventType == EventType.NewPopulation)
+        {
+            this.logNewPopulationCreated((Population)EventManager.Instance.LastEventInvoker);
+        }
+        else
+        {
+            Debug.Assert(true, $"LogSystem does not knows how to handle {eventType} yet");
+        }
     }
 
+    /// <summary>
+    /// To handle toggling the window
+    /// </summary>
     private void Update()
     {
         if (Input.GetKeyDown("l"))
@@ -112,6 +136,18 @@ public class LogSystem : MonoBehaviour
         this.logWindowText.text = logText;
     }
 
+    private void logNewPopulationCreated(Population population)
+    {
+        if (!this.populationLogs.ContainsKey(population))
+        {
+            this.populationLogs.Add(population, new List<LogEntry>());
+        }
+
+        LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {population.species.SpeciesName} created");
+
+        this.populationLogs[population].Add(newLog);
+        this.worldLog.Add(newLog);
+    }
 
     private void logPopulationIncrease(Population population)
     {
@@ -140,6 +176,19 @@ public class LogSystem : MonoBehaviour
         // Store to population log
         this.populationLogs[population].Add(newLog);
         // Store to world log
+        this.worldLog.Add(newLog);
+    }
+
+    private void logPopulationExtinct(Population population)
+    {
+        if (!this.populationLogs.ContainsKey(population))
+        {
+            this.populationLogs.Add(population, new List<LogEntry>());
+        }
+
+        LogEntry newLog = new LogEntry(Time.time.ToString(), $"{population.species.SpeciesName} has gone extinct!");
+
+        this.populationLogs[population].Add(newLog);
         this.worldLog.Add(newLog);
     }
 }
