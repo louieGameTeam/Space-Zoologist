@@ -38,6 +38,7 @@ public class LogSystem : MonoBehaviour
     private Dictionary<EnclosedArea, List<LogEntry>> enclosedAreaLogs = default;
 
     private bool isInLogSystem = false;
+    private EventType lastEventType = default; // Default is the enum at 0
 
     // Log window
     [SerializeField] private GameObject logWindow = default;
@@ -54,8 +55,28 @@ public class LogSystem : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountIncreased, this.logPopulationIncrease);
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountDecreased, this.logPopulationDecrease);
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountIncreased, () =>
+        {
+            this.lastEventType = EventType.PopulationCountIncreased;
+            this.handleLog();
+        });
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountDecreased, () =>
+        {
+            this.lastEventType = EventType.PopulationCountDecreased;
+            this.handleLog();
+        });
+    }
+
+    private void handleLog()
+    {
+        if (this.lastEventType == EventType.PopulationCountIncreased)
+        {
+            this.logPopulationIncrease((Population)EventManager.Instance.LastEventInvoker);
+        }
+        else if (this.lastEventType == EventType.PopulationCountDecreased)
+        {
+            this.logPopulationDecrease((Population)EventManager.Instance.LastEventInvoker);
+        }
     }
 
     private void Update()
@@ -92,10 +113,8 @@ public class LogSystem : MonoBehaviour
     }
 
 
-    private void logPopulationIncrease()
+    private void logPopulationIncrease(Population population)
     {
-        Population population = (Population)EventManager.Instance.LastEventInvoker;
-
         if (!this.populationLogs.ContainsKey(population))
         {
             this.populationLogs.Add(population, new List<LogEntry>());
@@ -109,10 +128,8 @@ public class LogSystem : MonoBehaviour
         this.worldLog.Add(newLog);
     }
 
-    private void logPopulationDecrease()
+    private void logPopulationDecrease(Population population)
     {
-        Population population = (Population)EventManager.Instance.LastEventInvoker;
-
         if (!this.populationLogs.ContainsKey(population))
         {
             this.populationLogs.Add(population, new List<LogEntry>());
