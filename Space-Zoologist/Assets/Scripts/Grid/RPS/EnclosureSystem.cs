@@ -2,191 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO refactor out temperature
-public enum AtmosphereComponent { GasX, GasY, GasZ, Temperature };
-
-/// <summary>
-/// A class that represents the atmospheric composition of an area.
-/// </summary>
-[System.Serializable]
-public class AtmosphericComposition
-{
-    [SerializeField] public float GasX = 0.0f;
-    [SerializeField] public float GasY = 0.0f;
-    [SerializeField] public float GasZ = 0.0f;
-    [SerializeField] private float temperature = 0.0f;
-
-    public float Temperature { get => temperature; }
-
-    public AtmosphericComposition()
-    {
-        GasX = GasY = GasZ = temperature = 0;
-    }
-
-    public AtmosphericComposition(float _GasX, float _GasY, float _GasZ, float _temperature)
-    {
-        GasX = _GasX;
-        GasY = _GasY;
-        GasZ = _GasZ;
-        temperature = _temperature;
-    }
-
-    public AtmosphericComposition(AtmosphericComposition from)
-    {
-        GasX = from.GasX; GasY = from.GasY; GasZ = from.GasZ; temperature = from.temperature;
-    }
-
-    public AtmosphericComposition Copy(AtmosphericComposition from)
-    {
-        GasX = from.GasX;
-        GasY = from.GasY;
-        GasZ = from.GasZ;
-        temperature = from.temperature;
-        return this;
-    }
-
-    public static AtmosphericComposition operator +(AtmosphericComposition lhs, AtmosphericComposition rhs)
-    {
-        return new AtmosphericComposition((lhs.GasX + rhs.GasX) / 2.0f, (lhs.GasY + rhs.GasY) / 2.0f,
-            (lhs.GasZ + rhs.GasZ) / 2.0f, (lhs.temperature + rhs.temperature) / 2.0f);
-    }
-
-    public override string ToString()
-    {
-        return "GasX = " + GasX + " GasY = " + GasY + " GasZ = " + GasZ + " Temp = " + temperature;
-    }
-
-    /// <summary>
-    /// Get the composition of the atmoshpere including temerature, in the order of AtmoshpereComponent enum
-    /// </summary>
-    /// <returns></returns>
-    public float[] GetComposition()
-    {
-        float[] composition = { GasX, GasY, GasZ, temperature };
-        return composition;
-    }
-
-    public float[] ConvertAtmosphereComposition()
-    {
-        float[] composition = { GasX, GasY, GasZ };
-        return composition;
-    }
-}
-
-/// <summary>
-/// Represent all information about a enlcosed area and objects in it 
-/// </summary>
-/// <remarks>
-/// Members of this struct could be expended for future needs
-/// </remarks>
-[System.Serializable]
-public class EnclosedArea
-{
-    // Data structure to hold a (x,y) coordinates
-    public struct Coordinate
-    {
-        public int x;
-        public int y;
-
-        public Coordinate(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public AtmosphericComposition atmosphericComposition;
-    public float[] terrainComposition;
-    public List<Animal> animals;
-    public List<Population> populations;
-    public List<FoodSource> foodSources;
-    public byte id;
-
-    private readonly GridSystem gridSystem;
-
-    /// <summary>
-    /// This represents the all the (x,y) coordinates inside this enclosed area.
-    /// Mainly use for accessing the CellGrid to pull info.
-    /// </summary>
-    /// <remarks>Using hash set for O(1)look up</remarks>
-    public HashSet<Coordinate> coordinates;
-
-    public EnclosedArea(AtmosphericComposition atmosphericComposition, GridSystem gridSystem, byte id)
-    {
-        this.atmosphericComposition = atmosphericComposition;
-        this.terrainComposition = new float[(int)TileType.TypesOfTiles];
-        this.gridSystem = gridSystem;
-        this.animals = new List<Animal>();
-        this.coordinates = new HashSet<Coordinate>();
-        this.populations = new List<Population>();
-        this.foodSources = new List<FoodSource>();
-        this.id = id;
-    }
-
-    public void UpdateAtmosphericComposition(AtmosphericComposition atmosphericComposition)
-    {
-        this.atmosphericComposition = atmosphericComposition;
-    }
-
-    public bool IsInEnclosedArea(Coordinate coordinate)
-    {
-        return this.coordinates.Contains(coordinate);
-    }
-
-    public void AddCoordinate(Coordinate coordinate, int tileType, AtmosphericComposition oldComposition)
-    {
-        if (gridSystem.isCellinGrid(coordinate.x, coordinate.y))
-        {
-            GridSystem.CellData cellData = this.gridSystem.CellGrid[coordinate.x, coordinate.y];
-
-            this.coordinates.Add(coordinate);
-
-            if (cellData.ContainsAnimal)
-            {
-                this.animals.Add(cellData.Animal.GetComponent<Animal>());
-
-                Population population = cellData.Animal.GetComponent<Animal>().PopulationInfo;
-
-                if (!this.populations.Contains(population))
-                {
-                    this.populations.Add(population);
-                }
-            }
-            if (cellData.ContainsFood)
-            {
-                this.foodSources.Add(cellData.Food.GetComponent<FoodSource>());
-            }
-            if (cellData.ContainsMachine && cellData.Machine.GetComponent<AtmosphereMachine>() != null && oldComposition != null)
-            {
-                this.atmosphericComposition = oldComposition;
-            }
-        }
-
-        this.terrainComposition[tileType]++;
-    }
-
-    // Update the population/food list for this enclosed area
-    public void Update()
-    {
-        this.populations = new List<Population>();
-        this.foodSources = new List<FoodSource>();
-
-        foreach (Coordinate coordinate in this.coordinates)
-        {
-            if (this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsAnimal)
-            {
-                this.populations.Add(this.gridSystem.CellGrid[coordinate.x, coordinate.y].Animal.GetComponent<Population>());
-                continue;
-            }
-            if (this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsFood)
-            {
-                this.foodSources.Add(this.gridSystem.CellGrid[coordinate.x, coordinate.y].Food.GetComponent<FoodSource>());
-                continue;
-            }
-        }
-    }
-}
-
 /// <summary>
 /// This system finds and manages enclose areas
 /// </summary>
@@ -430,6 +245,8 @@ public class EnclosureSystem : MonoBehaviour
         // Stores the ids of the enclosed areas that has been updated
         HashSet<byte> updatedEnclosedArea = new HashSet<byte>();
 
+        bool createdNewEclosedArea = false;
+
         // Initial flood fill
         byte curEnclosedAreaIndex = this.positionToEnclosedArea[new Vector3Int(1, 1, 0)];
         newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, curEnclosedAreaIndex));
@@ -451,6 +268,7 @@ public class EnclosureSystem : MonoBehaviour
                     if (updatedEnclosedArea.Contains(this.positionToEnclosedArea[pos]))
                     {
                         curEnclosedAreaIndex = ++this.enclosedAreaCount;
+                        createdNewEclosedArea = true;
                     }
                     else
                     {
@@ -463,6 +281,13 @@ public class EnclosureSystem : MonoBehaviour
                 this.FloodFill(pos, accessed, unaccessible, walls, curEnclosedAreaIndex, newEnclosedAreas[newEnclosedAreas.Count-1], true);
                 updatedEnclosedArea.Add(curEnclosedAreaIndex);
 
+
+                if (createdNewEclosedArea)
+                {
+                    EnclosedArea newlyCreatedEnclosedArea = newEnclosedAreas[newEnclosedAreas.Count - 1];
+                    EventManager.Instance.InvokeEvent(EventType.NewEnclosedArea, newlyCreatedEnclosedArea);
+                    createdNewEclosedArea = false;
+                }
             }
         }
 
