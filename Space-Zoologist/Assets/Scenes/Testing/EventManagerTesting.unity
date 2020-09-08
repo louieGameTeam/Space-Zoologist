@@ -15721,6 +15721,18 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &1558182170 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2491223199663496804, guid: 4eba38ea6a43a448aaabe2cf24a91a70,
+    type: 3}
+  m_PrefabInstance: {fileID: 6989837812700339089}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1725395074 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8291602454128984592, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -18282,7 +18294,7 @@ PrefabInstance:
     - target: {fileID: 2491223199663496804, guid: 4eba38ea6a43a448aaabe2cf24a91a70,
         type: 3}
       propertyPath: m_FontData.m_FontSize
-      value: 24
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2491223199663496810, guid: 4eba38ea6a43a448aaabe2cf24a91a70,
         type: 3}
@@ -18379,6 +18391,11 @@ PrefabInstance:
       propertyPath: logWindow
       value: 
       objectReference: {fileID: 6989837812700339090}
+    - target: {fileID: 7600303572480787947, guid: 4eba38ea6a43a448aaabe2cf24a91a70,
+        type: 3}
+      propertyPath: logWindowText
+      value: 
+      objectReference: {fileID: 1558182170}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4eba38ea6a43a448aaabe2cf24a91a70, type: 3}
 --- !u!1 &6989837812700339090 stripped
