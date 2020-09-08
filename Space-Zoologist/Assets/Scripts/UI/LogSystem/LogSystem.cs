@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// This system hanldes creating, saving and displaying the logs. 
@@ -20,6 +21,11 @@ public class LogSystem : MonoBehaviour
             this.logTime = logTime;
             this.logText = logText;
         }
+
+        public string GetDisplay()
+        {
+            return $"[{this.logTime}] {this.logText}";
+        }
     }
 
     // Stores all logs
@@ -35,6 +41,8 @@ public class LogSystem : MonoBehaviour
 
     // Log window
     [SerializeField] private GameObject logWindow = default;
+    // Log text
+    [SerializeField] private Text logWindowText = default;
 
     private void Awake()
     {
@@ -55,9 +63,32 @@ public class LogSystem : MonoBehaviour
         if (Input.GetKeyDown("l"))
         {
             Debug.Log("open log");
+
             this.logWindow.SetActive(!this.isInLogSystem);
             this.isInLogSystem = !this.isInLogSystem;
+
+            if (this.isInLogSystem)
+            {
+                this.displayWorldLog();
+            }
         }
+    }
+
+    private void displayWorldLog()
+    {
+        string logText = "Log\n";
+
+        if (this.worldLog.Count == 0)
+        {
+            this.logWindowText.text = "Log\n" + "None\n";
+        }
+
+        foreach(LogEntry logEntry in this.worldLog)
+        {
+            logText += $"{logEntry.GetDisplay()}\n";
+        }
+
+        this.logWindowText.text = logText;
     }
 
 
@@ -72,7 +103,10 @@ public class LogSystem : MonoBehaviour
 
         LogEntry newLog = new LogEntry(Time.time.ToString(), $"{population.species.SpeciesName} population size increased!");
 
+        // Store to population log
         this.populationLogs[population].Add(newLog);
+        // Store to world log
+        this.worldLog.Add(newLog);
     }
 
     private void logPopulationDecrease()
@@ -86,6 +120,9 @@ public class LogSystem : MonoBehaviour
 
         LogEntry newLog = new LogEntry(Time.time.ToString(), $"{population.species.SpeciesName} population size decreased!");
 
+        // Store to population log
         this.populationLogs[population].Add(newLog);
+        // Store to world log
+        this.worldLog.Add(newLog);
     }
 }
