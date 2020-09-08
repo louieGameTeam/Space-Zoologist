@@ -69,6 +69,8 @@ public class PopulationManager : MonoBehaviour
         population.InitializeNewPopulation(species, position, count);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
+
+        EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
 
     /// <summary>
