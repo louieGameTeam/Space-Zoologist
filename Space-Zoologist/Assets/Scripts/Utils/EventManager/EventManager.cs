@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
 public enum EventType {
     PopulationCountIncreased, PopulationCountDecreased, PopulationGrowing, PopulationDeclining, // Pass the population
     PopulationAccessibleAreaChanged, PopulationExtinct, // Pass the population

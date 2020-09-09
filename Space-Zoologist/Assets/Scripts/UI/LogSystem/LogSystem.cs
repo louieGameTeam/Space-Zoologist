@@ -58,6 +58,7 @@ public class LogSystem : MonoBehaviour
     {
         this.eventManager = EventManager.Instance;
 
+        // Subscribe to the events
         this.eventManager.SubscribeToEvent(EventType.PopulationCountIncreased, () =>
         {
             this.handleLog(EventType.PopulationCountIncreased);
