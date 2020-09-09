@@ -89,6 +89,11 @@ public class PlacementValidation : MonoBehaviour
         // else food item so make sure terrain is good
         else
         {
+            foreach(var foodData in this.FoodReferenceData.FoodSources)
+            {
+                Debug.Log(foodData.Key);
+            }
+            Debug.Log(selectedItem.ID);
             foreach (TileType acceptablTerrain in this.FoodReferenceData.FoodSources[selectedItem.ID].AccessibleTerrain)
             {
                 if (selectedTile.type.Equals(acceptablTerrain))

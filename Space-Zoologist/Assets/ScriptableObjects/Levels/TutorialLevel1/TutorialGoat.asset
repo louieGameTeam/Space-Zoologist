@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: TutorialGoat
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
+  speciesName: Goat
+  dominance: 1
+  growthRate: 40
+  range: 0
+  size: 0
+  accessibleTerrain: 010000000200000003000000
+  icon: {fileID: 0}
+  needsList:
+  - needType: 0
+    needs:
+    - needName: Grass
+      severity: 1
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 6a4366bcd80b749e1a0c994bf6f9a2ac, type: 2}
+      thresholds:
+      - 100
+    - needName: Dirt
+      severity: 1
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 6a4366bcd80b749e1a0c994bf6f9a2ac, type: 2}
+      thresholds:
+      - 200
+  - needType: 3
+    needs:
+    - needName: Space Maple
+      severity: 1
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
+      thresholds:
+      - 10
+  representation: {fileID: 0}

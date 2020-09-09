@@ -15,22 +15,10 @@ MonoBehaviour:
   accessibleTerrain: 02000000
   speciesName: Space Maple
   rootRadius: 10
-  baseOutput: 20
+  baseOutput: 10
   needsList:
   - needType: 0
     needs:
-    - needName: Sand
-      severity: 1
-      conditions:
-      - Condition: 0
-        Behavior: {fileID: 0}
-      - Condition: 1
-        Behavior: {fileID: 0}
-      - Condition: 2
-        Behavior: {fileID: 0}
-      thresholds:
-      - 3
-      - 6
     - needName: Dirt
       severity: 1
       conditions:
@@ -41,32 +29,6 @@ MonoBehaviour:
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 6
-      - 9
-  - needType: 1
-    needs:
-    - needName: GasX
-      severity: 1
-      conditions:
-      - Condition: 0
-        Behavior: {fileID: 0}
-      - Condition: 1
-        Behavior: {fileID: 0}
-      - Condition: 2
-        Behavior: {fileID: 0}
-      thresholds:
-      - 3
-      - 6
-    - needName: GasY
-      severity: 1
-      conditions:
-      - Condition: 0
-        Behavior: {fileID: 0}
-      - Condition: 1
-        Behavior: {fileID: 0}
-      - Condition: 2
-        Behavior: {fileID: 0}
-      thresholds:
-      - 3
-      - 6
+      - 5
+      - 10
   FoodSource: {fileID: 11400000, guid: 33c4785eeea134363b476230dcb191b9, type: 2}

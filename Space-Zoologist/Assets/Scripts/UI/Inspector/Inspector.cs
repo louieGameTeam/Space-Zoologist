@@ -22,10 +22,10 @@ public class Inspector : MonoBehaviour
     // To access other UI elements to toggle
     [SerializeField] private GameObject HUD = null;
     // The inspector window 
-    [SerializeField] private GameObject inspectorWindow = null;
-    [SerializeField] private Text inspectorWindowText = null;
     [SerializeField] private GameObject areaDropdownMenu = null;
     [SerializeField] private GameObject itemDropdownMenu = null;
+    [SerializeField] private GameObject inspectorWindow = null;
+    [SerializeField] private Text inspectorWindowText = null;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;

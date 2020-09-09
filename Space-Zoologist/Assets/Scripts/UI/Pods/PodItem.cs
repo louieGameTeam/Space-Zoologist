@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PodItem : MonoBehaviour
+public class PodItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] Image speciesImage = default;
+    [SerializeField] GameObject Popup = default;
+    [SerializeField] Text ItemInfo = default;
     AnimalSpecies species = default;
     PodMenu podMenu = default;
 
@@ -19,5 +20,16 @@ public class PodItem : MonoBehaviour
     public void OnPodClick()
     {
         podMenu.OnSelectSpecies(species);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        this.Popup.SetActive(true);
+        this.ItemInfo.text = this.species.SpeciesName;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        this.Popup.SetActive(false);
     }
 }
