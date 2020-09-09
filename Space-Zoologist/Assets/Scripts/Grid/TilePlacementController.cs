@@ -417,6 +417,21 @@ public class TilePlacementController : MonoBehaviour
                 else
                 {
                     triedToPlaceTiles.Add(cellLocation);
+                    foreach (Tilemap constraintTilemap in tile.constraintTilemap)
+                    {
+                        if (!constraintTilemap.HasTile(cellLocation) || !IsTileFree(cellLocation))
+                        {
+                            break;
+                        }
+                        foreach (Tilemap replacingTilemap in tile.replacementTilemap)
+                        {
+                            if (replacingTilemap.HasTile(cellLocation))
+                            {
+                                ReplaceTile(replacingTilemap, cellLocation);
+                            }
+                        }
+                        break;
+                    }
                 }
                 lastPlacedTile = cellLocation;
                 isFirstTile = false;
