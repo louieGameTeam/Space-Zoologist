@@ -1,47 +1,42 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO figure out how this can be refactored for behaviors
-/// <summary>
-/// Animals will attempt to move NumSteps based off of the seeded directions given.
-/// The seeded directions determine what order directions should be tried.
-/// </summary>
-public class AutomatonMovement : MonoBehaviour
+public class RandomAutomotonMovementPattern : BehaviorPattern
 {
     [SerializeField] int NumTiles = 3;
     [SerializeField] int MaxNumTiles = 6;
-    private MovementController movementController = default;
-    private int numTilesMoved = 0;
-
-    private Population population = default;
     private List<int> DirectionSeed = default;
     private int CurrentDirectionSeedIndex = 0;
     private List<int> TilesToMoveSeed = default;
     private int TilesMovedIndex = 0;
-    private Direction CurrentDirection = Direction.down;
+    private bool Initialized = false;
+    private Population population = default;
+    private MovementController movementController = default;
     private AnimalPathfinding.Node previousTile = default;
+    private Direction CurrentDirection = Direction.down;
+    private int numTilesMoved = 0;
+    private int totalTileMoved = 0;
 
-    public void Start()
+    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        this.movementController = this.gameObject.GetComponent<MovementController>();
-    }
-
-    public void Initialize(Population population)
-    {
-        this.population = population;
-        this.DirectionSeed = GenerateDirectionSeed();
-        this.TilesToMoveSeed = GenerateTilesToMoveSeed(MaxNumTiles);
-        this.CheckSurroundings();
-    }
-
-    // If animal walked predetermined number of tiles or animal cannot move in specified direction, update based off seed.
-    public void Update()
-    {
-        if (this.population == null || this.movementController.IsPaused)
+        this.movementController = animalData.animal.MovementController;
+        this.population = animalData.animal.PopulationInfo;
+        if (!this.Initialized)
         {
-            return;
+            this.Initialized = true;
+            this.DirectionSeed = GenerateDirectionSeed();
+            this.TilesToMoveSeed = GenerateTilesToMoveSeed(this.MaxNumTiles);
+            this.CheckSurroundings();
+        }
+    }
+    // Default behavior moves along a random path
+    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
+    {
+        if (this.population == null || this.movementController.IsPaused || this.totalTileMoved > 30)
+        {
+            return true;
         }
         if (this.numTilesMoved >= this.NumTiles)
         {
@@ -49,21 +44,22 @@ public class AutomatonMovement : MonoBehaviour
         }
         this.CheckSurroundings();
         this.movementController.MoveInDirection(this.CurrentDirection);
+        return false;
     }
 
     // If on new tile then respond to new surroundings
     private void CheckSurroundings()
     {
-        AnimalPathfinding.Node currentTile = population.Grid.GetNode(this.transform.position);
+        AnimalPathfinding.Node currentTile = this.population.Grid.GetNode(this.transform.position);
         if (currentTile != this.previousTile)
         {
             this.previousTile = currentTile;
             this.numTilesMoved++;
+            this.totalTileMoved++;
             this.RespondToNewSurroundings(currentTile);
         }
     }
 
-    // TODO setup pathfinding back to an accessiblearea for when the animal gets stuck or kill them...
     private void RespondToNewSurroundings(AnimalPathfinding.Node newTile)
     {
         if (!this.DirectionAllowed(this.CurrentDirection, newTile, this.population.Grid))
@@ -150,16 +146,6 @@ public class AutomatonMovement : MonoBehaviour
         return true;
     }
 
-    private int IncrementSeedIndex(int currentDirectionSeedIndex)
-    {
-        currentDirectionSeedIndex++;
-        if (currentDirectionSeedIndex >= 8)
-        {
-            currentDirectionSeedIndex = 0;
-        }
-        return currentDirectionSeedIndex;
-    }
-
     private void UpdateTilesToMove()
     {
         this.TilesMovedIndex++;
@@ -171,16 +157,14 @@ public class AutomatonMovement : MonoBehaviour
         this.numTilesMoved = 0;
     }
 
-    private void SetupPathfinding(List<Vector3> path, bool pathFound)
+    private int IncrementSeedIndex(int currentDirectionSeedIndex)
     {
-        // TODO figure out what to do if you can't pathfind.. Keep trying to pathfind? Notify player?
-        if (!pathFound)
+        currentDirectionSeedIndex++;
+        if (currentDirectionSeedIndex >= 8)
         {
-            Debug.Log("Issue with pathfinding");
-            return;
+            currentDirectionSeedIndex = 0;
         }
-        Debug.Log("Animal stuck, setting up pathfinding");
-        this.movementController.AssignPath(path, pathFound);
+        return currentDirectionSeedIndex;
     }
 
     private List<int> GenerateDirectionSeed()

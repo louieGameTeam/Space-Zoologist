@@ -26,7 +26,7 @@ public class Animal : MonoBehaviour
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
     }
 
-    void Update()
+    void LateUpdate()
     {
         this.UpdateAnimations();
     }
