@@ -106,6 +106,12 @@ public class Inspector : MonoBehaviour
 
     private void selectEnclosedArea(int selection)
     {
+        // Selected placeholder option
+        if (selection == 0)
+        {
+            return;
+        }
+
         EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection-1];
 
         Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
@@ -114,7 +120,6 @@ public class Inspector : MonoBehaviour
         this.itemsInEnclosedArea.Clear();
 
         this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
-
 
         foreach (Population population in enclosedAreaSelected.populations)
         {
@@ -128,11 +133,20 @@ public class Inspector : MonoBehaviour
             this.itemsInEnclosedArea.Add(foodSource);
         }
 
+        // Set item selection to placeholder option
+        this.itemsDropdown.value = 0;
+
         this.inspectorWindowDisplayScript.DislplayEnclosedArea(enclosedAreaSelected);
     }
 
     private void selectItem(int selection)
     {
+        // Selected placeholder option
+        if (selection == 0)
+        {
+            return;
+        }
+
         Debug.Log($"selected item {selection} from dropdown");
 
         Life itemSelected = this.itemsInEnclosedArea[selection-1];
@@ -147,6 +161,9 @@ public class Inspector : MonoBehaviour
             this.HighlightFoodSource(((FoodSource)itemSelected).gameObject);
             this.inspectorWindowDisplayScript.DisplayFoodSourceStatus((FoodSource)itemSelected);
         }
+
+        // Set enclosed area dropdown to placeholder selection
+        this.enclosedAreaDropdown.value = 0;
     }
 
     /// <summary>
@@ -213,6 +230,10 @@ public class Inspector : MonoBehaviour
                 this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedArea(cellPos));
                 //Debug.Log($"Enclosed are @ {cellPos} selected");
             }
+
+            // Reset dropdown selections
+            this.enclosedAreaDropdown.value = 0;
+            this.itemsDropdown.value = 0;
         }
     }
 
