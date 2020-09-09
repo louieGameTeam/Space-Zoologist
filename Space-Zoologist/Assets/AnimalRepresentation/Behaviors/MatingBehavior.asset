@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e20d01af98f04f87ef5a8791a6f7e, type: 3}
+  m_Name: MatingBehavior
+  m_EditorClassIdentifier: 
+  behaviorData:
+    behaviorName: SynchronizedBehaviorTrigger
+    behaviorTypes: 
+    priority: 0
+  maxAffectedNumber: 999
+  maxAffectedPortion: 1
+  numberTriggerdPerLoop: 2
+  behaviorPatterns:
+  - {fileID: 7976041885342915091, guid: 62e96f3b047992d488e1acdb8a9262b2, type: 3}
+  - {fileID: 7966967853517162290, guid: d5b7494b908a6b74fadf50b8cf401c43, type: 3}
+  - {fileID: 6907167482123345665, guid: 8557ffb798f528e4eaa2e69e8b13fcf7, type: 3}
+  - {fileID: 87448024633276244, guid: 6d1ce789be5fbf54b974ea8b387d17e2, type: 3}
+  refreshPeriod: 20
+  elapsedTime: 13.215852
+  synchronizedSteps: []

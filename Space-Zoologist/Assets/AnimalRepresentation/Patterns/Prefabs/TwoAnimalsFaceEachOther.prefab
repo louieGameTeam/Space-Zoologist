@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6849925649694488979
+--- !u!1 &7941770897027460887
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6849925649694488981}
-  - component: {fileID: 6849925649694488978}
+  - component: {fileID: 4358125844619664617}
+  - component: {fileID: 6907167482123345665}
   m_Layer: 0
-  m_Name: RotateSprite
+  m_Name: TwoAnimalsFaceEachOther
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6849925649694488981
+--- !u!4 &4358125844619664617
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6849925649694488979}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00017358609, w: 1}
-  m_LocalPosition: {x: 17.516293, y: 12.297238, z: -2.0124393}
+  m_GameObject: {fileID: 7941770897027460887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.640945, y: 9.490105, z: -16.064363}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6849925649694488978
+--- !u!114 &6907167482123345665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6849925649694488979}
+  m_GameObject: {fileID: 7941770897027460887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9d07627a2260344dbc7e6b9f8dbb8a3, type: 3}
+  m_Script: {fileID: 11500000, guid: c61c7d52d602a7a4599e6f5a6f406404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExitTime: 3
-  rotationAngles: {x: 0, y: 0, z: 90}
-  angularSpeeds: {x: 0, y: 0, z: 30}
+  ExitTime: 0.1
