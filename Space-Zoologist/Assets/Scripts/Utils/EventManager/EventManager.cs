@@ -9,7 +9,8 @@ public enum EventType {
     FoodSourceTerrainChange, FoodSourceOutputChange, // Pass the food source
     StoreOpened, StoreClosed,InspectorOpened, InspectorClosed, LogOpened, LogClosed, // Pass null is okay
     NewPopulation, NewFoodSource, NewEnclosedArea, // Pass the created object
-    TerrainChange, AtmosphereChange, LiquidChange, // Pass the enclosed area
+    TerrainChange, AtmosphereChange, // Pass the enclosed area
+    LiquidChange, // Pass the cell posistion
 };
 
 /// <summary>

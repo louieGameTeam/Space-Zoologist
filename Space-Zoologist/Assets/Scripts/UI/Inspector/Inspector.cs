@@ -227,7 +227,7 @@ public class Inspector : MonoBehaviour
                 this.UnHighlightAll();
                 this.HighlightEnclosedArea(cellPos);
                 this.enclosureSystem.UpdateEnclosedAreas();
-                this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedArea(cellPos));
+                this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
                 //Debug.Log($"Enclosed are @ {cellPos} selected");
             }
 

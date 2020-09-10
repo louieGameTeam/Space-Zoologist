@@ -88,6 +88,8 @@ public class TileSystem : MonoBehaviour
 
         RefreshTilemapColor(terrainTile.targetTilemap);
 
+        // Invoke event
+        EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellLocation);
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {

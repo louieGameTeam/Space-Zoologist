@@ -1,17 +1,22 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Inspector/Inspector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceSpecies.cs">
     <Files>
-      <File FileName="Assets/Scripts/Utils/EventManager/EventManager.cs" Line="13" Column="3" />
-      <File FileName="Assets/Scripts/UI/LogSystem/LogSystem.cs" Line="117" Column="10" />
-      <File FileName="Assets/Scripts/Species/Population/PopulationManager.cs" Line="76" Column="18" />
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="222" Column="94" />
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="271" Column="54" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs" Line="84" Column="6" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="13" Column="1" />
+      <File FileName="Assets/Scripts/Utils/EventManager/EventManager.cs" Line="13" Column="45" />
+      <File FileName="Assets/Scripts/Species/Population/PopulationManager.cs" Line="75" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="64" Column="1" />
+      <File FileName="Assets/Scripts/UI/LogSystem/LogSystem.cs" Line="183" Column="44" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="79" Column="6" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs" Line="13" Column="25" />
+      <File FileName="Assets/Scripts/Needs/Systems/AtmosphereNeedSystem.cs" Line="15" Column="48" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceSpecies.cs" Line="19" Column="47" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+        <State>
+          <Value>this.prevOutput != 0 &amp;&amp; this.prevOutput != output</Value>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
