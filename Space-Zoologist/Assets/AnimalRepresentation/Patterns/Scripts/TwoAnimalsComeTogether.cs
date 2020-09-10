@@ -13,7 +13,7 @@ public class TwoAnimalsComeTogether : BehaviorPattern
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
 
-        Debug.Log((animalData.animal.MovementController.DestinationReached, animal.name));
+        // Debug.Log((animalData.animal.MovementController.DestinationReached, animal.name));
         if (animalData.animal.MovementController.HasPath)
         {
             animalData.animal.MovementController.MoveTowardsDestination();
@@ -49,11 +49,11 @@ public class TwoAnimalsComeTogether : BehaviorPattern
                 return true;
             }
         }
-        if (!(animalData.collaboratingAnimals.Count > 0))
-        {
-            Debug.Log("No collaborating animals to come together");
-            return true;
-        }
+        // if (!(animalData.collaboratingAnimals.Count > 0))
+        // {
+        //     Debug.Log("No collaborating animals to come together");
+        //     return true;
+        // }
 /*        if (!AnimalsToAnimalData.ContainsKey(animalData.collaboratingAnimals[0]))
         {
             Debug.Log("Unable to reference collaborating animal, exiting behavior");
