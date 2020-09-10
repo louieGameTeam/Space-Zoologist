@@ -44,7 +44,28 @@ public class LogSystem : MonoBehaviour
     // Log text
     [SerializeField] private Text logWindowText = default;
 
+    [SerializeField] private EnclosureSystem enclosureSystem = default;
+
     private EventManager eventManager;
+
+    /// <summary>
+    /// To handle toggling the window
+    /// </summary>
+    private void Update()
+    {
+        if (Input.GetKeyDown("l"))
+        {
+            Debug.Log("open log");
+
+            this.logWindow.SetActive(!this.isInLogSystem);
+            this.isInLogSystem = !this.isInLogSystem;
+
+            if (this.isInLogSystem)
+            {
+                this.displayWorldLog();
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -83,6 +104,18 @@ public class LogSystem : MonoBehaviour
         {
             this.handleLog(EventType.NewEnclosedArea);
         });
+        this.eventManager.SubscribeToEvent(EventType.AtmosphereChange, () =>
+        {
+            this.handleLog(EventType.AtmosphereChange);
+        });
+        this.eventManager.SubscribeToEvent(EventType.LiquidChange, () =>
+        {
+            this.handleLog(EventType.LiquidChange);
+        });
+        this.eventManager.SubscribeToEvent(EventType.FoodSourceOutputChange, () =>
+        {
+            this.handleLog(EventType.FoodSourceOutputChange);
+        });
     }
 
     private void handleLog(EventType eventType)
@@ -111,30 +144,24 @@ public class LogSystem : MonoBehaviour
         {
             this.logNewCreation((EnclosedArea)EventManager.Instance.LastEventInvoker);
         }
+        else if (eventType == EventType.AtmosphereChange)
+        {
+            this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.LastEventInvoker);
+        }
+        else if (eventType == EventType.LiquidChange)
+        {
+            this.logLiquidChange((Vector3Int)EventManager.Instance.LastEventInvoker);
+        }
+        else if (eventType == EventType.FoodSourceOutputChange)
+        {
+            this.logFoodSourceOutputChanged((FoodSource)EventManager.Instance.LastEventInvoker);
+        }
         else
         {
             Debug.Assert(true, $"LogSystem does not knows how to handle {eventType} yet");
         }
     }
 
-    /// <summary>
-    /// To handle toggling the window
-    /// </summary>
-    private void Update()
-    {
-        if (Input.GetKeyDown("l"))
-        {
-            Debug.Log("open log");
-
-            this.logWindow.SetActive(!this.isInLogSystem);
-            this.isInLogSystem = !this.isInLogSystem;
-
-            if (this.isInLogSystem)
-            {
-                this.displayWorldLog();
-            }
-        }
-    }
 
     private void displayWorldLog()
     {
@@ -153,6 +180,45 @@ public class LogSystem : MonoBehaviour
         this.logWindowText.text = logText;
     }
 
+    private void logFoodSourceOutputChanged(FoodSource foodSource)
+    {
+        if (!this.foodSourceLogs.ContainsKey(foodSource))
+        {
+            this.foodSourceLogs.Add(foodSource, new List<LogEntry>());
+        }
+
+        LogEntry newLog = new LogEntry(Time.time.ToString(), $"{foodSource.Species.name} output changed!");
+        this.foodSourceLogs[foodSource].Add(newLog);
+        this.worldLog.Add(newLog);
+    }
+
+    private void logLiquidChange(Vector3Int cellPos)
+    {
+        EnclosedArea enclosedArea = this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos);
+
+        if (!this.enclosedAreaLogs.ContainsKey(enclosedArea))
+        {
+            this.enclosedAreaLogs.Add(enclosedArea, new List<LogEntry>());
+        }
+
+        LogEntry newLog = new LogEntry(Time.time.ToString(), $"Liquid composition changed at enclose area {enclosedArea.id}!");
+        this.enclosedAreaLogs[enclosedArea].Add(newLog);
+        this.worldLog.Add(newLog);
+    }
+
+    private void logAtmoesphereChange(EnclosedArea enclosedArea)
+    {
+        LogEntry newLog = new LogEntry(Time.time.ToString(), $"Atmospheric composition changed at enclose area {enclosedArea.id}!");
+
+        if (!this.enclosedAreaLogs.ContainsKey(enclosedArea))
+        {
+            this.enclosedAreaLogs.Add(enclosedArea, new List<LogEntry>());
+        }
+
+        this.enclosedAreaLogs[enclosedArea].Add(newLog);
+        this.worldLog.Add(newLog);
+    }
+
     private void logNewCreation(object creation)
     {
         if (creation.GetType() == typeof(Population))
@@ -164,7 +230,7 @@ public class LogSystem : MonoBehaviour
                 this.populationLogs.Add(population, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {population.species.SpeciesName} created");
+            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {population.species.SpeciesName} created!");
 
             this.populationLogs[population].Add(newLog);
             this.worldLog.Add(newLog);
@@ -178,7 +244,7 @@ public class LogSystem : MonoBehaviour
                 this.foodSourceLogs.Add(foodSource, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {foodSource.Species.SpeciesName} created");
+            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {foodSource.Species.SpeciesName} created!");
 
             this.foodSourceLogs[foodSource].Add(newLog);
             this.worldLog.Add(newLog);
