@@ -62,9 +62,43 @@ public class EnclosureSystem : MonoBehaviour
         }
     }
 
-    public EnclosedArea GetEnclosedArea(Vector3Int worldPosition)
+    /// <summary>
+    /// Find which enclosed area a population/food source is in and returns it
+    /// </summary>
+    /// <param name="obj">The object to be find in enclosed area</param>
+    /// <returns>
+    /// The enclosed area this object is in, null if not found.
+    /// This is a helper function from the log system.
+    /// </returns>
+    public EnclosedArea GetEnclosedAreaThisIsIn(object obj)
     {
-        Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
+        if (obj.GetType() == typeof(Population))
+        {
+            foreach(EnclosedArea enclosedArea in this.EnclosedAreas)
+            {
+                if (enclosedArea.populations.Contains((Population)obj))
+                {
+                    return enclosedArea;
+                }
+           }
+        }
+        else if (obj.GetType() == typeof(FoodSource))
+        {
+            foreach (EnclosedArea enclosedArea in this.EnclosedAreas)
+            {
+                if (enclosedArea.foodSources.Contains((FoodSource)obj))
+                {
+                    return enclosedArea;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public EnclosedArea GetEnclosedAreaByCellPosition(Vector3Int cellPos)
+    {
+        Vector3Int position = this.TileSystem.WorldToCell(cellPos);
 
         return this.GetEnclosedAreaById(positionToEnclosedArea[position]);
     }
@@ -91,6 +125,9 @@ public class EnclosureSystem : MonoBehaviour
 
             // Mark Atmosphere NS dirty
             this.needSystemManager.Systems[NeedType.Atmosphere].MarkAsDirty();
+
+            // Invoke event
+            EventManager.Instance.InvokeEvent(EventType.AtmosphereChange, this.GetEnclosedAreaById(positionToEnclosedArea[position]));
         }
         else
         {
