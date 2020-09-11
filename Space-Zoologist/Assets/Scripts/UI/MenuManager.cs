@@ -7,10 +7,10 @@ public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalanceHUD = default;
-    [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
     // PodMenu had original different design so could refactor to align with store sections but works for now
     [SerializeField] PodMenu PodMenu = default;
+    [SerializeField] PauseManager PauseManager = default;
     [Header("Shared menu dependencies")]
     [SerializeField] PlayerBalance PlayerBalance = default;
     [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
@@ -18,9 +18,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] GridSystem GridSystem = default;
     [SerializeField] List<RectTransform> UIElements = default;
+    public bool IsInStore { get; private set; }
 
     public void Start()
     {
+        this.IsInStore = false;
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
             storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay);
@@ -35,48 +37,41 @@ public class MenuManager : MonoBehaviour
     {
         if (currentMenu != menu)
         {
-            if (currentMenu)
-            {
-                currentMenu.SetActive(false);
-            }
-            menu.SetActive(true);
-            currentMenu = menu;
-            this.StoreToggledOn();
-
+            this.StoreToggledOn(menu);
         }
         else
         {
-            currentMenu = null;
-            menu.SetActive(false);
-            this.StoreToggledOff();
+            this.StoreToggledOff(menu);
         }
     }
 
     public void CloseMenu()
     {
-        if (currentMenu != null)
+        this.StoreToggledOff(this.currentMenu);
+    }
+
+    private void StoreToggledOn(GameObject menu)
+    {
+        if (this.currentMenu)
         {
-            currentMenu.SetActive(false);
-            currentMenu = null;
-            this.StoreToggledOff();
+            this.currentMenu.SetActive(false);
         }
-    }
-
-    private void StoreToggledOn()
-    {
+        menu.SetActive(true);
+        currentMenu = menu;
         this.PlayerBalanceHUD.SetActive(true);
-        NeedSystemUpdater.isInStore = true;
-        NeedSystemUpdater.PauseAllAnimals();
-        this.GridSystem.UpdateAnimalCellGrid();
-        this.GridSystem.HighlightHomeLocations();
+        this.IsInStore = true;
+        this.PauseManager.Pause();
     }
 
-    private void StoreToggledOff()
+    private void StoreToggledOff(GameObject menu)
     {
-        this.PlayerBalanceHUD.SetActive(false);
-        NeedSystemUpdater.isInStore = false;
-        NeedSystemUpdater.UpdateAccessibleLocations();
-        NeedSystemUpdater.UnpauseAllAnimals();
-        this.GridSystem.UnhighlightHomeLocations();
+        if (menu != null)
+        {
+            menu.SetActive(false);
+            this.currentMenu = null;
+            this.PlayerBalanceHUD.SetActive(false);
+            this.IsInStore = false;
+            this.PauseManager.Unpause();
+        }
     }
 }

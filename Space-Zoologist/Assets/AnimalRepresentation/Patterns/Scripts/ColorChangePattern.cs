@@ -12,10 +12,10 @@ public class ColorChangePattern : TimedPattern
         gameObject.GetComponent<SpriteRenderer>().color = color;
         base.EnterPattern(gameObject, animalData);
     }
-    protected override void ExitPattern(GameObject gameObject)
+    protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
         gameObject.GetComponent<SpriteRenderer>().color = animalsToOriginalColors[gameObject];
         animalsToOriginalColors.Remove(gameObject);
-        base.ExitPattern(gameObject);
+        base.ExitPattern(gameObject, callCallback);
     }
 }

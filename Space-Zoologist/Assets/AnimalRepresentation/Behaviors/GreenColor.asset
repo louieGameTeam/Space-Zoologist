@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: GreenColor
   m_EditorClassIdentifier: 
   behaviorData:
-    behaviorName: Changiing Color
+    behaviorName: GeneralBehavior
     behaviorTypes: 02000000
     priority: 2
-  maxAffectedNumber: 1
+  maxAffectedNumber: 2
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 1
   behaviorPatterns:
+  - {fileID: -7666405586187839307, guid: b286f3c4c2bee467197b0b1af78f21ff, type: 3}
   - {fileID: 3730844915883505050, guid: c25c5e78a739f42af80379ef7ecc70e4, type: 3}
+  - {fileID: -7666405586187839307, guid: b286f3c4c2bee467197b0b1af78f21ff, type: 3}
   refreshPeriod: 3
-  elapsedTime: 0
+  elapsedTime: 1.9050113

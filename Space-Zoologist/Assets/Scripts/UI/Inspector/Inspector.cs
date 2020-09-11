@@ -12,16 +12,16 @@ public class Inspector : MonoBehaviour
     private bool isInInspectorMode = false;
 
     [SerializeField] private Text inspectorButtonText = null;
-    // To pause/free animals
-    [SerializeField] private NeedSystemUpdater needSystemUpdater = null;
 
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
+    [SerializeField] private PauseManager PauseManager = default;
+    [SerializeField] private MenuManager MenuManager = default;
 
     // To access other UI elements to toggle
     [SerializeField] private GameObject HUD = null;
-    // The inspector window 
+    // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
     [SerializeField] private GameObject itemDropdownMenu = null;
     [SerializeField] private GameObject inspectorWindow = null;
@@ -52,7 +52,7 @@ public class Inspector : MonoBehaviour
     public void ToggleInspectMode()
     {
         // Cannot enter inspector mode while in istore
-        if (this.needSystemUpdater.isInStore)
+        if (this.MenuManager.IsInStore)
         {
             return;
         }
@@ -65,7 +65,7 @@ public class Inspector : MonoBehaviour
         {
             this.inspectorButtonText.text = "INSPECTOR:ON";
             this.inspectorWindowText.text = "INSPECTOR";
-            this.needSystemUpdater.PauseAllAnimals();
+            this.PauseManager.Pause();
             this.inspectorWindow.SetActive(true);
             this.UpdateDropdownMenu();
             this.areaDropdownMenu.SetActive(true);
@@ -75,7 +75,7 @@ public class Inspector : MonoBehaviour
         else
         {
             this.inspectorButtonText.text = "INSPECTOR:OFF";
-            this.needSystemUpdater.UnpauseAllAnimals();
+            this.PauseManager.Unpause();
             this.inspectorWindow.SetActive(false);
             this.areaDropdownMenu.SetActive(false);
             this.itemDropdownMenu.SetActive(false);

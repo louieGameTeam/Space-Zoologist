@@ -104,4 +104,14 @@ public class PopulationManager : MonoBehaviour
             population.UpdatePopulationStateForChecking();
         }
     }
+
+    public void UpdateAccessibleLocations()
+    {
+        this.NeedSystemManager.UpdateAccessMap();
+        foreach (Population population in this.Populations)
+        {
+            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
+            GridSystem.GetGridWithAccess(population));
+        }
+    }
 }

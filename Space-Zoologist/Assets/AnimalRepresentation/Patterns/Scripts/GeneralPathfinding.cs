@@ -31,6 +31,7 @@ public class GeneralPathfinding : BehaviorPattern
             animalData.animal.MovementController.MoveTowardsDestination();
             if (animalData.animal.MovementController.DestinationReached)
             {
+                animalData.animal.MovementController.ResetPathfindingConditions();
                 // Debug.Log(animal.name + " has reached their destination of " + this.Destination.ToString());
                 return true;
             }

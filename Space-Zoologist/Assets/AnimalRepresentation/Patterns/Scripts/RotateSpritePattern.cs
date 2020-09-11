@@ -9,8 +9,15 @@ public class RotateSpritePattern : TimedPattern
     Dictionary<GameObject, Vector3> animalsToCurrentAngles = new Dictionary<GameObject, Vector3>();
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        animalsToOriginalRotationAngles.Add(gameObject, gameObject.transform.rotation);
-        animalsToCurrentAngles.Add(gameObject, gameObject.transform.rotation.eulerAngles);
+        if (!animalsToOriginalRotationAngles.ContainsKey(gameObject))
+        {
+            animalsToOriginalRotationAngles.Add(gameObject, gameObject.transform.rotation);
+        }
+        if (!animalsToCurrentAngles.ContainsKey(gameObject))
+        {
+            animalsToCurrentAngles.Add(gameObject, gameObject.transform.rotation.eulerAngles);
+        }
+        animalData.animal.MovementData.MovementStatus = Movement.idle;
         base.EnterPattern(gameObject, animalData);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
@@ -28,11 +35,11 @@ public class RotateSpritePattern : TimedPattern
         animalsToCurrentAngles[animal] = newRotation;
         return base.IsPatternFinishedAfterUpdate(animal, animalData);
     }
-    protected override void ExitPattern(GameObject gameObject)
+    protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
         gameObject.transform.rotation = animalsToOriginalRotationAngles[gameObject];
         animalsToOriginalRotationAngles.Remove(gameObject);
         animalsToCurrentAngles.Remove(gameObject);
-        base.ExitPattern(gameObject);
+        base.ExitPattern(gameObject, callCallback);
     }
 }

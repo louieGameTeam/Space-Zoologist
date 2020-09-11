@@ -149,7 +149,7 @@ public class Population : MonoBehaviour, Life
         }
     }
 
-    public void PauseAnimals()
+    public void PauseAnimalsMovementController()
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
@@ -159,7 +159,7 @@ public class Population : MonoBehaviour, Life
         }
     }
 
-    public void UnpauseAnimals()
+    public void UnpauseAnimalsMovementController()
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {

@@ -20,6 +20,7 @@ public class ReturnHomePattern : BehaviorPattern
             animalData.animal.MovementController.MoveTowardsDestination();
             if (animalData.animal.MovementController.DestinationReached)
             {
+                animalData.animal.MovementController.ResetPathfindingConditions();
                 return true;
             }
         }

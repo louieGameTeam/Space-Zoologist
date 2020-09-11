@@ -6413,16 +6413,10 @@ PrefabInstance:
     - target: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
---- !u!1 &483941272 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
-    type: 3}
-  m_PrefabInstance: {fileID: 483941271}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &483941273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
@@ -7025,6 +7019,11 @@ PrefabInstance:
       propertyPath: PlayerBalanceDisplay
       value: 
       objectReference: {fileID: 616210799}
+    - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: PauseManager
+      value: 
+      objectReference: {fileID: 1849927152}
     - target: {fileID: 849827785566768625, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8762,16 +8761,10 @@ PrefabInstance:
     - target: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
---- !u!1 &713529161 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
-    type: 3}
-  m_PrefabInstance: {fileID: 713529160}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &713529162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
@@ -9016,16 +9009,10 @@ PrefabInstance:
     - target: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
---- !u!1 &856085053 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
-    type: 3}
-  m_PrefabInstance: {fileID: 856085052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &856085054 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
@@ -9249,7 +9236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridSystem: {fileID: 1228270578}
   behaviorPatterns: []
-  isPaused: 0
+  IsPaused: 0
 --- !u!1 &965074120
 GameObject:
   m_ObjectHideFlags: 0
@@ -16142,6 +16129,26 @@ PrefabInstance:
       propertyPath: ReservePartitionManager
       value: 
       objectReference: {fileID: 1021518976}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: NeedSystemUpdater
+      value: 
+      objectReference: {fileID: 1849927151}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: BehaviorPatternUpdater
+      value: 
+      objectReference: {fileID: 957276801}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: GridSystem
+      value: 
+      objectReference: {fileID: 1228270578}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: PopulationManager
+      value: 
+      objectReference: {fileID: 1051037409}
     m_RemovedComponents:
     - {fileID: 4694716191194936582, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
@@ -16179,6 +16186,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e3741b51b27e49489fc0b6b7a515df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1849927152 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1849927148}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954e95fea8d8f476080f48fd16068a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1870373114
@@ -18174,6 +18193,16 @@ PrefabInstance:
       propertyPath: itemDropdownMenu
       value: 
       objectReference: {fileID: 1100042253}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: PauseManager
+      value: 
+      objectReference: {fileID: 1849927152}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: MenuManager
+      value: 
+      objectReference: {fileID: 781210986}
     - target: {fileID: 7509669528419789672, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -18420,9 +18449,6 @@ MonoBehaviour:
     type: 3}
   AnimalPopulation:
   - {fileID: 1996958380}
-  - {fileID: 713529161}
-  - {fileID: 483941272}
-  - {fileID: 856085053}
   DefaultBehaviors: []
   TimeSinceUpdate: 0
   NeedEditorTesting: []

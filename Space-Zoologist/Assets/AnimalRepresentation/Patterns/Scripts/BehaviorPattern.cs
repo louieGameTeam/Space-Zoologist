@@ -59,14 +59,14 @@ public class BehaviorPattern : MonoBehaviour
         forceRemoveAnimals.Clear();
         foreach (GameObject animal in AnimalsToAnimalData.Keys)
         {
-
             if (IsPatternFinishedAfterUpdate(animal, AnimalsToAnimalData[animal]))
             {
+                // Debug.Log("Pattern finished after updating for " + animal.name);
                 compeletedAnimals.Add(animal);
             }
-            if (IsAlternativeConditionSatisfied(animal, AnimalsToAnimalData[animal]))
+            else if (IsAlternativeConditionSatisfied(animal, AnimalsToAnimalData[animal]))
             {
-                // Debug.Log("Alternate exit condition satisfied");
+                Debug.Log("Alternate exit condition satisfied for " + animal.name);
                 alternativeCompletedAnimals.Add(animal);
                 continue;
             }
@@ -108,13 +108,16 @@ public class BehaviorPattern : MonoBehaviour
     /// </summary>
     /// <param name="gameObject"></param>
     /// <param name="isCallingCallback">Set to false when force exiting without completion, leave as default</param>
-    protected virtual void ExitPattern(GameObject gameObject)
+    protected virtual void ExitPattern(GameObject gameObject, bool callCallback = true)
     {
         gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
         StepCompletedCallBack callback = AnimalsToAnimalData[gameObject].callback;
         List<GameObject> collab = AnimalsToAnimalData[gameObject].collaboratingAnimals;
         AnimalsToAnimalData.Remove(gameObject);
-        callback.Invoke(gameObject, collab);
+        if (callCallback)
+        {
+            callback.Invoke(gameObject, collab);
+        }
     }
     protected virtual void ExitPatternAlternative(GameObject gameObject)
     {
@@ -140,9 +143,7 @@ public class BehaviorPattern : MonoBehaviour
     /// <param name="gameObject"></param>
     protected virtual void ForceExit(GameObject gameObject)
     {
-        gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
-        // Debug.Log(gameObject.name + " has been forced exited");
-        AnimalsToAnimalData.Remove(gameObject);
+        ExitPattern(gameObject, false);
     }
     public struct AnimalData
     {
