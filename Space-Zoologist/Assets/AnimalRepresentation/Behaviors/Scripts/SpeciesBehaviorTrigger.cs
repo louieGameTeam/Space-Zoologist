@@ -27,7 +27,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     public void EnterBehavior(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
     {
         // TODO modularize initialization one
-        Debug.Log(behaviorPatterns[0].gameObject.name + " entered");
+        // Debug.Log(behaviorPatterns[0].gameObject.name + " entered");
         behaviorData.behaviorName = this.GetType().ToString();
         behaviorData.ForceExitCallback = OnForceExit;
         stepCompletedCallback = OnStepCompleted; // Setup Callback

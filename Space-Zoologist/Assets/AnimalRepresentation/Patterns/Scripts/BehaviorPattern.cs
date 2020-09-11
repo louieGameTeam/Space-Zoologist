@@ -66,7 +66,7 @@ public class BehaviorPattern : MonoBehaviour
             }
             else if (IsAlternativeConditionSatisfied(animal, AnimalsToAnimalData[animal]))
             {
-                Debug.Log("Alternate exit condition satisfied for " + animal.name);
+                // Debug.Log("Alternate exit condition satisfied for " + animal.name);
                 alternativeCompletedAnimals.Add(animal);
                 continue;
             }
