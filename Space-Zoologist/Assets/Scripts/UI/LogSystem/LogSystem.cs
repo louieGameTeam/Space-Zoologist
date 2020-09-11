@@ -116,6 +116,10 @@ public class LogSystem : MonoBehaviour
         {
             this.handleLog(EventType.FoodSourceOutputChange);
         });
+        this.eventManager.SubscribeToEvent(EventType.TerrainChange, () =>
+        {
+            this.handleLog(EventType.TerrainChange);
+        });
     }
 
     private void handleLog(EventType eventType)
@@ -156,6 +160,10 @@ public class LogSystem : MonoBehaviour
         {
             this.logFoodSourceOutputChanged((FoodSource)EventManager.Instance.LastEventInvoker);
         }
+        else if (eventType == EventType.TerrainChange)
+        {
+            this.logTerrainChange((List<Vector3Int>)EventManager.Instance.LastEventInvoker);
+        }
         else
         {
             Debug.Assert(true, $"LogSystem does not knows how to handle {eventType} yet");
@@ -178,6 +186,30 @@ public class LogSystem : MonoBehaviour
         }
 
         this.logWindowText.text = logText;
+    }
+
+    private void logTerrainChange(List<Vector3Int> changedTiles)
+    {
+        List<byte> seenEnclosedAreaIds = new List<byte>();
+
+        foreach (Vector3Int pos in changedTiles)
+        {
+            EnclosedArea enclosedArea = this.enclosureSystem.GetEnclosedAreaByCellPosition(pos);
+
+            if (!seenEnclosedAreaIds.Contains(enclosedArea.id))
+            {
+                if (!this.enclosedAreaLogs.ContainsKey(enclosedArea))
+                {
+                    this.enclosedAreaLogs.Add(enclosedArea, new List<LogEntry>());
+                }
+
+                LogEntry newLog = new LogEntry(Time.time.ToString(), $"Terrain changed in enclosed area {enclosedArea.id}");
+                this.enclosedAreaLogs[enclosedArea].Add(newLog);
+                this.worldLog.Add(newLog);
+
+                seenEnclosedAreaIds.Add(enclosedArea.id);
+            }
+        }
     }
 
     private void logFoodSourceOutputChanged(FoodSource foodSource)
