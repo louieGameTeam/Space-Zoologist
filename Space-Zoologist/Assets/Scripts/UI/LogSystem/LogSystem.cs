@@ -170,7 +170,6 @@ public class LogSystem : MonoBehaviour
         }
     }
 
-
     private void displayWorldLog()
     {
         string logText = "Log\n";
@@ -284,6 +283,12 @@ public class LogSystem : MonoBehaviour
         else if (creation.GetType() == typeof(EnclosedArea))
         {
             EnclosedArea enclosedArea = (EnclosedArea)creation;
+
+            // Don't log empty enclosed area
+            if (enclosedArea.coordinates.Count == 0)
+            {
+                return;
+            }
 
             if (!this.enclosedAreaLogs.ContainsKey(enclosedArea))
             {
