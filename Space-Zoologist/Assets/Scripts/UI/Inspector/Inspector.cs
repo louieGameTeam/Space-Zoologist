@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// This script is to attached to the inspector button and handles
@@ -18,6 +19,9 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
+
+    [SerializeField] private Tilemap highLight = default;
+    [SerializeField] private TerrainTile highLightTile = default;
 
     // To access other UI elements to toggle
     [SerializeField] private GameObject HUD = null;
@@ -252,6 +256,11 @@ public class Inspector : MonoBehaviour
             }
             this.lastPopulationSelected = null;
         }
+
+        foreach (Vector3Int pos in this.lastTilesSelected)
+        {
+            this.highLight.SetTile(pos, null);
+        }
     }
 
     private void HighlightPopulation(GameObject population)
@@ -265,10 +274,22 @@ public class Inspector : MonoBehaviour
     }
 
 
-    private void HighlightFoodSource(GameObject foodSource)
+    private void HighlightFoodSource(GameObject foodSourceGameObject)
     {
-        foodSource.GetComponent<SpriteRenderer>().color = Color.blue;
-        this.lastFoodSourceSelected = foodSource;
+        // Highlight food source object
+        foodSourceGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        this.lastFoodSourceSelected = foodSourceGameObject;
+
+        FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
+
+        // Hightlight
+        List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(Vector3Int.FloorToInt(foodSource.Position), foodSource.Species.RootRadius);
+        foreach (Vector3Int pos in foodSourceRadiusRange)
+        {
+            this.highLight.SetTile(pos, this.highLightTile);
+        }
+
+        this.lastTilesSelected = foodSourceRadiusRange;
     }
 
     
