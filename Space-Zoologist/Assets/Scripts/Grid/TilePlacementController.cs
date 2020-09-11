@@ -158,6 +158,11 @@ public class TilePlacementController : MonoBehaviour
         this.TileSystem.HasTerrainChanged = true;
         this.TileSystem.chagnedTiles.AddRange(addedTiles.Keys.ToList());
 
+        // Invoke event and pass the changed tiles that are not walls
+        EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.TileSystem.chagnedTiles.FindAll(
+            pos => this.TileSystem.GetTerrainTileAtLocation(pos).type != TileType.Wall
+        ));
+
         // Clear all dics
         referencedTiles.Clear();
         removedTileColors.Clear();
