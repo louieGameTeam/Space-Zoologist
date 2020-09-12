@@ -198,6 +198,9 @@ public class Population : MonoBehaviour, Life
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
         newAnimal.GetComponent<Animal>().Initialize(this, data);
+
+        // Invoke a population growth event
+        EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }
 
     // removes last animal in list and last behavior
@@ -211,10 +214,15 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
+
+            // Invoke a population decline event
+            EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
         }
         if (this.AnimalPopulation.Count == 0)
         {
             Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
+            // TODO Delete the population at another time, or else the reference will be lost
+            EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
         }
     }
 

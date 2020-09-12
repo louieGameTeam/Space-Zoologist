@@ -23,16 +23,36 @@ public class FoodSource: MonoBehaviour, Life
     private float goodMultiplier = 1.0f;
 
     private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
-    private bool hasAccessibleTerrainChanged = default;
-    private bool hasAccessibleTerrainChecked = default;
+    private bool hasAccessibilityChanged = default;
+    private bool hasAccessibilityChecked = default;
 
     private TileSystem TileSystem = default;
+
+    // To figure out if the output has changed, in order to invoke vent
+    private float prevOutput = 0;
 
     private void Awake()
     {
         if (species)
         {
             InitializeFoodSource(species, transform.position);
+        }
+    }
+
+    // Subscribe to events here
+    private void Start()
+    {
+        // If the food has atmospheric need then subscribe to atmosphere changed event
+        foreach (AtmosphereComponent atmosphereComponent in Enum.GetValues(typeof(AtmosphereComponent)))
+        {
+            if (this.needs.ContainsKey(atmosphereComponent.ToString()))
+            {
+                EventManager.Instance.SubscribeToEvent(EventType.AtmosphereChange, () =>
+                {
+                    this.hasAccessibilityChecked = true;
+                    this.hasAccessibilityChanged = true;
+                });
+            }
         }
     }
 
@@ -80,6 +100,15 @@ public class FoodSource: MonoBehaviour, Life
             float needSeverity = this.needs[needType].Severity;
             output += multiplier * (needSeverity / severityTotal) * species.BaseOutput;
         }
+
+        // Invoke event if output is different
+        if (this.prevOutput != 0 && this.prevOutput != output)
+        {
+            EventManager.Instance.InvokeEvent(EventType.FoodSourceOutputChange, this);
+        }
+
+        this.prevOutput = output;
+
         return output;
     }
 
@@ -122,9 +151,9 @@ public class FoodSource: MonoBehaviour, Life
         }
 
         // Return result if have checked
-        if (this.hasAccessibleTerrainChecked)
+        if (this.hasAccessibilityChecked)
         {
-            return this.hasAccessibleTerrainChanged;
+            return this.hasAccessibilityChanged;
         }
 
         var preTerrain = this.accessibleTerrian;
@@ -133,15 +162,15 @@ public class FoodSource: MonoBehaviour, Life
         // Accessible terrain had changed
         if(!preTerrain.SequenceEqual(curTerrain))
         {
-            this.hasAccessibleTerrainChanged = true;
-            this.hasAccessibleTerrainChecked = true;
+            this.hasAccessibilityChanged = true;
+            this.hasAccessibilityChecked = true;
         }
         else
         {
-            this.hasAccessibleTerrainChecked = true;
+            this.hasAccessibilityChecked = true;
         }
 
-        return this.hasAccessibleTerrainChanged;
+        return this.hasAccessibilityChanged;
     }
 
     /// <summary>
@@ -149,13 +178,13 @@ public class FoodSource: MonoBehaviour, Life
     /// </summary>
     public void UpdateAccessibleTerrainInfo()
     {
-        if (this.hasAccessibleTerrainChanged)
+        if (this.hasAccessibilityChanged)
         {
             this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
         }
 
         // Reset flags
-        this.hasAccessibleTerrainChecked = false;
-        this.hasAccessibleTerrainChanged = false;
+        this.hasAccessibilityChecked = false;
+        this.hasAccessibilityChanged = false;
     }
 }

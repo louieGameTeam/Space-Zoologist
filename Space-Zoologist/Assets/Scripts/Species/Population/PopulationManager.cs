@@ -37,6 +37,22 @@ public class PopulationManager : MonoBehaviour
         this.NeedSystemManager.UpdateAllSystems();
     }
 
+    public void PauseAllAnimals()
+    {
+        foreach (Population population in this.Populations)
+        {
+            population.PauseAnimals();
+        }
+    }
+
+    public void UnpauseAllAnimals()
+    {
+        foreach (Population population in this.Populations)
+        {
+            population.UnpauseAnimals();
+        }
+    }
+
     /// <summary>
     /// Create a new population of the given species at the given position.
     /// </summary>
@@ -53,6 +69,8 @@ public class PopulationManager : MonoBehaviour
         population.InitializeNewPopulation(species, position, count);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
+
+        EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
 
     /// <summary>

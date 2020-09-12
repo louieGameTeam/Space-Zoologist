@@ -33,6 +33,17 @@ public class TileSystem : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
+        {
+            // Invoke event and pass the changed tiles that are not walls
+            EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.chagnedTiles.FindAll(
+                pos => this.GetTerrainTileAtLocation(pos).type != TileType.Wall
+            ));
+        });
+    }
+
     /// <summary>
     /// Convert a world position to cell positions on the grid.
     /// </summary>
@@ -88,6 +99,8 @@ public class TileSystem : MonoBehaviour
 
         RefreshTilemapColor(terrainTile.targetTilemap);
 
+        // Invoke event
+        EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellLocation);
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {
@@ -360,6 +373,34 @@ public class TileSystem : MonoBehaviour
         }
         return -1;
     }
+
+    /// <summary>
+    /// Return all cell locations within a range from a center point
+    /// </summary>
+    /// <param name="centerCellLocation">Starting center point</param>
+    /// <param name="scanRange">search radius</param>
+    /// <returns></returns>
+    public List<Vector3Int> AllCellLocationsinRange(Vector3Int centerCellLocation, int scanRange)
+    {
+        List<Vector3Int> tileLocations = new List<Vector3Int>();
+        Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
+        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        {
+            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            {
+                float distance = Mathf.Sqrt(x * x + y * y);
+                if (distance > scanRange)
+                {
+                    continue;
+                }
+                scanLocation.x = x;
+                scanLocation.y = y;
+                tileLocations.Add(scanLocation);
+            }
+        }
+        return tileLocations;
+    }
+
 
     /// <summary>
     /// Returns a list of locations of all tiles in a certain range

@@ -8,7 +8,7 @@ using UnityEngine;
 public class NeedSystemUpdater : MonoBehaviour
 {
     [SerializeField] NeedSystemManager NeedSystemManager = default;
-
+    
     public bool IsPaused { get; set; }
 
     // Temp update

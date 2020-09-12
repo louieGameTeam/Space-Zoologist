@@ -61,6 +61,8 @@ public class MenuManager : MonoBehaviour
         this.PlayerBalanceHUD.SetActive(true);
         this.IsInStore = true;
         this.PauseManager.Pause();
+        
+        EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
     }
 
     private void StoreToggledOff(GameObject menu)
@@ -73,5 +75,7 @@ public class MenuManager : MonoBehaviour
             this.IsInStore = false;
             this.PauseManager.Unpause();
         }
+        
+        EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }
 }
