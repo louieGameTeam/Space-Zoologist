@@ -21,7 +21,7 @@ public class NeedSystemManager : MonoBehaviour
     /// <summary>
     /// Initialize the universal need systems
     /// </summary>
-    /// <remarks>Terrian/Atmoshpere -> FoodSource/Species -> Density, this order has to be fixed</remarks>
+    /// <remarks>Enviormental -> FoodSource/Species (consumable) -> Density/Symbiosis (other), this order has to be fixed</remarks>
     private void Start()
     {
         // Add enviormental NeedSystem
