@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3721cfe44167b904ab7e8232ec8720e8, type: 3}
+  m_Name: Display
+  m_EditorClassIdentifier: 
+  behaviorData:
+    behaviorName: UniversalAnimatorSpecieTrigger
+    behaviorTypes: 04000000
+    priority: 0
+  maxAffectedNumber: 999
+  maxAffectedPortion: 1
+  numberTriggerdPerLoop: 1
+  behaviorPatterns:
+  - {fileID: 7650229462495931979, guid: 09973ed82ba68d844b6c1d50ebe05fb1, type: 3}
+  refreshPeriod: 3
+  elapsedTime: 1.3420668

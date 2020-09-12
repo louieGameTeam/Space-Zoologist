@@ -14,6 +14,7 @@ public class PodMenu : MonoBehaviour
     [SerializeField] Transform PodItemContainer = default;
     [Header("Dependencies")]
     [SerializeField] PopulationManager populationManager = default;
+    [SerializeField] TopHUD TopHUD = default;
     private GridSystem GridSystem = default;
     private CursorItem cursorItem = default;
     private LevelDataReference LevelDataReference = default;
@@ -89,7 +90,7 @@ public class PodMenu : MonoBehaviour
             Vector2 position = Camera.main.ScreenToWorldPoint(pointerEventData.position);
             if (!this.GridSystem.PlacementValidation.IsPodPlacementValid(position, selectedSpecies))
             {
-                Debug.Log("Cannot place item that location");
+                this.TopHUD.StartCoroutine("FlashWarning", "Terrain not suitable for " + this.selectedSpecies.SpeciesName);
                 return;
             }
             populationManager.UpdatePopulation(selectedSpecies, 1, position);

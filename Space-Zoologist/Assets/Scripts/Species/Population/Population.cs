@@ -20,7 +20,7 @@ public class Population : MonoBehaviour, Life
 
     public Dictionary<string, Need> Needs => needs;
     public Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> NeedBehaviors => needBehaviors;
-    public AnimalPathfinding.Grid grid { get; private set; }
+    public AnimalPathfinding.Grid Grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
     public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
@@ -139,17 +139,17 @@ public class Population : MonoBehaviour, Life
     public void UpdateAccessibleArea(List<Vector3Int> accessibleLocations, AnimalPathfinding.Grid grid)
     {
         this.AccessibleLocations = accessibleLocations;
-        this.grid = grid;
+        this.Grid = grid;
         foreach(GameObject animal in this.AnimalPopulation)
         {
-            if (!this.AccessibleLocations.Contains(this.grid.grid.WorldToCell(animal.transform.position)))
+            if (!this.AccessibleLocations.Contains(this.Grid.grid.WorldToCell(animal.transform.position)))
             {
                 animal.transform.position = this.origin;
             }
         }
     }
 
-    public void PauseAnimals()
+    public void PauseAnimalsMovementController()
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
@@ -159,7 +159,7 @@ public class Population : MonoBehaviour, Life
         }
     }
 
-    public void UnpauseAnimals()
+    public void UnpauseAnimalsMovementController()
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
@@ -204,10 +204,12 @@ public class Population : MonoBehaviour, Life
     }
 
     // removes last animal in list and last behavior
+    // TODO keep track of last removed animal and when there's no more active behaviors it can be set inactive
     public void RemoveAnimal(int count)
     {
         if (this.AnimalPopulation.Count > 0)
         {
+            Debug.Log("Animal removed");
             this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
