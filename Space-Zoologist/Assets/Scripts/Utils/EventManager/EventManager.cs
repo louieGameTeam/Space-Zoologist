@@ -29,9 +29,10 @@ public class Publisher
 
     public void UnSubscribeAllMethods()
     {
-        foreach (Action action in Handlers.GetInvocationList())
+        // Removes each action associates to this handler
+        foreach (Action handler in Handlers.GetInvocationList())
         {
-            Handlers -= action;
+            Handlers -= handler;
         }
     }
 }
@@ -104,17 +105,17 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="eventType">The event that suscripber is interested in</param>
     /// <param name="action">What action to be triggered when event happens</param>
-    public void SubscribeToEvent(EventType eventType, Action action)
+    public void SubscribeToEvent(EventType eventType, Action handler)
     {
-        this.eventPublishers[eventType].Handlers += action;
+        this.eventPublishers[eventType].Handlers += handler;
     }
 
     /// <summary>
     /// Unsubscribes to an event
     /// </summary>
     /// <remarks>Forget to unsubcribe would cause errors</remarks>
-    public void UnsubscribeToEvent(EventType eventType, Action action)
+    public void UnsubscribeToEvent(EventType eventType, Action handler)
     {
-        this.eventPublishers[eventType].Handlers -= action;
+        this.eventPublishers[eventType].Handlers -= handler;
     }
 }
