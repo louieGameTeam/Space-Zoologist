@@ -11617,6 +11617,11 @@ PrefabInstance:
       propertyPath: PlayerBalanceDisplay
       value: 
       objectReference: {fileID: 616210799}
+    - target: {fileID: 849827785551453065, guid: 2b8234909d50f4bbe80178a1766c6faa,
+        type: 3}
+      propertyPath: PauseManager
+      value: 
+      objectReference: {fileID: 826795284}
     - target: {fileID: 849827785566768625, guid: 2b8234909d50f4bbe80178a1766c6faa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -13451,6 +13456,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5f4a03a01b6204aa3da0214c80da52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &826795284 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1849927148}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954e95fea8d8f476080f48fd16068a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &843918515 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8291602454289475955, guid: 2b8234909d50f4bbe80178a1766c6faa,
@@ -13760,7 +13777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridSystem: {fileID: 1228270578}
   behaviorPatterns: []
-  isPaused: 0
+  IsPaused: 0
 --- !u!1 &965074120
 GameObject:
   m_ObjectHideFlags: 0
@@ -20611,6 +20628,26 @@ PrefabInstance:
       propertyPath: ReservePartitionManager
       value: 
       objectReference: {fileID: 1021518976}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: PopulationManager
+      value: 
+      objectReference: {fileID: 1051037409}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: NeedSystemUpdater
+      value: 
+      objectReference: {fileID: 1849927151}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: BehaviorPatternUpdater
+      value: 
+      objectReference: {fileID: 957276801}
+    - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: GridSystem
+      value: 
+      objectReference: {fileID: 1228270578}
     m_RemovedComponents:
     - {fileID: 4694716191194936582, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
@@ -22635,13 +22672,23 @@ PrefabInstance:
         type: 3}
       propertyPath: highLight
       value: 
-      objectReference: {fileID: 443480455}
+      objectReference: {fileID: 218324505}
     - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
       propertyPath: highLightTile
       value: 
-      objectReference: {fileID: 11400000, guid: 8257b3e5344e747a2824a59ea3219bfc,
+      objectReference: {fileID: 11400000, guid: a8c58bbc857468c478c332d63c85a5ea,
         type: 2}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: PauseManager
+      value: 
+      objectReference: {fileID: 826795284}
+    - target: {fileID: 7184251803548676596, guid: 2453c37f1af084c5b8d5c0060334539a,
+        type: 3}
+      propertyPath: MenuManager
+      value: 
+      objectReference: {fileID: 781210986}
     - target: {fileID: 7509669528419789672, guid: 2453c37f1af084c5b8d5c0060334539a,
         type: 3}
       propertyPath: m_AnchoredPosition.x

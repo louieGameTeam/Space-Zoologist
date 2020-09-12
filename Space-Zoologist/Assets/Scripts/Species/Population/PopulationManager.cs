@@ -41,7 +41,7 @@ public class PopulationManager : MonoBehaviour
     {
         foreach (Population population in this.Populations)
         {
-            population.PauseAnimals();
+            population.PauseAnimalsMovementController();
         }
     }
 
@@ -49,7 +49,7 @@ public class PopulationManager : MonoBehaviour
     {
         foreach (Population population in this.Populations)
         {
-            population.UnpauseAnimals();
+            population.UnpauseAnimalsMovementController();
         }
     }
 
