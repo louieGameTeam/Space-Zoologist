@@ -18,13 +18,21 @@ public enum EventType {
 /// Publisher of a type of event
 /// </summary>
 public class Publisher
-{
-    public event Action Publish;
+{ 
+    public event Action Handlers;
 
     public void PublishTheEvent()
     {
         // Invoke the action when it is not null
-        Publish?.Invoke();
+        Handlers?.Invoke();
+    }
+
+    public void UnSubscribeAllMethods()
+    {
+        foreach (Action action in Handlers.GetInvocationList())
+        {
+            Handlers -= action;
+        }
     }
 }
 
@@ -70,6 +78,18 @@ public class EventManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Unsubscribes all methods for all events
+    /// </summary>
+    /// <remarks>Idlely the subscribers will unsubscribe, it is a fail-safe</remarks>
+    public void ResetSystem()
+    {
+        foreach (Publisher publisher in this.eventPublishers.Values)
+        {
+            publisher.UnSubscribeAllMethods();
+        }
+    }
+
+    /// <summary>
     /// Invoke an event.
     /// </summary>
     /// <param name="eventType">Type of the event that just happens</param>
@@ -86,7 +106,7 @@ public class EventManager : MonoBehaviour
     /// <param name="action">What action to be triggered when event happens</param>
     public void SubscribeToEvent(EventType eventType, Action action)
     {
-        this.eventPublishers[eventType].Publish += action;
+        this.eventPublishers[eventType].Handlers += action;
     }
 
     /// <summary>
@@ -95,6 +115,6 @@ public class EventManager : MonoBehaviour
     /// <remarks>Forget to unsubcribe would cause errors</remarks>
     public void UnsubscribeToEvent(EventType eventType, Action action)
     {
-        this.eventPublishers[eventType].Publish -= action;
+        this.eventPublishers[eventType].Handlers -= action;
     }
 }
