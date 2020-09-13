@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] Inspector Inspector = default;
     [SerializeField] LogSystem LogSystem = default;
+    [SerializeField] ObjectiveManager ObjectiveManager = default;
     [SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] List<GameObject> MachineHUDs = default;
     private Dictionary<KeyCode, GameObject> StoreBindings = new Dictionary<KeyCode, GameObject>();
@@ -62,6 +63,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             this.LogSystem.ToggleLog();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            this.ObjectiveManager.ToggleObjectivePanel();
         }
     }
 }
