@@ -50,11 +50,11 @@ public class EventManager : MonoBehaviour
 {
     private static EventManager instance;
     private Dictionary<EventType, Publisher> eventPublishers = new Dictionary<EventType, Publisher>();
-    private object lastEventInvoker = null;
+    private object eventData = null;
 
     // Holds a reference to the invoker (for the log system)
     // TODO Consider safety issues with this reference 
-    public object LastEventInvoker => this.lastEventInvoker;
+    public object EventData => this.eventData;
 
 
     public static EventManager Instance => EventManager.instance;
@@ -94,9 +94,9 @@ public class EventManager : MonoBehaviour
     /// Invoke an event.
     /// </summary>
     /// <param name="eventType">Type of the event that just happens</param>
-    public void InvokeEvent(EventType eventType, object invoker)
+    public void InvokeEvent(EventType eventType, object eventData)
     {
-        this.lastEventInvoker = invoker;
+        this.eventData = eventData;
         this.eventPublishers[eventType].PublishTheEvent();
     }
 
