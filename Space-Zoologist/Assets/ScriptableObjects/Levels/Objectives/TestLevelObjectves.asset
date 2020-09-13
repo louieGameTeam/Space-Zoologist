@@ -12,3 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec42b53d3e6684b669c3f7b074efca5f, type: 3}
   m_Name: TestLevelObjectves
   m_EditorClassIdentifier: 
+  survivalObjective:
+  - ObjectiveType: 0
+    targetSpecies: {fileID: 11400000, guid: 4fc91e10b303a49faaeffe6f232fefef, type: 2}
+    targetPopulationCount: 1
+    targetPopulationSize: 5
+    timeRequirement: 2
+  resourceObjective:
+  - ObjectiveType: 1
+    amountToKeep: 500

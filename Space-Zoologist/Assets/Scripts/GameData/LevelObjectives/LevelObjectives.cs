@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ObjectiveType { Survival, Resource }
+public enum ObjectiveStatus { Complete, InProgress, Failed }
 
 public class Objective
 {
     public ObjectiveType ObjectiveType;
-    private bool Status;
+    private ObjectiveStatus Status;
 }
 
 [System.Serializable]
 public class SurvivalObjective : Objective
 {
     // The species this objective cares about
-    public AnimalSpecies targetSpecies;
+    [SerializeField] private AnimalSpecies targetSpecies;
     // How many populations this objective needs
     public byte targetPopulationCount;
     // The populstion size this objective requires
