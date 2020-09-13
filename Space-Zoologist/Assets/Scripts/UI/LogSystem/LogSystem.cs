@@ -48,22 +48,16 @@ public class LogSystem : MonoBehaviour
 
     private EventManager eventManager;
 
-    /// <summary>
-    /// To handle toggling the window
-    /// </summary>
-    private void Update()
+    public void ToggleLog()
     {
-        if (Input.GetKeyDown("l"))
+        Debug.Log("open log");
+
+        this.logWindow.SetActive(!this.isInLogSystem);
+        this.isInLogSystem = !this.isInLogSystem;
+
+        if (this.isInLogSystem)
         {
-            Debug.Log("open log");
-
-            this.logWindow.SetActive(!this.isInLogSystem);
-            this.isInLogSystem = !this.isInLogSystem;
-
-            if (this.isInLogSystem)
-            {
-                this.displayWorldLog();
-            }
+            this.displayWorldLog();
         }
     }
 
