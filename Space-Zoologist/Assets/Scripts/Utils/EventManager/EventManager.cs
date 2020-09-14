@@ -12,6 +12,7 @@ public enum EventType {
     TerrainChange, // Pass a list of change tiles
     AtmosphereChange, // Pass the enclosed area
     LiquidChange, // Pass the cell posistion
+    GameOver, ObjectivesCompleted // pass null is fine
 };
 
 /// <summary>
