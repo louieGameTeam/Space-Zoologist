@@ -12,19 +12,29 @@ public enum EventType {
     TerrainChange, // Pass a list of change tiles
     AtmosphereChange, // Pass the enclosed area
     LiquidChange, // Pass the cell posistion
+    GameOver, ObjectivesCompleted // pass null is fine
 };
 
 /// <summary>
 /// Publisher of a type of event
 /// </summary>
 public class Publisher
-{
-    public event Action Publish;
+{ 
+    public event Action Handlers;
 
     public void PublishTheEvent()
     {
         // Invoke the action when it is not null
-        Publish?.Invoke();
+        Handlers?.Invoke();
+    }
+
+    public void UnSubscribeAllMethods()
+    {
+        // Removes each action associates to this handler
+        foreach (Action handler in Handlers.GetInvocationList())
+        {
+            Handlers -= handler;
+        }
     }
 }
 
@@ -41,11 +51,11 @@ public class EventManager : MonoBehaviour
 {
     private static EventManager instance;
     private Dictionary<EventType, Publisher> eventPublishers = new Dictionary<EventType, Publisher>();
-    private object lastEventInvoker = null;
+    private object eventData = null;
 
     // Holds a reference to the invoker (for the log system)
     // TODO Consider safety issues with this reference 
-    public object LastEventInvoker => this.lastEventInvoker;
+    public object EventData => this.eventData;
 
 
     public static EventManager Instance => EventManager.instance;
@@ -70,12 +80,24 @@ public class EventManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Unsubscribes all methods for all events
+    /// </summary>
+    /// <remarks>Idlely the subscribers will unsubscribe, it is a fail-safe</remarks>
+    public void ResetSystem()
+    {
+        foreach (Publisher publisher in this.eventPublishers.Values)
+        {
+            publisher.UnSubscribeAllMethods();
+        }
+    }
+
+    /// <summary>
     /// Invoke an event.
     /// </summary>
     /// <param name="eventType">Type of the event that just happens</param>
-    public void InvokeEvent(EventType eventType, object invoker)
+    public void InvokeEvent(EventType eventType, object eventData)
     {
-        this.lastEventInvoker = invoker;
+        this.eventData = eventData;
         this.eventPublishers[eventType].PublishTheEvent();
     }
 
@@ -84,17 +106,17 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="eventType">The event that suscripber is interested in</param>
     /// <param name="action">What action to be triggered when event happens</param>
-    public void SubscribeToEvent(EventType eventType, Action action)
+    public void SubscribeToEvent(EventType eventType, Action handler)
     {
-        this.eventPublishers[eventType].Publish += action;
+        this.eventPublishers[eventType].Handlers += handler;
     }
 
     /// <summary>
     /// Unsubscribes to an event
     /// </summary>
     /// <remarks>Forget to unsubcribe would cause errors</remarks>
-    public void UnsubscribeToEvent(EventType eventType, Action action)
+    public void UnsubscribeToEvent(EventType eventType, Action handler)
     {
-        this.eventPublishers[eventType].Publish -= action;
+        this.eventPublishers[eventType].Handlers -= handler;
     }
 }
