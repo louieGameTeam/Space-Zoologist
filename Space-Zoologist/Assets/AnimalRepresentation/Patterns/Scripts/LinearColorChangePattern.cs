@@ -31,7 +31,7 @@ public class LinearColorChangePattern : TimedPattern
     }
     protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
-        gameObject.GetComponent<SpriteRenderer>().color = animalsToOriginalColors[gameObject];
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         animalsToOriginalColors.Remove(gameObject);
         base.ExitPattern(gameObject, callCallback);
     }

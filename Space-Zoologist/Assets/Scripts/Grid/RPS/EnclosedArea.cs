@@ -103,7 +103,7 @@ public class EnclosedArea
         {
             if (this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsAnimal)
             {
-                this.populations.Add(this.gridSystem.CellGrid[coordinate.x, coordinate.y].Animal.GetComponent<Population>());
+                this.populations.Add(this.gridSystem.CellGrid[coordinate.x, coordinate.y].Animal.GetComponent<Animal>().PopulationInfo);
                 continue;
             }
             if (this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsFood)

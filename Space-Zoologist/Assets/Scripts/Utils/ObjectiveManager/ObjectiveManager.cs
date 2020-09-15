@@ -18,8 +18,8 @@ public class ObjectiveManager : MonoBehaviour
         public List<Population> Populations = default;
         public AnimalSpecies AnimalSpecies { get; private set; }
         public byte TargetPopulationCount { get; private set; }
-        public  byte TargetPopulationSize { get; private set; }
-        public  float TargetTime { get; private set; }
+        public byte TargetPopulationSize { get; private set; }
+        public float TargetTime { get; private set; }
 
         public  float timer { get; private set; }
         private ObjectiveStatus status;
@@ -51,14 +51,22 @@ public class ObjectiveManager : MonoBehaviour
                 // Have met the population number requirement
                 if (satisfiedPopulationCount >= this.TargetPopulationCount)
                 {
-                    this.timer += Time.deltaTime;
 
                     if (this.timer >= this.TargetTime)
                     {
                         return ObjectiveStatus.Completed;
                     }
+                    else
+                    {
+                        this.timer += Time.deltaTime;
+                    }
 
                     break;
+                }
+                // reset timer if requirement not met
+                else
+                {
+                    this.timer = 0f;
                 }
             }
             return ObjectiveStatus.InProgress;
@@ -96,7 +104,8 @@ public class ObjectiveManager : MonoBehaviour
         }
     }
 
-    [Expandable] public LevelObjectiveData LevelObjectiveData = default;
+    [Expandable] public LevelDataReference LevelDataReference = default;
+    private LevelObjectiveData LevelObjectiveData = default;
 
     private bool isOpen = false;
 
@@ -104,6 +113,7 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField] private PopulationManager populationManager = default;
     // To access the player balance
     [SerializeField] private PlayerBalance playerBalance = default;
+    [SerializeField] private PauseManager PauseManager = default;
     // Objective panel
     [SerializeField] private GameObject objectivePanel = default;
     [SerializeField] private Text objectivePanelText = default;
@@ -126,11 +136,20 @@ public class ObjectiveManager : MonoBehaviour
             if (objective.GetType() == typeof(SurvivalObjective))
             {
                 SurvivalObjective survivalObjective = (SurvivalObjective)objective;
-
-                displayText += $"Maintain at least {survivalObjective.TargetPopulationCount} of the ";
-                displayText += $"{survivalObjective.AnimalSpecies.SpeciesName} population at size {survivalObjective.TargetPopulationSize}";
-                displayText += $" for {survivalObjective.TargetTime} mins ";
-                displayText += $"[{survivalObjective.Status.ToString()}] [{survivalObjective.timer}/{survivalObjective.TargetTime}]\n";
+                string population = "population";
+                string min = "minute";
+                if (survivalObjective.TargetPopulationCount > 1)
+                {
+                    population += "s";
+                }
+                if (!(survivalObjective.TargetTime <= 120f))
+                {
+                    min += "s";
+                }
+                displayText += $"Maintain at least {survivalObjective.TargetPopulationCount} ";
+                displayText += $"{survivalObjective.AnimalSpecies.SpeciesName} {population} with a count of {survivalObjective.TargetPopulationSize}";
+                displayText += $" for {survivalObjective.TargetTime / 60f} {min} ";
+                displayText += $"[{survivalObjective.Status.ToString()}] [{Math.Round(survivalObjective.timer, 0)}/{survivalObjective.TargetTime}]\n";
             }
             else if(objective.GetType() == typeof(ResourceObjective))
             {
@@ -150,8 +169,9 @@ public class ObjectiveManager : MonoBehaviour
     /// <summary>
     /// Create objective objects and subscribe to events
     /// </summary>
-    private void Start()
+    public void Start()
     {
+        this.LevelObjectiveData = this.LevelDataReference.LevelData.LevelObjectiveData;
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)
         {
@@ -169,23 +189,28 @@ public class ObjectiveManager : MonoBehaviour
         }
 
         // Add the population to related objective if not seen before
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountIncreased, () =>
+        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, () =>
         {
             Population population = (Population)EventManager.Instance.EventData;
+            this.RegisterWithSurvivalObjectives(population);
+        });
+    }
 
-            foreach (Objective objective in this.objectives)
+    private void RegisterWithSurvivalObjectives(Population population)
+    {
+        //Debug.Log(population.gameObject.name + " attempting to update survivial objective");
+        foreach (Objective objective in this.objectives)
+        {
+            if (objective.GetType() == typeof(SurvivalObjective))
             {
-                if (objective.GetType() == typeof(SurvivalObjective))
+                SurvivalObjective survivalObjective = (SurvivalObjective)objective;
+                if (survivalObjective.AnimalSpecies == population.species && !survivalObjective.Populations.Contains(population))
                 {
-                    SurvivalObjective survivalObjective = (SurvivalObjective)objective;
-
-                    if (survivalObjective.AnimalSpecies == population.species && !survivalObjective.Populations.Contains(population))
-                    {
-                       survivalObjective.Populations.Add(population);
-                    }
+                    Debug.Log(population.name + " was added to survival objective");
+                    survivalObjective.Populations.Add(population);
                 }
             }
-        });
+        }
     }
 
     /// <summary>
@@ -194,7 +219,14 @@ public class ObjectiveManager : MonoBehaviour
     private void Update()
     {
         bool isAllCompleted = true;
-
+        if (this.PauseManager.IsPaused)
+        {
+            return;
+        }
+        if (this.isOpen)
+        {
+            this.UpdateObjectivePanel();
+        }
         foreach (Objective objective in this.objectives)
         {
             if (objective.UpdateStatus() == ObjectiveStatus.InProgress)

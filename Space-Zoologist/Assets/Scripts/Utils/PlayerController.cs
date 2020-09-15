@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Inspector Inspector = default;
     [SerializeField] LogSystem LogSystem = default;
     [SerializeField] ObjectiveManager ObjectiveManager = default;
+    [Tooltip("Binds to numbers in order of list (Element 0 -> 1, Element 1 -> 2, etc.")]
     [SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] List<GameObject> MachineHUDs = default;
     private Dictionary<KeyCode, GameObject> StoreBindings = new Dictionary<KeyCode, GameObject>();
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             this.MenuManager.CloseMenu();
+            this.Inspector.CloseInspector();
             foreach(GameObject machineHUD in this.MachineHUDs)
             {
                 if (machineHUD.activeSelf)

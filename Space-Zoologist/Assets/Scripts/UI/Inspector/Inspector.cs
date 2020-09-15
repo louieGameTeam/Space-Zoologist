@@ -12,12 +12,9 @@ public class Inspector : MonoBehaviour
 {
     private bool isInInspectorMode = false;
 
-    [SerializeField] private Text inspectorButtonText = null;
-
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
-    [SerializeField] private PauseManager PauseManager = default;
     [SerializeField] private MenuManager MenuManager = default;
 
     [SerializeField] private Tilemap highLight = default;
@@ -37,6 +34,7 @@ public class Inspector : MonoBehaviour
     private Dropdown enclosedAreaDropdown;
     private Dropdown itemsDropdown;
     private DisplayInspectorText inspectorWindowDisplayScript;
+    private GameObject PopulationHighlighted = null;
 
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
@@ -50,6 +48,34 @@ public class Inspector : MonoBehaviour
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
     }
 
+    public void CloseInspector()
+    {
+        if (this.isInInspectorMode)
+        {
+            this.inspectorWindow.SetActive(false);
+            this.areaDropdownMenu.SetActive(false);
+            this.itemDropdownMenu.SetActive(false);
+            this.HUD.SetActive(true);
+            this.UnHighlightAll();
+            EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
+            this.isInInspectorMode = !isInInspectorMode;
+        }
+
+    }
+
+    public void OpenInspector()
+    {
+        this.inspectorWindowText.text = "Inspector";
+        this.inspectorWindow.SetActive(true);
+        this.gridSystem.UpdateAnimalCellGrid();
+        this.UpdateDropdownMenu();
+        this.areaDropdownMenu.SetActive(true);
+        this.itemDropdownMenu.SetActive(true);
+        this.HUD.SetActive(false);
+        EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
+        this.isInInspectorMode = !isInInspectorMode;
+    }
+
     /// <summary>
     /// Toggle displays
     /// </summary>
@@ -61,35 +87,14 @@ public class Inspector : MonoBehaviour
             return;
         }
 
-        // Toggle flag
-        this.isInInspectorMode = !isInInspectorMode;
-
         // Toggle button text, displays and pause/free animals
-        if (this.isInInspectorMode)
+        if (!this.isInInspectorMode)
         {
-            this.inspectorButtonText.text = "INSPECTOR:ON";
-            this.inspectorWindowText.text = "INSPECTOR";
-            this.PauseManager.Pause();
-            this.inspectorWindow.SetActive(true);
-            this.UpdateDropdownMenu();
-            this.areaDropdownMenu.SetActive(true);
-            this.itemDropdownMenu.SetActive(true);
-            this.HUD.SetActive(false);
-
-            EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
+            this.OpenInspector();
         }
         else
         {
-            this.inspectorButtonText.text = "INSPECTOR:OFF";
-            this.PauseManager.Unpause();
-            this.inspectorWindow.SetActive(false);
-            this.areaDropdownMenu.SetActive(false);
-            this.itemDropdownMenu.SetActive(false);
-            this.HUD.SetActive(true);
-            this.UnHighlightAll();
-
-            EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
-
+            this.CloseInspector();
         }
 
         //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
@@ -196,7 +201,7 @@ public class Inspector : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
+                // Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
                 return;
             }
 
@@ -239,6 +244,13 @@ public class Inspector : MonoBehaviour
             this.enclosedAreaDropdown.value = 0;
             this.itemsDropdown.value = 0;
         }
+        if (this.isInInspectorMode)
+        {
+            if (this.PopulationHighlighted != null)
+            {
+                this.HighlightPopulation(this.PopulationHighlighted);
+            }
+        }
     }
 
     private void UnHighlightAll()
@@ -250,6 +262,7 @@ public class Inspector : MonoBehaviour
         }
         if (this.lastPopulationSelected)
         {
+            this.PopulationHighlighted = null;
             foreach (Transform child in this.lastPopulationSelected.transform)
             {
                 child.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
@@ -265,6 +278,7 @@ public class Inspector : MonoBehaviour
 
     private void HighlightPopulation(GameObject population)
     {
+        this.PopulationHighlighted = population;
         foreach (Transform child in population.transform)
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
