@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DisplayInspectorText : MonoBehaviour
 {
-    [SerializeField] private Text inspectorWindowText;
+    [SerializeField] private Text inspectorWindowText = default;
 
     public void DisplayPopulationStatus(Population population)
     {
@@ -59,7 +59,7 @@ public class DisplayInspectorText : MonoBehaviour
 
         displayText += "\n";
         displayText += $"Population count: {enclosedArea.populations.Count}\n";
-        displayText += $"Total aniaml count: {enclosedArea.animals.Count}\n";
+        displayText += $"Total animal count: {enclosedArea.animals.Count}\n";
         displayText += $"Food Source count: {enclosedArea.foodSources.Count}\n";
 
         this.inspectorWindowText.text = displayText;

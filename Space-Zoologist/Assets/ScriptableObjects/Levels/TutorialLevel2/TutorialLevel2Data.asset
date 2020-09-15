@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
+  m_Name: TutorialLevel2Data
+  m_EditorClassIdentifier: 
+  startingBalance: 400
+  MapWidth: 20
+  MapHeight: 20
+  foodSources:
+  - {fileID: 11400000, guid: bc40dc7d294484405bafbc34ae7d642b, type: 2}
+  animalSpecies:
+  - {fileID: 11400000, guid: 5617e9c2071d14ec28c0c33b79360e2c, type: 2}
+  items:
+  - {fileID: 11400000, guid: 7ae76de5ae6e54ee59f14dc506cd9177, type: 2}
+  - {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
+  - {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
+  - {fileID: 11400000, guid: d3eae864c0aa24b1591464e1e01489b6, type: 2}
+  - {fileID: 11400000, guid: 365f9d3baaf014c9bbe52730f04bba04, type: 2}
+  - {fileID: 11400000, guid: 2df928ca4bec041fbb0392ac7101272a, type: 2}
+  - {fileID: 11400000, guid: 7b48ec7c0dc2a48b1b0ab22e4e316793, type: 2}
+  globalAtmosphere:
+    GasX: 1
+    GasY: 2
+    GasZ: 3
+    temperature: 90

@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// Manager of all the FoodSource instance
 /// </summary>
-// TODO refactor to use reference util instead of foodSourceSpecies and refactor current food source subscription logic flow
 public class FoodSourceManager : MonoBehaviour
 {
     public List<FoodSource> FoodSources => foodSources;
@@ -18,6 +17,7 @@ public class FoodSourceManager : MonoBehaviour
     [SerializeField] private GameObject foodSourcePrefab = default;
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
+    [SerializeField] TileSystem TileSystem = default;
 
     private void Start()
     {
@@ -53,7 +53,7 @@ public class FoodSourceManager : MonoBehaviour
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
         newFoodSourceGameObject.name = species.SpeciesName;
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
-        foodSource.InitializeFoodSource(species, position);
+        foodSource.InitializeFoodSource(species, position, this.TileSystem);
         foodSources.Add(foodSource);
 
         //Debug.Log("Food source being added: " + foodSource.Species.SpeciesName);

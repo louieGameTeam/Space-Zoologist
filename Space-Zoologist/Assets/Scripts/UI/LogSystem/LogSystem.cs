@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// This system hanldes creating, saving and displaying the logs. 
@@ -60,10 +61,10 @@ public class LogSystem : MonoBehaviour
             this.logWindow.SetActive(!this.isInLogSystem);
             this.isInLogSystem = !this.isInLogSystem;
 
-            if (this.isInLogSystem)
-            {
-                this.displayWorldLog();
-            }
+        }
+        if (this.isInLogSystem)
+        {
+            this.displayWorldLog();
         }
     }
 

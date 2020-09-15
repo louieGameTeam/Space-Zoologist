@@ -5,7 +5,7 @@ using System;
 [CreateAssetMenu(fileName = "SynchronizedBehavior", menuName = "SpeciesBehavior/SynchronizedBehavior")]
 public class SynchronizedBehaviorTrigger : SpecieBehaviorTrigger
 {
-    [SerializeField] private float[] synchronizedSteps;
+    [SerializeField] private float[] synchronizedSteps = default;
     protected override List<GameObject> AnimalSelection(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
     {
         return BehaviorUtils.SelectAnimals(this.numberTriggerdPerLoop, avalabilityToAnimals);

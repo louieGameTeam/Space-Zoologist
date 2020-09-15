@@ -380,6 +380,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="centerCellLocation">Starting center point</param>
     /// <param name="scanRange">search radius</param>
     /// <returns></returns>
+    /// TODO not working, don't use until fixed
     public List<Vector3Int> AllCellLocationsinRange(Vector3Int centerCellLocation, int scanRange)
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();

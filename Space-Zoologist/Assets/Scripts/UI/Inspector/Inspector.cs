@@ -283,7 +283,7 @@ public class Inspector : MonoBehaviour
         FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
 
         // Hightlight
-        List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(Vector3Int.FloorToInt(foodSource.Position), foodSource.Species.RootRadius);
+        List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(this.tileSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
         foreach (Vector3Int pos in foodSourceRadiusRange)
         {
             this.highLight.SetTile(pos, this.highLightTile);
