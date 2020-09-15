@@ -100,6 +100,8 @@ public class PopulationManager : MonoBehaviour
         this.HandlePopulationRegistration(population);
         this.GridSystem.UnhighlightHomeLocations();
         population.InitializeExistingAnimals();
+
+        EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
 
     // Registers the population with all all of the systems that care about it
@@ -131,5 +133,20 @@ public class PopulationManager : MonoBehaviour
             population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
             GridSystem.GetGridWithAccess(population));
         }
+    }
+
+    public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)
+    {
+        List<Population> populations = new List<Population>();
+
+        foreach(Population population in this.ExistingPopulations)
+        {
+            if (population.species == animalSpecies)
+            {
+                populations.Add(population);
+            }
+        }
+
+        return populations;
     }
 }

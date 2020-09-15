@@ -5,66 +5,96 @@ using UnityEngine.UI;
 
 public class ObjectiveManager : MonoBehaviour
 {
+    public enum ObjectiveStatus { Completed, InProgress, Failed}
+
     public abstract class Objective
     {
-        public abstract bool Status { get; }
-        public abstract void UpdateStatus();
+        public abstract ObjectiveStatus Status { get; }
+        public abstract ObjectiveStatus UpdateStatus();
     }
-
 
     public class SurvivalObjective : Objective
     {
-        public List<Population> populations = default;
-        private byte targetPopulationCount;
-        private byte targetPopulationSize;
-        private float targetTime;
+        public List<Population> Populations = default;
+        public AnimalSpecies AnimalSpecies { get; private set; }
+        public byte TargetPopulationCount { get; private set; }
+        public  byte TargetPopulationSize { get; private set; }
+        public  float TargetTime { get; private set; }
 
-        private float timer;
-        private bool status;
+        public  float timer { get; private set; }
+        private ObjectiveStatus status;
 
-        public override bool Status => this.status;
+        public override ObjectiveStatus Status => this.status;
 
-        public SurvivalObjective(List<Population> populations, byte targetPopulationCount, byte targetPopulationSize, float targetTime)
+        public SurvivalObjective(AnimalSpecies animalSpecies, byte targetPopulationCount, byte targetPopulationSize, float targetTime)
         {
-            this.populations = populations;
-            this.status = false;
+            this.Populations = new List<Population>();
+            this.AnimalSpecies = animalSpecies;
+            this.TargetPopulationCount = targetPopulationCount;
+            this.TargetPopulationSize = targetPopulationSize;
+            this.TargetTime = targetTime;
+            this.status = ObjectiveStatus.InProgress;
         }
 
-        public override void UpdateStatus()
+        public override ObjectiveStatus UpdateStatus()
         {
-            throw new NotImplementedException();
+            byte satisfiedPopulationCount = 0;
+
+            foreach (Population population in this.Populations)
+            {
+                // Found a population that has enough pop count
+                if (population.Count >= this.TargetPopulationSize)
+                {
+                    satisfiedPopulationCount++;
+                }
+
+                // Have met the population number requirement
+                if (satisfiedPopulationCount >= this.TargetPopulationCount)
+                {
+                    this.timer += Time.deltaTime;
+
+                    if (this.timer >= this.TargetTime)
+                    {
+                        return ObjectiveStatus.Completed;
+                    }
+
+                    break;
+                }
+            }
+            return ObjectiveStatus.InProgress;
         }
     }
 
     public class ResourceObjective : Objective
     {
         private PlayerBalance playerBalance;
-        private int amountToKeep;
+        public  int amountToKeep { get; private set; }
 
-        public override bool Status => this.status;
+        public override ObjectiveStatus Status => this.status;
 
-        private bool status;
+        private ObjectiveStatus status;
 
         public ResourceObjective(PlayerBalance playerBalance, int amountToKeep)
         {
             this.playerBalance = playerBalance;
             this.amountToKeep = amountToKeep;
-            this.status = false;
+            this.status = ObjectiveStatus.InProgress;
         }
 
-        public override void UpdateStatus()
+        public override ObjectiveStatus UpdateStatus()
         {
             if (this.playerBalance.Balance >= this.amountToKeep)
             {
-                this.status = true;
+                this.status = ObjectiveStatus.InProgress;
             }
             else
             {
-                this.status = false;
+                this.status = ObjectiveStatus.Failed;
             }
+
+            return this.status;
         }
     }
-
 
     [Expandable] public LevelObjectiveData LevelObjectiveData = default;
 
@@ -76,6 +106,7 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField] private PlayerBalance playerBalance = default;
     // Objective panel
     [SerializeField] private GameObject objectivePanel = default;
+    [SerializeField] private Text objectivePanelText = default;
 
     private List<Objective> objectives = new List<Objective>();
    
@@ -83,33 +114,102 @@ public class ObjectiveManager : MonoBehaviour
     {
         this.isOpen = !this.isOpen;
         this.objectivePanel.SetActive(this.isOpen);
+        this.UpdateObjectivePanel();
     }
 
-    private void Awake()
+    public void UpdateObjectivePanel()
     {
-        // Read in level objectives and create objectives
-        foreach(SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)
+        string displayText = "";
+
+        foreach (Objective objective in this.objectives)
         {
-            //this.objectives.Add
+            if (objective.GetType() == typeof(SurvivalObjective))
+            {
+                SurvivalObjective survivalObjective = (SurvivalObjective)objective;
+
+                displayText += $"Maintain at least {survivalObjective.TargetPopulationCount} of the ";
+                displayText += $"{survivalObjective.AnimalSpecies.SpeciesName} population at size {survivalObjective.TargetPopulationSize}";
+                displayText += $" for {survivalObjective.TargetTime} mins ";
+                displayText += $"[{survivalObjective.Status.ToString()}] [{survivalObjective.timer}/{survivalObjective.TargetTime}]\n";
+            }
+            else if(objective.GetType() == typeof(ResourceObjective))
+            {
+                ResourceObjective resourceObjective = (ResourceObjective)objective;
+
+                displayText += $"Have at least ${resourceObjective.amountToKeep} left [{resourceObjective.Status.ToString()}]\n";
+            }
+            else
+            {
+                Debug.Assert(true, $"{objective.GetType()} is not accounted for");
+            }
         }
 
-        foreach(ResourceObjectiveData objectiveData in this.LevelObjectiveData.resourceObjectiveDatas)
+        this.objectivePanelText.text = displayText;
+    }
+
+    /// <summary>
+    /// Create objective objects and subscribe to events
+    /// </summary>
+    private void Start()
+    {
+        // Create the survival objectives
+        foreach (SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)
+        {
+            this.objectives.Add(new SurvivalObjective(
+                objectiveData.targetSpecies,
+                objectiveData.targetPopulationCount,
+                objectiveData.targetPopulationSize,
+                objectiveData.timeRequirement
+            ));
+        }
+        // Create the resource objective
+        foreach (ResourceObjectiveData objectiveData in this.LevelObjectiveData.resourceObjectiveDatas)
         {
             this.objectives.Add(new ResourceObjective(this.playerBalance, objectiveData.amountToKeep));
         }
 
-
-
-        // Subscribe to event
+        // Add the population to related objective if not seen before
         EventManager.Instance.SubscribeToEvent(EventType.PopulationCountIncreased, () =>
         {
             Population population = (Population)EventManager.Instance.EventData;
 
-        });
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountDecreased, () =>
-        {
-            Population population = (Population)EventManager.Instance.EventData;
+            foreach (Objective objective in this.objectives)
+            {
+                if (objective.GetType() == typeof(SurvivalObjective))
+                {
+                    SurvivalObjective survivalObjective = (SurvivalObjective)objective;
 
+                    if (survivalObjective.AnimalSpecies == population.species && !survivalObjective.Populations.Contains(population))
+                    {
+                       survivalObjective.Populations.Add(population);
+                    }
+                }
+            }
         });
+    }
+
+    /// <summary>
+    /// Check the status of the objectives
+    /// </summary>
+    private void Update()
+    {
+        bool isAllCompleted = true;
+
+        foreach (Objective objective in this.objectives)
+        {
+            if (objective.UpdateStatus() == ObjectiveStatus.InProgress)
+            {
+                isAllCompleted = false;
+            }
+        }
+
+        // All objectives had reach end state
+        if (isAllCompleted)
+        {
+            EventManager.Instance.InvokeEvent(EventType.ObjectivesCompleted, null);
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+
+            Debug.Log($"Level Completed!");
+        }
     }
 }

@@ -243,8 +243,8 @@ public class EnclosureSystem : MonoBehaviour
         List<EnclosedArea> newEnclosedAreas = new List<EnclosedArea>();
 
         // Initial flood fill
-        //this.enclosedAreaCount = 0;
-        //newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, enclosedAreaCount));
+        this.enclosedAreaCount = 0;
+        newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, enclosedAreaCount));
         this.FloodFill(startPos, accessed, unaccessible, walls, enclosedAreaCount, newEnclosedAreas[enclosedAreaCount], false);
 
 

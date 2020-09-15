@@ -11876,6 +11876,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 856085052}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &889273619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2433763450547657282, guid: 2b8234909d50f4bbe80178a1766c6faa,
+    type: 3}
+  m_PrefabInstance: {fileID: 662968411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &899435688 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2602462674503232225, guid: 46b421dec56b8423ea52909c2c55d38a,
@@ -21466,6 +21478,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 130c7a509689b4a48940f1a0b1a9b245,
         type: 2}
+    - target: {fileID: 2602462674503232225, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: objectivePanelText
+      value: 
+      objectReference: {fileID: 889273619}
     - target: {fileID: 4653195162996786436, guid: 46b421dec56b8423ea52909c2c55d38a,
         type: 3}
       propertyPath: m_Name
@@ -21486,7 +21503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HasAccessibilityChanged: 0
-  species: {fileID: 11400000, guid: 4fc91e10b303a49faaeffe6f232fefef, type: 2}
+  species: {fileID: 11400000, guid: 5617e9c2071d14ec28c0c33b79360e2c, type: 2}
   AnimalPrefab: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
     type: 3}
   AnimalPopulation:
