@@ -384,17 +384,17 @@ public class TileSystem : MonoBehaviour
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        foreach (int x in GridUtils.Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            foreach (int y in GridUtils.Range(-scanRange, scanRange))
             {
                 float distance = Mathf.Sqrt(x * x + y * y);
                 if (distance > scanRange)
                 {
                     continue;
                 }
-                scanLocation.x = x;
-                scanLocation.y = y;
+                scanLocation.x = x + centerCellLocation.x;
+                scanLocation.y = y + centerCellLocation.y;
                 tileLocations.Add(scanLocation);
             }
         }
@@ -414,9 +414,9 @@ public class TileSystem : MonoBehaviour
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        foreach (int x in GridUtils.Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            foreach (int y in GridUtils.Range(-scanRange, scanRange))
             {
                 if (isCircleMode)
                 {
@@ -426,8 +426,8 @@ public class TileSystem : MonoBehaviour
                         continue;
                     }
                 }
-                scanLocation.x = x;
-                scanLocation.y = y;
+                scanLocation.x = x + centerCellLocation.x;
+                scanLocation.y = y + centerCellLocation.y;
                 if (GetTerrainTileAtLocation(scanLocation) == tile)
                 {
                     tileLocations.Add(scanLocation);

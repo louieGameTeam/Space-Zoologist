@@ -126,43 +126,43 @@ public class LogSystem : MonoBehaviour
     {
         if (eventType == EventType.PopulationCountIncreased)
         {
-            this.logPopulationIncrease((Population)EventManager.Instance.LastEventInvoker);
+            this.logPopulationIncrease((Population)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.PopulationCountDecreased)
         {
-            this.logPopulationDecrease((Population)EventManager.Instance.LastEventInvoker);
+            this.logPopulationDecrease((Population)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.PopulationExtinct)
         {
-            this.logPopulationExtinct((Population)EventManager.Instance.LastEventInvoker);
+            this.logPopulationExtinct((Population)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.NewPopulation)
         {
-            this.logNewCreation((Population)EventManager.Instance.LastEventInvoker);
+            this.logNewCreation((Population)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.NewFoodSource)
         {
-            this.logNewCreation((FoodSource)EventManager.Instance.LastEventInvoker);
+            this.logNewCreation((FoodSource)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.NewEnclosedArea)
         {
-            this.logNewCreation((EnclosedArea)EventManager.Instance.LastEventInvoker);
+            this.logNewCreation((EnclosedArea)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.AtmosphereChange)
         {
-            this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.LastEventInvoker);
+            this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.LiquidChange)
         {
-            this.logLiquidChange((Vector3Int)EventManager.Instance.LastEventInvoker);
+            this.logLiquidChange((Vector3Int)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.FoodSourceOutputChange)
         {
-            this.logFoodSourceOutputChanged((FoodSource)EventManager.Instance.LastEventInvoker);
+            this.logFoodSourceOutputChanged((FoodSource)EventManager.Instance.EventData);
         }
         else if (eventType == EventType.TerrainChange)
         {
-            this.logTerrainChange((List<Vector3Int>)EventManager.Instance.LastEventInvoker);
+            this.logTerrainChange((List<Vector3Int>)EventManager.Instance.EventData);
         }
         else
         {

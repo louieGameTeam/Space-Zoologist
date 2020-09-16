@@ -48,6 +48,17 @@ public class Inspector : MonoBehaviour
         this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
         this.itemsDropdown.onValueChanged.AddListener(selectItem);
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
+
+        // Have the dropdown options be refreshed when new items created
+        EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
+        EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, ()=>
+        {
+            this.selectEnclosedArea(this.enclosedAreaDropdown.value);
+        });
+        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, () =>
+        {
+            this.selectEnclosedArea(this.enclosedAreaDropdown.value);
+        });
     }
 
     /// <summary>
