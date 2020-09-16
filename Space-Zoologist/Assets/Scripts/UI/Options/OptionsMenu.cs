@@ -5,10 +5,20 @@ using UnityEngine;
 public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] PauseManager PauseManager = default;
+    [SerializeField] GameObject IngameUI = default;
     public void CloseOptionsMenu()
     {
         this.gameObject.SetActive(false);
         this.PauseManager.TryToUnpause();
+        this.PauseManager.PauseButton.SetActive(true);
+        this.IngameUI.SetActive(true);
+    }
+
+    public void OpenOptionsMenu()
+    {
+        this.gameObject.SetActive(true);
+        this.IngameUI.SetActive(false);
+        this.PauseManager.TryToPause();
         this.PauseManager.PauseButton.SetActive(true);
     }
 
@@ -16,14 +26,12 @@ public class OptionsMenu : MonoBehaviour
     {
         if (this.gameObject.activeSelf)
         {
-            this.PauseManager.TryToUnpause();
-            this.PauseManager.PauseButton.SetActive(true);
+            this.CloseOptionsMenu();
         }
         else
         {
-            this.PauseManager.TryToPause();
-            this.PauseManager.PauseButton.SetActive(false);
+            this.OpenOptionsMenu();
         }
-        this.gameObject.SetActive(!this.gameObject.activeSelf);
+        //this.gameObject.SetActive(!this.gameObject.activeSelf);
     }
 }

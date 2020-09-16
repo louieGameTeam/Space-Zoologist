@@ -102,6 +102,6 @@ public class PlacementValidation : MonoBehaviour
 
     public bool IsInMapBounds(Vector3Int mousePosition)
     {
-        return mousePosition.x > 1 && mousePosition.y > 1 && mousePosition.x < LevelDataReference.MapWidth - 1 && mousePosition.y < LevelDataReference.MapHeight - 1;
+        return mousePosition.x >= 1 && mousePosition.y >= 1 && mousePosition.x < LevelDataReference.MapWidth - 1 && mousePosition.y < LevelDataReference.MapHeight - 1;
     }
 }
