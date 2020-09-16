@@ -21,7 +21,7 @@ public class ObjectiveManager : MonoBehaviour
         public byte TargetPopulationSize { get; private set; }
         public float TargetTime { get; private set; }
 
-        public  float timer { get; private set; }
+        public float timer { get; private set; }
         private ObjectiveStatus status;
 
         public override ObjectiveStatus Status => this.status;
