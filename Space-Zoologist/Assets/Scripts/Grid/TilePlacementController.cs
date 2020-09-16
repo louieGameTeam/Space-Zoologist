@@ -156,7 +156,7 @@ public class TilePlacementController : MonoBehaviour
 
         // Set terrain modified flag
         this.TileSystem.HasTerrainChanged = true;
-        this.TileSystem.chagnedTiles.AddRange(addedTiles.Keys.ToList());
+        this.TileSystem.changedTiles.AddRange(addedTiles.Keys.ToList());
 
         // Clear all dics
         referencedTiles.Clear();

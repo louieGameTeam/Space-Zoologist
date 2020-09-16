@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: FoodGood_IdleRandom
   m_EditorClassIdentifier: Assembly-CSharp::IdleRandomTrigger
   behaviorData:
-    behaviorName: 
+    behaviorName: IdleRandomBehavior
     behaviorTypes: 0100000003000000
     priority: 0
-  maxAffectedNumber: 2
+  maxAffectedNumber: 3
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 1
   behaviorPatterns:
   - {fileID: 6517820211179143171, guid: f5dfd58f95c8d4dbda6f0081aead67a2, type: 3}
   refreshPeriod: 3
-  elapsedTime: 0
+  elapsedTime: 0.5300697

@@ -435,7 +435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GrassTilemap: {fileID: 360448856}
   HasTerrainChanged: 0
-  chagnedTiles: []
+  changedTiles: []
   needSystemManager: {fileID: 1849927150}
 --- !u!114 &135368110
 MonoBehaviour:
@@ -23296,6 +23296,81 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5153a9c030ebc456aa6266393970db04, type: 3}
+--- !u!1001 &4758253914144814119
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 415.70938
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 84.09719
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -574.21936
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 522575381783848977, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2602462674503232225, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: levelObjectives
+      value: 
+      objectReference: {fileID: 11400000, guid: d1a237e4180e04c32a428ddadbe5d5da,
+        type: 2}
+    - target: {fileID: 4653195162996786436, guid: 46b421dec56b8423ea52909c2c55d38a,
+        type: 3}
+      propertyPath: m_Name
+      value: ObjectiveManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 46b421dec56b8423ea52909c2c55d38a, type: 3}
 --- !u!114 &5640349515442808622
 MonoBehaviour:
   m_ObjectHideFlags: 0

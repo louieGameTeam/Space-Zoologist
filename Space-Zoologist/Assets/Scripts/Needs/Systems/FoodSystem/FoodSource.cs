@@ -17,7 +17,9 @@ public class FoodSource: MonoBehaviour, Life
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
 
+    // For runtime instances of a food source
     [SerializeField] private FoodSourceSpecies species = default;
+    [SerializeField] private TileSystem tileSystem = default;
 
     private float neutralMultiplier = 0.5f;
     private float goodMultiplier = 1.0f;
@@ -35,7 +37,7 @@ public class FoodSource: MonoBehaviour, Life
     {
         if (species)
         {
-            InitializeFoodSource(species, transform.position);
+            InitializeFoodSource(species, transform.position, this.tileSystem);
         }
     }
 
@@ -56,13 +58,13 @@ public class FoodSource: MonoBehaviour, Life
         }
     }
 
-    public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position)
+    public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position, TileSystem tileSystem)
     {
         this.species = species;
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
-        this.TileSystem = FindObjectOfType<TileSystem>();
+        this.TileSystem = tileSystem;
         this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 
@@ -160,14 +162,10 @@ public class FoodSource: MonoBehaviour, Life
         var curTerrain = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
 
         // Accessible terrain had changed
+        this.hasAccessibilityChecked = true;
         if(!preTerrain.SequenceEqual(curTerrain))
         {
             this.hasAccessibilityChanged = true;
-            this.hasAccessibilityChecked = true;
-        }
-        else
-        {
-            this.hasAccessibilityChecked = true;
         }
 
         return this.hasAccessibilityChanged;

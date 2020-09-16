@@ -12,12 +12,9 @@ public class Inspector : MonoBehaviour
 {
     private bool isInInspectorMode = false;
 
-    [SerializeField] private Text inspectorButtonText = null;
-
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
-    [SerializeField] private PauseManager PauseManager = default;
     [SerializeField] private MenuManager MenuManager = default;
 
     [SerializeField] private Tilemap highLight = default;
@@ -37,6 +34,7 @@ public class Inspector : MonoBehaviour
     private Dropdown enclosedAreaDropdown;
     private Dropdown itemsDropdown;
     private DisplayInspectorText inspectorWindowDisplayScript;
+    private GameObject PopulationHighlighted = null;
 
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
@@ -51,14 +49,36 @@ public class Inspector : MonoBehaviour
 
         // Have the dropdown options be refreshed when new items created
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
-        EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, ()=>
+        EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, this.UpdateDropdownMenu);
+        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, this.UpdateDropdownMenu);
+    }
+
+    public void CloseInspector()
+    {
+        if (this.isInInspectorMode)
         {
-            this.selectEnclosedArea(this.enclosedAreaDropdown.value);
-        });
-        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, () =>
-        {
-            this.selectEnclosedArea(this.enclosedAreaDropdown.value);
-        });
+            this.inspectorWindow.SetActive(false);
+            this.areaDropdownMenu.SetActive(false);
+            this.itemDropdownMenu.SetActive(false);
+            //this.HUD.SetActive(true);
+            this.UnHighlightAll();
+            EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
+            this.isInInspectorMode = !isInInspectorMode;
+        }
+
+    }
+
+    public void OpenInspector()
+    {
+        this.inspectorWindowText.text = "Inspector";
+        this.inspectorWindow.SetActive(true);
+        this.gridSystem.UpdateAnimalCellGrid();
+        this.UpdateDropdownMenu();
+        this.areaDropdownMenu.SetActive(true);
+        this.itemDropdownMenu.SetActive(true);
+        //this.HUD.SetActive(false);
+        EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
+        this.isInInspectorMode = !isInInspectorMode;
     }
 
     /// <summary>
@@ -72,35 +92,14 @@ public class Inspector : MonoBehaviour
             return;
         }
 
-        // Toggle flag
-        this.isInInspectorMode = !isInInspectorMode;
-
         // Toggle button text, displays and pause/free animals
-        if (this.isInInspectorMode)
+        if (!this.isInInspectorMode)
         {
-            this.inspectorButtonText.text = "INSPECTOR:ON";
-            this.inspectorWindowText.text = "INSPECTOR";
-            this.PauseManager.Pause();
-            this.inspectorWindow.SetActive(true);
-            this.UpdateDropdownMenu();
-            this.areaDropdownMenu.SetActive(true);
-            this.itemDropdownMenu.SetActive(true);
-            this.HUD.SetActive(false);
-
-            EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
+            this.OpenInspector();
         }
         else
         {
-            this.inspectorButtonText.text = "INSPECTOR:OFF";
-            this.PauseManager.Unpause();
-            this.inspectorWindow.SetActive(false);
-            this.areaDropdownMenu.SetActive(false);
-            this.itemDropdownMenu.SetActive(false);
-            this.HUD.SetActive(true);
-            this.UnHighlightAll();
-
-            EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
-
+            this.CloseInspector();
         }
 
         //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
@@ -109,6 +108,10 @@ public class Inspector : MonoBehaviour
     private void UpdateDropdownMenu()
     {
         this.enclosedAreaDropdown.options.Clear();
+
+        this.itemsDropdown.options.Clear();
+        this.itemsInEnclosedArea.Clear();
+        this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
 
         // Add empty option
         this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Select an area" });
@@ -129,7 +132,7 @@ public class Inspector : MonoBehaviour
 
         EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection-1];
 
-        Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
+        //Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
 
         this.itemsDropdown.options.Clear();
         this.itemsInEnclosedArea.Clear();
@@ -162,7 +165,7 @@ public class Inspector : MonoBehaviour
             return;
         }
 
-        Debug.Log($"selected item {selection} from dropdown");
+        //Debug.Log($"selected item {selection} from dropdown");
 
         Life itemSelected = this.itemsInEnclosedArea[selection-1];
 
@@ -207,7 +210,7 @@ public class Inspector : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
+                // Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
                 return;
             }
 
@@ -250,6 +253,13 @@ public class Inspector : MonoBehaviour
             this.enclosedAreaDropdown.value = 0;
             this.itemsDropdown.value = 0;
         }
+        if (this.isInInspectorMode)
+        {
+            if (this.PopulationHighlighted != null)
+            {
+                this.HighlightPopulation(this.PopulationHighlighted);
+            }
+        }
     }
 
     private void UnHighlightAll()
@@ -261,6 +271,7 @@ public class Inspector : MonoBehaviour
         }
         if (this.lastPopulationSelected)
         {
+            this.PopulationHighlighted = null;
             foreach (Transform child in this.lastPopulationSelected.transform)
             {
                 child.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
@@ -276,6 +287,7 @@ public class Inspector : MonoBehaviour
 
     private void HighlightPopulation(GameObject population)
     {
+        this.PopulationHighlighted = population;
         foreach (Transform child in population.transform)
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
@@ -294,7 +306,7 @@ public class Inspector : MonoBehaviour
         FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
 
         // Hightlight
-        List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(Vector3Int.FloorToInt(foodSource.Position), foodSource.Species.RootRadius);
+        List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(this.tileSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
         foreach (Vector3Int pos in foodSourceRadiusRange)
         {
             this.highLight.SetTile(pos, this.highLightTile);

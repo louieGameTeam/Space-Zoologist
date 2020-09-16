@@ -250,8 +250,8 @@ public class EnclosureSystem : MonoBehaviour
 
         while (walls.Count > 0)
         {
-            this.enclosedAreaCount++;
-            newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount));
+            // this.enclosedAreaCount++;
+            // newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount));
 
             startPos = walls.Pop();
 

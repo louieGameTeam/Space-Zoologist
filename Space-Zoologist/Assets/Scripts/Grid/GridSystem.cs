@@ -112,7 +112,7 @@ public class GridSystem : MonoBehaviour
     // Will need to make the grid the size of the max tilemap size
     public AnimalPathfinding.Grid GetGridWithAccess(Population population)
     {
-        Debug.Log("Setting up pathfinding grid");
+        // Debug.Log("Setting up pathfinding grid");
         bool[,] tileGrid = new bool[GridWidth, GridHeight];
         for (int x=0; x<GridWidth; x++)
         {

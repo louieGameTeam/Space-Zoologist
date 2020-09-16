@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
@@ -8,12 +9,58 @@ public class PauseManager : MonoBehaviour
     [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
     [SerializeField] BehaviorPatternUpdater BehaviorPatternUpdater = default;
     [SerializeField] GridSystem GridSystem = default;
+    [SerializeField] public GameObject PauseButton = default;
+    [SerializeField] private Sprite PauseSprite = default;
+    [SerializeField] private Sprite ResumeSprite = default;
+    private Image PauseButtonSprite = default;
+    private Button PauseButtonButton = default;
 
     public bool IsPaused { get; private set; }
+    public bool WasPaused { get; private set; }
+
+    private void Awake()
+    {
+        this.IsPaused = false;
+        this.WasPaused = false;
+        this.PauseButtonSprite = this.PauseButton.GetComponent<Image>();
+        this.PauseButtonButton = this.PauseButton.GetComponent<Button>();
+    }
+
+    public void TogglePauseButton()
+    {
+        this.PauseButton.SetActive(!this.PauseButton.activeSelf);
+    }
+
+    public void TryToPause()
+    {
+        if (this.IsPaused)
+        {
+            this.WasPaused = true;
+        }
+        else
+        {
+            this.Pause();
+        }
+    }
+
+    public void TryToUnpause()
+    {
+        if (this.WasPaused)
+        {
+            this.WasPaused = false;
+        }
+        else
+        {
+            this.Unpause();
+        }
+    }
 
     public void Pause()
     {
         this.IsPaused = true;
+        this.PauseButtonSprite.sprite = this.ResumeSprite;
+        this.PauseButtonButton.onClick.RemoveAllListeners();
+        this.PauseButtonButton.onClick.AddListener(this.Unpause);
         this.BehaviorPatternUpdater.IsPaused = true;
         this.NeedSystemUpdater.IsPaused = true;
         this.PauseAllAnimalsMovementController();
@@ -24,6 +71,9 @@ public class PauseManager : MonoBehaviour
     public void Unpause()
     {
         this.IsPaused = false;
+        this.PauseButtonSprite.sprite = this.PauseSprite;
+        this.PauseButtonButton.onClick.RemoveAllListeners();
+        this.PauseButtonButton.onClick.AddListener(this.Pause);
         this.BehaviorPatternUpdater.IsPaused = false;
         this.NeedSystemUpdater.IsPaused = false;
         this.PopulationManager.UpdateAccessibleLocations();

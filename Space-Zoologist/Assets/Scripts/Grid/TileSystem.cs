@@ -12,7 +12,7 @@ public class TileSystem : MonoBehaviour
     private Grid grid;
 
     public bool HasTerrainChanged = false;
-    public List<Vector3Int> chagnedTiles = new List<Vector3Int>();
+    public List<Vector3Int> changedTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTilesAndContents = new List<Vector3Int>();
 
@@ -35,10 +35,15 @@ public class TileSystem : MonoBehaviour
 
     private void Start()
     {
+        EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
+        {
+            this.changedTiles.Clear();
+        });
+
         EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
         {
             // Invoke event and pass the changed tiles that are not walls
-            EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.chagnedTiles.FindAll(
+            EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.changedTiles.FindAll(
                 pos => this.GetTerrainTileAtLocation(pos).type != TileType.Wall
             ));
         });
@@ -380,6 +385,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="centerCellLocation">Starting center point</param>
     /// <param name="scanRange">search radius</param>
     /// <returns></returns>
+    /// TODO not working, don't use until fixed
     public List<Vector3Int> AllCellLocationsinRange(Vector3Int centerCellLocation, int scanRange)
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();

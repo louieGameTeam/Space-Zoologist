@@ -11,8 +11,6 @@ public class TileStoreSection : StoreSection
 {
     [SerializeField] private EnclosureSystem EnclosureSystem = default;
     [SerializeField] private TilePlacementController tilePlacementController = default;
-    [Header("Only needed if tutorial level")]
-    [SerializeField] private TutorialTesting tutorial = default;
 
     private float startingBalance;
     private bool isPlacing = false;
@@ -55,12 +53,6 @@ public class TileStoreSection : StoreSection
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
         base.playerBalance.SubtractFromBalance(numTilesPlaced * selectedItem.Price);
-        if (tutorial != null)
-        {
-            tutorial.TriggerDialogueOnce();
-        }
-
-        // TODO: Send meesgae 'terrain changed'
     }
 
     /// <summary>

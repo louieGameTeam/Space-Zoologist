@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// This system hanldes creating, saving and displaying the logs. 
@@ -48,22 +49,19 @@ public class LogSystem : MonoBehaviour
 
     private EventManager eventManager;
 
-    /// <summary>
-    /// To handle toggling the window
-    /// </summary>
+    public void ToggleLog()
+    {
+        Debug.Log("open log");
+
+        this.logWindow.SetActive(!this.isInLogSystem);
+        this.isInLogSystem = !this.isInLogSystem;
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown("l"))
+        if (this.isInLogSystem)
         {
-            Debug.Log("open log");
-
-            this.logWindow.SetActive(!this.isInLogSystem);
-            this.isInLogSystem = !this.isInLogSystem;
-
-            if (this.isInLogSystem)
-            {
-                this.displayWorldLog();
-            }
+            this.displayWorldLog();
         }
     }
 
@@ -124,49 +122,41 @@ public class LogSystem : MonoBehaviour
 
     private void handleLog(EventType eventType)
     {
-        if (eventType == EventType.PopulationCountIncreased)
+        switch(eventType)
         {
-            this.logPopulationIncrease((Population)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.PopulationCountDecreased)
-        {
-            this.logPopulationDecrease((Population)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.PopulationExtinct)
-        {
-            this.logPopulationExtinct((Population)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.NewPopulation)
-        {
-            this.logNewCreation((Population)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.NewFoodSource)
-        {
-            this.logNewCreation((FoodSource)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.NewEnclosedArea)
-        {
-            this.logNewCreation((EnclosedArea)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.AtmosphereChange)
-        {
-            this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.LiquidChange)
-        {
-            this.logLiquidChange((Vector3Int)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.FoodSourceOutputChange)
-        {
-            this.logFoodSourceOutputChanged((FoodSource)EventManager.Instance.EventData);
-        }
-        else if (eventType == EventType.TerrainChange)
-        {
-            this.logTerrainChange((List<Vector3Int>)EventManager.Instance.EventData);
-        }
-        else
-        {
-            Debug.Assert(true, $"LogSystem does not knows how to handle {eventType} yet");
+            case EventType.PopulationCountIncreased:
+                this.logPopulationIncrease((Population)EventManager.Instance.EventData);
+                break;
+            case EventType.PopulationCountDecreased:
+                this.logPopulationDecrease((Population)EventManager.Instance.EventData);
+                break;
+            case EventType.PopulationExtinct:
+                this.logPopulationExtinct((Population)EventManager.Instance.EventData);
+                break;
+            case EventType.NewPopulation:
+                this.logNewCreation((Population)EventManager.Instance.EventData);
+                break;
+            case EventType.NewFoodSource:
+                this.logNewCreation((FoodSource)EventManager.Instance.EventData);
+                break;
+            case EventType.NewEnclosedArea:
+                this.logNewCreation((EnclosedArea)EventManager.Instance.EventData);
+                break;
+            case EventType.AtmosphereChange:
+                this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.EventData);
+                break;
+            case EventType.LiquidChange:
+                this.logLiquidChange((Vector3Int)EventManager.Instance.EventData);
+                break;
+            case EventType.FoodSourceOutputChange:
+                this.logFoodSourceOutputChanged((FoodSource)EventManager.Instance.EventData);
+                break;
+            case EventType.TerrainChange:
+                this.logTerrainChange((List<Vector3Int>)EventManager.Instance.EventData);
+                break;
+            default:
+                Debug.Assert(true, $"LogSystem does not knows how to handle {eventType} yet");
+                break;
         }
     }
 
