@@ -529,6 +529,10 @@ public class TilePlacementController : MonoBehaviour
     }
     private bool IsTileFree(Vector3Int cellLocation)
     {
+        if (!GridSystem.IsWithinGridBouds(cellLocation))
+        {
+            return false;
+        }
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
         return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
     }

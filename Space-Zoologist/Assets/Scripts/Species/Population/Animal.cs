@@ -9,9 +9,11 @@ public class Animal : MonoBehaviour
     public Population PopulationInfo { get; private set; }
     private Animator Animator = null;
     public MovementController MovementController {get; set; }
+    private AnimalBehaviorManager AnimalBehaviorManager = default;
 
     public void Start()
     {
+        this.AnimalBehaviorManager = this.GetComponent<AnimalBehaviorManager>();
         if (!this.gameObject.TryGetComponent(out this.Animator))
         {
             this.Animator = null;
@@ -29,6 +31,10 @@ public class Animal : MonoBehaviour
     void LateUpdate()
     {
         this.UpdateAnimations();
+        if (this.AnimalBehaviorManager.activeBehaviorPatterns.Count == 0)
+        {
+            this.MovementData.MovementStatus = Movement.idle;
+        }
     }
 
     public void UpdateAnimations()

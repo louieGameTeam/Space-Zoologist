@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum LineupPosition {left, right}
 public class TwoAnimalsLineUp : BehaviorPattern
 {
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
@@ -41,14 +42,14 @@ public class TwoAnimalsLineUp : BehaviorPattern
         return isLinedUp;
     }
 
-    // protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
-    // {
-    //     float distanceBetweenAnimals = animalData.collaboratingAnimals[0].transform.position.x - animal.transform.position.x;
-    //     if (!(distanceBetweenAnimals >= -3f && distanceBetweenAnimals <=3f))
-    //     {
-    //         Debug.Log("Couldn't line animals up, exiting early");
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
+    {
+        float distanceBetweenAnimals = animalData.collaboratingAnimals[0].transform.position.x - animal.transform.position.x;
+        if (!(distanceBetweenAnimals >= -3f && distanceBetweenAnimals <=3f))
+        {
+            Debug.Log("Two animals come together didn't work, exiting early");
+            return true;
+        }
+        return false;
+    }
 }
