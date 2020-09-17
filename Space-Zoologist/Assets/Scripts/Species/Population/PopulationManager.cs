@@ -100,7 +100,6 @@ public class PopulationManager : MonoBehaviour
         this.HandlePopulationRegistration(population);
         this.GridSystem.UnhighlightHomeLocations();
         population.InitializeExistingAnimals();
-
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
 

@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class AtmosphereMachineHUD : MonoBehaviour
 {
-    [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] List<MachineValues> MachineValues = default;
     AtmosphereMachine CurrentMachine = default;
+    private NeedSystemManager NeedSystemManager = default;
+
+    public void SetupDependencies(NeedSystemManager needSystemManager)
+    {
+        this.NeedSystemManager = needSystemManager;
+    }
 
     public void Initialize(AtmosphericComposition atmosphericComposition, AtmosphereMachine currentMachine)
     {

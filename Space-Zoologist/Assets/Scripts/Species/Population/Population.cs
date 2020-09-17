@@ -207,6 +207,10 @@ public class Population : MonoBehaviour, Life
     // TODO keep track of last removed animal and when there's no more active behaviors it can be set inactive
     public void RemoveAnimal(int count)
     {
+        if (this.AnimalPopulation.Count == 0)
+        {
+            return;
+        }
         if (this.AnimalPopulation.Count > 0)
         {
             Debug.Log("Animal removed");
@@ -214,15 +218,17 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
-
-            // Invoke a population decline event
-            EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
-        }
-        if (this.AnimalPopulation.Count == 0)
-        {
-            Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
-            // TODO Delete the population at another time, or else the reference will be lost
-            EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
+            if (this.AnimalPopulation.Count == 0)
+            {
+                Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
+                // TODO Delete the population at another time, or else the reference will be lost
+                EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
+            }
+            else
+            {
+                // Invoke a population decline event
+                EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
+            }
         }
     }
 

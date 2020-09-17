@@ -162,12 +162,12 @@ public class LogSystem : MonoBehaviour
 
     private void displayWorldLog()
     {
-        string logText = "Log\n";
+        string logText = "\n";
 
-        if (this.worldLog.Count == 0)
-        {
-            this.logWindowText.text = "Log\n" + "None\n";
-        }
+        // if (this.worldLog.Count == 0)
+        // {
+        //     this.logWindowText.text = "Log\n" + "None\n";
+        // }
 
         foreach(LogEntry logEntry in this.worldLog)
         {
@@ -192,7 +192,7 @@ public class LogSystem : MonoBehaviour
                     this.enclosedAreaLogs.Add(enclosedArea, new List<LogEntry>());
                 }
 
-                LogEntry newLog = new LogEntry(Time.time.ToString(), $"Terrain changed in enclosed area {enclosedArea.id}");
+                LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"Terrain changed in enclosed area {enclosedArea.id}");
                 this.enclosedAreaLogs[enclosedArea].Add(newLog);
                 this.worldLog.Add(newLog);
 
@@ -208,7 +208,7 @@ public class LogSystem : MonoBehaviour
             this.foodSourceLogs.Add(foodSource, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Time.time.ToString(), $"{foodSource.Species.name} output changed!");
+        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{foodSource.Species.name} output changed!");
         this.foodSourceLogs[foodSource].Add(newLog);
         this.worldLog.Add(newLog);
     }
@@ -222,14 +222,14 @@ public class LogSystem : MonoBehaviour
             this.enclosedAreaLogs.Add(enclosedArea, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Time.time.ToString(), $"Liquid composition changed at enclose area {enclosedArea.id}!");
+        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"Liquid composition changed at enclose area {enclosedArea.id}!");
         this.enclosedAreaLogs[enclosedArea].Add(newLog);
         this.worldLog.Add(newLog);
     }
 
     private void logAtmoesphereChange(EnclosedArea enclosedArea)
     {
-        LogEntry newLog = new LogEntry(Time.time.ToString(), $"Atmospheric composition changed at enclose area {enclosedArea.id}!");
+        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"Atmospheric composition changed at enclose area {enclosedArea.id}!");
 
         if (!this.enclosedAreaLogs.ContainsKey(enclosedArea))
         {
@@ -251,7 +251,7 @@ public class LogSystem : MonoBehaviour
                 this.populationLogs.Add(population, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {population.species.SpeciesName} created!");
+            LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"New {population.species.SpeciesName} created!");
 
             this.populationLogs[population].Add(newLog);
             this.worldLog.Add(newLog);
@@ -265,7 +265,7 @@ public class LogSystem : MonoBehaviour
                 this.foodSourceLogs.Add(foodSource, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Time.time.ToString(), $"New {foodSource.Species.SpeciesName} created!");
+            LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"New {foodSource.Species.SpeciesName} created!");
 
             this.foodSourceLogs[foodSource].Add(newLog);
             this.worldLog.Add(newLog);
@@ -285,7 +285,7 @@ public class LogSystem : MonoBehaviour
                 this.enclosedAreaLogs.Add(enclosedArea, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Time.time.ToString(), $"Enclosed area {enclosedArea.id} created");
+            LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"Enclosed area {enclosedArea.id} created");
 
             this.enclosedAreaLogs[enclosedArea].Add(newLog);
             this.worldLog.Add(newLog);
@@ -299,7 +299,7 @@ public class LogSystem : MonoBehaviour
             this.populationLogs.Add(population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Time.time.ToString(), $"{population.species.SpeciesName} population size increased!");
+        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} population size increased!");
 
         // Store to population log
         this.populationLogs[population].Add(newLog);
@@ -314,7 +314,7 @@ public class LogSystem : MonoBehaviour
             this.populationLogs.Add(population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Time.time.ToString(), $"{population.species.SpeciesName} population size decreased!");
+        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} population size decreased!");
 
         // Store to population log
         this.populationLogs[population].Add(newLog);
@@ -329,7 +329,7 @@ public class LogSystem : MonoBehaviour
             this.populationLogs.Add(population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Time.time.ToString(), $"{population.species.SpeciesName} has gone extinct!");
+        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} has gone extinct!");
 
         this.populationLogs[population].Add(newLog);
         this.worldLog.Add(newLog);

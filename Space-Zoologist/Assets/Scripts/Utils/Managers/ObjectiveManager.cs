@@ -54,6 +54,7 @@ public class ObjectiveManager : MonoBehaviour
 
                     if (this.timer >= this.TargetTime)
                     {
+                        this.status = ObjectiveStatus.Completed;
                         return ObjectiveStatus.Completed;
                     }
                     else
@@ -69,6 +70,7 @@ public class ObjectiveManager : MonoBehaviour
                     this.timer = 0f;
                 }
             }
+            this.status = ObjectiveStatus.InProgress;
             return ObjectiveStatus.InProgress;
         }
     }
@@ -108,9 +110,8 @@ public class ObjectiveManager : MonoBehaviour
     private LevelObjectiveData LevelObjectiveData = default;
 
     private bool isOpen = false;
+    private bool IsGameOver = false;
 
-    // To access the populations 
-    [SerializeField] private PopulationManager populationManager = default;
     // To access the player balance
     [SerializeField] private PlayerBalance playerBalance = default;
     [SerializeField] private PauseManager PauseManager = default;
@@ -137,18 +138,24 @@ public class ObjectiveManager : MonoBehaviour
             {
                 SurvivalObjective survivalObjective = (SurvivalObjective)objective;
                 string population = "population";
-                string min = "minute";
+                string timeLabel = "minute";
+                float targetTime = survivalObjective.TargetTime / 60f;
                 if (survivalObjective.TargetPopulationCount > 1)
                 {
                     population += "s";
                 }
                 if (!(survivalObjective.TargetTime <= 120f))
                 {
-                    min += "s";
+                    timeLabel += "s";
+                }
+                if (survivalObjective.TargetTime < 60f)
+                {
+                    targetTime = survivalObjective.TargetTime;
+                    timeLabel = "seconds";
                 }
                 displayText += $"Maintain at least {survivalObjective.TargetPopulationCount} ";
                 displayText += $"{survivalObjective.AnimalSpecies.SpeciesName} {population} with a count of {survivalObjective.TargetPopulationSize}";
-                displayText += $" for {survivalObjective.TargetTime / 60f} {min} ";
+                displayText += $" for {targetTime} {timeLabel} ";
                 displayText += $"[{survivalObjective.Status.ToString()}] [{Math.Round(survivalObjective.timer, 0)}/{survivalObjective.TargetTime}]\n";
             }
             else if (objective.GetType() == typeof(ResourceObjective))
@@ -198,7 +205,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private void RegisterWithSurvivalObjectives(Population population)
     {
-        //Debug.Log(population.gameObject.name + " attempting to update survivial objective");
+        Debug.Log(population.gameObject.name + " attempting to update survivial objective");
         foreach (Objective objective in this.objectives)
         {
             if (objective.GetType() == typeof(SurvivalObjective))
@@ -236,8 +243,9 @@ public class ObjectiveManager : MonoBehaviour
         }
 
         // All objectives had reach end state
-        if (isAllCompleted)
+        if (isAllCompleted && !this.IsGameOver)
         {
+            this.IsGameOver = true;
             EventManager.Instance.InvokeEvent(EventType.ObjectivesCompleted, null);
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
 

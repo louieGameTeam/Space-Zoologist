@@ -6,6 +6,9 @@ public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] GameObject IngameUI = default;
+    public bool IsInOptionsMenu => gameObject.activeSelf;
+
+
     public void CloseOptionsMenu()
     {
         this.gameObject.SetActive(false);

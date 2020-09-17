@@ -10,18 +10,15 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class Inspector : MonoBehaviour
 {
-    private bool isInInspectorMode = false;
+    public bool IsInInspectorMode { get; private set; }
 
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
-    [SerializeField] private MenuManager MenuManager = default;
 
     [SerializeField] private Tilemap highLight = default;
     [SerializeField] private TerrainTile highLightTile = default;
 
-    // To access other UI elements to toggle
-    [SerializeField] private GameObject HUD = null;
     // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
     [SerializeField] private GameObject itemDropdownMenu = null;
@@ -41,6 +38,7 @@ public class Inspector : MonoBehaviour
 
     private void Start()
     {
+        this.IsInInspectorMode = false;
         this.enclosedAreaDropdown = this.areaDropdownMenu.GetComponent<Dropdown>();
         this.itemsDropdown = this.itemDropdownMenu.GetComponent<Dropdown>();
         this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
@@ -55,7 +53,7 @@ public class Inspector : MonoBehaviour
 
     public void CloseInspector()
     {
-        if (this.isInInspectorMode)
+        if (this.IsInInspectorMode)
         {
             this.inspectorWindow.SetActive(false);
             this.areaDropdownMenu.SetActive(false);
@@ -63,7 +61,7 @@ public class Inspector : MonoBehaviour
             //this.HUD.SetActive(true);
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
-            this.isInInspectorMode = !isInInspectorMode;
+            this.IsInInspectorMode = !IsInInspectorMode;
         }
 
     }
@@ -78,7 +76,7 @@ public class Inspector : MonoBehaviour
         this.itemDropdownMenu.SetActive(true);
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
-        this.isInInspectorMode = !isInInspectorMode;
+        this.IsInInspectorMode = !IsInInspectorMode;
     }
 
     /// <summary>
@@ -86,14 +84,8 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void ToggleInspectMode()
     {
-        // Cannot enter inspector mode while in istore
-        if (this.MenuManager.IsInStore)
-        {
-            return;
-        }
-
         // Toggle button text, displays and pause/free animals
-        if (!this.isInInspectorMode)
+        if (!this.IsInInspectorMode)
         {
             this.OpenInspector();
         }
@@ -102,7 +94,7 @@ public class Inspector : MonoBehaviour
             this.CloseInspector();
         }
 
-        //Debug.Log($"Inspector mode is {this.isInInspectorMode}");
+        //Debug.Log($"Inspector mode is {this.IsInInspectorMode}");
     }
 
     private void UpdateDropdownMenu()
@@ -190,7 +182,7 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        if (this.isInInspectorMode && Input.GetMouseButtonDown(0))
+        if (this.IsInInspectorMode && Input.GetMouseButtonDown(0))
         {
             // Update animal locations
             this.gridSystem.UpdateAnimalCellGrid();
@@ -253,7 +245,7 @@ public class Inspector : MonoBehaviour
             this.enclosedAreaDropdown.value = 0;
             this.itemsDropdown.value = 0;
         }
-        if (this.isInInspectorMode)
+        if (this.IsInInspectorMode)
         {
             if (this.PopulationHighlighted != null)
             {

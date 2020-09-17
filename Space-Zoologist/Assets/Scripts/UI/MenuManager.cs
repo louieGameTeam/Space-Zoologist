@@ -12,7 +12,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] PodMenu PodMenu = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] GameObject PauseButton = default;
-    [SerializeField] GameObject InspectorButton = default;
     [Header("Shared menu dependencies")]
     [SerializeField] PlayerBalance PlayerBalance = default;
     [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
@@ -47,7 +46,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void CloseMenu()
+    public void CloseStore()
     {
         this.StoreToggledOff(this.currentMenu);
     }
@@ -63,7 +62,6 @@ public class MenuManager : MonoBehaviour
         this.PlayerBalanceHUD.SetActive(true);
         this.IsInStore = true;
         this.PauseManager.TryToPause();
-        this.InspectorButton.SetActive(false);
         this.PauseButton.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
     }
@@ -77,7 +75,6 @@ public class MenuManager : MonoBehaviour
             this.PlayerBalanceHUD.SetActive(false);
             this.IsInStore = false;
             this.PauseManager.TryToUnpause();
-            this.InspectorButton.SetActive(true);
             this.PauseButton.SetActive(true);
         }
 

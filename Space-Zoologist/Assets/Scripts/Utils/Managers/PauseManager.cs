@@ -55,6 +55,18 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    public void TogglePause()
+    {
+        if (this.IsPaused)
+        {
+            this.Unpause();
+        }
+        else
+        {
+            this.Pause();
+        }
+    }
+
     public void Pause()
     {
         this.IsPaused = true;
