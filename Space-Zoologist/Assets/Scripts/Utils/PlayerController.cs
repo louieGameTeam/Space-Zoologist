@@ -84,6 +84,8 @@ public class PlayerController : MonoBehaviour
         }
         if (this.CanUseIngameControls)
         {
+            Debug.Log($"CanUseIngameControls");
+
             if (Input.GetKeyDown(KeyCode.I))
             {
                 this.Inspector.ToggleInspectMode();

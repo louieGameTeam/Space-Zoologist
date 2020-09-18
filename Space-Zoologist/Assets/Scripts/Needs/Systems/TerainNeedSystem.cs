@@ -17,6 +17,11 @@ public class TerrainNeedSystem : NeedSystem
     {
         this.rpm = rpm;
         this.tileSystem = tileSystem;
+
+        EventManager.Instance.SubscribeToEvent(EventType.TerrainChange, () =>
+        {
+            this.isDirty = true;
+        });
     }
 
     /// <summary>

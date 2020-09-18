@@ -44,14 +44,13 @@ public class LogSystem : MonoBehaviour
     [SerializeField] private GameObject logWindow = default;
     // Log text
     [SerializeField] private Text logWindowText = default;
-
     [SerializeField] private EnclosureSystem enclosureSystem = default;
 
     private EventManager eventManager;
 
     public void ToggleLog()
     {
-        Debug.Log("open log");
+        //Debug.Log("open log");
 
         this.logWindow.SetActive(!this.isInLogSystem);
         this.isInLogSystem = !this.isInLogSystem;

@@ -1,14 +1,12 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/ObjectiveManager/ObjectiveManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/Objectives/Objective.cs">
     <Files>
-      <File FileName="Assets/Scripts/Species/Population/PopulationManager.cs" Line="100" Column="55" />
-      <File FileName="Assets/Scripts/UI/Store/PlayerBalance.cs" Line="17" Column="39" />
-      <File FileName="Assets/Scripts/Utils/PlayerController.cs" Line="18" Column="35" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="63" Column="6" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="426" Column="14" />
-      <File FileName="Assets/Scripts/GameData/LevelObjectiveData/LevelObjectiveData.cs" Line="31" Column="1" />
-      <File FileName="Assets/Scripts/Utils/Managers/EventManager.cs" Line="15" Column="1" />
-      <File FileName="Assets/Scripts/Utils/ObjectiveManager/ObjectiveManager.cs" Line="6" Column="13" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="130" Column="24" />
+      <File FileName="Assets/Scripts/Utils/Managers/EventManager.cs" Line="56" Column="33" />
+      <File FileName="Assets/Scripts/UI/LogSystem/LogSystem.cs" Line="61" Column="31" />
+      <File FileName="Assets/Scripts/Utils/Managers/ObjectiveManager.cs" Line="7" Column="2" />
+      <File FileName="Assets/Scripts/GameData/LevelObjectiveData/LevelObjectiveData.cs" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Objectives/Objective.cs" Line="137" Column="2" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -22,7 +20,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2a7e9761-d9f1-4a69-bb66-c77d6b2a3a04" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="105" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
