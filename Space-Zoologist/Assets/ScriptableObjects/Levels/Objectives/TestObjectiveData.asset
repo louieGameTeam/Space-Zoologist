@@ -15,6 +15,7 @@ MonoBehaviour:
   survivalObjectiveDatas:
   - targetSpecies: {fileID: 11400000, guid: 5617e9c2071d14ec28c0c33b79360e2c, type: 2}
     targetPopulationCount: 1
-    targetPopulationSize: 5
-    timeRequirement: 30
-  resourceObjectiveDatas: []
+    targetPopulationSize: 6
+    timeRequirement: 60
+  resourceObjectiveDatas:
+  - amountToKeep: 500

@@ -206,10 +206,11 @@ public class Inspector : MonoBehaviour
                 return;
             }
 
+            this.UnHighlightAll();
+
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)
             {
-                this.UnHighlightAll();
                 this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
                 //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
                 this.inspectorWindowDisplayScript.DisplayPopulationStatus(cellData.Animal.GetComponent<Animal>().PopulationInfo);
@@ -217,7 +218,6 @@ public class Inspector : MonoBehaviour
             // Selection is food source or item
             else if (cellData.ContainsFood)
             {
-                this.UnHighlightAll();
                 this.HighlightFoodSource(cellData.Food);
                 //Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
                 this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
@@ -225,7 +225,6 @@ public class Inspector : MonoBehaviour
             // Selection is liquid tile
             else if (tile.type == TileType.Liquid)
             {
-                this.UnHighlightAll();
                 this.HighlightSingleTile(cellPos);
                 //Debug.Log($"Selected liquid tile @ {cellPos}");
                 float[] compositions = this.tileSystem.GetTileContentsAtLocation(cellPos, tile);
@@ -234,7 +233,6 @@ public class Inspector : MonoBehaviour
             // Selection is enclosed area
             else if (tile && tile.type != TileType.Wall)
             {
-                this.UnHighlightAll();
                 this.HighlightEnclosedArea(cellPos);
                 this.enclosureSystem.UpdateEnclosedAreas();
                 this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));

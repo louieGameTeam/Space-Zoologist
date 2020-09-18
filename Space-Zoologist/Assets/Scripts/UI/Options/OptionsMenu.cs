@@ -13,7 +13,7 @@ public class OptionsMenu : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         this.PauseManager.TryToUnpause();
-        this.PauseManager.PauseButton.SetActive(true);
+        //this.PauseManager.PauseButton.SetActive(true);
         this.IngameUI.SetActive(true);
     }
 
@@ -22,7 +22,7 @@ public class OptionsMenu : MonoBehaviour
         this.gameObject.SetActive(true);
         this.IngameUI.SetActive(false);
         this.PauseManager.TryToPause();
-        this.PauseManager.PauseButton.SetActive(true);
+        //this.PauseManager.PauseButton.SetActive(true);
     }
 
     public void ToggleOptionsMenu()
