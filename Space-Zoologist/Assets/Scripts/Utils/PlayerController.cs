@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (!this.MenuManager.IsInStore)
                 {
+                    Debug.Log("Unpause");
                     this.PauseManager.TogglePause();
                 }
             }

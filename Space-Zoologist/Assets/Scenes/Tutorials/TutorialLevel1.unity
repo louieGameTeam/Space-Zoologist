@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -25136,6 +25136,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 339.47464
       objectReference: {fileID: 0}
+    - target: {fileID: 4503815155396814362, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503815156008761626, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503815156008761627, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -292.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503815156008761627, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 4503815156330289286, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -25146,10 +25166,20 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4503815156330289286, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4503815156449324337, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 34.04651
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503815156449324337, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 4661624496759152727, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -25411,6 +25441,11 @@ PrefabInstance:
       propertyPath: tilePlacementController
       value: 
       objectReference: {fileID: 385555446}
+    - target: {fileID: 4661624498312455127, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: NeedSystemManager
+      value: 
+      objectReference: {fileID: 650241541}
     - target: {fileID: 4661624498337314293, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: populationManager
@@ -25681,17 +25716,17 @@ PrefabInstance:
     - target: {fileID: 6582897866667882507, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.83137256
       objectReference: {fileID: 0}
     - target: {fileID: 6582897866667882507, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.6784314
       objectReference: {fileID: 0}
     - target: {fileID: 6582897866667882507, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.06666667
       objectReference: {fileID: 0}
     - target: {fileID: 6640319220829224420, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
