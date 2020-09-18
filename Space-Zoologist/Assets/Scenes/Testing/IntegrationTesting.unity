@@ -43358,6 +43358,16 @@ PrefabInstance:
       propertyPath: TileSystem
       value: 
       objectReference: {fileID: 135368109}
+    - target: {fileID: 4661624496997434316, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: AtmosphereMachineHUD
+      value: 
+      objectReference: {fileID: 4661624498547218927}
+    - target: {fileID: 4661624496997434316, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: LiquidMachineHUD
+      value: 
+      objectReference: {fileID: 4661624498547218926}
     - target: {fileID: 4661624497506075485, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: enclosureSystem
@@ -43571,6 +43581,37 @@ PrefabInstance:
     - target: {fileID: 4661624498449627636, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661624498449627637, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661624498449627637, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661624498449627639, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0038356692de84c18bd68806fe1d099b,
+        type: 3}
+    - target: {fileID: 4661624498449627639, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661624498449627639, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661624498449627639, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4680055085196290755, guid: 71886a6858e6a442fa66e2dbc551db8a,

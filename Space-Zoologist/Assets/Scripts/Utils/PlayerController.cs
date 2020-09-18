@@ -53,13 +53,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
         this.CanUseIngameControls = !this.OptionsMenu.gameObject.activeSelf;
-        foreach(KeyValuePair<KeyCode, GameObject> keyBinding in this.StoreBindings)
-        {
-            if (Input.GetKeyDown(keyBinding.Key))
-            {
-                this.MenuManager.OnToggleMenu(keyBinding.Value);
-            }
-        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (this.MenuManager.IsInStore)
@@ -84,8 +77,6 @@ public class PlayerController : MonoBehaviour
         }
         if (this.CanUseIngameControls)
         {
-            Debug.Log($"CanUseIngameControls");
-
             if (Input.GetKeyDown(KeyCode.I))
             {
                 this.Inspector.ToggleInspectMode();
@@ -104,6 +95,13 @@ public class PlayerController : MonoBehaviour
                 {
                     Debug.Log("Unpause");
                     this.PauseManager.TogglePause();
+                }
+            }
+            foreach(KeyValuePair<KeyCode, GameObject> keyBinding in this.StoreBindings)
+            {
+                if (Input.GetKeyDown(keyBinding.Key))
+                {
+                    this.MenuManager.OnToggleMenu(keyBinding.Value);
                 }
             }
         }

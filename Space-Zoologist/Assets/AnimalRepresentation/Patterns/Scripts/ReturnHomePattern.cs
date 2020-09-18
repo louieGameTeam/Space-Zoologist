@@ -10,7 +10,7 @@ public class ReturnHomePattern : BehaviorPattern
         int locationIndex = this.random.Next(0, AnimalsToAnimalData[gameObject].animal.PopulationInfo.AccessibleLocations.Count);
         Vector3Int start = base.GridSystem.Grid.WorldToCell(gameObject.transform.position);
         Vector3Int end = base.GridSystem.Grid.WorldToCell(AnimalsToAnimalData[gameObject].animal.PopulationInfo.transform.position);
-        Debug.Log("Attempting to pathfind to : " + AnimalsToAnimalData[gameObject].animal.PopulationInfo.transform.position.x + ", " + AnimalsToAnimalData[gameObject].animal.PopulationInfo.transform.position.y);
+        // Debug.Log("Attempting to pathfind to : " + AnimalsToAnimalData[gameObject].animal.PopulationInfo.transform.position.x + ", " + AnimalsToAnimalData[gameObject].animal.PopulationInfo.transform.position.y);
         AnimalPathfinding.PathRequestManager.RequestPath(start, end, AnimalsToAnimalData[gameObject].animal.MovementController.AssignPath, AnimalsToAnimalData[gameObject].animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
