@@ -24,6 +24,8 @@ public class Population : MonoBehaviour, Life
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
     public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
+    private float animatorSpeed = 0f;
+    private float overlaySpeed = 0f;
 
     [Expandable] public AnimalSpecies species = default;
     [SerializeField] private GameObject AnimalPrefab = default;
@@ -154,6 +156,18 @@ public class Population : MonoBehaviour, Life
         foreach(GameObject animal in this.AnimalPopulation)
         {
             this.isPaused = true;
+            Animator animator = animal.GetComponent<Animator>();
+            Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
+            if (animator.speed != 0)
+            {
+                this.animatorSpeed = animator.speed;
+            }
+            if (overlay.speed != 0)
+            {
+                this.overlaySpeed = overlay.speed;
+            }
+            animator.speed = 0;
+            overlay.speed = 0;
             animal.GetComponent<MovementController>().IsPaused = true;
             animal.GetComponent<MovementController>().TryToCancelDestination();
         }
@@ -164,6 +178,10 @@ public class Population : MonoBehaviour, Life
         foreach(GameObject animal in this.AnimalPopulation)
         {
             this.isPaused = false;
+            Animator animator = animal.GetComponent<Animator>();
+            Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
+            animator.speed = this.animatorSpeed;
+            overlay.speed = this.overlaySpeed;
             animal.GetComponent<MovementController>().IsPaused = false;
         }
     }

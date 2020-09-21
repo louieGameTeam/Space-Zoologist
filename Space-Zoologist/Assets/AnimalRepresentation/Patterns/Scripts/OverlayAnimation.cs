@@ -2,22 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UniversalAnimatorPattern : BehaviorPattern
+public class OverlayAnimation : BehaviorPattern
 {
     public string AnimatorTriggerName;
     private Dictionary<GameObject, AnimatorData> animalToAnimatorData = new Dictionary<GameObject, AnimatorData>();
-    [SerializeField] protected bool OverlayAnimation;
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
         animalToAnimatorData.Add(animal, new AnimatorData());
-        if (OverlayAnimation)
-        {
-            animalToAnimatorData[animal].animator = animal.transform.GetChild(0).GetComponent<Animator>();
-        }
-        else
-        {
-            animalToAnimatorData[animal].animator = animal.GetComponent<Animator>();
-        }
+        animalToAnimatorData[animal].animator = animal.transform.GetChild(0).GetComponent<Animator>();
         if (animalToAnimatorData[animal].animator.layerCount != 1)
         {
             if (animalToAnimatorData[animal].animator.GetLayerIndex(AnimatorTriggerName) != -1)
@@ -37,11 +29,10 @@ public class UniversalAnimatorPattern : BehaviorPattern
         }
         return false;
     }
-    protected override void ExitPattern(GameObject animal, bool callCallback)
+    protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
-        animal.transform.GetChild(0).transform.localPosition = new Vector3(0, 1, 0); // reset position of the overlay if being modified by animation
-        animalToAnimatorData[animal].animator.SetBool("IsStateFinished", true);
-        animalToAnimatorData.Remove(animal);
-        base.ExitPattern(animal, callCallback);
+        animalToAnimatorData[gameObject].animator.SetBool("IsStateFinished", true);
+        animalToAnimatorData.Remove(gameObject);
+        base.ExitPattern(gameObject, callCallback);
     }
 }

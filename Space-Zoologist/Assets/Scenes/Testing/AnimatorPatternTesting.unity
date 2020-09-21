@@ -15486,11 +15486,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 821317561}
     m_Modifications:
-    - target: {fileID: 831146171819180491, guid: c072b4d6d32e2478dab3b3b2ace40048,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4839607305319048992, guid: c072b4d6d32e2478dab3b3b2ace40048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15550,26 +15545,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Animal
-      objectReference: {fileID: 0}
-    - target: {fileID: 4839607305319048995, guid: c072b4d6d32e2478dab3b3b2ace40048,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
-    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.96875
-      objectReference: {fileID: 0}
-    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.8125
-      objectReference: {fileID: 0}
-    - target: {fileID: 4839607305319048997, guid: c072b4d6d32e2478dab3b3b2ace40048,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
@@ -15959,6 +15934,7 @@ GameObject:
   - component: {fileID: 1327452906}
   - component: {fileID: 1327452905}
   - component: {fileID: 1327452904}
+  - component: {fileID: 1327452907}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -16082,6 +16058,25 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327452901}
   m_Enabled: 1
+--- !u!95 &1327452907
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327452901}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dc66489c7966d484fbe01b1427d6c969, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1359862849
 PrefabInstance:
   m_ObjectHideFlags: 0

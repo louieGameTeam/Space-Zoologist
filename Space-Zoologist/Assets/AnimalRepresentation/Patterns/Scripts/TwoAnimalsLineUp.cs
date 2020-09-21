@@ -23,7 +23,12 @@ public class TwoAnimalsLineUp : BehaviorPattern
         {
             float distanceBetweenAnimals = animalData.collaboratingAnimals[0].transform.position.x - animal.transform.position.x;
             // Seems to be the best distance
-            if (!(distanceBetweenAnimals <= 1f && distanceBetweenAnimals >= .9f))
+            if (distanceBetweenAnimals >= 1f)
+            {
+                animalData.animal.MovementController.ForceMoveInDirection(Direction.right);
+                isLinedUp = false;
+            }
+            else if (distanceBetweenAnimals <= .9f)
             {
                 animalData.animal.MovementController.ForceMoveInDirection(Direction.left);
                 isLinedUp = false;
@@ -32,7 +37,12 @@ public class TwoAnimalsLineUp : BehaviorPattern
         else if (animal.transform.position.x >= animalData.collaboratingAnimals[0].transform.position.x)
         {
             float distanceBetweenAnimals = animal.transform.position.x - animalData.collaboratingAnimals[0].transform.position.x;
-            if (!(distanceBetweenAnimals <= 1f && distanceBetweenAnimals >= .9f))
+            if (distanceBetweenAnimals >= 1f)
+            {
+                animalData.animal.MovementController.ForceMoveInDirection(Direction.left);
+                isLinedUp = false;
+            }
+            else if (distanceBetweenAnimals <= .9f)
             {
                 animalData.animal.MovementController.ForceMoveInDirection(Direction.right);
                 isLinedUp = false;

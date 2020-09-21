@@ -26,11 +26,11 @@ public class LinearColorChangePattern : TimedPattern
         animal.GetComponent<SpriteRenderer>().color = currentColor;
         return base.IsPatternFinishedAfterUpdate(animal, animalData);
     }
-    protected override void ExitPattern(GameObject gameObject)
+    protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
         gameObject.GetComponent<SpriteRenderer>().color = animalsToOriginalColors[gameObject];
         animalsToOriginalColors.Remove(gameObject);
-        base.ExitPattern(gameObject);
+        base.ExitPattern(gameObject, callCallback);
     }
     private float Clamp(float f)
     {

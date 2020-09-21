@@ -8506,6 +8506,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Animal
       objectReference: {fileID: 0}
+    - target: {fileID: 4839607305319048995, guid: c072b4d6d32e2478dab3b3b2ace40048,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ad77c56e1ef548e4997efb390d64f866, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c072b4d6d32e2478dab3b3b2ace40048, type: 3}
 --- !u!4 &842598257 stripped
@@ -16073,6 +16078,51 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1976033647}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1983260930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983260932}
+  - component: {fileID: 1983260931}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1983260931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983260930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e6e4e14cb06f84aa7ae059f148afeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimatorTriggerName: zzz
+  AnimatorLayerName: 
+--- !u!4 &1983260932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983260930}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.06451, y: 8.499771, z: -1.3249513}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1984116213
 GameObject:
   m_ObjectHideFlags: 0
@@ -19120,7 +19170,7 @@ PrefabInstance:
     - target: {fileID: 3745036016585126943, guid: 2abc5325e8e77485fb11fe6688a1a95c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -421.0005
+      value: -421
       objectReference: {fileID: 0}
     - target: {fileID: 3745036016585126943, guid: 2abc5325e8e77485fb11fe6688a1a95c,
         type: 3}

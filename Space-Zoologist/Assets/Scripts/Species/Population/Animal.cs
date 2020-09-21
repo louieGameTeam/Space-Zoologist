@@ -9,9 +9,11 @@ public class Animal : MonoBehaviour
     public Population PopulationInfo { get; private set; }
     private Animator Animator = null;
     public MovementController MovementController {get; set; }
+    private Vector3 lastPos;
 
     public void Start()
     {
+        lastPos = this.gameObject.transform.position;
         if (!this.gameObject.TryGetComponent(out this.Animator))
         {
             this.Animator = null;
@@ -28,6 +30,21 @@ public class Animal : MonoBehaviour
 
     void LateUpdate()
     {
+        float velocity = this.PythagoreanTheorem(lastPos, this.gameObject.transform.position) / Time.deltaTime;
+        lastPos = this.gameObject.transform.position;
+        if (velocity < 0.01f)
+        {
+            this.MovementData.MovementStatus = Movement.idle;
+            this.UpdateAnimations();
+            return;
+        }
+        if (velocity > MovementData.RunThreshold)
+        {
+            this.MovementData.MovementStatus = Movement.running;
+            this.UpdateAnimations();
+            return;
+        }
+        this.MovementData.MovementStatus = Movement.walking;
         this.UpdateAnimations();
     }
 
@@ -55,5 +72,11 @@ public class Animal : MonoBehaviour
     public void SetAnimatorFloat(string floatName, float value)
     {
         Animator.SetFloat(floatName, value);
+    }
+    private float PythagoreanTheorem(Vector3 v1, Vector3 v2)
+    {
+        float distx = Mathf.Abs(v1.x - v2.x);
+        float disty = Mathf.Abs(v1.y - v2.y);
+        return Mathf.Sqrt(distx * distx + disty * disty);
     }
 }

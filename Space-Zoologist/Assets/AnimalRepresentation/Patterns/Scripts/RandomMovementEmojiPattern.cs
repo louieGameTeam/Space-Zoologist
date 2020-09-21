@@ -10,9 +10,10 @@ public class RandomMovementEmojiPattern : BehaviorPattern
     {
         int locationIndex = this.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
         Vector3Int end = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+        gameObject.transform.GetChild(0).GetComponent<Animator>().enabled = false;
         animalData.animal.Overlay.sprite = Emoji;
         // Debug.Log("Overlay ENABLED");
-        animalData.animal.Overlay.enabled = true;
+        //animalData.animal.Overlay.enabled = true;
         AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
@@ -26,7 +27,6 @@ public class RandomMovementEmojiPattern : BehaviorPattern
             animalData.animal.MovementController.MoveTowardsDestination();
             if (animalData.animal.MovementController.DestinationReached)
             {
-                animalData.animal.Overlay.enabled = false;
                 return true;
             }
         }
@@ -39,11 +39,16 @@ public class RandomMovementEmojiPattern : BehaviorPattern
         {
             if (animalData.animal.MovementController.DestinationCancelled)
             {
-                animalData.animal.Overlay.enabled = false;
                 return true;
             }
         }
         return false;
+    }
+    protected override void ExitPattern(GameObject gameObject, bool callCallback = true)
+    {
+        gameObject.transform.GetChild(0).GetComponent<Animator>().enabled = true;
+        //AnimalsToAnimalData[gameObject].animal.Overlay.enabled = false;
+        base.ExitPattern(gameObject, callCallback);
     }
 
     // protected override void ForceExit(GameObject gameObject)

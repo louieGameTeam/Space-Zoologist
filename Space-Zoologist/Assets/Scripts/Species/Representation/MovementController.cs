@@ -234,7 +234,7 @@ public class MovementController : MonoBehaviour
 
     public void UpdateVisualLogic(Vector3 destination)
     {
-        this.HandleDirectionChange(this.transform.position, destination);
+        this.HandleDirectionChange(this.transform.position, destination);/*
         if (this.CalculateSpeed() > this.Animal.MovementData.RunThreshold)
         {
             this.Animal.MovementData.MovementStatus = Movement.running;
@@ -242,7 +242,7 @@ public class MovementController : MonoBehaviour
         else
         {
             this.Animal.MovementData.MovementStatus = Movement.walking;
-        }
+        }*/
     }
     // Can be modified for different angles of direction change
     private void HandleDirectionChange(Vector3 currentPosition, Vector3 nextTile)

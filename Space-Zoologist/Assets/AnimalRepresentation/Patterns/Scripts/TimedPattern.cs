@@ -5,8 +5,8 @@ using UnityEngine;
 // TODO 1 figure out how to inject GridSystem dependency for WorldToCell and
 public class TimedPattern : BehaviorPattern
 {
-    private Dictionary<GameObject,float> AnimalToTimeElapsed = new Dictionary<GameObject, float>();
-    [SerializeField]private float ExitTime = 0f;
+    protected Dictionary<GameObject,float> AnimalToTimeElapsed = new Dictionary<GameObject, float>();
+    [SerializeField] protected float ExitTime = 0f;
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
@@ -22,9 +22,9 @@ public class TimedPattern : BehaviorPattern
         this.AnimalToTimeElapsed[animal] += Time.deltaTime;
         return false;
     }
-    protected override void ExitPattern(GameObject gameObject)
+    protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
         this.AnimalToTimeElapsed.Remove(gameObject);
-        base.ExitPattern(gameObject);
+        base.ExitPattern(gameObject, callCallback);
     }
 }

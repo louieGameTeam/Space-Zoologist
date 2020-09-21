@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rotate
   m_EditorClassIdentifier: 
   behaviorData:
-    behaviorName: Rotate
+    behaviorName: GeneralBehavior
     behaviorTypes: 05000000
     priority: 2
   maxAffectedNumber: 2
@@ -22,4 +22,4 @@ MonoBehaviour:
   behaviorPatterns:
   - {fileID: 6849925649694488978, guid: 9a4eab84ddfd0d24cb9b8367e07a241b, type: 3}
   refreshPeriod: 3
-  elapsedTime: 0
+  elapsedTime: 0.95960253

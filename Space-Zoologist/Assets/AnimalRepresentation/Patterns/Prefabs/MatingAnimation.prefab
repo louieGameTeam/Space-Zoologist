@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 87448024633276245}
-  - component: {fileID: 87448024633276244}
+  - component: {fileID: 8365617925604230118}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MatingAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &87448024633276244
+--- !u!114 &8365617925604230118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimatorTriggerName: heart
-  AnimatorLayerName: Overlay
+  OverlayAnimation: 1
