@@ -9,12 +9,11 @@ public class Animal : MonoBehaviour
     public Population PopulationInfo { get; private set; }
     private Animator Animator = null;
     public MovementController MovementController {get; set; }
+    private AnimalBehaviorManager AnimalBehaviorManager = default;
     private Vector3 lastPos;
-
     public void Start()
     {
         lastPos = this.gameObject.transform.position;
-        private AnimalBehaviorManager AnimalBehaviorManager = default;
         this.AnimalBehaviorManager = this.GetComponent<AnimalBehaviorManager>();
         if (!this.gameObject.TryGetComponent(out this.Animator))
         {
