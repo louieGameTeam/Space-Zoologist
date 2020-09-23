@@ -12,7 +12,7 @@ public class TileSystem : MonoBehaviour
     private Grid grid;
 
     public bool HasTerrainChanged = false;
-    public List<Vector3Int> chagnedTiles = new List<Vector3Int>();
+    public List<Vector3Int> changedTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTilesAndContents = new List<Vector3Int>();
 
@@ -31,6 +31,22 @@ public class TileSystem : MonoBehaviour
         {
             tilemaps.Add(pair.Key);
         }
+    }
+
+    private void Start()
+    {
+        EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
+        {
+            this.changedTiles.Clear();
+        });
+
+        EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
+        {
+            // Invoke event and pass the changed tiles that are not walls
+            EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.changedTiles.FindAll(
+                pos => this.GetTerrainTileAtLocation(pos).type != TileType.Wall
+            ));
+        });
     }
 
     /// <summary>
@@ -88,6 +104,8 @@ public class TileSystem : MonoBehaviour
 
         RefreshTilemapColor(terrainTile.targetTilemap);
 
+        // Invoke event
+        EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellLocation);
     }
     private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
     {
@@ -362,6 +380,35 @@ public class TileSystem : MonoBehaviour
     }
 
     /// <summary>
+    /// Return all cell locations within a range from a center point
+    /// </summary>
+    /// <param name="centerCellLocation">Starting center point</param>
+    /// <param name="scanRange">search radius</param>
+    /// <returns></returns>
+    /// TODO not working, don't use until fixed
+    public List<Vector3Int> AllCellLocationsinRange(Vector3Int centerCellLocation, int scanRange)
+    {
+        List<Vector3Int> tileLocations = new List<Vector3Int>();
+        Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
+        foreach (int x in GridUtils.Range(-scanRange, scanRange))
+        {
+            foreach (int y in GridUtils.Range(-scanRange, scanRange))
+            {
+                float distance = Mathf.Sqrt(x * x + y * y);
+                if (distance > scanRange)
+                {
+                    continue;
+                }
+                scanLocation.x = x + centerCellLocation.x;
+                scanLocation.y = y + centerCellLocation.y;
+                tileLocations.Add(scanLocation);
+            }
+        }
+        return tileLocations;
+    }
+
+
+    /// <summary>
     /// Returns a list of locations of all tiles in a certain range
     /// </summary>
     /// <param name="centerCellLocation">The cell location to calculate range from</param>
@@ -373,9 +420,9 @@ public class TileSystem : MonoBehaviour
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(centerCellLocation.x - scanRange, centerCellLocation.x + scanRange))
+        foreach (int x in GridUtils.Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(centerCellLocation.y - scanRange, centerCellLocation.y + scanRange))
+            foreach (int y in GridUtils.Range(-scanRange, scanRange))
             {
                 if (isCircleMode)
                 {
@@ -385,8 +432,8 @@ public class TileSystem : MonoBehaviour
                         continue;
                     }
                 }
-                scanLocation.x = x;
-                scanLocation.y = y;
+                scanLocation.x = x + centerCellLocation.x;
+                scanLocation.y = y + centerCellLocation.y;
                 if (GetTerrainTileAtLocation(scanLocation) == tile)
                 {
                     tileLocations.Add(scanLocation);

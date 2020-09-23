@@ -6,11 +6,11 @@ public class BehaviorPatternUpdater : MonoBehaviour
 {
     [SerializeField] GridSystem GridSystem = default;
     public List<BehaviorPattern> behaviorPatterns = new List<BehaviorPattern>();
-    public bool isPaused = false;
+    public bool IsPaused = false;
     // TODO manage pause for all behaviors
     void Update()
     {
-        if (isPaused)
+        if (this.IsPaused)
         {
             return;
         }

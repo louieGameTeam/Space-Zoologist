@@ -16,10 +16,10 @@ MonoBehaviour:
   speciesName: Goat
   dominance: 1
   growthRate: 40
-  range: 0
+  range: 8
   size: 0
   accessibleTerrain: 010000000200000003000000
-  icon: {fileID: 0}
+  icon: {fileID: -1296245202944232447, guid: ba8959004e2214039b2342159c577ea2, type: 3}
   needsList:
   - needType: 0
     needs:
@@ -31,7 +31,7 @@ MonoBehaviour:
       - Condition: 2
         Behavior: {fileID: 11400000, guid: 9d9ceb9fa4c3d4c20a66b481424e6599, type: 2}
       thresholds:
-      - 100
+      - 20
     - needName: Dirt
       severity: 1
       conditions:
@@ -40,7 +40,7 @@ MonoBehaviour:
       - Condition: 2
         Behavior: {fileID: 11400000, guid: 95fc5e732f58d480997bdb4351536e6d, type: 2}
       thresholds:
-      - 175
+      - 10
   - needType: 3
     needs:
     - needName: Space Maple

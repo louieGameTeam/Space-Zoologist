@@ -14,6 +14,8 @@ public class Animal : MonoBehaviour
     public void Start()
     {
         lastPos = this.gameObject.transform.position;
+        private AnimalBehaviorManager AnimalBehaviorManager = default;
+        this.AnimalBehaviorManager = this.GetComponent<AnimalBehaviorManager>();
         if (!this.gameObject.TryGetComponent(out this.Animator))
         {
             this.Animator = null;
@@ -46,6 +48,10 @@ public class Animal : MonoBehaviour
         }
         this.MovementData.MovementStatus = Movement.walking;
         this.UpdateAnimations();
+        if (this.AnimalBehaviorManager.activeBehaviorPatterns.Count == 0)
+        {
+            this.MovementData.MovementStatus = Movement.idle;
+        }
     }
 
     public void UpdateAnimations()

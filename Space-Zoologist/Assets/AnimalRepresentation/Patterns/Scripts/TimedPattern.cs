@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO 1 figure out how to inject GridSystem dependency for WorldToCell and
 public class TimedPattern : BehaviorPattern
 {
     protected Dictionary<GameObject,float> AnimalToTimeElapsed = new Dictionary<GameObject, float>();
@@ -11,6 +10,7 @@ public class TimedPattern : BehaviorPattern
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         this.AnimalToTimeElapsed.Add(gameObject, 0);
+        animalData.animal.MovementData.MovementStatus = Movement.idle;
     }
     // Default behavior moves along a random path
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)

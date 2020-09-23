@@ -156,7 +156,7 @@ public class TilePlacementController : MonoBehaviour
 
         // Set terrain modified flag
         this.TileSystem.HasTerrainChanged = true;
-        this.TileSystem.chagnedTiles.AddRange(addedTiles.Keys.ToList());
+        this.TileSystem.changedTiles.AddRange(addedTiles.Keys.ToList());
 
         // Clear all dics
         referencedTiles.Clear();
@@ -529,6 +529,10 @@ public class TilePlacementController : MonoBehaviour
     }
     private bool IsTileFree(Vector3Int cellLocation)
     {
+        if (!GridSystem.IsWithinGridBouds(cellLocation))
+        {
+            return false;
+        }
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
         return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
     }

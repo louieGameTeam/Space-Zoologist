@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AtmosphereMachine : MonoBehaviour
 {
@@ -21,7 +22,11 @@ public class AtmosphereMachine : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!this.AtmosphereHUDGameObject.activeSelf) this.OpenHUD();
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        if (!this.AtmosphereHUDGameObject.activeSelf && results.Count == 0) this.OpenHUD();
     }
 
     public void OpenHUD()

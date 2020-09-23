@@ -9,7 +9,10 @@ public class LinearColorChangePattern : TimedPattern
     protected Dictionary<GameObject, Color> animalsToOriginalColors = new Dictionary<GameObject, Color>();
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        animalsToOriginalColors.Add(gameObject, gameObject.GetComponent<SpriteRenderer>().color);
+        if (!animalsToOriginalColors.ContainsKey(gameObject))
+        {
+            animalsToOriginalColors.Add(gameObject, gameObject.GetComponent<SpriteRenderer>().color);
+        }
         base.EnterPattern(gameObject, animalData);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
@@ -28,7 +31,7 @@ public class LinearColorChangePattern : TimedPattern
     }
     protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
-        gameObject.GetComponent<SpriteRenderer>().color = animalsToOriginalColors[gameObject];
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         animalsToOriginalColors.Remove(gameObject);
         base.ExitPattern(gameObject, callCallback);
     }

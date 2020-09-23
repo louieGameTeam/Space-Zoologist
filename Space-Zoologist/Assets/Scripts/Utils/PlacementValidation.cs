@@ -89,11 +89,6 @@ public class PlacementValidation : MonoBehaviour
         // else food item so make sure terrain is good
         else
         {
-            foreach(var foodData in this.FoodReferenceData.FoodSources)
-            {
-                Debug.Log(foodData.Key);
-            }
-            Debug.Log(selectedItem.ID);
             foreach (TileType acceptablTerrain in this.FoodReferenceData.FoodSources[selectedItem.ID].AccessibleTerrain)
             {
                 if (selectedTile.type.Equals(acceptablTerrain))
@@ -107,6 +102,6 @@ public class PlacementValidation : MonoBehaviour
 
     public bool IsInMapBounds(Vector3Int mousePosition)
     {
-        return mousePosition.x > 1 && mousePosition.y > 1 && mousePosition.x < LevelDataReference.MapWidth - 1 && mousePosition.y < LevelDataReference.MapHeight - 1;
+        return mousePosition.x >= 1 && mousePosition.y >= 1 && mousePosition.x < LevelDataReference.MapWidth - 1 && mousePosition.y < LevelDataReference.MapHeight - 1;
     }
 }

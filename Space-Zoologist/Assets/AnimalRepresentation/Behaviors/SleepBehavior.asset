@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   behaviorData:
     behaviorName: SleepBehavior
-    behaviorTypes: 0100000003000000
-    priority: 1
+    behaviorTypes: 01000000
+    priority: 0
   maxAffectedNumber: 4
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 1
   behaviorPatterns:
   - {fileID: -8053879978465708094, guid: 068f1325df2064a2c8f6dc31f6c5ef2d, type: 3}
-  - {fileID: 7232293891930065329, guid: 7da859d39f2384ac78d9885d1d154c7f, type: 3}
-  refreshPeriod: 2
-  elapsedTime: 0.93617094
+  - {fileID: -2105241463854920350, guid: 7da859d39f2384ac78d9885d1d154c7f, type: 3}
+  refreshPeriod: 10
+  elapsedTime: 10.887097

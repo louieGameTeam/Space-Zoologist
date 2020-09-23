@@ -37,6 +37,22 @@ public class PopulationManager : MonoBehaviour
         this.NeedSystemManager.UpdateAllSystems();
     }
 
+    public void PauseAllAnimals()
+    {
+        foreach (Population population in this.Populations)
+        {
+            population.PauseAnimalsMovementController();
+        }
+    }
+
+    public void UnpauseAllAnimals()
+    {
+        foreach (Population population in this.Populations)
+        {
+            population.UnpauseAnimalsMovementController();
+        }
+    }
+
     /// <summary>
     /// Create a new population of the given species at the given position.
     /// </summary>
@@ -53,6 +69,8 @@ public class PopulationManager : MonoBehaviour
         population.InitializeNewPopulation(species, position, count);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
+
+        EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
 
     /// <summary>
@@ -82,6 +100,7 @@ public class PopulationManager : MonoBehaviour
         this.HandlePopulationRegistration(population);
         this.GridSystem.UnhighlightHomeLocations();
         population.InitializeExistingAnimals();
+        EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
 
     // Registers the population with all all of the systems that care about it
@@ -103,5 +122,30 @@ public class PopulationManager : MonoBehaviour
         {
             population.UpdatePopulationStateForChecking();
         }
+    }
+
+    public void UpdateAccessibleLocations()
+    {
+        this.NeedSystemManager.UpdateAccessMap();
+        foreach (Population population in this.Populations)
+        {
+            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
+            GridSystem.GetGridWithAccess(population));
+        }
+    }
+
+    public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)
+    {
+        List<Population> populations = new List<Population>();
+
+        foreach(Population population in this.ExistingPopulations)
+        {
+            if (population.species == animalSpecies)
+            {
+                populations.Add(population);
+            }
+        }
+
+        return populations;
     }
 }

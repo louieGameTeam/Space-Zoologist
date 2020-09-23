@@ -6,9 +6,16 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] Inspector Inspector = default;
+    [SerializeField] LogSystem LogSystem = default;
+    [SerializeField] ObjectiveManager ObjectiveManager = default;
+    [SerializeField] OptionsMenu OptionsMenu = default;
+    [SerializeField] PauseManager PauseManager = default;
+    [Tooltip("Binds to numbers in order of list (Element 0 -> 1, Element 1 -> 2, etc.")]
     [SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] List<GameObject> MachineHUDs = default;
     private Dictionary<KeyCode, GameObject> StoreBindings = new Dictionary<KeyCode, GameObject>();
+    private bool CanUseIngameControls = true;
+    private bool GameOver = false;
 
     private void Awake()
     {
@@ -34,18 +41,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        EventManager.Instance.SubscribeToEvent(EventType.GameOver, this.UpdateGameOver);
+    }
+
     private void Update()
     {
-        foreach(KeyValuePair<KeyCode, GameObject> keyBinding in this.StoreBindings)
+        if (this.GameOver)
         {
-            if (Input.GetKeyDown(keyBinding.Key))
-            {
-                this.MenuManager.OnToggleMenu(keyBinding.Value);
-            }
+            return;
         }
+        this.CanUseIngameControls = !this.OptionsMenu.gameObject.activeSelf;
         if (Input.GetKeyDown(KeyCode.E))
         {
-            this.MenuManager.CloseMenu();
+            if (this.MenuManager.IsInStore)
+            {
+                this.MenuManager.CloseStore();
+            }
+            else if (this.Inspector.IsInInspectorMode)
+            {
+                this.Inspector.CloseInspector();
+            }
+            else if (this.OptionsMenu.IsInOptionsMenu)
+            {
+                this.OptionsMenu.CloseOptionsMenu();
+            }
             foreach(GameObject machineHUD in this.MachineHUDs)
             {
                 if (machineHUD.activeSelf)
@@ -54,9 +75,44 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (this.CanUseIngameControls)
         {
-            this.Inspector.ToggleInspectMode();
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                this.Inspector.ToggleInspectMode();
+            }
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                this.LogSystem.ToggleLog();
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                this.ObjectiveManager.ToggleObjectivePanel();
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!this.MenuManager.IsInStore)
+                {
+                    Debug.Log("Unpause");
+                    this.PauseManager.TogglePause();
+                }
+            }
+            foreach(KeyValuePair<KeyCode, GameObject> keyBinding in this.StoreBindings)
+            {
+                if (Input.GetKeyDown(keyBinding.Key))
+                {
+                    this.MenuManager.OnToggleMenu(keyBinding.Value);
+                }
+            }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.OptionsMenu.ToggleOptionsMenu();
+        }
+    }
+
+    private void UpdateGameOver()
+    {
+        this.GameOver = true;
     }
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class DrinkingPattern : UniversalAnimatorPattern
 {
-    [SerializeField] private string Up;
-    [SerializeField] private string Down;
-    [SerializeField] private string Left;
-    [SerializeField] private string Right;
-    [SerializeField] private TerrainTile liquidTile;
-    private TileSystem tileSystem;
+    [SerializeField] private string Up = default;
+    [SerializeField] private string Down = default;
+    [SerializeField] private string Left = default;
+    [SerializeField] private string Right = default;
+    [SerializeField] private TerrainTile liquidTile = default;
+    private TileSystem tileSystem = default;
     public override void StartUp()
     {
         tileSystem = FindObjectOfType<TileSystem>();

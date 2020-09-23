@@ -56,17 +56,31 @@ public class MovementController : MonoBehaviour
         }
         this.PathToDestination = pathToDestination;
         this.NextPathTile = new Vector3(this.PathToDestination[0].x + 0.5f, this.PathToDestination[0].y + 0.5f, 0);
-        this.DestinationReached = false;
-        this.DestinationCancelled = false;
-        this.PathIndex = 0;
+        this.ResetPathfindingConditions();
         this.UpdateVisualLogic(this.NextPathTile);
         this.CalculateSpeed();
         this.HasPath = true;
+        // Debug.Log(gameObject.name + " path assigned");
+        // foreach(Vector3 pathTile in pathToDestination)
+        // {
+        //     Debug.Log(pathTile.x + ", " + pathTile.y);
+        // }
+    }
+
+    public void ResetPathfindingConditions()
+    {
+        this.DestinationReached = false;
+        this.DestinationCancelled = false;
+        this.PathIndex = 0;
+        this.HasPath = false;
     }
 
     public void TryToCancelDestination()
     {
-        if (this.HasPath) this.DestinationCancelled = true;
+        if (this.HasPath)
+        {
+            this.DestinationCancelled = true;
+        }
     }
 
     /// <summary>

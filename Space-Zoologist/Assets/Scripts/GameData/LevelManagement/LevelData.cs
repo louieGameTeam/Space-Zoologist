@@ -17,6 +17,7 @@ public class LevelData : ScriptableObject
     [SerializeField] public float startingBalance = default;
     [SerializeField] public int MapWidth = default;
     [SerializeField] public int MapHeight = default;
+    [Expandable] public LevelObjectiveData LevelObjectiveData = default;
     [Expandable] public List<FoodSourceSpecies> foodSources = default;
     [Expandable] public List<AnimalSpecies> animalSpecies = default;
     [Expandable] public List<Item> items = default;

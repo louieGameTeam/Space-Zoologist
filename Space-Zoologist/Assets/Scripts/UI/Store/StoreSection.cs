@@ -86,10 +86,6 @@ public class StoreSection : MonoBehaviour
         {
             OnItemSelectionCanceled();
         }
-        else
-        {
-            this.playerBalance.SubtractFromBalance(selectedItem.Price);
-        }
     }
 
     public bool CanAfford(Item item)

@@ -19,6 +19,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     private float refreshPeriod = 3;
     [SerializeField]
     private float elapsedTime = 0;
+
     /// <summary>
     /// Called every refreshPeriod
     /// </summary>
@@ -26,6 +27,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
     public void EnterBehavior(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
     {
         // TODO modularize initialization one
+        // Debug.Log(behaviorPatterns[0].gameObject.name + " entered");
         behaviorData.behaviorName = this.GetType().ToString();
         behaviorData.ForceExitCallback = OnForceExit;
         stepCompletedCallback = OnStepCompleted; // Setup Callback
@@ -35,6 +37,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
         {
             if (avalabilityToAnimals[Availability.Override].Contains(animal))
             {
+                Debug.Log("Force exiting");
                 animal.GetComponent<AnimalBehaviorManager>().ForceExit();
             }
         }

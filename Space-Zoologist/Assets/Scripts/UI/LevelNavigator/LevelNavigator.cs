@@ -23,7 +23,7 @@ public class LevelNavigator : MonoBehaviour
         {
             GameObject newLevel = Instantiate(LevelUIPrefab, LevelContent.transform);
             newLevel.GetComponent<LevelUI>().InitializeLevelUI(level);
-            newLevel.GetComponent<Button>().onClick.AddListener(delegate{this.SceneNavigator.LoadLevel(level.SceneName);});
+            newLevel.GetComponent<Button>().onClick.AddListener(() =>  {this.SceneNavigator.LoadLevel(level.SceneName);});
             this.DisplayedLevels.Add(newLevel);
         }
     }

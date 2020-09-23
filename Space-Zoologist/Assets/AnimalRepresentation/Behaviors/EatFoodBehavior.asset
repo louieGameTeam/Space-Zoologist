@@ -15,15 +15,12 @@ MonoBehaviour:
   behaviorData:
     behaviorName: EatFoodBehavior
     behaviorTypes: 0100000004000000
-    priority: 2
-  maxAffectedNumber: 1
+    priority: 0
+  maxAffectedNumber: 4
   maxAffectedPortion: 1
   numberTriggerdPerLoop: 1
   behaviorPatterns:
   - {fileID: 3734241479601550561, guid: 2b2f91162eb974dde85e084799ae3c3d, type: 3}
-  - {fileID: 7650229462495931979, guid: 09973ed82ba68d844b6c1d50ebe05fb1, type: 3}
-  - {fileID: 7650229462495931979, guid: 09973ed82ba68d844b6c1d50ebe05fb1, type: 3}
-  - {fileID: 7650229462495931979, guid: 09973ed82ba68d844b6c1d50ebe05fb1, type: 3}
-  - {fileID: 7650229462495931979, guid: 09973ed82ba68d844b6c1d50ebe05fb1, type: 3}
-  refreshPeriod: 20
-  elapsedTime: 13.07144
+  - {fileID: 2498865982141510231, guid: 27a11cd98bbec49e2a2f49e6d5a4dc77, type: 3}
+  refreshPeriod: 10
+  elapsedTime: 4.5771184

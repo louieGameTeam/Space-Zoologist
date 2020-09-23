@@ -9,8 +9,15 @@ public class RotateSpritePattern : TimedPattern
     Dictionary<GameObject, Vector3> animalsToCurrentAngles = new Dictionary<GameObject, Vector3>();
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        animalsToOriginalRotationAngles.Add(gameObject, gameObject.transform.rotation);
-        animalsToCurrentAngles.Add(gameObject, gameObject.transform.rotation.eulerAngles);
+        if (!animalsToOriginalRotationAngles.ContainsKey(gameObject))
+        {
+            animalsToOriginalRotationAngles.Add(gameObject, gameObject.transform.rotation);
+        }
+        if (!animalsToCurrentAngles.ContainsKey(gameObject))
+        {
+            animalsToCurrentAngles.Add(gameObject, gameObject.transform.rotation.eulerAngles);
+        }
+        animalData.animal.MovementData.MovementStatus = Movement.idle;
         base.EnterPattern(gameObject, animalData);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)

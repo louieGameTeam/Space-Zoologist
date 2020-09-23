@@ -17,32 +17,54 @@ public class FoodSource: MonoBehaviour, Life
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
 
+    // For runtime instances of a food source
     [SerializeField] private FoodSourceSpecies species = default;
+    [SerializeField] private TileSystem tileSystem = default;
 
     private float neutralMultiplier = 0.5f;
     private float goodMultiplier = 1.0f;
 
     private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
-    private bool hasAccessibleTerrainChanged = default;
-    private bool hasAccessibleTerrainChecked = default;
+    private bool hasAccessibilityChanged = default;
+    private bool hasAccessibilityChecked = default;
 
     private TileSystem TileSystem = default;
+
+    // To figure out if the output has changed, in order to invoke vent
+    private float prevOutput = 0;
 
     private void Awake()
     {
         if (species)
         {
-            InitializeFoodSource(species, transform.position);
+            InitializeFoodSource(species, transform.position, this.tileSystem);
         }
     }
 
-    public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position)
+    // Subscribe to events here
+    private void Start()
+    {
+        // If the food has atmospheric need then subscribe to atmosphere changed event
+        foreach (AtmosphereComponent atmosphereComponent in Enum.GetValues(typeof(AtmosphereComponent)))
+        {
+            if (this.needs.ContainsKey(atmosphereComponent.ToString()))
+            {
+                EventManager.Instance.SubscribeToEvent(EventType.AtmosphereChange, () =>
+                {
+                    this.hasAccessibilityChecked = true;
+                    this.hasAccessibilityChanged = true;
+                });
+            }
+        }
+    }
+
+    public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position, TileSystem tileSystem)
     {
         this.species = species;
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
-        this.TileSystem = FindObjectOfType<TileSystem>();
+        this.TileSystem = tileSystem;
         this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 
@@ -80,6 +102,15 @@ public class FoodSource: MonoBehaviour, Life
             float needSeverity = this.needs[needType].Severity;
             output += multiplier * (needSeverity / severityTotal) * species.BaseOutput;
         }
+
+        // Invoke event if output is different
+        if (this.prevOutput != 0 && this.prevOutput != output)
+        {
+            EventManager.Instance.InvokeEvent(EventType.FoodSourceOutputChange, this);
+        }
+
+        this.prevOutput = output;
+
         return output;
     }
 
@@ -122,26 +153,22 @@ public class FoodSource: MonoBehaviour, Life
         }
 
         // Return result if have checked
-        if (this.hasAccessibleTerrainChecked)
+        if (this.hasAccessibilityChecked)
         {
-            return this.hasAccessibleTerrainChanged;
+            return this.hasAccessibilityChanged;
         }
 
         var preTerrain = this.accessibleTerrian;
         var curTerrain = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
 
         // Accessible terrain had changed
+        this.hasAccessibilityChecked = true;
         if(!preTerrain.SequenceEqual(curTerrain))
         {
-            this.hasAccessibleTerrainChanged = true;
-            this.hasAccessibleTerrainChecked = true;
-        }
-        else
-        {
-            this.hasAccessibleTerrainChecked = true;
+            this.hasAccessibilityChanged = true;
         }
 
-        return this.hasAccessibleTerrainChanged;
+        return this.hasAccessibilityChanged;
     }
 
     /// <summary>
@@ -149,13 +176,13 @@ public class FoodSource: MonoBehaviour, Life
     /// </summary>
     public void UpdateAccessibleTerrainInfo()
     {
-        if (this.hasAccessibleTerrainChanged)
+        if (this.hasAccessibilityChanged)
         {
             this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
         }
 
         // Reset flags
-        this.hasAccessibleTerrainChecked = false;
-        this.hasAccessibleTerrainChanged = false;
+        this.hasAccessibilityChecked = false;
+        this.hasAccessibilityChanged = false;
     }
 }

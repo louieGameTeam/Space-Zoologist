@@ -35,6 +35,7 @@ public class FoodSourceStoreSection : StoreSection
                 Debug.Log("Cannot place item that location");
                 return;
             }
+            base.playerBalance.SubtractFromBalance(selectedItem.Price);
             Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].ContainsFood = true;
             base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);

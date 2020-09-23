@@ -151,7 +151,7 @@ public class Population : MonoBehaviour, Life
         }
     }
 
-    public void PauseAnimals()
+    public void PauseAnimalsMovementController()
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
@@ -173,7 +173,7 @@ public class Population : MonoBehaviour, Life
         }
     }
 
-    public void UnpauseAnimals()
+    public void UnpauseAnimalsMovementController()
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
@@ -216,12 +216,19 @@ public class Population : MonoBehaviour, Life
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
         newAnimal.GetComponent<Animal>().Initialize(this, data);
+
+        // Invoke a population growth event
+        EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }
 
     // removes last animal in list and last behavior
     // TODO keep track of last removed animal and when there's no more active behaviors it can be set inactive
     public void RemoveAnimal(int count)
     {
+        if (this.AnimalPopulation.Count == 0)
+        {
+            return;
+        }
         if (this.AnimalPopulation.Count > 0)
         {
             Debug.Log("Animal removed");
@@ -229,10 +236,17 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
-        }
-        if (this.AnimalPopulation.Count == 0)
-        {
-            Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
+            if (this.AnimalPopulation.Count == 0)
+            {
+                Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
+                // TODO Delete the population at another time, or else the reference will be lost
+                EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
+            }
+            else
+            {
+                // Invoke a population decline event
+                EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
+            }
         }
     }
 

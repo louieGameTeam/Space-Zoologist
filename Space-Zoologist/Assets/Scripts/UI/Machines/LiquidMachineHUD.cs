@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class LiquidMachineHUD : MonoBehaviour
 {
-    [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] List<MachineValues> MachineValues = default;
     LiquidMachine CurrentMachine = default;
+    private NeedSystemManager NeedSystemManager = default;
+
+    public void SetupDependencies(NeedSystemManager needSystemManager)
+    {
+        this.NeedSystemManager = needSystemManager;
+    }
 
     public void Initialize(float[] liquidComposition, LiquidMachine currentMachine)
     {

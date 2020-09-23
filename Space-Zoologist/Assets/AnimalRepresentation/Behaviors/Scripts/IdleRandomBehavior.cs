@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "IdleRandomBehavior", menuName = "SpeciesBehavior/IdleRandomBehavior")]
 public class IdleRandomBehavior : SpecieBehaviorTrigger
 {
-
     protected override List<GameObject> AnimalSelection(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
     {
         // Debug.Log("Animal Selected");

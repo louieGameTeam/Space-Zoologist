@@ -59,14 +59,14 @@ public class BehaviorPattern : MonoBehaviour
         forceRemoveAnimals.Clear();
         foreach (GameObject animal in AnimalsToAnimalData.Keys)
         {
-
             if (IsPatternFinishedAfterUpdate(animal, AnimalsToAnimalData[animal]))
             {
+                // Debug.Log("Pattern finished after updating for " + animal.name);
                 compeletedAnimals.Add(animal);
             }
-            if (IsAlternativeConditionSatisfied(animal, AnimalsToAnimalData[animal]))
+            else if (IsAlternativeConditionSatisfied(animal, AnimalsToAnimalData[animal]))
             {
-                // Debug.Log("Alternate exit condition satisfied");
+                // Debug.Log("Alternate exit condition satisfied for " + animal.name);
                 alternativeCompletedAnimals.Add(animal);
                 continue;
             }

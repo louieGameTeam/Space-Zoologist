@@ -3,55 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Hanldes the update of NS and pausing animal repersentation
+/// Hanldes the update of NS
 /// </summary>
 public class NeedSystemUpdater : MonoBehaviour
 {
     [SerializeField] NeedSystemManager NeedSystemManager = default;
-    [SerializeField] PopulationManager PopulationManager = default;
-
-    [SerializeField] ReservePartitionManager ReservePartitionManager = default;
-    [SerializeField] GridSystem GridSystem = default;
-
-    public bool isInStore { get; set; }
-
-    public void PauseAllAnimals()
-    {
-       foreach (Population population in PopulationManager.Populations)
-        {
-            population.PauseAnimals();
-        }
-    }
-
-    public void UnpauseAllAnimals()
-    {
-        foreach (Population population in PopulationManager.Populations)
-        {
-            population.UnpauseAnimals();
-        }
-    }
-
-    public void UpdateAccessibleLocations()
-    {
-        this.NeedSystemManager.UpdateAccessMap();
-        foreach (Population population in PopulationManager.Populations)
-        {
-            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
-            GridSystem.GetGridWithAccess(population));
-        }
-    }
+    
+    public bool IsPaused { get; set; }
 
     // Temp update
     private void Update()
     {
-        if(!isInStore)
+        if (this.IsPaused)
         {
-            NeedSystemManager.UpdateSystems();
+            return;
         }
-        else
-        {
-            // continually pauses all animals in case any are added. Will need a better way to handle this once behavior framework figured out.
-            this.PauseAllAnimals();
-        }
+        NeedSystemManager.UpdateSystems();
     }
 }
