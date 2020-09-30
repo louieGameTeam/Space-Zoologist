@@ -9,7 +9,7 @@ public class ObjectiveManager : MonoBehaviour
     private LevelObjectiveData LevelObjectiveData = default;
 
     private bool isOpen = false;
-    private bool IsGameOver = false;
+    private bool isGameOver = false;
 
     // To access the player balance
     [SerializeField] private PlayerBalance playerBalance = default;
@@ -123,9 +123,9 @@ public class ObjectiveManager : MonoBehaviour
         }
 
         // All objectives had reach end state
-        if (isAllCompleted && !this.IsGameOver)
+        if (isAllCompleted && !this.isGameOver)
         {
-            this.IsGameOver = true;
+            this.isGameOver = true;
             EventManager.Instance.InvokeEvent(EventType.ObjectivesCompleted, null);
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
 
