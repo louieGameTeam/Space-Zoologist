@@ -305,13 +305,13 @@ public class Inspector : MonoBehaviour
         this.lastTilesSelected = foodSourceRadiusRange;
     }
 
-    
-
+    // TODO implement the "HighlightSingleTile" then use it here
     private void HighlightEnclosedArea(Vector3Int selectedLocation)
     {
 
     }
 
+    // TODO find a way to unhighlight the hightlighted tiles
     private void UnhighlightEnclosedArea(Vector3Int selectedLocation)
     {
 
@@ -322,6 +322,7 @@ public class Inspector : MonoBehaviour
 
     }
 
+    // TODO check out "HighlightFoodSource" to see how to tile can be highlighted
     private void HighlightSingleTile(Vector3Int location)
     {
 

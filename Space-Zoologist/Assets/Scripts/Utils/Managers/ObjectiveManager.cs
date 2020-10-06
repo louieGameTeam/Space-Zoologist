@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages all the objectives
+/// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
     [Expandable] public LevelDataReference LevelDataReference = default;
@@ -14,6 +17,7 @@ public class ObjectiveManager : MonoBehaviour
     // To access the player balance
     [SerializeField] private PlayerBalance playerBalance = default;
     [SerializeField] private PauseManager PauseManager = default;
+
     // Objective panel
     [SerializeField] private GameObject objectivePanel = default;
     [SerializeField] private Text objectivePanelText = default;
@@ -99,34 +103,41 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        bool isAllCompleted = true;
+        bool IsMainObjectivesCompleted = true;
+
         if (this.PauseManager.IsPaused)
         {
             return;
         }
+
         if (this.isOpen)
         {
             this.UpdateObjectivePanel();
         }
+
         // Level is completed when all mian objectives are done, failed when one has failed
         foreach (Objective objective in this.mainObjectives)
         {
             if (objective.UpdateStatus() == ObjectiveStatus.InProgress)
             {
-                isAllCompleted = false;
+                IsMainObjectivesCompleted = false;
             }
 
             if (objective.UpdateStatus() == ObjectiveStatus.Failed)
             {
+                // TODO figure out what should happen when game over event is triggered
                 EventManager.Instance.InvokeEvent(EventType.GameOver, null);
             }
         }
 
         // All objectives had reach end state
-        if (isAllCompleted && !this.isGameOver)
+        if (IsMainObjectivesCompleted && !this.isGameOver)
         {
             this.isGameOver = true;
-            EventManager.Instance.InvokeEvent(EventType.ObjectivesCompleted, null);
+
+            // TODO figure out what should happen when the main objectives are complete
+            EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
+            // TODO figure out what should happen when game over event is triggered
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
 
             Debug.Log($"Level Completed!");
