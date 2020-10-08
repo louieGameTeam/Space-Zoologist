@@ -83,4 +83,60 @@ public class MenuManager : MonoBehaviour
 
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }
+    public bool isSelling = false;
+    public void OnToggleSell() {
+        isSelling = !isSelling;
+        if (isSelling) {
+            Inspector inspector = FindObjectOfType<Inspector>();
+            if (inspector.IsInInspectorMode) {
+                inspector.ToggleInspectMode();
+            }
+
+        }
+    }
+    public void Update()
+    {
+        // Much taken from Inspector
+        if (isSelling && Input.GetMouseButtonDown(0)) {
+            GridSystem gridSystem = FindObjectOfType<GridSystem>();
+            TileSystem tileSystem = FindObjectOfType<TileSystem>();
+            // Update animal locations
+            gridSystem.UpdateAnimalCellGrid();
+
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3Int cellPos = tileSystem.WorldToCell(worldPos);
+            TerrainTile tile = tileSystem.GetTerrainTileAtLocation(cellPos);
+
+            //Debug.Log($"Mouse click at {cellPos}");
+
+            GridSystem.CellData cellData;
+
+            // Handles index out of bound exception
+            if (gridSystem.isCellinGrid(cellPos.x, cellPos.y))
+            {
+                cellData = gridSystem.CellGrid[cellPos.x, cellPos.y];
+            }
+            else
+            {
+                // Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
+                return;
+            }
+
+            // Check if selection is animal
+            if (cellData.ContainsAnimal)
+            {
+                Destroy(cellData.Animal.transform.parent.gameObject);
+            }
+            // Selection is food source or item
+            else if (cellData.ContainsFood)
+            {
+                Destroy(cellData.Food.gameObject);
+            }
+            // Selection is wall
+            else if (tile.type == TileType.Wall)
+            {
+                
+            }
+        }
+    }
 }

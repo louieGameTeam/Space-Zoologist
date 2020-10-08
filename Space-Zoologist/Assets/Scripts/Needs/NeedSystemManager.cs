@@ -58,7 +58,7 @@ public class NeedSystemManager : MonoBehaviour
         }
     }
 
-    public void UnregisterPopulationNeeds(Life life)
+    public void UnregisterWithNeedSystems(Life life)
     {
         foreach (Need need in life.GetNeedValues().Values)
         {

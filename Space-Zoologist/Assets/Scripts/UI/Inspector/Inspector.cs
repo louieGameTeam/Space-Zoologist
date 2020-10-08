@@ -208,7 +208,7 @@ public class Inspector : MonoBehaviour
 
             this.UnHighlightAll();
 
-            // Check if selection is anaiaml
+            // Check if selection is animal
             if (cellData.ContainsAnimal)
             {
                 this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
