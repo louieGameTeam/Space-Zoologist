@@ -1,23 +1,20 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/NeedSystemManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/MenuManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="136" Column="23" />
-      <File FileName="Assets/Scripts/UI/CursorItem.cs" Line="64" Column="36" />
-      <File FileName="Assets/Scripts/UI/OnMouseHover.cs" Line="8" Column="20" />
-      <File FileName="Assets/Scripts/UI/SelectableItemSystems/SelectableCanvasImage.cs" Line="10" Column="14" />
-      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="32" Column="26" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="61" Column="22" />
       <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" Line="1" Column="26" />
       <File FileName="Assets/Scripts/UI/Store/StoreSection.cs" Line="69" Column="10" />
       <File FileName="Assets/Scripts/UI/Store/Item.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/UI/Store/StoreItemCell.cs" Line="17" Column="23" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="240" Column="14" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="206" Column="24" />
       <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Grid/GridSystem.cs" Line="293" Column="19" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="75" Column="31" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" Line="114" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="9" Column="14" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="66" Column="48" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="79" Column="40" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" Line="119" Column="10" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="85" Column="29" />
+      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="61" Column="42" />
       <File FileName="Assets/Scripts/Needs/NeedSystem.cs" Line="40" Column="25" />
+      <File FileName="Assets/Scripts/Utils/PlacementValidation.cs" Line="68" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -33,7 +30,6 @@
                   <Node name="Systems" expanded="True">
                     <Node name="FoodSystem" expanded="True" />
                   </Node>
-                  <Node name="NeedSystemManager.cs" selected="True" />
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="Inspector" expanded="True" />
@@ -42,6 +38,10 @@
                   </Node>
                   <Node name="SelectableItemSystems" expanded="True" />
                   <Node name="Store" expanded="True" />
+                  <Node name="MenuManager.cs" selected="True" />
+                </Node>
+                <Node name="Utils" expanded="True">
+                  <Node name="Managers" expanded="True" />
                 </Node>
               </Node>
             </Node>

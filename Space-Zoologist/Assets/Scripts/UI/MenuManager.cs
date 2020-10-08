@@ -122,20 +122,18 @@ public class MenuManager : MonoBehaviour
                 return;
             }
 
-            // Check if selection is animal
-            if (cellData.ContainsAnimal)
-            {
-                Destroy(cellData.Animal.transform.parent.gameObject);
+            if (cellData.ContainsMachine) {
+                Destroy(cellData.Machine.gameObject);
             }
             // Selection is food source or item
             else if (cellData.ContainsFood)
             {
-                Destroy(cellData.Food.gameObject);
+                FindObjectOfType<FoodSourceManager>().DestroyFoodSource(cellData.Food.GetComponent<FoodSource>());
             }
             // Selection is wall
             else if (tile.type == TileType.Wall)
             {
-                
+
             }
         }
     }

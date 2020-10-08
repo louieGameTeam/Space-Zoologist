@@ -72,6 +72,13 @@ public class FoodSourceManager : MonoBehaviour
         return CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
     }
 
+    public void DestroyFoodSource(FoodSource foodSource) {
+        foodSources.Remove(foodSource);
+        foodSourceNeedSystems.RemoveFoodSource(foodSource);
+        NeedSystemManager.UnregisterWithNeedSystems(foodSource);
+        Destroy(foodSource.gameObject);
+    }
+
     // TODO: not sure what this does
     public void UpdateFoodSourceSpecies(FoodSourceSpecies species)
     {

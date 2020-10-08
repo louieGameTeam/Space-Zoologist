@@ -110,6 +110,15 @@ public class FoodSourceNeedSystem : NeedSystem
         this.isDirty = true;
     }
 
+    public void RemoveFoodSource(FoodSource foodSource) {
+        if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
+        {
+            this.foodSourceCalculators[foodSource.Species.SpeciesName].RemoveSource(foodSource);
+
+            this.isDirty = true;
+        }
+    }
+
     public override void AddConsumer(Life life)
     {
         foreach (Need need in life.GetNeedValues().Values)
