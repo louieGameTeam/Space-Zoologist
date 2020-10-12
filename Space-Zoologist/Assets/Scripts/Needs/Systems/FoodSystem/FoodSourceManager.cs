@@ -96,4 +96,15 @@ public class FoodSourceManager : MonoBehaviour
             foodSource.UpdateAccessibleTerrainInfo();
         }
     }
+
+    public string GetSpeciesID(FoodSourceSpecies species) {
+        if (foodSourceSpecies.ContainsValue(species)) {
+            for (var pair = foodSourceSpecies.GetEnumerator(); pair.MoveNext() != false;) {
+                if (pair.Current.Value.Equals(species)) {
+                    return pair.Current.Key;
+                }
+            }
+        }
+        return null;
+    }
 }
