@@ -10,6 +10,7 @@ public class TimedPattern : BehaviorPattern
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         this.AnimalToTimeElapsed.Add(gameObject, 0);
+        print(AnimalToTimeElapsed[gameObject]);
         animalData.animal.MovementData.MovementStatus = Movement.idle;
     }
     // Default behavior moves along a random path
@@ -24,6 +25,9 @@ public class TimedPattern : BehaviorPattern
     }
     protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
+
+        print("Num keys: " + AnimalToTimeElapsed.Keys.Count);
+        print(gameObject.name);
         this.AnimalToTimeElapsed.Remove(gameObject);
         base.ExitPattern(gameObject, callCallback);
     }
