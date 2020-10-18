@@ -14,7 +14,7 @@ public class NPCDialogueGenerator : MonoBehaviour
     [SerializeField] private Selector selector = default;
 
     // Loader script to read in dialogue ouuputs
-    private DialogueSheetLoader dialgoueSheetLoader = new DialogueSheetLoader();
+    [SerializeField] private DialogueSheetLoader dialgoueSheetLoader = default;
 
     private Dictionary<string, List<string>> dialogueTemplates = default;
 
@@ -22,7 +22,6 @@ public class NPCDialogueGenerator : MonoBehaviour
     private Dictionary<string, DialogueOptionData> objectiveStatusDialogue = default;
 
     private System.Random random = new System.Random();
-
 
     // Call the dialogue sheet loader to load the dialogues
     private void Start()
@@ -93,6 +92,7 @@ public class NPCDialogueGenerator : MonoBehaviour
         this.dialogueTextMeshPro.text = $"Displaying something about the journal progress";
     }
 
+    // TODO: re-think on how to talk about objectives.
     private string fillObjectiveTemplate(string template)
     {
         string dialogue = template;

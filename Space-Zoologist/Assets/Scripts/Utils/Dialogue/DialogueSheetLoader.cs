@@ -10,6 +10,8 @@ public class DialogueSheetLoader : MonoBehaviour
 {
     [SerializeField] private TextAsset templateDialogueSheet = default;
     [SerializeField] private TextAsset needDialogueSheet = default;
+    [SerializeField] private TextAsset eventDialogueSheet = default;
+
 
     [SerializeField] private LevelData levelData = default;
 
@@ -17,18 +19,11 @@ public class DialogueSheetLoader : MonoBehaviour
     private char fieldSeperator = ','; 
     private char fieldQutation = '"';
 
-    private List<List<string>> parsedTemplate = new List<List<string>>();
-    private List<List<string>> parsedNeedDialogue = new List<List<string>>();
-
     // Parse the csv files
     private void Start()
     {
-        this.templateDialogueSheet = Resources.Load<TextAsset>(Path.Combine("LevelData", "Level" + 1));
-        Resources.Load<TextAsset>(Path.Combine("NPC", "NPC Dialogue template"));
+        this.templateDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPC Dialogue template"));
         this.needDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPC Dialogue need"));
-
-        this.parsedTemplate = this.parseCsv(this.templateDialogueSheet);
-        this.parsedNeedDialogue = this.parseCsv(this.needDialogueSheet);
     }
 
     private List<List<string>> parseCsv(TextAsset csvFile)
@@ -105,7 +100,9 @@ public class DialogueSheetLoader : MonoBehaviour
 
     public void LoadDialogueTemplates(string type, List<string> dialogueTemplates)
     {
-        foreach (List<string> row in this.parsedTemplate)
+        List<List<string>> parsedCsv = this.parseCsv(this.templateDialogueSheet);
+
+        foreach (List<string> row in parsedCsv)
         {
             if (row[0] == type)
             {
@@ -117,7 +114,9 @@ public class DialogueSheetLoader : MonoBehaviour
 
     public void LoadSpeciesNeedDialogue(Dictionary<string, DialogueOptionData> specieseNeedDialogoues)
     {
-        foreach (List<string> row in this.parsedTemplate)
+        List<List<string>> parsedCsv = this.parseCsv(this.needDialogueSheet);
+
+        foreach (List<string> row in parsedCsv)
         {
             // specicesName-needName
             string name = $"{row[0]}-{row[1]}";
@@ -126,10 +125,23 @@ public class DialogueSheetLoader : MonoBehaviour
             {
                 specieseNeedDialogoues.Add("name", new DialogueOptionData(
                     name,
-                    new List<string>() { row[2], row[3], row[4] },
-                    new List<string>() { row[5], row[6], row[7] },
-                    new List<string>() { row[8], row[9], row[10] }
+                    row.GetRange(2,3),
+                    row.GetRange(5,3),
+                    row.GetRange(8, row.Count-8)
                 ));
+            }
+        }
+    }
+
+    public void LoadEventDialogue(Dictionary<string, List<string>> eventDialogue)
+    {
+        List<List<string>> parsedCsv = this.parseCsv(this.eventDialogueSheet);
+
+        foreach (List<string> row in parsedCsv)
+        {
+            if (eventDialogue.ContainsKey(row[0]))
+            {
+                eventDialogue.Add(row[0], row.GetRange(1, row.Count - 1));
             }
         }
     }
