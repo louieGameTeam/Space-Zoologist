@@ -16,6 +16,14 @@ public class DialogueOptionData
     private List<string> badDialogues;
     private List<string> hintDialogues;
 
+    public DialogueOptionData(string name, List<string> goodDialgoues, List<string> badDialogues, List<string> hintDialogues)
+    {
+        this.name = name;
+        this.goodDialgoues = goodDialgoues;
+        this.badDialogues = badDialogues;
+        this.hintDialogues = hintDialogues;
+}
+
     /// <summary>
     /// Return a random dialgoue with the option given.
     /// </summary>

@@ -8,12 +8,13 @@ using DialogueEditor;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
-    // The dialogue of the NPC
-    [SerializeField] private NPCConversation Conversation;
-
+    // The dialogues of the NPC
+    [SerializeField] private NPCConversation normalConversation;
+    [SerializeField] private NPCConversation eventTriggeredConversation;
+    
     // Update is called once per frame
     public void StartConversation()
     {
-       ConversationManager.Instance.StartConversation(Conversation);
+        ConversationManager.Instance.StartConversation(normalConversation);
     }
 }

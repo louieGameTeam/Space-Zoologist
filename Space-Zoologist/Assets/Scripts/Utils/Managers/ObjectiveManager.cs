@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Manages all the objectives
+/// Manages all the objectives and invoke event when game is over
 /// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
     [Expandable] public LevelDataReference LevelDataReference = default;
     private LevelObjectiveData LevelObjectiveData = default;
+
+    public bool IsGameOver => this.isGameOver;
 
     private bool isOpen = false;
     private bool isGameOver = false;
@@ -22,9 +24,9 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField] private GameObject objectivePanel = default;
     [SerializeField] private Text objectivePanelText = default;
 
+    // Currently all main objectives are survival objectives
     private List<Objective> mainObjectives = new List<Objective>();
     private List<Objective> secondaryObjectives = new List<Objective>();
-
 
     public void ToggleObjectivePanel()
     {
@@ -54,9 +56,10 @@ public class ObjectiveManager : MonoBehaviour
     /// <summary>
     /// Create objective objects and subscribe to events
     /// </summary>
-    public void Start()
+    private void Start()
     {
         this.LevelObjectiveData = this.LevelDataReference.LevelData.LevelObjectiveData;
+
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)
         {
@@ -67,6 +70,7 @@ public class ObjectiveManager : MonoBehaviour
                 objectiveData.timeRequirement
             ));
         }
+
         // Create the resource objective
         foreach (ResourceObjectiveData objectiveData in this.LevelObjectiveData.resourceObjectiveDatas)
         {

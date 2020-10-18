@@ -25,6 +25,8 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
 
+    [SerializeField] private Selector selector = default;
+
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
