@@ -198,6 +198,7 @@ public class Population : MonoBehaviour, Life
             }
         }
         this.prePopulationCount = this.AnimalPopulation.Count;
+        this.PopulationBehaviorManager.Initialize();
     }
 
     private void OnCollisionEnter(Collision collision)

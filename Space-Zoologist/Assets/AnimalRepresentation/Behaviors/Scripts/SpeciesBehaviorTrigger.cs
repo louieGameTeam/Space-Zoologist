@@ -15,37 +15,31 @@ public class SpecieBehaviorTrigger : ScriptableObject
     protected Dictionary<GameObject, int> animalsToSteps = new Dictionary<GameObject, int>();
     protected StepCompletedCallBack stepCompletedCallback;
     protected StepCompletedCallBack alternativeCallback;
+    protected BehaviorCompleteCallback behaviorCompleteCallback;
     [SerializeField]
     private float refreshPeriod = 3;
     [SerializeField]
     private float elapsedTime = 0;
-
+    public void AssignCallback(BehaviorCompleteCallback callback)
+    {
+        behaviorCompleteCallback = callback;
+    }
     /// <summary>
     /// Called every refreshPeriod
     /// </summary>
     /// <param name="avalabilityToAnimals"></param>
-    public void EnterBehavior(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
+    public void EnterBehavior(List<GameObject> animals)
     {
-        // TODO modularize initialization one
-        // Debug.Log(behaviorPatterns[0].gameObject.name + " entered");
         behaviorData.behaviorName = this.GetType().ToString();
         behaviorData.ForceExitCallback = OnForceExit;
         stepCompletedCallback = OnStepCompleted; // Setup Callback
         alternativeCallback = OnAlternativeExit;
-        List<GameObject> selectedAnimals = AnimalSelection(avalabilityToAnimals);
-        foreach (GameObject animal in selectedAnimals) // Force exits all behaviors of the overridden animals
+
+        if (animals.Count > 0)
         {
-            if (avalabilityToAnimals[Availability.Override].Contains(animal))
+            foreach (GameObject animal in animals)
             {
-                Debug.Log("Force exiting");
-                animal.GetComponent<AnimalBehaviorManager>().ForceExit();
-            }
-        }
-        if (selectedAnimals.Count > 0)
-        {
-            foreach (GameObject animal in selectedAnimals)
-            {
-                Initialize(animal, selectedAnimals);
+                Initialize(animal, animals);
             }
         }
     }
@@ -122,6 +116,7 @@ public class SpecieBehaviorTrigger : ScriptableObject
         {
             animalsToSteps.Remove(animal);
             animal.GetComponent<AnimalBehaviorManager>().activeBehaviors.Remove(behaviorData);
+            behaviorCompleteCallback.Invoke(animal);
         }
     }
     /// <summary>
@@ -197,27 +192,6 @@ public class SpecieBehaviorTrigger : ScriptableObject
         else
         {
             RemoveBehavior(animal);
-        }
-    }
-    /// <summary>
-    /// Example alternative to ProceedToNext() that loops all behavior patterns when the list is finished
-    /// Make sure it has low priority in BehaviorData, in which can be overridden by other behaviors
-    /// Additionally, make sure OnForceExit() is set up properly, as well as all referenced behavior patterns
-    /// </summary>
-    /// <param name="animal"></param>
-    /// <param name="collaboratingAnimals"></param>
-    /// <param name="isDriven"></param>
-    protected void LoopWhenFinished(GameObject animal, List<GameObject> collaboratingAnimals) //Looping can be achieved by overriding this function, as well as synchronization among all animals
-    {
-        if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed
-        {
-            //Debug.Log("Next");
-            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
-        }
-        else
-        {
-            animalsToSteps[animal] = 0;
-            ProceedToNext(animal, collaboratingAnimals);
         }
     }
 }
