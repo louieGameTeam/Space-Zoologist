@@ -11,7 +11,7 @@ public class EventDialogueGenerator : MonoBehaviour
     private Dictionary<string, List<string>> eventDialogue = new Dictionary<string, List<string>>();
     private System.Random random = new System.Random();
 
-    // Subcribe to event's that will trigger message
+    // Subcribe to events that will trigger message
     void Start()
     {
         this.dialgoueSheetLoader.LoadEventDialogue(this.eventDialogue);
