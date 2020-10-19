@@ -129,9 +129,24 @@ public class NPCDialogueGenerator : MonoBehaviour
         string dialogue = template;
 
         List<string> parsed = new List<string>(dialogue.Split(' '));
+        List<string> goodNeeds = new List<string>();
+        List<string> badNeeds = new List<string>();
+
+        // Compute a list of good needs and bad needs
+        foreach (Need need in population.Needs.Values)
+        {
+            if (need.GetCondition(need.NeedValue) == NeedCondition.Good)
+            {
+                goodNeeds.Add(need.NeedName);
+            }
+            else if (need.GetCondition(need.NeedValue) == NeedCondition.Bad)
+            {
+                badNeeds.Add(need.NeedName);
+            }
+        }
 
         // Replace text with dialogue when seen keyworkds, remove '{' and '}' used for syntax.
-        for(int i = 0; i < parsed.Count; i++)
+        for (int i = 0; i < parsed.Count; i++)
         {
             if (parsed[i] == "POPULATION")
             {
@@ -139,11 +154,51 @@ public class NPCDialogueGenerator : MonoBehaviour
             }
             else if (parsed[i] == "GOOD")
             {
+                string text = "";
 
+                int index = this.random.Next(goodNeeds.Count) - 1;
+
+                // Pick two randow good dialogue
+                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{goodNeeds[index]}"))
+                {
+                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{goodNeeds[index]}"].GetDialogue(DialogueOutputOption.Good);
+                }
+                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{goodNeeds[index]}"))
+                {
+                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{goodNeeds[index+1]}"].GetDialogue(DialogueOutputOption.Good);
+                }
+
+                // In case no dialogue found
+                if (text == "")
+                {
+                    text = "I have nothing to say about this...";
+                }
+
+                parsed[i] = text;
             }
             else if (parsed[i] == "BAD")
             {
+                string text = "";
 
+                int index = this.random.Next(badNeeds.Count) - 1;
+
+                // Pick two randow good dialogue
+                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{badNeeds[index]}"))
+                {
+                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{badNeeds[index]}"].GetDialogue(DialogueOutputOption.Bad);
+                }
+                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{badNeeds[index]}"))
+                {
+                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{badNeeds[index + 1]}"].GetDialogue(DialogueOutputOption.Bad);
+                }
+
+                // In case no dialogue found
+                if (text == "")
+                {
+                    text = "I have nothing to say about this...";
+                }
+
+                parsed[i] = text;
             }
             else if (parsed[i] == "{" || parsed[i] == "}")
             {
