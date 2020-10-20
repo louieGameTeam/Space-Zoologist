@@ -16,17 +16,17 @@ public class NPCDialogueGenerator : MonoBehaviour
     // Loader script to read in dialogue ouuputs
     [SerializeField] private DialogueSheetLoader dialgoueSheetLoader = default;
 
-    private Dictionary<string, List<string>> dialogueTemplates = default;
+    private Dictionary<string, List<string>> dialogueTemplates = new Dictionary<string, List<string>>();
 
-    private Dictionary<string, DialogueOptionData> specieseNeedDialogoues = default;
-    private Dictionary<string, DialogueOptionData> objectiveStatusDialogue = default;
+    private Dictionary<string, DialogueOptionData> specieseNeedDialogoues = new Dictionary<string, DialogueOptionData>();
+    private Dictionary<string, DialogueOptionData> objectiveStatusDialogue = new Dictionary<string, DialogueOptionData>();
 
     private System.Random random = new System.Random();
 
     // Call the dialogue sheet loader to load the dialogues
     private void Start()
     {
-        //this.loadDialogueOutputDatas();
+        this.loadDialogueOutputDatas();
         this.loadDialogueTemplates();
     }
 
