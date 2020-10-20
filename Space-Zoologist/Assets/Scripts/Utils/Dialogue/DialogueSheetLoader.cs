@@ -30,15 +30,14 @@ public class DialogueSheetLoader : MonoBehaviour
 
     private void loadSheets()
     {
-        //if (!this.sheetsLoaded)
-        //{
-        //    this.templateDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueTemplate"));
-        //    Debug.Log(Path.Combine("NPC", "NPCDialogueTemplate"));
-        //    this.needDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueNeed"));
-        //    this.eventDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueEvent"));
-        //}
+        if (!this.sheetsLoaded)
+        {
+            this.templateDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueTemplate"));
+            this.needDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueNeed"));
+            this.eventDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueEvent"));
+        }
 
-        //this.sheetsLoaded = true;
+        this.sheetsLoaded = true;
     }
 
     private List<List<string>> parseCsv(TextAsset csvFile)
@@ -113,7 +112,7 @@ public class DialogueSheetLoader : MonoBehaviour
         return parsedFile;
     }
 
-    public void LoadDialogueTemplates(string type, List<string> dialogueTemplates)
+    public List<string> LoadDialogueTemplates(string type)
     {
         this.loadSheets();
 
@@ -123,17 +122,20 @@ public class DialogueSheetLoader : MonoBehaviour
         {
             if (row[0] == type)
             {
-                dialogueTemplates = row.GetRange(1, row.Count - 1);
-                return;
+                return row.GetRange(1, row.Count - 1);
             }
         }
+
+        return null;
     }
 
-    public void LoadSpeciesNeedDialogue(Dictionary<string, DialogueOptionData> specieseNeedDialogoues)
+    public Dictionary<string, DialogueOptionData> LoadSpeciesNeedDialogue()
     {
         this.loadSheets();
 
         List<List<string>> parsedCsv = this.parseCsv(this.needDialogueSheet);
+
+        Dictionary<string, DialogueOptionData> specieseNeedDialogoues = new Dictionary<string, DialogueOptionData>();
 
         foreach (List<string> row in parsedCsv)
         {
@@ -142,7 +144,7 @@ public class DialogueSheetLoader : MonoBehaviour
 
             if (!specieseNeedDialogoues.ContainsKey(name))
             {
-                specieseNeedDialogoues.Add(name, new DialogueOptionData(
+                  specieseNeedDialogoues.Add(name, new DialogueOptionData(
                     name,
                     row.GetRange(2,3),
                     row.GetRange(5,3),
@@ -150,6 +152,8 @@ public class DialogueSheetLoader : MonoBehaviour
                 ));
             }
         }
+
+        return specieseNeedDialogoues;
     }
 
     public void LoadEventDialogue(Dictionary<string, List<string>> eventDialogue)

@@ -32,7 +32,7 @@ public class NPCDialogueGenerator : MonoBehaviour
 
     private void loadDialogueOutputDatas()
     {
-        this.dialgoueSheetLoader.LoadSpeciesNeedDialogue(this.specieseNeedDialogoues);
+        this.specieseNeedDialogoues = this.dialgoueSheetLoader.LoadSpeciesNeedDialogue();
     }
 
     private void loadDialogueTemplates()
@@ -41,11 +41,11 @@ public class NPCDialogueGenerator : MonoBehaviour
 
         // Loading template about population status
         this.dialogueTemplates.Add("Population", new List<string>());
-        this.dialgoueSheetLoader.LoadDialogueTemplates("Population", this.dialogueTemplates["Population"]);
+        this.dialogueTemplates["Population"] = this.dialgoueSheetLoader.LoadDialogueTemplates("Population");
 
         // Load template about objective status
         this.dialogueTemplates.Add("Objective", new List<string>());
-        this.dialgoueSheetLoader.LoadDialogueTemplates("Objective", this.dialogueTemplates["Objective"]);
+        this.dialogueTemplates["Objective"] = this.dialgoueSheetLoader.LoadDialogueTemplates("Objective");
     }
 
     public void NPCTalksAboutObjectiveStatus()
