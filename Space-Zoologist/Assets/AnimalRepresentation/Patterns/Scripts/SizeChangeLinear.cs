@@ -28,7 +28,7 @@ public class SizeChangeLinear : TimedPattern
     }
     protected override void ExitPattern(GameObject gameObject, bool callCallback)
     {
-        //gameObject.transform.localScale = animalsToOriginalScales[gameObject];
+        gameObject.transform.localScale = animalsToOriginalScales[gameObject];
         animalsToOriginalScales.Remove(gameObject);
         base.ExitPattern(gameObject, callCallback);
     }

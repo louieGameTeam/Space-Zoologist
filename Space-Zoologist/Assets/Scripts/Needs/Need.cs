@@ -45,11 +45,19 @@ public class Need
         if (conditions.Count == 1) return conditions[0].Condition;
         for (var i = 0; i < this.thresholds.Count; i++)
         {
-            // TODO fix rounding error lol
-            if (value < this.thresholds[i] - 0.1)
+            // Potential substitution for the code below
+            if (value <= this.thresholds[i] + Mathf.Epsilon)
             {
                 return this.conditions[i].Condition;
             }
+
+            // ------- Original -------
+            // TODO fix rounding error lol
+            //if (value < this.thresholds[i] - 0.1)
+            //{
+            //    return this.conditions[i].Condition;
+            //}
+            // ------- Original -------
         }
         return this.conditions[this.thresholds.Count].Condition;
     }

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 277d0cd1143524717a4d9c8405e907d7, type: 3}
+  m_Name: AttackMachine
+  m_EditorClassIdentifier: 
+  behaviorData:
+    behaviorName: GeneralBehavior
+    behaviorTypes: 02000000
+    priority: 0
+  maxAffectedNumber: 4
+  maxAffectedPortion: 1
+  numberTriggerdPerLoop: 1
+  behaviorPatterns:
+  - {fileID: 5870063742017445200, guid: cf3bc1f30502041389acbb9854903010, type: 3}
+  - {fileID: 8767624911547280796, guid: 9ccabcc7c9b7d6b47a0934521fe0f32b, type: 3}
+  refreshPeriod: 5
+  elapsedTime: 2.1300187
