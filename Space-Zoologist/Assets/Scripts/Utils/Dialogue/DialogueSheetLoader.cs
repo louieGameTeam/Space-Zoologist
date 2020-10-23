@@ -106,6 +106,9 @@ public class DialogueSheetLoader : MonoBehaviour
                 }
             }
 
+            // Added the last field
+            fields.Add(tempField.Trim());
+
             parsedFile.Add(fields);
         }
 
@@ -164,7 +167,7 @@ public class DialogueSheetLoader : MonoBehaviour
 
         foreach (List<string> row in parsedCsv)
         {
-            if (eventDialogue.ContainsKey(row[0]))
+            if (!eventDialogue.ContainsKey(row[0]))
             {
                 eventDialogue.Add(row[0], row.GetRange(1, row.Count - 1));
             }

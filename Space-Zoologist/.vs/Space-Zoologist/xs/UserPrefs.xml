@@ -1,19 +1,28 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/Selector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs">
     <Files>
-      <File FileName="Assets/Scripts/Utils/Dialogue/NPCDialogueGenerator.cs" Line="27" Column="25" />
-      <File FileName="Assets/Scripts/Utils/Dialogue/DialogueSheetLoader.cs" Line="136" Column="78" />
-      <File FileName="Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs" Line="17" Column="35" />
-      <File FileName="Assets/Scripts/GameData/LevelManagement/LevelDataLoader.cs" Line="15" Column="52" />
-      <File FileName="Assets/Scripts/Utils/Selector.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/NPCDialogueGenerator.cs" Line="184" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/DialogueSheetLoader.cs" Line="166" Column="69" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs" Line="14" Column="52" />
+      <File FileName="Assets/Scripts/Utils/Selector.cs" Line="28" Column="60" />
+      <File FileName="Assets/Scripts/Utils/Managers/DialogueManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Resources/NPC/NPCDialogueTemplate.csv" Line="4" Column="40" />
+      <File FileName="Assets/Resources/NPC/NPCDialogueEvent.csv" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>goodNeeds[index]</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7cd406ae-bc94-4e1b-bbfa-6abb5bacce1a" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f6332ddb-2430-4a8f-a4f1-38a9ec9e8450" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/Selector.cs" relfile="Assets/Scripts/Utils/Selector.cs" line="135" column="1" />
+      <Breakpoint file="/Users/ethanchiang/Desktop/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs" relfile="Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs" line="17" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

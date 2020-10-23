@@ -25,7 +25,7 @@ public class Selector : MonoBehaviour
     [SerializeField] private Tilemap highLight = default;
     [SerializeField] private TerrainTile highLightTile = default;
 
-    public void EnableSelection() { this.IsInSelectionMode = true; }
+    public void EnableSelection() { this.ResetSelection();  this.IsInSelectionMode = true; }
     public void UnenableSelection() { this.IsInSelectionMode = false; }
 
     private void Start()
@@ -63,7 +63,7 @@ public class Selector : MonoBehaviour
             }
 
             this.UnHighlightAll();
-            this.ResetSelection();
+            //this.ResetSelection();
 
             // Check if selection is anaiaml
             if (cellData.ContainsAnimal)
@@ -126,8 +126,11 @@ public class Selector : MonoBehaviour
     {
         if (this.SelectedGameObject)
         {
-            // Unhighlight selected game object (food source)
-            this.SelectedGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //// Unhighlight selected game object (food source)
+            //if (this.SelectedGameObject.GetComponent<SpriteRenderer>())
+            //{
+            //    this.SelectedGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //}
 
             // Unhighlight child of selected game object (population)
             foreach (Transform child in this.SelectedGameObject.transform)

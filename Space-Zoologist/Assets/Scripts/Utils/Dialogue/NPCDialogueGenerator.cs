@@ -92,7 +92,8 @@ public class NPCDialogueGenerator : MonoBehaviour
         this.dialogueTextMeshPro.text = $"Displaying something about the journal progress";
     }
 
-    // TODO: re-think on how to talk about objectives.
+    // TODO: re-think on how to talk about objective
+    // TODO: redo logic to match fillSpeciseNeedTemplate
     private string fillObjectiveTemplate(string template)
     {
         string dialogue = template;
@@ -148,24 +149,54 @@ public class NPCDialogueGenerator : MonoBehaviour
         // Replace text with dialogue when seen keyworkds, remove '{' and '}' used for syntax.
         for (int i = 0; i < parsed.Count; i++)
         {
-            if (parsed[i] == "POPULATION")
+            if (System.Text.RegularExpressions.Regex.IsMatch(parsed[i], "^{POPULATION}"))
             {
-                parsed[i] = population.species.SpeciesName;
+                parsed[i] = parsed[i].Replace("{POPULATION}", population.species.SpeciesName);
             }
-            else if (parsed[i] == "GOOD")
+            else if (System.Text.RegularExpressions.Regex.IsMatch(parsed[i], "^{GOOD}"))
             {
                 string text = "";
 
-                int index = this.random.Next(goodNeeds.Count) - 1;
+                if (goodNeeds.Count > 0)
+                {
+                    int index = goodNeeds.Count >= 1 ? this.random.Next(goodNeeds.Count) - 1 : 0;
+                    int count = 0;
 
-                // Pick two randow good dialogue
-                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{goodNeeds[index]}"))
-                {
-                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{goodNeeds[index]}"].GetDialogue(DialogueOutputOption.Good);
+                    // Pick at least two randow good dialogue
+                    // Unless there is only one 
+                    while (index >= 0 && count < 2)
+                    {
+                        text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{goodNeeds[index]}"].GetDialogue(DialogueOutputOption.Good);
+                        index--;
+                        count++;
+                    }
                 }
-                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{goodNeeds[index]}"))
+                
+                // In case no dialogue found
+                if (text == "")
                 {
-                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{goodNeeds[index+1]}"].GetDialogue(DialogueOutputOption.Good);
+                    text = "I have nothing to say about this...";
+                }
+
+                parsed[i] = parsed[i].Replace("{GOOD}", text);
+            }
+            else if (System.Text.RegularExpressions.Regex.IsMatch(parsed[i], "^{BAD}"))
+            {
+                string text = "";
+
+                if (badNeeds.Count > 0)
+                {
+                    int index = badNeeds.Count > 1 ? this.random.Next(badNeeds.Count) : 0;
+                    int count = 0;
+
+                    // Pick at least two randow good dialogue
+                    // Unless there is only one
+                    while (index >= 0 && count < 2)
+                    {
+                        text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{badNeeds[index]}"].GetDialogue(DialogueOutputOption.Bad);
+                        index--;
+                        count++;
+                    }
                 }
 
                 // In case no dialogue found
@@ -174,22 +205,22 @@ public class NPCDialogueGenerator : MonoBehaviour
                     text = "I have nothing to say about this...";
                 }
 
-                parsed[i] = text;
+                parsed[i] = parsed[i].Replace("{BAD}", text);
             }
-            else if (parsed[i] == "BAD")
+            else if(badNeeds.Count > 0 && System.Text.RegularExpressions.Regex.IsMatch(parsed[i], "^{HINT}"))
             {
                 string text = "";
 
-                int index = this.random.Next(badNeeds.Count) - 1;
+                int index = badNeeds.Count > 1 ? this.random.Next(badNeeds.Count) : 0;
+                int count = 0;
 
-                // Pick two randow good dialogue
-                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{badNeeds[index]}"))
+                // Pick at least two randow good dialogue
+                // Unless there is only one
+                while (index >= 0 && count < 2)
                 {
-                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{badNeeds[index]}"].GetDialogue(DialogueOutputOption.Bad);
-                }
-                if (this.specieseNeedDialogoues.ContainsKey($"{population.species.SpeciesName}-{badNeeds[index]}"))
-                {
-                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{badNeeds[index + 1]}"].GetDialogue(DialogueOutputOption.Bad);
+                    text += this.specieseNeedDialogoues[$"{population.species.SpeciesName}-{badNeeds[index]}"].GetDialogue(DialogueOutputOption.Hint);
+                    index--;
+                    count++;
                 }
 
                 // In case no dialogue found
@@ -198,13 +229,8 @@ public class NPCDialogueGenerator : MonoBehaviour
                     text = "I have nothing to say about this...";
                 }
 
-                parsed[i] = text;
+                parsed[i] = parsed[i].Replace("{HINT}", text);
             }
-            else if (parsed[i] == "{" || parsed[i] == "}")
-            {
-                parsed.RemoveAt(i);
-            }
-
         }
 
         return string.Join(" ", parsed);
