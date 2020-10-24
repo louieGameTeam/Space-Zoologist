@@ -79,7 +79,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private void RegisterWithSurvivalObjectives(Population population)
     {
-        Debug.Log(population.gameObject.name + " attempting to update survivial objective");
+        Debug.Log(population.gameObject.name + " attempting to update survival objective");
         foreach (Objective objective in this.mainObjectives)
         {
             if (objective.GetType() == typeof(SurvivalObjective))

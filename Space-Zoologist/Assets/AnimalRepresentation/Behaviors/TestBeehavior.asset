@@ -9,17 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3721cfe44167b904ab7e8232ec8720e8, type: 3}
+  m_Script: {fileID: 11500000, guid: cec441587ae331e418e270f49db7e10e, type: 3}
   m_Name: TestBeehavior
   m_EditorClassIdentifier: 
   behaviorData:
     behaviorName: 
-    behaviorTypes: 
-    priority: 0
-  maxAffectedNumber: 999
-  maxAffectedPortion: 1
-  numberTriggerdPerLoop: 1
-  behaviorPatterns:
-  - {fileID: 3332570452202527147, guid: f3a0a503e22dd78489dcc413c580791a, type: 3}
-  refreshPeriod: 1
-  elapsedTime: 0
+  numberOfAnimalsRequired: 1
+  behaviorPatterns: []

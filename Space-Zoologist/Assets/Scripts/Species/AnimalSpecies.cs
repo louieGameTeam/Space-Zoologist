@@ -55,9 +55,9 @@ public class AnimalSpecies : ScriptableObject
         return needs;
     }
 
-    public List<SpecieBehaviorTrigger> GetBehaviors()
+    public List<PopulationBehavior> GetBehaviors()
     {
-        List<SpecieBehaviorTrigger> behaviors = new List<SpecieBehaviorTrigger>();
+        List<PopulationBehavior> behaviors = new List<PopulationBehavior>();
         foreach (NeedTypeConstructData needData in needsList)
         {
             foreach (NeedConstructData need in needData.Needs)
@@ -74,14 +74,14 @@ public class AnimalSpecies : ScriptableObject
         return behaviors;
     }
 
-    public Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> SetupBehaviors(Dictionary<string, Need> needs)
+    public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> SetupBehaviors(Dictionary<string, Need> needs)
     {
-        Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> needBehaviorDict = new Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>>();
+        Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviorDict = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
         foreach (NeedTypeConstructData needData in needsList)
         {
             foreach (NeedConstructData need in needData.Needs)
             {
-                Dictionary<NeedCondition, SpecieBehaviorTrigger> needBehaviors = new Dictionary<NeedCondition, SpecieBehaviorTrigger>();
+                Dictionary<NeedCondition, PopulationBehavior> needBehaviors = new Dictionary<NeedCondition, PopulationBehavior>();
                 foreach (NeedBehavior needBehavior in need.Conditions)
                 {
                     if (!needBehaviors.ContainsKey(needBehavior.Condition))

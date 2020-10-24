@@ -26,49 +26,7 @@ public class AnimalBehaviorTrigger : ScriptableObject
         behaviorData.behaviorName = this.GetType().ToString();
         behaviorData.ForceExitCallback = OnForceExit;
         stepCompletedCallback = OnStepCompleted; // Setup Callback
-        // Unlike Specie triggers, Animal triggers determine if itself is free
-        Availability availability = IsAbleToEnter(animal);
-        switch (IsAbleToEnter(animal))
-        {
-            case Availability.Override:
-                animal.GetComponent<AnimalBehaviorManager>().ForceExit();
-                break;
-            case Availability.Occupied:
-                return;
-            default:
-                break;
-        }
         Initialize(animal);
-    }
-    /// <summary>
-    /// Determine animal's availability W.R.T this behavior
-    /// </summary>
-    /// <param name="animal"></param>
-    /// <returns></returns>
-    private Availability IsAbleToEnter(GameObject animal)
-    {
-        List<BehaviorData> activeBehaviors = animal.GetComponent<AnimalBehaviorManager>().activeBehaviors;
-        if (activeBehaviors.Count == 0) //No behavior
-        {
-            return Availability.Free;
-        }
-        if (BehaviorUtils.IsBehaviorConflicting(activeBehaviors, behaviorData)) // Determine if behavior is conflicting
-        {
-            bool isOverriding = true;
-            foreach (BehaviorData animalBehaviorData in activeBehaviors)
-            {
-                if (animalBehaviorData.priority > behaviorData.priority) // Add lower priority to list
-                {
-                    isOverriding = false;
-                    return Availability.Occupied;
-                }
-            }
-            if (isOverriding)
-            {
-                return Availability.Override;
-            }
-        }
-        return Availability.Concurrent;
     }
     /// <summary>
     /// Initialization, Adding animal to dictionary, and add behavior data to animal behavior manager

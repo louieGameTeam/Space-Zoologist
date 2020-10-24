@@ -8,14 +8,14 @@ public class BehaviorExecutionData
     public int currentBehaviorIndex = 0;
     public int avaliableAnimalCount = 1;
     public Queue<KeyValuePair<DequeueCoordinatedBehavior, GameObject>> QueuedCoordinatedBehaviorsToInitiators = new Queue<KeyValuePair<DequeueCoordinatedBehavior, GameObject>>();
-    public SpecieBehaviorTrigger pendingBehavior = null; // filled with behavior if the corresponding gameobject is initiating a coordinated behavior
+    public PopulationBehavior pendingBehavior = null; // filled with behavior if the corresponding gameobject is initiating a coordinated behavior
     public List<GameObject> cooperatingAnimals = new List<GameObject>();
-    public List<SpecieBehaviorTrigger> behaviorsToSkip = new List<SpecieBehaviorTrigger>();// Avoids behaviors involving multiple animals to be displayed more frequent than usual
+    public List<PopulationBehavior> behaviorsToSkip = new List<PopulationBehavior>();// Avoids behaviors involving multiple animals to be displayed more frequent than usual
     public BehaviorExecutionData(int behaviorIndex)
     {
         currentBehaviorIndex = behaviorIndex;
     }
-    public bool QueueBehavior(DequeueCoordinatedBehavior dequeueCoordinatedBehavior, SpecieBehaviorTrigger specieBehaviorTrigger, GameObject initiator, int maxQueueLength)
+    public bool QueueBehavior(DequeueCoordinatedBehavior dequeueCoordinatedBehavior, PopulationBehavior specieBehaviorTrigger, GameObject initiator, int maxQueueLength)
     {
         if (QueuedCoordinatedBehaviorsToInitiators.Count <= maxQueueLength)
         {
@@ -26,11 +26,10 @@ public class BehaviorExecutionData
         }
         return false;
     }
-    public SpecieBehaviorTrigger NextBehavior(List<SpecieBehaviorTrigger> behaviors, SpecieBehaviorTrigger defaultBehavior)
+    public PopulationBehavior NextBehavior(List<PopulationBehavior> behaviors, PopulationBehavior defaultBehavior)
     {
         if (QueuedCoordinatedBehaviorsToInitiators.Count != 0)
         {
-            Debug.Log("queued");
             KeyValuePair<DequeueCoordinatedBehavior, GameObject> keyValuePair = QueuedCoordinatedBehaviorsToInitiators.Dequeue();
             keyValuePair.Key.Invoke(keyValuePair.Value);
             return null;
@@ -41,7 +40,6 @@ public class BehaviorExecutionData
             currentBehaviorIndex = 0;// Start another loop if finished list OR list reduced
             if (behaviors.Count == 0)
             {
-                Debug.LogError("Behavior list is empty, entering default behavior");
                 return defaultBehavior;
             }
         }

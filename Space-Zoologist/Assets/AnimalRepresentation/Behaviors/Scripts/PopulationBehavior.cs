@@ -4,22 +4,15 @@ using UnityEngine;
 
 // For creating more behaviors, inherit like how IdleRandomTrigger is setup
 public delegate void StepCompletedCallBack(GameObject gameObject, List<GameObject> gameObjects);
-public class SpecieBehaviorTrigger : ScriptableObject
+public class PopulationBehavior : ScriptableObject
 {
     public BehaviorData behaviorData;
-    public int maxAffectedNumber = default;
-    [Range(0, 1)]
-    public float maxAffectedPortion = default;
-    public int numberTriggerdPerLoop = 1;
+    public int numberOfAnimalsRequired = 1;
     public List<BehaviorPattern> behaviorPatterns = default;
     protected Dictionary<GameObject, int> animalsToSteps = new Dictionary<GameObject, int>();
     protected StepCompletedCallBack stepCompletedCallback;
     protected StepCompletedCallBack alternativeCallback;
     protected BehaviorCompleteCallback behaviorCompleteCallback;
-    [SerializeField]
-    private float refreshPeriod = 3;
-    [SerializeField]
-    private float elapsedTime = 0;
     public void AssignCallback(BehaviorCompleteCallback callback)
     {
         behaviorCompleteCallback = callback;
@@ -30,27 +23,18 @@ public class SpecieBehaviorTrigger : ScriptableObject
     /// <param name="avalabilityToAnimals"></param>
     public void EnterBehavior(List<GameObject> animals)
     {
-        behaviorData.behaviorName = this.GetType().ToString();
+        behaviorData.behaviorName = this.name;
         behaviorData.ForceExitCallback = OnForceExit;
         stepCompletedCallback = OnStepCompleted; // Setup Callback
         alternativeCallback = OnAlternativeExit;
 
-        if (animals.Count >= numberTriggerdPerLoop)
+        if (animals.Count >= numberOfAnimalsRequired)
         {
             foreach (GameObject animal in animals)
             {
                 Initialize(animal, animals);
             }
         }
-    }
-    /// <summary>
-    /// Select animals to process, if not selecting specific animals, use BehaviorUtils.SelectAnimals for fast selection select
-    /// </summary>
-    /// <param name="avalabilityToAnimals"></param>
-    /// <returns></returns>
-    protected virtual List<GameObject> AnimalSelection (Dictionary<Availability, List<GameObject>> avalabilityToAnimals) // select all animals that is supposed to enter the behavior
-    {
-        return BehaviorUtils.SelectAnimals(this.numberTriggerdPerLoop, avalabilityToAnimals);
     }
     /// <summary>
     /// Initialization, mainly giving animals information of animals cooperating with them to perform a behavior

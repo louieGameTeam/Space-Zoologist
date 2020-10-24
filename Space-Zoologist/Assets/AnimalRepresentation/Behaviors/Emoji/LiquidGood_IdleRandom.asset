@@ -9,17 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9657db3234c398e4ea867aaa530b6cb4, type: 3}
+  m_Script: {fileID: 11500000, guid: cec441587ae331e418e270f49db7e10e, type: 3}
   m_Name: LiquidGood_IdleRandom
   m_EditorClassIdentifier: Assembly-CSharp::IdleRandomTrigger
   behaviorData:
     behaviorName: IdleRandomBehavior
-    behaviorTypes: 0100000003000000
-    priority: 0
-  maxAffectedNumber: 3
-  maxAffectedPortion: 1
-  numberTriggerdPerLoop: 1
+  numberOfAnimalsRequired: 1
   behaviorPatterns:
   - {fileID: 6517820211179143171, guid: ce74d3c179c064bf7b63434c5c1b004b, type: 3}
-  refreshPeriod: 3
-  elapsedTime: 2.9969647

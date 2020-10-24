@@ -34,7 +34,7 @@ public class BehaviorPatternUpdater : MonoBehaviour
     {
         // Temp
         PopulationBehaviorManager populationBehaviorManager = FindObjectOfType<PopulationBehaviorManager>();
-        foreach (SpecieBehaviorTrigger behaviorTrigger1 in populationBehaviorManager.tempBehaviors)
+        foreach (PopulationBehavior behaviorTrigger1 in populationBehaviorManager.tempBehaviors)
         {
             foreach (BehaviorPattern behaviorPattern in behaviorTrigger1.behaviorPatterns)
             {
@@ -42,7 +42,7 @@ public class BehaviorPatternUpdater : MonoBehaviour
             }
         }
         // Register unique behaviors
-        foreach (SpecieBehaviorTrigger behaviorTrigger in population.Species.GetBehaviors())
+        foreach (PopulationBehavior behaviorTrigger in population.Species.GetBehaviors())
         {
             foreach (BehaviorPattern behaviorPattern in behaviorTrigger.behaviorPatterns)
             {
@@ -50,7 +50,7 @@ public class BehaviorPatternUpdater : MonoBehaviour
             }
         }
         // Register default behaviors
-        foreach (SpecieBehaviorTrigger behaviorTrigger in population.DefaultBehaviors)
+        foreach (PopulationBehavior behaviorTrigger in population.DefaultBehaviors)
         {
             foreach (BehaviorPattern behaviorPattern in behaviorTrigger.behaviorPatterns)
             {

@@ -8,7 +8,5 @@ public enum BehaviorType { None, Movement, ColorChange, LayerOverlay, Animation,
 public class BehaviorData
 {
     public string behaviorName;
-    public List<BehaviorType> behaviorTypes;
-    public int priority;
     public ForceExitCallback ForceExitCallback;
 }

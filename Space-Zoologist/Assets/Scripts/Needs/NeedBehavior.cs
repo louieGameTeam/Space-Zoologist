@@ -6,7 +6,7 @@ using UnityEngine;
 public class NeedBehavior
 {
     [SerializeField] public NeedCondition Condition = default;
-    [SerializeField] public SpecieBehaviorTrigger Behavior = default;
+    [SerializeField] public PopulationBehavior Behavior = default;
 
     public NeedBehavior(NeedCondition needCondition)
     {

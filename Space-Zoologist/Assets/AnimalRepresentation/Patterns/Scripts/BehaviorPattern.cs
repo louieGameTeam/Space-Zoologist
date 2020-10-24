@@ -30,7 +30,7 @@ public class BehaviorPattern : MonoBehaviour
         animalData.alternativeCallback = alternativeCallback;
         animalData.collaboratingAnimals = collaboratingAnimals;
         // Debug.Log(gameObject.name + " is trying to be initial");
-        Debug.Log((this.GetType().ToString(),animal));
+        // Debug.Log((this.GetType().ToString(),animal));
         AnimalsToAnimalData.Add(animal, animalData);
         EnterPattern(animal, animalData);
     }

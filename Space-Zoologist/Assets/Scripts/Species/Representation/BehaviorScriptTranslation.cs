@@ -5,5 +5,5 @@
 public class BehaviorScriptTranslation
 {
     public NeedType NeedType;
-    public SpecieBehaviorTrigger Behavior;
+    public PopulationBehavior Behavior;
 }

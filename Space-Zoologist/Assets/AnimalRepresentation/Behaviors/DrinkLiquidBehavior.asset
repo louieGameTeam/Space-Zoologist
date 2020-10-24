@@ -9,18 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533abe468d65d44deb0cb1b5e48c7d73, type: 3}
+  m_Script: {fileID: 11500000, guid: cec441587ae331e418e270f49db7e10e, type: 3}
   m_Name: DrinkLiquidBehavior
   m_EditorClassIdentifier: 
   behaviorData:
-    behaviorName: DrinkLiquidBehavior
-    behaviorTypes: 0100000004000000
-    priority: 2
-  maxAffectedNumber: 1
-  maxAffectedPortion: 1
-  numberTriggerdPerLoop: 1
-  behaviorPatterns:
-  - {fileID: 2588004693997978585, guid: cc01b83530e4e48ad9b0cf6f5b94c056, type: 3}
-  - {fileID: 8863805409568424173, guid: 5935538be12dee84fa0cf4f3630d2247, type: 3}
-  refreshPeriod: 3
-  elapsedTime: 0.9101155
+    behaviorName: 
+  numberOfAnimalsRequired: 1
+  behaviorPatterns: []
