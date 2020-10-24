@@ -7,25 +7,10 @@ using System;
 public class AnimalBehaviorManager : MonoBehaviour
 {
     [Header("For testing purposes")]
-    public List<BehaviorData> activeBehaviors = new List<BehaviorData>();
+    public BehaviorData activeBehavior = null;
     public BehaviorPattern activeBehaviorPattern = null;
-    [SerializeField]
-    private List<AnimalBehaviorTrigger> animalBehaviorTriggers = new List<AnimalBehaviorTrigger>();
     // TODO add shader animation support
-    [SerializeField]
-    private AnimalBehaviorTrigger startUpTrigger = default; // Trigger that activates once at wake
 
-    private void Awake()
-    {
-        foreach (AnimalBehaviorTrigger animalBehavior in animalBehaviorTriggers)
-        {
-            //TODO subscribe to all callbacks and events
-        }
-        if (startUpTrigger)
-        {
-            startUpTrigger.EnterBehavior(this.gameObject);
-        }
-    }
     /// <summary>
     /// Adds a pattern to this animal
     /// </summary>
@@ -44,11 +29,8 @@ public class AnimalBehaviorManager : MonoBehaviour
     public void ForceExit(bool isDriven = false)
     {
         activeBehaviorPattern.QueueForForceExit(this.gameObject, isDriven);
-        for (int i=activeBehaviors.Count - 1; i>=0; i--)
-        {
-            activeBehaviors[i].ForceExitCallback.Invoke(this.gameObject);
-        }
-        activeBehaviors.Clear();
+        activeBehavior.ForceExitCallback.Invoke(this.gameObject);
+        activeBehavior = null;
     }
 
 }

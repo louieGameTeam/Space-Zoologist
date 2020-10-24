@@ -45,7 +45,7 @@ public class PopulationBehavior : ScriptableObject
     {
         List<GameObject> otherAnimals = new List<GameObject>(selectedAnimals);
         otherAnimals.Remove(animal);
-        animal.GetComponent<AnimalBehaviorManager>().activeBehaviors.Add(behaviorData);
+        animal.GetComponent<AnimalBehaviorManager>().activeBehavior = behaviorData;
         animalsToSteps.Add(animal, 0);
         ProceedToNext(animal, otherAnimals);
     }
@@ -79,7 +79,7 @@ public class PopulationBehavior : ScriptableObject
         if (animalsToSteps.ContainsKey(animal))
         {
             animalsToSteps.Remove(animal);
-            animal.GetComponent<AnimalBehaviorManager>().activeBehaviors.Remove(behaviorData);
+            animal.GetComponent<AnimalBehaviorManager>().activeBehavior = null;
             behaviorCompleteCallback.Invoke(animal);
         }
     }

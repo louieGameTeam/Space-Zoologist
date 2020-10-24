@@ -77,7 +77,6 @@ public class PopulationBehaviorManager : MonoBehaviour
                         {
                             animalToExecutionData[initiator].cooperatingAnimals.Add(animalsToData.Key);
                             numFound++;
-                            Debug.Log(numFound);
                             if(numFound == numToFind)
                             {
                                 return;
