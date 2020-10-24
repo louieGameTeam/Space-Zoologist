@@ -30,6 +30,7 @@ public class BehaviorPattern : MonoBehaviour
         animalData.alternativeCallback = alternativeCallback;
         animalData.collaboratingAnimals = collaboratingAnimals;
         // Debug.Log(gameObject.name + " is trying to be initial");
+        Debug.Log((this.GetType().ToString(),animal));
         AnimalsToAnimalData.Add(animal, animalData);
         EnterPattern(animal, animalData);
     }
@@ -110,7 +111,7 @@ public class BehaviorPattern : MonoBehaviour
     /// <param name="isCallingCallback">Set to false when force exiting without completion, leave as default</param>
     protected virtual void ExitPattern(GameObject animal, bool callCallback = true)
     {
-        animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
+        animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
         StepCompletedCallBack callback = AnimalsToAnimalData[animal].callback;
         List<GameObject> collab = AnimalsToAnimalData[animal].collaboratingAnimals;
         AnimalsToAnimalData.Remove(animal);
@@ -121,7 +122,7 @@ public class BehaviorPattern : MonoBehaviour
     }
     protected virtual void ExitPatternAlternative(GameObject animal)
     {
-        animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns.Remove(this);
+        animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
         AnimalsToAnimalData[animal].alternativeCallback?.Invoke(animal, AnimalsToAnimalData[animal].collaboratingAnimals);
         AnimalsToAnimalData.Remove(animal);
     }

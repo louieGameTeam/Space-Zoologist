@@ -11,7 +11,7 @@ public class PopulationBehaviorManager : MonoBehaviour
     public Dictionary<string, SpecieBehaviorTrigger> ActiveBehaviors = new Dictionary<string, SpecieBehaviorTrigger>();
     private Population population = default;
     [SerializeField] private Dictionary<GameObject, BehaviorExecutionData> animalToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
-    [SerializeField] private List<SpecieBehaviorTrigger> tempBehaviors = new List<SpecieBehaviorTrigger>();
+    [SerializeField] public List<SpecieBehaviorTrigger> tempBehaviors = new List<SpecieBehaviorTrigger>();
     [SerializeField] private SpecieBehaviorTrigger defaultBehavior;
     private DequeueCoordinatedBehavior DequeueCoordinatedBehavior;
     private BehaviorCompleteCallback BehaviorCompleteCallback;
@@ -44,14 +44,15 @@ public class PopulationBehaviorManager : MonoBehaviour
                 tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
                 continue;
             }
-            QueueGroupBehavior(animal, animalToExecutionData[animal].currentBehaviorIndex, tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].numberTriggerdPerLoop - 1);
+            QueueGroupBehavior(animal, animalToExecutionData[animal].currentBehaviorIndex, tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].numberTriggerdPerLoop);
         }
     }
     private void QueueGroupBehavior(GameObject initiator, int behaviorIndex, int numToFind)
     {
         animalToExecutionData[initiator].pendingBehavior = tempBehaviors[behaviorIndex];
         animalToExecutionData[initiator].cooperatingAnimals.Add(initiator);// Add self to list
-        int numFound = 0;
+        Debug.Log(numToFind);
+        int numFound = 1;
         int maxQueueLength = 0;
         while (numFound != numToFind)
         {
@@ -78,9 +79,10 @@ public class PopulationBehaviorManager : MonoBehaviour
                         {
                             animalToExecutionData[initiator].cooperatingAnimals.Add(animalsToData.Key);
                             numFound++;
+                            Debug.Log(numFound);
                             if(numFound == numToFind)
                             {
-                                break;
+                                return;
                             }
                         }
                     }
@@ -94,6 +96,7 @@ public class PopulationBehaviorManager : MonoBehaviour
         animalToExecutionData[initiator].avaliableAnimalCount++;
         if (animalToExecutionData[initiator].avaliableAnimalCount == animalToExecutionData[initiator].pendingBehavior.numberTriggerdPerLoop) //last animal ready will trigger the behavior
         {
+            Debug.Log(("enough!", animalToExecutionData[initiator].cooperatingAnimals.Count, animalToExecutionData[initiator].cooperatingAnimals[0]));
             animalToExecutionData[initiator].avaliableAnimalCount = 1;
             animalToExecutionData[initiator].pendingBehavior.EnterBehavior(animalToExecutionData[initiator].cooperatingAnimals);
             animalToExecutionData[initiator].cooperatingAnimals.Clear();
@@ -101,15 +104,20 @@ public class PopulationBehaviorManager : MonoBehaviour
     }
     private void OnBehaviorComplete(GameObject animal)
     {
-        animalToExecutionData[animal].NextBehavior(tempBehaviors, defaultBehavior);
-        if (tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].numberTriggerdPerLoop == 1)
+        Debug.Log(("next behavior", animal));
+        SpecieBehaviorTrigger behavior = animalToExecutionData[animal].NextBehavior(tempBehaviors, defaultBehavior);
+        if (behavior == null)
+        {
+            return;
+        }
+        if (behavior.numberTriggerdPerLoop == 1)
         {
             List<GameObject> animals = new List<GameObject>();
             animals.Add(animal);
             tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
             return;
         }
-        QueueGroupBehavior(animal, animalToExecutionData[animal].currentBehaviorIndex, tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].numberTriggerdPerLoop);
+        QueueGroupBehavior(animal, animalToExecutionData[animal].currentBehaviorIndex, behavior.numberTriggerdPerLoop);
     }
     // If there's a bad condition behavior, initialize to that. Otherwise initialize to null.
     public void InitializeBehaviors(Dictionary<string, Need> _needs)

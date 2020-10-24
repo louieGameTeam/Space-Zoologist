@@ -30,6 +30,7 @@ public class BehaviorExecutionData
     {
         if (QueuedCoordinatedBehaviorsToInitiators.Count != 0)
         {
+            Debug.Log("queued");
             KeyValuePair<DequeueCoordinatedBehavior, GameObject> keyValuePair = QueuedCoordinatedBehaviorsToInitiators.Dequeue();
             keyValuePair.Key.Invoke(keyValuePair.Value);
             return null;

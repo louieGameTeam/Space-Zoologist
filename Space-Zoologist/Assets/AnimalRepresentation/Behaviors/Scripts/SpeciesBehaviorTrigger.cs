@@ -35,33 +35,13 @@ public class SpecieBehaviorTrigger : ScriptableObject
         stepCompletedCallback = OnStepCompleted; // Setup Callback
         alternativeCallback = OnAlternativeExit;
 
-        if (animals.Count > 0)
+        if (animals.Count >= numberTriggerdPerLoop)
         {
             foreach (GameObject animal in animals)
             {
                 Initialize(animal, animals);
             }
         }
-    }
-    /// <summary>
-    /// Called every update Return true if the conditions have been satisfied for this behavior to be triggered
-    /// </summary>
-    /// <returns></returns>
-    public virtual bool IsConditionSatisfied()
-    {
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime > refreshPeriod)
-        {
-            return true;
-        }
-        return false;
-    }
-    /// <summary>
-    /// Called after IsConditionSatisfied() returns true. Reset condition satisfied if necessary
-    /// </summary>
-    public virtual void ResetCondition()
-    {
-        elapsedTime = 0;
     }
     /// <summary>
     /// Select animals to process, if not selecting specific animals, use BehaviorUtils.SelectAnimals for fast selection select

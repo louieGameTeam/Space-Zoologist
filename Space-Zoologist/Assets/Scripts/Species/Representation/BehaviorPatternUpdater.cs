@@ -24,14 +24,23 @@ public class BehaviorPatternUpdater : MonoBehaviour
     {
         if (!behaviorPatterns.Contains(behaviorPattern))
         {
+            behaviorPattern.SetupDependencies(this.GridSystem);
             behaviorPattern.StartUp();
             behaviorPatterns.Add(behaviorPattern);
-            behaviorPattern.SetupDependencies(this.GridSystem);
         }
     }
 
     public void RegisterPopulation(Population population)
     {
+        // Temp
+        PopulationBehaviorManager populationBehaviorManager = FindObjectOfType<PopulationBehaviorManager>();
+        foreach (SpecieBehaviorTrigger behaviorTrigger1 in populationBehaviorManager.tempBehaviors)
+        {
+            foreach (BehaviorPattern behaviorPattern in behaviorTrigger1.behaviorPatterns)
+            {
+                this.RegisterPattern(behaviorPattern);
+            }
+        }
         // Register unique behaviors
         foreach (SpecieBehaviorTrigger behaviorTrigger in population.Species.GetBehaviors())
         {

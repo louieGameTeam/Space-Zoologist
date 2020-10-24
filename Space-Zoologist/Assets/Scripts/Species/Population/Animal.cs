@@ -47,7 +47,7 @@ public class Animal : MonoBehaviour
         }
         this.MovementData.MovementStatus = Movement.walking;
         this.UpdateAnimations();
-        if (this.AnimalBehaviorManager.activeBehaviorPatterns.Count == 0)
+        if (this.AnimalBehaviorManager.activeBehaviorPattern == null)
         {
             this.MovementData.MovementStatus = Movement.idle;
         }
