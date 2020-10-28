@@ -111,6 +111,10 @@ public class PopulationBehaviorManager : MonoBehaviour
     }
     private void OnBehaviorComplete(GameObject animal)
     {
+        if (!animalsToExecutionData.ContainsKey(animal))// Discriminate force exited callbacks from removing animals
+        {
+            return;
+        }
         PopulationBehavior behavior = animalsToExecutionData[animal].NextBehavior(tempBehaviors, defaultBehavior);
         if (behavior == null)
         {
@@ -124,6 +128,23 @@ public class PopulationBehaviorManager : MonoBehaviour
             return;
         }
         QueueGroupBehavior(animal, animalsToExecutionData[animal].currentBehaviorIndex, behavior.numberOfAnimalsRequired);
+    }
+    public void RemoveAnimal(GameObject animal)
+    {
+        foreach (GameObject cooperatingAnimal in animalsToExecutionData[animal].cooperatingAnimals)
+        {
+            if (animal != cooperatingAnimal)
+            {
+                AnimalBehaviorManager behaviorManager = cooperatingAnimal.GetComponent<AnimalBehaviorManager>();
+                if (behaviorManager.activeBehavior == null)
+                {
+                    OnBehaviorComplete(animal);
+                    continue;
+                }
+            }
+        }
+        animalsToExecutionData.Remove(animal);
+        animal.GetComponent<AnimalBehaviorManager>().ForceExit();
     }
     // If there's a bad condition behavior, initialize to that. Otherwise initialize to null.
     public void InitializeBehaviors(Dictionary<string, Need> _needs)

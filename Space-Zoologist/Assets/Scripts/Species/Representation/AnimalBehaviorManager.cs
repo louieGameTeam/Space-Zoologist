@@ -28,9 +28,12 @@ public class AnimalBehaviorManager : MonoBehaviour
     /// <param name="isDriven">A bool used to call all partners to stop, but do not reference its self back, just leave as default</param>
     public void ForceExit(bool isDriven = false)
     {
-        activeBehaviorPattern.QueueForForceExit(this.gameObject, isDriven);
-        activeBehavior.ForceExitCallback.Invoke(this.gameObject);
-        activeBehavior = null;
+        if (activeBehaviorPattern != null) // Happens when cooperating animal gets removed
+        {
+            activeBehaviorPattern.QueueForForceExit(this.gameObject, isDriven);
+            activeBehavior.ForceExitCallback.Invoke(this.gameObject);
+            activeBehavior = null;
+        }
     }
 
 }
