@@ -15,16 +15,11 @@ public class BehaviorExecutionData
     {
         currentBehaviorIndex = behaviorIndex;
     }
-    public bool QueueBehavior(DequeueCoordinatedBehavior dequeueCoordinatedBehavior, PopulationBehavior specieBehaviorTrigger, GameObject initiator, int maxQueueLength)
+    public void QueueBehavior(DequeueCoordinatedBehavior dequeueCoordinatedBehavior, PopulationBehavior specieBehaviorTrigger, GameObject initiator, int maxQueueLength)
     {
-        if (pendingBehavior == null && QueuedCoordinatedBehaviorsToInitiators.Count <= maxQueueLength) // Prevent animals waiting for each other
-        {
-            KeyValuePair<DequeueCoordinatedBehavior, GameObject> newPair = new KeyValuePair<DequeueCoordinatedBehavior, GameObject>(dequeueCoordinatedBehavior, initiator);
-            behaviorsToSkip.Add(specieBehaviorTrigger);
-            QueuedCoordinatedBehaviorsToInitiators.Enqueue(newPair);
-            return true;
-        }
-        return false;
+        KeyValuePair<DequeueCoordinatedBehavior, GameObject> newPair = new KeyValuePair<DequeueCoordinatedBehavior, GameObject>(dequeueCoordinatedBehavior, initiator);
+        behaviorsToSkip.Add(specieBehaviorTrigger);
+        QueuedCoordinatedBehaviorsToInitiators.Enqueue(newPair);
     }
     public PopulationBehavior NextBehavior(List<PopulationBehavior> behaviors, PopulationBehavior defaultBehavior)
     {

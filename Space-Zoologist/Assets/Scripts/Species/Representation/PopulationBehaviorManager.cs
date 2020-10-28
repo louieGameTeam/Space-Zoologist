@@ -9,7 +9,7 @@ public class PopulationBehaviorManager : MonoBehaviour
 {
     public Dictionary<string, PopulationBehavior> ActiveBehaviors = new Dictionary<string, PopulationBehavior>();
     private Population population = default;
-    [SerializeField] public Dictionary<GameObject, BehaviorExecutionData> animalToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
+    [SerializeField] public Dictionary<GameObject, BehaviorExecutionData> animalsToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
     [SerializeField] public List<PopulationBehavior> tempBehaviors = new List<PopulationBehavior>();
     [SerializeField] private PopulationBehavior defaultBehavior;
     private DequeueCoordinatedBehavior DequeueCoordinatedBehavior;
@@ -32,27 +32,27 @@ public class PopulationBehaviorManager : MonoBehaviour
             {
                 j = 0;
             }
-            animalToExecutionData.Add(this.population.AnimalPopulation[i], new BehaviorExecutionData(j));
+            animalsToExecutionData.Add(this.population.AnimalPopulation[i], new BehaviorExecutionData(j));
         }
         foreach (GameObject animal in this.population.AnimalPopulation)
         {
-            if (tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].numberOfAnimalsRequired == 1)
+            if (tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].numberOfAnimalsRequired == 1)
             {
                 List<GameObject> animals = new List<GameObject>();
                 animals.Add(animal);
-                tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
+                tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
                 continue;
             }
-            QueueGroupBehavior(animal, animalToExecutionData[animal].currentBehaviorIndex, tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].numberOfAnimalsRequired);
+            QueueGroupBehavior(animal, animalsToExecutionData[animal].currentBehaviorIndex, tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].numberOfAnimalsRequired);
         }
     }
     private void QueueGroupBehavior(GameObject initiator, int behaviorIndex, int numToFind)
     {
-        animalToExecutionData[initiator].pendingBehavior = tempBehaviors[behaviorIndex];
-        animalToExecutionData[initiator].cooperatingAnimals.Add(initiator);// Add self to list
+        animalsToExecutionData[initiator].pendingBehavior = tempBehaviors[behaviorIndex];
+        animalsToExecutionData[initiator].cooperatingAnimals.Add(initiator);// Add self to list
         int numFound = 1;
         int maxQueueLength = 0;
-        while (numFound != numToFind || numToFind > animalToExecutionData.Count)
+        while (numFound != numToFind || numToFind > animalsToExecutionData.Count)
         {
             if (maxQueueLength == 5) //Queue too long, skip Group behavior. The queue length actually stabilizes between 0 and 2, but just in case it exceeds for whatever reason
             {
@@ -60,25 +60,32 @@ public class PopulationBehaviorManager : MonoBehaviour
             }
             for (int i = 1; i < tempBehaviors.Count; i++) //Prioritizes preceding behaviors to avoid clustering of behaviors
             {
-                int currentIndex = behaviorIndex - i - 1;
+                int currentIndex = behaviorIndex - i;
                 if (currentIndex < 0)
                 {
                     currentIndex += tempBehaviors.Count();
                 }
-                foreach (KeyValuePair<GameObject, BehaviorExecutionData> animalsToData in animalToExecutionData)
+                foreach (KeyValuePair<GameObject, BehaviorExecutionData> animalToData in animalsToExecutionData)
                 {
-                    if (animalsToData.Key == initiator)//Skip self(It will not find itself anyways, but just in case)
+                    if (animalToData.Key == initiator)//Skip self(It will not find itself anyways, but just in case)
                     {
                         continue;
                     }
-                    if (animalsToData.Value.currentBehaviorIndex == currentIndex)
+                    if (animalToData.Value.currentBehaviorIndex == currentIndex)
                     {
-                        if (animalsToData.Value.QueueBehavior(DequeueCoordinatedBehavior, tempBehaviors[behaviorIndex], initiator, maxQueueLength)) //Queue is small enough to be added
+                        if (animalToData.Value.QueuedCoordinatedBehaviorsToInitiators.Count <= maxQueueLength) //Queue is small enough to be added
                         {
-                            animalToExecutionData[initiator].cooperatingAnimals.Add(animalsToData.Key);
+                            animalsToExecutionData[initiator].cooperatingAnimals.Add(animalToData.Key);
                             numFound++;
-                            if(numFound == numToFind)
+                            if(numFound == numToFind) //When all found, queue behavior
                             {
+                                foreach (GameObject animal in animalsToExecutionData[initiator].cooperatingAnimals)
+                                {
+                                    if (animal != initiator)
+                                    {
+                                        animalsToExecutionData[animal].QueueBehavior(DequeueCoordinatedBehavior, tempBehaviors[behaviorIndex], initiator, maxQueueLength);
+                                    }
+                                }
                                 return;
                             }
                         }
@@ -88,23 +95,23 @@ public class PopulationBehaviorManager : MonoBehaviour
             maxQueueLength++;
         }
         // When not enough animal or queue too long, go to next behavior
-        animalToExecutionData[initiator].pendingBehavior = null;
-        animalToExecutionData[initiator].cooperatingAnimals.Clear();
+        animalsToExecutionData[initiator].pendingBehavior = null;
+        animalsToExecutionData[initiator].cooperatingAnimals.Clear();
         OnBehaviorComplete(initiator);
     }
     private void OnDequeue(GameObject initiator)
     {
-        animalToExecutionData[initiator].avaliableAnimalCount++;
-        if (animalToExecutionData[initiator].avaliableAnimalCount == animalToExecutionData[initiator].pendingBehavior.numberOfAnimalsRequired) //last animal ready will trigger the behavior
+        animalsToExecutionData[initiator].avaliableAnimalCount++;
+        if (animalsToExecutionData[initiator].avaliableAnimalCount == animalsToExecutionData[initiator].pendingBehavior.numberOfAnimalsRequired) //last animal ready will trigger the behavior
         {
-            animalToExecutionData[initiator].avaliableAnimalCount = 1;
-            animalToExecutionData[initiator].pendingBehavior.EnterBehavior(animalToExecutionData[initiator].cooperatingAnimals);
-            animalToExecutionData[initiator].cooperatingAnimals.Clear();
+            animalsToExecutionData[initiator].avaliableAnimalCount = 1;
+            animalsToExecutionData[initiator].pendingBehavior.EnterBehavior(animalsToExecutionData[initiator].cooperatingAnimals);
+            animalsToExecutionData[initiator].cooperatingAnimals.Clear();
         }
     }
     private void OnBehaviorComplete(GameObject animal)
     {
-        PopulationBehavior behavior = animalToExecutionData[animal].NextBehavior(tempBehaviors, defaultBehavior);
+        PopulationBehavior behavior = animalsToExecutionData[animal].NextBehavior(tempBehaviors, defaultBehavior);
         if (behavior == null)
         {
             return;
@@ -113,10 +120,10 @@ public class PopulationBehaviorManager : MonoBehaviour
         {
             List<GameObject> animals = new List<GameObject>();
             animals.Add(animal);
-            tempBehaviors[animalToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
+            tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
             return;
         }
-        QueueGroupBehavior(animal, animalToExecutionData[animal].currentBehaviorIndex, behavior.numberOfAnimalsRequired);
+        QueueGroupBehavior(animal, animalsToExecutionData[animal].currentBehaviorIndex, behavior.numberOfAnimalsRequired);
     }
     // If there's a bad condition behavior, initialize to that. Otherwise initialize to null.
     public void InitializeBehaviors(Dictionary<string, Need> _needs)
