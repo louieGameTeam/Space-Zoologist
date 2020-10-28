@@ -18,7 +18,7 @@ public class PopulationBehavior : ScriptableObject
         behaviorCompleteCallback = callback;
     }
     /// <summary>
-    /// Called every refreshPeriod
+    /// Called when animal enters behavior
     /// </summary>
     /// <param name="avalabilityToAnimals"></param>
     public void EnterBehavior(List<GameObject> animals)

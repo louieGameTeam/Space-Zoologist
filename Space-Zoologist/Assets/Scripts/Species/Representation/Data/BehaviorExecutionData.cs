@@ -17,7 +17,7 @@ public class BehaviorExecutionData
     }
     public bool QueueBehavior(DequeueCoordinatedBehavior dequeueCoordinatedBehavior, PopulationBehavior specieBehaviorTrigger, GameObject initiator, int maxQueueLength)
     {
-        if (QueuedCoordinatedBehaviorsToInitiators.Count <= maxQueueLength)
+        if (pendingBehavior == null && QueuedCoordinatedBehaviorsToInitiators.Count <= maxQueueLength) // Prevent animals waiting for each other
         {
             KeyValuePair<DequeueCoordinatedBehavior, GameObject> newPair = new KeyValuePair<DequeueCoordinatedBehavior, GameObject>(dequeueCoordinatedBehavior, initiator);
             behaviorsToSkip.Add(specieBehaviorTrigger);

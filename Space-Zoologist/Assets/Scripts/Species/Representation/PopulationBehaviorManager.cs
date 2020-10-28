@@ -9,7 +9,7 @@ public class PopulationBehaviorManager : MonoBehaviour
 {
     public Dictionary<string, PopulationBehavior> ActiveBehaviors = new Dictionary<string, PopulationBehavior>();
     private Population population = default;
-    [SerializeField] private Dictionary<GameObject, BehaviorExecutionData> animalToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
+    [SerializeField] public Dictionary<GameObject, BehaviorExecutionData> animalToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
     [SerializeField] public List<PopulationBehavior> tempBehaviors = new List<PopulationBehavior>();
     [SerializeField] private PopulationBehavior defaultBehavior;
     private DequeueCoordinatedBehavior DequeueCoordinatedBehavior;
@@ -52,9 +52,9 @@ public class PopulationBehaviorManager : MonoBehaviour
         animalToExecutionData[initiator].cooperatingAnimals.Add(initiator);// Add self to list
         int numFound = 1;
         int maxQueueLength = 0;
-        while (numFound != numToFind)
+        while (numFound != numToFind || numToFind > animalToExecutionData.Count)
         {
-            if (maxQueueLength == 5)
+            if (maxQueueLength == 5) //Queue too long, skip Group behavior. The queue length actually stabilizes between 0 and 2, but just in case it exceeds for whatever reason
             {
                 break;
             }
@@ -87,6 +87,10 @@ public class PopulationBehaviorManager : MonoBehaviour
             }
             maxQueueLength++;
         }
+        // When not enough animal or queue too long, go to next behavior
+        animalToExecutionData[initiator].pendingBehavior = null;
+        animalToExecutionData[initiator].cooperatingAnimals.Clear();
+        OnBehaviorComplete(initiator);
     }
     private void OnDequeue(GameObject initiator)
     {
