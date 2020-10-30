@@ -18,46 +18,52 @@ public class DrinkingPattern : UniversalAnimatorPattern
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
         Vector3Int currentCell = tileSystem.WorldToCell(animal.transform.position);
-        for (int i = -1; i < 2; i++)
+        for (int y = -1; y < 2; y++)
         {
-            for (int j = -1; j < 2; j++)
+            for (int x = -1; x < 2; x++)
             {
-                if (currentCell[0] + j < 0 || currentCell[1] + i < 0)
+                if (Mathf.Abs(y) + Mathf.Abs(x) > 1)
                 {
                     continue;
                 }
-                if (tileSystem.GetTerrainTileAtLocation(new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0)) == liquidTile)
+                if (tileSystem.GetTerrainTileAtLocation(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)) == liquidTile)
                 {
-                    //if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.SpeciesName.Equals(foodName))
+                    //if (GridSystem.CellGrid[currentCell[0] + x, currentCell[1] + i].Food.SpeciesName.Equals(foodName))
                     //{
-                        this.AnimatorTriggerName = GetTriggerName(i, j);
+                        this.AnimatorTriggerName = GetTriggerName(x, y);
+                    if (AnimatorTriggerName == this.Up)
+                    {
+                        print((currentCell[0]+x)+","+ (currentCell[1] +y)+":" + tileSystem.GetTerrainTileAtLocation(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)).name);
+                    }
                         base.EnterPattern(animal, animalData);
                         return;
                     //}
                 }
             }
         }
-        this.AnimatorTriggerName = this.Up;
+        Debug.LogError("no liquid2");
+        this.AnimatorTriggerName = this.Down;
         base.EnterPattern(animal, animalData);
     }
-    private string GetTriggerName(int i, int j)
+    private string GetTriggerName(int x, int y)
     {
-        if (i == 1)
-        {
-            return this.Up;
-        }
-        if (i == -1)
+        if (y == -1)
         {
             return this.Down;
         }
-        if (j == 1)
+        if (x == 1)
         {
             return this.Right;
         }
-        if (j == -1)
+        if (x == -1)
         {
             return this.Left;
         }
-        return this.Up;
+        if (y == 1)
+        {
+            return this.Up;
+        }
+        Debug.LogError("no liquid");
+        return this.Down;
     }
 }
