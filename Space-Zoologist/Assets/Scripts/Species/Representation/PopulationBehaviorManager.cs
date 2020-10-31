@@ -124,7 +124,7 @@ public class PopulationBehaviorManager : MonoBehaviour
         {
             List<GameObject> animals = new List<GameObject>();
             animals.Add(animal);
-            tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
+            behavior.EnterBehavior(animals);
             return;
         }
         QueueGroupBehavior(animal, animalsToExecutionData[animal].currentBehaviorIndex, behavior.numberOfAnimalsRequired);
