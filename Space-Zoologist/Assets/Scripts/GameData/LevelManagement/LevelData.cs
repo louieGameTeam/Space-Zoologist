@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName="LevelData", menuName="Scene Data/LevelData")]
 public class LevelData : ScriptableObject
 {
+    public Level Level = default;
     public float StartingBalance => startingBalance;
     public List<FoodSourceSpecies> FoodSourceSpecies => foodSources;
     public List<AnimalSpecies> AnimalSpecies => animalSpecies;
