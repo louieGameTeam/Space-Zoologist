@@ -30,7 +30,7 @@ public class LiquidMachine : MonoBehaviour
         this.LiquidHUDGameObject.SetActive(!this.LiquidHUDGameObject.activeSelf);
         if (this.LiquidHUDGameObject.activeSelf)
         {
-            TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(this.TileSystem.WorldToCell(this.gameObject.transform.position));
+            GameTile tile = this.TileSystem.GetTerrainTileAtLocation(this.TileSystem.WorldToCell(this.gameObject.transform.position));
             this.LiquidMachineHUD.Initialize(this.TileSystem.GetTileContentsAtLocation(this.TileSystem.WorldToCell(this.gameObject.transform.position), tile), this);
         }
     }

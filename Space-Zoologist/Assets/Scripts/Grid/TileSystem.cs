@@ -66,12 +66,12 @@ public class TileSystem : MonoBehaviour
     public List<Vector3Int> GetLiquidBodyPositions(Vector3Int vector3Int)
     {
         liquidBodyTiles.Clear();
-        TerrainTile terrainTile = GetTerrainTileAtLocation(vector3Int);
+        GameTile terrainTile = GetTerrainTileAtLocation(vector3Int);
         liquidBodyTiles.Add(vector3Int);
         GetNeighborCellLocations(vector3Int, terrainTile);
         return liquidBodyTiles;
     }
-    private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile)
+    private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
@@ -94,7 +94,7 @@ public class TileSystem : MonoBehaviour
     public void ChangeLiquidBodyComposition(Vector3Int cellLocation, float[] composition, bool isSetting)
     {
         liquidBodyTilesAndContents.Clear();
-        TerrainTile terrainTile = GetTerrainTileAtLocation(cellLocation);
+        GameTile terrainTile = GetTerrainTileAtLocation(cellLocation);
         liquidBodyTilesAndContents.Add(cellLocation);
         ChangeLiquidComposition(cellLocation, composition, terrainTile, isSetting);
         GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
@@ -107,7 +107,7 @@ public class TileSystem : MonoBehaviour
         // Invoke event
         EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellLocation);
     }
-    private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, TerrainTile tile, bool isSetting)
+    private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, GameTile tile, bool isSetting)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
@@ -122,7 +122,7 @@ public class TileSystem : MonoBehaviour
             }
         }
     }
-    private void ChangeLiquidComposition(Vector3Int cellLocation, float[] composition, TerrainTile terrainTile, bool isSetting)
+    private void ChangeLiquidComposition(Vector3Int cellLocation, float[] composition, GameTile terrainTile, bool isSetting)
     {
         if (terrainTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
         {
@@ -141,11 +141,11 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     /// <param name="cellLocation"> Position of the cell. </param>
     /// <returns></returns>
-    public TerrainTile GetTerrainTileAtLocation(Vector3Int cellLocation)
+    public GameTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
         foreach (Tilemap tilemap in tilemaps)
         {
-            var returnedTile = tilemap.GetTile<TerrainTile>(cellLocation);
+            var returnedTile = tilemap.GetTile<GameTile>(cellLocation);
             if (returnedTile != null && returnedTile.isRepresentative)
             {
                 return returnedTile;
@@ -167,7 +167,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="cellLocation"></param>
     /// <param name="tile"></param>
     /// <returns></returns>
-    public bool TileExistsAtLocation(Vector3Int cellLocation, TerrainTile tile)
+    public bool TileExistsAtLocation(Vector3Int cellLocation, GameTile tile)
     {
         return tile.targetTilemap.GetTile(cellLocation) == tile;
     }
@@ -177,7 +177,7 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     /// <param name="cellLocation"> Position of the cell. </param>
     /// <returns></returns>
-    public float[] GetTileContentsAtLocation(Vector3Int cellLocation, TerrainTile tile)
+    public float[] GetTileContentsAtLocation(Vector3Int cellLocation, GameTile tile)
     {
         if (tile != null)
         {
@@ -201,7 +201,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public List<Vector3Int> CellLocationsOfClosestTiles(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
+    public List<Vector3Int> CellLocationsOfClosestTiles(Vector3Int centerCellLocation, GameTile tile, int scanRange = 8, bool isCircleMode = false)
     {
         int[] distance3 = new int[3];
         int i = 0;
@@ -258,7 +258,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public Dictionary<float[], float> DistancesToClosestTilesOfEachBody(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
+    public Dictionary<float[], float> DistancesToClosestTilesOfEachBody(Vector3Int centerCellLocation, GameTile tile, int scanRange = 8, bool isCircleMode = false)
     {
         int[] distance3 = new int[3];
         int i = 0;
@@ -329,7 +329,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public float DistanceToClosestTile(Vector3Int centerCellLocation, TerrainTile tile, int scanRange = 8, bool isCircleMode = false)
+    public float DistanceToClosestTile(Vector3Int centerCellLocation, GameTile tile, int scanRange = 8, bool isCircleMode = false)
     {
         int i = 0;
         int posX = 0;
@@ -416,7 +416,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public List<Vector3Int> AllCellLocationsOfTileInRange(Vector3Int centerCellLocation, int scanRange, TerrainTile tile, bool isCircleMode = false)
+    public List<Vector3Int> AllCellLocationsOfTileInRange(Vector3Int centerCellLocation, int scanRange, GameTile tile, bool isCircleMode = false)
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
@@ -465,7 +465,7 @@ public class TileSystem : MonoBehaviour
                 scanLocation.x = x + centerCellLocation.x;
                 scanLocation.y = y + centerCellLocation.y;
 
-                TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
+                GameTile tile = GetTerrainTileAtLocation(scanLocation);
                 if (tile)
                 {
                     typesOfTileWithinRadius[(int)tile.type]++;
@@ -499,7 +499,7 @@ public class TileSystem : MonoBehaviour
                 scanLocation.x = x + centerCellLocation.x;
                 scanLocation.y = y + centerCellLocation.y;
 
-                TerrainTile tile = GetTerrainTileAtLocation(scanLocation);
+                GameTile tile = GetTerrainTileAtLocation(scanLocation);
 
                 if (tile)
                 {
@@ -532,7 +532,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
-    public bool IsAnyTileInRange(Vector3Int centerCellLocation, int scanRange, TerrainTile tile, bool isCircleMode = false)
+    public bool IsAnyTileInRange(Vector3Int centerCellLocation, int scanRange, GameTile tile, bool isCircleMode = false)
     {
         if (DistanceToClosestTile(centerCellLocation, tile,scanRange, isCircleMode) == -1)
         {
@@ -546,7 +546,7 @@ public class TileSystem : MonoBehaviour
         {
             foreach (Vector3Int cellLocation in this.GrassTilemap.cellBounds.allPositionsWithin)
             {
-                tileColorManager.SetTileColor(cellLocation, (TerrainTile)this.GrassTilemap.GetTile(cellLocation));
+                tileColorManager.SetTileColor(cellLocation, (GameTile)this.GrassTilemap.GetTile(cellLocation));
             }
         }
     }
@@ -569,12 +569,12 @@ public class TileSystem : MonoBehaviour
             {
                 if (tilemap.HasTile(cellLocation))
                 {
-                    tileColorManager.SetTileColor(cellLocation, (TerrainTile)tilemap.GetTile(cellLocation));
+                    tileColorManager.SetTileColor(cellLocation, (GameTile)tilemap.GetTile(cellLocation));
                 }
             }
         }
     }
-    private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
+    private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, GameTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
         Vector3Int cell_2 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y - distanceY, subjectCellLocation.z);
@@ -590,7 +590,7 @@ public class TileSystem : MonoBehaviour
         return false;
     }
 
-    private bool IsTileInAnyOfEight(int distanceX, int distanceY,Vector3Int subjectCellLocation, TerrainTile tile)
+    private bool IsTileInAnyOfEight(int distanceX, int distanceY,Vector3Int subjectCellLocation, GameTile tile)
     {
         if (IsTileInAnyOfFour(distanceX, distanceY, subjectCellLocation, tile))
         {
@@ -613,7 +613,7 @@ public class TileSystem : MonoBehaviour
         return false;
     }
 
-    private List<Vector3Int> TileCellLocationsInFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
+    private List<Vector3Int> TileCellLocationsInFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, GameTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);
         Vector3Int cell_2 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y - distanceY, subjectCellLocation.z);
@@ -631,7 +631,7 @@ public class TileSystem : MonoBehaviour
         return results;
     }
 
-    private List<Vector3Int> TileCellLocationsInEight(int distanceX, int distanceY, Vector3Int subjectCellLocation, TerrainTile tile)
+    private List<Vector3Int> TileCellLocationsInEight(int distanceX, int distanceY, Vector3Int subjectCellLocation, GameTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceY, subjectCellLocation.y + distanceX, subjectCellLocation.z);
         Vector3Int cell_2 = new Vector3Int(subjectCellLocation.x - distanceY, subjectCellLocation.y + distanceX, subjectCellLocation.z);

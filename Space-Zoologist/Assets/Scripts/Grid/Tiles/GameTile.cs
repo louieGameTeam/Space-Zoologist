@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public enum TileType { Rock, Sand, Dirt, Grass, Liquid, Wall, TypesOfTiles };
 [CreateAssetMenu]
-public class TerrainTile : RuleTile<TerrainTile.Neighbor>
+public class GameTile : RuleTile<GameTile.Neighbor>
 {
 	[HideInInspector] public Tilemap targetTilemap;
 	[HideInInspector] public List<Tilemap> replacementTilemap;

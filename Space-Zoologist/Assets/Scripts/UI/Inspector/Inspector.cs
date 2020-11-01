@@ -17,7 +17,7 @@ public class Inspector : MonoBehaviour
     [SerializeField] private EnclosureSystem enclosureSystem = null;
 
     [SerializeField] private Tilemap highLight = default;
-    [SerializeField] private TerrainTile highLightTile = default;
+    [SerializeField] private GameTile highLightTile = default;
 
     // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
@@ -189,7 +189,7 @@ public class Inspector : MonoBehaviour
 
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
-            TerrainTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
+            GameTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
 
             //Debug.Log($"Mouse click at {cellPos}");
 

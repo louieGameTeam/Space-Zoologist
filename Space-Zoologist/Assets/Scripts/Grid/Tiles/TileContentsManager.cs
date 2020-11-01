@@ -15,7 +15,7 @@ public class TileContentsManager : MonoBehaviour
     private Tilemap tilemap;
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private bool isPlacedTileNew;
-    private TerrainTile terrainTile;
+    private GameTile terrainTile;
     private enum neighborTileStatus
     {
         None,
@@ -33,7 +33,7 @@ public class TileContentsManager : MonoBehaviour
         {
             tileContents[cellLocation][i] = composition[i];
         }
-        TerrainTile tile = (TerrainTile)tilemap.GetTile(cellLocation);
+        GameTile tile = (GameTile)tilemap.GetTile(cellLocation);
         ChangeColor(cellLocation, null, tile);
     }
     public void ModifyComposition(Vector3Int cellLocation, float[] changeInComposition)
@@ -53,7 +53,7 @@ public class TileContentsManager : MonoBehaviour
             tileContents[cellLocation][i] += changeInComposition[i];
         }
     }
-    public void MergeTile (Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
+    public void MergeTile (Vector3Int cellLocation, GameTile tile, List<Vector3Int> addedTiles)
     {
         terrainTile = tile;
         float[] newcomp = new float[] { 0, 0, 0 };
@@ -182,7 +182,7 @@ public class TileContentsManager : MonoBehaviour
             }
         }
     }
-    private void ChangeColor(Vector3Int cellLocation, TileColorManager tileColorManager = null , TerrainTile tile = null)
+    private void ChangeColor(Vector3Int cellLocation, TileColorManager tileColorManager = null , GameTile tile = null)
     {
         if(tileColorManager != null)
         {

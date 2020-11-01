@@ -8,7 +8,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
     [SerializeField] private string Down = default;
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
-    [SerializeField] private TerrainTile liquidTile = default;
+    [SerializeField] private GameTile liquidTile = default;
     private TileSystem tileSystem = default;
     public override void StartUp()
     {

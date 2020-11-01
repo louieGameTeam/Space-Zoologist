@@ -21,7 +21,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] private Tilemap TilePlacementValidation = default;
-    [SerializeField] private TerrainTile Tile = default;
+    [SerializeField] private GameTile Tile = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
@@ -164,7 +164,7 @@ public class GridSystem : MonoBehaviour
                 else if (item.Equals(ItemType.Terrain))
                 {
                     // if contains liquid tile, check neighbors accessibility
-                    TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(new Vector3Int(x, y, 0));
+                    GameTile tile = this.TileSystem.GetTerrainTileAtLocation(new Vector3Int(x, y, 0));
                     if (tile != null && tile.type == TileType.Liquid)
                     {
                         if (population.Grid.IsAccessible(x + 1, y))

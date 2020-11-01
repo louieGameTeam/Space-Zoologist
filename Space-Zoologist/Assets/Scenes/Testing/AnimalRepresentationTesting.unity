@@ -6074,6 +6074,11 @@ PrefabInstance:
       propertyPath: populationManager
       value: 
       objectReference: {fileID: 288247525}
+    - target: {fileID: 4661624498449627637, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1803.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4661624498449627639, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_Sprite
@@ -6163,12 +6168,22 @@ PrefabInstance:
     - target: {fileID: 5559967345287919608, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42.200195
+      value: 42.25
       objectReference: {fileID: 0}
     - target: {fileID: 5559967345287919608, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 52.300293
+      value: 52.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750456605920355872, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 42.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750456605920355872, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 52.25
       objectReference: {fileID: 0}
     - target: {fileID: 5832809130060376378, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -6538,6 +6553,7 @@ GameObject:
   - component: {fileID: 1033088159}
   - component: {fileID: 1033088160}
   - component: {fileID: 1033088161}
+  - component: {fileID: 1033088163}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -6636,6 +6652,19 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &1033088163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033088157}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3654a2182885f44a269bc6a0e5c8b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCamera: {fileID: 1714759540}
 --- !u!1001 &1070949162
 PrefabInstance:
   m_ObjectHideFlags: 0
