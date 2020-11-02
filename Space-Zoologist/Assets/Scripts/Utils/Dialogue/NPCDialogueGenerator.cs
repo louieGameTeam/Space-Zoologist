@@ -84,7 +84,8 @@ public class NPCDialogueGenerator : MonoBehaviour
         }
 
         this.dialogueTextMeshPro.text = dialogue;
-
+        this.dialogueTextMeshPro.textBounds.
+        //Debug.Log(dialogue);
     }
 
     public void NPCTalksAboutJournalProgress()
