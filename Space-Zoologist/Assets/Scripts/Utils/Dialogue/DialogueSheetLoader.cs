@@ -13,36 +13,21 @@ public class DialogueSheetLoader : MonoBehaviour
     [SerializeField] private TextAsset needDialogueSheet = default;
     [SerializeField] private TextAsset eventDialogueSheet = default;
 
-
     [SerializeField] private LevelData levelData = default;
 
-    private char lineSeperater = '\n'; 
-    private char fieldSeperator = ','; 
-    private char fieldQutation = '"';
+    private readonly char lineSeperater = '\n'; 
+    private readonly char fieldSeperator = ','; 
+    private readonly char fieldQutation = '"';
 
-    private bool sheetsLoaded = false;
-
-    // Loat the csv sheets from Resource folder
-    private void Start()
-    {
-        this.loadSheets();
-    }
-
-    private void loadSheets()
-    {
-        if (!this.sheetsLoaded)
-        {
-            this.templateDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueTemplate"));
-            this.needDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueNeed"));
-            this.eventDialogueSheet = Resources.Load<TextAsset>(Path.Combine("NPC", "NPCDialogueEvent"));
-        }
-
-        this.sheetsLoaded = true;
-    }
-
+    /// <summary>
+    /// Parser for .csv google sheets
+    /// </summary>
+    /// <param name="csvFile"> The file to be parsed </param>
+    /// <returns></returns>
     private List<List<string>> parseCsv(TextAsset csvFile)
     {
-        //Debug.Assert(!csvFile, "Template sheet not found!");
+        // Make sure that csv file is there
+        Debug.Assert(!csvFile, "Template sheet not found!");
 
         // Split lines
         string[] rows = csvFile.text.Trim().Split(this.lineSeperater);
@@ -115,10 +100,13 @@ public class DialogueSheetLoader : MonoBehaviour
         return parsedFile;
     }
 
+    /// <summary>
+    /// Parses the returns the dialogue template of the give type of dialogue.
+    /// </summary>
+    /// <param name="type"> The name of the template type, eg Population, Objective etc. </param>
+    /// <returns>List of templates.</returns>
     public List<string> LoadDialogueTemplates(string type)
     {
-        this.loadSheets();
-
         List<List<string>> parsedCsv = this.parseCsv(this.templateDialogueSheet);
 
         foreach (List<string> row in parsedCsv)
@@ -132,10 +120,12 @@ public class DialogueSheetLoader : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Dictionary<string, DialogueOptionData> LoadSpeciesNeedDialogue()
     {
-        this.loadSheets();
-
         List<List<string>> parsedCsv = this.parseCsv(this.needDialogueSheet);
 
         Dictionary<string, DialogueOptionData> specieseNeedDialogoues = new Dictionary<string, DialogueOptionData>();
@@ -161,8 +151,6 @@ public class DialogueSheetLoader : MonoBehaviour
 
     public void LoadEventDialogue(Dictionary<string, List<string>> eventDialogue)
     {
-        this.loadSheets();
-
         List<List<string>> parsedCsv = this.parseCsv(this.eventDialogueSheet);
 
         foreach (List<string> row in parsedCsv)

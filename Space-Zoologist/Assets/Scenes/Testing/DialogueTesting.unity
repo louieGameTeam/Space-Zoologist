@@ -568,6 +568,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4661624498547218925}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &183190910 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4911377573606507051, guid: 4a655de4858af4a7087acc5c0ef45c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 4911377573865448859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &218324504
 GameObject:
   m_ObjectHideFlags: 0
@@ -38724,6 +38736,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954e95fea8d8f476080f48fd16068a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1860692151 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4911377573362057768, guid: 4a655de4858af4a7087acc5c0ef45c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 4911377573865448859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1870373114
 GameObject:
   m_ObjectHideFlags: 0
@@ -44291,6 +44315,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4911377573362057770, guid: 4a655de4858af4a7087acc5c0ef45c17,
+        type: 3}
+      propertyPath: m_Name
+      value: ScriptedConversation
+      objectReference: {fileID: 0}
     - target: {fileID: 4911377573606507049, guid: 4a655de4858af4a7087acc5c0ef45c17,
         type: 3}
       propertyPath: dialogueTextMeshPro
@@ -44336,6 +44365,26 @@ PrefabInstance:
       propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4911377573606507060, guid: 4a655de4858af4a7087acc5c0ef45c17,
+        type: 3}
+      propertyPath: m_Name
+      value: InteractiveConversation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911377574435884307, guid: 4a655de4858af4a7087acc5c0ef45c17,
+        type: 3}
+      propertyPath: interactiveConversation
+      value: 
+      objectReference: {fileID: 183190910}
+    - target: {fileID: 4911377574435884307, guid: 4a655de4858af4a7087acc5c0ef45c17,
+        type: 3}
+      propertyPath: eventConversation
+      value: 
+      objectReference: {fileID: 994741208}
+    - target: {fileID: 4911377574435884307, guid: 4a655de4858af4a7087acc5c0ef45c17,
+        type: 3}
+      propertyPath: scriptedConversation
+      value: 
+      objectReference: {fileID: 1860692151}
     - target: {fileID: 4911377574435884316, guid: 4a655de4858af4a7087acc5c0ef45c17,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -44435,6 +44484,11 @@ PrefabInstance:
         type: 3}
       propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911377574562683758, guid: 4a655de4858af4a7087acc5c0ef45c17,
+        type: 3}
+      propertyPath: m_Name
+      value: EventConversation
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a655de4858af4a7087acc5c0ef45c17, type: 3}

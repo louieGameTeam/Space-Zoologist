@@ -16,13 +16,21 @@ public class DialogueOptionData
     private List<string> badDialogues;
     private List<string> hintDialogues;
 
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="name">Name of this DialogueOptionData</param>
+    /// <param name="goodDialgoues">Good dialogues</param>
+    /// <param name="badDialogues">Bad dialogues </param>
+    /// <param name="hintDialogues">Hint dialogues</param>
     public DialogueOptionData(string name, List<string> goodDialgoues, List<string> badDialogues, List<string> hintDialogues)
     {
         this.name = name;
         this.goodDialgoues = goodDialgoues;
         this.badDialogues = badDialogues;
         this.hintDialogues = hintDialogues;
-}
+    }
 
     /// <summary>
     /// Return a random dialgoue with the option given.

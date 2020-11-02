@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using DialogueEditor;
 
+/// <summary>
+/// This handles dialogues related to events
+/// </summary>
 public class EventDialogueGenerator : MonoBehaviour
 {
     [SerializeField] private NPCConversation eventTriggeredConversation;
@@ -16,8 +19,10 @@ public class EventDialogueGenerator : MonoBehaviour
 
     private EventType lastEventType = default;
 
-    // Subcribe to events that will trigger message
-    void Start()
+    /// <summary>
+    /// Subcribe to events that will trigger message.
+    /// </summary>
+    private void Start()
     {
         this.dialgoueSheetLoader.LoadEventDialogue(this.eventDialogue);
 
@@ -28,6 +33,9 @@ public class EventDialogueGenerator : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Display a random dialogue associates with this event.
+    /// </summary>
     public void FillInDialogue()
     {
         dialogueTextMeshPro.text = this.eventDialogue[this.lastEventType.ToString()][this.random.Next(this.eventDialogue[this.lastEventType.ToString()].Count)];

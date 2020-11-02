@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.N))
             {
-                this.DialogueManager.StartConversation();
+                this.DialogueManager.StartInteractiveConversation();
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
