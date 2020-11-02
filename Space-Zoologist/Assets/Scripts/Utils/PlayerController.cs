@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Inspector Inspector = default;
     [SerializeField] LogSystem LogSystem = default;
     [SerializeField] ObjectiveManager ObjectiveManager = default;
+    [SerializeField] DialogueManager DialogueManager = default;
     [SerializeField] OptionsMenu OptionsMenu = default;
     [SerializeField] PauseManager PauseManager = default;
     [Tooltip("Binds to numbers in order of list (Element 0 -> 1, Element 1 -> 2, etc.")]
@@ -88,6 +89,10 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.O))
             {
                 this.ObjectiveManager.ToggleObjectivePanel();
+            }
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                this.DialogueManager.StartInteractiveConversation();
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {

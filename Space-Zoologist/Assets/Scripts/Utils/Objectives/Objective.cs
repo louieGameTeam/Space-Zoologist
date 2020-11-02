@@ -5,6 +5,9 @@ using UnityEngine;
 
 public enum ObjectiveStatus { Completed, InProgress, Failed }
 
+/// <summary>
+/// Parent class of all types of abjective
+/// </summary>
 public abstract class Objective
 {
     public abstract ObjectiveStatus Status { get; }
@@ -12,6 +15,9 @@ public abstract class Objective
     public abstract string GetObjectiveText();
 }
 
+/// <summary>
+/// Objective type to keep a population of some size for some time
+/// </summary>
 public class SurvivalObjective : Objective
 {
     public List<Population> Populations = default;
@@ -101,6 +107,9 @@ public class SurvivalObjective : Objective
     }
 }
 
+/// <summary>
+/// Objective to have x amount of money left when level is completed 
+/// </summary>
 public class ResourceObjective : Objective
 {
     private PlayerBalance playerBalance;

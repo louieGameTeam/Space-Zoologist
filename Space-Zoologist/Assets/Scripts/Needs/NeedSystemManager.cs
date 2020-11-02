@@ -65,6 +65,8 @@ public class NeedSystemManager : MonoBehaviour
             Debug.Assert(systems.ContainsKey(need.NeedType), $"No { need } system");
             systems[need.NeedType].RemoveConsumer(life);
         }
+
+        // TODO also remove from consumed list
     }
 
     /// <summary>
@@ -127,12 +129,12 @@ public class NeedSystemManager : MonoBehaviour
             NeedSystem system = entry.Value;
             if (system.IsDirty)
             {
-                Debug.Log($"Updating {system.NeedType} NS by dirty flag");
+                //Debug.Log($"Updating {system.NeedType} NS by dirty flag");
                 system.UpdateSystem();
             }
             else if(system.CheckState())
             {
-                Debug.Log($"Updating {system.NeedType} NS by dirty pre-check");
+                //Debug.Log($"Updating {system.NeedType} NS by dirty pre-check");
                 system.UpdateSystem();
             }
         }
