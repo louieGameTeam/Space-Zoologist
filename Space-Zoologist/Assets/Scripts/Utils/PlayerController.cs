@@ -92,6 +92,7 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.N))
             {
+                print("Start Conversation");
                 this.DialogueManager.StartInteractiveConversation();
             }
             if (Input.GetKeyDown(KeyCode.Space))

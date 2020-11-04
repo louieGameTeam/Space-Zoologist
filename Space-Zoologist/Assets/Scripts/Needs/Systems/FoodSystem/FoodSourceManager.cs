@@ -18,6 +18,7 @@ public class FoodSourceManager : MonoBehaviour
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
+    [SerializeField] GridSystem GridSystem = default;
 
     private void Start()
     {
@@ -35,15 +36,20 @@ public class FoodSourceManager : MonoBehaviour
         // Get all FoodSource at start of level
         GameObject[] foods = GameObject.FindGameObjectsWithTag("FoodSource");
 
-        foreach(GameObject food in foods)
+        foreach (GameObject food in foods)
         {
             foodSources.Add(food.GetComponent<FoodSource>());
+            Vector3Int GridPosition = TileSystem.WorldToCell(food.transform.position);
+            GridSystem.CellGrid[GridPosition.x, GridPosition.y].ContainsFood = true;
+            GridSystem.CellGrid[GridPosition.x, GridPosition.y].Food = food;
         }
 
         // Register Foodsource with NeedSystem via NeedSystemManager
         foreach (FoodSource foodSource in foodSources)
         {
+            this.foodSourceNeedSystems.AddFoodSource(foodSource);
             NeedSystemManager.RegisterWithNeedSystems(foodSource);
+            EventManager.Instance.InvokeEvent(EventType.NewFoodSource, foodSource);
         }
     }
 

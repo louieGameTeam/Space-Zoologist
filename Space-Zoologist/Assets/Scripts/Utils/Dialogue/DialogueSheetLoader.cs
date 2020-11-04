@@ -27,7 +27,7 @@ public class DialogueSheetLoader : MonoBehaviour
     private List<List<string>> parseCsv(TextAsset csvFile)
     {
         // Make sure that csv file is there
-        Debug.Assert(!csvFile, "Template sheet not found!");
+        Debug.Assert(csvFile, "Template sheet not found!");
 
         // Split lines
         string[] rows = csvFile.text.Trim().Split(this.lineSeperater);

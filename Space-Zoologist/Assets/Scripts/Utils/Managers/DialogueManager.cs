@@ -20,7 +20,9 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-
+        if (scriptedConversation) {
+            ConversationManager.Instance.StartConversation(this.scriptedConversation);
+        }
     }
 
     /// <summary>

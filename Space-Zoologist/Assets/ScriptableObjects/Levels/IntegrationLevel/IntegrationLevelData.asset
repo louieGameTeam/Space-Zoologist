@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: IntegrationLevelData
   m_EditorClassIdentifier: 
+  Level: {fileID: 0}
   startingBalance: 1000
   MapWidth: 30
   MapHeight: 20
@@ -21,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdff69c7a7c1545788d855470b1a8fa9, type: 2}
   - {fileID: 11400000, guid: 532bdf3e9b964431d9968bb5941bf025, type: 2}
   animalSpecies:
-  - {fileID: 11400000, guid: 5617e9c2071d14ec28c0c33b79360e2c, type: 2}
+  - {fileID: 11400000, guid: 4fc91e10b303a49faaeffe6f232fefef, type: 2}
   - {fileID: 11400000, guid: f63235a2877914bf39c7b582d9f794cd, type: 2}
   - {fileID: 11400000, guid: 8afe24851d24244739304ba29fbb9e77, type: 2}
   items:

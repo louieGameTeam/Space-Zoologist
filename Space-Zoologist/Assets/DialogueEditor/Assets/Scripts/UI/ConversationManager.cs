@@ -173,6 +173,12 @@ namespace DialogueEditor
                                 }
                             }
                         }
+                        //Added by Alex
+                        else if (Input.GetMouseButtonDown(0)) {
+                            if (m_currentSpeech.Options.Count == 0) {
+                                SetState(eState.TransitioningOptionsOff);
+                            }
+                        }
                     }
                     break;
 
@@ -185,8 +191,8 @@ namespace DialogueEditor
                         {
                             ClearOptions();
 
-                            if (m_currentSpeech.AutomaticallyAdvance)
-                            {
+                            //if (m_currentSpeech.AutomaticallyAdvance)
+                            //{
                                 if (m_currentSpeech.Dialogue != null)
                                 {
                                     DoSpeech(m_currentSpeech.Dialogue);
@@ -197,7 +203,7 @@ namespace DialogueEditor
                                     EndConversation();
                                     return;
                                 }  
-                            }
+                            //}
 
                             if (m_selectedOption == null)
                             {
@@ -519,9 +525,9 @@ namespace DialogueEditor
             else
             {
                 // Display "Continue" / "End" if we should.
-                bool notAutoAdvance = !speech.AutomaticallyAdvance;
+                //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
-                if (notAutoAdvance || autoWithOption)
+                if (speech.Options.Count > 0 || autoWithOption)
                 {
                     // Else display "continue" button to go to following dialogue
                     if (speech.Dialogue != null)
