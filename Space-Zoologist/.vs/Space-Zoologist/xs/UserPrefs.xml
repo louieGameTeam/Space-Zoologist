@@ -1,8 +1,16 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/Dialogue/DialogueOptionData.cs">
     <Files>
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="529" Column="42" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs" Line="6" Column="18" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="598" Column="22" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" Line="21" Column="103" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/GeneralPathfinding.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/EatingPattern.cs" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="106" Column="30" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/DialogueSheetLoader.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/NPCDialogueGenerator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/DialogueOptionData.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,9 +28,7 @@
               <Node name="DialogueEditor" expanded="True">
                 <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
-                    <Node name="UI" expanded="True">
-                      <Node name="UIConversationButton.cs" selected="True" />
-                    </Node>
+                    <Node name="UI" expanded="True" />
                   </Node>
                 </Node>
               </Node>
@@ -38,6 +44,7 @@
                   </Node>
                 </Node>
                 <Node name="Species" expanded="True">
+                  <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True">
                     <Node name="Data" expanded="True" />
@@ -48,7 +55,9 @@
                   <Node name="Store" expanded="True" />
                 </Node>
                 <Node name="Utils" expanded="True">
-                  <Node name="Dialogue" expanded="True" />
+                  <Node name="Dialogue" expanded="True">
+                    <Node name="DialogueOptionData.cs" selected="True" />
+                  </Node>
                   <Node name="Managers" expanded="True" />
                 </Node>
               </Node>
@@ -60,7 +69,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="55aa25f8-05e6-4443-a6d7-6276e8e7ae24" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="07401fe0-b439-4a19-9252-03a9f44f8d2c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="106" column="1" />

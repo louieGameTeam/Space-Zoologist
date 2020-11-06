@@ -18,6 +18,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
         Vector3Int currentCell = tileSystem.WorldToCell(animal.transform.position);
+        tileSystem.GetTerrainTileAtLocation(currentCell).targetTilemap.SetColor(currentCell,Color.red);
         for (int y = -1; y < 2; y++)
         {
             for (int x = -1; x < 2; x++)

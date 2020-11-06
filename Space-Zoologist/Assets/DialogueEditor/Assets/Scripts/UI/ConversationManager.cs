@@ -581,6 +581,7 @@ namespace DialogueEditor
         {
             DialoguePanel.gameObject.SetActive(true);
             OptionsPanel.gameObject.SetActive(true);
+            NpcIcon.gameObject.SetActive(true);
 
             if (BackgroundImage != null)
             {
@@ -599,6 +600,7 @@ namespace DialogueEditor
         {
             DialoguePanel.gameObject.SetActive(false);
             OptionsPanel.gameObject.SetActive(false);
+            NpcIcon.gameObject.SetActive(false);
             SetState(eState.Off);
 #if UNITY_EDITOR
             // Debug.Log("[ConversationManager]: Conversation UI off.");

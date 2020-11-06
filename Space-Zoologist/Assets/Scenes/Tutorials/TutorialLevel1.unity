@@ -19167,6 +19167,115 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &924230032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 924230033}
+  - component: {fileID: 924230036}
+  - component: {fileID: 924230035}
+  - component: {fileID: 924230034}
+  m_Layer: 0
+  m_Name: Space Maple
+  m_TagString: FoodSource
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &924230033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924230032}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 493.07678, y: 247.08336, z: -32.125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 650241545}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &924230034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924230032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c563e719349c948f2b3a17853fcfaf27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!212 &924230035
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924230032}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: 27a567287e2bd46ee8aab96fd3602ad3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.28, y: 1.28}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &924230036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924230032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1535e7f341ea435d8528917d39c0138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  species: {fileID: 11400000, guid: bc40dc7d294484405bafbc34ae7d642b, type: 2}
+  tileSystem: {fileID: 385555447}
 --- !u!1 &936381357
 GameObject:
   m_ObjectHideFlags: 0
@@ -21805,22 +21914,22 @@ PrefabInstance:
     - target: {fileID: 5559967345287919608, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42.200195
+      value: 42.20117
       objectReference: {fileID: 0}
     - target: {fileID: 5559967345287919608, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 52.299805
+      value: 52.29883
       objectReference: {fileID: 0}
     - target: {fileID: 5750456605920355872, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42.200195
+      value: 42.20117
       objectReference: {fileID: 0}
     - target: {fileID: 5750456605920355872, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 52.299805
+      value: 52.29883
       objectReference: {fileID: 0}
     - target: {fileID: 5956148264453198503, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -27631,7 +27740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScrollText: 1
-  ScrollSpeed: 1
+  ScrollSpeed: 0.3
   BackgroundImage: {fileID: 21300000, guid: bf566e80557acbc45b9a695fcaa25327, type: 3}
   BackgroundImageSliced: 1
   OptionImage: {fileID: 21300000, guid: bf566e80557acbc45b9a695fcaa25327, type: 3}
@@ -28153,7 +28262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 40
-  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":304.5,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Want
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":282,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Want
     can I help you with?","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0}]}'
   saveVersion: 103
   DefaultName: I want to learn more
@@ -29500,25 +29609,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 39
-  json: '{"Options":[{"EditorInfo":{"isRoot":false,"xPos":64,"yPos":258},"ID":1,"TMPFontGUID":null,"Text":"Talk
-    about objectives","parentUIDs":[0,14,0],"SpeechUID":23},{"EditorInfo":{"isRoot":false,"xPos":363,"yPos":211},"ID":2,"TMPFontGUID":null,"Text":"Check
-    population status","parentUIDs":[0,0],"SpeechUID":37},{"EditorInfo":{"isRoot":false,"xPos":429.5,"yPos":716},"ID":17,"TMPFontGUID":null,"Text":"I
-    want to ask about something else","parentUIDs":[14,21,33,32,20,35,14,20,21,32,33,35],"SpeechUID":0},{"EditorInfo":{"isRoot":false,"xPos":748,"yPos":260},"ID":18,"TMPFontGUID":null,"Text":"Check
-    my journal status","parentUIDs":[0,0],"SpeechUID":21},{"EditorInfo":{"isRoot":false,"xPos":1022.5,"yPos":259},"ID":19,"TMPFontGUID":null,"Text":"Talk
-    about the level","parentUIDs":[0,0],"SpeechUID":20},{"EditorInfo":{"isRoot":false,"xPos":-223,"yPos":495},"ID":24,"TMPFontGUID":null,"Text":"Check
-    my obejective status","parentUIDs":[23,23],"SpeechUID":35},{"EditorInfo":{"isRoot":false,"xPos":17.5,"yPos":494},"ID":30,"TMPFontGUID":null,"Text":"What
-    is the main objective?","parentUIDs":[23,23],"SpeechUID":32},{"EditorInfo":{"isRoot":false,"xPos":234.5,"yPos":490},"ID":31,"TMPFontGUID":null,"Text":"What
-    are the side objectives?","parentUIDs":[23,23],"SpeechUID":33},{"EditorInfo":{"isRoot":false,"xPos":604,"yPos":40},"ID":36,"TMPFontGUID":null,"Text":"That''s
-    it!","parentUIDs":[0,0],"SpeechUID":-1}],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":304.5,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Want
-    can I help you with?","parentUIDs":[17,17],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[1,2,18,19,36],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":369,"yPos":375},"ID":14,"TMPFontGUID":null,"Text":"Place
-    HolderPlace HolderPlace HolderPlace HolderPlace HolderPlace HolderPlace Holder","parentUIDs":[2,37,37],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":1019.5,"yPos":370},"ID":20,"TMPFontGUID":null,"Text":"This
-    is a testing level for the dialogue system","parentUIDs":[19,19],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":752.5,"yPos":376},"ID":21,"TMPFontGUID":null,"Text":"Place
+  json: '{"Options":[{"EditorInfo":{"isRoot":false,"xPos":41.5,"yPos":258},"ID":1,"TMPFontGUID":null,"Text":"Talk
+    about objectives","parentUIDs":[0,14,0],"SpeechUID":23},{"EditorInfo":{"isRoot":false,"xPos":340.5,"yPos":211},"ID":2,"TMPFontGUID":null,"Text":"Check
+    population status","parentUIDs":[0,0],"SpeechUID":37},{"EditorInfo":{"isRoot":false,"xPos":407,"yPos":716},"ID":17,"TMPFontGUID":null,"Text":"I
+    want to ask about something else","parentUIDs":[14,21,33,32,20,35,14,20,21,32,33,35],"SpeechUID":0},{"EditorInfo":{"isRoot":false,"xPos":725.5,"yPos":260},"ID":18,"TMPFontGUID":null,"Text":"Check
+    my journal status","parentUIDs":[0,0],"SpeechUID":21},{"EditorInfo":{"isRoot":false,"xPos":1000,"yPos":259},"ID":19,"TMPFontGUID":null,"Text":"Talk
+    about the level","parentUIDs":[0,0],"SpeechUID":20},{"EditorInfo":{"isRoot":false,"xPos":-245.5,"yPos":495},"ID":24,"TMPFontGUID":null,"Text":"Check
+    my obejective status","parentUIDs":[23,23],"SpeechUID":35},{"EditorInfo":{"isRoot":false,"xPos":-5,"yPos":494},"ID":30,"TMPFontGUID":null,"Text":"What
+    is the main objective?","parentUIDs":[23,23],"SpeechUID":32},{"EditorInfo":{"isRoot":false,"xPos":212,"yPos":490},"ID":31,"TMPFontGUID":null,"Text":"What
+    are the side objectives?","parentUIDs":[23,23],"SpeechUID":33},{"EditorInfo":{"isRoot":false,"xPos":581.5,"yPos":40},"ID":36,"TMPFontGUID":null,"Text":"That''s
+    it!","parentUIDs":[0,0],"SpeechUID":-1}],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":282,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Want
+    can I help you with?","parentUIDs":[17,17],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[1,2,18,19,36],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":346.5,"yPos":375},"ID":14,"TMPFontGUID":null,"Text":"Place
+    HolderPlace HolderPlace HolderPlace HolderPlace HolderPlace HolderPlace Holder","parentUIDs":[2,37,37],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":997,"yPos":370},"ID":20,"TMPFontGUID":null,"Text":"This
+    is a testing level for the dialogue system","parentUIDs":[19,19],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":730,"yPos":376},"ID":21,"TMPFontGUID":null,"Text":"Place
     HolderPlace HolderPlace HolderPlace HolderPlace HolderPlace HolderPlace HolderPlace
-    HolderPlace HolderPlace Holder","parentUIDs":[18,18],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Profressor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":43,"yPos":373},"ID":23,"TMPFontGUID":null,"Text":"What
-    about the objective you want to know?","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[24,30,31],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":20.5,"yPos":556},"ID":32,"TMPFontGUID":null,"Text":"something
-    about the main objective","parentUIDs":[30,30],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":240.5,"yPos":555},"ID":33,"TMPFontGUID":null,"Text":"something
-    about the side objectives","parentUIDs":[31,31],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":-220.5,"yPos":560},"ID":35,"TMPFontGUID":null,"Text":"place
-    holderplace holderplace holderplace holderplace holderplace holderplace holder","parentUIDs":[24,24],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":366,"yPos":275},"ID":37,"TMPFontGUID":null,"Text":"Select
+    HolderPlace HolderPlace Holder","parentUIDs":[18,18],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Profressor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":20.5,"yPos":373},"ID":23,"TMPFontGUID":null,"Text":"What
+    about the objective you want to know?","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[24,30,31],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":-2,"yPos":556},"ID":32,"TMPFontGUID":null,"Text":"something
+    about the main objective","parentUIDs":[30,30],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":218,"yPos":555},"ID":33,"TMPFontGUID":null,"Text":"something
+    about the side objectives","parentUIDs":[31,31],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":-243,"yPos":560},"ID":35,"TMPFontGUID":null,"Text":"place
+    holderplace holderplace holderplace holderplace holderplace holderplace holder","parentUIDs":[24,24],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0},{"EditorInfo":{"isRoot":false,"xPos":343.5,"yPos":275},"ID":37,"TMPFontGUID":null,"Text":"Select
     a population then click continue","parentUIDs":[2,2],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Professor","OptionUIDs":[],"SpeechUID":14,"TimeUntilAdvance":0,"Volume":0}]}'
   saveVersion: 103
   DefaultName: I want to learn more
@@ -29622,25 +29731,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 27
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":70.5,\"yPos\":70},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Hello!\",\"parentUIDs\":[0,0],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306.5,\"yPos\":72},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi
-    there! You are...?\",\"parentUIDs\":[0,0],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":199.5,\"yPos\":926},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[12,12],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":469.5,\"yPos\":922},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[12,12],\"SpeechUID\":23},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":530.5,\"yPos\":73},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"...\",\"parentUIDs\":[0,0],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306.5,\"yPos\":-50},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[4,5,22],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":294.5,\"yPos\":183},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"The
-    name\u2019s Aurora Alabaster Star, or just Star.\",\"parentUIDs\":[4,5,4,5,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0.1,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":295.5,\"yPos\":324},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"I
-    guess that makes me the Star of the show!\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":298.5,\"yPos\":439},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"...
-    or does it make me the Star of the ship?\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":299.5,\"yPos\":552},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Anyways!
-    Hello, welcome to the ship!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":298.5,\"yPos\":671},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"and
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":46,\"yPos\":149},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Hello!\",\"parentUIDs\":[0,0],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":282,\"yPos\":151},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi
+    there! You are...?\",\"parentUIDs\":[0,0],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":175,\"yPos\":1005},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[12,12],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":445,\"yPos\":1001},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[12,12],\"SpeechUID\":23},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":506,\"yPos\":152},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"...\",\"parentUIDs\":[0,0],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":282,\"yPos\":29},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
+    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[4,5,22],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":270,\"yPos\":262},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"The
+    name\u2019s Aurora Alabaster Star, or just Star.\",\"parentUIDs\":[4,5,22,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0.1,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":271,\"yPos\":403},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"I
+    guess that makes me the Star of the show!\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":274,\"yPos\":518},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"...
+    or does it make me the Star of the ship?\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":275,\"yPos\":631},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Anyways!
+    Hello, welcome to the ship!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":274,\"yPos\":750},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"and
     this here is the reserve interface or as I like to call it, the RESERVED interface
-    since it\u2019s not that chatty!\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":301.5,\"yPos\":799},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"How
-    was that one? Better?\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[13,14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":201.5,\"yPos\":1021},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"ah
-    I am glad they sent me someone with a sense of humor!\",\"parentUIDs\":[13,14,13],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308.5,\"yPos\":1132},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Well
-    then! Shall we get to it?\",\"parentUIDs\":[15,23,15,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":18,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":314.5,\"yPos\":1252},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Whoa
-    now ain\u2019t that neat? That little critter right there is showing off some
-    cool behaviors!\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315.5,\"yPos\":1380},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Here
-    let\u2019s see what the behavior means.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":313.5,\"yPos\":1477},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"You
-    can check it out by looking online about it!\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":21,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":307.5,\"yPos\":1591},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Hm!
-    It looks like that behavior shows that the species\u2026 needs more food???\",\"parentUIDs\":[20,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":461.5,\"yPos\":1018},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"...
-    but I was working on that one all week\u2026\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":310.5,\"yPos\":1707},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Huh.
-    I thought I fed them yesterday...\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":309.5,\"yPos\":1814},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"So!
+    since it\u2019s not that chatty!\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":277,\"yPos\":878},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"How
+    was that one? Better?\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[13,14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":177,\"yPos\":1100},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"ah
+    I am glad they sent me someone with a sense of humor!\",\"parentUIDs\":[13,14,13],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":284,\"yPos\":1211},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Well
+    then! Shall we get to it?\",\"parentUIDs\":[15,23,15,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":18,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":290,\"yPos\":1331},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Whoa
+    now ain\u2019t that neat? That goat right there is showing off some cool behaviors!\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":291,\"yPos\":1459},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Here
+    let\u2019s see what the behavior means.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289,\"yPos\":1556},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"You
+    can check it out by looking online about it!\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":21,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":282,\"yPos\":1670},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Hm!
+    It looks like that behavior shows that the species\u2026 needs more food???\",\"parentUIDs\":[20,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":437,\"yPos\":1097},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"...
+    but I was working on that one all week\u2026\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":286,\"yPos\":1786},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Huh.
+    I thought I fed them yesterday...\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":285,\"yPos\":1895},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"So!
     I think it might be time for me to teach you about how to feed the goats!\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
