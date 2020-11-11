@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 797833649837637184}
-  - component: {fileID: 3734241479601550561}
+  - component: {fileID: -3547515025713862425}
   m_Layer: 0
-  m_Name: FoodPathfinding
+  m_Name: SpaceMaplePathfinding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3734241479601550561
+--- !u!114 &-3547515025713862425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +40,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1824605351311689491}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265f2f860621e4bb3915dc07427174ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 307ae804ce3794d8f8847b9b73caa800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Destination: 0
+  FoodSpeciesName: Space Maple

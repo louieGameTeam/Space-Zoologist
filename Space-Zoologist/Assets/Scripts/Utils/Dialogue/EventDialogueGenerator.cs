@@ -9,7 +9,7 @@ using DialogueEditor;
 /// </summary>
 public class EventDialogueGenerator : MonoBehaviour
 {
-    [SerializeField] private NPCConversation eventTriggeredConversation;
+    [SerializeField] private NPCConversation eventTriggeredConversation = default;
 
     [SerializeField] private TextMeshProUGUI dialogueTextMeshPro = default;
     [SerializeField] private DialogueSheetLoader dialgoueSheetLoader = default;

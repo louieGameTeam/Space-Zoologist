@@ -9,19 +9,21 @@ using DialogueEditor;
 public class DialogueManager : MonoBehaviour
 {
     // The interactive dialogues of the NPC
-    [SerializeField] private NPCConversation interactiveConversation;
+    [SerializeField] private NPCConversation interactiveConversation = default;
     // The event dialogue
-    [SerializeField] private NPCConversation eventConversation;
+    [SerializeField] private NPCConversation eventConversation = default;
     // The fully-scripted dialogue
-    [SerializeField] private NPCConversation scriptedConversation;
+    [SerializeField] private NPCConversation scriptedConversation = default;
+    // The starting dialogue
+    [SerializeField] private NPCConversation startingConversation = default;
 
     /// <summary>
     /// Initialize stuffs here
     /// </summary>
     private void Start()
     {
-        if (scriptedConversation) {
-            ConversationManager.Instance.StartConversation(this.scriptedConversation);
+        if (startingConversation) {
+            ConversationManager.Instance.StartConversation(this.startingConversation);
         }
     }
 
