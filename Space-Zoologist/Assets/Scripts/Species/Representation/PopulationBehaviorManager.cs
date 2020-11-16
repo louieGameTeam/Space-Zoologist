@@ -8,6 +8,8 @@ public enum Availability { Free, Concurrent, Override, Occupied }
 public class PopulationBehaviorManager : MonoBehaviour
 {
     public Dictionary<string, SpecieBehaviorTrigger> ActiveBehaviors = new Dictionary<string, SpecieBehaviorTrigger>();
+    public string[] ActStr;
+    public SpecieBehaviorTrigger[] ActSpe;
     private Population population = default;
 
     private void Start()
@@ -43,8 +45,20 @@ public class PopulationBehaviorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ActStr = ActiveBehaviors.Keys.ToArray();
+        ActSpe = ActiveBehaviors.Values.ToArray();
         if (this.population.AnimalPopulation.Count > 0 && !this.population.IsPaused)
         {
+            //KeyValuePair<string, SpecieBehaviorTrigger> temp;
+            //KeyValuePair<string, SpecieBehaviorTrigger>[] ArrayBehaviors = ActiveBehaviors.ToArray();
+            
+            //for (int i = 0; i < ArrayBehaviors.Length; i++) {
+            //    int random = UnityEngine.Random.Range(i, ArrayBehaviors.Length);
+            //    temp = ArrayBehaviors[i];
+            //    ArrayBehaviors[i] = ArrayBehaviors[random];
+            //    ArrayBehaviors[random] = temp;
+            //}
+
             // TODO figure out a better way to filter the activebehaviors for testing
             foreach (KeyValuePair<string, SpecieBehaviorTrigger> specieBehaviorTrigger in this.ActiveBehaviors)
             {

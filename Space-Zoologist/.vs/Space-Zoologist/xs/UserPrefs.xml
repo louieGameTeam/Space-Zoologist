@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AnimalRepresentation/Patterns/Scripts/TwoAnimalsLineUp.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Species/Representation/PopulationBehaviorManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="300" Column="13" />
-      <File FileName="Assets/Scripts/Species/AnimalSpecies.cs" Line="77" Column="54" />
-      <File FileName="Assets/Scripts/Needs/NeedConstructData.cs" Line="73" Column="53" />
-      <File FileName="Assets/Scripts/Needs/Need.cs" Line="76" Column="54" />
-      <File FileName="Assets/Scripts/Needs/NeedBehavior.cs" Line="9" Column="53" />
-      <File FileName="Assets/Scripts/Species/Representation/PopulationBehaviorManager.cs" Line="19" Column="17" />
-      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/SpeciesBehaviorTrigger.cs" Line="7" Column="14" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/TwoAnimalsLineUp.cs" Line="58" Column="43" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs" Line="5" Column="14" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="48" Column="36" />
+      <File FileName="Assets/Scripts/Species/Representation/PopulationBehaviorManager.cs" Line="140" Column="10" />
+      <File FileName="Assets/Scripts/Species/Representation/AnimalBehaviorManager.cs" Line="55" Column="33" />
+      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/AnimalBehaviorTrigger.cs" Line="18" Column="45" />
+      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/SpeciesBehaviorTrigger.cs" Line="90" Column="76" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/TwoAnimalsComeTogether.cs" Line="33" Column="16" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/FoodPathfinding.cs" Line="12" Column="82" />
+      <File FileName="Assets/Scripts/Species/Representation/MovementController.cs" Line="12" Column="17" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="158" Column="49" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,9 +21,7 @@
                   <Node name="Scripts" expanded="True" />
                 </Node>
                 <Node name="Patterns" expanded="True">
-                  <Node name="Scripts" expanded="True">
-                    <Node name="TwoAnimalsLineUp.cs" selected="True" />
-                  </Node>
+                  <Node name="Scripts" expanded="True" />
                 </Node>
               </Node>
               <Node name="DialogueEditor" expanded="True">
@@ -51,6 +49,7 @@
                   <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True">
                     <Node name="Data" expanded="True" />
+                    <Node name="PopulationBehaviorManager.cs" selected="True" />
                   </Node>
                 </Node>
                 <Node name="UI" expanded="True">
@@ -70,7 +69,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5d74fc60-b482-4e96-95df-6306527bb31d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8d5ccc1a-d49f-43c2-89bc-bcf78fdbf76e" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="106" column="1" />
