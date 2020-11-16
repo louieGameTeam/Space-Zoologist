@@ -7,26 +7,10 @@ using System;
 public class AnimalBehaviorManager : MonoBehaviour
 {
     [Header("For testing purposes")]
-    public List<BehaviorData> activeBehaviors = new List<BehaviorData>();
-    public List<BehaviorPattern> activeBehaviorPatterns = new List<BehaviorPattern>();
-    [SerializeField]
-    private List<AnimalBehaviorTrigger> animalBehaviorTriggers = new List<AnimalBehaviorTrigger>();
+    public BehaviorData activeBehavior = null;
+    public BehaviorPattern activeBehaviorPattern = null;
     // TODO add shader animation support
-    [SerializeField]
-    private AnimalBehaviorTrigger startUpTrigger = default; // Trigger that activates once at wake
 
-    private void Awake()
-    {
-        foreach (AnimalBehaviorTrigger animalBehavior in animalBehaviorTriggers)
-        {
-            //TODO subscribe to all callbacks and events
-        }
-        if (startUpTrigger)
-        {
-            startUpTrigger.EnterBehavior(this.gameObject);
-        }
-        
-    }
     /// <summary>
     /// Adds a pattern to this animal
     /// </summary>
@@ -35,7 +19,7 @@ public class AnimalBehaviorManager : MonoBehaviour
     /// <param name="collaboratingAnimals"></param>
     public void AddBehaviorPattern(BehaviorPattern behaviorPattern, StepCompletedCallBack stepCompletedCallBack, StepCompletedCallBack alternativeCallback, List<GameObject> collaboratingAnimals = null)
     {
-        activeBehaviorPatterns.Add(behaviorPattern);
+        activeBehaviorPattern = behaviorPattern;
         behaviorPattern.InitializePattern(this.gameObject, stepCompletedCallBack, alternativeCallback, collaboratingAnimals);
     }
     /// <summary>
@@ -44,15 +28,12 @@ public class AnimalBehaviorManager : MonoBehaviour
     /// <param name="isDriven">A bool used to call all partners to stop, but do not reference its self back, just leave as default</param>
     public void ForceExit(bool isDriven = false)
     {
-        foreach (BehaviorPattern pattern in activeBehaviorPatterns)
+        if (activeBehaviorPattern != null) // Happens when cooperating animal gets removed
         {
-            pattern.QueueForForceExit(this.gameObject, isDriven);
+            activeBehaviorPattern.QueueForForceExit(this.gameObject, isDriven);
+            activeBehavior.ForceExitCallback.Invoke(this.gameObject);
+            activeBehavior = null;
         }
-        for (int i=activeBehaviors.Count - 1; i>=0; i--)
-        {
-            activeBehaviors[i].ForceExitCallback.Invoke(this.gameObject);
-        }
-        activeBehaviors.Clear();
     }
 
 }

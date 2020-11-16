@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8863805409568424174}
   - component: {fileID: 8863805409568424173}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Drinking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270d6ed82b609e44a9039556f01de2af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimatorTriggerName: 
-  AnimatorLayerName: 
+  AnimatorTriggerName: e_d
+  OverlayAnimation: 0
   Up: e_u
   Down: e_d
   Left: e_l

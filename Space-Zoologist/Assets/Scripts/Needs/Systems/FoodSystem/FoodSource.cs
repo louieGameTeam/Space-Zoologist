@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// A runtime instance of a food source
 /// </summary>
-public class FoodSource: MonoBehaviour, Life
+public class FoodSource : MonoBehaviour, Life
 {
     public FoodSourceSpecies Species => species;
     public float FoodOutput => CalculateOutput();
@@ -18,7 +18,7 @@ public class FoodSource: MonoBehaviour, Life
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
 
     // For runtime instances of a food source
-    [SerializeField] private FoodSourceSpecies species = default;
+    [Expandable][SerializeField] private FoodSourceSpecies species = default;
     [SerializeField] private TileSystem tileSystem = default;
 
     private float neutralMultiplier = 0.5f;

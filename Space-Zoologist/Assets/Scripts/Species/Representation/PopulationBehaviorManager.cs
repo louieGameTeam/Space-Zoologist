@@ -4,17 +4,148 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public enum Availability { Free, Concurrent, Override, Occupied }
+public delegate void BehaviorCompleteCallback(GameObject animal);
 public class PopulationBehaviorManager : MonoBehaviour
 {
-    public Dictionary<string, SpecieBehaviorTrigger> ActiveBehaviors = new Dictionary<string, SpecieBehaviorTrigger>();
+    public Dictionary<string, PopulationBehavior> ActiveBehaviors = new Dictionary<string, PopulationBehavior>();
     private Population population = default;
+    [SerializeField] public Dictionary<GameObject, BehaviorExecutionData> animalsToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
+    [SerializeField] public List<PopulationBehavior> tempBehaviors = new List<PopulationBehavior>();
+    [SerializeField] private PopulationBehavior defaultBehavior;
+    private DequeueCoordinatedBehavior DequeueCoordinatedBehavior;
+    private BehaviorCompleteCallback BehaviorCompleteCallback;
 
-    private void Start()
+    public void Initialize()
     {
+        DequeueCoordinatedBehavior = OnDequeue;
+        BehaviorCompleteCallback = OnBehaviorComplete;
+        foreach (PopulationBehavior behavior in tempBehaviors)
+        {
+            behavior.AssignCallback(BehaviorCompleteCallback);
+        }
         this.population = this.gameObject.GetComponent<Population>();
+        int j = -1;
+        for (int i = 0; i < population.Count; i++)
+        {
+            j++;
+            if (j >= tempBehaviors.Count)
+            {
+                j = 0;
+            }
+            animalsToExecutionData.Add(this.population.AnimalPopulation[i], new BehaviorExecutionData(j));
+        }
+        foreach (GameObject animal in this.population.AnimalPopulation)
+        {
+            if (tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].numberOfAnimalsRequired == 1)
+            {
+                List<GameObject> animals = new List<GameObject>();
+                animals.Add(animal);
+                tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].EnterBehavior(animals);
+                continue;
+            }
+            QueueGroupBehavior(animal, animalsToExecutionData[animal].currentBehaviorIndex, tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].numberOfAnimalsRequired);
+        }
     }
-
+    private void QueueGroupBehavior(GameObject initiator, int behaviorIndex, int numToFind)
+    {
+        animalsToExecutionData[initiator].pendingBehavior = tempBehaviors[behaviorIndex];
+        animalsToExecutionData[initiator].cooperatingAnimals.Add(initiator);// Add self to list
+        int numFound = 1;
+        int maxQueueLength = 0;
+        while (numFound != numToFind || numToFind > animalsToExecutionData.Count)
+        {
+            if (maxQueueLength == 5) //Queue too long, skip Group behavior. The queue length actually stabilizes between 0 and 2, but just in case it exceeds for whatever reason
+            {
+                break;
+            }
+            for (int i = 1; i < tempBehaviors.Count; i++) //Prioritizes preceding behaviors to avoid clustering of behaviors
+            {
+                int currentIndex = behaviorIndex - i;
+                if (currentIndex < 0)
+                {
+                    currentIndex += tempBehaviors.Count();
+                }
+                foreach (KeyValuePair<GameObject, BehaviorExecutionData> animalToData in animalsToExecutionData)
+                {
+                    if (animalToData.Key == initiator)//Skip self(It will not find itself anyways, but just in case)
+                    {
+                        continue;
+                    }
+                    if (animalToData.Value.currentBehaviorIndex == currentIndex)
+                    {
+                        if (animalToData.Value.QueuedCoordinatedBehaviorsToInitiators.Count <= maxQueueLength) //Queue is small enough to be added
+                        {
+                            animalsToExecutionData[initiator].cooperatingAnimals.Add(animalToData.Key);
+                            numFound++;
+                            if(numFound == numToFind) //When all found, queue behavior
+                            {
+                                foreach (GameObject animal in animalsToExecutionData[initiator].cooperatingAnimals)
+                                {
+                                    if (animal != initiator)
+                                    {
+                                        animalsToExecutionData[animal].QueueBehavior(DequeueCoordinatedBehavior, tempBehaviors[behaviorIndex], initiator, maxQueueLength);
+                                    }
+                                }
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            maxQueueLength++;
+        }
+        // When not enough animal or queue too long, go to next behavior
+        animalsToExecutionData[initiator].pendingBehavior = null;
+        animalsToExecutionData[initiator].cooperatingAnimals.Clear();
+        OnBehaviorComplete(initiator);
+    }
+    private void OnDequeue(GameObject initiator)
+    {
+        animalsToExecutionData[initiator].avaliableAnimalCount++;
+        if (animalsToExecutionData[initiator].avaliableAnimalCount == animalsToExecutionData[initiator].pendingBehavior.numberOfAnimalsRequired) //last animal ready will trigger the behavior
+        {
+            animalsToExecutionData[initiator].avaliableAnimalCount = 1;
+            animalsToExecutionData[initiator].pendingBehavior.EnterBehavior(animalsToExecutionData[initiator].cooperatingAnimals);
+            animalsToExecutionData[initiator].cooperatingAnimals.Clear();
+        }
+    }
+    private void OnBehaviorComplete(GameObject animal)
+    {
+        if (!animalsToExecutionData.ContainsKey(animal))// Discriminate force exited callbacks from removing animals
+        {
+            return;
+        }
+        PopulationBehavior behavior = animalsToExecutionData[animal].NextBehavior(tempBehaviors, defaultBehavior);
+        if (behavior == null)
+        {
+            return;
+        }
+        if (behavior.numberOfAnimalsRequired == 1)
+        {
+            List<GameObject> animals = new List<GameObject>();
+            animals.Add(animal);
+            behavior.EnterBehavior(animals);
+            return;
+        }
+        QueueGroupBehavior(animal, animalsToExecutionData[animal].currentBehaviorIndex, behavior.numberOfAnimalsRequired);
+    }
+    public void RemoveAnimal(GameObject animal)
+    {
+        foreach (GameObject cooperatingAnimal in animalsToExecutionData[animal].cooperatingAnimals)
+        {
+            if (animal != cooperatingAnimal)
+            {
+                AnimalBehaviorManager behaviorManager = cooperatingAnimal.GetComponent<AnimalBehaviorManager>();
+                if (behaviorManager.activeBehavior == null)
+                {
+                    OnBehaviorComplete(animal);
+                    continue;
+                }
+            }
+        }
+        animalsToExecutionData.Remove(animal);
+        animal.GetComponent<AnimalBehaviorManager>().ForceExit();
+    }
     // If there's a bad condition behavior, initialize to that. Otherwise initialize to null.
     public void InitializeBehaviors(Dictionary<string, Need> _needs)
     {
@@ -38,96 +169,5 @@ public class PopulationBehaviorManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (this.population.AnimalPopulation.Count > 0 && !this.population.IsPaused)
-        {
-            // TODO figure out a better way to filter the activebehaviors for testing
-            foreach (KeyValuePair<string, SpecieBehaviorTrigger> specieBehaviorTrigger in this.ActiveBehaviors)
-            {
-                if (specieBehaviorTrigger.Value != null && specieBehaviorTrigger.Value.IsConditionSatisfied())
-                {
-                    specieBehaviorTrigger.Value.ResetCondition();
-                    Trigger(specieBehaviorTrigger.Value);
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Checks if there are enough animals to perform behavior, then checks for conflicts between animals running a behavior and the triggered behavior,
-    /// then checks for all available animals and sends that list to the behavior
-    /// </summary>
-    /// <param name="trigger"></param>
-    /// TODO refactor animal.GetComponent out
-    private void Trigger(SpecieBehaviorTrigger trigger)
-    {
-        int maxNumberApplicable = Mathf.Min(trigger.maxAffectedNumber, Mathf.RoundToInt(trigger.maxAffectedPortion * this.population.Count));
-        if (maxNumberApplicable < trigger.numberTriggerdPerLoop) // Not enough animals to perform behavior
-        {
-            Debug.Log("Return, Not enough animals to perform behavior");
-            return;
-        }
-        int numberAlreadyRunningBehavior = 0;
-        Dictionary<Availability, List<GameObject>> avalabilityToAnimals = new Dictionary<Availability, List<GameObject>>();
-        foreach (Availability availability in Enum.GetValues(typeof(Availability))) //Construct dictionary
-        {
-            avalabilityToAnimals.Add(availability, new List<GameObject>());
-        }
-        foreach (GameObject animal in this.population.AnimalPopulation)
-        {
-            List<BehaviorData> activeBehaviors = animal.GetComponent<AnimalBehaviorManager>().activeBehaviors;
-            if (activeBehaviors.Count == 0) //No behavior
-            {
-                avalabilityToAnimals[Availability.Free].Add(animal);
-                // Debug.Log("Free Animal Found");
-                continue;
-            }
-            if (activeBehaviors.Contains(trigger.behaviorData)) // Same behavior
-            {
-                numberAlreadyRunningBehavior++;
-                if (maxNumberApplicable - numberAlreadyRunningBehavior < trigger.numberTriggerdPerLoop) // Already enough running the behavior
-                {
-                    //Debug.Log("Return, Already enough running the behavior");
-                    return;
-                }
-                continue;
-            }
-            if (BehaviorUtils.IsBehaviorConflicting(activeBehaviors, trigger.behaviorData)) // Determine if behavior is conflicting
-            {
-                bool isOverriding = true;
-                foreach (BehaviorData animalBehaviorData in activeBehaviors)
-                {
-                    if (animalBehaviorData.priority >= trigger.behaviorData.priority) // Add lower priority to list
-                    {
-                        isOverriding = false;
-                        break;
-                    }
-                }
-                if (isOverriding)
-                {
-                    avalabilityToAnimals[Availability.Override].Add(animal);
-                }
-                continue;
-            }
-            else
-            {
-                avalabilityToAnimals[Availability.Concurrent].Add(animal); // Add concurrent possible animals
-                continue;
-            }
-        }
-        int totalAvaliable = 0;
-        foreach (Availability key in avalabilityToAnimals.Keys)
-        {
-            totalAvaliable += avalabilityToAnimals[key].Count();
-        }
-        if (totalAvaliable < trigger.numberTriggerdPerLoop)
-        {
-            return;
-        }
-        trigger.EnterBehavior(avalabilityToAnimals);
     }
 }

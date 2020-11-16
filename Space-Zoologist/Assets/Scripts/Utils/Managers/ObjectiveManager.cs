@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages all the objectives and invoke event when game is over
+/// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
     [Expandable] public LevelDataReference LevelDataReference = default;
     private LevelObjectiveData LevelObjectiveData = default;
 
+    public bool IsGameOver => this.isGameOver;
+
     private bool isOpen = false;
-    private bool IsGameOver = false;
+    private bool isGameOver = false;
 
     // To access the player balance
     [SerializeField] private PlayerBalance playerBalance = default;
     [SerializeField] private PauseManager PauseManager = default;
+
     // Objective panel
     [SerializeField] private GameObject objectivePanel = default;
     [SerializeField] private Text objectivePanelText = default;
 
+    // Currently all main objectives are survival objectives
     private List<Objective> mainObjectives = new List<Objective>();
     private List<Objective> secondaryObjectives = new List<Objective>();
-
 
     public void ToggleObjectivePanel()
     {
@@ -50,9 +56,10 @@ public class ObjectiveManager : MonoBehaviour
     /// <summary>
     /// Create objective objects and subscribe to events
     /// </summary>
-    public void Start()
+    private void Start()
     {
         this.LevelObjectiveData = this.LevelDataReference.LevelData.LevelObjectiveData;
+
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)
         {
@@ -63,6 +70,7 @@ public class ObjectiveManager : MonoBehaviour
                 objectiveData.timeRequirement
             ));
         }
+
         // Create the resource objective
         foreach (ResourceObjectiveData objectiveData in this.LevelObjectiveData.resourceObjectiveDatas)
         {
@@ -79,7 +87,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private void RegisterWithSurvivalObjectives(Population population)
     {
-        Debug.Log(population.gameObject.name + " attempting to update survivial objective");
+        Debug.Log(population.gameObject.name + " attempting to update survival objective");
         foreach (Objective objective in this.mainObjectives)
         {
             if (objective.GetType() == typeof(SurvivalObjective))
@@ -99,34 +107,41 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        bool isAllCompleted = true;
+        bool IsMainObjectivesCompleted = true;
+
         if (this.PauseManager.IsPaused)
         {
             return;
         }
+
         if (this.isOpen)
         {
             this.UpdateObjectivePanel();
         }
+
         // Level is completed when all mian objectives are done, failed when one has failed
         foreach (Objective objective in this.mainObjectives)
         {
             if (objective.UpdateStatus() == ObjectiveStatus.InProgress)
             {
-                isAllCompleted = false;
+                IsMainObjectivesCompleted = false;
             }
 
             if (objective.UpdateStatus() == ObjectiveStatus.Failed)
             {
+                // TODO figure out what should happen when game over event is triggered
                 EventManager.Instance.InvokeEvent(EventType.GameOver, null);
             }
         }
 
         // All objectives had reach end state
-        if (isAllCompleted && !this.IsGameOver)
+        if (IsMainObjectivesCompleted && !this.isGameOver)
         {
-            this.IsGameOver = true;
-            EventManager.Instance.InvokeEvent(EventType.ObjectivesCompleted, null);
+            this.isGameOver = true;
+
+            // TODO figure out what should happen when the main objectives are complete
+            EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
+            // TODO figure out what should happen when game over event is triggered
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
 
             Debug.Log($"Level Completed!");

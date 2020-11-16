@@ -19,7 +19,7 @@ public class Population : MonoBehaviour, Life
     public System.Random random = new System.Random();
 
     public Dictionary<string, Need> Needs => needs;
-    public Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> NeedBehaviors => needBehaviors;
+    public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> NeedBehaviors => needBehaviors;
     public AnimalPathfinding.Grid Grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
@@ -32,14 +32,14 @@ public class Population : MonoBehaviour, Life
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [Header("Lowest Priority Behaviors")]
-    [Expandable] public List<SpecieBehaviorTrigger> DefaultBehaviors = default;
+    [Expandable] public List<PopulationBehavior> DefaultBehaviors = default;
     [Header("Modify values and thresholds for testing")]
     [SerializeField] private float TimeSinceUpdate = 0f;
     [SerializeField] private List<Need> NeedEditorTesting = default;
     [SerializeField] private List<MovementData> AnimalsMovementData = default;
 
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    private Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, SpecieBehaviorTrigger>>();
+    private Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
 
     private Vector3 origin = Vector3.zero;
     private GrowthCalculator GrowthCalculator = new GrowthCalculator();
@@ -62,7 +62,7 @@ public class Population : MonoBehaviour, Life
     private void Start()
     {
         int i=0;
-        foreach(SpecieBehaviorTrigger behaviorPattern in this.DefaultBehaviors)
+        foreach(PopulationBehavior behaviorPattern in this.DefaultBehaviors)
         {
             this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
             i++;
@@ -198,6 +198,7 @@ public class Population : MonoBehaviour, Life
             }
         }
         this.prePopulationCount = this.AnimalPopulation.Count;
+        this.PopulationBehaviorManager.Initialize();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -216,6 +217,7 @@ public class Population : MonoBehaviour, Life
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
         newAnimal.GetComponent<Animal>().Initialize(this, data);
+        this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
 
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
@@ -233,6 +235,7 @@ public class Population : MonoBehaviour, Life
         {
             Debug.Log("Animal removed");
             this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
+            this.PopulationBehaviorManager.RemoveAnimal(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
@@ -294,7 +297,10 @@ public class Population : MonoBehaviour, Life
     {
         if (this.PopulationBehaviorManager.ActiveBehaviors.ContainsKey(need))
         {
-            this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needBehaviors[this.needs[need]][needCondition];
+            // previous implementation
+            //this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needBehaviors[this.needs[need]][needCondition];
+
+            this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needs[need].GetBehavior(needs[need].NeedValue).Behavior;
         }
     }
 

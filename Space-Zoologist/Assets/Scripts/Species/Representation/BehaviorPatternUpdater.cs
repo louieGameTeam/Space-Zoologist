@@ -24,16 +24,25 @@ public class BehaviorPatternUpdater : MonoBehaviour
     {
         if (!behaviorPatterns.Contains(behaviorPattern))
         {
+            behaviorPattern.SetupDependencies(this.GridSystem);
             behaviorPattern.StartUp();
             behaviorPatterns.Add(behaviorPattern);
-            behaviorPattern.SetupDependencies(this.GridSystem);
         }
     }
 
     public void RegisterPopulation(Population population)
     {
+        // Temp
+        PopulationBehaviorManager populationBehaviorManager = FindObjectOfType<PopulationBehaviorManager>();
+        foreach (PopulationBehavior behaviorTrigger1 in populationBehaviorManager.tempBehaviors)
+        {
+            foreach (BehaviorPattern behaviorPattern in behaviorTrigger1.behaviorPatterns)
+            {
+                this.RegisterPattern(behaviorPattern);
+            }
+        }
         // Register unique behaviors
-        foreach (SpecieBehaviorTrigger behaviorTrigger in population.Species.GetBehaviors())
+        foreach (PopulationBehavior behaviorTrigger in population.Species.GetBehaviors())
         {
             foreach (BehaviorPattern behaviorPattern in behaviorTrigger.behaviorPatterns)
             {
@@ -41,7 +50,7 @@ public class BehaviorPatternUpdater : MonoBehaviour
             }
         }
         // Register default behaviors
-        foreach (SpecieBehaviorTrigger behaviorTrigger in population.DefaultBehaviors)
+        foreach (PopulationBehavior behaviorTrigger in population.DefaultBehaviors)
         {
             foreach (BehaviorPattern behaviorPattern in behaviorTrigger.behaviorPatterns)
             {

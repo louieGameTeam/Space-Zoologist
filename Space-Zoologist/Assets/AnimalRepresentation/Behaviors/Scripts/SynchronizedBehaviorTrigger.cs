@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 [CreateAssetMenu(fileName = "SynchronizedBehavior", menuName = "SpeciesBehavior/SynchronizedBehavior")]
-public class SynchronizedBehaviorTrigger : SpecieBehaviorTrigger
+public class SynchronizedBehaviorTrigger : PopulationBehavior
 {
     [SerializeField] private float[] synchronizedSteps = default;
-    protected override List<GameObject> AnimalSelection(Dictionary<Availability, List<GameObject>> avalabilityToAnimals)
-    {
-        return BehaviorUtils.SelectAnimals(this.numberTriggerdPerLoop, avalabilityToAnimals);
-    }
     protected override void ProceedToNext(GameObject animal, List<GameObject> collaboratingAnimals, bool isDriven = false)
     {
         if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed

@@ -47,6 +47,7 @@ public class RandomMovementEmojiPattern : BehaviorPattern
     protected override void ExitPattern(GameObject gameObject, bool callCallback = true)
     {
         gameObject.transform.GetChild(0).GetComponent<Animator>().enabled = true;
+        AnimalsToAnimalData[gameObject].animal.Overlay.sprite = null;
         //AnimalsToAnimalData[gameObject].animal.Overlay.enabled = false;
         base.ExitPattern(gameObject, callCallback);
     }
