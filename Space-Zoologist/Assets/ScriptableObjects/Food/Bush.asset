@@ -21,24 +21,24 @@ MonoBehaviour:
     needs:
     - needName: Dirt
       severity: 5
-      conditions: 000000000100000002000000
+      conditions: []
       thresholds:
       - 10
   - needType: 4
     needs:
     - needName: MineralX
       severity: 5
-      conditions: 000000000100000002000000
+      conditions: []
       thresholds:
       - 10
     - needName: MineralY
       severity: 5
-      conditions: 000000000100000002000000
+      conditions: []
       thresholds:
       - 10
     - needName: MineralZ
       severity: 5
-      conditions: 000000000100000002000000
+      conditions: []
       thresholds:
       - 10
   FoodSource: {fileID: 11400000, guid: b63cac9feff8a4b0f89cedf9db1d134f, type: 2}

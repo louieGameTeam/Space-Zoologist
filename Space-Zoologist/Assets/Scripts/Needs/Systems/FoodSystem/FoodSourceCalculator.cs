@@ -80,6 +80,17 @@ public class FoodSourceCalculator : NeedCalculator
         this.isDirty = true;
     }
 
+    public bool RemoveConsumer(Population consumer)
+    {
+        this.isDirty = true;
+
+        // Assert would not be included in depolyment built
+        Debug.Assert(!this.consumers.Remove(consumer), "Consumer removal failure");
+        Debug.Assert(!this.accessibleFoodSources.Remove(consumer), "Removal of consumer in AccessibleFoodSources failed!");
+
+        return true;
+    }
+
     public bool RemoveSource(Life source)
     {
         FoodSource foodSource = (FoodSource)source;
@@ -88,17 +99,6 @@ public class FoodSourceCalculator : NeedCalculator
 
         Debug.Assert(!this.foodSources.Remove(foodSource), "FoodSource removal failure");
         Debug.Assert(!this.populationsWithAccess.Remove(foodSource), "Removal of foodsource in populationsWithAccess failed!");
-
-        return true;
-    }
-
-    public bool RemoveConsumer(Population consumer)
-    {
-        this.isDirty = true;
-
-        // Assert would not be included in depolyment built
-        Debug.Assert(!this.consumers.Remove(consumer), "Consumer removal failure");
-        Debug.Assert(!this.accessibleFoodSources.Remove(consumer), "Removal of consumer in AccessibleFoodSources failed!");
 
         return true;
     }

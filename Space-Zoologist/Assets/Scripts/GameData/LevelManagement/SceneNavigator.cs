@@ -15,6 +15,22 @@ public class SceneNavigator : ScriptableObject
         SceneManager.LoadScene(levelName, LoadSceneMode.Single);
     }
 
+    public void RestartLevel() {
+        Level curlevel = FindObjectOfType<LevelDataReference>().LevelData.Level;
+        LoadLevel(curlevel.SceneName);
+    }
+
+    public void LoadNextLevel() {
+        Level curlevel = FindObjectOfType<LevelDataReference>().LevelData.Level;
+        for (int i = 0; i < Levels.Count; i++) {
+            if (Levels[i].Equals(curlevel)) {
+                LoadLevel(Levels[i + 1].SceneName);
+                return;
+            }
+        }
+        Debug.LogError("Scene Navigator: Error loading next level");
+    }
+
     public void LoadMainMenu()
     {
         this.UpdateRecentlyLoadedLevel("MainMenu");

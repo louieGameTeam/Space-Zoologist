@@ -297,7 +297,10 @@ public class Population : MonoBehaviour, Life
     {
         if (this.PopulationBehaviorManager.ActiveBehaviors.ContainsKey(need))
         {
-            this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needBehaviors[this.needs[need]][needCondition];
+            // previous implementation
+            //this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needBehaviors[this.needs[need]][needCondition];
+
+            this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needs[need].GetBehavior(needs[need].NeedValue).Behavior;
         }
     }
 

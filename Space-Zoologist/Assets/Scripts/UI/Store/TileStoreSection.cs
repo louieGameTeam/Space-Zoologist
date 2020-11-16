@@ -52,7 +52,7 @@ public class TileStoreSection : StoreSection
         isPlacing = false;
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
-        base.playerBalance.SubtractFromBalance(numTilesPlaced * selectedItem.Price);
+        base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
     }
 
     /// <summary>
@@ -105,7 +105,7 @@ public class TileStoreSection : StoreSection
             else
             {
                 numTilesPlaced = tilePlacementController.PlacedTileCount();
-                base.playerBalance.SubtractFromBalance(numTilesPlaced * selectedItem.Price);
+                base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
             }
         }
     }

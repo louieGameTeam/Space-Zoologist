@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SizeChange : BehaviorPattern
 {
-    [SerializeField] Vector3 targetScale;
+    [SerializeField] Vector3 targetScale = default;
     protected Dictionary<GameObject, Vector3> animalsToOriginalScales = new Dictionary<GameObject, Vector3>();
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
