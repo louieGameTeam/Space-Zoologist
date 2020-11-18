@@ -173,7 +173,6 @@ public class ReservePartitionManager : MonoBehaviour
 
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
             GameTile tile = _tileSystem.GetTerrainTileAtLocation(cur);
-
             // Get liquid tile info
             if (tile != null && tile.type == TileType.Liquid)
             {

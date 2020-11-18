@@ -2,23 +2,113 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Tilemaps;
 
 public delegate void BodyEmptyCallback(LiquidBody liquidBody);
+public enum AbsoluteDirection { Towards, Against, Parallel}
 public class TileLayerManager : MonoBehaviour
 {
-    private Dictionary<Vector3Int, TileData> positionsToTileData = new Dictionary<Vector3Int, TileData>();
-    private List<LiquidBody> liquidBodies = new List<LiquidBody>();
-    private List<LiquidBody> previewBodies = new List<LiquidBody>();
-    private List<Vector3Int> ChangedTiles = new List<Vector3Int>();
+    private enum Direction2D { X, Y }
+    private enum CellStatus { Other, Self, Walked }
+    private enum MoveType { Towards, Parallel1, Parallel2, Away }
     public bool holdsContent;
+    private Tilemap tilemap;
+    private Dictionary<Vector3Int, TileData> positionsToTileData = new Dictionary<Vector3Int, TileData>();
+    private HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
+    private HashSet<LiquidBody> liquidBodies = new HashSet<LiquidBody>();
+    private List<LiquidBody> previewBodies = new List<LiquidBody>();
     private BodyEmptyCallback bodyEmptyCallback;
-    private HashSet<Vector3Int> removedTiles = new HashSet<Vector3Int>();
-    void Awake()
+    private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
+    [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
+                                                           // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
+
+    private void Update()
+    {
+        Debug.Log(this.liquidBodies.Count.ToString() + this.previewBodies.Count.ToString()) ;
+    }
+/*    private void Awake()
     {
         this.bodyEmptyCallback = OnLiquidBodyEmpty;
-        //TODO parse and initialize liquid bodies
+        this.tilemap = this.gameObject.GetComponent<Tilemap>();
+    }*/
+    public LiquidBody GetLiquidBodyAt(Vector3Int cellPosition)
+    {
+        if (positionsToTileData.ContainsKey(cellPosition))
+        {
+            return positionsToTileData[cellPosition].currentLiquidBody;
+        }
+        return null;
     }
+    public void ChangeComposition(Vector3Int cellPosition, float[] contents)
+    {
+        if (!this.holdsContent)
+        {
+            Debug.LogError("This tilemap does not hold content");
+            return;
+        }
+        if (positionsToTileData.ContainsKey(cellPosition))
+        {
+            contents.CopyTo(positionsToTileData[cellPosition].currentLiquidBody.contents, 0);
+            return;
+        }
+        Debug.LogError(cellPosition + "Does not have tile present");
 
+    }
+    public void ParseSerializedTilemap(SerializedTilemap serializedTilemap, GameTile[] gameTiles)
+    {
+        this.bodyEmptyCallback = OnLiquidBodyEmpty;
+        this.tilemap = this.gameObject.GetComponent<Tilemap>();
+        Dictionary<int, LiquidBody> bodyIDsToLiquidBodies = new Dictionary<int, LiquidBody>();
+        foreach (SerializedLiquidBody serializedLiquidBody in serializedTilemap.SerializedLiquidBodies)
+        {
+            LiquidBody liquidBody = ParseSerializedLiquidBody(serializedLiquidBody);
+            bodyIDsToLiquidBodies.Add(liquidBody.bodyID, liquidBody);
+            this.liquidBodies.Add(liquidBody);
+        }
+        Dictionary<string, GameTile> namesToGameTiles = new Dictionary<string, GameTile>();
+        foreach(SerializedTileData serializedTileData in serializedTilemap.SerializedTileDatas)
+        {
+            if (!namesToGameTiles.ContainsKey(serializedTileData.TileName))
+            {
+                foreach (GameTile gameTile in gameTiles)
+                {
+                    if (gameTile.name.Equals(serializedTileData.TileName))
+                    {
+                        namesToGameTiles.Add(serializedTileData.TileName, gameTile);
+                        break;
+                    }
+                }
+            }
+            TileData tileData = ParseSerializedTileData(serializedTileData, namesToGameTiles[serializedTileData.TileName], bodyIDsToLiquidBodies);
+            this.positionsToTileData.Add(tileData.tilePosition,tileData);
+            ApplyChangesToTilemap(tileData.tilePosition);
+        }
+    }
+    private LiquidBody ParseSerializedLiquidBody(SerializedLiquidBody serializedLiquidBody)
+    {
+        HashSet<Vector3Int> tiles = new HashSet<Vector3Int>();
+        if (serializedLiquidBody.BodyID == 0)
+        {
+            Debug.LogError("Liquid Body has body ID 0. Is temporary bodies being stored or no proper ID given to the bodies");
+        }
+        for (int i = 0; i < serializedLiquidBody.TilePositions.Length/3; i++)
+        {
+            int index = i * 3;
+            tiles.Add(new Vector3Int(serializedLiquidBody.TilePositions[index], serializedLiquidBody.TilePositions[index + 1], serializedLiquidBody.TilePositions[index + 2]));
+        }
+        return new LiquidBody(tiles, serializedLiquidBody.Contents, this.bodyEmptyCallback, serializedLiquidBody.BodyID);
+    }
+    private TileData ParseSerializedTileData(SerializedTileData serializedTileData, GameTile gameTile, Dictionary<int, LiquidBody> bodyIDsToLiquidBodies)
+    {
+        Vector3Int position = new Vector3Int(serializedTileData.TilePosition[0], serializedTileData.TilePosition[1], serializedTileData.TilePosition[2]);
+        Color color = new Color(serializedTileData.Color[0],serializedTileData.Color[1], serializedTileData.Color[2], serializedTileData.Color[3]);
+        LiquidBody liquidBody = null;
+        if (serializedTileData.LiquidBodyID != 0)
+        {
+            liquidBody = bodyIDsToLiquidBodies[serializedTileData.LiquidBodyID];
+        }
+        return new TileData(gameTile, position, color, liquidBody);
+    }
     public void UpdateContents(Vector3Int tilePosition, float[] contents)
     {
         if (!this.holdsContent)
@@ -29,16 +119,123 @@ public class TileLayerManager : MonoBehaviour
         this.positionsToTileData[tilePosition].currentLiquidBody.contents = contents;
         // TODO Update color
     }
-    public void AddTile(Vector3Int cellPosition, GameTile tile, float[] contents)
+    public void AddTile(Vector3Int cellPosition, GameTile tile)
     {
-        this.positionsToTileData[cellPosition].PreviewReplacement(tile, MergeLiquidBodies(cellPosition, tile, contents)); // Add body information to tile
+
+        if (!this.positionsToTileData.ContainsKey(cellPosition)) //Create empty
+        {
+            this.positionsToTileData.Add(cellPosition, new TileData(cellPosition));
+        }
+        if (this.holdsContent)
+        {
+            this.positionsToTileData[cellPosition].PreviewReplacement(tile, MergeLiquidBodies(cellPosition, tile)); // Add body information to tile
+            this.ChangedTiles.Add(cellPosition);
+            ApplyChangesToTilemap(cellPosition);
+            return;
+        }
+        this.positionsToTileData[cellPosition].PreviewReplacement(tile);
+        this.ChangedTiles.Add(cellPosition);
+        this.ApplyChangesToTilemap(cellPosition);
         // TODO update color
     }
     public void RemoveTile(Vector3Int cellPosition)
     {
-        this.positionsToTileData[cellPosition].PreviewReplacement(null, null);
-        this.removedTiles.Add(cellPosition);
-        DivideLiquidBody(cellPosition);
+        if (this.positionsToTileData.ContainsKey(cellPosition))
+        {
+            this.positionsToTileData[cellPosition].PreviewReplacement(null, null);
+            this.ChangedTiles.Add(cellPosition);
+            this.RemovedTiles.Add(cellPosition);
+            if (this.holdsContent)
+            {
+                this.DivideLiquidBody(cellPosition);
+            }
+            this.ApplyChangesToTilemap(cellPosition);
+        }
+
+    }
+    public void ConfirmPlacement()
+    {
+        if (this.previewBodies.Count == 0)
+        {
+            foreach (Vector3Int tile in this.ChangedTiles)
+            {
+                this.positionsToTileData[tile].ConfirmReplacement();
+            }
+        }
+        foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
+        {
+            foreach (Vector3Int tile in previewLiquidBody.tiles)
+            {
+                this.positionsToTileData[tile].ConfirmReplacement();
+            }
+            this.liquidBodies.ExceptWith(previewLiquidBody.referencedBodies);
+            this.GenerateNewLiquidBodyID(previewLiquidBody);
+            this.liquidBodies.Add(previewLiquidBody);
+        }
+        foreach (Vector3Int cellPosition in this.RemovedTiles)
+        {
+            this.positionsToTileData.Remove(cellPosition);
+        }
+        this.RemovedTiles.Clear();
+        this.ChangedTiles.Clear();
+        this.previewBodies.Clear();
+    }
+    public void Revert()
+    {
+        foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
+        {
+            this.ChangedTiles.UnionWith(previewLiquidBody.tiles);
+            previewLiquidBody.Clear();
+        }
+        foreach (Vector3Int changedTile in this.ChangedTiles)
+        {
+            this.positionsToTileData[changedTile].Revert();
+            this.ApplyChangesToTilemap(changedTile);
+            if (this.positionsToTileData[changedTile].currentTile == null)
+            {
+                this.positionsToTileData[changedTile].Clear();
+                this.positionsToTileData.Remove(changedTile);
+            }
+        }
+        this.RemovedTiles.Clear();
+        this.ChangedTiles.Clear();
+        this.previewBodies.Clear();
+
+        //System.GC.Collect();
+    }
+    private void ApplyChangesToTilemap(Vector3Int cellPosition)
+    {
+        TileData data = positionsToTileData[cellPosition];
+        Debug.Log(tilemap);
+        this.tilemap.SetTile(cellPosition, data.currentTile);
+        this.tilemap.SetTileFlags(cellPosition, TileFlags.None);
+        this.tilemap.SetColor(cellPosition, data.currentColor);
+    }
+    private void GenerateNewLiquidBodyID(LiquidBody previewLiquidBody)
+    {
+        int newID = 1;
+        while (true)
+        {
+            bool isSame = false;
+            foreach (LiquidBody liquidBody in this.liquidBodies)
+            {
+                if (liquidBody.bodyID == newID)
+                {
+                    isSame = true;
+                }
+            }
+            if (!isSame)
+            {
+                previewLiquidBody.bodyID = newID;
+                break;
+            }
+            newID++;
+        }
+    }
+    public SerializedTilemap Serialize()
+    {
+        Debug.Log("Serialize " + this.tilemap.name);
+        return new SerializedTilemap(this.gameObject.name, this.positionsToTileData, this.liquidBodies);
     }
     /// <summary>
     /// Merge Current Tile to existing liquid bodies
@@ -47,7 +244,7 @@ public class TileLayerManager : MonoBehaviour
     /// <param name="tile"></param>
     /// <param name="contents"></param>
     /// <returns></returns>
-    private LiquidBody MergeLiquidBodies(Vector3Int cellPosition, GameTile tile, float[] contents)
+    private LiquidBody MergeLiquidBodies(Vector3Int cellPosition, GameTile tile)
     {
         if (!this.holdsContent)
         {
@@ -56,21 +253,21 @@ public class TileLayerManager : MonoBehaviour
         HashSet<LiquidBody> neighborLiquidBodies = new HashSet<LiquidBody>();
         foreach (Vector3Int neighborCell in FourNeighborTileCellPositions(cellPosition))
         {
-            if (positionsToTileData[neighborCell].currentTile == tile)
+            if (positionsToTileData.ContainsKey(neighborCell) && positionsToTileData[neighborCell].currentTile == tile)
             {
                 neighborLiquidBodies.Add(positionsToTileData[neighborCell].currentLiquidBody);
             }
         }
-        neighborLiquidBodies.Distinct().ToList();
         switch (neighborLiquidBodies.Count)
         {
             case 0: // Create new body
                 HashSet<Vector3Int> newBodyTiles = new HashSet<Vector3Int>();
-                LiquidBody newBody = new LiquidBody(newBodyTiles, contents, bodyEmptyCallback);
-                previewBodies.Add(newBody);
+                LiquidBody newBody = new LiquidBody(newBodyTiles, tile.defaultContents, this.bodyEmptyCallback);
+                this.previewBodies.Add(newBody);
                 return newBody;
+
             case 1: // Extend the new one drawn, or extend existing body
-                List<LiquidBody> liquidBodyL = liquidBodies.ToList();
+                List<LiquidBody> liquidBodyL = neighborLiquidBodies.ToList();
                 if (liquidBodyL[0].bodyID == 0) // Preview Liquid Body, newly placed tile
                 {
                     liquidBodyL[0].AddTile(cellPosition);
@@ -79,6 +276,7 @@ public class TileLayerManager : MonoBehaviour
                 LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], cellPosition);
                 this.previewBodies.Add(extendedBody);
                 return extendedBody;
+
             default: // Merge Multiple bodies, including new bodies generated by the placement
                 LiquidBody mergedBody = new LiquidBody(neighborLiquidBodies, bodyEmptyCallback);
                 mergedBody.AddTile(cellPosition);
@@ -98,69 +296,213 @@ public class TileLayerManager : MonoBehaviour
     {
         HashSet<Vector3Int> remainingTiles = new HashSet<Vector3Int>();
         remainingTiles.UnionWith(positionsToTileData[cellPosition].currentLiquidBody.tiles);
-        remainingTiles.ExceptWith(removedTiles);
-        int[] connections = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
-        List<Vector3Int> fourNeighbor = FourNeighborTileCellPositions(cellPosition);
-        int numNeighbor = 0;
-        for (int i = 0; i < 4; i++)
+        remainingTiles.ExceptWith(RemovedTiles);
+        List<Vector3Int> neighborTiles = new List<Vector3Int>();
+        foreach (Vector3Int neighborTile in FourNeighborTileCellPositions(cellPosition)) //Filter available liquid tiles
         {
-            if (remainingTiles.Contains(fourNeighbor[i]))
+            if (remainingTiles.Contains(neighborTile))
             {
-                connections[i * 2] = 1;
-                numNeighbor++;
+                neighborTiles.Add(neighborTile);
             }
         }
-        List<Vector3Int> fourDiagonal = FourDiagonalTileCellPositions(cellPosition);
-        for (int i = 0; i < 4; i++)
+        if (neighborTiles.Count <= 1) // No tile or only one tile. don't try anything
         {
-            if (remainingTiles.Contains(fourDiagonal[i]))
+            return;
+        }
+        bool isContinueous = true;
+        CellStatus[,] historyArray = InitializeHistoryArray(cellPosition, remainingTiles); //Create a matrix as large as meaningful iterations can go, centered at the given position. 
+        historyArray[quickCheckIterations / 2, quickCheckIterations / 2] = CellStatus.Other; //Make sure the origin is other. 
+        List<Vector3Int> startingTiles = new List<Vector3Int>(neighborTiles); //Copy the list to use later
+        while (neighborTiles.Count > 1)
+        {
+            if (QuickContinuityTest(cellPosition, neighborTiles[0], neighborTiles[1], historyArray))
             {
-                connections[i * 2 + 1] = 1;
+                neighborTiles.RemoveAt(0);
+                ClearHistoryArray(historyArray);
+                continue;
+            }
+            isContinueous = false;
+            break;
+        }
+        if (!isContinueous) //perform complicated check and generate new bodies if necessary
+        {
+            List<LiquidBody> newBodies = GenerateNewBodies(positionsToTileData[cellPosition].currentLiquidBody, cellPosition, startingTiles, remainingTiles);
+            if (newBodies != null)
+            {
+                previewBodies.AddRange(newBodies);
             }
         }
-        bool continueous = false;
-        for (int i = 0; i < 8; i += 2)
+    }
+    private List<LiquidBody> GenerateNewBodies(LiquidBody dividedBody, Vector3Int dividePoint, List<Vector3Int> startingTiles, HashSet<Vector3Int> remainingTiles)
+    {
+        List<LiquidBody> newBodies = new List<LiquidBody>();
+        foreach (Vector3Int tile in startingTiles)
         {
-            if (connections[i] == 1)
+            bool skip = false;
+            foreach (LiquidBody liquidBody in newBodies) //If a prior body generation included this tile, then skip generation using this tile
             {
-                int numFound = 1;
-                for (int j = 1; j < 7; j += 2)
+                if (liquidBody.tiles.Contains(tile))
                 {
-                    if (connections[LoopIteration(i + j, 7)] == 1 && connections[LoopIteration(i + j + 1, 7)] == 1)
-                    {
-                        numFound++;
-                        if (numFound == numNeighbor)
-                        {
-                            continueous = true;
-                            break;
-                        }
-                    }
+                    skip = true;
+                    break;
                 }
             }
-        }
-        if (!continueous)
-        {
-            
-            for (int i = 0; i < 4; i++)
+            if (!skip)
             {
-                if (remainingTiles.Contains(fourNeighbor[i]))
+                newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, DetermineRelativeDirection(dividePoint, tile), bodyEmptyCallback));
+            }
+            if (remainingTiles.Count == 0)
+            {
+                break;
+            }
+        }
+        if (newBodies.Count == 1) //They still belong to the same body, do not add new body
+        {
+            return null;
+        }
+        return newBodies;
+    }
+    private SearchDirection DetermineRelativeDirection(Vector3Int referencedTile, Vector3Int tile)
+    {
+        int x = tile.x - referencedTile.x;
+        int y = tile.y - referencedTile.y;
+        switch (x)
+        {
+            case 1:
+                return SearchDirection.Right;
+            case -1:
+                return SearchDirection.Left;
+            default:
+                break;
+        }
+        switch (y)
+        {
+            case 1:
+                return SearchDirection.Up;
+            case -1:
+                return SearchDirection.Down;
+            default:
+                Debug.LogError("Input tile is not neighbor to referenced tile");
+                return SearchDirection.Up;
+        }
+    }
+    private bool QuickContinuityTest(Vector3Int origin, Vector3Int start, Vector3Int stop, CellStatus[,] historyArray)
+    {
+        int iterations = 0;
+        int maxDisplacement = quickCheckIterations / 2 - 1; // TODO optimization, when trying to access outside possible bound, terminate immediately
+        int[] displacement = new int[2] { start.x - origin.x, start.y - origin.y };
+        int[] targetDisplacement = new int[2] { stop.x - origin.x, stop.y - origin.y };
+        TranslateDisplacementToArray(displacement, historyArray);
+        while (iterations < quickCheckIterations)
+        {
+            if (displacement[0] == targetDisplacement[0] && displacement[1] == targetDisplacement[1]) // Success
+            {
+                return true;
+            }
+            // Try move towards target
+            Direction2D direction = Mathf.Abs(displacement[0]) < Mathf.Abs(displacement[1]) ? Direction2D.X : Direction2D.Y; // Move to direction with smaller displacement
+            // TODO refine path finding, repathfind in a different order to avoid dead ends if steps not depleted, especially change the order of the parallel movements.
+            //Move Towards target direction
+            if (CanMove(displacement, targetDisplacement, direction, historyArray, MoveType.Towards) || CanMove(displacement, targetDisplacement, SwitchDirection(direction), historyArray, MoveType.Towards))
+            {
+                iterations++;
+                continue;
+            }
+            //Move in parallel
+            if (CanMove(displacement, targetDisplacement, direction, historyArray, MoveType.Parallel1) || CanMove(displacement, targetDisplacement, SwitchDirection(direction), historyArray, MoveType.Parallel1))
+            {
+                iterations++;
+                continue;
+            }
+            //Move Away from target direction
+            if (CanMove(displacement, targetDisplacement, direction, historyArray, MoveType.Away) || CanMove(displacement, targetDisplacement, SwitchDirection(direction), historyArray, MoveType.Away))
+            {
+                iterations++;
+                continue;
+            }
+            return false; //Stuck in somewhere
+        }
+        return false;
+    }
+    private bool CanMove(int[] displacement, int[] targetDisplacement, Direction2D direction, CellStatus[,] historyArray, MoveType moveType)
+    {
+        int adder = new int();
+        switch (moveType)
+        {
+            case MoveType.Towards:
+                adder = PathfindTowards(displacement[(int)direction], targetDisplacement[(int)direction]);
+                break;
+            case MoveType.Away:
+                adder = -PathfindTowards(displacement[(int)direction], targetDisplacement[(int)direction]);
+                break;
+            case MoveType.Parallel1:
+                adder = 1;
+                break;
+            default:
+                adder = -1;
+                break;
+        }
+        int[] newDisp = new int[2] { displacement[0], displacement[1] };
+        newDisp[(int)direction] += adder;
+        if (TranslateDisplacementToArray(newDisp, historyArray))
+        {
+            displacement[(int)direction] += adder;
+            return true;
+        }
+        if (moveType == MoveType.Parallel1)
+        {
+            return CanMove(displacement, targetDisplacement, direction, historyArray, MoveType.Parallel2);
+        }
+        return false;
+    }
+    /// <summary>
+    /// If successfully updated history array, then returns true, otherwise returns false
+    /// </summary>
+    /// <param name="origin"></param>
+    /// <param name="cellPosition"></param>
+    /// <param name="historyArray"></param>
+    /// <returns></returns>
+    private bool TranslateDisplacementToArray(int[] displacement, CellStatus[,] historyArray)
+    {
+        int maxDisplacement = quickCheckIterations / 2 - 1;
+        int x = displacement[0] + maxDisplacement;
+        int y = displacement[1] + maxDisplacement;
+        if (x < 0 || x >= quickCheckIterations - 1 || y < 0 || y >= quickCheckIterations - 1) // Out of bound
+        {
+            return false;
+        }
+        if (historyArray[x, y] != CellStatus.Self)
+        {
+            return false;
+        }
+        historyArray[x, y] = CellStatus.Walked;
+        return true;
+    }
+
+    private void ClearHistoryArray (CellStatus[,] historyArray)
+    {
+        for (int i = 0; i < quickCheckIterations - 1; i++)
+        {
+            for (int j = 0; j < quickCheckIterations - 1; j++)
+            {
+                if (historyArray[i, j] == CellStatus.Walked)
                 {
-                    connections[i * 2] = 1;
-                    numNeighbor++;
+                    historyArray[i, j] = CellStatus.Self;
                 }
             }
         }
     }
+    private Direction2D SwitchDirection(Direction2D direction)
+    {
+        return direction == Direction2D.X ? Direction2D.Y : Direction2D.X;
+    }
+
     private void UpdatePreviewLiquidBody(LiquidBody liquidBody)
     {
         foreach (Vector3Int tileCellPosition in liquidBody.tiles)
         {
             this.positionsToTileData[tileCellPosition].PreviewLiquidBody(liquidBody);
         }
-    }
-    private int LoopIteration(int current, int oneOverMax)
-    {
-        return (current - oneOverMax);
     }
     private List<Vector3Int> FourNeighborTileCellPositions(Vector3Int cellPosition)
     {
@@ -171,14 +513,38 @@ public class TileLayerManager : MonoBehaviour
         result.Add(new Vector3Int(cellPosition.x - 1, cellPosition.y, cellPosition.z));
         return result;
     }
-    private List<Vector3Int> FourDiagonalTileCellPositions(Vector3Int cellPosition)
+    private int PathfindTowards(int start, int end)
     {
-        List<Vector3Int> result = new List<Vector3Int>();
-        result.Add(new Vector3Int(cellPosition.x + 1, cellPosition.y + 1, cellPosition.z));
-        result.Add(new Vector3Int(cellPosition.x + 1, cellPosition.y - 1, cellPosition.z));
-        result.Add(new Vector3Int(cellPosition.x - 1, cellPosition.y + 1, cellPosition.z));
-        result.Add(new Vector3Int(cellPosition.x - 1, cellPosition.y - 1, cellPosition.z));
-        return result;
+        if(start > end)
+        {
+            return -1;
+        }
+        if(start < end)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    private CellStatus[,] InitializeHistoryArray(Vector3Int originPosition, HashSet<Vector3Int> selfTiles)
+    {
+        CellStatus[,] historyArray = new CellStatus[quickCheckIterations - 1, quickCheckIterations - 1];
+        Vector3Int startPoint = new Vector3Int(originPosition.x - quickCheckIterations / 2 - 1, originPosition.y - quickCheckIterations / 2 - 1, originPosition.z);
+        Vector3Int cellToScan = new Vector3Int(startPoint.x, startPoint.y, startPoint.z);
+        for (int i = 0; i < quickCheckIterations - 1; i++)
+        {
+            cellToScan.x = startPoint.x;
+            cellToScan.x += i;
+            for (int j = 0; j < quickCheckIterations - 1; j++)
+            {
+                cellToScan.y = startPoint.y;
+                cellToScan.y += j;
+                if (selfTiles.Contains(cellToScan))
+                {
+                    historyArray[i, j] = CellStatus.Self;
+                }
+            }
+        }
+        return historyArray;
     }
     private void OnLiquidBodyEmpty(LiquidBody liquidBody)
     {

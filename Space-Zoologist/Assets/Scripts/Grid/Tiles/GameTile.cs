@@ -5,18 +5,19 @@ using UnityEngine.Tilemaps;
 
 public enum TileType { Rock, Sand, Dirt, Grass, Liquid, Wall, TypesOfTiles };
 [CreateAssetMenu]
+[System.Serializable]
 public class GameTile : RuleTile<GameTile.Neighbor>
 {
 	[HideInInspector] public Tilemap targetTilemap;
-	[HideInInspector] public List<Tilemap> replacementTilemap;
-	[HideInInspector] public List<Tilemap> constraintTilemap;
+	[HideInInspector] public List<Tilemap> replacementTilemaps;
+	[HideInInspector] public List<Tilemap> constraintTilemaps;
 	public TileType type;
 	public string TileName;
 	public GridUtils.TileLayer targetLayer;
 	public List<GridUtils.TileLayer> replacementLayers;
 	public List<GridUtils.TileLayer> constraintLayers;
 	public bool isRepresentative;
-	public bool isMergingAttributes;
+	public float[] defaultContents = null;
 	public void ReferencePlaceableArea()
 	{
 		if (!constraintLayers.Contains(GridUtils.TileLayer.PlaceableArea))

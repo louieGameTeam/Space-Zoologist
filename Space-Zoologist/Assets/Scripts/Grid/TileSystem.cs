@@ -88,53 +88,20 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Change the composition of all connecting liquid tiles of the selected location
     /// </summary>
-    /// <param name="cellLocation">Cell location of any liquid tile within the body to change </param>
+    /// <param name="cellPosition">Cell location of any liquid tile within the body to change </param>
     /// <param name="composition">Composition that will either be added or used to modify original composition</param>
     /// <param name="isSetting">When set to true, original composition will be replaced by input composition. When set to false, input composition will be added to original Composition</param>
-    public void ChangeLiquidBodyComposition(Vector3Int cellLocation, float[] composition, bool isSetting)
+    public void ChangeLiquidBodyComposition(Vector3Int cellPosition, float[] composition)
     {
-        liquidBodyTilesAndContents.Clear();
-        GameTile terrainTile = GetTerrainTileAtLocation(cellLocation);
-        liquidBodyTilesAndContents.Add(cellLocation);
-        ChangeLiquidComposition(cellLocation, composition, terrainTile, isSetting);
-        GetNeighborCellLocationsAndAccessComposition(cellLocation, composition, terrainTile, isSetting);
-
-        // Mark liquid NS dirty
-        this.needSystemManager.Systems[NeedType.Liquid].MarkAsDirty();
-
-        RefreshTilemapColor(terrainTile.targetTilemap);
-
-        // Invoke event
-        EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellLocation);
-    }
-    private void GetNeighborCellLocationsAndAccessComposition(Vector3Int cellLocation, float[] composition, GameTile tile, bool isSetting)
-    {
-        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
+        TileLayerManager tileLayerManager = GetTerrainTileAtLocation(cellPosition).targetTilemap.GetComponent<TileLayerManager>();
+        if (tileLayerManager.holdsContent)
         {
-            if (
-                tile.targetTilemap.GetTile(tileToCheck) == tile &&
-                GetTileContentsAtLocation(tileToCheck, tile) != null &&
-                !liquidBodyTiles.Contains(tileToCheck))
-            {
-                liquidBodyTiles.Add(tileToCheck);
-                ChangeLiquidComposition(tileToCheck, composition, tile, isSetting);
-                GetNeighborCellLocationsAndAccessComposition(tileToCheck, composition, tile, isSetting);
-            }
+            tileLayerManager.ChangeComposition(cellPosition, composition);
+
+            // Invoke event
+            EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellPosition);
         }
-    }
-    private void ChangeLiquidComposition(Vector3Int cellLocation, float[] composition, GameTile terrainTile, bool isSetting)
-    {
-        if (terrainTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
-        {
-            if (isSetting)
-            {
-                tileAttributes.SetCompostion(cellLocation, composition);
-            }
-            else
-            {
-                tileAttributes.ModifyComposition(cellLocation, composition);
-            }
-        }
+        Debug.LogError("Tile at position" + cellPosition + "does not hold content");
     }
     /// <summary>
     /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
@@ -143,6 +110,11 @@ public class TileSystem : MonoBehaviour
     /// <returns></returns>
     public GameTile GetTerrainTileAtLocation(Vector3Int cellLocation)
     {
+        if (cellLocation.x < 0 || cellLocation.y < 0) // Tiles shouldn't be in negative coordinates
+        {
+            //Debug.Log("Trying accessing tiles at negative coordinate" + cellLocation);
+            return null;
+        }
         foreach (Tilemap tilemap in tilemaps)
         {
             var returnedTile = tilemap.GetTile<GameTile>(cellLocation);
@@ -150,14 +122,8 @@ public class TileSystem : MonoBehaviour
             {
                 return returnedTile;
             }
-            // if (returnedTile != null && returnedTile.GetType().Equals(typeof(TerrainTile))) {
-            //     TerrainTile tileOnLayer = (TerrainTile)returnedTile;
-            //     if (tileOnLayer.isRepresentative)
-            //     {
-            //         return tileOnLayer;
-            //     }
-            // }
         }
+        Debug.LogWarning("Tile does not exist at " + cellLocation);
         return null;
     }
 
@@ -181,9 +147,9 @@ public class TileSystem : MonoBehaviour
     {
         if (tile != null)
         {
-            if (tile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
+            if (tile.targetTilemap.GetComponent<TileLayerManager>().holdsContent)
             {
-                return tileAttributes.tileContents[cellLocation];
+                return tile.targetTilemap.GetComponent<TileLayerManager>().GetLiquidBodyAt(cellLocation).contents;
             }
             else
             {
@@ -322,11 +288,11 @@ public class TileSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns distance of cloest tile from a given cell position. Returns -1 if not found.
+    /// Returns distance of closet tile from a given cell position. Returns -1 if not found.
     /// </summary>
     /// <param name="centerCellLocation">The cell location to calculate distance to</param>
     /// <param name="tile">The tile of interest</param>
-    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="scanRange">1/2 side length of the scanned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
     public float DistanceToClosestTile(Vector3Int centerCellLocation, GameTile tile, int scanRange = 8, bool isCircleMode = false)
@@ -413,7 +379,7 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     /// <param name="centerCellLocation">The cell location to calculate range from</param>
     /// <param name="tile">The tile of interest</param>
-    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="scanRange">1/2 side length of the scanned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
     public List<Vector3Int> AllCellLocationsOfTileInRange(Vector3Int centerCellLocation, int scanRange, GameTile tile, bool isCircleMode = false)
@@ -476,11 +442,11 @@ public class TileSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Scan from all the liquid tiles withint a radius range and return all different liquid compositions
+    /// Scan from all the liquid tiles within a radius range and return all different liquid compositions
     /// </summary>
     /// <param name="centerCellLocation">The location of the center cell</param>
     /// <param name="scanRange">The radius range to look for</param>
-    /// <returns>A list of the composistions, null is there is no liquid within range</returns>
+    /// <returns>A list of the compositions, null is there is no liquid within range</returns>
     public List<float[]> GetLiquidCompositionWithinRange(Vector3Int centerCellLocation, int scanRange)
     {
         List<float[]> liquidCompositions = new List<float[]>();
@@ -529,7 +495,7 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     /// <param name="centerCellLocation">The cell location to calculate range from</param>
     /// <param name="tile">The tile of interest</param>
-    /// <param name="scanRange">1/2 side length of the scaned square (radius if isCircleMode = true)</param>
+    /// <param name="scanRange">1/2 side length of the scanned square (radius if isCircleMode = true)</param>
     /// <param name="isCircleMode">Enable circular scan. Default to false, scans a square of side length of scanRange * 2 + 1</param>
     /// <returns></returns>
     public bool IsAnyTileInRange(Vector3Int centerCellLocation, int scanRange, GameTile tile, bool isCircleMode = false)
