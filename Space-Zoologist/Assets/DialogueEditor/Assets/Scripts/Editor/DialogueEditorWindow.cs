@@ -286,16 +286,16 @@ namespace DialogueEditor
             }
         }
 
-        protected void OnLostFocus()
-        {
-            bool keepOnWindow = EditorWindow.focusedWindow != null && EditorWindow.focusedWindow.titleContent.text.Equals("Dialogue Editor");
+        //protected void OnLostFocus()
+        //{
+        //    bool keepOnWindow = EditorWindow.focusedWindow != null && EditorWindow.focusedWindow.titleContent.text.Equals("Dialogue Editor");
 
-            if (CurrentAsset != null && !keepOnWindow)
-            {
-                Log("Saving conversation. Reason: Window Lost Focus.");
-                Save();
-            }
-        }
+        //    if (CurrentAsset != null && !keepOnWindow)
+        //    {
+        //        Log("Saving conversation. Reason: Window Lost Focus.");
+        //        Save();
+        //    }
+        //}
 
         protected void OnDestroy()
         {
@@ -1049,9 +1049,9 @@ namespace DialogueEditor
 
         private static void Log(string str)
         {
-#if DIALOGUE_DEBUG
+//#if DIALOGUE_DEBUG
             Debug.Log("[DialogueEditor]: " + str);
-#endif
+//#endif
         }
 
         private void PlayModeStateChanged(PlayModeStateChange state)
