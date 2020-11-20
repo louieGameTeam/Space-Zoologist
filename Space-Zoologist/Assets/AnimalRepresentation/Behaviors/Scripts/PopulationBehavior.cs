@@ -4,6 +4,7 @@ using UnityEngine;
 
 // For creating more behaviors, inherit like how IdleRandomTrigger is setup
 public delegate void StepCompletedCallBack(GameObject gameObject, List<GameObject> gameObjects);
+[CreateAssetMenu(fileName = "PopulationBehavior", menuName = "SpeciesBehavior/PopulationBehavior")]
 public class PopulationBehavior : ScriptableObject
 {
     public BehaviorData behaviorData;

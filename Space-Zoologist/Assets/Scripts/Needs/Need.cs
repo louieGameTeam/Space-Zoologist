@@ -46,17 +46,17 @@ public class Need
         for (var i = 0; i < this.thresholds.Count; i++)
         {
             // Potential substitution for the code below
-            if (value <= this.thresholds[i] + Mathf.Epsilon)
-            {
-                return this.conditions[i].Condition;
-            }
+            // if (value <= this.thresholds[i] + Mathf.Epsilon)
+            // {
+            //     return this.conditions[i].Condition;
+            // }
 
             // ------- Original -------
             // TODO fix rounding error lol
-            //if (value < this.thresholds[i] - 0.1)
-            //{
-            //    return this.conditions[i].Condition;
-            //}
+            if (value < this.thresholds[i] - 0.1)
+            {
+               return this.conditions[i].Condition;
+            }
             // ------- Original -------
         }
         return this.conditions[this.thresholds.Count].Condition;

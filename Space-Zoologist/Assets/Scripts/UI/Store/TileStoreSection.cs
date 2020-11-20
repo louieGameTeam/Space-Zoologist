@@ -105,7 +105,7 @@ public class TileStoreSection : StoreSection
             else
             {
                 numTilesPlaced = tilePlacementController.PlacedTileCount();
-                base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+                // base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
             }
         }
     }

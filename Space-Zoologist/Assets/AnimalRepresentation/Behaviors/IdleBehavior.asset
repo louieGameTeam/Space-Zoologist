@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cec441587ae331e418e270f49db7e10e, type: 3}
-  m_Name: LiquidNeutral
-  m_EditorClassIdentifier: Assembly-CSharp::IdleRandomTrigger
+  m_Name: IdleBehavior
+  m_EditorClassIdentifier: 
   behaviorData:
-    behaviorName: 
+    behaviorName: IdleBehavior
   numberOfAnimalsRequired: 1
-  behaviorPatterns: []
+  behaviorPatterns:
+  - {fileID: 2498865982141510231, guid: 27a11cd98bbec49e2a2f49e6d5a4dc77, type: 3}
