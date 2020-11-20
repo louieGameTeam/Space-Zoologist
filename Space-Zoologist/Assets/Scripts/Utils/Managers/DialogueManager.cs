@@ -17,12 +17,14 @@ public class DialogueManager : MonoBehaviour
     // The starting dialogue
     [SerializeField] private NPCConversation startingConversation = default;
 
+    [SerializeField] PauseManager pauseManager = default;
     /// <summary>
     /// Initialize stuffs here
     /// </summary>
     private void Start()
     {
         if (startingConversation) {
+            pauseManager.TryToPause();
             ConversationManager.Instance.StartConversation(this.startingConversation);
         }
     }
@@ -32,6 +34,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void StartInteractiveConversation()
     {
+        pauseManager.TryToPause();
         ConversationManager.Instance.StartConversation(this.interactiveConversation);
     }
 }

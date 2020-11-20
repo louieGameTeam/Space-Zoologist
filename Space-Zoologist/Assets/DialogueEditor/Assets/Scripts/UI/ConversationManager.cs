@@ -7,7 +7,7 @@ namespace DialogueEditor
 {
     public class ConversationManager : MonoBehaviour
     {
-        private const float TRANSITION_TIME = 0.2f; // Transition time for fades
+        private const float TRANSITION_TIME = 0.05f; // Transition time for fades
 
         public static ConversationManager Instance { get; private set; }
 
@@ -74,6 +74,7 @@ namespace DialogueEditor
         private float m_stateTime;
         private Conversation m_conversation;
         private List<UIConversationButton> m_uiOptions;
+        private bool skipping;
 
         private SpeechNode m_pendingDialogue;
         private OptionNode m_selectedOption;
@@ -120,6 +121,13 @@ namespace DialogueEditor
 
         private void Update()
         {
+            if (m_state != eState.Off) { 
+                if (Input.GetMouseButtonDown(1))
+                {
+                    skipping = !skipping;
+                }
+            }
+
             switch (m_state)
             {
                 case eState.TransitioningDialogueBoxOn:
@@ -174,9 +182,10 @@ namespace DialogueEditor
                             }
                         }
                         //Added by Alex
-                        else if (Input.GetMouseButtonDown(0)) {
+                        else if (Input.GetMouseButtonDown(0) || skipping) {
                             if (m_currentSpeech.Options.Count == 0) {
                                 SetState(eState.TransitioningOptionsOff);
+                                m_currentSpeech.Event?.Invoke();
                             }
                         }
                     }
@@ -257,6 +266,14 @@ namespace DialogueEditor
             timePerChar *= ScrollSpeed;
 
             m_elapsedScrollTime += Time.deltaTime;
+
+            if (Input.GetMouseButtonDown(0) || skipping)
+            {
+                m_elapsedScrollTime = 0f;
+                DialogueText.maxVisibleCharacters = m_targetScrollTextCount;
+                SetState(eState.TransitioningOptionsOn);
+            }
+            
 
             if (m_elapsedScrollTime > timePerChar)
             {
@@ -363,7 +380,21 @@ namespace DialogueEditor
                 OnConversationEnded.Invoke();
         }
 
+        //--------------------------------------
+        // (CUSTOM) Pause/Continue Conversation
+        //--------------------------------------
 
+        public void PauseConversation()
+        {
+            m_pendingDialogue = m_currentSpeech.Dialogue;
+            SetState(eState.TransitioningDialogueOff);
+        }
+
+        public void ContinueConversation()
+        {
+            TurnOnUI();
+            SetState(eState.TransitioningDialogueBoxOn);
+        }
 
 
         //--------------------------------------
@@ -500,8 +531,7 @@ namespace DialogueEditor
 
 
             // Call the event
-            if (speech.Event != null)
-                speech.Event.Invoke();
+            // speech.Event?.Invoke();
 
             // Play the audio
             if (speech.Audio != null)
@@ -594,6 +624,7 @@ namespace DialogueEditor
             }
 
             NpcIcon.sprite = BlankSprite;
+            skipping = false;
         }
 
         private void TurnOffUI()
