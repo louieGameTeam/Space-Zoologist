@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: TutorialLevel2Data
   m_EditorClassIdentifier: 
-  Level: {fileID: 0}
-  startingBalance: 400
+  Level: {fileID: 11400000, guid: 3871e0dd288b845ad893d9b957565eab, type: 2}
+  startingBalance: 300
   MapWidth: 20
-  MapHeight: 20
-  LevelObjectiveData: {fileID: 11400000, guid: 130c7a509689b4a48940f1a0b1a9b245, type: 2}
+  MapHeight: 10
+  LevelObjectiveData: {fileID: 11400000, guid: 62df93a9291e24c2a99abe04f2c8286f, type: 2}
   foodSources:
   - {fileID: 11400000, guid: bc40dc7d294484405bafbc34ae7d642b, type: 2}
   animalSpecies: []
@@ -29,7 +29,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2df928ca4bec041fbb0392ac7101272a, type: 2}
   - {fileID: 11400000, guid: 7b48ec7c0dc2a48b1b0ab22e4e316793, type: 2}
   globalAtmosphere:
-    GasX: 1
-    GasY: 2
-    GasZ: 3
+    GasX: 5
+    GasY: 3
+    GasZ: 1
     temperature: 90

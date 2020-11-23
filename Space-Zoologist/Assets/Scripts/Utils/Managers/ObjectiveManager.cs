@@ -35,15 +35,26 @@ public class ObjectiveManager : MonoBehaviour
         this.UpdateObjectivePanel();
     }
 
+    public void TurnObjectivePanelOff()
+    {
+        this.isOpen = false;
+        this.objectivePanel.SetActive(this.isOpen);
+        this.UpdateObjectivePanel();
+    }
+
     public void UpdateObjectivePanel()
     {
-        string displayText = "Main Objectives:\n";
+        string displayText = "Main Objective:\n";
 
         foreach (Objective objective in this.mainObjectives)
         {
             displayText += objective.GetObjectiveText();
         }
-
+        if (this.secondaryObjectives.Count == 0)
+        {
+            this.objectivePanelText.text = displayText;
+            return;
+        }
         displayText += "Secondary Objectives:\n";
         foreach (Objective objective in this.secondaryObjectives)
         {
@@ -83,6 +94,7 @@ public class ObjectiveManager : MonoBehaviour
             Population population = (Population)EventManager.Instance.EventData;
             this.RegisterWithSurvivalObjectives(population);
         });
+        this.UpdateObjectivePanel();
     }
 
     private void RegisterWithSurvivalObjectives(Population population)
