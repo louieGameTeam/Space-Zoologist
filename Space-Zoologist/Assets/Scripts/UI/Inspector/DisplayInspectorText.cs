@@ -15,7 +15,7 @@ public class DisplayInspectorText : MonoBehaviour
         
         foreach (Need need in population.Needs.Values)
         {
-            displayText += $"{need.NeedName} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
+            displayText += $"{need.NeedName} : {need.NeedValue} \n";//[{need.GetCondition(need.NeedValue)}]\n";
         }
 
         this.inspectorWindowText.text = displayText;

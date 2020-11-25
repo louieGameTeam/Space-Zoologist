@@ -81,6 +81,7 @@ public class SurvivalObjective : Objective
 
     public override string GetObjectiveText()
     {
+
         string displayText = "";
         string population = "population";
         string timeLabel = "minute";
@@ -97,6 +98,11 @@ public class SurvivalObjective : Objective
         {
             targetTime = this.TargetTime;
             timeLabel = "seconds";
+        }
+        if (this.TargetTime.Equals(0f))
+        {
+            displayText += $"Reach a population size of {this.TargetPopulationSize} {this.AnimalSpecies.SpeciesName}s\n";
+            return displayText;
         }
         displayText += $"Maintain at least {this.TargetPopulationCount} ";
         displayText += $"{this.AnimalSpecies.SpeciesName} {population} with a count of {this.TargetPopulationSize}";

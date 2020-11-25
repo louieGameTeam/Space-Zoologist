@@ -109,7 +109,7 @@ public class PopulationBehaviorManager : MonoBehaviour
             animalsToExecutionData[initiator].cooperatingAnimals.Clear();
         }
     }
-    private void OnBehaviorComplete(GameObject animal)
+    public void OnBehaviorComplete(GameObject animal)
     {
         if (!animalsToExecutionData.ContainsKey(animal))// Discriminate force exited callbacks from removing animals
         {
