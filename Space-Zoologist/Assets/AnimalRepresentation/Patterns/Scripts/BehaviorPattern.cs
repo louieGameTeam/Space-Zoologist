@@ -123,8 +123,11 @@ public class BehaviorPattern : MonoBehaviour
     protected virtual void ExitPatternAlternative(GameObject animal)
     {
         animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
-        AnimalsToAnimalData[animal].alternativeCallback?.Invoke(animal, AnimalsToAnimalData[animal].collaboratingAnimals);
+        AnimalData Animal = AnimalsToAnimalData[animal];
         AnimalsToAnimalData.Remove(animal);
+        Animal.alternativeCallback?.Invoke(animal, Animal.collaboratingAnimals);
+        // Moved above callback to prevent adding duplicate keys
+        // AnimalsToAnimalData.Remove(animal);
     }
     public void QueueForForceExit(GameObject animal, bool isDriven = false)
     {
