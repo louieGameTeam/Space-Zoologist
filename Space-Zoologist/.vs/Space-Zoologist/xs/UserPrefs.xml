@@ -1,8 +1,11 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/Managers/PauseManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs">
     <Files>
       <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/PopulationBehavior.cs" Line="36" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="103" Column="24" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/FoodPathfinding.cs" Line="5" Column="40" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/GeneralPathfinding.cs" Line="5" Column="42" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs" Line="5" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +17,9 @@
                   <Node name="Scripts" expanded="True" />
                 </Node>
                 <Node name="Patterns" expanded="True">
-                  <Node name="Scripts" expanded="True" />
+                  <Node name="Scripts" expanded="True">
+                    <Node name="BehaviorPattern.cs" selected="True" />
+                  </Node>
                 </Node>
               </Node>
               <Node name="DialogueEditor" expanded="True">
@@ -43,9 +48,7 @@
                   <Node name="Machines" expanded="True" />
                 </Node>
                 <Node name="Utils" expanded="True">
-                  <Node name="Managers" expanded="True">
-                    <Node name="PauseManager.cs" selected="True" />
-                  </Node>
+                  <Node name="Managers" expanded="True" />
                   <Node name="Objectives" expanded="True" />
                 </Node>
               </Node>
