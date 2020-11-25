@@ -8,14 +8,14 @@ using DialogueEditor;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
+    // The starting dialogue
+    [SerializeField] private NPCConversation startingConversation = default;
     // The interactive dialogues of the NPC
     [SerializeField] private NPCConversation interactiveConversation = default;
     // The event dialogue
     [SerializeField] private NPCConversation eventConversation = default;
     // The fully-scripted dialogue
     [SerializeField] private NPCConversation scriptedConversation = default;
-    // The starting dialogue
-    [SerializeField] private NPCConversation startingConversation = default;
 
     [SerializeField] PauseManager pauseManager = default;
     /// <summary>
