@@ -28,7 +28,7 @@ public class EatingPattern : UniversalAnimatorPattern
                 }
                 if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsFood)
                 {
-                    if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.GetComponent<FoodSource>().Species.name == foodName)
+                    if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
                     {
                         this.AnimatorTriggerName = GetTriggerName(i, j);
                         base.EnterPattern(animal, animalData);
@@ -39,7 +39,8 @@ public class EatingPattern : UniversalAnimatorPattern
         }
         // No edible food
         // this.AnimatorTriggerName = this.Up;
-        // base.EnterPattern(animal, animalData);
+        base.EnterPattern(animal, animalData);
+        base.ExitPattern(animal, true);
     }
     private string GetTriggerName(int i, int j)
     {
