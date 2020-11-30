@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     private float targetZoom;
     private float zoomFactor = 3f;
     private Vector3 dragOrigin;
+    private Vector3 oldPos;
 
     void Start()
     {
@@ -72,16 +73,17 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(2))
         {
             dragOrigin = Input.mousePosition;
+            oldPos = this.transform.position;
             return;
         }
 
         if (!Input.GetMouseButton(2)) return;
 
-        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        Vector3 newPosition = new Vector3(this.transform.position.x + pos.x * dragSpeed * -1, this.transform.position.y + pos.y * dragSpeed * -1, -10);
+        Vector3 displacement = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Camera.main.ScreenToWorldPoint(dragOrigin);
+        Vector3 newPosition = new Vector3(oldPos.x + displacement.x * -1, oldPos.y + displacement.y * -1, -10);
         if (!this.IsValidLocation(newPosition))
         {
-            return;
+            newPosition = ClampToValidLocation(newPosition);
         }
         this.transform.position = newPosition;
     }
@@ -118,5 +120,11 @@ public class CameraController : MonoBehaviour
     {
         return (newPosition.x >= 0 && newPosition.y >= 0
         && newPosition.x <= LevelDataReference.MapWidth && newPosition.y <= LevelDataReference.MapHeight);
+    }
+
+    private Vector3 ClampToValidLocation(Vector3 toClamp) {
+        float x = Mathf.Clamp(toClamp.x, 0, LevelDataReference.MapWidth);
+        float y = Mathf.Clamp(toClamp.y, 0, LevelDataReference.MapHeight);
+        return new Vector3(x, y, toClamp.z);
     }
 }
