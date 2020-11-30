@@ -9,17 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 277d0cd1143524717a4d9c8405e907d7, type: 3}
+  m_Script: {fileID: 11500000, guid: cec441587ae331e418e270f49db7e10e, type: 3}
   m_Name: GotoMachine
   m_EditorClassIdentifier: 
   behaviorData:
-    behaviorName: GeneralBehavior
-    behaviorTypes: 01000000
-    priority: 0
-  maxAffectedNumber: 4
-  maxAffectedPortion: 1
-  numberTriggerdPerLoop: 1
+    behaviorName: Go to Machine
+  numberOfAnimalsRequired: 1
   behaviorPatterns:
   - {fileID: 5870063742017445200, guid: cf3bc1f30502041389acbb9854903010, type: 3}
-  refreshPeriod: 5
-  elapsedTime: 2.9346235

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -21154,6 +21154,135 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &90262807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 90262808}
+  - component: {fileID: 90262811}
+  - component: {fileID: 90262810}
+  - component: {fileID: 90262809}
+  m_Layer: 5
+  m_Name: SpeedUpButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &90262808
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90262807}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 752807797}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -728.1, y: 450}
+  m_SizeDelta: {x: 140.5, y: 140}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &90262809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90262807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 90262810}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 650241543}
+        m_MethodName: FourTimeSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &90262810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90262807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: e0599891fd02145039558e86116e9dc2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &90262811
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90262807}
+  m_CullTransparentMesh: 0
 --- !u!1 &113365922
 GameObject:
   m_ObjectHideFlags: 0
@@ -23154,12 +23283,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &575871629 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6282307746449053871, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &588109351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23543,6 +23666,12 @@ MonoBehaviour:
 --- !u!1 &752807796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7040152306282585640, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &752807797 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 237033510401218804, guid: 71886a6858e6a442fa66e2dbc551db8a,
     type: 3}
   m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
@@ -24203,12 +24332,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 7f5ecf2051bfa6448bf2e8e3b2d07c41, type: 2}
   TileSystem: {fileID: 385555447}
---- !u!1 &961130262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4661624498490500398, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1054101993
 GameObject:
   m_ObjectHideFlags: 0
@@ -24652,21 +24775,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 47
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-90.5,\"yPos\":142},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Food
-    Resources\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":145.5,\"yPos\":142},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Modifying
-    Terrain\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":44},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":494.5,\"yPos\":197},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Populations\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":451,\"yPos\":77},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"That's
-    all\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":145.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
-    your first week going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[4,5,22,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-275,\"yPos\":403},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Click
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":125,\"yPos\":142},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Food
+    Resources\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":361,\"yPos\":142},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Modifying
+    Terrain\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":44},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":710,\"yPos\":197},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Populations\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":666.5,\"yPos\":77},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"That's
+    all\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":361,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
+    your first week going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[4,5,22,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-59.5,\"yPos\":403},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Click
     on the food icon to the left and select the food you want to place. For now,
     try placing the Space Maple on dirt patches. We\u2019ll get to more advanced
-    food resources in later stages. Hope this helps!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":252,\"yPos\":449},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Click
+    food resources in later stages. Hope this helps!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":467.5,\"yPos\":449},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Click
     on the terrain icon to the left and select the terrain you want to place. You
     should be able to place terrain in all locations except for a population's starting
-    location (shaded gray). Hope this helps!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":493,\"yPos\":397},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"A
+    location (shaded gray). Hope this helps!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":708.5,\"yPos\":397},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"A
     species population is represented by the animals moving around in the reserve.
     For our purposes, we are most concerned with how the population as a whole is
     doing, which means that each signal given to us by an individual animal is indicative
-    of how the whole population is doing.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-36,\"yPos\":263},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Anything
+    of how the whole population is doing.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":179.5,\"yPos\":263},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Anything
     else I can help you with?\",\"parentUIDs\":[43,44,45,43,44,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[22,5,4,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
@@ -31490,6 +31613,7 @@ MonoBehaviour:
   tempBehaviors:
   - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
   - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
+  - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
   defaultBehavior: {fileID: 0}
 --- !u!114 &1760439637
 MonoBehaviour:
@@ -33324,13 +33448,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3f7cc3157724a0d9487ef32f2dd87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseManager: {fileID: 650241543}
+  startingConversation: {fileID: 3395325108385911807}
   interactiveConversation: {fileID: 1194454914}
   eventConversation: {fileID: 0}
   scriptedConversation: {fileID: 0}
-  startingConversation: {fileID: 3395325108385911807}
-  ConversationManagerGameObject: {fileID: 575871629}
-  StoreButtonsGameObject: {fileID: 961130262}
+  pauseManager: {fileID: 650241543}
 --- !u!4 &3395325107312024776
 Transform:
   m_ObjectHideFlags: 0
@@ -33408,54 +33530,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 68
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-37.5,\"yPos\":754},\"ID\":48,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[47,47],\"SpeechUID\":50},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":201.5,\"yPos\":759},\"ID\":49,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[47,47],\"SpeechUID\":51}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":76.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[],\"SpeechUID\":42,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":75.5,\"yPos\":118},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"The
-    name\u2019s Aurora Alabaster Star, or just Star.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":43,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":76.5,\"yPos\":229},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"I
-    guess that makes me the Star of the show!\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":44,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":75.5,\"yPos\":322},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"...
-    or does it make me the Star of the ship?\",\"parentUIDs\":[43,43],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":75.5,\"yPos\":432},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"Anyways!
-    Hello, welcome to the ship!\",\"parentUIDs\":[44,44],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":75.5,\"yPos\":536},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"What
+  CurrentIDCounter: 71
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":310,\"yPos\":778},\"ID\":48,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[47,47],\"SpeechUID\":50},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":559,\"yPos\":782},\"ID\":49,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[47,47],\"SpeechUID\":51},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":701,\"yPos\":131},\"ID\":68,\"TMPFontGUID\":null,\"Text\":\"SKIP\",\"parentUIDs\":[0],\"SpeechUID\":-1},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":192,\"yPos\":114},\"ID\":70,\"TMPFontGUID\":null,\"Text\":\"CONT\",\"parentUIDs\":[0],\"SpeechUID\":42}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":424,\"yPos\":46},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
+    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[70,68],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":423,\"yPos\":142},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"The
+    name\u2019s Aurora Alabaster Star, or just Star.\",\"parentUIDs\":[0,70],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":43,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":424,\"yPos\":253},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"I
+    guess that makes me the Star of the show!\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":44,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":423,\"yPos\":346},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"...
+    or does it make me the Star of the ship?\",\"parentUIDs\":[43,43],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":423,\"yPos\":456},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"Anyways!
+    Hello, welcome to the ship!\",\"parentUIDs\":[44,44],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":423,\"yPos\":560},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"What
     you're looking at right now is the reserve interface, or as I like to call it,
-    the RESERVED interface since it\u2019s not that chatty!\",\"parentUIDs\":[45,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":47,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":75.5,\"yPos\":636},\"ID\":47,\"TMPFontGUID\":null,\"Text\":\"How
-    was that one? Better?\",\"parentUIDs\":[46,46],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[48,49],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-40.5,\"yPos\":858},\"ID\":50,\"TMPFontGUID\":null,\"Text\":\"Ah
-    I\u2019m glad they sent me someone with a sense of humor!\",\"parentUIDs\":[48,48],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":206.5,\"yPos\":858},\"ID\":51,\"TMPFontGUID\":null,\"Text\":\"...
-    but I was working on that one all week\u2026\",\"parentUIDs\":[49,49],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":76.5,\"yPos\":1033},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"Well
+    the RESERVED interface since it\u2019s not that chatty!\",\"parentUIDs\":[45,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":47,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":423,\"yPos\":660},\"ID\":47,\"TMPFontGUID\":null,\"Text\":\"How
+    was that one? Better?\",\"parentUIDs\":[46,46],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[48,49],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":307,\"yPos\":882},\"ID\":50,\"TMPFontGUID\":null,\"Text\":\"Ah
+    I\u2019m glad they sent me someone with a sense of humor!\",\"parentUIDs\":[48,48],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":554,\"yPos\":882},\"ID\":51,\"TMPFontGUID\":null,\"Text\":\"...
+    but I was working on that one all week\u2026\",\"parentUIDs\":[49,49],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":424,\"yPos\":1057},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"Well
     then! Let\u2019s get started. Your objective for each level can be toggled by
-    pressing the O key.\",\"parentUIDs\":[50,51,50,51],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":67,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":76.5,\"yPos\":1144},\"ID\":54,\"TMPFontGUID\":null,\"Text\":\"You
+    pressing the O key.\",\"parentUIDs\":[50,51,50,51],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":67,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":424,\"yPos\":1168},\"ID\":54,\"TMPFontGUID\":null,\"Text\":\"You
     can use that button to pause and unpause the reserve interface at any point during
-    your assignments.\",\"parentUIDs\":[53,67,67],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":55,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":83.5,\"yPos\":1255},\"ID\":55,\"TMPFontGUID\":null,\"Text\":\"When
+    your assignments.\",\"parentUIDs\":[53,67,67],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":55,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":431,\"yPos\":1279},\"ID\":55,\"TMPFontGUID\":null,\"Text\":\"When
     the reserve interface is unpaused, you\u2019ll notice the animals moving around
-    in interesting ways.\",\"parentUIDs\":[54,54],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":56,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":81.5,\"yPos\":1370},\"ID\":56,\"TMPFontGUID\":null,\"Text\":\"In
+    in interesting ways.\",\"parentUIDs\":[54,54],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":56,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":429,\"yPos\":1394},\"ID\":56,\"TMPFontGUID\":null,\"Text\":\"In
     this case, it looks like the goats are currently looking for food. You may notice
-    some of them walking up to the food source but not eating any.\",\"parentUIDs\":[55,55],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":57,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":84.5,\"yPos\":1494},\"ID\":57,\"TMPFontGUID\":null,\"Text\":\"So
+    some of them walking up to the food source but not eating any.\",\"parentUIDs\":[55,55],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":57,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":432,\"yPos\":1518},\"ID\":57,\"TMPFontGUID\":null,\"Text\":\"So
     now I\u2019ll teach you how to access the food resources in order to feed the
     goats. Afterwards, I\u2019ll teach you how to access the terrain resources in
-    order to modify their terrain to their liking.\",\"parentUIDs\":[56,56],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":58,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":87.5,\"yPos\":1616},\"ID\":58,\"TMPFontGUID\":null,\"Text\":\"You
+    order to modify their terrain to their liking.\",\"parentUIDs\":[56,56],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":58,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":435,\"yPos\":1640},\"ID\":58,\"TMPFontGUID\":null,\"Text\":\"You
     can access food resources in the bottom left store menu by clicking on the purple
     tree icon. For this assignment, I\u2019ve stocked the food section in the store
-    with Space Maple for the goat, so go ahead and place 6 for them.\",\"parentUIDs\":[57,57],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":59,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":92.5,\"yPos\":1739},\"ID\":59,\"TMPFontGUID\":null,\"Text\":\"You
+    with Space Maple for the goat, so go ahead and place 6 for them.\",\"parentUIDs\":[57,57],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":59,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":440,\"yPos\":1763},\"ID\":59,\"TMPFontGUID\":null,\"Text\":\"You
     can access terrain resources in the bottom left store menu by clicking on the
     square terrain icon. For this assignment, I\u2019ve stocked the terrain section
     in the store with Dirt, Grass, and Liquid resources. Go ahead and place at least
     10 Dirt and Grass tiles, and at least 1 liquid tile anywhere except for the shaded
-    gray area (that\u2019s the goat population\u2019s home location).\",\"parentUIDs\":[58,58],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":60,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":96.5,\"yPos\":1854},\"ID\":60,\"TMPFontGUID\":null,\"Text\":\"Now
+    gray area (that\u2019s the goat population\u2019s home location).\",\"parentUIDs\":[58,58],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":60,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":444,\"yPos\":1878},\"ID\":60,\"TMPFontGUID\":null,\"Text\":\"Now
     that we\u2019ve covered the basics of caring for the goat species, I want you
-    to take a look at the research catalogue and journal.\",\"parentUIDs\":[59,59],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":61,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":92.5,\"yPos\":1970},\"ID\":61,\"TMPFontGUID\":null,\"Text\":\"The
+    to take a look at the research catalogue and journal.\",\"parentUIDs\":[59,59],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":61,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":440,\"yPos\":1994},\"ID\":61,\"TMPFontGUID\":null,\"Text\":\"The
     research catalogue will often contain important information hidden within text.
     When you think you\u2019ve found an important piece of information, you can add
-    it to your journal.\",\"parentUIDs\":[60,60],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":62,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":103.5,\"yPos\":2096},\"ID\":62,\"TMPFontGUID\":null,\"Text\":\"The
+    it to your journal.\",\"parentUIDs\":[60,60],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":62,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":451,\"yPos\":2120},\"ID\":62,\"TMPFontGUID\":null,\"Text\":\"The
     goat entry in the research catalogue and in your journal should give you a good
-    starting idea of what to look for when researching and how to add it to the journal.\",\"parentUIDs\":[61,61],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":63,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":99.5,\"yPos\":2218},\"ID\":63,\"TMPFontGUID\":null,\"Text\":\"Hey
+    starting idea of what to look for when researching and how to add it to the journal.\",\"parentUIDs\":[61,61],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":63,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":447,\"yPos\":2242},\"ID\":63,\"TMPFontGUID\":null,\"Text\":\"Hey
     look at that, we\u2019ve now covered the basics of what you will be doing and
     seen the positive results of your work. In the future, I advise you to research
     thoroughly before starting the assignments, it will help prevent any confusion
-    and will make taking care of the populations much easier.\",\"parentUIDs\":[62,62],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":64,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":93.5,\"yPos\":2329},\"ID\":64,\"TMPFontGUID\":null,\"Text\":\"Oh
-    that reminds me, one last clarification!\",\"parentUIDs\":[63,63],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":65,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106.5,\"yPos\":2448},\"ID\":65,\"TMPFontGUID\":null,\"Text\":\"You\u2019ll
+    and will make taking care of the populations much easier.\",\"parentUIDs\":[62,62],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":64,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":441,\"yPos\":2353},\"ID\":64,\"TMPFontGUID\":null,\"Text\":\"Oh
+    that reminds me, one last clarification!\",\"parentUIDs\":[63,63],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":65,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":454,\"yPos\":2472},\"ID\":65,\"TMPFontGUID\":null,\"Text\":\"You\u2019ll
     be taking care of the populations, not the individual animals. So each signal
     that an individual animal expresses is really telling you what that population
-    as a whole currently needs.\",\"parentUIDs\":[64,64],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":66,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":107.5,\"yPos\":2556},\"ID\":66,\"TMPFontGUID\":null,\"Text\":\"And
+    as a whole currently needs.\",\"parentUIDs\":[64,64],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":66,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":455,\"yPos\":2580},\"ID\":66,\"TMPFontGUID\":null,\"Text\":\"And
     with that, I wish you luck in completing this first assignment, and please talk
-    to me if you need clarification on anything.\",\"parentUIDs\":[65,65],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-148,\"yPos\":1095},\"ID\":67,\"TMPFontGUID\":null,\"Text\":\"Now
+    to me if you need clarification on anything.\",\"parentUIDs\":[65,65],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":199.5,\"yPos\":1119},\"ID\":67,\"TMPFontGUID\":null,\"Text\":\"Now
     that we know what our objective is for this level, go ahead and click that big
     green arrow button in the top left to unpause the reserve interface (you can
     also use space bar to pause and unpase the game).\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":54,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
@@ -33517,6 +33639,8 @@ MonoBehaviour:
   - {fileID: 7725408199843566981}
   - {fileID: 7725408199843566980}
   - {fileID: 7725408199843566998}
+  - {fileID: 7725408199843567000}
+  - {fileID: 7725408199843566999}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -33875,6 +33999,8 @@ GameObject:
   - component: {fileID: 7725408199843566981}
   - component: {fileID: 7725408199843566980}
   - component: {fileID: 7725408199843566998}
+  - component: {fileID: 7725408199843567000}
+  - component: {fileID: 7725408199843566999}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -34633,4 +34759,42 @@ MonoBehaviour:
       m_Calls: []
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 27112e13e0f4d481d953a3e3445a4fbf, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7725408199843566999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725408199843566959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 70
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &7725408199843567000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725408199843566959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 68
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
   Audio: {fileID: 0}

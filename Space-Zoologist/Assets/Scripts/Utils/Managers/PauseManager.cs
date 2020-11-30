@@ -70,6 +70,7 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
+        Time.timeScale = 1;
         this.IsPaused = true;
         this.PauseButtonSprite.sprite = this.ResumeSprite;
         this.PauseButtonButton.onClick.RemoveAllListeners();
@@ -92,6 +93,14 @@ public class PauseManager : MonoBehaviour
         this.PopulationManager.UpdateAccessibleLocations();
         this.UnpauseAllAnimalsMovementController();
         this.GridSystem.UnhighlightHomeLocations();
+    }
+
+    public void TwoTimeSpeed() {
+        Time.timeScale = 2;
+    }
+
+    public void FourTimeSpeed() {
+        Time.timeScale = 4;
     }
 
     public void PauseAllAnimalsMovementController()

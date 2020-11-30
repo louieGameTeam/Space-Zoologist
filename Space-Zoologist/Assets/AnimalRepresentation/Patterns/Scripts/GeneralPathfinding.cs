@@ -26,7 +26,7 @@ public class GeneralPathfinding : BehaviorPattern
         {
             if (animalData.animal.MovementController.DestinationCancelled)
             {
-                return false;
+                return true;
             }
             animalData.animal.MovementController.MoveTowardsDestination();
             if (animalData.animal.MovementController.DestinationReached)
@@ -41,13 +41,13 @@ public class GeneralPathfinding : BehaviorPattern
 
     protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
     {
-        if (animalData.animal.MovementController.HasPath)
-        {
-            if (animalData.animal.MovementController.DestinationCancelled)
-            {
-                return true;
-            }
-        }
+        //if (animalData.animal.MovementController.HasPath)
+        //{
+        //    if (animalData.animal.MovementController.DestinationCancelled)
+        //    {
+        //        return true;
+        //    }
+        //}
         return false;
     }
 }

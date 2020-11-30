@@ -40,15 +40,13 @@ public class FoodPathfinding : GeneralPathfinding
                 destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
                 Debug.Log("No " + FoodSpeciesName + " location is accessible, pathfinding to random location instead");
             }
+
+            Debug.Log("Pathfinding towards " + FoodSpeciesName + " located at " + destination.x + ", " + destination.y);
+            AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
         }
         else {
-            // TODO figure out how to exit pattern since condition not satisfied
-            int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-            destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
-            Debug.Log(FoodSpeciesName + " location not found, pathfinding to random location instead");
+            // If the edible food doesn't exist, just go to a random food (or whatever ItemType destination is set to)
+            base.EnterPattern(gameObject,animalData);
         }
-
-        Debug.Log("Pathfinding towards " + FoodSpeciesName + " located at " + destination.x + ", " + destination.y);
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
 }
