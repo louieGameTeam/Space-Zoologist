@@ -5,7 +5,7 @@ using UnityEngine;
 public class UniversalAnimatorPattern : BehaviorPattern
 {
     public string AnimatorTriggerName;
-    private Dictionary<GameObject, AnimatorData> animalToAnimatorData = new Dictionary<GameObject, AnimatorData>();
+    protected Dictionary<GameObject, AnimatorData> animalToAnimatorData = new Dictionary<GameObject, AnimatorData>();
     [SerializeField] protected bool OverlayAnimation;
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {

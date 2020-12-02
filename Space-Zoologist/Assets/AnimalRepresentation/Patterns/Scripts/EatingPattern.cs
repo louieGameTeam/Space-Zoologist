@@ -8,7 +8,7 @@ public class EatingPattern : UniversalAnimatorPattern
     [SerializeField] private string Down = default;
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
-    // [SerializeField] private string foodName = default;
+    [SerializeField] private string foodName = default;
     private TileSystem tileSystem = default;
     public override void StartUp()
     {
@@ -28,17 +28,19 @@ public class EatingPattern : UniversalAnimatorPattern
                 }
                 if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsFood)
                 {
-                    //if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.SpeciesName.Equals(foodName))
-                    //{
+                    if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
+                    {
                         this.AnimatorTriggerName = GetTriggerName(i, j);
                         base.EnterPattern(animal, animalData);
                         return;
-                    //}
+                    }
                 }
             }
         }
-        this.AnimatorTriggerName = this.Up;
+        // No edible food
+        // this.AnimatorTriggerName = this.Up;
         base.EnterPattern(animal, animalData);
+        base.ExitPattern(animal, true);
     }
     private string GetTriggerName(int i, int j)
     {

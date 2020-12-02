@@ -4,7 +4,7 @@ using UnityEngine;
 using DialogueEditor;
 
 /// <summary>
-/// Handles conversations, it is pretty useless at this moment
+/// Handles conversations
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
