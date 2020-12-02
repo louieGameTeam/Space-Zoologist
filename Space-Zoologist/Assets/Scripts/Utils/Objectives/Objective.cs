@@ -24,6 +24,8 @@ public class SurvivalObjective : Objective
     public AnimalSpecies AnimalSpecies { get; private set; }
     public byte TargetPopulationCount { get; private set; }
     public byte TargetPopulationSize { get; private set; }
+    public byte satisfiedPopulationCount { get; private set; }
+    public int totalPopulationCount { get; private set; }
     public float TargetTime { get; private set; }
 
     public float timer { get; private set; }
@@ -43,10 +45,13 @@ public class SurvivalObjective : Objective
 
     public override ObjectiveStatus UpdateStatus()
     {
-        byte satisfiedPopulationCount = 0;
+        satisfiedPopulationCount = 0;
+        totalPopulationCount = 0;
 
         foreach (Population population in this.Populations)
         {
+            totalPopulationCount += population.Count;
+
             // Found a population that has enough pop count
             if (population.Count >= this.TargetPopulationSize)
             {
@@ -101,10 +106,10 @@ public class SurvivalObjective : Objective
         }
         if (this.TargetTime.Equals(0f))
         {
-            displayText += $"Reach a population size of {this.TargetPopulationSize} {this.AnimalSpecies.SpeciesName}s\n";
+            displayText += $"Reach a population size of {this.totalPopulationCount}/{this.TargetPopulationSize} {this.AnimalSpecies.SpeciesName}s\n";
             return displayText;
         }
-        displayText += $"Maintain at least {this.TargetPopulationCount} ";
+        displayText += $"Maintain at least {this.satisfiedPopulationCount}/{this.TargetPopulationCount} ";
         displayText += $"{this.AnimalSpecies.SpeciesName} {population} with a count of {this.TargetPopulationSize}";
         displayText += $" for {targetTime} {timeLabel} ";
         displayText += $"[{this.Status.ToString()}] [{Math.Round(this.timer, 0)}/{this.TargetTime}]\n";
