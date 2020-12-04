@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SellingManager : MonoBehaviour
 {
-    GridSystem gridSystem = default;
-    TileSystem tileSystem = default;
+    [SerializeField] GridSystem gridSystem = default;
+    [SerializeField] TileSystem tileSystem = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] Inspector Inspector = default;
@@ -30,7 +30,8 @@ public class SellingManager : MonoBehaviour
         IsSelling = !IsSelling;
     }
 
-    public void StopSelling() {
+    public void StopSelling()
+    {
         IsSelling = false;
     }
 
@@ -38,8 +39,6 @@ public class SellingManager : MonoBehaviour
     void Start()
     {
         IsSelling = false;
-        gridSystem = FindObjectOfType<GridSystem>();
-        tileSystem = FindObjectOfType<TileSystem>();
         // stop selling when store opens
         EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
         {
@@ -56,75 +55,101 @@ public class SellingManager : MonoBehaviour
             // Update animal locations
             gridSystem.UpdateAnimalCellGrid();
 
+            // Find the cell that the player clicked on
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = tileSystem.WorldToCell(worldPos);
+
+            // What is on the tile?
             TerrainTile tile = tileSystem.GetTerrainTileAtLocation(cellPos);
-
-            //Debug.Log($"Mouse click at {cellPos}");
-
             GridSystem.CellData cellData;
 
-            // Handles index out of bound exception
+            // Find out what is on the tile if it is in bounds
             if (gridSystem.isCellinGrid(cellPos.x, cellPos.y))
             {
                 cellData = gridSystem.CellGrid[cellPos.x, cellPos.y];
             }
             else
             {
-                // Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
+                // Out of bounds, nothing to sell
                 return;
             }
 
+
+            // Only deleting 1 item on each click, so split into if/else. By priority:
+            // 1. Sell the machine
             if (cellData.ContainsMachine)
             {
-                if (cellData.Machine.GetComponent<AtmosphereMachine>())
-                {
-                    foreach (Item item in LevelDataReference.LevelData.Items)
-                    {
-                        if (item.ID.Equals("AtmosphereMachine"))
-                        {
-                            PlayerBalance.SubtractFromBalance(-1 * item.Price);
-                            break;
-                        }
-                    }
-                }
-                else if (cellData.Machine.GetComponent<LiquidMachine>())
-                {
-                    foreach (Item item in LevelDataReference.LevelData.Items)
-                    {
-                        if (item.ID.Equals("LiquidMachine"))
-                        {
-                            PlayerBalance.SubtractFromBalance(-1 * item.Price);
-                            break;
-                        }
-                    }
-                }
-                Destroy(cellData.Machine);
-                cellData.ContainsMachine = false;
-                cellData.Machine = null;
-            }
-            // Selection is food source or item
-            else if (cellData.ContainsFood)
-            {
-                GameObject food = cellData.Food;
-                string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
-                foreach (Item item in LevelDataReference.LevelData.Items)
-                {
-                    if (item.ID.Equals(id))
-                    {
-                        PlayerBalance.SubtractFromBalance(-1 * item.Price);
-                        break;
-                    }
-                }
-                gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsFood = false;
-                gridSystem.CellGrid[cellPos.x, cellPos.y].Food = null;
-                FindObjectOfType<FoodSourceManager>().DestroyFoodSource(food.GetComponent<FoodSource>());
-            }
-            // Selection is wall
-            else if (tile.type == TileType.Wall)
-            {
+                SellMachineOnTile(cellData, cellPos);
 
             }
+            // 2. Sell the food
+            else if (cellData.ContainsFood)
+            {
+                SellFoodOnTile(cellData, cellPos);
+
+            }
+            // 3. Sell the wall
+            else if (tile.type == TileType.Wall)
+            {
+                SellWallOnTile(cellPos);
+            }
         }
+    }
+
+    private void SellMachineOnTile(GridSystem.CellData cellData, Vector3Int cellPos)
+    {
+        if (cellData.Machine.GetComponent<AtmosphereMachine>())
+        {
+            foreach (Item item in LevelDataReference.LevelData.Items)
+            {
+                if (item.ID.Equals("AtmosphereMachine"))
+                {
+                    PlayerBalance.SubtractFromBalance(-1 * item.Price);
+                    break;
+                }
+            }
+        }
+        else if (cellData.Machine.GetComponent<LiquidMachine>())
+        {
+            foreach (Item item in LevelDataReference.LevelData.Items)
+            {
+                if (item.ID.Equals("LiquidMachine"))
+                {
+                    PlayerBalance.SubtractFromBalance(-1 * item.Price);
+                    break;
+                }
+            }
+        }
+        Destroy(cellData.Machine);
+
+        // Clean up CellData
+        gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsMachine = false;
+        gridSystem.CellGrid[cellPos.x, cellPos.y].Machine = null;
+    }
+
+    private void SellFoodOnTile(GridSystem.CellData cellData, Vector3Int cellPos)
+    {
+        GameObject food = cellData.Food;
+        string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
+        foreach (Item item in LevelDataReference.LevelData.Items)
+        {
+            if (item.ID.Equals(id))
+            {
+                PlayerBalance.SubtractFromBalance(-1 * item.Price);
+                break;
+            }
+        }
+        FindObjectOfType<FoodSourceManager>().DestroyFoodSource(food.GetComponent<FoodSource>());
+
+
+        // Clean up CellData
+        gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsFood = false;
+        gridSystem.CellGrid[cellPos.x, cellPos.y].Food = null;
+    }
+
+    private void SellWallOnTile(Vector3Int cellPos)
+    {
+        //TODO work with TileSystem to delete the wall
+
     }
 }
