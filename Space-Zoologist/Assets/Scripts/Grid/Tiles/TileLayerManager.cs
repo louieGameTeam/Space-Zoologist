@@ -24,7 +24,7 @@ public class TileLayerManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(this.liquidBodies.Count.ToString() + this.previewBodies.Count.ToString()) ;
+        //Debug.Log(this.liquidBodies.Count.ToString() + this.previewBodies.Count.ToString()) ;
     }
 /*    private void Awake()
     {
@@ -142,26 +142,23 @@ public class TileLayerManager : MonoBehaviour
     {
         if (this.positionsToTileData.ContainsKey(cellPosition))
         {
-            this.positionsToTileData[cellPosition].PreviewReplacement(null, null);
-            this.ChangedTiles.Add(cellPosition);
             this.RemovedTiles.Add(cellPosition);
             if (this.holdsContent)
             {
                 this.DivideLiquidBody(cellPosition);
             }
+            this.positionsToTileData[cellPosition].PreviewReplacement(null, null);
+            this.ChangedTiles.Add(cellPosition);
             this.ApplyChangesToTilemap(cellPosition);
         }
 
     }
     public void ConfirmPlacement()
     {
-        if (this.previewBodies.Count == 0)
-        {
             foreach (Vector3Int tile in this.ChangedTiles)
             {
                 this.positionsToTileData[tile].ConfirmReplacement();
             }
-        }
         foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
         {
             foreach (Vector3Int tile in previewLiquidBody.tiles)
@@ -176,9 +173,7 @@ public class TileLayerManager : MonoBehaviour
         {
             this.positionsToTileData.Remove(cellPosition);
         }
-        this.RemovedTiles.Clear();
-        this.ChangedTiles.Clear();
-        this.previewBodies.Clear();
+        this.ClearAll();
     }
     public void Revert()
     {
@@ -197,16 +192,18 @@ public class TileLayerManager : MonoBehaviour
                 this.positionsToTileData.Remove(changedTile);
             }
         }
-        this.RemovedTiles.Clear();
-        this.ChangedTiles.Clear();
-        this.previewBodies.Clear();
-
+        this.ClearAll();
         //System.GC.Collect();
+    }
+    private void ClearAll()
+    {
+        this.RemovedTiles = new HashSet<Vector3Int>();
+        this.ChangedTiles = new HashSet<Vector3Int>();
+        this.previewBodies = new List<LiquidBody>();
     }
     private void ApplyChangesToTilemap(Vector3Int cellPosition)
     {
         TileData data = positionsToTileData[cellPosition];
-        Debug.Log(tilemap);
         this.tilemap.SetTile(cellPosition, data.currentTile);
         this.tilemap.SetTileFlags(cellPosition, TileFlags.None);
         this.tilemap.SetColor(cellPosition, data.currentColor);
@@ -262,6 +259,7 @@ public class TileLayerManager : MonoBehaviour
         {
             case 0: // Create new body
                 HashSet<Vector3Int> newBodyTiles = new HashSet<Vector3Int>();
+                newBodyTiles.Add(cellPosition);
                 LiquidBody newBody = new LiquidBody(newBodyTiles, tile.defaultContents, this.bodyEmptyCallback);
                 this.previewBodies.Add(newBody);
                 return newBody;
@@ -296,6 +294,7 @@ public class TileLayerManager : MonoBehaviour
     {
         HashSet<Vector3Int> remainingTiles = new HashSet<Vector3Int>();
         remainingTiles.UnionWith(positionsToTileData[cellPosition].currentLiquidBody.tiles);
+        Debug.Log("Liquidbody tile count:" + remainingTiles.Count);
         remainingTiles.ExceptWith(RemovedTiles);
         List<Vector3Int> neighborTiles = new List<Vector3Int>();
         foreach (Vector3Int neighborTile in FourNeighborTileCellPositions(cellPosition)) //Filter available liquid tiles
@@ -324,6 +323,7 @@ public class TileLayerManager : MonoBehaviour
             isContinueous = false;
             break;
         }
+        Debug.Log(isContinueous);
         if (!isContinueous) //perform complicated check and generate new bodies if necessary
         {
             List<LiquidBody> newBodies = GenerateNewBodies(positionsToTileData[cellPosition].currentLiquidBody, cellPosition, startingTiles, remainingTiles);
@@ -391,6 +391,7 @@ public class TileLayerManager : MonoBehaviour
         int iterations = 0;
         int maxDisplacement = quickCheckIterations / 2 - 1; // TODO optimization, when trying to access outside possible bound, terminate immediately
         int[] displacement = new int[2] { start.x - origin.x, start.y - origin.y };
+        Debug.Log("Starting point: " + displacement[0].ToString() + displacement[1].ToString());
         int[] targetDisplacement = new int[2] { stop.x - origin.x, stop.y - origin.y };
         TranslateDisplacementToArray(displacement, historyArray);
         while (iterations < quickCheckIterations)
@@ -420,13 +421,15 @@ public class TileLayerManager : MonoBehaviour
                 iterations++;
                 continue;
             }
+            Debug.Log("stuck");
             return false; //Stuck in somewhere
         }
+        Debug.Log("max iterations");
         return false;
     }
     private bool CanMove(int[] displacement, int[] targetDisplacement, Direction2D direction, CellStatus[,] historyArray, MoveType moveType)
     {
-        int adder = new int();
+        int adder;
         switch (moveType)
         {
             case MoveType.Towards:
@@ -442,11 +445,16 @@ public class TileLayerManager : MonoBehaviour
                 adder = -1;
                 break;
         }
+        if (adder == 0)
+        {
+            return false;
+        }
         int[] newDisp = new int[2] { displacement[0], displacement[1] };
         newDisp[(int)direction] += adder;
         if (TranslateDisplacementToArray(newDisp, historyArray))
         {
             displacement[(int)direction] += adder;
+            Debug.Log("passed");
             return true;
         }
         if (moveType == MoveType.Parallel1)
@@ -454,6 +462,18 @@ public class TileLayerManager : MonoBehaviour
             return CanMove(displacement, targetDisplacement, direction, historyArray, MoveType.Parallel2);
         }
         return false;
+    }
+    private int PathfindTowards(int start, int end)
+    {
+        if (start > end)
+        {
+            return -1;
+        }
+        if (start < end)
+        {
+            return 1;
+        }
+        return 0;
     }
     /// <summary>
     /// If successfully updated history array, then returns true, otherwise returns false
@@ -467,15 +487,19 @@ public class TileLayerManager : MonoBehaviour
         int maxDisplacement = quickCheckIterations / 2 - 1;
         int x = displacement[0] + maxDisplacement;
         int y = displacement[1] + maxDisplacement;
+        Debug.Log("Displacement: " + displacement[0].ToString() + displacement[1].ToString());
+        Debug.Log("Array pos: " + x.ToString() + y.ToString());
         if (x < 0 || x >= quickCheckIterations - 1 || y < 0 || y >= quickCheckIterations - 1) // Out of bound
         {
             return false;
         }
+        Debug.Log(historyArray[x, y].ToString());
         if (historyArray[x, y] != CellStatus.Self)
         {
             return false;
         }
         historyArray[x, y] = CellStatus.Walked;
+        Debug.Log("Walked");
         return true;
     }
 
@@ -513,22 +537,10 @@ public class TileLayerManager : MonoBehaviour
         result.Add(new Vector3Int(cellPosition.x - 1, cellPosition.y, cellPosition.z));
         return result;
     }
-    private int PathfindTowards(int start, int end)
-    {
-        if(start > end)
-        {
-            return -1;
-        }
-        if(start < end)
-        {
-            return 1;
-        }
-        return 0;
-    }
     private CellStatus[,] InitializeHistoryArray(Vector3Int originPosition, HashSet<Vector3Int> selfTiles)
     {
         CellStatus[,] historyArray = new CellStatus[quickCheckIterations - 1, quickCheckIterations - 1];
-        Vector3Int startPoint = new Vector3Int(originPosition.x - quickCheckIterations / 2 - 1, originPosition.y - quickCheckIterations / 2 - 1, originPosition.z);
+        Vector3Int startPoint = new Vector3Int(originPosition.x - quickCheckIterations / 2 + 1, originPosition.y - quickCheckIterations / 2 + 1, originPosition.z);
         Vector3Int cellToScan = new Vector3Int(startPoint.x, startPoint.y, startPoint.z);
         for (int i = 0; i < quickCheckIterations - 1; i++)
         {

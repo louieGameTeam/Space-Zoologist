@@ -218,7 +218,7 @@ public class Population : MonoBehaviour, Life
         }
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
-
+        this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }

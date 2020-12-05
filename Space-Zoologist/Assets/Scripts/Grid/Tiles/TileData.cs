@@ -50,7 +50,7 @@ public class TileData
             return;
         }
         this.previousTile = this.currentTile;
-        Debug.Log("previous:" + this.previousTile ?? this.previousTile.TileName + "current:" + this.currentTile ?? this.currentTile.TileName);
+        //Debug.Log("previous:" + this.previousTile ?? this.previousTile.TileName + "current:" + this.currentTile ?? this.currentTile.TileName);
         this.previousLiquidBody = this.currentLiquidBody;
         this.currentTile = tile;
         this.currentLiquidBody = liquidBody;

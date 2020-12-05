@@ -71,18 +71,17 @@ public class LiquidBody
         for (int i = 0; i < contents.Length; i++)
         {
             this.contents[i] = 0;
-            int numAdded = 0;
             int tileCount = 0;
             foreach (LiquidBody liquidBody in this.referencedBodies)
             {
                 if (liquidBody.bodyID != 0) // Not preview body
                 {
-                    numAdded++;
                     tileCount += liquidBody.tiles.Count;
                     this.contents[i] += liquidBody.contents[i] * liquidBody.tiles.Count;
                 }
             }
-            this.contents[i] /= numAdded * tileCount;
+            Debug.Log("Merged tile count" + tileCount.ToString());
+            this.contents[i] /= tileCount;
         }
         this.callback = bodyEmptyCallback;
     }
@@ -186,7 +185,7 @@ public class LiquidBody
     {
         if (!this.tiles.Add(tileToAdd))
         {
-            Debug.LogError("Duplicated Tile added to liquid body" + this.bodyID);
+            Debug.LogError("Duplicated Tile added to liquid body " + this.bodyID);
         }
     }
     public void RemoveTile(Vector3Int tileToRemove)

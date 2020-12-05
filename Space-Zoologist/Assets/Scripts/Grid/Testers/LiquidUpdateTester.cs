@@ -27,10 +27,11 @@ public class LiquidUpdateTester : MonoBehaviour
             // tileSystem.ChangeLiquidBodyComposition(cellLocation, comp, true);
             //comp2 = tileSystem.GetTileContentsAtLocation(cellLocation, tileSystem.GetTerrainTileAtLocation(cellLocation));
         }
-        //Debug.Log(("reference",ReferenceEquals(tileSystem.GetTileContentsAtLocation(cellLocation, tileSystem.GetTerrainTileAtLocation(cellLocation)), tileSystem.GetTileContentsAtLocation(cellLocation2, tileSystem.GetTerrainTileAtLocation(cellLocation2)))));
-        //Debug.Log(("value", Equals(tileSystem.GetTileContentsAtLocation(cellLocation, tileSystem.GetTerrainTileAtLocation(cellLocation))[0], tileSystem.GetTileContentsAtLocation(cellLocation2, tileSystem.GetTerrainTileAtLocation(cellLocation2))[0])));
-        //Debug.Log(ReferenceEquals(comp, tileSystem.GetTileContentsAtLocation(cellLocation, tileSystem.GetTerrainTileAtLocation(cellLocation))));
-        LiquidBody liquidBody = tileLayerManager.GetLiquidBodyAt(cellPosition);
-        Debug.Log("Liquid body: " + liquidBody.bodyID+ "Contents" + liquidBody.contents[0] + liquidBody.contents[1] + liquidBody.contents[2]);
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Debug.Log(cellPosition.ToString());
+            LiquidBody liquidBody = tileLayerManager.GetLiquidBodyAt(cellPosition);
+            Debug.Log("Liquid body: " + liquidBody.bodyID + " Contents" + liquidBody.contents[0] + "," + liquidBody.contents[1] + "," + liquidBody.contents[2] + "Count: " + liquidBody.tiles.Count);
+        }
     }
 }
