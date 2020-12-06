@@ -13,12 +13,12 @@ public class TileLayerManager : MonoBehaviour
     private enum MoveType { Towards, Parallel1, Parallel2, Away }
     public bool holdsContent;
     private Tilemap tilemap;
-    private Dictionary<Vector3Int, TileData> positionsToTileData = new Dictionary<Vector3Int, TileData>();
+    public Dictionary<Vector3Int, TileData> positionsToTileData { get; private set; } = new Dictionary<Vector3Int, TileData>();
     private HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
-    private HashSet<LiquidBody> liquidBodies = new HashSet<LiquidBody>();
-    private List<LiquidBody> previewBodies = new List<LiquidBody>();
-    private BodyEmptyCallback bodyEmptyCallback;
+    public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
+    public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
+    private BodyEmptyCallback bodyEmptyCallback;
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
@@ -306,12 +306,12 @@ public class TileLayerManager : MonoBehaviour
     {
         HashSet<Vector3Int> remainingTiles = new HashSet<Vector3Int>();
         remainingTiles.UnionWith(positionsToTileData[cellPosition].currentLiquidBody.tiles);
-        Debug.Log("Liquidbody tile count:" + remainingTiles.Count);
+        //Debug.Log("Liquidbody tile count:" + remainingTiles.Count);
         remainingTiles.ExceptWith(RemovedTiles);
-        foreach(Vector3Int vector3Int in remainingTiles)
+/*        foreach(Vector3Int vector3Int in remainingTiles)
         {
             Debug.Log("Remaining: " + vector3Int.ToString());
-        }
+        }*/
         List<Vector3Int> neighborTiles = new List<Vector3Int>();
         foreach (Vector3Int neighborTile in FourNeighborTileCellPositions(cellPosition)) //Filter available liquid tiles
         {
@@ -391,6 +391,10 @@ public class TileLayerManager : MonoBehaviour
             {
                 this.positionsToTileData[tile].PreviewLiquidBody(body);
             }
+        }
+        if (dividedBody.bodyID == 0)
+        {
+            dividedBody.callback.Invoke(dividedBody);
         }
         return newBodies;
     }

@@ -110,6 +110,11 @@ public class LiquidBody
         {
             this.referencedBodies.UnionWith(dividedBody.referencedBodies);
             this.referencedBodies.Remove(dividedBody);
+        }
+        if (dividedBody.bodyID == 0)
+        {
+            this.referencedBodies.UnionWith(dividedBody.referencedBodies);
+            this.referencedBodies.Remove(dividedBody);
             dividedBody.callback.Invoke(dividedBody);
         }
         //this.RemoveReferencedPreviewBodies();
