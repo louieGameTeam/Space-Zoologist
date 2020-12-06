@@ -22,13 +22,6 @@ public class TileLayerManager : MonoBehaviour
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
-    private void Update()
-    {
-        if (this.holdsContent)
-        {
-            Debug.Log(this.liquidBodies.Count.ToString() + this.previewBodies.Count.ToString());
-        }
-    }
 /*    private void Awake()
     {
         this.bodyEmptyCallback = OnLiquidBodyEmpty;
@@ -339,13 +332,17 @@ public class TileLayerManager : MonoBehaviour
             isContinueous = false;
             break;
         }
-        Debug.Log(isContinueous);
+        Debug.Log("Quick continuity check result: " + isContinueous);
         if (!isContinueous) //perform complicated check and generate new bodies if necessary
         {
             List<LiquidBody> newBodies = GenerateDividedBodies(positionsToTileData[cellPosition].currentLiquidBody, cellPosition, startingTiles, remainingTiles);
             if (newBodies != null)
             {
                 previewBodies.AddRange(newBodies);
+                foreach (LiquidBody liquidBody in newBodies) // Remove Referenced Preview Body
+                {
+                    liquidBody.RemoveNestedReference();
+                }
             }
         }
     }
@@ -398,7 +395,7 @@ public class TileLayerManager : MonoBehaviour
         }
         return newBodies;
     }
-    private bool QuickContinuityTest(Vector3Int origin, Vector3Int start, Vector3Int stop, CellStatus[,] historyArray)
+    private bool QuickContinuityTest(Vector3Int origin, Vector3Int start, Vector3Int stop, CellStatus[,] historyArray) // TODO not performing as expected drawing left to right, also does not repathfind when stuck. 
     {
         int iterations = 0;
         int maxDisplacement = this.quickCheckIterations / 2 - 1; // TODO optimization, when trying to access outside possible bound, terminate immediately

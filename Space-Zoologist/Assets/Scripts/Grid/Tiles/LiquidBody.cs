@@ -111,12 +111,6 @@ public class LiquidBody
             this.referencedBodies.UnionWith(dividedBody.referencedBodies);
             this.referencedBodies.Remove(dividedBody);
         }
-        if (dividedBody.bodyID == 0)
-        {
-            this.referencedBodies.UnionWith(dividedBody.referencedBodies);
-            this.referencedBodies.Remove(dividedBody);
-            dividedBody.callback.Invoke(dividedBody);
-        }
         //this.RemoveReferencedPreviewBodies();
 
         this.callback = bodyEmptyCallback;
@@ -133,6 +127,7 @@ public class LiquidBody
         {
             if (existingTile.Remove(position))
             {
+                this.tiles.Add(position);
                 CheckNeighbors(existingTile, position);
 /*                if (this.tiles.Add(position))
                 {
@@ -154,6 +149,17 @@ public class LiquidBody
         if (this.tiles.Count == 0)
         {
             this.callback.Invoke(this);
+        }
+    }
+    public void RemoveNestedReference()
+    {
+        foreach (LiquidBody liquidBody in this.referencedBodies.ToList())
+        {
+            if (liquidBody.bodyID == 0)
+            {
+                this.referencedBodies.Remove(liquidBody);
+                liquidBody.callback.Invoke(liquidBody);
+            }
         }
     }
     public SerializedLiquidBody Serialize()

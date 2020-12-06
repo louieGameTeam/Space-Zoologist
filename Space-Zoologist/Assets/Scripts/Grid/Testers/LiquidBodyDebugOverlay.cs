@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TilemapDebugOverlay : MonoBehaviour
+public class LiquidBodyDebugOverlay : MonoBehaviour
 {
     private bool DisplayLiquidBodyInfo;
     private bool DisplayPreviewBodies;
@@ -17,11 +17,14 @@ public class TilemapDebugOverlay : MonoBehaviour
         this.tilemaps = FindObjectsOfType<Tilemap>();
         this.tileSystem = FindObjectOfType<TileSystem>();
     }
+    private void Update()
+    {
+    }
     private void OnGUI()
     {
         GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 900));
         GUILayout.BeginVertical();
-        GUILayout.Box("Grid Debugger");
+        GUILayout.Box("Liquid Developer Debugger");
         this.DisplayLiquidBodyInfo = GUILayout.Toggle(this.DisplayLiquidBodyInfo, "Liquid Body Info Display");
         if (this.DisplayLiquidBodyInfo)
         {
@@ -51,7 +54,11 @@ public class TilemapDebugOverlay : MonoBehaviour
                         for (int i = 0; i < liquidBody.contents.Length; i++)
                         {
                             GUILayout.BeginHorizontal();
-                            GUILayout.Box(liquidBody.contents[i].ToString("n3"));
+                            try
+                            {
+                                liquidBody.contents[i] = float.Parse(GUILayout.TextField(liquidBody.contents[i].ToString("n3")));
+                            }
+                            catch { }
                             liquidBody.contents[i] = GUILayout.HorizontalSlider(liquidBody.contents[i], 0.0f, 1.0f);
                             GUILayout.EndHorizontal();
                         }
@@ -66,16 +73,17 @@ public class TilemapDebugOverlay : MonoBehaviour
                             }
                         }
                         GUILayout.Box("Valid Cross Reference: " + validCrossReference.ToString());
-                        if (GUILayout.Toggle(ManagersToToggles[tileLayerManager][liquidBody],"View Area"))
+                        ManagersToToggles[tileLayerManager][liquidBody] = GUILayout.Toggle(ManagersToToggles[tileLayerManager][liquidBody], "View Area");
+                        if (ManagersToToggles[tileLayerManager][liquidBody])
                         {
                             // View Area
                         }
                     }
                     GUILayout.EndScrollView();
                     int bodyCount = 0;
-                    this.scrollPosition2 = GUILayout.BeginScrollView(scrollPosition1, GUILayout.Width(200), GUILayout.Height(300));
-                    GUILayout.Box("Preview Bodies");
-                    GUILayout.Toggle(this.DisplayPreviewBodies, "Display Preview Bodies");
+                    this.scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2, GUILayout.Width(200), GUILayout.Height(300));
+                    GUILayout.Box("Active Preview Bodies: " + tileLayerManager.previewBodies.Count.ToString());
+                    this.DisplayPreviewBodies = GUILayout.Toggle(this.DisplayPreviewBodies, "Display Preview Bodies");
                     foreach (LiquidBody liquidBody in tileLayerManager.previewBodies)
                     {
                         bodyCount++;
