@@ -24,7 +24,10 @@ public class TileLayerManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(this.liquidBodies.Count.ToString() + this.previewBodies.Count.ToString()) ;
+/*        if (this.holdsContent)
+        {
+            Debug.Log(this.liquidBodies.Count.ToString() + this.previewBodies.Count.ToString());
+        }*/
     }
 /*    private void Awake()
     {
@@ -128,10 +131,7 @@ public class TileLayerManager : MonoBehaviour
         }
         if (this.holdsContent)
         {
-            this.positionsToTileData[cellPosition].PreviewReplacement(tile, MergeLiquidBodies(cellPosition, tile)); // Add body information to tile
-            this.ChangedTiles.Add(cellPosition);
-            ApplyChangesToTilemap(cellPosition);
-            return;
+            this.positionsToTileData[cellPosition].PreviewLiquidBody(MergeLiquidBodies(cellPosition, tile));
         }
         this.positionsToTileData[cellPosition].PreviewReplacement(tile);
         this.ChangedTiles.Add(cellPosition);
@@ -147,7 +147,7 @@ public class TileLayerManager : MonoBehaviour
             {
                 this.DivideLiquidBody(cellPosition);
             }
-            this.positionsToTileData[cellPosition].PreviewReplacement(null, null);
+            this.positionsToTileData[cellPosition].PreviewReplacement(null);
             this.ChangedTiles.Add(cellPosition);
             this.ApplyChangesToTilemap(cellPosition);
         }
@@ -155,10 +155,17 @@ public class TileLayerManager : MonoBehaviour
     }
     public void ConfirmPlacement()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            return;
+        }
+        if (!this.holdsContent)
+        {
             foreach (Vector3Int tile in this.ChangedTiles)
             {
                 this.positionsToTileData[tile].ConfirmReplacement();
             }
+        }
         foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
         {
             foreach (Vector3Int tile in previewLiquidBody.tiles)
@@ -171,6 +178,7 @@ public class TileLayerManager : MonoBehaviour
         }
         foreach (Vector3Int cellPosition in this.RemovedTiles)
         {
+            this.positionsToTileData[cellPosition].ConfirmReplacement();
             this.positionsToTileData.Remove(cellPosition);
         }
         this.ClearAll();
@@ -272,6 +280,10 @@ public class TileLayerManager : MonoBehaviour
                     return liquidBodyL[0];
                 }
                 LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], cellPosition);
+                foreach (Vector3Int position in extendedBody.tiles)
+                {
+                    this.positionsToTileData[position].PreviewLiquidBody(extendedBody);
+                }
                 this.previewBodies.Add(extendedBody);
                 return extendedBody;
 
@@ -317,7 +329,7 @@ public class TileLayerManager : MonoBehaviour
             if (QuickContinuityTest(cellPosition, neighborTiles[0], neighborTiles[1], historyArray))
             {
                 neighborTiles.RemoveAt(0);
-                ClearHistoryArray(historyArray);
+                ResetHistoryArray(historyArray);
                 continue;
             }
             isContinueous = false;
@@ -326,14 +338,14 @@ public class TileLayerManager : MonoBehaviour
         Debug.Log(isContinueous);
         if (!isContinueous) //perform complicated check and generate new bodies if necessary
         {
-            List<LiquidBody> newBodies = GenerateNewBodies(positionsToTileData[cellPosition].currentLiquidBody, cellPosition, startingTiles, remainingTiles);
+            List<LiquidBody> newBodies = GenerateDividedBodies(positionsToTileData[cellPosition].currentLiquidBody, cellPosition, startingTiles, remainingTiles);
             if (newBodies != null)
             {
                 previewBodies.AddRange(newBodies);
             }
         }
     }
-    private List<LiquidBody> GenerateNewBodies(LiquidBody dividedBody, Vector3Int dividePoint, List<Vector3Int> startingTiles, HashSet<Vector3Int> remainingTiles)
+    private List<LiquidBody> GenerateDividedBodies(LiquidBody dividedBody, Vector3Int dividePoint, List<Vector3Int> startingTiles, HashSet<Vector3Int> remainingTiles)
     {
         List<LiquidBody> newBodies = new List<LiquidBody>();
         foreach (Vector3Int tile in startingTiles)
@@ -344,57 +356,48 @@ public class TileLayerManager : MonoBehaviour
                 if (liquidBody.tiles.Contains(tile))
                 {
                     skip = true;
+                    Debug.Log(tile.ToString() + "skipped");
                     break;
                 }
             }
             if (!skip)
             {
-                newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, DetermineRelativeDirection(dividePoint, tile), bodyEmptyCallback));
+                Debug.Log(tile.ToString() + "Generated " + "divide point: " + dividePoint.ToString());
+                newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, tile, bodyEmptyCallback));
+/*                foreach (Vector3Int tile1 in newBodies.Last().tiles)
+                {
+                    Debug.Log("Body contains" + tile1.ToString());
+                }*/
             }
             if (remainingTiles.Count == 0)
             {
+                Debug.Log("Tile depleted");
                 break;
             }
         }
         if (newBodies.Count == 1) //They still belong to the same body, do not add new body
         {
+            Debug.Log("Still same body");
             return null;
         }
+        foreach (LiquidBody body in newBodies)
+        {
+            foreach (Vector3Int tile in body.tiles)
+            {
+                this.positionsToTileData[tile].PreviewLiquidBody(body);
+            }
+        }
         return newBodies;
-    }
-    private SearchDirection DetermineRelativeDirection(Vector3Int referencedTile, Vector3Int tile)
-    {
-        int x = tile.x - referencedTile.x;
-        int y = tile.y - referencedTile.y;
-        switch (x)
-        {
-            case 1:
-                return SearchDirection.Right;
-            case -1:
-                return SearchDirection.Left;
-            default:
-                break;
-        }
-        switch (y)
-        {
-            case 1:
-                return SearchDirection.Up;
-            case -1:
-                return SearchDirection.Down;
-            default:
-                Debug.LogError("Input tile is not neighbor to referenced tile");
-                return SearchDirection.Up;
-        }
     }
     private bool QuickContinuityTest(Vector3Int origin, Vector3Int start, Vector3Int stop, CellStatus[,] historyArray)
     {
         int iterations = 0;
-        int maxDisplacement = quickCheckIterations / 2 - 1; // TODO optimization, when trying to access outside possible bound, terminate immediately
+        int maxDisplacement = this.quickCheckIterations / 2 - 1; // TODO optimization, when trying to access outside possible bound, terminate immediately
         int[] displacement = new int[2] { start.x - origin.x, start.y - origin.y };
-        Debug.Log("Starting point: " + displacement[0].ToString() + displacement[1].ToString());
+        //Debug.Log("Starting point: " + displacement[0].ToString() + displacement[1].ToString());
         int[] targetDisplacement = new int[2] { stop.x - origin.x, stop.y - origin.y };
         TranslateDisplacementToArray(displacement, historyArray);
-        while (iterations < quickCheckIterations)
+        while (iterations < this.quickCheckIterations)
         {
             if (displacement[0] == targetDisplacement[0] && displacement[1] == targetDisplacement[1]) // Success
             {
@@ -421,10 +424,10 @@ public class TileLayerManager : MonoBehaviour
                 iterations++;
                 continue;
             }
-            Debug.Log("stuck");
+            //Debug.Log("stuck");
             return false; //Stuck in somewhere
         }
-        Debug.Log("max iterations");
+        //Debug.Log("max iterations");
         return false;
     }
     private bool CanMove(int[] displacement, int[] targetDisplacement, Direction2D direction, CellStatus[,] historyArray, MoveType moveType)
@@ -454,7 +457,7 @@ public class TileLayerManager : MonoBehaviour
         if (TranslateDisplacementToArray(newDisp, historyArray))
         {
             displacement[(int)direction] += adder;
-            Debug.Log("passed");
+            //Debug.Log("passed");
             return true;
         }
         if (moveType == MoveType.Parallel1)
@@ -487,23 +490,23 @@ public class TileLayerManager : MonoBehaviour
         int maxDisplacement = quickCheckIterations / 2 - 1;
         int x = displacement[0] + maxDisplacement;
         int y = displacement[1] + maxDisplacement;
-        Debug.Log("Displacement: " + displacement[0].ToString() + displacement[1].ToString());
-        Debug.Log("Array pos: " + x.ToString() + y.ToString());
+        //Debug.Log("Displacement: " + displacement[0].ToString() + displacement[1].ToString());
+        //Debug.Log("Array pos: " + x.ToString() + y.ToString());
         if (x < 0 || x >= quickCheckIterations - 1 || y < 0 || y >= quickCheckIterations - 1) // Out of bound
         {
             return false;
         }
-        Debug.Log(historyArray[x, y].ToString());
+        //Debug.Log(historyArray[x, y].ToString());
         if (historyArray[x, y] != CellStatus.Self)
         {
             return false;
         }
         historyArray[x, y] = CellStatus.Walked;
-        Debug.Log("Walked");
+        //Debug.Log("Walked");
         return true;
     }
 
-    private void ClearHistoryArray (CellStatus[,] historyArray)
+    private void ResetHistoryArray (CellStatus[,] historyArray)
     {
         for (int i = 0; i < quickCheckIterations - 1; i++)
         {
@@ -560,6 +563,13 @@ public class TileLayerManager : MonoBehaviour
     }
     private void OnLiquidBodyEmpty(LiquidBody liquidBody)
     {
-        liquidBodies.Remove(liquidBody);
+        if (liquidBodies.Remove(liquidBody))
+        {
+            Debug.Log("Liquid Body Removed");
+        }
+        if (previewBodies.Remove(liquidBody))
+        {
+            Debug.Log("Preview Body Removed");
+        }
     }
 }

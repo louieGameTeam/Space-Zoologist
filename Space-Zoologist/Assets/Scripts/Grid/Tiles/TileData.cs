@@ -41,19 +41,16 @@ public class TileData
         this.isTileChanged = false;
         this.isColorChanged = false;
     }
-    public void PreviewReplacement(GameTile tile, LiquidBody liquidBody = null)
+    public void PreviewReplacement(GameTile tile)
     {
         if (isTileChanged)
         {
             this.currentTile = tile;
-            this.currentLiquidBody = liquidBody;
             return;
         }
         this.previousTile = this.currentTile;
         //Debug.Log("previous:" + this.previousTile ?? this.previousTile.TileName + "current:" + this.currentTile ?? this.currentTile.TileName);
-        this.previousLiquidBody = this.currentLiquidBody;
         this.currentTile = tile;
-        this.currentLiquidBody = liquidBody;
         this.isTileChanged = true;
     }
     public void PreviewColorChange(Color color)
@@ -69,22 +66,26 @@ public class TileData
     }
     public void PreviewLiquidBody(LiquidBody newLiquidBody)
     {
-        if (previousLiquidBody == null && (this.currentLiquidBody != null && this.currentLiquidBody.bodyID != 0))
+        if (isLiquidBodyChanged)
         {
-            this.previousLiquidBody = this.currentLiquidBody;
+            if (newLiquidBody == this.currentLiquidBody)
+            {
+                return;
+            }
+            this.currentLiquidBody.callback.Invoke(this.currentLiquidBody);
             this.currentLiquidBody = newLiquidBody;
-            this.isLiquidBodyChanged = true;
             return;
         }
+        this.previousLiquidBody = this.currentLiquidBody;
+        this.currentLiquidBody = newLiquidBody;
         this.isLiquidBodyChanged = true;
-        currentLiquidBody = newLiquidBody;
     }
     public void ConfirmReplacement()
     {
         if (currentTile == null)
         {
             this.currentColor = Color.white;
-            if (this.currentLiquidBody != null)
+            if (this.currentLiquidBody != null && currentLiquidBody.bodyID != 0)
             {
                 this.currentLiquidBody.RemoveTile(tilePosition); // Remove Tile from liquid body
             }
@@ -115,6 +116,7 @@ public class TileData
         this.previousTile = null;
         this.isTileChanged = false;
         this.isColorChanged = false;
+        this.isLiquidBodyChanged = false;
     }
     public SerializedTileData Serialize()
     {

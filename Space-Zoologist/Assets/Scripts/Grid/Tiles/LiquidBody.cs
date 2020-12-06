@@ -10,7 +10,7 @@ public class LiquidBody
     public HashSet<Vector3Int> tiles { get; private set; }
     public float[] contents;
     public HashSet<LiquidBody> referencedBodies { get; private set; }
-    private BodyEmptyCallback callback;
+    public BodyEmptyCallback callback;
     public void Clear()
     {
         this.tiles.Clear();
@@ -92,21 +92,26 @@ public class LiquidBody
     /// <param name="remainingTile"></param>
     /// <param name="dividePoint"></param>
     /// <param name="direction"></param>
-    public LiquidBody(LiquidBody dividedBody, HashSet<Vector3Int> remainingTiles, Vector3Int dividePoint, SearchDirection direction, BodyEmptyCallback bodyEmptyCallback)
+    public LiquidBody(LiquidBody dividedBody, HashSet<Vector3Int> remainingTiles, Vector3Int dividePoint, Vector3Int startPoint, BodyEmptyCallback bodyEmptyCallback)
     {
         this.bodyID = 0;
         this.tiles = new HashSet<Vector3Int>();
-
+        this.tiles.Add(startPoint);
         Queue<SearchDirection> sourceDirectionHistory = new Queue<SearchDirection>(2);
-        sourceDirectionHistory.Enqueue(ReverseDirection(direction));
 
-        CheckNeighbors(remainingTiles, dividePoint, sourceDirectionHistory);
+        CheckNeighbors(remainingTiles, startPoint, sourceDirectionHistory);
         this.contents = new float[dividedBody.contents.Length];
         dividedBody.contents.CopyTo(this.contents, 0);
 
         this.referencedBodies = new HashSet<LiquidBody>();
         this.referencedBodies.Add(dividedBody);
-        this.RemoveReferencedPreviewBodies();
+        if (dividedBody.bodyID == 0)
+        {
+            this.referencedBodies.UnionWith(dividedBody.referencedBodies);
+            this.referencedBodies.Remove(dividedBody);
+            dividedBody.callback.Invoke(dividedBody);
+        }
+        //this.RemoveReferencedPreviewBodies();
 
         this.callback = bodyEmptyCallback;
     }
@@ -145,9 +150,10 @@ public class LiquidBody
             }
             if (existingTile.Contains(newCell))
             {
+                existingTile.Remove(newCell);
                 if (this.tiles.Add(newCell))
                 {
-                    if (sourceDirectionHistory.Count > 1)
+                    if (sourceDirectionHistory.Count > 0)
                     {
                         sourceDirectionHistory.Dequeue();
                     }
@@ -194,18 +200,6 @@ public class LiquidBody
         if (this.tiles.Count == 0)
         {
             this.callback.Invoke(this);
-        }
-    }
-    private void RemoveReferencedPreviewBodies()
-    {
-        foreach (LiquidBody body in this.referencedBodies)
-        {
-            if (body.bodyID == 0)
-            {
-                this.referencedBodies.UnionWith(body.referencedBodies);
-                body.callback.Invoke(body);
-                this.referencedBodies.Remove(body);
-            }
         }
     }
     public SerializedLiquidBody Serialize()

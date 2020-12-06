@@ -31,7 +31,7 @@ public class LiquidUpdateTester : MonoBehaviour
         {
             Debug.Log(cellPosition.ToString());
             LiquidBody liquidBody = tileLayerManager.GetLiquidBodyAt(cellPosition);
-            Debug.Log("Liquid body: " + liquidBody.bodyID + " Contents" + liquidBody.contents[0] + "," + liquidBody.contents[1] + "," + liquidBody.contents[2] + "Count: " + liquidBody.tiles.Count);
+            Debug.Log("Liquid body: " + liquidBody.bodyID + " Contents: " + liquidBody.contents[0] + "," + liquidBody.contents[1] + "," + liquidBody.contents[2] + " Count: " + liquidBody.tiles.Count + " Body also contains pos: " + liquidBody.tiles.Contains(cellPosition));
         }
     }
 }
