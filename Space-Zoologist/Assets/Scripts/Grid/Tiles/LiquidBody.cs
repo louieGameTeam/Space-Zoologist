@@ -94,12 +94,13 @@ public class LiquidBody
     /// <param name="direction"></param>
     public LiquidBody(LiquidBody dividedBody, HashSet<Vector3Int> remainingTiles, Vector3Int dividePoint, Vector3Int startPoint, BodyEmptyCallback bodyEmptyCallback)
     {
+        Debug.Log("Divided body ID: " + dividedBody.bodyID.ToString() + " Divided body tile count: " + dividedBody.tiles.Count);
         this.bodyID = 0;
         this.tiles = new HashSet<Vector3Int>();
         this.tiles.Add(startPoint);
-        Queue<SearchDirection> sourceDirectionHistory = new Queue<SearchDirection>(2);
+        remainingTiles.Remove(startPoint);
 
-        CheckNeighbors(remainingTiles, startPoint, sourceDirectionHistory);
+        CheckNeighbors(remainingTiles, startPoint);
         this.contents = new float[dividedBody.contents.Length];
         dividedBody.contents.CopyTo(this.contents, 0);
 
@@ -121,70 +122,18 @@ public class LiquidBody
     /// <param name="existingTile"></param>
     /// <param name="cellPosition"></param>
     /// <param name="sourceDirectionHistory"></param>
-    private void CheckNeighbors(HashSet<Vector3Int> existingTile, Vector3Int cellPosition, Queue<SearchDirection> sourceDirectionHistory)
+    private void CheckNeighbors(HashSet<Vector3Int> existingTile, Vector3Int cellPosition)
     {
-        foreach(SearchDirection direction in Enum.GetValues(typeof(SearchDirection)))
+        foreach (Vector3Int position in GridUtils.FourNeighborTiles(cellPosition))
         {
-            if (sourceDirectionHistory.Contains(direction)) //Optimization
+            if (existingTile.Remove(position))
             {
-                continue;
-            }
-            Vector3Int newCell = new Vector3Int();
-            switch (direction)
-            {
-                case SearchDirection.Up:
-                    newCell = new Vector3Int(cellPosition.x, cellPosition.y + 1, cellPosition.z);
-                    break;
-                case SearchDirection.Down:
-                    newCell = new Vector3Int(cellPosition.x, cellPosition.y - 1, cellPosition.z);
-                    break;
-                case SearchDirection.Right:
-                    newCell = new Vector3Int(cellPosition.x + 1, cellPosition.y, cellPosition.z);
-                    break;
-                case SearchDirection.Left:
-                    newCell = new Vector3Int(cellPosition.x - 1, cellPosition.y, cellPosition.z);
-                    break;
-                default:
-                    Debug.LogError("Undefined Search Direction");
-                    break;
-            }
-            if (existingTile.Contains(newCell))
-            {
-                existingTile.Remove(newCell);
-                if (this.tiles.Add(newCell))
+                CheckNeighbors(existingTile, position);
+/*                if (this.tiles.Add(position))
                 {
-                    if (sourceDirectionHistory.Count > 0)
-                    {
-                        sourceDirectionHistory.Dequeue();
-                    }
-                    sourceDirectionHistory.Enqueue(ReverseDirection(direction));
-                    CheckNeighbors(existingTile, newCell, sourceDirectionHistory);
                     return;
-                }
+                }*/
             }
-            sourceDirectionHistory.Clear();
-        }
-    }
-    /// <summary>
-    /// Reverses the direction
-    /// </summary>
-    /// <param name="direction"></param>
-    /// <returns></returns>
-    private SearchDirection ReverseDirection(SearchDirection direction)
-    {
-        switch (direction)
-        {
-            case SearchDirection.Up:
-                return SearchDirection.Down;
-            case SearchDirection.Down:
-                return SearchDirection.Up;
-            case SearchDirection.Right:
-                return SearchDirection.Left;
-            case SearchDirection.Left:
-                return SearchDirection.Right;
-            default:
-                Debug.LogError("Undefined Search Direction");
-                return direction;
         }
     }
     public void AddTile(Vector3Int tileToAdd)

@@ -24,10 +24,10 @@ public class TileLayerManager : MonoBehaviour
 
     private void Update()
     {
-/*        if (this.holdsContent)
+        if (this.holdsContent)
         {
             Debug.Log(this.liquidBodies.Count.ToString() + this.previewBodies.Count.ToString());
-        }*/
+        }
     }
 /*    private void Awake()
     {
@@ -308,6 +308,10 @@ public class TileLayerManager : MonoBehaviour
         remainingTiles.UnionWith(positionsToTileData[cellPosition].currentLiquidBody.tiles);
         Debug.Log("Liquidbody tile count:" + remainingTiles.Count);
         remainingTiles.ExceptWith(RemovedTiles);
+        foreach(Vector3Int vector3Int in remainingTiles)
+        {
+            Debug.Log("Remaining: " + vector3Int.ToString());
+        }
         List<Vector3Int> neighborTiles = new List<Vector3Int>();
         foreach (Vector3Int neighborTile in FourNeighborTileCellPositions(cellPosition)) //Filter available liquid tiles
         {
@@ -362,8 +366,9 @@ public class TileLayerManager : MonoBehaviour
             }
             if (!skip)
             {
-                Debug.Log(tile.ToString() + "Generated " + "divide point: " + dividePoint.ToString());
                 newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, tile, bodyEmptyCallback));
+
+                Debug.Log("Generated divided body at" + tile.ToString() + "divide point: " + dividePoint.ToString());
 /*                foreach (Vector3Int tile1 in newBodies.Last().tiles)
                 {
                     Debug.Log("Body contains" + tile1.ToString());
