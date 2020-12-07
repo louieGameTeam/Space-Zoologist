@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 782f35dade51c4e4f8ce5a997e902738, type: 3}
+  m_Script: {fileID: 11500000, guid: 165219529732ab948ab0bbf013f649b8, type: 3}
   m_Name: Grass
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -1347532211411968617, guid: 40dfdc042b489cd4d9616473473c0922,
@@ -871,8 +871,9 @@ MonoBehaviour:
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
-  replacementTilemap: []
-  constraintTilemap:
+  replacementTilemaps: []
+  constraintTilemaps:
+  - {fileID: 0}
   - {fileID: 0}
   type: 3
   TileName: grass
@@ -880,5 +881,4 @@ MonoBehaviour:
   replacementLayers: 
   constraintLayers: 01000000
   isRepresentative: 1
-  isMergingAttributes: 0
-  priority: 100
+  defaultContents: []

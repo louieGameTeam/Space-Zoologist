@@ -182,7 +182,7 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         // check if tilemap has tile
-        TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
+        GameTile tile = this.TileSystem.GetGameTileAt(cur);
         if (tile != null)
         {
             if (tile.type != TileType.Wall)

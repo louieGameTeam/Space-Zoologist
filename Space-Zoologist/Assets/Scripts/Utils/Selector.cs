@@ -14,7 +14,7 @@ public class Selector : MonoBehaviour
     public Population SelectedPopulation { get; private set; }
     public FoodSource SelectedFoodSource { get; private set; }
     public Vector3Int SelectedTileLocation { get; private set; }
-    public TerrainTile SelectedTile { get; private set; }
+    public GameTile SelectedTile { get; private set; }
     public List<Vector3Int> SelectedTiles { get; private set; }
     public EnclosedArea SelectedEnclosedArea { get; private set; }
 
@@ -45,7 +45,7 @@ public class Selector : MonoBehaviour
 
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
-            this.SelectedTile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
+            this.SelectedTile = this.tileSystem.GetGameTileAt(cellPos);
 
             //Debug.Log($"Mouse click at {cellPos}");
 

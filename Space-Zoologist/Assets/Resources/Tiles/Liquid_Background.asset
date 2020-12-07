@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 782f35dade51c4e4f8ce5a997e902738, type: 3}
+  m_Script: {fileID: 11500000, guid: 165219529732ab948ab0bbf013f649b8, type: 3}
   m_Name: Liquid_Background
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 5702992157170746657, guid: f638a46204f555042acc2aab250d5385,
@@ -871,13 +871,13 @@ MonoBehaviour:
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
-  replacementTilemap: []
-  constraintTilemap: []
+  replacementTilemaps: []
+  constraintTilemaps:
+  - {fileID: 0}
   type: 4
   TileName: liquid_background
   targetLayer: 2
   replacementLayers: 
   constraintLayers: 
   isRepresentative: 0
-  isMergingAttributes: 0
-  priority: 0
+  defaultContents: []
