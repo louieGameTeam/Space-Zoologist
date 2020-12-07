@@ -22,11 +22,25 @@ public class TileLayerManager : MonoBehaviour
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
-/*    private void Awake()
+    /*    private void Awake()
+        {
+            this.bodyEmptyCallback = OnLiquidBodyEmpty;
+            this.tilemap = this.gameObject.GetComponent<Tilemap>();
+        }*/
+    private void Awake()
+    {
+        this.Initialize();
+    }
+    private void Initialize()
     {
         this.bodyEmptyCallback = OnLiquidBodyEmpty;
         this.tilemap = this.gameObject.GetComponent<Tilemap>();
-    }*/
+        this.positionsToTileData = new Dictionary<Vector3Int, TileData>();
+        this.liquidBodies = new HashSet<LiquidBody>();
+        this.previewBodies = new List<LiquidBody>();
+        this.RemovedTiles = new HashSet<Vector3Int>();
+        this.tilemap.ClearAllTiles();
+    }
     public LiquidBody GetLiquidBodyAt(Vector3Int cellPosition)
     {
         if (positionsToTileData.ContainsKey(cellPosition))
@@ -52,8 +66,7 @@ public class TileLayerManager : MonoBehaviour
     }
     public void ParseSerializedTilemap(SerializedTilemap serializedTilemap, GameTile[] gameTiles)
     {
-        this.bodyEmptyCallback = OnLiquidBodyEmpty;
-        this.tilemap = this.gameObject.GetComponent<Tilemap>();
+        Initialize();
         Dictionary<int, LiquidBody> bodyIDsToLiquidBodies = new Dictionary<int, LiquidBody>();
         foreach (SerializedLiquidBody serializedLiquidBody in serializedTilemap.SerializedLiquidBodies)
         {

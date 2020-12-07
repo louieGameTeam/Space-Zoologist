@@ -904,12 +904,14 @@ MonoBehaviour:
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
-  replacementTilemaps: []
-  constraintTilemaps: []
+  replacementTilemaps:
+  - {fileID: 0}
+  constraintTilemaps:
+  - {fileID: 0}
   type: 2
   TileName: dirtEdge
   targetLayer: 7
   replacementLayers: 07000000
-  constraintLayers: 09000000
+  constraintLayers: 
   isRepresentative: 0
-  isMergingAttributes: 0
+  defaultContents: []

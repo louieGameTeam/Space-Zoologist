@@ -38,11 +38,12 @@ MonoBehaviour:
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
   replacementTilemaps: []
-  constraintTilemaps: []
+  constraintTilemaps:
+  - {fileID: 0}
   type: 6
   TileName: highlight
   targetLayer: 9
   replacementLayers: 
   constraintLayers: 
   isRepresentative: 0
-  isMergingAttributes: 0
+  defaultContents: []

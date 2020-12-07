@@ -122,7 +122,7 @@ public class AnimalSpecies : ScriptableObject
             }
             if (tileType.Equals("Rock", StringComparison.OrdinalIgnoreCase))
             {
-                this.accessibleTerrain.Add(TileType.Rock);
+                this.accessibleTerrain.Add(TileType.Stone);
             }
             if (tileType.Equals("Wall", StringComparison.OrdinalIgnoreCase))
             {

@@ -872,11 +872,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
   replacementTilemaps: []
-  constraintTilemaps: []
+  constraintTilemaps:
+  - {fileID: 0}
+  - {fileID: 0}
   type: 3
   TileName: grass
   targetLayer: 6
   replacementLayers: 
-  constraintLayers: 0100000009000000
+  constraintLayers: 01000000
   isRepresentative: 1
-  isMergingAttributes: 0
+  defaultContents: []

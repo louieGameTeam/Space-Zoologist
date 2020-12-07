@@ -905,11 +905,12 @@ MonoBehaviour:
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
   replacementTilemaps: []
-  constraintTilemaps: []
+  constraintTilemaps:
+  - {fileID: 0}
   type: 4
   TileName: liquid_surface
   targetLayer: 4
   replacementLayers: 
   constraintLayers: 
   isRepresentative: 0
-  isMergingAttributes: 0
+  defaultContents: []

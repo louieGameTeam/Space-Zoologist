@@ -8,11 +8,11 @@ public class SerializedGrid
     public SerializedTilemap[] serializedTilemaps;
     // TODO Add other floating objects
 
-    public SerializedGrid(Dictionary<Tilemap, TileLayerManager> tilemapsToTileLayerManagers)
+    public SerializedGrid(TileLayerManager[] tileLayerManagers)
     {
-        this.serializedTilemaps = new SerializedTilemap[tilemapsToTileLayerManagers.Count];
+        this.serializedTilemaps = new SerializedTilemap[tileLayerManagers.Length];
         int i = 0;
-        foreach(TileLayerManager tileLayerManager in tilemapsToTileLayerManagers.Values)
+        foreach(TileLayerManager tileLayerManager in tileLayerManagers)
         {
             this.serializedTilemaps[i] = tileLayerManager.Serialize();
             i++;
