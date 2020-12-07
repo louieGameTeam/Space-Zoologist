@@ -151,6 +151,10 @@ public class LiquidBody
             this.callback.Invoke(this);
         }
     }
+    public void ClearReferencedBodies()
+    {
+        this.referencedBodies = new HashSet<LiquidBody>();
+    }
     public void RemoveNestedReference()
     {
         foreach (LiquidBody liquidBody in this.referencedBodies.ToList())

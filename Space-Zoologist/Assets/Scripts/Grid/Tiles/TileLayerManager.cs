@@ -166,6 +166,7 @@ public class TileLayerManager : MonoBehaviour
                 this.positionsToTileData[tile].ConfirmReplacement();
             }
             this.liquidBodies.ExceptWith(previewLiquidBody.referencedBodies);
+            previewLiquidBody.ClearReferencedBodies();
             this.GenerateNewLiquidBodyID(previewLiquidBody);
             this.liquidBodies.Add(previewLiquidBody);
         }
