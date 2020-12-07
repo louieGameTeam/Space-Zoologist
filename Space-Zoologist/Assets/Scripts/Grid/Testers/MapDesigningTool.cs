@@ -13,7 +13,7 @@ public class MapDesigningTool : MonoBehaviour
     private GridIO gridIO;
     private TilePlacementController tilePlacementController;
     private bool godMode = true;
-    private bool DisplayLiquidBodyInfo;
+    private bool DisplayLiquidBodyInfo = true;
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;
     private TileSystem tileSystem;
@@ -51,6 +51,7 @@ public class MapDesigningTool : MonoBehaviour
         TileSelectionBlock();
         MapIOBlock();
         GUILayout.EndArea();
+        MouseHUD();
         LiquidBlock();
     }
     private void TileSelectionBlock()
@@ -89,15 +90,15 @@ public class MapDesigningTool : MonoBehaviour
         }
         GUILayout.EndVertical();
     }
-    private void LiquidBlock()
+    private void MouseHUD()
     {
-        GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 600));
-        GUILayout.BeginVertical();
-        GUILayout.Box("Liquid Developer Debugger");
+        GUILayout.BeginArea(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y -150 , 200, 150));
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         GUILayout.Box("World Pos: " + mousePos.ToString());
         Vector3Int cellPosition = this.tileSystem.WorldToCell(mousePos);
         GUILayout.Box("Cell Pos: " + cellPosition);
+        GameTile gameTile = this.tileSystem.GetGameTileAt(cellPosition);
+        string name = gameTile ? gameTile.name : "Null";
         LiquidBody liquid = this.tileSystem.GetLiquidBodyAt(cellPosition);
         string bodyID = "Null";
         string con = "Null";
@@ -106,8 +107,16 @@ public class MapDesigningTool : MonoBehaviour
             bodyID = liquid.bodyID == 0 ? "Preview Body" : liquid.bodyID.ToString();
             con = string.Join(", ", liquid.contents);
         }
+        GUILayout.Box("Tile: " + name);
         GUILayout.Box("Liquid Body: " + bodyID);
         GUILayout.Box("Contents: " + con);
+        GUILayout.EndArea();
+    }
+    private void LiquidBlock()
+    {
+        GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 600));
+        GUILayout.BeginVertical();
+        GUILayout.Box("Liquid Developer Debugger");
         this.DisplayLiquidBodyInfo = GUILayout.Toggle(this.DisplayLiquidBodyInfo, "Liquid Body Info Display");
         if (this.DisplayLiquidBodyInfo)
         {
