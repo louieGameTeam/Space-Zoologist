@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 782f35dade51c4e4f8ce5a997e902738, type: 3}
+  m_Script: {fileID: 11500000, guid: 165219529732ab948ab0bbf013f649b8, type: 3}
   m_Name: BrickWall
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 1856567207279646495, guid: 1863acd83f712ef4c998dbd95207a950,
@@ -871,10 +871,8 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
-  replacementTilemap:
-  - {fileID: 0}
-  constraintTilemap:
-  - {fileID: 0}
+  replacementTilemaps: []
+  constraintTilemaps:
   - {fileID: 0}
   type: 5
   TileName: Wall

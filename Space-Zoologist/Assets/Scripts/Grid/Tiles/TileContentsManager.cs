@@ -15,7 +15,7 @@ public class TileContentsManager : MonoBehaviour
     private Tilemap tilemap;
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private bool isPlacedTileNew;
-    private TerrainTile terrainTile;
+    private GameTile terrainTile;
     private enum neighborTileStatus
     {
         None,
@@ -33,7 +33,7 @@ public class TileContentsManager : MonoBehaviour
         {
             tileContents[cellLocation][i] = composition[i];
         }
-        TerrainTile tile = (TerrainTile)tilemap.GetTile(cellLocation);
+        GameTile tile = (GameTile)tilemap.GetTile(cellLocation);
         ChangeColor(cellLocation, null, tile);
     }
     public void ModifyComposition(Vector3Int cellLocation, float[] changeInComposition)
@@ -53,93 +53,10 @@ public class TileContentsManager : MonoBehaviour
             tileContents[cellLocation][i] += changeInComposition[i];
         }
     }
-    public void MergeTile (Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
+    public void MergeTile (Vector3Int cellLocation, GameTile tile, List<Vector3Int> addedTiles)
     {
         terrainTile = tile;
         float[] newcomp = new float[] { 0, 0, 0 };
-        if (tile.isMergingAttributes)
-        {
-            switch (GetNeighborTileStatus(cellLocation))
-            {
-                case neighborTileStatus.None:
-                    isPlacedTileNew = true;
-                    if (!tileContents.ContainsKey(cellLocation))
-                    {
-                        tileContents.Add(cellLocation, newcomp);
-                    }
-                    if (!addedAttributes.ContainsKey(cellLocation))
-                    {
-                        addedAttributes.Add(cellLocation, tileContents[cellLocation]);
-                    }
-                    ChangeColor(cellLocation);
-                    return;
-                case neighborTileStatus.Same:
-                    isPlacedTileNew = false;
-                    foreach (Vector3Int location in addedTiles)
-                    {
-                        tileContents[location] = tileContents[neighborTiles.First()];
-                        if (!addedAttributes.ContainsKey(location))
-                        {
-                            addedAttributes.Add(location, tileContents[location]);
-                        }
-                        ChangeColor(location);
-                    }
-                    neighborTiles = new List<Vector3Int>();
-                    break;
-                case neighborTileStatus.Different:
-                    isPlacedTileNew = false;
-                    neighborTiles = new List<Vector3Int>();
-                    GetNeighborCellLocations(cellLocation,addedTiles);
-                    neighborTiles.Remove(cellLocation);
-                    Dictionary<float[], int> neighborTileContents = new Dictionary<float[], int>();
-                    foreach (Vector3Int tileLocation in neighborTiles)
-                    {/*
-                        if(addedAttributes.ContainsKey(tileLocation))
-                        {
-                            continue;
-                        }*/
-                        float[] contents = tileContents[tileLocation];
-                        if (!changedAttributes.ContainsKey(tileLocation))
-                        {
-                            changedAttributes.Add(tileLocation, contents);
-                        }
-                        if (neighborTileContents.ContainsKey(contents))
-                        {
-                            neighborTileContents[contents] += 1;
-                        }
-                        else
-                        {
-                            neighborTileContents.Add(contents, 1);
-                        }
-                    }
-                    float[] averageContentValues = new float[neighborTileContents.Keys.First().Length];
-                    for (int i = 0; i < neighborTileContents.Keys.First().Length; i++)
-                    {
-                        float totalValue = 0;
-                        int totalFrequency = 0;
-                        foreach (KeyValuePair<float[], int> keyValuePair in neighborTileContents)
-                        {
-                            totalValue += keyValuePair.Key[i] * (float)keyValuePair.Value;
-                            totalFrequency += keyValuePair.Value;
-                        }
-                        averageContentValues[i] = totalValue / (float)totalFrequency;
-                    }
-                    foreach (Vector3Int tileLocation in neighborTiles)
-                    {
-                        tileContents[tileLocation] = averageContentValues;
-                        ChangeColor(tileLocation);
-                    }
-                    foreach (Vector3Int tileLocation in addedTiles)
-                    {
-                        tileContents[tileLocation] = tileContents[neighborTiles.First()];
-                        ChangeColor(tileLocation);
-                    }
-                    neighborTiles = new List<Vector3Int>();
-                    break;
-                default:
-                    return;
-            }
-        }
     }
     public void RemoveTile (Vector3Int cellLocation)
     {
@@ -182,7 +99,7 @@ public class TileContentsManager : MonoBehaviour
             }
         }
     }
-    private void ChangeColor(Vector3Int cellLocation, TileColorManager tileColorManager = null , TerrainTile tile = null)
+    private void ChangeColor(Vector3Int cellLocation, TileColorManager tileColorManager = null , GameTile tile = null)
     {
         if(tileColorManager != null)
         {
