@@ -105,7 +105,7 @@ public class MenuManager : MonoBehaviour
 
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = tileSystem.WorldToCell(worldPos);
-            TerrainTile tile = tileSystem.GetTerrainTileAtLocation(cellPos);
+            GameTile tile = tileSystem.GetGameTileAt(cellPos);
 
             //Debug.Log($"Mouse click at {cellPos}");
 

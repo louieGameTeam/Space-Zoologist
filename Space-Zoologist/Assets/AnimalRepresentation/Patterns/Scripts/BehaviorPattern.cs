@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class BehaviorPattern : MonoBehaviour
 {
-    public Dictionary<GameObject, AnimalData> AnimalsToAnimalData = new Dictionary<GameObject, AnimalData>(); // The dictionary that holds all animal gameObjects to their data. If you want custom data to be stored, add another dictionary like this one
+    public Dictionary<GameObject, AnimalData> AnimalsToAnimalData; // The dictionary that holds all animal gameObjects to their data. If you want custom data to be stored, add another dictionary like this one
     protected GridSystem GridSystem = default;
-    private List<GameObject> compeletedAnimals = new List<GameObject>(); //Lists to remove animals from updating before updating to avoid modifying while iterating
-    private List<GameObject> alternativeCompletedAnimals = new List<GameObject>();
-    private List<GameObject> forceRemoveAnimals = new List<GameObject>();
+    private List<GameObject> compeletedAnimals; //Lists to remove animals from updating before updating to avoid modifying while iterating
+    private List<GameObject> alternativeCompletedAnimals;
+    private List<GameObject> forceRemoveAnimals;
     public virtual void StartUp()
     {
-        AnimalsToAnimalData.Clear();
-        compeletedAnimals.Clear();
-        alternativeCompletedAnimals.Clear();
-        forceRemoveAnimals.Clear();
+        this.AnimalsToAnimalData = new Dictionary<GameObject, AnimalData>();
+        this.compeletedAnimals = new List<GameObject>();
+        this.alternativeCompletedAnimals = new List<GameObject>();
+        this.forceRemoveAnimals = new List<GameObject>();
     }
     /// <summary>
     /// Assign necessary data to this script

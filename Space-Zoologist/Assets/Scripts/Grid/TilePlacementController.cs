@@ -78,7 +78,15 @@ public class TilePlacementController : MonoBehaviour
     private void ParseJson()
     {
         string fullPath = directory + SceneManager.GetActiveScene().name + ".json";
-        SerializedGrid serializedGrid = JsonUtility.FromJson<SerializedGrid>(File.ReadAllText(fullPath));
+        SerializedGrid serializedGrid;
+        try
+        {
+            serializedGrid = JsonUtility.FromJson<SerializedGrid>(File.ReadAllText(fullPath));
+        }
+        catch
+        {
+            return;
+        }
         foreach (Tilemap tilemap in this.tilemaps)
         {
             foreach (SerializedTilemap serializedTilemap in serializedGrid.serializedTilemaps)

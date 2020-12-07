@@ -34,18 +34,22 @@ public class TileSystem : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
+        try
         {
-            this.changedTiles.Clear();
-        });
+            EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
+            {
+                this.changedTiles.Clear();
+            });
 
-        EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
-        {
-            // Invoke event and pass the changed tiles that are not walls
-            EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.changedTiles.FindAll(
-                pos => this.GetGameTileAt(pos).type != TileType.Wall
-            ));
-        });
+            EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
+            {
+                // Invoke event and pass the changed tiles that are not walls
+                EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.changedTiles.FindAll(
+                        pos => this.GetGameTileAt(pos).type != TileType.Wall
+                    ));
+            });
+        }
+        catch { };
     }
 
     /// <summary>
