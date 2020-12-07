@@ -26,7 +26,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
                 {
                     continue;
                 }
-                if (tileSystem.GetTerrainTileAtLocation(new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0)) == liquidTile)
+                if (tileSystem.GetGameTileAt(new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0)) == liquidTile)
                 {
                     //if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.SpeciesName.Equals(foodName))
                     //{

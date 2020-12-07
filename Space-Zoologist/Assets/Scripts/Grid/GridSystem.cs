@@ -164,7 +164,7 @@ public class GridSystem : MonoBehaviour
                 else if (item.Equals(ItemType.Terrain))
                 {
                     // if contains liquid tile, check neighbors accessibility
-                    GameTile tile = this.TileSystem.GetTerrainTileAtLocation(new Vector3Int(x, y, 0));
+                    GameTile tile = this.TileSystem.GetGameTileAt(new Vector3Int(x, y, 0));
                     if (tile != null && tile.type == TileType.Liquid)
                     {
                         if (population.Grid.IsAccessible(x + 1, y))

@@ -11,20 +11,33 @@ public class LiquidBodyDebugOverlay : MonoBehaviour
     private TileSystem tileSystem;
     private Vector2 scrollPosition1;
     private Vector2 scrollPosition2;
+    private Camera mainCamera;
     private Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>> ManagersToToggles = new Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>>();
     private void Awake()
     {
+        this.mainCamera = this.gameObject.GetComponent<Camera>();
         this.tilemaps = FindObjectsOfType<Tilemap>();
         this.tileSystem = FindObjectOfType<TileSystem>();
     }
-    private void Update()
-    {
-    }
     private void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 900));
+        GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 600));
         GUILayout.BeginVertical();
         GUILayout.Box("Liquid Developer Debugger");
+        Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        GUILayout.Box("World Pos: " + mousePos.ToString());
+        Vector3Int cellPosition = this.tileSystem.WorldToCell(mousePos);
+        GUILayout.Box("Cell Pos: " + cellPosition);
+        LiquidBody liquid = this.tileSystem.GetLiquidBodyAt(cellPosition);
+        string bodyID = "Null";
+        string con = "Null";
+        if (liquid != null)
+        {
+            bodyID = liquid.bodyID == 0 ? "Preview Body" : liquid.bodyID.ToString();
+            con = string.Join(", ", liquid.contents);
+        }
+        GUILayout.Box("Liquid Body: " + bodyID);
+        GUILayout.Box("Contents: " + con);
         this.DisplayLiquidBodyInfo = GUILayout.Toggle(this.DisplayLiquidBodyInfo, "Liquid Body Info Display");
         if (this.DisplayLiquidBodyInfo)
         {
@@ -42,7 +55,7 @@ public class LiquidBodyDebugOverlay : MonoBehaviour
                     }
                     GUILayout.Box("Tilemap: " + tilemap.name);
                     GUILayout.Box("Active Liquid Bodies: " + tileLayerManager.liquidBodies.Count.ToString());
-                    this.scrollPosition1 = GUILayout.BeginScrollView(scrollPosition1, GUILayout.Width(200), GUILayout.Height(300));
+                    this.scrollPosition1 = GUILayout.BeginScrollView(scrollPosition1, GUILayout.Width(200), GUILayout.Height(210));
                     foreach (LiquidBody liquidBody in tileLayerManager.liquidBodies)
                     {
                         if (!this.ManagersToToggles[tileLayerManager].ContainsKey(liquidBody))
@@ -72,6 +85,7 @@ public class LiquidBodyDebugOverlay : MonoBehaviour
                                 break;
                             }
                         }
+                        GUILayout.Box("Referenced Bodies: " + liquidBody.referencedBodies.Count);
                         GUILayout.Box("Valid Cross Reference: " + validCrossReference.ToString());
                         ManagersToToggles[tileLayerManager][liquidBody] = GUILayout.Toggle(ManagersToToggles[tileLayerManager][liquidBody], "View Area");
                         if (ManagersToToggles[tileLayerManager][liquidBody])
@@ -81,7 +95,7 @@ public class LiquidBodyDebugOverlay : MonoBehaviour
                     }
                     GUILayout.EndScrollView();
                     int bodyCount = 0;
-                    this.scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2, GUILayout.Width(200), GUILayout.Height(300));
+                    this.scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2, GUILayout.Width(200), GUILayout.Height(210));
                     GUILayout.Box("Active Preview Bodies: " + tileLayerManager.previewBodies.Count.ToString());
                     this.DisplayPreviewBodies = GUILayout.Toggle(this.DisplayPreviewBodies, "Display Preview Bodies");
                     foreach (LiquidBody liquidBody in tileLayerManager.previewBodies)

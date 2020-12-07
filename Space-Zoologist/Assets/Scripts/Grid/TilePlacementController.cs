@@ -26,7 +26,6 @@ public class TilePlacementController : MonoBehaviour
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     private GameTile[] gameTiles = default;
     private Dictionary<Vector3Int, List<GameTile>> addedTiles = new Dictionary<Vector3Int, List<GameTile>>(); // All NEW tiles
-    private Dictionary<Vector3Int, List<GameTile>> removedTiles = new Dictionary<Vector3Int, List<GameTile>>(); //All tiles removed
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
@@ -179,7 +178,6 @@ public class TilePlacementController : MonoBehaviour
         this.referencedTiles.Clear();
         this.removedTileColors.Clear();
         this.addedTiles.Clear();
-        this.removedTiles.Clear();
         this.triedToPlaceTiles.Clear();
     }
 
@@ -207,7 +205,6 @@ public class TilePlacementController : MonoBehaviour
         }
         removedTileColors.Clear();
         addedTiles.Clear();
-        removedTiles.Clear();
         triedToPlaceTiles.Clear();
         StopPreview();
     }
@@ -319,7 +316,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
-        foreach (Vector3Int addLocation in tilesToAdd)
+/*        foreach (Vector3Int addLocation in tilesToAdd)
         {
             PlaceTile(addLocation);
         }
@@ -337,7 +334,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
 
-        }
+        }*/
         lastCornerX = currentMouseCellPosition.x;
         lastCornerY = currentMouseCellPosition.y;
     }
@@ -400,7 +397,7 @@ public class TilePlacementController : MonoBehaviour
         return PlacementResult.Restricted;
     }
 
-    private void RestoreReplacedTile (Vector3Int cellLocation)
+/*    private void RestoreReplacedTile (Vector3Int cellLocation)
     {
         foreach (GameTile addedTile in addedTiles[cellLocation])
         {
@@ -423,7 +420,7 @@ public class TilePlacementController : MonoBehaviour
             removedTileColors[cellLocation].Values.First().SetColor(cellLocation, removedTileColors[cellLocation].Keys.First());
             removedTileColors.Remove(cellLocation);
         }
-    }
+    }*/
 
     private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile, Tilemap targetTilemap)
     {

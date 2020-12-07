@@ -35,7 +35,7 @@ public class PlacementValidation : MonoBehaviour
             for (int j=-1; j<=1; j++)
             {
                 Vector3Int surroundingGridPosition = new Vector3Int(cellPosition.x + i, cellPosition.y + j, 0);
-                GameTile tile = this.TileSystem.GetTerrainTileAtLocation(surroundingGridPosition);
+                GameTile tile = this.TileSystem.GetGameTileAt(surroundingGridPosition);
                 foreach (TileType acceptablTerrain in selectedSpecies.AccessibleTerrain)
                 {
                     if (tile.type.Equals(acceptablTerrain))
@@ -69,7 +69,7 @@ public class PlacementValidation : MonoBehaviour
             return false;
         }
         // Prevent placing on walls
-        GameTile selectedTile = this.TileSystem.GetTerrainTileAtLocation(gridPosition);
+        GameTile selectedTile = this.TileSystem.GetGameTileAt(gridPosition);
         if (selectedTile.type.Equals(TileType.Wall))
         {
             return false;

@@ -189,7 +189,7 @@ public class Inspector : MonoBehaviour
 
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
-            GameTile tile = this.tileSystem.GetTerrainTileAtLocation(cellPos);
+            GameTile tile = this.tileSystem.GetGameTileAt(cellPos);
 
             //Debug.Log($"Mouse click at {cellPos}");
 
@@ -227,7 +227,7 @@ public class Inspector : MonoBehaviour
             {
                 this.HighlightSingleTile(cellPos);
                 //Debug.Log($"Selected liquid tile @ {cellPos}");
-                float[] compositions = this.tileSystem.GetTileContentsAtLocation(cellPos, tile);
+                float[] compositions = this.tileSystem.GetTileContentsAt(cellPos, tile);
                 this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
             }
             // Selection is enclosed area

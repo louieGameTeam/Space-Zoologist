@@ -18,11 +18,11 @@ public class TestingA : MonoBehaviour
         currentMouseCellPosition = TileSystem.WorldToCell(mouseWorldPosition);
         if (Input.GetKeyDown(KeyCode.V))
         {
-            tile1 = this.TileSystem.GetTerrainTileAtLocation(currentMouseCellPosition);
+            tile1 = this.TileSystem.GetGameTileAt(currentMouseCellPosition);
         }
         if (tile1 != null)
         {
-            Debug.Log(ReferenceEquals(tile1, this.TileSystem.GetTerrainTileAtLocation(currentMouseCellPosition)));
+            Debug.Log(ReferenceEquals(tile1, this.TileSystem.GetGameTileAt(currentMouseCellPosition)));
         }
     }
 }
