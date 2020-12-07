@@ -31,6 +31,10 @@ public class ObjectiveManager : MonoBehaviour
     private List<Objective> mainObjectives = new List<Objective>();
     private List<Objective> secondaryObjectives = new List<Objective>();
 
+    public bool IsMainObjectivesCompleted { get; private set; }
+    public int NumSecondaryObjectivesCompleted { get; private set; }
+
+
     public void ToggleObjectivePanel()
     {
         this.isOpen = !this.isOpen;
@@ -123,7 +127,8 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        bool IsMainObjectivesCompleted = true;
+        IsMainObjectivesCompleted = true;
+        NumSecondaryObjectivesCompleted = 0;
 
         if (this.PauseManager.IsPaused)
         {
@@ -145,8 +150,16 @@ public class ObjectiveManager : MonoBehaviour
 
             if (objective.UpdateStatus() == ObjectiveStatus.Failed)
             {
-                // TODO figure out what should happen when game over event is triggered
+                // GameOver.cs listens for the event and handles gameover
                 EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+            }
+        }
+
+        // Secondary objective status can be viewed on screen
+        foreach (Objective objective in this.secondaryObjectives) {
+            if (objective.UpdateStatus() == ObjectiveStatus.Completed)
+            {
+                NumSecondaryObjectivesCompleted++;
             }
         }
 
@@ -157,7 +170,8 @@ public class ObjectiveManager : MonoBehaviour
 
             // TODO figure out what should happen when the main objectives are complete
             EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
-            // TODO figure out what should happen when game over event is triggered
+
+            // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
 
             Debug.Log($"Level Completed!");

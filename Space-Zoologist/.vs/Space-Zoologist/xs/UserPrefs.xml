@@ -1,21 +1,27 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/SellingManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Library/PackageCache/com.unity.timeline@1.2.9/Runtime/Events/Signals/SignalReceiver.cs">
     <Files>
-      <File FileName="Assets/Scripts/Utils/Managers/ObjectiveManager.cs" Line="161" Column="59" />
-      <File FileName="Assets/Scripts/Utils/Objectives/Objective.cs" />
-      <File FileName="Assets/Scripts/Species/Population/PopulationManager.cs" />
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" />
-      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" />
-      <File FileName="Assets/Scripts/UI/GameOver/GameOver.cs" Line="17" Column="58" />
-      <File FileName="Assets/Scripts/UI/Store/SellingManager.cs" Line="55" Column="38" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="20" Column="1" />
+      <File FileName="Assets/Scripts/Species/AnimalSpecies.cs" />
+      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/PopulationBehavior.cs" Line="8" Column="14" />
+      <File FileName="Assets/Scripts/Utils/Managers/ObjectiveManager.cs" Line="153" Column="74" />
+      <File FileName="Assets/Scripts/Utils/Objectives/Objective.cs" Line="144" Column="46" />
+      <File FileName="Assets/Scripts/Utils/Managers/EventManager.cs" Line="15" Column="38" />
+      <File FileName="Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs" Line="4" Column="12" />
+      <File FileName="Assets/Scripts/UI/GameOver/GameOver.cs" Line="46" Column="28" />
+      <File FileName="Assets/Scripts/GameData/LevelManagement/SceneNavigator.cs" Line="25" Column="58" />
+      <File FileName="Library/PackageCache/com.unity.timeline@1.2.9/Runtime/Events/Signals/SignalReceiver.cs" Line="196" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
+              <Node name="AnimalRepresentation" expanded="True">
+                <Node name="Behaviors" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
               <Node name="DialogueEditor" expanded="True">
                 <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
@@ -25,6 +31,7 @@
               </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="GameData" expanded="True">
+                  <Node name="LevelManagement" expanded="True" />
                   <Node name="LevelObjectiveData" expanded="True" />
                 </Node>
                 <Node name="Grid" expanded="True" />
@@ -38,15 +45,16 @@
                   <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
-                  <Node name="GameOver" expanded="True" />
+                  <Node name="GameOver" expanded="True">
+                    <Node name="GameOver.cs" selected="True" />
+                  </Node>
                   <Node name="Inspector" expanded="True" />
                   <Node name="LogSystem" expanded="True" />
                   <Node name="Machines" expanded="True" />
-                  <Node name="Store" expanded="True">
-                    <Node name="SellingManager.cs" selected="True" />
-                  </Node>
+                  <Node name="Store" expanded="True" />
                 </Node>
                 <Node name="Utils" expanded="True">
+                  <Node name="Dialogue" expanded="True" />
                   <Node name="Managers" expanded="True" />
                   <Node name="Objectives" expanded="True" />
                 </Node>
@@ -59,11 +67,9 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a2ce2450-6109-4c3c-9074-3323a978b6b9" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="41255ae7-79ad-481e-adcd-32c49afd737d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="105" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
