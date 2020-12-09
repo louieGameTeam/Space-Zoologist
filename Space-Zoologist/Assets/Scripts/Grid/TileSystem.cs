@@ -126,7 +126,7 @@ public class TileSystem : MonoBehaviour
                 return returnedTile;
             }
         }
-        Debug.LogWarning("Tile does not exist at " + cellLocation);
+        //Debug.LogWarning("Tile does not exist at " + cellLocation);
         return null;
     }
 

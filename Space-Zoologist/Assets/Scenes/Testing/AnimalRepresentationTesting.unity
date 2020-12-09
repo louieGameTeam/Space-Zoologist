@@ -421,6 +421,7 @@ MonoBehaviour:
   Inspector: {fileID: 891450729}
   LogSystem: {fileID: 891450742}
   ObjectiveManager: {fileID: 11460497}
+  DialogueManager: {fileID: 0}
   OptionsMenu: {fileID: 891450740}
   PauseManager: {fileID: 11460494}
   StoreMenus:
@@ -1762,6 +1763,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 369.7776
       objectReference: {fileID: 0}
+    - target: {fileID: 1491916692121265187, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1976455328350302441, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: NeedSystemManager
@@ -2829,7 +2835,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 1714759540}
-  directory: Assets/SaveData/Grid/
   tilemaps:
   - {fileID: 1093066800}
   - {fileID: 1747213240}
@@ -2855,7 +2860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ddd4f6b4e76a249bc255e7d1b858fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savingCD: 1
   directory: Assets/SaveData/Grid/
 --- !u!114 &1033088161
 MonoBehaviour:
