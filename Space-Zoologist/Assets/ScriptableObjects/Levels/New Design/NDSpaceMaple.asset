@@ -10,23 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
-  m_Name: TutorialSpaceMaple
+  m_Name: NDSpaceMaple
   m_EditorClassIdentifier: 
+  size: 1
   accessibleTerrain: 02000000
   speciesName: Space Maple
   rootRadius: 1
-  baseOutput: 7
+  baseOutput: 10
   needsList:
   - needType: 0
     needs:
     - needName: Dirt
       severity: 1
       conditions:
-      - Condition: 1
-        Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
-      thresholds:
-      - 4
+      thresholds: []
   FoodSource: {fileID: 11400000, guid: 7ae76de5ae6e54ee59f14dc506cd9177, type: 2}
-  allNeedsMustSatisfy: 1
+  allNeedsMustSatisfy: 0
