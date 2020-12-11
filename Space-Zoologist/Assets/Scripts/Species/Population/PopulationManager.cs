@@ -92,7 +92,7 @@ public class PopulationManager : MonoBehaviour
     {
         this.ReservePartitionManager.AddPopulation(population);
         population.UpdateAccessibleArea(this.ReservePartitionManager.GetLocationsWithAccess(population),
-        this.GridSystem.GetGridWithAccess(population));
+        this.GridSystem.GetAnimalPathfindingGrid(population));
         this.GridSystem.HighlightHomeLocations();
         this.speciesNeedSystem.AddPopulation(population);
         this.NeedSystemManager.RegisterWithNeedSystems(population);
@@ -114,7 +114,7 @@ public class PopulationManager : MonoBehaviour
         foreach (Population population in this.Populations)
         {
             population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
-            GridSystem.GetGridWithAccess(population));
+            GridSystem.GetAnimalPathfindingGrid(population));
         }
     }
 

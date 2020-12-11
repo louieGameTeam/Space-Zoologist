@@ -159,7 +159,7 @@ public class ReservePartitionManager : MonoBehaviour
         // Clear TypesOfTerrain for given population
         this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
 
-        // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
+        // iterate until no tile left in list, ends in iteration 1 if population location is not accessible
         while (stack.Count > 0)
         {
             // next point
@@ -424,5 +424,10 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         return this.populationAccessibleLiquid[population];
+    }
+
+    public int CountConnectedTerrain(Population pop)
+    {
+
     }
 }

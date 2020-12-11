@@ -1,11 +1,9 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/GridSystem.cs">
     <Files>
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="175" Column="50" />
-      <File FileName="Assets/Scripts/Utils/PlacementValidation.cs" Line="92" Column="10" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceSpecies.cs" Line="17" Column="68" />
-      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" Line="53" Column="38" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="79" Column="24" />
+      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="46" Column="30" />
+      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="429" Column="15" />
+      <File FileName="Assets/Scripts/Grid/GridSystem.cs" Line="113" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -35,6 +33,7 @@
                 <Node name="Grid" expanded="True">
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
+                  <Node name="GridSystem.cs" selected="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -49,9 +48,7 @@
                   <Node name="Inspector" expanded="True" />
                   <Node name="LogSystem" expanded="True" />
                   <Node name="Machines" expanded="True" />
-                  <Node name="Store" expanded="True">
-                    <Node name="FoodSourceStoreSection.cs" selected="True" />
-                  </Node>
+                  <Node name="Store" expanded="True" />
                 </Node>
                 <Node name="Utils" expanded="True">
                   <Node name="Managers" expanded="True" />
@@ -66,7 +63,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c6b9684a-ad5b-4b7f-9503-908e69db3d7f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9275f3d6-b911-4029-a625-0551aa910a08" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="105" column="1" />
