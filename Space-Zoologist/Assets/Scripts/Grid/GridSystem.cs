@@ -110,7 +110,7 @@ public class GridSystem : MonoBehaviour
     }
 
     // Will need to make the grid the size of the max tilemap size
-    public AnimalPathfinding.Grid GetAnimalPathfindingGrid(Population population)
+    public AnimalPathfinding.Grid GetGridWithAccess(Population population)
     {
         // Debug.Log("Setting up pathfinding grid");
         bool[,] tileGrid = new bool[GridWidth, GridHeight];
@@ -132,29 +132,6 @@ public class GridSystem : MonoBehaviour
         this.SetupMovementBoundaires(tileGrid);
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
     }
-
-    public bool[,] GetGridWithAccess(Population population)
-    {
-        // Debug.Log("Setting up pathfinding grid");
-        bool[,] tileGrid = new bool[GridWidth, GridHeight];
-        for (int x = 0; x < GridWidth; x++)
-        {
-            for (int y = 0; y < GridHeight; y++)
-            {
-                if (RPM.CanAccess(population, new Vector3Int(x, y, 0)))
-                {
-                    tileGrid[x, y] = true;
-                }
-                else
-                {
-                    tileGrid[x, y] = false;
-                }
-            }
-        }
-        // Setup boundaries for movement
-        return tileGrid;
-    }
-
 
 
     // iterate through CellData, if contains item of interest and locations accessible, calculate distance and keep track of closest item location

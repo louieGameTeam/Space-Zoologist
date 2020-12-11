@@ -1237,6 +1237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Liquid: {fileID: 0}
   TileSystem: {fileID: 2109121436}
+  GridSystem: {fileID: 522521664}
 --- !u!1001 &867046442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6546,6 +6547,11 @@ PrefabInstance:
       propertyPath: TileSystem
       value: 
       objectReference: {fileID: 2109121436}
+    - target: {fileID: 6874327554880135011, guid: ea0e367afd13e4b568216541f00b9ab0,
+        type: 3}
+      propertyPath: GridSystem
+      value: 
+      objectReference: {fileID: 522521664}
     - target: {fileID: 8582389809603506210, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: PopulationManager
