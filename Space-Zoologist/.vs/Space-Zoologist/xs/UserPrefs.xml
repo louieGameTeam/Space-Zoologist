@@ -26,20 +26,17 @@
                 <Node name="Behaviors" expanded="True">
                   <Node name="Scripts" expanded="True" />
                 </Node>
-                <Node name="Patterns" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
               </Node>
               <Node name="DialogueEditor" expanded="True">
                 <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
-                    <Node name="Editor" expanded="True" />
                     <Node name="UI" expanded="True" />
                   </Node>
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="GameData" expanded="True">
+                  <Node name="LevelManagement" expanded="True" />
                   <Node name="LevelObjectiveData" expanded="True" />
                 </Node>
                 <Node name="Grid" expanded="True">
@@ -58,12 +55,16 @@
                   <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
+                  <Node name="GameOver" expanded="True">
+                    <Node name="GameOver.cs" selected="True" />
+                  </Node>
                   <Node name="Inspector" expanded="True" />
                   <Node name="LogSystem" expanded="True" />
                   <Node name="Machines" expanded="True" />
                   <Node name="Store" expanded="True" />
                 </Node>
                 <Node name="Utils" expanded="True">
+                  <Node name="Dialogue" expanded="True" />
                   <Node name="Managers" expanded="True" />
                   <Node name="Objectives" expanded="True" />
                 </Node>
@@ -78,9 +79,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c6b9684a-ad5b-4b7f-9503-908e69db3d7f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="105" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
