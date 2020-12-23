@@ -35,11 +35,15 @@ public class Population : MonoBehaviour, Life
     [Expandable] public List<PopulationBehavior> DefaultBehaviors = default;
     [Header("Modify values and thresholds for testing")]
     [SerializeField] private float TimeSinceUpdate = 0f;
+    [SerializeField] private int consecutiveDaysWithSameGrowth = 0;
     [SerializeField] private List<Need> NeedEditorTesting = default;
     [SerializeField] private List<MovementData> AnimalsMovementData = default;
 
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
     private Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
+
+    // Afflicted animals will be added to the death timer
+    private Dictionary<GameObject, int> DeathTimer = new Dictionary<GameObject, int>();
 
     private Vector3 origin = Vector3.zero;
     private GrowthCalculator GrowthCalculator = new GrowthCalculator();
@@ -116,19 +120,39 @@ public class Population : MonoBehaviour, Life
     {
         float rate = this.GrowthCalculator.GrowthRate;
         if (rate == 0 || this.isPaused) return;
-        if (this.TimeSinceUpdate > rate)
+        if (this.TimeSinceUpdate > NeedSystemUpdater.InGameDayPeriod)
         {
-            this.TimeSinceUpdate = 0;
-            switch (this.GrowthCalculator.GrowthStatus)
+            this.TimeSinceUpdate -= NeedSystemUpdater.InGameDayPeriod;
+            this.consecutiveDaysWithSameGrowth++;
+            if (this.consecutiveDaysWithSameGrowth == species.GrowthRate)
             {
-                case GrowthStatus.growing:
-                    this.AddAnimal();
-                    break;
-                case GrowthStatus.declining:
-                    this.RemoveAnimal(1);
-                    break;
-                default:
-                    break;
+                this.consecutiveDaysWithSameGrowth = 0;
+                switch (this.GrowthCalculator.GrowthStatus)
+                {
+                    case GrowthStatus.growing:
+                        this.AddAnimal();
+                        break;
+                    case GrowthStatus.declining:
+                        // Death is now handled by afflictions
+                        break;
+                    default:
+                        break;
+                }
+
+                // Handle Affliction Death
+                foreach (KeyValuePair<GameObject, int> pair in DeathTimer)
+                {
+                    // Afflicted animals will be added to the death timer
+                    DeathTimer[pair.Key] -= 1;
+                    if (DeathTimer[pair.Key] == 0)
+                    {
+                        //TODO queue up the affliction to be added to another animal
+
+                        GameObject animal = pair.Key;
+                        DeathTimer.Remove(pair.Key);
+                        Kill(animal);
+                    }
+                }
             }
         }
         this.TimeSinceUpdate += Time.deltaTime;
@@ -254,6 +278,32 @@ public class Population : MonoBehaviour, Life
     }
 
     /// <summary>
+    /// Kill off an animal
+    /// </summary>
+    /// <param name="animal"></param>
+    public void Kill(GameObject animal) {
+        if (!AnimalPopulation.Contains(animal)) return;
+
+        int index = AnimalPopulation.IndexOf(animal);
+        this.AnimalsMovementData.RemoveAt(index);
+        this.PopulationBehaviorManager.RemoveAnimal(animal);
+        this.AnimalPopulation[index].SetActive(false);
+        this.PoolingSystem.ReturnObjectToPool(animal);
+        this.AnimalPopulation.RemoveAt(index);
+        if (this.AnimalPopulation.Count == 0)
+        {
+            Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
+            // TODO Delete the population at another time, or else the reference will be lost
+            EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
+        }
+        else
+        {
+            // Invoke a population decline event
+            EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
+        }
+    }
+
+    /// <summary>
     /// Update the given need of the population with the given value.
     /// </summary>
     /// <param name="need">The need to update</param>
@@ -284,7 +334,12 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void UpdateGrowthConditions()
     {
+        GrowthStatus previous = GrowthCalculator.GrowthStatus;
         if (this.Species != null) this.GrowthCalculator.CalculateGrowth(this);
+
+        // Growth Status changed, no longer consecutive
+        if (previous != GrowthCalculator.GrowthStatus) consecutiveDaysWithSameGrowth = 0;
+
         // Debug.Log("Growth Status: " + this.GrowthCalculator.GrowthStatus + ", Growth Rate: " + this.GrowthCalculator.GrowthRate);
     }
 
