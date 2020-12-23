@@ -1,16 +1,21 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Library/PackageCache/com.unity.timeline@1.2.9/Runtime/Events/Signals/SignalReceiver.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/RPS/EnclosureSystem.cs">
     <Files>
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="20" Column="1" />
-      <File FileName="Assets/Scripts/Species/AnimalSpecies.cs" />
-      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/PopulationBehavior.cs" Line="8" Column="14" />
-      <File FileName="Assets/Scripts/Utils/Managers/ObjectiveManager.cs" Line="153" Column="74" />
-      <File FileName="Assets/Scripts/Utils/Objectives/Objective.cs" Line="144" Column="46" />
-      <File FileName="Assets/Scripts/Utils/Managers/EventManager.cs" Line="15" Column="38" />
-      <File FileName="Assets/Scripts/Utils/Dialogue/EventDialogueGenerator.cs" Line="4" Column="12" />
-      <File FileName="Assets/Scripts/UI/GameOver/GameOver.cs" Line="46" Column="28" />
-      <File FileName="Assets/Scripts/GameData/LevelManagement/SceneNavigator.cs" Line="25" Column="58" />
-      <File FileName="Library/PackageCache/com.unity.timeline@1.2.9/Runtime/Events/Signals/SignalReceiver.cs" Line="196" Column="1" />
+      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/PopulationBehavior.cs" Line="36" Column="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="103" Column="24" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/FoodPathfinding.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/GeneralPathfinding.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/UniversalAnimatorPattern.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/EatingPattern.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" />
+      <File FileName="Assets/Scripts/Species/Representation/BehaviorPatternUpdater.cs" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="175" Column="25" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="129" Column="11" />
+      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="54" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="288" Column="1" />
+      <File FileName="Assets/Scripts/Grid/Tiles/LiquidBody.cs" Line="143" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="53" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -34,7 +39,12 @@
                   <Node name="LevelManagement" expanded="True" />
                   <Node name="LevelObjectiveData" expanded="True" />
                 </Node>
-                <Node name="Grid" expanded="True" />
+                <Node name="Grid" expanded="True">
+                  <Node name="RPS" expanded="True">
+                    <Node name="EnclosureSystem.cs" selected="True" />
+                  </Node>
+                  <Node name="Tiles" expanded="True" />
+                </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
                     <Node name="FoodSystem" expanded="True" />
@@ -67,7 +77,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="41255ae7-79ad-481e-adcd-32c49afd737d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c6b9684a-ad5b-4b7f-9503-908e69db3d7f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
