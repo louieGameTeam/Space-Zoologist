@@ -15,6 +15,7 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
+    [SerializeField] private ReservePartitionManager rpm = default;
 
     [SerializeField] private Tilemap highLight = default;
     [SerializeField] private GameTile highLightTile = default;
@@ -26,6 +27,8 @@ public class Inspector : MonoBehaviour
     [SerializeField] private Text inspectorWindowText = null;
 
     [SerializeField] private Selector selector = default;
+
+    [SerializeField] private bool relocatingPopulation = false;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -178,6 +181,17 @@ public class Inspector : MonoBehaviour
         this.enclosedAreaDropdown.value = 0;
     }
 
+    public void StartRelocation() {
+        relocatingPopulation = true;
+    }
+
+    public void RelocatePopulation(Population population, Vector3 position) {
+        if (population == null) return;
+        population.transform.position = position;
+        rpm.RemovePopulation(population);
+        rpm.AddPopulation(population);
+    }
+
     /// <summary>
     /// Listens to mouse clicks and what was selected, then call functions to
     /// display info on inspector window
@@ -192,6 +206,16 @@ public class Inspector : MonoBehaviour
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
             GameTile tile = this.tileSystem.GetGameTileAt(cellPos);
+
+
+            if (relocatingPopulation == true) {
+                if (lastPopulationSelected) {
+                    Population population = lastPopulationSelected.GetComponent<Population>();
+                    RelocatePopulation(population, worldPos);
+                }
+                relocatingPopulation = false;
+                return;
+            }
 
             //Debug.Log($"Mouse click at {cellPos}");
 
@@ -268,6 +292,7 @@ public class Inspector : MonoBehaviour
             {
                 child.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             }
+            gridSystem.UnhighlightHomeLocations();
             this.lastPopulationSelected = null;
         }
 
@@ -275,6 +300,8 @@ public class Inspector : MonoBehaviour
         {
             this.highLight.SetTile(pos, null);
         }
+
+        lastTilesSelected.Clear();
     }
 
     private void HighlightPopulation(GameObject population)
@@ -285,6 +312,7 @@ public class Inspector : MonoBehaviour
             child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
 
+        gridSystem.HighlightHomeLocations();
         this.lastPopulationSelected = population;
     }
 
@@ -302,31 +330,43 @@ public class Inspector : MonoBehaviour
         foreach (Vector3Int pos in foodSourceRadiusRange)
         {
             this.highLight.SetTile(pos, this.highLightTile);
+            this.lastTilesSelected.Add(pos);
         }
-
-        this.lastTilesSelected = foodSourceRadiusRange;
     }
 
     // TODO implement the "HighlightSingleTile" then use it here
     private void HighlightEnclosedArea(Vector3Int selectedLocation)
     {
-
+        EnclosedArea enclosedArea = enclosureSystem.GetEnclosedAreaByCellPosition(selectedLocation);
+        foreach (EnclosedArea.Coordinate pos in enclosedArea.coordinates)
+        {
+            Vector3Int position = new Vector3Int(pos.x, pos.y, 0);
+            lastTilesSelected.Add(position);
+            this.highLight.SetTile(position, this.highLightTile);
+        }
     }
 
     // TODO find a way to unhighlight the hightlighted tiles
     private void UnhighlightEnclosedArea(Vector3Int selectedLocation)
     {
-
-    }
-
-    private void UnHighSignleTile(Vector3Int location)
-    {
-
+        EnclosedArea enclosedArea = enclosureSystem.GetEnclosedAreaByCellPosition(selectedLocation);
+        foreach (EnclosedArea.Coordinate pos in enclosedArea.coordinates)
+        {
+            Vector3Int position = new Vector3Int(pos.x, pos.y, 0);
+            this.highLight.SetTile(position, null);
+        }
     }
 
     // TODO check out "HighlightFoodSource" to see how to tile can be highlighted
     private void HighlightSingleTile(Vector3Int location)
     {
+        this.highLight.SetTile(location, this.highLightTile);
 
+        lastTilesSelected.Add(location);
+    }
+
+    private void UnHighlightSingleTile(Vector3Int location)
+    {
+        this.highLight.SetTile(location, null);
     }
 }

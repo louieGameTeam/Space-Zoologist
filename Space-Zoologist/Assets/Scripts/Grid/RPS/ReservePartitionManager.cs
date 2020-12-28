@@ -428,6 +428,11 @@ public class ReservePartitionManager : MonoBehaviour
         return this.populationAccessibleLiquid[population];
     }
 
+    /// <summary>
+    /// Count number of connected terrain of each type for terrain need
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
     public Dictionary<TileType, List<int>> CountConnectedTerrain(Population population)
     {
 
@@ -451,7 +456,7 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         // For debugging
-        //foreach (KeyValuePair<TileType, List<int>> pair in ConnectedTilesByType) {
+        // foreach (KeyValuePair<TileType, List<int>> pair in ConnectedTilesByType) {
         //    string output = "";
         //    output += pair.Key + ": {";
         //    for (int i = 0; i < pair.Value.Count; i++) {
@@ -461,7 +466,7 @@ public class ReservePartitionManager : MonoBehaviour
         //    }
         //    output += "}";
         //    print(output);
-        //}
+        // }
 
         return ConnectedTilesByType;
     }

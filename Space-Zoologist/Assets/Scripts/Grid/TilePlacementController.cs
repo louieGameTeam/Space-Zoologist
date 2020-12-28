@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
@@ -410,7 +410,7 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        if (!GridSystem.IsWithinGridBouds(cellLocation))
+        if (!GridSystem.IsWithinGridBounds(cellLocation))
         {
             Debug.Log("outside bound");
             return false;
