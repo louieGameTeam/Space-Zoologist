@@ -1,68 +1,32 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Species/PathFinding/Pathfinding.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Species/Population/Population.cs">
     <Files>
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="131" Column="30" />
-      <File FileName="Assets/Scripts/Species/Population/PopulationManager.cs" Line="74" Column="43" />
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="232" Column="1" />
-      <File FileName="Assets/Scripts/Grid/GridSystem.cs" Line="48" Column="17" />
-      <File FileName="Assets/Scripts/UI/Pods/PodMenu.cs" Line="97" Column="10" />
-      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="460" Column="34" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="191" Column="1" />
-      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="82" Column="32" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="526" Column="86" />
-      <File FileName="Assets/Scripts/Species/PathFinding/Pathfinding.cs" Line="65" Column="1" />
+      <File FileName="Assets/Scripts/Grid/GridSystem.cs" Line="257" Column="43" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="196" Column="38" />
+      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Pods/PodMenu.cs" Line="91" Column="62" />
+      <File FileName="Assets/Scripts/Utils/PlacementValidation.cs" Line="20" Column="17" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="173" Column="54" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="AnimalRepresentation" expanded="True">
-                <Node name="Behaviors" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
-                <Node name="Patterns" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="DialogueEditor" expanded="True">
-                <Node name="Assets" expanded="True">
-                  <Node name="Scripts" expanded="True">
-                    <Node name="Editor" expanded="True" />
-                    <Node name="UI" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="GameData" expanded="True">
-                  <Node name="LevelObjectiveData" expanded="True" />
-                </Node>
-                <Node name="Grid" expanded="True">
-                  <Node name="RPS" expanded="True" />
-                  <Node name="Tiles" expanded="True" />
-                </Node>
-                <Node name="Needs" expanded="True">
-                  <Node name="Systems" expanded="True">
-                    <Node name="FoodSystem" expanded="True" />
-                  </Node>
-                </Node>
+                <Node name="Grid" expanded="True" />
                 <Node name="Species" expanded="True">
-                  <Node name="PathFinding" expanded="True">
-                    <Node name="Pathfinding.cs" selected="True" />
+                  <Node name="Population" expanded="True">
+                    <Node name="Population.cs" selected="True" />
                   </Node>
-                  <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="Inspector" expanded="True" />
-                  <Node name="LogSystem" expanded="True" />
-                  <Node name="Machines" expanded="True" />
                   <Node name="Pods" expanded="True" />
-                  <Node name="Store" expanded="True" />
                 </Node>
                 <Node name="Utils" expanded="True">
                   <Node name="Managers" expanded="True" />
-                  <Node name="Objectives" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -73,7 +37,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bd8d637a-df81-44cd-aa31-41cd3915edd8" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4cbbfd69-34a1-40eb-93e6-37530ea24983" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="105" column="1" />
