@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 782f35dade51c4e4f8ce5a997e902738, type: 3}
+  m_Script: {fileID: 11500000, guid: 165219529732ab948ab0bbf013f649b8, type: 3}
   m_Name: SandEdge
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -2999576738319222987, guid: e6e6efad32c044349a28ecd4bc06cf13,
@@ -904,14 +904,13 @@ MonoBehaviour:
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
-  replacementTilemap:
+  replacementTilemaps: []
+  constraintTilemaps:
   - {fileID: 0}
-  constraintTilemap: []
   type: 1
   TileName: sandEdge
   targetLayer: 7
-  replacementLayers: 07000000
+  replacementLayers: 
   constraintLayers: 
   isRepresentative: 0
-  isMergingAttributes: 0
-  priority: 0
+  defaultContents: []

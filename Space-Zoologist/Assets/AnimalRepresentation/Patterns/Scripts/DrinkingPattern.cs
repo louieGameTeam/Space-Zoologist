@@ -8,17 +8,17 @@ public class DrinkingPattern : UniversalAnimatorPattern
     [SerializeField] private string Down = default;
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
-    [SerializeField] private TerrainTile liquidTile = default;
+    [SerializeField] private GameTile liquidTile = default;
     private TileSystem tileSystem = default;
     public override void StartUp()
     {
-        tileSystem = FindObjectOfType<TileSystem>();
+        this.tileSystem = FindObjectOfType<TileSystem>();
         base.StartUp();
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
         Vector3Int currentCell = tileSystem.WorldToCell(animal.transform.position);
-        tileSystem.GetTerrainTileAtLocation(currentCell).targetTilemap.SetColor(currentCell,Color.red);
+        tileSystem.GetGameTileAt(currentCell).targetTilemap.SetColor(currentCell,Color.red);
         for (int y = -1; y < 2; y++)
         {
             for (int x = -1; x < 2; x++)
@@ -27,14 +27,14 @@ public class DrinkingPattern : UniversalAnimatorPattern
                 {
                     continue;
                 }
-                if (tileSystem.GetTerrainTileAtLocation(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)) == liquidTile)
+                if (tileSystem.GetGameTileAt(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)) == liquidTile)
                 {
                     //if (GridSystem.CellGrid[currentCell[0] + x, currentCell[1] + i].Food.SpeciesName.Equals(foodName))
                     //{
                         this.AnimatorTriggerName = GetTriggerName(x, y);
                     if (AnimatorTriggerName == this.Up)
                     {
-                        print((currentCell[0]+x)+","+ (currentCell[1] +y)+":" + tileSystem.GetTerrainTileAtLocation(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)).name);
+                        print((currentCell[0]+x)+","+ (currentCell[1] +y)+":" + tileSystem.GetGameTileAt(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)).name);
                     }
                         base.EnterPattern(animal, animalData);
                         return;

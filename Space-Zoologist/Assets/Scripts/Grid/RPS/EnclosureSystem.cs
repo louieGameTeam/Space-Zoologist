@@ -182,7 +182,7 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         // check if tilemap has tile
-        TerrainTile tile = this.TileSystem.GetTerrainTileAtLocation(cur);
+        GameTile tile = this.TileSystem.GetGameTileAt(cur);
         if (tile != null)
         {
             if (tile.type != TileType.Wall)
@@ -285,6 +285,8 @@ public class EnclosureSystem : MonoBehaviour
         bool createdNewEclosedArea = false;
 
         // Initial flood fill
+        // TODO Replace this with a better way to determine the first tile to start with
+        // If the map DOES NOT contain a tile at (1,1,0), this code causes an ERROR! -> tile will not get placed in store
         byte curEnclosedAreaIndex = this.positionToEnclosedArea[new Vector3Int(1, 1, 0)];
         newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, curEnclosedAreaIndex));
         this.FloodFill(startPos, accessed, unaccessible, walls, curEnclosedAreaIndex, newEnclosedAreas[curEnclosedAreaIndex], true);

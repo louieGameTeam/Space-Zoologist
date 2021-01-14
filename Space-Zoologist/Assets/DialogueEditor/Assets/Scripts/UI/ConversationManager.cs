@@ -27,6 +27,7 @@ namespace DialogueEditor
             TransitioningDialogueOff,
             Off,
             NONE,
+            freeze
         }
 
         // User-Facing options
@@ -256,6 +257,8 @@ namespace DialogueEditor
                         SetColorAlpha(NameText, 1 - t);
                     }
                     break;
+                case eState.freeze:
+                    break;
             }
         }
 
@@ -394,6 +397,13 @@ namespace DialogueEditor
         {
             TurnOnUI();
             SetState(eState.TransitioningDialogueBoxOn);
+        }
+
+        public void TurnOffPortraitAndPauseConversation()
+        {
+            m_pendingDialogue = m_currentSpeech.Dialogue;
+            NpcIcon.gameObject.SetActive(false);
+            SetState(eState.freeze);
         }
 
 

@@ -55,6 +55,22 @@ public class MovementData
             TagsToAdditionSpeedModifiers.Add(tag, adder);
         }
     }
+    public void RemoveSpeedModifier(string tag)
+    {
+        IsModifierChanged = true;
+        if (TagsToAdditionSpeedModifiers.ContainsKey(tag))
+        {
+            TagsToAdditionSpeedModifiers.Remove(tag);
+            return;
+        }
+        if (TagsToMultiplicationSpeedModifiers.ContainsKey(tag))
+        {
+            TagsToMultiplicationSpeedModifiers.Remove(tag);
+            return;
+        }
+        Debug.LogError("Modifier not found");
+
+    }
     /// <summary>
     /// Returns the moving speed taking consideration all the modifiers. Additions first, then multiplications
     /// </summary>

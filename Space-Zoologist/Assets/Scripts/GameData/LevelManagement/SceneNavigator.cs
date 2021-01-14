@@ -16,19 +16,18 @@ public class SceneNavigator : ScriptableObject
     }
 
     public void RestartLevel() {
-        Level curlevel = FindObjectOfType<LevelDataReference>().LevelData.Level;
-        LoadLevel(curlevel.SceneName);
+        LoadLevel(RecentlyLoadedLevel);
     }
 
     public void LoadNextLevel() {
-        Level curlevel = FindObjectOfType<LevelDataReference>().LevelData.Level;
         for (int i = 0; i < Levels.Count; i++) {
-            if (Levels[i].Equals(curlevel)) {
+            if (Levels[i].SceneName == RecentlyLoadedLevel) {
+                // found current level, load the next one
                 LoadLevel(Levels[i + 1].SceneName);
                 return;
             }
         }
-        Debug.LogError("Scene Navigator: Error loading next level");
+        Debug.LogError("Scene Navigator: Did not find current level. Check if level name matches scene name.");
     }
 
     public void LoadMainMenu()
