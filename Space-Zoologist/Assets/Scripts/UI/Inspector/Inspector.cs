@@ -188,8 +188,15 @@ public class Inspector : MonoBehaviour
     }
 
     public void RelocatePopulation(Population population, Vector3 position) {
-        if (population == null) return;
-        else if (!gridSystem.PlacementValidation.IsPodPlacementValid(position, population.Species)) return;
+        if (population == null)
+        {
+            print("No Population selected.");
+            return;
+        }
+        else if (!gridSystem.PlacementValidation.IsPodPlacementValid(position, population.Species)) {
+            print("Invalid placement for " + population + " at " + position);
+            return;
+        }
 
         population.transform.position = position;
         foreach (GameObject animal in population.AnimalPopulation) {
