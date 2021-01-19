@@ -120,40 +120,45 @@ public class Population : MonoBehaviour, Life
     {
         float rate = this.GrowthCalculator.GrowthRate;
         if (rate == 0 || this.isPaused) return;
-        if (this.TimeSinceUpdate > NeedSystemUpdater.InGameDayPeriod)
+
+        if (this.TimeSinceUpdate > rate)
         {
-            this.TimeSinceUpdate -= NeedSystemUpdater.InGameDayPeriod;
-            this.consecutiveDaysWithSameGrowth++;
-            if (this.consecutiveDaysWithSameGrowth == species.GrowthRate)
+            this.TimeSinceUpdate = 0;
+                // WIP for infliction death
+                    //    if (this.TimeSinceUpdate > NeedSystemUpdater.InGameDayPeriod)
+                    //{
+                    //    this.TimeSinceUpdate -= NeedSystemUpdater.InGameDayPeriod;
+                    //    this.consecutiveDaysWithSameGrowth++;
+                    //    if (this.consecutiveDaysWithSameGrowth == species.GrowthRate)
+                    //    {
+                    //        this.consecutiveDaysWithSameGrowth = 0;
+            switch (this.GrowthCalculator.GrowthStatus)
             {
-                this.consecutiveDaysWithSameGrowth = 0;
-                switch (this.GrowthCalculator.GrowthStatus)
-                {
-                    case GrowthStatus.growing:
-                        this.AddAnimal();
-                        break;
-                    case GrowthStatus.declining:
-                        // Death is now handled by afflictions
-                        break;
-                    default:
-                        break;
-                }
-
-                // Handle Affliction Death
-                foreach (KeyValuePair<GameObject, int> pair in DeathTimer)
-                {
-                    // Afflicted animals will be added to the death timer
-                    DeathTimer[pair.Key] -= 1;
-                    if (DeathTimer[pair.Key] == 0)
-                    {
-                        //TODO queue up the affliction to be added to another animal
-
-                        GameObject animal = pair.Key;
-                        DeathTimer.Remove(pair.Key);
-                        Kill(animal);
-                    }
-                }
+                case GrowthStatus.growing:
+                    this.AddAnimal();
+                    break;
+                case GrowthStatus.declining:
+                    this.RemoveAnimal(1);
+                    break;
+                default:
+                    break;
             }
+
+            // WIP
+                //// Handle Affliction Death
+                //foreach (KeyValuePair<GameObject, int> pair in DeathTimer)
+                //{
+                //    // Afflicted animals will be added to the death timer
+                //    DeathTimer[pair.Key] -= 1;
+                //    if (DeathTimer[pair.Key] == 0)
+                //    {
+                //        //TODO queue up the affliction to be added to another animal
+
+                //        GameObject animal = pair.Key;
+                //        DeathTimer.Remove(pair.Key);
+                //        Kill(animal);
+                //    }
+                //}
         }
         this.TimeSinceUpdate += Time.deltaTime;
     }

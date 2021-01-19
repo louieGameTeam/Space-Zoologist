@@ -1,13 +1,17 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Inspector/Inspector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/Need.cs">
     <Files>
       <File FileName="Assets/Scripts/Grid/GridSystem.cs" Line="257" Column="43" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="196" Column="38" />
-      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="276" Column="129" />
+      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/UI/Pods/PodMenu.cs" />
-      <File FileName="Assets/Scripts/Utils/PlacementValidation.cs" />
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="173" Column="54" />
+      <File FileName="Assets/Scripts/Utils/PlacementValidation.cs" Line="20" Column="17" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="343" Column="57" />
+      <File FileName="Assets/Scripts/Species/Representation/GrowthCalculator.cs" Line="56" Column="7" />
+      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="18" Column="61" />
+      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="9" Column="23" />
+      <File FileName="Assets/Scripts/Needs/Need.cs" Line="15" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,13 +20,15 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Grid" expanded="True" />
+                <Node name="Needs" expanded="True">
+                  <Node name="Need.cs" selected="True" />
+                </Node>
                 <Node name="Species" expanded="True">
                   <Node name="Population" expanded="True" />
+                  <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
-                  <Node name="Inspector" expanded="True">
-                    <Node name="Inspector.cs" selected="True" />
-                  </Node>
+                  <Node name="Inspector" expanded="True" />
                   <Node name="Pods" expanded="True" />
                 </Node>
                 <Node name="Utils" expanded="True">
