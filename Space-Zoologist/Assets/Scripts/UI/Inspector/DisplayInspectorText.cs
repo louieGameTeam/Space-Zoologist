@@ -18,6 +18,19 @@ public class DisplayInspectorText : MonoBehaviour
             displayText += $"{need.NeedName} : {need.NeedValue} \n";//[{need.GetCondition(need.NeedValue)}]\n";
         }
 
+        // Temp for debugging
+        //foreach (KeyValuePair<TileType, List<int>> pair in FindObjectOfType<ReservePartitionManager>().CountConnectedTerrain(population))
+        //{
+        //    displayText += pair.Key + ": {";
+        //    for (int i = 0; i < pair.Value.Count; i++)
+        //    {
+        //        displayText += pair.Value[i];
+        //        if (i != pair.Value.Count - 1)
+        //            displayText += ", ";
+        //    }
+        //    displayText += "}";
+        //}
+
         this.inspectorWindowText.text = displayText;
     }
 

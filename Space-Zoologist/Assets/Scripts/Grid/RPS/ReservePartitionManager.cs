@@ -43,6 +43,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     public GameTile Liquid;
     [SerializeField] private TileSystem TileSystem = default;
+    [SerializeField] private GridSystem GridSystem = default;
 
     private void Awake()
     {
@@ -85,6 +86,7 @@ public class ReservePartitionManager : MonoBehaviour
             // generate the map with the new id
             GenerateMap(population);
 
+            CountConnectedTerrain(population);
         }
     }
 
@@ -159,7 +161,7 @@ public class ReservePartitionManager : MonoBehaviour
         // Clear TypesOfTerrain for given population
         this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
 
-        // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
+        // iterate until no tile left in list, ends in iteration 1 if population location is not accessible
         while (stack.Count > 0)
         {
             // next point
@@ -424,5 +426,67 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         return this.populationAccessibleLiquid[population];
+    }
+
+    /// <summary>
+    /// Count number of connected terrain of each type for terrain need
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
+    public Dictionary<TileType, List<int>> CountConnectedTerrain(Population population)
+    {
+
+        List<Vector3Int> accessiblePositions = GetLocationsWithAccess(population);
+
+        HashSet<Vector3Int> closed = new HashSet<Vector3Int>();
+
+        Dictionary<TileType, List<int>> ConnectedTilesByType = new Dictionary<TileType, List<int>>();
+
+
+        foreach (Vector3Int position in accessiblePositions)
+        {
+            if (closed.Contains(position)) continue;
+
+            TileType type = TileSystem.GetGameTileAt(position).type;
+            if (!ConnectedTilesByType.ContainsKey(type))
+            {
+                ConnectedTilesByType.Add(type, new List<int>());
+            }
+            ConnectedTilesByType[type].Add(DFS(population, position, ref closed, type));
+        }
+
+        // For debugging
+        // foreach (KeyValuePair<TileType, List<int>> pair in ConnectedTilesByType) {
+        //    string output = "";
+        //    output += pair.Key + ": {";
+        //    for (int i = 0; i < pair.Value.Count; i++) {
+        //        output += pair.Value[i];
+        //        if (i != pair.Value.Count - 1)
+        //            output += ", ";
+        //    }
+        //    output += "}";
+        //    print(output);
+        // }
+
+        return ConnectedTilesByType;
+    }
+
+    static int[] rowNbr = { -1,  0, 0, 1 };
+    static int[] colNbr = { 0,  -1, 1, 0 };
+    private int DFS(Population population, Vector3Int position, ref HashSet<Vector3Int> closed, TileType type) {
+
+        int total = 1;
+
+        closed.Add(position);
+
+        for (int i = 0; i < rowNbr.Length; i++) {
+            Vector3Int next = position;
+            next += new Vector3Int(colNbr[i], rowNbr[i], 0);
+            if (closed.Contains(next)) continue;
+            if (CanAccess(population, position) && TileSystem.GetGameTileAt(next) != null && TileSystem.GetGameTileAt(next).type == type) {
+                total += DFS(population, next, ref closed, type);
+            }
+        }
+        return total;
     }
 }

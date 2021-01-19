@@ -7,17 +7,21 @@ using UnityEngine;
 public class FoodSourceSpecies : ScriptableObject
 {
     public string SpeciesName => speciesName;
+    public int Size => size;
     public int RootRadius => rootRadius;
     public int BaseOutput => baseOutput;
     public Item FoodSourceItem => FoodSource;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
+    public bool AllNeedsMustSatisfy => allNeedsMustSatisfy;
 
+    [SerializeField] private int size = 1; // default to 1 tile big
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private string speciesName = default;
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int baseOutput = default;
     [SerializeField] private List<NeedTypeConstructData> needsList = default;
     [SerializeField] private Item FoodSource = default;
+    [SerializeField] private bool allNeedsMustSatisfy = false;
 
 
     public Dictionary<string, Need> SetupNeeds()

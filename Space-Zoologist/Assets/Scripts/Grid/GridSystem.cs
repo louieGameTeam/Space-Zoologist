@@ -103,7 +103,7 @@ public class GridSystem : MonoBehaviour
         return homeLocations;
     }
 
-    public bool IsWithinGridBouds(Vector3 mousePosition)
+    public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         return (mousePosition.x < GridWidth - 1 && mousePosition.y < GridHeight - 1 &&
         mousePosition.x > 0 && mousePosition.y > 0);
@@ -132,6 +132,7 @@ public class GridSystem : MonoBehaviour
         this.SetupMovementBoundaires(tileGrid);
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
     }
+
 
     // iterate through CellData, if contains item of interest and locations accessible, calculate distance and keep track of closest item location
     public Vector3Int FindClosestItem(Population population, GameObject animal, ItemType item)

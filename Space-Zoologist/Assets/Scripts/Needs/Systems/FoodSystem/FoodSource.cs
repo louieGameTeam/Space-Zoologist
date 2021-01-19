@@ -75,33 +75,57 @@ public class FoodSource : MonoBehaviour, Life
 
     private float CalculateOutput()
     {
-        int severityTotal = 0;
         float output = 0;
-        foreach (Need need in this.needs.Values)
+
+        if (species.AllNeedsMustSatisfy)
         {
-            severityTotal += need.Severity;
-        }
-        foreach (KeyValuePair<string, Need> needValuePair in this.needs)
-        {
-            string needType = needValuePair.Key;
-            float needValue = needValuePair.Value.NeedValue;
-            NeedCondition condition = this.needs[needType].GetCondition(needValue);
-            float multiplier = 0;
-            switch (condition)
+            // All needs must be good for it to produce food
+            output = species.BaseOutput;
+            foreach (KeyValuePair<string, Need> needValuePair in this.needs)
             {
-                case NeedCondition.Bad:
-                    multiplier = 0;
+                string needType = needValuePair.Key;
+                float needValue = needValuePair.Value.NeedValue;
+                NeedCondition condition = this.needs[needType].GetCondition(needValue);
+
+                // A need is not satisfied
+                if (condition != NeedCondition.Good)
+                {
+                    output = 0;
                     break;
-                case NeedCondition.Neutral:
-                    multiplier = neutralMultiplier;
-                    break;
-                case NeedCondition.Good:
-                    multiplier = goodMultiplier;
-                    break;
+                }
             }
-            float needSeverity = this.needs[needType].Severity;
-            output += multiplier * (needSeverity / severityTotal) * species.BaseOutput;
         }
+        else
+        {
+            // Variable output based on each need
+            int severityTotal = 0;
+            foreach (Need need in this.needs.Values)
+            {
+                severityTotal += need.Severity;
+            }
+            foreach (KeyValuePair<string, Need> needValuePair in this.needs)
+            {
+                string needType = needValuePair.Key;
+                float needValue = needValuePair.Value.NeedValue;
+                NeedCondition condition = this.needs[needType].GetCondition(needValue);
+                float multiplier = 0;
+                switch (condition)
+                {
+                    case NeedCondition.Bad:
+                        multiplier = 0;
+                        break;
+                    case NeedCondition.Neutral:
+                        multiplier = neutralMultiplier;
+                        break;
+                    case NeedCondition.Good:
+                        multiplier = goodMultiplier;
+                        break;
+                }
+                float needSeverity = this.needs[needType].Severity;
+                output += multiplier * (needSeverity / severityTotal) * species.BaseOutput;
+            }
+        }
+        
 
         // Invoke event if output is different
         if (this.prevOutput != 0 && this.prevOutput != output)
