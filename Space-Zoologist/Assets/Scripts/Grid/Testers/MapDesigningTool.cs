@@ -12,7 +12,7 @@ public class MapDesigningTool : MonoBehaviour
     private string sceneName;
     private GridIO gridIO;
     private TilePlacementController tilePlacementController;
-    private bool godMode = true;
+    [SerializeField] bool godMode = true;
     private bool DisplayLiquidBodyInfo = true;
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;

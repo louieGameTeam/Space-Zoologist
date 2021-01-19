@@ -60,7 +60,7 @@ public class SellingManager : MonoBehaviour
             Vector3Int cellPos = tileSystem.WorldToCell(worldPos);
 
             // What is on the tile?
-            TerrainTile tile = tileSystem.GetTerrainTileAtLocation(cellPos);
+            GameTile tile = tileSystem.GetGameTileAt(cellPos);
             GridSystem.CellData cellData;
 
             // Find out what is on the tile if it is in bounds

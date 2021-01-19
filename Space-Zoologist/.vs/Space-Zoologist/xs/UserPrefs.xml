@@ -1,85 +1,32 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/RPS/EnclosureSystem.cs">
     <Files>
-      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/PopulationBehavior.cs" Line="36" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="103" Column="24" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/FoodPathfinding.cs" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/GeneralPathfinding.cs" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/UniversalAnimatorPattern.cs" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/EatingPattern.cs" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" />
-      <File FileName="Assets/Scripts/Species/Representation/BehaviorPatternUpdater.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="175" Column="25" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="129" Column="11" />
-      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="54" Column="1" />
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="288" Column="1" />
-      <File FileName="Assets/Scripts/Grid/Tiles/LiquidBody.cs" Line="143" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="53" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/SellingManager.cs" Line="63" Column="53" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" />
+      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="68" Column="1" />
+      <File FileName="Assets/Scripts/Grid/Testers/MapDesigningTool.cs" Line="15" Column="21" />
+      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="42" Column="1" />
+      <File FileName="Assets/Scripts/UI/CameraController.cs" Line="122" Column="66" />
+      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="154" Column="1" />
+      <File FileName="Assets/Scripts/Species/Representation/PopulationBehaviorManager.cs" Line="24" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="290" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="AnimalRepresentation" expanded="True">
-                <Node name="Behaviors" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="DialogueEditor" expanded="True">
-                <Node name="Assets" expanded="True">
-                  <Node name="Scripts" expanded="True">
-                    <Node name="UI" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
-              <Node name="Scripts" expanded="True">
-                <Node name="GameData" expanded="True">
-                  <Node name="LevelManagement" expanded="True" />
-                  <Node name="LevelObjectiveData" expanded="True" />
-                </Node>
-                <Node name="Grid" expanded="True">
-                  <Node name="RPS" expanded="True">
-                    <Node name="EnclosureSystem.cs" selected="True" />
-                  </Node>
-                  <Node name="Tiles" expanded="True" />
-                </Node>
-                <Node name="Needs" expanded="True">
-                  <Node name="Systems" expanded="True">
-                    <Node name="FoodSystem" expanded="True" />
-                  </Node>
-                </Node>
-                <Node name="Species" expanded="True">
-                  <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True" />
-                </Node>
-                <Node name="UI" expanded="True">
-                  <Node name="GameOver" expanded="True">
-                    <Node name="GameOver.cs" selected="True" />
-                  </Node>
-                  <Node name="Inspector" expanded="True" />
-                  <Node name="LogSystem" expanded="True" />
-                  <Node name="Machines" expanded="True" />
-                  <Node name="Store" expanded="True" />
-                </Node>
-                <Node name="Utils" expanded="True">
-                  <Node name="Dialogue" expanded="True" />
-                  <Node name="Managers" expanded="True" />
-                  <Node name="Objectives" expanded="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
+          <Node name="Space-Zoologist" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c6b9684a-ad5b-4b7f-9503-908e69db3d7f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bb2de2a6-0d0f-4cf7-8345-d280953fe2cb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Unity.2D.Tilemap.Extras.Editor PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
