@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c08ee996ea5474e8a20157d9e39505, type: 3}
-  m_Name: Scene Navigator
+  m_Script: {fileID: 11500000, guid: cec441587ae331e418e270f49db7e10e, type: 3}
+  m_Name: IdleBehavior 2
   m_EditorClassIdentifier: 
-  Levels:
-  - {fileID: 11400000, guid: fe4d49745a36f4941805b30a60e788fd, type: 2}
+  behaviorData:
+    behaviorName: IdleBehavior
+  numberOfAnimalsRequired: 1
+  behaviorPatterns:
+  - {fileID: 2498865982141510231, guid: 27a11cd98bbec49e2a2f49e6d5a4dc77, type: 3}

@@ -113,6 +113,7 @@ public class PopulationManager : MonoBehaviour
         this.NeedSystemManager.UpdateAccessMap();
         foreach (Population population in this.Populations)
         {
+            Debug.Log("Accessible map updated for " + population.name);
             population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
             GridSystem.GetGridWithAccess(population));
         }

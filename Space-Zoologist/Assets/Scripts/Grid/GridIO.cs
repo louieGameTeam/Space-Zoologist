@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 public class GridIO : MonoBehaviour
 {
     private TilePlacementController tilePlacementController;
-    [SerializeField] private string directory = "Assets/SaveData/Grid/";
+    [SerializeField] private string directory = "Assets/Resources/Grid/";
     private string sceneName;
     private TileLayerManager[] tileLayerManagers;
     // Start is called before the first frame update
@@ -23,7 +23,8 @@ public class GridIO : MonoBehaviour
     public void SaveGrid(string name = null)
     {
         name = name ?? this.sceneName;
-        string fullPath = this.directory + name + ".json";
+        name = name + ".json";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
         Debug.Log("Saving Grid to " + fullPath);
         if (File.Exists(fullPath))
         {
@@ -38,7 +39,8 @@ public class GridIO : MonoBehaviour
     public void LoadGrid(string name = null)
     {
         name = name ?? this.sceneName;
-        string fullPath = this.directory + name + ".json";
+        name = name + ".json";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
         Debug.Log("Loading map save: " + fullPath);
 
         SerializedGrid serializedGrid;

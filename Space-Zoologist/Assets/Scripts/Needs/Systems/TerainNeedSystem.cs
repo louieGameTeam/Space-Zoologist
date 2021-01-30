@@ -24,11 +24,87 @@ public class TerrainNeedSystem : NeedSystem
         });
     }
 
+    // TODO: refactor update system to use this
+    public void calculateConnectedTerrain()
+    {
+        foreach (Population population in Consumers)
+        {
+            CountConnectedTerrain(population);
+        }
+    }
+
+    /// <summary>
+    /// Count number of connected terrain of each type for terrain need
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
+    public Dictionary<TileType, List<int>> CountConnectedTerrain(Population population)
+    {
+        List<Vector3Int> accessiblePositions = rpm.GetLocationsWithAccess(population);
+
+        HashSet<Vector3Int> closed = new HashSet<Vector3Int>();
+
+        Dictionary<TileType, List<int>> ConnectedTilesByType = new Dictionary<TileType, List<int>>();
+
+
+        foreach (Vector3Int position in accessiblePositions)
+        {
+            if (closed.Contains(position)) continue;
+
+            TileType type = tileSystem.GetGameTileAt(position).type;
+            if (!ConnectedTilesByType.ContainsKey(type))
+            {
+                ConnectedTilesByType.Add(type, new List<int>());
+            }
+            ConnectedTilesByType[type].Add(DFS(population, position, ref closed, type));
+        }
+
+        // For debugging
+        foreach (KeyValuePair<TileType, List<int>> pair in ConnectedTilesByType)
+        {
+            string output = population.name + " ";
+            output += pair.Key + ": {";
+            for (int i = 0; i < pair.Value.Count; i++)
+            {
+                output += pair.Value[i];
+                if (i != pair.Value.Count - 1)
+                    output += ", ";
+            }
+            output += "}";
+            Debug.Log(output);
+        }
+
+        return ConnectedTilesByType;
+    }
+
+    static int[] rowNbr = { -1, 0, 0, 1 };
+    static int[] colNbr = { 0, -1, 1, 0 };
+    private int DFS(Population population, Vector3Int position, ref HashSet<Vector3Int> closed, TileType type)
+    {
+
+        int total = 1;
+
+        closed.Add(position);
+
+        for (int i = 0; i < rowNbr.Length; i++)
+        {
+            Vector3Int next = position;
+            next += new Vector3Int(colNbr[i], rowNbr[i], 0);
+            if (closed.Contains(next)) continue;
+            if (rpm.CanAccess(population, position) && tileSystem.GetGameTileAt(next) != null && tileSystem.GetGameTileAt(next).type == type)
+            {
+                total += DFS(population, next, ref closed, type);
+            }
+        }
+        return total;
+    }
+
     /// <summary>
     /// Get the terrian conposition of the consumers and update the need values
     /// </summary>
     public override void UpdateSystem()
     {
+
         // Unmark dirty when there is not consumer then exit
         if (this.Consumers.Count == 0)
         {
@@ -36,6 +112,7 @@ public class TerrainNeedSystem : NeedSystem
             return;
         }
 
+        // TODO: refactor to loop through population and foodsource instead of checking type
         foreach (Life life in Consumers)
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
@@ -59,6 +136,7 @@ public class TerrainNeedSystem : NeedSystem
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 string needName = ((TileType)index).ToString();
+              
 
                 if (life.GetNeedValues().ContainsKey(needName))
                 {

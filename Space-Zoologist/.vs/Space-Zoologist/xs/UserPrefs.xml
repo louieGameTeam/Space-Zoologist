@@ -1,32 +1,57 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/RPS/EnclosureSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Species/Representation/MovementController.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/Store/SellingManager.cs" Line="63" Column="53" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" />
-      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="68" Column="1" />
-      <File FileName="Assets/Scripts/Grid/Testers/MapDesigningTool.cs" Line="15" Column="21" />
-      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="42" Column="1" />
-      <File FileName="Assets/Scripts/UI/CameraController.cs" Line="122" Column="66" />
-      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="23" Column="1" />
-      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="154" Column="1" />
-      <File FileName="Assets/Scripts/Species/Representation/PopulationBehaviorManager.cs" Line="24" Column="1" />
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="290" Column="1" />
+      <File FileName="Assets/Scripts/Utils/Managers/PauseManager.cs" Line="106" Column="17" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="154" Column="17" />
+      <File FileName="Assets/Scripts/Species/Representation/MovementController.cs" Line="82" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
+          <Node name="Space-Zoologist" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="AnimalRepresentation" expanded="True">
+                <Node name="Patterns" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Scripts" expanded="True">
+                <Node name="Grid" expanded="True">
+                  <Node name="RPS" expanded="True" />
+                </Node>
+                <Node name="Needs" expanded="True">
+                  <Node name="Systems" expanded="True">
+                    <Node name="FoodSystem" expanded="True" />
+                  </Node>
+                </Node>
+                <Node name="Species" expanded="True">
+                  <Node name="PathFinding" expanded="True" />
+                  <Node name="Population" expanded="True" />
+                  <Node name="Representation" expanded="True">
+                    <Node name="MovementController.cs" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="UI" expanded="True">
+                  <Node name="LevelNavigator" expanded="True" />
+                  <Node name="Machines" expanded="True" />
+                  <Node name="Store" expanded="True" />
+                </Node>
+                <Node name="Utils" expanded="True">
+                  <Node name="Dialogue" expanded="True" />
+                  <Node name="Managers" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bb2de2a6-0d0f-4cf7-8345-d280953fe2cb" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c8b6f0a7-3295-4663-9451-d30a384a636d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Unity.2D.Tilemap.Extras.Editor PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

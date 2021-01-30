@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c08ee996ea5474e8a20157d9e39505, type: 3}
-  m_Name: Scene Navigator
+  m_Script: {fileID: 11500000, guid: cec441587ae331e418e270f49db7e10e, type: 3}
+  m_Name: RandomMovement 1
   m_EditorClassIdentifier: 
-  Levels:
-  - {fileID: 11400000, guid: fe4d49745a36f4941805b30a60e788fd, type: 2}
+  behaviorData:
+    behaviorName: RandomMovement
+  numberOfAnimalsRequired: 1
+  behaviorPatterns:
+  - {fileID: 6517820211179143171, guid: 8dffb8fa9cb4c4ecb932c3935cd91cac, type: 3}

@@ -151,6 +151,7 @@ public class Population : MonoBehaviour, Life
         }
     }
 
+    // Only pauses movements
     public void PauseAnimalsMovementController()
     {
         foreach(GameObject animal in this.AnimalPopulation)
@@ -169,7 +170,7 @@ public class Population : MonoBehaviour, Life
             animator.speed = 0;
             overlay.speed = 0;
             animal.GetComponent<MovementController>().IsPaused = true;
-            animal.GetComponent<MovementController>().TryToCancelDestination();
+            //animal.GetComponent<MovementController>().TryToCancelDestination();
         }
     }
 

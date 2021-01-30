@@ -13,7 +13,7 @@ public class ObjectiveManager : MonoBehaviour
 
     public bool IsGameOver => this.isGameOver;
 
-    private bool isOpen = false;
+    private bool isOpen = true;
     private bool isGameOver = false;
 
     // To access the player balance
@@ -107,7 +107,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private void RegisterWithSurvivalObjectives(Population population)
     {
-        Debug.Log(population.gameObject.name + " attempting to update survival objective");
+        // Debug.Log(population.gameObject.name + " attempting to update survival objective");
         foreach (Objective objective in this.mainObjectives)
         {
             if (objective.GetType() == typeof(SurvivalObjective))
@@ -115,7 +115,7 @@ public class ObjectiveManager : MonoBehaviour
                 SurvivalObjective survivalObjective = (SurvivalObjective)objective;
                 if (survivalObjective.AnimalSpecies == population.species && !survivalObjective.Populations.Contains(population))
                 {
-                    Debug.Log(population.name + " was added to survival objective");
+                    // Debug.Log(population.name + " was added to survival objective");
                     survivalObjective.Populations.Add(population);
                 }
             }

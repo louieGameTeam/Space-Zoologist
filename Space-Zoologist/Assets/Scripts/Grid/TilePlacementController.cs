@@ -410,7 +410,7 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        if (!GridSystem.IsWithinGridBouds(cellLocation))
+        if (!GridSystem.IsWithinGridBounds(cellLocation))
         {
             Debug.Log("outside bound");
             return false;

@@ -103,7 +103,7 @@ public class GridSystem : MonoBehaviour
         return homeLocations;
     }
 
-    public bool IsWithinGridBouds(Vector3 mousePosition)
+    public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         return (mousePosition.x < GridWidth - 1 && mousePosition.y < GridHeight - 1 &&
         mousePosition.x > 0 && mousePosition.y > 0);

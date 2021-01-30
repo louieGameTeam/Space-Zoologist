@@ -103,6 +103,7 @@ public class TileSystem : MonoBehaviour
 
             // Invoke event
             EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellPosition);
+            return;
         }
         Debug.LogError("Tile at position" + cellPosition + "does not hold content");
     }
