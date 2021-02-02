@@ -1,60 +1,65 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using UnityEngine.SceneManagement;
+using System.IO;
 public class TilePlacementController : MonoBehaviour
 {
-    // Can be either pen or block mode.
+    private enum PlacementResult { Placed, Restricted, AlreadyExisted }
     public bool isBlockMode { get; set; } = false;
-    public TerrainTile selectedTile { get; set; } = default;
     public Vector3Int mouseCellPosition { get { return currentMouseCellPosition; } }
+    public bool PlacementPaused { get; private set; }
     [SerializeField] private Camera currentCamera = default;
     private bool isPreviewing { get; set; } = false;
+    private bool godMode = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
     private Grid grid;
     private Vector3Int lastPlacedTile;
+    private List<GameTile> referencedTiles = new List<GameTile>();
     private bool isFirstTile;
     public Tilemap[] allTilemaps { get { return tilemaps; } }
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
-    [SerializeField] private TerrainTile[] terrainTiles = default;
-    private Dictionary<Vector3Int, List<TerrainTile>> addedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); // All NEW tiles 
-    private Dictionary<Vector3Int, List<TerrainTile>> removedTiles = new Dictionary<Vector3Int, List<TerrainTile>>(); //All tiles removed
+    public GameTile[] gameTiles { get; private set; } = default;
+    private Dictionary<Vector3Int, List<GameTile>> addedTiles = new Dictionary<Vector3Int, List<GameTile>>(); // All NEW tiles
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
-    private List<Vector3Int> triedToPlaceTiles = new List<Vector3Int>(); // New tiles and same tile 
-    private List<Vector3Int> neighborTiles = new List<Vector3Int>();
-    private Dictionary<TerrainTile, List<Tilemap>> colorLinkedTiles = new Dictionary<TerrainTile, List<Tilemap>>();
-    private TileSystem tileSystem;
+    private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
+    private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
+    private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
+    private Dictionary<Tilemap, TileLayerManager> tilemapsToTileLayerManagers = new Dictionary<Tilemap, TileLayerManager>();
     private int lastCornerX;
     private int lastCornerY;
-
+    [SerializeField] private TileSystem TileSystem = default;
+    [SerializeField] private GridSystem GridSystem = default;
     private void Awake()
     {
-        tileSystem = FindObjectOfType<TileSystem>();
-        grid = GetComponent<Grid>();
-        foreach (TerrainTile terrainTile in terrainTiles)
+        this.gameTiles = Resources.LoadAll("Tiles",typeof(GameTile)).Cast<GameTile>().ToArray(); // Load tiles form resources
+        foreach (GameTile terrainTile in this.gameTiles)// Construct list of tiles and their corresponding layers
         {
             terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
-            terrainTile.constraintTilemap.Clear();
-            terrainTile.replacementTilemap.Clear();
+            terrainTile.constraintTilemaps.Clear();
+            terrainTile.replacementTilemaps.Clear();
             foreach (GridUtils.TileLayer layer in terrainTile.constraintLayers)
             {
-                terrainTile.constraintTilemap.Add(tilemaps[(int)layer]);
+                terrainTile.constraintTilemaps.Add(tilemaps[(int)layer]);
             }
             foreach (GridUtils.TileLayer layer in terrainTile.replacementLayers)
             {
-                terrainTile.replacementTilemap.Add(tilemaps[(int)layer]);
+                terrainTile.replacementTilemaps.Add(tilemaps[(int)layer]);
             }
         }
-        foreach (Tilemap tilemap in tilemaps)
+        grid = GetComponent<Grid>();
+        foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
-            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
+            this.tilemapsToTileLayerManagers.Add(tilemap, tilemap.GetComponent<TileLayerManager>());
+            List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
+/*            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
             {
-                foreach (TerrainTile tile in tileColorManager.linkedTiles)
+                foreach (GameTile tile in tileColorManager.linkedTiles)
                 {
                     if (!colorLinkedTiles.ContainsKey(tile))
                     {
@@ -62,17 +67,22 @@ public class TilePlacementController : MonoBehaviour
                     }
                     colorLinkedTiles[tile].Add(tilemap);
                 }
-            }
+            }*/
+            referencedTiles = this.gameTiles.ToList();
+            RenderColorOfColorLinkedTiles(colorInitializeTiles);
+            referencedTiles.Clear();
         }
+        this.gameObject.GetComponent<GridIO>().Initialize();
+        this.gameObject.GetComponent<GridIO>().LoadGrid();
     }
-
-    void Update()
+    private void Update()
     {
-        if (isPreviewing)
+        if (isPreviewing) // Update for preview
         {
             Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
-            currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
-            if (currentMouseCellPosition != lastMouseCellPosition || isFirstTile)
+            this.currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
+            this.PlacementPaused = false;
+            if (this.currentMouseCellPosition != this.lastMouseCellPosition || this.isFirstTile)
             {
                 if (isBlockMode)
                 {
@@ -82,69 +92,76 @@ public class TilePlacementController : MonoBehaviour
                 {
                     UpdatePreviewPen();
                 }
-                lastMouseCellPosition = currentMouseCellPosition;
+                this.lastMouseCellPosition = this.currentMouseCellPosition;
             }
         }
+    }
+    /// <summary>
+    /// Start tile placement preview.
+    /// </summary>
+    /// <param name="tileID">The ID of the tile to preview its placement.</param>
+    public void StartPreview(string tileID, bool godMode = false)
+    {
+        this.godMode = godMode;
+        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+        this.dragStartPosition = this.grid.WorldToCell(mouseWorldPosition);
+        if (!Enum.IsDefined(typeof(TileType), tileID))
+        {
+            throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
+        }
+        this.isPreviewing = true;
+        foreach (GameTile tile in gameTiles)
+        {
+            if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
+            {
+                this.referencedTiles.Add(tile);
+            }
+        }
+        this.isFirstTile = true;
     }
 
-    public void StartPreview(TerrainTile newTile)
-    {
-        isPreviewing = true;
-        selectedTile = newTile;
-        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
-        dragStartPosition = grid.WorldToCell(mouseWorldPosition);
-        isFirstTile = true;
-    }
     public void StopPreview()
     {
+        this.godMode = false;
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
-        foreach (Tilemap tilemap1 in tilemaps)
+        foreach (Tilemap tilemap in tilemaps)
         {
-            if (tilemap1.TryGetComponent(out TileContentsManager tilecContentsManager))
-            {
-                tilecContentsManager.ConfirmMerge();
-            }
+            this.tilemapsToTileLayerManagers[tilemap].ConfirmPlacement();
         }
         RenderColorOfColorLinkedTiles(addedTiles.Keys.ToList());
-        if (selectedTile.targetTilemap.GetComponent<TileContentsManager>() == null && selectedTile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
+        foreach (GameTile tile in referencedTiles)
         {
-            foreach (Vector3Int vector3Int in addedTiles.Keys)
+            if (tile.targetTilemap.GetComponent<TileContentsManager>() == null && tile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
             {
-                placedTileColorManager.SetTileColor(vector3Int, selectedTile);
+                foreach (Vector3Int vector3Int in addedTiles.Keys)
+                {
+                    placedTileColorManager.SetTileColor(vector3Int, tile);
+                }
             }
         }
-        removedTileColors.Clear();
-        addedTiles.Clear();
-        removedTiles.Clear();
-        triedToPlaceTiles.Clear();
+
+        // Set terrain modified flag
+        this.TileSystem.HasTerrainChanged = true;
+        this.TileSystem.changedTiles.AddRange(addedTiles.Keys.ToList());
+
+        // Clear all dics
+        this.referencedTiles.Clear();
+        this.removedTileColors.Clear();
+        this.addedTiles.Clear();
+        this.triedToPlaceTiles.Clear();
     }
+
     public int PlacedTileCount()
     {
         return addedTiles.Count();
     }
 
-    public void RevertChanges()
+    public void RevertChanges() // Go through each change and revert back to original
     {
-        foreach (Vector3Int changedTileLocation in triedToPlaceTiles)
-        {
-            if (addedTiles.ContainsKey(changedTileLocation))
-            {
-                foreach (TerrainTile addedTile in addedTiles[changedTileLocation])
-                {
-                    addedTile.targetTilemap.SetTile(changedTileLocation, null);
-                }
-            }
-            if (removedTiles.ContainsKey(changedTileLocation))
-            {
-                foreach (TerrainTile removedTile in removedTiles[changedTileLocation])
-                {
-                    removedTile.targetTilemap.SetTile(changedTileLocation, removedTile);
-                }
-            }
-        }
         foreach (Tilemap tilemap in tilemaps)
         {
+            this.tilemapsToTileLayerManagers[tilemap].Revert();
             if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
             {
                 List<Vector3Int> changedTiles = tileAttributes.changedTilesPositions;
@@ -159,25 +176,27 @@ public class TilePlacementController : MonoBehaviour
         }
         removedTileColors.Clear();
         addedTiles.Clear();
-        removedTiles.Clear();
         triedToPlaceTiles.Clear();
         StopPreview();
     }
 
-    public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles)
+    public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles) // Update color for linked tiles.
     {
-        if (colorLinkedTiles.Keys.Contains(selectedTile))
+        foreach (GameTile tile in referencedTiles)
         {
-            foreach (Tilemap tilemap in colorLinkedTiles[selectedTile])
+            if (colorLinkedTiles.Keys.Contains(tile))
             {
-                TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
-                foreach (Vector3Int addedTileLocation in changedTiles)
+                foreach (Tilemap tilemap in colorLinkedTiles[tile])
                 {
-                    foreach (TerrainTile managedTile in tileColorManager.managedTiles)
+                    TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
+                    foreach (Vector3Int addedTileLocation in changedTiles)
                     {
-                        foreach (Vector3Int affectedTileLocation in tileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
+                        foreach (GameTile managedTile in tileColorManager.managedTiles)
                         {
-                            tileColorManager.SetTileColor(affectedTileLocation, managedTile);
+                            foreach (Vector3Int affectedTileLocation in this.TileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
+                            {
+                                tileColorManager.SetTileColor(affectedTileLocation, managedTile);
+                            }
                         }
                     }
                 }
@@ -189,17 +208,17 @@ public class TilePlacementController : MonoBehaviour
     {
         if (isFirstTile)
         {
-            PlaceTile(currentMouseCellPosition, selectedTile);
+            PlaceTile(currentMouseCellPosition);
             return;
         }
-        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile))
+        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
         {
             if (currentMouseCellPosition.x == lastPlacedTile.x)// Handles divide by zero exception
             {
                 foreach (int y in GridUtils.Range(lastPlacedTile.y, currentMouseCellPosition.y))
                 {
                     Vector3Int location = new Vector3Int(lastPlacedTile.x, y, currentMouseCellPosition.z);
-                    PlaceTile(location, selectedTile);
+                    PlaceTile(location);
                 }
             }
             else
@@ -210,38 +229,33 @@ public class TilePlacementController : MonoBehaviour
                     float interpolatedY = gradient * (x - lastPlacedTile.x);
                     int incrementY = GridUtils.RoundTowardsZeroInt(interpolatedY);
                     Vector3Int interpolateTileLocation = new Vector3Int(GridUtils.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
-                    PlaceTile(interpolateTileLocation, selectedTile);
+                    PlaceTile(interpolateTileLocation);
                 }
             }
         }
-        PlaceTile(currentMouseCellPosition, selectedTile);
+        PlaceTile(currentMouseCellPosition);
     }
 
-    private void UpdatePreviewBlock() //TODO Resolve lag when moving back and forth
+    private void UpdatePreviewBlock()
     {
         if (isFirstTile)
         {
-            PlaceTile(dragStartPosition, selectedTile, false);
+            PlaceTile(dragStartPosition, false);
             lastCornerX = dragStartPosition.x;
             lastCornerY = dragStartPosition.y;
         }
-        List<Vector3Int> tilesToRemove = new List<Vector3Int>();
-        List<Vector3Int> tilesToAdd = new List<Vector3Int>();
-        List<Vector3Int> supposedTiles = new List<Vector3Int>();
+        HashSet<Vector3Int> tilesToRemove = new HashSet<Vector3Int>();
+        HashSet<Vector3Int> tilesToAdd = new HashSet<Vector3Int>();
+        HashSet<Vector3Int> supposedTiles = new HashSet<Vector3Int>();
         foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
         {
             foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
             {
                 supposedTiles.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
+                tilesToRemove.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
             }
         }
-        foreach (Vector3Int existingTile in addedTiles.Keys) // Forcing removal of all tiles not in bound to avoid leftover tile not being removed due to lagging, possible optimization
-        {
-            if (!supposedTiles.Contains(existingTile))
-            {
-                tilesToRemove.Add(existingTile);
-            }
-        }
+        tilesToRemove.ExceptWith(addedTiles.Keys); // Forcing removal of all tiles not in bound to avoid leftover tile not being removed due to lagging and tick skipping, possible optimization
         Vector3Int sweepLocation = Vector3Int.zero;
         sweepLocation.z = currentMouseCellPosition.z;
         bool isXShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.x - dragStartPosition.x, currentMouseCellPosition.x - lastCornerX);
@@ -273,9 +287,9 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
-        foreach (Vector3Int addLocation in tilesToAdd)
+/*        foreach (Vector3Int addLocation in tilesToAdd)
         {
-            PlaceTile(addLocation, selectedTile);
+            PlaceTile(addLocation);
         }
         if (tilesToRemove.Count > 0)
         {
@@ -283,24 +297,26 @@ public class TilePlacementController : MonoBehaviour
             {
                 RestoreReplacedTile(removeLocation);
             }
-            if (selectedTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
+            foreach (GameTile tile in referencedTiles)
             {
-                tileAttributes.Revert(supposedTiles);
+                if (tile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
+                {
+                    //tileAttributes.Revert(supposedTiles);
+                }
             }
 
-        }
+        }*/
         lastCornerX = currentMouseCellPosition.x;
         lastCornerY = currentMouseCellPosition.y;
     }
 
-    private bool IsPlacable(Vector3Int cellLocation)
+    private bool IsPlacable(Vector3Int cellPosition)
     {
-
         if (currentMouseCellPosition == dragStartPosition)
         {
             return true;
         }
-        foreach (Vector3Int location in GridUtils.FourNeighborTiles(cellLocation))
+        foreach (Vector3Int location in GridUtils.FourNeighborTiles(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
@@ -310,64 +326,56 @@ public class TilePlacementController : MonoBehaviour
         return false;
     }
 
-    private bool PlaceTile(Vector3Int cellLocation, TerrainTile placedTile, bool checkPlacable = true)
+    private PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {
-        Tilemap targetTilemap = placedTile.targetTilemap;
-        if (IsPlacable(cellLocation) || !checkPlacable)
+        if (IsPlacable(cellPosition) || !checkPlacable)
         {
-            // Remove conflicting tiles
-            foreach (Tilemap replacingTilemap in placedTile.replacementTilemap)
+            // Check availability
+            foreach (GameTile tile in referencedTiles)
             {
-                if (replacingTilemap.HasTile(cellLocation))
+                // If animal/food at location
+                if (!IsPositionFree(cellPosition))
                 {
-                    ReplaceTile(replacingTilemap, cellLocation);
+                    return PlacementResult.Restricted;
                 }
-            }
-            // Add new tiles
-            TerrainTile replacedTile = (TerrainTile)targetTilemap.GetTile(cellLocation);
-            if (placedTile != replacedTile)
-            {
-                if (placedTile.constraintTilemap.Count > 0)
+                // If Constrain not met
+                foreach (Tilemap constrainTilemap in tile.constraintTilemaps)
                 {
-                    foreach (Tilemap constraintTilemap in placedTile.constraintTilemap)
+                    if (!constrainTilemap.HasTile(cellPosition))
                     {
-                        if (constraintTilemap.HasTile(cellLocation))
-                        {
-                            AddNewTile(cellLocation, placedTile);
-                        }
+                        return PlacementResult.Restricted;
                     }
                 }
-                else
+                // If same tile
+                if ((GameTile)tile.targetTilemap.GetTile(cellPosition) == tile)
                 {
-                    if (replacedTile != null)
-                    {
-                        ReplaceTile(replacedTile.targetTilemap, cellLocation);
-                    }
-                    AddNewTile(cellLocation, placedTile);
+                    this.triedToPlaceTiles.Add(cellPosition);
+                    return PlacementResult.AlreadyExisted;
                 }
             }
-            else
+            // Check clear, place tiles
+            foreach (GameTile tile in referencedTiles)
             {
-                triedToPlaceTiles.Add(cellLocation);
+                tilemapsToTileLayerManagers[tile.targetTilemap].AddTile(cellPosition, tile);
+                foreach (Tilemap replacementTilemap in tile.replacementTilemaps)
+                {
+                    tilemapsToTileLayerManagers[replacementTilemap].RemoveTile(cellPosition);
+                }
             }
-            lastPlacedTile = cellLocation;
-            isFirstTile = false;
-            return true;
+            this.triedToPlaceTiles.Add(cellPosition);
+            return PlacementResult.Placed;
         }
-        else
-        {
-            return false;
-        }
+        return PlacementResult.Restricted;
     }
 
-    private void RestoreReplacedTile (Vector3Int cellLocation)
+/*    private void RestoreReplacedTile (Vector3Int cellLocation)
     {
-        foreach (TerrainTile addedTile in addedTiles[cellLocation])
+        foreach (GameTile addedTile in addedTiles[cellLocation])
         {
             addedTile.targetTilemap.SetTile(cellLocation, null);
             if (removedTiles.ContainsKey(cellLocation))
             {
-                foreach (TerrainTile removedTile in removedTiles[cellLocation])
+                foreach (GameTile removedTile in removedTiles[cellLocation])
                 {
                     removedTile.targetTilemap.SetTile(cellLocation, removedTile);
                     if (removedTile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
@@ -383,70 +391,9 @@ public class TilePlacementController : MonoBehaviour
             removedTileColors[cellLocation].Values.First().SetColor(cellLocation, removedTileColors[cellLocation].Keys.First());
             removedTileColors.Remove(cellLocation);
         }
-    }
+    }*/
 
-    private void AddNewTile(Vector3Int cellLocation, TerrainTile tile)
-    {
-        triedToPlaceTiles.Add(cellLocation);
-        if (!addedTiles.ContainsKey(cellLocation))
-        {
-            addedTiles.Add(cellLocation, new List<TerrainTile> { tile });
-        }
-        else
-        {
-            addedTiles[cellLocation].Add(tile);
-        }
-        tile.targetTilemap.SetTile(cellLocation, tile);
-        PlaceAuxillaryTile(cellLocation, tile);
-        if (tile.targetTilemap.TryGetComponent(out TileContentsManager tileAttributes))
-        {
-            tileAttributes.MergeTile(cellLocation, tile, addedTiles.Keys.ToList());
-        }
-    }
-
-    private void ReplaceTile(Tilemap replacedTilemap, Vector3Int cellLocation)
-    {
-        TerrainTile removedTile = (TerrainTile)replacedTilemap.GetTile(cellLocation);
-        if (!removedTiles.ContainsKey(cellLocation))
-        {
-            removedTiles.Add(cellLocation, new List<TerrainTile> { removedTile });
-        }
-        else if (!removedTiles[cellLocation].Contains(removedTile))
-        {
-            removedTiles[cellLocation].Add(removedTile);
-        }
-        if (replacedTilemap.TryGetComponent(out TileContentsManager tileAttributes))
-        {
-            tileAttributes.RemoveTile(cellLocation);
-        }
-        if (replacedTilemap.TryGetComponent(out TileColorManager tileColorManager))
-        {
-            if (!removedTileColors.ContainsKey(cellLocation))
-            {
-                removedTileColors.Add(cellLocation, new Dictionary<Color, Tilemap>());
-                removedTileColors[cellLocation].Add(replacedTilemap.GetColor(cellLocation), replacedTilemap);
-            }
-        }
-        replacedTilemap.SetTile(cellLocation, null);
-    }
-
-    private void PlaceAuxillaryTile(Vector3Int cellLocation, TerrainTile tile)
-    {
-        foreach (TerrainTile auxillaryTile in tile.auxillaryTiles)
-        {
-            if (!addedTiles.ContainsKey(cellLocation))
-            {
-                addedTiles.Add(cellLocation, new List<TerrainTile> { auxillaryTile });
-            }
-            else
-            {
-                addedTiles[cellLocation].Add(auxillaryTile);
-            }
-            auxillaryTile.targetTilemap.SetTile(cellLocation, auxillaryTile);
-        }
-    }
-
-    private void GetNeighborCellLocations(Vector3Int cellLocation, TerrainTile tile, Tilemap targetTilemap)
+    private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile, Tilemap targetTilemap)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
@@ -457,5 +404,18 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
-
+    private bool IsPositionFree(Vector3Int cellLocation)
+    {
+        if (godMode)
+        {
+            return true;
+        }
+        if (!GridSystem.IsWithinGridBouds(cellLocation))
+        {
+            Debug.Log("outside bound");
+            return false;
+        }
+        GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
+        return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
+    }
 }

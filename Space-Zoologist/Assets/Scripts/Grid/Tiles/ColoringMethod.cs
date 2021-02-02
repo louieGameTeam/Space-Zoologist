@@ -7,7 +7,7 @@ public class ColoringMethod : MonoBehaviour
 {
     private float[,] interpolationArray = null;
     [SerializeField] public int affectedRange;
-    public virtual void SetColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
+    public virtual void SetColor(float[] composition, Vector3Int cellLocation, GameTile tile, Tilemap tilemap, List<GameTile> managedTiles, List<GameTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
     {
         tilemap.SetTileFlags(cellLocation, TileFlags.None);
         Color color = GridUtils.RYBValuesToRGBColor(composition, interpolationArray);

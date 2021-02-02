@@ -5,14 +5,21 @@ using UnityEngine.Tilemaps;
 
 public class GrassColoringMethod : ColoringMethod
 {
-    private float[] gasComposition = new float[] { 0.5f, 0.2f, 0.3f };
+    private float[] gasComposition = new float[] { 0, 0, 0 };
     private float[] colorShitfDirt = new float[] { 0, 0.3f, 0.3f };
     private float[] colorShitfSand = new float[] { -0.2f, 0.4f, -0.1f };
-    public override void SetColor(float[] composition, Vector3Int cellLocation, TerrainTile tile, Tilemap tilemap, List<TerrainTile> managedTiles, List<TerrainTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
+    [SerializeField] EnclosureSystem EnclosureSystem = default;
+
+    public override void SetColor(float[] composition, Vector3Int cellLocation, GameTile tile, Tilemap tilemap, List<GameTile> managedTiles, List<GameTile> linkedTiles, TileSystem tileSystem, TilePlacementController tilePlacementController)
     {
-        TerrainTile liquid = linkedTiles[0];
-        TerrainTile dirt = linkedTiles[1];
-        TerrainTile sand = linkedTiles[2];
+        float[] newComposition = this.EnclosureSystem.GetAtmosphericComposition(cellLocation).ConvertAtmosphereComposition();
+        for (int i = 0; i < 3; i++)
+        {
+            gasComposition[i] = newComposition[i] / Mathf.Max(newComposition);
+        }
+        GameTile liquid = linkedTiles[0];
+        GameTile dirt = linkedTiles[1];
+        GameTile sand = linkedTiles[2];
         float distance = tileSystem.DistanceToClosestTile(cellLocation, liquid, affectedRange);
         float[] newRYBValues = new float[] { 0, 0, 0 };
         for (int i = 0; i < 3; i++)

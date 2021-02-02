@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Tutorial1Goat
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
+  speciesName: Goat
+  dominance: 5
+  growthRate: 10
+  range: 10
+  size: 10
+  accessibleTerrain: 020000000100000003000000
+  icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
+  needsList:
+  - needType: 0
+    needs:
+    - needName: Dirt
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: e13580ca2c186441ea42fcc461524b8f, type: 2}
+      thresholds:
+      - 20
+    - needName: Grass
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: e13580ca2c186441ea42fcc461524b8f, type: 2}
+      thresholds:
+      - 20
+  - needType: 3
+    needs:
+    - needName: Space Maple
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: d8db50c154b53314db35cc28d7bacbde, type: 2}
+      thresholds:
+      - 10
+  - needType: 4
+    needs:
+    - needName: MineralX
+      severity: 2
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
+      thresholds:
+      - 0.1
+  representation: {fileID: 0}

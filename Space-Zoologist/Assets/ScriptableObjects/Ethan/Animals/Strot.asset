@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Strot
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: e28c40730e812434993f5de4a67f674f, type: 2}
+  speciesName: Strot
+  dominance: 5
+  growthRate: 60.5
+  range: 8.28
+  size: 5
+  accessibleTerrain: 0100000003000000
+  icon: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c, type: 3}
+  needsList:
+  - needType: 7
+    needs:
+    - needName: Snake
+      severity: 5
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: eede245d4c0be4652bdb305c79acf15f, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: 3c6ef48567b6544d8a671d6c5c2c1ac5, type: 2}
+      thresholds:
+      - 1
+      - 2
+  - needType: 0
+    needs:
+    - needName: Sand
+      severity: 5
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: e13580ca2c186441ea42fcc461524b8f, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 6a4366bcd80b749e1a0c994bf6f9a2ac, type: 2}
+      thresholds:
+      - 20
+      - 30
+    - needName: Grass
+      severity: 5
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
+      - Condition: 1
+        Behavior: {fileID: 11400000, guid: e13580ca2c186441ea42fcc461524b8f, type: 2}
+      - Condition: 2
+        Behavior: {fileID: 11400000, guid: 6a4366bcd80b749e1a0c994bf6f9a2ac, type: 2}
+      thresholds:
+      - 20
+      - 30
+  representation: {fileID: 0}

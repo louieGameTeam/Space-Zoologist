@@ -1,43 +1,32 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Store/ReserveStore.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/RPS/EnclosureSystem.cs">
     <Files>
-      <File FileName="Assets/Scripts/Store/ReserveStore.cs" Line="81" Column="6" />
-      <File FileName="Assets/Scripts/SelectableItems/SelectableItem.cs" Line="15" Column="1" />
-      <File FileName="Assets/Scripts/Store/PlayerController.cs" Line="80" Column="58" />
-      <File FileName="Assets/Scripts/HUD/HUD.cs" Line="9" Column="5" />
-      <File FileName="Assets/Scripts/Journal/JournalSystem.cs" Line="78" Column="12" />
-      <File FileName="Assets/Scripts/SelectableItems/ISelectable.cs" Line="17" Column="5" />
-      <File FileName="Assets/Scripts/Store/StoreItemSO.cs" Line="3" Column="20" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="391" Column="10" />
+      <File FileName="Assets/Scripts/UI/Store/SellingManager.cs" Line="63" Column="53" />
+      <File FileName="Assets/Scripts/Grid/TileSystem.cs" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" />
+      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="68" Column="1" />
+      <File FileName="Assets/Scripts/Grid/Testers/MapDesigningTool.cs" Line="15" Column="21" />
+      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="42" Column="1" />
+      <File FileName="Assets/Scripts/UI/CameraController.cs" Line="122" Column="66" />
+      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="154" Column="1" />
+      <File FileName="Assets/Scripts/Species/Representation/PopulationBehaviorManager.cs" Line="24" Column="1" />
+      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="290" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="Animals" expanded="True" />
-                <Node name="Grid" expanded="True" />
-                <Node name="HUD" expanded="True" />
-                <Node name="Journal" expanded="True" />
-                <Node name="Player" expanded="True" />
-                <Node name="SelectableItems" expanded="True" />
-                <Node name="Store" expanded="True">
-                  <Node name="ReserveStore.cs" selected="True" />
-                </Node>
-                <Node name="Testing" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
+          <Node name="Space-Zoologist" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4a2ddd7e-272f-401c-af4d-87407364af7d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bb2de2a6-0d0f-4cf7-8345-d280953fe2cb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Unity.2D.Tilemap.Extras.Editor PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

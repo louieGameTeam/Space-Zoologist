@@ -15,7 +15,7 @@ public class TileContentsManager : MonoBehaviour
     private Tilemap tilemap;
     private List<Vector3Int> neighborTiles = new List<Vector3Int>();
     private bool isPlacedTileNew;
-    private TerrainTile terrainTile;
+    private GameTile terrainTile;
     private enum neighborTileStatus
     {
         None,
@@ -26,92 +26,37 @@ public class TileContentsManager : MonoBehaviour
     {
         tilemap = GetComponent<Tilemap>();
     }
-    public void MergeTile (Vector3Int cellLocation, TerrainTile tile, List<Vector3Int> addedTiles)
+    public void SetCompostion(Vector3Int cellLocation, float[] composition)
+    {
+        //tileContents[cellLocation] = new float[] { composition[0], composition[1], composition[2] };
+        for (int i = 0; i <3; i++)
+        {
+            tileContents[cellLocation][i] = composition[i];
+        }
+        GameTile tile = (GameTile)tilemap.GetTile(cellLocation);
+        ChangeColor(cellLocation, null, tile);
+    }
+    public void ModifyComposition(Vector3Int cellLocation, float[] changeInComposition)
+    {
+        for (int i = 0; i < changeInComposition.Length; i++)
+        {
+            if (tileContents[cellLocation][i] + changeInComposition[i] >= 1)
+            {
+                tileContents[cellLocation][i] = 1;
+                continue;
+            }
+            if (tileContents[cellLocation][i] + changeInComposition[i] <= 0)
+            {
+                tileContents[cellLocation][i] = 0;
+                continue;
+            }
+            tileContents[cellLocation][i] += changeInComposition[i];
+        }
+    }
+    public void MergeTile (Vector3Int cellLocation, GameTile tile, List<Vector3Int> addedTiles)
     {
         terrainTile = tile;
-        if (tile.isMergingAttributes)
-        {
-            switch (GetNeighborTileStatus(cellLocation))
-            {
-                case neighborTileStatus.None:
-                    isPlacedTileNew = true;
-                    if (!tileContents.ContainsKey(cellLocation))
-                    {
-                        tileContents.Add(cellLocation, new float[] { 0, 0, 0 });
-                    }
-                    if (!addedAttributes.ContainsKey(cellLocation))
-                    {
-                        addedAttributes.Add(cellLocation, tileContents[cellLocation]);
-                    }
-                    ChangeColor(cellLocation);
-                    return;
-                case neighborTileStatus.Same:
-                    isPlacedTileNew = false;
-                    foreach (Vector3Int location in addedTiles)
-                    {
-                        tileContents[location] = tileContents[neighborTiles.First()];
-                        if (!addedAttributes.ContainsKey(location))
-                        {
-                            addedAttributes.Add(location, tileContents[location]);
-                        }
-                        ChangeColor(location);
-                    }
-                    neighborTiles = new List<Vector3Int>();
-                    break;
-                case neighborTileStatus.Different:
-                    isPlacedTileNew = false;
-                    neighborTiles = new List<Vector3Int>();
-                    GetNeighborCellLocations(cellLocation,addedTiles);
-                    neighborTiles.Remove(cellLocation);
-                    Dictionary<float[], int> neighborTileContents = new Dictionary<float[], int>();
-                    foreach (Vector3Int tileLocation in neighborTiles)
-                    {/*
-                        if(addedAttributes.ContainsKey(tileLocation))
-                        {
-                            continue;
-                        }*/
-                        float[] contents = tileContents[tileLocation];
-                        if (!changedAttributes.ContainsKey(tileLocation))
-                        {
-                            changedAttributes.Add(tileLocation, contents);
-                        }
-                        if (neighborTileContents.ContainsKey(contents))
-                        {
-                            neighborTileContents[contents] += 1;
-                        }
-                        else
-                        {
-                            neighborTileContents.Add(contents, 1);
-                        }
-                    }
-                    float[] averageContentValues = new float[neighborTileContents.Keys.First().Length];
-                    for (int i = 0; i < neighborTileContents.Keys.First().Length; i++)
-                    {
-                        float totalValue = 0;
-                        int totalFrequency = 0;
-                        foreach (KeyValuePair<float[], int> keyValuePair in neighborTileContents)
-                        {
-                            totalValue += keyValuePair.Key[i] * (float)keyValuePair.Value;
-                            totalFrequency += keyValuePair.Value;
-                        }
-                        averageContentValues[i] = totalValue / (float)totalFrequency;
-                    }
-                    foreach (Vector3Int tileLocation in neighborTiles)
-                    {
-                        tileContents[tileLocation] = averageContentValues;
-                        ChangeColor(tileLocation);
-                    }
-                    foreach (Vector3Int tileLocation in addedTiles)
-                    {
-                        tileContents[tileLocation] = tileContents[neighborTiles.First()];
-                        ChangeColor(tileLocation);
-                    }
-                    neighborTiles = new List<Vector3Int>();
-                    break;
-                default:
-                    return;
-            }
-        }
+        float[] newcomp = new float[] { 0, 0, 0 };
     }
     public void RemoveTile (Vector3Int cellLocation)
     {
@@ -154,11 +99,15 @@ public class TileContentsManager : MonoBehaviour
             }
         }
     }
-    private void ChangeColor(Vector3Int cellLocation)
+    private void ChangeColor(Vector3Int cellLocation, TileColorManager tileColorManager = null , GameTile tile = null)
     {
-        if(tilemap.TryGetComponent(out TileColorManager tileColorManager))
+        if(tileColorManager != null)
         {
-            tileColorManager.SetTileColor(cellLocation, terrainTile);
+            tileColorManager.SetTileColor(cellLocation, tile ?? terrainTile);
+        }
+        else if(tilemap.TryGetComponent(out TileColorManager colorManager))
+        {
+            colorManager.SetTileColor(cellLocation, tile ?? terrainTile);
         }
     }
     private neighborTileStatus GetNeighborTileStatus(Vector3Int cellLocation)
@@ -189,13 +138,13 @@ public class TileContentsManager : MonoBehaviour
         }
         return neighborTileStatus.Same;
     }
-    private void GetNeighborCellLocations(Vector3Int cellLocation,List<Vector3Int> addedTiles)
+    private void GetNeighborCellLocations(Vector3Int cellLocation, List<Vector3Int> addedTiles)
     {
         foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
         {
             if (
-                !neighborTiles.Contains(tileToCheck) && 
                 tilemap.GetTile(tileToCheck) == terrainTile &&
+                !neighborTiles.Contains(tileToCheck) &&
                 tileContents.ContainsKey(tileToCheck))
             {
                 neighborTiles.Add(tileToCheck);
@@ -210,11 +159,14 @@ public class TileContentsManager : MonoBehaviour
             float n0 = (float)Random.Range(0, 100) / 100;
             float n1 = (float)Random.Range(0, 100) / 100;
             float n2 = (float)Random.Range(0, 100) / 100;
-            foreach(Vector3Int tileLocation in addedAttributes.Keys)
+            float[] newComp = new float[] { n0, n1, n2 };
+            foreach (Vector3Int tileLocation in addedAttributes.Keys)
             {
-                tileContents[tileLocation] = new float[] { n0, n1, n2 };
+                tileContents[tileLocation] = newComp;
                 ChangeColor(tileLocation);
                 //TODO call user to enter parameters
+
+                //Debug.Log($"Placed liquid {n0}:{n1}:{n2}");
             }
             isPlacedTileNew = false;
         }
@@ -237,9 +189,15 @@ public class TileContentsManager : MonoBehaviour
     }
     public void RefreshAllColors()
     {
-        foreach (Vector3Int tileLocation in tilemap.cellBounds.allPositionsWithin)
+        if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
         {
-            ChangeColor(tileLocation);
+            foreach (Vector3Int tileLocation in tilemap.cellBounds.allPositionsWithin)
+            {
+                if (tileContents.ContainsKey(tileLocation))
+                {
+                    ChangeColor(tileLocation, tileColorManager);
+                }
+            }
         }
     }
 }

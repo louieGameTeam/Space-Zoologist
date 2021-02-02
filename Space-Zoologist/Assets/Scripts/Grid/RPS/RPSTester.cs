@@ -17,7 +17,7 @@ public class RPSTester : MonoBehaviour
 
     public void Graph()
     {
-        List<Vector3Int> list = GetComponent<ReservePartitionManager>().GetLocationWithAccess(population);
+        List<Vector3Int> list = GetComponent<ReservePartitionManager>().GetLocationsWithAccess(population);
 
         //set color based on the fraction density/maxdensity
         foreach (Vector3Int pos in list)
@@ -26,7 +26,7 @@ public class RPSTester : MonoBehaviour
             mask.SetTileFlags(pos, TileFlags.None);
 
             //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
-            mask.SetColor(pos, new Color(0, 1, 0, 255.0f / 255));
+            //mask.SetColor(pos, new Color(0, 1, 0, 255.0f / 255));
         }
 
         //debug
