@@ -246,7 +246,7 @@ public class TileLayerManager : MonoBehaviour
     }
     public SerializedTilemap Serialize()
     {
-        Debug.Log("Serialize " + this.tilemap.name);
+        // Debug.Log("Serialize " + this.tilemap.name);
         return new SerializedTilemap(this.gameObject.name, this.positionsToTileData, this.liquidBodies);
     }
     /// <summary>

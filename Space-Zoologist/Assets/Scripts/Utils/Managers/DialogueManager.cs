@@ -18,7 +18,7 @@ public class DialogueManager : MonoBehaviour
     // The starting dialogue
     [SerializeField] private NPCConversation startingConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
-    [SerializeField] GameObject StoreButtonsGameObject = default;
+    [SerializeField] public GameObject StoreButtonsGameObject = default;
 
     private bool ContinueSpeech = false;
 

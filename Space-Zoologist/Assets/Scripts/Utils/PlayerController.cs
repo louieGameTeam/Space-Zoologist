@@ -20,9 +20,14 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        for (int i=0; i<this.StoreMenus.Count; i++)
+
+    }
+
+    private void setupStoreBindings()
+    {
+        for (int i = 0; i < this.StoreMenus.Count; i++)
         {
-            switch(i)
+            switch (i)
             {
                 case 0:
                     this.StoreBindings.Add(KeyCode.Alpha1, StoreMenus[i]);

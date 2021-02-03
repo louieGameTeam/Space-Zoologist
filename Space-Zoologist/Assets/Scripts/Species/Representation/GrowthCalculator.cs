@@ -10,92 +10,47 @@ public class GrowthCalculator
 {
     public GrowthStatus GrowthStatus { get; private set; }
     public float GrowthRate { get; private set; }
+    public Dictionary<string, int> needTimers = new Dictionary<string, int>();
+    public int deadAnimals = 0;
 
     public GrowthCalculator()
     {
         this.GrowthRate = 0;
-        this.GrowthStatus = GrowthStatus.stagnate;
+        this.GrowthStatus = GrowthStatus.growing;
+    }
+
+    public void setupNeedTimer(string need, int severity)
+    {
+        needTimers.Add(need, severity);
     }
 
     /*
-        if any need has a severity of 2 and isn't being met, population does not grow in size.
+        reset need timer if good, countdown need timer if bad, if reach 0, animal removed on next day and countdown starts over
     */
     public void CalculateGrowth(Population population)
     {
-        bool IsStagnate = false;
+        deadAnimals = 0;
+        GrowthStatus = GrowthStatus.growing;
         foreach(KeyValuePair<string, Need> need in population.Needs)
         {
             switch(need.Value.GetCondition(need.Value.NeedValue))
             {
                 case NeedCondition.Bad:
-                    if (need.Value.Severity == 2)
+                    GrowthStatus = GrowthStatus.declining;
+                    needTimers[need.Key]--;
+                    if (needTimers[need.Key] == 0)
                     {
-                        IsStagnate = true;
+                        deadAnimals++;
+                        needTimers[need.Key] = need.Value.Severity;
                     }
                     break;
-                case NeedCondition.Neutral:
-                    break;
                 case NeedCondition.Good:
+                    needTimers[need.Key] = need.Value.Severity;
                     break;
                 default:
+                    Debug.LogError("Needs incorrectly setup");
                     break;
             }
         }
-        if (IsStagnate)
-        {
-            this.GrowthStatus = GrowthStatus.stagnate;
-        }
-        else
-        {
-            this.GrowthStatus = GrowthStatus.growing;
-            this.GrowthRate = population.Species.GrowthRate;
-        }
-
     }
-
-    /*
-        bad > 0 declining
-        bad == 0 && good == 0 stagnate
-        bad == 0 && good > 0 growing
-        start with a rate of 60 and take off the rate of severity
-    */
-    // public void OldCalculateGrowth(Population population)
-    // {
-    //     int neutralConditionCount = 0;
-    //     int badConditionModifier = 0;
-    //     foreach(KeyValuePair<string, Need> need in population.Needs)
-    //     {
-    //         switch(need.Value.GetCondition(need.Value.NeedValue))
-    //         {
-    //             case NeedCondition.Bad:
-    //                 badConditionModifier += need.Value.Severity;
-    //                 break;
-    //             case NeedCondition.Neutral:
-    //             neutralConditionCount++;
-    //                 break;
-    //             case NeedCondition.Good:
-    //                 break;
-    //             default:
-    //                 break;
-    //         }
-    //         if (neutralConditionCount == population.Needs.Count)
-    //         {
-    //             this.GrowthStatus = GrowthStatus.stagnate;
-    //         }
-    //         else if (badConditionModifier > 0)
-    //         {
-    //             this.GrowthStatus = GrowthStatus.declining;
-    //             this.GrowthRate = population.Species.GrowthRate - badConditionModifier;
-    //             if (this.GrowthRate < 10)
-    //             {
-    //                 this.GrowthRate = 10;
-    //             }
-    //         }
-    //         else
-    //         {
-    //             this.GrowthStatus = GrowthStatus.growing;
-    //             this.GrowthRate = population.Species.GrowthRate;
-    //         }
-    //     }
-    // }
 }

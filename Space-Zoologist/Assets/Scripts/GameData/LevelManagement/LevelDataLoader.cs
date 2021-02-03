@@ -82,8 +82,8 @@ public class LevelDataLoader : ScriptableObject
         string name = row[1];
         int dominance;
         int.TryParse(row[3], out dominance);
-        float growthFactor;
-        float.TryParse(row[5], out growthFactor);
+        int growthFactor;
+        int.TryParse(row[5], out growthFactor);
         // Terrain
         List<String> terrain = new List<string>();
         row = data[i + 2].Trim().Split(new char[] { ',' });

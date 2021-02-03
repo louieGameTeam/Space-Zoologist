@@ -12,12 +12,12 @@ public class NeedSystemUpdater : MonoBehaviour
     public bool IsPaused { get; set; }
 
     // Temp update
-    private void Update()
-    {
-        if (this.IsPaused)
-        {
-            return;
-        }
-        NeedSystemManager.UpdateSystems();
-    }
+    //private void Update()
+    //{
+    //    if (this.IsPaused)
+    //    {
+    //        return;
+    //    }
+    //    NeedSystemManager.UpdateSystems();
+    //}
 }

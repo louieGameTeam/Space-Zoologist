@@ -25,23 +25,23 @@ public class GridIO : MonoBehaviour
         name = name ?? this.sceneName;
         name = name + ".json";
         string fullPath = Path.Combine(Application.persistentDataPath, name);
-        Debug.Log("Saving Grid to " + fullPath);
+        // Debug.Log("Saving Grid to " + fullPath);
         if (File.Exists(fullPath))
         {
-            Debug.Log("Overwriting file at " + fullPath);
+            // Debug.Log("Overwriting file at " + fullPath);
         }
         using (StreamWriter streamWriter = new StreamWriter(fullPath))
         {
             streamWriter.Write(JsonUtility.ToJson(new SerializedGrid(this.tileLayerManagers)));
         }
-        Debug.Log("Grid Saved to: " + fullPath);
+        // Debug.Log("Grid Saved to: " + fullPath);
     }
     public void LoadGrid(string name = null)
     {
         name = name ?? this.sceneName;
         name = name + ".json";
         string fullPath = Path.Combine(Application.persistentDataPath, name);
-        Debug.Log("Loading map save: " + fullPath);
+        // Debug.Log("Loading map save: " + fullPath);
 
         SerializedGrid serializedGrid;
         try

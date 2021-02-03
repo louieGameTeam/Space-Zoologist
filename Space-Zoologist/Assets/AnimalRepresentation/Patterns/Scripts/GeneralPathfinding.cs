@@ -15,7 +15,7 @@ public class GeneralPathfinding : BehaviorPattern
             // TODO figure out how to exit pattern since condition not satisfied
             int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
             destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
-            Debug.Log(this.Destination.ToString() + " location not found, pathfinding to random location instead");
+            // Debug.Log(this.Destination.ToString() + " location not found, pathfinding to random location instead");
         }
         // Debug.Log("Pathfidning towards " + this.Destination.ToString() + " located at " + destination.x + ", " + destination.y);
         AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);

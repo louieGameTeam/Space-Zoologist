@@ -90,7 +90,6 @@ public class PauseManager : MonoBehaviour
         this.PauseButtonButton.onClick.AddListener(this.Pause);
         this.BehaviorPatternUpdater.IsPaused = false;
         this.NeedSystemUpdater.IsPaused = false;
-        this.PopulationManager.UpdateAccessibleLocations();
         this.UnpauseAllAnimalsMovementController();
         this.GridSystem.UnhighlightHomeLocations();
     }

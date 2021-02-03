@@ -34,7 +34,6 @@ public class PopulationManager : MonoBehaviour
         {
             this.SetupExistingPopulation(population);
         }
-        this.NeedSystemManager.UpdateAllSystems();
     }
 
     /// <summary>
@@ -105,6 +104,14 @@ public class PopulationManager : MonoBehaviour
         foreach (Population population in this.ExistingPopulations)
         {
             population.UpdatePopulationStateForChecking();
+        }
+    }
+
+    public void UpdateAllGrowthConditions()
+    {
+        foreach(Population population in this.ExistingPopulations)
+        {
+            population.UpdateGrowthConditions();
         }
     }
 

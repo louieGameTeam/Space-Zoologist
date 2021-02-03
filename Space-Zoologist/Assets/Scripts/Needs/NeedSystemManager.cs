@@ -14,6 +14,7 @@ public class NeedSystemManager : MonoBehaviour
     private Dictionary<NeedType, NeedSystem> systems = new Dictionary<NeedType, NeedSystem>();
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
+    [SerializeField] TimeSystem TimeSystem = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
@@ -23,6 +24,15 @@ public class NeedSystemManager : MonoBehaviour
     /// </summary>
     /// <remarks>Enviormental -> FoodSource/Species (consumable) -> Density/Symbiosis (other), this order has to be fixed</remarks>
     private void Start()
+    {
+        setupNeedSystems();
+        FoodSourceManager.Initialize();
+        PopulationManager.Initialize();
+        this.UpdateAllSystems();
+        PopulationManager.UpdateAllGrowthConditions();
+    }
+
+    private void setupNeedSystems()
     {
         // Add enviormental NeedSystem
         AddSystem(new AtmosphereNeedSystem(EnclosureSystem));
@@ -39,9 +49,6 @@ public class NeedSystemManager : MonoBehaviour
 
         // Add Symbiosis NeedSystem
         AddSystem(new SymbiosisNeedSystem(ReservePartitionManager));
-
-        FoodSourceManager.Initialize();
-        PopulationManager.Initialize();
     }
 
     /// <summary>
@@ -87,11 +94,13 @@ public class NeedSystemManager : MonoBehaviour
 
     public void UpdateAllSystems()
     {
+        Debug.Log("---Need Systems FORCED Updated---");
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             entry.Value.UpdateSystem();
         }
     }
+
 
     public void UpdateSystem(NeedType needType)
     {
@@ -117,6 +126,7 @@ public class NeedSystemManager : MonoBehaviour
     /// </remarks>
     public void UpdateSystems()
     {
+        Debug.Log("---Need Systems Updated---");
         // Update populations' accessible map when terrain was modified
         if (this.TileSystem.HasTerrainChanged)
         {
