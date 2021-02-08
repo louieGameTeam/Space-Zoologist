@@ -42,13 +42,13 @@ public class NeedSystemManager : MonoBehaviour
 
         // FoodSource and Species NS
         AddSystem(new FoodSourceNeedSystem(ReservePartitionManager));
-        AddSystem(new SpeciesNeedSystem(ReservePartitionManager));
+        // AddSystem(new SpeciesNeedSystem(ReservePartitionManager));
 
         // Add Density NeedSystem
-        AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
+        //AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
 
         // Add Symbiosis NeedSystem
-        AddSystem(new SymbiosisNeedSystem(ReservePartitionManager));
+        // AddSystem(new SymbiosisNeedSystem(ReservePartitionManager));
     }
 
     /// <summary>
@@ -94,7 +94,6 @@ public class NeedSystemManager : MonoBehaviour
 
     public void UpdateAllSystems()
     {
-        Debug.Log("---Need Systems FORCED Updated---");
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             entry.Value.UpdateSystem();
@@ -126,7 +125,6 @@ public class NeedSystemManager : MonoBehaviour
     /// </remarks>
     public void UpdateSystems()
     {
-        Debug.Log("---Need Systems Updated---");
         // Update populations' accessible map when terrain was modified
         if (this.TileSystem.HasTerrainChanged)
         {

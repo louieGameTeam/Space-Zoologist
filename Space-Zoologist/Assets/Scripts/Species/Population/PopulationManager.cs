@@ -22,8 +22,8 @@ public class PopulationManager : MonoBehaviour
     public void Initialize()
     {
         GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
-        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
-        this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
+        //this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
+        // this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
 
         foreach (GameObject population in populations)
         {
@@ -93,10 +93,10 @@ public class PopulationManager : MonoBehaviour
         population.UpdateAccessibleArea(this.ReservePartitionManager.GetLocationsWithAccess(population),
         this.GridSystem.GetGridWithAccess(population));
         this.GridSystem.HighlightHomeLocations();
-        this.speciesNeedSystem.AddPopulation(population);
         this.NeedSystemManager.RegisterWithNeedSystems(population);
         this.BehaviorPatternUpdater.RegisterPopulation(population);
-        this.symbiosisNeedSystem.AddPopulation(population);
+        //this.speciesNeedSystem.AddPopulation(population);
+        //this.symbiosisNeedSystem.AddPopulation(population);
     }
 
     public void UdateAllPopulationStateForChecking()

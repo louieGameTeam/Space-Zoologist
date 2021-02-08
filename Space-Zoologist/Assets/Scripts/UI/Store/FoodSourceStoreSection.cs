@@ -16,6 +16,12 @@ public class FoodSourceStoreSection : StoreSection
         base.Initialize();
     }
 
+    public void ManuallyPlaceItem(Item item, Vector3Int mouseGridPosition)
+    {
+        selectedItem = item;
+        placeFood(mouseGridPosition);
+    }
+
     /// <summary>
     /// Handles the click release on the cursor item.
     /// </summary>
@@ -41,7 +47,9 @@ public class FoodSourceStoreSection : StoreSection
         }
     }
 
-    private void placeFood(Vector3Int mouseGridPosition)
+    // TODO setup manual food placement while Virgil gets saving and loading updated.
+
+    public void placeFood(Vector3Int mouseGridPosition)
     {
         Vector3Int pos;
         Vector2 mousePosition = new Vector2(mouseGridPosition.x, mouseGridPosition.y);

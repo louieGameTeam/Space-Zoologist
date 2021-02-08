@@ -363,6 +363,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
             this.triedToPlaceTiles.Add(cellPosition);
+            this.addedTiles.Add(cellPosition, null);
             return PlacementResult.Placed;
         }
         return PlacementResult.Restricted;

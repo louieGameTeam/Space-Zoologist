@@ -107,7 +107,7 @@ public class SpeciesCalculator : NeedCalculator
     {
         foreach (Population population in this.distributedAmount.Keys)
         {
-            population.RemoveAnimal(distributedAmount[population]);
+            // population.RemoveAnimal(distributedAmount[population]);
             //Debug.Log($"Removed {distributedAmount[population]} from {population.Species.SpeciesName}");
         }
     }

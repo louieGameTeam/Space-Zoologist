@@ -22,6 +22,6 @@ public class TileColorManager : MonoBehaviour
     public void SetTileColor(Vector3Int cellLocation, GameTile tile)
     {
         float[] composition = tileSystem.GetTileContentsAt(cellLocation, tile);
-        coloringMethod.SetColor(composition, cellLocation, tile, tilemap, managedTerrainTiles, linkedTerrainTiles, tileSystem, tilePlacementController);
+        // coloringMethod.SetColor(composition, cellLocation, tile, tilemap, managedTerrainTiles, linkedTerrainTiles, tileSystem, tilePlacementController);
     }
 }

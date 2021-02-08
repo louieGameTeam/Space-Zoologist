@@ -13,16 +13,19 @@ public class DisplayInspectorText : MonoBehaviour
 
         displayText += $"Count: {population.Count} [{population.GrowthStatus}]\n";
 
-        if (population.GrowthStatus.Equals(GrowthStatus.declining))
+        if (population.GrowthStatus.Equals(GrowthStatus.growing))
         {
-            foreach (Need need in population.Needs.Values)
-            {
-                displayText += $"Death countdown for {need.NeedName} need: {population.DaysTillDeath(need.NeedName)} days\n";
-            }
+            displayText += $"Population {population.gameObject.name} will increase in {population.DaysTillGrowth()} days\n";
         }
         else
         {
-            displayText += $"Population {population.gameObject.name} will increase in {population.Species.GrowthRate} days\n";
+            foreach (Need need in population.Needs.Values)
+            {
+                if (need.GetCondition(need.NeedValue).Equals(NeedCondition.Bad))
+                {
+                    displayText += $"Death countdown for {need.NeedName} need: {population.DaysTillDeath(need.NeedName)} days\n";
+                }
+            }
         }
 
         this.inspectorWindowText.text = displayText;

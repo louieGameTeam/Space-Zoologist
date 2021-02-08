@@ -12,14 +12,19 @@ public class TimeSystem : MonoBehaviour
 
     public void nextDay()
     {
+        Debug.Log("---NEXT DAY---");
         this.ReserveDraft.loadDraft();
         // Recalculates need system values and should updates all populations needs
-        this.NeedSystemManager.UpdateSystems();
+        //foreach (Population population in this.PopulationManager.Populations)
+        //{
+        //    population.HandleGrowth();
+        //}
+        this.NeedSystemManager.UpdateAllSystems();
         this.PopulationManager.UpdateAccessibleLocations();
-        // Calculate each populations growth and 
         foreach (Population population in this.PopulationManager.Populations)
         {
             population.UpdateGrowthConditions();
+            population.HandleGrowth();
         }
     }
 }

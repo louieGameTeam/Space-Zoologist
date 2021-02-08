@@ -42,7 +42,7 @@ public class Population : MonoBehaviour, Life
     private Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
 
     private Vector3 origin = Vector3.zero;
-    private GrowthCalculator GrowthCalculator = new GrowthCalculator();
+    private GrowthCalculator GrowthCalculator;
     private PoolingSystem PoolingSystem = default;
     private int prePopulationCount = default;
     private PopulationBehaviorManager PopulationBehaviorManager = default;
@@ -50,6 +50,7 @@ public class Population : MonoBehaviour, Life
 
     private void Awake()
     {
+        this.GrowthCalculator = new GrowthCalculator(this);
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         if (this.species != null)
@@ -184,9 +185,9 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
-        // Debug.Log("Need: " + need + " is now in " + this.needs[need].GetCondition(value) + " condition");
+        Debug.Log(need + " now has a value of " + this.needs[need].NeedValue + " and is now in a " + this.needs[need].GetCondition(value) + " condition");
         this.FilterBehaviors(need, this.needs[need].GetCondition(value));
-        //Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
+        // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
     // TODO figure out filter bug for behaviors
@@ -221,6 +222,11 @@ public class Population : MonoBehaviour, Life
         return this.GrowthCalculator.needTimers[need];
     }
 
+    public int DaysTillGrowth()
+    {
+        return this.GrowthCalculator.GrowthCountdown;
+    }
+
     /// <summary>
     /// Calculate growth, then remove or add animals as needed.
     /// </summary>
@@ -228,19 +234,24 @@ public class Population : MonoBehaviour, Life
     {
         if (this.Species == null) return;
 
-        this.GrowthCalculator.CalculateGrowth(this);
-        this.HandleGrowth(this.GrowthCalculator.GrowthStatus, this.GrowthCalculator.deadAnimals);
+        this.GrowthCalculator.CalculateGrowth();
     }
 
-    private void HandleGrowth(GrowthStatus growthStatus, int animalsToRemove)
+    public void HandleGrowth()
     {
-        switch (growthStatus)
+        switch (this.GrowthCalculator.GrowthStatus)
         {
             case GrowthStatus.growing:
-                this.AddAnimal();
+                if (this.GrowthCalculator.IncreasePopulation)
+                {
+                    this.AddAnimal();
+                }
                 break;
             case GrowthStatus.declining:
-                this.RemoveAnimal(animalsToRemove);
+                for (int i=0; i< this.GrowthCalculator.deadAnimals; i++)
+                {
+                    this.RemoveAnimal();
+                }
                 break;
             default:
                 break;
@@ -262,14 +273,16 @@ public class Population : MonoBehaviour, Life
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
+        Debug.Log("POP COUNT: " + this.AnimalPopulation.Count);
     }
 
     // removes last animal in list and last behavior
     // TODO remove count of animals
-    public void RemoveAnimal(int count)
+    public void RemoveAnimal()
     {
-        if (this.AnimalPopulation.Count == 0 || count == 0)
+        if (this.AnimalPopulation.Count == 0)
         {
+            Debug.Log(this.gameObject.name + " population already exitinct");
             return;
         }
         if (this.AnimalPopulation.Count > 0)

@@ -25,8 +25,6 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
 
-    [SerializeField] private Selector selector = default;
-
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
@@ -225,7 +223,7 @@ public class Inspector : MonoBehaviour
                 this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
             }
             // Selection is liquid tile
-            else if (tile.type == TileType.Liquid)
+            else if (tile && tile.type == TileType.Liquid)
             {
                 this.HighlightSingleTile(cellPos);
                 //Debug.Log($"Selected liquid tile @ {cellPos}");
@@ -295,16 +293,15 @@ public class Inspector : MonoBehaviour
         foodSourceGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSourceGameObject;
 
-        FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
-
         // Hightlight
-        List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(this.tileSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
-        foreach (Vector3Int pos in foodSourceRadiusRange)
-        {
-            this.highLight.SetTile(pos, this.highLightTile);
-        }
+        //FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
+        //List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(this.tileSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
+        //foreach (Vector3Int pos in foodSourceRadiusRange)
+        //{
+        //    this.highLight.SetTile(pos, this.highLightTile);
+        //}
 
-        this.lastTilesSelected = foodSourceRadiusRange;
+        //this.lastTilesSelected = foodSourceRadiusRange;
     }
 
     // TODO implement the "HighlightSingleTile" then use it here

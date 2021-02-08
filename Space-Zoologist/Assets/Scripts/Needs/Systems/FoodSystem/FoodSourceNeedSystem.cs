@@ -81,8 +81,8 @@ public class FoodSourceNeedSystem : NeedSystem
     {
         foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
-            if (foodSourceCalculator.IsDirty)
-            {
+            //if (foodSourceCalculator.IsDirty)
+            //{
                 var foodDistributionOutput = foodSourceCalculator.CalculateDistribution();
                 // foodDistributionOutput returns null is not thing to be updated
                 if (foodDistributionOutput != null)
@@ -93,7 +93,7 @@ public class FoodSourceNeedSystem : NeedSystem
                     }
                 }
                 //Debug.Log($"{foodSourceCalculator.FoodSourceName} calculator updated");
-            }
+            //}
         }
         this.isDirty = false;
     }

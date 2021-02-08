@@ -37,8 +37,8 @@ public class GameOver : MonoBehaviour
         {
             if(NextLevelButton != null)
                 NextLevelButton.interactable = true;
-            title.text = "Objectives Complete";
-            text.text = "Completed Secondary Objectives: " + objectiveManager.NumSecondaryObjectivesCompleted;
+            // title.text = "Objectives Complete";
+            //text.text = "Completed Secondary Objectives: " + objectiveManager.NumSecondaryObjectivesCompleted;
         }
         else {
             // Game lost

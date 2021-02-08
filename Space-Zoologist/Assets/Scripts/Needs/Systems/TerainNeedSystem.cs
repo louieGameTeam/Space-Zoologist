@@ -112,35 +112,33 @@ public class TerrainNeedSystem : NeedSystem
             return;
         }
 
-        // TODO: refactor to loop through population and foodsource instead of checking type
-        foreach (Life life in Consumers)
+        foreach (Population population in Consumers.OfType<Population>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-
-            // Call different get terrain info function for Popultation and FoodSource
-            if (life.GetType() == typeof(Population))
+            terrainCountsByType = rpm.GetTypesOfTiles(population);
+            foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
-                terrainCountsByType = rpm.GetTypesOfTiles((Population)life);
+                string needName = ((TileType)index).ToString();
+                int countPerIndividual = count / population.AnimalPopulation.Count;
+                Debug.Log(countPerIndividual);
+                if (population.GetNeedValues().ContainsKey(needName))
+                {
+                    population.UpdateNeed(needName, countPerIndividual);
+                }
             }
-            else if(life.GetType() == typeof(FoodSource))
-            {
-                FoodSource foodSource = (FoodSource)life;
-                terrainCountsByType = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(life.GetPosition()), foodSource.Species.RootRadius);
-            }
-            else
-            {
-                Debug.Assert(true, "Consumer type error!");
-            }
-
+        }
+        foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
+        {
+            int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
+            terrainCountsByType = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 string needName = ((TileType)index).ToString();
-              
 
-                if (life.GetNeedValues().ContainsKey(needName))
+                if (foodSource.GetNeedValues().ContainsKey(needName))
                 {
-                    life.UpdateNeed(needName, count);
+                    foodSource.UpdateNeed(needName, count);
                 }
             }
         }

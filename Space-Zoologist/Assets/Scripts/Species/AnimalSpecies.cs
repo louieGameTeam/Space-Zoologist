@@ -22,7 +22,7 @@ public class AnimalSpecies : ScriptableObject
     // Values
     [SerializeField] private RuntimeAnimatorController animatorController = default;
     [SerializeField] private string speciesName = default;
-    [Range(0.0f, 10.0f)]
+    [Range(1.0f, 10.0f)]
     [SerializeField] private int dominance = default;
     [Range(1, 30)]
     [SerializeField] private int growthRate = 3;
