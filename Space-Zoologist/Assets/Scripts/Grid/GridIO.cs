@@ -36,11 +36,66 @@ public class GridIO : MonoBehaviour
         }
         // Debug.Log("Grid Saved to: " + fullPath);
     }
+    public void SaveAsPresetGrid(string name = null)
+    {
+        name = name ?? this.sceneName;
+        name = name + ".json";
+        string fullPath = this.directory + name; // preset map
+        // Debug.Log("Saving Grid to " + fullPath);
+        if (File.Exists(fullPath))
+        {
+            // Debug.Log("Overwriting file at " + fullPath);
+        }
+        using (StreamWriter streamWriter = new StreamWriter(fullPath))
+        {
+            streamWriter.Write(JsonUtility.ToJson(new SerializedGrid(this.tileLayerManagers)));
+        }
+        // Debug.Log("Grid Saved to: " + fullPath);
+    }
     public void LoadGrid(string name = null)
     {
         name = name ?? this.sceneName;
         name = name + ".json";
-        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        string fullPath = Path.Combine(Application.persistentDataPath, name); // in-game save
+        if (!File.Exists(fullPath)) // in-game save doesn't exist - use preset map instead
+        {
+            fullPath = this.directory + name; // preset map
+        }
+        Debug.Log("Loading map save: " + fullPath);
+
+        SerializedGrid serializedGrid;
+        try
+        {
+            serializedGrid = JsonUtility.FromJson<SerializedGrid>(File.ReadAllText(fullPath));
+        }
+        catch
+        {
+            Debug.LogError("No map save found for this scene, create a map using map designer or check your spelling");
+            return;
+        }
+        foreach (SerializedTilemap serializedTilemap in serializedGrid.serializedTilemaps)
+        {
+            bool found = false;
+            foreach (TileLayerManager tileLayerManager in this.tileLayerManagers)
+            {
+                if (tileLayerManager.gameObject.name.Equals(serializedTilemap.TilemapName))
+                {
+                    tileLayerManager.ParseSerializedTilemap(serializedTilemap, this.tilePlacementController.gameTiles);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                Debug.LogError("Tilemap '" + serializedTilemap.TilemapName + "' was not found");
+            }
+        }
+    }
+    public void LoadPresetGrid(string name = null)
+    {
+        name = name ?? this.sceneName;
+        name = name + ".json";
+        string fullPath = this.directory + name; // preset map
         Debug.Log("Loading map save: " + fullPath);
 
         SerializedGrid serializedGrid;

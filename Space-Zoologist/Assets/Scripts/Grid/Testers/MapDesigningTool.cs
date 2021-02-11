@@ -82,11 +82,11 @@ public class MapDesigningTool : MonoBehaviour
         this.sceneName = GUILayout.TextField(this.sceneName);
         if (GUILayout.Button("Save"))
         {
-            gridIO.SaveGrid(this.sceneName);
+            gridIO.SaveAsPresetGrid(this.sceneName);
         }
         if (GUILayout.Button("Load"))
         {
-            gridIO.LoadGrid(this.sceneName);
+            gridIO.LoadPresetGrid(this.sceneName);
         }
         GUILayout.EndVertical();
     }

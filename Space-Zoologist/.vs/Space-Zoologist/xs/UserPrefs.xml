@@ -1,81 +1,49 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/GridIO.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/ReserveDraft.cs">
     <Files>
-      <File FileName="Assets/Scripts/TimeManagers/TimeSystem.cs" Line="29" Column="48" />
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="278" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Need.cs" Line="44" Column="1" />
-      <File FileName="Assets/Scripts/Species/Representation/GrowthCalculator.cs" Line="82" Column="32" />
-      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="18" Column="60" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="188" Column="10" />
-      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="123" Column="1" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="15" Column="1" />
-      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="38" Column="1" />
-      <File FileName="Assets/Scripts/Grid/ReserveDraft.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="18" Column="6" />
-      <File FileName="Assets/Scripts/GameData/LevelManagement/Level.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameData/LevelManagement/LevelNavigator/LevelNavigator.cs" Line="49" Column="20" />
+      <File FileName="Assets/Scripts/UI/Store/StoreItemCell.cs" Line="33" Column="74" IsPinned="True" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" />
+      <File FileName="Assets/Scripts/UI/Store/StoreSection.cs" />
+      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" />
+      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" />
+      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="381" Column="43" />
+      <File FileName="Assets/Scripts/UI/Store/MachineStoreSection.cs" />
+      <File FileName="Assets/Scripts/UI/Pods/PodMenu.cs" />
+      <File FileName="Assets/Scripts/GameData/LevelManagement/SceneNavigator.cs" Line="12" Column="17" />
+      <File FileName="Assets/Scripts/UI/LevelNavigator/LevelNavigator.cs" Line="26" Column="93" />
+      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="64" Column="1" />
+      <File FileName="Library/PackageCache/com.unity.render-pipelines.core@7.3.1/Runtime/Debugging/DebugUpdater.cs" Line="19" Column="1" />
+      <File FileName="Assets/Scripts/Grid/Testers/MapDesigningTool.cs" Line="84" Column="10" />
+      <File FileName="Assets/Scripts/Grid/ReserveDraft.cs" Line="29" Column="49" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="AnimalRepresentation" expanded="True">
-                <Node name="Modifiers" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
-                <Node name="Patterns" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="DialogueEditor" expanded="True">
-                <Node name="Assets" expanded="True">
-                  <Node name="Scripts" expanded="True">
-                    <Node name="UI" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="GameData" expanded="True">
-                  <Node name="LevelManagement" expanded="True">
-                    <Node name="LevelNavigator" expanded="True" />
-                  </Node>
+                  <Node name="LevelManagement" expanded="True" />
                 </Node>
                 <Node name="Grid" expanded="True">
-                  <Node name="GridIO.cs" selected="True" />
+                  <Node name="Testers" expanded="True" />
+                  <Node name="ReserveDraft.cs" selected="True" />
                 </Node>
-                <Node name="Needs" expanded="True">
-                  <Node name="Systems" expanded="True">
-                    <Node name="FoodSystem" expanded="True" />
-                  </Node>
-                </Node>
-                <Node name="Species" expanded="True">
-                  <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True" />
-                </Node>
-                <Node name="TimeManagers" expanded="True" />
-                <Node name="UI" expanded="True">
-                  <Node name="GameOver" expanded="True" />
-                  <Node name="Inspector" expanded="True" />
-                </Node>
-                <Node name="Utils" expanded="True" />
+                <Node name="UI" expanded="True" />
               </Node>
             </Node>
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ff27d8d4-d675-43c4-9953-232a9b919d9a" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="85ea547e-d417-4fe1-8594-502233a36c3f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Utils/PlayerController.cs" relfile="Assets/Scripts/Utils/PlayerController.cs" line="105" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
