@@ -41,7 +41,7 @@ public class GridIO : MonoBehaviour
         name = name ?? this.sceneName;
         name = name + ".json";
         string fullPath = Path.Combine(Application.persistentDataPath, name);
-        // Debug.Log("Loading map save: " + fullPath);
+        Debug.Log("Loading map save: " + fullPath);
 
         SerializedGrid serializedGrid;
         try

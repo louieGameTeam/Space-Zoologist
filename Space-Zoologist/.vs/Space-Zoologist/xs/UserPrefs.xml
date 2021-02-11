@@ -1,23 +1,19 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/Tiles/TileColorManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/GridIO.cs">
     <Files>
-      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="188" Column="9" />
-      <File FileName="Assets/Scripts/TimeManagers/TimeSystem.cs" Line="21" Column="12" />
-      <File FileName="Assets/Scripts/Needs/NeedSystemManager.cs" Line="99" Column="40" />
-      <File FileName="Assets/Scripts/Species/Representation/GrowthCalculator.cs" Line="81" Column="9" />
-      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="18" Column="115" />
+      <File FileName="Assets/Scripts/TimeManagers/TimeSystem.cs" Line="29" Column="48" />
+      <File FileName="Assets/Scripts/Species/Population/Population.cs" Line="278" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Need.cs" Line="44" Column="1" />
+      <File FileName="Assets/Scripts/Species/Representation/GrowthCalculator.cs" Line="82" Column="32" />
+      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="18" Column="60" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="188" Column="10" />
       <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="123" Column="1" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="366" Column="53" />
-      <File FileName="Assets/Scripts/Grid/Tiles/GrassColoringMethod.cs" Line="36" Column="24" />
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="8" Column="14" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" Line="140" Column="37" />
-      <File FileName="Assets/Scripts/Grid/Tiles/GameTile.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/GameOver/GameOver.cs" Line="40" Column="16" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="217" Column="9" />
-      <File FileName="Assets/Scripts/Species/Population/PopulationManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" Line="84" Column="1" />
-      <File FileName="Assets/Scripts/Grid/Tiles/TileColorManager.cs" Line="22" Column="18" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="38" Column="1" />
+      <File FileName="Assets/Scripts/Grid/ReserveDraft.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="18" Column="6" />
+      <File FileName="Assets/Scripts/GameData/LevelManagement/Level.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameData/LevelManagement/LevelNavigator/LevelNavigator.cs" Line="49" Column="20" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -40,11 +36,13 @@
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Grid" expanded="True">
-                  <Node name="RPS" expanded="True" />
-                  <Node name="Tiles" expanded="True">
-                    <Node name="TileColorManager.cs" selected="True" />
+                <Node name="GameData" expanded="True">
+                  <Node name="LevelManagement" expanded="True">
+                    <Node name="LevelNavigator" expanded="True" />
                   </Node>
+                </Node>
+                <Node name="Grid" expanded="True">
+                  <Node name="GridIO.cs" selected="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -53,20 +51,29 @@
                 </Node>
                 <Node name="Species" expanded="True">
                   <Node name="Population" expanded="True" />
+                  <Node name="Representation" expanded="True" />
                 </Node>
+                <Node name="TimeManagers" expanded="True" />
                 <Node name="UI" expanded="True">
                   <Node name="GameOver" expanded="True" />
+                  <Node name="Inspector" expanded="True" />
                 </Node>
+                <Node name="Utils" expanded="True" />
               </Node>
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Space-Zoologist" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="30f83dcd-5197-4495-98a8-8325f0919b62" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ff27d8d4-d675-43c4-9953-232a9b919d9a" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

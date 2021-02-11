@@ -11,16 +11,13 @@ public class GrowthCalculator
     public GrowthStatus GrowthStatus { get; private set; }
     public float GrowthRate { get; private set; }
     public Dictionary<string, int> needTimers = new Dictionary<string, int>();
-    public int deadAnimals = 0;
     public int GrowthCountdown = 0;
-    public bool IncreasePopulation { get; private set; }
     Population Population = default;
 
     public GrowthCalculator(Population population)
     {
         this.Population = population;
         this.GrowthCountdown = population.Species.GrowthRate;
-        this.IncreasePopulation = false;
         this.GrowthRate = 0;
         this.GrowthStatus = GrowthStatus.growing;
     }
@@ -36,7 +33,6 @@ public class GrowthCalculator
     public void CalculateGrowth()
     {
         this.GrowthStatus = GrowthStatus.growing;
-        this.IncreasePopulation = false;
         foreach (KeyValuePair<string, Need> need in Population.Needs)
         {
             switch(need.Value.GetCondition(need.Value.NeedValue))
@@ -52,23 +48,13 @@ public class GrowthCalculator
                     break;
             }
         }
-        if (this.GrowthStatus.Equals(GrowthStatus.growing))
-        {
-            this.HandleGrowthCalculation();
-        }
     }
 
     private void HandleBadCondition(KeyValuePair<string, Need> need)
     {
-        // Debug.Log(need + " has a value of " + need.Value.GetCondition(need.Value.NeedValue));
         GrowthStatus = GrowthStatus.declining;
         this.GrowthCountdown = Population.Species.GrowthRate;
         needTimers[need.Key]--;
-        if (needTimers[need.Key] == 0)
-        {
-            deadAnimals++;
-            needTimers[need.Key] = need.Value.Severity;
-        }
     }
 
     private void HandleGoodCondition(KeyValuePair<string, Need> need)
@@ -76,13 +62,29 @@ public class GrowthCalculator
         needTimers[need.Key] = need.Value.Severity;
     }
 
-    private void HandleGrowthCalculation()
+    public int NumAnimalsToRemove()
+    {
+        int numAnimals = 0;
+        var needTimerCopy = new Dictionary<string, int>(this.needTimers);
+        foreach (KeyValuePair<string, int> needTimer in needTimerCopy)
+        {
+            if (needTimer.Value == 0)
+            {
+                numAnimals++;
+                needTimers[needTimer.Key] = Population.Needs[needTimer.Key].Severity;
+            }
+        }
+        return numAnimals;
+    }
+
+    public bool ReadyForGrowth()
     {
         this.GrowthCountdown--;
         if (this.GrowthCountdown == 0)
         {
-            this.IncreasePopulation = true;
             this.GrowthCountdown = Population.Species.GrowthRate;
+            return true;
         }
+        return false;
     }
 }

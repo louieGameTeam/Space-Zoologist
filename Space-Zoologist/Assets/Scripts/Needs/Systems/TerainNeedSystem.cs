@@ -120,7 +120,6 @@ public class TerrainNeedSystem : NeedSystem
             {
                 string needName = ((TileType)index).ToString();
                 int countPerIndividual = count / population.AnimalPopulation.Count;
-                Debug.Log(countPerIndividual);
                 if (population.GetNeedValues().ContainsKey(needName))
                 {
                     population.UpdateNeed(needName, countPerIndividual);

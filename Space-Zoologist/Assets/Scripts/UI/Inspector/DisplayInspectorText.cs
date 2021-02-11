@@ -15,7 +15,7 @@ public class DisplayInspectorText : MonoBehaviour
 
         if (population.GrowthStatus.Equals(GrowthStatus.growing))
         {
-            displayText += $"Population {population.gameObject.name} will increase in {population.DaysTillGrowth()} days\n";
+            displayText += $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days\n";
         }
         else
         {

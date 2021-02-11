@@ -185,7 +185,7 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
-        Debug.Log(need + " now has a value of " + this.needs[need].NeedValue + " and is now in a " + this.needs[need].GetCondition(value) + " condition");
+        // Debug.Log(need + " now has a value of " + this.needs[need].NeedValue + " and is now in a " + this.needs[need].GetCondition(value) + " condition");
         this.FilterBehaviors(need, this.needs[need].GetCondition(value));
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
@@ -217,11 +217,13 @@ public class Population : MonoBehaviour, Life
         return this.needs[need].NeedValue;
     }
 
+    // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
     public int DaysTillDeath(String need)
     {
-        return this.GrowthCalculator.needTimers[need];
+        return this.GrowthCalculator.needTimers[need] + 1;
     }
 
+    // Don't add one because this value is updated when HandleGrowth is called
     public int DaysTillGrowth()
     {
         return this.GrowthCalculator.GrowthCountdown;
@@ -242,13 +244,13 @@ public class Population : MonoBehaviour, Life
         switch (this.GrowthCalculator.GrowthStatus)
         {
             case GrowthStatus.growing:
-                if (this.GrowthCalculator.IncreasePopulation)
+                if (this.GrowthCalculator.ReadyForGrowth())
                 {
                     this.AddAnimal();
                 }
                 break;
             case GrowthStatus.declining:
-                for (int i=0; i< this.GrowthCalculator.deadAnimals; i++)
+                for (int i=0; i<this.GrowthCalculator.NumAnimalsToRemove(); i++)
                 {
                     this.RemoveAnimal();
                 }
@@ -273,7 +275,6 @@ public class Population : MonoBehaviour, Life
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
-        Debug.Log("POP COUNT: " + this.AnimalPopulation.Count);
     }
 
     // removes last animal in list and last behavior

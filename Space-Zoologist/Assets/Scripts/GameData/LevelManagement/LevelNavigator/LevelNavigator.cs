@@ -39,14 +39,14 @@ public class LevelNavigator : MonoBehaviour
             newLevel.GetComponent<LevelUI>().InitializeLevelUI(level);
             newLevel.GetComponent<Button>().onClick.AddListener(() => {
                 this.SceneNavigator.LoadLevel(level.SceneName);
-                try
-                {
-                    SendCurrentLevelToWeb(level.SceneName);
-                }
-                catch
-                {
-                    Debug.Log("Level loaded, not hooked up to React");
-                }
+                //try
+                //{
+                //    SendCurrentLevelToWeb(level.SceneName);
+                //}
+                //catch
+                //{
+                //    Debug.Log("Level loaded, not hooked up to React");
+                //}
 
             });
             this.DisplayedLevels.Add(newLevel);
