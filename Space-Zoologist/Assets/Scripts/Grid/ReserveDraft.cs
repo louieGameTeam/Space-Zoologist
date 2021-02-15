@@ -13,6 +13,11 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] GameObject PlaceHolder = default;
 
+    public void Start()
+    {
+        GridIO.SaveGrid(currentLevel + "Draft");
+    }
+
     public void startDrafting()
     {
         GridIO.LoadGrid(currentLevel + "Draft");

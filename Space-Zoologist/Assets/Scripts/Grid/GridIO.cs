@@ -10,6 +10,7 @@ using UnityEngine.Tilemaps;
 public class GridIO : MonoBehaviour
 {
     private TilePlacementController tilePlacementController;
+    [SerializeField] private string resourceDirectory = "Grid/";
     [SerializeField] private string directory = "Assets/Resources/Grid/";
     private string sceneName;
     private TileLayerManager[] tileLayerManagers;
@@ -55,11 +56,11 @@ public class GridIO : MonoBehaviour
     public void LoadGrid(string name = null)
     {
         name = name ?? this.sceneName;
-        name = name + ".json";
-        string fullPath = Path.Combine(Application.persistentDataPath, name); // in-game save
+        string filename = name + ".json";
+        string fullPath = Path.Combine(Application.persistentDataPath, filename); // in-game save
         if (!File.Exists(fullPath)) // in-game save doesn't exist - use preset map instead
         {
-            fullPath = this.directory + name; // preset map
+            LoadPresetGrid(name);
         }
         Debug.Log("Loading map save: " + fullPath);
 
@@ -94,17 +95,18 @@ public class GridIO : MonoBehaviour
     public void LoadPresetGrid(string name = null)
     {
         name = name ?? this.sceneName;
-        name = name + ".json";
-        string fullPath = this.directory + name; // preset map
+        string fullPath = this.resourceDirectory + name; // preset map
         Debug.Log("Loading map save: " + fullPath);
 
         SerializedGrid serializedGrid;
         try
         {
-            serializedGrid = JsonUtility.FromJson<SerializedGrid>(File.ReadAllText(fullPath));
+            var jsonTextFile = Resources.Load<TextAsset>(fullPath).text;
+            serializedGrid = JsonUtility.FromJson<SerializedGrid>(jsonTextFile);
         }
-        catch
+        catch (System.Exception e)
         {
+            Debug.LogError(e.Message);
             Debug.LogError("No map save found for this scene, create a map using map designer or check your spelling");
             return;
         }
