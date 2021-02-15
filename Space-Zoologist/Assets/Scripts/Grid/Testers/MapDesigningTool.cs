@@ -73,6 +73,7 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.EndHorizontal();
         }
+        this.tilePlacementController.isErasing = GUILayout.Toggle(this.tilePlacementController.isErasing, "Eraser Mode");
         GUILayout.EndScrollView();
         GUILayout.EndVertical();
     }
@@ -80,7 +81,7 @@ public class MapDesigningTool : MonoBehaviour
     {
         GUILayout.BeginVertical();
         this.sceneName = GUILayout.TextField(this.sceneName);
-        if (GUILayout.Button("Save"))
+        if (GUILayout.Button("Save") && !this.sceneName.Equals("") && this.sceneName != null)
         {
             gridIO.SaveGrid(this.sceneName);
         }

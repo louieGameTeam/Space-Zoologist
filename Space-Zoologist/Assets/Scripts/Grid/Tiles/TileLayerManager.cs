@@ -22,11 +22,6 @@ public class TileLayerManager : MonoBehaviour
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
-    /*    private void Awake()
-        {
-            this.bodyEmptyCallback = OnLiquidBodyEmpty;
-            this.tilemap = this.gameObject.GetComponent<Tilemap>();
-        }*/
     private void Awake()
     {
         this.Initialize();
@@ -46,6 +41,14 @@ public class TileLayerManager : MonoBehaviour
         if (positionsToTileData.ContainsKey(cellPosition))
         {
             return positionsToTileData[cellPosition].currentLiquidBody;
+        }
+        return null;
+    }
+    public GameTile GetGameTileAt(Vector3Int cellPosition)
+    {
+        if (this.positionsToTileData.ContainsKey(cellPosition))
+        {
+            return this.positionsToTileData[cellPosition].currentTile;
         }
         return null;
     }
