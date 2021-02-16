@@ -19,6 +19,11 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] GameObject DraftingButton = default;
 
 
+    public void Start()
+    {
+        GridIO.SaveGrid(currentLevel + "Draft");
+    }
+
     public void startDrafting()
     {
         GridIO.LoadGrid(currentLevel + "Draft");
