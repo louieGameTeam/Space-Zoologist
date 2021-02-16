@@ -9,9 +9,15 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] DialogueManager DialogueManager = default;
+    // TODO refactor UI stuff into seperate script
     [SerializeField] GameObject StoreButtons = default;
     [SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] GameObject PlaceHolder = default;
+    [SerializeField] GameObject NextDayButton = default;
+    [SerializeField] GameObject PauseButton = default;
+    [SerializeField] PlayerController PlayerController = default;
+    [SerializeField] GameObject DraftingButton = default;
+
 
     public void startDrafting()
     {
@@ -22,6 +28,10 @@ public class ReserveDraft : MonoBehaviour
         {
             population.gameObject.SetActive(false);
         }
+        NextDayButton.SetActive(false);
+        PlayerController.CanUseIngameControls = false;
+        PauseButton.SetActive(false);
+        DraftingButton.SetActive(false);
     }
 
     public void finishDrafting()
@@ -34,6 +44,10 @@ public class ReserveDraft : MonoBehaviour
             population.gameObject.SetActive(true);
         }
         PauseManager.Unpause();
+        NextDayButton.SetActive(true);
+        PlayerController.CanUseIngameControls = true;
+        PauseButton.SetActive(true);
+        DraftingButton.SetActive(true);
     }
 
     // Load drafted level and overwrite previous save files with new level

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DialogueEditor;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handles conversations
@@ -11,14 +12,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] PauseManager PauseManager = default;
     // The interactive dialogues of the NPC
     [SerializeField] private NPCConversation interactiveConversation = default;
-    // The event dialogue
-    [SerializeField] private NPCConversation eventConversation = default;
-    // The fully-scripted dialogue
-    [SerializeField] private NPCConversation scriptedConversation = default;
+    private NPCConversation currentDialogue = default;
     // The starting dialogue
     [SerializeField] private NPCConversation startingConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
     [SerializeField] public GameObject StoreButtonsGameObject = default;
+    [SerializeField] private GameObject DialogueButton = default;
+    [SerializeField] private Sprite DefaultImage = default;
+    [SerializeField] private Sprite NotificationImage = default;
 
     private bool ContinueSpeech = false;
 
@@ -32,6 +33,7 @@ public class DialogueManager : MonoBehaviour
             PauseManager.Pause();
             ContinueSpeech = true;
             StoreButtonsGameObject.SetActive(false);
+            currentDialogue = this.startingConversation;
             ConversationManager.Instance.StartConversation(this.startingConversation);
         }
     }
@@ -41,6 +43,18 @@ public class DialogueManager : MonoBehaviour
         ContinueSpeech = false;
         StoreButtonsGameObject.SetActive(true);
         ConversationManagerGameObject.SetActive(false);
+        SetDefaultConversation();
+    }
+
+    public void SetNewDialogue(NPCConversation newDialogue)
+    {
+        this.DialogueButton.GetComponent<Image>().sprite = NotificationImage;
+        currentDialogue = newDialogue;
+    }
+
+    public void SetDefaultConversation()
+    {
+        currentDialogue = interactiveConversation;
     }
 
     /// <summary>
@@ -48,6 +62,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void StartInteractiveConversation()
     {
+        this.DialogueButton.GetComponent<Image>().sprite = DefaultImage;
         if (ContinueSpeech)
         {
             ConversationManagerGameObject.SetActive(!ConversationManagerGameObject.activeSelf);
@@ -58,7 +73,7 @@ public class DialogueManager : MonoBehaviour
             if (!ConversationManagerGameObject.activeSelf)
             {
                 ConversationManagerGameObject.SetActive(true);
-                ConversationManager.Instance.StartConversation(this.interactiveConversation);
+                ConversationManager.Instance.StartConversation(currentDialogue);
                 ContinueSpeech = true;
                 StoreButtonsGameObject.SetActive(false);
             }

@@ -13,8 +13,6 @@ public class DialogueSheetLoader : MonoBehaviour
     [SerializeField] private TextAsset needDialogueSheet = default;
     [SerializeField] private TextAsset eventDialogueSheet = default;
 
-    [SerializeField] private LevelData levelData = default;
-
     private readonly char lineSeperater = '\n'; 
     private readonly char fieldSeperator = ','; 
     private readonly char fieldQutation = '"';

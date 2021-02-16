@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] PopulationManager PopulationManager = default;
-    [SerializeField] NeedSystemUpdater NeedSystemUpdater = default;
     [SerializeField] BehaviorPatternUpdater BehaviorPatternUpdater = default;
     [SerializeField] GridSystem GridSystem = default;
     [SerializeField] public GameObject PauseButton = default;
@@ -76,7 +75,6 @@ public class PauseManager : MonoBehaviour
         this.PauseButtonButton.onClick.RemoveAllListeners();
         this.PauseButtonButton.onClick.AddListener(this.Unpause);
         this.BehaviorPatternUpdater.IsPaused = true;
-        this.NeedSystemUpdater.IsPaused = true;
         this.PauseAllAnimalsMovementController();
         this.GridSystem.UpdateAnimalCellGrid();
         this.GridSystem.HighlightHomeLocations();
@@ -89,7 +87,6 @@ public class PauseManager : MonoBehaviour
         this.PauseButtonButton.onClick.RemoveAllListeners();
         this.PauseButtonButton.onClick.AddListener(this.Pause);
         this.BehaviorPatternUpdater.IsPaused = false;
-        this.NeedSystemUpdater.IsPaused = false;
         this.UnpauseAllAnimalsMovementController();
         this.GridSystem.UnhighlightHomeLocations();
     }

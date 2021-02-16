@@ -24,9 +24,6 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField] private GameObject objectivePanel = default;
     [SerializeField] private Text objectivePanelText = default;
 
-    // For getting the current values for objectives
-    PopulationManager populationManager = default;
-
     // Currently all main objectives are survival objectives
     private List<Objective> mainObjectives = new List<Objective>();
     private List<Objective> secondaryObjectives = new List<Objective>();

@@ -301,6 +301,7 @@ public class GridSystem : MonoBehaviour
             this.Machine = null;
             this.ContainsMachine = false;
             this.HomeLocation = false;
+            this.OutOfBounds = false;
         }
 
         public bool ContainsMachine { get; set; }
@@ -310,6 +311,7 @@ public class GridSystem : MonoBehaviour
         public bool ContainsAnimal { get; set; }
         public GameObject Animal { get; set; }
         public bool HomeLocation { get; set; }
+        public bool OutOfBounds { get; set; }
     }
 
     public struct TileData

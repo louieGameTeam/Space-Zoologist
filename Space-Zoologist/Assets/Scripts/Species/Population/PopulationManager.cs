@@ -16,8 +16,8 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
 
-    private SpeciesNeedSystem speciesNeedSystem = null;
-    private SymbiosisNeedSystem symbiosisNeedSystem = null;
+    //private SpeciesNeedSystem speciesNeedSystem = null;
+    //private SymbiosisNeedSystem symbiosisNeedSystem = null;
 
     public void Initialize()
     {
@@ -120,7 +120,7 @@ public class PopulationManager : MonoBehaviour
         this.NeedSystemManager.UpdateAccessMap();
         foreach (Population population in this.Populations)
         {
-            Debug.Log("Accessible map updated for " + population.name);
+            // Debug.Log("Accessible map updated for " + population.name);
             population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
             GridSystem.GetGridWithAccess(population));
         }

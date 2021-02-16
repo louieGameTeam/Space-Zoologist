@@ -15,8 +15,6 @@ public class TileSystem : MonoBehaviour
     public List<Vector3Int> changedTiles = new List<Vector3Int>();
     private List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
 
-    [SerializeField] NeedSystemManager needSystemManager = default;
-
     private void Awake()
     {
         grid = GetComponent<Grid>();

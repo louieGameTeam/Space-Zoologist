@@ -34,7 +34,6 @@ public class Population : MonoBehaviour, Life
     [Header("Lowest Priority Behaviors")]
     [Expandable] public List<PopulationBehavior> DefaultBehaviors = default;
     [Header("Modify values and thresholds for testing")]
-    [SerializeField] private float TimeSinceUpdate = 0f;
     [SerializeField] private List<Need> NeedEditorTesting = default;
     [SerializeField] private List<MovementData> AnimalsMovementData = default;
 

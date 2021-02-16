@@ -11,7 +11,7 @@ public class PopulationBehaviorManager : MonoBehaviour
     private Population population = default;
     [SerializeField] public Dictionary<GameObject, BehaviorExecutionData> animalsToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
     [SerializeField] public List<PopulationBehavior> tempBehaviors = new List<PopulationBehavior>();
-    [SerializeField] private PopulationBehavior defaultBehavior;
+    [SerializeField] private PopulationBehavior defaultBehavior = default;
     private DequeueCoordinatedBehavior DequeueCoordinatedBehavior;
     private BehaviorCompleteCallback BehaviorCompleteCallback;
 

@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] List<GameObject> MachineHUDs = default;
     private Dictionary<KeyCode, GameObject> StoreBindings = new Dictionary<KeyCode, GameObject>();
-    private bool CanUseIngameControls = true;
+    public bool CanUseIngameControls = true;
     private bool GameOver = false;
 
     private void Awake()

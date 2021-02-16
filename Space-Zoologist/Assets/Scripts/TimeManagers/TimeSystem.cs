@@ -9,6 +9,7 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] Inspector Inspector = default;
+    [SerializeField] MenuManager MenuManager = default;
 
 
     public void nextDay()
@@ -26,6 +27,7 @@ public class TimeSystem : MonoBehaviour
         {
             population.UpdateGrowthConditions();
         }
-        this.Inspector.UpdateInspectorValues();
+        this.Inspector.UpdateCurrentDisplay();
+        MenuManager.CloseStore();
     }
 }

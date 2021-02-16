@@ -14,6 +14,7 @@ public class PodMenu : MonoBehaviour
     [SerializeField] Transform PodItemContainer = default;
     [Header("Dependencies")]
     [SerializeField] PopulationManager populationManager = default;
+    private ResourceManager resourceManager = default;
     [SerializeField] TopHUD TopHUD = default;
     private GridSystem GridSystem = default;
     private CursorItem cursorItem = default;
@@ -23,13 +24,14 @@ public class PodMenu : MonoBehaviour
     private List<RectTransform> UIElements = default;
     AnimalSpecies selectedSpecies = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, ResourceManager resourceManager)
     {
         this.itemType = ItemType.Pod;
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
+        this.resourceManager = resourceManager;
     }
 
     public void Initialize()
@@ -93,7 +95,13 @@ public class PodMenu : MonoBehaviour
                 this.TopHUD.StartCoroutine("FlashWarning", "Terrain not suitable for " + this.selectedSpecies.SpeciesName);
                 return;
             }
+            else if (resourceManager.CheckRemainingResource(selectedSpecies) <= 0)
+            {
+                this.TopHUD.StartCoroutine("FlashWarning", "No more " + this.selectedSpecies.SpeciesName + " available");
+                return;
+            }
             populationManager.UpdatePopulation(selectedSpecies, 1, position);
+            resourceManager.Placed(selectedSpecies, 1);
         }
     }
 

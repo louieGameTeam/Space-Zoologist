@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// This script is to attached to the inspector button and handles
@@ -17,7 +18,7 @@ public class Inspector : MonoBehaviour
     [SerializeField] private EnclosureSystem enclosureSystem = null;
 
     [SerializeField] private Tilemap highLight = default;
-    [SerializeField] private GameTile highLightTile = default;
+    // [SerializeField] private GameTile highLightTile = default;
 
     // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
@@ -32,6 +33,7 @@ public class Inspector : MonoBehaviour
     private Dropdown itemsDropdown;
     private DisplayInspectorText inspectorWindowDisplayScript;
     private GameObject PopulationHighlighted = null;
+    private Vector3Int selectedPosition;
 
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
@@ -184,6 +186,11 @@ public class Inspector : MonoBehaviour
     {
         if (this.IsInInspectorMode && Input.GetMouseButtonDown(0))
         {
+            // UI layer clicked TODO better way to handle mouse inputs?
+            if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+            {
+                return;
+            }
             this.UpdateInspectorValues();
         }
         if (this.IsInInspectorMode)
@@ -198,17 +205,51 @@ public class Inspector : MonoBehaviour
     // TODO break this up and refactor
     public void UpdateInspectorValues()
     {
-        // Update animal locations
+        // Update animal location reference
         this.gridSystem.UpdateAnimalCellGrid();
-
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
-        GameTile tile = this.tileSystem.GetGameTileAt(cellPos);
+        Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
+        GameTile tile = this.tileSystem.GetGameTileAt(pos);
+        GridSystem.CellData cellData = getCellData(pos);
 
-        //Debug.Log($"Mouse click at {cellPos}");
+        if (cellData.OutOfBounds)
+        {
+            return;
+        }
 
-        GridSystem.CellData cellData;
+        this.UnHighlightAll();
+        if (cellData.ContainsAnimal)
+        {
+            DisplayPopulationText(cellData);
+            selectedPosition = pos;
+        }
+        // Selection is food source or item
+        else if (cellData.ContainsFood)
+        {
+            DisplayFoodText(cellData);
+            selectedPosition = pos;
+        }
+        // Selection is liquid tile
+        else if (tile && tile.type == TileType.Liquid)
+        {
+            DisplayLiquidText(pos);
+            selectedPosition = pos;
+        }
+        // Selection is enclosed area
+        else if (tile && tile.type != TileType.Wall)
+        {
+            DisplayAreaText(pos);
+            selectedPosition = pos;
+        }
 
+        // Reset dropdown selections
+        this.enclosedAreaDropdown.value = 0;
+        this.itemsDropdown.value = 0;
+    }
+
+    private GridSystem.CellData getCellData(Vector3Int cellPos)
+    {
+        GridSystem.CellData cellData = new GridSystem.CellData();
         // Handles index out of bound exception
         if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
         {
@@ -216,47 +257,72 @@ public class Inspector : MonoBehaviour
         }
         else
         {
-            // Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
-            return;
+            cellData.OutOfBounds = true;
         }
-
-        this.UnHighlightAll();
-
-        // Check if selection is animal
-        if (cellData.ContainsAnimal)
-        {
-            this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
-            //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
-            this.inspectorWindowDisplayScript.DisplayPopulationStatus(cellData.Animal.GetComponent<Animal>().PopulationInfo);
-        }
-        // Selection is food source or item
-        else if (cellData.ContainsFood)
-        {
-            this.HighlightFoodSource(cellData.Food);
-            //Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
-            this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
-        }
-        // Selection is liquid tile
-        else if (tile && tile.type == TileType.Liquid)
-        {
-            this.HighlightSingleTile(cellPos);
-            //Debug.Log($"Selected liquid tile @ {cellPos}");
-            float[] compositions = this.tileSystem.GetTileContentsAt(cellPos, tile);
-            this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
-        }
-        // Selection is enclosed area
-        else if (tile && tile.type != TileType.Wall)
-        {
-            this.HighlightEnclosedArea(cellPos);
-            this.enclosureSystem.UpdateEnclosedAreas();
-            this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
-            //Debug.Log($"Enclosed are @ {cellPos} selected");
-        }
-
-        // Reset dropdown selections
-        this.enclosedAreaDropdown.value = 0;
-        this.itemsDropdown.value = 0;
+        return cellData;
     }
+
+    public void UpdateCurrentDisplay()
+    {
+        GridSystem.CellData cellData = getCellData(selectedPosition);
+        switch (inspectorWindowDisplayScript.CurrentDisplay)
+        {
+            case DisplayInspectorText.InspectorText.Population:
+                if (!cellData.ContainsAnimal)
+                {
+                    return;
+                }
+                DisplayPopulationText(cellData);
+                break;
+            case DisplayInspectorText.InspectorText.Food:
+                if (!cellData.ContainsFood)
+                {
+                    return;
+                }
+                DisplayFoodText(cellData);
+                break;
+            case DisplayInspectorText.InspectorText.Area:
+                DisplayAreaText(selectedPosition);
+                break;
+            case DisplayInspectorText.InspectorText.Liquid:
+                DisplayLiquidText(selectedPosition);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void DisplayPopulationText(GridSystem.CellData cellData)
+    {
+        this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
+        //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
+        this.inspectorWindowDisplayScript.DisplayPopulationStatus(cellData.Animal.GetComponent<Animal>().PopulationInfo);
+    }
+
+    private void DisplayFoodText(GridSystem.CellData cellData)
+    {
+        this.HighlightFoodSource(cellData.Food);
+        //Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
+        this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
+    }
+
+    private void DisplayAreaText(Vector3Int cellPos)
+    {
+        this.HighlightEnclosedArea(cellPos);
+        this.enclosureSystem.UpdateEnclosedAreas();
+        this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
+        //Debug.Log($"Enclosed are @ {cellPos} selected");
+    }
+
+    private void DisplayLiquidText(Vector3Int cellPos)
+    {
+        this.HighlightSingleTile(cellPos);
+        //Debug.Log($"Selected liquid tile @ {cellPos}");
+        GameTile tile = this.tileSystem.GetGameTileAt(selectedPosition);
+        float[] compositions = this.tileSystem.GetTileContentsAt(cellPos, tile);
+        this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
+    }
+
 
     private void UnHighlightAll()
     {

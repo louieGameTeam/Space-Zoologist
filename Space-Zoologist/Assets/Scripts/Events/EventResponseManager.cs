@@ -12,33 +12,12 @@ public class EventResponseManager : MonoBehaviour
     public List<Action> responses = new List<Action>();
     public List<EventType> EventTypes => eventTypes;
     // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
 
-    public void InitializeEventManagerResponse(EventType eventType)
+    public void Start()
     {
-        foreach (EventResponse eventResponse in EventResponses)
+        foreach(EventResponse eventResponse in EventResponses)
         {
-            if (eventResponse.EventType.Equals(EventType.NPCDialogue))
-            {
-                EventManager.Instance.SubscribeToEvent(eventType, eventResponse.triggerResponse);
-                return;
-            }
-        }
-    }
-
-    // Triggers first dialogue type response
-    public void TriggerDialogueResponse()
-    {
-        foreach (EventResponse eventResponse in EventResponses)
-        {
-            if (eventResponse.EventType.Equals(EventType.NPCDialogue))
-            {
-                eventResponse.triggerResponse();
-                return;
-            }
+            eventResponse.Start();
         }
     }
 

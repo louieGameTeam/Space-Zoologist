@@ -14,7 +14,6 @@ public class NeedSystemManager : MonoBehaviour
     private Dictionary<NeedType, NeedSystem> systems = new Dictionary<NeedType, NeedSystem>();
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
-    [SerializeField] TimeSystem TimeSystem = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
