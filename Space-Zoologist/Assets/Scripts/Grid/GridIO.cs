@@ -119,6 +119,7 @@ public class GridIO : MonoBehaviour
                 {
                     tileLayerManager.ParseSerializedTilemap(serializedTilemap, this.tilePlacementController.gameTiles);
                     found = true;
+                    Debug.Log("Loaded from resources");
                     break;
                 }
             }

@@ -2295,7 +2295,7 @@ PrefabInstance:
         type: 3}
       propertyPath: NeedSystemUpdater
       value: 
-      objectReference: {fileID: 650241540}
+      objectReference: {fileID: 0}
     - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: BehaviorPatternUpdater
@@ -2331,18 +2331,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4694716191194936582, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ea0e367afd13e4b568216541f00b9ab0, type: 3}
---- !u!114 &650241540 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8582389809603506210, guid: ea0e367afd13e4b568216541f00b9ab0,
-    type: 3}
-  m_PrefabInstance: {fileID: 650241539}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e3741b51b27e49489fc0b6b7a515df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &650241541 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8743428314657368663, guid: ea0e367afd13e4b568216541f00b9ab0,
@@ -9454,7 +9442,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 791501854}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1738013071
 MonoBehaviour:
@@ -15299,7 +15287,7 @@ Transform:
   - {fileID: 3395325108385911805}
   - {fileID: 1194454913}
   m_Father: {fileID: 791501854}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3395325107312024778
 GameObject:
