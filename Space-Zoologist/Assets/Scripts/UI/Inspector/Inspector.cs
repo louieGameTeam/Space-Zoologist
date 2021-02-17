@@ -70,7 +70,7 @@ public class Inspector : MonoBehaviour
 
     public void OpenInspector()
     {
-        this.inspectorWindowText.text = "Inspector";
+        this.inspectorWindowText.text = "Select from the dropdown or click on a point of interest to gather information";
         this.inspectorWindow.SetActive(true);
         this.gridSystem.UpdateAnimalCellGrid();
         this.UpdateDropdownMenu();

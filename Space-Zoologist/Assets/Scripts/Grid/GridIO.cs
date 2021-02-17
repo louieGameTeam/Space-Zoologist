@@ -14,6 +14,7 @@ public class GridIO : MonoBehaviour
     [SerializeField] private string directory = "Assets/Resources/Grid/";
     private string sceneName;
     private TileLayerManager[] tileLayerManagers;
+    private bool initialized = false;
     // Start is called before the first frame update
     public void Initialize()
     {
@@ -58,9 +59,11 @@ public class GridIO : MonoBehaviour
         name = name ?? this.sceneName;
         string filename = name + ".json";
         string fullPath = Path.Combine(Application.persistentDataPath, filename); // in-game save
-        if (!File.Exists(fullPath)) // in-game save doesn't exist - use preset map instead
+        if (!initialized) // in-game save doesn't exist - use preset map instead
         {
+            initialized = true;
             LoadPresetGrid(name);
+            return;
         }
         Debug.Log("Loading map save: " + fullPath);
 

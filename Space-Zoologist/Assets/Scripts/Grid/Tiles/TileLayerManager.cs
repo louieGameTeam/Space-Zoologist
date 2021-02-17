@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.Tilemaps;
 
 public delegate void BodyEmptyCallback(LiquidBody liquidBody);
-public enum AbsoluteDirection { Towards, Against, Parallel}
+public enum AbsoluteDirection { Towards, Against, Parallel }
 public class TileLayerManager : MonoBehaviour
 {
     private enum Direction2D { X, Y }
@@ -22,11 +22,6 @@ public class TileLayerManager : MonoBehaviour
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
-    /*    private void Awake()
-        {
-            this.bodyEmptyCallback = OnLiquidBodyEmpty;
-            this.tilemap = this.gameObject.GetComponent<Tilemap>();
-        }*/
     private void Awake()
     {
         this.Initialize();
@@ -46,6 +41,14 @@ public class TileLayerManager : MonoBehaviour
         if (positionsToTileData.ContainsKey(cellPosition))
         {
             return positionsToTileData[cellPosition].currentLiquidBody;
+        }
+        return null;
+    }
+    public GameTile GetGameTileAt(Vector3Int cellPosition)
+    {
+        if (this.positionsToTileData.ContainsKey(cellPosition))
+        {
+            return this.positionsToTileData[cellPosition].currentTile;
         }
         return null;
     }
@@ -75,7 +78,7 @@ public class TileLayerManager : MonoBehaviour
             this.liquidBodies.Add(liquidBody);
         }
         Dictionary<string, GameTile> namesToGameTiles = new Dictionary<string, GameTile>();
-        foreach(SerializedTileData serializedTileData in serializedTilemap.SerializedTileDatas)
+        foreach (SerializedTileData serializedTileData in serializedTilemap.SerializedTileDatas)
         {
             if (!namesToGameTiles.ContainsKey(serializedTileData.TileName))
             {
@@ -89,7 +92,7 @@ public class TileLayerManager : MonoBehaviour
                 }
             }
             TileData tileData = ParseSerializedTileData(serializedTileData, namesToGameTiles[serializedTileData.TileName], bodyIDsToLiquidBodies);
-            this.positionsToTileData.Add(tileData.tilePosition,tileData);
+            this.positionsToTileData.Add(tileData.tilePosition, tileData);
             ApplyChangesToTilemap(tileData.tilePosition);
         }
     }
@@ -100,7 +103,7 @@ public class TileLayerManager : MonoBehaviour
         {
             Debug.LogError("Liquid Body has body ID 0. Is temporary bodies being stored or no proper ID given to the bodies");
         }
-        for (int i = 0; i < serializedLiquidBody.TilePositions.Length/3; i++)
+        for (int i = 0; i < serializedLiquidBody.TilePositions.Length / 3; i++)
         {
             int index = i * 3;
             tiles.Add(new Vector3Int(serializedLiquidBody.TilePositions[index], serializedLiquidBody.TilePositions[index + 1], serializedLiquidBody.TilePositions[index + 2]));
@@ -110,7 +113,7 @@ public class TileLayerManager : MonoBehaviour
     private TileData ParseSerializedTileData(SerializedTileData serializedTileData, GameTile gameTile, Dictionary<int, LiquidBody> bodyIDsToLiquidBodies)
     {
         Vector3Int position = new Vector3Int(serializedTileData.TilePosition[0], serializedTileData.TilePosition[1], serializedTileData.TilePosition[2]);
-        Color color = new Color(serializedTileData.Color[0],serializedTileData.Color[1], serializedTileData.Color[2], serializedTileData.Color[3]);
+        Color color = new Color(serializedTileData.Color[0], serializedTileData.Color[1], serializedTileData.Color[2], serializedTileData.Color[3]);
         LiquidBody liquidBody = null;
         if (serializedTileData.LiquidBodyID != 0)
         {
@@ -315,10 +318,10 @@ public class TileLayerManager : MonoBehaviour
         remainingTiles.UnionWith(positionsToTileData[cellPosition].currentLiquidBody.tiles);
         //Debug.Log("Liquidbody tile count:" + remainingTiles.Count);
         remainingTiles.ExceptWith(RemovedTiles);
-/*        foreach(Vector3Int vector3Int in remainingTiles)
-        {
-            Debug.Log("Remaining: " + vector3Int.ToString());
-        }*/
+        /*        foreach(Vector3Int vector3Int in remainingTiles)
+                {
+                    Debug.Log("Remaining: " + vector3Int.ToString());
+                }*/
         List<Vector3Int> neighborTiles = new List<Vector3Int>();
         foreach (Vector3Int neighborTile in FourNeighborTileCellPositions(cellPosition)) //Filter available liquid tiles
         {
@@ -380,10 +383,10 @@ public class TileLayerManager : MonoBehaviour
                 newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, tile, bodyEmptyCallback));
 
                 Debug.Log("Generated divided body at" + tile.ToString() + "divide point: " + dividePoint.ToString());
-/*                foreach (Vector3Int tile1 in newBodies.Last().tiles)
-                {
-                    Debug.Log("Body contains" + tile1.ToString());
-                }*/
+                /*                foreach (Vector3Int tile1 in newBodies.Last().tiles)
+                                {
+                                    Debug.Log("Body contains" + tile1.ToString());
+                                }*/
             }
             if (remainingTiles.Count == 0)
             {
@@ -526,7 +529,7 @@ public class TileLayerManager : MonoBehaviour
         return true;
     }
 
-    private void ResetHistoryArray (CellStatus[,] historyArray)
+    private void ResetHistoryArray(CellStatus[,] historyArray)
     {
         for (int i = 0; i < quickCheckIterations - 1; i++)
         {

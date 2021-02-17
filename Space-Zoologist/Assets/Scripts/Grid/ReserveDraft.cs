@@ -17,6 +17,7 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] GameObject PauseButton = default;
     [SerializeField] PlayerController PlayerController = default;
     [SerializeField] GameObject DraftingButton = default;
+    [SerializeField] GameObject FinishDrafting = default;
 
 
     public void Start()
@@ -27,32 +28,39 @@ public class ReserveDraft : MonoBehaviour
     public void startDrafting()
     {
         GridIO.LoadGrid(currentLevel + "Draft");
-        PauseManager.TryToPause();
+
+        setAnimalsVisible(false);
         setupStoreStuff();
-        foreach (Population population in this.PopulationManager.Populations)
-        {
-            population.gameObject.SetActive(false);
-        }
-        NextDayButton.SetActive(false);
-        PlayerController.CanUseIngameControls = false;
-        PauseButton.SetActive(false);
-        DraftingButton.SetActive(false);
+        PauseManager.TryToPause();
+        UpdateUI(false);
     }
 
     public void finishDrafting()
     {
         GridIO.SaveGrid(currentLevel + "Draft");
         GridIO.LoadGrid(currentLevel);
+
         closeStoreStuff();
+        setAnimalsVisible(true);
+        PauseManager.Unpause();
+        UpdateUI(true);
+    }
+
+    private void setAnimalsVisible(bool isVisible)
+    {
         foreach (Population population in this.PopulationManager.Populations)
         {
-            population.gameObject.SetActive(true);
+            population.gameObject.SetActive(isVisible);
         }
-        PauseManager.Unpause();
-        NextDayButton.SetActive(true);
-        PlayerController.CanUseIngameControls = true;
-        PauseButton.SetActive(true);
-        DraftingButton.SetActive(true);
+    }
+
+    private void UpdateUI(bool onOff)
+    {
+        NextDayButton.SetActive(onOff);
+        PlayerController.CanUseIngameControls = onOff;
+        PauseButton.SetActive(onOff);
+        DraftingButton.SetActive(onOff);
+        FinishDrafting.SetActive(!onOff);
     }
 
     // Load drafted level and overwrite previous save files with new level

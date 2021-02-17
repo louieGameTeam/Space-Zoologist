@@ -11,7 +11,6 @@ public class MenuManager : MonoBehaviour
     // PodMenu had original different design so could refactor to align with store sections but works for now
     [SerializeField] PodMenu PodMenu = default;
     [SerializeField] PauseManager PauseManager = default;
-    [SerializeField] GameObject PauseButton = default;
     [SerializeField] ResourceManager ResourceManager = default;
     [Header("Shared menu dependencies")]
     [SerializeField] PlayerBalance PlayerBalance = default;
@@ -67,7 +66,6 @@ public class MenuManager : MonoBehaviour
         currentMenu = menu;
         //this.PlayerBalanceHUD.SetActive(true);
         this.IsInStore = true;
-        this.PauseButton.SetActive(false);
     }
 
     private void StoreToggledOff(GameObject menu)
@@ -79,7 +77,6 @@ public class MenuManager : MonoBehaviour
             ///this.PlayerBalanceHUD.SetActive(false);
             this.IsInStore = false;
             this.PauseManager.TryToUnpause();
-            this.PauseButton.SetActive(true);
         }
 
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
