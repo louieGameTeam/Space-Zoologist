@@ -102,11 +102,8 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (!this.MenuManager.IsInStore)
-                {
-                    Debug.Log("Unpause");
-                    this.PauseManager.TogglePause();
-                }
+                Debug.Log("Unpause");
+                this.PauseManager.TogglePause();
             }
             foreach(KeyValuePair<KeyCode, GameObject> keyBinding in this.StoreBindings)
             {
