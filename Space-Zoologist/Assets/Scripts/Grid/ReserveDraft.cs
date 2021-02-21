@@ -8,16 +8,15 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] string currentLevel = "Level1";
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] PauseManager PauseManager = default;
-    [SerializeField] DialogueManager DialogueManager = default;
     // TODO refactor UI stuff into seperate script
     [SerializeField] GameObject StoreButtons = default;
     [SerializeField] List<GameObject> StoreMenus = default;
-    [SerializeField] GameObject PlaceHolder = default;
     [SerializeField] GameObject NextDayButton = default;
     [SerializeField] GameObject PauseButton = default;
     [SerializeField] PlayerController PlayerController = default;
     [SerializeField] GameObject DraftingButton = default;
     [SerializeField] GameObject FinishDrafting = default;
+    [SerializeField] GameObject CancelDrafting = default;
 
 
     public void Start()
@@ -46,6 +45,14 @@ public class ReserveDraft : MonoBehaviour
         UpdateUI(true);
     }
 
+    public void cancelDrafting()
+    {
+        closeStoreStuff();
+        setAnimalsVisible(true);
+        PauseManager.Unpause();
+        UpdateUI(true);
+    }
+
     private void setAnimalsVisible(bool isVisible)
     {
         foreach (Population population in this.PopulationManager.Populations)
@@ -61,6 +68,7 @@ public class ReserveDraft : MonoBehaviour
         PauseButton.SetActive(onOff);
         DraftingButton.SetActive(onOff);
         FinishDrafting.SetActive(!onOff);
+        CancelDrafting.SetActive(!onOff);
     }
 
     // Load drafted level and overwrite previous save files with new level
@@ -73,13 +81,11 @@ public class ReserveDraft : MonoBehaviour
 
     private void setupStoreStuff()
     {
-        DialogueManager.StoreButtonsGameObject = StoreButtons;
         StoreButtons.SetActive(true);
     }
 
     private void closeStoreStuff()
     {
-        DialogueManager.StoreButtonsGameObject = PlaceHolder;
         StoreButtons.SetActive(false);
         foreach (GameObject storeMenu in this.StoreMenus)
         {

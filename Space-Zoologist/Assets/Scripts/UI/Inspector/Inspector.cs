@@ -58,8 +58,8 @@ public class Inspector : MonoBehaviour
         if (this.IsInInspectorMode)
         {
             this.inspectorWindow.SetActive(false);
-            this.areaDropdownMenu.SetActive(false);
-            this.itemDropdownMenu.SetActive(false);
+            //this.areaDropdownMenu.SetActive(false);
+            //this.itemDropdownMenu.SetActive(false);
             //this.HUD.SetActive(true);
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
@@ -73,9 +73,9 @@ public class Inspector : MonoBehaviour
         this.inspectorWindowText.text = "Select from the dropdown or click on a point of interest to gather information";
         this.inspectorWindow.SetActive(true);
         this.gridSystem.UpdateAnimalCellGrid();
-        this.UpdateDropdownMenu();
-        this.areaDropdownMenu.SetActive(true);
-        this.itemDropdownMenu.SetActive(true);
+        //this.UpdateDropdownMenu();
+        //this.areaDropdownMenu.SetActive(true);
+        //this.itemDropdownMenu.SetActive(true);
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = !IsInInspectorMode;

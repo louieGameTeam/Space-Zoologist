@@ -16,7 +16,6 @@ public class DialogueManager : MonoBehaviour
     // The starting dialogue
     [SerializeField] private NPCConversation startingConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
-    [SerializeField] public GameObject StoreButtonsGameObject = default;
     [SerializeField] private GameObject DialogueButton = default;
     [SerializeField] private Sprite DefaultImage = default;
     [SerializeField] private Sprite NotificationImage = default;
@@ -32,7 +31,6 @@ public class DialogueManager : MonoBehaviour
         if (startingConversation) {
             PauseManager.Pause();
             ContinueSpeech = true;
-            StoreButtonsGameObject.SetActive(false);
             currentDialogue = this.startingConversation;
             ConversationManager.Instance.StartConversation(this.startingConversation);
         }
@@ -41,7 +39,6 @@ public class DialogueManager : MonoBehaviour
     private void ConversationEnded()
     {
         ContinueSpeech = false;
-        StoreButtonsGameObject.SetActive(true);
         ConversationManagerGameObject.SetActive(false);
         SetDefaultConversation();
     }
@@ -66,7 +63,6 @@ public class DialogueManager : MonoBehaviour
         if (ContinueSpeech)
         {
             ConversationManagerGameObject.SetActive(!ConversationManagerGameObject.activeSelf);
-            StoreButtonsGameObject.SetActive(!StoreButtonsGameObject.activeSelf);
         }
         else
         {
@@ -75,12 +71,10 @@ public class DialogueManager : MonoBehaviour
                 ConversationManagerGameObject.SetActive(true);
                 ConversationManager.Instance.StartConversation(currentDialogue);
                 ContinueSpeech = true;
-                StoreButtonsGameObject.SetActive(false);
             }
             else
             {
                 ConversationManagerGameObject.SetActive(false);
-                StoreButtonsGameObject.SetActive(true);
             }
         }
     }

@@ -13,7 +13,7 @@ public class ObjectiveManager : MonoBehaviour
 
     public bool IsGameOver => this.isGameOver;
 
-    private bool isOpen = true;
+    private bool isOpen = false;
     private bool isGameOver = false;
 
     // To access the player balance
@@ -36,7 +36,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         this.isOpen = !this.isOpen;
         this.objectivePanel.SetActive(this.isOpen);
-        this.Update();
+        UpdateObjectives();
         this.UpdateObjectivePanel();
     }
 
@@ -44,7 +44,35 @@ public class ObjectiveManager : MonoBehaviour
     {
         this.isOpen = false;
         this.objectivePanel.SetActive(this.isOpen);
+        UpdateObjectives();
         this.UpdateObjectivePanel();
+    }
+
+    private void UpdateObjectives()
+    {
+        // Level is completed when all mian objectives are done, failed when one has failed
+        foreach (Objective objective in this.mainObjectives)
+        {
+            if (objective.UpdateStatus() == ObjectiveStatus.InProgress)
+            {
+                IsMainObjectivesCompleted = false;
+            }
+
+            if (objective.UpdateStatus() == ObjectiveStatus.Failed)
+            {
+                // GameOver.cs listens for the event and handles gameover
+                EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+            }
+        }
+
+        // Secondary objective status can be viewed on screen
+        foreach (Objective objective in this.secondaryObjectives)
+        {
+            if (objective.UpdateStatus() == ObjectiveStatus.Completed)
+            {
+                NumSecondaryObjectivesCompleted++;
+            }
+        }
     }
 
     public void UpdateObjectivePanel()
@@ -137,28 +165,7 @@ public class ObjectiveManager : MonoBehaviour
             this.UpdateObjectivePanel();
         }
 
-        // Level is completed when all mian objectives are done, failed when one has failed
-        foreach (Objective objective in this.mainObjectives)
-        {
-            if (objective.UpdateStatus() == ObjectiveStatus.InProgress)
-            {
-                IsMainObjectivesCompleted = false;
-            }
-
-            if (objective.UpdateStatus() == ObjectiveStatus.Failed)
-            {
-                // GameOver.cs listens for the event and handles gameover
-                EventManager.Instance.InvokeEvent(EventType.GameOver, null);
-            }
-        }
-
-        // Secondary objective status can be viewed on screen
-        foreach (Objective objective in this.secondaryObjectives) {
-            if (objective.UpdateStatus() == ObjectiveStatus.Completed)
-            {
-                NumSecondaryObjectivesCompleted++;
-            }
-        }
+        UpdateObjectives();
 
         // All objectives had reach end state
         if (IsMainObjectivesCompleted && !this.isGameOver)

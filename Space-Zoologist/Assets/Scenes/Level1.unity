@@ -931,19 +931,18 @@ MonoBehaviour:
   currentLevel: Level1
   PopulationManager: {fileID: 2078374405}
   PauseManager: {fileID: 650241543}
-  DialogueManager: {fileID: 3395325107312024775}
   StoreButtons: {fileID: 961130262}
   StoreMenus:
   - {fileID: 1957592464}
   - {fileID: 574417233}
   - {fileID: 220827994}
   - {fileID: 52738758}
-  PlaceHolder: {fileID: 2042517773}
   NextDayButton: {fileID: 1481787291}
   PauseButton: {fileID: 1518430617}
   PlayerController: {fileID: 1290313821}
   DraftingButton: {fileID: 1220722983}
   FinishDrafting: {fileID: 1054207728}
+  CancelDrafting: {fileID: 1771615207}
 --- !u!1 &462963690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1273,6 @@ MonoBehaviour:
   interactiveConversation: {fileID: 1195355568}
   startingConversation: {fileID: 1392974207}
   ConversationManagerGameObject: {fileID: 575871629}
-  StoreButtonsGameObject: {fileID: 2042517773}
   DialogueButton: {fileID: 117441984}
   DefaultImage: {fileID: 21300000, guid: e362590e8029a4309bcbe4de1292a927, type: 3}
   NotificationImage: {fileID: 21300000, guid: c37ef1c215fed4353adafc754fd2280b, type: 3}
@@ -2443,6 +2441,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &575871632 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4901738870636729095, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575871629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fe614b88daf184a841493ff6bdcd86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &588109351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3049,21 +3059,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 47
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-410.5,\"yPos\":130},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Food
-    Resources\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-174.5,\"yPos\":130},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Modifying
-    Terrain\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":44},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":174.5,\"yPos\":185},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Populations\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":131,\"yPos\":65},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"That's
-    all\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-174.5,\"yPos\":10},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
-    your first week going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[4,5,22,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-595,\"yPos\":391},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Click
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-259.5,\"yPos\":142},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Food
+    Resources\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-23.5,\"yPos\":142},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Modifying
+    Terrain\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":44},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":325.5,\"yPos\":197},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Populations\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":282,\"yPos\":77},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"That's
+    all\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-23.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
+    your first week going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[4,5,22,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-444,\"yPos\":403},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Click
     on the drafting icon, then the food icon to the left and select the food you
     want to place. For now, try placing the Space Maple on dirt patches. We\u2019ll
-    get to more advanced food resources in later stages. Hope this helps!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-68,\"yPos\":437},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Click
+    get to more advanced food resources in later stages. Hope this helps!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":83,\"yPos\":449},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Click
     on the drafting icon, then the terrain icon to the left and select the terrain
     you want to place. You should be able to place terrain in all locations except
-    for a population's starting location (shaded gray). Hope this helps!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":173,\"yPos\":385},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"A
+    for a population's starting location (shaded gray). Hope this helps!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":324,\"yPos\":397},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"A
     species population is represented by the animals moving around in the reserve.
     For our purposes, we are most concerned with how the population as a whole is
     doing, which means that each signal given to us by an individual animal is indicative
-    of how the whole population is doing.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-356,\"yPos\":251},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Anything
+    of how the whole population is doing.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-205,\"yPos\":263},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Anything
     else I can help you with?\",\"parentUIDs\":[43,44,45,43,44,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[22,5,4,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
@@ -3645,6 +3655,12 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!224 &747007570 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2460226946974277235, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &752807796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7040152306282585640, guid: 71886a6858e6a442fa66e2dbc551db8a,
@@ -4970,35 +4986,171 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 83
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":190},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"...\",\"parentUIDs\":[46,46],\"SpeechUID\":81},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":307,\"yPos\":186},\"ID\":82,\"TMPFontGUID\":null,\"Text\":null,\"parentUIDs\":[46],\"SpeechUID\":81}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":164.5,\"yPos\":-453},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[],\"SpeechUID\":42,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":-357},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"The
+  CurrentIDCounter: 125
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":6,\"yPos\":-4632},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[46,85,85],\"SpeechUID\":86},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":300,\"yPos\":-4635},\"ID\":82,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[46,85,85],\"SpeechUID\":87},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":4.5,\"yPos\":-3473},\"ID\":88,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[78,78],\"SpeechUID\":90},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":273.5,\"yPos\":-3480},\"ID\":89,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[78,78],\"SpeechUID\":91}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":133.5,\"yPos\":-5384},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
+    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[],\"SpeechUID\":42,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":131.5,\"yPos\":-5285},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"The
     name\u2019s Aurora Star, but you can just call me...\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Aurora
-    Star\",\"OptionUIDs\":[],\"SpeechUID\":79,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":165.5,\"yPos\":-246},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"...since
-    I'm the star of the show...\",\"parentUIDs\":[42,79,79],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":44,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":-153},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"...
-    or I guess the star of the ship?\",\"parentUIDs\":[43,43],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":-43},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"Anyways!
-    Hello, welcome to the ship!\",\"parentUIDs\":[44,44],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":61},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"What
-    you're looking at right now is the reserve interface, or as I like to call it,
-    the RESERVED interface since it\u2019s not that chatty!\",\"parentUIDs\":[45,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[80,82],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":475},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"Your
-    objective for this mission and following missions can be toggled by pressing
-    the <b>O key<\\/b>.\",\"parentUIDs\":[81,81],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":71,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":167,\"yPos\":661},\"ID\":71,\"TMPFontGUID\":null,\"Text\":\"Currently,
-    the reserve interface is paused. Let's press that big <b>play button<\\/b> in
-    the top right to get a live feed of the goats.\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":77,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":164,\"yPos\":923},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"So
-    for more in depth information, click the <b>magnifying glass<\\/b>, then either
-    select from the <b>dropdown<\\/b> or <b>click on a point of interest<\\/b> to
-    learn more about it.\",\"parentUIDs\":[71,77,77],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":166,\"yPos\":1044},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"In
-    this case, I believe the goat population will be growing in a few days, but they'll
-    soon run out of land.\",\"parentUIDs\":[72,72],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163,\"yPos\":1192},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"So
-    let me go get some more land resources to restock your inventory and give you
-    a chance to gather more information and test out the drafting feature.\",\"parentUIDs\":[73,73],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":78,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":167.5,\"yPos\":807},\"ID\":77,\"TMPFontGUID\":null,\"Text\":\"We
-    can gather some information by simply observing the animals, but we'll likely
-    need to do more research to know what's really going on.\",\"parentUIDs\":[71,71],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":165.5,\"yPos\":1315},\"ID\":78,\"TMPFontGUID\":null,\"Text\":\"And
-    please ping me through the chat icon if you would like further assistance. Good
-    luck and have fun!\",\"parentUIDs\":[74,74],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-52.5,\"yPos\":-296},\"ID\":79,\"TMPFontGUID\":null,\"Text\":\"STAR\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"...\",\"OptionUIDs\":[],\"SpeechUID\":43,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":162,\"yPos\":316},\"ID\":81,\"TMPFontGUID\":null,\"Text\":\"You
-    can hold your applause for later, right now, we've got some cute space Goats
-    to care for.\",\"parentUIDs\":[80,80,82],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+    Star 2\",\"OptionUIDs\":[],\"SpeechUID\":79,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":132.5,\"yPos\":-4973},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"I
+    am really chuffed to have you.  These creatures are amazing, but they are unlike
+    any species we have ever encountered and we are struggling to <color=\\\"orange\\\">identify
+    their needs<\\/color>\u2026 Keeping them alive has been harder than trying to
+    high dive into oobleck!\",\"parentUIDs\":[84,84],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    6 \",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133.5,\"yPos\":-4870},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Get
+    it?  \u201CDiving from great height into Oobleck?\u201D\u2026?\",\"parentUIDs\":[45,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    7\",\"OptionUIDs\":[],\"SpeechUID\":85,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":140.5,\"yPos\":-4319},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"We\u2019ll
+    be counting on you to <color=\\\"orange\\\">Engineer<\\/color> environments and
+    <color=\\\"orange\\\">Design<\\/color> solutions that address the needs of the
+    Space Goats.\",\"parentUIDs\":[81,81],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    11\",\"OptionUIDs\":[],\"SpeechUID\":71,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":140,\"yPos\":-4193},\"ID\":71,\"TMPFontGUID\":null,\"Text\":\"Here,
+    we follow the ROCeT Man protocol for design...\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    12\",\"OptionUIDs\":[],\"SpeechUID\":77,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":136,\"yPos\":-3994},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"Here
+    at the Command Central, you have the ability to monitor the space and use the
+    virtual reality Creator to design the habitat.  \",\"parentUIDs\":[71,77,77],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    14\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133,\"yPos\":-3877},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"And
+    then you can push the conceptual design through to implementation, which the
+    VIVA synthesizer will put into action overnight.\",\"parentUIDs\":[72,72],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    15\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":132,\"yPos\":-3738},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"First
+    press \u201CO\u201D, for OBJECTIVE, to find out what your assignment is.\",\"parentUIDs\":[73,73],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    16\",\"OptionUIDs\":[],\"SpeechUID\":78,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":135.5,\"yPos\":-4093},\"ID\":77,\"TMPFontGUID\":null,\"Text\":\"1)
+    <color=\\\"orange\\\">Research<\\/color> what is already known. \\n2) <color=\\\"orange\\\">Observe<\\/color>
+    current situation.  \\n3) Propose <color=\\\"orange\\\">Concept<\\/color> to
+    modify the environment.  \\n4) <color=\\\"orange\\\">Test<\\/color> the effect
+    of the changes. \\n5) <color=\\\"orange\\\">Record<\\/color> key Metrics R-O-C-T-M. 
+    or ROCeT Man!\",\"parentUIDs\":[71,71],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    13\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133.5,\"yPos\":-3617},\"ID\":78,\"TMPFontGUID\":null,\"Text\":\"Oh
+    cool! You\u2019ve got the Space Goat enclosure.  I LUV them!!! They are so cute!
+    And really sassy!  Amazing creatures, the Space Goat.  Do you have any experience
+    with terran goats?\",\"parentUIDs\":[74,74],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    17\",\"OptionUIDs\":[88,89],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-83.5,\"yPos\":-5226},\"ID\":79,\"TMPFontGUID\":null,\"Text\":\"STAR...
+    since I'm the star of the show\u2026 ba da bing!\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"...
+    3\",\"OptionUIDs\":[],\"SpeechUID\":83,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":144,\"yPos\":-4432},\"ID\":81,\"TMPFontGUID\":null,\"Text\":\"Seriously,
+    though, you as an engineer, your background in problem-solving could contribute
+    a lot towards designing viable solutions for the habitats we are trying to create.\",\"parentUIDs\":[80,82,86,87,86,87],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    10\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":143.5,\"yPos\":-5186},\"ID\":83,\"TMPFontGUID\":null,\"Text\":\"Thank
+    you, thank you, I\u2019m here till Thursday\u2026 no laughs huh? Tough audience. 
+    Well, really, don\u2019t worry, I do not think I am all-that-and-a-bag-of-chips,
+    but please do call me Star.  I am one of the Senior Zoologists on staff here.
+    \",\"parentUIDs\":[79,79],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    4\",\"OptionUIDs\":[],\"SpeechUID\":84,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":137.5,\"yPos\":-5082},\"ID\":84,\"TMPFontGUID\":null,\"Text\":\"And
+    you are our new engineer!\",\"parentUIDs\":[83,83],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    5\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":134.5,\"yPos\":-4775},\"ID\":85,\"TMPFontGUID\":null,\"Text\":\"Still
+    no laughs?!  Ah well, obscure non-Newtonian fluid humor. Do you know oobleck?\",\"parentUIDs\":[46,46],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    8\",\"OptionUIDs\":[80,82],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":15.5,\"yPos\":-4563},\"ID\":86,\"TMPFontGUID\":null,\"Text\":\"I
+    knew you were a fellow nerd!\",\"parentUIDs\":[80,80],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    9\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":277.5,\"yPos\":-4567},\"ID\":87,\"TMPFontGUID\":null,\"Text\":\"You
+    gotta look it up it is fantastic stuff!\\n\",\"parentUIDs\":[82,82],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    9\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4.5,\"yPos\":-3371},\"ID\":90,\"TMPFontGUID\":null,\"Text\":\"Great! 
+    However, these aren\u2019t quite like any goat you\u2019ve ever worked with on
+    earth, so don\u2019t be surprised if they don\u2019t like the things that terrain
+    goats like!\",\"parentUIDs\":[88,88],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    18\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":281.5,\"yPos\":-3367},\"ID\":91,\"TMPFontGUID\":null,\"Text\":\"No
+    worries. These aren\u2019t quite like any goat you\u2019ve ever seen on earth,
+    so you aren\u2019t at any disadvantage for not knowing terrain goats.\",\"parentUIDs\":[89,89],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    18\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":108.5,\"yPos\":-3198},\"ID\":92,\"TMPFontGUID\":null,\"Text\":\"Ok.
+    You control everything through this interface you are looking at. Currently,
+    the reserve interface is paused. Go ahead and press that big <b>play button<\\/b>
+    in the top left to get a live feed of the goats.\",\"parentUIDs\":[90,91,90,91],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    19\",\"OptionUIDs\":[],\"SpeechUID\":94,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-3038},\"ID\":94,\"TMPFontGUID\":null,\"Text\":\"Alright,
+    we can gather some information by simply observing the animals, but we'll likely
+    need to do more research to know what's really going on.\",\"parentUIDs\":[92,92],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    20\",\"OptionUIDs\":[],\"SpeechUID\":95,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":115.5,\"yPos\":-2902},\"ID\":95,\"TMPFontGUID\":null,\"Text\":\"Let
+    me show you how to get more detailed information. To <color=\\\"orange\\\">monitor<\\/color>
+    your assigned enclosure, click on the magnifying glass in the top left.  This
+    is your observation tool.\",\"parentUIDs\":[94,94],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    21\",\"OptionUIDs\":[],\"SpeechUID\":96,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-2781},\"ID\":96,\"TMPFontGUID\":null,\"Text\":\"Now
+    you can click on any creature, terrain, or plant and it will show you the current
+    stats for the selected item.  Click on a goat, for example, that will show you
+    the population status report.\",\"parentUIDs\":[95,95],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    22\",\"OptionUIDs\":[],\"SpeechUID\":98,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-2664},\"ID\":98,\"TMPFontGUID\":null,\"Text\":\"Ok,
+    looks like right now you have 4 goats and they are relatively stable.  But your
+    assignment is to increase the population, and clearly, they don\u2019t have what
+    they need to feel like reproducing. And that is what we need you for, to design
+    a solution.\",\"parentUIDs\":[96,96],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    23\",\"OptionUIDs\":[],\"SpeechUID\":99,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":116.5,\"yPos\":-2570},\"ID\":99,\"TMPFontGUID\":null,\"Text\":\"To
+    <color=\\\"orange\\\">design<\\/color> a <color=\\\"orange\\\">concept<\\/color>
+    for the habitat click here on the Creator tool, which is the blueprint icon at
+    the top of the screen.\",\"parentUIDs\":[98,98],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    24\",\"OptionUIDs\":[],\"SpeechUID\":100,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":109.5,\"yPos\":-2455},\"ID\":100,\"TMPFontGUID\":null,\"Text\":\"Inside
+    the Creator is where you can design a <color=\\\"orange\\\">concept<\\/color>,
+    for example, modify terrain, add vegetation\u2026\",\"parentUIDs\":[99,99],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    25\",\"OptionUIDs\":[],\"SpeechUID\":101,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106.5,\"yPos\":-2329},\"ID\":101,\"TMPFontGUID\":null,\"Text\":\"In
+    the lower left is the Storehouse, where you can find what resources are at your
+    disposal. Hover over the dirt icon for example, right now looks like you have
+    a dirt tiles available.\",\"parentUIDs\":[100,100],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    26\",\"OptionUIDs\":[],\"SpeechUID\":102,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106.5,\"yPos\":-2192},\"ID\":102,\"TMPFontGUID\":null,\"Text\":\"You
+    have to be careful with how you use your resources, you don't want to launch
+    into a a lot of random trial and error, we've lost a lot of species that way.\",\"parentUIDs\":[101,101],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    27\",\"OptionUIDs\":[],\"SpeechUID\":103,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":103.5,\"yPos\":-2073},\"ID\":103,\"TMPFontGUID\":null,\"Text\":\"Just
+    to show you the ropes, go ahead and click on the dirt tile and place it somewhere
+    in the grass.  \",\"parentUIDs\":[102,102],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    28\",\"OptionUIDs\":[],\"SpeechUID\":104,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":96.5,\"yPos\":-1946},\"ID\":104,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    worry this is CREATOR mode\u2014it won\u2019t implement any changes until you
+    finalize the design. You can cancel your placement if you right click while placing,
+    or by exiting drafting mode without finalizing.\",\"parentUIDs\":[103,103],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    29\",\"OptionUIDs\":[],\"SpeechUID\":105,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":94.5,\"yPos\":-1810},\"ID\":105,\"TMPFontGUID\":null,\"Text\":\"Once
+    you are happy with your <color=\\\"orange\\\">concept<\\/color>, you can choose
+    \u201CFinalize\u201D, and it will be routed to the Implementation division for
+    overnight terraforma synthesis.\",\"parentUIDs\":[104,104],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    30\",\"OptionUIDs\":[],\"SpeechUID\":106,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":108.5,\"yPos\":-1672},\"ID\":106,\"TMPFontGUID\":null,\"Text\":\"We\u2019ve
+    wired a bit of a time accelerator into the system so you can <color=\\\"orange\\\">test<\\/color>
+    your concept before settling on a final solution. You can only go forward, so
+    you want to be pretty sure of your design before you choose to jump ahead.  \",\"parentUIDs\":[105,105],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    31\",\"OptionUIDs\":[],\"SpeechUID\":107,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":120.5,\"yPos\":-1557},\"ID\":107,\"TMPFontGUID\":null,\"Text\":\"And
+    you are playing with lives here, so keep a close eye on the goats\u2019 condition
+    using the Monitor, to be careful not to accelerate them to extinction!\",\"parentUIDs\":[106,106],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    32\",\"OptionUIDs\":[],\"SpeechUID\":108,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":105.5,\"yPos\":-1434},\"ID\":108,\"TMPFontGUID\":null,\"Text\":\"Now
+    you can access the TIME ACCELERATOR mode by clicking the sun icon.  Click on
+    it now.\",\"parentUIDs\":[107,107],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    33\",\"OptionUIDs\":[],\"SpeechUID\":109,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":105.5,\"yPos\":-1300},\"ID\":109,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    just jumped the enclosure ahead 24 hours.  Now observe the goats again by clicking
+    the MONITOR icon.\",\"parentUIDs\":[108,108],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    34\",\"OptionUIDs\":[],\"SpeechUID\":110,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106.5,\"yPos\":-1153},\"ID\":110,\"TMPFontGUID\":null,\"Text\":\"It
+    looks like it'll take a few more days for the population to increase. Go ahead
+    and jump ahead until their population size increase.\",\"parentUIDs\":[109,109],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    35\",\"OptionUIDs\":[],\"SpeechUID\":111,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":108.5,\"yPos\":-1021},\"ID\":111,\"TMPFontGUID\":null,\"Text\":\"Looks
+    like that one dirt tile increased your population!  Great job!  Seems like we're
+    moving in the right direction. \",\"parentUIDs\":[110,110],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    36\",\"OptionUIDs\":[],\"SpeechUID\":112,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":119.5,\"yPos\":-906},\"ID\":112,\"TMPFontGUID\":null,\"Text\":\"Keep
+    an eye out though, as the population increases you might need to augment the
+    food resources too or they\u2019ll start dying off again. You add Space Maples
+    in a similar way that you added dirt.\",\"parentUIDs\":[111,111],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    37\",\"OptionUIDs\":[],\"SpeechUID\":113,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":121.5,\"yPos\":-782},\"ID\":113,\"TMPFontGUID\":null,\"Text\":\"
+    But like I said, keep monitoring your population as they have apparent growth
+    surges, because insufficient food can be lead to rapid decline, that\u2019s what
+    happened to...\",\"parentUIDs\":[112,112],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    38\",\"OptionUIDs\":[],\"SpeechUID\":114,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-659},\"ID\":114,\"TMPFontGUID\":null,\"Text\":\"Ouch!\",\"parentUIDs\":[113,113],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    39\",\"OptionUIDs\":[],\"SpeechUID\":115,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":119.5,\"yPos\":-533},\"ID\":115,\"TMPFontGUID\":null,\"Text\":\"My
+    paging chip is signaling, I can never get used to getting be-zapped by these
+    things!  Geez!  Couldn\u2019t they have made it a tickle function instead?  Oh
+    no!  Emergency in the Strot enclosure!  I\u2019ve got to go! \",\"parentUIDs\":[114,114],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    40\",\"OptionUIDs\":[],\"SpeechUID\":116,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":107.5,\"yPos\":-416},\"ID\":116,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    got enough to get started designing a habitat for the goats that will encourage
+    them to multiply. But before I go, word of advice that I learned the hard way.
+    \",\"parentUIDs\":[115,115],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    41\",\"OptionUIDs\":[],\"SpeechUID\":117,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":118.5,\"yPos\":-279},\"ID\":117,\"TMPFontGUID\":null,\"Text\":\"Start
+    with <color=\\\"orange\\\">Research<\\/color>, and find out what is already known
+    about the goats. When the rescuers salvaged what they could from Planet X, they
+    put all recorded documentation, videos, comcasts, etc. they could find about
+    any species into a repository called THE ENCYLOPEDIA.\\n\",\"parentUIDs\":[116,116],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    42\",\"OptionUIDs\":[],\"SpeechUID\":118,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":110.5,\"yPos\":-177},\"ID\":118,\"TMPFontGUID\":null,\"Text\":\"I
+    recommend you start there and see what they have on Space Goats before you try
+    to do any more designing. \",\"parentUIDs\":[117,117],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    43\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133.5,\"yPos\":253},\"ID\":120,\"TMPFontGUID\":null,\"Text\":\"
+    But um, try not to zap me too often, yeah? Just kidding!  Call any time!  The
+    COMMUNICATOR doesn\u2019t zap, it\u2019s sends a call over the entire preserve
+    that lets me know who needs me and I can hologram over to see how you are doing!
+    Good luck!\",\"parentUIDs\":[124,124],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    46\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":102,\"yPos\":-69},\"ID\":121,\"TMPFontGUID\":null,\"Text\":\"I
+    think they have pretty strict requirements for water, and you need a minimum
+    number of aqua units per goat, which is why the current enclosure has kept them
+    stable, whereas we were on the brink of losing them for a while.  Truly, we started
+    with 50 and now are down to these 4!   \",\"parentUIDs\":[118],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    44\",\"OptionUIDs\":[],\"SpeechUID\":124,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":114,\"yPos\":88},\"ID\":124,\"TMPFontGUID\":null,\"Text\":\"Ouch! 
+    There it goes again!  I have to run to the Strot area.  Good luck!  If you need
+    me you can try calling me with the COMMUNICATOR tool.\",\"parentUIDs\":[121,121],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    45\",\"OptionUIDs\":[],\"SpeechUID\":120,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
-  DefaultName: Star
+  DefaultName: Star 1
   DefaultSprite: {fileID: 21300000, guid: 27112e13e0f4d481d953a3e3445a4fbf, type: 3}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
@@ -5031,8 +5183,6 @@ MonoBehaviour:
   - {fileID: 1915406533}
   - {fileID: 1915406532}
   - {fileID: 1915406531}
-  - {fileID: 1915406530}
-  - {fileID: 1915406529}
   - {fileID: 1915406528}
   - {fileID: 1915406527}
   - {fileID: 1915406523}
@@ -5050,6 +5200,43 @@ MonoBehaviour:
   - {fileID: 1915406517}
   - {fileID: 1915406516}
   - {fileID: 1915406518}
+  - {fileID: 1915406599}
+  - {fileID: 1915406598}
+  - {fileID: 1915406597}
+  - {fileID: 1915406596}
+  - {fileID: 1915406595}
+  - {fileID: 1915406594}
+  - {fileID: 1915406593}
+  - {fileID: 1915406592}
+  - {fileID: 1915406591}
+  - {fileID: 1915406590}
+  - {fileID: 1915406589}
+  - {fileID: 1915406588}
+  - {fileID: 1915406587}
+  - {fileID: 1915406586}
+  - {fileID: 1915406585}
+  - {fileID: 1915406584}
+  - {fileID: 1915406583}
+  - {fileID: 1915406582}
+  - {fileID: 1915406581}
+  - {fileID: 1915406580}
+  - {fileID: 1915406579}
+  - {fileID: 1915406578}
+  - {fileID: 1915406577}
+  - {fileID: 1915406576}
+  - {fileID: 1915406575}
+  - {fileID: 1915406574}
+  - {fileID: 1915406573}
+  - {fileID: 1915406530}
+  - {fileID: 1915406529}
+  - {fileID: 1915406526}
+  - {fileID: 1915406525}
+  - {fileID: 1915406524}
+  - {fileID: 1915406522}
+  - {fileID: 1915406521}
+  - {fileID: 1915406519}
+  - {fileID: 1915406600}
+  - {fileID: 1915406520}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -7315,8 +7502,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -121.89, y: -397.6}
-  m_SizeDelta: {x: 793.7864, y: 143.81128}
+  m_AnchoredPosition: {x: -320, y: 445}
+  m_SizeDelta: {x: 359.8932, y: 114.89493}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1086981702 stripped
 MonoBehaviour:
@@ -8196,6 +8383,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed7d11313c934f0ebeaffd1fe07584a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1378128705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378128706}
+  - component: {fileID: 1378128708}
+  - component: {fileID: 1378128707}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1378128706
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378128705}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 747007570}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 642.52, y: -106.02}
+  m_SizeDelta: {x: -1296.0916, y: -223.75961}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1378128707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378128705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b842a3e249da64e51953311a3e9d4212, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1378128708
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378128705}
+  m_CullTransparentMesh: 0
 --- !u!1 &1378897273 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4503815156008761626, guid: 71886a6858e6a442fa66e2dbc551db8a,
@@ -8476,22 +8737,22 @@ PrefabInstance:
     - target: {fileID: 403085640593535717, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 86.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 403085640593535717, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 432.0639
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 403085640593535717, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 129.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 403085640593535717, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 993.564
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 433049247909183246, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -12068,9 +12329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Finished Drafting
-
-'
+  m_text: Finalize
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -12139,10 +12398,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1707648722}
-    characterCount: 18
+    characterCount: 8
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -12369,6 +12628,292 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1771615207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1771615211}
+  - component: {fileID: 1771615210}
+  - component: {fileID: 1771615209}
+  - component: {fileID: 1771615208}
+  m_Layer: 5
+  m_Name: CancelDrafting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1771615208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771615207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.49734908, g: 0.383277, b: 0.9339623, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1771615209}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 459174929}
+        m_MethodName: cancelDrafting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1771615209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771615207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 0.5882353}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1771615210
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771615207}
+  m_CullTransparentMesh: 0
+--- !u!224 &1771615211
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771615207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1772848318}
+  m_Father: {fileID: 299544664}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 114, y: 445}
+  m_SizeDelta: {x: 359.8932, y: 114.89493}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1772848317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1772848318}
+  - component: {fileID: 1772848320}
+  - component: {fileID: 1772848319}
+  m_Layer: 5
+  m_Name: Cancel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1772848318
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772848317}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1771615211}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1772848319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772848317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Cancel
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278234867
+  m_fontColor: {r: 0.9528302, g: 0.681605, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 73.5
+  m_fontSizeBase: 73.5
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 1772848319}
+    characterCount: 6
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 1
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1772848320
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772848317}
+  m_CullTransparentMesh: 0
 --- !u!1 &1782313611
 GameObject:
   m_ObjectHideFlags: 0
@@ -13514,8 +14059,6 @@ GameObject:
   - component: {fileID: 1915406533}
   - component: {fileID: 1915406532}
   - component: {fileID: 1915406531}
-  - component: {fileID: 1915406530}
-  - component: {fileID: 1915406529}
   - component: {fileID: 1915406528}
   - component: {fileID: 1915406527}
   - component: {fileID: 1915406523}
@@ -13533,6 +14076,43 @@ GameObject:
   - component: {fileID: 1915406517}
   - component: {fileID: 1915406516}
   - component: {fileID: 1915406518}
+  - component: {fileID: 1915406599}
+  - component: {fileID: 1915406598}
+  - component: {fileID: 1915406597}
+  - component: {fileID: 1915406596}
+  - component: {fileID: 1915406595}
+  - component: {fileID: 1915406594}
+  - component: {fileID: 1915406593}
+  - component: {fileID: 1915406592}
+  - component: {fileID: 1915406591}
+  - component: {fileID: 1915406590}
+  - component: {fileID: 1915406589}
+  - component: {fileID: 1915406588}
+  - component: {fileID: 1915406587}
+  - component: {fileID: 1915406586}
+  - component: {fileID: 1915406585}
+  - component: {fileID: 1915406584}
+  - component: {fileID: 1915406583}
+  - component: {fileID: 1915406582}
+  - component: {fileID: 1915406581}
+  - component: {fileID: 1915406580}
+  - component: {fileID: 1915406579}
+  - component: {fileID: 1915406578}
+  - component: {fileID: 1915406577}
+  - component: {fileID: 1915406576}
+  - component: {fileID: 1915406575}
+  - component: {fileID: 1915406574}
+  - component: {fileID: 1915406573}
+  - component: {fileID: 1915406530}
+  - component: {fileID: 1915406529}
+  - component: {fileID: 1915406526}
+  - component: {fileID: 1915406525}
+  - component: {fileID: 1915406524}
+  - component: {fileID: 1915406522}
+  - component: {fileID: 1915406521}
+  - component: {fileID: 1915406519}
+  - component: {fileID: 1915406600}
+  - component: {fileID: 1915406520}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -13609,7 +14189,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406508
 MonoBehaviour:
@@ -13666,7 +14246,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406511
 MonoBehaviour:
@@ -13685,7 +14265,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406512
 MonoBehaviour:
@@ -13704,7 +14284,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
+  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406513
 MonoBehaviour:
@@ -13742,7 +14322,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406515
 MonoBehaviour:
@@ -13799,7 +14379,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406518
 MonoBehaviour:
@@ -13819,6 +14399,82 @@ MonoBehaviour:
       m_Calls: []
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &1915406519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 120
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b31586d8437b6438fbc8d52e492b6172, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 124
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 27112e13e0f4d481d953a3e3445a4fbf, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 118
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 117
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406523
 MonoBehaviour:
@@ -13848,7 +14504,64 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 116
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 115
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 114
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: f90457a2014c24bbdb093b2233c905d5, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406527
 MonoBehaviour:
@@ -13867,7 +14580,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: b31586d8437b6438fbc8d52e492b6172, type: 3}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406528
 MonoBehaviour:
@@ -13886,7 +14599,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406529
 MonoBehaviour:
@@ -13900,12 +14613,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodeID: 44
+  NodeID: 113
   Event:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: f90457a2014c24bbdb093b2233c905d5, type: 3}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406530
 MonoBehaviour:
@@ -13919,12 +14632,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodeID: 43
+  NodeID: 112
   Event:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1915406531
 MonoBehaviour:
@@ -14723,6 +15436,538 @@ MonoBehaviour:
       m_Calls: []
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 111
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 110
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 109
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 108
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 107
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 89
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &1915406579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 88
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &1915406580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 106
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 105
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 104
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 103
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 102
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 101
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 100
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 99
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 98
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 96
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 95
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 94
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 92
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 91
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 90
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 87
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b31586d8437b6438fbc8d52e492b6172, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 86
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b31586d8437b6438fbc8d52e492b6172, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 85
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b31586d8437b6438fbc8d52e492b6172, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 84
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 83
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b31586d8437b6438fbc8d52e492b6172, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1915406600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915406503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 121
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &1957592464 stripped
 GameObject:
@@ -16014,6 +17259,135 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
+--- !u!1 &2026469683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026469684}
+  - component: {fileID: 2026469687}
+  - component: {fileID: 2026469686}
+  - component: {fileID: 2026469685}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2026469684
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026469683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 747007570}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 643.3, y: -107.2}
+  m_SizeDelta: {x: 75, y: 75}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2026469685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026469683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2026469686}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 575871632}
+        m_MethodName: UpdateNextSpeech
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2026469686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026469683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 72ce2daf0657047f18c67325cb96fd0a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2026469687
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026469683}
+  m_CullTransparentMesh: 0
 --- !u!114 &2031291481 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2522856075384190207, guid: 71886a6858e6a442fa66e2dbc551db8a,
@@ -20558,7 +21932,6 @@ MonoBehaviour:
   interactiveConversation: {fileID: 598365504}
   startingConversation: {fileID: 861948894}
   ConversationManagerGameObject: {fileID: 575871629}
-  StoreButtonsGameObject: {fileID: 2042517773}
   DialogueButton: {fileID: 117441984}
   DefaultImage: {fileID: 21300000, guid: e362590e8029a4309bcbe4de1292a927, type: 3}
   NotificationImage: {fileID: 21300000, guid: c37ef1c215fed4353adafc754fd2280b, type: 3}
