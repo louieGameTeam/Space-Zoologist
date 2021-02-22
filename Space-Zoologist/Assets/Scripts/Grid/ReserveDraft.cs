@@ -55,6 +55,17 @@ public class ReserveDraft : MonoBehaviour
         UpdateUI(true);
     }
 
+    public void applyDraft()
+    {
+        GridIO.SaveGrid(currentLevel);
+        GridIO.SaveGrid(currentLevel + "Draft");
+
+        closeStoreStuff();
+        setAnimalsVisible(true);
+        PauseManager.Unpause();
+        UpdateUI(true);
+    }
+
     private void setAnimalsVisible(bool isVisible)
     {
         foreach (Population population in this.PopulationManager.Populations)
