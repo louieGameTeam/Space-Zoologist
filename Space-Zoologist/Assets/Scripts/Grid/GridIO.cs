@@ -52,7 +52,7 @@ public class GridIO : MonoBehaviour
         {
             streamWriter.Write(JsonUtility.ToJson(new SerializedGrid(this.tileLayerManagers)));
         }
-        // Debug.Log("Grid Saved to: " + fullPath);
+        Debug.Log("Grid Saved to: " + fullPath);
     }
     public void LoadGrid(string name = null)
     {

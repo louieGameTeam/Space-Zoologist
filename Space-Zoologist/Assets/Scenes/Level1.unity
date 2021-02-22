@@ -218,12 +218,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 50754422}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &52738758 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4661624496997434352, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &113365922
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,61 +290,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!1 &117441984 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2479990839691685957, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &196057115
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 196057116}
-  - component: {fileID: 196057117}
-  m_Layer: 5
-  m_Name: WebCommunication
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &196057116
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196057115}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 299544664}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &196057117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196057115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16cc9a5822bc64239a3a097d54f22281, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsInputEnabled: 1
 --- !u!1 &208159618
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,24 +346,6 @@ MonoBehaviour:
       resourceName: Space Maple
       amount: 1
       NPCConversation: {fileID: 2106454061}
---- !u!1 &220827994 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4661624496959536084, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &220827996 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4661624496959536080, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220827994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a6b2c1f102a0ef4590e9b3db7f3b319, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &225452884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +380,18 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
+--- !u!114 &258311931 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6806260342313386140, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6b2c1f102a0ef4590e9b3db7f3b319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &285697809
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,12 +634,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!224 &299544664 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4661624496606486879, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &320161628
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,18 +858,11 @@ MonoBehaviour:
   currentLevel: Level1
   PopulationManager: {fileID: 2078374405}
   PauseManager: {fileID: 650241543}
-  StoreButtons: {fileID: 961130262}
-  StoreMenus:
-  - {fileID: 1957592464}
-  - {fileID: 574417233}
-  - {fileID: 220827994}
-  - {fileID: 52738758}
-  NextDayButton: {fileID: 1481787291}
-  PauseButton: {fileID: 1518430617}
+  NextDayButton: {fileID: 1442133057}
+  PauseButton: {fileID: 1110257800}
   PlayerController: {fileID: 1290313821}
-  DraftingButton: {fileID: 1220722983}
-  FinishDrafting: {fileID: 1054207728}
-  CancelDrafting: {fileID: 1771615207}
+  FinishDrafting: {fileID: 1457899957}
+  CancelDrafting: {fileID: 1331265386}
 --- !u!1 &462963690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,81 +1193,9 @@ MonoBehaviour:
   interactiveConversation: {fileID: 1195355568}
   startingConversation: {fileID: 1392974207}
   ConversationManagerGameObject: {fileID: 575871629}
-  DialogueButton: {fileID: 117441984}
+  DialogueButton: {fileID: 0}
   DefaultImage: {fileID: 21300000, guid: e362590e8029a4309bcbe4de1292a927, type: 3}
   NotificationImage: {fileID: 21300000, guid: c37ef1c215fed4353adafc754fd2280b, type: 3}
---- !u!1 &521369252 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3316588042901008568, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &521369253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521369252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 521369254}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 196057117}
-        m_MethodName: ToggleJ
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &521369254 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1954075098932905151, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521369252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &548474200
 GameObject:
   m_ObjectHideFlags: 0
@@ -2429,12 +2277,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!1 &574417233 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4661624498312455131, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &575871629 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6282307746449053871, guid: 71886a6858e6a442fa66e2dbc551db8a,
@@ -2529,7 +2371,7 @@ PrefabInstance:
         type: 3}
       propertyPath: TileSystem
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 765609361}
     - target: {fileID: 5592442341701244945, guid: cb486228a247c40499c6ee6199be321f,
         type: 3}
       propertyPath: needSystemManager
@@ -3059,21 +2901,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 47
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-259.5,\"yPos\":142},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Food
-    Resources\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-23.5,\"yPos\":142},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Modifying
-    Terrain\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":44},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":325.5,\"yPos\":197},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Populations\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":282,\"yPos\":77},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"That's
-    all\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-23.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
-    your first week going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[4,5,22,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-444,\"yPos\":403},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Click
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":220.5,\"yPos\":142},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Food
+    Resources\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":456.5,\"yPos\":142},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Modifying
+    Terrain\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":44},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":805.5,\"yPos\":197},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Populations\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":762,\"yPos\":77},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"That's
+    all\",\"parentUIDs\":[0,46,0,46],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":456.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
+    your first week going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[4,5,22,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":36,\"yPos\":403},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Click
     on the drafting icon, then the food icon to the left and select the food you
     want to place. For now, try placing the Space Maple on dirt patches. We\u2019ll
-    get to more advanced food resources in later stages. Hope this helps!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":83,\"yPos\":449},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Click
+    get to more advanced food resources in later stages. Hope this helps!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":563,\"yPos\":449},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Click
     on the drafting icon, then the terrain icon to the left and select the terrain
     you want to place. You should be able to place terrain in all locations except
-    for a population's starting location (shaded gray). Hope this helps!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":324,\"yPos\":397},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"A
+    for a population's starting location (shaded gray). Hope this helps!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":804,\"yPos\":397},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"A
     species population is represented by the animals moving around in the reserve.
     For our purposes, we are most concerned with how the population as a whole is
     doing, which means that each signal given to us by an individual animal is indicative
-    of how the whole population is doing.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-205,\"yPos\":263},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Anything
+    of how the whole population is doing.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":275,\"yPos\":263},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Anything
     else I can help you with?\",\"parentUIDs\":[43,44,45,43,44,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[22,5,4,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
@@ -3170,12 +3012,12 @@ PrefabInstance:
         type: 3}
       propertyPath: objectivePanel
       value: 
-      objectReference: {fileID: 1597436014}
+      objectReference: {fileID: 2115759715}
     - target: {fileID: 1071554014468661023, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: objectivePanelText
       value: 
-      objectReference: {fileID: 1086981702}
+      objectReference: {fileID: 657539521}
     - target: {fileID: 1071554014468661023, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: LevelDataReference
@@ -3305,7 +3147,7 @@ PrefabInstance:
         type: 3}
       propertyPath: PauseButton
       value: 
-      objectReference: {fileID: 1518430617}
+      objectReference: {fileID: 1110257800}
     - target: {fileID: 9080907037132233418, guid: ea0e367afd13e4b568216541f00b9ab0,
         type: 3}
       propertyPath: ResumeSprite
@@ -3367,6 +3209,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5e83d68ea3bf4ae1bd4a7f234c314f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &657539521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5722233562074186345, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &661599982
@@ -3655,6 +3509,12 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!95 &678508383 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6228998522823290336, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &747007570 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2460226946974277235, guid: 71886a6858e6a442fa66e2dbc551db8a,
@@ -4987,165 +4847,165 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 125
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":6,\"yPos\":-4632},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[46,85,85],\"SpeechUID\":86},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":300,\"yPos\":-4635},\"ID\":82,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[46,85,85],\"SpeechUID\":87},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":4.5,\"yPos\":-3473},\"ID\":88,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[78,78],\"SpeechUID\":90},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":273.5,\"yPos\":-3480},\"ID\":89,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[78,78],\"SpeechUID\":91}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":133.5,\"yPos\":-5384},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[],\"SpeechUID\":42,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":131.5,\"yPos\":-5285},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"The
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329,\"yPos\":774},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[46,85,85],\"SpeechUID\":86},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":623,\"yPos\":771},\"ID\":82,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[46,85,85],\"SpeechUID\":87},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":327.5,\"yPos\":1933},\"ID\":88,\"TMPFontGUID\":null,\"Text\":\"Yes\",\"parentUIDs\":[78,78],\"SpeechUID\":90},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":596.5,\"yPos\":1926},\"ID\":89,\"TMPFontGUID\":null,\"Text\":\"No\",\"parentUIDs\":[78,78],\"SpeechUID\":91}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":456.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
+    there, so you\u2019re the new recruit! It\u2019s a pleasure to meet you!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"???\",\"OptionUIDs\":[],\"SpeechUID\":42,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":454.5,\"yPos\":121},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"The
     name\u2019s Aurora Star, but you can just call me...\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Aurora
-    Star 2\",\"OptionUIDs\":[],\"SpeechUID\":79,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":132.5,\"yPos\":-4973},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"I
+    Star 2\",\"OptionUIDs\":[],\"SpeechUID\":79,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":455.5,\"yPos\":433},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"I
     am really chuffed to have you.  These creatures are amazing, but they are unlike
     any species we have ever encountered and we are struggling to <color=\\\"orange\\\">identify
     their needs<\\/color>\u2026 Keeping them alive has been harder than trying to
     high dive into oobleck!\",\"parentUIDs\":[84,84],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    6 \",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133.5,\"yPos\":-4870},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Get
+    6 \",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":456.5,\"yPos\":536},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"Get
     it?  \u201CDiving from great height into Oobleck?\u201D\u2026?\",\"parentUIDs\":[45,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    7\",\"OptionUIDs\":[],\"SpeechUID\":85,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":140.5,\"yPos\":-4319},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"We\u2019ll
+    7\",\"OptionUIDs\":[],\"SpeechUID\":85,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":463.5,\"yPos\":1087},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"We\u2019ll
     be counting on you to <color=\\\"orange\\\">Engineer<\\/color> environments and
     <color=\\\"orange\\\">Design<\\/color> solutions that address the needs of the
     Space Goats.\",\"parentUIDs\":[81,81],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    11\",\"OptionUIDs\":[],\"SpeechUID\":71,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":140,\"yPos\":-4193},\"ID\":71,\"TMPFontGUID\":null,\"Text\":\"Here,
+    11\",\"OptionUIDs\":[],\"SpeechUID\":71,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":463,\"yPos\":1213},\"ID\":71,\"TMPFontGUID\":null,\"Text\":\"Here,
     we follow the ROCeT Man protocol for design...\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    12\",\"OptionUIDs\":[],\"SpeechUID\":77,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":136,\"yPos\":-3994},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"Here
+    12\",\"OptionUIDs\":[],\"SpeechUID\":77,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":459,\"yPos\":1412},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"Here
     at the Command Central, you have the ability to monitor the space and use the
     virtual reality Creator to design the habitat.  \",\"parentUIDs\":[71,77,77],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    14\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133,\"yPos\":-3877},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"And
+    14\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":456,\"yPos\":1529},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"And
     then you can push the conceptual design through to implementation, which the
     VIVA synthesizer will put into action overnight.\",\"parentUIDs\":[72,72],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    15\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":132,\"yPos\":-3738},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"First
+    15\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":455,\"yPos\":1668},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"First
     press \u201CO\u201D, for OBJECTIVE, to find out what your assignment is.\",\"parentUIDs\":[73,73],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    16\",\"OptionUIDs\":[],\"SpeechUID\":78,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":135.5,\"yPos\":-4093},\"ID\":77,\"TMPFontGUID\":null,\"Text\":\"1)
+    16\",\"OptionUIDs\":[],\"SpeechUID\":78,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":458.5,\"yPos\":1313},\"ID\":77,\"TMPFontGUID\":null,\"Text\":\"1)
     <color=\\\"orange\\\">Research<\\/color> what is already known. \\n2) <color=\\\"orange\\\">Observe<\\/color>
     current situation.  \\n3) Propose <color=\\\"orange\\\">Concept<\\/color> to
     modify the environment.  \\n4) <color=\\\"orange\\\">Test<\\/color> the effect
     of the changes. \\n5) <color=\\\"orange\\\">Record<\\/color> key Metrics R-O-C-T-M. 
     or ROCeT Man!\",\"parentUIDs\":[71,71],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    13\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133.5,\"yPos\":-3617},\"ID\":78,\"TMPFontGUID\":null,\"Text\":\"Oh
+    13\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":456.5,\"yPos\":1789},\"ID\":78,\"TMPFontGUID\":null,\"Text\":\"Oh
     cool! You\u2019ve got the Space Goat enclosure.  I LUV them!!! They are so cute!
     And really sassy!  Amazing creatures, the Space Goat.  Do you have any experience
     with terran goats?\",\"parentUIDs\":[74,74],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    17\",\"OptionUIDs\":[88,89],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-83.5,\"yPos\":-5226},\"ID\":79,\"TMPFontGUID\":null,\"Text\":\"STAR...
+    17\",\"OptionUIDs\":[88,89],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":239.5,\"yPos\":180},\"ID\":79,\"TMPFontGUID\":null,\"Text\":\"STAR...
     since I'm the star of the show\u2026 ba da bing!\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"...
-    3\",\"OptionUIDs\":[],\"SpeechUID\":83,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":144,\"yPos\":-4432},\"ID\":81,\"TMPFontGUID\":null,\"Text\":\"Seriously,
+    3\",\"OptionUIDs\":[],\"SpeechUID\":83,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":467,\"yPos\":974},\"ID\":81,\"TMPFontGUID\":null,\"Text\":\"Seriously,
     though, you as an engineer, your background in problem-solving could contribute
     a lot towards designing viable solutions for the habitats we are trying to create.\",\"parentUIDs\":[80,82,86,87,86,87],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    10\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":143.5,\"yPos\":-5186},\"ID\":83,\"TMPFontGUID\":null,\"Text\":\"Thank
+    10\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":466.5,\"yPos\":220},\"ID\":83,\"TMPFontGUID\":null,\"Text\":\"Thank
     you, thank you, I\u2019m here till Thursday\u2026 no laughs huh? Tough audience. 
     Well, really, don\u2019t worry, I do not think I am all-that-and-a-bag-of-chips,
     but please do call me Star.  I am one of the Senior Zoologists on staff here.
     \",\"parentUIDs\":[79,79],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    4\",\"OptionUIDs\":[],\"SpeechUID\":84,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":137.5,\"yPos\":-5082},\"ID\":84,\"TMPFontGUID\":null,\"Text\":\"And
+    4\",\"OptionUIDs\":[],\"SpeechUID\":84,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":460.5,\"yPos\":324},\"ID\":84,\"TMPFontGUID\":null,\"Text\":\"And
     you are our new engineer!\",\"parentUIDs\":[83,83],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    5\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":134.5,\"yPos\":-4775},\"ID\":85,\"TMPFontGUID\":null,\"Text\":\"Still
+    5\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":457.5,\"yPos\":631},\"ID\":85,\"TMPFontGUID\":null,\"Text\":\"Still
     no laughs?!  Ah well, obscure non-Newtonian fluid humor. Do you know oobleck?\",\"parentUIDs\":[46,46],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    8\",\"OptionUIDs\":[80,82],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":15.5,\"yPos\":-4563},\"ID\":86,\"TMPFontGUID\":null,\"Text\":\"I
+    8\",\"OptionUIDs\":[80,82],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":338.5,\"yPos\":843},\"ID\":86,\"TMPFontGUID\":null,\"Text\":\"I
     knew you were a fellow nerd!\",\"parentUIDs\":[80,80],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    9\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":277.5,\"yPos\":-4567},\"ID\":87,\"TMPFontGUID\":null,\"Text\":\"You
+    9\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":600.5,\"yPos\":839},\"ID\":87,\"TMPFontGUID\":null,\"Text\":\"You
     gotta look it up it is fantastic stuff!\\n\",\"parentUIDs\":[82,82],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    9\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4.5,\"yPos\":-3371},\"ID\":90,\"TMPFontGUID\":null,\"Text\":\"Great! 
+    9\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":318.5,\"yPos\":2035},\"ID\":90,\"TMPFontGUID\":null,\"Text\":\"Great! 
     However, these aren\u2019t quite like any goat you\u2019ve ever worked with on
     earth, so don\u2019t be surprised if they don\u2019t like the things that terrain
     goats like!\",\"parentUIDs\":[88,88],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    18\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":281.5,\"yPos\":-3367},\"ID\":91,\"TMPFontGUID\":null,\"Text\":\"No
+    18\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":604.5,\"yPos\":2039},\"ID\":91,\"TMPFontGUID\":null,\"Text\":\"No
     worries. These aren\u2019t quite like any goat you\u2019ve ever seen on earth,
     so you aren\u2019t at any disadvantage for not knowing terrain goats.\",\"parentUIDs\":[89,89],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    18\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":108.5,\"yPos\":-3198},\"ID\":92,\"TMPFontGUID\":null,\"Text\":\"Ok.
+    18\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":431.5,\"yPos\":2208},\"ID\":92,\"TMPFontGUID\":null,\"Text\":\"Ok.
     You control everything through this interface you are looking at. Currently,
     the reserve interface is paused. Go ahead and press that big <b>play button<\\/b>
     in the top left to get a live feed of the goats.\",\"parentUIDs\":[90,91,90,91],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    19\",\"OptionUIDs\":[],\"SpeechUID\":94,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-3038},\"ID\":94,\"TMPFontGUID\":null,\"Text\":\"Alright,
+    19\",\"OptionUIDs\":[],\"SpeechUID\":94,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":435.5,\"yPos\":2368},\"ID\":94,\"TMPFontGUID\":null,\"Text\":\"Alright,
     we can gather some information by simply observing the animals, but we'll likely
     need to do more research to know what's really going on.\",\"parentUIDs\":[92,92],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    20\",\"OptionUIDs\":[],\"SpeechUID\":95,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":115.5,\"yPos\":-2902},\"ID\":95,\"TMPFontGUID\":null,\"Text\":\"Let
+    20\",\"OptionUIDs\":[],\"SpeechUID\":95,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":438.5,\"yPos\":2504},\"ID\":95,\"TMPFontGUID\":null,\"Text\":\"Let
     me show you how to get more detailed information. To <color=\\\"orange\\\">monitor<\\/color>
     your assigned enclosure, click on the magnifying glass in the top left.  This
     is your observation tool.\",\"parentUIDs\":[94,94],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    21\",\"OptionUIDs\":[],\"SpeechUID\":96,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-2781},\"ID\":96,\"TMPFontGUID\":null,\"Text\":\"Now
+    21\",\"OptionUIDs\":[],\"SpeechUID\":96,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":435.5,\"yPos\":2625},\"ID\":96,\"TMPFontGUID\":null,\"Text\":\"Now
     you can click on any creature, terrain, or plant and it will show you the current
     stats for the selected item.  Click on a goat, for example, that will show you
     the population status report.\",\"parentUIDs\":[95,95],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    22\",\"OptionUIDs\":[],\"SpeechUID\":98,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-2664},\"ID\":98,\"TMPFontGUID\":null,\"Text\":\"Ok,
+    22\",\"OptionUIDs\":[],\"SpeechUID\":98,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":435.5,\"yPos\":2742},\"ID\":98,\"TMPFontGUID\":null,\"Text\":\"Ok,
     looks like right now you have 4 goats and they are relatively stable.  But your
     assignment is to increase the population, and clearly, they don\u2019t have what
     they need to feel like reproducing. And that is what we need you for, to design
     a solution.\",\"parentUIDs\":[96,96],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    23\",\"OptionUIDs\":[],\"SpeechUID\":99,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":116.5,\"yPos\":-2570},\"ID\":99,\"TMPFontGUID\":null,\"Text\":\"To
+    23\",\"OptionUIDs\":[],\"SpeechUID\":99,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":439.5,\"yPos\":2836},\"ID\":99,\"TMPFontGUID\":null,\"Text\":\"To
     <color=\\\"orange\\\">design<\\/color> a <color=\\\"orange\\\">concept<\\/color>
     for the habitat click here on the Creator tool, which is the blueprint icon at
     the top of the screen.\",\"parentUIDs\":[98,98],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    24\",\"OptionUIDs\":[],\"SpeechUID\":100,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":109.5,\"yPos\":-2455},\"ID\":100,\"TMPFontGUID\":null,\"Text\":\"Inside
+    24\",\"OptionUIDs\":[],\"SpeechUID\":100,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":432.5,\"yPos\":2951},\"ID\":100,\"TMPFontGUID\":null,\"Text\":\"Inside
     the Creator is where you can design a <color=\\\"orange\\\">concept<\\/color>,
     for example, modify terrain, add vegetation\u2026\",\"parentUIDs\":[99,99],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    25\",\"OptionUIDs\":[],\"SpeechUID\":101,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106.5,\"yPos\":-2329},\"ID\":101,\"TMPFontGUID\":null,\"Text\":\"In
+    25\",\"OptionUIDs\":[],\"SpeechUID\":101,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":429.5,\"yPos\":3077},\"ID\":101,\"TMPFontGUID\":null,\"Text\":\"In
     the lower left is the Storehouse, where you can find what resources are at your
     disposal. Hover over the dirt icon for example, right now looks like you have
     a dirt tiles available.\",\"parentUIDs\":[100,100],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    26\",\"OptionUIDs\":[],\"SpeechUID\":102,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106.5,\"yPos\":-2192},\"ID\":102,\"TMPFontGUID\":null,\"Text\":\"You
+    26\",\"OptionUIDs\":[],\"SpeechUID\":102,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":429.5,\"yPos\":3214},\"ID\":102,\"TMPFontGUID\":null,\"Text\":\"You
     have to be careful with how you use your resources, you don't want to launch
     into a a lot of random trial and error, we've lost a lot of species that way.\",\"parentUIDs\":[101,101],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    27\",\"OptionUIDs\":[],\"SpeechUID\":103,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":103.5,\"yPos\":-2073},\"ID\":103,\"TMPFontGUID\":null,\"Text\":\"Just
+    27\",\"OptionUIDs\":[],\"SpeechUID\":103,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":426.5,\"yPos\":3333},\"ID\":103,\"TMPFontGUID\":null,\"Text\":\"Just
     to show you the ropes, go ahead and click on the dirt tile and place it somewhere
     in the grass.  \",\"parentUIDs\":[102,102],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    28\",\"OptionUIDs\":[],\"SpeechUID\":104,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":96.5,\"yPos\":-1946},\"ID\":104,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    28\",\"OptionUIDs\":[],\"SpeechUID\":104,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":419.5,\"yPos\":3460},\"ID\":104,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
     worry this is CREATOR mode\u2014it won\u2019t implement any changes until you
     finalize the design. You can cancel your placement if you right click while placing,
     or by exiting drafting mode without finalizing.\",\"parentUIDs\":[103,103],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    29\",\"OptionUIDs\":[],\"SpeechUID\":105,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":94.5,\"yPos\":-1810},\"ID\":105,\"TMPFontGUID\":null,\"Text\":\"Once
+    29\",\"OptionUIDs\":[],\"SpeechUID\":105,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":417.5,\"yPos\":3596},\"ID\":105,\"TMPFontGUID\":null,\"Text\":\"Once
     you are happy with your <color=\\\"orange\\\">concept<\\/color>, you can choose
     \u201CFinalize\u201D, and it will be routed to the Implementation division for
     overnight terraforma synthesis.\",\"parentUIDs\":[104,104],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    30\",\"OptionUIDs\":[],\"SpeechUID\":106,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":108.5,\"yPos\":-1672},\"ID\":106,\"TMPFontGUID\":null,\"Text\":\"We\u2019ve
+    30\",\"OptionUIDs\":[],\"SpeechUID\":106,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":431.5,\"yPos\":3734},\"ID\":106,\"TMPFontGUID\":null,\"Text\":\"We\u2019ve
     wired a bit of a time accelerator into the system so you can <color=\\\"orange\\\">test<\\/color>
     your concept before settling on a final solution. You can only go forward, so
     you want to be pretty sure of your design before you choose to jump ahead.  \",\"parentUIDs\":[105,105],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    31\",\"OptionUIDs\":[],\"SpeechUID\":107,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":120.5,\"yPos\":-1557},\"ID\":107,\"TMPFontGUID\":null,\"Text\":\"And
+    31\",\"OptionUIDs\":[],\"SpeechUID\":107,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":443.5,\"yPos\":3849},\"ID\":107,\"TMPFontGUID\":null,\"Text\":\"And
     you are playing with lives here, so keep a close eye on the goats\u2019 condition
     using the Monitor, to be careful not to accelerate them to extinction!\",\"parentUIDs\":[106,106],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    32\",\"OptionUIDs\":[],\"SpeechUID\":108,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":105.5,\"yPos\":-1434},\"ID\":108,\"TMPFontGUID\":null,\"Text\":\"Now
+    32\",\"OptionUIDs\":[],\"SpeechUID\":108,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":428.5,\"yPos\":3972},\"ID\":108,\"TMPFontGUID\":null,\"Text\":\"Now
     you can access the TIME ACCELERATOR mode by clicking the sun icon.  Click on
     it now.\",\"parentUIDs\":[107,107],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    33\",\"OptionUIDs\":[],\"SpeechUID\":109,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":105.5,\"yPos\":-1300},\"ID\":109,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    33\",\"OptionUIDs\":[],\"SpeechUID\":109,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":428.5,\"yPos\":4106},\"ID\":109,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
     just jumped the enclosure ahead 24 hours.  Now observe the goats again by clicking
     the MONITOR icon.\",\"parentUIDs\":[108,108],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    34\",\"OptionUIDs\":[],\"SpeechUID\":110,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106.5,\"yPos\":-1153},\"ID\":110,\"TMPFontGUID\":null,\"Text\":\"It
+    34\",\"OptionUIDs\":[],\"SpeechUID\":110,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":429.5,\"yPos\":4253},\"ID\":110,\"TMPFontGUID\":null,\"Text\":\"It
     looks like it'll take a few more days for the population to increase. Go ahead
     and jump ahead until their population size increase.\",\"parentUIDs\":[109,109],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    35\",\"OptionUIDs\":[],\"SpeechUID\":111,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":108.5,\"yPos\":-1021},\"ID\":111,\"TMPFontGUID\":null,\"Text\":\"Looks
+    35\",\"OptionUIDs\":[],\"SpeechUID\":111,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":431.5,\"yPos\":4385},\"ID\":111,\"TMPFontGUID\":null,\"Text\":\"Looks
     like that one dirt tile increased your population!  Great job!  Seems like we're
     moving in the right direction. \",\"parentUIDs\":[110,110],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    36\",\"OptionUIDs\":[],\"SpeechUID\":112,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":119.5,\"yPos\":-906},\"ID\":112,\"TMPFontGUID\":null,\"Text\":\"Keep
+    36\",\"OptionUIDs\":[],\"SpeechUID\":112,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":442.5,\"yPos\":4500},\"ID\":112,\"TMPFontGUID\":null,\"Text\":\"Keep
     an eye out though, as the population increases you might need to augment the
     food resources too or they\u2019ll start dying off again. You add Space Maples
     in a similar way that you added dirt.\",\"parentUIDs\":[111,111],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    37\",\"OptionUIDs\":[],\"SpeechUID\":113,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":121.5,\"yPos\":-782},\"ID\":113,\"TMPFontGUID\":null,\"Text\":\"
+    37\",\"OptionUIDs\":[],\"SpeechUID\":113,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":444.5,\"yPos\":4624},\"ID\":113,\"TMPFontGUID\":null,\"Text\":\"
     But like I said, keep monitoring your population as they have apparent growth
     surges, because insufficient food can be lead to rapid decline, that\u2019s what
     happened to...\",\"parentUIDs\":[112,112],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    38\",\"OptionUIDs\":[],\"SpeechUID\":114,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112.5,\"yPos\":-659},\"ID\":114,\"TMPFontGUID\":null,\"Text\":\"Ouch!\",\"parentUIDs\":[113,113],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    39\",\"OptionUIDs\":[],\"SpeechUID\":115,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":119.5,\"yPos\":-533},\"ID\":115,\"TMPFontGUID\":null,\"Text\":\"My
+    38\",\"OptionUIDs\":[],\"SpeechUID\":114,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":435.5,\"yPos\":4747},\"ID\":114,\"TMPFontGUID\":null,\"Text\":\"Ouch!\",\"parentUIDs\":[113,113],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
+    39\",\"OptionUIDs\":[],\"SpeechUID\":115,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":442.5,\"yPos\":4873},\"ID\":115,\"TMPFontGUID\":null,\"Text\":\"My
     paging chip is signaling, I can never get used to getting be-zapped by these
     things!  Geez!  Couldn\u2019t they have made it a tickle function instead?  Oh
     no!  Emergency in the Strot enclosure!  I\u2019ve got to go! \",\"parentUIDs\":[114,114],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    40\",\"OptionUIDs\":[],\"SpeechUID\":116,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":107.5,\"yPos\":-416},\"ID\":116,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    40\",\"OptionUIDs\":[],\"SpeechUID\":116,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430.5,\"yPos\":4990},\"ID\":116,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
     got enough to get started designing a habitat for the goats that will encourage
     them to multiply. But before I go, word of advice that I learned the hard way.
     \",\"parentUIDs\":[115,115],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    41\",\"OptionUIDs\":[],\"SpeechUID\":117,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":118.5,\"yPos\":-279},\"ID\":117,\"TMPFontGUID\":null,\"Text\":\"Start
+    41\",\"OptionUIDs\":[],\"SpeechUID\":117,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":441.5,\"yPos\":5127},\"ID\":117,\"TMPFontGUID\":null,\"Text\":\"Start
     with <color=\\\"orange\\\">Research<\\/color>, and find out what is already known
     about the goats. When the rescuers salvaged what they could from Planet X, they
     put all recorded documentation, videos, comcasts, etc. they could find about
     any species into a repository called THE ENCYLOPEDIA.\\n\",\"parentUIDs\":[116,116],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    42\",\"OptionUIDs\":[],\"SpeechUID\":118,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":110.5,\"yPos\":-177},\"ID\":118,\"TMPFontGUID\":null,\"Text\":\"I
+    42\",\"OptionUIDs\":[],\"SpeechUID\":118,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":433.5,\"yPos\":5229},\"ID\":118,\"TMPFontGUID\":null,\"Text\":\"I
     recommend you start there and see what they have on Space Goats before you try
     to do any more designing. \",\"parentUIDs\":[117,117],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    43\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":133.5,\"yPos\":253},\"ID\":120,\"TMPFontGUID\":null,\"Text\":\"
+    43\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":456.5,\"yPos\":5659},\"ID\":120,\"TMPFontGUID\":null,\"Text\":\"
     But um, try not to zap me too often, yeah? Just kidding!  Call any time!  The
     COMMUNICATOR doesn\u2019t zap, it\u2019s sends a call over the entire preserve
     that lets me know who needs me and I can hologram over to see how you are doing!
     Good luck!\",\"parentUIDs\":[124,124],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    46\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":102,\"yPos\":-69},\"ID\":121,\"TMPFontGUID\":null,\"Text\":\"I
+    46\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":425,\"yPos\":5337},\"ID\":121,\"TMPFontGUID\":null,\"Text\":\"I
     think they have pretty strict requirements for water, and you need a minimum
     number of aqua units per goat, which is why the current enclosure has kept them
     stable, whereas we were on the brink of losing them for a while.  Truly, we started
     with 50 and now are down to these 4!   \",\"parentUIDs\":[118],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
-    44\",\"OptionUIDs\":[],\"SpeechUID\":124,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":114,\"yPos\":88},\"ID\":124,\"TMPFontGUID\":null,\"Text\":\"Ouch! 
+    44\",\"OptionUIDs\":[],\"SpeechUID\":124,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":437,\"yPos\":5494},\"ID\":124,\"TMPFontGUID\":null,\"Text\":\"Ouch! 
     There it goes again!  I have to run to the Strot area.  Good luck!  If you need
     me you can try calling me with the COMMUNICATOR tool.\",\"parentUIDs\":[121,121],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star
     45\",\"OptionUIDs\":[],\"SpeechUID\":120,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
@@ -5265,7 +5125,7 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
   - location: {x: 9, y: 7, z: 0}
     item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
-  FoodSourceStoreSection: {fileID: 220827996}
+  FoodSourceStoreSection: {fileID: 258311931}
 --- !u!1 &863355871
 GameObject:
   m_ObjectHideFlags: 0
@@ -6699,6 +6559,12 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &932181803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1909169626771594422, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &936381357
 GameObject:
   m_ObjectHideFlags: 0
@@ -6876,173 +6742,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &958140238
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 958140239}
-  - component: {fileID: 958140241}
-  - component: {fileID: 958140240}
-  m_Layer: 5
-  m_Name: Drafting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &958140239
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958140238}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1220722984}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &958140240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958140238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: '
-
-
-'
---- !u!222 &958140241
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958140238}
-  m_CullTransparentMesh: 0
---- !u!1 &961130262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4661624498490500398, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &967817666
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 967817667}
-  - component: {fileID: 967817669}
-  - component: {fileID: 967817668}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &967817667
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967817666}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1481787292}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &967817668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967817666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: '
-
-'
---- !u!222 &967817669
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967817666}
-  m_CullTransparentMesh: 0
 --- !u!1 &972285138
 GameObject:
   m_ObjectHideFlags: 0
@@ -7375,148 +7074,12 @@ Skybox:
   m_GameObject: {fileID: 1054101993}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 8cb1a21e14f444393a0e691e9704f95a, type: 2}
---- !u!1 &1054207728
+--- !u!1 &1110257800 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1054207732}
-  - component: {fileID: 1054207731}
-  - component: {fileID: 1054207730}
-  - component: {fileID: 1054207729}
-  m_Layer: 5
-  m_Name: FinishDrafting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1054207729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054207728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.49734908, g: 0.383277, b: 0.9339623, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1054207730}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 459174929}
-        m_MethodName: finishDrafting
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1054207730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054207728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 0.5882353}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1054207731
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054207728}
-  m_CullTransparentMesh: 0
---- !u!224 &1054207732
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054207728}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1707648721}
-  m_Father: {fileID: 299544664}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -320, y: 445}
-  m_SizeDelta: {x: 359.8932, y: 114.89493}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1086981702 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1998453961670222983, guid: 71886a6858e6a442fa66e2dbc551db8a,
+  m_CorrespondingSourceObject: {fileID: 1914891538992906013, guid: 71886a6858e6a442fa66e2dbc551db8a,
     type: 3}
   m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1123128914
 GameObject:
   m_ObjectHideFlags: 0
@@ -7821,136 +7384,6 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1220722983
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1220722984}
-  - component: {fileID: 1220722987}
-  - component: {fileID: 1220722986}
-  - component: {fileID: 1220722985}
-  m_Layer: 5
-  m_Name: Drafting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1220722984
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220722983}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 958140239}
-  m_Father: {fileID: 299544664}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 225, y: 450}
-  m_SizeDelta: {x: 120, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1220722985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220722983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1220722986}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 459174929}
-        m_MethodName: startDrafting
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1220722986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220722983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e307fdfec0dd49a9b0d169ecab78188, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1220722987
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220722983}
-  m_CullTransparentMesh: 0
 --- !u!1 &1242613437
 GameObject:
   m_ObjectHideFlags: 0
@@ -8296,9 +7729,7 @@ MonoBehaviour:
   DialogueManager: {fileID: 3395325107312024775}
   OptionsMenu: {fileID: 1317938754}
   PauseManager: {fileID: 650241543}
-  StoreMenus:
-  - {fileID: 574417233}
-  - {fileID: 220827994}
+  StoreMenus: []
   MachineHUDs: []
   CanUseIngameControls: 1
 --- !u!4 &1290313822
@@ -8327,6 +7758,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28e955d87fa441bdaa18115205a2030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1331265386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5554138369544134231, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1363747825
 GameObject:
   m_ObjectHideFlags: 0
@@ -8671,6 +8108,24 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   Inspector: {fileID: 2031291481}
   MenuManager: {fileID: 1167188137}
+--- !u!1 &1395396257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6749542217376250551, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1395396260 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3472710298295782132, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395396257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1397434917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8819,6 +8274,136 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 369.92743
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 1676535824}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 678508383}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.9607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.9607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.9607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Clicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 459174929}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: cancelDrafting
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1395396257}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1676535821}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 498742228085838163, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 591995490317384428, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -8992,6 +8577,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 356
       objectReference: {fileID: 0}
+    - target: {fileID: 1210181885174307792, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: TopHUD
+      value: 
+      objectReference: {fileID: 1906015845}
+    - target: {fileID: 1210181885174307792, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: populationManager
+      value: 
+      objectReference: {fileID: 2078374405}
     - target: {fileID: 1231101649539694980, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -9015,6 +8610,26 @@ PrefabInstance:
     - target: {fileID: 1231101649539694980, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365817267510643624, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365817267510643624, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365817267510643624, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365817267510643624, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1436790573828673628, guid: 71886a6858e6a442fa66e2dbc551db8a,
@@ -9132,6 +8747,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2148745099240896068, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: EnclosureSystem
+      value: 
+      objectReference: {fileID: 588109353}
+    - target: {fileID: 2148745099240896068, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: tilePlacementController
+      value: 
+      objectReference: {fileID: 765609362}
     - target: {fileID: 2376502275908473136, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -9583,6 +9208,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2696238261963933728, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 459174929}
+    - target: {fileID: 2696238261963933728, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: finishDrafting
+      objectReference: {fileID: 0}
     - target: {fileID: 2729096041512716728, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -9638,6 +9273,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2959075026439135242, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: TileSystem
+      value: 
+      objectReference: {fileID: 765609361}
+    - target: {fileID: 2959075026439135242, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: EnclosureSystem
+      value: 
+      objectReference: {fileID: 588109353}
+    - target: {fileID: 2959075026439135242, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: AtmosphereMachineHUD
+      value: 
+      objectReference: {fileID: 1758660378}
+    - target: {fileID: 2959075026439135242, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: LiquidMachineHUD
+      value: 
+      objectReference: {fileID: 18103058}
     - target: {fileID: 3201628975397539763, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -9933,6 +9588,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3821917667932020987, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821917667932020987, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821917667932020987, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821917667932020987, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3851706739866076742, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_IsActive
@@ -9943,6 +9618,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: LogSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 3858377368810705693, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858377368810705693, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858377368810705693, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 459174929}
     - target: {fileID: 4059204372910534039, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10354,6 +10044,16 @@ PrefabInstance:
       propertyPath: ResourceManager
       value: 
       objectReference: {fileID: 1738013071}
+    - target: {fileID: 4661624497907420083, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: PlayerBalanceDisplay
+      value: 
+      objectReference: {fileID: 1906015844}
+    - target: {fileID: 4661624497907420083, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: PlayerBalanceHUD
+      value: 
+      objectReference: {fileID: 1906015842}
     - target: {fileID: 4661624497970069087, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_IsActive
@@ -10524,6 +10224,91 @@ PrefabInstance:
         type: 3}
       propertyPath: ScrollSpeed
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 459174929}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: startDrafting
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1395396257}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1676535821}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 1395396260}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 678508383}
+    - target: {fileID: 4999710815445873113, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 5084530613883707619, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -10901,6 +10686,16 @@ PrefabInstance:
       propertyPath: m_Type
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5200332069299245658, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200332069299245658, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 27.686054
+      objectReference: {fileID: 0}
     - target: {fileID: 5214572473932150140, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -10986,6 +10781,11 @@ PrefabInstance:
       propertyPath: m_text
       value: Mission Objective Complete
       objectReference: {fileID: 0}
+    - target: {fileID: 5841127575855634409, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6145152458272073102, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_Text
@@ -11035,6 +10835,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377291465861151525, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377291465861151525, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377291465861151525, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6474113440284182904, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -11136,6 +10951,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6806260342313386140, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: FoodSourceManager
+      value: 
+      objectReference: {fileID: 650241542}
     - target: {fileID: 6812605081983265810, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: PauseManager
@@ -11181,6 +11001,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 482.00006
       objectReference: {fileID: 0}
+    - target: {fileID: 7039428363355676692, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039428363355676692, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395149765}
     - target: {fileID: 7040152306282585640, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_Name
@@ -11210,6 +11040,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 339.47464
+      objectReference: {fileID: 0}
+    - target: {fileID: 7184310509061360897, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3395325107312024775}
+    - target: {fileID: 7184310509061360897, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartInteractiveConversation
+      objectReference: {fileID: 0}
+    - target: {fileID: 7184310509061360897, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7184310509061360897, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258559642774885588, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 414
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258559642774885588, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 185
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348569618172070565, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348569618172070565, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348569618172070565, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348569618172070565, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7361094148487230728, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -11245,6 +11125,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 140.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734881704026172340, guid: 71886a6858e6a442fa66e2dbc551db8a,
+        type: 3}
+      propertyPath: m_text
+      value: Apply (not impl)
       objectReference: {fileID: 0}
     - target: {fileID: 7862617678161577160, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -11505,136 +11390,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b836258500d48699ffeb91f19aa645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1481787291
+--- !u!1 &1442133057 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8176693873035503938, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1481787292}
-  - component: {fileID: 1481787295}
-  - component: {fileID: 1481787294}
-  - component: {fileID: 1481787293}
-  m_Layer: 5
-  m_Name: Next Day
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1481787292
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!1 &1457899957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2944668364729720203, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481787291}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 967817667}
-  m_Father: {fileID: 299544664}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28, y: 450}
-  m_SizeDelta: {x: 120, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1481787293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481787291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1481787294}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1395149765}
-        m_MethodName: nextDay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1481787294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481787291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5141b7e523dcb4c75a8d9633c932f79d, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1481787295
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481787291}
-  m_CullTransparentMesh: 0
 --- !u!1 &1486070715
 GameObject:
   m_ObjectHideFlags: 0
@@ -11767,12 +11534,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1518430617 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6560090618958580962, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1537467280
 GameObject:
   m_ObjectHideFlags: 0
@@ -12136,12 +11897,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1597436014 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1998453962261524651, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1609592112
 GameObject:
   m_ObjectHideFlags: 0
@@ -12273,162 +12028,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1707648720
+--- !u!1 &1676535821 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 9115787406713095752, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1707648721}
-  - component: {fileID: 1707648723}
-  - component: {fileID: 1707648722}
-  m_Layer: 5
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1707648721
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707648720}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1054207732}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1707648722
+--- !u!114 &1676535824 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8822334466457418714, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707648720}
+  m_GameObject: {fileID: 1676535821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Finalize
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4278234867
-  m_fontColor: {r: 0.9528302, g: 0.681605, b: 0, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_outlineColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontSize: 73.5
-  m_fontSizeBase: 73.5
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_textAlignment: 514
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
-  m_linkedTextComponent: {fileID: 0}
-  m_isLinkedTextComponent: 0
-  m_isTextTruncated: 0
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_ignoreRectMaskCulling: 0
-  m_ignoreCulling: 1
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_VertexBufferAutoSizeReduction: 1
-  m_firstVisibleCharacter: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_textInfo:
-    textComponent: {fileID: 1707648722}
-    characterCount: 8
-    spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
-    linkCount: 0
-    lineCount: 1
-    pageCount: 1
-    materialCount: 1
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
-  m_subTextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1707648723
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707648720}
-  m_CullTransparentMesh: 0
 --- !u!114 &1717089342 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4661624497907276214, guid: 71886a6858e6a442fa66e2dbc551db8a,
@@ -12628,292 +12245,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1771615207
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1771615211}
-  - component: {fileID: 1771615210}
-  - component: {fileID: 1771615209}
-  - component: {fileID: 1771615208}
-  m_Layer: 5
-  m_Name: CancelDrafting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1771615208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771615207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.49734908, g: 0.383277, b: 0.9339623, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1771615209}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 459174929}
-        m_MethodName: cancelDrafting
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1771615209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771615207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 0.5882353}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1771615210
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771615207}
-  m_CullTransparentMesh: 0
---- !u!224 &1771615211
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771615207}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1772848318}
-  m_Father: {fileID: 299544664}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 114, y: 445}
-  m_SizeDelta: {x: 359.8932, y: 114.89493}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1772848317
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1772848318}
-  - component: {fileID: 1772848320}
-  - component: {fileID: 1772848319}
-  m_Layer: 5
-  m_Name: Cancel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1772848318
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772848317}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1771615211}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1772848319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772848317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Cancel
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4278234867
-  m_fontColor: {r: 0.9528302, g: 0.681605, b: 0, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_outlineColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontSize: 73.5
-  m_fontSizeBase: 73.5
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_textAlignment: 514
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
-  m_linkedTextComponent: {fileID: 0}
-  m_isLinkedTextComponent: 0
-  m_isTextTruncated: 0
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_ignoreRectMaskCulling: 0
-  m_ignoreCulling: 1
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_VertexBufferAutoSizeReduction: 1
-  m_firstVisibleCharacter: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_textInfo:
-    textComponent: {fileID: 1772848319}
-    characterCount: 6
-    spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
-    linkCount: 0
-    lineCount: 1
-    pageCount: 1
-    materialCount: 1
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
-  m_subTextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1772848320
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772848317}
-  m_CullTransparentMesh: 0
 --- !u!1 &1782313611
 GameObject:
   m_ObjectHideFlags: 0
@@ -14008,6 +13339,36 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
+--- !u!1 &1906015842 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 938667279254063607, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1906015844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2187960884434939008, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906015842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6d6a56fcdf7403194ea0f60ee8c422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1906015845 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3314575031216690839, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906015842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76fbef10564ff409eb9f40c6714d104a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1915406503
 GameObject:
   m_ObjectHideFlags: 0
@@ -15969,12 +15330,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!1 &1957592464 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4661624498337314297, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1959954723
 GameObject:
   m_ObjectHideFlags: 0
@@ -18561,78 +17916,6 @@ Transform:
   m_Father: {fileID: 1652469948}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2102184930 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6187028242337131383, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2102184931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2102184930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 2102184932}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 196057117}
-        m_MethodName: ToggleC
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2102184932 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3977693962203397264, guid: 71886a6858e6a442fa66e2dbc551db8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397434917}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2102184930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2106454059
 GameObject:
   m_ObjectHideFlags: 0
@@ -18727,6 +18010,12 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &2115759715 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5898057965462866318, guid: 71886a6858e6a442fa66e2dbc551db8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397434917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2116026519
 GameObject:
   m_ObjectHideFlags: 0
@@ -21932,7 +21221,7 @@ MonoBehaviour:
   interactiveConversation: {fileID: 598365504}
   startingConversation: {fileID: 861948894}
   ConversationManagerGameObject: {fileID: 575871629}
-  DialogueButton: {fileID: 117441984}
+  DialogueButton: {fileID: 932181803}
   DefaultImage: {fileID: 21300000, guid: e362590e8029a4309bcbe4de1292a927, type: 3}
   NotificationImage: {fileID: 21300000, guid: c37ef1c215fed4353adafc754fd2280b, type: 3}
 --- !u!4 &3395325107312024776
@@ -21969,4 +21258,4 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0

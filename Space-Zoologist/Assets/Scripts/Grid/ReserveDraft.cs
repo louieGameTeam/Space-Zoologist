@@ -9,12 +9,12 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] PauseManager PauseManager = default;
     // TODO refactor UI stuff into seperate script
-    [SerializeField] GameObject StoreButtons = default;
-    [SerializeField] List<GameObject> StoreMenus = default;
+    //[SerializeField] GameObject StoreButtons = default;
+    //[SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] GameObject NextDayButton = default;
     [SerializeField] GameObject PauseButton = default;
     [SerializeField] PlayerController PlayerController = default;
-    [SerializeField] GameObject DraftingButton = default;
+    //[SerializeField] GameObject DraftingButton = default;
     [SerializeField] GameObject FinishDrafting = default;
     [SerializeField] GameObject CancelDrafting = default;
 
@@ -47,6 +47,8 @@ public class ReserveDraft : MonoBehaviour
 
     public void cancelDrafting()
     {
+        GridIO.LoadGrid(currentLevel);
+
         closeStoreStuff();
         setAnimalsVisible(true);
         PauseManager.Unpause();
@@ -66,7 +68,7 @@ public class ReserveDraft : MonoBehaviour
         NextDayButton.SetActive(onOff);
         PlayerController.CanUseIngameControls = onOff;
         PauseButton.SetActive(onOff);
-        DraftingButton.SetActive(onOff);
+        //DraftingButton.SetActive(onOff);
         FinishDrafting.SetActive(!onOff);
         CancelDrafting.SetActive(!onOff);
     }
@@ -81,15 +83,15 @@ public class ReserveDraft : MonoBehaviour
 
     private void setupStoreStuff()
     {
-        StoreButtons.SetActive(true);
+        //StoreButtons.SetActive(true);
     }
 
     private void closeStoreStuff()
     {
-        StoreButtons.SetActive(false);
-        foreach (GameObject storeMenu in this.StoreMenus)
-        {
-            storeMenu.SetActive(false);
-        }
+        //StoreButtons.SetActive(false);
+        //foreach (GameObject storeMenu in this.StoreMenus)
+        //{
+        //    storeMenu.SetActive(false);
+        //}
     }
 }
