@@ -13,12 +13,11 @@ public class ObjectiveManager : MonoBehaviour
 
     public bool IsGameOver => this.isGameOver;
 
-    private bool isOpen = false;
+    private bool isOpen = true;
     private bool isGameOver = false;
 
     // To access the player balance
     [SerializeField] private PlayerBalance playerBalance = default;
-    [SerializeField] private PauseManager PauseManager = default;
 
     // Objective panel
     [SerializeField] private GameObject objectivePanel = default;
@@ -154,18 +153,12 @@ public class ObjectiveManager : MonoBehaviour
     {
         IsMainObjectivesCompleted = true;
         NumSecondaryObjectivesCompleted = 0;
-
-        if (this.PauseManager.IsPaused)
-        {
-            return;
-        }
+        UpdateObjectives();
 
         if (this.isOpen)
         {
             this.UpdateObjectivePanel();
         }
-
-        UpdateObjectives();
 
         // All objectives had reach end state
         if (IsMainObjectivesCompleted && !this.isGameOver)

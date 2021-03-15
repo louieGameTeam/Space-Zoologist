@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 // TODO refactor PodMenu to inherit same as other store menus
 public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalanceHUD = default;
+    [SerializeField] List<GameObject> StoreMenuImages = default;
+
     [SerializeField] List<StoreSection> StoreMenus = default;
     // PodMenu had original different design so could refactor to align with store sections but works for now
     [SerializeField] PodMenu PodMenu = default;
@@ -19,7 +23,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] GridSystem GridSystem = default;
     [SerializeField] List<RectTransform> UIElements = default;
+    [SerializeField] RectTransform StoreCanvas = default;
     public bool IsInStore { get; private set; }
+    private int curMenu = 0;
+
 
     public void Start()
     {
@@ -32,6 +39,9 @@ public class MenuManager : MonoBehaviour
         PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.ResourceManager);
         PodMenu.Initialize();
         this.PlayerBalanceHUD.GetComponent<TopHUD>().SetupPlayerBalance(this.PlayerBalance);
+        StoreMenus[curMenu].gameObject.SetActive(true);
+        StoreMenuImages[curMenu].SetActive(true);
+
     }
 
     public void OnToggleMenu(GameObject menu)
@@ -51,10 +61,37 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void ToggleStore()
+    {
+        if (!this.IsInStore)
+        {
+            OpenStore();
+        }
+        else
+        {
+            CloseStore();
+        }
+    }
+
+
+    public void OpenStore()
+    {
+        if (!this.IsInStore)
+        {
+            this.PauseManager.TryToPause();
+            EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
+        }
+        StoreCanvas.DOAnchorPosX(StoreCanvas.anchoredPosition.x + StoreCanvas.rect.width / 2.5f, 0.5f);
+        this.IsInStore = true;
+    }
+
     public void CloseStore()
     {
-        this.StoreToggledOff(this.currentMenu);
+        StoreCanvas.DOAnchorPosX(StoreCanvas.anchoredPosition.x - StoreCanvas.rect.width / 2.5f, 0.5f);
+        this.IsInStore = false;
+        EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }
+
 
     private void StoreToggledOn(GameObject menu)
     {
@@ -81,4 +118,30 @@ public class MenuManager : MonoBehaviour
 
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }
+
+    public void NextMenu()
+    {
+        StoreMenus[curMenu].gameObject.SetActive(false);
+        StoreMenuImages[curMenu].SetActive(false);
+
+        curMenu++;
+        if (curMenu >= StoreMenus.Count) curMenu = 0;
+
+        StoreMenus[curMenu].gameObject.SetActive(true);
+        StoreMenuImages[curMenu].SetActive(true);
+    }
+
+    public void PrevMenu()
+    {
+
+        StoreMenus[curMenu].gameObject.SetActive(false);
+        StoreMenuImages[curMenu].SetActive(false);
+
+        curMenu--;
+        if (curMenu < 0) curMenu = StoreMenus.Count - 1;
+
+        StoreMenus[curMenu].gameObject.SetActive(true);
+        StoreMenuImages[curMenu].SetActive(true);
+    }
+
 }

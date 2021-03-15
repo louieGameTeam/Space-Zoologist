@@ -5,41 +5,56 @@ using UnityEngine.UI;
 
 public class TextEffects : MonoBehaviour
 {
-    [SerializeField] Scrollbar scrollbar = default;
     [Range(0, 1)]
     [SerializeField] float speed = default;
-    [SerializeField] float FadeOutTime = 4f;
 
     [SerializeField] TMPro.TextMeshProUGUI Introduction = default;
+    [SerializeField] List<string> IntroductionTexts = default;
     [SerializeField] SceneNavigator SceneNavigator = default;
+    private int Index = 0;
 
-    private float TimePassed = 0f;
-    private Color originalColor = default;
 
     private void Start()
     {
-        scrollbar.value = 1;
         var color = Introduction.color;
         color.a = 255;
         Introduction.color = color;
-        originalColor = Introduction.color;
+        SetNextText();
     }
 
     public void Update()
     {
-        if (scrollbar.value >= 0)
+        if (Input.GetMouseButtonDown(0) && Index < IntroductionTexts.Count)
         {
-            scrollbar.value -= Time.deltaTime * speed;
+            SetNextText();
+            if (Index == IntroductionTexts.Count)
+            {
+                Introduction.alignment = TMPro.TextAlignmentOptions.TopLeft;
+            }
         }
-        else if (this.TimePassed <= this.FadeOutTime)
+        else if (Input.GetMouseButtonDown(0))
         {
-            TimePassed += Time.deltaTime;
-            this.Introduction.color = Color.Lerp(originalColor, Color.clear, this.TimePassed / this.FadeOutTime);
-        }
-        else
-        {
-            this.Introduction.color = Color.clear;
             SceneNavigator.LoadMainMenu();
         }
+        FadeTextIn(Introduction);
+    }
+
+    private void FadeTextIn(TMPro.TextMeshProUGUI line)
+    {
+        if (line.color.a <= 255)
+        {
+            var color = line.color;
+            color.a += Time.deltaTime * speed;
+            line.color = color;
+        }
+    }
+
+    private void SetNextText()
+    {
+        var color = Introduction.color;
+        color.a = 0;
+        Introduction.color = color;
+        Introduction.text = IntroductionTexts[Index];
+        Index++;
     }
 }

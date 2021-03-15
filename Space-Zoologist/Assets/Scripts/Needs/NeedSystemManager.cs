@@ -17,6 +17,7 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] EnclosureSystem EnclosureSystem = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
+    [SerializeField] PauseManager PauseManager = default;
 
     /// <summary>
     /// Initialize the universal need systems
@@ -29,6 +30,7 @@ public class NeedSystemManager : MonoBehaviour
         PopulationManager.Initialize();
         this.UpdateAllSystems();
         PopulationManager.UpdateAllGrowthConditions();
+        PauseManager.TogglePause();
     }
 
     private void setupNeedSystems()

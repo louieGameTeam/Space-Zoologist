@@ -8,6 +8,7 @@ public class IntroductionSetup : MonoBehaviour
     [SerializeField] AudioSource Audio = default;
     [SerializeField] float FadeInTime = 2f;
     [SerializeField] Image Image = default;
+    [SerializeField] Image TitleImage = default;
     [SerializeField] List<TMPro.TextMeshProUGUI> TitleScreen = default;
     [Range(0, 1)]
     [SerializeField] float speed = default;
@@ -17,6 +18,9 @@ public class IntroductionSetup : MonoBehaviour
         var color = Image.color;
         color.a = 0;
         Image.color = color;
+        color = TitleImage.color;
+        color.a = 0;
+        TitleImage.color = color;
         foreach (TMPro.TextMeshProUGUI line in TitleScreen)
         {
             color = line.color;
@@ -33,6 +37,9 @@ public class IntroductionSetup : MonoBehaviour
             var color = Image.color;
             color.a += Time.deltaTime * speed;
             Image.color = color;
+            color = TitleImage.color;
+            color.a += Time.deltaTime * speed;
+            TitleImage.color = color;
             foreach (TMPro.TextMeshProUGUI line in TitleScreen)
             {
                 if (line.color.a <= 255)

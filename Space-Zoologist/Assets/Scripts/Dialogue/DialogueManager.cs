@@ -9,16 +9,14 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] PauseManager PauseManager = default;
-    // The interactive dialogues of the NPC
-    [SerializeField] private NPCConversation interactiveConversation = default;
     private NPCConversation currentDialogue = default;
-    // The starting dialogue
     [SerializeField] private NPCConversation startingConversation = default;
+    [SerializeField] private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
     [SerializeField] private GameObject DialogueButton = default;
-    [SerializeField] private Sprite DefaultImage = default;
-    [SerializeField] private Sprite NotificationImage = default;
+    [SerializeField] private Image DefaultImage = default;
+    [SerializeField] private Image NotificationImage = default;
+    private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
 
     private bool ContinueSpeech = false;
 
@@ -29,7 +27,6 @@ public class DialogueManager : MonoBehaviour
     {
         ConversationManager.OnConversationEnded = ConversationEnded;
         if (startingConversation) {
-            PauseManager.Pause();
             ContinueSpeech = true;
             currentDialogue = this.startingConversation;
             ConversationManager.Instance.StartConversation(this.startingConversation);
@@ -40,18 +37,34 @@ public class DialogueManager : MonoBehaviour
     {
         ContinueSpeech = false;
         ConversationManagerGameObject.SetActive(false);
-        SetDefaultConversation();
     }
 
     public void SetNewDialogue(NPCConversation newDialogue)
     {
-        this.DialogueButton.GetComponent<Image>().sprite = NotificationImage;
-        currentDialogue = newDialogue;
+        if (queuedConversations.Contains(newDialogue))
+        {
+            return;
+        }
+        this.DialogueButton.GetComponent<Button>().targetGraphic = NotificationImage;
+        NotificationImage.gameObject.SetActive(true);
+        queuedConversations.Enqueue(newDialogue);
     }
 
-    public void SetDefaultConversation()
+    public void UpdateCurrentDialogue()
     {
-        currentDialogue = interactiveConversation;
+        if (queuedConversations.Count > 0)
+        {
+            currentDialogue = queuedConversations.Dequeue();
+            if (queuedConversations.Count == 0)
+            {
+                this.DialogueButton.GetComponent<Button>().targetGraphic = DefaultImage;
+                NotificationImage.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            currentDialogue = defaultConversation;
+        }
     }
 
     /// <summary>
@@ -59,7 +72,6 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void StartInteractiveConversation()
     {
-        this.DialogueButton.GetComponent<Image>().sprite = DefaultImage;
         if (ContinueSpeech)
         {
             ConversationManagerGameObject.SetActive(!ConversationManagerGameObject.activeSelf);
@@ -68,14 +80,20 @@ public class DialogueManager : MonoBehaviour
         {
             if (!ConversationManagerGameObject.activeSelf)
             {
-                ConversationManagerGameObject.SetActive(true);
-                ConversationManager.Instance.StartConversation(currentDialogue);
-                ContinueSpeech = true;
+                StartNewConversation();
             }
             else
             {
                 ConversationManagerGameObject.SetActive(false);
             }
         }
+    }
+
+    private void StartNewConversation()
+    {
+        ConversationManagerGameObject.SetActive(true);
+        UpdateCurrentDialogue();
+        ConversationManager.Instance.StartConversation(currentDialogue);
+        ContinueSpeech = true;
     }
 }

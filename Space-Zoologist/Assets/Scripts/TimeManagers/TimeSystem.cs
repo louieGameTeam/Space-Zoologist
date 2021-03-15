@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO create QueueChangeClass which gets invoked by Initialize and nextDay to calculate any changes
 public class TimeSystem : MonoBehaviour
@@ -9,8 +10,13 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] Inspector Inspector = default;
-    [SerializeField] MenuManager MenuManager = default;
+    [SerializeField] Text CurrentDayText = default;
+    private int currentDay = 1;
 
+    private void Start()
+    {
+        UpdateDayText(currentDay);
+    }
 
     public void nextDay()
     {
@@ -28,6 +34,11 @@ public class TimeSystem : MonoBehaviour
             population.UpdateGrowthConditions();
         }
         this.Inspector.UpdateCurrentDisplay();
-        MenuManager.CloseStore();
+        UpdateDayText(++currentDay);
+    }
+
+    private void UpdateDayText(int day)
+    {
+        CurrentDayText.text = "Day " + day;
     }
 }
