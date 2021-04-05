@@ -1,14 +1,16 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameData/LevelManagement/SceneNavigator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Representation/Data/AnimatorData.cs">
     <Files>
-      <File FileName="Assets/Scripts/TimeManagers/TimeSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Species/Population/Animal.cs" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" />
-      <File FileName="Assets/Scripts/Grid/ReserveDraft.cs" />
       <File FileName="Assets/Scripts/Utils/PlayerController.cs" />
-      <File FileName="Assets/Scripts/Dialogue/DialogueManager.cs" Line="50" Column="1" />
-      <File FileName="Assets/Scripts/GameData/LevelManagement/SceneNavigator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Dialogue/DialogueManager.cs" />
+      <File FileName="Assets/Scripts/GameData/PopulationDataDisplay.cs" Line="9" Column="14" />
+      <File FileName="Assets/Scripts/GameData/PlayerInfo.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/MovementData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/BehaviorExecutionData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/BehaviorData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/AnimatorData.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,13 +19,13 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Dialogue" expanded="True" />
-                <Node name="GameData" expanded="True">
-                  <Node name="LevelManagement" expanded="True">
-                    <Node name="SceneNavigator.cs" selected="True" />
+                <Node name="PopulationSystem" expanded="True">
+                  <Node name="Representation" expanded="True">
+                    <Node name="Data" expanded="True">
+                      <Node name="AnimatorData.cs" selected="True" />
+                    </Node>
                   </Node>
                 </Node>
-                <Node name="Grid" expanded="True" />
-                <Node name="TimeManagers" expanded="True" />
                 <Node name="Utils" expanded="True" />
               </Node>
             </Node>
@@ -34,7 +36,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6de30373-329e-431d-ba54-8a6fd28bbb3d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a19b6c19-a1c5-4b85-8dc9-034c5f67cabb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
