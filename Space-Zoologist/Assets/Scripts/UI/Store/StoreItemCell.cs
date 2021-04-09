@@ -20,6 +20,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         this.item = item;
         this.itemImage.sprite = item.Icon;
         this.onSelected += itemSelectedHandler;
+        this.ItemInfo.text = this.item.ItemName + ": $" + this.item.Price;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -31,14 +32,14 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         highlightImage.enabled = true;
         this.Popup.SetActive(true);
-        if (RemainingAmount == -1)
-        {
-            this.ItemInfo.text = this.item.ItemName;
-        }
-        else
-        {
-            this.ItemInfo.text = this.item.ItemName + " " + this.RemainingAmount + "x";
-        }
+        //if (RemainingAmount == -1)
+        //{
+        //    this.ItemInfo.text = this.item.ItemName;
+        //}
+        //else
+        //{
+        //    this.ItemInfo.text = this.item.ItemName + " " + this.RemainingAmount + "x";
+        //}
     }
 
     public void OnPointerExit(PointerEventData eventData)

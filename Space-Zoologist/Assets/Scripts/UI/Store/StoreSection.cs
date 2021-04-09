@@ -99,9 +99,9 @@ public class StoreSection : MonoBehaviour
 
     public bool HasSupply(Item item)
     {
-        if (storeItems.ContainsKey(item) && storeItems[item].RemainingAmount == 0)
+        if (storeItems.ContainsKey(item) && playerBalance.Balance < storeItems[item].item.Price)
         {
-            Debug.Log("No " + item.ItemName + " remaining!");
+            Debug.Log("You can't afford this!");
             OnItemSelectionCanceled();
             return false;
         }
