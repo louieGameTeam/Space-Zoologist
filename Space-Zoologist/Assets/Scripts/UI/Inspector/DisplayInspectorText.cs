@@ -17,17 +17,35 @@ public class DisplayInspectorText : MonoBehaviour
 
         displayText += $"Count: {population.Count} [{population.GrowthStatus}]\n";
 
+
         if (population.GrowthStatus.Equals(GrowthStatus.growing))
         {
             displayText += $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days\n";
         }
         else
         {
+            HashSet<Need> UniqueNeed = new HashSet<Need>();
             foreach (Need need in population.Needs.Values)
             {
+                if (UniqueNeed.Contains(need)) {
+                    continue;
+                }
+                UniqueNeed.Add(need);
+                
                 if (need.GetCondition(need.NeedValue).Equals(NeedCondition.Bad))
                 {
-                    displayText += $"Death countdown for {need.NeedName} need: {population.DaysTillDeath(need.NeedName)} days\n";
+                    if (need.NeedName.Length == 1)
+                    {
+                        displayText += $"Death countdown for {need.NeedName[0]} need: {population.DaysTillDeath(need.NeedName[0])} days\n";
+                    }
+                    else
+                    {
+                        displayText += $"Death countdown for {need.NeedType} (";
+                        foreach (string str in need.NeedName) displayText += str + ", ";
+                        displayText = displayText.TrimEnd(new char[] { ',', ' ' });
+                        displayText += $") need: {population.DaysTillDeath(need.NeedName[0])} days\n";
+                    }
+    
                 }
             }
         }
@@ -44,7 +62,10 @@ public class DisplayInspectorText : MonoBehaviour
 
         foreach (Need need in foodSource.Needs.Values)
         {
-            displayText += $"{need.NeedName} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
+            foreach (string name in need.NeedName)
+            {
+                displayText += $"{name} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
+            }
         }
 
 

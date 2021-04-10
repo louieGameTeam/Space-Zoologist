@@ -30,7 +30,8 @@ public class FoodSourceSpecies : ScriptableObject
             foreach (NeedConstructData need in needData.Needs)
             {
                 // Use the NeedData to create Need
-                needs.Add(need.NeedName, new Need(needData.NeedType, need));
+                foreach(string str in need.NeedName)
+                    needs.Add(str, new Need(needData.NeedType, need));
                 //Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
             }
         }

@@ -107,7 +107,7 @@ public class FoodSourceCalculator : NeedCalculator
     {
         if (foodSources.Count == 0 || consumers.Count == 0)
         {
-            Debug.Log("Food output not calculated");
+            Debug.Log(foodSourceName+" output not calculated");
             this.isDirty = false;
             return null;
         }

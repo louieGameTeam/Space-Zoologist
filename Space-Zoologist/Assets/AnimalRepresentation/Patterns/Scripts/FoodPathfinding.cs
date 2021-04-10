@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Pathfind to food, usually followed by EatingPattern if food is edible
+/// </summary>
 public class FoodPathfinding : GeneralPathfinding
 {
     [Header("Same as FoodSourceSpecies.SpeciesName, case sensitive.")]

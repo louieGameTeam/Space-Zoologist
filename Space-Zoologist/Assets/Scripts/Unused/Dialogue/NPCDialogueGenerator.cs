@@ -138,11 +138,11 @@ public class NPCDialogueGenerator : MonoBehaviour
         {
             if (need.GetCondition(need.NeedValue) == NeedCondition.Good)
             {
-                goodNeeds.Add(need.NeedName);
+                goodNeeds.Add(need.NeedName[0]);
             }
             else if (need.GetCondition(need.NeedValue) == NeedCondition.Bad)
             {
-                badNeeds.Add(need.NeedName);
+                badNeeds.Add(need.NeedName[0]);
             }
         }
 

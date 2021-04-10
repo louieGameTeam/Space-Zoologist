@@ -1,22 +1,37 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Tiles/TileLayerManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="145" Column="6" />
-      <File FileName="Assets/Scripts/UI/Store/StoreSection.cs" Line="62" Column="46" />
-      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="43" Column="45" />
-      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" Line="31" Column="66" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="92" Column="17" />
-      <File FileName="Assets/Scripts/UI/Store/MachineStoreSection.cs" Line="37" Column="44" />
-      <File FileName="Assets/Scripts/UI/Store/PlayerBalance.cs" Line="5" Column="14" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" Line="163" Column="73" />
-      <File FileName="Assets/Scripts/Plot/Tiles/TileContentsManager.cs" Line="29" Column="25" />
-      <File FileName="Assets/Scripts/Plot/Tiles/TileLayerManager.cs" Line="150" Column="17" />
+      <File FileName="Assets/Scripts/Unused/Needs/NeedConstructData.cs" Line="64" Column="2" />
+      <File FileName="Assets/Scripts/Needs/NeedBehavior.cs" Line="8" Column="43" />
+      <File FileName="Assets/Scripts/0-ScriptableObjects/AnimalSpecies.cs" Line="54" Column="33" />
+      <File FileName="Assets/Scripts/Needs/Need.cs" Line="153" Column="69" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="110" Column="38" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" Line="161" Column="58" />
+      <File FileName="Assets/Scripts/Needs/Systems/NeedSystem.cs" Line="11" Column="23" />
+      <File FileName="Assets/Scripts/Managers/NeedSystemManager.cs" Line="139" Column="24" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/NeedCalculator.cs" Line="47" Column="35" />
+      <File FileName="Assets/Scripts/0-Utils/ReferenceSystem/SpeciesNeedReferenceData.cs" Line="33" Column="8" />
+      <File FileName="Assets/Scripts/Unused/JournalSystems/NeedsSection/NeedsSectionManager.cs" Line="98" Column="12" />
+      <File FileName="Assets/Scripts/Unused/Needs/SpeciesNeedSystem.cs" Line="87" Column="74" />
+      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="32" Column="18" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="233" Column="62" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="34" Column="6" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs" Line="52" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="117" Column="33" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
+              <Node name="AnimalRepresentation" expanded="True">
+                <Node name="Behaviors" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+                <Node name="Patterns" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
               <Node name="DialogueEditor" expanded="True">
                 <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
@@ -25,17 +40,39 @@
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
+                <Node name="0-ScriptableObjects" expanded="True" />
+                <Node name="0-Utils" expanded="True">
+                  <Node name="ReferenceSystem" expanded="True" />
+                </Node>
                 <Node name="Managers" expanded="True" />
-                <Node name="Plot" expanded="True">
-                  <Node name="Tiles" expanded="True">
-                    <Node name="TileLayerManager.cs" selected="True" />
+                <Node name="Needs" expanded="True">
+                  <Node name="Systems" expanded="True">
+                    <Node name="FoodSystem" expanded="True" />
+                    <Node name="TerainNeedSystem.cs" selected="True" />
                   </Node>
+                </Node>
+                <Node name="Plot" expanded="True">
+                  <Node name="Tiles" expanded="True" />
                   <Node name="Utils" expanded="True" />
+                </Node>
+                <Node name="PopulationSystem" expanded="True">
+                  <Node name="Population" expanded="True" />
+                  <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="GameOver" expanded="True" />
                   <Node name="Inspector" expanded="True" />
                   <Node name="Store" expanded="True" />
+                </Node>
+                <Node name="Unused" expanded="True">
+                  <Node name="Dialogue" expanded="True" />
+                  <Node name="JournalSystems" expanded="True">
+                    <Node name="NeedsSection" expanded="True" />
+                    <Node name="ResearchSection" expanded="True" />
+                  </Node>
+                  <Node name="Needs" expanded="True">
+                    <Node name="SymbiosisNS" expanded="True" />
+                  </Node>
                 </Node>
               </Node>
             </Node>
@@ -46,7 +83,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="33055a20-2ee9-45e1-94e4-31333086c924" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4062e78a-31bf-4dca-9e9b-03824f375e93" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -30,7 +30,7 @@ public class DiscoveredNeedsManager : MonoBehaviour, ISetupSelectable
             discoveredNeed.GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(need);
             this.SetupItemSelectedHandler(discoveredNeed, this.NeedSelected);
             // For filtering
-            discoveredNeed.name = need.NeedName;
+            discoveredNeed.name = need.NeedName[0];
             DiscoveredNeeds.Add(discoveredNeed);
         }
     }

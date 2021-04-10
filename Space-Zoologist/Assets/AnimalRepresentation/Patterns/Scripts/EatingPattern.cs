@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Eating animation for food in the immediate 3x3 area
+/// </summary>
 public class EatingPattern : UniversalAnimatorPattern
 {
     [SerializeField] private string Up = default;

@@ -79,6 +79,7 @@ public class FoodSourceNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
+        HashSet<Population> initialized = new HashSet<Population>();
         foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
             //if (foodSourceCalculator.IsDirty)
@@ -89,7 +90,13 @@ public class FoodSourceNeedSystem : NeedSystem
                 {
                     foreach (Population consumer in foodDistributionOutput.Keys)
                     {
-                        consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
+                        if (!initialized.Contains(consumer))
+                        {
+                            consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, 0);
+                            initialized.Add(consumer);
+                        }
+    
+                        consumer.AddToNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
                     }
                 }
                 //Debug.Log($"{foodSourceCalculator.FoodSourceName} calculator updated");
@@ -128,13 +135,16 @@ public class FoodSourceNeedSystem : NeedSystem
             {
                 // Create a food source calculator for this food source,
                 // if not already exist
-                if (!this.foodSourceCalculators.ContainsKey(need.NeedName))
+                foreach (string foodType in need.NeedName)
                 {
-                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(rpm, need.NeedName));
-                }
+                    if (!this.foodSourceCalculators.ContainsKey(foodType))
+                    {
+                        this.foodSourceCalculators.Add(foodType, new FoodSourceCalculator(rpm, foodType));
+                    }
 
-                // Add consumer to food source calculator
-                this.foodSourceCalculators[need.NeedName].AddConsumer((Population)life);
+                    // Add consumer to food source calculator
+                    this.foodSourceCalculators[foodType].AddConsumer((Population)life);
+                }
             }
         }
 
@@ -148,7 +158,10 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if the need is a 'FoodSource' type
             if (need.NeedType == NeedType.FoodSource)
             {
-                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoveConsumer((Population)life), "Remove conumer failed!");
+                foreach (string foodType in need.NeedName)
+                {
+                    Debug.Assert(this.foodSourceCalculators[foodType].RemoveConsumer((Population)life), "Remove consumer failed!");
+                }
             }
         }
 

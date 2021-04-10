@@ -43,7 +43,7 @@ public class ResearchSectionManager : MonoBehaviour
                 researchNeed.GetComponent<NeedData>().Need = needData.Need;
                 researchNeed.GetComponent<NeedsEntryDisplayLogic>().SetupDisplay(needData.Need);
                 researchNeed.SetActive(true);
-                researchNeed.name = needData.Need.NeedName;
+                researchNeed.name = needData.Need.NeedName[0];
                 break;
             }
         }
@@ -56,7 +56,7 @@ public class ResearchSectionManager : MonoBehaviour
         {
             if (researchNeed.activeSelf)
             {
-                if (researchNeed.name.Equals(needData.Need.NeedName))
+                if (researchNeed.name.Equals(needData.Need.NeedName[0]))
                 {
                     return;
                 }

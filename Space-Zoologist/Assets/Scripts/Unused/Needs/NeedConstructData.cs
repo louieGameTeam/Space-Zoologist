@@ -62,12 +62,12 @@ public class NeedTypeConstructData
 [System.Serializable]
 public class NeedConstructData
 {
-    public string NeedName => needName;
+    public string[] NeedName => needName;
     public int Severity => severity;
     public List<NeedBehavior> Conditions => conditions;
     public List<float> Thresholds => thresholds;
 
-    [SerializeField] private string needName = default;
+    [SerializeField] private string[] needName = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
     [SerializeField] private List<NeedBehavior> conditions = default;
@@ -77,7 +77,7 @@ public class NeedConstructData
     {
         this.conditions = new List<NeedBehavior>();
         this.thresholds = new List<float>();
-        this.needName = name;
+        this.needName = new string[] { name };
         this.severity = severity;
         foreach(string condition in conditions)
         {

@@ -21,14 +21,14 @@ public class SpeciesNeedReferenceData : ScriptableObject
     }
 
     // Ensure the Needs are all indexed by their name
-    public void OnValidate()
-    {
-        foreach(Need need in this.AddAllNeeds)
-        {
-            if (!this.AllNeeds.ContainsKey(need.NeedName))
-            {
-                this.AllNeeds.Add(need.NeedName, need);
-            }
-        }
-    }
+    //public void OnValidate()
+    //{
+    //    foreach(Need need in this.AddAllNeeds)
+    //    {
+    //        if (!this.AllNeeds.ContainsKey(need.NeedName))
+    //        {
+    //            this.AllNeeds.Add(need.NeedName, need);
+    //        }
+    //    }
+    //}
 }

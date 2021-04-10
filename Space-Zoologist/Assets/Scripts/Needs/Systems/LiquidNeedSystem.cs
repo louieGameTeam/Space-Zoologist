@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public enum LiquidComposition { MineralX, MineralY, MineralZ };
+public enum LiquidComposition { Salt, Bacteria, MineralZ };
 
 /// <summary>
 /// Handles liquid need value updates

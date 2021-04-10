@@ -47,8 +47,12 @@ public class AnimalSpecies : ScriptableObject
         {
             foreach (NeedConstructData need in needData.Needs)
             {
+                Need needToAdd = new Need(needData.NeedType, need);
                 // Use the NeedData to create Need
-                needs.Add(need.NeedName, new Need(needData.NeedType, need));
+                foreach (string str in need.NeedName)
+                {
+                    needs.Add(str, needToAdd);
+                }
                 //Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
             }
         }
@@ -89,7 +93,7 @@ public class AnimalSpecies : ScriptableObject
                         needBehaviors.Add(needBehavior.Condition, needBehavior.Behavior);
                     }
                 }
-                needBehaviorDict.Add(needs[need.NeedName], needBehaviors);
+                needBehaviorDict.Add(needs[need.NeedName[0]], needBehaviors);
             }
         }
         return needBehaviorDict;

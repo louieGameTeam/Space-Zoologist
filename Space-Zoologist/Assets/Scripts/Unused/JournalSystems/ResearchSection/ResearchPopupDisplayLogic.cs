@@ -11,7 +11,7 @@ public class ResearchPopupDisplayLogic : MonoBehaviour
     {
         NeedData needData = hoveredNeed.GetComponent<NeedData>();
         this.ItemDescription.text = "Progress description here maybe";
-        this.ItemName.text = needData.Need.NeedName;
+        this.ItemName.text = needData.Need.NeedName[0];
         this.gameObject.SetActive(true);
     }
 

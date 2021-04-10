@@ -8,7 +8,7 @@ using System.Linq;
 [System.Serializable]
 public class Need
 {
-    public string NeedName => needName;
+    public string[] NeedName => needName;
     public int Severity => severity;
     public NeedType NeedType => needType;
     public Sprite Sprite => sprite;
@@ -16,7 +16,7 @@ public class Need
     public List<NeedBehavior> Behaviors => this.conditions;
 
     [SerializeField] private NeedType needType = default;
-    [SerializeField] private string needName = default;
+    [SerializeField] private string[] needName = default;
     [SerializeField] private float needValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
@@ -147,5 +147,11 @@ public class Need
     public void UpdateNeedValue(float value)
     {
         this.needValue = value;
+    }
+
+
+    // Temporary fix for multiple types of food satisfying same need
+    public void AddNeedValue(float value) {
+        this.needValue += value;
     }
 }

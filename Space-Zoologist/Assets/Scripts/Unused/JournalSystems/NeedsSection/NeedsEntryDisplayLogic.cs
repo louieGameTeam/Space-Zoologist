@@ -8,7 +8,7 @@ public class NeedsEntryDisplayLogic : MonoBehaviour
     public void SetupDisplay(Need need)
     {
         this.gameObject.SetActive(true);
-        this.NeedName.text = need.NeedName;
+        this.NeedName.text = need.NeedName[0];
         this.Sprite.sprite = need.Sprite;
     }
 }

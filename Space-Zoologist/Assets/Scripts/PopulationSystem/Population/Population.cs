@@ -189,6 +189,17 @@ public class Population : MonoBehaviour, Life
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
+    /// <summary>
+    /// TODO Temporary fix for multiple types of food/tiles/etc satifying same need
+    /// </summary>
+    /// <param name="need"></param>
+    /// <param name="value"></param>
+    public void AddToNeed(string need, float value) {
+        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        this.needs[need].AddNeedValue(value);
+        this.FilterBehaviors(need, this.needs[need].GetCondition(value));
+    }
+
     // TODO figure out filter bug for behaviors
     /// <summary>
     /// Updates the needs behaviors based on the need's current condition
@@ -219,6 +230,7 @@ public class Population : MonoBehaviour, Life
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
     public int DaysTillDeath(String need)
     {
+        print(String.Join(" ", GrowthCalculator.needTimers));
         return this.GrowthCalculator.needTimers[need] + 1;
     }
 
@@ -341,7 +353,7 @@ public class Population : MonoBehaviour, Life
         {
             foreach (Need need in this.NeedEditorTesting)
             {
-                this.needs[need.NeedName] = need;
+                this.needs[need.NeedName[0]] = need;
             }
         }
     }
