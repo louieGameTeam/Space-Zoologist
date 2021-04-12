@@ -10,29 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
-  m_Name: Space Maple
+  m_Name: Ants
   m_EditorClassIdentifier: 
   size: 1
-  accessibleTerrain: 02000000
-  speciesName: Space Maple
-  rootRadius: 4
+  accessibleTerrain: 03000000020000000100000000000000
+  speciesName: Ants
+  rootRadius: 2
   baseOutput: 10
   needsList:
   - needType: 0
     needs:
     - needName:
       - Dirt
+      - Grass
+      - Sand
       severity: 5
-      conditions:
-      - Condition: 0
-        Behavior: {fileID: 0}
-      - Condition: 2
-        Behavior: {fileID: 0}
-      thresholds:
-      - 6
-    - needName:
-      - Liquid
-      severity: 1
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
@@ -41,25 +33,25 @@ MonoBehaviour:
       thresholds:
       - 4
     - needName:
-      - Swamp
-      severity: -4
+      - Liquid
+      severity: 5
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 2
+      - 1
   - needType: 4
     needs:
     - needName:
       - Salt
-      severity: 2
+      severity: 5
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 0.02
-  FoodSource: {fileID: 11400000, guid: 33c4785eeea134363b476230dcb191b9, type: 2}
+      - 0.01
+  FoodSource: {fileID: 11400000, guid: b63cac9feff8a4b0f89cedf9db1d134f, type: 2}

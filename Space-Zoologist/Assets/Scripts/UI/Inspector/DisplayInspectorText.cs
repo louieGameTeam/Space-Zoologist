@@ -64,6 +64,11 @@ public class DisplayInspectorText : MonoBehaviour
         {
             foreach (string name in need.NeedName)
             {
+                //TODO find a more elegant way. Temporary to make inspector text more intuitive
+                if (need.Severity < 0) {
+                    displayText += $"{name} : {need.NeedValue} [{(NeedCondition)(NeedCondition.Good - need.GetCondition(need.NeedValue))}]\n";
+                    continue;
+                }
                 displayText += $"{name} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
             }
         }

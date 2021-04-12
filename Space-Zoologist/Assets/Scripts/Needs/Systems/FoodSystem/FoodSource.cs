@@ -33,6 +33,9 @@ public class FoodSource : MonoBehaviour, Life
     // To figure out if the output has changed, in order to invoke vent
     private float prevOutput = 0;
 
+    // total severity for dynamic output
+    private float severityTotal = 0;
+
     private void Awake()
     {
         if (species)
@@ -56,6 +59,23 @@ public class FoodSource : MonoBehaviour, Life
                 });
             }
         }
+
+
+        // calculate total severity for dynamic output
+        severityTotal = 0;
+        HashSet<Need> unique_needs = new HashSet<Need>();
+        foreach (Need need in needs.Values)
+        {
+            if (!unique_needs.Contains(need))
+            {
+                unique_needs.Add(need);
+                // harmful things have negative severity
+                if (need.Severity >= 0)
+                {
+                    severityTotal += need.Severity;
+                }
+            }
+        }
     }
 
     public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position, TileSystem tileSystem)
@@ -75,20 +95,25 @@ public class FoodSource : MonoBehaviour, Life
 
     private float CalculateOutput()
     {
+        float output = 0;
+
         foreach (KeyValuePair<string, Need> needValuePair in this.needs)
         {
             string needType = needValuePair.Key;
             float needValue = needValuePair.Value.NeedValue;
-            if (!needIsSatisified(needType, needValue))
-            {
-                updatePreviousOutput(0);
-                return 0;
-            }
-            // output += calculateNeedOutput(needType, needValue, severityTotal);
+            // for 1/0 output
+            //if (!needIsSatisified(needType, needValue))
+            //{
+            //    updatePreviousOutput(0);
+            //    return 0;
+            //}
+
+            // dynamic output based on satisfied needs
+            output += calculateNeedOutput(needType, needValue, severityTotal);
         }
 
-        updatePreviousOutput(species.BaseOutput);
-        return species.BaseOutput;
+        updatePreviousOutput(output);
+        return output;
     }
 
     private bool needIsSatisified(string needType, float needValue)
