@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-// TODO figure out why can't click on items sometimes
+// TODO setup player balance to show remaining items and strobe when out
 /// <summary>
 /// A section of items in the store. Subclass for specific behavior regarding what happens after an item is selected.
 /// </summary>
@@ -21,10 +21,12 @@ public class StoreSection : MonoBehaviour
     protected PlayerBalance playerBalance = default;
     protected LevelDataReference LevelDataReference = default;
     protected GridSystem GridSystem = default;
+    protected ResourceManager ResourceManager = default;
+    private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
 
     protected Item selectedItem = null;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance, CanvasObjectStrobe playerBalanceDisplay)
+    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
     {
         this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
@@ -32,6 +34,7 @@ public class StoreSection : MonoBehaviour
         this.GridSystem = gridSystem;
         this.playerBalance = playerBalance;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
+        this.ResourceManager = resourceManager;
     }
 
     public virtual void Initialize()
@@ -52,7 +55,13 @@ public class StoreSection : MonoBehaviour
     public void AddItem(Item item)
     {
         GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid);
-        newItemCellGO.GetComponent<StoreItemCell>().Initialize(item, OnItemSelected);
+        StoreItemCell itemCell = newItemCellGO.GetComponent<StoreItemCell>();
+        itemCell.Initialize(item, OnItemSelected);
+        if (this.ResourceManager.hasLimitedSupply(item.ItemName))
+        {
+            this.ResourceManager.setupItemSupplyTracker(itemCell);
+            storeItems.Add(item, itemCell);
+        }
     }
 
     /// <summary>
@@ -61,9 +70,9 @@ public class StoreSection : MonoBehaviour
     /// <param name="item">The item that was selected.</param>
     public virtual void OnItemSelected(Item item)
     {
-        if (!this.CanAfford(item))
+        if (!this.HasSupply(item))
         {
-            this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
             return;
         }
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
@@ -77,9 +86,9 @@ public class StoreSection : MonoBehaviour
 
     public void OnCursorItemClicked(PointerEventData eventData)
     {
-        if (!this.CanAfford(this.selectedItem))
+        if (!this.HasSupply(this.selectedItem))
         {
-            this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
             return;
         }
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -88,11 +97,11 @@ public class StoreSection : MonoBehaviour
         }
     }
 
-    public bool CanAfford(Item item)
+    public bool HasSupply(Item item)
     {
-        if (item.Price > this.playerBalance.Balance)
+        if (storeItems.ContainsKey(item) && storeItems[item].RemainingAmount == 0)
         {
-            Debug.Log("Too expensive");
+            Debug.Log("No " + item.ItemName + " remaining!");
             OnItemSelectionCanceled();
             return false;
         }
@@ -114,9 +123,9 @@ public class StoreSection : MonoBehaviour
     /// <param name="eventData"></param>
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
-        if (!this.CanAfford(this.selectedItem))
+        if (!this.HasSupply(this.selectedItem))
         {
-            this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
             return;
         }
     }

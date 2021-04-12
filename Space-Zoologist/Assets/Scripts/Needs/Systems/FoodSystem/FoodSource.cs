@@ -75,34 +75,57 @@ public class FoodSource : MonoBehaviour, Life
 
     private float CalculateOutput()
     {
-        int severityTotal = 0;
-        float output = 0;
-        foreach (Need need in this.needs.Values)
-        {
-            severityTotal += need.Severity;
-        }
         foreach (KeyValuePair<string, Need> needValuePair in this.needs)
         {
             string needType = needValuePair.Key;
             float needValue = needValuePair.Value.NeedValue;
-            NeedCondition condition = this.needs[needType].GetCondition(needValue);
-            float multiplier = 0;
-            switch (condition)
+            if (!needIsSatisified(needType, needValue))
             {
-                case NeedCondition.Bad:
-                    multiplier = 0;
-                    break;
-                case NeedCondition.Neutral:
-                    multiplier = neutralMultiplier;
-                    break;
-                case NeedCondition.Good:
-                    multiplier = goodMultiplier;
-                    break;
+                updatePreviousOutput(0);
+                return 0;
             }
-            float needSeverity = this.needs[needType].Severity;
-            output += multiplier * (needSeverity / severityTotal) * species.BaseOutput;
+            // output += calculateNeedOutput(needType, needValue, severityTotal);
         }
 
+        updatePreviousOutput(species.BaseOutput);
+        return species.BaseOutput;
+    }
+
+    private bool needIsSatisified(string needType, float needValue)
+    {
+        NeedCondition condition = this.needs[needType].GetCondition(needValue);
+        // A need is not satisfied
+        if (condition != NeedCondition.Good)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    // Variable output currently removed from design
+    private float calculateNeedOutput(string needType, float needValue, float severityTotal)
+    {
+        NeedCondition condition = this.needs[needType].GetCondition(needValue);
+        float multiplier = 0;
+        switch (condition)
+        {
+            case NeedCondition.Bad:
+                multiplier = 0;
+                break;
+            case NeedCondition.Neutral:
+                multiplier = neutralMultiplier;
+                break;
+            case NeedCondition.Good:
+                multiplier = goodMultiplier;
+                break;
+        }
+        float needSeverity = this.needs[needType].Severity;
+        float output = multiplier * (needSeverity / severityTotal) * species.BaseOutput;
+        return output;
+    }
+
+    private void updatePreviousOutput(float output)
+    {
         // Invoke event if output is different
         if (this.prevOutput != 0 && this.prevOutput != output)
         {
@@ -110,8 +133,6 @@ public class FoodSource : MonoBehaviour, Life
         }
 
         this.prevOutput = output;
-
-        return output;
     }
 
     /// <summary>

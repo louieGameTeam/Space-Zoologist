@@ -5,7 +5,7 @@ using UnityEngine;
 public class SizeModifier : AnimalModifier
 {
     // Start is called before the first frame update
-    [SerializeField] private Vector3 Multiplier;
+    [SerializeField] private Vector3 Multiplier = default;
     public override void AddModifier(GameObject animal)
     {
         animal.gameObject.GetComponent<SpriteRenderer>().transform.localScale = Multiplier;

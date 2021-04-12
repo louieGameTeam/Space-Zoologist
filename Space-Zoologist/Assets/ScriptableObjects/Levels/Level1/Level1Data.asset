@@ -14,24 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Level: {fileID: 11400000, guid: fe4d49745a36f4941805b30a60e788fd, type: 2}
   startingBalance: 400
-  MapWidth: 20
-  MapHeight: 20
+  MapWidth: 12
+  MapHeight: 12
   LevelObjectiveData: {fileID: 11400000, guid: 0fda617c7827b4782a70ae364eb134a5, type: 2}
   foodSources:
   - {fileID: 11400000, guid: d25f32c20698c4ad3b53971045b65639, type: 2}
-  - {fileID: 11400000, guid: 10efa4c1d70fd4d2884e712e03828bb0, type: 2}
-  - {fileID: 11400000, guid: c697a0597ac324fb0a036ea66c6c502d, type: 2}
   animalSpecies: []
   items:
   - {fileID: 11400000, guid: 7ae76de5ae6e54ee59f14dc506cd9177, type: 2}
   - {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
-  - {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
-  - {fileID: 11400000, guid: d3eae864c0aa24b1591464e1e01489b6, type: 2}
-  - {fileID: 11400000, guid: 365f9d3baaf014c9bbe52730f04bba04, type: 2}
-  - {fileID: 11400000, guid: 2df928ca4bec041fbb0392ac7101272a, type: 2}
-  - {fileID: 11400000, guid: 7b48ec7c0dc2a48b1b0ab22e4e316793, type: 2}
-  - {fileID: 11400000, guid: b6561a91193224fe9bdfab3a5c9dc10e, type: 2}
-  - {fileID: 11400000, guid: 5de4f8e9ed31648ec9e6cf3381e92628, type: 2}
   globalAtmosphere:
     GasX: 5
     GasY: 3

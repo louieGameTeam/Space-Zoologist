@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] float WASDSpeed = 0.5f;
-    [SerializeField] float dragSpeed = 2;
     [SerializeField] private float zoomLerpSpeed = 5f;
     [SerializeField] bool EdgeMovement = false;
     [SerializeField] private float edgeSpeed = 5f;

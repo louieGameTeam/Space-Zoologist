@@ -41,7 +41,7 @@ public class FoodPathfinding : GeneralPathfinding
                 Debug.Log("No " + FoodSpeciesName + " location is accessible, pathfinding to random location instead");
             }
 
-            Debug.Log("Pathfinding towards " + FoodSpeciesName + " located at " + destination.x + ", " + destination.y);
+            // Debug.Log("Pathfinding towards " + FoodSpeciesName + " located at " + destination.x + ", " + destination.y);
             AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
         }
         else {

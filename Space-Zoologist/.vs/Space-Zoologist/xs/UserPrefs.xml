@@ -1,32 +1,44 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Grid/RPS/EnclosureSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Representation/Data/AnimatorData.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/Store/SellingManager.cs" Line="63" Column="53" />
-      <File FileName="Assets/Scripts/Grid/TileSystem.cs" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" />
-      <File FileName="Assets/Scripts/Grid/GridIO.cs" Line="68" Column="1" />
-      <File FileName="Assets/Scripts/Grid/Testers/MapDesigningTool.cs" Line="15" Column="21" />
-      <File FileName="Assets/Scripts/Species/Population/Animal.cs" Line="42" Column="1" />
-      <File FileName="Assets/Scripts/UI/CameraController.cs" Line="122" Column="66" />
-      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="23" Column="1" />
-      <File FileName="Assets/Scripts/Grid/RPS/ReservePartitionManager.cs" Line="154" Column="1" />
-      <File FileName="Assets/Scripts/Species/Representation/PopulationBehaviorManager.cs" Line="24" Column="1" />
-      <File FileName="Assets/Scripts/Grid/RPS/EnclosureSystem.cs" Line="290" Column="1" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" />
+      <File FileName="Assets/Scripts/Utils/PlayerController.cs" />
+      <File FileName="Assets/Scripts/Dialogue/DialogueManager.cs" />
+      <File FileName="Assets/Scripts/GameData/PopulationDataDisplay.cs" Line="9" Column="14" />
+      <File FileName="Assets/Scripts/GameData/PlayerInfo.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/MovementData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/BehaviorExecutionData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/BehaviorData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/AnimatorData.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
+          <Node name="Space-Zoologist" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Dialogue" expanded="True" />
+                <Node name="PopulationSystem" expanded="True">
+                  <Node name="Representation" expanded="True">
+                    <Node name="Data" expanded="True">
+                      <Node name="AnimatorData.cs" selected="True" />
+                    </Node>
+                  </Node>
+                </Node>
+                <Node name="Utils" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bb2de2a6-0d0f-4cf7-8345-d280953fe2cb" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a19b6c19-a1c5-4b85-8dc9-034c5f67cabb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Unity.2D.Tilemap.Extras.Editor PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
