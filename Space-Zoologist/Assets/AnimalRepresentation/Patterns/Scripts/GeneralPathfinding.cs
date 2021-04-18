@@ -9,15 +9,10 @@ public class GeneralPathfinding : BehaviorPattern
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        Vector3Int destination = base.GridSystem.FindClosestItem(animalData.animal.PopulationInfo, gameObject, Destination);
-        if (destination.Equals(new Vector3Int(-1, -1, -1)))
-        {
-            // TODO figure out how to exit pattern since condition not satisfied
-            int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-            destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
-            // Debug.Log(this.Destination.ToString() + " location not found, pathfinding to random location instead");
-        }
-        // Debug.Log("Pathfidning towards " + this.Destination.ToString() + " located at " + destination.x + ", " + destination.y);
+        int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
+        Vector3Int destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+        Debug.Log("Pathfidning towards " + this.Destination.ToString() + " located at " + destination.x + ", " + destination.y);
+        Debug.Log("World to cell: " + base.GridSystem.Grid.WorldToCell(gameObject.transform.position) + " movement controller: " + animalData.animal.MovementController.ToString());// + " grid: " + animalData.animal.PopulationInfo.Grid.ToString());
         AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)

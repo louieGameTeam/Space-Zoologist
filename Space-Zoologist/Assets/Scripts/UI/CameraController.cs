@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] bool EdgeMovement = false;
     [SerializeField] private float edgeSpeed = 5f;
     [SerializeField] private float edgeBoundary = 10f;
+    [SerializeField] private float zoomHeight = 10f;
     [SerializeField] private LevelDataReference LevelDataReference = default;
 
     private Camera cam = default;
@@ -35,7 +36,7 @@ public class CameraController : MonoBehaviour
     {
         float scrollData = Input.GetAxis("Mouse ScrollWheel");
         targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 2.5f, 10f);
+        targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
     }
 

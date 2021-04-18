@@ -13,7 +13,6 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] List<StoreSection> StoreMenus = default;
     // PodMenu had original different design so could refactor to align with store sections but works for now
-    [SerializeField] PodMenu PodMenu = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] ResourceManager ResourceManager = default;
     [Header("Shared menu dependencies")]
@@ -36,8 +35,6 @@ public class MenuManager : MonoBehaviour
             storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay, this.ResourceManager);
             storeMenu.Initialize();
         }
-        PodMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.ResourceManager);
-        PodMenu.Initialize();
         this.PlayerBalanceHUD.GetComponent<TopHUD>().SetupPlayerBalance(this.PlayerBalance);
         StoreMenus[curMenu].gameObject.SetActive(true);
         StoreMenuImages[curMenu].SetActive(true);

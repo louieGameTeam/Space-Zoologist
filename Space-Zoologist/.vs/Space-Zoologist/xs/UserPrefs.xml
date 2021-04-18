@@ -1,32 +1,52 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Representation/Data/AnimatorData.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" />
-      <File FileName="Assets/Scripts/Utils/PlayerController.cs" />
-      <File FileName="Assets/Scripts/Dialogue/DialogueManager.cs" />
-      <File FileName="Assets/Scripts/GameData/PopulationDataDisplay.cs" Line="9" Column="14" />
-      <File FileName="Assets/Scripts/GameData/PlayerInfo.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/MovementData.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/BehaviorExecutionData.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/BehaviorData.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/AnimatorData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/StoreItemCell.cs" Line="19" Column="6" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/PopulationBehaviorManager.cs" Line="43" Column="84" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/GeneralPathfinding.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/FoodPathfinding.cs" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="280" Column="12" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="52" Column="93" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/AnimalBehaviorManager.cs" />
+      <File FileName="Assets/AnimalRepresentation/Behaviors/Scripts/PopulationBehavior.cs" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Animal.cs" Line="29" Column="125" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
+              <Node name="AnimalRepresentation" expanded="True">
+                <Node name="Behaviors" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+                <Node name="Patterns" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Dialogue" expanded="True" />
+                <Node name="0-BaseClasses" expanded="True" />
+                <Node name="0-Utils" expanded="True">
+                  <Node name="ReferenceSystem" expanded="True" />
+                </Node>
+                <Node name="Managers" expanded="True">
+                  <Node name="EventSystem" expanded="True" />
+                </Node>
+                <Node name="Plot" expanded="True">
+                  <Node name="Utils" expanded="True" />
+                </Node>
                 <Node name="PopulationSystem" expanded="True">
-                  <Node name="Representation" expanded="True">
-                    <Node name="Data" expanded="True">
-                      <Node name="AnimatorData.cs" selected="True" />
-                    </Node>
+                  <Node name="Population" expanded="True">
+                    <Node name="PopulationManager.cs" selected="True" />
+                  </Node>
+                  <Node name="Representation" expanded="True" />
+                </Node>
+                <Node name="UI" expanded="True">
+                  <Node name="Store" expanded="True">
+                    <Node name="Sections" expanded="True" />
                   </Node>
                 </Node>
-                <Node name="Utils" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -36,7 +56,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a19b6c19-a1c5-4b85-8dc9-034c5f67cabb" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ddc14d95-05c2-4ae6-bb45-84a085d89a30" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
