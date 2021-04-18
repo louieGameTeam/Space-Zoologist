@@ -21,30 +21,35 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] EventResponseManager EventResponseManager = default;
     [SerializeField] List<ResourceData> resourceData = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();
+
+    // a copy of the dictionary before draft
+    Dictionary<string, int> initialResources = new Dictionary<string, int>();
     private Dictionary<string, StoreItemCell> itemDisplayInfo = new Dictionary<string, StoreItemCell>();
 
     // Auto-generate the list of ResourceData for you if resourceData is empty
-    public void OnValidate()
-    {
-        //if (LevelDataRef == null) return;
-        //if (resourceData == null || resourceData.Count > 0) return;
+    //public LevelDataReference LevelDataRef = default;
+    //public void OnValidate()
+    //{
+    //    if (LevelDataRef == null) return;
+    //    if (resourceData == null || resourceData.Count > 0) return;
 
-        //resourceData = new List<ResourceData>();
-        //foreach (Item item in LevelDataRef.LevelData.Items)
-        //{
-        //    resourceData.Add(new ResourceData(item.ID));
-        //}
-        //foreach (AnimalSpecies species in LevelDataRef.LevelData.AnimalSpecies)
-        //{
-        //    resourceData.Add(new ResourceData(species.SpeciesName));
-        //}
-    }
+    //    resourceData = new List<ResourceData>();
+    //    foreach (Item item in LevelDataRef.LevelData.Items)
+    //    {
+    //        resourceData.Add(new ResourceData(item.ID));
+    //    }
+    //    foreach (AnimalSpecies species in LevelDataRef.LevelData.AnimalSpecies)
+    //    {
+    //        resourceData.Add(new ResourceData(species.SpeciesName));
+    //    }
+    //}
 
     public void Awake()
     {
         foreach (ResourceData data in resourceData)
         {
             remainingResources.Add(data.resourceName, data.initialAmount);
+            initialResources.Add(data.resourceName, data.initialAmount);
         }
     }
 
@@ -129,6 +134,30 @@ public class ResourceManager : MonoBehaviour
         {
             // Debug.Log("ResourceManager: " + species.SpeciesName + " does not exist!");
             return -1;
+        }
+    }
+
+
+    public void StartDraft() {
+        remainingResources = new Dictionary<string, int>();
+        Copy(initialResources, remainingResources);
+    }
+
+    public void CancelDraft() {
+        // nothing needed to be done
+    }
+
+    public void ApplyDraft()
+    {
+        initialResources = new Dictionary<string, int>();
+        Copy(remainingResources, initialResources);
+    }
+
+    
+    private void Copy<TKeys, TValues>(Dictionary<TKeys, TValues> from, Dictionary<TKeys, TValues> to) {
+        foreach (var pair in from)
+        {
+            to.Add(pair.Key, pair.Value);
         }
     }
 }

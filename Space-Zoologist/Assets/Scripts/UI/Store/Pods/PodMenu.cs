@@ -95,7 +95,7 @@ public class PodMenu : MonoBehaviour
                 this.TopHUD.StartCoroutine("FlashWarning", "Terrain not suitable for " + this.selectedSpecies.SpeciesName);
                 return;
             }
-            else if (resourceManager.CheckRemainingResource(selectedSpecies) <= 0)
+            else if (resourceManager.CheckRemainingResource(selectedSpecies) == 0)
             {
                 this.TopHUD.StartCoroutine("FlashWarning", "No more " + this.selectedSpecies.SpeciesName + " available");
                 return;

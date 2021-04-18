@@ -35,16 +35,19 @@ public class MachineStoreSection : StoreSection
                 return;
             }
             base.playerBalance.SubtractFromBalance(selectedItem.Price);
+            base.ResourceManager.Placed(selectedItem, 1);
             CreateMachine(mousePosition);
         }
     }
 
+    // Create and set up the machine just created
     private void CreateMachine(Vector3 mousePosition)
     {
         GameObject newMachineGameObject = Instantiate(this.MachinePrefab, mousePosition, Quaternion.identity, EnclosureSystem.transform);
         newMachineGameObject.transform.position = new Vector3(newMachineGameObject.transform.position.x, newMachineGameObject.transform.position.y, 10);
         newMachineGameObject.name = base.selectedItem.name;
         newMachineGameObject.GetComponent<SpriteRenderer>().sprite = base.selectedItem.Icon;
+
         Vector3Int position = base.GridSystem.Grid.WorldToCell(mousePosition);
         base.GridSystem.CellGrid[position.x, position.y].ContainsMachine = true;
         base.GridSystem.CellGrid[position.x, position.y].Machine = newMachineGameObject;

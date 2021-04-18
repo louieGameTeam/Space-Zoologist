@@ -21,8 +21,10 @@ public class FoodSource : MonoBehaviour, Life
     [Expandable][SerializeField] private FoodSourceSpecies species = default;
     [SerializeField] private TileSystem tileSystem = default;
 
-    private float neutralMultiplier = 0.5f;
-    private float goodMultiplier = 1.0f;
+    // multipliers that determines the percentage of food output given need satisfaction
+    const float badMultiplier = 0f;
+    const float neutralMultiplier = 0.5f;
+    const float goodMultiplier = 1.0f;
 
     private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
     private bool hasAccessibilityChanged = default;
@@ -96,9 +98,12 @@ public class FoodSource : MonoBehaviour, Life
     private float CalculateOutput()
     {
         float output = 0;
-
+        HashSet<Need> uniqueNeed = new HashSet<Need>();
         foreach (KeyValuePair<string, Need> needValuePair in this.needs)
         {
+            if (uniqueNeed.Contains(needValuePair.Value)) { continue; }
+            uniqueNeed.Add(needValuePair.Value);
+
             string needType = needValuePair.Key;
             float needValue = needValuePair.Value.NeedValue;
             // for 1/0 output
@@ -135,7 +140,7 @@ public class FoodSource : MonoBehaviour, Life
         switch (condition)
         {
             case NeedCondition.Bad:
-                multiplier = 0;
+                multiplier = badMultiplier;
                 break;
             case NeedCondition.Neutral:
                 multiplier = neutralMultiplier;
@@ -170,6 +175,17 @@ public class FoodSource : MonoBehaviour, Life
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } food source has no need { need }");
         this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
+    }
+
+    /// <summary>
+    /// TODO Temporary fix for multiple types of food/tiles/etc satifying same need
+    /// </summary>
+    /// <param name="need"></param>
+    /// <param name="value"></param>
+    public void AddToNeed(string need, float value)
+    {
+        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } food source has no need { need }");
+        this.needs[need].AddNeedValue(value);
     }
 
     public Dictionary<string, Need> GetNeedValues()

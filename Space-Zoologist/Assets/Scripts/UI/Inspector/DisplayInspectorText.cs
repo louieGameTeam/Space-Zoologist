@@ -60,17 +60,31 @@ public class DisplayInspectorText : MonoBehaviour
 
         displayText += $"Output: {foodSource.FoodOutput}/{foodSource.Species.BaseOutput}\n";
 
+        HashSet<Need> UniqueNeed = new HashSet<Need>();
         foreach (Need need in foodSource.Needs.Values)
         {
-            foreach (string name in need.NeedName)
+            if (UniqueNeed.Contains(need))
             {
-                //TODO find a more elegant way. Temporary to make inspector text more intuitive
-                if (need.Severity < 0) {
-                    displayText += $"{name} : {need.NeedValue} [{(NeedCondition)(NeedCondition.Good - need.GetCondition(need.NeedValue))}]\n";
-                    continue;
-                }
-                displayText += $"{name} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
+                continue;
             }
+            UniqueNeed.Add(need);
+
+            if (need.NeedName.Length == 1)
+            {
+                displayText += $"{need.NeedName[0]} : ";
+            }
+            else {
+                foreach (string str in need.NeedName) displayText += str + ", ";
+                displayText = displayText.TrimEnd(new char[] { ',', ' ' });
+                displayText += " : ";
+            }
+
+            //TODO find a more elegant way. Temporary to make harmful need more intuitive
+            if (need.Severity < 0) {
+                displayText += $"{need.NeedValue} [{(NeedCondition)(NeedCondition.Good - need.GetCondition(need.NeedValue))}]\n";
+                continue;
+            }
+            displayText += $"{need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
         }
 
 

@@ -811,6 +811,8 @@ MonoBehaviour:
   PauseButton: {fileID: 1328550532}
   NextDayButton: {fileID: 1618472787}
   PlayerController: {fileID: 1290313821}
+  resourceManager: {fileID: 1738013071}
+  playerBalance: {fileID: 4661624496553112467}
 --- !u!1 &462963690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,7 +1086,7 @@ PrefabInstance:
     - target: {fileID: 7438113056020303429, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7438113056020303429, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
         type: 3}
@@ -1114,7 +1116,7 @@ PrefabInstance:
     - target: {fileID: 7438113056020303429, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: startDrafting
+      value: toggleDrafting
       objectReference: {fileID: 0}
     - target: {fileID: 7438113056020303429, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
         type: 3}
@@ -9269,10 +9271,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EventResponseManager: {fileID: 208159620}
   resourceData:
+  - resourceName: Bush
+    initialAmount: 5
   - resourceName: Dirt
-    initialAmount: 1
+    initialAmount: 5
+  - resourceName: Grass
+    initialAmount: 5
+  - resourceName: Liquid
+    initialAmount: 5
+  - resourceName: Sand
+    initialAmount: 5
+  - resourceName: Seaweed
+    initialAmount: 5
   - resourceName: Space Maple
-    initialAmount: 0
+    initialAmount: 5
+  - resourceName: Stone
+    initialAmount: 5
+  - resourceName: Wall
+    initialAmount: 5
+  - resourceName: Goat
+    initialAmount: 5
+  - resourceName: Prey
+    initialAmount: 5
+  - resourceName: Slug
+    initialAmount: 5
+  - resourceName: Snake
+    initialAmount: 5
+  - resourceName: Strot
+    initialAmount: 5
 --- !u!1 &1771126782
 GameObject:
   m_ObjectHideFlags: 0

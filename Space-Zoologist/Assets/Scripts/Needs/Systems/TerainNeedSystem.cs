@@ -116,13 +116,23 @@ public class TerrainNeedSystem : NeedSystem
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
             terrainCountsByType = rpm.GetTypesOfTiles(population);
+
+            //set to 0
+            foreach (var (count, index) in terrainCountsByType.WithIndex())
+            {
+                string needName = ((TileType)index).ToString();
+                if (population.GetNeedValues().ContainsKey(needName))
+                {
+                    population.UpdateNeed(needName, 0);
+                }
+            }
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 string needName = ((TileType)index).ToString();
                 int countPerIndividual = count / population.AnimalPopulation.Count;
                 if (population.GetNeedValues().ContainsKey(needName))
                 {
-                    population.UpdateNeed(needName, countPerIndividual);
+                    population.AddToNeed(needName, countPerIndividual);
                 }
             }
         }
@@ -131,13 +141,26 @@ public class TerrainNeedSystem : NeedSystem
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
             terrainCountsByType = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius);
             // Update need values
+
+            // Set to 0
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 string needName = ((TileType)index).ToString();
 
                 if (foodSource.GetNeedValues().ContainsKey(needName))
                 {
-                    foodSource.UpdateNeed(needName, count);
+                    foodSource.UpdateNeed(needName, 0);
+                }
+            }
+
+
+            foreach (var (count, index) in terrainCountsByType.WithIndex())
+            {
+                string needName = ((TileType)index).ToString();
+
+                if (foodSource.GetNeedValues().ContainsKey(needName))
+                {
+                    foodSource.AddToNeed(needName, count);
                 }
             }
         }
