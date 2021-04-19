@@ -3,38 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AtmosphereMachineHUD : MonoBehaviour
+public class AtmosphereMachineHUD : MachineHUD
 {
     [SerializeField] List<MachineValues> MachineValues = default;
-    AtmosphereMachine CurrentMachine = default;
-    private NeedSystemManager NeedSystemManager = default;
-
-    public void SetupDependencies(NeedSystemManager needSystemManager)
+    public void SetAtmosphericComposition(AtmosphericComposition atmosphericComposition)
     {
-        this.NeedSystemManager = needSystemManager;
-    }
 
-    public void Initialize(AtmosphericComposition atmosphericComposition, AtmosphereMachine currentMachine)
-    {
-        this.CurrentMachine = currentMachine;
         foreach (MachineValues atm in this.MachineValues)
         {
-            switch(atm.MachineValueType)
+            switch (atm.MachineValueType)
             {
-                case(MachineValueType.X):
+                case (MachineValueType.X):
                     atm.StartingValue = atmosphericComposition.GasX;
                     break;
-                case(MachineValueType.Y):
+                case (MachineValueType.Y):
                     atm.StartingValue = atmosphericComposition.GasY;
                     break;
-                case(MachineValueType.Z):
+                case (MachineValueType.Z):
                     atm.StartingValue = atmosphericComposition.GasZ;
                     break;
             }
             atm.ApplyStartingValue();
         }
     }
-
     /// <summary>
     /// Update the atmosphere with the current HUD values
     /// </summary>
@@ -57,7 +48,8 @@ public class AtmosphereMachineHUD : MonoBehaviour
                     break;
             }
         }
-        this.CurrentMachine.UpdateAtmosphere(atmosphericComposition);
+        // TODO restore machine functions in GUI
+        //base.CurrentMachine.UpdateAtmosphere(atmosphericComposition);
         this.NeedSystemManager.UpdateSystem(NeedType.Atmosphere);
     }
 
@@ -67,10 +59,5 @@ public class AtmosphereMachineHUD : MonoBehaviour
         {
             atm.ApplyStartingValue();
         }
-    }
-
-    public void CloseHUD()
-    {
-        this.gameObject.SetActive(false);
     }
 }

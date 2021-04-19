@@ -5,7 +5,6 @@ using UnityEngine;
 public class DayManagerTester : MonoBehaviour
 {
     private List<GameObject> Animals = new List<GameObject>();
-    private int counter;
     public int Days;
     public float time;
     private DayManager dayManager;

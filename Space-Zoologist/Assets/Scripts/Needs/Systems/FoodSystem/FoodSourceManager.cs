@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Manager of all the FoodSource instance
 /// </summary>
-public class FoodSourceManager : MonoBehaviour
+public class FoodSourceManager : GridObjectManager
 {
     public static FoodSourceManager ins;
     public List<FoodSource> FoodSources => foodSources;
@@ -21,6 +21,7 @@ public class FoodSourceManager : MonoBehaviour
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
+    protected string MapObjectName = "FoodSource"; // String used to identify serialized map objects being handled by this manager
 
     private void Awake()
     {
@@ -33,12 +34,13 @@ public class FoodSourceManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public override void Start()
     {
         foreach (FoodSourceSpecies species in this.LevelDataReference.LevelData.FoodSourceSpecies)
         {
             foodSourceSpecies.Add(species.SpeciesName, species);
         }
+        base.Start();
     }
 
     public void Initialize()
@@ -47,6 +49,7 @@ public class FoodSourceManager : MonoBehaviour
         this.foodSourceNeedSystems = (FoodSourceNeedSystem)NeedSystemManager.Systems[NeedType.FoodSource];
 
         // Get all FoodSource at start of level
+        // TODO make use of saved tile
         GameObject[] foods = GameObject.FindGameObjectsWithTag("FoodSource");
 
         foreach (GameObject food in foods)
@@ -181,5 +184,37 @@ public class FoodSourceManager : MonoBehaviour
         }
 
         return locations;
+    }
+    public Vector3[] GetFoodSourcesWorldLocationWithSpecies(string speciesName)
+    {
+        List<FoodSource> foods = GetFoodSourcesWithSpecies(speciesName);
+        if (foods == null) return null;
+        Vector3[] locations = new Vector3[foods.Count];
+        for (int i = 0; i < foods.Count; i++)
+        {
+            locations[i] = foods[i].transform.position;
+        }
+
+        return locations;
+    }
+    public override void Serialize(SerializedMapObjects serializedMapObjects)
+    {
+        foreach (string speciesName in this.foodSourceSpecies.Keys)
+        {
+            serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(this.foodSourceSpecies[speciesName]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
+        }
+    }
+    public override void Parse(SerializedMapObjects serializedMapObjects)
+    {
+        foreach (KeyValuePair<string, GridItemSet> keyValuePair in serializedMapObjects.ToDictionary())
+        {
+            if (keyValuePair.Key.Equals(this.MapObjectName))
+            {
+                foreach (Vector3 position in SerializationUtils.ParseVector3(keyValuePair.Value.coords))
+                {
+                    this.CreateFoodSource(keyValuePair.Value.name, position);
+                }
+            }
+        }
     }
 }

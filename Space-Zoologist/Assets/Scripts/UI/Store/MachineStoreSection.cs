@@ -11,10 +11,17 @@ public class MachineStoreSection : StoreSection
     [SerializeField] GameObject AtmosphereMachineHUD = default;
     [SerializeField] GameObject LiquidMachineHUD = default;
     [SerializeField] GameObject MachinePrefab = default;
+    [SerializeField] Machine[] Machines = default;
+    private Dictionary<string, Machine> namesToMachines = new Dictionary<string, Machine>();
 
     public override void Initialize()
     {
         base.itemType = ItemType.Machine;
+        this.namesToMachines = new Dictionary<string, Machine>();
+        foreach (Machine machine in Machines)
+        {
+            this.namesToMachines.Add(machine.name, machine);
+        }
         base.Initialize();
     }
 
@@ -45,16 +52,12 @@ public class MachineStoreSection : StoreSection
         newMachineGameObject.transform.position = new Vector3(newMachineGameObject.transform.position.x, newMachineGameObject.transform.position.y, 10);
         newMachineGameObject.name = base.selectedItem.name;
         newMachineGameObject.GetComponent<SpriteRenderer>().sprite = base.selectedItem.Icon;
+
         Vector3Int position = base.GridSystem.Grid.WorldToCell(mousePosition);
         base.GridSystem.CellGrid[position.x, position.y].ContainsMachine = true;
         base.GridSystem.CellGrid[position.x, position.y].Machine = newMachineGameObject;
-        if (base.selectedItem.ID.Equals("AtmosphereMachine"))
-        {
-            newMachineGameObject.AddComponent<AtmosphereMachine>().Initialize(this.EnclosureSystem, this.AtmosphereMachineHUD);
-        }
-        if (base.selectedItem.ID.Equals("LiquidMachine"))
-        {
-            newMachineGameObject.AddComponent<LiquidMachine>().Initialize(this.TileSystem, this.LiquidMachineHUD);
-        }
+        if (!this.namesToMachines.ContainsKey(base.selectedItem.ID)) { Debug.LogError("Machine named" + base.selectedItem.ID + "not found"); return; }
+        newMachineGameObject.AddComponent(namesToMachines[base.selectedItem.ID].GetType());
+        newMachineGameObject.GetComponent<Machine>().SetPosition(position);
     }
 }

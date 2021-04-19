@@ -2562,7 +2562,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 1054101994}
-  isErasing: 0
   tilemaps:
   - {fileID: 940519983}
   - {fileID: 895381626}
@@ -4791,7 +4790,7 @@ PrefabInstance:
     - target: {fileID: 1998453961670222976, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.499996
+      value: 37.500076
       objectReference: {fileID: 0}
     - target: {fileID: 1998453961670222983, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -6033,7 +6032,7 @@ PrefabInstance:
     - target: {fileID: 4661624498449627637, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 92.5
+      value: 92.40039
       objectReference: {fileID: 0}
     - target: {fileID: 4661624498449627637, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -6565,22 +6564,22 @@ PrefabInstance:
     - target: {fileID: 5559967345287919608, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42
+      value: 42.19922
       objectReference: {fileID: 0}
     - target: {fileID: 5559967345287919608, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 52.25
+      value: 52.30078
       objectReference: {fileID: 0}
     - target: {fileID: 5750456605920355872, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42
+      value: 42.19922
       objectReference: {fileID: 0}
     - target: {fileID: 5750456605920355872, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 52.25
+      value: 52.30078
       objectReference: {fileID: 0}
     - target: {fileID: 6145152458272073102, guid: 71886a6858e6a442fa66e2dbc551db8a,
         type: 3}
@@ -9233,7 +9232,6 @@ MonoBehaviour:
     type: 3}
   ReservePartitionManager: {fileID: 936381359}
   GridSystem: {fileID: 1621202152}
-  Species: []
 --- !u!4 &2078374406
 Transform:
   m_ObjectHideFlags: 0
