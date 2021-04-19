@@ -32,14 +32,14 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         highlightImage.enabled = true;
         this.Popup.SetActive(true);
-        //if (RemainingAmount == -1)
-        //{
-        //    this.ItemInfo.text = this.item.ItemName;
-        //}
-        //else
-        //{
-        //    this.ItemInfo.text = this.item.ItemName + " " + this.RemainingAmount + "x";
-        //}
+        if (RemainingAmount == -1)
+        {
+            this.ItemInfo.text = this.item.ItemName;
+        }
+        else
+        {
+            this.ItemInfo.text = this.item.ItemName + ": $" + this.item.Price + " " + this.RemainingAmount + "x";
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
