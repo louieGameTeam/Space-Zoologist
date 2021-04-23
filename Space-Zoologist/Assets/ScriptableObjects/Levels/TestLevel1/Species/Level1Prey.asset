@@ -14,11 +14,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: afe80bc84a5bc22449b95bda8c01671b, type: 2}
   speciesName: Prey
-  dominance: 1
-  growthRate: 3
+  dominance: 5
+  growthRate: 6
+  decayRate: 5
   range: 0
   size: 0
-  accessibleTerrain: 01000000040000000200000003000000
+  accessibleTerrain: 0100000006000000020000000300000000000000
   icon: {fileID: 0}
-  needsList: []
+  needsList:
+  - needType: 3
+    needs:
+    - needName: Space Maple
+      severity: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 8
+    - needName: Berries
+      severity: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 8
+  - needType: 0
+    needs:
+    - needName: Dirt
+      severity: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 7.5
+    - needName: Grass
+      severity: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 7.5
   representation: {fileID: 0}

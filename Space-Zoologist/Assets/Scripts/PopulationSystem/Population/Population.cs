@@ -107,7 +107,7 @@ public class Population : MonoBehaviour, Life
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
             this.NeedEditorTesting.Add(need.Value);
-            this.GrowthCalculator.setupNeedTimer(need.Key, need.Value.Severity);
+            this.GrowthCalculator.setupNeedTracker(need.Value.NeedType);
         }
     }
 
@@ -221,9 +221,9 @@ public class Population : MonoBehaviour, Life
     }
 
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
-    public int DaysTillDeath(String need)
+    public int DaysTillDeath()
     {
-        return this.GrowthCalculator.needTimers[need] + 1;
+        return this.GrowthCalculator.DecayCountdown;
     }
 
     // Don't add one because this value is updated when HandleGrowth is called
@@ -253,7 +253,7 @@ public class Population : MonoBehaviour, Life
                 }
                 break;
             case GrowthStatus.declining:
-                for (int i=0; i<this.GrowthCalculator.NumAnimalsToRemove(); i++)
+                if (this.GrowthCalculator.ReadyForDecay())
                 {
                     this.RemoveAnimal();
                 }

@@ -45,7 +45,7 @@ public class Need
         if (conditions.Count == 1) return conditions[0].Condition;
         for (var i = 0; i < this.thresholds.Count; i++)
         {
-            if (value < this.thresholds[i])
+            if (value + 0.1 < this.thresholds[i])
             {
                 return this.conditions[i].Condition;
             }

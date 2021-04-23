@@ -118,7 +118,6 @@ public class PlacementValidation : MonoBehaviour
         else
         {
             //size is even: place it at cross-center
-
             // Check if the whole object is in bounds
             for (int x = -1 * (radius - 1); x <= radius; x++)
             {
