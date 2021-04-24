@@ -1,17 +1,21 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/StoreItemCell.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/GridIO.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="145" Column="6" />
-      <File FileName="Assets/Scripts/UI/Store/StoreSection.cs" Line="155" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" Line="122" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" Line="110" Column="1" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="82" Column="57" />
+      <File FileName="Assets/Scripts/UI/Store/StoreSection.cs" />
+      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" />
+      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" />
       <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" />
-      <File FileName="Assets/Scripts/UI/Store/MachineStoreSection.cs" Line="64" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/MachineStoreSection.cs" />
       <File FileName="Assets/Scripts/UI/Store/PlayerBalance.cs" />
       <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" />
       <File FileName="Assets/Scripts/Plot/Tiles/TileContentsManager.cs" />
-      <File FileName="Assets/Scripts/Plot/Tiles/TileLayerManager.cs" Line="150" Column="17" />
+      <File FileName="Assets/Scripts/Plot/Tiles/TileLayerManager.cs" />
       <File FileName="Assets/Scripts/UI/Store/StoreItemCell.cs" Line="51" Column="1" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/EventManager.cs" Line="10" Column="15" />
+      <File FileName="Assets/Scripts/Plot/TileSystem.cs" Line="37" Column="62" />
+      <File FileName="Assets/Scripts/Plot/ReserveDraft.cs" Line="55" Column="21" />
+      <File FileName="Assets/Scripts/Plot/GridIO.cs" Line="25" Column="17" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,17 +30,18 @@
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Managers" expanded="True" />
+                <Node name="Managers" expanded="True">
+                  <Node name="EventSystem" expanded="True" />
+                </Node>
                 <Node name="Plot" expanded="True">
                   <Node name="Tiles" expanded="True" />
                   <Node name="Utils" expanded="True" />
+                  <Node name="GridIO.cs" selected="True" />
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="GameOver" expanded="True" />
                   <Node name="Inspector" expanded="True" />
-                  <Node name="Store" expanded="True">
-                    <Node name="StoreItemCell.cs" selected="True" />
-                  </Node>
+                  <Node name="Store" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -47,7 +52,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e6247358-226d-45b8-ae97-8d23ed6e2f81" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8defdc42-1421-49af-a4c4-13e487d638aa" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -15,6 +15,11 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] PlayerController PlayerController = default;
     private bool isToggled = false;
 
+    [SerializeField] ResourceManager resourceManager = default;
+    [SerializeField] PlayerBalance playerBalance = default;
+    float initialBalance;
+
+
 
     public void Start()
     {
@@ -40,6 +45,10 @@ public class ReserveDraft : MonoBehaviour
     {
         GridIO.LoadGrid(currentLevel + "Draft");
         PauseManager.TryToPause();
+
+        // save current resources
+        resourceManager.Save();
+        initialBalance = playerBalance.Balance;
         UpdateUI(false);
     }
 
@@ -47,12 +56,20 @@ public class ReserveDraft : MonoBehaviour
     {
         GridIO.LoadGrid(currentLevel);
         PauseManager.Unpause();
+
+        // load resources - won't change if applied draft
+        resourceManager.Load();
+        playerBalance.SetBalance(initialBalance);
         UpdateUI(true);
     }
 
     public void applyDraft()
     {
         GridIO.SaveGrid(currentLevel + "Draft");
+
+        // save changes
+        resourceManager.Save();
+        initialBalance = playerBalance.Balance;
     }
 
     private void UpdateUI(bool onOff)
