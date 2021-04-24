@@ -99,7 +99,7 @@ public class PopulationManager : MonoBehaviour
         //this.symbiosisNeedSystem.AddPopulation(population);
     }
 
-    public void UdateAllPopulationStateForChecking()
+    public void UpdateAllPopulationStateForChecking()
     {
         foreach (Population population in this.ExistingPopulations)
         {

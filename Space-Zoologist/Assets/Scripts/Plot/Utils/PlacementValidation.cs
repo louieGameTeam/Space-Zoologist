@@ -17,9 +17,9 @@ public class PlacementValidation : MonoBehaviour
         this.FoodReferenceData = foodReferenceData;
     }
 
-    public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
+    public bool IsPodPlacementValid(Vector3 worldPosition, AnimalSpecies species)
     {
-        Vector3Int gridPosition = this.TileSystem.WorldToCell(mousePosition);
+        Vector3Int gridPosition = this.TileSystem.WorldToCell(worldPosition);
         if (!this.IsInMapBounds(gridPosition))
         {
             return false;
@@ -89,11 +89,15 @@ public class PlacementValidation : MonoBehaviour
         return false;
     }
 
-    public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem)
+    public bool IsFoodPlacementValid(Vector3 worldPosition, Item selectedItem)
     {
         FoodSourceSpecies species = this.FoodReferenceData.FoodSources[selectedItem.ID];
-        Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(mousePosition);
+        return IsFoodPlacementValid(worldPosition, species);
+    }
 
+    public bool IsFoodPlacementValid(Vector3 worldPosition, FoodSourceSpecies species)
+    {
+        Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(worldPosition);
         // size 1 -> rad 0, size 3 -> rad 1 ...
         int radius = species.Size / 2;
         Vector3Int pos;

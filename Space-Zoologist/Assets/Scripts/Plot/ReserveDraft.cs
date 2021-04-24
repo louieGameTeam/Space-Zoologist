@@ -13,7 +13,7 @@ public class ReserveDraft : MonoBehaviour
     [SerializeField] GameObject PauseButton = default;
     [SerializeField] GameObject NextDayButton = default;
     [SerializeField] PlayerController PlayerController = default;
-    private bool isToggled = false;
+    public bool IsToggled { get; private set; }
 
     [SerializeField] ResourceManager resourceManager = default;
     [SerializeField] PlayerBalance playerBalance = default;
@@ -25,19 +25,20 @@ public class ReserveDraft : MonoBehaviour
     {
         GridIO.SaveGrid(currentLevel);
         GridIO.SaveGrid(currentLevel + "Draft");
+        IsToggled = false;
     }
 
     public void toggleDrafting()
     {
-        if (!isToggled)
+        if (!IsToggled)
         {
             startDrafting();
-            isToggled = true;
+            IsToggled = true;
         }
         else
         {
             finishDrafting();
-            isToggled = false;
+            IsToggled = false;
         }
     }
 

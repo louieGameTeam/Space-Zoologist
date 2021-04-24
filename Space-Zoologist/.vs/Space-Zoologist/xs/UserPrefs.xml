@@ -1,21 +1,15 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/GridIO.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Utils/FoodPlacer.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="82" Column="57" />
-      <File FileName="Assets/Scripts/UI/Store/StoreSection.cs" />
-      <File FileName="Assets/Scripts/UI/Store/TileStoreSection.cs" />
-      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" />
-      <File FileName="Assets/Scripts/UI/Store/MachineStoreSection.cs" />
-      <File FileName="Assets/Scripts/UI/Store/PlayerBalance.cs" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" />
-      <File FileName="Assets/Scripts/Plot/Tiles/TileContentsManager.cs" />
-      <File FileName="Assets/Scripts/Plot/Tiles/TileLayerManager.cs" />
-      <File FileName="Assets/Scripts/UI/Store/StoreItemCell.cs" Line="51" Column="1" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/EventManager.cs" Line="10" Column="15" />
-      <File FileName="Assets/Scripts/Plot/TileSystem.cs" Line="37" Column="62" />
-      <File FileName="Assets/Scripts/Plot/ReserveDraft.cs" Line="55" Column="21" />
-      <File FileName="Assets/Scripts/Plot/GridIO.cs" Line="25" Column="17" />
+      <File FileName="Assets/Scripts/UI/Store/MoveObject.cs" Line="112" Column="49" />
+      <File FileName="Assets/Scripts/UI/Store/StoreSection.cs" Line="27" Column="28" />
+      <File FileName="Assets/Scripts/Plot/GridSystem.cs" Line="113" Column="35" />
+      <File FileName="Assets/Scripts/Managers/NeedSystemManager.cs" Line="152" Column="29" />
+      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="159" Column="1" />
+      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="121" Column="33" />
+      <File FileName="Assets/Scripts/UI/Store/FoodSourceStoreSection.cs" Line="48" Column="10" />
+      <File FileName="Assets/Scripts/UI/Store/SellingManager.cs" Line="5" Column="14" />
+      <File FileName="Assets/Scripts/Plot/Utils/FoodPlacer.cs" Line="12" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -33,10 +27,19 @@
                 <Node name="Managers" expanded="True">
                   <Node name="EventSystem" expanded="True" />
                 </Node>
+                <Node name="Needs" expanded="True">
+                  <Node name="Systems" expanded="True">
+                    <Node name="FoodSystem" expanded="True" />
+                  </Node>
+                </Node>
                 <Node name="Plot" expanded="True">
                   <Node name="Tiles" expanded="True" />
-                  <Node name="Utils" expanded="True" />
-                  <Node name="GridIO.cs" selected="True" />
+                  <Node name="Utils" expanded="True">
+                    <Node name="FoodPlacer.cs" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="PopulationSystem" expanded="True">
+                  <Node name="Population" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="GameOver" expanded="True" />
