@@ -1,7 +1,12 @@
 # Space-Zoologist
 ## California Education Learning Lab (CELL) Project
-### Summary
-Space Zoologist is a video game that will teach engineering students needs-finding, designing, and researching skills. It is in the design and development process and will be developed through 2019-2020 school year. In the game, the player will take on the role of a space zoologist that is tasked with restoring the populations of various animal species whose home planet was destroyed. With only partial data on the animals' native environments, the player will have to pay close attention to the needs and behaviors of the animals as well as make the most of the given data. 
 
-# Git Workflow
-![](GitHub-Resources/images/git_flow.png)
+![](GitHub-Resources/images/InGamePic.png)
+Space Zoologist is a top down, strategy simulation type video game that strives to teach engineering students the [engineering design process](https://www.teachengineering.org/design/designprocess). It is currently being designed, developed, and playtested and is exptected to be completed by early 2022. In the game, the player takes on the role of a space zoologist that is tasked with restoring the populations of various alien species whose home planet was destroyed. With only partial data on the animals' native environments made available in the encyclopedia, the player will have to research the needs and behaviors of the animals and learn to effectively use their journal in order to develop a solution for each mission. 
+
+## First Demo!
+[https://louielab.org/SpaceZoologist/](https://louielab.org/SpaceZoologist/)
+
+## Team
+We're a team of students from multiple UC schools who are passionate about game development and working part time on this project. We are currently focusing on improving the overall UI/UX and art style, polishing the current gameplay systems and implementing new systems, designing and playtesting more levels, writing narrative and research style articles, and composing music.
+
