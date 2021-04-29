@@ -16,6 +16,7 @@ MonoBehaviour:
   speciesName: Goat
   dominance: 1
   growthRate: 2
+  decayRate: 3
   range: 0
   size: 0
   accessibleTerrain: 0200000003000000
@@ -25,6 +26,7 @@ MonoBehaviour:
     needs:
     - needName: Space Maple
       severity: 3
+      isPoison: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
@@ -36,6 +38,7 @@ MonoBehaviour:
     needs:
     - needName: Dirt
       severity: 3
+      isPoison: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}

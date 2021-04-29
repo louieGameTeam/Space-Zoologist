@@ -122,6 +122,8 @@ public class TerrainNeedSystem : NeedSystem
                 int countPerIndividual = count / population.AnimalPopulation.Count;
                 if (population.GetNeedValues().ContainsKey(needName))
                 {
+                    Debug.Log("Updating " + needName + " with value " + countPerIndividual);
+
                     population.UpdateNeed(needName, countPerIndividual);
                 }
             }

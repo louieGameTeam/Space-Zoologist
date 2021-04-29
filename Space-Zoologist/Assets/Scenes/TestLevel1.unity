@@ -356,19 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc86807f5dc24198962246390635ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventResponses:
-  - EventType: 0
-    DialogueManager: {fileID: 3395325107312024775}
-    TargetPopulation: {fileID: 0}
-    ResponsesData:
-    - PopulationTriggerSize: 6
-      resourceName: Dirt
-      amount: 20
-      NPCConversation: {fileID: 339094291}
-    - PopulationTriggerSize: 7
-      resourceName: Space Maple
-      amount: 1
-      NPCConversation: {fileID: 2106454061}
+  EventResponses: []
 --- !u!1 &215227610
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,6 +949,8 @@ MonoBehaviour:
   PauseButton: {fileID: 1425400391}
   NextDayButton: {fileID: 401962784}
   PlayerController: {fileID: 1290313821}
+  resourceManager: {fileID: 1738013071}
+  playerBalance: {fileID: 4661624496553112467}
 --- !u!1 &462963690
 GameObject:
   m_ObjectHideFlags: 0
@@ -7953,7 +7943,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4661624496553112466}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20087,7 +20078,6 @@ RectTransform:
   - {fileID: 4661624496595949017}
   - {fileID: 6834458015625767973}
   - {fileID: 514777875679304137}
-  - {fileID: 4661624496553112466}
   - {fileID: 4661624497994337146}
   m_Father: {fileID: 4661624496892425695}
   m_RootOrder: 0
@@ -26635,11 +26625,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4661624496553112465}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -641.996, y: 295.38922, z: -1236.8546}
-  m_LocalScale: {x: 3.168312, y: 3.168312, z: 3.168312}
+  m_LocalPosition: {x: 148.07065, y: 389.0406, z: -575.9104}
+  m_LocalScale: {x: 1.4752452, y: 1.4752452, z: 1.4752452}
   m_Children: []
-  m_Father: {fileID: 237033509542114001}
-  m_RootOrder: 4
+  m_Father: {fileID: 1280332670}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4661624496553112467
 MonoBehaviour:
@@ -26882,7 +26872,7 @@ RectTransform:
   - {fileID: 1844187853}
   - {fileID: 162745540}
   m_Father: {fileID: 237033509542114001}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

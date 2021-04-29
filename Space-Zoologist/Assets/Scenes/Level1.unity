@@ -808,8 +808,8 @@ MonoBehaviour:
   GridIO: {fileID: 765609360}
   currentLevel: Level1
   PauseManager: {fileID: 1395149766}
-  PauseButton: {fileID: 1328550532}
-  NextDayButton: {fileID: 1618472787}
+  PauseButton: {fileID: 1018393202}
+  NextDayButton: {fileID: 1204104003}
   PlayerController: {fileID: 1290313821}
   resourceManager: {fileID: 1738013071}
   playerBalance: {fileID: 4661624496553112467}
@@ -5856,6 +5856,12 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1018393202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6943948463895553028, guid: 680b7a5510b8f489e862ea82b41f14cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1425400390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1054101993
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,6 +6484,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1188625117}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1204104003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5434642600480007295, guid: 680b7a5510b8f489e862ea82b41f14cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1425400390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1242613437
 GameObject:
   m_ObjectHideFlags: 0
@@ -6833,12 +6845,6 @@ Transform:
   m_Father: {fileID: 26666793554278037}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1328550532 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6870516816456691122, guid: 680b7a5510b8f489e862ea82b41f14cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1425400390}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1363747825
 GameObject:
   m_ObjectHideFlags: 0
@@ -8149,7 +8155,7 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   BehaviorPatternUpdater: {fileID: 1576156859}
   GridSystem: {fileID: 1621202152}
-  PauseButton: {fileID: 1328550532}
+  PauseButton: {fileID: 1018393202}
   PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
   ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
     type: 3}
@@ -8413,6 +8419,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026,
         type: 3}
+    - target: {fileID: 3647981620192280673, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395149765}
+    - target: {fileID: 3647981620192280673, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: nextDay
+      objectReference: {fileID: 0}
     - target: {fileID: 3859339434846047464, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8439,6 +8455,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 129.18262
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235674868749168370, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395149766}
+    - target: {fileID: 4235674868749168370, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePause
       objectReference: {fileID: 0}
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
@@ -8535,6 +8561,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToggleInspectMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943948463895553028, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_Name
+      value: TogglePause
       objectReference: {fileID: 0}
     - target: {fileID: 8131560787423883400, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
@@ -9122,12 +9153,6 @@ Transform:
   m_Father: {fileID: 765609359}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1618472787 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5318295241996425607, guid: 680b7a5510b8f489e862ea82b41f14cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1425400390}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1621202151
 GameObject:
   m_ObjectHideFlags: 0
@@ -16526,6 +16551,7 @@ MonoBehaviour:
     type: 3}
   ReservePartitionManager: {fileID: 936381359}
   GridSystem: {fileID: 1621202152}
+  GenericBehaviors: []
 --- !u!4 &2078374406
 Transform:
   m_ObjectHideFlags: 0
@@ -24900,6 +24926,7 @@ MonoBehaviour:
   itemDropdownMenu: {fileID: 4799730373970479878}
   inspectorWindow: {fileID: 1507429523}
   inspectorWindowText: {fileID: 2012387185}
+  ObjectivePane: {fileID: 0}
 --- !u!1 &2535077653345000887
 GameObject:
   m_ObjectHideFlags: 0

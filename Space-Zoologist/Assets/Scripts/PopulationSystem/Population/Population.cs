@@ -277,7 +277,7 @@ public class Population : MonoBehaviour, Life
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
         // Invoke a population growth event
-        // EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
+        EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }
 
     // removes last animal in list and last behavior
