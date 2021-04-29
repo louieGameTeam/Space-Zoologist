@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -34,6 +35,11 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom()
     {
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+        {
+            Debug.Log("Not zooming");
+            return;
+        }
         float scrollData = Input.GetAxis("Mouse ScrollWheel");
         targetZoom -= scrollData * zoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);

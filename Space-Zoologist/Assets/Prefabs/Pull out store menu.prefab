@@ -1439,8 +1439,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ffa30cbd0f68fc4482e9ff0dfac2c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  podButtonPrefab: {fileID: 2838119846179554497, guid: 54bcdf80211ee99408aa64e50f63d5f4,
-    type: 3}
+  itemGrid: {fileID: 0}
+  itemCellPrefab: {fileID: 0}
   PodItemContainer: {fileID: 4540037690776166707}
   populationManager: {fileID: 0}
   TopHUD: {fileID: 0}
@@ -1600,7 +1600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2056607558492765538
 RectTransform:
   m_ObjectHideFlags: 0

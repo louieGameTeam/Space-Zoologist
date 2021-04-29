@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Get scriptable object given a food source or species item ID
 public class ReferenceData : MonoBehaviour
 {
     [SerializeField] public LevelDataReference LevelDataReference = default;

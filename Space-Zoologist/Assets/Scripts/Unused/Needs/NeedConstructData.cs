@@ -66,10 +66,12 @@ public class NeedConstructData
     public int Severity => severity;
     public List<NeedBehavior> Conditions => conditions;
     public List<float> Thresholds => thresholds;
+    public bool IsPoison => isPoison;
 
     [SerializeField] private string needName = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
+    [SerializeField] private bool isPoison = false;
     [SerializeField] private List<NeedBehavior> conditions = default;
     [SerializeField] private List<float> thresholds = default;
 

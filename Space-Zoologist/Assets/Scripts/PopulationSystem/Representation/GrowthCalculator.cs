@@ -33,11 +33,13 @@ public class GrowthCalculator
 
     /*
         1. if any needs of a type are good, then need is satisfied
+            a. if any needs are poison, then need is not satisfied
         2. reset NeedTracker and udpate growth status
     */
     public void CalculateGrowth()
     {
         this.GrowthStatus = GrowthStatus.growing;
+        bool isPoisoned = false;
         // 1.
         foreach (KeyValuePair<string, Need> need in Population.Needs)
         {
@@ -46,8 +48,20 @@ public class GrowthCalculator
                 NeedCondition needCondition = need.Value.GetCondition(need.Value.NeedValue);
                 if (needCondition.Equals(NeedCondition.Good))
                 {
+             
                     Debug.Log(need.Value.NeedName + " is being met");
                     NeedTracker[need.Value.NeedType] = NeedCondition.Good;
+                }
+                if (need.Value.IsPoison)
+                {
+                    if (needCondition.Equals(NeedCondition.Good))
+                    {
+                        isPoisoned = true;
+                    }
+                    else
+                    {
+                        NeedTracker[need.Value.NeedType] = NeedCondition.Good;
+                    }
                 }
             }
         }
@@ -55,7 +69,7 @@ public class GrowthCalculator
         Dictionary<NeedType, NeedCondition> resetNeedTracker = new Dictionary<NeedType, NeedCondition>(NeedTracker);
         foreach (KeyValuePair<NeedType, NeedCondition> need in NeedTracker)
         {
-            if (NeedTracker[need.Key].Equals(NeedCondition.Bad))
+            if (NeedTracker[need.Key].Equals(NeedCondition.Bad) || isPoisoned)
             {
                 GrowthStatus = GrowthStatus.declining;
             }
