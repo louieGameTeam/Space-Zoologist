@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] bool EdgeMovement = false;
     [SerializeField] private float edgeSpeed = 5f;
     [SerializeField] private float edgeBoundary = 10f;
+    [SerializeField] private float zoomHeight = 10f;
     [SerializeField] private LevelDataReference LevelDataReference = default;
 
     private Camera cam = default;
@@ -33,9 +35,14 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom()
     {
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+        {
+            Debug.Log("Not zooming");
+            return;
+        }
         float scrollData = Input.GetAxis("Mouse ScrollWheel");
         targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 2.5f, 10f);
+        targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
     }
 

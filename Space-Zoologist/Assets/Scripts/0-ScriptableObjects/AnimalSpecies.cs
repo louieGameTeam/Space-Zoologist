@@ -9,6 +9,7 @@ public class AnimalSpecies : ScriptableObject
     public string SpeciesName => speciesName;
     public int Dominance => dominance;
     public int GrowthRate => growthRate;
+    public int DecayRate => decayRate;
     public float Size => size;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Sprite Icon => icon;
@@ -26,7 +27,8 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int dominance = default;
     [Range(1, 30)]
     [SerializeField] private int growthRate = 3;
-
+    [Range(1, 30)]
+    [SerializeField] private int decayRate = 3;
     [SerializeField] private float range = default;
 
     [Range(0.0f, 10.0f)]

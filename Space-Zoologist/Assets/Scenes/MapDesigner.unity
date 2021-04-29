@@ -1322,6 +1322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 1714759540}
+  isErasing: 0
   tilemaps:
   - {fileID: 1093066800}
   - {fileID: 1747213240}
@@ -1347,6 +1348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ddd4f6b4e76a249bc255e7d1b858fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceDirectory: Grid/
   directory: Assets/Resources/Grid/
 --- !u!114 &1033088161
 MonoBehaviour:
@@ -1363,7 +1365,6 @@ MonoBehaviour:
   GrassTilemap: {fileID: 472077959}
   HasTerrainChanged: 0
   changedTiles: []
-  needSystemManager: {fileID: 0}
 --- !u!156049354 &1033088162
 Grid:
   m_ObjectHideFlags: 0
@@ -3452,7 +3453,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WASDSpeed: 0.3
-  dragSpeed: 3
   zoomLerpSpeed: 5
   EdgeMovement: 0
   edgeSpeed: 10

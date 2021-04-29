@@ -7,14 +7,14 @@ public class PlacementValidation : MonoBehaviour
     private GridSystem GridSystem = default;
     private TileSystem TileSystem = default;
     private LevelDataReference LevelDataReference = default;
-    private FoodReferenceData FoodReferenceData = default;
+    private ReferenceData ReferenceData = default;
 
-    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, FoodReferenceData foodReferenceData)
+    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, ReferenceData ReferenceData)
     {
         this.GridSystem = gridSystem;
         this.TileSystem = tileSystem;
         this.LevelDataReference = levelData;
-        this.FoodReferenceData = foodReferenceData;
+        this.ReferenceData = ReferenceData;
     }
 
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
@@ -91,7 +91,7 @@ public class PlacementValidation : MonoBehaviour
 
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem)
     {
-        FoodSourceSpecies species = this.FoodReferenceData.FoodSources[selectedItem.ID];
+        FoodSourceSpecies species = this.ReferenceData.FoodSources[selectedItem.ID];
         Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(mousePosition);
 
         // size 1 -> rad 0, size 3 -> rad 1 ...
@@ -118,7 +118,6 @@ public class PlacementValidation : MonoBehaviour
         else
         {
             //size is even: place it at cross-center
-
             // Check if the whole object is in bounds
             for (int x = -1 * (radius - 1); x <= radius; x++)
             {
@@ -175,7 +174,12 @@ public class PlacementValidation : MonoBehaviour
     }
     public FoodSourceSpecies GetFoodSpecies(Item item)
     {
-        return this.FoodReferenceData.FoodSources[item.ID];
+        return this.ReferenceData.FoodSources[item.ID];
+    }
+
+    public AnimalSpecies GetAnimalSpecies(Item item)
+    {
+        return this.ReferenceData.Species[item.ID];
     }
 
     public bool IsInMapBounds(Vector3Int mousePosition)

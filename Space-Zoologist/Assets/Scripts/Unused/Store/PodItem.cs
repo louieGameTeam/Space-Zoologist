@@ -8,9 +8,9 @@ public class PodItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] GameObject Popup = default;
     [SerializeField] Text ItemInfo = default;
     AnimalSpecies species = default;
-    PodMenu podMenu = default;
+    PodSection podMenu = default;
 
-    public void Initialize(AnimalSpecies species, PodMenu podMenu)
+    public void Initialize(AnimalSpecies species, PodSection podMenu)
     {
         this.species = species;
         speciesImage.sprite = species.Icon;
@@ -19,7 +19,7 @@ public class PodItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPodClick()
     {
-        podMenu.OnSelectSpecies(species);
+        //podMenu.OnSelectSpecies(species);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

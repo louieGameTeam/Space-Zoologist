@@ -25,6 +25,7 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject itemDropdownMenu = null;
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
+    [SerializeField] private GameObject ObjectivePane = null;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -186,7 +187,6 @@ public class Inspector : MonoBehaviour
     {
         if (this.IsInInspectorMode && Input.GetMouseButtonDown(0))
         {
-            // UI layer clicked TODO better way to handle mouse inputs?
             if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
             {
                 return;

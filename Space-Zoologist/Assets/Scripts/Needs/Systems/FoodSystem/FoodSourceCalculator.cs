@@ -83,10 +83,12 @@ public class FoodSourceCalculator : NeedCalculator
     public bool RemoveConsumer(Population consumer)
     {
         this.isDirty = true;
-
+ 
+        this.consumers.Remove(consumer);
+        this.accessibleFoodSources.Remove(consumer);
         // Assert would not be included in depolyment built
-        Debug.Assert(!this.consumers.Remove(consumer), "Consumer removal failure");
-        Debug.Assert(!this.accessibleFoodSources.Remove(consumer), "Removal of consumer in AccessibleFoodSources failed!");
+        // Debug.Assert(this.consumers.Remove(consumer), "Consumer removal failure");
+        // Debug.Assert(this.accessibleFoodSources.Remove(consumer), "Removal of consumer in AccessibleFoodSources failed!");
 
         return true;
     }
@@ -159,9 +161,11 @@ public class FoodSourceCalculator : NeedCalculator
         {
             float availableFood = 0.0f;
             float amountRequiredPerIndividualForGoodCondition = population.Needs[this.foodSourceName].GetThreshold(NeedCondition.Good, -1, false);
+       
             float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * population.Count;
             foreach (FoodSource foodSource in accessibleFoodSources[population])
             {
+                Debug.Log(population.gameObject.name + " dominance: " + population.Dominance + ", total local dominance: " + totalLocalDominance[foodSource] + " for " + foodSource.gameObject.name);
                 availableFood += foodSource.FoodOutput * (population.Dominance / totalLocalDominance[foodSource]);
             }
 

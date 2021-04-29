@@ -15,6 +15,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
+    [SerializeField] private List<PopulationBehavior> GenericBehaviors = default;
 
     //private SpeciesNeedSystem speciesNeedSystem = null;
     //private SymbiosisNeedSystem symbiosisNeedSystem = null;
@@ -47,6 +48,20 @@ public class PopulationManager : MonoBehaviour
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
+        List<PopulationBehavior> copiedBehaviors = new List<PopulationBehavior>();
+        // Have to copy behavior scriptable objects for them to work on multiple populations
+        foreach (PopulationBehavior behavior in GenericBehaviors)
+        {
+            List<BehaviorPattern> patterns = new List<BehaviorPattern>();
+            foreach(BehaviorPattern pattern in behavior.behaviorPatterns)
+            {
+                patterns.Add(Instantiate(pattern));
+            }
+            PopulationBehavior newBehavior = Instantiate(behavior);
+            newBehavior.behaviorPatterns = patterns;
+            copiedBehaviors.Add(newBehavior);
+        }
+        population.GetComponent<PopulationBehaviorManager>().tempBehaviors = copiedBehaviors;
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
         population.InitializeNewPopulation(species, position, count);

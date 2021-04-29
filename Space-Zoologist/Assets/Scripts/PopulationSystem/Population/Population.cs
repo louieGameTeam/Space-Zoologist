@@ -49,24 +49,14 @@ public class Population : MonoBehaviour, Life
 
     private void Awake()
     {
-        this.GrowthCalculator = new GrowthCalculator(this);
-        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
+        SetupBehaviors();
         if (this.species != null)
         {
+            this.GrowthCalculator = new GrowthCalculator(this);
             this.SetupNeeds();
             this.origin = this.transform.position;
         }
-    }
-
-    private void Start()
-    {
-        int i=0;
-        foreach(PopulationBehavior behaviorPattern in this.DefaultBehaviors)
-        {
-            this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
-            i++;
-        }
+        this.PoolingSystem = this.GetComponent<PoolingSystem>();
     }
 
     /// <summary>
@@ -81,7 +71,9 @@ public class Population : MonoBehaviour, Life
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
-
+        this.SetupBehaviors();
+        this.GrowthCalculator = new GrowthCalculator(this);
+        this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         for (int i = 0; i < populationSize; i++)
         {
@@ -91,6 +83,18 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation[i].SetActive(true);
         }
         this.SetupNeeds();
+    }
+
+    private void SetupBehaviors()
+    {
+        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
+        int i = 0;
+        foreach (PopulationBehavior behaviorPattern in this.DefaultBehaviors)
+        {
+            Debug.Log("added behavior: " + behaviorPattern.name);
+            this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
+            i++;
+        }
     }
 
     private void SetupNeeds()
@@ -103,7 +107,7 @@ public class Population : MonoBehaviour, Life
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
             this.NeedEditorTesting.Add(need.Value);
-            this.GrowthCalculator.setupNeedTimer(need.Key, need.Value.Severity);
+            this.GrowthCalculator.setupNeedTracker(need.Value.NeedType);
         }
     }
 
@@ -217,9 +221,9 @@ public class Population : MonoBehaviour, Life
     }
 
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
-    public int DaysTillDeath(String need)
+    public int DaysTillDeath()
     {
-        return this.GrowthCalculator.needTimers[need] + 1;
+        return this.GrowthCalculator.DecayCountdown;
     }
 
     // Don't add one because this value is updated when HandleGrowth is called
@@ -249,7 +253,7 @@ public class Population : MonoBehaviour, Life
                 }
                 break;
             case GrowthStatus.declining:
-                for (int i=0; i<this.GrowthCalculator.NumAnimalsToRemove(); i++)
+                if (this.GrowthCalculator.ReadyForDecay())
                 {
                     this.RemoveAnimal();
                 }
@@ -273,7 +277,7 @@ public class Population : MonoBehaviour, Life
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
         // Invoke a population growth event
-        EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
+        // EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }
 
     // removes last animal in list and last behavior
