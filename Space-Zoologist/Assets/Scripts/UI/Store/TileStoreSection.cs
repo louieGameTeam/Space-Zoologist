@@ -13,6 +13,7 @@ public class TileStoreSection : StoreSection
     [SerializeField] private TilePlacementController tilePlacementController = default;
 
     private float startingBalance;
+    private int initialAmt;
     private bool isPlacing = false;
     private int numTilesPlaced = 0;
 
@@ -29,6 +30,7 @@ public class TileStoreSection : StoreSection
     private void StartPlacing()
     {
         numTilesPlaced = 0;
+        initialAmt = ResourceManager.CheckRemainingResource(selectedItem);
         isPlacing = true;
         startingBalance = base.playerBalance.Balance;
         tilePlacementController.StartPreview(selectedItem.ID);
@@ -52,7 +54,7 @@ public class TileStoreSection : StoreSection
         isPlacing = false;
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
-        // base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+        base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, numTilesPlaced);
     }
 
@@ -92,7 +94,7 @@ public class TileStoreSection : StoreSection
     {
         //Debug.Log("Tile placement canceled");
         base.OnItemSelectionCanceled();
-        CancelPlacing();
+        //CancelPlacing();
     }
 
     private void Update()
@@ -106,12 +108,14 @@ public class TileStoreSection : StoreSection
             else
             {
                 numTilesPlaced = tilePlacementController.PlacedTileCount();
-                if (ResourceManager.CheckRemainingResource(selectedItem) - numTilesPlaced == 0)
+                base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+
+                if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
                 {
                     FinishPlacing();
                 }
-                // base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
             }
         }
     }
+
 }

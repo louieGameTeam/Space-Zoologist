@@ -143,5 +143,4 @@ public class MenuManager : MonoBehaviour
         StoreMenus[curMenu].gameObject.SetActive(true);
         StoreMenuImages[curMenu].SetActive(true);
     }
-
 }
