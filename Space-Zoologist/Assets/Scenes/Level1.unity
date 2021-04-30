@@ -6887,6 +6887,7 @@ MonoBehaviour:
   referenceCamera: {fileID: 1054101994}
   populationManager: {fileID: 2078374405}
   foodSourceManager: {fileID: 6874327555454712160}
+  reservePartitionManager: {fileID: 936381359}
 --- !u!1 &1363747825
 GameObject:
   m_ObjectHideFlags: 0
@@ -9321,7 +9322,7 @@ MonoBehaviour:
   EventResponseManager: {fileID: 208159620}
   resourceData:
   - resourceName: Dirt
-    initialAmount: 10
+    initialAmount: 1
   - resourceName: Space Maple
     initialAmount: 0
 --- !u!1 &1771126782

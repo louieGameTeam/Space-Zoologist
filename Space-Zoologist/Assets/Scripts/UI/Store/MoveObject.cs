@@ -11,6 +11,7 @@ public class MoveObject : MonoBehaviour
     [SerializeField] Camera referenceCamera = default;
     [SerializeField] PopulationManager populationManager = default;
     [SerializeField] FoodSourceManager foodSourceManager = default;
+    [SerializeField] ReservePartitionManager reservePartitionManager = default;
 
     GameObject toMove = null;
     bool movingAnimal = false;
@@ -24,7 +25,8 @@ public class MoveObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (reserveDraft.IsToggled){
+        if (reserveDraft.IsToggled){ //TODO replace this with a mode in store that toggles drag & drop
+
             if (Input.GetMouseButtonDown(0)) {
 
                 // TODO check that we are not currently placing items
@@ -87,12 +89,9 @@ public class MoveObject : MonoBehaviour
 
                     bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species);
 
-                    if (valid) {
-                        populationManager.CreatePopulation(species, population.Count, worldPos);
-
-                        // TODO Delete the existing population
-
-
+                    // placement is valid and population did not already reach here
+                    if (valid && !reservePartitionManager.CanAccess(population, worldPos)) {
+                        populationManager.MoveAnimal(population, worldPos);
                     }
                     else
                     {
@@ -103,13 +102,13 @@ public class MoveObject : MonoBehaviour
                 {
                     FoodSource foodSource = toMove.GetComponent<FoodSource>();
                     FoodSourceSpecies species = foodSource.Species;
-                    bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species);
+                    bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species, toMove);
 
                     print(valid);
                     if (valid)
                     {
+                        removeOriginalFood(foodSource);
                         placeFood(pos, species);
-                        removeFood(foodSource);
                     }
                     else {
                         toMove.transform.position = initialPos;
@@ -123,103 +122,34 @@ public class MoveObject : MonoBehaviour
     }
     public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
     {
-        Vector3Int pos;
-        Vector2 mousePosition = new Vector2(mouseGridPosition.x, mouseGridPosition.y);
-        //gridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
-        int radius = species.Size / 2;
-        print(mouseGridPosition);
-
-        // Offset
         Vector3Int Temp = mouseGridPosition;
         Temp.x += 1;
         Temp.y += 1;
-
         if (species.Size % 2 == 1)
         {
             //size is odd: center it
-            Vector3 FoodLocation = gridSystem.Grid.CellToWorld(mouseGridPosition);
+            Vector3 FoodLocation = gridSystem.Grid.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
             FoodLocation += Temp;
             FoodLocation /= 2f;
 
             GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius; x <= radius; x++)
-            {
-                for (int y = -1 * radius; y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    gridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    gridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
-
+            gridSystem.AddFood(mouseGridPosition, species.Size, Food);
         }
         else
         {
             //size is even: place it at cross-center (position of tile)
-            Vector3 FoodLocation = gridSystem.Grid.CellToWorld(Temp);
+            Vector3 FoodLocation = gridSystem.Grid.CellToWorld(Temp); //equivalent since cell and world is 1:1, but in Vector3
             GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
-            // Check if the whole object is in bounds
-            for (int x = -1 * (radius - 1); x <= radius; x++)
-            {
-                for (int y = -1 * (radius - 1); y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    gridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    gridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
+            gridSystem.AddFood(mouseGridPosition, species.Size, Food);
         }
     }
 
-    public void removeFood(FoodSource foodSource)
+    public void removeOriginalFood(FoodSource foodSource)
     {
-        FoodSourceSpecies species = foodSource.Species;
-        Vector3Int pos;
-        Vector3Int foodSourceGridPos = tileSystem.WorldToCell(new Vector3(foodSource.Position.x, foodSource.Position.y));
-        //gridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
-        int radius = species.Size / 2;
-        print(foodSourceGridPos);
-
-        if (species.Size % 2 == 1)
-        {
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius; x <= radius; x++)
-            {
-                for (int y = -1 * radius; y <= radius; y++)
-                {
-                    pos = foodSourceGridPos;
-                    pos.x += x;
-                    pos.y += y;
-                    gridSystem.CellGrid[pos.x, pos.y].ContainsFood = false;
-                    gridSystem.CellGrid[pos.x, pos.y].Food = null;
-                    print(gridSystem.CellGrid[pos.x, pos.y].ContainsFood);
-                }
-            }
-
-        }
-        else
-        {
-            // Check if the whole object is in bounds
-            for (int x = -1 * (radius - 1); x <= radius; x++)
-            {
-                for (int y = -1 * (radius - 1); y <= radius; y++)
-                {
-                    pos = foodSourceGridPos;
-                    pos.x += x;
-                    pos.y += y;
-                    gridSystem.CellGrid[pos.x, pos.y].ContainsFood = false;
-                    gridSystem.CellGrid[pos.x, pos.y].Food = null;
-                }
-            }
-        }
-
+        Vector3Int FoodLocation = gridSystem.Grid.WorldToCell(initialPos);
+        gridSystem.RemoveFood(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource);
     }
 

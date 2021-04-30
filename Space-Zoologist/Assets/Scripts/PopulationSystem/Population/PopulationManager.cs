@@ -77,6 +77,13 @@ public class PopulationManager : MonoBehaviour
         CreatePopulation(species, count, position);
     }
 
+    public void MoveAnimal(Population population, Vector3 newLocation) {
+        if (GridSystem.PlacementValidation.IsPodPlacementValid(newLocation, population.species)) {
+            UpdatePopulation(population.species, 1, newLocation);
+            population.RemoveAnimal();
+        }
+    }
+
     // register the existing population then initialize the animals
     private void SetupExistingPopulation(Population population)
     {

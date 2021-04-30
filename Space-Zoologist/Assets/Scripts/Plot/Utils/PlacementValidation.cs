@@ -95,7 +95,7 @@ public class PlacementValidation : MonoBehaviour
         return IsFoodPlacementValid(worldPosition, species);
     }
 
-    public bool IsFoodPlacementValid(Vector3 worldPosition, FoodSourceSpecies species)
+    public bool IsFoodPlacementValid(Vector3 worldPosition, FoodSourceSpecies species, GameObject foodSource = null)
     {
         Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(worldPosition);
         // size 1 -> rad 0, size 3 -> rad 1 ...
@@ -114,7 +114,7 @@ public class PlacementValidation : MonoBehaviour
                     pos = gridPosition;
                     pos.x += x;
                     pos.y += y;
-                    if (!IsFoodPlacementValid(pos, species)) { return false; }
+                    if (!IsFoodPlacementValid(pos, species, foodSource)) { return false; }
                 }
             }
 
@@ -132,7 +132,7 @@ public class PlacementValidation : MonoBehaviour
                     pos.x += x;
                     pos.y += y;
 
-                    if (!IsFoodPlacementValid(pos, species)) { return false; }
+                    if (!IsFoodPlacementValid(pos, species, foodSource)) { return false; }
                 }
             }
         }
@@ -140,7 +140,7 @@ public class PlacementValidation : MonoBehaviour
     }
 
     // helper function that checks the validity at one tile
-    private bool IsFoodPlacementValid(Vector3Int pos, FoodSourceSpecies species)
+    private bool IsFoodPlacementValid(Vector3Int pos, FoodSourceSpecies species, GameObject foodSource = null)
     {
         if (!this.IsInMapBounds(pos))
         {
@@ -154,7 +154,7 @@ public class PlacementValidation : MonoBehaviour
             cellData.Machine.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
             return false;
         }
-        if (cellData.ContainsFood)
+        if (cellData.ContainsFood && (foodSource == null || !ReferenceEquals(cellData.Food, foodSource)))
         {
             cellData.Food.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
             return false;
@@ -177,6 +177,7 @@ public class PlacementValidation : MonoBehaviour
         }
         return false;
     }
+
     public FoodSourceSpecies GetFoodSpecies(Item item)
     {
         return this.FoodReferenceData.FoodSources[item.ID];
