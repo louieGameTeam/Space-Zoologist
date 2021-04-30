@@ -29,11 +29,11 @@ public class MachineStoreSection : StoreSection
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            if (!base.GridSystem.PlacementValidation.IsItemPlacementValid(mousePosition, base.selectedItem))
-            {
-                Debug.Log("Cannot place item that location");
-                return;
-            }
+            //if (!base.GridSystem.PlacementValidation.IsItemPlacementValid(mousePosition, base.selectedItem))
+            //{
+            //    Debug.Log("Cannot place item that location");
+            //    return;
+            //}
             base.playerBalance.SubtractFromBalance(selectedItem.Price);
             base.ResourceManager.Placed(selectedItem, 1);
             CreateMachine(mousePosition);

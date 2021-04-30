@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
     {
         if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
         {
-            Debug.Log("Not zooming");
+            //Debug.Log("Not zooming");
             return;
         }
         float scrollData = Input.GetAxis("Mouse ScrollWheel");

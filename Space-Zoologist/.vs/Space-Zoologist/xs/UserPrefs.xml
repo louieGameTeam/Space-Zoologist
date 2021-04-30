@@ -1,14 +1,12 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Population/Population.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/0-BaseClasses/StoreSection.cs">
     <Files>
-      <File FileName="Assets/Scripts/Needs/Need.cs" Line="17" Column="38" />
-      <File FileName="Assets/Scripts/Managers/NeedSystemManager.cs" Line="76" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" Line="147" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="122" Column="84" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="280" Column="9" />
-      <File FileName="Assets/Scripts/UI/LogSystem/LogSystem.cs" Line="49" Column="13" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TimeSystem/TimeSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Plot/GridSystem.cs" Line="106" Column="58" />
+      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="45" Column="10" />
+      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="127" Column="10" />
+      <File FileName="Assets/Scripts/Plot/GridOverlay.cs" Line="45" Column="1" />
+      <File FileName="Assets/Scripts/UI/CursorItem.cs" Line="24" Column="17" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,7 +22,9 @@
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="0-BaseClasses" expanded="True" />
+                <Node name="0-BaseClasses" expanded="True">
+                  <Node name="StoreSection.cs" selected="True" />
+                </Node>
                 <Node name="0-ScriptableObjects" expanded="True" />
                 <Node name="0-Utils" expanded="True">
                   <Node name="ReferenceSystem" expanded="True" />
@@ -37,18 +37,24 @@
                     <Node name="FoodSystem" expanded="True" />
                   </Node>
                 </Node>
+                <Node name="Plot" expanded="True">
+                  <Node name="Tiles" expanded="True" />
+                  <Node name="Utils" expanded="True" />
+                </Node>
                 <Node name="PopulationSystem" expanded="True">
-                  <Node name="Population" expanded="True">
-                    <Node name="Population.cs" selected="True" />
-                  </Node>
+                  <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="TimeSystem" expanded="True" />
                 <Node name="UI" expanded="True">
                   <Node name="LogSystem" expanded="True" />
+                  <Node name="Store" expanded="True">
+                    <Node name="Sections" expanded="True" />
+                  </Node>
                 </Node>
                 <Node name="Unused" expanded="True">
                   <Node name="Needs" expanded="True" />
+                  <Node name="Store" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -59,7 +65,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f89ae7da-606a-4bd7-8ab8-c3fd5944028a" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d9428229-6b0f-4c90-a327-85880d563705" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -23,8 +23,9 @@ public class StoreSection : MonoBehaviour
     protected GridSystem GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
-
+    private GridOverlay gridOverlay = default;
     protected Item selectedItem = null;
+    private Vector3Int previousLocation = default;
 
     public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
     {
@@ -32,9 +33,29 @@ public class StoreSection : MonoBehaviour
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
+        gridOverlay = GridSystem.gameObject.GetComponent<GridOverlay>();
         this.playerBalance = playerBalance;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
+    }
+
+    public void Update()
+    {
+        if (cursorItem.IsOn)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
+            if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
+
+            Vector3Int gridLocation = GridSystem.Grid.WorldToCell(mousePosition);
+            if (this.GridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
+
+            if (gridLocation.x != previousLocation.x && gridLocation.y != previousLocation.y)
+            {
+                previousLocation = gridLocation;
+                gridOverlay.ClearColors();
+                GridSystem.PlacementValidation.updateVisualPlacement(gridLocation, selectedItem);
+            }
+        }
     }
 
     public virtual void Initialize()
@@ -82,6 +103,7 @@ public class StoreSection : MonoBehaviour
     public virtual void OnItemSelectionCanceled()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        gridOverlay.ClearColors();
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)
