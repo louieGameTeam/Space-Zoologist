@@ -75,6 +75,7 @@ public class PopulationManager : MonoBehaviour
             }
         }
         CreatePopulation(species, count, position);
+        print("created");
     }
 
     public void MoveAnimal(Population population, Vector3 newLocation) {

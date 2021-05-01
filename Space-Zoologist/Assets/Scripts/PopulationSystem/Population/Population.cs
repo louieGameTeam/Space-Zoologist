@@ -49,7 +49,7 @@ public class Population : MonoBehaviour, Life
 
     private void Awake()
     {
-        this.GrowthCalculator = new GrowthCalculator(this);
+        if(species != null) this.GrowthCalculator = new GrowthCalculator(this);
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         if (this.species != null)
@@ -79,6 +79,7 @@ public class Population : MonoBehaviour, Life
     public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize)
     {
         this.species = species;
+        this.GrowthCalculator = new GrowthCalculator(this);
         this.origin = origin;
         this.transform.position = origin;
 

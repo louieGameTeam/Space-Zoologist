@@ -73,12 +73,13 @@ public class MoveObject : MonoBehaviour
                 newPosition.z = z;
                 toMove.transform.position = newPosition;
             }
-
+             
             if (Input.GetMouseButtonUp(0) && toMove != null)
             {
                 // Update animal location reference
                 this.gridSystem.UpdateAnimalCellGrid();
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                worldPos.z = 0;
                 Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
 
 
