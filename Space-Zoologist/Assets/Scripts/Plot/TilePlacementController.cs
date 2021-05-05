@@ -70,8 +70,7 @@ public class TilePlacementController : MonoBehaviour
             RenderColorOfColorLinkedTiles(colorInitializeTiles);
             referencedTiles.Clear();
         }
-        this.gameObject.GetComponent<GridIO>().Initialize();
-        this.gameObject.GetComponent<GridIO>().LoadGrid();
+        this.gameObject.GetComponent<PlotIO>().Initialize();
     }
     private void Update()
     {

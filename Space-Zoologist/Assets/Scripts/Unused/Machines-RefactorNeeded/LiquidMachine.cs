@@ -3,40 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO setup so can only be placed in liquid and only modifies the values in that liquid
-public class LiquidMachine : MonoBehaviour
+public class LiquidMachine : Machine
 {
-    private GameObject LiquidHUDGameObject = default;
     private TileSystem TileSystem = default;
-    private LiquidMachineHUD LiquidMachineHUD = default;
-
-    public void Start()
+    public override void Initialize()
     {
-        this.LiquidMachineHUD = this.LiquidHUDGameObject.GetComponent<LiquidMachineHUD>();
+        this.TileSystem = FindObjectOfType<TileSystem>();
+        base.Initialize();
+    }
+    // TODO Input handler
+    private void OnMouseDown()
+    {
+        if (!this.machineHUDGO.activeSelf) this.OpenHUD();
     }
 
-    public void Initialize(TileSystem tileSystem, GameObject liquidMachineHUD)
+    public override void OpenHUD()
     {
-        this.TileSystem = tileSystem;
-        this.LiquidHUDGameObject = liquidMachineHUD;
-    }
-
-    void OnMouseDown()
-    {
-        if (!this.LiquidHUDGameObject.activeSelf) this.OpenHUD();
-    }
-
-    public void OpenHUD()
-    {
-        this.LiquidHUDGameObject.SetActive(!this.LiquidHUDGameObject.activeSelf);
-        if (this.LiquidHUDGameObject.activeSelf)
+        this.machineHUDGO.SetActive(!this.machineHUDGO.activeSelf);
+        if (this.machineHUDGO.activeSelf)
         {
-            GameTile tile = this.TileSystem.GetGameTileAt(this.TileSystem.WorldToCell(this.gameObject.transform.position));
-            this.LiquidMachineHUD.Initialize(this.TileSystem.GetTileContentsAt(this.TileSystem.WorldToCell(this.gameObject.transform.position), tile), this);
+            GameTile tile = this.TileSystem.GetGameTileAt(this.position);
+            this.machineHUD.Initialize(this);
         }
     }
 
     public void UpdateLiquid(float[] liquidComposition)
     {
-        this.TileSystem.ChangeLiquidBodyComposition(this.TileSystem.WorldToCell(this.gameObject.transform.position), liquidComposition);
+        this.TileSystem.ChangeLiquidBodyComposition(this.position, liquidComposition);
     }
 }

@@ -15,16 +15,21 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
+    [Header("Attach All ScriptableObjects of Species Available on This Level Here")]
+    [SerializeField] private AnimalSpecies[] Species = default;
 
     //private SpeciesNeedSystem speciesNeedSystem = null;
     //private SymbiosisNeedSystem symbiosisNeedSystem = null;
 
     public void Initialize()
     {
-        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
-        //this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
-        // this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
+        //TODO load from save
+        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
+        this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
+        
 
+        //Old loading, load gameobjects from the scene
+/*        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
         foreach (GameObject population in populations)
         {
             this.ExistingPopulations.Add(population.GetComponent<Population>());
@@ -34,14 +39,56 @@ public class PopulationManager : MonoBehaviour
         {
             this.SetupExistingPopulation(population);
         }
+        this.NeedSystemManager.UpdateAllSystems();*/
     }
-
+    private AnimalSpecies LoadSpecies(string name)
+    {
+        foreach (AnimalSpecies animalSpecies in Species)
+        {
+            if (animalSpecies.name.Equals(name))
+            {
+                return animalSpecies;
+            }
+        }
+        Debug.LogError("No animal match the name '" + name + "' can be found in the species list. Did you attach the AnimalSpecies ScriptableObjects to the Population Manager?");
+        return null;
+    }
+    public SerializedPopulation[] Serialize()
+    {
+        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
+        SerializedPopulation[] serializedPopulations = new SerializedPopulation[populations.Length];
+        for (int i = 0; i < populations.Length; i++)
+        {
+            AnimalSpecies animalSpecies = populations[i].GetComponent<Population>().species;
+            GameObject[] animals = new GameObject[populations[i].transform.childCount];
+            for (int j = 0; j < populations[i].transform.childCount; j++)
+            {
+                animals[i] = populations[i].transform.GetChild(j).gameObject;
+            }
+            serializedPopulations[i] = new SerializedPopulation(animalSpecies, animals);
+        }
+        return serializedPopulations;
+    }
+    public void Parse(SerializedPopulation[] serializedPopulations)
+    {
+        if (serializedPopulations == null)
+        {
+            Debug.LogWarning("No population found in save");
+            return;
+        }
+        for (int i=0; i < serializedPopulations.Length;i++)
+        {
+            Vector3[] pos = SerializationUtils.ParseVector3(serializedPopulations[i].population.coords);
+            this.CreatePopulation(this.LoadSpecies(serializedPopulations[i].population.name), serializedPopulations.Length, pos[0], pos);
+        }
+    }
     /// <summary>
     /// Create a new population of the given species at the given position.
     /// </summary>
     /// <param name="species">The species of the population</param>
     /// <param name="position">The origin point of the population</param>
-    public void CreatePopulation(AnimalSpecies species, int count, Vector3 position)
+    /// Can be simplified since count will always equal to positions
+    public void CreatePopulation(AnimalSpecies species, int count, Vector3 position, Vector3[] positions = null)
     {
         // Create population
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
@@ -49,13 +96,12 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
-        population.InitializeNewPopulation(species, position, count);
+        population.InitializeNewPopulation(species, position, count, positions);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
 
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
-
     /// <summary>
     /// Add animals to the accessible area containing the given position. If there is already a population, add the animals to it, else create a new population.
     /// </summary>

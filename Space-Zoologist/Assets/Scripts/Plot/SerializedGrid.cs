@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
-
-public class SerializedGrid
+﻿public class SerializedGrid
 {
     public SerializedTilemap[] serializedTilemaps;
     // TODO Add other floating objects

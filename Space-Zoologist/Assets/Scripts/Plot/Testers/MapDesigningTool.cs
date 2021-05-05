@@ -10,7 +10,7 @@ public class MapDesigningTool : MonoBehaviour
     private TileType selectedTile;
     private Vector2 tileScrollPosition;
     private string sceneName;
-    private GridIO gridIO;
+    private LevelIO levelIO;
     private TilePlacementController tilePlacementController;
     [SerializeField] bool godMode = true;
     private bool DisplayLiquidBodyInfo = true;
@@ -23,8 +23,8 @@ public class MapDesigningTool : MonoBehaviour
     private Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>> ManagersToToggles = new Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>>();
     private void Awake()
     {
-        this.gridIO = FindObjectOfType<GridIO>();
-        this.tilePlacementController = this.gridIO.gameObject.GetComponent<TilePlacementController>();
+        this.levelIO = FindObjectOfType<LevelIO>();
+        this.tilePlacementController = FindObjectOfType<TilePlacementController>();
         this.mainCamera = this.gameObject.GetComponent<Camera>();
         this.tilemaps = FindObjectsOfType<Tilemap>();
         this.tileSystem = FindObjectOfType<TileSystem>();
@@ -73,6 +73,7 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.EndHorizontal();
         }
+        this.tilePlacementController.isErasing = GUILayout.Toggle(this.tilePlacementController.isErasing, "Eraser Mode");
         GUILayout.EndScrollView();
         GUILayout.EndVertical();
     }
@@ -80,13 +81,13 @@ public class MapDesigningTool : MonoBehaviour
     {
         GUILayout.BeginVertical();
         this.sceneName = GUILayout.TextField(this.sceneName);
-        if (GUILayout.Button("Save"))
+        if (GUILayout.Button("Save") && !this.sceneName.Equals("") && this.sceneName != null)
         {
-            gridIO.SaveAsPresetGrid(this.sceneName);
+            levelIO.Save(this.sceneName);
         }
         if (GUILayout.Button("Load"))
         {
-            gridIO.LoadPresetGrid(this.sceneName);
+            levelIO.Load(this.sceneName);
         }
         GUILayout.EndVertical();
     }

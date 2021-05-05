@@ -164,10 +164,6 @@ public class TileLayerManager : MonoBehaviour
     }
     public void ConfirmPlacement()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            return;
-        }
         if (!this.holdsContent)
         {
             foreach (Vector3Int tile in this.ChangedTiles)
