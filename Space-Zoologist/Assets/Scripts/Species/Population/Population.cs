@@ -75,7 +75,8 @@ public class Population : MonoBehaviour, Life
     /// <param name="species">The species of the population</param>
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
-    ///  TODO population instantiation should likely come from an populationdata object with more fields
+    /// TODO simplify populations size, as it will always be the same as number of positions given 
+    /// TODO population instantiation should likely come from an populationdata object with more fields
     public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, Vector3[] positions)
     {
         this.species = species;

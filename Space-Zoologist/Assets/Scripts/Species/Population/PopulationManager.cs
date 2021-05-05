@@ -24,11 +24,12 @@ public class PopulationManager : MonoBehaviour
     public void Initialize()
     {
         //TODO load from save
-        // this.Parse()
-        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
         this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
         this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
+        
 
+        //Old loading, load gameobjects from the scene
+/*        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
         foreach (GameObject population in populations)
         {
             this.ExistingPopulations.Add(population.GetComponent<Population>());
@@ -38,7 +39,7 @@ public class PopulationManager : MonoBehaviour
         {
             this.SetupExistingPopulation(population);
         }
-        this.NeedSystemManager.UpdateAllSystems();
+        this.NeedSystemManager.UpdateAllSystems();*/
     }
     private AnimalSpecies LoadSpecies(string name)
     {
@@ -70,6 +71,11 @@ public class PopulationManager : MonoBehaviour
     }
     public void Parse(SerializedPopulation[] serializedPopulations)
     {
+        if (serializedPopulations == null)
+        {
+            Debug.LogWarning("No population found in save");
+            return;
+        }
         for (int i=0; i < serializedPopulations.Length;i++)
         {
             Vector3[] pos = SerializationUtils.ParseVector3(serializedPopulations[i].population.coords);
@@ -81,6 +87,7 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     /// <param name="species">The species of the population</param>
     /// <param name="position">The origin point of the population</param>
+    /// Can be simplified since count will always equal to positions
     public void CreatePopulation(AnimalSpecies species, int count, Vector3 position, Vector3[] positions = null)
     {
         // Create population

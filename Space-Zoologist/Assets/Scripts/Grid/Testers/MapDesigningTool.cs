@@ -24,7 +24,7 @@ public class MapDesigningTool : MonoBehaviour
     private void Awake()
     {
         this.levelIO = FindObjectOfType<LevelIO>();
-        this.tilePlacementController = this.levelIO.gameObject.GetComponent<TilePlacementController>();
+        this.tilePlacementController = FindObjectOfType<TilePlacementController>();
         this.mainCamera = this.gameObject.GetComponent<Camera>();
         this.tilemaps = FindObjectsOfType<Tilemap>();
         this.tileSystem = FindObjectOfType<TileSystem>();

@@ -21,7 +21,6 @@ public class FoodSourceManager : GridObjectManager
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
-    protected string MapObjectName = "FoodSource"; // String used to identify serialized map objects being handled by this manager
 
     private void Awake()
     {
@@ -216,5 +215,10 @@ public class FoodSourceManager : GridObjectManager
                 }
             }
         }
+    }
+    protected override string GetMapObjectName()
+    {
+        // String used to identify serialized map objects being handled by this manager
+        return "FoodSource";
     }
 }

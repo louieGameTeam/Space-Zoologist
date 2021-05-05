@@ -34,6 +34,7 @@ public class PlotIO : MonoBehaviour
     }
     public void LoadPlot(SerializedPlot serializedPlot)
     {
+        Debug.Log(serializedPlot.serializedMapObjects.names);
         this.SerializedPlot = serializedPlot;
     }
     public void ParseSerializedObjects()
@@ -64,6 +65,11 @@ public class PlotIO : MonoBehaviour
             mapObjectNames.Add(gridObjectManager.name);
         }
         // Notify if a saved object is not been serialized
+        if (this.SerializedPlot.serializedMapObjects.names == null)
+        {
+            Debug.LogWarning("No map objects found in save");
+            return;
+        }
         foreach (string name in this.SerializedPlot.serializedMapObjects.names)
         {
             if (!mapObjectNames.Contains(name))

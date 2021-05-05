@@ -245,6 +245,9 @@ MonoBehaviour:
     type: 3}
   ReservePartitionManager: {fileID: 530496335}
   GridSystem: {fileID: 1654072073}
+  Species:
+  - {fileID: 11400000, guid: 71f359d75cd374dc2af2253ea6d39f95, type: 2}
+  - {fileID: 11400000, guid: 5b93b183258a1425c99de8277ff09938, type: 2}
 --- !u!1 &337163558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,10 +1299,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1033088157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ddd4f6b4e76a249bc255e7d1b858fe, type: 3}
+  m_Script: {fileID: 11500000, guid: ca4933cdddee27341970b70e4763ee72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directory: Assets/SaveData/Grid/
 --- !u!114 &1033088161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3702,6 +3704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1748326426}
+  - component: {fileID: 1748326427}
   m_Layer: 0
   m_Name: Plot
   m_TagString: Untagged
@@ -3729,6 +3732,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1748326427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748326425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8701b7aa16bc14ebbbb89da855647b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directory: Assets/SaveData/
 --- !u!1 &1835187564
 GameObject:
   m_ObjectHideFlags: 0
