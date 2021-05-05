@@ -49,7 +49,7 @@ public class StoreSection : MonoBehaviour
             Vector3Int gridLocation = GridSystem.Grid.WorldToCell(mousePosition);
             if (this.GridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
 
-            if (gridLocation.x != previousLocation.x && gridLocation.y != previousLocation.y)
+            if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
             {
                 previousLocation = gridLocation;
                 gridOverlay.ClearColors();

@@ -38,6 +38,7 @@ public class PlacementValidation : MonoBehaviour
 
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
+        Debug.Log("Item selected " + selectedItem.ID);
         if (this.ReferenceData.FoodSources.ContainsKey(selectedItem.ID))
         {
             FoodSourceSpecies species = this.ReferenceData.FoodSources[selectedItem.ID];
@@ -48,12 +49,17 @@ public class PlacementValidation : MonoBehaviour
             AnimalSpecies species = this.ReferenceData.Species[selectedItem.ID];
             CheckSurroundingTerrain(gridPosition, species);
         }
+        else
+        {
+            // TODO figure out how to determine if tile is placable
+            // gridOverlay.HighlightTile(gridPosition, Color.green);
+        }
     }
 
     private bool CheckSurroundingTerrain(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
     {
-        bool isValid = false;
         Vector3Int pos;
+        GameTile tile;
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
@@ -61,21 +67,13 @@ public class PlacementValidation : MonoBehaviour
                 pos = cellPosition;
                 pos.x += x;
                 pos.y += y;
-                GameTile tile = this.TileSystem.GetGameTileAt(pos);
+                tile = this.TileSystem.GetGameTileAt(pos);
                 if (tile == null)
                 {
                     return false;
                 }
-                foreach (TileType acceptablTerrain in selectedSpecies.AccessibleTerrain)
-                {
-                    if (tile.type.Equals(acceptablTerrain))
-                    {
-                        isValid = true;
-                        break;
-                    }
-               
-                }
-                if (isValid)
+                bool isTerrainAcceptable = IsTerrainAcceptable(tile.type, selectedSpecies.AccessibleTerrain);
+                if (isTerrainAcceptable)
                 {
                     gridOverlay.HighlightTile(pos, Color.green);
                 }
@@ -85,7 +83,20 @@ public class PlacementValidation : MonoBehaviour
                 }
             }
         }
-        return isValid;
+        tile = this.TileSystem.GetGameTileAt(cellPosition);
+        return IsTerrainAcceptable(tile.type, selectedSpecies.AccessibleTerrain);
+    }
+
+    private bool IsTerrainAcceptable(TileType tileType, List<TileType> accessibleTerrain)
+    {
+        foreach (TileType acceptablTerrain in accessibleTerrain)
+        {
+            if (tileType.Equals(acceptablTerrain))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private bool CheckSurroudingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
@@ -100,9 +111,9 @@ public class PlacementValidation : MonoBehaviour
             offset = 1;
         }
         // Check if the whole object is in bounds
-        for (int x = -1 * (radius - offset); x <= radius; x++)
+        for (int x = (-1 - offset) * (radius - offset); x <= radius; x++)
         {
-            for (int y = -1 * (radius - offset) ; y <= radius ; y++)
+            for (int y = (-1 - offset) * (radius - offset) ; y <= radius ; y++)
             {
                 pos = cellPosition;
                 pos.x += x;

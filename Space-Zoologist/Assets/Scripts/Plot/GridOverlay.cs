@@ -25,11 +25,10 @@ public class GridOverlay : MonoBehaviour
 
     public void HighlightTile(Vector3Int tilePosition, Color color)
     {
-        if (previousColors.ContainsKey(tilePosition))
+        if (!previousColors.ContainsKey(tilePosition))
         {
-            return;
+            previousColors.Add(tilePosition, gridOverlay.GetColor(tilePosition));
         }
-        previousColors.Add(tilePosition, gridOverlay.GetColor(tilePosition));
         gridOverlay.SetTileFlags(tilePosition, TileFlags.None);
         gridOverlay.SetColor(tilePosition, color);
     }
