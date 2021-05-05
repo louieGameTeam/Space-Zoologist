@@ -1,13 +1,9 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/FoodSourceManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="106" Column="1" />
-      <File FileName="Assets/Scripts/Plot/GridSystem.cs" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="149" Column="14" />
-      <File FileName="Assets/Scripts/Plot/GridOverlay.cs" />
-      <File FileName="Assets/Scripts/UI/CursorItem.cs" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="96" Column="1" />
+      <File FileName="Assets/Scripts/Plot/GridOverlay.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="43" Column="1" />
+      <File FileName="Assets/Scripts/Plot/Utils/FoodPlacer.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -39,6 +35,7 @@
                 <Node name="Plot" expanded="True">
                   <Node name="Tiles" expanded="True" />
                   <Node name="Utils" expanded="True" />
+                  <Node name="GridOverlay.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="Population" expanded="True" />
@@ -48,9 +45,7 @@
                 <Node name="UI" expanded="True">
                   <Node name="LogSystem" expanded="True" />
                   <Node name="Store" expanded="True">
-                    <Node name="Sections" expanded="True">
-                      <Node name="TileStoreSection.cs" selected="True" />
-                    </Node>
+                    <Node name="Sections" expanded="True" />
                   </Node>
                 </Node>
                 <Node name="Unused" expanded="True">
@@ -66,7 +61,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="10e0c496-2220-4279-946d-bfdd48b11d4f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="fc44b5e8-882d-4946-ac5a-a2a56697d4a8" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

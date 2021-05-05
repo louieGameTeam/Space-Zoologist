@@ -21,7 +21,7 @@ public class FoodSourceManager : MonoBehaviour
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
-    private FoodPlacer FoodPlacer = default;
+    [SerializeField] private FoodPlacer FoodPlacer = default;
 
     private void Awake()
     {
@@ -40,7 +40,6 @@ public class FoodSourceManager : MonoBehaviour
         {
             foodSourceSpecies.Add(species.SpeciesName, species);
         }
-        FoodPlacer = this.gameObject.GetComponent<FoodPlacer>();
     }
 
     public void Initialize()

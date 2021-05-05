@@ -6,14 +6,8 @@ using UnityEngine.Tilemaps;
 public class GridOverlay : MonoBehaviour
 {
     [SerializeField] Tilemap gridOverlay = default;
-    [SerializeField] Color gridColor = default;
     bool isOn = false;
     Dictionary<Vector3Int, Color> previousColors = new Dictionary<Vector3Int, Color>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        //gridOverlay.color = new Color(0, 0, 0, 0);
-    }
 
     public void ClearColors()
     {
@@ -26,14 +20,7 @@ public class GridOverlay : MonoBehaviour
 
     public void ToggleGridOverlay()
     {
-        if (isOn)
-        {
-            gridOverlay.color = new Color(0, 0, 0, 0);
-        }
-        else
-        {
-            gridOverlay.color = gridColor;
-        }
+        gridOverlay.gameObject.SetActive(!gridOverlay.gameObject.activeSelf);
     }
 
     public void HighlightTile(Vector3Int tilePosition, Color color)

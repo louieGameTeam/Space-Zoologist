@@ -950,6 +950,7 @@ Transform:
   - {fileID: 936381358}
   - {fileID: 1621202153}
   - {fileID: 459174928}
+  - {fileID: 549433666}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1571,6 +1572,65 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1425400390}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &549433665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 549433666}
+  - component: {fileID: 549433667}
+  m_Layer: 0
+  m_Name: SpeciesSetup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &549433666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549433665}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 462963691}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &549433667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549433665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FoodPlacementDatas:
+  - location: {x: 2, y: 23, z: 0}
+    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+  - location: {x: 7, y: 10, z: 0}
+    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+  - location: {x: 4, y: 4, z: 0}
+    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+  - location: {x: 12, y: 7, z: 0}
+    item: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
+  - location: {x: 18, y: 6, z: 0}
+    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+  - location: {x: 18, y: 2, z: 0}
+    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+  - location: {x: 24, y: 12, z: 0}
+    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+  FoodSourceStoreSection: {fileID: 609238252}
 --- !u!1 &588171184
 GameObject:
   m_ObjectHideFlags: 0
@@ -4472,34 +4532,6 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &862772413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6874327555454712161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FoodPlacementDatas:
-  - location: {x: 2, y: 23, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 7, y: 10, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 4, y: 4, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 12, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
-  - location: {x: 18, y: 6, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  - location: {x: 18, y: 2, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  - location: {x: 24, y: 12, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  FoodSourceStoreSection: {fileID: 609238252}
 --- !u!224 &877353588 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8051970479444849610, guid: 680b7a5510b8f489e862ea82b41f14cb,
@@ -9087,7 +9119,7 @@ PrefabInstance:
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
@@ -9122,6 +9154,31 @@ PrefabInstance:
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1621202155}
+    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ToggleGridOverlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5029382863611648250, guid: 680b7a5510b8f489e862ea82b41f14cb,
@@ -9866,7 +9923,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridOverlay: {fileID: 1708195239}
-  gridColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1652469947
 GameObject:
   m_ObjectHideFlags: 0
@@ -10970,7 +11026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1708195237
 Transform:
   m_ObjectHideFlags: 0
@@ -28648,7 +28704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50.000732, y: -50}
+  m_AnchoredPosition: {x: -50.000977, y: -50}
   m_SizeDelta: {x: -100, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1910881289714381795
@@ -38605,6 +38661,7 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   TileSystem: {fileID: 765609361}
   GridSystem: {fileID: 1621202152}
+  FoodPlacer: {fileID: 549433667}
 --- !u!1 &6874327555454712161
 GameObject:
   m_ObjectHideFlags: 0
@@ -38615,7 +38672,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6874327555454712159}
   - component: {fileID: 6874327555454712160}
-  - component: {fileID: 862772413}
   m_Layer: 0
   m_Name: FoodSourceManager
   m_TagString: Untagged
