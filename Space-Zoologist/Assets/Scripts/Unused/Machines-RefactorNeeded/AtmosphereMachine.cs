@@ -34,8 +34,8 @@ public class AtmosphereMachine : Machine
         this.AtmosphereHUDGameObject.SetActive(!this.AtmosphereHUDGameObject.activeSelf);
         if (this.AtmosphereHUDGameObject.activeSelf)
         {
-            this.AtmosphereMachineHUD.Initialize(this);
-            this.AtmosphereMachineHUD.SetAtmosphericComposition(this.EnclosureSystem.GetAtmosphericComposition(this.gameObject.transform.position));
+            //this.AtmosphereMachineHUD.Initialize(this);
+            //this.AtmosphereMachineHUD.SetAtmosphericComposition(this.EnclosureSystem.GetAtmosphericComposition(this.gameObject.transform.position));
         }
     }
 
