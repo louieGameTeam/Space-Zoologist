@@ -91,8 +91,9 @@ public class MoveObject : MonoBehaviour
                     bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species);
 
                     // placement is valid and population did not already reach here
-                    if (valid && !reservePartitionManager.CanAccess(population, worldPos)) {
-                        populationManager.MoveAnimal(population, worldPos);
+                    if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species)) {
+                        populationManager.UpdatePopulation(species, 1, worldPos);
+                        population.RemoveAnimal();
                     }
                     toMove.transform.position = initialPos;
                 }

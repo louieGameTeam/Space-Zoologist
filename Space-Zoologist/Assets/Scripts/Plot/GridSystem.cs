@@ -298,7 +298,6 @@ public class GridSystem : MonoBehaviour
                     pos.y += y;
                     CellGrid[pos.x, pos.y].ContainsFood = true;
                     CellGrid[pos.x, pos.y].Food = foodSource;
-                    print("added at " + pos);
                 }
             }
         }
@@ -318,7 +317,6 @@ public class GridSystem : MonoBehaviour
                 CellData cell = CellGrid[pos.x + dx, pos.y + dy];
                 if (cell.ContainsFood && ReferenceEquals(cell.Food, foodSource))
                 {
-                    print("deleted at " + (pos.x+dx) + ", " + (pos.y+dy) + " " + CellGrid[pos.x + dx, pos.y + dy].ContainsFood + " " + CellGrid[pos.x + dx, pos.y + dy].Food);
                     CellGrid[pos.x + dx, pos.y + dy].ContainsFood = false;
                     CellGrid[pos.x + dx, pos.y + dy].Food = null;
                 }

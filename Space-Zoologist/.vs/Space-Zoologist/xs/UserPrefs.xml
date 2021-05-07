@@ -1,13 +1,14 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/TilePlacementController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/NeedSystemManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Plot/GridOverlay.cs" Line="12" Column="30" />
-      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="54" Column="1" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="55" Column="70" />
-      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="43" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="28" Column="11" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="100" Column="13" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="181" Column="37" />
+      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="110" Column="23" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="39" Column="54" />
+      <File FileName="Assets/Scripts/UI/Store/MoveObject.cs" Line="134" Column="64" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="168" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" Line="114" Column="17" />
+      <File FileName="Assets/Scripts/Plot/GridSystem.cs" Line="320" Column="22" />
+      <File FileName="Assets/Scripts/Managers/NeedSystemManager.cs" Line="103" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -37,6 +38,7 @@
                 </Node>
                 <Node name="Managers" expanded="True">
                   <Node name="EventSystem" expanded="True" />
+                  <Node name="NeedSystemManager.cs" selected="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -45,18 +47,23 @@
                 </Node>
                 <Node name="Plot" expanded="True">
                   <Node name="Tiles" expanded="True" />
-                  <Node name="TilePlacementController.cs" selected="True" />
+                  <Node name="Utils" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
+                  <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="TimeSystem" expanded="True" />
                 <Node name="UI" expanded="True">
+                  <Node name="Inspector" expanded="True" />
                   <Node name="LogSystem" expanded="True" />
                   <Node name="Store" expanded="True">
                     <Node name="Sections" expanded="True" />
                   </Node>
+                </Node>
+                <Node name="Unused" expanded="True">
+                  <Node name="Needs" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -67,7 +74,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="fc44b5e8-882d-4946-ac5a-a2a56697d4a8" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="dcd72317-d023-4950-8baa-ef1ecc748ded" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
