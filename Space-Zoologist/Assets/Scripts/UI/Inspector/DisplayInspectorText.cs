@@ -27,7 +27,7 @@ public class DisplayInspectorText : MonoBehaviour
             {
                 if (need.GetCondition(need.NeedValue).Equals(NeedCondition.Bad))
                 {
-                    displayText += $"Death countdown for {need.NeedName} need: {population.DaysTillDeath(need.NeedName)} days\n";
+                    displayText += $"Death countdown for {need.NeedName} need: {population.DaysTillDeath()} days\n";
                 }
             }
         }

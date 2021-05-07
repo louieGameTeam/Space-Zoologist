@@ -94,10 +94,7 @@ public class MoveObject : MonoBehaviour
                     if (valid && !reservePartitionManager.CanAccess(population, worldPos)) {
                         populationManager.MoveAnimal(population, worldPos);
                     }
-                    else
-                    {
-                        toMove.transform.position = initialPos;
-                    }
+                    toMove.transform.position = initialPos;
                 }
                 else
                 {

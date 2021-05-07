@@ -21,7 +21,7 @@ public class Population : MonoBehaviour, Life
     public Dictionary<string, Need> Needs => needs;
     public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> NeedBehaviors => needBehaviors;
     public AnimalPathfinding.Grid Grid { get; private set; }
-    public List<Vector3Int>  AccessibleLocations { get; private set; }
+    public List<Vector3Int> AccessibleLocations { get; private set; }
 
     public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
     private float animatorSpeed = 0f;
@@ -49,24 +49,14 @@ public class Population : MonoBehaviour, Life
 
     private void Awake()
     {
-        if(species != null) this.GrowthCalculator = new GrowthCalculator(this);
-        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
+        SetupBehaviors();
         if (this.species != null)
         {
+            this.GrowthCalculator = new GrowthCalculator(this);
             this.SetupNeeds();
             this.origin = this.transform.position;
         }
-    }
-
-    private void Start()
-    {
-        int i=0;
-        foreach(PopulationBehavior behaviorPattern in this.DefaultBehaviors)
-        {
-            this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
-            i++;
-        }
+        this.PoolingSystem = this.GetComponent<PoolingSystem>();
     }
 
     /// <summary>
@@ -79,10 +69,11 @@ public class Population : MonoBehaviour, Life
     public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize)
     {
         this.species = species;
-        this.GrowthCalculator = new GrowthCalculator(this);
         this.origin = origin;
         this.transform.position = origin;
-
+        this.SetupBehaviors();
+        this.GrowthCalculator = new GrowthCalculator(this);
+        this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         for (int i = 0; i < populationSize; i++)
         {
@@ -92,6 +83,18 @@ public class Population : MonoBehaviour, Life
             this.AnimalPopulation[i].SetActive(true);
         }
         this.SetupNeeds();
+    }
+
+    private void SetupBehaviors()
+    {
+        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
+        int i = 0;
+        foreach (PopulationBehavior behaviorPattern in this.DefaultBehaviors)
+        {
+            Debug.Log("added behavior: " + behaviorPattern.name);
+            this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
+            i++;
+        }
     }
 
     private void SetupNeeds()
@@ -104,7 +107,7 @@ public class Population : MonoBehaviour, Life
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
             this.NeedEditorTesting.Add(need.Value);
-            this.GrowthCalculator.setupNeedTimer(need.Key, need.Value.Severity);
+            this.GrowthCalculator.setupNeedTracker(need.Value.NeedType);
         }
     }
 
@@ -116,7 +119,7 @@ public class Population : MonoBehaviour, Life
     {
         this.AccessibleLocations = accessibleLocations;
         this.Grid = grid;
-        foreach(GameObject animal in this.AnimalPopulation)
+        foreach (GameObject animal in this.AnimalPopulation)
         {
             if (!this.AccessibleLocations.Contains(this.Grid.grid.WorldToCell(animal.transform.position)))
             {
@@ -128,7 +131,7 @@ public class Population : MonoBehaviour, Life
     // Only pauses movements
     public void PauseAnimalsMovementController()
     {
-        foreach(GameObject animal in this.AnimalPopulation)
+        foreach (GameObject animal in this.AnimalPopulation)
         {
             this.isPaused = true;
             Animator animator = animal.GetComponent<Animator>();
@@ -150,7 +153,7 @@ public class Population : MonoBehaviour, Life
 
     public void UnpauseAnimalsMovementController()
     {
-        foreach(GameObject animal in this.AnimalPopulation)
+        foreach (GameObject animal in this.AnimalPopulation)
         {
             this.isPaused = false;
             Animator animator = animal.GetComponent<Animator>();
@@ -218,9 +221,9 @@ public class Population : MonoBehaviour, Life
     }
 
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
-    public int DaysTillDeath(String need)
+    public int DaysTillDeath()
     {
-        return this.GrowthCalculator.needTimers[need] + 1;
+        return this.GrowthCalculator.DecayCountdown;
     }
 
     // Don't add one because this value is updated when HandleGrowth is called
@@ -250,7 +253,7 @@ public class Population : MonoBehaviour, Life
                 }
                 break;
             case GrowthStatus.declining:
-                for (int i=0; i<this.GrowthCalculator.NumAnimalsToRemove(); i++)
+                if (this.GrowthCalculator.ReadyForDecay())
                 {
                     this.RemoveAnimal();
                 }
@@ -329,7 +332,7 @@ public class Population : MonoBehaviour, Life
     private void UpdateEditorNeeds()
     {
         // Debug.Log("Needs updated with editor");
-        int i=0;
+        int i = 0;
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
             if (this.NeedEditorTesting[i].NeedName.Equals(need.Key))

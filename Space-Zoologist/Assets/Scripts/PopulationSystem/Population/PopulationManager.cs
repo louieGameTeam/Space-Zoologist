@@ -15,6 +15,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
+    [SerializeField] private List<PopulationBehavior> GenericBehaviors = default;
 
     //private SpeciesNeedSystem speciesNeedSystem = null;
     //private SymbiosisNeedSystem symbiosisNeedSystem = null;
@@ -47,6 +48,20 @@ public class PopulationManager : MonoBehaviour
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
+        List<PopulationBehavior> copiedBehaviors = new List<PopulationBehavior>();
+        // Have to copy behavior scriptable objects for them to work on multiple populations
+        foreach (PopulationBehavior behavior in GenericBehaviors)
+        {
+            List<BehaviorPattern> patterns = new List<BehaviorPattern>();
+            foreach (BehaviorPattern pattern in behavior.behaviorPatterns)
+            {
+                patterns.Add(Instantiate(pattern));
+            }
+            PopulationBehavior newBehavior = Instantiate(behavior);
+            newBehavior.behaviorPatterns = patterns;
+            copiedBehaviors.Add(newBehavior);
+        }
+        population.GetComponent<PopulationBehaviorManager>().tempBehaviors = copiedBehaviors;
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
         population.InitializeNewPopulation(species, position, count);
@@ -66,7 +81,7 @@ public class PopulationManager : MonoBehaviour
     {
         // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
         List<Population> localPopulations = ReservePartitionManager.GetPopulationsWithAccessTo(position);
-        foreach(Population preexistingPopulation in localPopulations)
+        foreach (Population preexistingPopulation in localPopulations)
         {
             if (preexistingPopulation.Species.SpeciesName.Equals(species.SpeciesName))
             {
@@ -75,16 +90,16 @@ public class PopulationManager : MonoBehaviour
             }
         }
         CreatePopulation(species, count, position);
-        print("created");
     }
 
-    public void MoveAnimal(Population population, Vector3 newLocation) {
-        if (GridSystem.PlacementValidation.IsPodPlacementValid(newLocation, population.species)) {
+    public void MoveAnimal(Population population, Vector3 newLocation)
+    {
+        if (GridSystem.PlacementValidation.IsPodPlacementValid(newLocation, population.species))
+        {
             UpdatePopulation(population.species, 1, newLocation);
             population.RemoveAnimal();
         }
     }
-
     // register the existing population then initialize the animals
     private void SetupExistingPopulation(Population population)
     {
@@ -117,7 +132,7 @@ public class PopulationManager : MonoBehaviour
 
     public void UpdateAllGrowthConditions()
     {
-        foreach(Population population in this.ExistingPopulations)
+        foreach (Population population in this.ExistingPopulations)
         {
             population.UpdateGrowthConditions();
         }
@@ -138,7 +153,7 @@ public class PopulationManager : MonoBehaviour
     {
         List<Population> populations = new List<Population>();
 
-        foreach(Population population in this.ExistingPopulations)
+        foreach (Population population in this.ExistingPopulations)
         {
             if (population.species == animalSpecies)
             {
