@@ -55,7 +55,8 @@ public class Need
         }
         return this.conditions[this.thresholds.Count].Condition;
     }
-    public NeedBehavior GetBehavior(float value) {
+    public NeedBehavior GetBehavior(float value)
+    {
         // If there is only one condition, return it.
         if (conditions.Count == 1) return conditions[0];
         for (var i = 0; i < this.thresholds.Count; i++)
@@ -79,7 +80,7 @@ public class Need
     public float GetThreshold(NeedCondition needCondition, int occurrence = 0, bool top = true)
     {
         int count = 0;
-        foreach(NeedBehavior needBehavior in this.conditions)
+        foreach (NeedBehavior needBehavior in this.conditions)
         {
             if (needBehavior.Condition.Equals(needCondition))
             {

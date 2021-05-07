@@ -27,25 +27,23 @@ public class FoodSourceStoreSection : StoreSection
     /// </summary>
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
-        Debug.Log("Attempting to place food");
         base.OnCursorPointerUp(eventData);
         if (base.IsCursorOverUI(eventData) || base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
-            Debug.Log("Cannot place item that location");
             base.OnItemSelectionCanceled();
             return;
         }
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            if (!base.GridSystem.PlacementValidation.IsFoodPlacementValid(mousePosition, base.selectedItem))
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(eventData.position);
+            if (!base.GridSystem.PlacementValidation.IsFoodPlacementValid(worldPosition, base.selectedItem))
             {
                 Debug.Log("Cannot place item that location");
                 return;
             }
             base.playerBalance.SubtractFromBalance(selectedItem.Price);
             base.ResourceManager.Placed(selectedItem, 1);
-            Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
+            Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(worldPosition);
             placeFood(mouseGridPosition);
         }
     }
@@ -54,59 +52,28 @@ public class FoodSourceStoreSection : StoreSection
 
     public void placeFood(Vector3Int mouseGridPosition)
     {
-        Debug.Log("Placing food");
-        Vector3Int pos;
-        Vector2 mousePosition = new Vector2(mouseGridPosition.x, mouseGridPosition.y);
-        //base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
         FoodSourceSpecies species = base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem);
-        int radius = species.Size / 2;
+        Vector3Int Temp = mouseGridPosition;
+        Temp.x += 1;
+        Temp.y += 1;
         if (species.Size % 2 == 1)
         {
             //size is odd: center it
-            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(mouseGridPosition);
-            Vector3Int Temp = mouseGridPosition;
-            Temp.x += 1;
-            Temp.y += 1;
+            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
             FoodLocation += Temp;
             FoodLocation /= 2f;
 
             GameObject Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
 
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius; x <= radius; x++)
-            {
-                for (int y = -1 * radius; y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    base.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    base.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
-
+            GridSystem.AddFood(mouseGridPosition, species.Size, Food);
         }
         else
         {
             //size is even: place it at cross-center (position of tile)
-            Vector3Int Temp = mouseGridPosition;
-            Temp.x += 1;
-            Temp.y += 1;
-            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(Temp);
+            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(Temp); //equivalent since cell and world is 1:1, but in Vector3
             GameObject Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
 
-            // Check if the whole object is in bounds
-            for (int x = -1 * (radius - 1); x <= radius; x++)
-            {
-                for (int y = -1 * (radius - 1); y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    base.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    base.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
+            GridSystem.AddFood(mouseGridPosition, species.Size, Food);
         }
     }
 }

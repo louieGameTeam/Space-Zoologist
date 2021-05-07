@@ -107,9 +107,9 @@ public class FoodSourceManager : MonoBehaviour
         return newFoodSourceGameObject;
     }
 
-    public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
+    public GameObject CreateFoodSource(string speciesName, Vector2 position)
     {
-        return CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
+        return CreateFoodSource(foodSourceSpecies[speciesName], position);
     }
 
     public void DestroyFoodSource(FoodSource foodSource) {

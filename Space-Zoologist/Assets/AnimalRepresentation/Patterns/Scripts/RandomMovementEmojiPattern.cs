@@ -14,7 +14,17 @@ public class RandomMovementEmojiPattern : BehaviorPattern
         animalData.animal.Overlay.sprite = Emoji;
         // Debug.Log("Overlay ENABLED");
         //animalData.animal.Overlay.enabled = true;
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+        try
+        {
+            AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+        }
+        catch (System.Exception e) {
+            Debug.LogException(e);
+            print(gameObject.name);
+            print(animalData.animal.PopulationInfo.Grid);
+            print(base.GridSystem.Grid.WorldToCell(gameObject.transform.position));
+            print(end);
+        }
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {

@@ -7,158 +7,165 @@ public class PlacementValidation : MonoBehaviour
     private GridSystem GridSystem = default;
     private TileSystem TileSystem = default;
     private LevelDataReference LevelDataReference = default;
-    private ReferenceData ReferenceData = default;
-    private GridOverlay gridOverlay = default;
+    private FoodReferenceData FoodReferenceData = default;
 
-    private void Start()
-    {
-        gridOverlay = this.gameObject.GetComponent<GridOverlay>();
-    }
-
-    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, ReferenceData ReferenceData)
+    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, FoodReferenceData foodReferenceData)
     {
         this.GridSystem = gridSystem;
         this.TileSystem = tileSystem;
         this.LevelDataReference = levelData;
-        this.ReferenceData = ReferenceData;
+        this.FoodReferenceData = foodReferenceData;
     }
 
-    public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
+    public bool IsPodPlacementValid(Vector3 worldPosition, AnimalSpecies species)
     {
-        Vector3Int gridPosition = this.TileSystem.WorldToCell(mousePosition);
+        Vector3Int gridPosition = this.TileSystem.WorldToCell(worldPosition);
+        if (!this.IsInMapBounds(gridPosition))
+        {
+            return false;
+        }
         return this.CheckSurroundingTerrain(gridPosition, species);
-    }
-
-    public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem)
-    {
-        FoodSourceSpecies species = this.ReferenceData.FoodSources[selectedItem.ID];
-        Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(mousePosition);
-        return CheckSurroudingTiles(gridPosition, species);
-    }
-
-    public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
-    {
-        Debug.Log("Item selected " + selectedItem.ID);
-        if (this.ReferenceData.FoodSources.ContainsKey(selectedItem.ID))
-        {
-            FoodSourceSpecies species = this.ReferenceData.FoodSources[selectedItem.ID];
-            CheckSurroudingTiles(gridPosition, species);
-        }
-        else if (this.ReferenceData.Species.ContainsKey(selectedItem.ID))
-        {
-            AnimalSpecies species = this.ReferenceData.Species[selectedItem.ID];
-            CheckSurroundingTerrain(gridPosition, species);
-        }
-        else
-        {
-            // TODO figure out how to determine if tile is placable
-            // gridOverlay.HighlightTile(gridPosition, Color.green);
-        }
     }
 
     private bool CheckSurroundingTerrain(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
     {
-        Vector3Int pos;
-        GameTile tile;
-        for (int x = -1; x <= 1; x++)
+        int count = 0;
+        for (int i=-1; i<=1; i++)
         {
-            for (int y = -1; y <= 1; y++)
+            for (int j=-1; j<=1; j++)
             {
-                pos = cellPosition;
-                pos.x += x;
-                pos.y += y;
-                tile = this.TileSystem.GetGameTileAt(pos);
-                if (tile == null)
+                Vector3Int surroundingGridPosition = new Vector3Int(cellPosition.x + i, cellPosition.y + j, 0);
+                GameTile tile = this.TileSystem.GetGameTileAt(surroundingGridPosition);
+                foreach (TileType acceptablTerrain in selectedSpecies.AccessibleTerrain)
                 {
-                    return false;
-                }
-                bool isTerrainAcceptable = IsTerrainAcceptable(tile.type, selectedSpecies.AccessibleTerrain);
-                if (isTerrainAcceptable)
-                {
-                    gridOverlay.HighlightTile(pos, Color.green);
-                }
-                else
-                {
-                    gridOverlay.HighlightTile(pos, Color.red);
+                    if (tile.type.Equals(acceptablTerrain))
+                    {
+                        count++;
+                        continue;
+                    }
                 }
             }
         }
-        tile = this.TileSystem.GetGameTileAt(cellPosition);
-        return IsTerrainAcceptable(tile.type, selectedSpecies.AccessibleTerrain);
+        return count == 9;
     }
 
-    private bool IsTerrainAcceptable(TileType tileType, List<TileType> accessibleTerrain)
+    public bool IsItemPlacementValid(Vector3 mousePosition, Item selectedItem)
     {
-        foreach (TileType acceptablTerrain in accessibleTerrain)
+        Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(mousePosition);
+        if (!this.IsInMapBounds(gridPosition))
         {
-            if (tileType.Equals(acceptablTerrain))
-            {
-                return true;
-            }
+            return false;
         }
-        return false;
-    }
-
-    private bool CheckSurroudingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
-    {
-        int radius = species.Size / 2;
-        Vector3Int pos;
-        bool isValid = true;
-        int offset = 0;
-        // Size is even, offset by 1
-        if (species.Size % 2 == 0)
+        GridSystem.CellData cellData = this.GridSystem.CellGrid[gridPosition.x, gridPosition.y];
+        // Prevent placing on items already there.
+        if (cellData.ContainsMachine)
         {
-            offset = 1;
+            cellData.Machine.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
+            return false;
         }
-        // Check if the whole object is in bounds
-        for (int x = (-1 - offset) * (radius - offset); x <= radius; x++)
+        if (cellData.ContainsFood)
         {
-            for (int y = (-1 - offset) * (radius - offset) ; y <= radius ; y++)
-            {
-                pos = cellPosition;
-                pos.x += x;
-                pos.y += y;
-                if (!IsFoodPlacementValid(pos, species))
-                {
-                    isValid = false;
-                    gridOverlay.HighlightTile(pos, Color.red);
-                }
-                else
-                {
-                    gridOverlay.HighlightTile(pos, Color.green);
-                }
-            }
+            cellData.Food.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
+            return false;
         }
-        return isValid;
-    }
-
-    public bool IsOnWall(Vector3Int pos)
-    {
         // Prevent placing on walls
-        GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
+        GameTile selectedTile = this.TileSystem.GetGameTileAt(gridPosition);
         if (selectedTile.type.Equals(TileType.Wall))
         {
-            return true;
+            return false;
+        }
+        // if liquidmachine and on liquid
+        if (selectedItem.ID.Equals("LiquidMachine"))
+        {
+            bool isCorrectTileType = selectedTile.type.Equals(TileType.Liquid);
+            return isCorrectTileType;
+        }
+        // or atmosphere machine not on liquid
+        else if (selectedItem.ID.Equals("AtmosphereMachine"))
+        {
+            bool isCorrectTileType = !selectedTile.type.Equals(TileType.Liquid);
+            return isCorrectTileType;
         }
         return false;
+    }
+
+    public bool IsFoodPlacementValid(Vector3 worldPosition, Item selectedItem)
+    {
+        FoodSourceSpecies species = this.FoodReferenceData.FoodSources[selectedItem.ID];
+        return IsFoodPlacementValid(worldPosition, species);
+    }
+
+    public bool IsFoodPlacementValid(Vector3 worldPosition, FoodSourceSpecies species, GameObject foodSource = null)
+    {
+        Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(worldPosition);
+        // size 1 -> rad 0, size 3 -> rad 1 ...
+        int radius = species.Size / 2;
+        Vector3Int pos;
+
+        if (species.Size % 2 == 1)
+        {
+            //size is odd: center it
+
+            // Check if the whole object is in bounds
+            for (int x = -1 * radius; x <= radius; x++)
+            {
+                for (int y = -1 * radius; y <= radius; y++)
+                {
+                    pos = gridPosition;
+                    pos.x += x;
+                    pos.y += y;
+                    if (!IsFoodPlacementValid(pos, species, foodSource)) { return false; }
+                }
+            }
+
+        }
+        else
+        {
+            //size is even: place it at cross-center
+
+            // Check if the whole object is in bounds
+            for (int x = -1 * (radius - 1); x <= radius; x++)
+            {
+                for (int y = -1 * (radius - 1); y <= radius; y++)
+                {
+                    pos = gridPosition;
+                    pos.x += x;
+                    pos.y += y;
+
+                    if (!IsFoodPlacementValid(pos, species, foodSource)) { return false; }
+                }
+            }
+        }
+        return true;
     }
 
     // helper function that checks the validity at one tile
-    private bool IsFoodPlacementValid(Vector3Int pos, FoodSourceSpecies species)
+    private bool IsFoodPlacementValid(Vector3Int pos, FoodSourceSpecies species, GameObject foodSource = null)
     {
-        if (!this.GridSystem.IsWithinGridBounds(pos))
+        if (!this.IsInMapBounds(pos))
         {
             return false;
         }
 
         // Prevent placing on items already there.
         GridSystem.CellData cellData = this.GridSystem.CellGrid[pos.x, pos.y];
-        if (cellData.ContainsFood)
+        if (cellData.ContainsMachine)
+        {
+            cellData.Machine.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
+            return false;
+        }
+        if (cellData.ContainsFood && (foodSource == null || !ReferenceEquals(cellData.Food, foodSource)))
+        {
+            cellData.Food.GetComponent<FloatingObjectStrobe>().StrobeColor(2, Color.red);
+            return false;
+        }
+
+        // Prevent placing on walls
+        GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
+        if (selectedTile.type.Equals(TileType.Wall))
         {
             return false;
         }
-        if (IsOnWall(pos)) return false;
-        GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
 
         // Make sure the tile is acceptable
         foreach (TileType acceptablTerrain in species.AccessibleTerrain)
@@ -170,13 +177,14 @@ public class PlacementValidation : MonoBehaviour
         }
         return false;
     }
+
     public FoodSourceSpecies GetFoodSpecies(Item item)
     {
-        return this.ReferenceData.FoodSources[item.ID];
+        return this.FoodReferenceData.FoodSources[item.ID];
     }
 
-    public AnimalSpecies GetAnimalSpecies(Item item)
+    public bool IsInMapBounds(Vector3Int mousePosition)
     {
-        return this.ReferenceData.Species[item.ID];
+        return mousePosition.x >= 1 && mousePosition.y >= 1 && mousePosition.x < LevelDataReference.MapWidth - 1 && mousePosition.y < LevelDataReference.MapHeight - 1;
     }
 }

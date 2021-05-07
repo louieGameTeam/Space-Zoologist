@@ -21,7 +21,7 @@ public class Population : MonoBehaviour, Life
     public Dictionary<string, Need> Needs => needs;
     public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> NeedBehaviors => needBehaviors;
     public AnimalPathfinding.Grid Grid { get; private set; }
-    public List<Vector3Int>  AccessibleLocations { get; private set; }
+    public List<Vector3Int> AccessibleLocations { get; private set; }
 
     public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
     private float animatorSpeed = 0f;
@@ -119,7 +119,7 @@ public class Population : MonoBehaviour, Life
     {
         this.AccessibleLocations = accessibleLocations;
         this.Grid = grid;
-        foreach(GameObject animal in this.AnimalPopulation)
+        foreach (GameObject animal in this.AnimalPopulation)
         {
             if (!this.AccessibleLocations.Contains(this.Grid.grid.WorldToCell(animal.transform.position)))
             {
@@ -131,7 +131,7 @@ public class Population : MonoBehaviour, Life
     // Only pauses movements
     public void PauseAnimalsMovementController()
     {
-        foreach(GameObject animal in this.AnimalPopulation)
+        foreach (GameObject animal in this.AnimalPopulation)
         {
             this.isPaused = true;
             Animator animator = animal.GetComponent<Animator>();
@@ -153,7 +153,7 @@ public class Population : MonoBehaviour, Life
 
     public void UnpauseAnimalsMovementController()
     {
-        foreach(GameObject animal in this.AnimalPopulation)
+        foreach (GameObject animal in this.AnimalPopulation)
         {
             this.isPaused = false;
             Animator animator = animal.GetComponent<Animator>();
@@ -332,7 +332,7 @@ public class Population : MonoBehaviour, Life
     private void UpdateEditorNeeds()
     {
         // Debug.Log("Needs updated with editor");
-        int i=0;
+        int i = 0;
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
             if (this.NeedEditorTesting[i].NeedName.Equals(need.Key))

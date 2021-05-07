@@ -269,6 +269,109 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+    public void AddFood(Vector3Int gridPosition, int size, GameObject foodSource) {
+        int radius = size / 2;
+        Vector3Int pos;
+        if (size % 2 == 1)
+        {
+            // Check if the whole object is in bounds
+            for (int x = -1 * radius; x <= radius; x++)
+            {
+                for (int y = -1 * radius; y <= radius; y++)
+                {
+                    pos = gridPosition;
+                    pos.x += x;
+                    pos.y += y;
+                    CellGrid[pos.x, pos.y].ContainsFood = true;
+                    CellGrid[pos.x, pos.y].Food = foodSource;
+                }
+            }
+        }
+        else {
+            // Check if the whole object is in bounds
+            for (int x = -1 * radius + 1; x <= radius; x++)
+            {
+                for (int y = -1 * radius + 1; y <= radius; y++)
+                {
+                    pos = gridPosition;
+                    pos.x += x;
+                    pos.y += y;
+                    CellGrid[pos.x, pos.y].ContainsFood = true;
+                    CellGrid[pos.x, pos.y].Food = foodSource;
+                    print("added at " + pos);
+                }
+            }
+        }
+    }
+
+    // Remove the food source on this tile, a little inefficient
+    public void RemoveFood(Vector3Int gridPosition)
+    {
+        Vector3Int pos = gridPosition;
+        if (!CellGrid[pos.x, pos.y].ContainsFood) return;
+
+        GameObject foodSource = CellGrid[pos.x, pos.y].Food;
+        int size = foodSource.GetComponent<FoodSource>().Species.Size;
+
+        for (int dx = -size; dx < size; dx++) {
+            for (int dy = -size; dy < size; dy++) {
+                CellData cell = CellGrid[pos.x + dx, pos.y + dy];
+                if (cell.ContainsFood && ReferenceEquals(cell.Food, foodSource))
+                {
+                    print("deleted at " + (pos.x+dx) + ", " + (pos.y+dy) + " " + CellGrid[pos.x + dx, pos.y + dy].ContainsFood + " " + CellGrid[pos.x + dx, pos.y + dy].Food);
+                    CellGrid[pos.x + dx, pos.y + dy].ContainsFood = false;
+                    CellGrid[pos.x + dx, pos.y + dy].Food = null;
+                }
+            }
+        }
+    }
+
+
+
+    /// <summary>
+    /// Not guaranteed to work, use RemoveFood(Vector3Int gridPosition) instead!
+    /// Need to be very sure of what you're doing. This gridPosition must match up EXACTLY with the one called in AddFood() for this to work.
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <param name="size"></param>
+    public void RemoveFood(Vector3Int gridPosition, int size)
+    {
+        int radius = size / 2;
+        Vector3Int pos;
+        if (size % 2 == 1)
+        {
+            // Check if the whole object is in bounds
+            for (int x = -1 * radius; x <= radius; x++)
+            {
+                for (int y = -1 * radius; y <= radius; y++)
+                {
+                    pos = gridPosition;
+                    pos.x += x;
+                    pos.y += y;
+                    CellGrid[pos.x, pos.y].ContainsFood = false;
+                    CellGrid[pos.x, pos.y].Food = null;
+                }
+            }
+
+        }
+        else
+        {
+            // Check if the whole object is in bounds
+            for (int x = -1 * (radius - 1); x <= radius; x++)
+            {
+                for (int y = -1 * (radius - 1); y <= radius; y++)
+                {
+                    pos = gridPosition;
+                    pos.x += x;
+                    pos.y += y;
+                    CellGrid[pos.x, pos.y].ContainsFood = false;
+                    CellGrid[pos.x, pos.y].Food = null;
+                }
+            }
+        }
+    }
+
+
     // Showing how tiles can be shaded
     // We'll likely need a better version of this in the future for determing if we're setting up levels correctly
     private void ShadeOutsidePerimeter()

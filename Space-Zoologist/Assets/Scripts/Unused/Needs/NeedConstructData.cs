@@ -81,7 +81,7 @@ public class NeedConstructData
         this.thresholds = new List<float>();
         this.needName = name;
         this.severity = severity;
-        foreach(string condition in conditions)
+        foreach (string condition in conditions)
         {
             if (condition.Equals("Good", StringComparison.OrdinalIgnoreCase))
             {
