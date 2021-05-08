@@ -39,10 +39,6 @@ public class FoodSourceManager : GridObjectManager
         {
             foodSourceSpecies.Add(species.SpeciesName, species);
         }
-<<<<<<< Updated upstream:Space-Zoologist/Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceManager.cs
-=======
-        FoodPlacer = this.gameObject.GetComponent<FoodPlacer>();
->>>>>>> Stashed changes:Space-Zoologist/Assets/Scripts/Managers/FoodSourceManager.cs
         base.Start();
     }
 
