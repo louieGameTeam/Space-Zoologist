@@ -24,10 +24,14 @@ public class PopulationManager : MonoBehaviour
     public void Initialize()
     {
         //TODO load from save
-
+<<<<<<< Updated upstream:Space-Zoologist/Assets/Scripts/Species/Population/PopulationManager.cs
+        this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
+        this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
+=======
         //this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
         //this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
-  
+>>>>>>> Stashed changes:Space-Zoologist/Assets/Scripts/PopulationSystem/Population/PopulationManager.cs
+        
 
         //Old loading, load gameobjects from the scene
 /*        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");

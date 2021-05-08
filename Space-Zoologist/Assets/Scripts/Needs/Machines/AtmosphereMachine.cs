@@ -34,10 +34,13 @@ public class AtmosphereMachine : Machine
         this.AtmosphereHUDGameObject.SetActive(!this.AtmosphereHUDGameObject.activeSelf);
         if (this.AtmosphereHUDGameObject.activeSelf)
         {
-
+<<<<<<< Updated upstream:Space-Zoologist/Assets/Scripts/Needs/Machines/AtmosphereMachine.cs
             this.AtmosphereMachineHUD.Initialize(this);
             this.AtmosphereMachineHUD.SetAtmosphericComposition(this.EnclosureSystem.GetAtmosphericComposition(this.gameObject.transform.position));
-
+=======
+            //this.AtmosphereMachineHUD.Initialize(this);
+            //this.AtmosphereMachineHUD.SetAtmosphericComposition(this.EnclosureSystem.GetAtmosphericComposition(this.gameObject.transform.position));
+>>>>>>> Stashed changes:Space-Zoologist/Assets/Scripts/Unused/Machines-RefactorNeeded/AtmosphereMachine.cs
         }
     }
 
