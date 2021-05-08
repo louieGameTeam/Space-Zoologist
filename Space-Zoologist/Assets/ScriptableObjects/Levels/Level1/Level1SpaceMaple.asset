@@ -12,17 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
   m_Name: Level1SpaceMaple
   m_EditorClassIdentifier: 
+  size: 2
   accessibleTerrain: 02000000
   speciesName: Space Maple
   rootRadius: 1
-  baseOutput: 10
+  baseOutput: 7
   needsList:
   - needType: 0
     needs:
     - needName: Dirt
-      severity: 1
+      severity: 3
       conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
-      thresholds: []
+      thresholds:
+      - 3
   FoodSource: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColorModifier : AnimalModifier
 {
-    [SerializeField] private Color TargetColor;
+    [SerializeField] private Color TargetColor = default;
     public override void AddModifier(GameObject animal)
     {
         animal.gameObject.GetComponent<SpriteRenderer>().color = TargetColor;

@@ -28,7 +28,7 @@ public class MachineStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData) || !base.CanAfford(base.selectedItem))
+        if (base.IsCursorOverUI(eventData) || !base.HasSupply(base.selectedItem))
         {
             base.OnItemSelectionCanceled();
             return;
@@ -42,10 +42,12 @@ public class MachineStoreSection : StoreSection
                 return;
             }
             base.playerBalance.SubtractFromBalance(selectedItem.Price);
+            base.ResourceManager.Placed(selectedItem, 1);
             CreateMachine(mousePosition);
         }
     }
 
+    // Create and set up the machine just created
     private void CreateMachine(Vector3 mousePosition)
     {
         GameObject newMachineGameObject = Instantiate(this.MachinePrefab, mousePosition, Quaternion.identity, EnclosureSystem.transform);

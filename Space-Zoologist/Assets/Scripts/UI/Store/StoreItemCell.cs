@@ -10,6 +10,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [SerializeField] Image highlightImage = default;
     [SerializeField] GameObject Popup = default;
     [SerializeField] Text ItemInfo = default;
+    public int RemainingAmount = -1;
 
     public delegate void ItemSelectedHandler(Item item);
     public event ItemSelectedHandler onSelected;
@@ -19,6 +20,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         this.item = item;
         this.itemImage.sprite = item.Icon;
         this.onSelected += itemSelectedHandler;
+        this.ItemInfo.text = this.item.ItemName + ": $" + this.item.Price;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -30,7 +32,14 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         highlightImage.enabled = true;
         this.Popup.SetActive(true);
-        this.ItemInfo.text = this.item.ItemName + "  $" + this.item.Price;
+        if (RemainingAmount == -1)
+        {
+            this.ItemInfo.text = this.item.ItemName;
+        }
+        else
+        {
+            this.ItemInfo.text = this.item.ItemName + ": $" + this.item.Price + " " + this.RemainingAmount + "x";
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

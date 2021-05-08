@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpeedMultiplier : AnimalModifier
 {
-    [SerializeField] string MultiplierName;
-    [SerializeField] float Multiplier;
+    [SerializeField] string MultiplierName = default;
+    [SerializeField] float Multiplier = default;
     public override void AddModifier(GameObject animal)
     {
         animal.gameObject.GetComponent<Animal>().MovementData.AddMultiplicationSpeedModifiers(this.MultiplierName, this.Multiplier);

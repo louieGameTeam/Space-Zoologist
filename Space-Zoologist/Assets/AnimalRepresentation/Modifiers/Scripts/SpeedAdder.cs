@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpeedAdder : AnimalModifier
 {
-    [SerializeField] string AdderName;
-    [SerializeField] float Adder;
+    [SerializeField] string AdderName = default;
+    [SerializeField] float Adder = default;
     public override void AddModifier(GameObject animal)
     {
         animal.gameObject.GetComponent<Animal>().MovementData.AddAdditionSpeedModifiers(this.AdderName, this.Adder);

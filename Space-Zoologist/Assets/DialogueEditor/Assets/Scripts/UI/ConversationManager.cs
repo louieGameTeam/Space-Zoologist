@@ -184,10 +184,7 @@ namespace DialogueEditor
                         }
                         //Added by Alex
                         else if (Input.GetMouseButtonDown(0) || skipping) {
-                            if (m_currentSpeech.Options.Count == 0) {
-                                SetState(eState.TransitioningOptionsOff);
-                                m_currentSpeech.Event?.Invoke();
-                            }
+                            // UpdateNextSpeech();
                         }
                     }
                     break;
@@ -259,6 +256,15 @@ namespace DialogueEditor
                     break;
                 case eState.freeze:
                     break;
+            }
+        }
+
+        public void UpdateNextSpeech()
+        {
+            if (m_currentSpeech.Options.Count == 0)
+            {
+                SetState(eState.TransitioningOptionsOff);
+                m_currentSpeech.Event?.Invoke();
             }
         }
 
