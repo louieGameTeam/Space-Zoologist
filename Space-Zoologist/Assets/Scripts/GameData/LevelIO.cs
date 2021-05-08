@@ -5,21 +5,17 @@ using UnityEngine.SceneManagement;
 using System.IO;
 public class LevelIO : MonoBehaviour
 {
-    private TilePlacementController tilePlacementController;
     [SerializeField] private string directory = "Assets/SaveData/";
     private string sceneName;
-    private TileLayerManager[] tileLayerManagers;
     private PlotIO plotIO;
     private PopulationManager populationManager;
     // Start is called before the first frame update
     public void Awake()
     {
-        this.tilePlacementController = this.gameObject.GetComponent<TilePlacementController>();
         this.sceneName = SceneManager.GetActiveScene().name;
-        this.tileLayerManagers = GetComponentsInChildren<TileLayerManager>();
         this.plotIO = FindObjectOfType<PlotIO>();
         this.populationManager = FindObjectOfType<PopulationManager>();
-        this.Load();
+        this.LoadPreset();
     }
     public void Save(string name = null)
     {

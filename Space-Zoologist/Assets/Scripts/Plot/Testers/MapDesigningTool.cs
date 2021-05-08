@@ -87,6 +87,7 @@ public class MapDesigningTool : MonoBehaviour
         TileSelectionBlock();
         AnimalBlock();
         MapIOBlock();
+        FoodBlock();
         GUILayout.EndArea();
         MouseHUD();
         LiquidBlock();
@@ -120,7 +121,7 @@ public class MapDesigningTool : MonoBehaviour
     {
         GUILayout.BeginVertical();
         this.sceneName = GUILayout.TextField(this.sceneName);
-        if (GUILayout.Button("Save")  && this.sceneName != null && !this.sceneName.Equals(""))
+        if (GUILayout.Button("Save") && this.sceneName != null && !this.sceneName.Equals(""))
         {
             levelIO.SaveAsPreset(this.sceneName);
         }

@@ -8,23 +8,21 @@ using UnityEngine;
 
 public class GridObjectManager : MonoBehaviour
 {
+    protected SerializedMapObjects SerializedMapObjects;
     // Start is called before the first frame update
-    protected string MapObjectName { get { return GetMapObjectName(); } } //Name of the type of object managed, used in S/L save files
-    /// <summary>
-    /// Registers Manager in GridIO to be referenced at S/L, needs to be done before parsing (at least before parsing map objects)
-    /// </summary>
-    public virtual void Start()
-    {
-        PlotIO gridIO = FindObjectOfType<PlotIO>();
-        gridIO.RegisterManager(this);
-    }
+    public string MapObjectName { get { return GetMapObjectName(); } } //Name of the type of object managed, used in S/L save files
+
     public virtual void Serialize(SerializedMapObjects serializedMapObjects)
     {
 
     }
-    public virtual void Parse(SerializedMapObjects serializedMapObjects)
+    protected virtual void Parse()
     {
 
+    }
+    public void Store(SerializedMapObjects serializedMapObjects)
+    {
+        this.SerializedMapObjects = serializedMapObjects;
     }
     protected virtual string GetMapObjectName()
     {

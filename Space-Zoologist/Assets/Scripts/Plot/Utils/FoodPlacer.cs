@@ -16,9 +16,9 @@ public class FoodPlacer : MonoBehaviour
 
     public void PlaceFood()
     {
-        foreach (FoodPlacementData food in this.FoodPlacementDatas)
+/*        foreach (FoodPlacementData food in this.FoodPlacementDatas)
         {
             FoodSourceStoreSection.ManuallyPlaceItem(food.item, food.location);
-        }
+        }*/
     }
 }

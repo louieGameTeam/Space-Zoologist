@@ -34,14 +34,13 @@ public class FoodSourceManager : GridObjectManager
         }
     }
 
-    public override void Start()
+    public void Start()
     {
         foreach (FoodSourceSpecies species in this.LevelDataReference.LevelData.FoodSourceSpecies)
         {
             foodSourceSpecies.Add(species.SpeciesName, species);
         }
         FoodPlacer = this.gameObject.GetComponent<FoodPlacer>();
-        base.Start();
     }
 
     public void Initialize()
@@ -78,6 +77,7 @@ public class FoodSourceManager : GridObjectManager
             EventManager.Instance.InvokeEvent(EventType.NewFoodSource, foodSource);
         }
         FoodPlacer.PlaceFood();
+        this.Parse();
     }
     // TODO: combine two version into one
     public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position)
@@ -205,9 +205,9 @@ public class FoodSourceManager : GridObjectManager
             serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(this.foodSourceSpecies[speciesName]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
         }
     }
-    public override void Parse(SerializedMapObjects serializedMapObjects)
+    protected override void Parse()
     {
-        foreach (KeyValuePair<string, GridItemSet> keyValuePair in serializedMapObjects.ToDictionary())
+        foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects.ToDictionary())
         {
             if (keyValuePair.Key.Equals(this.MapObjectName))
             {

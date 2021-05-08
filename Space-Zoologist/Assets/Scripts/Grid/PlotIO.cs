@@ -2,6 +2,7 @@
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 /// <summary>
 /// Temporary Class for testing only, do not integrate
 /// </summary>
@@ -17,10 +18,6 @@ public class PlotIO : MonoBehaviour
         this.tilePlacementController = this.gameObject.GetComponent<TilePlacementController>();
         this.tileLayerManagers = this.tilePlacementController.gameObject.GetComponentsInChildren<TileLayerManager>();
         this.ParseSerializedObjects();
-    }
-    public void RegisterManager(GridObjectManager gridObjectManager)
-    {
-        this.gridObjectManagers.Add(gridObjectManager);
     }
     public SerializedPlot SavePlot()
     {
@@ -60,10 +57,12 @@ public class PlotIO : MonoBehaviour
             }
         }
         List<string> mapObjectNames = new List<string>();
+        this.gridObjectManagers = FindObjectsOfType<GridObjectManager>().ToList();
+        Debug.Log(gridObjectManagers[0].name);
         foreach (GridObjectManager gridObjectManager in this.gridObjectManagers)
         {
-            gridObjectManager.Parse(this.SerializedPlot.serializedMapObjects);
-            mapObjectNames.Add(gridObjectManager.name);
+            gridObjectManager.Store(this.SerializedPlot.serializedMapObjects);
+            mapObjectNames.Add(gridObjectManager.MapObjectName);
         }
         // Notify if a saved object is not been serialized
         if (this.SerializedPlot.serializedMapObjects.names == null)
