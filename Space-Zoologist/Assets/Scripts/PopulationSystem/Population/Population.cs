@@ -49,7 +49,7 @@ public class Population : MonoBehaviour, Life
 
     private void Awake()
     {
-        this.GrowthCalculator = new GrowthCalculator(this);
+        
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         if (this.species != null)
@@ -82,7 +82,7 @@ public class Population : MonoBehaviour, Life
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
-
+        this.GrowthCalculator = new GrowthCalculator(this);
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         for (int i = 0; i < populationSize; i++)
         {

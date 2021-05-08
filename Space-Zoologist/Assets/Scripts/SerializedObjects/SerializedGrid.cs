@@ -1,4 +1,5 @@
-﻿public class SerializedGrid
+﻿[System.Serializable]
+public class SerializedGrid
 {
     public SerializedTilemap[] serializedTilemaps;
     // TODO Add other floating objects

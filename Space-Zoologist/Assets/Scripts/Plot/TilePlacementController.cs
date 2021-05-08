@@ -10,7 +10,7 @@ public class TilePlacementController : MonoBehaviour
     public bool isBlockMode { get; set; } = false;
     public bool PlacementPaused { get; private set; }
     [SerializeField] private Camera currentCamera = default;
-    private bool isPreviewing { get; set; } = false;
+    public bool isPreviewing { get; set; } = false;
     private bool godMode = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
@@ -379,7 +379,7 @@ public class TilePlacementController : MonoBehaviour
         }
         if (!GridSystem.IsWithinGridBounds(cellLocation))
         {
-            Debug.Log("outside bound");
+            //Debug.Log("outside bound");
             return false;
         }
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];

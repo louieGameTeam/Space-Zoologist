@@ -16,7 +16,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] private GridSystem GridSystem = default;
     [Header("Attach All ScriptableObjects of Species Available on This Level Here")]
-    [SerializeField] private AnimalSpecies[] Species = default;
+    [SerializeField] public AnimalSpecies[] Species = default;
 
     //private SpeciesNeedSystem speciesNeedSystem = null;
     //private SymbiosisNeedSystem symbiosisNeedSystem = null;

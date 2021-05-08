@@ -36,6 +36,8 @@ public class PopulationBehaviorManager : MonoBehaviour
         }
         foreach (GameObject animal in this.population.AnimalPopulation)
         {
+            Debug.Log(animalsToExecutionData[animal].currentBehaviorIndex);
+            Debug.Log(tempBehaviors.Count);
             if (tempBehaviors[animalsToExecutionData[animal].currentBehaviorIndex].numberOfAnimalsRequired == 1)
             {
                 List<GameObject> animals = new List<GameObject>();

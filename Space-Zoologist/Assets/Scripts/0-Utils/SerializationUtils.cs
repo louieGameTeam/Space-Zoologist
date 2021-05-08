@@ -17,7 +17,7 @@ public class SerializationUtils
     }
     public static Vector3Int[] ParseVector3Int(int[] coords)
     {
-        if (coords.Length % 3 != 10)
+        if (coords.Length % 3 != 0)
         {
             Debug.LogError("Input is not a array of set of 3s, are you converting a Vector3?");
         }
@@ -42,7 +42,7 @@ public class SerializationUtils
     }
     public static Vector3[] ParseVector3(float[] coords)
     {
-        if (coords.Length % 3 != 10)
+        if (coords.Length % 3 != 0)
         {
             Debug.LogError("Input is not a array of set of 3s, are you converting a Vector3?");
         }

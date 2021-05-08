@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridIO: {fileID: 765609360}
+  GridIO: {fileID: 0}
   currentLevel: Level1
   PauseManager: {fileID: 1395149766}
   PauseButton: {fileID: 1328550532}
@@ -822,6 +822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 462963691}
+  - component: {fileID: 462963692}
   m_Layer: 0
   m_Name: Plot
   m_TagString: Untagged
@@ -849,6 +850,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &462963692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462963690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8701b7aa16bc14ebbbb89da855647b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directory: Assets/SaveData/
 --- !u!1001 &493638994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2818,11 +2832,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 765609358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ddd4f6b4e76a249bc255e7d1b858fe, type: 3}
+  m_Script: {fileID: 11500000, guid: ca4933cdddee27341970b70e4763ee72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceDirectory: Grid/
-  directory: Assets/Resources/Grid/
 --- !u!114 &765609361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5870,6 +5882,7 @@ GameObject:
   - component: {fileID: 1054101997}
   - component: {fileID: 1054101996}
   - component: {fileID: 1054101999}
+  - component: {fileID: 1054102000}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6001,6 +6014,19 @@ Skybox:
   m_GameObject: {fileID: 1054101993}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 8cb1a21e14f444393a0e691e9704f95a, type: 2}
+--- !u!114 &1054102000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054101993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8822ea8189c58564daa59061db90b10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  godMode: 1
 --- !u!1 &1059671635
 GameObject:
   m_ObjectHideFlags: 0
@@ -16525,6 +16551,7 @@ MonoBehaviour:
     type: 3}
   ReservePartitionManager: {fileID: 936381359}
   GridSystem: {fileID: 1621202152}
+  Species: []
 --- !u!4 &2078374406
 Transform:
   m_ObjectHideFlags: 0
@@ -25551,6 +25578,7 @@ MonoBehaviour:
   LiquidMachineHUD: {fileID: 5084530615255394736}
   MachinePrefab: {fileID: 647726722904301470, guid: 17c8dc9aaf0fb4c6a96e3f57422a18e8,
     type: 3}
+  Machines: []
 --- !u!222 &3034838806152472121
 CanvasRenderer:
   m_ObjectHideFlags: 0

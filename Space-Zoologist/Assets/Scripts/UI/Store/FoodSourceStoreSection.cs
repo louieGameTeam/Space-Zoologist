@@ -50,7 +50,7 @@ public class FoodSourceStoreSection : StoreSection
 
     // TODO setup manual food placement while Virgil gets saving and loading updated.
 
-    public void placeFood(Vector3Int mouseGridPosition)
+    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies foodSource = null)
     {
         Vector3Int pos;
         Vector2 mousePosition = new Vector2(mouseGridPosition.x, mouseGridPosition.y);
@@ -66,9 +66,15 @@ public class FoodSourceStoreSection : StoreSection
             Temp.y += 1;
             FoodLocation += Temp;
             FoodLocation /= 2f;
-
-            GameObject Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
-
+            GameObject Food;
+            if (foodSource = null)
+            {
+                Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
+            }
+            else
+            {
+                Food = FoodSourceManager.CreateFoodSource(foodSource, FoodLocation);
+            }
             // Check if the whole object is in bounds
             for (int x = -1 * radius; x <= radius; x++)
             {

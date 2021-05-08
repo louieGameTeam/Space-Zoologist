@@ -79,9 +79,8 @@ public class FoodSourceManager : GridObjectManager
         }
         FoodPlacer.PlaceFood();
     }
-
     // TODO: combine two version into one
-    private GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position)
+    public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
         newFoodSourceGameObject.name = species.SpeciesName;

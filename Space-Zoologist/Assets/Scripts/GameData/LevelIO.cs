@@ -24,15 +24,28 @@ public class LevelIO : MonoBehaviour
     public void Save(string name = null)
     {
         name = name ?? this.sceneName;
-        string fullPath = this.directory + name + ".json";
+        name = name + ".json";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        this.generateSaveFile(fullPath);
+    }
+    public void SaveAsPreset(string name = null)
+    {
+        name = name ?? this.sceneName;
+        name = name + ".json";
+        string fullPath = this.directory + name; // preset map
+        this.generateSaveFile(fullPath);
+    }
+    private void generateSaveFile(string fullPath)
+    {
         Debug.Log("Saving Grid to " + fullPath);
         if (File.Exists(fullPath))
         {
             Debug.Log("Overwriting file at " + fullPath);
         }
+
+        SerializedLevel level = new SerializedLevel();
         try
         {
-            SerializedLevel level = new SerializedLevel();
             // Serialize plot
             level.SetPlot(this.plotIO.SavePlot());
             // Serialize Animals
@@ -43,20 +56,30 @@ public class LevelIO : MonoBehaviour
             Debug.LogError("Serialization error, NOT saved to protect existing saves");
             return;
         }
-        this.WriteToFile(fullPath);
+        this.WriteToFile(fullPath, level);
     }
-    private void WriteToFile(string path)
+    private void WriteToFile(string path, SerializedLevel level)
     {
         using (StreamWriter streamWriter = new StreamWriter(path))
         {
-            streamWriter.Write(JsonUtility.ToJson(new SerializedGrid(this.tileLayerManagers)));
+            streamWriter.Write(JsonUtility.ToJson(level));
         }
         Debug.Log("Grid Saved to: " + path);
     }
     public void Load(string name = null)
     {
         name = name ?? this.sceneName;
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        this.LoadFromFile(fullPath);
+    }
+    public void LoadPreset(string name = null)
+    {
+        name = name ?? this.sceneName;
         string fullPath = this.directory + name + ".json";
+        this.LoadFromFile(fullPath);
+    }
+    private void LoadFromFile(string fullPath)
+    {
         SerializedLevel serializedLevel;
         try
         {
@@ -70,9 +93,14 @@ public class LevelIO : MonoBehaviour
             serializedLevel.SetPlot(new SerializedPlot(new SerializedMapObjects(), this.CreateDefaultGrid()));
         }
         this.plotIO.LoadPlot(serializedLevel.serializedPlot);
+        Debug.Log(serializedLevel.serializedPlot.serializedGrid);
         //Animals loaded after map to avoid path finding issues
         // TODO make dependencies clearer
         this.populationManager.Parse(serializedLevel.serializedPopulations);
+    }
+    public void Reload()
+    {
+        this.plotIO.Initialize();
     }
     private SerializedGrid CreateDefaultGrid()
     {

@@ -25,6 +25,7 @@ public class PlotIO : MonoBehaviour
     public SerializedPlot SavePlot()
     {
         SerializedGrid serializedGrid =  new SerializedGrid(this.tileLayerManagers);
+        Debug.Log(serializedGrid);
         SerializedMapObjects serializedMapObjects = new SerializedMapObjects();
         foreach (GridObjectManager gridObjectManager in this.gridObjectManagers)
         {
@@ -34,7 +35,7 @@ public class PlotIO : MonoBehaviour
     }
     public void LoadPlot(SerializedPlot serializedPlot)
     {
-        Debug.Log(serializedPlot.serializedMapObjects.names);
+        //Debug.Log(serializedPlot.serializedMapObjects.names);
         this.SerializedPlot = serializedPlot;
     }
     public void ParseSerializedObjects()
