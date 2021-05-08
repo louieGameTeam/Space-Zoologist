@@ -12,10 +12,10 @@ public class SerializedLevel
         for (int i = 0; i < populationManager.transform.childCount; i++)
         {
             GameObject populationGO = populationManager.transform.GetChild(i).gameObject;
-            GameObject[] animals = new GameObject[populationGO.transform.childCount];
+            Vector3[] animals = new Vector3[populationGO.transform.childCount];
             for (int j = 0; j < populationGO.transform.childCount; j++)
             {
-                animals[i] = populationGO.transform.GetChild(j).gameObject;
+                animals[i] = populationGO.transform.GetChild(j).position;
             }
             this.serializedPopulations[i] = new SerializedPopulation(populationGO.GetComponent<Population>().species, animals);
         }

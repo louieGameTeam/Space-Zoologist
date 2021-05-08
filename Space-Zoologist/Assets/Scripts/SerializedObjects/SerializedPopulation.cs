@@ -6,13 +6,8 @@ using UnityEngine;
 public class SerializedPopulation
 {
     public MapItemSet population;
-    public SerializedPopulation(AnimalSpecies animalSpecies, GameObject[] animals)
+    public SerializedPopulation(AnimalSpecies animalSpecies, Vector3[] animals)
     {
-        Vector3[] positions = new Vector3[animals.Length];
-        for (int i = 0; i < animals.Length; i++)
-        {
-            positions[i] = animals[i].transform.position;
-        }
-        this.population = new MapItemSet(animalSpecies.name, positions);
+        this.population = new MapItemSet(animalSpecies.name, animals);
     }
 }

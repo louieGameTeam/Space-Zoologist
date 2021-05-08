@@ -40,6 +40,7 @@ public class LevelIO : MonoBehaviour
         }
 
         SerializedLevel level = new SerializedLevel();
+
         try
         {
             // Serialize plot

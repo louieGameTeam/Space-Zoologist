@@ -53,7 +53,7 @@ public class PopulationManager : MonoBehaviour
         Debug.LogError("No animal match the name '" + name + "' can be found in the species list. Did you attach the AnimalSpecies ScriptableObjects to the Population Manager?");
         return null;
     }
-    public SerializedPopulation[] Serialize()
+/*    public SerializedPopulation[] Serialize()
     {
         GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
         SerializedPopulation[] serializedPopulations = new SerializedPopulation[populations.Length];
@@ -61,6 +61,7 @@ public class PopulationManager : MonoBehaviour
         {
             AnimalSpecies animalSpecies = populations[i].GetComponent<Population>().species;
             GameObject[] animals = new GameObject[populations[i].transform.childCount];
+            Debug.Log(animals.Length);
             for (int j = 0; j < populations[i].transform.childCount; j++)
             {
                 animals[i] = populations[i].transform.GetChild(j).gameObject;
@@ -68,7 +69,7 @@ public class PopulationManager : MonoBehaviour
             serializedPopulations[i] = new SerializedPopulation(animalSpecies, animals);
         }
         return serializedPopulations;
-    }
+    }*/
     public void Parse(SerializedPopulation[] serializedPopulations)
     {
         if (serializedPopulations == null)
