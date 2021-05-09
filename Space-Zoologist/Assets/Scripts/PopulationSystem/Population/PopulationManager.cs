@@ -17,7 +17,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private GridSystem GridSystem = default;
     [Header("Attach All ScriptableObjects of Species Available on This Level Here")]
     [SerializeField] public AnimalSpecies[] Species = default;
-
+    [SerializeField] private List<PopulationBehavior> GenericBehaviors = default;
     //private SpeciesNeedSystem speciesNeedSystem = null;
     //private SymbiosisNeedSystem symbiosisNeedSystem = null;
 
@@ -96,6 +96,7 @@ public class PopulationManager : MonoBehaviour
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
+        population.GetComponent<PopulationBehaviorManager>().tempBehaviors = GenericBehaviors;
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
         population.InitializeNewPopulation(species, position, count, positions);
         this.HandlePopulationRegistration(population);

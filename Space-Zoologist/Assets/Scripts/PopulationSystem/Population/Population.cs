@@ -82,7 +82,6 @@ public class Population : MonoBehaviour, Life
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
-        this.GrowthCalculator = new GrowthCalculator(this);
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         for (int i = 0; i < populationSize; i++)
         {
@@ -100,6 +99,7 @@ public class Population : MonoBehaviour, Life
 
     private void SetupNeeds()
     {
+        this.GrowthCalculator = new GrowthCalculator(this);
         this.needs = this.Species.SetupNeeds();
         this.needBehaviors = this.Species.SetupBehaviors(this.needs);
         //this.PopulationBehaviorManager.isPaused = true;

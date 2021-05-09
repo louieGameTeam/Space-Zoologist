@@ -31,6 +31,10 @@ public class Animal : MonoBehaviour
 
     void LateUpdate()
     {
+        if (this.MovementData == null)
+        {
+            return;
+        }
         float velocity = this.PythagoreanTheorem(lastPos, this.gameObject.transform.position) / Time.deltaTime;
         lastPos = this.gameObject.transform.position;
         if (velocity < 0.01f)

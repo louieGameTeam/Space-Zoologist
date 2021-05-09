@@ -29,7 +29,10 @@ public class DialogueManager : MonoBehaviour
         if (startingConversation) {
             ContinueSpeech = true;
             currentDialogue = this.startingConversation;
-            ConversationManager.Instance.StartConversation(this.startingConversation);
+            if (ConversationManager.Instance != null)
+            {
+                ConversationManager.Instance.StartConversation(this.startingConversation);
+            }
         }
     }
 

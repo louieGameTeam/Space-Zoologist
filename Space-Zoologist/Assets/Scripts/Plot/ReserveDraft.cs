@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ReserveDraft : MonoBehaviour
 {
-    [SerializeField] GridIO GridIO = default;
+    [SerializeField] LevelIO LevelIO = default;
     [SerializeField] string currentLevel = "Level1";
     [SerializeField] PauseManager PauseManager = default;
     // TODO refactor UI stuff into seperate script
@@ -23,8 +23,8 @@ public class ReserveDraft : MonoBehaviour
 
     public void Start()
     {
-        GridIO.SaveGrid(currentLevel);
-        GridIO.SaveGrid(currentLevel + "Draft");
+        LevelIO.Save(currentLevel);
+        LevelIO.Save(currentLevel + "Draft");
     }
 
     public void toggleDrafting()
@@ -43,7 +43,7 @@ public class ReserveDraft : MonoBehaviour
 
     public void startDrafting()
     {
-        GridIO.LoadGrid(currentLevel + "Draft");
+        LevelIO.Load(currentLevel + "Draft");
         PauseManager.TryToPause();
 
         // save current resources
@@ -54,7 +54,7 @@ public class ReserveDraft : MonoBehaviour
 
     public void finishDrafting()
     {
-        GridIO.LoadGrid(currentLevel);
+        LevelIO.Load(currentLevel);
         PauseManager.Unpause();
 
         // load resources - won't change if applied draft
@@ -65,7 +65,7 @@ public class ReserveDraft : MonoBehaviour
 
     public void applyDraft()
     {
-        GridIO.SaveGrid(currentLevel + "Draft");
+        LevelIO.Save(currentLevel + "Draft");
 
         // save changes
         resourceManager.Save();
@@ -82,8 +82,8 @@ public class ReserveDraft : MonoBehaviour
     // Load drafted level and overwrite previous save files with new level
     public void loadDraft()
     {
-        GridIO.LoadGrid(currentLevel + "Draft");
-        GridIO.SaveGrid(currentLevel);
-        GridIO.SaveGrid(currentLevel + "Draft");
+        LevelIO.Load(currentLevel + "Draft");
+        LevelIO.Save(currentLevel);
+        LevelIO.Save(currentLevel + "Draft");
     }
 }

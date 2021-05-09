@@ -71,7 +71,8 @@ public class MapDesigningTool : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            this.populationManager.UpdatePopulation(selectedSpecies, 1, this.mainCamera.ScreenToWorldPoint(Input.mousePosition));
+            Vector3 location = new Vector3(this.mainCamera.ScreenToWorldPoint(Input.mousePosition).x, this.mainCamera.ScreenToWorldPoint(Input.mousePosition).y, 5);
+            this.populationManager.UpdatePopulation(selectedSpecies, 1, location);
         }
     }
     private void FoodActions()
