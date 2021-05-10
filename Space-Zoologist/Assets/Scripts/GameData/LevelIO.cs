@@ -44,9 +44,9 @@ public class LevelIO : MonoBehaviour
         try
         {
             // Serialize plot
-            level.SetPlot(this.plotIO.SavePlot());
-            // Serialize Animals
             level.SetPopulations(this.populationManager);
+            // Serialize Animals
+            level.SetPlot(this.plotIO.SavePlot());
         }
         catch
         {
@@ -90,7 +90,6 @@ public class LevelIO : MonoBehaviour
             serializedLevel.SetPlot(new SerializedPlot(new SerializedMapObjects(), this.CreateDefaultGrid()));
         }
         this.plotIO.LoadPlot(serializedLevel.serializedPlot);
-        Debug.Log(serializedLevel.serializedPlot.serializedGrid);
         //Animals loaded after map to avoid path finding issues
         // TODO make dependencies clearer
         this.populationManager.Parse(serializedLevel.serializedPopulations);

@@ -47,7 +47,7 @@ public class Population : MonoBehaviour, Life
     private PopulationBehaviorManager PopulationBehaviorManager = default;
     private bool isPaused = false;
 
-    private void Awake()
+/*    private void Awake()
     {
         
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
@@ -57,7 +57,7 @@ public class Population : MonoBehaviour, Life
             this.SetupNeeds();
             this.origin = this.transform.position;
         }
-    }
+    }*/
 
     private void Start()
     {
@@ -79,6 +79,8 @@ public class Population : MonoBehaviour, Life
     /// TODO population instantiation should likely come from an populationdata object with more fields
     public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, Vector3[] positions)
     {
+        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
+        this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;

@@ -23,7 +23,6 @@ public class PopulationManager : MonoBehaviour
 
     public void Initialize()
     {
-        //TODO load from save
         //this.speciesNeedSystem = (SpeciesNeedSystem)NeedSystemManager.Systems[NeedType.Species];
         //this.symbiosisNeedSystem = (SymbiosisNeedSystem)NeedSystemManager.Systems[NeedType.Symbiosis];
         

@@ -805,8 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridIO: {fileID: 0}
-  currentLevel: Level1
+  plotIO: {fileID: 0}
   PauseManager: {fileID: 1395149766}
   PauseButton: {fileID: 1328550532}
   NextDayButton: {fileID: 1618472787}
@@ -16551,7 +16550,8 @@ MonoBehaviour:
     type: 3}
   ReservePartitionManager: {fileID: 936381359}
   GridSystem: {fileID: 1621202152}
-  Species: []
+  Species:
+  - {fileID: 11400000, guid: 71f359d75cd374dc2af2253ea6d39f95, type: 2}
 --- !u!4 &2078374406
 Transform:
   m_ObjectHideFlags: 0
