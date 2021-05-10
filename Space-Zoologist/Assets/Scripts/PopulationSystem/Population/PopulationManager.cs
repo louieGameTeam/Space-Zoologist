@@ -14,7 +14,7 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private BehaviorPatternUpdater BehaviorPatternUpdater = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
-    [SerializeField] private GridSystem GridSystem = default;
+    [SerializeField] public GridSystem GridSystem = default;
     [Header("Attach All ScriptableObjects of Species Available on This Level Here")]
     [SerializeField] public AnimalSpecies[] Species = default;
 
@@ -52,23 +52,6 @@ public class PopulationManager : MonoBehaviour
         Debug.LogError("No animal match the name '" + name + "' can be found in the species list. Did you attach the AnimalSpecies ScriptableObjects to the Population Manager?");
         return null;
     }
-/*    public SerializedPopulation[] Serialize()
-    {
-        GameObject[] populations = GameObject.FindGameObjectsWithTag("Population");
-        SerializedPopulation[] serializedPopulations = new SerializedPopulation[populations.Length];
-        for (int i = 0; i < populations.Length; i++)
-        {
-            AnimalSpecies animalSpecies = populations[i].GetComponent<Population>().species;
-            GameObject[] animals = new GameObject[populations[i].transform.childCount];
-            Debug.Log(animals.Length);
-            for (int j = 0; j < populations[i].transform.childCount; j++)
-            {
-                animals[i] = populations[i].transform.GetChild(j).gameObject;
-            }
-            serializedPopulations[i] = new SerializedPopulation(animalSpecies, animals);
-        }
-        return serializedPopulations;
-    }*/
     public void Parse(SerializedPopulation[] serializedPopulations)
     {
         if (serializedPopulations == null)
@@ -79,7 +62,11 @@ public class PopulationManager : MonoBehaviour
         for (int i=0; i < serializedPopulations.Length;i++)
         {
             Vector3[] pos = SerializationUtils.ParseVector3(serializedPopulations[i].population.coords);
-            this.CreatePopulation(this.LoadSpecies(serializedPopulations[i].population.name), serializedPopulations.Length, pos[0], pos);
+            foreach (Vector3 position in pos)
+            {
+                this.UpdatePopulation(this.LoadSpecies(serializedPopulations[i].population.name), 1, position);
+            }
+            //this.CreatePopulation(this.LoadSpecies(serializedPopulations[i].population.name), serializedPopulations.Length, pos[0], pos);
         }
     }
     /// <summary>
@@ -132,7 +119,7 @@ public class PopulationManager : MonoBehaviour
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
 
-    // Registers the population with all all of the systems that care about it
+    // Registers the population with all of the systems that care about it
     private void HandlePopulationRegistration(Population population)
     {
         this.ReservePartitionManager.AddPopulation(population);

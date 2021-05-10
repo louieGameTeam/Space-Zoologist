@@ -8,14 +8,14 @@ public class SerializedLevel
     public SerializedPlot serializedPlot;
     public void SetPopulations(PopulationManager populationManager)
     {
-        this.serializedPopulations = new SerializedPopulation[populationManager.transform.childCount];
+        this.serializedPopulations = new SerializedPopulation[populationManager.gameObject.transform.childCount];
         for (int i = 0; i < populationManager.transform.childCount; i++)
         {
             GameObject populationGO = populationManager.transform.GetChild(i).gameObject;
             Vector3[] animals = new Vector3[populationGO.transform.childCount];
             for (int j = 0; j < populationGO.transform.childCount; j++)
             {
-                animals[i] = populationGO.transform.GetChild(j).position;
+                animals[j] = populationManager.GridSystem.Grid.WorldToCell(populationGO.transform.GetChild(j).position);
             }
             this.serializedPopulations[i] = new SerializedPopulation(populationGO.GetComponent<Population>().species, animals);
         }

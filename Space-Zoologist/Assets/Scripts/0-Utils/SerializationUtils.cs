@@ -38,6 +38,7 @@ public class SerializationUtils
 
         for (int i = 0; i < vector3s.Length; i++)
         {
+            Debug.Log(vector3s[i]);
             coords[i * 3] = vector3s[i].x;
             coords[i * 3 + 1] = vector3s[i].y;
             coords[i * 3 + 2] = vector3s[i].z;

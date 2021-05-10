@@ -7,9 +7,9 @@ public class MapItemSet
 {
     public string name;
     public float[] coords;
-    public MapItemSet(string name, Vector3[] vector3Ints)
+    public MapItemSet(string name, Vector3[] vector3s)
     {
         this.name = name;
-        this.coords = SerializationUtils.SerializeVector3(vector3Ints);
+        this.coords = SerializationUtils.SerializeVector3(vector3s);
     }
 }
