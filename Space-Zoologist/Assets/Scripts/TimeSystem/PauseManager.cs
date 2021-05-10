@@ -77,7 +77,7 @@ public class PauseManager : MonoBehaviour
         this.BehaviorPatternUpdater.IsPaused = true;
         this.PauseAllAnimalsMovementController();
         this.GridSystem.UpdateAnimalCellGrid();
-        this.GridSystem.HighlightHomeLocations();
+        //this.GridSystem.HighlightHomeLocations();
     }
 
     public void Unpause()
@@ -88,7 +88,7 @@ public class PauseManager : MonoBehaviour
         this.PauseButtonButton.onClick.AddListener(this.Pause);
         this.BehaviorPatternUpdater.IsPaused = false;
         this.UnpauseAllAnimalsMovementController();
-        this.GridSystem.UnhighlightHomeLocations();
+        //this.GridSystem.UnhighlightHomeLocations();
     }
 
     public void TwoTimeSpeed() {

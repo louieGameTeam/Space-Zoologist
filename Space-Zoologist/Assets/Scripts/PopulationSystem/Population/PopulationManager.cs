@@ -129,7 +129,7 @@ public class PopulationManager : MonoBehaviour
     private void SetupExistingPopulation(Population population)
     {
         this.HandlePopulationRegistration(population);
-        this.GridSystem.UnhighlightHomeLocations();
+        // this.GridSystem.UnhighlightHomeLocations();
         population.InitializeExistingAnimals();
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
     }
@@ -140,7 +140,7 @@ public class PopulationManager : MonoBehaviour
         this.ReservePartitionManager.AddPopulation(population);
         population.UpdateAccessibleArea(this.ReservePartitionManager.GetLocationsWithAccess(population),
         this.GridSystem.GetGridWithAccess(population));
-        this.GridSystem.HighlightHomeLocations();
+        // this.GridSystem.HighlightHomeLocations();
         this.NeedSystemManager.RegisterWithNeedSystems(population);
         this.BehaviorPatternUpdater.RegisterPopulation(population);
         //this.speciesNeedSystem.AddPopulation(population);

@@ -15,8 +15,13 @@ public class LevelIO : MonoBehaviour
         this.sceneName = SceneManager.GetActiveScene().name;
         this.plotIO = FindObjectOfType<PlotIO>();
         this.populationManager = FindObjectOfType<PopulationManager>();
+        
+    }
+    public void Start()
+    {
         this.LoadPreset();
     }
+
     public void Save(string name = null)
     {
         name = name ?? this.sceneName;

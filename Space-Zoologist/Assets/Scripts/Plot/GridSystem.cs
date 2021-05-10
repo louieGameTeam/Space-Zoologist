@@ -70,7 +70,7 @@ public class GridSystem : MonoBehaviour
             }
         }
         // Could be broken up for better efficiency since iterating through population twice
-        this.PopulationHomeLocations = this.RecalculateHomeLocation();
+        // this.PopulationHomeLocations = this.RecalculateHomeLocation();
         // Update locations and grab reference to animal GameObject (for future use)
         foreach (Population population in this.PopulationManager.Populations)
         {
@@ -229,45 +229,45 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    // Resets and recalculates everytime in case a population dies
-    public void HighlightHomeLocations()
-    {
-        this.PopulationHomeLocations = this.RecalculateHomeLocation();
-        foreach (Vector3Int location in this.PopulationHomeLocations)
-        {
-            this.TilePlacementValidation.SetTile(location, this.Tile);
-        }
-    }
+    //// Resets and recalculates everytime in case a population dies
+    //public void HighlightHomeLocations()
+    //{
+    //    this.PopulationHomeLocations = this.RecalculateHomeLocation();
+    //    foreach (Vector3Int location in this.PopulationHomeLocations)
+    //    {
+    //        this.TilePlacementValidation.SetTile(location, this.Tile);
+    //    }
+    //}
 
-    private HashSet<Vector3Int> RecalculateHomeLocation()
-    {
-        HashSet<Vector3Int> homeLocations = new HashSet<Vector3Int>();
-        foreach (Population population in this.PopulationManager.Populations)
-        {
-            Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
-            for (int i=-1; i<=1; i++)
-            {
-                for (int j=-1; j<=1; j++)
-                {
-                    Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
-                    if (!homeLocations.Contains(loc))
-                    {
-                        homeLocations.Add(loc);
-                        this.CellGrid[origin.x + i, origin.y + j].HomeLocation = true;
-                    }
-                }
-            }
-        }
-        return homeLocations;
-    }
+    //private HashSet<Vector3Int> RecalculateHomeLocation()
+    //{
+    //    HashSet<Vector3Int> homeLocations = new HashSet<Vector3Int>();
+    //    foreach (Population population in this.PopulationManager.Populations)
+    //    {
+    //        Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
+    //        for (int i=-1; i<=1; i++)
+    //        {
+    //            for (int j=-1; j<=1; j++)
+    //            {
+    //                Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
+    //                if (!homeLocations.Contains(loc))
+    //                {
+    //                    homeLocations.Add(loc);
+    //                    this.CellGrid[origin.x + i, origin.y + j].HomeLocation = true;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return homeLocations;
+    //}
 
-    public void UnhighlightHomeLocations()
-    {
-        foreach (Vector3Int location in this.PopulationHomeLocations)
-        {
-            this.TilePlacementValidation.SetTile(location, null);
-        }
-    }
+    //public void UnhighlightHomeLocations()
+    //{
+    //    foreach (Vector3Int location in this.PopulationHomeLocations)
+    //    {
+    //        this.TilePlacementValidation.SetTile(location, null);
+    //    }
+    //}
 
     // Showing how tiles can be shaded
     // We'll likely need a better version of this in the future for determing if we're setting up levels correctly

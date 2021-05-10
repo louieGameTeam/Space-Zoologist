@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridIO: {fileID: 0}
+  LevelIO: {fileID: 2067607044}
   currentLevel: Level1
   PauseManager: {fileID: 1872698887}
   PauseButton: {fileID: 1442615144}
@@ -7607,7 +7607,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &589688952
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12662,7 +12662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8822ea8189c58564daa59061db90b10b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  godMode: 1
+  godMode: 0
 --- !u!45 &791024325
 Skybox:
   m_ObjectHideFlags: 0
@@ -20662,7 +20662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1244814438
 Transform:
   m_ObjectHideFlags: 0
@@ -21251,6 +21251,8 @@ MonoBehaviour:
   Species:
   - {fileID: 11400000, guid: 71f359d75cd374dc2af2253ea6d39f95, type: 2}
   - {fileID: 11400000, guid: 5b93b183258a1425c99de8277ff09938, type: 2}
+  GenericBehaviors:
+  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
 --- !u!4 &1293167603
 Transform:
   m_ObjectHideFlags: 0
@@ -27577,7 +27579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fddaa2072f642548f2acfc0c5f8743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelData: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4, type: 2}
+  LevelData: {fileID: 11400000, guid: 398a61438fed54f0992d65281f1eeea9, type: 2}
 --- !u!4 &1695157341
 Transform:
   m_ObjectHideFlags: 0
