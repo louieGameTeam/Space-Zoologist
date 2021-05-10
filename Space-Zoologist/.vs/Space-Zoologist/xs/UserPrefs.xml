@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameData/LevelIO.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/EventSystem/EventResponseManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Plot/ReserveDraft.cs" Line="46" Column="17" />
-      <File FileName="Assets/Scripts/GameData/LevelIO.cs" Line="22" Column="27" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="132" Column="12" />
-      <File FileName="Assets/Scripts/Managers/NeedSystemManager.cs" Line="30" Column="9" />
-      <File FileName="Assets/Scripts/Grid/PlotIO.cs" Line="40" Column="1" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" />
-      <File FileName="Assets/Scripts/Plot/Testers/MapDesigningTool.cs" />
-      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" />
-      <File FileName="Assets/Scripts/Needs/GridObjectManager.cs" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="26" Column="1" />
+      <File FileName="Assets/Scripts/GameData/LevelIO.cs" Line="96" Column="1" />
+      <File FileName="Assets/Scripts/Grid/PlotIO.cs" Line="47" Column="1" />
+      <File FileName="Assets/Scripts/SerializedObjects/SerializedLevel.cs" Line="9" Column="17" />
+      <File FileName="Assets/Scripts/SerializedObjects/SerializedPlot.cs" Line="5" Column="28" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponse.cs" Line="18" Column="30" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseManager.cs" Line="21" Column="12" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Managers/ResourceManager.cs" Line="58" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,12 +29,12 @@
                 <Node name="0-Utils" expanded="True">
                   <Node name="ReferenceSystem" expanded="True" />
                 </Node>
-                <Node name="GameData" expanded="True">
-                  <Node name="LevelIO.cs" selected="True" />
-                </Node>
+                <Node name="GameData" expanded="True" />
                 <Node name="Grid" expanded="True" />
                 <Node name="Managers" expanded="True">
-                  <Node name="EventSystem" expanded="True" />
+                  <Node name="EventSystem" expanded="True">
+                    <Node name="EventResponseManager.cs" selected="True" />
+                  </Node>
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -42,6 +42,7 @@
                   </Node>
                 </Node>
                 <Node name="Plot" expanded="True">
+                  <Node name="RPS" expanded="True" />
                   <Node name="Testers" expanded="True" />
                   <Node name="Tiles" expanded="True" />
                   <Node name="Utils" expanded="True" />
@@ -50,12 +51,16 @@
                   <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True" />
                 </Node>
+                <Node name="SerializedObjects" expanded="True" />
                 <Node name="TimeSystem" expanded="True" />
                 <Node name="UI" expanded="True">
                   <Node name="LogSystem" expanded="True" />
                   <Node name="Store" expanded="True" />
                 </Node>
                 <Node name="Unused" expanded="True">
+                  <Node name="JournalSystems" expanded="True">
+                    <Node name="SpeciesSection" expanded="True" />
+                  </Node>
                   <Node name="Needs" expanded="True" />
                 </Node>
               </Node>
@@ -67,7 +72,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4b5fb086-e1be-4bef-a10a-6f4aa37f5f51" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="72c4fae7-d26e-419c-b1a7-1f89d97aac61" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

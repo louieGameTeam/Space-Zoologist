@@ -6,9 +6,6 @@ public class ReserveDraft : MonoBehaviour
 {
     [SerializeField] PlotIO plotIO;
     [SerializeField] PauseManager PauseManager = default;
-    // TODO refactor UI stuff into seperate script
-    //[SerializeField] GameObject StoreButtons = default;
-    //[SerializeField] List<GameObject> StoreMenus = default;
     [SerializeField] GameObject PauseButton = default;
     [SerializeField] GameObject NextDayButton = default;
     [SerializeField] PlayerController PlayerController = default;

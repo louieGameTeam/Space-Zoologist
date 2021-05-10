@@ -2,34 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SpeciesReference", menuName = "ReferenceData/SpeciesReference")]
-public class SpeciesReferenceData : ScriptableObject
+public class SpeciesReferenceData : MonoBehaviour
 {
-    // Using singleton pattern so Species can be easily indexed by name
-    [SerializeField] private List<AnimalSpecies> AddAllSpecies = new List<AnimalSpecies>();
-    public Dictionary<string, AnimalSpecies> AllSpecies = new Dictionary<string, AnimalSpecies>();
-
-    public AnimalSpecies FindSpecies(string species)
-    {
-        if (this.AllSpecies.ContainsKey(species))
-        {
-            return this.AllSpecies[species];
-        }
-        else
-        {
-            return null;
-        }
-    }
+    [SerializeField] public LevelDataReference LevelDataReference = default;
+    public Dictionary<string, FoodSourceSpecies> FoodSources = new Dictionary<string, FoodSourceSpecies>();
+    public Dictionary<string, AnimalSpecies> AnimalSpecies = new Dictionary<string, AnimalSpecies>();
 
     // Ensure the Species are all indexed by their name
-    public void OnValidate()
+    public void Start()
     {
-        foreach(AnimalSpecies species in this.AddAllSpecies)
+        foreach (FoodSourceSpecies foodSource in this.LevelDataReference.LevelData.FoodSourceSpecies)
         {
-            if (!this.AllSpecies.ContainsKey(species.SpeciesName))
+            foreach (Item item in this.LevelDataReference.LevelData.Items)
             {
-                this.AllSpecies.Add(species.SpeciesName, species);
+                if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName))
+                {
+                    this.FoodSources.Add(item.ID, foodSource);
+                }
             }
+        }
+        foreach (AnimalSpecies animalSpecies in this.LevelDataReference.LevelData.AnimalSpecies)
+        {
+            this.AnimalSpecies.Add(animalSpecies.name, animalSpecies);
         }
     }
 }

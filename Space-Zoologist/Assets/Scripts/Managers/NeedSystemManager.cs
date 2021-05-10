@@ -18,11 +18,11 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] PauseManager PauseManager = default;
+    [SerializeField] LevelIO LevelIO = default;
 
     /// <summary>
     /// Initialize the universal need systems
     /// </summary>
-    /// <remarks>Enviormental -> FoodSource/Species (consumable) -> Density/Symbiosis (other), this order has to be fixed</remarks>
     private void Start()
     {
         setupNeedSystems();

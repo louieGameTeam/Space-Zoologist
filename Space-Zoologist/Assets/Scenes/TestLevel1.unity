@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fddaa2072f642548f2acfc0c5f8743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelData: {fileID: 0}
+  LevelData: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4, type: 2}
 --- !u!4 &320161630
 Transform:
   m_ObjectHideFlags: 0
@@ -903,14 +903,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridIO: {fileID: 765609360}
-  currentLevel: Level1
+  plotIO: {fileID: 765609360}
   PauseManager: {fileID: 1395149766}
-  PauseButton: {fileID: 0}
-  NextDayButton: {fileID: 0}
+  PauseButton: {fileID: 462793385}
+  NextDayButton: {fileID: 594495562}
   PlayerController: {fileID: 1290313821}
   resourceManager: {fileID: 1738013071}
   playerBalance: {fileID: 4661624496553112467}
+--- !u!1 &462793385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6870516816456691122, guid: 680b7a5510b8f489e862ea82b41f14cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1425400390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &462963690
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,6 +925,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 462963691}
+  - component: {fileID: 462963692}
   m_Layer: 0
   m_Name: Plot
   m_TagString: Untagged
@@ -948,6 +954,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &462963692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462963690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8701b7aa16bc14ebbbb89da855647b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directory: Assets/SaveData/
 --- !u!1001 &493638994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2078,6 +2097,12 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &594495562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5318295241996425607, guid: 680b7a5510b8f489e862ea82b41f14cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1425400390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &595932786
 GameObject:
   m_ObjectHideFlags: 0
@@ -3013,15 +3038,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 765609358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ddd4f6b4e76a249bc255e7d1b858fe, type: 3}
+  m_Script: {fileID: 11500000, guid: ca4933cdddee27341970b70e4763ee72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePlacementController: {fileID: 0}
-  resourceDirectory: Grid/
-  directory: Assets/Resources/Grid/
-  sceneName: 
-  tileLayerManagers: []
-  initialized: 0
+  levelIO: {fileID: 462963692}
 --- !u!114 &765609361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7715,7 +7735,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1280332668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c0aac84ec35496bb636340c696466e, type: 3}
+  m_Script: {fileID: 11500000, guid: df0d5d27e61ed4529bc42c54c40eafe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LevelDataReference: {fileID: 320161629}
@@ -8782,7 +8802,7 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   BehaviorPatternUpdater: {fileID: 1576156859}
   GridSystem: {fileID: 1621202152}
-  PauseButton: {fileID: 0}
+  PauseButton: {fileID: 462793385}
   PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
   ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
     type: 3}
@@ -9177,7 +9197,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1621202155}
+      objectReference: {fileID: 0}
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -9696,6 +9716,18 @@ Transform:
   m_Father: {fileID: 1652469948}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1579699998 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3643579319242990668, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 493638994}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ffa30cbd0f68fc4482e9ff0dfac2c5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1582801182
 GameObject:
   m_ObjectHideFlags: 0
@@ -9856,7 +9888,6 @@ GameObject:
   - component: {fileID: 1621202153}
   - component: {fileID: 1621202152}
   - component: {fileID: 1621202154}
-  - component: {fileID: 1621202155}
   m_Layer: 0
   m_Name: GridSystem
   m_TagString: Untagged
@@ -9878,7 +9909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlacementValidation: {fileID: 0}
   Grid: {fileID: 765609363}
-  FoodReferenceData: {fileID: 0}
+  SpeciesReferenceData: {fileID: 1280332669}
   LevelDataReference: {fileID: 320161629}
   RPM: {fileID: 936381359}
   TileSystem: {fileID: 765609361}
@@ -9911,20 +9942,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7586f8d0b56e84dc49d889cf768d4811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1621202155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621202151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 816729202455d4de08722e41b519e674, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridOverlay: {fileID: 1708195239}
-  isOn: 0
 --- !u!1 &1652469947
 GameObject:
   m_ObjectHideFlags: 0
@@ -23776,8 +23793,10 @@ MonoBehaviour:
     type: 3}
   ReservePartitionManager: {fileID: 936381359}
   GridSystem: {fileID: 1621202152}
-  Species: []
-  GenericBehaviors: []
+  GenericBehaviors:
+  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
+  levelIO: {fileID: 462963692}
+  speciesReferenceData: {fileID: 1280332669}
 --- !u!4 &2078374406
 Transform:
   m_ObjectHideFlags: 0
@@ -33844,8 +33863,7 @@ MonoBehaviour:
   StoreMenus:
   - {fileID: 861086360}
   - {fileID: 609238252}
-  - {fileID: 0}
-  PodMenu: {fileID: 0}
+  PodMenu: {fileID: 1579699998}
   PauseManager: {fileID: 1395149766}
   ResourceManager: {fileID: 1738013071}
   PlayerBalance: {fileID: 4661624496553112467}
@@ -38651,6 +38669,7 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   TileSystem: {fileID: 765609361}
   GridSystem: {fileID: 1621202152}
+  FoodPlacer: {fileID: 549433667}
 --- !u!1 &6874327555454712161
 GameObject:
   m_ObjectHideFlags: 0
@@ -40481,6 +40500,7 @@ MonoBehaviour:
   TileSystem: {fileID: 765609361}
   ReservePartitionManager: {fileID: 936381359}
   PauseManager: {fileID: 1395149766}
+  LevelIO: {fileID: 462963692}
 --- !u!4 &8743428314032458837
 Transform:
   m_ObjectHideFlags: 0

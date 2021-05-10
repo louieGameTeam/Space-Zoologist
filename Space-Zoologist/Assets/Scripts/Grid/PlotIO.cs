@@ -3,11 +3,10 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
-/// <summary>
-/// Temporary Class for testing only, do not integrate
-/// </summary>
+
 public class PlotIO : MonoBehaviour
 {
+    [SerializeField] LevelIO levelIO = default;
     private TilePlacementController tilePlacementController;
     private TileLayerManager[] tileLayerManagers;
     private List<GridObjectManager> gridObjectManagers = new List<GridObjectManager>();

@@ -9,19 +9,17 @@ public class LevelIO : MonoBehaviour
     private string sceneName;
     private PlotIO plotIO;
     private PopulationManager populationManager;
+    public SerializedLevel presetMap { get; private set; }
     // Start is called before the first frame update
     public void Awake()
     {
         this.sceneName = SceneManager.GetActiveScene().name;
         this.plotIO = FindObjectOfType<PlotIO>();
         this.populationManager = FindObjectOfType<PopulationManager>();
-        
-    }
-    public void Start()
-    {
         this.LoadPreset();
-    }
 
+    }
+    
     public void Save(string name = null)
     {
         name = name ?? this.sceneName;
@@ -96,9 +94,9 @@ public class LevelIO : MonoBehaviour
         }
         this.plotIO.LoadPlot(serializedLevel.serializedPlot);
         //Animals loaded after map to avoid path finding issues
-        // TODO make dependencies clearer
-        this.populationManager.Parse(serializedLevel.serializedPopulations);
+        this.presetMap = serializedLevel;
     }
+
     public void Reload()
     {
         this.plotIO.Initialize();

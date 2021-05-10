@@ -15,10 +15,10 @@ public class EventResponseManager : MonoBehaviour
 
     public void Start()
     {
-        foreach(EventResponse eventResponse in EventResponses)
-        {
-            eventResponse.Start();
-        }
+        //foreach(EventResponse eventResponse in EventResponses)
+        //{
+        //    eventResponse.Start();
+        //}
     }
 
     // Sets up response to be triggered multiple times with different data according to eventType.

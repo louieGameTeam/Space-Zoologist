@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Tilemaps;
-enum SelectionType {Tile, Animal, FoodSource }
+enum SelectionType {Tile, Animal, FoodSource, None }
 public class MapDesigningTool : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -74,12 +74,20 @@ public class MapDesigningTool : MonoBehaviour
             Vector3 location = new Vector3(this.mainCamera.ScreenToWorldPoint(Input.mousePosition).x, this.mainCamera.ScreenToWorldPoint(Input.mousePosition).y, 5);
             this.populationManager.UpdatePopulation(selectedSpecies, 1, location);
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            this.selectionType = SelectionType.None;
+        }
     }
     private void FoodActions()
     {
         if (Input.GetMouseButtonDown(0))
         {
             this.populationManager.UpdatePopulation(selectedSpecies, 1, this.mainCamera.ScreenToWorldPoint(Input.mousePosition));
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            this.selectionType = SelectionType.None;
         }
     }
     private void OnGUI()
@@ -137,15 +145,15 @@ public class MapDesigningTool : MonoBehaviour
     {
         GUILayout.Box("Animals");
         this.scrollPosition3 = GUILayout.BeginScrollView(this.scrollPosition3);
-        foreach (AnimalSpecies species in populationManager.Species)
+        foreach (KeyValuePair<string, AnimalSpecies> species in populationManager.speciesReferenceData.AnimalSpecies)
         {
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button(species.name))
+            if (GUILayout.Button(species.Value.name))
             {
-                this.selectedSpecies = species;
+                this.selectedSpecies = species.Value;
                 this.selectionType = SelectionType.Animal;
             }
-            if (this.selectedSpecies == species && this.selectionType == SelectionType.Animal)
+            if (this.selectedSpecies == species.Value && this.selectionType == SelectionType.Animal)
             {
                 GUILayout.Box("Selected");
             }

@@ -7,14 +7,14 @@ public class PlacementValidation : MonoBehaviour
     private GridSystem GridSystem = default;
     private TileSystem TileSystem = default;
     private LevelDataReference LevelDataReference = default;
-    private FoodReferenceData FoodReferenceData = default;
+    private SpeciesReferenceData SpeciesReferenceData = default;
 
-    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, FoodReferenceData foodReferenceData)
+    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, SpeciesReferenceData speciesReferenceData)
     {
         this.GridSystem = gridSystem;
         this.TileSystem = tileSystem;
         this.LevelDataReference = levelData;
-        this.FoodReferenceData = foodReferenceData;
+        this.SpeciesReferenceData = speciesReferenceData;
     }
 
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
@@ -91,7 +91,7 @@ public class PlacementValidation : MonoBehaviour
 
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem)
     {
-        FoodSourceSpecies species = this.FoodReferenceData.FoodSources[selectedItem.ID];
+        FoodSourceSpecies species = this.SpeciesReferenceData.FoodSources[selectedItem.ID];
         Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(mousePosition);
 
         // size 1 -> rad 0, size 3 -> rad 1 ...
@@ -175,7 +175,7 @@ public class PlacementValidation : MonoBehaviour
     }
     public FoodSourceSpecies GetFoodSpecies(Item item)
     {
-        return this.FoodReferenceData.FoodSources[item.ID];
+        return this.SpeciesReferenceData.FoodSources[item.ID];
     }
 
     public bool IsInMapBounds(Vector3Int mousePosition)
