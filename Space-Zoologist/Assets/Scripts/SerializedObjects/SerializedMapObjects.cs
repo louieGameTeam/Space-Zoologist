@@ -18,10 +18,14 @@ public class SerializedMapObjects
     public Dictionary<string , GridItemSet> ToDictionary()
     {
         Dictionary<string, GridItemSet> dict = new Dictionary<string, GridItemSet>();
-        for (int i = 0; i < names.Length; i++)
+        if (this.names != null)
         {
-            dict.Add(names[i], gridItemSets[i]);
+            for (int i = 0; i < names.Length; i++)
+            {
+                dict.Add(names[i], gridItemSets[i]);
+            }
         }
+
         return dict;
     }
 }

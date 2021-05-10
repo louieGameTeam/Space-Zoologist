@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ReserveDraft : MonoBehaviour
 {
-    [SerializeField] LevelIO LevelIO = default;
-    [SerializeField] string currentLevel = "Level1";
+    [SerializeField] PlotIO plotIO;
     [SerializeField] PauseManager PauseManager = default;
     // TODO refactor UI stuff into seperate script
     //[SerializeField] GameObject StoreButtons = default;
@@ -17,14 +16,17 @@ public class ReserveDraft : MonoBehaviour
 
     [SerializeField] ResourceManager resourceManager = default;
     [SerializeField] PlayerBalance playerBalance = default;
+    SerializedPlot draftPlot;
+    SerializedPlot plot;
     float initialBalance;
 
 
 
     public void Start()
     {
-        LevelIO.Save(currentLevel);
-        LevelIO.Save(currentLevel + "Draft");
+        plotIO = FindObjectOfType<PlotIO>();
+        plot = plotIO.SavePlot();
+        draftPlot = plotIO.SavePlot();
     }
 
     public void toggleDrafting()
@@ -43,7 +45,7 @@ public class ReserveDraft : MonoBehaviour
 
     public void startDrafting()
     {
-        LevelIO.Load(currentLevel + "Draft");
+        plotIO.LoadPlot(this.draftPlot);
         PauseManager.TryToPause();
 
         // save current resources
@@ -54,7 +56,7 @@ public class ReserveDraft : MonoBehaviour
 
     public void finishDrafting()
     {
-        LevelIO.Load(currentLevel);
+        plotIO.LoadPlot(this.plot);
         PauseManager.Unpause();
 
         // load resources - won't change if applied draft
@@ -65,7 +67,7 @@ public class ReserveDraft : MonoBehaviour
 
     public void applyDraft()
     {
-        LevelIO.Save(currentLevel + "Draft");
+        plot = plotIO.SavePlot();
 
         // save changes
         resourceManager.Save();
@@ -82,8 +84,8 @@ public class ReserveDraft : MonoBehaviour
     // Load drafted level and overwrite previous save files with new level
     public void loadDraft()
     {
-        LevelIO.Load(currentLevel + "Draft");
-        LevelIO.Save(currentLevel);
-        LevelIO.Save(currentLevel + "Draft");
+        plotIO.LoadPlot(this.draftPlot);
+        plot = plotIO.SavePlot();
+        draftPlot = plotIO.SavePlot();
     }
 }
