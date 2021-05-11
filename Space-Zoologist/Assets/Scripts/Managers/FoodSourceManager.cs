@@ -21,7 +21,7 @@ public class FoodSourceManager : GridObjectManager
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
-    [SerializeField] FoodPlacer FoodPlacer = default;
+    [SerializeField] private FoodPlacer FoodPlacer = default;
 
     private void Awake()
     {

@@ -7,7 +7,7 @@ public class FoodPlacementData
 {
     [SerializeField] public Vector3Int location = default;
     [SerializeField] public Item item = default;
-}
+}   
 
 public class FoodPlacer : MonoBehaviour
 {

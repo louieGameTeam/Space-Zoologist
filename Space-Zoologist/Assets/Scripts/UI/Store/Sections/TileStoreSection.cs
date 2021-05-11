@@ -99,6 +99,7 @@ public class TileStoreSection : StoreSection
 
     private void Update()
     {
+        base.Update();
         if (isPlacing)
         {
             if (this.tilePlacementController.PlacementPaused)
