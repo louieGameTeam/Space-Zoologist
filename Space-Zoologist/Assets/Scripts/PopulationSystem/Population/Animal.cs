@@ -33,7 +33,6 @@ public class Animal : MonoBehaviour
     {
         if (this.MovementData == null)
         {
-            Debug.Log("movement controller not setup");
             return;
         }
         float velocity = this.PythagoreanTheorem(lastPos, this.gameObject.transform.position) / Time.deltaTime;
