@@ -100,7 +100,7 @@ public class PodMenu : MonoBehaviour
                 this.TopHUD.StartCoroutine("FlashWarning", "No more " + this.selectedSpecies.SpeciesName + " available");
                 return;
             }
-            populationManager.UpdatePopulation(selectedSpecies, 1, position);
+            populationManager.UpdatePopulation(selectedSpecies, position);
             resourceManager.Placed(selectedSpecies, 1);
         }
     }

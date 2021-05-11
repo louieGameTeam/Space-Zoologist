@@ -77,7 +77,7 @@ public class Population : MonoBehaviour, Life
     /// <param name="needSystemManager"></param>
     /// TODO simplify populations size, as it will always be the same as number of positions given 
     /// TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, int populationSize, Vector3[] positions)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, Vector3[] positions)
     {
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
@@ -85,17 +85,6 @@ public class Population : MonoBehaviour, Life
         this.origin = origin;
         this.transform.position = origin;
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
-        for (int i = 0; i < populationSize; i++)
-        {
-            GameObject newAnimal = Instantiate(this.AnimalPrefab, this.transform);
-            if (positions != null)
-            {
-                newAnimal.transform.SetPositionAndRotation(positions[i], Quaternion.identity);
-            }
-            this.AnimalPopulation.Add(newAnimal);
-            // PopulationManager will explicitly initialize a new population's animal at the very end
-            this.AnimalPopulation[i].SetActive(true);
-        }
         this.SetupNeeds();
     }
 
@@ -104,7 +93,6 @@ public class Population : MonoBehaviour, Life
         this.GrowthCalculator = new GrowthCalculator(this);
         this.needs = this.Species.SetupNeeds();
         this.needBehaviors = this.Species.SetupBehaviors(this.needs);
-        //this.PopulationBehaviorManager.isPaused = true;
         this.PopulationBehaviorManager.InitializeBehaviors(this.needs);
         this.NeedEditorTesting = new List<Need>();
         foreach (KeyValuePair<string, Need> need in this.needs)

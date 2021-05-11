@@ -44,7 +44,7 @@ public class PlotIO : MonoBehaviour
                 {
                     tileLayerManager.ParseSerializedTilemap(serializedTilemap, this.tilePlacementController.gameTiles);
                     tilemapFound = true;
-                    Debug.Log("Loaded from resources");
+                    Debug.Log("Loaded map from resources");
                     break;
                 }
             }

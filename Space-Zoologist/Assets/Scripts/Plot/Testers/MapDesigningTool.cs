@@ -72,7 +72,7 @@ public class MapDesigningTool : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 location = new Vector3(this.mainCamera.ScreenToWorldPoint(Input.mousePosition).x, this.mainCamera.ScreenToWorldPoint(Input.mousePosition).y, 5);
-            this.populationManager.UpdatePopulation(selectedSpecies, 1, location);
+            this.populationManager.UpdatePopulation(selectedSpecies, location);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -83,7 +83,7 @@ public class MapDesigningTool : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            this.populationManager.UpdatePopulation(selectedSpecies, 1, this.mainCamera.ScreenToWorldPoint(Input.mousePosition));
+            this.populationManager.UpdatePopulation(selectedSpecies, this.mainCamera.ScreenToWorldPoint(Input.mousePosition));
         }
         if (Input.GetMouseButtonDown(1))
         {

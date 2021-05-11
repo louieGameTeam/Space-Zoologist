@@ -21,15 +21,14 @@ public class PopulationManager : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("Initializing population");
         SerializedPopulation[] serializedPopulations = this.levelIO.presetMap.serializedPopulations;
         for (int i = 0; i < serializedPopulations.Length; i++)
         {
             Vector3[] pos = SerializationUtils.ParseVector3(serializedPopulations[i].population.coords);
+            AnimalSpecies species = this.LoadSpecies(serializedPopulations[i].population.name);
             foreach (Vector3 position in pos)
             {
-                Debug.Log("adding population to " + pos);
-                this.UpdatePopulation(this.LoadSpecies(serializedPopulations[i].population.name), 1, position);
+                UpdatePopulation(species, position);
             }
         }
     }
@@ -49,7 +48,7 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     /// <param name="species">The species of the population</param>
     /// <param name="position">The origin point of the population</param>
-    public void CreatePopulation(AnimalSpecies species, int count, Vector3 position, Vector3[] positions = null)
+    public Population CreatePopulation(AnimalSpecies species, Vector3 position, Vector3[] positions = null)
     {
         // Create population
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
@@ -58,31 +57,39 @@ public class PopulationManager : MonoBehaviour
         this.ExistingPopulations.Add(population);
         population.GetComponent<PopulationBehaviorManager>().tempBehaviors = GenericBehaviors;
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
-        population.InitializeNewPopulation(species, position, count, positions);
+        population.InitializeNewPopulation(species, position, positions);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
-
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
+        return population;
     }
     /// <summary>
-    /// Add animals to the accessible area containing the given position. If there is already a population, add the animals to it, else create a new population.
+    /// Creates a population if needed, then adds a new animal to the population
     /// </summary>
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public void UpdatePopulation(AnimalSpecies species, int count, Vector3 position)
+    public void UpdatePopulation(AnimalSpecies species, Vector3 position)
     {
-        // If a population of the species already exists in this area, just combine with it, otherwise, make a new one
+        Population population = DoesPopulationExist(species, position);
+        if (population == null)
+        {
+            population = CreatePopulation(species, position);
+        }
+        population.AddAnimal();
+    }
+
+    private Population DoesPopulationExist(AnimalSpecies species, Vector3 position)
+    {
         List<Population> localPopulations = ReservePartitionManager.GetPopulationsWithAccessTo(position);
-        foreach(Population preexistingPopulation in localPopulations)
+        foreach (Population preexistingPopulation in localPopulations)
         {
             if (preexistingPopulation.Species.SpeciesName.Equals(species.SpeciesName))
             {
-                preexistingPopulation.AddAnimal();
-                return;
+                return preexistingPopulation;
             }
         }
-        CreatePopulation(species, count, position);
+        return null;
     }
 
     // Registers the population with all of the systems that care about it
