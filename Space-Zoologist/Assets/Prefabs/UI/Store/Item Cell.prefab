@@ -64,6 +64,7 @@ MonoBehaviour:
   highlightImage: {fileID: 9097091684942968647}
   Popup: {fileID: 1183875391472045904}
   ItemInfo: {fileID: 4592214893932257188}
+  RemainingAmount: -1
 --- !u!1 &504285917637353408
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +165,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183875391472045904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6859261894083941386}

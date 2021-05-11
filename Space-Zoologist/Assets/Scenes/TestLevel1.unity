@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fddaa2072f642548f2acfc0c5f8743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelData: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4, type: 2}
+  LevelData: {fileID: 11400000, guid: 0eaa55557163b4874b1111b6687272c5, type: 2}
 --- !u!4 &320161630
 Transform:
   m_ObjectHideFlags: 0
@@ -824,6 +824,12 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &401962784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5434642600480007295, guid: 680b7a5510b8f489e862ea82b41f14cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1425400390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &426489587
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,19 +909,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plotIO: {fileID: 765609360}
+  GridIO: {fileID: 765609360}
+  currentLevel: Level1
   PauseManager: {fileID: 1395149766}
-  PauseButton: {fileID: 462793385}
-  NextDayButton: {fileID: 594495562}
+  PauseButton: {fileID: 1425400391}
+  NextDayButton: {fileID: 401962784}
   PlayerController: {fileID: 1290313821}
   resourceManager: {fileID: 1738013071}
   playerBalance: {fileID: 4661624496553112467}
---- !u!1 &462793385 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6870516816456691122, guid: 680b7a5510b8f489e862ea82b41f14cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1425400390}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &462963690
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,7 +926,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 462963691}
-  - component: {fileID: 462963692}
   m_Layer: 0
   m_Name: Plot
   m_TagString: Untagged
@@ -950,23 +950,9 @@ Transform:
   - {fileID: 936381358}
   - {fileID: 1621202153}
   - {fileID: 459174928}
-  - {fileID: 549433666}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &462963692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 462963690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8701b7aa16bc14ebbbb89da855647b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  directory: Assets/SaveData/
 --- !u!1001 &493638994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1585,65 +1571,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1425400390}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &549433665
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 549433666}
-  - component: {fileID: 549433667}
-  m_Layer: 0
-  m_Name: SpeciesSetup
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &549433666
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549433665}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 462963691}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &549433667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549433665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FoodPlacementDatas:
-  - location: {x: 2, y: 23, z: 0}
-    item: {fileID: 0}
-  - location: {x: 7, y: 10, z: 0}
-    item: {fileID: 0}
-  - location: {x: 4, y: 4, z: 0}
-    item: {fileID: 0}
-  - location: {x: 12, y: 7, z: 0}
-    item: {fileID: 0}
-  - location: {x: 18, y: 6, z: 0}
-    item: {fileID: 0}
-  - location: {x: 18, y: 2, z: 0}
-    item: {fileID: 0}
-  - location: {x: 24, y: 12, z: 0}
-    item: {fileID: 0}
-  FoodSourceStoreSection: {fileID: 609238252}
 --- !u!1 &588171184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,12 +2024,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &594495562 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5318295241996425607, guid: 680b7a5510b8f489e862ea82b41f14cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1425400390}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &595932786
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,10 +2959,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 765609358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4933cdddee27341970b70e4763ee72, type: 3}
+  m_Script: {fileID: 11500000, guid: d6ddd4f6b4e76a249bc255e7d1b858fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelIO: {fileID: 462963692}
+  resourceDirectory: Grid/
+  directory: Assets/Resources/Grid/
 --- !u!114 &765609361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4550,6 +4472,34 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &862772413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6874327555454712161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FoodPlacementDatas:
+  - location: {x: 2, y: 23, z: 0}
+    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+  - location: {x: 7, y: 10, z: 0}
+    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+  - location: {x: 4, y: 4, z: 0}
+    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+  - location: {x: 12, y: 7, z: 0}
+    item: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
+  - location: {x: 18, y: 6, z: 0}
+    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+  - location: {x: 18, y: 2, z: 0}
+    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+  - location: {x: 24, y: 12, z: 0}
+    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+  FoodSourceStoreSection: {fileID: 609238252}
 --- !u!224 &877353588 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8051970479444849610, guid: 680b7a5510b8f489e862ea82b41f14cb,
@@ -5455,6 +5405,7 @@ MonoBehaviour:
   EdgeMovement: 0
   edgeSpeed: 10
   edgeBoundary: 30
+  zoomHeight: 15
   LevelDataReference: {fileID: 320161629}
 --- !u!114 &1054101997
 MonoBehaviour:
@@ -7735,7 +7686,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1280332668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df0d5d27e61ed4529bc42c54c40eafe6, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c0aac84ec35496bb636340c696466e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LevelDataReference: {fileID: 320161629}
@@ -8802,7 +8753,7 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   BehaviorPatternUpdater: {fileID: 1576156859}
   GridSystem: {fileID: 1621202152}
-  PauseButton: {fileID: 462793385}
+  PauseButton: {fileID: 1425400391}
   PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
   ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
     type: 3}
@@ -8816,7 +8767,7 @@ PrefabInstance:
     - target: {fileID: 461098412494317410, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 766111037663681712, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
@@ -8968,7 +8919,7 @@ PrefabInstance:
     - target: {fileID: 1824365468828290284, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1923890046165031162, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
@@ -9101,11 +9052,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 97.14749
       objectReference: {fileID: 0}
-    - target: {fileID: 3859339434846047464, guid: 680b7a5510b8f489e862ea82b41f14cb,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 3940803006167269014, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_Text
@@ -9122,11 +9068,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 129.18262
-      objectReference: {fileID: 0}
-    - target: {fileID: 4179941281786509768, guid: 680b7a5510b8f489e862ea82b41f14cb,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4235674868749168370, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
@@ -9146,7 +9087,7 @@ PrefabInstance:
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
@@ -9181,31 +9122,6 @@ PrefabInstance:
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: ToggleGridOverlay
-      objectReference: {fileID: 0}
-    - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5029382863611648250, guid: 680b7a5510b8f489e862ea82b41f14cb,
@@ -9326,6 +9242,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 680b7a5510b8f489e862ea82b41f14cb, type: 3}
+--- !u!1 &1425400391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6943948463895553028, guid: 680b7a5510b8f489e862ea82b41f14cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1425400390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1486070715
 GameObject:
   m_ObjectHideFlags: 0
@@ -9716,18 +9638,6 @@ Transform:
   m_Father: {fileID: 1652469948}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1579699998 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3643579319242990668, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
-    type: 3}
-  m_PrefabInstance: {fileID: 493638994}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ffa30cbd0f68fc4482e9ff0dfac2c5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1582801182
 GameObject:
   m_ObjectHideFlags: 0
@@ -9888,6 +9798,7 @@ GameObject:
   - component: {fileID: 1621202153}
   - component: {fileID: 1621202152}
   - component: {fileID: 1621202154}
+  - component: {fileID: 1621202155}
   m_Layer: 0
   m_Name: GridSystem
   m_TagString: Untagged
@@ -9909,7 +9820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlacementValidation: {fileID: 0}
   Grid: {fileID: 765609363}
-  SpeciesReferenceData: {fileID: 1280332669}
+  ReferenceData: {fileID: 1280332669}
   LevelDataReference: {fileID: 320161629}
   RPM: {fileID: 936381359}
   TileSystem: {fileID: 765609361}
@@ -9942,6 +9853,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7586f8d0b56e84dc49d889cf768d4811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1621202155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621202151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816729202455d4de08722e41b519e674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridOverlay: {fileID: 1708195239}
+  gridColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1652469947
 GameObject:
   m_ObjectHideFlags: 0
@@ -11016,6 +10941,18 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
+--- !u!114 &1676485593 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3643579319242990668, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 493638994}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ffa30cbd0f68fc4482e9ff0dfac2c5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1708195236
 GameObject:
   m_ObjectHideFlags: 0
@@ -11033,7 +10970,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1708195237
 Transform:
   m_ObjectHideFlags: 0
@@ -23794,9 +23731,7 @@ MonoBehaviour:
   ReservePartitionManager: {fileID: 936381359}
   GridSystem: {fileID: 1621202152}
   GenericBehaviors:
-  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
-  levelIO: {fileID: 462963692}
-  speciesReferenceData: {fileID: 1280332669}
+  - {fileID: 11400000, guid: 68f88ecfd3bad42fe8b36869efb36a69, type: 2}
 --- !u!4 &2078374406
 Transform:
   m_ObjectHideFlags: 0
@@ -28713,7 +28648,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50.000977, y: -50}
+  m_AnchoredPosition: {x: -50.000732, y: -50}
   m_SizeDelta: {x: -100, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1910881289714381795
@@ -31745,6 +31680,7 @@ MonoBehaviour:
   itemDropdownMenu: {fileID: 4799730373970479878}
   inspectorWindow: {fileID: 1507429523}
   inspectorWindowText: {fileID: 2012387185}
+  ObjectivePane: {fileID: 0}
 --- !u!1 &2535077653345000887
 GameObject:
   m_ObjectHideFlags: 0
@@ -33863,7 +33799,7 @@ MonoBehaviour:
   StoreMenus:
   - {fileID: 861086360}
   - {fileID: 609238252}
-  PodMenu: {fileID: 1579699998}
+  - {fileID: 1676485593}
   PauseManager: {fileID: 1395149766}
   ResourceManager: {fileID: 1738013071}
   PlayerBalance: {fileID: 4661624496553112467}
@@ -38669,7 +38605,6 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   TileSystem: {fileID: 765609361}
   GridSystem: {fileID: 1621202152}
-  FoodPlacer: {fileID: 549433667}
 --- !u!1 &6874327555454712161
 GameObject:
   m_ObjectHideFlags: 0
@@ -38680,6 +38615,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6874327555454712159}
   - component: {fileID: 6874327555454712160}
+  - component: {fileID: 862772413}
   m_Layer: 0
   m_Name: FoodSourceManager
   m_TagString: Untagged
@@ -40500,7 +40436,6 @@ MonoBehaviour:
   TileSystem: {fileID: 765609361}
   ReservePartitionManager: {fileID: 936381359}
   PauseManager: {fileID: 1395149766}
-  LevelIO: {fileID: 462963692}
 --- !u!4 &8743428314032458837
 Transform:
   m_ObjectHideFlags: 0

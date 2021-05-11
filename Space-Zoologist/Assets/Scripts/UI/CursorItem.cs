@@ -21,7 +21,8 @@ public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     // The sprite to display under the cursor.
     public Sprite Sprite => image.sprite;
     // The image to display the sprite.
-    private Image image = default;
+    public bool IsOn => image.IsActive();
+    private Image image = default; 
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     private void Update()
     {
         transform.position = Input.mousePosition;
+        
     }
 
     /// <summary>

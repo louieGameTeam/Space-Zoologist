@@ -16,22 +16,27 @@ public class DisplayInspectorText : MonoBehaviour
         string displayText = $"{population.species.SpeciesName} Info: \n";
 
         displayText += $"Count: {population.Count} [{population.GrowthStatus}]\n";
-
-        if (population.GrowthStatus.Equals(GrowthStatus.growing))
+        if (population.GrowthStatus.Equals(GrowthStatus.stagnate))
+        {
+            displayText += $"Please wait 1 day for population to get accustomed to enclosure\n";
+        }
+        else if (population.GrowthStatus.Equals(GrowthStatus.growing))
         {
             displayText += $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days\n";
         }
         else
         {
-            foreach (Need need in population.Needs.Values)
+            displayText += $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days\n";
+            displayText += "\n<For development testing>\n";
+            foreach (KeyValuePair<string, Need> need in population.Needs)
             {
-                if (need.GetCondition(need.NeedValue).Equals(NeedCondition.Bad))
+                if (need.Value.GetCondition(need.Value.NeedValue).Equals(NeedCondition.Bad))
                 {
-                    displayText += $"Death countdown for {need.NeedName} need: {population.DaysTillDeath(need.NeedName)} days\n";
+                    displayText += $"{need.Key} need not being met\n";
                 }
             }
         }
-
+        
         this.inspectorWindowText.text = displayText;
     }
 

@@ -31,6 +31,11 @@ public class NeedSystemManager : MonoBehaviour
         this.UpdateAllSystems();
         PopulationManager.UpdateAllGrowthConditions();
         PauseManager.TogglePause();
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
+        {
+            Debug.Log("Received pop extinct message");
+            this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
+        });
     }
 
     private void setupNeedSystems()
@@ -73,8 +78,6 @@ public class NeedSystemManager : MonoBehaviour
             Debug.Assert(systems.ContainsKey(need.NeedType), $"No { need } system");
             systems[need.NeedType].RemoveConsumer(life);
         }
-
-        // TODO also remove from consumed list
     }
 
     /// <summary>

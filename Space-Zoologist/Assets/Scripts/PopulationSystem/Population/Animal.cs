@@ -20,12 +20,10 @@ public class Animal : MonoBehaviour
             this.Animator = null;
             Debug.Log("Animator component not attached");
         }
-        
-        this.MovementController = this.gameObject.GetComponent<MovementController>();
     }
     public void Initialize(Population population, MovementData data)
     {
-        Debug.Log("Initializing animal");
+        this.MovementController = this.gameObject.GetComponent<MovementController>();
         this.MovementData = data;
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;

@@ -89,6 +89,7 @@ public class FoodSourceNeedSystem : NeedSystem
                 {
                     foreach (Population consumer in foodDistributionOutput.Keys)
                     {
+                    Debug.Log(consumer.gameObject.name + " received " + foodDistributionOutput[consumer] + "food from " + foodSourceCalculator.FoodSourceName);
                         consumer.UpdateNeed(foodSourceCalculator.FoodSourceName, foodDistributionOutput[consumer]);
                     }
                 }
