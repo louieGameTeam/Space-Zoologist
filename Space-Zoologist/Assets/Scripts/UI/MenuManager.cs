@@ -4,17 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-// TODO refactor PodMenu to inherit same as other store menus
 public class MenuManager : MonoBehaviour
 {
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalanceHUD = default;
     [SerializeField] List<GameObject> StoreMenuImages = default;
-
     [SerializeField] List<StoreSection> StoreMenus = default;
-    // PodMenu had original different design so could refactor to align with store sections but works for now
-    [SerializeField] PauseManager PauseManager = default;
     [SerializeField] ResourceManager ResourceManager = default;
+    [SerializeField] PauseManager PauseManager = default;
     [Header("Shared menu dependencies")]
     [SerializeField] PlayerBalance PlayerBalance = default;
     [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;

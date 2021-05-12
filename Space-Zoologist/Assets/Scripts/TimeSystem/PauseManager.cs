@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// TODO debug IsPaused
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] PopulationManager PopulationManager = default;

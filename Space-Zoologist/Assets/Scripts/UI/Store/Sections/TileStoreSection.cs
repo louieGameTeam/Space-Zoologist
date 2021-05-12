@@ -51,6 +51,7 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void FinishPlacing()
     {
+        Debug.Log("Finish placing");
         isPlacing = false;
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();

@@ -4974,7 +4974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4751170634262015809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5421,8 +5421,8 @@ MonoBehaviour:
   - {fileID: 920832549469818884}
   - {fileID: 920832549319020144}
   - {fileID: 920832549399028057}
-  PauseManager: {fileID: 0}
   ResourceManager: {fileID: 0}
+  PauseManager: {fileID: 0}
   PlayerBalance: {fileID: 0}
   PlayerBalanceDisplay: {fileID: 920832548821827161}
   LevelDataReference: {fileID: 0}
@@ -7343,7 +7343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1120667243421106253
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8234,6 +8234,11 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 9178815342823601660, guid: 12d3716f9a9f546febe648696da24fd5,
+        type: 3}
+      propertyPath: m_Text
+      value: Click on a point of interest to gather information
+      objectReference: {fileID: 0}
     - target: {fileID: 9178815343780381124, guid: 12d3716f9a9f546febe648696da24fd5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8343,6 +8348,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InspectorWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 9178815343780381127, guid: 12d3716f9a9f546febe648696da24fd5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12d3716f9a9f546febe648696da24fd5, type: 3}
@@ -8924,6 +8934,11 @@ PrefabInstance:
       propertyPath: tilePlacementController
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4330968804073895391, guid: 986e97fd056b44a80afc43d3a0b25214,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4330968804202577152, guid: 986e97fd056b44a80afc43d3a0b25214,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8943,6 +8958,16 @@ PrefabInstance:
         type: 3}
       propertyPath: populationManager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330968804587972568, guid: 986e97fd056b44a80afc43d3a0b25214,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330968804587972574, guid: 986e97fd056b44a80afc43d3a0b25214,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4330968804587972575, guid: 986e97fd056b44a80afc43d3a0b25214,
         type: 3}

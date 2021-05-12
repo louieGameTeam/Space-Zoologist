@@ -23,7 +23,7 @@ public class SpeciesReferenceData : MonoBehaviour
         }
         foreach (AnimalSpecies animalSpecies in this.LevelDataReference.LevelData.AnimalSpecies)
         {
-            this.AnimalSpecies.Add(animalSpecies.name, animalSpecies);
+            this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
         }
     }
 }
