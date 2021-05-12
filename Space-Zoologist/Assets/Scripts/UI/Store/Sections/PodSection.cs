@@ -10,7 +10,6 @@ public class PodSection : StoreSection
     [SerializeField] Transform PodItemContainer = default;
     [Header("Dependencies")]
     [SerializeField] PopulationManager populationManager = default;
-    [SerializeField] TopHUD TopHUD = default;
 
     AnimalSpecies selectedSpecies = null;
 
@@ -35,12 +34,10 @@ public class PodSection : StoreSection
             if (!this.GridSystem.PlacementValidation.IsPodPlacementValid(position, selectedSpecies))
             {
                 Debug.Log("Can't place species there");
-                // this.TopHUD.StartCoroutine("FlashWarning", "Terrain not suitable for " + this.selectedSpecies.SpeciesName);
                 return;
             }
             if (base.ResourceManager.CheckRemainingResource(selectedSpecies) <= 0)
             {
-                // this.TopHUD.StartCoroutine("FlashWarning", "No more " + this.selectedSpecies.SpeciesName + " available");
                 return;
             }
             populationManager.UpdatePopulation(selectedSpecies, position);

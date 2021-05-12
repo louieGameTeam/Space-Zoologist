@@ -909,8 +909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridIO: {fileID: 765609360}
-  currentLevel: Level1
+  plotIO: {fileID: 765609360}
   PauseManager: {fileID: 1395149766}
   PauseButton: {fileID: 1425400391}
   NextDayButton: {fileID: 401962784}
@@ -926,6 +925,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 462963691}
+  - component: {fileID: 462963692}
   m_Layer: 0
   m_Name: Plot
   m_TagString: Untagged
@@ -954,6 +954,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &462963692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462963690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8701b7aa16bc14ebbbb89da855647b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directory: Assets/SaveData/
 --- !u!1001 &493638994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1440,6 +1453,7 @@ PrefabInstance:
     - {fileID: 7016157683956535880, guid: a175b6a01e8ff43e7b20a052eb60ce0b, type: 3}
     - {fileID: 8214766363174909134, guid: a175b6a01e8ff43e7b20a052eb60ce0b, type: 3}
     - {fileID: 4946415117197355056, guid: a175b6a01e8ff43e7b20a052eb60ce0b, type: 3}
+    - {fileID: 3643579319242990668, guid: a175b6a01e8ff43e7b20a052eb60ce0b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a175b6a01e8ff43e7b20a052eb60ce0b, type: 3}
 --- !u!1 &493638995 stripped
 GameObject:
@@ -3019,11 +3033,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 765609358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ddd4f6b4e76a249bc255e7d1b858fe, type: 3}
+  m_Script: {fileID: 11500000, guid: ca4933cdddee27341970b70e4763ee72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceDirectory: Grid/
-  directory: Assets/Resources/Grid/
+  levelIO: {fileID: 462963692}
 --- !u!114 &765609361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3078,6 +3091,29 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!1 &790418370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8767883309134952600, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 493638994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &790418373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790418370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9dd007c654544962b70fa0c1f92a9e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemGrid: {fileID: 1882629709}
+  itemCellPrefab: {fileID: 350285113092910437, guid: aea9f06f2052dd746ae9292eb6d693ff,
+    type: 3}
+  PodItemContainer: {fileID: 0}
+  populationManager: {fileID: 2078374405}
 --- !u!1 &819990575
 GameObject:
   m_ObjectHideFlags: 0
@@ -7718,7 +7754,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1280332668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c0aac84ec35496bb636340c696466e, type: 3}
+  m_Script: {fileID: 11500000, guid: df0d5d27e61ed4529bc42c54c40eafe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LevelDataReference: {fileID: 320161629}
@@ -9877,7 +9913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlacementValidation: {fileID: 0}
   Grid: {fileID: 765609363}
-  ReferenceData: {fileID: 1280332669}
+  SpeciesReferenceData: {fileID: 1280332669}
   LevelDataReference: {fileID: 320161629}
   RPM: {fileID: 936381359}
   TileSystem: {fileID: 765609361}
@@ -10997,18 +11033,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
---- !u!114 &1676485593 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3643579319242990668, guid: a175b6a01e8ff43e7b20a052eb60ce0b,
-    type: 3}
-  m_PrefabInstance: {fileID: 493638994}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ffa30cbd0f68fc4482e9ff0dfac2c5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1708195236
 GameObject:
   m_ObjectHideFlags: 0
@@ -23788,6 +23812,8 @@ MonoBehaviour:
   GridSystem: {fileID: 1621202152}
   GenericBehaviors:
   - {fileID: 11400000, guid: 68f88ecfd3bad42fe8b36869efb36a69, type: 2}
+  levelIO: {fileID: 462963692}
+  speciesReferenceData: {fileID: 1280332669}
 --- !u!4 &2078374406
 Transform:
   m_ObjectHideFlags: 0
@@ -33855,7 +33881,7 @@ MonoBehaviour:
   StoreMenus:
   - {fileID: 861086360}
   - {fileID: 609238252}
-  - {fileID: 1676485593}
+  - {fileID: 790418373}
   PauseManager: {fileID: 1395149766}
   ResourceManager: {fileID: 1738013071}
   PlayerBalance: {fileID: 4661624496553112467}
@@ -40492,6 +40518,7 @@ MonoBehaviour:
   TileSystem: {fileID: 765609361}
   ReservePartitionManager: {fileID: 936381359}
   PauseManager: {fileID: 1395149766}
+  LevelIO: {fileID: 462963692}
 --- !u!4 &8743428314032458837
 Transform:
   m_ObjectHideFlags: 0
