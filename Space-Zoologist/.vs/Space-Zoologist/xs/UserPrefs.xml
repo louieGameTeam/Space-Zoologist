@@ -1,24 +1,37 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Utils/PlacementValidation.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="21" Column="1" />
-      <File FileName="Assets/Scripts/TimeSystem/PauseManager.cs" Line="74" Column="9" />
-      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="106" Column="1" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Animal.cs" Line="36" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/PodSection.cs" Line="41" Column="1" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="181" Column="1" />
+      <File FileName="Assets/Scripts/UI/Inspector/LiquidModificationHUD.cs" Line="64" Column="2" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="301" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="77" Column="61" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
+          <Node name="Space-Zoologist" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="0-ScriptableObjects" expanded="True" />
+                <Node name="Needs" expanded="True">
+                  <Node name="Systems" expanded="True" />
+                </Node>
+                <Node name="PopulationSystem" expanded="True">
+                  <Node name="Population" expanded="True">
+                    <Node name="PopulationManager.cs" selected="True" />
+                  </Node>
+                  <Node name="Representation" expanded="True" />
+                </Node>
+                <Node name="UI" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="55b41f3c-5ac8-4da1-97d9-08801b94dee9" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f7e0f87a-6789-4124-8676-bbacf71de810" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

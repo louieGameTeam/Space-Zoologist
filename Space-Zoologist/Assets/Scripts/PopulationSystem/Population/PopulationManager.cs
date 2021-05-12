@@ -57,12 +57,25 @@ public class PopulationManager : MonoBehaviour
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
         newPopulationGameObject.name = species.SpeciesName;
         Population population = newPopulationGameObject.GetComponent<Population>();
+        this.ExistingPopulations.Add(population);
+        // Initialize the basic population data, register the population, then initialize the animals and their behaviors
+        population.GetComponent<PopulationBehaviorManager>().tempBehaviors = CopyBehaviors();
+        population.InitializeNewPopulation(species, position);
+        this.HandlePopulationRegistration(population);
+        population.InitializeExistingAnimals();
+        EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
+        return population;
+    }
+
+    // TODO determine better way to setup behaviors
+    private List<PopulationBehavior> CopyBehaviors()
+    {
         List<PopulationBehavior> copiedBehaviors = new List<PopulationBehavior>();
         // Have to copy behavior scriptable objects for them to work on multiple populations
         foreach (PopulationBehavior behavior in GenericBehaviors)
         {
             List<BehaviorPattern> patterns = new List<BehaviorPattern>();
-            foreach(BehaviorPattern pattern in behavior.behaviorPatterns)
+            foreach (BehaviorPattern pattern in behavior.behaviorPatterns)
             {
                 patterns.Add(Instantiate(pattern));
             }
@@ -70,15 +83,7 @@ public class PopulationManager : MonoBehaviour
             newBehavior.behaviorPatterns = patterns;
             copiedBehaviors.Add(newBehavior);
         }
-        population.GetComponent<PopulationBehaviorManager>().tempBehaviors = copiedBehaviors;
-        this.ExistingPopulations.Add(population);
-        population.GetComponent<PopulationBehaviorManager>().tempBehaviors = GenericBehaviors;
-        // Initialize the basic population data, register the population, then initialize the animals and their behaviors
-        population.InitializeNewPopulation(species, position, positions);
-        this.HandlePopulationRegistration(population);
-        population.InitializeExistingAnimals();
-        EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
-        return population;
+        return copiedBehaviors;
     }
     /// <summary>
     /// Creates a population if needed, then adds a new animal to the population

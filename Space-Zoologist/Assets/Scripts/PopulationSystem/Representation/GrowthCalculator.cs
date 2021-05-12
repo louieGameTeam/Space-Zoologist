@@ -33,7 +33,6 @@ public class GrowthCalculator
 
     /*
         1. if any needs of a type are good, then need is satisfied
-            a. if any needs are poison, then need is not satisfied
         2. reset NeedTracker and udpate growth status
     */
     public void CalculateGrowth()
@@ -48,20 +47,7 @@ public class GrowthCalculator
                 NeedCondition needCondition = need.Value.GetCondition(need.Value.NeedValue);
                 if (needCondition.Equals(NeedCondition.Good))
                 {
-             
-                    Debug.Log(need.Value.NeedName + " is being met");
                     NeedTracker[need.Value.NeedType] = NeedCondition.Good;
-                }
-                if (need.Value.IsPoison)
-                {
-                    if (needCondition.Equals(NeedCondition.Good))
-                    {
-                        isPoisoned = true;
-                    }
-                    else
-                    {
-                        NeedTracker[need.Value.NeedType] = NeedCondition.Good;
-                    }
                 }
             }
         }
@@ -77,33 +63,6 @@ public class GrowthCalculator
         }
         NeedTracker = resetNeedTracker;
     }
-
-    //private void HandleBadCondition(KeyValuePair<string, Need> need)
-    //{
-    //    GrowthStatus = GrowthStatus.declining;
-    //    this.GrowthCountdown = Population.Species.GrowthRate;
-    //    needTimers[need.Key]--;
-    //}
-
-    //private void HandleGoodCondition(KeyValuePair<string, Need> need)
-    //{
-    //    needTimers[need.Key] = need.Value.Severity;
-    //}
-
-    //public int NumAnimalsToRemove()
-    //{
-    //    int numAnimals = 0;
-    //    var needTimerCopy = new Dictionary<string, int>(this.needTimers);
-    //    foreach (KeyValuePair<string, int> needTimer in needTimerCopy)
-    //    {
-    //        if (needTimer.Value == 0)
-    //        {
-    //            numAnimals++;
-    //            needTimers[needTimer.Key] = Population.Needs[needTimer.Key].Severity;
-    //        }
-    //    }
-    //    return numAnimals;
-    //}
 
     public bool ReadyForDecay()
     {

@@ -14,12 +14,10 @@ public class Need
     public Sprite Sprite => sprite;
     public float NeedValue => this.needValue;
     public List<NeedBehavior> Behaviors => this.conditions;
-    public bool IsPoison => isPoison;
 
     [SerializeField] private NeedType needType = default;
     [SerializeField] private string needName = default;
     [SerializeField] private float needValue = default;
-    [SerializeField] private bool isPoison = false;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
     [SerializeField] private List<NeedBehavior> conditions = default;
@@ -34,7 +32,6 @@ public class Need
         this.conditions = needConstructData.Conditions;
         this.thresholds = needConstructData.Thresholds;
         this.conditions = needConstructData.Conditions;
-        this.isPoison = needConstructData.IsPoison;
     }
 
     /// <summary>

@@ -47,20 +47,6 @@ public class Population : MonoBehaviour, Life
     private PopulationBehaviorManager PopulationBehaviorManager = default;
     private bool isPaused = false;
 
-/*    private void Awake()
-    {
-        
-        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
-        SetupBehaviors();
-        if (this.species != null)
-        {
-            this.GrowthCalculator = new GrowthCalculator(this);
-            this.SetupNeeds();
-            this.origin = this.transform.position;
-        }
-    }*/
-
     private void Start()
     {
         int i=0;
@@ -78,9 +64,7 @@ public class Population : MonoBehaviour, Life
     /// <param name="species">The species of the population</param>
     /// <param name="origin">The origin of the population</param>
     /// <param name="needSystemManager"></param>
-    /// TODO simplify populations size, as it will always be the same as number of positions given 
-    /// TODO population instantiation should likely come from an populationdata object with more fields
-    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin, Vector3[] positions)
+    public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin)
     {
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
@@ -100,7 +84,6 @@ public class Population : MonoBehaviour, Life
         int i = 0;
         foreach (PopulationBehavior behaviorPattern in this.DefaultBehaviors)
         {
-            Debug.Log("added behavior: " + behaviorPattern.name);
             this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
             i++;
         }
@@ -202,7 +185,6 @@ public class Population : MonoBehaviour, Life
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
-    // TODO figure out filter bug for behaviors
     /// <summary>
     /// Updates the needs behaviors based on the need's current condition
     /// </summary>
@@ -211,9 +193,6 @@ public class Population : MonoBehaviour, Life
     {
         if (this.PopulationBehaviorManager.ActiveBehaviors.ContainsKey(need))
         {
-            // previous implementation
-            //this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needBehaviors[this.needs[need]][needCondition];
-
             this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needs[need].GetBehavior(needs[need].NeedValue).Behavior;
         }
     }
@@ -290,7 +269,6 @@ public class Population : MonoBehaviour, Life
     }
 
     // removes last animal in list and last behavior
-    // TODO remove count of animals
     public void RemoveAnimal()
     {
         if (this.AnimalPopulation.Count == 0)
