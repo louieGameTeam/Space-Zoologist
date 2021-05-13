@@ -28,7 +28,7 @@ public class FoodSourceStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData) || base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
+        if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Right || base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
             base.OnItemSelectionCanceled();
             return;

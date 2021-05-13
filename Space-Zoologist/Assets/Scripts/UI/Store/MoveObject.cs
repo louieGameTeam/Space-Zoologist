@@ -12,25 +12,27 @@ public class MoveObject : MonoBehaviour
     [SerializeField] PopulationManager populationManager = default;
     [SerializeField] FoodSourceManager foodSourceManager = default;
     [SerializeField] ReservePartitionManager reservePartitionManager = default;
+    [SerializeField] CursorItem cursorItem = default;
+    [SerializeField] private GridOverlay gridOverlay = default;
+    Item tempItem;
 
     GameObject toMove = null;
     bool movingAnimal = false;
     Vector3 initialPos;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        tempItem = new Item();
     }
 
+    private Vector3Int previousLocation = default;
     // Update is called once per frame
     void Update()
     {
-        if (reserveDraft.IsToggled){ //TODO replace this with a mode in store that toggles drag & drop
+        if (reserveDraft.IsToggled){ //TODO? replace this with a mode in store that toggles drag & drop?
 
             if (Input.GetMouseButtonDown(0)) {
-
-                // TODO check that we are not currently placing items
-                bool notPlacingItem = true;
+                bool notPlacingItem = !cursorItem.IsOn;
                 if (notPlacingItem) {
 
                     // Imported from Inspector.cs -- prevents selecting UI element
@@ -46,22 +48,25 @@ public class MoveObject : MonoBehaviour
                     Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
                     GridSystem.CellData cellData = getCellData(pos);
 
-
                     if (cellData.OutOfBounds)
                     {
                         return;
                     }
 
-
                     if (cellData.ContainsAnimal)
                     {
                         toMove = cellData.Animal;
                         movingAnimal = true;
+                        string ID = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
+                        tempItem.SetupData(ID, "Pod", ID, 0);
                     }
                     else if (cellData.ContainsFood)
                     {
                         toMove = cellData.Food;
                         movingAnimal = false;
+                        string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
+                        tempItem.SetupData(ID, "Food", ID, 0);
+
                     }
                     if (toMove != null) initialPos = toMove.transform.position;
                 }
@@ -72,6 +77,18 @@ public class MoveObject : MonoBehaviour
                 Vector3 newPosition = referenceCamera.ScreenToWorldPoint(Input.mousePosition);
                 newPosition.z = z;
                 toMove.transform.position = newPosition;
+
+                if (!gridSystem.IsWithinGridBounds(newPosition)) return;
+
+                Vector3Int gridLocation = gridSystem.Grid.WorldToCell(newPosition);
+                if (this.gridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
+
+                if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
+                {
+                    previousLocation = gridLocation;
+                    gridOverlay.ClearColors();
+                    gridSystem.PlacementValidation.updateVisualPlacement(gridLocation, tempItem);
+                }
             }
              
             if (Input.GetMouseButtonUp(0) && toMove != null)
