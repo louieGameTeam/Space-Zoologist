@@ -57,6 +57,7 @@ public class TileStoreSection : StoreSection
         tilePlacementController.StopPreview();
         base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, numTilesPlaced);
+        base.OnItemSelectionCanceled();
     }
 
     /// <summary>
@@ -111,8 +112,7 @@ public class TileStoreSection : StoreSection
             {
                 numTilesPlaced = tilePlacementController.PlacedTileCount();
                 base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
-
-                if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
+                if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced <= 0)
                 {
                     FinishPlacing();
                 }
