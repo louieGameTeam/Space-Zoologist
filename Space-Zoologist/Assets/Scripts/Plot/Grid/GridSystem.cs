@@ -229,65 +229,50 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    //// Resets and recalculates everytime in case a population dies
-    //public void HighlightHomeLocations()
-    //{
-    //    this.PopulationHomeLocations = this.RecalculateHomeLocation();
-    //    foreach (Vector3Int location in this.PopulationHomeLocations)
-    //    {
-    //        this.TilePlacementValidation.SetTile(location, this.Tile);
-    //    }
-    //}
-
-    //private HashSet<Vector3Int> RecalculateHomeLocation()
-    //{
-    //    HashSet<Vector3Int> homeLocations = new HashSet<Vector3Int>();
-    //    foreach (Population population in this.PopulationManager.Populations)
-    //    {
-    //        Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
-    //        for (int i=-1; i<=1; i++)
-    //        {
-    //            for (int j=-1; j<=1; j++)
-    //            {
-    //                Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
-    //                if (!homeLocations.Contains(loc))
-    //                {
-    //                    homeLocations.Add(loc);
-    //                    this.CellGrid[origin.x + i, origin.y + j].HomeLocation = true;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    return homeLocations;
-    //}
-
-    //public void UnhighlightHomeLocations()
-    //{
-    //    foreach (Vector3Int location in this.PopulationHomeLocations)
-    //    {
-    //        this.TilePlacementValidation.SetTile(location, null);
-    //    }
-    //}
-
-    // Showing how tiles can be shaded
-    // We'll likely need a better version of this in the future for determing if we're setting up levels correctly
-    private void ShadeOutsidePerimeter()
+    public void AddFood(Vector3Int gridPosition, int size, GameObject foodSource)
     {
-        for (int x=-1; x<this.GridWidth + 1; x++)
+        int radius = size / 2;
+        Vector3Int pos;
+        int offset = 0;
+        if (size % 2 == 0)
         {
-            this.ShadeSquare(x, -1, Color.red);
-            this.ShadeSquare(x, this.GridHeight, Color.red);
+            offset = 1;
         }
-        for (int y=-1; y<this.GridHeight + 1; y++)
+        // Check if the whole object is in bounds
+        for (int x = -1 * (radius - offset); x <= radius; x++)
         {
-            this.ShadeSquare(-1, y, Color.red);
-            this.ShadeSquare(this.GridWidth, y, Color.red);
+            for (int y = -1 * (radius - offset); y <= radius; y++)
+            {
+                pos = gridPosition;
+                pos.x += x;
+                pos.y += y;
+                CellGrid[pos.x, pos.y].ContainsFood = true;
+                CellGrid[pos.x, pos.y].Food = foodSource;
+            }
         }
     }
 
-    public void ShadeSquare(int x, int y, Color color)
+    // Remove the food source on this tile, a little inefficient
+    public void RemoveFood(Vector3Int gridPosition)
     {
-        Vector3Int cellToShade = new Vector3Int(x, y, 0);
+        Vector3Int pos = gridPosition;
+        if (!CellGrid[pos.x, pos.y].ContainsFood) return;
+
+        GameObject foodSource = CellGrid[pos.x, pos.y].Food;
+        int size = foodSource.GetComponent<FoodSource>().Species.Size;
+
+        for (int dx = -size; dx < size; dx++)
+        {
+            for (int dy = -size; dy < size; dy++)
+            {
+                CellData cell = CellGrid[pos.x + dx, pos.y + dy];
+                if (cell.ContainsFood && ReferenceEquals(cell.Food, foodSource))
+                {
+                    CellGrid[pos.x + dx, pos.y + dy].ContainsFood = false;
+                    CellGrid[pos.x + dx, pos.y + dy].Food = null;
+                }
+            }
+        }
     }
 
     public struct CellData

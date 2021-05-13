@@ -137,7 +137,7 @@ public class PlacementValidation : MonoBehaviour
     {
         // Prevent placing on walls
         GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
-        if (selectedTile.type.Equals(TileType.Wall))
+        if (selectedTile != null && selectedTile.type.Equals(TileType.Wall))
         {
             return true;
         }

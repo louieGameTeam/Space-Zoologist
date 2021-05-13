@@ -44,7 +44,7 @@ public class PlotIO : MonoBehaviour
                 {
                     tileLayerManager.ParseSerializedTilemap(serializedTilemap, this.tilePlacementController.gameTiles);
                     tilemapFound = true;
-                    Debug.Log("Loaded map from resources");
+                    // Debug.Log("Loaded map from resources");
                     break;
                 }
             }
@@ -64,7 +64,6 @@ public class PlotIO : MonoBehaviour
         // Notify if a saved object is not been serialized
         if (this.SerializedPlot.serializedMapObjects.names == null)
         {
-            Debug.LogWarning("No map objects found in save");
             return;
         }
         foreach (string name in this.SerializedPlot.serializedMapObjects.names)

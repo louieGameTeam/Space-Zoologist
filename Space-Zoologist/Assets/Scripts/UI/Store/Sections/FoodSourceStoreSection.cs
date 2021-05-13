@@ -29,7 +29,8 @@ public class FoodSourceStoreSection : StoreSection
     {
         Debug.Log("Attempting to place food");
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData) || base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
+        if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Right ||
+            base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
             Debug.Log("Cannot place item that location");
             base.OnItemSelectionCanceled();
@@ -50,69 +51,28 @@ public class FoodSourceStoreSection : StoreSection
         }
     }
 
-    // TODO setup manual food placement while Virgil gets saving and loading updated.
-
     public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies foodSource = null)
     {
-        Debug.Log("Placing food");
-        Vector3Int pos;
-        Vector2 mousePosition = new Vector2(mouseGridPosition.x, mouseGridPosition.y);
-        //base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
         FoodSourceSpecies species = base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem);
-        int radius = species.Size / 2;
+        Vector3Int Temp = mouseGridPosition;
+        Temp.x += 1;
+        Temp.y += 1;
+        GameObject Food;
+        Vector3 FoodLocation;
         if (species.Size % 2 == 1)
         {
             //size is odd: center it
-            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(mouseGridPosition);
-            Vector3Int Temp = mouseGridPosition;
-            Temp.x += 1;
-            Temp.y += 1;
+            FoodLocation = base.GridSystem.Grid.CellToWorld(mouseGridPosition);
             FoodLocation += Temp;
             FoodLocation /= 2f;
-            GameObject Food;
-            if (foodSource = null)
-            {
-                Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
-            }
-            else
-            {
-                Food = FoodSourceManager.CreateFoodSource(foodSource, FoodLocation);
-            }
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius; x <= radius; x++)
-            {
-                for (int y = -1 * radius; y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    base.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    base.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
-
         }
         else
         {
             //size is even: place it at cross-center (position of tile)
-            Vector3Int Temp = mouseGridPosition;
-            Temp.x += 1;
-            Temp.y += 1;
-            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(Temp);
-            GameObject Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
-
-            // Check if the whole object is in bounds
-            for (int x = -1 * (radius - 1); x <= radius; x++)
-            {
-                for (int y = -1 * (radius - 1); y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    base.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    base.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
+            FoodLocation = base.GridSystem.Grid.CellToWorld(Temp);
         }
+        Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
+
+        GridSystem.AddFood(mouseGridPosition, species.Size, Food);
     }
 }

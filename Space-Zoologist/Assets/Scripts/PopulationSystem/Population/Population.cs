@@ -24,8 +24,8 @@ public class Population : MonoBehaviour, Life
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
     public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
-    private float animatorSpeed = 0f;
-    private float overlaySpeed = 0f;
+    private float animatorSpeed = 1f;
+    private float overlaySpeed = 1f;
 
     [Expandable] public AnimalSpecies species = default;
     [SerializeField] private GameObject AnimalPrefab = default;
@@ -282,6 +282,7 @@ public class Population : MonoBehaviour, Life
             this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
             this.PopulationBehaviorManager.RemoveAnimal(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
+            this.AnimalPopulation[this.AnimalPopulation.Count - 1].GetComponent<AnimalBehaviorManager>().activeBehaviorPattern.UpdatePattern();
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
             if (this.AnimalPopulation.Count == 0)

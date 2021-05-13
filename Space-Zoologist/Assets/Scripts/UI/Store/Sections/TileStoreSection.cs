@@ -115,6 +115,7 @@ public class TileStoreSection : StoreSection
                 if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
                 {
                     FinishPlacing();
+                    base.OnItemSelectionCanceled();
                 }
             }
         }

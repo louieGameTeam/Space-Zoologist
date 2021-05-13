@@ -17,11 +17,8 @@ public class ReserveDraft : MonoBehaviour
     SerializedPlot plot;
     float initialBalance;
 
-
-
     public void Start()
     {
-        plotIO = FindObjectOfType<PlotIO>();
         plot = plotIO.SavePlot();
         draftPlot = plotIO.SavePlot();
     }
@@ -43,7 +40,9 @@ public class ReserveDraft : MonoBehaviour
     public void startDrafting()
     {
         plotIO.LoadPlot(this.draftPlot);
+        plotIO.ParseSerializedObjects();
         PauseManager.TryToPause();
+        Debug.Log("started drafting");
 
         // save current resources
         resourceManager.Save();
@@ -53,7 +52,9 @@ public class ReserveDraft : MonoBehaviour
 
     public void finishDrafting()
     {
+        Debug.Log("finished drafting");
         plotIO.LoadPlot(this.plot);
+        plotIO.ParseSerializedObjects();
         PauseManager.Unpause();
 
         // load resources - won't change if applied draft
@@ -64,7 +65,7 @@ public class ReserveDraft : MonoBehaviour
 
     public void applyDraft()
     {
-        plot = plotIO.SavePlot();
+        draftPlot = plotIO.SavePlot();
 
         // save changes
         resourceManager.Save();
@@ -82,6 +83,7 @@ public class ReserveDraft : MonoBehaviour
     public void loadDraft()
     {
         plotIO.LoadPlot(this.draftPlot);
+        plotIO.ParseSerializedObjects();
         plot = plotIO.SavePlot();
         draftPlot = plotIO.SavePlot();
     }

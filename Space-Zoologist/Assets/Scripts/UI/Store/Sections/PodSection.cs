@@ -38,6 +38,7 @@ public class PodSection : StoreSection
             }
             if (base.ResourceManager.CheckRemainingResource(selectedSpecies) <= 0)
             {
+                base.OnItemSelectionCanceled();
                 return;
             }
             populationManager.UpdatePopulation(selectedSpecies, position);

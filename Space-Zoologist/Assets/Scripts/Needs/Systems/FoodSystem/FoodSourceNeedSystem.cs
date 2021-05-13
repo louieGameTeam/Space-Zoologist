@@ -112,7 +112,7 @@ public class FoodSourceNeedSystem : NeedSystem
     }
 
     public void RemoveFoodSource(FoodSource foodSource) {
-        if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
+        if (this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
         {
             this.foodSourceCalculators[foodSource.Species.SpeciesName].RemoveSource(foodSource);
 

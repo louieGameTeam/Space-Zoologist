@@ -1,11 +1,16 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Grid/GridSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/FoodSourceManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="14" Column="35" />
-      <File FileName="Assets/Scripts/TimeSystem/PauseManager.cs" Line="117" Column="1" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="18" Column="18" />
-      <File FileName="Assets/Scripts/0-Utils/SpeciesReferenceData.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="45" Column="34" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="118" Column="52" />
+      <File FileName="Assets/Scripts/SerializedObjects/SerializedLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SerializedObjects/SerializedGrid.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Plot/LevelIO.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Plot/ReserveDraft.cs" Line="70" Column="24" />
+      <File FileName="Assets/Scripts/Plot/Grid/PlotIO.cs" Line="12" Column="18" />
+      <File FileName="Assets/Scripts/Needs/GridObjectManager.cs" Line="9" Column="14" />
+      <File FileName="Assets/Scripts/TimeSystem/TimeSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="8" Column="34" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,23 +21,17 @@
                 <Node name="0-BaseClasses" expanded="True" />
                 <Node name="0-ScriptableObjects" expanded="True" />
                 <Node name="0-Utils" expanded="True" />
-                <Node name="Managers" expanded="True" />
-                <Node name="Needs" expanded="True">
-                  <Node name="Systems" expanded="True" />
+                <Node name="Managers" expanded="True">
+                  <Node name="FoodSourceManager.cs" selected="True" />
                 </Node>
+                <Node name="Needs" expanded="True" />
                 <Node name="Plot" expanded="True">
-                  <Node name="Grid" expanded="True">
-                    <Node name="GridSystem.cs" selected="True" />
-                  </Node>
+                  <Node name="Grid" expanded="True" />
                   <Node name="Utils" expanded="True" />
                 </Node>
-                <Node name="PopulationSystem" expanded="True">
-                  <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True" />
-                </Node>
+                <Node name="SerializedObjects" expanded="True" />
                 <Node name="TimeSystem" expanded="True" />
                 <Node name="UI" expanded="True">
-                  <Node name="Inspector" expanded="True" />
                   <Node name="Store" expanded="True">
                     <Node name="Sections" expanded="True" />
                   </Node>
@@ -42,16 +41,11 @@
           </Node>
         </State>
       </Pad>
-      <Pad Id="ClassPad">
-        <State name="__root__">
-          <Node name="Space-Zoologist" expanded="True" selected="True" />
-        </State>
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f7e0f87a-6789-4124-8676-bbacf71de810" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8bb9d455-b753-49f5-b7c8-54a3e406f9b6" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

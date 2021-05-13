@@ -95,12 +95,18 @@ public class FoodSourceCalculator : NeedCalculator
 
     public bool RemoveSource(Life source)
     {
+        Debug.Log("REMOVING");
+        Debug.Log(this.FoodSourceName);
         FoodSource foodSource = (FoodSource)source;
-
+        Debug.Log(foodSources.Contains(foodSource));
         this.isDirty = true;
 
-        Debug.Assert(!this.foodSources.Remove(foodSource), "FoodSource removal failure");
-        Debug.Assert(!this.populationsWithAccess.Remove(foodSource), "Removal of foodsource in populationsWithAccess failed!");
+        Debug.Assert(this.foodSources.Remove(foodSource), "FoodSource removal failure");
+        foreach (Population pop in populationsWithAccess[foodSource])
+        {
+            Debug.Assert(accessibleFoodSources[pop].Remove(foodSource), "Accessible FoodSource removal failure");
+        }
+        Debug.Assert(this.populationsWithAccess.Remove(foodSource), "Removal of foodsource in populationsWithAccess failed!");
 
         return true;
     }
