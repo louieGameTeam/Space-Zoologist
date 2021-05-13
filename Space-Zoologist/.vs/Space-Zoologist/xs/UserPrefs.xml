@@ -1,22 +1,28 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="14" Column="35" />
-      <File FileName="Assets/Scripts/TimeSystem/PauseManager.cs" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" />
-      <File FileName="Assets/Scripts/0-Utils/SpeciesReferenceData.cs" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="45" Column="34" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="19" Column="42" />
+      <File FileName="Assets/Scripts/TimeSystem/PauseManager.cs" Line="116" Column="1" />
+      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" Line="167" Column="1" />
+      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="81" Column="24" />
       <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="59" Column="67" />
-      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="106" Column="23" />
-      <File FileName="Assets/Scripts/UI/Utils/CursorItem.cs" Line="58" Column="17" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/PodSection.cs" Line="41" Column="48" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/PodSection.cs" Line="39" Column="47" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="38" Column="66" />
+      <File FileName="Assets/Scripts/UI/CursorItem.cs" Line="46" Column="17" />
+      <File FileName="Assets/Scripts/UI/Store/Item.cs" Line="7" Column="14" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/BehaviorPattern.cs" Line="54" Column="26" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="285" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
+              <Node name="AnimalRepresentation" expanded="True">
+                <Node name="Patterns" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="0-BaseClasses" expanded="True" />
                 <Node name="0-ScriptableObjects" expanded="True" />
@@ -26,7 +32,6 @@
                   <Node name="Systems" expanded="True" />
                 </Node>
                 <Node name="Plot" expanded="True">
-                  <Node name="Grid" expanded="True" />
                   <Node name="Utils" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
@@ -41,7 +46,6 @@
                       <Node name="FoodSourceStoreSection.cs" selected="True" />
                     </Node>
                   </Node>
-                  <Node name="Utils" expanded="True" />
                 </Node>
               </Node>
             </Node>

@@ -29,7 +29,7 @@ public class FoodSourceStoreSection : StoreSection
     {
         Debug.Log("Attempting to place food");
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData) || base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
+        if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Left || base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
             Debug.Log("Cannot place item that location");
             base.OnItemSelectionCanceled();
