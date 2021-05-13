@@ -24,8 +24,8 @@ public class Population : MonoBehaviour, Life
     public List<Vector3Int> AccessibleLocations { get; private set; }
 
     public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
-    private float animatorSpeed = 0f;
-    private float overlaySpeed = 0f;
+    private float animatorSpeed = 1f;
+    private float overlaySpeed = 1f;
 
     [Expandable] public AnimalSpecies species = default;
     [SerializeField] private GameObject AnimalPrefab = default;
