@@ -53,27 +53,25 @@ public class FoodSourceStoreSection : StoreSection
     public void placeFood(Vector3Int mouseGridPosition)
     {
         FoodSourceSpecies species = base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem);
-        Vector3Int Temp = mouseGridPosition;
+        Vector3Int Temp = mouseGridPosition; // mouse position with offset
         Temp.x += 1;
         Temp.y += 1;
+
+        Vector3 FoodLocation;
         if (species.Size % 2 == 1)
         {
             //size is odd: center it
-            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
+            FoodLocation = base.GridSystem.Grid.CellToWorld(mouseGridPosition); //doing this floors the mouse position to the closest integer grid position
             FoodLocation += Temp;
             FoodLocation /= 2f;
-
-            GameObject Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
-
-            GridSystem.AddFood(mouseGridPosition, species.Size, Food);
         }
         else
         {
             //size is even: place it at cross-center (position of tile)
-            Vector3 FoodLocation = base.GridSystem.Grid.CellToWorld(Temp); //equivalent since cell and world is 1:1, but in Vector3
-            GameObject Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
-
-            GridSystem.AddFood(mouseGridPosition, species.Size, Food);
+            FoodLocation = base.GridSystem.Grid.CellToWorld(Temp);
         }
+
+        GameObject Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
+        GridSystem.AddFood(mouseGridPosition, species.Size, Food);
     }
 }

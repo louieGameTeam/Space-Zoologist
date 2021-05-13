@@ -18,21 +18,24 @@ public class MoveObject : MonoBehaviour
 
     GameObject toMove = null;
     bool movingAnimal = false;
+    Vector3Int previousLocation = default; // previous grid location
     Vector3 initialPos;
+    Vector3 curPos;
 
     private void Start()
     {
         tempItem = new Item();
     }
 
-    private Vector3Int previousLocation = default;
     // Update is called once per frame
     void Update()
     {
         if (reserveDraft.IsToggled){ //TODO? replace this with a mode in store that toggles drag & drop?
 
             if (Input.GetMouseButtonDown(0)) {
+                // currently has no cursorItem
                 bool notPlacingItem = !cursorItem.IsOn;
+
                 if (notPlacingItem) {
 
                     // Imported from Inspector.cs -- prevents selecting UI element
@@ -41,54 +44,14 @@ public class MoveObject : MonoBehaviour
                         return;
                     }
 
-
-                    // Update animal location reference
-                    this.gridSystem.UpdateAnimalCellGrid();
-                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
-                    GridSystem.CellData cellData = getCellData(pos);
-
-                    if (cellData.OutOfBounds)
-                    {
-                        return;
-                    }
-
-                    if (cellData.ContainsAnimal)
-                    {
-                        toMove = cellData.Animal;
-                        movingAnimal = true;
-                        string ID = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
-                        tempItem.SetupData(ID, "Pod", ID, 0);
-                    }
-                    else if (cellData.ContainsFood)
-                    {
-                        toMove = cellData.Food;
-                        movingAnimal = false;
-                        string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
-                        tempItem.SetupData(ID, "Food", ID, 0);
-
-                    }
-                    if (toMove != null) initialPos = toMove.transform.position;
+                    // Select the food or animal at mouse position
+                    SelectGameObjectAtMousePosition();
                 }
             }
 
             if (toMove != null) {
-                float z = toMove.transform.position.z;
-                Vector3 newPosition = referenceCamera.ScreenToWorldPoint(Input.mousePosition);
-                newPosition.z = z;
-                toMove.transform.position = newPosition;
-
-                if (!gridSystem.IsWithinGridBounds(newPosition)) return;
-
-                Vector3Int gridLocation = gridSystem.Grid.WorldToCell(newPosition);
-                if (this.gridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
-
-                if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
-                {
-                    previousLocation = gridLocation;
-                    gridOverlay.ClearColors();
-                    gridSystem.PlacementValidation.updateVisualPlacement(gridLocation, tempItem);
-                }
+                GameObjectFollowMouse();
+                HighlightGrid();
             }
              
             if (Input.GetMouseButtonUp(0) && toMove != null)
@@ -97,38 +60,15 @@ public class MoveObject : MonoBehaviour
                 this.gridSystem.UpdateAnimalCellGrid();
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 worldPos.z = 0;
-                Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
 
 
                 if (movingAnimal)
                 {
-                    Population population = toMove.GetComponent<Animal>().PopulationInfo;
-                    AnimalSpecies species = population.Species;
-
-                    bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species);
-
-                    // placement is valid and population did not already reach here
-                    if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species)) {
-                        populationManager.UpdatePopulation(species, 1, worldPos);
-                        population.RemoveAnimal();
-                    }
-                    toMove.transform.position = initialPos;
+                    TryPlaceAnimal(worldPos);
                 }
                 else
                 {
-                    FoodSource foodSource = toMove.GetComponent<FoodSource>();
-                    FoodSourceSpecies species = foodSource.Species;
-                    bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species, toMove);
-
-                    print(valid);
-                    if (valid)
-                    {
-                        removeOriginalFood(foodSource);
-                        placeFood(pos, species);
-                    }
-                    else {
-                        toMove.transform.position = initialPos;
-                    }
+                    TryPlaceFood(worldPos);
                 }
 
                 toMove = null;
@@ -136,6 +76,94 @@ public class MoveObject : MonoBehaviour
         }
 
     }
+    
+    private void SelectGameObjectAtMousePosition()
+    {
+        // Update animal location reference
+        this.gridSystem.UpdateAnimalCellGrid();
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
+        GridSystem.CellData cellData = getCellData(pos);
+
+        if (cellData.OutOfBounds)
+        {
+            return;
+        }
+
+        if (cellData.ContainsAnimal)
+        {
+            toMove = cellData.Animal;
+            movingAnimal = true;
+            string ID = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
+            tempItem.SetupData(ID, "Pod", ID, 0);
+        }
+        else if (cellData.ContainsFood)
+        {
+            toMove = cellData.Food;
+            movingAnimal = false;
+            string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
+            tempItem.SetupData(ID, "Food", ID, 0);
+        }
+
+        if (toMove != null) initialPos = toMove.transform.position;
+    }
+
+    private void GameObjectFollowMouse() {
+        float z = toMove.transform.position.z;
+        curPos = referenceCamera.ScreenToWorldPoint(Input.mousePosition);
+        curPos.z = z;
+        toMove.transform.position = curPos;
+    }
+
+    private void HighlightGrid() {
+
+        curPos = referenceCamera.ScreenToWorldPoint(Input.mousePosition);
+        if (!gridSystem.IsWithinGridBounds(curPos)) return;
+
+        Vector3Int gridLocation = gridSystem.Grid.WorldToCell(curPos);
+        if (this.gridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
+
+        // Different position: need to repaint
+        if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
+        {
+            previousLocation = gridLocation;
+            gridOverlay.ClearColors();
+            gridSystem.PlacementValidation.updateVisualPlacement(gridLocation, tempItem);
+        }
+    }
+
+    private void TryPlaceAnimal(Vector3 worldPos) {
+        Population population = toMove.GetComponent<Animal>().PopulationInfo;
+        AnimalSpecies species = population.Species;
+
+        bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species);
+
+        // placement is valid and population did not already reach here
+        if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species))
+        {
+            populationManager.UpdatePopulation(species, 1, worldPos);
+            population.RemoveAnimal();
+        }
+        toMove.transform.position = initialPos;
+    }
+
+    private void TryPlaceFood(Vector3 worldPos) {
+        FoodSource foodSource = toMove.GetComponent<FoodSource>();
+        FoodSourceSpecies species = foodSource.Species;
+        Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
+        bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species, toMove);
+
+        if (valid)
+        {
+            removeOriginalFood(foodSource);
+            placeFood(pos, species);
+        }
+        else
+        {
+            toMove.transform.position = initialPos;
+        }
+    }
+
     public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
     {
         Vector3Int Temp = mouseGridPosition;
@@ -170,17 +198,17 @@ public class MoveObject : MonoBehaviour
     }
 
     private GridSystem.CellData getCellData(Vector3Int cellPos)
+    {
+        GridSystem.CellData cellData = new GridSystem.CellData();
+        // Handles index out of bound exception
+        if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
         {
-            GridSystem.CellData cellData = new GridSystem.CellData();
-            // Handles index out of bound exception
-            if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
-            {
-                cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
-            }
-            else
-            {
-                cellData.OutOfBounds = true;
-            }
-            return cellData;
+            cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
         }
+        else
+        {
+            cellData.OutOfBounds = true;
+        }
+        return cellData;
     }
+}

@@ -42,42 +42,35 @@ public class PlacementValidation : MonoBehaviour
         int radius = species.Size / 2;
         Vector3Int pos;
 
+        int x, y;
         if (species.Size % 2 == 1)
         {
             //size is odd: center it
-
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius; x <= radius; x++)
-            {
-                for (int y = -1 * radius; y <= radius; y++)
-                {
-                    pos = gridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    if (!IsFoodPlacementValid(pos, species, foodSource)) { return false; }
-                }
-            }
-
+            x = -1 * radius;
+            y = -1 * radius;
         }
         else
         {
             //size is even: place it at cross-center
+            x = -1 * (radius - 1);
+            y = -1 * (radius - 1);
+        }
 
-            // Check if the whole object is in bounds
-            for (int x = -1 * (radius - 1); x <= radius; x++)
+        // Check if the whole object is in bounds
+        // variables initialized earlier
+        for (; x <= radius; x++)
+        {
+            for (; y <= radius; y++)
             {
-                for (int y = -1 * (radius - 1); y <= radius; y++)
-                {
-                    pos = gridPosition;
-                    pos.x += x;
-                    pos.y += y;
-
-                    if (!IsFoodPlacementValid(pos, species, foodSource)) { return false; }
-                }
+                pos = gridPosition;
+                pos.x += x;
+                pos.y += y;
+                if (!IsFoodPlacementValid(pos, species, foodSource)) { return false; }
             }
         }
         return true;
     }
+
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
         Debug.Log("Item selected " + selectedItem.ID);

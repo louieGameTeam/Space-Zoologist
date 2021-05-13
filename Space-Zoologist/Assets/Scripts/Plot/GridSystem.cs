@@ -272,33 +272,30 @@ public class GridSystem : MonoBehaviour
     public void AddFood(Vector3Int gridPosition, int size, GameObject foodSource) {
         int radius = size / 2;
         Vector3Int pos;
+
+        int x, y;
         if (size % 2 == 1)
         {
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius; x <= radius; x++)
-            {
-                for (int y = -1 * radius; y <= radius; y++)
-                {
-                    pos = gridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    CellGrid[pos.x, pos.y].ContainsFood = true;
-                    CellGrid[pos.x, pos.y].Food = foodSource;
-                }
-            }
+            //size is odd: center it
+            x = -1 * radius;
+            y = -1 * radius;
         }
-        else {
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius + 1; x <= radius; x++)
+        else
+        {
+            //size is even: place it at cross-center
+            x = -1 * (radius - 1);
+            y = -1 * (radius - 1);
+        }
+
+        for (; x <= radius; x++)
+        {
+            for (; y <= radius; y++)
             {
-                for (int y = -1 * radius + 1; y <= radius; y++)
-                {
-                    pos = gridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    CellGrid[pos.x, pos.y].ContainsFood = true;
-                    CellGrid[pos.x, pos.y].Food = foodSource;
-                }
+                pos = gridPosition;
+                pos.x += x;
+                pos.y += y;
+                CellGrid[pos.x, pos.y].ContainsFood = true;
+                CellGrid[pos.x, pos.y].Food = foodSource;
             }
         }
     }
