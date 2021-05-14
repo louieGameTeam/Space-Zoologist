@@ -85,6 +85,9 @@ namespace DialogueEditor
         private int m_currentSelectedIndex;
 
 
+        public Text Backlog;
+
+
         //--------------------------------------
         // Awake, Start, Destroy
         //--------------------------------------
@@ -543,6 +546,7 @@ namespace DialogueEditor
                     DialogueText.text = speech.Text;
                     DialogueText.maxVisibleCharacters = speech.Text.Length;
                 }
+                Backlog.text += speech.Name + ":\n" + speech.Text + "\n\n";
             }
 
 
