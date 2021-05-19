@@ -120,6 +120,16 @@ public class FoodSourceManager : GridObjectManager
         NeedSystemManager.UnregisterWithNeedSystems(foodSource);
         Destroy(foodSource.gameObject);
     }
+    /// <summary>
+    /// Debug function to remove all food sources
+    /// </summary>
+    public void DestroyAll()
+    {
+        while (foodSources.Count > 0)
+        {
+            this.DestroyFoodSource(foodSources[-1]);
+        }
+    }
 
     // TODO: not sure what this does
     public void UpdateFoodSourceSpecies(FoodSourceSpecies species)

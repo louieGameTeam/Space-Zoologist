@@ -130,9 +130,7 @@ public class PopulationBehavior : ScriptableObject
             if (!isDriven)// Avoids infinite loop
             {
                 foreach (GameObject otherAnimal in collaboratingAnimals)
-                {/*
-                    Debug.Log(animalsToSteps.Count);
-                    Debug.Log(animalsToSteps[otherAnimal]);*/
+                {
                     if (!animalsToSteps.ContainsKey(otherAnimal) || animalsToSteps[otherAnimal] != animalsToSteps[animal])
                     {
                         return;
@@ -147,11 +145,6 @@ public class PopulationBehavior : ScriptableObject
                     ProceedToNext(otherAnimal, otherAnimalCollabs, true);
                 }
             }
-            foreach (int step in animalsToSteps.Values)
-            {
-                //Debug.Log(step);
-            }
-            //Debug.Log(isDriven);
             animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, alternativeCallback, collaboratingAnimals);
         }
         else

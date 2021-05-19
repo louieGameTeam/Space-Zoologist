@@ -39,6 +39,7 @@ public class MapDesigningTool : MonoBehaviour
     }
     private void Update()
     {
+        // TODO input interpreter
         if (this.selectionType == SelectionType.Tile)
         {
             this.TileActions();
@@ -95,8 +96,8 @@ public class MapDesigningTool : MonoBehaviour
         GUILayout.BeginArea(new Rect(0, 0, 200, 600));
         TileSelectionBlock();
         AnimalBlock();
-        MapIOBlock();
         FoodBlock();
+        MapIOBlock();
         GUILayout.EndArea();
         MouseHUD();
         LiquidBlock();
@@ -160,6 +161,10 @@ public class MapDesigningTool : MonoBehaviour
             GUILayout.EndHorizontal();
         }
         GUILayout.EndScrollView();
+        if (GUILayout.Button("Clear Animals"))
+        {
+            this.levelIO.ClearAnimals();
+        }
     }
     private void FoodBlock()
     {

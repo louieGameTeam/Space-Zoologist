@@ -6,7 +6,6 @@ using System.Linq;
 
 public class PlotIO : MonoBehaviour
 {
-    [SerializeField] LevelIO levelIO = default;
     private TilePlacementController tilePlacementController;
     private TileLayerManager[] tileLayerManagers;
     private List<GridObjectManager> gridObjectManagers = new List<GridObjectManager>();
@@ -30,7 +29,6 @@ public class PlotIO : MonoBehaviour
     }
     public void LoadPlot(SerializedPlot serializedPlot)
     {
-        //Debug.Log(serializedPlot.serializedMapObjects.names);
         this.SerializedPlot = serializedPlot;
     }
     public void ParseSerializedObjects()

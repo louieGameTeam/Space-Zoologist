@@ -301,7 +301,16 @@ public class Population : MonoBehaviour, Life
             }
         }
     }
-
+    /// <summary>
+    /// Debug function to remove all animals
+    /// </summary>
+    public void RemoveAll()
+    {
+        while(this.AnimalPopulation.Count > 0)
+        {
+            this.RemoveAnimal();
+        }
+    }
     // Ensure there are enough behavior data scripts mapped to the population size
     void OnValidate()
     {
