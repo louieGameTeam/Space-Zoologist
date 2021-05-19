@@ -284,6 +284,7 @@ public class Population : MonoBehaviour, Life
         {
             Debug.Log("Animal removed");
             this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
+            
             this.PopulationBehaviorManager.RemoveAnimal(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);

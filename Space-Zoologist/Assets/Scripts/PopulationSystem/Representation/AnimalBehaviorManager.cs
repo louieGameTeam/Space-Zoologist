@@ -30,6 +30,7 @@ public class AnimalBehaviorManager : MonoBehaviour
     {
         if (activeBehaviorPattern != null) // Happens when cooperating animal gets removed
         {
+            Debug.Log(this.activeBehaviorPattern);
             activeBehaviorPattern.QueueForForceExit(this.gameObject, isDriven);
             activeBehavior.ForceExitCallback.Invoke(this.gameObject);
             activeBehavior = null;

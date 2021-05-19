@@ -31,8 +31,8 @@ public class BehaviorPattern : MonoBehaviour
         animalData.collaboratingAnimals = collaboratingAnimals;
         // Debug.Log(gameObject.name + " is trying to be initial");
         // Debug.Log((this.GetType().ToString(),animal));
-        Debug.Log(AnimalsToAnimalData.Count);
         this.AnimalsToAnimalData.Add(animal, animalData);
+        Debug.Log(AnimalsToAnimalData.Count);
         EnterPattern(animal, animalData);
     }
 
@@ -109,12 +109,13 @@ public class BehaviorPattern : MonoBehaviour
     /// Actions taken upon completion of pattern. All following are generally necessary when exit. It is recommended to call base when overridden.
     /// </summary>
     /// <param name="animal"></param>
-    /// <param name="isCallingCallback">Set to false when force exiting without completion, leave as default</param>
+    /// <param name="callCallback">Set to false when force exiting without completion, leave as default</param>
     protected virtual void ExitPattern(GameObject animal, bool callCallback = true)
     {
         animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
         StepCompletedCallBack callback = AnimalsToAnimalData[animal].callback;
         List<GameObject> collab = AnimalsToAnimalData[animal].collaboratingAnimals;
+        Debug.Log("Animal Removed" + AnimalsToAnimalData.Count.ToString());
         AnimalsToAnimalData.Remove(animal);
         if (callCallback)
         {
@@ -132,7 +133,8 @@ public class BehaviorPattern : MonoBehaviour
     }
     public void QueueForForceExit(GameObject animal, bool isDriven = false)
     {
-        forceRemoveAnimals.Add(animal);
+        this.ForceExit(animal);
+        //forceRemoveAnimals.Add(animal);
         if (isDriven)
         {
             foreach (GameObject collab in AnimalsToAnimalData[animal].collaboratingAnimals)
