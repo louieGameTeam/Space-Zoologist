@@ -107,6 +107,8 @@ public class LevelIO : MonoBehaviour
     public void Reload()
     {
         this.plotIO.Initialize();
+        this.plotIO.ReloadGridObjectManagers();
+        this.populationManager.Initialize();
     }
     /// <summary>
     /// Clear all placed animals. Reinitializing population manager isn't necessary at the moment

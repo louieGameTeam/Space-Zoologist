@@ -42,7 +42,6 @@ public class PlotIO : MonoBehaviour
                 {
                     tileLayerManager.ParseSerializedTilemap(serializedTilemap, this.tilePlacementController.gameTiles);
                     tilemapFound = true;
-                    Debug.Log("Loaded map from resources");
                     break;
                 }
             }
@@ -71,6 +70,13 @@ public class PlotIO : MonoBehaviour
             {
                 Debug.LogError("Map object set '" + name + "' is not found in the map object managers.");
             }
+        }
+    }
+    public void ReloadGridObjectManagers()
+    {
+        foreach (GridObjectManager gridObjectManager in this.gridObjectManagers)
+        {
+            gridObjectManager.Parse();
         }
     }
 }

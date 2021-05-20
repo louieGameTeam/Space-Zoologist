@@ -47,17 +47,6 @@ public class Population : MonoBehaviour, Life
     private PopulationBehaviorManager PopulationBehaviorManager = default;
     private bool isPaused = false;
 
-/*    private void Awake()
-    {
-        
-        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
-        if (this.species != null)
-        {
-            this.SetupNeeds();
-            this.origin = this.transform.position;
-        }
-    }*/
 
     private void Start()
     {
@@ -240,7 +229,7 @@ public class Population : MonoBehaviour, Life
             case GrowthStatus.growing:
                 if (this.GrowthCalculator.ReadyForGrowth())
                 {
-                    this.AddAnimal();
+                    this.AddAnimal(this.gameObject.transform.position);
                 }
                 break;
             case GrowthStatus.declining:
@@ -254,7 +243,7 @@ public class Population : MonoBehaviour, Life
         }
     }
 
-    public void AddAnimal()
+    public void AddAnimal(Vector3 position)
     {
         MovementData data = new MovementData();
         this.AnimalsMovementData.Add(data);
@@ -264,6 +253,7 @@ public class Population : MonoBehaviour, Life
             this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
+        newAnimal.transform.SetPositionAndRotation(position, Quaternion.identity);
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);

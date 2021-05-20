@@ -21,7 +21,6 @@ public class FoodSourceManager : GridObjectManager
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
-    [SerializeField] FoodPlacer FoodPlacer = default;
 
     private void Awake()
     {
@@ -266,7 +265,7 @@ public class FoodSourceManager : GridObjectManager
             serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(this.foodSourceSpecies[speciesName]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
         }
     }
-    protected override void Parse()
+    public override void Parse()
     {
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects.ToDictionary())
         {

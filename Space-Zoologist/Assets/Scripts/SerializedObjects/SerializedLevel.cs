@@ -12,12 +12,22 @@ public class SerializedLevel
         for (int i = 0; i < populationManager.transform.childCount; i++)
         {
             GameObject populationGO = populationManager.transform.GetChild(i).gameObject;
-            Vector3[] animals = new Vector3[populationGO.transform.childCount];
+            
+            List<GameObject> activeChildren = new List<GameObject>();
             for (int j = 0; j < populationGO.transform.childCount; j++)
             {
-                animals[j] = populationManager.GridSystem.Grid.WorldToCell(populationGO.transform.GetChild(j).position);
+                GameObject animalGO = populationGO.transform.GetChild(j).gameObject;
+                if (animalGO.activeSelf)
+                {
+                    activeChildren.Add(animalGO);
+                }
             }
-            this.serializedPopulations[i] = new SerializedPopulation(populationGO.GetComponent<Population>().species, animals);
+            Vector3[] animalPos = new Vector3[activeChildren.Count];
+            for (int k = 0; k < activeChildren.Count; k++)
+            {
+                animalPos[k] = activeChildren[k].transform.position;
+            }
+            this.serializedPopulations[i] = new SerializedPopulation(populationGO.GetComponent<Population>().species, animalPos);
         }
     }
     public void SetPlot(SerializedPlot serializedPlot)

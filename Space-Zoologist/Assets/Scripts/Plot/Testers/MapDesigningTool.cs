@@ -22,10 +22,10 @@ public class MapDesigningTool : MonoBehaviour
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;
     private TileSystem tileSystem;
-    private Vector2 scrollPosition1;
-    private Vector2 scrollPosition2;
-    private Vector2 scrollPosition3;
-    private Vector2 scrollPosition4;
+    private Vector2 liquidScrollPos;
+    private Vector2 previewBodyScrollPos;
+    private Vector2 animalScrollPos;
+    private Vector2 foodScrollPos;
     private Camera mainCamera;
     private Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>> ManagersToToggles = new Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>>();
     [SerializeField] private FoodSourceSpecies[] foodSourceSpecies = default; //Attach food sources here
@@ -133,12 +133,14 @@ public class MapDesigningTool : MonoBehaviour
     {
         GUILayout.BeginVertical();
         this.sceneName = GUILayout.TextField(this.sceneName);
-        if (GUILayout.Button("Save") && this.sceneName != null && !this.sceneName.Equals(""))
+        if (GUILayout.Button("Save"))
         {
             levelIO.SaveAsPreset(this.sceneName);
         }
         if (GUILayout.Button("Load"))
         {
+            foodSourceManager.DestroyAll();
+            levelIO.ClearAnimals();
             levelIO.LoadPreset(this.sceneName);
             levelIO.Reload();
         }
@@ -147,7 +149,7 @@ public class MapDesigningTool : MonoBehaviour
     private void AnimalBlock()
     {
         GUILayout.Box("Animals");
-        this.scrollPosition3 = GUILayout.BeginScrollView(this.scrollPosition3);
+        this.animalScrollPos = GUILayout.BeginScrollView(this.animalScrollPos);
         foreach (KeyValuePair<string, AnimalSpecies> species in populationManager.speciesReferenceData.AnimalSpecies)
         {
             GUILayout.BeginHorizontal();
@@ -171,7 +173,7 @@ public class MapDesigningTool : MonoBehaviour
     private void FoodBlock()
     {
         GUILayout.Box("Food Sources");
-        this.scrollPosition4 = GUILayout.BeginScrollView(this.scrollPosition4);
+        this.foodScrollPos = GUILayout.BeginScrollView(this.foodScrollPos);
         foreach (FoodSourceSpecies fs in this.foodSourceSpecies)
         {
             GUILayout.BeginHorizontal();
@@ -246,7 +248,7 @@ public class MapDesigningTool : MonoBehaviour
         }
         GUILayout.Box("Tilemap: " + tilemap.name);
         GUILayout.Box("Active Liquid Bodies: " + tileLayerManager.liquidBodies.Count.ToString());
-        this.scrollPosition1 = GUILayout.BeginScrollView(scrollPosition1, GUILayout.Width(200), GUILayout.Height(210));
+        this.liquidScrollPos = GUILayout.BeginScrollView(liquidScrollPos, GUILayout.Width(200), GUILayout.Height(210));
         foreach (LiquidBody liquidBody in tileLayerManager.liquidBodies)
         {
             if (!this.ManagersToToggles[tileLayerManager].ContainsKey(liquidBody))
@@ -289,7 +291,7 @@ public class MapDesigningTool : MonoBehaviour
     private void PreviewBodyScroll(TileLayerManager tileLayerManager)
     {
         int bodyCount = 0;
-        this.scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2, GUILayout.Width(200), GUILayout.Height(210));
+        this.previewBodyScrollPos = GUILayout.BeginScrollView(previewBodyScrollPos, GUILayout.Width(200), GUILayout.Height(210));
         GUILayout.Box("Active Preview Bodies: " + tileLayerManager.previewBodies.Count.ToString());
         this.DisplayPreviewBodies = GUILayout.Toggle(this.DisplayPreviewBodies, "Display Preview Bodies");
         foreach (LiquidBody liquidBody in tileLayerManager.previewBodies)
