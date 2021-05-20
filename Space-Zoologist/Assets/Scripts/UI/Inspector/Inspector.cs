@@ -398,4 +398,9 @@ public class Inspector : MonoBehaviour
     {
 
     }
+
+    //Helper function for ResponseManager
+    public GameObject GetAnimalSelected() {
+        return lastPopulationSelected;
+    }
 }

@@ -412,6 +412,14 @@ namespace DialogueEditor
             SetState(eState.freeze);
         }
 
+        public void FreezeConversation() {
+            SetState(eState.freeze);
+        }
+
+        public void UnfreezeConversation() {
+            print("Unfroze");
+            SetState(eState.TransitioningOptionsOff);
+        }
 
         //--------------------------------------
         // Public functions
