@@ -4060,7 +4060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4933cdddee27341970b70e4763ee72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelIO: {fileID: 0}
 --- !u!156049354 &243132425
 Grid:
   m_ObjectHideFlags: 0
@@ -12402,6 +12401,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   godMode: 0
+  foodSourceSpecies:
+  - {fileID: 11400000, guid: d25f32c20698c4ad3b53971045b65639, type: 2}
+  - {fileID: 11400000, guid: 10efa4c1d70fd4d2884e712e03828bb0, type: 2}
 --- !u!45 &791024325
 Skybox:
   m_ObjectHideFlags: 0
@@ -15892,7 +15894,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1033973368}
   - component: {fileID: 1033973366}
-  - component: {fileID: 1033973367}
   m_Layer: 0
   m_Name: FoodSourceManager
   m_TagString: Untagged
@@ -15918,27 +15919,7 @@ MonoBehaviour:
   LevelDataReference: {fileID: 1695157340}
   TileSystem: {fileID: 243132426}
   GridSystem: {fileID: 1455894801}
-  FoodPlacer: {fileID: 1033973367}
---- !u!114 &1033973367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033973365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FoodPlacementDatas:
-  - location: {x: 5, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
-  - location: {x: 7, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
-  - location: {x: 9, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
-  FoodSourceStoreSection: {fileID: 1980081641}
+  FoodPlacer: {fileID: 0}
 --- !u!4 &1033973368
 Transform:
   m_ObjectHideFlags: 0

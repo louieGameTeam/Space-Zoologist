@@ -32,7 +32,6 @@ public class BehaviorPattern : MonoBehaviour
         // Debug.Log(gameObject.name + " is trying to be initial");
         // Debug.Log((this.GetType().ToString(),animal));
         this.AnimalsToAnimalData.Add(animal, animalData);
-        Debug.Log(AnimalsToAnimalData.Count);
         EnterPattern(animal, animalData);
     }
 
@@ -115,7 +114,6 @@ public class BehaviorPattern : MonoBehaviour
         animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
         StepCompletedCallBack callback = AnimalsToAnimalData[animal].callback;
         List<GameObject> collab = AnimalsToAnimalData[animal].collaboratingAnimals;
-        Debug.Log("Animal Removed" + AnimalsToAnimalData.Count.ToString());
         AnimalsToAnimalData.Remove(animal);
         if (callCallback)
         {

@@ -173,9 +173,9 @@ public class PlacementValidation : MonoBehaviour
         }
         return false;
     }
-    public FoodSourceSpecies GetFoodSpecies(Item item)
+    public FoodSourceSpecies GetFoodSpecies(string itemID)
     {
-        return this.SpeciesReferenceData.FoodSources[item.ID];
+        return this.SpeciesReferenceData.FoodSources[itemID];
     }
 
     public bool IsInMapBounds(Vector3Int mousePosition)

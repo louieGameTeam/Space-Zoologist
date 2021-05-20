@@ -9,14 +9,15 @@ public class MapDesigningTool : MonoBehaviour
     // Start is called before the first frame update
     private TileType selectedTile;
     private AnimalSpecies selectedSpecies;
+    private FoodSourceSpecies selectedFood;
     private SelectionType selectionType;
     private Vector2 tileScrollPosition;
     private string sceneName;
     private LevelIO levelIO;
     private TilePlacementController tilePlacementController;
-    private FoodSourceStoreSection foodSourceStoreSection;
+    private FoodSourceManager foodSourceManager;
     private PopulationManager populationManager;
-    [SerializeField] bool godMode = true;
+    [SerializeField] private bool godMode = true;
     private bool DisplayLiquidBodyInfo = true;
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;
@@ -27,6 +28,7 @@ public class MapDesigningTool : MonoBehaviour
     private Vector2 scrollPosition4;
     private Camera mainCamera;
     private Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>> ManagersToToggles = new Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>>();
+    [SerializeField] private FoodSourceSpecies[] foodSourceSpecies = default; //Attach food sources here
     private void Awake()
     {
         this.levelIO = FindObjectOfType<LevelIO>();
@@ -35,7 +37,7 @@ public class MapDesigningTool : MonoBehaviour
         this.tilemaps = FindObjectsOfType<Tilemap>();
         this.tileSystem = FindObjectOfType<TileSystem>();
         this.populationManager = FindObjectOfType<PopulationManager>();
-        this.foodSourceStoreSection = FindObjectOfType<FoodSourceStoreSection>();
+        this.foodSourceManager = FindObjectOfType<FoodSourceManager>();
     }
     private void Update()
     {
@@ -84,7 +86,7 @@ public class MapDesigningTool : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            this.populationManager.UpdatePopulation(selectedSpecies, this.mainCamera.ScreenToWorldPoint(Input.mousePosition));
+            foodSourceManager.placeFood(this.tileSystem.WorldToCell(this.mainCamera.ScreenToWorldPoint(Input.mousePosition)), this.selectedFood);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -170,8 +172,25 @@ public class MapDesigningTool : MonoBehaviour
     {
         GUILayout.Box("Food Sources");
         this.scrollPosition4 = GUILayout.BeginScrollView(this.scrollPosition4);
-        // TODO make food placeable
+        foreach (FoodSourceSpecies fs in this.foodSourceSpecies)
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button(fs.name))
+            {
+                this.selectedFood = fs;
+                this.selectionType = SelectionType.FoodSource;
+            }
+            if (this.selectedFood == fs && this.selectionType == SelectionType.FoodSource)
+            {
+                GUILayout.Box("Selected");
+            }
+            GUILayout.EndHorizontal();
+        }
         GUILayout.EndScrollView();
+        if (GUILayout.Button("Clear Food"))
+        {
+            this.foodSourceManager.DestroyAll();
+        }
     }
     private void MouseHUD()
     {

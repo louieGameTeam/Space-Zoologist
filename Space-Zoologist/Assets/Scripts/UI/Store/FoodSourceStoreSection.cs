@@ -55,7 +55,7 @@ public class FoodSourceStoreSection : StoreSection
         Vector3Int pos;
         Vector2 mousePosition = new Vector2(mouseGridPosition.x, mouseGridPosition.y);
         //base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
-        FoodSourceSpecies species = base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem);
+        FoodSourceSpecies species = base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem.ID);
         int radius = species.Size / 2;
         if (species.Size % 2 == 1)
         {
