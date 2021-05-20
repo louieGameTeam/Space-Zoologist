@@ -546,7 +546,10 @@ namespace DialogueEditor
                     DialogueText.text = speech.Text;
                     DialogueText.maxVisibleCharacters = speech.Text.Length;
                 }
-                Backlog.text += speech.Name + ":\n" + speech.Text + "\n\n";
+                if (Backlog != null)
+                {
+                    Backlog.text += speech.Name + ":\n" + speech.Text + "\n\n";
+                }
             }
 
 
