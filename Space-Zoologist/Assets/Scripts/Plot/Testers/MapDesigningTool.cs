@@ -9,22 +9,24 @@ public class MapDesigningTool : MonoBehaviour
     // Start is called before the first frame update
     private TileType selectedTile;
     private AnimalSpecies selectedSpecies;
+    private FoodSourceSpecies selectedFood;
     private SelectionType selectionType;
     private Vector2 tileScrollPosition;
     private string sceneName;
     private LevelIO levelIO;
     private TilePlacementController tilePlacementController;
-    private FoodSourceStoreSection foodSourceStoreSection;
+    private FoodSourceManager foodSourceManager;
     private PopulationManager populationManager;
     [SerializeField] bool godMode = true;
+    [SerializeField] private FoodSourceSpecies[] foodSourceSpecies = default; //Attach food sources here
     private bool DisplayLiquidBodyInfo = true;
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;
     private TileSystem tileSystem;
-    private Vector2 scrollPosition1;
-    private Vector2 scrollPosition2;
-    private Vector2 scrollPosition3;
-    private Vector2 scrollPosition4;
+    private Vector2 liquidScrollPos;
+    private Vector2 previewBodyScrollPos;
+    private Vector2 animalScrollPos;
+    private Vector2 foodScrollPos;
     private Camera mainCamera;
     private Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>> ManagersToToggles = new Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>>();
     private void Awake()
@@ -35,7 +37,7 @@ public class MapDesigningTool : MonoBehaviour
         this.tilemaps = FindObjectsOfType<Tilemap>();
         this.tileSystem = FindObjectOfType<TileSystem>();
         this.populationManager = FindObjectOfType<PopulationManager>();
-        this.foodSourceStoreSection = FindObjectOfType<FoodSourceStoreSection>();
+        this.foodSourceManager = FindObjectOfType<FoodSourceManager>();
     }
     private void Update()
     {
@@ -83,7 +85,7 @@ public class MapDesigningTool : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            this.populationManager.UpdatePopulation(selectedSpecies, this.mainCamera.ScreenToWorldPoint(Input.mousePosition));
+            foodSourceManager.placeFood(this.tileSystem.WorldToCell(this.mainCamera.ScreenToWorldPoint(Input.mousePosition)), this.selectedFood);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -95,8 +97,8 @@ public class MapDesigningTool : MonoBehaviour
         GUILayout.BeginArea(new Rect(0, 0, 200, 600));
         TileSelectionBlock();
         AnimalBlock();
-        MapIOBlock();
         FoodBlock();
+        MapIOBlock();
         GUILayout.EndArea();
         MouseHUD();
         LiquidBlock();
@@ -130,12 +132,14 @@ public class MapDesigningTool : MonoBehaviour
     {
         GUILayout.BeginVertical();
         this.sceneName = GUILayout.TextField(this.sceneName);
-        if (GUILayout.Button("Save") && this.sceneName != null && !this.sceneName.Equals(""))
+        if (GUILayout.Button("Save"))
         {
             levelIO.SaveAsPreset(this.sceneName);
         }
         if (GUILayout.Button("Load"))
         {
+            foodSourceManager.DestroyAll();
+            levelIO.ClearAnimals();
             levelIO.LoadPreset(this.sceneName);
             levelIO.Reload();
         }
@@ -144,7 +148,7 @@ public class MapDesigningTool : MonoBehaviour
     private void AnimalBlock()
     {
         GUILayout.Box("Animals");
-        this.scrollPosition3 = GUILayout.BeginScrollView(this.scrollPosition3);
+        this.animalScrollPos = GUILayout.BeginScrollView(this.animalScrollPos);
         foreach (KeyValuePair<string, AnimalSpecies> species in populationManager.speciesReferenceData.AnimalSpecies)
         {
             GUILayout.BeginHorizontal();
@@ -160,13 +164,34 @@ public class MapDesigningTool : MonoBehaviour
             GUILayout.EndHorizontal();
         }
         GUILayout.EndScrollView();
+        if (GUILayout.Button("Clear Animals"))
+        {
+            this.levelIO.ClearAnimals();
+        }
     }
     private void FoodBlock()
     {
         GUILayout.Box("Food Sources");
-        this.scrollPosition4 = GUILayout.BeginScrollView(this.scrollPosition4);
-        // TODO make food placeable
+        this.foodScrollPos = GUILayout.BeginScrollView(this.foodScrollPos);
+        foreach (FoodSourceSpecies fs in this.foodSourceSpecies)
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button(fs.name))
+            {
+                this.selectedFood = fs;
+                this.selectionType = SelectionType.FoodSource;
+            }
+            if (this.selectedFood == fs && this.selectionType == SelectionType.FoodSource)
+            {
+                GUILayout.Box("Selected");
+            }
+            GUILayout.EndHorizontal();
+        }
         GUILayout.EndScrollView();
+        if (GUILayout.Button("Clear Food"))
+        {
+            this.foodSourceManager.DestroyAll();
+        }
     }
     private void MouseHUD()
     {
@@ -222,7 +247,7 @@ public class MapDesigningTool : MonoBehaviour
         }
         GUILayout.Box("Tilemap: " + tilemap.name);
         GUILayout.Box("Active Liquid Bodies: " + tileLayerManager.liquidBodies.Count.ToString());
-        this.scrollPosition1 = GUILayout.BeginScrollView(scrollPosition1, GUILayout.Width(200), GUILayout.Height(210));
+        this.liquidScrollPos = GUILayout.BeginScrollView(liquidScrollPos, GUILayout.Width(200), GUILayout.Height(210));
         foreach (LiquidBody liquidBody in tileLayerManager.liquidBodies)
         {
             if (!this.ManagersToToggles[tileLayerManager].ContainsKey(liquidBody))
@@ -262,10 +287,12 @@ public class MapDesigningTool : MonoBehaviour
         }
         GUILayout.EndScrollView();
     }
+
+
     private void PreviewBodyScroll(TileLayerManager tileLayerManager)
     {
         int bodyCount = 0;
-        this.scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2, GUILayout.Width(200), GUILayout.Height(210));
+        this.previewBodyScrollPos = GUILayout.BeginScrollView(previewBodyScrollPos, GUILayout.Width(200), GUILayout.Height(210));
         GUILayout.Box("Active Preview Bodies: " + tileLayerManager.previewBodies.Count.ToString());
         this.DisplayPreviewBodies = GUILayout.Toggle(this.DisplayPreviewBodies, "Display Preview Bodies");
         foreach (LiquidBody liquidBody in tileLayerManager.previewBodies)

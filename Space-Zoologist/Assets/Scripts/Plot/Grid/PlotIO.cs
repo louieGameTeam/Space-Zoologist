@@ -74,4 +74,12 @@ public class PlotIO : MonoBehaviour
             }
         }
     }
+
+    public void ReloadGridObjectManagers()
+    {
+        foreach (GridObjectManager gridObjectManager in this.gridObjectManagers)
+        {
+            gridObjectManager.Parse();
+        }
+    }
 }

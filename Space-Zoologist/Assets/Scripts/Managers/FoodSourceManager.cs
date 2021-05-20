@@ -75,7 +75,7 @@ public class FoodSourceManager : GridObjectManager
             NeedSystemManager.RegisterWithNeedSystems(foodSource);
             EventManager.Instance.InvokeEvent(EventType.NewFoodSource, foodSource);
         }
-        FoodPlacer.PlaceFood();
+        //FoodPlacer.PlaceFood();
         this.Parse();
     }
     // TODO: combine two version into one
@@ -118,6 +118,7 @@ public class FoodSourceManager : GridObjectManager
         foodSourceNeedSystems.RemoveFoodSource(foodSource);
         foodSourcesBySpecies[foodSource.Species].Remove(foodSource);
         NeedSystemManager.UnregisterWithNeedSystems(foodSource);
+        this.GridSystem.RemoveFood(this.GridSystem.Grid.WorldToCell(foodSource.gameObject.transform.position));
         Destroy(foodSource.gameObject);
     }
 
@@ -182,19 +183,24 @@ public class FoodSourceManager : GridObjectManager
         for (int i = 0; i < foods.Count; i++) {
             locations[i] = TileSystem.WorldToCell(foods[i].transform.position);
         }
-
+        Debug.Log("Returned locations");
         return locations;
     }
     public Vector3[] GetFoodSourcesWorldLocationWithSpecies(string speciesName)
     {
         List<FoodSource> foods = GetFoodSourcesWithSpecies(speciesName);
-        if (foods == null) return null;
+        if (foods == null)
+        {
+            Debug.Log("returned null");
+            return null;
+        }
+        
         Vector3[] locations = new Vector3[foods.Count];
         for (int i = 0; i < foods.Count; i++)
         {
             locations[i] = foods[i].transform.position;
         }
-
+        Debug.Log("Returned locations");
         return locations;
     }
     public override void Serialize(SerializedMapObjects serializedMapObjects)
@@ -204,7 +210,7 @@ public class FoodSourceManager : GridObjectManager
             serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(this.foodSourceSpecies[speciesName]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
         }
     }
-    protected override void Parse()
+    public override void Parse()
     {
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects.ToDictionary())
         {
@@ -221,5 +227,70 @@ public class FoodSourceManager : GridObjectManager
     {
         // String used to identify serialized map objects being handled by this manager
         return "FoodSource";
+    }
+
+    /// <summary>
+    /// Debug function to remove all food sources
+    /// </summary>
+    public void DestroyAll()
+    {
+        while (foodSources.Count > 0)
+        {
+            this.DestroyFoodSource(foodSources[foodSources.Count - 1]);
+        }
+    }
+
+    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
+    {
+        Vector3Int pos;
+        //base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
+        int radius = species.Size / 2;
+        if (species.Size % 2 == 1)
+        {
+            //size is odd: center it
+            Vector3 FoodLocation = this.GridSystem.Grid.CellToWorld(mouseGridPosition);
+            Vector3Int Temp = mouseGridPosition;
+            Temp.x += 1;
+            Temp.y += 1;
+            FoodLocation += Temp;
+            FoodLocation /= 2f;
+            GameObject Food;
+            Food = CreateFoodSource(species, FoodLocation);
+            // Check if the whole object is in bounds
+            for (int x = -1 * radius; x <= radius; x++)
+            {
+                for (int y = -1 * radius; y <= radius; y++)
+                {
+                    pos = mouseGridPosition;
+                    pos.x += x;
+                    pos.y += y;
+                    this.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
+                    this.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
+                }
+            }
+
+        }
+        else
+        {
+            //size is even: place it at cross-center (position of tile)
+            Vector3Int Temp = mouseGridPosition;
+            Temp.x += 1;
+            Temp.y += 1;
+            Vector3 FoodLocation = this.GridSystem.Grid.CellToWorld(Temp);
+            GameObject Food = CreateFoodSource(species, FoodLocation);
+
+            // Check if the whole object is in bounds
+            for (int x = -1 * (radius - 1); x <= radius; x++)
+            {
+                for (int y = -1 * (radius - 1); y <= radius; y++)
+                {
+                    pos = mouseGridPosition;
+                    pos.x += x;
+                    pos.y += y;
+                    this.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
+                    this.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
+                }
+            }
+        }
     }
 }

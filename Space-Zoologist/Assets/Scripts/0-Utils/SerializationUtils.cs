@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SerializationUtils
 {
+    /// <summary>
+    /// Convert Vector3Int to serializable array
+    /// </summary>
+    /// <param name="vector3Ints"></param>
+    /// <returns></returns>
     public static int[] SerializeVector3Int(Vector3Int[] vector3Ints)
     {
         int[] coords = new int[vector3Ints.Length * 3];
@@ -15,6 +20,11 @@ public class SerializationUtils
         }
         return coords;
     }
+    /// <summary>
+    /// Convert serializable array to Vector3Int
+    /// </summary>
+    /// <param name="coords"></param>
+    /// <returns></returns>
     public static Vector3Int[] ParseVector3Int(int[] coords)
     {
         if (coords.Length % 3 != 0)
@@ -28,6 +38,11 @@ public class SerializationUtils
         }
         return vector3Ints;
     }
+    /// <summary>
+    /// Convert Vector3 to serializable array
+    /// </summary>
+    /// <param name="vector3s"></param>
+    /// <returns></returns>
     public static float[] SerializeVector3(Vector3[] vector3s)
     {
         if (vector3s == null)
@@ -45,6 +60,11 @@ public class SerializationUtils
         }
         return coords;
     }
+    /// <summary>
+    /// Convert serializable array to Vector3
+    /// </summary>
+    /// <param name="coords"></param>
+    /// <returns></returns>
     public static Vector3[] ParseVector3(float[] coords)
     {
         if (coords.Length % 3 != 0)

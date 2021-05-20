@@ -131,7 +131,7 @@ public class BehaviorPattern : MonoBehaviour
     }
     public void QueueForForceExit(GameObject animal, bool isDriven = false)
     {
-        forceRemoveAnimals.Add(animal);
+        this.ForceExit(animal);
         if (isDriven)
         {
             foreach (GameObject collab in AnimalsToAnimalData[animal].collaboratingAnimals)

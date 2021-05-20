@@ -237,7 +237,7 @@ public class Population : MonoBehaviour, Life
             case GrowthStatus.growing:
                 if (this.GrowthCalculator.ReadyForGrowth())
                 {
-                    this.AddAnimal();
+                    this.AddAnimal(this.gameObject.transform.position);
                 }
                 break;
             case GrowthStatus.declining:
@@ -251,11 +251,12 @@ public class Population : MonoBehaviour, Life
         }
     }
 
-    public void AddAnimal()
+    public void AddAnimal(Vector3 position)
     {
         MovementData data = new MovementData();
         this.AnimalsMovementData.Add(data);
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
+        newAnimal.transform.position = position;
         if (newAnimal == null)
         {
             this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
@@ -296,6 +297,17 @@ public class Population : MonoBehaviour, Life
                 // Invoke a population decline event
                 EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
             }
+        }
+    }
+
+    /// <summary>
+    /// Debug function to remove all animals
+    /// </summary>
+    public void RemoveAll()
+    {
+        while (this.AnimalPopulation.Count > 0)
+        {
+            this.RemoveAnimal();
         }
     }
 

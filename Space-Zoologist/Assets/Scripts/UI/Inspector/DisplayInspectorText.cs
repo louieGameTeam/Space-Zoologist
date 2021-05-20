@@ -89,14 +89,20 @@ public class DisplayInspectorText : MonoBehaviour
     public void DisplayLiquidCompisition(float[] compositions)
     {
         currentDisplay = InspectorText.Liquid;
-        string displayText = "Liquid composition: 0 0 0\n";
+        string displayText = "";
+        if (compositions == null)
+        {
+            displayText = "Water : 0.00\n Salt : 0.00 \n Bacteria : 0.00\n";
+        }
+        else
+        {
+            string[] liquidName = new string[] { "Water", "Salt", "Bacteria" };
+            for (int i = 0; i < 3; i++)
+            {
+                displayText += $"{liquidName[i]} : {compositions[i]}\n";
+            }
 
-        // TODO causing errors, debug
-        //foreach (var (composition, index) in compositions.WithIndex())
-        //{
-        //    displayText += $"{((LiquidComposition)index).ToString()} : {composition}\n";
-        //}
-
+        }
         this.inspectorWindowText.text = displayText;
     }
 }

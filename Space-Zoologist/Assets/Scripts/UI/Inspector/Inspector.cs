@@ -318,8 +318,7 @@ public class Inspector : MonoBehaviour
     {
         this.HighlightSingleTile(cellPos);
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        GameTile tile = this.tileSystem.GetGameTileAt(selectedPosition);
-        float[] compositions = this.tileSystem.GetTileContentsAt(cellPos, tile);
+        float[] compositions = this.tileSystem.GetLiquidBodyAt(cellPos).contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 

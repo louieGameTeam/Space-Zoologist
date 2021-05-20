@@ -42,14 +42,10 @@ public class LevelIO : MonoBehaviour
             Debug.Log("Overwriting file at " + fullPath);
         }
 
-        SerializedLevel level = new SerializedLevel();
-
+        SerializedLevel level;
         try
         {
-            // Serialize plot
-            level.SetPopulations(this.populationManager);
-            // Serialize Animals
-            level.SetPlot(this.plotIO.SavePlot());
+            level = this.SaveLevel();
         }
         catch
         {
@@ -57,6 +53,16 @@ public class LevelIO : MonoBehaviour
             return;
         }
         this.WriteToFile(fullPath, level);
+    }
+    private SerializedLevel SaveLevel()
+    {
+
+        SerializedLevel level = new SerializedLevel();
+        // Serialize plot
+        level.SetPopulations(this.populationManager);
+        // Serialize Animals
+        level.SetPlot(this.plotIO.SavePlot());
+        return level;
     }
     private void WriteToFile(string path, SerializedLevel level)
     {
@@ -100,6 +106,28 @@ public class LevelIO : MonoBehaviour
     public void Reload()
     {
         this.plotIO.Initialize();
+        this.plotIO.ReloadGridObjectManagers();
+        this.populationManager.Initialize();
+    }
+    /// <summary>
+    /// Clear all placed animals. Reinitializing population manager isn't necessary at the moment
+    /// </summary>
+    public void ClearAnimals()
+    {
+        SerializedLevel level = this.SaveLevel();
+        level.serializedPopulations = new SerializedPopulation[0];
+        this.presetMap = level;
+
+        foreach (Population population in this.populationManager.Populations)
+        {
+            population.RemoveAll();
+        }
+        this.populationManager.Initialize();
+    }
+    public void ClearMapObjects()
+    {
+        FoodSourceManager foodSourceManager = FindObjectOfType<FoodSourceManager>();
+        foodSourceManager.DestroyAll();
     }
     private SerializedGrid CreateDefaultGrid()
     {

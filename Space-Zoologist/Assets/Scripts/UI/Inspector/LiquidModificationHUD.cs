@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class LiquidModificationHUD : MonoBehaviour
 {
+    [SerializeField] MenuManager MenuManager = default;
     private TileSystem tileSystem;
     private Camera mainCamera;
     private bool isOpened = false;
     private Vector3 worldPos;
     private LiquidBody liquidBody;
-
+    string[] liquidName = new string[] { "Water   ", "Salt      ", "Bacteria" };
     void Start()
     {
         this.tileSystem = FindObjectOfType<TileSystem>();
@@ -23,11 +24,13 @@ public class LiquidModificationHUD : MonoBehaviour
             GUILayout.BeginArea(new Rect(screenPoint.x, Screen.height - screenPoint.y - 150, 200, 150));
             GUILayout.Box("LiquidBodyID: " + liquidBody.bodyID);
             GUILayout.Box("Composition");
+            
             for (int i = 0; i < liquidBody.contents.Length; i++)
             {
                 GUILayout.BeginHorizontal();
                 try
                 {
+                    GUILayout.Box(liquidName[i]);
                     liquidBody.contents[i] = float.Parse(GUILayout.TextField(liquidBody.contents[i].ToString("n3")));
                 }
                 catch { }
@@ -40,7 +43,7 @@ public class LiquidModificationHUD : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(2)) //If clicking MMB on liquid tile, open HUD
+        if (Input.GetMouseButtonDown(1) && MenuManager.IsInStore) //If clicking MMB on liquid tile, open HUD
         {
             Vector3 mousePos = this.mainCamera.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPosition = this.tileSystem.WorldToCell(mousePos);
@@ -54,9 +57,13 @@ public class LiquidModificationHUD : MonoBehaviour
             else //If not clicked on a liquid tile, close HUD
             {
                 this.isOpened = false;
+                if (liquidBody != null)
+                {
+                    this.tileSystem.ChangeLiquidBodyComposition(this.tileSystem.WorldToCell(this.worldPos), liquidBody.contents);
+                }
             }
         }
-        if (Input.GetMouseButtonDown(1)) //RMB to close
+        else if (!MenuManager.IsInStore)
         {
             this.isOpened = false;
         }

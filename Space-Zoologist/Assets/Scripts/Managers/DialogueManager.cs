@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     private NPCConversation currentDialogue = default;
+    [SerializeField] private bool HideNPC = default;
     [SerializeField] private NPCConversation startingConversation = default;
     [SerializeField] private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
@@ -26,13 +27,18 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         ConversationManager.OnConversationEnded = ConversationEnded;
-        if (startingConversation) {
-            ContinueSpeech = true;
+        if (this.startingConversation != null)
+        {
             currentDialogue = this.startingConversation;
-            if (ConversationManager.Instance != null)
-            {
-                ConversationManager.Instance.StartConversation(this.startingConversation);
-            }
+        }
+        else
+        {
+            UpdateCurrentDialogue();
+        }
+        if (ConversationManager.Instance != null)
+        {
+            ConversationManager.Instance.StartConversation(currentDialogue);
+            ContinueSpeech = true;
         }
     }
 

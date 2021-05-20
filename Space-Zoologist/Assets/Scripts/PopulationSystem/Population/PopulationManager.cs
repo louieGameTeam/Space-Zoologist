@@ -98,7 +98,7 @@ public class PopulationManager : MonoBehaviour
         {
             population = CreatePopulation(species, position);
         }
-        population.AddAnimal();
+        population.AddAnimal(position);
     }
 
     private Population DoesPopulationExist(AnimalSpecies species, Vector3 position)

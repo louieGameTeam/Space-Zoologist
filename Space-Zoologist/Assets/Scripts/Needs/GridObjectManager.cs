@@ -16,7 +16,7 @@ public class GridObjectManager : MonoBehaviour
     {
 
     }
-    protected virtual void Parse()
+    public virtual void Parse()
     {
 
     }
