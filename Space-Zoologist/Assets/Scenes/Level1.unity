@@ -164,6 +164,16 @@ PrefabInstance:
       propertyPath: tilePlacementController
       value: 
       objectReference: {fileID: 1432163885}
+    - target: {fileID: 4330968804202577152, guid: 986e97fd056b44a80afc43d3a0b25214,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 174072321}
+    - target: {fileID: 4330968804202577152, guid: 986e97fd056b44a80afc43d3a0b25214,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: applyDraft
+      objectReference: {fileID: 0}
     - target: {fileID: 4330968804206038631, guid: 986e97fd056b44a80afc43d3a0b25214,
         type: 3}
       propertyPath: FoodSourceManager
@@ -247,7 +257,7 @@ PrefabInstance:
     - target: {fileID: 4330968804587972575, guid: 986e97fd056b44a80afc43d3a0b25214,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -339.23584
+      value: -339.23535
       objectReference: {fileID: 0}
     - target: {fileID: 4330968804587972575, guid: 986e97fd056b44a80afc43d3a0b25214,
         type: 3}
@@ -688,7 +698,8 @@ MonoBehaviour:
   EventResponses:
   - EventType: 0
     DialogueManager: {fileID: 3395325107312024775}
-    TargetPopulation: {fileID: 0}
+    PopulationManager: {fileID: 2078374405}
+    PopulationName: Goat
     ResponsesData:
     - PopulationTriggerSize: 6
       resourceName: Dirt
@@ -1774,6 +1785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3f7cc3157724a0d9487ef32f2dd87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HideNPC: 0
   startingConversation: {fileID: 1149319073}
   defaultConversation: {fileID: 586821967}
   ConversationManagerGameObject: {fileID: 6282307747300831882}
@@ -6972,7 +6984,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 174072321}
     - target: {fileID: 5029382863611648248, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -7098,7 +7110,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 9086212616480976181}
+      objectReference: {fileID: 0}
     - target: {fileID: 8365861475992805735, guid: 680b7a5510b8f489e862ea82b41f14cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -7462,7 +7474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111eb3ad57f04c548aa453096a787a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 2116729166}
   behaviorPatterns: []
   IsPaused: 0
 --- !u!4 &1576156860
@@ -7544,7 +7556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -18748,7 +18760,7 @@ MonoBehaviour:
   GridSystem: {fileID: 2116729166}
   GenericBehaviors:
   - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
-  - {fileID: 11400000, guid: 3a578652255f545d2b61f787b2bed7f8, type: 2}
+  - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
   - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
   levelIO: {fileID: 1933971807}
   speciesReferenceData: {fileID: 1280332669}
@@ -26575,7 +26587,6 @@ RectTransform:
   - {fileID: 4661624496552993175}
   - {fileID: 4661624496595949017}
   - {fileID: 6834458015625767973}
-  - {fileID: 514777875679304137}
   - {fileID: 4661624496553112466}
   - {fileID: 4661624497994337146}
   m_Father: {fileID: 4661624496892425695}
@@ -26772,20 +26783,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!4 &514777875679304137
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3851706739115764835}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5174825, y: 2.5174825, z: 2.5174825}
-  m_Children: []
-  m_Father: {fileID: 237033509542114001}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &515033922951514582
 GameObject:
   m_ObjectHideFlags: 0
@@ -31647,6 +31644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3f7cc3157724a0d9487ef32f2dd87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HideNPC: 0
   startingConversation: {fileID: 861948894}
   defaultConversation: {fileID: 598365504}
   ConversationManagerGameObject: {fileID: 6282307747300831882}
@@ -31902,23 +31900,6 @@ GameObject:
   - component: {fileID: 77686741586972128}
   m_Layer: 5
   m_Name: Text (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &3851706739115764835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 514777875679304137}
-  - component: {fileID: 9086212616480976181}
-  m_Layer: 0
-  m_Name: LogSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33006,7 +32987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4661624496553112466
 Transform:
   m_ObjectHideFlags: 0
@@ -33020,7 +33001,7 @@ Transform:
   m_Children:
   - {fileID: 1659810606}
   m_Father: {fileID: 237033509542114001}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4661624496553112467
 MonoBehaviour:
@@ -33287,7 +33268,7 @@ RectTransform:
   - {fileID: 3157658187303462995}
   - {fileID: 1844187853}
   m_Father: {fileID: 237033509542114001}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -33438,6 +33419,9 @@ MonoBehaviour:
     type: 3}
   BlankSprite: {fileID: 21300000, guid: 70e433de46068504fa56fcf7f49b32b1, type: 3}
   m_targetScrollTextCount: 0
+  BacklogGameObject: {fileID: 0}
+  BacklogButton: {fileID: 0}
+  Backlog: {fileID: 0}
 --- !u!114 &4980189226556591510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37696,7 +37680,6 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   TileSystem: {fileID: 1432163888}
   GridSystem: {fileID: 2116729166}
-  FoodPlacer: {fileID: 1006849750}
 --- !u!1 &6874327555454712161
 GameObject:
   m_ObjectHideFlags: 0
@@ -39629,21 +39612,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9086212616480976181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3851706739115764835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40b836258500d48699ffeb91f19aa645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logWindow: {fileID: 4503815157296075583}
-  logWindowText: {fileID: 4503815155630835475}
-  enclosureSystem: {fileID: 0}
 --- !u!114 &9137677756600807222
 MonoBehaviour:
   m_ObjectHideFlags: 0

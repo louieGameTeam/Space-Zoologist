@@ -111,7 +111,6 @@ public class TileStoreSection : StoreSection
             {
                 numTilesPlaced = tilePlacementController.PlacedTileCount();
                 base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
-
                 if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
                 {
                     FinishPlacing();
