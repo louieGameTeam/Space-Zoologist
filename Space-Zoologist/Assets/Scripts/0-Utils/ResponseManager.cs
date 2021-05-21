@@ -51,8 +51,8 @@ public class ResponseManager : MonoBehaviour {
 	}
 
 	// Listening for checking animals & food
-	public void ListenForAnimal(string speciesName){
-		listenedButtons.Add(speciesName);
+	public void ListenForSpecies(string speciesName){
+		listenedSpecies.Add(speciesName);
 		StartListening();
 	}
 
