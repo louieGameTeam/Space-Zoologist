@@ -171,7 +171,7 @@ public class FoodSourceCalculator : NeedCalculator
             float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * population.Count;
             foreach (FoodSource foodSource in accessibleFoodSources[population])
             {
-                Debug.Log(population.gameObject.name + " dominance: " + population.Dominance + ", total local dominance: " + totalLocalDominance[foodSource] + " for " + foodSource.gameObject.name);
+                //Debug.Log(population.gameObject.name + " dominance: " + population.Dominance + ", total local dominance: " + totalLocalDominance[foodSource] + " for " + foodSource.gameObject.name);
                 availableFood += foodSource.FoodOutput * (population.Dominance / totalLocalDominance[foodSource]);
             }
 

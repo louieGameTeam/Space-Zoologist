@@ -21,7 +21,6 @@ public class FoodSourceManager : GridObjectManager
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
-    [SerializeField] private FoodPlacer FoodPlacer = default;
 
     private void Awake()
     {
@@ -86,7 +85,10 @@ public class FoodSourceManager : GridObjectManager
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
         foodSource.InitializeFoodSource(species, position, this.TileSystem);
         foodSources.Add(foodSource);
-
+        Vector2 pos = position;
+        pos.x -= 1;
+        pos.y -= 1;
+        GridSystem.AddFood(GridSystem.Grid.WorldToCell(pos), species.Size, newFoodSourceGameObject);
         if (!foodSourcesBySpecies.ContainsKey(foodSource.Species))
         {
             foodSourcesBySpecies.Add(foodSource.Species, new List<FoodSource>());
@@ -158,12 +160,17 @@ public class FoodSourceManager : GridObjectManager
     /// <returns>An list of Food Source with the given species name</returns>
     public List<FoodSource> GetFoodSourcesWithSpecies(string speciesName) {
         // Given species doesn't exist in the level
-        if (!foodSourceSpecies.ContainsKey(speciesName)) return null;
+        if (!foodSourceSpecies.ContainsKey(speciesName))
+        {
+            Debug.Log("Food source not in level data");
+            return null;
+        } 
         FoodSourceSpecies species = foodSourceSpecies[speciesName];
 
         // No food source of given species exist
         if (!foodSourcesBySpecies.ContainsKey(species))
         {
+            Debug.Log("Food source species not initialized");
             return null;
         }
         else {
@@ -212,8 +219,9 @@ public class FoodSourceManager : GridObjectManager
     }
     public override void Parse()
     {
-        foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects.ToDictionary())
+        foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)
         {
+            Debug.Log("Parsing " + keyValuePair.Key);
             if (keyValuePair.Key.Equals(this.MapObjectName))
             {
                 foreach (Vector3 position in SerializationUtils.ParseVector3(keyValuePair.Value.coords))
@@ -242,55 +250,14 @@ public class FoodSourceManager : GridObjectManager
 
     public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
     {
-        Vector3Int pos;
-        //base.GridSystem.CellGrid[mouseGridPosition.x, mouseGridPosition.y].Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, mousePosition);
-        int radius = species.Size / 2;
+        Vector3 FoodLocation = this.GridSystem.Grid.CellToWorld(mouseGridPosition);
+        FoodLocation.x += 1;
+        FoodLocation.y += 1;
         if (species.Size % 2 == 1)
         {
-            //size is odd: center it
-            Vector3 FoodLocation = this.GridSystem.Grid.CellToWorld(mouseGridPosition);
-            Vector3Int Temp = mouseGridPosition;
-            Temp.x += 1;
-            Temp.y += 1;
-            FoodLocation += Temp;
             FoodLocation /= 2f;
-            GameObject Food;
-            Food = CreateFoodSource(species, FoodLocation);
-            // Check if the whole object is in bounds
-            for (int x = -1 * radius; x <= radius; x++)
-            {
-                for (int y = -1 * radius; y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    this.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    this.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
-
         }
-        else
-        {
-            //size is even: place it at cross-center (position of tile)
-            Vector3Int Temp = mouseGridPosition;
-            Temp.x += 1;
-            Temp.y += 1;
-            Vector3 FoodLocation = this.GridSystem.Grid.CellToWorld(Temp);
-            GameObject Food = CreateFoodSource(species, FoodLocation);
-
-            // Check if the whole object is in bounds
-            for (int x = -1 * (radius - 1); x <= radius; x++)
-            {
-                for (int y = -1 * (radius - 1); y <= radius; y++)
-                {
-                    pos = mouseGridPosition;
-                    pos.x += x;
-                    pos.y += y;
-                    this.GridSystem.CellGrid[pos.x, pos.y].ContainsFood = true;
-                    this.GridSystem.CellGrid[pos.x, pos.y].Food = Food;
-                }
-            }
-        }
+        Debug.Log("Placing food at " + FoodLocation);
+        GameObject Food = CreateFoodSource(species, FoodLocation);
     }
 }

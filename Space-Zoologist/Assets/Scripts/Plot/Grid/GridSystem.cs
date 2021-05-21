@@ -83,26 +83,6 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    public Vector3Int[,] GetHomeLocations(Population population)
-    {
-        Vector3Int[,] homeLocations = new Vector3Int[3,3];
-        Vector3Int origin = this.Grid.WorldToCell(population.transform.position);
-        int x = 0;
-        int y = 0;
-        for (int i=-1; i<=1; i++)
-        {
-            for (int j=-1; j<=1; j++)
-            {
-                Vector3Int loc = new Vector3Int(origin.x + i, origin.y + j, 0);
-                homeLocations[x, y] = loc;
-                y++;
-            }
-            x++;
-            y = 0;
-        }
-        return homeLocations;
-    }
-
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         return (mousePosition.x < GridWidth - 1 && mousePosition.y < GridHeight - 1 &&
@@ -131,83 +111,6 @@ public class GridSystem : MonoBehaviour
         // Setup boundaries for movement
         this.SetupMovementBoundaires(tileGrid);
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
-    }
-
-    // iterate through CellData, if contains item of interest and locations accessible, calculate distance and keep track of closest item location
-    public Vector3Int FindClosestItem(Population population, GameObject animal, ItemType item)
-    {
-        Vector3Int itemLocation = new Vector3Int(-1, -1, -1);
-        float closestDistance = 10000f;
-        float localDistance = 0f;
-        for (int x=0; x<this.CellGrid.GetLength(0); x++)
-        {
-            for (int y=0; y<this.CellGrid.GetLength(1); y++)
-            {
-                if (this.CellGrid[x, y].ContainsFood && item.Equals(ItemType.Food) && population.Grid.IsAccessible(x, y))
-                {
-                    localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
-                    if (localDistance < closestDistance)
-                    {
-                        closestDistance = localDistance;
-                        itemLocation = new Vector3Int(x, y, 0);
-                    }
-                }
-                else if (this.CellGrid[x, y].ContainsMachine && item.Equals(ItemType.Machine) && population.Grid.IsAccessible(x, y))
-                {
-                    localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
-                    if (localDistance < closestDistance)
-                    {
-                        closestDistance = localDistance;
-                        itemLocation = new Vector3Int(x, y, 0);
-                    }
-                }
-                else if (item.Equals(ItemType.Terrain))
-                {
-                    // if contains liquid tile, check neighbors accessibility
-                    GameTile tile = this.TileSystem.GetGameTileAt(new Vector3Int(x, y, 0));
-                    if (tile != null && tile.type == TileType.Liquid)
-                    {
-                        if (population.Grid.IsAccessible(x + 1, y))
-                        {
-                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
-                            if (localDistance < closestDistance)
-                            {
-                                closestDistance = localDistance;
-                                itemLocation = new Vector3Int(x + 1, y, 0);
-                            }
-                        }
-                        if (population.Grid.IsAccessible(x - 1, y))
-                        {
-                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
-                            if (localDistance < closestDistance)
-                            {
-                                closestDistance = localDistance;
-                                itemLocation = new Vector3Int(x - 1, y, 0);
-                            }
-                        }
-                        if (population.Grid.IsAccessible(x, y + 1))
-                        {
-                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
-                            if (localDistance < closestDistance)
-                            {
-                                closestDistance = localDistance;
-                                itemLocation = new Vector3Int(x, y + 1, 0);
-                            }
-                        }
-                        if (population.Grid.IsAccessible(x, y - 1))
-                        {
-                            localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
-                            if (localDistance < closestDistance)
-                            {
-                                closestDistance = localDistance;
-                                itemLocation = new Vector3Int(x, y - 1, 0);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return itemLocation;
     }
 
     private float CalculateDistance(float x1, float y1, float x2, float y2)
@@ -239,9 +142,9 @@ public class GridSystem : MonoBehaviour
             offset = 1;
         }
         // Check if the whole object is in bounds
-        for (int x = -1 * (radius - offset); x <= radius; x++)
+        for (int x = (-1) * (radius - offset); x <= radius; x++)
         {
-            for (int y = -1 * (radius - offset); y <= radius; y++)
+            for (int y = (-1) * (radius - offset); y <= radius; y++)
             {
                 pos = gridPosition;
                 pos.x += x;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ReserveDraft : MonoBehaviour
 {
+    public bool IsToggled => isToggled;
     [SerializeField] PlotIO plotIO;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] GameObject PauseButton = default;

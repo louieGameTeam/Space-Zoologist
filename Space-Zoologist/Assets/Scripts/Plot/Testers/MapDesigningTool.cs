@@ -7,6 +7,7 @@ enum SelectionType {Tile, Animal, FoodSource, None }
 public class MapDesigningTool : MonoBehaviour
 {
     // Start is called before the first frame update
+    private LevelDataReference LevelDataReference;
     private TileType selectedTile;
     private AnimalSpecies selectedSpecies;
     private FoodSourceSpecies selectedFood;
@@ -18,7 +19,7 @@ public class MapDesigningTool : MonoBehaviour
     private FoodSourceManager foodSourceManager;
     private PopulationManager populationManager;
     [SerializeField] bool godMode = true;
-    [SerializeField] private FoodSourceSpecies[] foodSourceSpecies = default; //Attach food sources here
+    private FoodSourceSpecies[] foodSourceSpecies = default;
     private bool DisplayLiquidBodyInfo = true;
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;
@@ -38,6 +39,8 @@ public class MapDesigningTool : MonoBehaviour
         this.tileSystem = FindObjectOfType<TileSystem>();
         this.populationManager = FindObjectOfType<PopulationManager>();
         this.foodSourceManager = FindObjectOfType<FoodSourceManager>();
+        this.LevelDataReference = FindObjectOfType<LevelDataReference>();
+        this.foodSourceSpecies = this.LevelDataReference.LevelData.FoodSourceSpecies.ToArray();
     }
     private void Update()
     {

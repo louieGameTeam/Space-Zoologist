@@ -397,4 +397,9 @@ public class Inspector : MonoBehaviour
     {
 
     }
+
+    public GameObject GetAnimalSelected()
+    {
+        return lastPopulationSelected;
+    }
 }

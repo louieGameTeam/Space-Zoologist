@@ -38,7 +38,6 @@ public class GrowthCalculator
     public void CalculateGrowth()
     {
         this.GrowthStatus = GrowthStatus.growing;
-        bool isPoisoned = false;
         // 1.
         foreach (KeyValuePair<string, Need> need in Population.Needs)
         {
@@ -55,7 +54,7 @@ public class GrowthCalculator
         Dictionary<NeedType, NeedCondition> resetNeedTracker = new Dictionary<NeedType, NeedCondition>(NeedTracker);
         foreach (KeyValuePair<NeedType, NeedCondition> need in NeedTracker)
         {
-            if (NeedTracker[need.Key].Equals(NeedCondition.Bad) || isPoisoned)
+            if (NeedTracker[need.Key].Equals(NeedCondition.Bad))
             {
                 GrowthStatus = GrowthStatus.declining;
             }

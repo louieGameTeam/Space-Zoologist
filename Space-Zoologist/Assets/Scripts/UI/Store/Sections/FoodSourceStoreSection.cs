@@ -16,12 +16,6 @@ public class FoodSourceStoreSection : StoreSection
         base.Initialize();
     }
 
-    public void ManuallyPlaceItem(Item item, Vector3Int mouseGridPosition)
-    {
-        selectedItem = item;
-        placeFood(mouseGridPosition);
-    }
-
     /// <summary>
     /// Handles the click release on the cursor item.
     /// </summary>
@@ -47,32 +41,7 @@ public class FoodSourceStoreSection : StoreSection
             base.playerBalance.SubtractFromBalance(selectedItem.Price);
             base.ResourceManager.Placed(selectedItem, 1);
             Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
-            placeFood(mouseGridPosition);
+            FoodSourceManager.placeFood(mouseGridPosition, base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem));
         }
-    }
-
-    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies foodSource = null)
-    {
-        FoodSourceSpecies species = base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem);
-        Vector3Int Temp = mouseGridPosition;
-        Temp.x += 1;
-        Temp.y += 1;
-        GameObject Food;
-        Vector3 FoodLocation;
-        if (species.Size % 2 == 1)
-        {
-            //size is odd: center it
-            FoodLocation = base.GridSystem.Grid.CellToWorld(mouseGridPosition);
-            FoodLocation += Temp;
-            FoodLocation /= 2f;
-        }
-        else
-        {
-            //size is even: place it at cross-center (position of tile)
-            FoodLocation = base.GridSystem.Grid.CellToWorld(Temp);
-        }
-        Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
-
-        GridSystem.AddFood(mouseGridPosition, species.Size, Food);
     }
 }

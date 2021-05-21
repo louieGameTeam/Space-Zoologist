@@ -21,6 +21,7 @@ public class GridOverlay : MonoBehaviour
     public void ToggleGridOverlay()
     {
         gridOverlay.gameObject.SetActive(!gridOverlay.gameObject.activeSelf);
+        ClearColors();
     }
 
     public void HighlightTile(Vector3Int tilePosition, Color color)

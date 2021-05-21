@@ -51,7 +51,6 @@ public class StoreSection : MonoBehaviour
 
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
             {
-                Debug.Log("Updating visuals");
                 previousLocation = gridLocation;
                 gridOverlay.ClearColors();
                 GridSystem.PlacementValidation.updateVisualPlacement(gridLocation, selectedItem);

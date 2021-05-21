@@ -22,7 +22,7 @@ public class LiquidModificationHUD : MonoBehaviour
         {
             Vector3 screenPoint = this.mainCamera.WorldToScreenPoint(worldPos);
             GUILayout.BeginArea(new Rect(screenPoint.x, Screen.height - screenPoint.y - 150, 200, 150));
-            GUILayout.Box("LiquidBodyID: " + liquidBody.bodyID);
+            //GUILayout.Box("LiquidBodyID: " + liquidBody.bodyID);
             GUILayout.Box("Composition");
             
             for (int i = 0; i < liquidBody.contents.Length; i++)

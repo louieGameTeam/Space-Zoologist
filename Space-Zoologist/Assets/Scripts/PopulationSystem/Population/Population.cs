@@ -256,12 +256,12 @@ public class Population : MonoBehaviour, Life
         MovementData data = new MovementData();
         this.AnimalsMovementData.Add(data);
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
-        newAnimal.transform.position = position;
         if (newAnimal == null)
         {
             this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
+        newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
@@ -283,7 +283,7 @@ public class Population : MonoBehaviour, Life
             this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
             this.PopulationBehaviorManager.RemoveAnimal(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
-            this.AnimalPopulation[this.AnimalPopulation.Count - 1].GetComponent<AnimalBehaviorManager>().activeBehaviorPattern.UpdatePattern();
+
             this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
             this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
             if (this.AnimalPopulation.Count == 0)

@@ -36,9 +36,15 @@ public class PlacementValidation : MonoBehaviour
         return CheckSurroudingTiles(gridPosition, species);
     }
 
+    public bool IsFoodPlacementValid(Vector3 mousePosition, FoodSourceSpecies species)
+    {
+        //FoodSourceSpecies species = this.ReferenceData.FoodSources[selectedItem.ID];
+        Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(mousePosition);
+        return CheckSurroudingTiles(gridPosition, species);
+    }
+
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
-        Debug.Log("Item selected " + selectedItem.ID);
         if (this.ReferenceData.FoodSources.ContainsKey(selectedItem.ID))
         {
             FoodSourceSpecies species = this.ReferenceData.FoodSources[selectedItem.ID];

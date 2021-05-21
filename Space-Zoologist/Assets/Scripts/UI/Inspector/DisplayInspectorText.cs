@@ -27,7 +27,7 @@ public class DisplayInspectorText : MonoBehaviour
         else
         {
             displayText += $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days\n";
-            displayText += "\n<For development testing>\n";
+            displayText += "\n\n";
             foreach (KeyValuePair<string, Need> need in population.Needs)
             {
                 if (need.Value.GetCondition(need.Value.NeedValue).Equals(NeedCondition.Bad))

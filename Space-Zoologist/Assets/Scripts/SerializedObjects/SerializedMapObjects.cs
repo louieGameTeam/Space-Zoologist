@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public class SerializedMapObjects
+public class SerializedMapObjects : IEnumerable<KeyValuePair<string, GridItemSet>>
 {
     public string[] names;
     private List<string> typeList = new List<string>();
@@ -15,17 +15,16 @@ public class SerializedMapObjects
         this.gridItemSetList.Add(gridItemSet);
         this.gridItemSets = this.gridItemSetList.ToArray();
     }
-    public Dictionary<string , GridItemSet> ToDictionary()
+    public IEnumerator<KeyValuePair<string, GridItemSet>> GetEnumerator()
     {
-        Dictionary<string, GridItemSet> dict = new Dictionary<string, GridItemSet>();
-        if (this.names != null)
+        this.names = this.names ?? new string[0];
+        for (int i = 0; i < names.Length; i++)
         {
-            for (int i = 0; i < names.Length; i++)
-            {
-                dict.Add(names[i], gridItemSets[i]);
-            }
+            yield return new KeyValuePair<string, GridItemSet>(names[i], gridItemSets[i]);
         }
-
-        return dict;
+    }
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

@@ -293,6 +293,7 @@ public class ReservePartitionManager : MonoBehaviour
         // Most intuitive implementation: recalculate map for all affected populations
         foreach (Population population in AffectedPopulations)
         {
+            Debug.Log("Updating access map for " + population.gameObject.name);
             CleanupAccessMap(PopulationToID[population]);
             GenerateMap(population);
         }
