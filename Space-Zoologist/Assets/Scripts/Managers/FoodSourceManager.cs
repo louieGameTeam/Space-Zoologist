@@ -212,7 +212,7 @@ public class FoodSourceManager : GridObjectManager
     }
     public override void Parse()
     {
-        foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects.ToDictionary())
+        foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)
         {
             if (keyValuePair.Key.Equals(this.MapObjectName))
             {

@@ -25,6 +25,7 @@ public class PopulationManager : MonoBehaviour
     public void Initialize()
     {
         SerializedPopulation[] serializedPopulations = this.levelIO.presetMap.serializedPopulations;
+        serializedPopulations = serializedPopulations ?? new SerializedPopulation[0];
         for (int i = 0; i < serializedPopulations.Length; i++)
         {
             Vector3[] pos = SerializationUtils.ParseVector3(serializedPopulations[i].population.coords);
