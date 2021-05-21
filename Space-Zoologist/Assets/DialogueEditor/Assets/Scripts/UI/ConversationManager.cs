@@ -85,7 +85,9 @@ namespace DialogueEditor
         private int m_currentSelectedIndex;
 
 
-        public Text Backlog;
+        public GameObject BacklogGameObject;
+        public Text BacklogText;
+        public Button BacklogButton;
 
 
         //--------------------------------------
@@ -546,9 +548,9 @@ namespace DialogueEditor
                     DialogueText.text = speech.Text;
                     DialogueText.maxVisibleCharacters = speech.Text.Length;
                 }
-                if (Backlog != null)
+                if (BacklogText != null)
                 {
-                    Backlog.text += speech.Name + ":\n" + speech.Text + "\n\n";
+                    BacklogText.text += speech.Name + ":\n" + speech.Text + "\n\n";
                 }
             }
 
@@ -698,6 +700,11 @@ namespace DialogueEditor
 
             m_uiOptions[m_currentSelectedIndex].SetHovering(false);
             m_currentSelectedIndex = -1;
+        }
+
+        public void ToggleBacklog() {
+            bool active = BacklogGameObject.activeSelf;
+            BacklogGameObject.SetActive(!active); // toggle backlog
         }
     }
 }

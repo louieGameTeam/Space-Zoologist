@@ -22,7 +22,9 @@ namespace DialogueEditor
         SerializedProperty ScrollTextProperty;
         SerializedProperty ScrollTextSpeedProperty;
         SerializedProperty AllowMouseInteractionProperty;
-        SerializedProperty BacklogProperty;
+        SerializedProperty BacklogGameObjectProperty;
+        SerializedProperty BacklogTextProperty;
+        SerializedProperty BacklogButtonProperty;
 
         private void OnEnable()
         {
@@ -33,7 +35,9 @@ namespace DialogueEditor
             ScrollTextProperty = serializedObject.FindProperty("ScrollText");
             ScrollTextSpeedProperty = serializedObject.FindProperty("ScrollSpeed");
             AllowMouseInteractionProperty = serializedObject.FindProperty("AllowMouseInteraction");
-            BacklogProperty = serializedObject.FindProperty("Backlog");
+            BacklogGameObjectProperty = serializedObject.FindProperty("BacklogGameObject");
+            BacklogTextProperty = serializedObject.FindProperty("BacklogText");
+            BacklogButtonProperty = serializedObject.FindProperty("BacklogButton");
         }
 
         public override void OnInspectorGUI()
@@ -75,7 +79,9 @@ namespace DialogueEditor
 
             // Interaction options
             GUILayout.Label("Backlog", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(BacklogProperty);
+            EditorGUILayout.PropertyField(BacklogGameObjectProperty);
+            EditorGUILayout.PropertyField(BacklogTextProperty);
+            EditorGUILayout.PropertyField(BacklogButtonProperty);
 
             // Apply changes to the serializedProperty - always do this in the end of OnInspectorGUI.
             serializedObject.ApplyModifiedProperties();
