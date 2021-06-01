@@ -37,7 +37,7 @@ public class MenuManager : MonoBehaviour
         }
         this.PlayerBalanceHUD.GetComponent<TopHUD>().SetupPlayerBalance(this.PlayerBalance);
         StoreMenus[curMenu]?.gameObject.SetActive(true);
-        
+        StoreCanvas.localScale = Vector3.zero;
 
     }
 
@@ -78,13 +78,13 @@ public class MenuManager : MonoBehaviour
             this.PauseManager.TryToPause();
             EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
         }
-        StoreCanvas.DOAnchorPosX(StoreCanvas.anchoredPosition.x + StoreCanvas.rect.width / 2.5f, 0.5f);
+        StoreCanvas.DOScale(0.8f, 0.5f);
         this.IsInStore = true;
     }
 
     public void CloseStore()
     {
-        StoreCanvas.DOAnchorPosX(StoreCanvas.anchoredPosition.x - StoreCanvas.rect.width / 2.5f, 0.5f);
+        StoreCanvas.DOScale(0, 0.5f);
         this.IsInStore = false;
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }

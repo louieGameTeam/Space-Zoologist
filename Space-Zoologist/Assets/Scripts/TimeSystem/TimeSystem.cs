@@ -12,6 +12,7 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] Inspector Inspector = default;
     [SerializeField] Text CurrentDayText = default;
     private int currentDay = 1;
+    private int maxDay = 20; //TODO implement max day?
 
     private void Start()
     {
@@ -39,6 +40,10 @@ public class TimeSystem : MonoBehaviour
 
     private void UpdateDayText(int day)
     {
-        CurrentDayText.text = "Day " + day;
+        CurrentDayText.text = "DAY " + day;
+        if (maxDay > 0)
+        {
+            CurrentDayText.text += " / " + maxDay;
+        }
     }
 }
