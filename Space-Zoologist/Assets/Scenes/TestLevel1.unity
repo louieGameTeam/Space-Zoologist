@@ -2960,6 +2960,64 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &667936681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667936682}
+  - component: {fileID: 667936683}
+  m_Layer: 5
+  m_Name: MoveObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667936682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667936681}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -469.18948, y: -279.58356, z: -9416.397}
+  m_LocalScale: {x: 0.9677419, y: 0.9677419, z: 0.9677419}
+  m_Children: []
+  m_Father: {fileID: 237033509542114001}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &667936683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667936681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1043407aa51401cb0059b2ae7bee1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reserveDraft: {fileID: 459174929}
+  gridSystem: {fileID: 1621202152}
+  tileSystem: {fileID: 765609361}
+  referenceCamera: {fileID: 1054101994}
+  populationManager: {fileID: 2078374405}
+  foodSourceManager: {fileID: 6874327555454712160}
+  reservePartitionManager: {fileID: 936381359}
+  cursorItem: {fileID: 4661624496595948998}
+  gridOverlay: {fileID: 1621202155}
+  playerBalance: {fileID: 4661624496553112467}
+  MoveButtonPrefab: {fileID: 4894018203119638648, guid: c3191e92a628b4843a5d8a023b563faf,
+    type: 3}
+  DeleteButtonPrefab: {fileID: 4319639836530594827, guid: 5d6f628a32ac249fe945c3e9408f293e,
+    type: 3}
+  InGameUI: {fileID: 237033509542114001}
 --- !u!1 &698944565
 GameObject:
   m_ObjectHideFlags: 0
@@ -5323,63 +5381,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &959143558
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 959143559}
-  - component: {fileID: 959143560}
-  m_Layer: 5
-  m_Name: MoveObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &959143559
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959143558}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 237033509542114001}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &959143560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959143558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b1043407aa51401cb0059b2ae7bee1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reserveDraft: {fileID: 459174929}
-  gridSystem: {fileID: 1621202152}
-  tileSystem: {fileID: 765609361}
-  referenceCamera: {fileID: 1054101994}
-  populationManager: {fileID: 2078374405}
-  foodSourceManager: {fileID: 6874327555454712160}
-  reservePartitionManager: {fileID: 936381359}
-  cursorItem: {fileID: 4661624496595948998}
-  gridOverlay: {fileID: 1621202155}
 --- !u!1 &972285138
 GameObject:
   m_ObjectHideFlags: 0
@@ -24535,7 +24536,7 @@ RectTransform:
   m_Children:
   - {fileID: 4661624496552993175}
   - {fileID: 6834458015625767973}
-  - {fileID: 959143559}
+  - {fileID: 667936682}
   - {fileID: 514777875679304137}
   - {fileID: 4661624497994337146}
   - {fileID: 4661624496595949017}
@@ -27815,7 +27816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 514777875679304137}
   - component: {fileID: 9086212616480976181}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LogSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
