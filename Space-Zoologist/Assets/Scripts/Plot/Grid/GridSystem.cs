@@ -10,31 +10,37 @@ using UnityEngine.Tilemaps;
 /// PlaceableArea transparency can be increased or decreased when adding it
 public class GridSystem : MonoBehaviour
 {
-    public int GridWidth => LevelDataReference.LevelData.MapWidth;
-    public int GridHeight => LevelDataReference.LevelData.MapHeight;
     [HideInInspector]
     public PlacementValidation PlacementValidation = default;
     [SerializeField] public Grid Grid = default;
+    [SerializeField] public Tilemap PlacableArea = default;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
-    [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] private Tilemap TilePlacementValidation = default;
     [SerializeField] private GameTile Tile = default;
+    [Header("Used to define 2d array")]
+    [SerializeField] private int ReserveWidth = default;
+    [SerializeField] private int ReserveHeight = default;
+    public Vector3Int startTile = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
-    private HashSet<Vector3Int> PopulationHomeLocations = new HashSet<Vector3Int>();
 
     private void Awake()
     {
-        this.CellGrid = new CellData[this.GridWidth, this.GridHeight];
-        for (int i=0; i<this.GridWidth; i++)
+        this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
+        for (int i=0; i<this.ReserveWidth; i++)
         {
-            for (int j=0; j<this.GridHeight; j++)
+            for (int j=0; j<this.ReserveHeight; j++)
             {
-                this.CellGrid[i, j] = new CellData(false);
+                Vector3Int loc = new Vector3Int(i, j, 0);
+                if (startTile == default && PlacableArea.HasTile(loc))
+                {
+                    startTile = loc;
+                }
+                this.CellGrid[i, j] = new CellData(PlacableArea.HasTile(loc));
             }
         }
     }
@@ -42,17 +48,12 @@ public class GridSystem : MonoBehaviour
     private void Start()
     {
         this.PlacementValidation = this.gameObject.GetComponent<PlacementValidation>();
-        this.PlacementValidation.Initialize(this, this.TileSystem, this.LevelDataReference, this.SpeciesReferenceData);
+        this.PlacementValidation.Initialize(this, this.TileSystem, this.SpeciesReferenceData);
     }
 
     public bool isCellinGrid(int x, int y)
     {
-        if (x < 0 || x >= this.GridWidth || y < 0 || y >= this.GridHeight)
-        {
-            return false;
-        }
-
-        return true;
+        return x >= 0 && y >= 0 && x < ReserveWidth && y < ReserveHeight;
     }
 
     /// <summary>
@@ -85,18 +86,20 @@ public class GridSystem : MonoBehaviour
 
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
-        return (mousePosition.x < GridWidth - 1 && mousePosition.y < GridHeight - 1 &&
-        mousePosition.x > 0 && mousePosition.y > 0);
+        Vector3Int loc = Grid.WorldToCell(mousePosition);
+        Debug.Log("Placable area: " + PlacableArea.HasTile(loc));
+        return PlacableArea.HasTile(loc);
     }
 
     // Will need to make the grid the size of the max tilemap size
     public AnimalPathfinding.Grid GetGridWithAccess(Population population)
     {
         // Debug.Log("Setting up pathfinding grid");
-        bool[,] tileGrid = new bool[GridWidth, GridHeight];
-        for (int x=0; x<GridWidth; x++)
+        bool[,] tileGrid = new bool[ReserveWidth, ReserveHeight];
+        this.SetupMovementBoundaires(tileGrid);
+        for (int x=0; x<ReserveWidth; x++)
         {
-            for (int y=0; y<GridHeight; y++)
+            for (int y=0; y<ReserveHeight; y++)
             {
                 if (RPM.CanAccess(population, new Vector3Int(x, y, 0)))
                 {
@@ -108,8 +111,6 @@ public class GridSystem : MonoBehaviour
                 }
             }
         }
-        // Setup boundaries for movement
-        this.SetupMovementBoundaires(tileGrid);
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
     }
 
@@ -120,15 +121,13 @@ public class GridSystem : MonoBehaviour
 
     private void SetupMovementBoundaires(bool[,] tileGrid)
     {
-        for (int x=0; x<GridWidth; x++)
+        for (int i = 0; i < this.ReserveWidth; i++)
         {
-            tileGrid[x, 0] = false;
-            tileGrid[x, GridHeight - 1] = false;
-        }
-        for (int y=0; y<GridHeight; y++)
-        {
-            tileGrid[0, y] = false;
-            tileGrid[GridWidth - 1, y] = false;
+            for (int j = 0; j < this.ReserveHeight; j++)
+            {
+                Vector3Int loc = new Vector3Int(i, j, 0);
+                tileGrid[i, j] = PlacableArea.HasTile(loc);
+            }
         }
     }
 
@@ -180,7 +179,7 @@ public class GridSystem : MonoBehaviour
 
     public struct CellData
     {
-        public CellData(bool start)
+        public CellData(bool inBounds)
         {
             this.ContainsFood = false;
             this.ContainsAnimal = false;
@@ -189,7 +188,7 @@ public class GridSystem : MonoBehaviour
             this.Machine = null;
             this.ContainsMachine = false;
             this.HomeLocation = false;
-            this.OutOfBounds = false;
+            this.OutOfBounds = !inBounds;
         }
 
         public bool ContainsMachine { get; set; }

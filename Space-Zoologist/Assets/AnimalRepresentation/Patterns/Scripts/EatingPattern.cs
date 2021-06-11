@@ -26,7 +26,7 @@ public class EatingPattern : UniversalAnimatorPattern
                 {
                     continue;
                 }
-                if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsFood)
+                if (GridSystem.isCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsFood)
                 {
                     if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
                     {

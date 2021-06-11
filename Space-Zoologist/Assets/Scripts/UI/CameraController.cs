@@ -11,7 +11,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float edgeSpeed = 5f;
     [SerializeField] private float edgeBoundary = 10f;
     [SerializeField] private float zoomHeight = 10f;
-    [SerializeField] private LevelDataReference LevelDataReference = default;
+    [SerializeField] private int MapWidth = default;
+    [SerializeField] private int MapHeight = default;
 
     private Camera cam = default;
     private float targetZoom;
@@ -125,12 +126,12 @@ public class CameraController : MonoBehaviour
     private bool IsValidLocation(Vector3 newPosition)
     {
         return (newPosition.x >= 0 && newPosition.y >= 0
-        && newPosition.x <= LevelDataReference.MapWidth && newPosition.y <= LevelDataReference.MapHeight);
+        && newPosition.x <= MapWidth && newPosition.y <= MapHeight);
     }
 
     private Vector3 ClampToValidLocation(Vector3 toClamp) {
-        float x = Mathf.Clamp(toClamp.x, 0, LevelDataReference.MapWidth);
-        float y = Mathf.Clamp(toClamp.y, 0, LevelDataReference.MapHeight);
+        float x = Mathf.Clamp(toClamp.x, 0, MapWidth);
+        float y = Mathf.Clamp(toClamp.y, 0, MapHeight);
         return new Vector3(x, y, toClamp.z);
     }
 }

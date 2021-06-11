@@ -65,6 +65,11 @@ public class ReservePartitionManager : MonoBehaviour
         populationAccessibleLiquid = new Dictionary<Population, List<float[]>>();
     }
 
+    private void Start()
+    {
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => this.RemovePopulation((Population)EventManager.Instance.EventData));
+    }
+
     /// <summary>
     /// Add a population to the RPM.
     /// </summary>
@@ -93,11 +98,16 @@ public class ReservePartitionManager : MonoBehaviour
     /// </summary>
     public void RemovePopulation(Population population)
     {
+        if (!Populations.Contains(population))
+        {
+            return;
+        }
         Populations.Remove(population);
         TypesOfTerrain.Remove(population);
         openID.Enqueue(PopulationToID[population]);
         PopulationByID.Remove(PopulationToID[population]);  // free ID
         PopulationToID.Remove(population);  // free ID
+        CleanupAccessMapForRecycledID();
 
     }
 

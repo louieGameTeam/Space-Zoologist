@@ -44,5 +44,5 @@ public interface NeedCalculator
     /// Calculate and return the distribution results
     /// </summary>
     /// <returns> The distribution results </returns>
-    Dictionary<Population, float> CalculateDistribution();
+    // Dictionary<Population, float> CalculateDistribution();
 }

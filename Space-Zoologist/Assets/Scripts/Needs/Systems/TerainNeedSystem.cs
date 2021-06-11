@@ -118,13 +118,17 @@ public class TerrainNeedSystem : NeedSystem
             terrainCountsByType = rpm.GetTypesOfTiles(population);
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
+                int numTiles = count;
                 string needName = ((TileType)index).ToString();
-                int countPerIndividual = count / population.AnimalPopulation.Count;
                 if (population.GetNeedValues().ContainsKey(needName))
                 {
-                    // Debug.Log("Updating " + needName + " with value " + countPerIndividual);
+                    if (needName.Equals("Liquid"))
+                    {
+                        numTiles = rpm.GetLiquidComposition(population).Count;
+                    }
+                    Debug.Log("Updating " + needName + " with value " + numTiles);
 
-                    population.UpdateNeed(needName, countPerIndividual);
+                    population.UpdateNeed(needName, numTiles);
                 }
             }
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// Calculates food distribution of a certain food type
@@ -24,7 +25,8 @@ public class FoodSourceCalculator : NeedCalculator
     // Holds which populations have access to each FoodSource, the opposite of accessibleFoodSources.
     private Dictionary<FoodSource, HashSet<Population>> populationsWithAccess = new Dictionary<FoodSource, HashSet<Population>>();
 
-    Dictionary<Population, float> distributedFood = new Dictionary<Population, float>();
+    private Dictionary<FoodSource, float> foodRemaining = new Dictionary<FoodSource, float>();
+    Dictionary<FoodSource, float> localDominanceRemaining = new Dictionary<FoodSource, float>();
 
     public FoodSourceCalculator(ReservePartitionManager rpm, string foodSourceName)
     {
@@ -86,16 +88,12 @@ public class FoodSourceCalculator : NeedCalculator
  
         this.consumers.Remove(consumer);
         this.accessibleFoodSources.Remove(consumer);
-        // Assert would not be included in depolyment built
-        // Debug.Assert(this.consumers.Remove(consumer), "Consumer removal failure");
-        // Debug.Assert(this.accessibleFoodSources.Remove(consumer), "Removal of consumer in AccessibleFoodSources failed!");
-
         return true;
     }
 
     public bool RemoveSource(Life source)
     {
-        Debug.Log("REMOVING");
+        Debug.Log("REMOVING " + source.ToString());
         Debug.Log(this.FoodSourceName);
         FoodSource foodSource = (FoodSource)source;
         Debug.Log(foodSources.Contains(foodSource));
@@ -111,121 +109,68 @@ public class FoodSourceCalculator : NeedCalculator
         return true;
     }
 
-    public Dictionary<Population, float> CalculateDistribution()
+    public float CalculateDistribution(Population population, float maxThreshold)
     {
-        if (foodSources.Count == 0 || consumers.Count == 0)
+        float foodAcquired = 0.0f;
+        List<FoodSource> leastToMostContested = accessibleFoodSources[population].OrderByDescending(foodSource => localDominanceRemaining[foodSource]).ToList();
+        foreach (FoodSource foodSource in leastToMostContested)
         {
-            Debug.Log("Food output not calculated");
-            this.isDirty = false;
-            return null;
-        }
-
-        // When accessbility of population changes a full reset should be triggered
-        foreach (Population population in consumers)
-        {
-            if (population.HasAccessibilityChanged)
+            // 1. Calculate how much food each population can receive from available food, accounting for no food or dominance
+            float dominanceRatio = population.Dominance / localDominanceRemaining[foodSource];
+            if (localDominanceRemaining[foodSource] <= 0 || dominanceRatio <= 0)
             {
-                // Debug.Log($"{population} triggered a accessible list reset");
-
-                foreach (FoodSource foodSource in foodSources)
-                {
-                    if (rpm.CanAccess(population, foodSource.Position))
-                    {
-                        accessibleFoodSources[population].Add(foodSource);
-                        populationsWithAccess[foodSource].Add(population);
-                    }
-                }
+                dominanceRatio = 1;
             }
-        }
-
-        // Holds how much food each FoodSource has left after Populations take from them.
-        Dictionary<FoodSource, float> amountFoodRemaining = new Dictionary<FoodSource, float>();
-
-        // Holds the sum of the Dominance of all Populations that have access to the FoodSource for each FoodSource.
-        Dictionary<FoodSource, float> totalLocalDominance = new Dictionary<FoodSource, float>();
-        // Holds the remaining Dominance of each FoodSource after populations have already taken their share of food.
-        Dictionary<FoodSource, float> localDominanceRemaining = new Dictionary<FoodSource, float>();
-
-        // Initialize totalLocalDominance and localDominanceRemaining.
-        foreach (FoodSource foodSource in foodSources)
-        {
-            float total = populationsWithAccess[foodSource].Sum(p => p.Dominance);
-            totalLocalDominance.Add(foodSource, total);
-            localDominanceRemaining.Add(foodSource, total);
-
-            // Reset amountFoodRemaining to initial food output 
-            amountFoodRemaining.Add(foodSource, foodSource.FoodOutput);
-        }
-
-        // Holds the populations that will not have enough food to give them a good condition.
-        HashSet<Population> populationsWithNotEnough = new HashSet<Population>();
-
-        // Foreach population, if it is in good condition from the food available to it, then take its portion and update its need,
-        // else, add it to the set of populations that will not have enough. The populations without enough will then split what is 
-        // remaining based on the ratio of their dominance to the localRemainingDominance for each of their FoodSources.
-        foreach (Population population in consumers)
-        {
-            float availableFood = 0.0f;
-            float amountRequiredPerIndividualForGoodCondition = population.Needs[this.foodSourceName].GetThreshold(NeedCondition.Good, -1, false);
-       
-            float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * population.Count;
-            foreach (FoodSource foodSource in accessibleFoodSources[population])
+            float foodToAcquire = foodRemaining[foodSource] * (dominanceRatio);
+            // 2. Handle case for if they take all remaining food
+            if (foodToAcquire > foodRemaining[foodSource])
             {
-                //Debug.Log(population.gameObject.name + " dominance: " + population.Dominance + ", total local dominance: " + totalLocalDominance[foodSource] + " for " + foodSource.gameObject.name);
-                availableFood += foodSource.FoodOutput * (population.Dominance / totalLocalDominance[foodSource]);
+                foodAcquired += foodRemaining[foodSource];
+                foodRemaining[foodSource] = 0;
             }
-
-            // If the food available to the Population is more than enough, only take enough and update its need.
-            if (availableFood >= amountRequiredForGoodCondition)
-            {
-                float foodToTakeRatio = amountRequiredForGoodCondition / availableFood;
-                float totalFoodAcquired = 0.0f;
-                foreach (FoodSource foodSource in accessibleFoodSources[population])
-                {
-                    float foodAcquired = foodToTakeRatio * foodSource.FoodOutput * (population.Dominance / totalLocalDominance[foodSource]);
-                    amountFoodRemaining[foodSource] -= foodAcquired;
-                    totalFoodAcquired += foodAcquired;
-                    localDominanceRemaining[foodSource] -= population.Dominance;
-                    //Debug.Log($"{population.Species.SpeciesName} population took {foodAcquired} food from foodsource at {foodSource.Position}");
-                }
-                float foodAcquiredPerIndividual = totalFoodAcquired / population.Count;
-
-                // Save the distributed value
-                if(!this.distributedFood.ContainsKey(population))
-                {
-                    this.distributedFood.Add(population, 0f);
-                }
-                this.distributedFood[population] = foodAcquiredPerIndividual;
-            }
-            // Otherwise, add to the set of populationsWithNotEnough to be processed later.
             else
             {
-                populationsWithNotEnough.Add(population);
+                foodAcquired += foodToAcquire;
+                foodRemaining[foodSource] -= foodToAcquire;
+            }
+            // 3. Population has already received enough food, return any excess food and remove them from dominance of any local food
+            if (foodAcquired >= maxThreshold)
+            {
+                float excessFood = foodAcquired - maxThreshold;
+                foodAcquired = maxThreshold;
+                foodRemaining[foodSource] += excessFood;
+                UpdateLocalDominance(population);
+                break;
             }
         }
+        Debug.Log(population.gameObject.name + " receieved " + foodAcquired + " from " + this.FoodSourceName);
+        return foodAcquired;
+    }
 
-        // For those Populations who will not have enough to be in good condition, split what food remains from each FoodSource.
-        foreach (Population population in populationsWithNotEnough)
+    private void UpdateLocalDominance(Population population)
+    {
+        foreach (FoodSource foodSource in accessibleFoodSources[population])
         {
-            float foodAcquired = 0.0f;
-            foreach (FoodSource foodSource in accessibleFoodSources[population])
-            {
-                float dominanceRatio = population.Dominance / localDominanceRemaining[foodSource];
-                foodAcquired += dominanceRatio * amountFoodRemaining[foodSource];
-            }
-            float amountAcquiredPerIndividual = foodAcquired / population.Count;
-
-            // Save the distributed value
-            if (!this.distributedFood.ContainsKey(population))
-            {
-                this.distributedFood.Add(population, 0f);
-            }
-            this.distributedFood[population] = amountAcquiredPerIndividual;
+            localDominanceRemaining[foodSource] -= population.Dominance;
         }
+    }
 
-        // Done update not dirty any more
-        isDirty = false;
-
-        return this.distributedFood;
+    // Single sum to keep track of total food output
+    public void ResetCalculator()
+    {
+        foreach (FoodSource foodSource in foodSources)
+        {
+            if (!foodRemaining.ContainsKey(foodSource))
+            {
+                foodRemaining[foodSource] = 0f;
+            }
+            if (!localDominanceRemaining.ContainsKey(foodSource))
+            {
+                localDominanceRemaining[foodSource] = 0f;
+            }
+            float total = populationsWithAccess[foodSource].Sum(p => p.Dominance);
+            localDominanceRemaining[foodSource] = total;
+            foodRemaining[foodSource] = foodSource.FoodOutput;
+        }
     }
 }

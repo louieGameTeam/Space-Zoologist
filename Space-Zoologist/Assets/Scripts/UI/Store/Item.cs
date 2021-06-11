@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum ItemType {Food, Terrain, Machine, Pod}
@@ -12,6 +13,7 @@ public class Item : ScriptableObject
     public int Price => price;
     public string Description => description;
     public Sprite Icon => icon;
+    public List<AudioClip> AudioClips => audio;
 
     [SerializeField] private string id = default;
     [SerializeField] private ItemType type = default;
@@ -19,6 +21,7 @@ public class Item : ScriptableObject
     [SerializeField] private int price = default;
     [SerializeField] private string description = default;
     [SerializeField] private Sprite icon = default;
+    [SerializeField] private List<AudioClip> audio = default;
 
     public void SetupData(string id, string type, string name, int price)
     {

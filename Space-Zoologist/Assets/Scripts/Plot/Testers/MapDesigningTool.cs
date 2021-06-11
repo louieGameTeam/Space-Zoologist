@@ -131,6 +131,7 @@ public class MapDesigningTool : MonoBehaviour
         GUILayout.EndScrollView();
         GUILayout.EndVertical();
     }
+
     private void MapIOBlock()
     {
         GUILayout.BeginVertical();

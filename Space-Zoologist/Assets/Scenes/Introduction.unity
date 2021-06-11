@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.7, y: 0}
+  m_AnchoredPosition: {x: 12.7, y: -495}
   m_SizeDelta: {x: 1659.2529, y: 806.9844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &88214022
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -323,24 +323,29 @@ MonoBehaviour:
   speed: 0.396
   Introduction: {fileID: 88214022}
   IntroductionTexts:
-  - Planet X was a recently discovered planet bustling with biodiversity and the
-    largest variety in physical environments ever seen. However, Planet X fell into
-    a rapidly decaying orbit around a black hole so rescue teams were sent to save
-    as much of the biodiversity as possible.
-  - Because of the increasingly dangerous acceleration of the planet towards destruction,
-    rescue efforts turned into emergency evacuations that taxed the limits of our
-    capabilities to transport creatures and plants safely away. Sometimes only a
-    few creatures of certain species could be rescued.
-  - And, unfortunately, the data and records that were salvaged are incomplete, so
-    for some species we do not fully understand what the alien creatures need to
-    survive.
-  - Since most of the creatures represent the last of their kind in the multiverse,
+  - 'Astronomists recently discovered Planet X, the largest biodiverse planet on
+    record. However, Planet X fell into a rapidly decaying orbit around a black hole. '
+  - "Rescue teams were sent to save as much of Planet X\u2019s fauna and flora as
+    possible. To allow lifeforms to survive rescue transport, they were stored in
+    stasis pods on the container ships."
+  - 'These alien species were preserved in suspended animation on the journey to
+    their new home on the nearest nature preserve planet, Natura Serva 22. '
+  - You are a recent recruit at Natura Serva 22, tasked with interning under Aurora
+    Star, a senior zoologist. Your first rotation is with the CapraX Zeigrun, or
+    space goat, population.
+  - 'Since most of the creatures represent the last of their kind in the universe,
     it is critical to quickly determine their needs to stabilize the populations
-    and promote growth to restore their numbers.
-  - You have just arrived on the nature preserve planet to join the brave and dedicated
-    scientists and engineers responsible for designing hospitable environments to
-    save these endangered alien species.
-  - "Wait, who is that coming over?  You should see what they want\u2026"
+    and promote growth to restore their numbers. '
+  - "Wait, who is that coming over? You should see what they want\u2026"
+  PrologueIllustrations:
+  - {fileID: 21300000, guid: f2b334d8e5ecf48e8b3e747bd1473cf8, type: 3}
+  - {fileID: 21300000, guid: 3fd217b34b5a34c9a8457568440417d7, type: 3}
+  - {fileID: 21300000, guid: 31d683df9aa6548dda7f14781789534b, type: 3}
+  - {fileID: 21300000, guid: 8e92cfe5f8b2b40bc86d8d6c436c3185, type: 3}
+  - {fileID: 21300000, guid: c3ea23b18180e440eb009771bfef1a08, type: 3}
+  - {fileID: 21300000, guid: 5526c612a669e4ccc90500875b67255b, type: 3}
+  BackgroundImage: {fileID: 759210052}
+  PreviousBackgroundImage: {fileID: 1838508325}
   SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
 --- !u!1 &638390405
 GameObject:
@@ -498,7 +503,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1531323788}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -524,7 +529,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 08936abc378a34eb185cfa08f7044d42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f2b334d8e5ecf48e8b3e747bd1473cf8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -542,6 +547,133 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759210050}
   m_CullTransparentMesh: 0
+--- !u!1 &822940767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 822940769}
+  - component: {fileID: 822940768}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &822940768
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822940767}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &822940769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822940767}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.141408, y: 4.839453, z: -467.83258}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &951830779
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +870,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1838508327}
   - {fileID: 759210051}
   m_Father: {fileID: 638390411}
   m_RootOrder: 0
@@ -807,3 +940,77 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: -38
   m_TargetDisplay: 0
+--- !u!1 &1838508324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838508327}
+  - component: {fileID: 1838508326}
+  - component: {fileID: 1838508325}
+  m_Layer: 8
+  m_Name: PrevBackgroundImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1838508325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838508324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f2b334d8e5ecf48e8b3e747bd1473cf8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1838508326
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838508324}
+  m_CullTransparentMesh: 0
+--- !u!224 &1838508327
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838508324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1531323788}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}

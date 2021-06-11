@@ -180,9 +180,12 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
-        // Debug.Log(need + " now has a value of " + this.needs[need].NeedValue + " and is now in a " + this.needs[need].GetCondition(value) + " condition");
-        this.FilterBehaviors(need, this.needs[need].GetCondition(value));
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
+    }
+
+    public void UpdateFoodNeed(float preferredValue, float compatibleValue)
+    {
+        this.GrowthCalculator.CalculateFoodNeed(preferredValue, compatibleValue);
     }
 
     /// <summary>
@@ -208,6 +211,24 @@ public class Population : MonoBehaviour, Life
         return this.needs[need].NeedValue;
     }
 
+    public List<NeedType> GetUnmentNeeds()
+    {
+        List<NeedType> needStatus = new List<NeedType>();
+        foreach (KeyValuePair<NeedType, bool> need in this.GrowthCalculator.IsNeedMet)
+        {
+            if (!need.Value)
+            {
+                needStatus.Add(need.Key);
+            }
+        }
+        return needStatus;
+    }
+
+    public bool IsStagnate()
+    {
+        return this.GrowthCalculator.populationIncreaseRate == 0;
+    }
+
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
     public int DaysTillDeath()
     {
@@ -226,7 +247,8 @@ public class Population : MonoBehaviour, Life
     public void UpdateGrowthConditions()
     {
         if (this.Species == null) return;
-
+        this.GrowthCalculator.CalculateTerrainNeed();
+        this.GrowthCalculator.CalculateWaterNeed();
         this.GrowthCalculator.CalculateGrowth();
     }
 
@@ -237,13 +259,19 @@ public class Population : MonoBehaviour, Life
             case GrowthStatus.growing:
                 if (this.GrowthCalculator.ReadyForGrowth())
                 {
-                    this.AddAnimal(this.gameObject.transform.position);
+                    for (int i=0; i<(int)this.GrowthCalculator.populationIncreaseRate; i++)
+                    {
+                        this.AddAnimal(this.gameObject.transform.position);
+                    }
                 }
                 break;
             case GrowthStatus.declining:
                 if (this.GrowthCalculator.ReadyForDecay())
                 {
-                    this.RemoveAnimal();
+                    for (int i = 0; i < (int)this.GrowthCalculator.populationIncreaseRate * -1; i++)
+                    {
+                        this.RemoveAnimal();
+                    }
                 }
                 break;
             default:

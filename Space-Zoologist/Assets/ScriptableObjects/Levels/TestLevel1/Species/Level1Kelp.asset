@@ -29,4 +29,24 @@ MonoBehaviour:
         Behavior: {fileID: 0}
       thresholds:
       - 1.5
+  - needType: 4
+    needs:
+    - needName: Water
+      severity: 1
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 0.969
+    - needName: Bacteria
+      severity: 1
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 0.019
   FoodSource: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}

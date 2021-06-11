@@ -104,6 +104,7 @@ public class DensityCalculator
                     density += cur.Species.Size * cur.Count / spaces[cur] * 100;
                 }
             }
+            //Debug.Log("D score at " + pos + ": " + density);
             return density;
         }
         else
@@ -253,6 +254,7 @@ public class DensityCalculator
 
         //total weight / tiles = density
         density /= spaces[pop];
+        Debug.Log(pop.Species.SpeciesName + " D SCORE: " + density);
         return density;
     }
 

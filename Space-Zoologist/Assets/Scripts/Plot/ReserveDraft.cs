@@ -43,7 +43,6 @@ public class ReserveDraft : MonoBehaviour
         plotIO.LoadPlot(this.draftPlot);
         plotIO.ParseSerializedObjects();
         PauseManager.TryToPause();
-        Debug.Log("started drafting");
 
         // save current resources
         resourceManager.Save();
@@ -53,7 +52,6 @@ public class ReserveDraft : MonoBehaviour
 
     public void finishDrafting()
     {
-        Debug.Log("finished drafting");
         plotIO.LoadPlot(this.plot);
         plotIO.ParseSerializedObjects();
         PauseManager.Unpause();
