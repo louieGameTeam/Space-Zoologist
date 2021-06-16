@@ -56,6 +56,7 @@ public class DensityNeedSystem : NeedSystem
 
         foreach (Population population in Consumers)
         {
+            densityCalculator.UpdateSystem();
             float density = densityCalculator.GetDensityScore(population);
             population.UpdateNeed("Density", density);
 

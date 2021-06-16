@@ -1,23 +1,16 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Testers/LiquidUpdateTester.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/NeedSystemManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="114" Column="1" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" />
-      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" />
-      <File FileName="Assets/Scripts/UI/Store/PlayerBalance.cs" />
-      <File FileName="Assets/SaveData/Level1.json" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/FoodPathfinding.cs" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseManager.cs" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponse.cs" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseData.cs" />
-      <File FileName="Assets/Scripts/Plot/Utils/PlacementValidation.cs" />
-      <File FileName="Assets/Scripts/UI/TopHUD.cs" />
-      <File FileName="Assets/Scripts/UI/Store/StoreItemCell.cs" />
-      <File FileName="Assets/Scripts/TimeSystem/TimeSystem.cs" Line="29" Column="39" />
-      <File FileName="Assets/Scripts/0-Utils/MoveObject.cs" Line="87" Column="37" />
-      <File FileName="Assets/Scripts/Plot/Testers/LiquidUpdateTester.cs" Line="34" Column="1" />
+      <File FileName="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" Line="108" Column="10" />
+      <File FileName="Assets/Scripts/Needs/Systems/DensityCalculator.cs" Line="9" Column="24" />
+      <File FileName="Assets/Scripts/Needs/Systems/DensityNeedSystem.cs" Line="37" Column="42" />
+      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/NeedCalculator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="9" Column="46" />
+      <File FileName="Assets/Scripts/0-BaseClasses/NeedSystem.cs" Line="47" Column="25" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="368" Column="40" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="128" Column="38" />
+      <File FileName="Assets/Scripts/Managers/NeedSystemManager.cs" Line="155" Column="27" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -45,8 +38,10 @@
                 <Node name="0-BaseClasses" expanded="True" />
                 <Node name="0-ScriptableObjects" expanded="True" />
                 <Node name="0-Utils" expanded="True" />
+                <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
                   <Node name="EventSystem" expanded="True" />
+                  <Node name="NeedSystemManager.cs" selected="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -56,9 +51,7 @@
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
-                  <Node name="Testers" expanded="True">
-                    <Node name="LiquidUpdateTester.cs" selected="True" />
-                  </Node>
+                  <Node name="Testers" expanded="True" />
                   <Node name="Utils" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
@@ -88,7 +81,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="13fd59e1-0a34-4022-bb49-993e92ae76e0" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7432720c-1a07-48f7-b3d3-88a58f69548e" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" relfile="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" line="114" column="1" />

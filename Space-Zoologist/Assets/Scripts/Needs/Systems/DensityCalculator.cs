@@ -11,6 +11,9 @@ public class DensityCalculator
     private ReservePartitionManager rpm = null;
     private TileSystem tileSystem = null;
 
+    readonly int NumPopPerTile = 2;
+    readonly float TilePerUnitSize = 0.5f;
+
     /// <summary>
     /// Mask for showing the demo.
     /// </summary>
@@ -22,16 +25,17 @@ public class DensityCalculator
         this.tileSystem = tileSystem;
     }
 
+    SortedList<float,Population> populationsByOrderOfDominance = new SortedList<float,Population>();
+
     //Dictionary<ID, population> initialized from rpm
     Dictionary<int, Population> popsByID = new Dictionary<int, Population>();
 
     //Density map based on what species spreads throughout the area, similar to AccessMap in rpm
-    Dictionary<Vector3Int, long> popDensityMap = new Dictionary<Vector3Int, long>();
+    Dictionary<Vector3Int, long> popOccupationMap = new Dictionary<Vector3Int, long>(); //bit mask
+    Dictionary<Vector3Int, int> numOccupatedMap = new Dictionary<Vector3Int, int>(); // how many pop uses this tile
+    Dictionary<Population, List<Vector3Int>> OccupatedTerritory = new Dictionary<Population, List<Vector3Int>>(); //the territories that the pop takes
 
-    Dictionary<Population, int> spaces = new Dictionary<Population, int>();
-
-    //if in demo
-    //public bool PDMDemo = default;
+    Dictionary<Population, int> remainingRequiredSpace = new Dictionary<Population, int>();
 
     /// <summary>
     /// Initialize variables from rpm and generate new density map
@@ -55,14 +59,47 @@ public class DensityCalculator
         }
         else
         {
+            populationsByOrderOfDominance.Add(pop.Dominance, pop);
             popsByID.Add(rpm.PopulationToID[pop], pop);
+            remainingRequiredSpace[pop] = (int)(pop.Count * pop.Species.Size/10);
             GenerateDensityMap(pop);
         }
     }
 
-    public bool RemovePop(Population pop)
+    public void RemovePop(Population pop)
     {
-        return popsByID.Remove(rpm.PopulationToID[pop]);
+        CleanupDensityMap(rpm.PopulationToID[pop]);
+        remainingRequiredSpace.Remove(pop);
+        OccupatedTerritory.Remove(pop);
+        populationsByOrderOfDominance.RemoveAt(populationsByOrderOfDominance.IndexOfValue(pop));
+
+        popsByID.Remove(rpm.PopulationToID[pop]);
+    }
+
+    public void UpdateSystem() {
+        var popByOrder = populationsByOrderOfDominance.Values;
+        for(int i = popByOrder.Count-1; i>= 0; i--){
+            UpdateDensityMap(popByOrder[i]);
+        }
+    }
+
+    public void UpdateDensityMap(Population pop) {
+        remainingRequiredSpace[pop] = (int)(pop.Count * pop.Species.Size / 10);
+        CleanupDensityMap(rpm.PopulationToID[pop]);
+        GenerateDensityMap(pop);
+    }
+
+    public void CleanupDensityMap(int id)
+    {
+        Population pop = popsByID[id];
+        foreach (Vector3Int loc in OccupatedTerritory[pop])
+        {
+            //set the values to 0 through bit masking
+            popOccupationMap[loc] &= ~(1L << id);
+            numOccupatedMap[loc]--;
+        }
+        OccupatedTerritory[pop] = new List<Vector3Int>();
+        remainingRequiredSpace[pop] = (int)(pop.Count * pop.Species.Size * TilePerUnitSize);
     }
 
     /// <summary>
@@ -73,10 +110,10 @@ public class DensityCalculator
     {
         foreach (int id in recycledID)
         {
-            foreach (Vector3Int loc in popDensityMap.Keys)
+            foreach (Vector3Int loc in popOccupationMap.Keys)
             {
                 //set the values to 0 through bit masking
-                popDensityMap[loc] &= ~(1L << id);
+                popOccupationMap[loc] &= ~(1L << id);
             }
         }
     }
@@ -86,39 +123,26 @@ public class DensityCalculator
     /// </summary>
     /// <param name="pos"> Cell Position </param>
     // O(n) algorithm
-    public float GetPopDensityAt(Vector3Int pos)
+    public int GetPopDensityAt(Vector3Int pos)
     {
         //if not a key, no population lives there and therefore density is 0
-        if (popDensityMap.ContainsKey(pos))
+        if (popOccupationMap.ContainsKey(pos))
         {
-            float density = 0;
-            //accumulate the weight/tile (≈ density) of populations there
-            for (int i = 0; i < 64; i++)
-            {
-                //the pop lives there, add its weight/tile to density
-                if (popsByID.ContainsKey(i) && ((popDensityMap[pos] >> i) & 1L) == 1L)
-                {
-                    Population cur = popsByID[i];
-                    //print(cur.Species.Size * cur.Count / spaces[cur]);
-                    //weight per tile
-                    density += cur.Species.Size * cur.Count / spaces[cur] * 100;
-                }
-            }
-            return density;
+            return numOccupatedMap[pos];
         }
         else
         {
-            return 0f;
+            return 0;
         }
     }
 
     /// <summary>
     /// Generate the Density Map, only called by running Init()
     /// </summary>
-    //(2r^2 + 2r + 1) * O(n) algorithm, significantly more expensive if radius is big
     private void GenerateDensityMap()
     {
-        popDensityMap = new Dictionary<Vector3Int, long>();
+        popOccupationMap = new Dictionary<Vector3Int, long>();
+        numOccupatedMap = new Dictionary<Vector3Int, int>();
 
         List<Population> pops = rpm.Populations;
 
@@ -128,26 +152,28 @@ public class DensityCalculator
         }
     }
 
+    //Fill in territory with BFS
     private void GenerateDensityMap(Population pop)
     {
         //find the number of accessible tiles
-        int space = 0;
+        int neededSpace = remainingRequiredSpace[pop];
 
-        Stack<Vector3Int> stack = new Stack<Vector3Int>();
-        List<Vector3Int> accessed = new List<Vector3Int>();
-        List<Vector3Int> unaccessible = new List<Vector3Int>();
+        Queue<Vector3Int> queue = new Queue<Vector3Int>();
+        HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
+        HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
+        List<Vector3Int> territory = new List<Vector3Int>();
         Vector3Int cur;
 
         //starting location
         //Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
         Vector3Int location = tileSystem.WorldToCell(pop.transform.position);
-        stack.Push(location);
+        queue.Enqueue(location);
 
         //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
-        while (stack.Count > 0)
+        while (queue.Count > 0 && neededSpace > 0)
         {
             //next point
-            cur = stack.Pop();
+            cur = queue.Dequeue();
 
             if (accessed.Contains(cur) || unaccessible.Contains(cur))
             {
@@ -155,26 +181,29 @@ public class DensityCalculator
                 continue;
             }
 
-            if (rpm.CanAccess(pop, cur))
+            if (rpm.CanAccess(pop, cur) && (!numOccupatedMap.ContainsKey(cur) || numOccupatedMap[cur] < NumPopPerTile))
             {
                 //save the Vector3Int since it is already checked
                 accessed.Add(cur);
 
-                space++;
-                if (popDensityMap.ContainsKey(cur))
+                neededSpace--;
+                if (popOccupationMap.ContainsKey(cur))
                 {
-                    popDensityMap[cur] |= 1L << rpm.PopulationToID[pop];
+                    popOccupationMap[cur] |= 1L << rpm.PopulationToID[pop];
+                    numOccupatedMap[cur] = 1;
                 }
                 else
                 {
-                    popDensityMap.Add(cur, 1L << rpm.PopulationToID[pop]);
+                    popOccupationMap.Add(cur, 1L << rpm.PopulationToID[pop]);
+                    numOccupatedMap[cur]++;
                 }
+                territory.Add(cur);
 
                 //check all 4 tiles around, may be too expensive/awaiting optimization
-                stack.Push(cur + Vector3Int.left);
-                stack.Push(cur + Vector3Int.up);
-                stack.Push(cur + Vector3Int.right);
-                stack.Push(cur + Vector3Int.down);
+                queue.Enqueue(cur + Vector3Int.left);
+                queue.Enqueue(cur + Vector3Int.up);
+                queue.Enqueue(cur + Vector3Int.right);
+                queue.Enqueue(cur + Vector3Int.down);
             }
             else
             {
@@ -184,17 +213,12 @@ public class DensityCalculator
         }
 
         //save the amount of space the pop has
-        if (!spaces.ContainsKey(pop))
-        {
-            spaces.Add(pop, space);
-        }
-        else
-        {
-            spaces[pop] = space;
-        }
+        remainingRequiredSpace[pop] = neededSpace;
+
+        OccupatedTerritory[pop] = territory;
     }
 
-    //(2r^2 + 2r + 1) * O(n) algorithm, significantly more expensive if radius is big
+    // Returns the # of owned tiles / # of needed tiles
     public float GetDensityScore(Population pop)
     {
         //not initialized
@@ -202,63 +226,13 @@ public class DensityCalculator
             return -1;
 
 
-        //calculate the number of accessible tiles
-        float density = 0;
-
-        Stack<Vector3Int> stack = new Stack<Vector3Int>();
-        List<Vector3Int> accessed = new List<Vector3Int>();
-        List<Vector3Int> unaccessible = new List<Vector3Int>();
-        Vector3Int cur;
-
-        //starting location
-        //Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
-        Vector3Int location = tileSystem.WorldToCell(pop.transform.position);
-        stack.Push(location);
-
-        GenerateDensityMap(pop);
-
-        //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
-        while (stack.Count > 0)
-        {
-            //next point
-            cur = stack.Pop();
-
-            if (accessed.Contains(cur) || unaccessible.Contains(cur))
-            {
-                //checked before, move on
-                continue;
-            }
-
-            if (rpm.CanAccess(pop, cur))
-            {
-                //save the Vector3Int since it is already checked
-                accessed.Add(cur);
-
-                //add population density at the tile to density, note that density/tile * 1 tile = weight
-                //so this is summing the weight at this point
-                density += GetPopDensityAt(cur);
-
-                //check all 4 tiles around, may be too expensive/awaiting optimization
-                stack.Push(cur + Vector3Int.left);
-                stack.Push(cur + Vector3Int.up);
-                stack.Push(cur + Vector3Int.right);
-                stack.Push(cur + Vector3Int.down);
-            }
-            else
-            {
-                //save the Vector3Int since it is already checked
-                unaccessible.Add(cur);
-            }
-        }
-
-        //total weight / tiles = density
-        density /= spaces[pop];
-        return density;
+        return OccupatedTerritory[pop].Count / ((int)(pop.Count * pop.Species.Size / 10));
     }
 
     /// <summary>
     /// Graphing for demo purposes, may be worked into the game as a sort of inspection mode?
     /// </summary>
+    /*
     public void Graph()
     {
         //colors
@@ -291,4 +265,5 @@ public class DensityCalculator
             mask.SetColor(pair.Key, new Color(pair.Value / maxDensity, 1 - pair.Value / maxDensity, 0, 255.0f / 255));
         }
     }
+    */
 }
