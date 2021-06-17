@@ -276,13 +276,14 @@ public class Population : MonoBehaviour, Life
     {
         MovementData data = new MovementData();
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
-        this.AnimalsMovementData.Add(newAnimal.GetComponent<Animal>(), data);
 
         if (newAnimal == null)
         {
             this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
             newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
         }
+        this.AnimalsMovementData.Add(newAnimal.GetComponent<Animal>(), data);
+
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));

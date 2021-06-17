@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum MenuType { Food, Water, Tiles, Animals };
+public enum MenuType { Food, Tiles, Animals };
 public class MenuManager : MonoBehaviour
 {
-    readonly string[] menuNames = { "Food", "Water", "Tiles", "Animals" };
+    readonly string[] menuNames = { "Food", "Tiles", "Animals" };
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalanceHUD = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
@@ -117,6 +117,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void OpenMenu(int menu) {
+
         StoreMenus[curMenu]?.gameObject.SetActive(false);
 
         curMenu = menu;
@@ -125,13 +126,6 @@ public class MenuManager : MonoBehaviour
 
         MenuSelectPanel.gameObject.SetActive(false);
         CurrentMenuText.text = menuNames[curMenu];
-    }
-
-    // Unfortunately can't be called by an inspector onclick event because
-    // unity doesn't support onclick with enums
-    public void OpenMenu(MenuType menu)
-    {
-        OpenMenu((int)menu);
     }
 
     public void ToggleMenuSelectPanel() {

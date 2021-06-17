@@ -173,7 +173,7 @@ public class MoveObject : MonoBehaviour
     public void RemoveSelectedGameObject()
     {
         if (movingAnimal)
-            objectToMove.GetComponent<Animal>().PopulationInfo.RemoveAnimal();
+            objectToMove.GetComponent<Animal>().PopulationInfo.RemoveAnimal(objectToMove);
         else
             removeOriginalFood(objectToMove.GetComponent<FoodSource>());
 
@@ -221,7 +221,7 @@ public class MoveObject : MonoBehaviour
             playerBalance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
-        toMove.transform.position = initialPos; // always place animal back because animal movement will be handled by pop manager
+        toMove.transform.position = worldPos; // always place animal back because animal movement will be handled by pop manager
     }
 
     private void TryPlaceFood(Vector3 worldPos, GameObject toMove)
