@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+public enum MenuType { Food, Water, Tiles, Animals };
 public class MenuManager : MonoBehaviour
 {
+    readonly string[] menuNames = { "Food", "Water", "Tiles", "Animals" };
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalanceHUD = default;
-    [SerializeField] List<GameObject> StoreMenuImages = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
     [SerializeField] ResourceManager ResourceManager = default;
     [SerializeField] PauseManager PauseManager = default;
@@ -20,6 +21,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GridSystem GridSystem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
+    [SerializeField] RectTransform MenuSelectPanel = default;
+    [SerializeField] Text CurrentMenuText = default;
     public bool IsInStore { get; private set; }
     private int curMenu = 0;
 
@@ -29,12 +32,12 @@ public class MenuManager : MonoBehaviour
         this.IsInStore = false;
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay, this.ResourceManager);
-            storeMenu.Initialize();
+            storeMenu?.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay, this.ResourceManager);
+            storeMenu?.Initialize();
         }
         this.PlayerBalanceHUD.GetComponent<TopHUD>().SetupPlayerBalance(this.PlayerBalance);
-        StoreMenus[curMenu].gameObject.SetActive(true);
-        StoreMenuImages[curMenu].SetActive(true);
+        StoreMenus[curMenu]?.gameObject.SetActive(true);
+        StoreCanvas.localScale = Vector3.zero;
 
     }
 
@@ -75,13 +78,13 @@ public class MenuManager : MonoBehaviour
             this.PauseManager.TryToPause();
             EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
         }
-        StoreCanvas.DOAnchorPosX(StoreCanvas.anchoredPosition.x + StoreCanvas.rect.width / 2.5f, 0.5f);
+        StoreCanvas.DOScale(0.8f, 0.5f);
         this.IsInStore = true;
     }
 
     public void CloseStore()
     {
-        StoreCanvas.DOAnchorPosX(StoreCanvas.anchoredPosition.x - StoreCanvas.rect.width / 2.5f, 0.5f);
+        StoreCanvas.DOScale(0, 0.5f);
         this.IsInStore = false;
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }
@@ -113,28 +116,25 @@ public class MenuManager : MonoBehaviour
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
     }
 
-    public void NextMenu()
-    {
-        StoreMenus[curMenu].gameObject.SetActive(false);
-        StoreMenuImages[curMenu].SetActive(false);
+    public void OpenMenu(int menu) {
+        StoreMenus[curMenu]?.gameObject.SetActive(false);
 
-        curMenu++;
-        if (curMenu >= StoreMenus.Count) curMenu = 0;
+        curMenu = menu;
 
-        StoreMenus[curMenu].gameObject.SetActive(true);
-        StoreMenuImages[curMenu].SetActive(true);
+        StoreMenus[curMenu]?.gameObject.SetActive(true);
+
+        MenuSelectPanel.gameObject.SetActive(false);
+        CurrentMenuText.text = menuNames[curMenu];
     }
 
-    public void PrevMenu()
+    // Unfortunately can't be called by an inspector onclick event because
+    // unity doesn't support onclick with enums
+    public void OpenMenu(MenuType menu)
     {
+        OpenMenu((int)menu);
+    }
 
-        StoreMenus[curMenu].gameObject.SetActive(false);
-        StoreMenuImages[curMenu].SetActive(false);
-
-        curMenu--;
-        if (curMenu < 0) curMenu = StoreMenus.Count - 1;
-
-        StoreMenus[curMenu].gameObject.SetActive(true);
-        StoreMenuImages[curMenu].SetActive(true);
+    public void ToggleMenuSelectPanel() {
+        MenuSelectPanel.gameObject.SetActive(!MenuSelectPanel.gameObject.activeSelf);
     }
 }

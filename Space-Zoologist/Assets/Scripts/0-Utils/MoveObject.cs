@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MoveObject : MonoBehaviour
 {
@@ -14,26 +15,47 @@ public class MoveObject : MonoBehaviour
     [SerializeField] ReservePartitionManager reservePartitionManager = default;
     [SerializeField] CursorItem cursorItem = default;
     [SerializeField] private GridOverlay gridOverlay = default;
+    [SerializeField] PlayerBalance playerBalance = default;
+    [SerializeField] GameObject MoveButtonPrefab = default;
+    [SerializeField] GameObject DeleteButtonPrefab = default;
+
     Item tempItem;
 
     GameObject objectToMove = null;
+    GameObject MoveButton = null;
+    GameObject DeleteButton = null;
     bool movingAnimal = false;
     Vector3Int previousLocation = default; // previous grid location
     Vector3 initialPos;
     Vector3 curPos;
+    bool moving;
+
+    const float FixedCost = 0;
+    const float CostPerUnitSizeAnimal = 10;
+    const float CostPerUnitSizeFood = 10;
 
     private void Start()
     {
         tempItem = new Item();
+        MoveButton = Instantiate(MoveButtonPrefab, this.transform);
+        DeleteButton = Instantiate(DeleteButtonPrefab, this.transform);
+        MoveButton.GetComponent<Button>().onClick.AddListener(StartMovement);
+        DeleteButton.GetComponent<Button>().onClick.AddListener(RemoveSelectedGameObject);
+        MoveButton.SetActive(false);
+        DeleteButton.SetActive(false);
+        Reset();
+    }
+
+    public void StartMovement() {
+        moving = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (reserveDraft.IsToggled)
-        { //TODO? replace this with a mode in store that toggles drag & drop?
-
-            if (Input.GetMouseButtonDown(0))
+        {
+            if (!moving && Input.GetMouseButtonDown(0))
             {
                 // currently has no cursorItem
                 bool notPlacingItem = !cursorItem.IsOn;
@@ -48,37 +70,71 @@ public class MoveObject : MonoBehaviour
                     }
 
                     // Select the food or animal at mouse position
-                    objectToMove = SelectGameObjectAtMousePosition();
+                    GameObject SelectedObject = SelectGameObjectAtMousePosition();
+                    if(SelectedObject != null)
+                        objectToMove = SelectedObject;
                 }
             }
 
             if (objectToMove != null)
             {
-                GameObjectFollowMouse(objectToMove);
-                HighlightGrid();
+                Vector3 screenPos = referenceCamera.WorldToScreenPoint(objectToMove.transform.position);
+                MoveButton.SetActive(true);
+                DeleteButton.SetActive(true);
+                MoveButton.transform.position = screenPos + new Vector3(-50, 100, 0);
+                DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
             }
 
-            if (Input.GetMouseButtonUp(0) && objectToMove != null)
+            if (objectToMove != null && moving)
             {
-                // Update animal location reference
-                this.gridSystem.UpdateAnimalCellGrid();
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                worldPos.z = 0;
+                // Preview placement
+                GameObjectFollowMouse(objectToMove);
+                HighlightGrid();
 
-
-                if (movingAnimal)
+                // If trying to place
+                if (Input.GetMouseButtonDown(0))
                 {
-                    TryPlaceAnimal(worldPos, objectToMove);
-                }
-                else
-                {
-                    TryPlaceFood(worldPos, objectToMove);
-                }
+                    // Imported from Inspector.cs -- prevents selecting UI element
+                    if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+                    {
+                        return;
+                    }
 
-                objectToMove = null;
+                    // Update animal location reference
+                    this.gridSystem.UpdateAnimalCellGrid();
+                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    worldPos.z = 0;
+
+
+                    if (movingAnimal)
+                    {
+                        TryPlaceAnimal(worldPos, objectToMove);
+                    }
+                    else
+                    {
+                        TryPlaceFood(worldPos, objectToMove);
+                    }
+
+                    Reset();
+                }
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (objectToMove != null) objectToMove.transform.position = initialPos;
+                Reset();
             }
         }
 
+    }
+
+    private void Reset()
+    {
+        objectToMove = null;
+        moving = false;
+        MoveButton.SetActive(false);
+        DeleteButton.SetActive(false);
+        gridOverlay.ClearColors();
     }
 
     private GameObject SelectGameObjectAtMousePosition()
@@ -114,6 +170,16 @@ public class MoveObject : MonoBehaviour
         return toMove;
     }
 
+    public void RemoveSelectedGameObject()
+    {
+        if (movingAnimal)
+            objectToMove.GetComponent<Animal>().PopulationInfo.RemoveAnimal();
+        else
+            removeOriginalFood(objectToMove.GetComponent<FoodSource>());
+
+        Reset();
+    }
+
     private void GameObjectFollowMouse(GameObject toMove)
     {
         float z = toMove.transform.position.z;
@@ -145,15 +211,17 @@ public class MoveObject : MonoBehaviour
         Population population = toMove.GetComponent<Animal>().PopulationInfo;
         AnimalSpecies species = population.Species;
 
-        bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species);
+        float cost = FixedCost + species.Size * CostPerUnitSizeAnimal;
+        bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
 
         // placement is valid and population did not already reach here
         if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species))
         {
             populationManager.UpdatePopulation(species,  worldPos);
             population.RemoveAnimal();
+            playerBalance.SubtractFromBalance(cost);
         }
-        toMove.transform.position = initialPos;
+        toMove.transform.position = initialPos; // always place animal back because animal movement will be handled by pop manager
     }
 
     private void TryPlaceFood(Vector3 worldPos, GameObject toMove)
@@ -161,12 +229,15 @@ public class MoveObject : MonoBehaviour
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
         Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
-        bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species);
+
+        float cost = FixedCost + species.Size * CostPerUnitSizeFood;
+        bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
 
         if (valid)
         {
             removeOriginalFood(foodSource);
             placeFood(pos, species);
+            playerBalance.SubtractFromBalance(cost);
         }
         else
         {
