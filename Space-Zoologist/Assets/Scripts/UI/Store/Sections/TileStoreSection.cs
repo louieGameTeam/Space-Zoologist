@@ -16,6 +16,7 @@ public class TileStoreSection : StoreSection
     private int initialAmt;
     private bool isPlacing = false;
     private int numTilesPlaced = 0;
+    private int prevTilesPlaced = 0;
 
     public override void Initialize()
     {
@@ -110,6 +111,11 @@ public class TileStoreSection : StoreSection
             else
             {
                 numTilesPlaced = tilePlacementController.PlacedTileCount();
+                if (prevTilesPlaced != numTilesPlaced)
+                {
+                    base.HandleAudio();
+                    prevTilesPlaced = numTilesPlaced;
+                }
                 base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
                 if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
                 {
@@ -119,5 +125,4 @@ public class TileStoreSection : StoreSection
             }
         }
     }
-
 }

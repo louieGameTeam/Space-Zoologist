@@ -9,15 +9,13 @@ public class EatingPattern : UniversalAnimatorPattern
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
     [SerializeField] private string foodName = default;
-    private TileSystem tileSystem = default;
     public override void StartUp()
     {
-        tileSystem = FindObjectOfType<TileSystem>();
         base.StartUp();
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
-        Vector3Int currentCell = tileSystem.WorldToCell(animal.transform.position);
+        Vector3Int currentCell = base.GridSystem.Grid.WorldToCell(animal.transform.position);
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
@@ -26,7 +24,7 @@ public class EatingPattern : UniversalAnimatorPattern
                 {
                     continue;
                 }
-                if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsFood)
+                if (GridSystem.isCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsFood)
                 {
                     if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
                     {

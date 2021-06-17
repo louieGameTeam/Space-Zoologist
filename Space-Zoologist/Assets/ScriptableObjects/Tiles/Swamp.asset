@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb43224d6f3ee97448552e334a6e0c8f, type: 3}
+  m_Name: Swamp
+  m_EditorClassIdentifier: 
+  id: Swamp
+  type: 1
+  itemName: Swamp
+  price: 0
+  description: 
+  icon: {fileID: -8275502208090371910, guid: 11180d07bca8c4ec4869a229d6c29531, type: 3}
+  audio:
+  - {fileID: 8300000, guid: e6ba1a846b0324042872b138c10e3901, type: 3}
+  - {fileID: 8300000, guid: bcc56f504991940d3ac2e849880c580e, type: 3}

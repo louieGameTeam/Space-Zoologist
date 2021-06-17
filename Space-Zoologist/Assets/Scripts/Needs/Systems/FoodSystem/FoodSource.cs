@@ -13,6 +13,8 @@ public class FoodSource : MonoBehaviour, Life
     public FoodSourceSpecies Species => species;
     public float FoodOutput => CalculateOutput();
     public Vector2 Position { get; private set; } = Vector2.zero;
+    public bool terrainNeedMet = false;
+    public bool liquidNeedMet = false;
 
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
@@ -75,20 +77,52 @@ public class FoodSource : MonoBehaviour, Life
 
     private float CalculateOutput()
     {
+        bool terrainNeedMet = false;
+        bool liquidNeedMet = false;
+        float waterRating = 0f;
+        float terrainRating = 0f;
+        float numPreferredTiles = 0f;
+        float survivableTiles = 0f;
+        float totalNeededTiles = 0f;
         foreach (KeyValuePair<string, Need> needValuePair in this.needs)
         {
             string needType = needValuePair.Key;
-            float needValue = needValuePair.Value.NeedValue;
-            if (!needIsSatisified(needType, needValue))
+            Need needValue = needValuePair.Value;
+     
+            if (needType.Equals("Liquid") && needValue.NeedType.Equals(NeedType.Liquid))
             {
-                updatePreviousOutput(0);
-                return 0;
+                if (needIsSatisified(needType, needValue.NeedValue))
+                {
+                    waterRating = 1 + (needValue.NeedValue - needValue.GetMaxThreshold());
+                    liquidNeedMet = true;
+                }
             }
-            // output += calculateNeedOutput(needType, needValue, severityTotal);
+            if (needValue.NeedType.Equals(NeedType.Terrain))
+            {
+                totalNeededTiles = needValue.GetMaxThreshold();
+                if (needValue.IsPreferred)
+                {
+                    numPreferredTiles = needValue.NeedValue;
+                }
+                else
+                {
+                    survivableTiles = needValue.NeedValue;
+                }
+            }
+        }
+        if (survivableTiles + numPreferredTiles >= totalNeededTiles)
+        {
+            terrainRating = species.BaseOutput + numPreferredTiles;
+            terrainNeedMet = true;
+        }
+        else
+        {
+            terrainRating = species.BaseOutput - (totalNeededTiles - survivableTiles - numPreferredTiles);
+            if (terrainRating < 0) terrainRating = 0;
         }
 
-        updatePreviousOutput(species.BaseOutput);
-        return species.BaseOutput;
+        float output = output = waterRating + terrainRating;
+        return output;
     }
 
     private bool needIsSatisified(string needType, float needValue)
@@ -122,17 +156,6 @@ public class FoodSource : MonoBehaviour, Life
         float needSeverity = this.needs[needType].Severity;
         float output = multiplier * (needSeverity / severityTotal) * species.BaseOutput;
         return output;
-    }
-
-    private void updatePreviousOutput(float output)
-    {
-        // Invoke event if output is different
-        if (this.prevOutput != 0 && this.prevOutput != output)
-        {
-            EventManager.Instance.InvokeEvent(EventType.FoodSourceOutputChange, this);
-        }
-
-        this.prevOutput = output;
     }
 
     /// <summary>

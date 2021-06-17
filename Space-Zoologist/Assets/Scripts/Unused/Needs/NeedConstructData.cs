@@ -10,45 +10,6 @@ public enum NeedCondition { Bad, Neutral, Good }
 public class NeedTypeConstructData
 {
 
-    public NeedTypeConstructData(NeedType needType)
-    {
-        this.needType = needType;
-        needs = new List<NeedConstructData>();
-    }
-
-    public NeedTypeConstructData(string needType)
-    {
-        if (needType.Equals("Terrain", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.Terrain;
-        }
-        if (needType.Equals("Atmosphere", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.Atmosphere;
-        }
-        if (needType.Equals("Density", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.Density;
-        }
-        if (needType.Equals("FoodSource", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.FoodSource;
-        }
-        if (needType.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.Liquid;
-        }
-        if (needType.Equals("Species", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.Species;
-        }
-        if (needType.Equals("Temperature", StringComparison.OrdinalIgnoreCase))
-        {
-            this.needType = NeedType.Temperature;
-        }
-        needs = new List<NeedConstructData>();
-    }
-
     public NeedType NeedType => needType;
     public List<NeedConstructData> Needs => needs;
 
@@ -66,12 +27,12 @@ public class NeedConstructData
     public int Severity => severity;
     public List<NeedBehavior> Conditions => conditions;
     public List<float> Thresholds => thresholds;
-    public bool IsPoison => isPoison;
+    public bool IsPreferred => isPreferred;
 
     [SerializeField] private string needName = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
-    [SerializeField] private bool isPoison = false;
+    [SerializeField] private bool isPreferred = false;
     [SerializeField] private List<NeedBehavior> conditions = default;
     [SerializeField] private List<float> thresholds = default;
 

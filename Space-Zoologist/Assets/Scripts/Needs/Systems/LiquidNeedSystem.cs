@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public enum LiquidComposition { MineralX, MineralY, MineralZ };
+public enum LiquidComposition { Water, Salt, Bacteria };
 
 /// <summary>
 /// Handles liquid need value updates
@@ -29,7 +29,6 @@ public class LiquidNeedSystem : NeedSystem
         }
 
         float[] liquidCompositionToUpdate = default; 
-
         foreach (Life life in Consumers)
         {
             if (life.GetType() == typeof(Population))
@@ -58,7 +57,6 @@ public class LiquidNeedSystem : NeedSystem
                         foreach (var (value, index) in composition.WithIndex())
                         {
                             string needName = ((LiquidComposition)index).ToString();
-
                             if (population.GetNeedValues().ContainsKey(needName))
                             {
                                 curScore += ((int)(population.Needs[needName].GetCondition(value))) * population.Needs[needName].Severity;
@@ -75,14 +73,13 @@ public class LiquidNeedSystem : NeedSystem
                 else
                 {
                     this.isDirty = false;
-                    return;
+                    continue;
                 }
             }
             else if (life.GetType() == typeof(FoodSource))
             {
                 FoodSource foodSource = (FoodSource)life;
-                List<float[]> liquidCompositions = tileSystem.GetLiquidCompositionWithinRange(Vector3Int.FloorToInt(life.GetPosition()), foodSource.Species.RootRadius);
-
+                List<float[]> liquidCompositions = tileSystem.GetLiquidCompositionWithinRange(tileSystem.WorldToCell(life.GetPosition()), foodSource.Species.RootRadius);
                 // Check is there is found composition
                 if (liquidCompositions != null)
                 {
@@ -102,7 +99,7 @@ public class LiquidNeedSystem : NeedSystem
                 else
                 {
                     this.isDirty = false;
-                    return;
+                    continue;
                 }
             }
             else
@@ -113,7 +110,6 @@ public class LiquidNeedSystem : NeedSystem
             foreach (var (value, index) in liquidCompositionToUpdate.WithIndex())
             {
                 string needName = ((LiquidComposition)index).ToString();
-
                 if (life.GetNeedValues().ContainsKey(needName))
                 {
                     life.UpdateNeed(needName, value);

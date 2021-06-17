@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level1Berries
   m_EditorClassIdentifier: 
   size: 1
-  accessibleTerrain: 03000000
+  accessibleTerrain: 0200000003000000
   speciesName: Berries
   rootRadius: 2
   baseOutput: 8
@@ -22,11 +22,34 @@ MonoBehaviour:
     needs:
     - needName: Liquid
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 2.5
+      - 3
+    - needName: Dirt
+      severity: 1
+      isPreferred: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 2
+  - needType: 4
+    needs:
+    - needName: Water
+      severity: 1
+      isPreferred: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 0.96
   FoodSource: {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}

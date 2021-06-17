@@ -15,7 +15,7 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Population;
         string displayText = $"{population.species.SpeciesName} Info: \n";
 
-        displayText += $"Count: {population.Count} [{population.GrowthStatus}]\n";
+        displayText += $"Count: {population.Count}, {population.GrowthStatus}\n";
         if (population.GrowthStatus.Equals(GrowthStatus.stagnate))
         {
             displayText += $"Please wait 1 day for population to get accustomed to enclosure\n";
@@ -26,14 +26,18 @@ public class DisplayInspectorText : MonoBehaviour
         }
         else
         {
-            displayText += $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days\n";
-            displayText += "\n\n";
-            foreach (KeyValuePair<string, Need> need in population.Needs)
+            if (population.IsStagnate())
             {
-                if (need.Value.GetCondition(need.Value.NeedValue).Equals(NeedCondition.Bad))
-                {
-                    displayText += $"{need.Key} need not being met\n";
-                }
+                displayText += $"{population.gameObject.name} is stagnate\n";
+            }
+            else
+            {
+                displayText += $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days\n";
+            }
+            List<NeedType> unmetNeeds = population.GetUnmentNeeds();
+            foreach (NeedType needType in unmetNeeds)
+            {
+                displayText += $"\n{needType.ToString()} need not being met"; 
             }
         }
         
@@ -45,11 +49,14 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Food;
         string displayText = $"{foodSource.name} Info: \n";
 
-        displayText += $"Output: {foodSource.FoodOutput}/{foodSource.Species.BaseOutput}\n";
-
-        foreach (Need need in foodSource.Needs.Values)
+        displayText += $"Output: {foodSource.FoodOutput}\n";
+        if (!foodSource.terrainNeedMet)
         {
-            displayText += $"{need.NeedName} : {need.NeedValue} [{need.GetCondition(need.NeedValue)}]\n";
+            displayText += $"\n Terrain need not being met";
+        }
+        if (!foodSource.liquidNeedMet)
+        {
+            displayText += $"\n Liquid need not being met";
         }
 
 
@@ -99,7 +106,7 @@ public class DisplayInspectorText : MonoBehaviour
             string[] liquidName = new string[] { "Water", "Salt", "Bacteria" };
             for (int i = 0; i < 3; i++)
             {
-                displayText += $"{liquidName[i]} : {compositions[i]}\n";
+                displayText += $"{liquidName[i]} : {compositions[i] * 100}%\n";
             }
 
         }

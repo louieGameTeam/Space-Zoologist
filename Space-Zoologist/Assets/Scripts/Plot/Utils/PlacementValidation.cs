@@ -6,7 +6,6 @@ public class PlacementValidation : MonoBehaviour
 {
     private GridSystem GridSystem = default;
     private TileSystem TileSystem = default;
-    private LevelDataReference LevelDataReference = default;
     private SpeciesReferenceData ReferenceData = default;
     private GridOverlay gridOverlay = default;
 
@@ -15,11 +14,10 @@ public class PlacementValidation : MonoBehaviour
         gridOverlay = this.gameObject.GetComponent<GridOverlay>();
     }
 
-    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, LevelDataReference levelData, SpeciesReferenceData ReferenceData)
+    public void Initialize(GridSystem gridSystem, TileSystem tileSystem, SpeciesReferenceData ReferenceData)
     {
         this.GridSystem = gridSystem;
         this.TileSystem = tileSystem;
-        this.LevelDataReference = levelData;
         this.ReferenceData = ReferenceData;
     }
 
@@ -38,7 +36,6 @@ public class PlacementValidation : MonoBehaviour
 
     public bool IsFoodPlacementValid(Vector3 mousePosition, FoodSourceSpecies species)
     {
-        //FoodSourceSpecies species = this.ReferenceData.FoodSources[selectedItem.ID];
         Vector3Int gridPosition = this.GridSystem.Grid.WorldToCell(mousePosition);
         return CheckSurroudingTiles(gridPosition, species);
     }

@@ -13,6 +13,7 @@ public class Need
     public NeedType NeedType => needType;
     public Sprite Sprite => sprite;
     public float NeedValue => this.needValue;
+    public bool IsPreferred => isPreferred;
     public List<NeedBehavior> Behaviors => this.conditions;
 
     [SerializeField] private NeedType needType = default;
@@ -20,6 +21,7 @@ public class Need
     [SerializeField] private float needValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
+    [SerializeField] bool isPreferred = default;
     [SerializeField] private List<NeedBehavior> conditions = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
@@ -32,6 +34,7 @@ public class Need
         this.conditions = needConstructData.Conditions;
         this.thresholds = needConstructData.Thresholds;
         this.conditions = needConstructData.Conditions;
+        this.isPreferred = needConstructData.IsPreferred;
     }
 
     /// <summary>
@@ -64,6 +67,16 @@ public class Need
 
         }
         return this.conditions[this.thresholds.Count];
+    }
+
+    public float GetMaxThreshold()
+    {
+        return this.thresholds[this.thresholds.Count - 1];
+    }
+
+    public float GetMinThreshold()
+    {
+        return this.thresholds[0];
     }
 
     // TODO what is this doing

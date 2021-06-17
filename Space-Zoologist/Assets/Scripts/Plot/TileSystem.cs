@@ -478,20 +478,11 @@ public class TileSystem : MonoBehaviour
 
                 scanLocation.x = x + centerCellLocation.x;
                 scanLocation.y = y + centerCellLocation.y;
-
-                GameTile tile = GetGameTileAt(scanLocation);
-
-                if (tile)
+                LiquidBody liquid = this.GetLiquidBodyAt(scanLocation);
+                if (liquid != null)
                 {
-                    if (tile.type == TileType.Liquid)
-                    {
-                        float[] composition = this.GetTileContentsAt(scanLocation, tile);
+                    liquidCompositions.Add(liquid.contents);
 
-                        if (!liquidCompositions.Contains(composition))
-                        {
-                            liquidCompositions.Add(composition);
-                        }
-                    }
                 }
             }
         }

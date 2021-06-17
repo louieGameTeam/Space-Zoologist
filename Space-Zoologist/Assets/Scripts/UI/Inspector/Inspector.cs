@@ -211,7 +211,6 @@ public class Inspector : MonoBehaviour
         Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
         GameTile tile = this.tileSystem.GetGameTileAt(pos);
         GridSystem.CellData cellData = getCellData(pos);
-
         if (cellData.OutOfBounds)
         {
             return;
@@ -308,7 +307,6 @@ public class Inspector : MonoBehaviour
 
     private void DisplayAreaText(Vector3Int cellPos)
     {
-        this.HighlightEnclosedArea(cellPos);
         this.enclosureSystem.UpdateEnclosedAreas();
         this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
         //Debug.Log($"Enclosed are @ {cellPos} selected");
@@ -316,7 +314,6 @@ public class Inspector : MonoBehaviour
 
     private void DisplayLiquidText(Vector3Int cellPos)
     {
-        this.HighlightSingleTile(cellPos);
         //Debug.Log($"Selected liquid tile @ {cellPos}");
         float[] compositions = this.tileSystem.GetLiquidBodyAt(cellPos).contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
@@ -363,39 +360,6 @@ public class Inspector : MonoBehaviour
         // Highlight food source object
         foodSourceGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSourceGameObject;
-
-        // Hightlight
-        //FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
-        //List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(this.tileSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
-        //foreach (Vector3Int pos in foodSourceRadiusRange)
-        //{
-        //    this.highLight.SetTile(pos, this.highLightTile);
-        //}
-
-        //this.lastTilesSelected = foodSourceRadiusRange;
-    }
-
-    // TODO implement the "HighlightSingleTile" then use it here
-    private void HighlightEnclosedArea(Vector3Int selectedLocation)
-    {
-
-    }
-
-    // TODO find a way to unhighlight the hightlighted tiles
-    private void UnhighlightEnclosedArea(Vector3Int selectedLocation)
-    {
-
-    }
-
-    private void UnHighSignleTile(Vector3Int location)
-    {
-
-    }
-
-    // TODO check out "HighlightFoodSource" to see how to tile can be highlighted
-    private void HighlightSingleTile(Vector3Int location)
-    {
-
     }
 
     public GameObject GetAnimalSelected()

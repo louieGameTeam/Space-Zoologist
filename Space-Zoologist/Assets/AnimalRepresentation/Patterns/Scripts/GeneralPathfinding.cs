@@ -9,10 +9,16 @@ public class GeneralPathfinding : BehaviorPattern
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-        Vector3Int destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
-        Debug.Log("Pathfidning towards " + this.Destination.ToString() + " located at " + destination.x + ", " + destination.y);
-        Debug.Log("World to cell: " + base.GridSystem.Grid.WorldToCell(gameObject.transform.position) + " movement controller: " + animalData.animal.MovementController.ToString());// + " grid: " + animalData.animal.PopulationInfo.Grid.ToString());
+        Vector3Int destination;
+        if (Destination.Equals(ItemType.Terrain))
+        {
+            destination = base.GridSystem.FindClosestLiquidSource(animalData.animal.PopulationInfo, gameObject);
+        }
+        else
+        {
+            int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
+            destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+        }
         AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)

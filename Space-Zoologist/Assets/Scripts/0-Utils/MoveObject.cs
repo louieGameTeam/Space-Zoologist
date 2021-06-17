@@ -218,8 +218,8 @@ public class MoveObject : MonoBehaviour
         if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species))
         {
             populationManager.UpdatePopulation(species,  worldPos);
-            population.RemoveAnimal();
             playerBalance.SubtractFromBalance(cost);
+            population.RemoveAnimal(toMove);
         }
         toMove.transform.position = initialPos; // always place animal back because animal movement will be handled by pop manager
     }

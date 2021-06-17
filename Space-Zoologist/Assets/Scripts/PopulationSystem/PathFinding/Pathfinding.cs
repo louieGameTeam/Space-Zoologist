@@ -106,7 +106,7 @@ namespace AnimalPathfinding
             bool pathSuccessfullyFound = (path.Count > 0) ? true : false;
             if (!pathSuccessfullyFound)
             {
-                Debug.Log("Issue with pathfinding b");
+                //Debug.Log("Issue with pathfinding b");
             }
             PathRequestManager.instance.FinishedProcessPath(path, pathSuccessfullyFound);
         }

@@ -86,8 +86,11 @@ public class FoodSourceManager : GridObjectManager
         foodSource.InitializeFoodSource(species, position, this.TileSystem);
         foodSources.Add(foodSource);
         Vector2 pos = position;
-        pos.x -= 1;
-        pos.y -= 1;
+        if (species.Size % 2 == 0)
+        {
+            pos.x -= 1;
+            pos.y -= 1;
+        }
         GridSystem.AddFood(GridSystem.Grid.WorldToCell(pos), species.Size, newFoodSourceGameObject);
         if (!foodSourcesBySpecies.ContainsKey(foodSource.Species))
         {
@@ -170,7 +173,6 @@ public class FoodSourceManager : GridObjectManager
         // No food source of given species exist
         if (!foodSourcesBySpecies.ContainsKey(species))
         {
-            Debug.Log("Food source species not initialized");
             return null;
         }
         else {
@@ -190,7 +192,7 @@ public class FoodSourceManager : GridObjectManager
         for (int i = 0; i < foods.Count; i++) {
             locations[i] = TileSystem.WorldToCell(foods[i].transform.position);
         }
-        Debug.Log("Returned locations");
+        //Debug.Log("Returned locations");
         return locations;
     }
     public Vector3[] GetFoodSourcesWorldLocationWithSpecies(string speciesName)
@@ -198,7 +200,7 @@ public class FoodSourceManager : GridObjectManager
         List<FoodSource> foods = GetFoodSourcesWithSpecies(speciesName);
         if (foods == null)
         {
-            Debug.Log("returned null");
+            //Debug.Log("returned null");
             return null;
         }
         
@@ -207,7 +209,6 @@ public class FoodSourceManager : GridObjectManager
         {
             locations[i] = foods[i].transform.position;
         }
-        Debug.Log("Returned locations");
         return locations;
     }
     public override void Serialize(SerializedMapObjects serializedMapObjects)
@@ -221,7 +222,6 @@ public class FoodSourceManager : GridObjectManager
     {
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)
         {
-            Debug.Log("Parsing " + keyValuePair.Key);
             if (keyValuePair.Key.Equals(this.MapObjectName))
             {
                 foreach (Vector3 position in SerializationUtils.ParseVector3(keyValuePair.Value.coords))
@@ -255,9 +255,9 @@ public class FoodSourceManager : GridObjectManager
         FoodLocation.y += 1;
         if (species.Size % 2 == 1)
         {
-            FoodLocation /= 2f;
+            FoodLocation.x -= 0.5f;
+            FoodLocation.y -= 0.5f;
         }
-        Debug.Log("Placing food at " + FoodLocation);
-        GameObject Food = CreateFoodSource(species, FoodLocation);
+        CreateFoodSource(species, FoodLocation);
     }
 }

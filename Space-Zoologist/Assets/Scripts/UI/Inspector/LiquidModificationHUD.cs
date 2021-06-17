@@ -1,50 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class LiquidModificationHUD : MonoBehaviour
 {
     [SerializeField] MenuManager MenuManager = default;
+    [SerializeField] GameObject liquidModificationHUD = default;
+    [SerializeField] List<TMPro.TMP_InputField> Values = default;
+    [SerializeField] Camera mainCamera = default;
     private TileSystem tileSystem;
-    private Camera mainCamera;
     private bool isOpened = false;
     private Vector3 worldPos;
     private LiquidBody liquidBody;
-    string[] liquidName = new string[] { "Water   ", "Salt      ", "Bacteria" };
     void Start()
     {
         this.tileSystem = FindObjectOfType<TileSystem>();
-        this.mainCamera = FindObjectOfType<Camera>();
+        liquidModificationHUD.SetActive(false);
     }
-    void OnGUI()
+    public void ParseValues()
     {
         if (this.isOpened)
         {
-            Vector3 screenPoint = this.mainCamera.WorldToScreenPoint(worldPos);
-            GUILayout.BeginArea(new Rect(screenPoint.x, Screen.height - screenPoint.y - 150, 200, 150));
-            //GUILayout.Box("LiquidBodyID: " + liquidBody.bodyID);
-            GUILayout.Box("Composition");
-            
-            for (int i = 0; i < liquidBody.contents.Length; i++)
+            for (int i = 0; i < Values.Count; i++)
             {
-                GUILayout.BeginHorizontal();
-                try
+                Debug.Log("start of text: " + Values[i].text[0]);
+                if (Values[i].text[0].Equals("."))
                 {
-                    GUILayout.Box(liquidName[i]);
-                    liquidBody.contents[i] = float.Parse(GUILayout.TextField(liquidBody.contents[i].ToString("n3")));
+                    Debug.Log("Inserted 0");
+                    Values[i].text.Insert(0, "0");
                 }
-                catch { }
-                liquidBody.contents[i] = GUILayout.HorizontalSlider(liquidBody.contents[i], 0.0f, 1.0f);
-                GUILayout.EndHorizontal();
+                Debug.Log("Attempting to parse: " + Values[i].text);
+                float output = 0;
+                float.TryParse(Values[i].text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture.NumberFormat, out output);
+                Debug.Log("Parsed: " + output);
+                liquidBody.contents[i] = output;
+                
             }
-            GUILayout.Box("Tile Count: " + liquidBody.tiles.Count);
-            GUILayout.EndArea();
+
+        }
+        if (liquidBody != null)
+        {
+            Debug.Log("Updated values");
+            this.tileSystem.ChangeLiquidBodyComposition(this.tileSystem.WorldToCell(this.worldPos), liquidBody.contents);
         }
     }
     void Update()
     {
         if (Input.GetMouseButtonDown(1) && MenuManager.IsInStore) //If clicking MMB on liquid tile, open HUD
         {
+            liquidModificationHUD.SetActive(true);
             Vector3 mousePos = this.mainCamera.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPosition = this.tileSystem.WorldToCell(mousePos);
             LiquidBody liquid = this.tileSystem.GetLiquidBodyAt(cellPosition);
@@ -53,19 +58,21 @@ public class LiquidModificationHUD : MonoBehaviour
                 this.worldPos = new Vector3(mousePos.x, mousePos.y, mousePos.z);
                 this.isOpened = true;
                 this.liquidBody = this.tileSystem.GetLiquidBodyAt(cellPosition);
+                for (int i = 0; i < Values.Count; i++)
+                {
+                    Values[i].text = "";
+                    Values[i].text = liquidBody.contents[i].ToString();
+                    
+                }
             }
             else //If not clicked on a liquid tile, close HUD
             {
-                this.isOpened = false;
-                if (liquidBody != null)
-                {
-                    this.tileSystem.ChangeLiquidBodyComposition(this.tileSystem.WorldToCell(this.worldPos), liquidBody.contents);
-                }
+                liquidModificationHUD.SetActive(false);
             }
         }
         else if (!MenuManager.IsInStore)
         {
-            this.isOpened = false;
+            liquidModificationHUD.SetActive(false);
         }
     }
 }

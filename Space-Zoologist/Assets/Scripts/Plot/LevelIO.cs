@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 public class LevelIO : MonoBehaviour
 {
-    [SerializeField] private string directory = "Assets/SaveData/";
+    [SerializeField] private string directory = "Levels/";
     private string sceneName;
     private PlotIO plotIO;
     private PopulationManager populationManager;
@@ -31,7 +31,7 @@ public class LevelIO : MonoBehaviour
     {
         name = name ?? this.sceneName;
         name = name + ".json";
-        string fullPath = this.directory + name; // preset map
+        string fullPath = "Assets/Resources/" + this.directory + name; // preset map
         this.generateSaveFile(fullPath);
     }
     private void generateSaveFile(string fullPath)
@@ -81,7 +81,8 @@ public class LevelIO : MonoBehaviour
     public void LoadPreset(string name = null)
     {
         name = name ?? this.sceneName;
-        string fullPath = this.directory + name + ".json";
+        string fullPath = this.directory + name;
+        Debug.Log("Loading from " + fullPath);
         this.LoadFromFile(fullPath);
     }
     private void LoadFromFile(string fullPath)
@@ -89,7 +90,8 @@ public class LevelIO : MonoBehaviour
         SerializedLevel serializedLevel;
         try
         {
-            serializedLevel = JsonUtility.FromJson<SerializedLevel>(File.ReadAllText(fullPath));
+            var jsonTextFile = Resources.Load<TextAsset>(fullPath).ToString();
+            serializedLevel = JsonUtility.FromJson<SerializedLevel>(jsonTextFile);
         }
         catch
         {

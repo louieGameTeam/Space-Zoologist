@@ -8,6 +8,7 @@ public class AnimalSpecies : ScriptableObject
     // Getters
     public string SpeciesName => speciesName;
     public int Dominance => dominance;
+    public float GrowthScaleFactor => growthScaleFactor;
     public int GrowthRate => growthRate;
     public int DecayRate => decayRate;
     public float Size => size;
@@ -25,6 +26,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private string speciesName = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int dominance = default;
+    [SerializeField] private float growthScaleFactor = default;
     [Range(1, 30)]
     [SerializeField] private int growthRate = 3;
     [Range(1, 30)]
