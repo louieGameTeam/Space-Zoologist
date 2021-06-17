@@ -153,15 +153,45 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
+    // Creates new populations if population becomes split or updates population's map
     public void UpdateAccessibleLocations()
     {
         this.NeedSystemManager.UpdateAccessMap();
-        foreach (Population population in this.Populations)
+        List<Population> currentPopulations = new List<Population>();
+        foreach(Population population in this.Populations)
+        {
+            currentPopulations.Add(population);
+        }
+        foreach (Population population in currentPopulations)
         {
             // Debug.Log("Accessible map updated for " + population.name);
-            population.UpdateAccessibleArea(ReservePartitionManager.GetLocationsWithAccess(population),
-            GridSystem.GetGridWithAccess(population));
+            List<Vector3Int> accessibleLocations = ReservePartitionManager.GetLocationsWithAccess(population);
+            AnimalPathfinding.Grid grid = GridSystem.GetGridWithAccess(population);
+            for (int i = population.AnimalPopulation.Count - 1; i >= 0; i--)
+            {
+                GameObject animal = population.AnimalPopulation[i];
+                if (!accessibleLocations.Contains(grid.grid.WorldToCell(animal.transform.position)))
+                {
+                    UpdatePopulation(population.Species, animal.transform.position);
+                    population.RemoveAnimal(animal);
+                }
+            }
+            if (accessibleLocations.Count == 0 || population.AnimalPopulation.Count == 0)
+            {
+                RemovePopulation(population);
+            }
+            else
+            {
+                population.UpdateAccessibleArea(accessibleLocations, grid);
+            }
+            
         }
+    }
+
+    public void RemovePopulation(Population population)
+    {
+        population.RemoveAll();
+        this.Populations.Remove(population);
     }
 
     public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)

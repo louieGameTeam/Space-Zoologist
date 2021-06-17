@@ -68,6 +68,7 @@ public class GridSystem : MonoBehaviour
             {
                 this.CellGrid[i, j].ContainsAnimal = false;
                 this.CellGrid[i, j].HomeLocation = false;
+                this.CellGrid[i, j].ContainsLiquid = false;
             }
         }
         // Could be broken up for better efficiency since iterating through population twice
@@ -84,10 +85,66 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+    public Vector3Int FindClosestLiquidSource(Population population, GameObject animal)
+    {
+        Vector3Int itemLocation = new Vector3Int(-1, -1, -1);
+        float closestDistance = 10000f;
+        float localDistance = 0f;
+        for (int x = 0; x < this.CellGrid.GetLength(0); x++)
+        {
+            for (int y = 0; y < this.CellGrid.GetLength(1); y++)
+            {
+                // if contains liquid tile, check neighbors accessibility
+                GameTile tile = this.TileSystem.GetGameTileAt(new Vector3Int(x, y, 0));
+                if (tile != null && tile.type == TileType.Liquid)
+                {
+                    this.CellGrid[x, y].ContainsLiquid = true;
+                    if (population.Grid.IsAccessible(x + 1, y))
+                    {
+                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                        if (localDistance < closestDistance)
+                        {
+                            closestDistance = localDistance;
+                            itemLocation = new Vector3Int(x + 1, y, 0);
+                        }
+                    }
+                    if (population.Grid.IsAccessible(x - 1, y))
+                    {
+                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                        if (localDistance < closestDistance)
+                        {
+                            closestDistance = localDistance;
+                            itemLocation = new Vector3Int(x - 1, y, 0);
+                        }
+                    }
+                    if (population.Grid.IsAccessible(x, y + 1))
+                    {
+                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                        if (localDistance < closestDistance)
+                        {
+                            closestDistance = localDistance;
+                            itemLocation = new Vector3Int(x, y + 1, 0);
+                        }
+                    }
+                    if (population.Grid.IsAccessible(x, y - 1))
+                    {
+                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
+                        if (localDistance < closestDistance)
+                        {
+                            closestDistance = localDistance;
+                            itemLocation = new Vector3Int(x, y - 1, 0);
+                        }
+                    }
+                    
+                }
+            }
+        }
+        return itemLocation;
+    }
+
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         Vector3Int loc = Grid.WorldToCell(mousePosition);
-        Debug.Log("Placable area: " + PlacableArea.HasTile(loc));
         return PlacableArea.HasTile(loc);
     }
 
@@ -186,12 +243,12 @@ public class GridSystem : MonoBehaviour
             this.Food = null;
             this.Animal = null;
             this.Machine = null;
-            this.ContainsMachine = false;
+            this.ContainsLiquid = false;
             this.HomeLocation = false;
             this.OutOfBounds = !inBounds;
         }
 
-        public bool ContainsMachine { get; set; }
+        public bool ContainsLiquid { get; set; }
         public GameObject Machine { get; set; }
         public bool ContainsFood { get; set; }
         public GameObject Food { get; set; }

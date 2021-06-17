@@ -84,10 +84,7 @@ public class EnclosedArea
             {
                 this.foodSources.Add(cellData.Food.GetComponent<FoodSource>());
             }
-            if (cellData.ContainsMachine && cellData.Machine.GetComponent<AtmosphereMachine>() != null && oldComposition != null)
-            {
-                this.atmosphericComposition = oldComposition;
-            }
+
         }
 
         this.terrainComposition[tileType]++;

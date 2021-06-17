@@ -35,7 +35,7 @@ public class Population : MonoBehaviour, Life
     [Expandable] public List<PopulationBehavior> DefaultBehaviors = default;
     [Header("Modify values and thresholds for testing")]
     [SerializeField] private List<Need> NeedEditorTesting = default;
-    [SerializeField] private List<MovementData> AnimalsMovementData = default;
+    [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
 
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
     private Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
@@ -111,13 +111,6 @@ public class Population : MonoBehaviour, Life
     {
         this.AccessibleLocations = accessibleLocations;
         this.Grid = grid;
-        foreach(GameObject animal in this.AnimalPopulation)
-        {
-            if (!this.AccessibleLocations.Contains(this.Grid.grid.WorldToCell(animal.transform.position)))
-            {
-                animal.transform.position = this.origin;
-            }
-        }
     }
 
     // Only pauses movements
@@ -163,7 +156,7 @@ public class Population : MonoBehaviour, Life
             if (animal.activeSelf)
             {
                 MovementData data = new MovementData();
-                this.AnimalsMovementData.Add(data);
+                this.AnimalsMovementData.Add(animal.GetComponent<Animal>(), data);
                 animal.GetComponent<Animal>().Initialize(this, data);
             }
         }
@@ -270,7 +263,7 @@ public class Population : MonoBehaviour, Life
                 {
                     for (int i = 0; i < (int)this.GrowthCalculator.populationIncreaseRate * -1; i++)
                     {
-                        this.RemoveAnimal();
+                        this.RemoveAnimal(this.AnimalPopulation[i]);
                     }
                 }
                 break;
@@ -282,8 +275,9 @@ public class Population : MonoBehaviour, Life
     public void AddAnimal(Vector3 position)
     {
         MovementData data = new MovementData();
-        this.AnimalsMovementData.Add(data);
         GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
+        this.AnimalsMovementData.Add(newAnimal.GetComponent<Animal>(), data);
+
         if (newAnimal == null)
         {
             this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
@@ -298,7 +292,7 @@ public class Population : MonoBehaviour, Life
     }
 
     // removes last animal in list and last behavior
-    public void RemoveAnimal()
+    public void RemoveAnimal(GameObject animal)
     {
         if (this.AnimalPopulation.Count == 0)
         {
@@ -308,12 +302,12 @@ public class Population : MonoBehaviour, Life
         if (this.AnimalPopulation.Count > 0)
         {
             Debug.Log("Animal removed");
-            this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
-            this.PopulationBehaviorManager.RemoveAnimal(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
-            this.AnimalPopulation[this.AnimalPopulation.Count - 1].SetActive(false);
+            this.AnimalsMovementData.Remove(animal.GetComponent<Animal>());
+            this.PopulationBehaviorManager.RemoveAnimal(animal);
+            animal.SetActive(false);
 
-            this.PoolingSystem.ReturnObjectToPool(this.AnimalPopulation[this.AnimalPopulation.Count - 1]);
-            this.AnimalPopulation.RemoveAt(this.AnimalPopulation.Count - 1);
+            this.PoolingSystem.ReturnObjectToPool(animal);
+            this.AnimalPopulation.Remove(animal);
             if (this.AnimalPopulation.Count == 0)
             {
                 Debug.Log("Population " + this.gameObject.name + " has gone extinct!");
@@ -333,9 +327,9 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void RemoveAll()
     {
-        while (this.AnimalPopulation.Count > 0)
+        for (int i=this.AnimalPopulation.Count - 1; i>=0; i--)
         {
-            this.RemoveAnimal();
+            this.RemoveAnimal(this.AnimalPopulation[i]);
         }
     }
 

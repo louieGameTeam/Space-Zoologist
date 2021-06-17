@@ -16,28 +16,40 @@ MonoBehaviour:
   accessibleTerrain: 0200000003000000
   speciesName: Space Maple
   rootRadius: 4
-  baseOutput: 10
+  baseOutput: 5
   needsList:
   - needType: 0
     needs:
     - needName: Liquid
       severity: 3
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 3.5
+      - 4
+    - needName: Dirt
+      severity: 3
+      isPreferred: 1
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 4
   - needType: 4
     needs:
     - needName: Water
       severity: 3
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 0.959
+      - 0.96
   FoodSource: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}

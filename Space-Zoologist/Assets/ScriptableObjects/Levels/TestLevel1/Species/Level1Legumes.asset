@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level1Legumes
   m_EditorClassIdentifier: 
   size: 1
-  accessibleTerrain: 02000000
+  accessibleTerrain: 020000000300000001000000
   speciesName: Legumes
   rootRadius: 1
   baseOutput: 10
@@ -22,28 +22,64 @@ MonoBehaviour:
     needs:
     - needName: Grass
       severity: 1
+      isPreferred: 1
       conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
-      thresholds: []
+      thresholds:
+      - 1
+    - needName: Sand
+      severity: 1
+      isPreferred: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 1
+    - needName: Dirt
+      severity: 1
+      isPreferred: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 1
+    - needName: Liquid
+      severity: 1
+      isPreferred: 0
+      conditions:
+      - Condition: 0
+        Behavior: {fileID: 0}
+      - Condition: 2
+        Behavior: {fileID: 0}
+      thresholds:
+      - 2
   - needType: 4
     needs:
     - needName: Water
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 0.939
+      - 0.94
     - needName: Bacteria
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
       - Condition: 2
         Behavior: {fileID: 0}
       thresholds:
-      - 0.019
+      - 0.02
   FoodSource: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}

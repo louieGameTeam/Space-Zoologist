@@ -151,7 +151,7 @@ public class MoveObject : MonoBehaviour
         if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species))
         {
             populationManager.UpdatePopulation(species,  worldPos);
-            population.RemoveAnimal();
+            population.RemoveAnimal(toMove);
         }
         toMove.transform.position = initialPos;
     }

@@ -49,14 +49,14 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Food;
         string displayText = $"{foodSource.name} Info: \n";
 
-        displayText += $"Output: {foodSource.FoodOutput}/{foodSource.Species.BaseOutput}\n";
-
-        foreach (Need need in foodSource.Needs.Values)
+        displayText += $"Output: {foodSource.FoodOutput}\n";
+        if (!foodSource.terrainNeedMet)
         {
-            if (need.GetCondition(need.NeedValue).Equals(NeedCondition.Bad))
-            {
-                displayText += $"\n{need.NeedName} need not being met";
-            }
+            displayText += $"\n Terrain need not being met";
+        }
+        if (!foodSource.liquidNeedMet)
+        {
+            displayText += $"\n Liquid need not being met";
         }
 
 

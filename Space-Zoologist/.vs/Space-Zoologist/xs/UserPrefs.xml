@@ -1,13 +1,11 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Population/Population.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="217" Column="10" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="191" Column="33" />
-      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="124" Column="1" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="23" Column="32" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="218" Column="6" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" Line="25" Column="1" />
+      <File FileName="Assets/Scripts/0-BaseClasses/NeedSystem.cs" />
       <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Plot/TileSystem.cs" Line="431" Column="18" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,6 +17,7 @@
                   <Node name="Scripts" expanded="True" />
                 </Node>
                 <Node name="Patterns" expanded="True">
+                  <Node name="Prefabs" expanded="True" />
                   <Node name="Scripts" expanded="True" />
                 </Node>
               </Node>
@@ -41,7 +40,9 @@
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
-                    <Node name="FoodSystem" expanded="True" />
+                    <Node name="FoodSystem" expanded="True">
+                      <Node name="FoodSource.cs" selected="True" />
+                    </Node>
                   </Node>
                 </Node>
                 <Node name="Plot" expanded="True">
@@ -53,9 +54,7 @@
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
-                  <Node name="Population" expanded="True">
-                    <Node name="Population.cs" selected="True" />
-                  </Node>
+                  <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True">
                     <Node name="Data" expanded="True" />
                   </Node>
@@ -72,6 +71,7 @@
                 </Node>
                 <Node name="Unused" expanded="True">
                   <Node name="Needs" expanded="True" />
+                  <Node name="Store" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -82,7 +82,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d063a1aa-ed1e-4891-bc8a-ec37ff3bae84" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5ac58491-0129-45ef-b17a-3bb90d08d0af" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
