@@ -9,9 +9,12 @@ using UnityEngine.EventSystems;
 public class FoodSourceStoreSection : StoreSection
 {
     [SerializeField] FoodSourceManager FoodSourceManager = default;
+    private BuildBufferManager buildBufferManager;
+    private Color constructionColor = new Color(0.5f, 0.5f, 1f, 1f);//Green
 
     public override void Initialize()
     {
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
         base.itemType = ItemType.Food;
         base.Initialize();
     }
@@ -72,7 +75,7 @@ public class FoodSourceStoreSection : StoreSection
             FoodLocation = base.GridSystem.Grid.CellToWorld(Temp);
         }
         Food = FoodSourceManager.CreateFoodSource(selectedItem.ID, FoodLocation);
-
+        this.buildBufferManager.CreateBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.selectedItem.buildTime, this.constructionColor);
         GridSystem.AddFood(mouseGridPosition, species.Size, Food);
     }
 }

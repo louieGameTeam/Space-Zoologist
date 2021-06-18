@@ -79,7 +79,7 @@ public class FoodSourceManager : GridObjectManager
         this.Parse();
     }
     // TODO: combine two version into one
-    public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position)
+    public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position, int ttb = -1)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
         newFoodSourceGameObject.name = species.SpeciesName;

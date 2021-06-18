@@ -4436,6 +4436,63 @@ Skybox:
   m_GameObject: {fileID: 1054101993}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 8cb1a21e14f444393a0e691e9704f95a, type: 2}
+--- !u!1 &1125327843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1125327844}
+  - component: {fileID: 1125327845}
+  - component: {fileID: 1125327846}
+  m_Layer: 0
+  m_Name: BuildBufferManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1125327844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125327843}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 405.79727, y: 178.27325, z: -3258.1558}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 26666793554278037}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1125327845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125327843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3f6e01f8a46fe40ad76f937e51e98d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bufferGO: {fileID: 857420968307824151, guid: 94d62094d4e08fb4389ce407dedb4baf, type: 3}
+--- !u!114 &1125327846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125327843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6063cca304296084aa44ddc3a17c9c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1140081635
 GameObject:
   m_ObjectHideFlags: 0
@@ -7601,6 +7658,7 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   Inspector: {fileID: 2522856074633993946}
   CurrentDayText: {fileID: 3940803004895190224}
+  buildBufferManager: {fileID: 0}
 --- !u!114 &1395149766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22115,6 +22173,7 @@ Transform:
   - {fileID: 497773653}
   - {fileID: 1290313822}
   - {fileID: 1370191616}
+  - {fileID: 1125327844}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

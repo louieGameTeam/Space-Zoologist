@@ -39,7 +39,6 @@ public class DensityNeedSystem : NeedSystem
                 return true;
             }
         }
-
         return false;
     }
 

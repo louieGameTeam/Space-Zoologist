@@ -9,6 +9,7 @@ public class PlacementValidation : MonoBehaviour
     private LevelDataReference LevelDataReference = default;
     private SpeciesReferenceData ReferenceData = default;
     private GridOverlay gridOverlay = default;
+    private BuildBufferManager buildBufferManager;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class PlacementValidation : MonoBehaviour
         this.TileSystem = tileSystem;
         this.LevelDataReference = levelData;
         this.ReferenceData = ReferenceData;
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
     }
 
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
@@ -159,6 +161,10 @@ public class PlacementValidation : MonoBehaviour
             return false;
         }
         if (IsOnWall(pos)) return false;
+        if (this.buildBufferManager.IsConstructing(pos.x,pos.y))
+        {
+            return false;
+        }
         GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
 
         // Make sure the tile is acceptable

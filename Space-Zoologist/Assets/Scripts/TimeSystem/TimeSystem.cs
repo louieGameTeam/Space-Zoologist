@@ -11,6 +11,7 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] Inspector Inspector = default;
     [SerializeField] Text CurrentDayText = default;
+    [SerializeField] BuildBufferManager buildBufferManager = default;
     private int currentDay = 1;
 
     private void Start()
@@ -34,6 +35,7 @@ public class TimeSystem : MonoBehaviour
             population.UpdateGrowthConditions();
         }
         this.Inspector.UpdateCurrentDisplay();
+        this.buildBufferManager.CountDown();
         UpdateDayText(++currentDay);
     }
 

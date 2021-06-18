@@ -17,8 +17,11 @@ public class TileStoreSection : StoreSection
     private bool isPlacing = false;
     private int numTilesPlaced = 0;
 
+    private BuildBufferManager buildBufferManager;
+    private Color constructionColor = new Color(1f, 0.6f, 0.2f, 1f);//Orange
     public override void Initialize()
     {
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
         base.itemType = ItemType.Terrain;
         base.Initialize();
         Debug.Assert(tilePlacementController != null);
@@ -53,6 +56,10 @@ public class TileStoreSection : StoreSection
     {
         Debug.Log("Finish placing");
         isPlacing = false;
+        foreach (Vector3Int pos in this.tilePlacementController.addedTiles)
+        {
+            this.buildBufferManager.CreateBuffer(new Vector2Int(pos.x,pos.y), this.selectedItem.buildTime, constructionColor);
+        }
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
         base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
