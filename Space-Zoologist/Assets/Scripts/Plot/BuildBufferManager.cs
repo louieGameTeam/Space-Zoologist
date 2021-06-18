@@ -52,7 +52,7 @@ public class BuildBufferManager : GridObjectManager
             return;
         }
         GameObject newGo = Instantiate(this.bufferGO);
-        
+        Debug.Log("Placing item under constuction");
         newGo.transform.position = new Vector3(pos.x, pos.y, 0);
         color.a = 1; //Enforce alpha channel to be 1, prevent human error
 
