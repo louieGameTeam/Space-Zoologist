@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// Base class for all managers of objects on the grid. 
-/// Call base.Start() in inherited members
 /// </summary>
 
 public class GridObjectManager : MonoBehaviour
@@ -18,7 +17,7 @@ public class GridObjectManager : MonoBehaviour
     }
     public virtual void Parse()
     {
-
+        
     }
     public void Store(SerializedMapObjects serializedMapObjects)
     {

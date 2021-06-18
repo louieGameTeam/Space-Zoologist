@@ -23,12 +23,13 @@ public class TilePlacementController : MonoBehaviour
     public Tilemap[] allTilemaps { get { return tilemaps; } }
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     public GameTile[] gameTiles { get; private set; } = default;
-    private HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
+    public HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
     private Dictionary<Tilemap, TileLayerManager> tilemapsToTileLayerManagers = new Dictionary<Tilemap, TileLayerManager>();
+    private BuildBufferManager buildBufferManager;
     private int lastCornerX;
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
@@ -71,6 +72,7 @@ public class TilePlacementController : MonoBehaviour
             referencedTiles.Clear();
         }
         this.gameObject.GetComponent<PlotIO>().Initialize();
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
     }
     private void Update()
     {
@@ -379,10 +381,17 @@ public class TilePlacementController : MonoBehaviour
         }
         if (!GridSystem.IsWithinGridBounds(cellLocation))
         {
-            //Debug.Log("outside bound");
             return false;
         }
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
-        return !cellData.ContainsFood;
+        if (cellData.ContainsFood)
+        {
+            return false;
+        }
+        if (this.buildBufferManager.IsConstructing(cellLocation.x, cellLocation.y))
+        {
+            return false;
+        }
+        return true;
     }
 }

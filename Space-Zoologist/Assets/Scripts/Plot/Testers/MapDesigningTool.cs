@@ -40,6 +40,8 @@ public class MapDesigningTool : MonoBehaviour
         this.populationManager = FindObjectOfType<PopulationManager>();
         this.foodSourceManager = FindObjectOfType<FoodSourceManager>();
         this.LevelDataReference = FindObjectOfType<LevelDataReference>();
+        // Load food sources from leveldata.
+        // Loading other scriptable objects is possible by editing this field, but it will not be saved
         this.foodSourceSpecies = this.LevelDataReference.LevelData.FoodSourceSpecies.ToArray();
     }
     private void Update()

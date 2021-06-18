@@ -14,6 +14,7 @@ public class Item : ScriptableObject
     public string Description => description;
     public Sprite Icon => icon;
     public List<AudioClip> AudioClips => audio;
+    public int buildTime => BuildTime;
 
     [SerializeField] private string id = default;
     [SerializeField] private ItemType type = default;
@@ -22,6 +23,7 @@ public class Item : ScriptableObject
     [SerializeField] private string description = default;
     [SerializeField] private Sprite icon = default;
     [SerializeField] private List<AudioClip> audio = default;
+    [SerializeField] private int BuildTime = default;
 
     public void SetupData(string id, string type, string name, int price)
     {
