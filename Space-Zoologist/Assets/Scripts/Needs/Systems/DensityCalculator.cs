@@ -25,7 +25,7 @@ public class DensityCalculator
         this.tileSystem = tileSystem;
     }
 
-    SortedList<float,Population> populationsByOrderOfDominance = new SortedList<float,Population>();
+    List<Population> populationsByOrderOfDominance = new List<Population>();
 
     //Dictionary<ID, population> initialized from rpm
     Dictionary<int, Population> popsByID = new Dictionary<int, Population>();
@@ -36,6 +36,14 @@ public class DensityCalculator
     Dictionary<Population, List<Vector3Int>> OccupatedTerritory = new Dictionary<Population, List<Vector3Int>>(); //the territories that the pop takes
 
     Dictionary<Population, int> remainingRequiredSpace = new Dictionary<Population, int>();
+
+    public class DominanceSorter : IComparer<Population> {
+        public int Compare(Population p1, Population p2) {
+            return p1.Dominance.CompareTo(p2.Dominance);
+        }
+    }
+
+    DominanceSorter sorter = new DominanceSorter();
 
     /// <summary>
     /// Initialize variables from rpm and generate new density map
@@ -59,9 +67,10 @@ public class DensityCalculator
         }
         else
         {
-            populationsByOrderOfDominance.Add(pop.Dominance, pop);
+            populationsByOrderOfDominance.Add(pop);
+            populationsByOrderOfDominance.Sort(sorter);
             popsByID.Add(rpm.PopulationToID[pop], pop);
-            remainingRequiredSpace[pop] = (int)(pop.Count * pop.Species.Size/10);
+            remainingRequiredSpace[pop] = (int)(pop.Count * pop.Species.Size * TilePerUnitSize);
             GenerateDensityMap(pop);
         }
     }
@@ -71,20 +80,20 @@ public class DensityCalculator
         CleanupDensityMap(rpm.PopulationToID[pop]);
         remainingRequiredSpace.Remove(pop);
         OccupatedTerritory.Remove(pop);
-        populationsByOrderOfDominance.RemoveAt(populationsByOrderOfDominance.IndexOfValue(pop));
+        populationsByOrderOfDominance.Remove(pop);
 
         popsByID.Remove(rpm.PopulationToID[pop]);
     }
 
     public void UpdateSystem() {
-        var popByOrder = populationsByOrderOfDominance.Values;
+        var popByOrder = populationsByOrderOfDominance;
         for(int i = popByOrder.Count-1; i>= 0; i--){
             UpdateDensityMap(popByOrder[i]);
         }
     }
 
     public void UpdateDensityMap(Population pop) {
-        remainingRequiredSpace[pop] = (int)(pop.Count * pop.Species.Size / 10);
+        remainingRequiredSpace[pop] = (int)(pop.Count * pop.Species.Size * TilePerUnitSize);
         CleanupDensityMap(rpm.PopulationToID[pop]);
         GenerateDensityMap(pop);
     }
@@ -190,13 +199,14 @@ public class DensityCalculator
                 if (popOccupationMap.ContainsKey(cur))
                 {
                     popOccupationMap[cur] |= 1L << rpm.PopulationToID[pop];
-                    numOccupatedMap[cur] = 1;
+                    numOccupatedMap[cur]++;
                 }
                 else
                 {
                     popOccupationMap.Add(cur, 1L << rpm.PopulationToID[pop]);
-                    numOccupatedMap[cur]++;
+                    numOccupatedMap[cur] = 1;
                 }
+
                 territory.Add(cur);
 
                 //check all 4 tiles around, may be too expensive/awaiting optimization
@@ -225,45 +235,47 @@ public class DensityCalculator
         if (!rpm.Populations.Contains(pop))
             return -1;
 
+        int requiredSpace = (int)(pop.Count * pop.Species.Size * TilePerUnitSize);
 
-        return OccupatedTerritory[pop].Count / ((int)(pop.Count * pop.Species.Size / 10));
+        // need 0 tiles
+        if (requiredSpace == 0)
+            return 1;
+
+        float obtainedSpace = OccupatedTerritory[pop].Count;
+        float score = obtainedSpace/requiredSpace;
+        return score;
     }
 
     /// <summary>
     /// Graphing for demo purposes, may be worked into the game as a sort of inspection mode?
     /// </summary>
-    /*
-    public void Graph()
+    public void Graph(Tilemap mask)
     {
-        //colors
-        Dictionary<Vector3Int, float> col = new Dictionary<Vector3Int, float>();
-
-        //max density for color comparison
-        float maxDensity = -1;
-
+        int i = 0;
         //find max density and calculate density for each tile
-        foreach (KeyValuePair<Vector3Int, long> pair in popDensityMap)
+        foreach (var pair in OccupatedTerritory)
         {
-            //calculate density
-            float density = GetPopDensityAt(pair.Key);
+            foreach (var location in pair.Value) {
 
-            col.Add(pair.Key, density);
+                //By default the flag is TileFlags.LockColor
+                mask.SetTileFlags(location, TileFlags.None);
 
-            if (density > maxDensity)
-            {
-                maxDensity = density;
+                //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
+                Color color = new Color(i%3/2f, (i+1)%3/2f, (i+2)%3/2f, 200.0f / 255);
+                Color existingColor = mask.GetColor(location);
+                if (existingColor.a != 200.0f / 255)
+                    mask.SetColor(location, color);
+                else
+                {
+                    Color newColor = Color.Lerp(color, existingColor, 0.5f);
+                    newColor.a = 1f;
+                    mask.SetColor(location, newColor);
+
+                }
             }
+            i++;
         }
 
-        //set color based on the fraction density/maxdensity
-        foreach (KeyValuePair<Vector3Int, float> pair in col)
-        {
-            //By default the flag is TileFlags.LockColor
-            mask.SetTileFlags(pair.Key, TileFlags.None);
-
-            //set color of tile, close to maxDensity = red, close to 0 = green, in the middle = orange
-            mask.SetColor(pair.Key, new Color(pair.Value / maxDensity, 1 - pair.Value / maxDensity, 0, 255.0f / 255));
-        }
     }
-    */
+    
 }

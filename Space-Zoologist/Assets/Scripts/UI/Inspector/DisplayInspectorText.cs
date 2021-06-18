@@ -34,6 +34,9 @@ public class DisplayInspectorText : MonoBehaviour
                 {
                     displayText += $"{need.Key} need not being met\n";
                 }
+                if (need.Key == "Density") {
+                    displayText += $"{need.Key} need is {need.Value.NeedValue}\n";
+                }
             }
         }
         

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Handles density need value updates
@@ -62,5 +63,12 @@ public class DensityNeedSystem : NeedSystem
 
             this.isDirty = false;
         }
+    }
+    /// <summary>
+    /// Graphing for demo purposes, may be worked into the game as a sort of inspection mode?
+    /// </summary>
+    public void Graph(Tilemap mask)
+    {
+        densityCalculator.Graph(mask);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Manages all need systems and the registration point for populations to register with specific need systems.
@@ -19,6 +20,7 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] LevelIO LevelIO = default;
+    [SerializeField] Tilemap overlay = default;
 
     /// <summary>
     /// Initialize the universal need systems
@@ -51,7 +53,7 @@ public class NeedSystemManager : MonoBehaviour
         // AddSystem(new SpeciesNeedSystem(ReservePartitionManager));
 
         // Add Density NeedSystem
-        //AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
+        AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
 
         // Add Symbiosis NeedSystem
         // AddSystem(new SymbiosisNeedSystem(ReservePartitionManager));
@@ -101,6 +103,13 @@ public class NeedSystemManager : MonoBehaviour
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
         {
             entry.Value.UpdateSystem();
+
+            if (entry.Key == NeedType.Density)
+            {
+                //overlay.gameObject.SetActive(true);
+                ((DensityNeedSystem)entry.Value).Graph(overlay);
+                print("graphed");
+            }
         }
     }
 
