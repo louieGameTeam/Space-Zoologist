@@ -13,6 +13,7 @@ public class Inspector : MonoBehaviour
 {
     public bool IsInInspectorMode { get; private set; }
 
+    [SerializeField] private ReservePartitionManager rps = null;
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
@@ -26,6 +27,7 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
     [SerializeField] private GameObject ObjectivePane = null;
+    [SerializeField] private GameTile HighlightTile = null;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -352,6 +354,16 @@ public class Inspector : MonoBehaviour
         }
 
         this.lastPopulationSelected = population;
+
+
+        //Hightlight accessible area
+        var species = population.GetComponent<Population>().species;
+        var accessibleArea = rps.GetLocationsWithAccess(population.GetComponent<Population>());
+        foreach (Vector3Int pos in accessibleArea)
+        {
+            this.highLight.SetTile(pos, HighlightTile);
+            this.lastTilesSelected.Add(pos);
+        }
     }
 
 
@@ -360,6 +372,19 @@ public class Inspector : MonoBehaviour
         // Highlight food source object
         foodSourceGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSourceGameObject;
+
+        //Highlight root radius
+        var food = foodSourceGameObject.GetComponent<FoodSource>();
+        var tiles = tileSystem.AllCellLocationsinRange(tileSystem.WorldToCell(food.transform.position), food.Species.RootRadius);
+        foreach (Vector3Int pos in tiles)
+        {
+            GameTile tile = tileSystem.GetGameTileAt(pos);
+            if (tile && food.Species.AccessibleTerrain.Contains(tile.type))
+            {
+                this.highLight.SetTile(pos, HighlightTile);
+                this.lastTilesSelected.Add(pos);
+            }
+        }
     }
 
     public GameObject GetAnimalSelected()

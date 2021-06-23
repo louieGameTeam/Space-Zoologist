@@ -6616,6 +6616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
   TileSystem: {fileID: 765609361}
+  buildBufferManager: {fileID: 1507564720}
 --- !u!1 &940519979
 GameObject:
   m_ObjectHideFlags: 0
@@ -10800,7 +10801,7 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   Inspector: {fileID: 2522856074633993946}
   CurrentDayText: {fileID: 3940803004895190224}
-  buildBufferManager: {fileID: 0}
+  buildBufferManager: {fileID: 1507564720}
 --- !u!114 &1395149766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28431,6 +28432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rps: {fileID: 936381359}
   gridSystem: {fileID: 1621202152}
   tileSystem: {fileID: 765609361}
   enclosureSystem: {fileID: 5592442342188060214}
@@ -28440,6 +28442,7 @@ MonoBehaviour:
   inspectorWindow: {fileID: 1507429523}
   inspectorWindowText: {fileID: 2012387185}
   ObjectivePane: {fileID: 3368074591926353176}
+  HighlightTile: {fileID: 11400000, guid: 8257b3e5344e747a2824a59ea3219bfc, type: 2}
 --- !u!1 &2535077653345000887
 GameObject:
   m_ObjectHideFlags: 0
@@ -28516,7 +28519,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2615640745541295455}
   m_HandleRect: {fileID: 2110857668092513228}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

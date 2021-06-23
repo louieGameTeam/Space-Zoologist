@@ -52,7 +52,7 @@ public class DisplayInspectorText : MonoBehaviour
         displayText += $"Output: {foodSource.FoodOutput}\n";
         if (!foodSource.terrainNeedMet)
         {
-            displayText += $"\n Terrain need not being met";
+            displayText += $"\n Terrain need not being met" + foodSource.GetNeedValues().Values;
         }
         if (!foodSource.liquidNeedMet)
         {
