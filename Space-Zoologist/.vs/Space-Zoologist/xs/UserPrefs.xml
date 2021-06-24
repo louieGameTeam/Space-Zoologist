@@ -1,17 +1,23 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/BuildBufferManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs">
     <Files>
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" Line="25" Column="1" />
-      <File FileName="Assets/Scripts/0-BaseClasses/NeedSystem.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" />
-      <File FileName="Assets/Scripts/Plot/TileSystem.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs" />
-      <File FileName="Assets/Scripts/0-Utils/MoveObject.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/LiquidModificationHUD.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="124" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="25" Column="10" />
-      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" Line="46" Column="22" />
+      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="137" Column="138" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/NeedCalculator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/TimeSystem/TimeSystem.cs" Line="38" Column="1" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="298" Column="60" />
+      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="5" Column="14" />
+      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="94" Column="25" />
+      <File FileName="Assets/Scripts/Plot/TileSystem.cs" Line="622" Column="6" />
+      <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" Line="82" Column="75" />
+      <File FileName="Assets/Scripts/Managers/NeedSystemManager.cs" Line="44" Column="23" />
+      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="237" Column="1" />
+      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="13" Column="17" />
+      <File FileName="Assets/Scripts/UI/Store/Item.cs" Line="26" Column="1" />
+      <File FileName="Assets/Scripts/0-Utils/MoveObject.cs" Line="39" Column="28" />
+      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs" Line="124" Column="54" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -23,7 +29,6 @@
                   <Node name="Scripts" expanded="True" />
                 </Node>
                 <Node name="Patterns" expanded="True">
-                  <Node name="Prefabs" expanded="True" />
                   <Node name="Scripts" expanded="True" />
                 </Node>
               </Node>
@@ -50,10 +55,14 @@
                   </Node>
                 </Node>
                 <Node name="Plot" expanded="True">
-                  <Node name="BuildBufferManager.cs" selected="True" />
+                  <Node name="Grid" expanded="True" />
+                  <Node name="RPS" expanded="True">
+                    <Node name="ReservePartitionManager.cs" selected="True" />
+                  </Node>
+                  <Node name="Testers" expanded="True" />
+                  <Node name="Utils" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
-                  <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True">
                     <Node name="Data" expanded="True" />
@@ -63,7 +72,6 @@
                 <Node name="TimeSystem" expanded="True" />
                 <Node name="UI" expanded="True">
                   <Node name="Inspector" expanded="True" />
-                  <Node name="SceneEffects" expanded="True" />
                   <Node name="Store" expanded="True">
                     <Node name="Sections" expanded="True" />
                   </Node>
@@ -71,7 +79,6 @@
                 </Node>
                 <Node name="Unused" expanded="True">
                   <Node name="Needs" expanded="True" />
-                  <Node name="Store" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -82,9 +89,11 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="89446e69-ccba-4469-94e6-8016d673b411" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f4fe30cc-37d6-4ee3-b265-5ee85657a941" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" relfile="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" line="114" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

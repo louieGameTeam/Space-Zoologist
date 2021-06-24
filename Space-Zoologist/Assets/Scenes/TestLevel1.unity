@@ -6616,6 +6616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
   TileSystem: {fileID: 765609361}
+  buildBufferManager: {fileID: 1507564720}
 --- !u!1 &940519979
 GameObject:
   m_ObjectHideFlags: 0
@@ -10800,7 +10801,7 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   Inspector: {fileID: 2522856074633993946}
   CurrentDayText: {fileID: 3940803004895190224}
-  buildBufferManager: {fileID: 0}
+  buildBufferManager: {fileID: 1507564720}
 --- !u!114 &1395149766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28516,7 +28517,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2615640745541295455}
   m_HandleRect: {fileID: 2110857668092513228}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -34924,7 +34925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 1.0625, y: 33.131}
+  m_AnchoredPosition: {x: 1.0625, y: 33.13086}
   m_SizeDelta: {x: 9.484375, y: 66.28753}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8068485728034751190
