@@ -234,6 +234,43 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+    public List<Vector3Int> GetFoodRootArea(Vector3Int gridPosition) {
+        Vector3Int pos = gridPosition;
+        if (!CellGrid[pos.x, pos.y].ContainsFood) return null;
+
+
+        List<Vector3Int> RootArea = new List<Vector3Int>();
+        GameObject foodSource = CellGrid[pos.x, pos.y].Food;
+        int size = foodSource.GetComponent<FoodSource>().Species.Size;
+
+        for (int dx = -size; dx < size; dx++)
+        {
+            for (int dy = -size; dy < size; dy++)
+            {
+                CellData cell = CellGrid[pos.x + dx, pos.y + dy];
+                if (cell.ContainsFood && ReferenceEquals(cell.Food, foodSource))
+                {
+                    RootArea.Add(new Vector3Int(pos.x + dx, pos.y + dy, pos.z));
+                }
+            }
+        }
+        return RootArea;
+    }
+
+    public int[] GetTilesInRootArea(Vector3Int gridPosition) {
+        List<Vector3Int> rootArea = GetFoodRootArea(gridPosition);
+        int[] tilesByType = new int[(int)TileType.TypesOfTiles];
+
+        foreach (Vector3Int pos in rootArea) {
+            GameTile tile = TileSystem.GetGameTileAt(pos);
+            if (tile) {
+                tilesByType[(int)tile.type]++;
+            }
+        }
+
+        return tilesByType;
+    }
+
     public struct CellData
     {
         public CellData(bool inBounds)

@@ -373,13 +373,13 @@ public class Inspector : MonoBehaviour
         foodSourceGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSourceGameObject;
 
-        //Highlight root radius
+        //Highlight liquid within root radius
         var food = foodSourceGameObject.GetComponent<FoodSource>();
         var tiles = tileSystem.AllCellLocationsinRange(tileSystem.WorldToCell(food.transform.position), food.Species.RootRadius);
         foreach (Vector3Int pos in tiles)
         {
             GameTile tile = tileSystem.GetGameTileAt(pos);
-            if (tile && food.Species.AccessibleTerrain.Contains(tile.type))
+            if (tile && tile.type == TileType.Liquid)
             {
                 this.highLight.SetTile(pos, HighlightTile);
                 this.lastTilesSelected.Add(pos);

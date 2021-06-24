@@ -43,6 +43,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     public GameTile Liquid;
     [SerializeField] private TileSystem TileSystem = default;
+    [SerializeField] private GridSystem GridSystem = default;
     [SerializeField] private BuildBufferManager buildBufferManager;
     private void Awake()
     {
@@ -433,6 +434,27 @@ public class ReservePartitionManager : MonoBehaviour
         return TypesOfTerrain[population];
     }
 
+    /// <summary>
+    /// Returns the number of each types of tile the population has access to and is free for use. The position in the array represent the type,
+    /// with the same order as the enum TileType.
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
+    public int[] GetTypesOfTilesFreeForUse(Population population)
+    {
+        int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
+        var locations = GetLocationsWithAccess(population);
+        foreach (Vector3Int pos in locations)
+        {
+            GridSystem.CellData cell = GridSystem.CellGrid[pos.x, pos.y];
+            if (!cell.ContainsFood)
+            {
+                terrainCountsByType[(int)TileSystem.GetGameTileAt(pos).type]++;
+            }
+        }
+        return terrainCountsByType;
+    }
+
     public List<float[]> GetLiquidComposition(Population population)
     {
         if (!this.populationAccessibleLiquid.ContainsKey(population))
@@ -441,5 +463,9 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         return this.populationAccessibleLiquid[population];
+    }
+
+    public GridSystem GetGridSystem() {
+        return GridSystem;
     }
 }

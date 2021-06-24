@@ -36,7 +36,7 @@ public class MoveObject : MonoBehaviour
 
     private void Start()
     {
-        tempItem = new Item();
+        tempItem = (Item)Item.CreateInstance("Item");
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
         DeleteButton = Instantiate(DeleteButtonPrefab, this.transform);
         MoveButton.GetComponent<Button>().onClick.AddListener(StartMovement);

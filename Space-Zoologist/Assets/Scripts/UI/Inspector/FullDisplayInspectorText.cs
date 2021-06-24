@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayInspectorText : MonoBehaviour
+public class FullDisplayInspectorText : DisplayInspectorText
 {
-    [SerializeField] protected Text inspectorWindowText = default;
-    public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
-    public enum InspectorText { Population, Food, Area, Liquid }
 
-    public virtual void DisplayPopulationStatus(Population population)
+    public override void DisplayPopulationStatus(Population population)
     {
         currentDisplay = InspectorText.Population;
         string displayText = $"{population.species.SpeciesName} Info: \n";
@@ -37,14 +34,19 @@ public class DisplayInspectorText : MonoBehaviour
             List<NeedType> unmetNeeds = population.GetUnmentNeeds();
             foreach (NeedType needType in unmetNeeds)
             {
-                displayText += $"\n{needType.ToString()} need not being met"; 
+                displayText += $"\n{needType.ToString()} need not being met";
             }
         }
-        
+
+        foreach (var pair in population.GetNeedValues())
+        {
+            displayText += $"\n{pair.Key}: {pair.Value.NeedValue} ({pair.Value.GetCondition(pair.Value.NeedValue)})";
+        }
+
         this.inspectorWindowText.text = displayText;
     }
 
-    public virtual void DisplayFoodSourceStatus(FoodSource foodSource)
+    public override void DisplayFoodSourceStatus(FoodSource foodSource)
     {
         currentDisplay = InspectorText.Food;
         string displayText = $"{foodSource.name} Info: \n";
@@ -60,10 +62,14 @@ public class DisplayInspectorText : MonoBehaviour
         }
 
 
+        foreach (var pair in foodSource.GetNeedValues())
+        {
+            displayText += $"\n{pair.Key}: {pair.Value.NeedValue} ({pair.Value.GetCondition(pair.Value.NeedValue)})";
+        }
         this.inspectorWindowText.text = displayText;
     }
 
-    public virtual void DislplayEnclosedArea(EnclosedArea enclosedArea)
+    public override void DislplayEnclosedArea(EnclosedArea enclosedArea)
     {
         currentDisplay = InspectorText.Area;
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
@@ -93,7 +99,7 @@ public class DisplayInspectorText : MonoBehaviour
         this.inspectorWindowText.text = displayText;
     }
 
-    public virtual void DisplayLiquidCompisition(float[] compositions)
+    public override void DisplayLiquidCompisition(float[] compositions)
     {
         currentDisplay = InspectorText.Liquid;
         string displayText = "";

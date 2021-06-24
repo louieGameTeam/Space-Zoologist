@@ -12,12 +12,14 @@ public class TerrainNeedSystem : NeedSystem
     private readonly ReservePartitionManager rpm = null;
     // For `FoodSource` consumers
     private TileSystem tileSystem = null;
+    private GridSystem gridSystem = null;
+
 
     public TerrainNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, NeedType needType = NeedType.Terrain) : base(needType)
     {
         this.rpm = rpm;
         this.tileSystem = tileSystem;
-
+        this.gridSystem = rpm.GetGridSystem();
         EventManager.Instance.SubscribeToEvent(EventType.TerrainChange, () =>
         {
             this.isDirty = true;
@@ -115,7 +117,8 @@ public class TerrainNeedSystem : NeedSystem
         foreach (Population population in Consumers.OfType<Population>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = rpm.GetTypesOfTiles(population);
+            terrainCountsByType = rpm.GetTypesOfTilesFreeForUse(population);
+
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 int numTiles = count;
@@ -134,7 +137,9 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.RootRadius);
+
+            Vector3Int cellPos = tileSystem.WorldToCell(foodSource.transform.position);
+            terrainCountsByType = gridSystem.GetTilesInRootArea(cellPos);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
@@ -150,6 +155,7 @@ public class TerrainNeedSystem : NeedSystem
         this.isDirty = false;
     }
 }
+
 
 /// <summary>
 /// To use .WithIndex
