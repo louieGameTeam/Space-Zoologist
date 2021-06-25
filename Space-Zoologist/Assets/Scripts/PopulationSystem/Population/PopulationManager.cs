@@ -32,10 +32,12 @@ public class PopulationManager : MonoBehaviour
         {
             Vector3[] pos = SerializationUtils.ParseVector3(serializedPopulations[i].population.coords);
             AnimalSpecies species = this.LoadSpecies(serializedPopulations[i].population.name);
+            Population pop = null;
             foreach (Vector3 position in pos)
             {
-                UpdatePopulation(species, position);
+                pop = UpdatePopulation(species, position);
             }
+            pop.LoadGrowthRate(serializedPopulations[i].populationIncreaseRate);
         }
     }
 
@@ -104,7 +106,7 @@ public class PopulationManager : MonoBehaviour
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public void UpdatePopulation(AnimalSpecies species, Vector3 position)
+    public Population UpdatePopulation(AnimalSpecies species, Vector3 position)
     {
         Population population = DoesPopulationExist(species, position);
         if (population == null)
@@ -112,6 +114,7 @@ public class PopulationManager : MonoBehaviour
             population = CreatePopulation(species, position);
         }
         population.AddAnimal(position);
+        return population;
     }
 
     private Population DoesPopulationExist(AnimalSpecies species, Vector3 position)

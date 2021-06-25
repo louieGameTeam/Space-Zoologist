@@ -6,8 +6,10 @@ using UnityEngine;
 public class SerializedPopulation
 {
     public MapItemSet population;
-    public SerializedPopulation(AnimalSpecies animalSpecies, Vector3[] animals)
+    public float populationIncreaseRate;
+    public SerializedPopulation(AnimalSpecies animalSpecies, Vector3[] animals, float growthRate)
     {
         this.population = new MapItemSet(animalSpecies.name, animals);
+        this.populationIncreaseRate = growthRate;
     }
 }

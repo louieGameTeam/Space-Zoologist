@@ -20,8 +20,8 @@ public class ReserveDraft : MonoBehaviour
 
     public void Start()
     {
-        plot = plotIO.SavePlot();
-        draftPlot = plotIO.SavePlot();
+        //plot = plotIO.SavePlot();
+        //draftPlot = plotIO.SavePlot();
     }
 
     public void toggleDrafting()
@@ -40,8 +40,8 @@ public class ReserveDraft : MonoBehaviour
 
     public void startDrafting()
     {
-        plotIO.LoadPlot(this.draftPlot);
-        plotIO.ParseSerializedObjects();
+        //plotIO.LoadPlot(this.draftPlot);
+        //plotIO.ParseSerializedObjects();
         PauseManager.TryToPause();
 
         // save current resources
@@ -52,8 +52,8 @@ public class ReserveDraft : MonoBehaviour
 
     public void finishDrafting()
     {
-        plotIO.LoadPlot(this.plot);
-        plotIO.ParseSerializedObjects();
+        //plotIO.LoadPlot(this.plot);
+        //plotIO.ParseSerializedObjects();
         PauseManager.Unpause();
 
         // load resources - won't change if applied draft
