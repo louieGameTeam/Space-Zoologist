@@ -77,8 +77,8 @@ public class FoodSource : MonoBehaviour, Life
 
     private float CalculateOutput()
     {
-        bool terrainNeedMet = false;
-        bool liquidNeedMet = false;
+        terrainNeedMet = false;
+        liquidNeedMet = false;
         float waterRating = 0f;
         float terrainRating = 0f;
         float numPreferredTiles = 0f;

@@ -5,14 +5,24 @@ using UnityEngine.UI;
 
 public class DisplayInspectorText : MonoBehaviour
 {
+    [SerializeField] private Text inspectorWindowTitle = default;
+    [SerializeField] private Image inspectorWindowImage = default;
+    [SerializeField] private RectTransform layoutGroupRect = default;
     [SerializeField] private Text inspectorWindowText = default;
+    [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
     public enum InspectorText { Population, Food, Area, Liquid }
 
+    private List<GameObject> needSliders = new List<GameObject>();
+
     public void DisplayPopulationStatus(Population population)
     {
+        ClearInspectorWindow();
         currentDisplay = InspectorText.Population;
+        inspectorWindowImage.sprite = population.species.Icon;
+        inspectorWindowTitle.text = population.species.SpeciesName;
+
         string displayText = $"{population.species.SpeciesName} Info: \n";
 
         displayText += $"Count: {population.Count}, {population.GrowthStatus}\n";
@@ -40,13 +50,19 @@ public class DisplayInspectorText : MonoBehaviour
                 displayText += $"\n{needType.ToString()} need not being met"; 
             }
         }
-        
+
+        GenerateSliders(population.Needs, ref displayText);
+
         this.inspectorWindowText.text = displayText;
     }
 
     public void DisplayFoodSourceStatus(FoodSource foodSource)
     {
+        ClearInspectorWindow();
         currentDisplay = InspectorText.Food;
+        inspectorWindowImage.sprite = foodSource.Species?.FoodSourceItem.Icon;
+        inspectorWindowTitle.text = foodSource.Species.SpeciesName;
+
         string displayText = $"{foodSource.name} Info: \n";
 
         displayText += $"Output: {foodSource.FoodOutput}\n";
@@ -59,12 +75,14 @@ public class DisplayInspectorText : MonoBehaviour
             displayText += $"\n Liquid need not being met";
         }
 
+        GenerateSliders(foodSource.Needs, ref displayText);
 
         this.inspectorWindowText.text = displayText;
     }
 
     public void DislplayEnclosedArea(EnclosedArea enclosedArea)
     {
+        ClearInspectorWindow();
         currentDisplay = InspectorText.Area;
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
@@ -95,6 +113,7 @@ public class DisplayInspectorText : MonoBehaviour
 
     public void DisplayLiquidCompisition(float[] compositions)
     {
+        ClearInspectorWindow();
         currentDisplay = InspectorText.Liquid;
         string displayText = "";
         if (compositions == null)
@@ -111,5 +130,38 @@ public class DisplayInspectorText : MonoBehaviour
 
         }
         this.inspectorWindowText.text = displayText;
+    }
+
+    public void ClearInspectorWindow() {
+        inspectorWindowImage.sprite = null;
+        inspectorWindowTitle.text = "Title";
+        foreach (GameObject obj in needSliders) {
+            Destroy(obj);
+        }
+        needSliders.Clear();
+    }
+
+    private void GenerateSliders(Dictionary<string, Need> needs, ref string displayText) {
+
+        foreach (var pair in needs)
+        {
+            displayText += $"\n{pair.Key}: {pair.Value.NeedValue}";
+
+            GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
+            needSliders.Add(sliderObj);
+
+            NeedSlider slider = sliderObj.GetComponent<NeedSlider>();
+            slider.SetName(pair.Key);
+
+            NeedCondition condition = pair.Value.GetCondition(pair.Value.NeedValue);
+
+            //FIXME TODO Find a better function that converts the raw need value to need satisfaction (from -1 to 1).
+            if (condition == NeedCondition.Bad)
+                slider.SetValue(-1f + pair.Value.NeedValue / pair.Value.GetThresholdForFirstGoodCondition());
+            else if (condition == NeedCondition.Neutral)
+                slider.SetValue(pair.Value.NeedValue / pair.Value.GetThresholdForFirstGoodCondition());
+            else
+                slider.SetValue(1f);
+        }
     }
 }

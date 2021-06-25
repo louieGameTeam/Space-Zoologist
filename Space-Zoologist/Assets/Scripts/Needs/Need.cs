@@ -79,6 +79,15 @@ public class Need
         return this.thresholds[0];
     }
 
+    public float GetThresholdForFirstGoodCondition() {
+        for (int i = 1; i < conditions.Count; i++) {
+            if (conditions[i].Condition == NeedCondition.Good) {
+                return thresholds[i - 1];
+            }
+        }
+        return 0.01f;
+    }
+
     // TODO what is this doing
     /// <summary>
     /// 
