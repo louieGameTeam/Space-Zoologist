@@ -18,7 +18,9 @@ public class MoveObject : MonoBehaviour
     [SerializeField] PlayerBalance playerBalance = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
     [SerializeField] GameObject DeleteButtonPrefab = default;
-
+    [SerializeField] BuildBufferManager BuildBufferManager = default;
+    [SerializeField] FoodSourceStoreSection FoodSourceStoreSection = default;
+    [SerializeField] SpeciesReferenceData SpeciesReferenceData;
     Item tempItem;
 
     GameObject objectToMove = null;
@@ -45,11 +47,10 @@ public class MoveObject : MonoBehaviour
         DeleteButton.SetActive(false);
         Reset();
     }
-
-    public void StartMovement() {
+    public void StartMovement()
+    {
         moving = true;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -71,7 +72,7 @@ public class MoveObject : MonoBehaviour
 
                     // Select the food or animal at mouse position
                     GameObject SelectedObject = SelectGameObjectAtMousePosition();
-                    if(SelectedObject != null)
+                    if (SelectedObject != null)
                         objectToMove = SelectedObject;
                 }
             }
@@ -217,7 +218,7 @@ public class MoveObject : MonoBehaviour
         // placement is valid and population did not already reach here
         if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species))
         {
-            populationManager.UpdatePopulation(species,  worldPos);
+            populationManager.UpdatePopulation(species, worldPos);
             playerBalance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
@@ -235,6 +236,13 @@ public class MoveObject : MonoBehaviour
 
         if (valid)
         {
+            /*            ConstructionCountdown cc = GetBufferCountDown(foodSource);
+                        int ttb = 0;
+                        if (cc != null)
+                        {
+                            ttb = cc.target;
+                        }*/
+            //foodSourceManager.PlaceFood(pos, species, ttb);
             removeOriginalFood(foodSource);
             placeFood(pos, species);
             playerBalance.SubtractFromBalance(cost);
@@ -260,6 +268,7 @@ public class MoveObject : MonoBehaviour
             GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
             gridSystem.AddFood(mouseGridPosition, species.Size, Food);
+            BuildBufferManager.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size, foodSourceManager.constructionColor);
         }
         else
         {
@@ -268,16 +277,38 @@ public class MoveObject : MonoBehaviour
             GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
             gridSystem.AddFood(mouseGridPosition, species.Size, Food);
+            BuildBufferManager.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size, foodSourceManager.constructionColor);
         }
     }
-
+    private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
+    {
+        string itemID = "";
+        foreach (KeyValuePair<string, FoodSourceSpecies> nameToFoodSpecies in this.SpeciesReferenceData.FoodSources)
+        {
+            if (nameToFoodSpecies.Value == foodSourceSpecies)
+            {
+                itemID = nameToFoodSpecies.Key;
+            }
+        }
+        return this.FoodSourceStoreSection.GetItemByID(itemID);
+    }
     public void removeOriginalFood(FoodSource foodSource)
     {
         Vector3Int FoodLocation = gridSystem.Grid.WorldToCell(initialPos);
         gridSystem.RemoveFood(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource);
+        int sizeShift = foodSource.Species.Size - 1; // Finds the lower left cell the food occupies
+        Vector2Int shiftedPos = new Vector2Int(FoodLocation.x - sizeShift, FoodLocation.y - sizeShift);
+        BuildBufferManager.DestoryBuffer(shiftedPos, foodSource.Species.Size);
     }
+    private ConstructionCountdown GetBufferCountDown(FoodSource foodSource)
+    {
+        Vector3Int FoodLocation = gridSystem.Grid.WorldToCell(initialPos);
+        Vector2Int shiftedPos = GetShiftedPos(FoodLocation, foodSource.Species.Size);
 
+        ConstructionCountdown cc = BuildBufferManager.GetBuffer(shiftedPos);
+        return cc;
+    }
     private GridSystem.CellData getCellData(Vector3Int cellPos)
     {
         GridSystem.CellData cellData = new GridSystem.CellData();
@@ -292,4 +323,10 @@ public class MoveObject : MonoBehaviour
         }
         return cellData;
     }
+    private Vector2Int GetShiftedPos(Vector3Int original, int size)
+    {
+        int sizeShift = size - 1; // Finds the lower left cell the food occupies
+        return new Vector2Int(original.x - sizeShift, original.y - sizeShift);
+    }
+
 }

@@ -4056,6 +4056,9 @@ MonoBehaviour:
     type: 3}
   DeleteButtonPrefab: {fileID: 4319639836530594827, guid: 5d6f628a32ac249fe945c3e9408f293e,
     type: 3}
+  BuildBufferManager: {fileID: 1507564720}
+  FoodSourceStoreSection: {fileID: 609238252}
+  SpeciesReferenceData: {fileID: 1280332669}
 --- !u!1 &698944565
 GameObject:
   m_ObjectHideFlags: 0
@@ -33656,6 +33659,8 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   TileSystem: {fileID: 765609361}
   GridSystem: {fileID: 1621202152}
+  buildBufferManager: {fileID: 1507564720}
+  constructionColor: {r: 0.5, g: 1, b: 0.5, a: 1}
 --- !u!1 &6874327555454712161
 GameObject:
   m_ObjectHideFlags: 0
