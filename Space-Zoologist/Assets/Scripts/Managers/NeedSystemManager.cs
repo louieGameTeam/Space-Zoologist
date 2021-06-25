@@ -104,12 +104,13 @@ public class NeedSystemManager : MonoBehaviour
         {
             entry.Value.UpdateSystem();
 
-            if (entry.Key == NeedType.Density)
-            {
-                //overlay.gameObject.SetActive(true);
-                ((DensityNeedSystem)entry.Value).Graph(overlay);
-                print("graphed");
-            }
+            // UNDONE Uncomment this to debug density system
+            //if (entry.Key == NeedType.Density)
+            //{
+            //    //overlay.gameObject.SetActive(true);
+            //    ((DensityNeedSystem)entry.Value).Graph(overlay);
+            //    print("graphed");
+            //}
         }
     }
 
