@@ -9,6 +9,7 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private Image inspectorWindowImage = default;
     [SerializeField] private RectTransform layoutGroupRect = default;
     [SerializeField] private Text inspectorWindowText = default;
+    [SerializeField] private GameObject DetailButton = default;
     [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
@@ -16,38 +17,59 @@ public class DisplayInspectorText : MonoBehaviour
 
     private List<GameObject> needSliders = new List<GameObject>();
 
+    [Header("Temporary sprites")]
+    [SerializeField] Sprite enclosedAreaSprite = default;
+    [SerializeField] Sprite liquidSprite = default;
+    [SerializeField] Sprite defaultSprite = default;
+
+
+    GameObject detailBackground;
+    Text detailText;
+    float defaultHeight;
+    public void Initialize()
+    {
+        defaultHeight = inspectorWindowImage.rectTransform.sizeDelta.y;
+
+        detailBackground = DetailButton.transform.GetChild(0).gameObject;
+        detailText = detailBackground.GetComponentInChildren<Text>(true);
+    }
+
     public void DisplayPopulationStatus(Population population)
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Population;
         inspectorWindowImage.sprite = population.species.Icon;
+
+        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0,inspectorWindowImage.sprite.rect.size.x,defaultHeight/inspectorWindowImage.sprite.rect.size.y), defaultHeight);
         inspectorWindowTitle.text = population.species.SpeciesName;
+
+        DetailButton.SetActive(true);
+        detailBackground.SetActive(false);
 
         string displayText = $"{population.species.SpeciesName} Info: \n";
 
         displayText += $"Count: {population.Count}, {population.GrowthStatus}\n";
         if (population.GrowthStatus.Equals(GrowthStatus.stagnate))
         {
-            displayText += $"Please wait 1 day for population to get accustomed to enclosure\n";
+            //displayText += $"Please wait 1 day for population to get accustomed to enclosure\n";
+            detailText.text = $"Please wait 1 day for population to get accustomed to enclosure";
         }
         else if (population.GrowthStatus.Equals(GrowthStatus.growing))
         {
-            displayText += $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days\n";
+            //displayText += $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days\n";
+            detailText.text = $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days";
         }
         else
         {
             if (population.IsStagnate())
             {
-                displayText += $"{population.gameObject.name} is stagnate\n";
+                //displayText += $"{population.gameObject.name} is stagnate\n";
+                detailText.text = $"{population.gameObject.name} is stagnate";
             }
             else
             {
-                displayText += $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days\n";
-            }
-            List<NeedType> unmetNeeds = population.GetUnmentNeeds();
-            foreach (NeedType needType in unmetNeeds)
-            {
-                displayText += $"\n{needType.ToString()} need not being met"; 
+                //displayText += $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days\n";
+                detailText.text = $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days";
             }
         }
 
@@ -61,19 +83,12 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
         currentDisplay = InspectorText.Food;
         inspectorWindowImage.sprite = foodSource.Species?.FoodSourceItem.Icon;
+        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
         inspectorWindowTitle.text = foodSource.Species.SpeciesName;
 
         string displayText = $"{foodSource.name} Info: \n";
 
         displayText += $"Output: {foodSource.FoodOutput}\n";
-        if (!foodSource.terrainNeedMet)
-        {
-            displayText += $"\n Terrain need not being met";
-        }
-        if (!foodSource.liquidNeedMet)
-        {
-            displayText += $"\n Liquid need not being met";
-        }
 
         GenerateSliders(foodSource.Needs, ref displayText);
 
@@ -84,6 +99,12 @@ public class DisplayInspectorText : MonoBehaviour
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Area;
+
+        inspectorWindowTitle.text = $"Area {enclosedArea.id}";
+        inspectorWindowImage.sprite = enclosedAreaSprite;
+        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
+
+
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
         float[] terrainComposition = enclosedArea.terrainComposition;
@@ -115,6 +136,12 @@ public class DisplayInspectorText : MonoBehaviour
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Liquid;
+
+        inspectorWindowTitle.text = "Body of Water";
+        inspectorWindowImage.sprite = liquidSprite;
+        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
+
+
         string displayText = "";
         if (compositions == null)
         {
@@ -133,7 +160,12 @@ public class DisplayInspectorText : MonoBehaviour
     }
 
     public void ClearInspectorWindow() {
-        inspectorWindowImage.sprite = null;
+        DetailButton.SetActive(false);
+        detailBackground.SetActive(false);
+        detailText.text = "";
+        inspectorWindowImage.sprite = defaultSprite;
+        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
+
         inspectorWindowTitle.text = "Title";
         foreach (GameObject obj in needSliders) {
             Destroy(obj);
@@ -142,26 +174,51 @@ public class DisplayInspectorText : MonoBehaviour
     }
 
     private void GenerateSliders(Dictionary<string, Need> needs, ref string displayText) {
-
+        Dictionary<NeedType, List<Need>> needByType = new Dictionary<NeedType, List<Need>>();
+        Dictionary<NeedType, float> needSatisfaction = new Dictionary<NeedType, float>();
         foreach (var pair in needs)
         {
             displayText += $"\n{pair.Key}: {pair.Value.NeedValue}";
 
+            if (needByType.ContainsKey(pair.Value.NeedType))
+            {
+                needByType[pair.Value.NeedType].Add(pair.Value);
+            }
+            else {
+                needByType[pair.Value.NeedType] = new List<Need>();
+                needByType[pair.Value.NeedType].Add(pair.Value);
+            }
+        }
+
+        foreach (var pair in needByType)
+        {
+            int numNeeds = pair.Value.Count;
+            int totalSatisfaction = 0;
+
+            foreach (Need need in pair.Value) {
+                NeedCondition condition = need.GetCondition(need.NeedValue);
+
+                //TODO Find a better function that converts the raw need value to need satisfaction (from -1 to 1).
+                //currently finding the average satisfaction in the type
+                if (condition == NeedCondition.Bad)
+                    totalSatisfaction -= 1;
+                else if (condition == NeedCondition.Good) {
+                    totalSatisfaction += 1;
+                }
+                //neutral is 0
+
+            }
+
+            needSatisfaction[pair.Key] = ((float)totalSatisfaction) / numNeeds;
+        }
+
+        foreach (var pair in needSatisfaction) {
             GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
             needSliders.Add(sliderObj);
 
             NeedSlider slider = sliderObj.GetComponent<NeedSlider>();
-            slider.SetName(pair.Key);
-
-            NeedCondition condition = pair.Value.GetCondition(pair.Value.NeedValue);
-
-            //FIXME TODO Find a better function that converts the raw need value to need satisfaction (from -1 to 1).
-            if (condition == NeedCondition.Bad)
-                slider.SetValue(-1f + pair.Value.NeedValue / pair.Value.GetThresholdForFirstGoodCondition());
-            else if (condition == NeedCondition.Neutral)
-                slider.SetValue(pair.Value.NeedValue / pair.Value.GetThresholdForFirstGoodCondition());
-            else
-                slider.SetValue(1f);
+            slider.SetName(pair.Key.ToString());
+            slider.SetValue(pair.Value);
         }
     }
 }
