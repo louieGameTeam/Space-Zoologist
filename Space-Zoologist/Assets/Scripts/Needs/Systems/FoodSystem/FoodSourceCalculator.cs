@@ -142,6 +142,7 @@ public class FoodSourceCalculator : NeedCalculator
                 break;
             }
         }
+        population.UpdateNeed(foodSourceName, foodAcquired);
         Debug.Log(population.gameObject.name + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;
     }
