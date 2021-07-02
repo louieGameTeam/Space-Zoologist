@@ -5,7 +5,7 @@ using System;
 
 using UnityEngine;
 
-public class SpeciesCalculator : NeedCalculator
+public class SymbiosisCalculator : NeedCalculator
 {
     public string SpeciesName => this.speciesName;
     public List<Population> Consumers => this.consumers;
@@ -23,12 +23,9 @@ public class SpeciesCalculator : NeedCalculator
     // Holds which consumer populations have access to each consumed population, the opposite of accessiblePopulation.
     Dictionary<Population, HashSet<Population>> populationsWithAccess = new Dictionary<Population, HashSet<Population>>();
 
-    // How much pop count each consumer was distributed
-    Dictionary<Population, float> amountConsumerWasDistributed = new Dictionary<Population, float>();
+    Dictionary<Population, float> distributAmount = new Dictionary<Population, float>();
 
-    Dictionary<Population, int> distributedAmount = new Dictionary<Population, int>();
-
-    public SpeciesCalculator(ReservePartitionManager rpm, string speciesName)
+    public SymbiosisCalculator(ReservePartitionManager rpm, string speciesName)
     {
         this.speciesName = speciesName;
         this.rpm = rpm;
@@ -103,15 +100,6 @@ public class SpeciesCalculator : NeedCalculator
         this.isDirty = true;
     }
 
-    public void RemoveAnimalFromConsumedPopulation()
-    {
-        foreach (Population population in this.distributedAmount.Keys)
-        {
-            // population.RemoveAnimal(distributedAmount[population]);
-            //Debug.Log($"Removed {distributedAmount[population]} from {population.Species.SpeciesName}");
-        }
-    }
-
     public Dictionary<Population, float> CalculateDistribution()
     {
 
@@ -148,12 +136,6 @@ public class SpeciesCalculator : NeedCalculator
         // Holds the remaining Dominance of each consumed population after populations have already taken their share.
         Dictionary<Population, float> localDominanceRemaining = new Dictionary<Population, float>();
 
-        Dictionary<Population, int> newDistributedAmount = new Dictionary<Population, int>();
-        foreach (Population population in this.populations)
-        {
-            newDistributedAmount[population] = 0;
-        }
-
         // Initialize totalLocalDominance and localDominanceRemaining.
         foreach (Population population in populations)
         {
@@ -175,67 +157,71 @@ public class SpeciesCalculator : NeedCalculator
         // Foreach population, if it is in good condition from the food available to it, then take its portion and update its need,
         // else, add it to the set of populations that will not have enough. The populations without enough will then split what is 
         // remaining based on the ratio of their dominance to the localRemainingDominance for each of their FoodSources.
-        foreach (Population consumer in Consumers)
+        foreach (Population life in Consumers)
         {
             int availablePopulationCount = 0;
-            float amountRequiredPerIndividualForGoodCondition = consumer.Needs[this.speciesName].GetThreshold(NeedCondition.Good, -1, false);
-            float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * consumer.Count;
+            float amountRequiredPerIndividualForGoodCondition = 0f; // life.Needs[this.speciesName].GetThreshold(NeedCondition.Good, -1, false);
+            float amountRequiredForGoodCondition = amountRequiredPerIndividualForGoodCondition * life.Count;
 
-            foreach (Population population in accessiblePopulation[consumer])
+            foreach (Population population in accessiblePopulation[life])
             {
                 // All area consumed population has access to
                 List<Vector3Int> accessibleArea = rpm.GetLocationsWithAccess(population);
                 // Where both the consumer and consumed population has access to
-                List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)consumer, cell)).ToList();
+                List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)life, cell)).ToList();
 
-                accessibleAreaRatio.Add(consumer, new Dictionary<Population, float>());
+                accessibleAreaRatio.Add(life, new Dictionary<Population, float>());
 
-                accessibleAreaRatio[consumer][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
-                int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[consumer][population]);
-                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (consumer.Dominance / totalLocalDominance[population]));
-                //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availablePopulationCount}");
+                accessibleAreaRatio[life][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
+                int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[life][population]);
+                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (life.Dominance / totalLocalDominance[population]));
             }
 
             // If the food available to the Population is more than enough, only take enough and update its need.
             if (availablePopulationCount >= amountRequiredForGoodCondition)
             {
                 float totalPopulationCountAcquired = 0.0f;
-                foreach (Population population in accessiblePopulation[consumer])
+                foreach (Population population in accessiblePopulation[life])
                 {
                     // Take as much as the amount it needs to be in good condition
-                    amountPopulationCountRemaining[population] -= amountRequiredForGoodCondition;
-                    totalPopulationCountAcquired += amountRequiredForGoodCondition;
-                    newDistributedAmount[population] += (int)totalPopulationCountAcquired;
-                    localDominanceRemaining[population] -= consumer.Dominance;
+                    float populationCountAcquired = amountRequiredForGoodCondition;
+                    amountPopulationCountRemaining[population] -= populationCountAcquired;
+                    totalPopulationCountAcquired += populationCountAcquired;
+                    localDominanceRemaining[population] -= life.Dominance;
                 }
-                float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / consumer.Count;
-                this.amountConsumerWasDistributed[consumer] = populationCountAcquiredPerIndividual;
+                float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
+                this.distributAmount[life] = populationCountAcquiredPerIndividual;
             }
             // Otherwise, add to the set of populationsWithNotEnough to be processed later.
             else
             {
-                populationsWithNotEnough.Add(consumer);
+                populationsWithNotEnough.Add(life);
             }
         }
 
         // For those Populations who will not have enough to be in good condition, split what food remains from each FoodSource.
-        foreach (Population consumer in populationsWithNotEnough)
+        foreach (Population life in populationsWithNotEnough)
         {
             float totalPopulationCountAcquired = 0.0f;
-            foreach (Population population in accessiblePopulation[consumer])
+            foreach (Population population in accessiblePopulation[life])
             {
-                float dominanceRatio = consumer.Dominance / localDominanceRemaining[population];
-                totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[consumer][population] * amountPopulationCountRemaining[population]);
-                newDistributedAmount[population] += (int)totalPopulationCountAcquired;
+                //// All area consumed population has access to
+                //List<Vector3Int> accessibleArea = rpm.GetLocationsWithAccess(population);
+                //// Where both the consumer and consumed population has access to
+                //List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)life, cell)).ToList();
+                //float accessibleAreaRatio = (float)overlapArea.Count / (float)accessibleArea.Count;
+
+                float dominanceRatio = life.Dominance / localDominanceRemaining[population];
+                totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[life][population] * amountPopulationCountRemaining[population]);
                 //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {totalPopulationCountAcquired} pop count from {population.Species.SpeciesName} {population.GetInstanceID()}");
             }
-            float amountAcquiredPerIndividual = totalPopulationCountAcquired / consumer.Count;
-            this.amountConsumerWasDistributed[consumer] = amountAcquiredPerIndividual;
+            float amountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
+            this.distributAmount[life] = amountAcquiredPerIndividual;
         }
 
         // Done update not dirty any more
         this.isDirty = false;
 
-        return this.amountConsumerWasDistributed;
+        return this.distributAmount;
     }
 }

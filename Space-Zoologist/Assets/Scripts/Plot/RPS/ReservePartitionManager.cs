@@ -67,6 +67,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     private void Start()
     {
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => this.RemovePopulation((Population)EventManager.Instance.EventData));
     }
 

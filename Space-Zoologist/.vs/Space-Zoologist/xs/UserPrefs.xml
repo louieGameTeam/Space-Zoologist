@@ -1,17 +1,15 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/BuildBufferManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs">
     <Files>
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" Line="25" Column="1" />
-      <File FileName="Assets/Scripts/0-BaseClasses/NeedSystem.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" />
-      <File FileName="Assets/Scripts/Plot/TileSystem.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs" />
-      <File FileName="Assets/Scripts/0-Utils/MoveObject.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/LiquidModificationHUD.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="124" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="25" Column="10" />
-      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="20" Column="18" />
+      <File FileName="Assets/Scripts/Plot/LevelIO.cs" />
+      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" />
+      <File FileName="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" />
+      <File FileName="Assets/Scripts/Z - Unused/Needs/DensityCalculator.cs" Line="106" Column="14" />
+      <File FileName="Assets/Scripts/UI/GameOver.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Y - Utils/Objective.cs" Line="1" Column="1" />
+      <File FileName="Assets/Resources/Levels/Level1E1.json" Line="1" Column="75064" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,54 +22,24 @@
                 </Node>
                 <Node name="Patterns" expanded="True">
                   <Node name="Prefabs" expanded="True" />
-                  <Node name="Scripts" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="DialogueEditor" expanded="True">
-                <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
-                    <Node name="UI" expanded="True">
-                      <Node name="Editor" expanded="True" />
-                    </Node>
+                    <Node name="DrinkingPattern.cs" selected="True" />
                   </Node>
                 </Node>
               </Node>
+              <Node name="DialogueEditor" expanded="True" />
               <Node name="Scripts" expanded="True">
-                <Node name="0-BaseClasses" expanded="True" />
-                <Node name="0-ScriptableObjects" expanded="True" />
-                <Node name="0-Utils" expanded="True" />
-                <Node name="LevelData" expanded="True" />
-                <Node name="Managers" expanded="True">
-                  <Node name="EventSystem" expanded="True" />
-                </Node>
-                <Node name="Needs" expanded="True">
-                  <Node name="Systems" expanded="True">
-                    <Node name="FoodSystem" expanded="True" />
-                  </Node>
-                </Node>
                 <Node name="Plot" expanded="True">
-                  <Node name="BuildBufferManager.cs" selected="True" />
+                  <Node name="Grid" expanded="True" />
+                  <Node name="RPS" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
-                  <Node name="PathFinding" expanded="True" />
-                  <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True">
-                    <Node name="Data" expanded="True" />
-                  </Node>
+                  <Node name="Representation" expanded="True" />
                 </Node>
-                <Node name="SerializedObjects" expanded="True" />
-                <Node name="TimeSystem" expanded="True" />
-                <Node name="UI" expanded="True">
-                  <Node name="Inspector" expanded="True" />
-                  <Node name="SceneEffects" expanded="True" />
-                  <Node name="Store" expanded="True">
-                    <Node name="Sections" expanded="True" />
-                  </Node>
-                  <Node name="Utils" expanded="True" />
-                </Node>
-                <Node name="Unused" expanded="True">
+                <Node name="UI" expanded="True" />
+                <Node name="Y - Utils" expanded="True" />
+                <Node name="Z - Unused" expanded="True">
                   <Node name="Needs" expanded="True" />
-                  <Node name="Store" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -82,7 +50,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="89446e69-ccba-4469-94e6-8016d673b411" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f912db6c-5e06-404c-ae8e-d89e8ef1d78a" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

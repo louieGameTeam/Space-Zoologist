@@ -127,12 +127,6 @@ public class FoodSourceManager : GridObjectManager
         Destroy(foodSource.gameObject);
     }
 
-    // TODO: not sure what this does
-    public void UpdateFoodSourceSpecies(FoodSourceSpecies species)
-    {
-        this.foodSourceSpecies.Add(species.SpeciesName, species);
-    }
-
     /// <summary>
     /// Update accessible terrain info for all food sources,
     /// called when all NS updates are done

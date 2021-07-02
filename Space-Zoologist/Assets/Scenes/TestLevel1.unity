@@ -243,22 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodPlacementDatas:
-  - location: {x: 2, y: 23, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 7, y: 10, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 4, y: 4, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 12, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
-  - location: {x: 18, y: 6, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  - location: {x: 18, y: 2, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  - location: {x: 24, y: 12, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  FoodSourceStoreSection: {fileID: 0}
 --- !u!114 &96584221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,14 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodPlacementDatas:
-  - location: {x: 5, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
-  - location: {x: 7, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
-  - location: {x: 9, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 0f4e74d896ff14249bbc476389829b93, type: 2}
-  FoodSourceStoreSection: {fileID: 0}
 --- !u!1 &113365922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,22 +2300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a995a8c20c1b4cae8bd6b79c4758dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodPlacementDatas:
-  - location: {x: 2, y: 23, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 7, y: 10, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 4, y: 4, z: 0}
-    item: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - location: {x: 12, y: 7, z: 0}
-    item: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
-  - location: {x: 18, y: 6, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  - location: {x: 18, y: 2, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  - location: {x: 24, y: 12, z: 0}
-    item: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
-  FoodSourceStoreSection: {fileID: 609238252}
 --- !u!1 &554098996
 GameObject:
   m_ObjectHideFlags: 0
@@ -4710,10 +4670,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 765609358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4933cdddee27341970b70e4763ee72, type: 3}
+  m_Script: {fileID: 11500000, guid: 13470c80d298a43b3a87f3fad68b7746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelIO: {fileID: 462963692}
+  levelIO: {fileID: 0}
 --- !u!114 &765609361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10800,7 +10760,7 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   Inspector: {fileID: 2522856074633993946}
   CurrentDayText: {fileID: 3940803004895190224}
-  buildBufferManager: {fileID: 0}
+  buildBufferManager: {fileID: 1507564720}
 --- !u!114 &1395149766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12009,7 +11969,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1621202151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586f8d0b56e84dc49d889cf768d4811, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b51c9f60e7484a2cba907ca79416125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1621202155
@@ -28516,7 +28476,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2615640745541295455}
   m_HandleRect: {fileID: 2110857668092513228}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

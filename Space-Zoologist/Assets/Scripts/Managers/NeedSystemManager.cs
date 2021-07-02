@@ -40,12 +40,8 @@ public class NeedSystemManager : MonoBehaviour
 
     private void setupNeedSystems()
     {
-        // Add enviormental NeedSystem
         AddSystem(new TerrainNeedSystem(ReservePartitionManager, TileSystem));
         AddSystem(new LiquidNeedSystem(ReservePartitionManager, TileSystem));
-
-
-        // FoodSource and Species NS
         AddSystem(new FoodSourceNeedSystem(ReservePartitionManager));
     }
 

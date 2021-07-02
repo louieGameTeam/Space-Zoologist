@@ -47,19 +47,6 @@ public class FoodSourceNeedSystem : NeedSystem
         return needUpdate;
     }
 
-    private bool CheckFoodSourcesConsumers(FoodSourceCalculator foodSourceCalculator)
-    {
-        foreach (Population consumer in foodSourceCalculator.Consumers)
-        {
-            if (consumer.GetAccessibilityStatus())
-            {
-                foodSourceCalculator.MarkDirty();
-                return true;
-            }
-        }
-        return false;
-    }
-
     // foodSource.GetAccessibilityStatus() is Expensive!
     private bool CheckFoodSourcesTerrain(FoodSourceCalculator foodSourceCalculator)
     {
