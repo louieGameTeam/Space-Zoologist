@@ -43,7 +43,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     public GameTile Liquid;
     [SerializeField] private TileSystem TileSystem = default;
-    private BuildBufferManager buildBufferManager;
+    [SerializeField] private BuildBufferManager buildBufferManager;
     private void Awake()
     {
         // Variable initializations

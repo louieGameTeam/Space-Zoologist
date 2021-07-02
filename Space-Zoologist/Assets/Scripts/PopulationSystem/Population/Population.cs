@@ -41,7 +41,7 @@ public class Population : MonoBehaviour, Life
     private Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
 
     private Vector3 origin = Vector3.zero;
-    private GrowthCalculator GrowthCalculator;
+    public GrowthCalculator GrowthCalculator;
     private PoolingSystem PoolingSystem = default;
     private int prePopulationCount = default;
     private PopulationBehaviorManager PopulationBehaviorManager = default;
@@ -76,6 +76,10 @@ public class Population : MonoBehaviour, Life
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         this.SetupNeeds();
+    }
+    public void LoadGrowthRate(float growthRate)
+    {
+        this.GrowthCalculator.populationIncreaseRate = growthRate;
     }
 
     private void SetupBehaviors()

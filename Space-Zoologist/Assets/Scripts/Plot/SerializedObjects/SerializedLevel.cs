@@ -27,7 +27,8 @@ public class SerializedLevel
             {
                 animalPos[k] = activeChildren[k].transform.position;
             }
-            this.serializedPopulations[i] = new SerializedPopulation(populationGO.GetComponent<Population>().species, animalPos);
+            Population popClass = populationGO.GetComponent<Population>();
+            this.serializedPopulations[i] = new SerializedPopulation(popClass.species, animalPos, popClass.GrowthCalculator.populationIncreaseRate);
         }
     }
     public void SetPlot(SerializedPlot serializedPlot)

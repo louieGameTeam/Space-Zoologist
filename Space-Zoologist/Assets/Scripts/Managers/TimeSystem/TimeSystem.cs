@@ -22,7 +22,7 @@ public class TimeSystem : MonoBehaviour
 
     public void nextDay()
     {
-        this.ReserveDraft.loadDraft();
+        //this.ReserveDraft.loadDraft();
         // Recalculates need system values and should updates all populations needs
         foreach (Population population in this.PopulationManager.Populations)
         {
