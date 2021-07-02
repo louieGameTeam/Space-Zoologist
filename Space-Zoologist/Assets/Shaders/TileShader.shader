@@ -3,12 +3,16 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _GridSelectedTexture("Grid Selected Texture", 2D) = "white" {}
-        _GridLiquidLocationTexture("Grid Liquid Location Texture", 2D) = "white" {}
+        [HideInInspector, PerRendererData]_GridInformationTexture ("Grid Information Texture", 2D) = "white" {}
+        _NoiseTexture("Noise Texture", 2D) = "white" {}
         
         [Toggle]_GridOverlayToggle("Grid Overlay Toggle", float) = 0
         _GridOverlayLineWidth("Grid OverLay Line Width", Range(0, 32)) = 0
         _GridOverlayDesaturation("Grid Overlay Desaturation", Range(0, 1)) = 0
+
+        _LiquidColor("Liquid Color", COLOR) = (1, 1, 1, 1)
+        _LiquidSubColor("Liquid Sub Color", COLOR) = (1, 1, 1, 1)
+        _LiquidTextureScaling("Liquid Texture Scaling", Vector) = (1, 1, 0, 0)
     }
     SubShader
     {
@@ -54,10 +58,10 @@
                 return o;
             }
 
-            sampler2D _GridSelectedTexture;
-            float4 _GridSelectedTexture_ST;
-            sampler2D _GridLiquidLocationTexture;
-            float4 _GridLiquidLocationTexture_ST;
+            sampler2D _GridInformationTexture;
+            float4 _GridInformationTexture_ST;
+            sampler2D _NoiseTexture;
+            float4 _NoiseTexture_ST;
 
             float2 _GridTextureDimensions;
 
@@ -65,21 +69,39 @@
             int _GridOverlayLineWidth;
             float _GridOverlayDesaturation;
 
-            float4 AddGrid(float4 col, float2 localPixel, int2 tilePos) {
+            float4 AddGrid(float4 col, float2 localPixel, int2 tilePos, float4 tileInformation) {
                 // add the outlines
                 if ((localPixel.x < _GridOverlayLineWidth || localPixel.x >= PIXELS_PER_TILE - _GridOverlayLineWidth)
                     || (localPixel.y < _GridOverlayLineWidth || localPixel.y >= PIXELS_PER_TILE - _GridOverlayLineWidth))
                     col = 1;
 
                 // use texture's alpha channel to figure out if this tile is selected or not
-                float4 gridSelected = tex2D(_GridSelectedTexture, float2(tilePos) / _GridTextureDimensions);
-                gridSelected.a = 1;
+                tileInformation.a = 1;
 
                 // if not selected, make saturated
-                if (gridSelected.a > 0) {
+                if (tileInformation.a > 0) {
                     float2 grayScale = 0.33 * (col.r + col.g + col.b);
                     col.rgb = lerp(col.rgb, grayScale.xxx, _GridOverlayDesaturation);
                 }
+
+                return col;
+            }
+
+            float4 _LiquidColor;
+            float4 _LiquidSubColor;
+            float4 _LiquidTextureScaling;
+
+            float4 AddLiquid(float4 col, float2 localPixel, float2 worldPos, float4 tileInformation) {
+                float4 liquid = 1;
+                worldPos.xy /= _LiquidTextureScaling.xy;
+                worldPos.y += _Time.x / 2;
+                float2 noiseUV = float2(int2(frac(worldPos) * PIXELS_PER_TILE)) / PIXELS_PER_TILE;
+                float noise = tex2D(_NoiseTexture, noiseUV);
+
+                liquid = lerp(_LiquidColor, _LiquidSubColor, noise);
+
+                if (tileInformation.a == 0)
+                    col = lerp(liquid, col, col.a);
 
                 return col;
             }
@@ -91,9 +113,13 @@
                 float2 localUV = frac(i.worldPos.xy);
                 int2 localPixel = localUV * PIXELS_PER_TILE;
 
+                float4 tileInformation = tex2D(_GridInformationTexture, float2(tilePos) / _GridTextureDimensions);
+
                 // create grid
                 if (_GridOverlayToggle > 0)
-                    col = AddGrid(col, localPixel, tilePos);
+                    col = AddGrid(col, localPixel, tilePos, tileInformation);
+
+                col = AddLiquid(col, localPixel, i.worldPos.xy, tileInformation);
 
                 return col;
             }

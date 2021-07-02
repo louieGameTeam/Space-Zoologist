@@ -21,7 +21,6 @@ public class TileLayerManager : MonoBehaviour
     private BodyEmptyCallback bodyEmptyCallback;
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
-    
 
     private void Awake()
     {
@@ -122,6 +121,7 @@ public class TileLayerManager : MonoBehaviour
         }
         return new TileData(gameTile, position, color, liquidBody);
     }
+
     public void UpdateContents(Vector3Int tilePosition, float[] contents)
     {
         if (!this.holdsContent)
@@ -132,6 +132,7 @@ public class TileLayerManager : MonoBehaviour
         this.positionsToTileData[tilePosition].currentLiquidBody.contents = contents;
         // TODO Update color
     }
+
     public void AddTile(Vector3Int cellPosition, GameTile tile)
     {
 

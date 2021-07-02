@@ -10196,11 +10196,12 @@ MonoBehaviour:
   RPM: {fileID: 936381359}
   TileSystem: {fileID: 765609361}
   PopulationManager: {fileID: 2078374405}
-  Terrain: {fileID: 895381626}
+  terrain: {fileID: 895381626}
   Tile: {fileID: 11400000, guid: cea6169c6f3309f4d8acffc71703b8b7, type: 2}
   ReserveWidth: 32
   ReserveHeight: 32
   startTile: {x: 0, y: 0, z: 0}
+  GridTexture: {fileID: 2800000, guid: 72ce2daf0657047f18c67325cb96fd0a, type: 3}
 --- !u!4 &1621202153
 Transform:
   m_ObjectHideFlags: 0

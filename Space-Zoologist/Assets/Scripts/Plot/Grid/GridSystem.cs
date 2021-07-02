@@ -16,19 +16,23 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
-    public Tilemap Terrain;
+    public Tilemap terrain;
     private BuildBufferManager buildBufferManager;
     [SerializeField] private GameTile Tile = default;
     [Header("Used to define 2d array")]
-    [SerializeField] private int ReserveWidth = default;
-    [SerializeField] private int ReserveHeight = default;
+    [SerializeField] public int ReserveWidth = default;
+    [SerializeField] public int ReserveHeight = default;
     public Vector3Int startTile = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
 
+    private Texture2D GridTexture;
+    private MaterialPropertyBlock GridTexturePropertyBlock;
+
     private void Awake()
     {
+
         PlaceableArea = new bool[ReserveHeight, ReserveWidth];
         for (int i = 0; i < ReserveHeight; ++i)
         {
@@ -56,6 +60,20 @@ public class GridSystem : MonoBehaviour
     private void Start()
     {
         this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
+
+        // temporary to show effect
+
+        GridTexture = new Texture2D(ReserveWidth, ReserveHeight);
+        GridTexture.filterMode = FilterMode.Point;
+        GridTexture.wrapMode = TextureWrapMode.Repeat;
+        GridTexture.SetPixel(1, 1, new Color(0, 0, 0, 0));
+        GridTexture.SetPixel(1, 2, new Color(0, 0, 0, 0));
+        GridTexture.Apply();
+        GridTexturePropertyBlock = new MaterialPropertyBlock();
+        GridTexturePropertyBlock.SetTexture("_GridInformationTexture", GridTexture);
+        GridTexturePropertyBlock.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+        terrain.gameObject.GetComponent<TilemapRenderer>().SetPropertyBlock(GridTexturePropertyBlock);
+        
     }
 
 
@@ -64,7 +82,7 @@ public class GridSystem : MonoBehaviour
     public void ClearColors()
     {
         foreach (KeyValuePair<Vector3Int, Color> tileColor in previousColors)
-            Terrain.SetColor(tileColor.Key, tileColor.Value);
+            terrain.SetColor(tileColor.Key, tileColor.Value);
 
         previousColors.Clear();
     }
@@ -78,10 +96,10 @@ public class GridSystem : MonoBehaviour
     {
         if (!previousColors.ContainsKey(tilePosition))
         {
-            previousColors.Add(tilePosition, Terrain.GetColor(tilePosition));
+            previousColors.Add(tilePosition, terrain.GetColor(tilePosition));
         }
-        Terrain.SetTileFlags(tilePosition, TileFlags.None);
-        Terrain.SetColor(tilePosition, color);
+        terrain.SetTileFlags(tilePosition, TileFlags.None);
+        terrain.SetColor(tilePosition, color);
     }
 
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
