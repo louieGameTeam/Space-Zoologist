@@ -1,12 +1,17 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Audio/MusicQueuer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Audio/MusicManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Audio/MainMenuMusicManager.cs" Line="96" Column="36" />
-      <File FileName="Assets/Scripts/Audio/LoopableAudioTrack.cs" Line="32" Column="32" />
       <File FileName="Assets/Scripts/UI/SceneEffects/TextEffects.cs" Line="41" Column="15" />
       <File FileName="Assets/Scripts/0-ScriptableObjects/SceneNavigator.cs" Line="22" Column="26" />
-      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="9" Column="6" />
-      <File FileName="Assets/Scripts/Audio/AudioManager.cs" Line="24" Column="6" />
+      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Audio/AudioManager.cs" Line="42" Column="6" />
+      <File FileName="Assets/Scripts/Audio/MusicManager.cs" Line="48" Column="31" />
+      <File FileName="Assets/Scripts/Audio/LoopableAudioTrack.cs" Line="161" Column="22" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="58" Column="28" />
+      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="193" Column="31" />
+      <File FileName="Assets/Scripts/0-ScriptableObjects/AnimalSpecies.cs" Line="10" Column="27" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="123" Column="31" />
+      <File FileName="Assets/Scripts/TimeSystem/TimeSystem.cs" Line="38" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -35,7 +40,7 @@
                 <Node name="0-ScriptableObjects" expanded="True" />
                 <Node name="0-Utils" expanded="True" />
                 <Node name="Audio" expanded="True">
-                  <Node name="MusicQueuer.cs" selected="True" />
+                  <Node name="MusicManager.cs" selected="True" />
                 </Node>
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
@@ -80,11 +85,9 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8d3f3254-49c4-4c96-9d42-87b641e5424e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b6ca5797-116d-442d-acf4-2bd8e63bc81e" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" relfile="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" line="114" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

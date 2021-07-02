@@ -6,10 +6,12 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-    [SerializeField] AudioSource Music;
-    [SerializeField] AudioSource SFX;
+    public AudioSource SFX => sfx;
+    public MusicManager MusicManager => musicManager;
+    [SerializeField] MusicManager musicManager;
+    [SerializeField] AudioSource sfx;
 
-    Queue<AudioClip> musicQueue;
+    float masterVolume = 1;
 
     private void Awake()
     {
@@ -20,18 +22,27 @@ public class AudioManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-        musicQueue = new Queue<AudioClip>();
-    }
-
-    public void QueueMusic(AudioClip toQueue) {
-        musicQueue.Enqueue(toQueue);
-    }
-
-    private void Update()
-    {
-        if (!Music.isPlaying) {
-            Music.clip = musicQueue.Dequeue();
-            Music.Play();
+        musicManager = GetComponentInChildren<MusicManager>();
+        if (musicManager == null) {
+            musicManager = transform.GetChild(0).gameObject.AddComponent<MusicManager>();
         }
+    }
+    public void SetMasterVolume(float vol) {
+        masterVolume = vol;
+    }
+
+    public void SetMusicVolume(float vol)
+    {
+        musicManager.SetVolume(masterVolume * vol);
+    }
+
+    public void SetSFXVolume(float vol)
+    {
+        sfx.volume = masterVolume * vol;
+    }
+
+    public void PlayOneShot(AudioClip clip) {
+        // introduce a little bit of variety
+        sfx.PlayOneShot(clip, Random.value * 0.2f + 0.8f);
     }
 }

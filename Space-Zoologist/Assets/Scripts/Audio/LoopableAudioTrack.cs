@@ -90,7 +90,7 @@ public class LoopableAudioTrack {
     // stop the track and detach it from its current source
     public void StopTrack() {
         if (!isInitialized) {
-            Debug.LogWarning("Tried to stop a track that was never set up: " + mainClip.name);
+            Debug.LogWarning("Tried to stop a track that was never set up: " + mainClip?.name);
             return;
         }
 
@@ -154,5 +154,10 @@ public class LoopableAudioTrack {
         copy.velocityUpdateMode = source.velocityUpdateMode;
 
         return copy;
+    }
+
+    public static bool IsEmpty(LoopableAudioTrack track) {
+        if (track is null || track.mainClip == null && track.startupClip == null) return true;
+        return false;
     }
 }

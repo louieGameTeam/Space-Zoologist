@@ -4,65 +4,64 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    public static MusicManager instance;
-    public LoopableAudioTrack preTransitionMusic;
-    public LoopableAudioTrack postTransitionMusic;
+    public LoopableAudioTrack curMusic;
+    public LoopableAudioTrack nextMusic;
+    public LoopableAudioTrack queuedMusic;
 
-    public AudioSource preTransitionMusicSource;
-    public AudioSource postTransitionMusicSource;
+    public AudioSource curMusicSource;
+    public AudioSource nextMusicSource;
 
-    bool isExitingPrologue;
+    bool isInTrasition;
+    bool frequentTransition;
 
     const int TEMPO = 112;                                      // tempo of track, in beats per minute
     const int BEATS_PER_BAR = 2;                                // the tracks have 4 beats per bar, but I'm allowing half-bar transitions
     const float SECONDS_PER_BAR = BEATS_PER_BAR * 60f / TEMPO;  // (beats / bars) * (60 seconds / 1 minute) * (minutes / beats)
 
-    void Awake()
-    {
-        if (instance)
-        {
-            Destroy(gameObject);
-            return;
-        }
+    float volume = 1f;
 
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    Coroutine transition = null;
 
     void Start() {
-        isExitingPrologue = false;
-        if(preTransitionMusic != null)
-            preTransitionMusic.StartTrack(preTransitionMusicSource);
+        isInTrasition = false;
+        frequentTransition = false;
+        if (curMusic != null)
+            curMusic.StartTrack(curMusicSource);
     }
 
     public void SetNextTrack(LoopableAudioTrack nextTrack) {
-        if (preTransitionMusic == null)
-        {
-            preTransitionMusic = nextTrack;
-            preTransitionMusic.StartTrack(preTransitionMusicSource);
-        }
+        if (LoopableAudioTrack.IsEmpty(nextMusic))
+            nextMusic = nextTrack;
         else
-            postTransitionMusic = nextTrack;
+            queuedMusic = nextTrack;
     }
 
     // !! CALL THIS TO SWITCH FROM PROLOGUE MUSIC TO MAIN MENU MUSIC !!
     public void StartTransition() {
-        if (isExitingPrologue) return;
-        if (preTransitionMusic == null)
+        if (isInTrasition) {
+            if (LoopableAudioTrack.IsEmpty(queuedMusic)) return; // cancel if the transition isn't queued up
+
+            nextMusic.StopTrack();
+            StopCoroutine(transition);
+            nextMusic = queuedMusic;
+            queuedMusic = null;
+            transition = null;
+        }
+        if (LoopableAudioTrack.IsEmpty(curMusic))
         {
-            postTransitionMusic.StartTrack(postTransitionMusicSource);
+            nextMusic.StartTrack(nextMusicSource);
             return;
         }
-        else if (postTransitionMusic == null) {
+        else if (LoopableAudioTrack.IsEmpty(nextMusic)) {
             return;
         }
 
-        isExitingPrologue = true;
+        isInTrasition = true;
 
-        float curPlayheadTime = preTransitionMusic.GetCurrentTime();
+        float curPlayheadTime = curMusic.GetCurrentTime();
         int nextBar = Mathf.CeilToInt(curPlayheadTime / SECONDS_PER_BAR);
         float nextBarTime = nextBar * SECONDS_PER_BAR;
-        StartCoroutine(MusicTransition(nextBarTime - curPlayheadTime));
+        transition = StartCoroutine(MusicTransition(nextBarTime - curPlayheadTime));
     }
 
     // timed sequence of events to make the transition smooth
@@ -74,7 +73,7 @@ public class MusicManager : MonoBehaviour
 
         yield return new WaitForSeconds(delay); // wait for the beat
 
-        postTransitionMusic.StartTrack(postTransitionMusicSource); // start the main menu music
+        nextMusic.StartTrack(nextMusicSource); // start the main menu music
 
         float waitTime = SECONDS_PER_BAR * 1f; // wait for a full bar
         yield return new WaitForSeconds(waitTime);
@@ -82,23 +81,31 @@ public class MusicManager : MonoBehaviour
 
         // fade out the prologue
         float p = 0f;
-        float startVolume = preTransitionMusicSource.volume;
         while (p < 1f) { // we only need to fade most of the way out
-            preTransitionMusic.SetVolume(startVolume * (1 - p));
+            curMusic.SetVolume(volume * (1 - p));
             p += Time.deltaTime / fadeTime;
             yield return null;
         }
 
-        preTransitionMusic.StopTrack(); //wait for main menu to start before stopping prologue
-        preTransitionMusicSource.volume = startVolume;
+        curMusic.StopTrack(); //wait for main menu to start before stopping prologue
+        curMusicSource.volume = volume;
 
-        preTransitionMusic = postTransitionMusic;
-        postTransitionMusic = null;
+        curMusic = nextMusic;
+        nextMusic = null;
 
-        AudioSource temp = preTransitionMusicSource;
-        preTransitionMusicSource = postTransitionMusicSource;
-        postTransitionMusicSource = temp;
+        AudioSource temp = curMusicSource;
+        curMusicSource = nextMusicSource;
+        nextMusicSource = temp;
 
-        isExitingPrologue = false;
+        isInTrasition = false;
+        frequentTransition = false;
+        transition = null;
+    }
+
+    public void SetVolume(float vol)
+    {
+        volume = vol;
+        curMusicSource.volume = volume;
+        nextMusicSource.volume = volume;
     }
 }
