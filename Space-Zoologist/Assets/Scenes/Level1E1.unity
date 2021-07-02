@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -9710,7 +9710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 1.0625, y: 33.131}
+  m_AnchoredPosition: {x: 1.0625, y: 33.13086}
   m_SizeDelta: {x: 9.484375, y: 66.28753}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &876844969
@@ -10263,6 +10263,9 @@ MonoBehaviour:
     type: 3}
   DeleteButtonPrefab: {fileID: 4319639836530594827, guid: 5d6f628a32ac249fe945c3e9408f293e,
     type: 3}
+  BuildBufferManager: {fileID: 799223294}
+  FoodSourceStoreSection: {fileID: 370814157}
+  SpeciesReferenceData: {fileID: 1280332669}
 --- !u!1 &915008188
 GameObject:
   m_ObjectHideFlags: 0
@@ -10594,6 +10597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
   TileSystem: {fileID: 765609361}
+  buildBufferManager: {fileID: 799223294}
 --- !u!1 &940353652
 GameObject:
   m_ObjectHideFlags: 0
@@ -16181,7 +16185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc60c39f1ca141b59b031fdb4eb6304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HUD: {fileID: 0}
+  HUD: {fileID: 170123770}
   CanUseIngameControls: 1
 --- !u!4 &1290313822
 Transform:
@@ -19269,8 +19273,8 @@ MonoBehaviour:
   PopulationManager: {fileID: 2078374405}
   TilePlacementValidation: {fileID: 1582801185}
   Tile: {fileID: 11400000, guid: cea6169c6f3309f4d8acffc71703b8b7, type: 2}
-  ReserveWidth: 28
-  ReserveHeight: 16
+  ReserveWidth: 30
+  ReserveHeight: 20
   startTile: {x: 0, y: 0, z: 0}
 --- !u!4 &1621202153
 Transform:
@@ -31569,8 +31573,8 @@ MonoBehaviour:
   HideNPC: 0
   startingConversation: {fileID: 0}
   defaultConversation: {fileID: 2106454061}
-  ConversationManagerGameObject: {fileID: 0}
-  DialogueButton: {fileID: 0}
+  ConversationManagerGameObject: {fileID: 750348920}
+  DialogueButton: {fileID: 1948625719}
   DefaultImage: {fileID: 0}
   NotificationImage: {fileID: 0}
 --- !u!4 &3395325107312024776
@@ -31712,6 +31716,8 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   TileSystem: {fileID: 765609361}
   GridSystem: {fileID: 1621202152}
+  buildBufferManager: {fileID: 799223294}
+  constructionColor: {r: 0.5, g: 1, b: 0.5, a: 1}
 --- !u!1 &6874327555454712161
 GameObject:
   m_ObjectHideFlags: 0

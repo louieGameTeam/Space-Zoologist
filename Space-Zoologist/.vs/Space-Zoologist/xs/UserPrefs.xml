@@ -1,15 +1,8 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/BuildBufferManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="20" Column="18" />
-      <File FileName="Assets/Scripts/Plot/LevelIO.cs" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" />
-      <File FileName="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" />
-      <File FileName="Assets/Scripts/Z - Unused/Needs/DensityCalculator.cs" Line="106" Column="14" />
-      <File FileName="Assets/Scripts/UI/GameOver.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Y - Utils/Objective.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Levels/Level1E1.json" Line="1" Column="75064" />
-      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/DrinkingPattern.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="96" Column="28" />
+      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,21 +15,25 @@
                 </Node>
                 <Node name="Patterns" expanded="True">
                   <Node name="Prefabs" expanded="True" />
-                  <Node name="Scripts" expanded="True">
-                    <Node name="DrinkingPattern.cs" selected="True" />
-                  </Node>
+                  <Node name="Scripts" expanded="True" />
                 </Node>
               </Node>
               <Node name="DialogueEditor" expanded="True" />
               <Node name="Scripts" expanded="True">
+                <Node name="Managers" expanded="True" />
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
+                  <Node name="BuildBufferManager.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="Representation" expanded="True" />
                 </Node>
-                <Node name="UI" expanded="True" />
+                <Node name="UI" expanded="True">
+                  <Node name="Store" expanded="True">
+                    <Node name="Sections" expanded="True" />
+                  </Node>
+                </Node>
                 <Node name="Y - Utils" expanded="True" />
                 <Node name="Z - Unused" expanded="True">
                   <Node name="Needs" expanded="True" />
@@ -50,7 +47,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f912db6c-5e06-404c-ae8e-d89e8ef1d78a" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7ea6318e-06a0-4f6c-966b-52923f074206" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
