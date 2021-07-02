@@ -10,28 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 165219529732ab948ab0bbf013f649b8, type: 3}
-  m_Name: Liquid_Foreground
+  m_Name: Liquid
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 1218525551048803148, guid: cb36b878bb5216c458f79d20e5292cc4,
+  m_DefaultSprite: {fileID: -6890714792668632813, guid: 61bdd3f6ec27939478c93d4c4adb6947,
     type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules: []
   targetTilemap: {fileID: 0}
-  replacementTilemaps:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  constraintTilemaps:
-  - {fileID: 0}
+  replacementTilemaps: []
+  constraintTilemaps: []
   type: 4
   TileName: liquid
-  targetLayer: 3
-  replacementLayers: 01000000060000000700000008000000
+  targetLayer: 0
+  replacementLayers: 
   constraintLayers: 
   isRepresentative: 1
-  defaultContents:
-  - 0
-  - 0
-  - 0
+  defaultContents: []

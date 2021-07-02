@@ -13,7 +13,6 @@ public class TileSystem : MonoBehaviour
 
     public bool HasTerrainChanged = false;
     public List<Vector3Int> changedTiles = new List<Vector3Int>();
-    private List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
 
     private void Awake()
     {
@@ -32,6 +31,10 @@ public class TileSystem : MonoBehaviour
 
     private void Start()
     {
+        // Sanity Tests (only for testing scene)
+        print("GetLiquidBodyPositions: " + (GetLiquidBodyPositions(new Vector3Int(1, 1, 0)).Count == 2));
+
+
         try
         {
             EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
@@ -62,19 +65,19 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Returns all liquid tiles belong to the same liquid body at the given location
     /// </summary>
-    /// <param name="vector3Int">Cell location of any liquid tile within the body to change</param>
+    /// <param name="location">Cell location of any liquid tile within the body to change</param>
     /// <returns></returns>
-    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int vector3Int)
+    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int location)
     {
-        liquidBodyTiles.Clear();
-        GameTile terrainTile = GetGameTileAt(vector3Int);
-        liquidBodyTiles.Add(vector3Int);
-        GetNeighborCellLocations(vector3Int, terrainTile);
+        List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
+        GameTile terrainTile = GetGameTileAt(location);
+        liquidBodyTiles.Add(location);
+        GetNeighborLiquidLocations(location, terrainTile, liquidBodyTiles);
         return liquidBodyTiles;
     }
-    private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile)
+    private void GetNeighborLiquidLocations(Vector3Int location, GameTile tile, List<Vector3Int> liquidBodyTiles)
     {
-        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
+        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(location))
         {
             if (
                 tile.targetTilemap.GetTile(tileToCheck) == tile &&
@@ -82,8 +85,10 @@ public class TileSystem : MonoBehaviour
                 !liquidBodyTiles.Contains(tileToCheck))
             {
                 liquidBodyTiles.Add(tileToCheck);
-                GetNeighborCellLocations(tileToCheck, tile);
+                GetNeighborLiquidLocations(tileToCheck, tile, liquidBodyTiles);
             }
+            GameTile thisTile = (GameTile)tile.targetTilemap.GetTile(tileToCheck);
+            float[] contents = GetTileContentsAt(tileToCheck, tile);
         }
     }
     /// <summary>

@@ -208,4 +208,14 @@ public class PopulationManager : MonoBehaviour
 
         return populations;
     }
+
+    public FoodSourceSpecies GetFoodSpecies(Item item)
+    {
+        return speciesReferenceData.FoodSources[item.ID];
+    }
+
+    public AnimalSpecies GetAnimalSpecies(Item item)
+    {
+        return speciesReferenceData.AnimalSpecies[item.ID];
+    }
 }

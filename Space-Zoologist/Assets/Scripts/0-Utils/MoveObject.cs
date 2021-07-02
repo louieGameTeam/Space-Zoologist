@@ -14,7 +14,6 @@ public class MoveObject : MonoBehaviour
     [SerializeField] FoodSourceManager foodSourceManager = default;
     [SerializeField] ReservePartitionManager reservePartitionManager = default;
     [SerializeField] CursorItem cursorItem = default;
-    [SerializeField] private GridOverlay gridOverlay = default;
     [SerializeField] PlayerBalance playerBalance = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
     [SerializeField] GameObject DeleteButtonPrefab = default;
@@ -134,7 +133,7 @@ public class MoveObject : MonoBehaviour
         moving = false;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
-        gridOverlay.ClearColors();
+        gridSystem.ClearColors();
     }
 
     private GameObject SelectGameObjectAtMousePosition()
@@ -195,14 +194,14 @@ public class MoveObject : MonoBehaviour
         if (!gridSystem.IsWithinGridBounds(curPos)) return;
 
         Vector3Int gridLocation = gridSystem.Grid.WorldToCell(curPos);
-        if (this.gridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
+        if (this.gridSystem.IsOnWall(gridLocation)) return;
 
         // Different position: need to repaint
         if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
         {
             previousLocation = gridLocation;
-            gridOverlay.ClearColors();
-            gridSystem.PlacementValidation.updateVisualPlacement(gridLocation, tempItem);
+            gridSystem.ClearColors();
+            gridSystem.updateVisualPlacement(gridLocation, tempItem);
         }
     }
 
@@ -212,10 +211,10 @@ public class MoveObject : MonoBehaviour
         AnimalSpecies species = population.Species;
 
         float cost = FixedCost + species.Size * CostPerUnitSizeAnimal;
-        bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
+        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
 
         // placement is valid and population did not already reach here
-        if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species))
+        if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
         {
             populationManager.UpdatePopulation(species,  worldPos);
             playerBalance.SubtractFromBalance(cost);
@@ -231,7 +230,7 @@ public class MoveObject : MonoBehaviour
         Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
 
         float cost = FixedCost + species.Size * CostPerUnitSizeFood;
-        bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
+        bool valid = gridSystem.IsFoodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
 
         if (valid)
         {

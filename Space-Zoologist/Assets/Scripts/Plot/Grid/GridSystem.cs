@@ -10,15 +10,14 @@ using UnityEngine.Tilemaps;
 /// PlaceableArea transparency can be increased or decreased when adding it
 public class GridSystem : MonoBehaviour
 {
-    [HideInInspector]
-    public PlacementValidation PlacementValidation = default;
     [SerializeField] public Grid Grid = default;
-    [SerializeField] public Tilemap PlacableArea = default;
+    public bool[,] PlaceableArea;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
-    [SerializeField] private Tilemap TilePlacementValidation = default;
+    public Tilemap Terrain;
+    private BuildBufferManager buildBufferManager;
     [SerializeField] private GameTile Tile = default;
     [Header("Used to define 2d array")]
     [SerializeField] private int ReserveWidth = default;
@@ -30,25 +29,211 @@ public class GridSystem : MonoBehaviour
 
     private void Awake()
     {
+        PlaceableArea = new bool[ReserveHeight, ReserveWidth];
+        for (int i = 0; i < ReserveHeight; ++i)
+        {
+            for (int j = 0; j < ReserveWidth; ++j)
+            {
+                PlaceableArea[i, j] = true;
+            }
+        }
+
         this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
         for (int i=0; i<this.ReserveWidth; i++)
         {
             for (int j=0; j<this.ReserveHeight; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
-                if (startTile == default && PlacableArea.HasTile(loc))
+                if (startTile == default && PlaceableArea[j, i])
                 {
                     startTile = loc;
                 }
-                this.CellGrid[i, j] = new CellData(PlacableArea.HasTile(loc));
+                this.CellGrid[i, j] = new CellData(PlaceableArea[j, i]);
             }
         }
     }
 
     private void Start()
     {
-        this.PlacementValidation = this.gameObject.GetComponent<PlacementValidation>();
-        this.PlacementValidation.Initialize(this, this.TileSystem, this.SpeciesReferenceData);
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
+    }
+
+
+    Dictionary<Vector3Int, Color> previousColors = new Dictionary<Vector3Int, Color>();
+
+    public void ClearColors()
+    {
+        foreach (KeyValuePair<Vector3Int, Color> tileColor in previousColors)
+            Terrain.SetColor(tileColor.Key, tileColor.Value);
+
+        previousColors.Clear();
+    }
+
+    public void ToggleGridOverlay()
+    {
+        // toggle using shader here
+    }
+
+    public void HighlightTile(Vector3Int tilePosition, Color color)
+    {
+        if (!previousColors.ContainsKey(tilePosition))
+        {
+            previousColors.Add(tilePosition, Terrain.GetColor(tilePosition));
+        }
+        Terrain.SetTileFlags(tilePosition, TileFlags.None);
+        Terrain.SetColor(tilePosition, color);
+    }
+
+    public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
+    {
+        Vector3Int gridPosition = this.TileSystem.WorldToCell(mousePosition);
+        return this.CheckSurroundingTerrain(gridPosition, species);
+    }
+
+    public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem)
+    {
+        FoodSourceSpecies species = PopulationManager.speciesReferenceData.FoodSources[selectedItem.ID];
+        Vector3Int gridPosition = Grid.WorldToCell(mousePosition);
+        return CheckSurroudingTiles(gridPosition, species);
+    }
+
+    public bool IsFoodPlacementValid(Vector3 mousePosition, FoodSourceSpecies species)
+    {
+        Vector3Int gridPosition = Grid.WorldToCell(mousePosition);
+        return CheckSurroudingTiles(gridPosition, species);
+    }
+
+    public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
+    {
+        if (PopulationManager.speciesReferenceData.FoodSources.ContainsKey(selectedItem.ID))
+        {
+            FoodSourceSpecies species = PopulationManager.speciesReferenceData.FoodSources[selectedItem.ID];
+            CheckSurroudingTiles(gridPosition, species);
+        }
+        else if (PopulationManager.speciesReferenceData.AnimalSpecies.ContainsKey(selectedItem.ID))
+        {
+            AnimalSpecies species = PopulationManager.speciesReferenceData.AnimalSpecies[selectedItem.ID];
+            CheckSurroundingTerrain(gridPosition, species);
+        }
+        else
+        {
+            // TODO figure out how to determine if tile is placable
+            // gridOverlay.HighlightTile(gridPosition, Color.green);
+        }
+    }
+
+    private bool CheckSurroundingTerrain(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
+    {
+        Vector3Int pos;
+        GameTile tile;
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                pos = cellPosition;
+                pos.x += x;
+                pos.y += y;
+                tile = this.TileSystem.GetGameTileAt(pos);
+                if (tile == null)
+                {
+                    return false;
+                }
+                bool isTerrainAcceptable = selectedSpecies.AccessibleTerrain.Contains(tile.type);
+                if (isTerrainAcceptable)
+                {
+                    // replace with shader code
+                    //gridOverlay.HighlightTile(pos, Color.green);
+                }
+                else
+                {
+                    // replace with shader code
+                    //gridOverlay.HighlightTile(pos, Color.red);
+                }
+            }
+        }
+        tile = this.TileSystem.GetGameTileAt(cellPosition);
+        return selectedSpecies.AccessibleTerrain.Contains(tile.type);
+    }
+
+    private bool CheckSurroudingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
+    {
+        // size 1 -> rad 0, size 3 -> rad 1 ...
+        int radius = species.Size / 2;
+        Vector3Int pos;
+        bool isValid = true;
+        int offset = 0;
+        // Size is even, offset by 1
+        if (species.Size % 2 == 0)
+        {
+            offset = 1;
+        }
+        // Check if the whole object is in bounds
+        for (int x = (-1 - offset) * (radius - offset); x <= radius; x++)
+        {
+            for (int y = (-1 - offset) * (radius - offset); y <= radius; y++)
+            {
+                pos = cellPosition;
+                pos.x += x;
+                pos.y += y;
+                if (!IsFoodPlacementValid(pos, species))
+                {
+                    isValid = false;
+                    // change to shader code
+                    //gridOverlay.HighlightTile(pos, Color.red);
+                }
+                else
+                {
+                    //gridOverlay.HighlightTile(pos, Color.green);
+                }
+            }
+        }
+        return isValid;
+    }
+
+    public bool IsOnWall(Vector3Int pos)
+    {
+        // Prevent placing on walls
+        GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
+        if (selectedTile != null && selectedTile.type.Equals(TileType.Wall))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    // helper function that checks the validity at one tile
+    private bool IsFoodPlacementValid(Vector3Int pos, FoodSourceSpecies species)
+    {
+        if (!IsWithinGridBounds(pos))
+        {
+            return false;
+        }
+
+        // Prevent placing on items already there.
+        CellData cellData = CellGrid[pos.x, pos.y];
+        if (cellData.ContainsFood)
+        {
+            return false;
+        }
+        if (IsOnWall(pos)) return false;
+        if (this.buildBufferManager.IsConstructing(pos.x, pos.y))
+        {
+            return false;
+        }
+        GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
+
+        if (selectedTile)
+        {
+            // Make sure the tile is acceptable
+            foreach (TileType acceptablTerrain in species.AccessibleTerrain)
+            {
+                if (selectedTile.type.Equals(acceptablTerrain))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public bool isCellinGrid(int x, int y)
@@ -145,7 +330,11 @@ public class GridSystem : MonoBehaviour
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         Vector3Int loc = Grid.WorldToCell(mousePosition);
-        return PlacableArea.HasTile(loc);
+
+        if (isCellinGrid(loc.x, loc.y))
+            return PlaceableArea[loc.y, loc.x];
+        else
+            return false;
     }
 
     // Will need to make the grid the size of the max tilemap size
@@ -183,7 +372,7 @@ public class GridSystem : MonoBehaviour
             for (int j = 0; j < this.ReserveHeight; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
-                tileGrid[i, j] = PlacableArea.HasTile(loc);
+                tileGrid[i, j] = PlaceableArea[loc.y, loc.x];
             }
         }
     }

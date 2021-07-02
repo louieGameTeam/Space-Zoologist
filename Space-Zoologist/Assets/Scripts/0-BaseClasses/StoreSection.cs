@@ -23,7 +23,6 @@ public class StoreSection : MonoBehaviour
     protected GridSystem GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
-    private GridOverlay gridOverlay = default;
     protected Item selectedItem = null;
     private Vector3Int previousLocation = default;
     protected AudioSource audioSource = default;
@@ -35,7 +34,6 @@ public class StoreSection : MonoBehaviour
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
-        gridOverlay = GridSystem.gameObject.GetComponent<GridOverlay>();
         audioSource = this.GetComponent<AudioSource>();
         this.playerBalance = playerBalance;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
@@ -50,13 +48,13 @@ public class StoreSection : MonoBehaviour
             if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
 
             Vector3Int gridLocation = GridSystem.Grid.WorldToCell(mousePosition);
-            if (this.GridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
+            if (this.GridSystem.IsOnWall(gridLocation)) return;
 
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
             {
                 previousLocation = gridLocation;
-                gridOverlay.ClearColors();
-                GridSystem.PlacementValidation.updateVisualPlacement(gridLocation, selectedItem);
+                GridSystem.ClearColors();
+                GridSystem.updateVisualPlacement(gridLocation, selectedItem);
             }
         }
     }
@@ -106,7 +104,7 @@ public class StoreSection : MonoBehaviour
     public virtual void OnItemSelectionCanceled()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
-        gridOverlay.ClearColors();
+        GridSystem.ClearColors();
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)

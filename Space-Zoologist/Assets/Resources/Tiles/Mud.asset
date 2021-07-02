@@ -871,19 +871,12 @@ MonoBehaviour:
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
   targetTilemap: {fileID: 0}
-  replacementTilemaps:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  constraintTilemaps:
-  - {fileID: 0}
+  replacementTilemaps: []
+  constraintTilemaps: []
   type: 2
   TileName: dirt
-  targetLayer: 1
-  replacementLayers: 020000000300000004000000050000000600000008000000
+  targetLayer: 0
+  replacementLayers: 
   constraintLayers: 
   isRepresentative: 1
   defaultContents: []
