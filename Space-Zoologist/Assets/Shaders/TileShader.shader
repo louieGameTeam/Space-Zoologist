@@ -121,7 +121,7 @@
 
                 col = AddLiquid(col, localPixel, i.worldPos.xy, tileInformation);
 
-                return col;
+                return i.color;
             }
             ENDCG
         }

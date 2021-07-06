@@ -11,12 +11,13 @@ using UnityEngine.Tilemaps;
 public class GridSystem : MonoBehaviour
 {
     [SerializeField] public Grid Grid = default;
-    public bool[,] PlaceableArea;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     public Tilemap terrain;
+    public Tilemap grass;
+    public Tilemap Structures;
     private BuildBufferManager buildBufferManager;
     [SerializeField] private GameTile Tile = default;
     [Header("Used to define 2d array")]
@@ -30,29 +31,20 @@ public class GridSystem : MonoBehaviour
     private Texture2D GridTexture;
     private MaterialPropertyBlock GridTexturePropertyBlock;
 
+    #region Monobehaviour Callbacks
     private void Awake()
     {
-
-        PlaceableArea = new bool[ReserveHeight, ReserveWidth];
-        for (int i = 0; i < ReserveHeight; ++i)
-        {
-            for (int j = 0; j < ReserveWidth; ++j)
-            {
-                PlaceableArea[i, j] = true;
-            }
-        }
-
         this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
         for (int i=0; i<this.ReserveWidth; i++)
         {
             for (int j=0; j<this.ReserveHeight; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
-                if (startTile == default && PlaceableArea[j, i])
+                if (startTile == default)
                 {
                     startTile = loc;
                 }
-                this.CellGrid[i, j] = new CellData(PlaceableArea[j, i]);
+                this.CellGrid[i, j] = new CellData(true);
             }
         }
     }
@@ -75,6 +67,7 @@ public class GridSystem : MonoBehaviour
         terrain.gameObject.GetComponent<TilemapRenderer>().SetPropertyBlock(GridTexturePropertyBlock);
         
     }
+    #endregion
 
 
     Dictionary<Vector3Int, Color> previousColors = new Dictionary<Vector3Int, Color>();
@@ -90,15 +83,23 @@ public class GridSystem : MonoBehaviour
     public void ToggleGridOverlay()
     {
         // toggle using shader here
+        float currentToggleValue = terrain.gameObject.GetComponent<TilemapRenderer>().material.GetFloat("_GridOverlayToggle");
+        // set up methods for updating all or only some tilemaps
+        terrain.gameObject.GetComponent<TilemapRenderer>().material.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
+        Structures.gameObject.GetComponent<TilemapRenderer>().material.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
+        grass.gameObject.GetComponent<TilemapRenderer>().material.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
+
+        // sanity check for highlight tile
+        HighlightTile(new Vector3Int(0, 0, 0), Color.red);
     }
 
+    // currently has no references?
     public void HighlightTile(Vector3Int tilePosition, Color color)
     {
         if (!previousColors.ContainsKey(tilePosition))
         {
             previousColors.Add(tilePosition, terrain.GetColor(tilePosition));
         }
-        terrain.SetTileFlags(tilePosition, TileFlags.None);
         terrain.SetColor(tilePosition, color);
     }
 
@@ -349,10 +350,7 @@ public class GridSystem : MonoBehaviour
     {
         Vector3Int loc = Grid.WorldToCell(mousePosition);
 
-        if (isCellinGrid(loc.x, loc.y))
-            return PlaceableArea[loc.y, loc.x];
-        else
-            return false;
+        return isCellinGrid(loc.x, loc.y);
     }
 
     // Will need to make the grid the size of the max tilemap size
@@ -390,7 +388,7 @@ public class GridSystem : MonoBehaviour
             for (int j = 0; j < this.ReserveHeight; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
-                tileGrid[i, j] = PlaceableArea[loc.y, loc.x];
+                tileGrid[i, j] = true;
             }
         }
     }
