@@ -21,6 +21,8 @@ public class LoopableAudioTrack {
 
     public const double BUFFER = 0.05;     // to align start time
 
+    public bool haveStarted => isInitialized;
+
     // initialize this track to play in 'baseSource', and start it from the beginning
     public void StartTrack(AudioSource baseSource) {
         if (isInitialized) StopTrack();

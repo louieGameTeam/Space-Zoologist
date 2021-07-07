@@ -22,23 +22,39 @@ public class MusicManager : MonoBehaviour
 
     Coroutine transition = null;
 
-    void Start() {
+    private void Awake()
+    {
+        if (curMusicSource == null) {
+            curMusicSource = gameObject.AddComponent<AudioSource>();
+        }
+        if (nextMusicSource == null) {
+            nextMusicSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    void Start()
+    {
         isInTrasition = false;
         frequentTransition = false;
-        if (curMusic != null)
+        if (curMusic != null && !curMusic.haveStarted)
             curMusic.StartTrack(curMusicSource);
     }
 
-    public void SetNextTrack(LoopableAudioTrack nextTrack) {
-        if (LoopableAudioTrack.IsEmpty(nextMusic))
+    public void SetNextTrack(LoopableAudioTrack nextTrack)
+    {
+        if (nextTrack == curMusic) return;
+
+        if(LoopableAudioTrack.IsEmpty(nextMusic))
             nextMusic = nextTrack;
         else
-            queuedMusic = nextTrack;
+            queuedMusic = nextTrack; // if there is queued music that isn't played, just overwrite it
     }
 
     // !! CALL THIS TO SWITCH FROM PROLOGUE MUSIC TO MAIN MENU MUSIC !!
-    public void StartTransition() {
-        if (isInTrasition) {
+    public void StartTransition()
+    {
+        if (isInTrasition)
+        {
             if (LoopableAudioTrack.IsEmpty(queuedMusic)) return; // cancel if the transition isn't queued up
 
             nextMusic.StopTrack();
@@ -47,13 +63,19 @@ public class MusicManager : MonoBehaviour
             queuedMusic = null;
             transition = null;
         }
-        if (LoopableAudioTrack.IsEmpty(curMusic))
+        if (LoopableAudioTrack.IsEmpty(nextMusic))
         {
-            nextMusic.StartTrack(nextMusicSource);
             return;
         }
-        else if (LoopableAudioTrack.IsEmpty(nextMusic)) {
+        else if (LoopableAudioTrack.IsEmpty(curMusic))
+        {
+            curMusic = nextMusic;
+            nextMusic = null;
+            curMusic.StartTrack(curMusicSource);
             return;
+        }
+        else if (nextMusic == curMusic) {
+            nextMusic = null;
         }
 
         isInTrasition = true;
@@ -65,7 +87,8 @@ public class MusicManager : MonoBehaviour
     }
 
     // timed sequence of events to make the transition smooth
-    IEnumerator MusicTransition(float delay) {
+    IEnumerator MusicTransition(float delay)
+    {
         float buffer = (float)LoopableAudioTrack.BUFFER + Time.deltaTime; //HACK to deal with start buffer
 
         delay -= buffer;
@@ -81,7 +104,8 @@ public class MusicManager : MonoBehaviour
 
         // fade out the prologue
         float p = 0f;
-        while (p < 1f) { // we only need to fade most of the way out
+        while (p < 1f)
+        { // we only need to fade most of the way out
             curMusic.SetVolume(volume * (1 - p));
             p += Time.deltaTime / fadeTime;
             yield return null;

@@ -9,13 +9,15 @@ public class MusicQueuer : MonoBehaviour
     {
         QueueAndTrigger();
     }
+
     // Start is called before the first frame update
     public void QueueMusic()
     {
         AudioManager.instance.MusicManager.SetNextTrack(nextTrack);
     }
 
-    public void QueueAndTrigger() {
+    public void QueueAndTrigger()
+    {
         QueueMusic();
         AudioManager.instance.MusicManager.StartTransition();
     }
