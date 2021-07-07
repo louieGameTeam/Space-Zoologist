@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d05f70925ac394b8f29ba72a273fb5, type: 3}
+  m_Name: Research
+  m_EditorClassIdentifier: 
+  speciesResearch:
+  - category:
+      name: Goat
+    notes:
+      labels: {fileID: 11400000, guid: 7db18264fea8d8f4aa7e56fb145ee95d, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Slug
+    notes:
+      labels: {fileID: 11400000, guid: ac04ecac4d60fff4f8a19f25597cf2f1, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Cow
+    notes:
+      labels: {fileID: 11400000, guid: ac04ecac4d60fff4f8a19f25597cf2f1, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Spider
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Anteater
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  foodResearch:
+  - category:
+      name: Maple
+    notes:
+      labels: {fileID: 11400000, guid: f5cd230013c53804996c231d4b6b56ad, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Berries
+    notes:
+      labels: {fileID: 11400000, guid: 2da04ddc0de25f146ada5ae4685907c7, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Ants
+    notes:
+      labels: {fileID: 11400000, guid: 2da04ddc0de25f146ada5ae4685907c7, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Kelp
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Mushroom
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  tileResearch:
+  - category:
+      name: Dirt
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Grass
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Swamp
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Sand
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
+  - category:
+      name: Rock
+    notes:
+      labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+    encyclopedia: {fileID: 0}
