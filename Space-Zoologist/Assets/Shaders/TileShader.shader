@@ -3,7 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        [HideInInspector, PerRendererData]_GridInformationTexture ("Grid Information Texture", 2D) = "white" {}
+        [PerRendererData]_GridInformationTexture ("Grid Information Texture", 2D) = "white" {}
         _NoiseTexture("Noise Texture", 2D) = "white" {}
         
         [Toggle]_GridOverlayToggle("Grid Overlay Toggle", float) = 0
@@ -27,6 +27,9 @@
             #pragma vertex vert
             #pragma fragment frag
             #define PIXELS_PER_TILE 32
+            // flags as determined in GridSystem
+            #define LIQUID_FLAG 0x2
+            #define HIGHLIGHT_FLAG 0x3
 
             #include "UnityCG.cginc"
 
@@ -76,10 +79,11 @@
                     col = 1;
 
                 // use texture's alpha channel to figure out if this tile is selected or not
-                tileInformation.a = 1;
 
                 // if not selected, make saturated
-                if (tileInformation.a > 0) {
+                if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG == 0 && tileInformation.a != 0)
+                    col.rgb *= tileInformation.rgb;
+                else if (int(tileInformation.a) % HIGHLIGHT_FLAG != 0 || tileInformation.a == 0) {
                     float2 grayScale = 0.33 * (col.r + col.g + col.b);
                     col.rgb = lerp(col.rgb, grayScale.xxx, _GridOverlayDesaturation);
                 }
@@ -91,7 +95,7 @@
             float4 _LiquidSubColor;
             float4 _LiquidTextureScaling;
 
-            float4 AddLiquid(float4 col, float2 localPixel, float2 worldPos, float4 tileInformation) {
+            float4 AddLiquid(float4 col, float2 localPixel, float2 worldPos) {
                 float4 liquid = 1;
                 worldPos.xy /= _LiquidTextureScaling.xy;
                 worldPos.y += _Time.x / 2;
@@ -100,28 +104,33 @@
 
                 liquid = lerp(_LiquidColor, _LiquidSubColor, noise);
 
-                if (tileInformation.a == 0)
-                    col = lerp(liquid, col, col.a);
+                col = lerp(liquid, col, col.a);
 
                 return col;
             }
 
             float4 frag (v2f i) : SV_Target
             {
-                float4 col = tex2D(_MainTex, i.uv) * i.color;
+                float4 col = tex2D(_MainTex, i.uv);
                 int2 tilePos = int2(i.worldPos.xy);
                 float2 localUV = frac(i.worldPos.xy);
                 int2 localPixel = localUV * PIXELS_PER_TILE;
 
+                // rgb color, alpha mask
                 float4 tileInformation = tex2D(_GridInformationTexture, float2(tilePos) / _GridTextureDimensions);
+
+                // add liquid and other animated tiles first
+                if (int(tileInformation.a * 256) % LIQUID_FLAG == 0 && tileInformation.a != 0)
+                    col = AddLiquid(col, localPixel, i.worldPos.xy);
+                
+                // then add color modifier
+                col *= i.color;
 
                 // create grid
                 if (_GridOverlayToggle > 0)
                     col = AddGrid(col, localPixel, tilePos, tileInformation);
 
-                col = AddLiquid(col, localPixel, i.worldPos.xy, tileInformation);
-
-                return i.color;
+                return col;
             }
             ENDCG
         }

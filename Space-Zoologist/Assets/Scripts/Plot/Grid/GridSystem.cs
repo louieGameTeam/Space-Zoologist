@@ -10,14 +10,20 @@ using UnityEngine.Tilemaps;
 /// PlaceableArea transparency can be increased or decreased when adding it
 public class GridSystem : MonoBehaviour
 {
+    [System.Flags]
+    // using prime numbers instead of binary for flagging LMAO
+    public enum TileFlag
+    {
+        LIQUID_FLAG = 0x2,
+        HIGHLIGHT_FLAG = 0x3
+    }
+
     [SerializeField] public Grid Grid = default;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
-    public Tilemap terrain;
-    public Tilemap grass;
-    public Tilemap Structures;
+    public List<Tilemap> Tilemaps;
     private BuildBufferManager buildBufferManager;
     [SerializeField] private GameTile Tile = default;
     [Header("Used to define 2d array")]
@@ -28,22 +34,53 @@ public class GridSystem : MonoBehaviour
     public CellData[,] CellGrid = default;
     public TileData TilemapData = default;
 
-    private Texture2D GridTexture;
-    private MaterialPropertyBlock GridTexturePropertyBlock;
+    List<Vector3Int> HighlightedTiles;
+    private Dictionary<Tilemap, Texture2D> TilemapTextureDictionary;
+    private MaterialPropertyBlock TilemapPropertyBlock;
 
     #region Monobehaviour Callbacks
     private void Awake()
     {
+        // set up the information textures
+        TilemapTextureDictionary = new Dictionary<Tilemap, Texture2D>();
+        TilemapPropertyBlock = new MaterialPropertyBlock();
+        foreach (Tilemap t in Tilemaps)
+        {
+            Texture2D tex = new Texture2D(ReserveWidth, ReserveHeight);
+            // make black texture
+            for (int i = 0; i < ReserveWidth; ++i)
+            {
+                for (int j = 0; j < ReserveHeight; ++j)
+                    tex.SetPixel(i, j, new Color(0, 0, 0, 0));
+            }
+            tex.Apply();
+
+            tex.filterMode = FilterMode.Point;
+            tex.wrapMode = TextureWrapMode.Repeat;
+
+            TilemapRenderer renderer = t.GetComponent<TilemapRenderer>();
+            renderer.GetPropertyBlock(TilemapPropertyBlock);
+            TilemapPropertyBlock.SetTexture("_GridInformationTexture", tex);
+            renderer.SetPropertyBlock(TilemapPropertyBlock);
+
+            TilemapTextureDictionary.Add(t, tex);
+        }
+        Tilemaps[0].GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+        HighlightedTiles = new List<Vector3Int>();
+
         this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
         for (int i=0; i<this.ReserveWidth; i++)
         {
             for (int j=0; j<this.ReserveHeight; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
+
                 if (startTile == default)
                 {
                     startTile = loc;
                 }
+
+                // every cell is currently in bounds if they are within the reserved size
                 this.CellGrid[i, j] = new CellData(true);
             }
         }
@@ -55,52 +92,81 @@ public class GridSystem : MonoBehaviour
 
         // temporary to show effect
 
-        GridTexture = new Texture2D(ReserveWidth, ReserveHeight);
-        GridTexture.filterMode = FilterMode.Point;
-        GridTexture.wrapMode = TextureWrapMode.Repeat;
-        GridTexture.SetPixel(1, 1, new Color(0, 0, 0, 0));
-        GridTexture.SetPixel(1, 2, new Color(0, 0, 0, 0));
-        GridTexture.Apply();
-        GridTexturePropertyBlock = new MaterialPropertyBlock();
-        GridTexturePropertyBlock.SetTexture("_GridInformationTexture", GridTexture);
-        GridTexturePropertyBlock.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
-        terrain.gameObject.GetComponent<TilemapRenderer>().SetPropertyBlock(GridTexturePropertyBlock);
-        
+        Tilemap Terrain = Tilemaps.Find(t => t.gameObject.name == "Terrain");
+        ApplyFlagsToTileTexture(Terrain, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
+        ApplyFlagsToTileTexture(Terrain, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
     }
     #endregion
 
+    /// <summary>
+    /// Applies the flags to the tile in texture data.
+    /// </summary>
+    /// <param name="tilemap">Tilemap to be affected (mostly for terrain).</param>
+    /// <param name="tilePosition">Position of tile in grid space.</param>
+    /// <param name="flag">Compiled flags to be set.</param>
+    public void ApplyFlagsToTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag, Color color)
+    {
+        Texture2D TilemapTex = TilemapTextureDictionary[tilemap];
 
-    Dictionary<Vector3Int, Color> previousColors = new Dictionary<Vector3Int, Color>();
+        Color tilePixel = TilemapTex.GetPixel(tilePosition.x, tilePosition.y);
+        // replace the colors anyways since only the flag matters
+        tilePixel.r = color.r;
+        tilePixel.g = color.g;
+        tilePixel.b = color.b;
+
+        // currently only in alpha channel, can expand to rgb as well
+        // note that alphas can only contain [0...1] so we're multiplying by a power of 2
+        int alphaBitMask = (int)(tilePixel.a * 256f);
+
+        // if nothing there, just set the flag
+        if (alphaBitMask == 0)
+            alphaBitMask = (int)flag;
+        // divide if already has flag to remove, multiply if not
+        else if (alphaBitMask % (int)flag == 0)
+            alphaBitMask /= (int)flag;
+        else
+            alphaBitMask *= (int)flag;
+
+        tilePixel.a = (float)alphaBitMask / 256f;
+        TilemapTex.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        TilemapTex.Apply();
+
+        // add to propertyblock
+        TilemapRenderer renderer = tilemap.GetComponent<TilemapRenderer>();
+        renderer.GetPropertyBlock(TilemapPropertyBlock);
+        TilemapPropertyBlock.SetTexture("_GridInformationTexture", TilemapTex);
+        renderer.SetPropertyBlock(TilemapPropertyBlock);
+    }
 
     public void ClearColors()
     {
-        foreach (KeyValuePair<Vector3Int, Color> tileColor in previousColors)
-            terrain.SetColor(tileColor.Key, tileColor.Value);
+        foreach (Tilemap t in Tilemaps)
+        {
+            foreach (Vector3Int tilePosition in HighlightedTiles)
+                ApplyFlagsToTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG, Color.clear);
+        }
 
-        previousColors.Clear();
+        HighlightedTiles.Clear();
     }
 
     public void ToggleGridOverlay()
     {
         // toggle using shader here
-        float currentToggleValue = terrain.gameObject.GetComponent<TilemapRenderer>().material.GetFloat("_GridOverlayToggle");
+        float currentToggleValue = Tilemaps.Find(t => t.gameObject.name == "Terrain").gameObject.GetComponent<TilemapRenderer>().material.GetFloat("_GridOverlayToggle");
         // set up methods for updating all or only some tilemaps
-        terrain.gameObject.GetComponent<TilemapRenderer>().material.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
-        Structures.gameObject.GetComponent<TilemapRenderer>().material.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
-        grass.gameObject.GetComponent<TilemapRenderer>().material.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
-
-        // sanity check for highlight tile
-        HighlightTile(new Vector3Int(0, 0, 0), Color.red);
+        foreach (Tilemap t in Tilemaps)
+            t.gameObject.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
     }
 
-    // currently has no references?
     public void HighlightTile(Vector3Int tilePosition, Color color)
     {
-        if (!previousColors.ContainsKey(tilePosition))
+        if (!HighlightedTiles.Contains(tilePosition))
         {
-            previousColors.Add(tilePosition, terrain.GetColor(tilePosition));
+            HighlightedTiles.Add(tilePosition);
+
+            foreach (Tilemap t in Tilemaps)
+                ApplyFlagsToTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG, color);
         }
-        terrain.SetColor(tilePosition, color);
     }
 
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
@@ -109,29 +175,25 @@ public class GridSystem : MonoBehaviour
         return this.CheckSurroundingTerrain(gridPosition, species);
     }
 
-    public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem)
+    public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem = null, FoodSourceSpecies species = null)
     {
-        FoodSourceSpecies species = PopulationManager.speciesReferenceData.FoodSources[selectedItem.ID];
-        Vector3Int gridPosition = Grid.WorldToCell(mousePosition);
-        return CheckSurroudingTiles(gridPosition, species);
-    }
+        if (selectedItem)
+            species = SpeciesReferenceData.FoodSources[selectedItem.ID];
 
-    public bool IsFoodPlacementValid(Vector3 mousePosition, FoodSourceSpecies species)
-    {
         Vector3Int gridPosition = Grid.WorldToCell(mousePosition);
         return CheckSurroudingTiles(gridPosition, species);
     }
 
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
-        if (PopulationManager.speciesReferenceData.FoodSources.ContainsKey(selectedItem.ID))
+        if (SpeciesReferenceData.FoodSources.ContainsKey(selectedItem.ID))
         {
-            FoodSourceSpecies species = PopulationManager.speciesReferenceData.FoodSources[selectedItem.ID];
+            FoodSourceSpecies species = SpeciesReferenceData.FoodSources[selectedItem.ID];
             CheckSurroudingTiles(gridPosition, species);
         }
-        else if (PopulationManager.speciesReferenceData.AnimalSpecies.ContainsKey(selectedItem.ID))
+        else if (SpeciesReferenceData.AnimalSpecies.ContainsKey(selectedItem.ID))
         {
-            AnimalSpecies species = PopulationManager.speciesReferenceData.AnimalSpecies[selectedItem.ID];
+            AnimalSpecies species = SpeciesReferenceData.AnimalSpecies[selectedItem.ID];
             CheckSurroundingTerrain(gridPosition, species);
         }
         else
@@ -157,17 +219,8 @@ public class GridSystem : MonoBehaviour
                 {
                     return false;
                 }
-                bool isTerrainAcceptable = selectedSpecies.AccessibleTerrain.Contains(tile.type);
-                if (isTerrainAcceptable)
-                {
-                    // replace with shader code
-                    //gridOverlay.HighlightTile(pos, Color.green);
-                }
-                else
-                {
-                    // replace with shader code
-                    //gridOverlay.HighlightTile(pos, Color.red);
-                }
+                
+                HighlightTile(pos, selectedSpecies.AccessibleTerrain.Contains(tile.type) ? Color.green : Color.red);
             }
         }
         tile = this.TileSystem.GetGameTileAt(cellPosition);
@@ -197,12 +250,11 @@ public class GridSystem : MonoBehaviour
                 if (!IsFoodPlacementValid(pos, species))
                 {
                     isValid = false;
-                    // change to shader code
-                    //gridOverlay.HighlightTile(pos, Color.red);
+                    HighlightTile(pos, Color.red);
                 }
                 else
                 {
-                    //gridOverlay.HighlightTile(pos, Color.green);
+                    HighlightTile(pos, Color.green);
                 }
             }
         }
@@ -260,9 +312,13 @@ public class GridSystem : MonoBehaviour
         return x >= 0 && y >= 0 && x < ReserveWidth && y < ReserveHeight;
     }
 
-    /// <summary>
-    /// Called when the store is opened
-    /// </summary>
+    public bool IsWithinGridBounds(Vector3 mousePosition)
+    {
+        Vector3Int loc = Grid.WorldToCell(mousePosition);
+
+        return isCellinGrid(loc.x, loc.y);
+    }
+
     public void UpdateAnimalCellGrid()
     {
         // Reset previous locations
@@ -303,9 +359,10 @@ public class GridSystem : MonoBehaviour
                 if (tile != null && tile.type == TileType.Liquid)
                 {
                     this.CellGrid[x, y].ContainsLiquid = true;
+                    localDistance = Vector2.Distance(animal.transform.position, new Vector2(x, y));
+
                     if (population.Grid.IsAccessible(x + 1, y))
                     {
-                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
                         if (localDistance < closestDistance)
                         {
                             closestDistance = localDistance;
@@ -314,7 +371,6 @@ public class GridSystem : MonoBehaviour
                     }
                     if (population.Grid.IsAccessible(x - 1, y))
                     {
-                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
                         if (localDistance < closestDistance)
                         {
                             closestDistance = localDistance;
@@ -323,7 +379,6 @@ public class GridSystem : MonoBehaviour
                     }
                     if (population.Grid.IsAccessible(x, y + 1))
                     {
-                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
                         if (localDistance < closestDistance)
                         {
                             closestDistance = localDistance;
@@ -332,7 +387,6 @@ public class GridSystem : MonoBehaviour
                     }
                     if (population.Grid.IsAccessible(x, y - 1))
                     {
-                        localDistance = this.CalculateDistance(animal.transform.position.x, animal.transform.position.y, x, y);
                         if (localDistance < closestDistance)
                         {
                             closestDistance = localDistance;
@@ -346,51 +400,19 @@ public class GridSystem : MonoBehaviour
         return itemLocation;
     }
 
-    public bool IsWithinGridBounds(Vector3 mousePosition)
-    {
-        Vector3Int loc = Grid.WorldToCell(mousePosition);
-
-        return isCellinGrid(loc.x, loc.y);
-    }
-
     // Will need to make the grid the size of the max tilemap size
     public AnimalPathfinding.Grid GetGridWithAccess(Population population)
     {
         // Debug.Log("Setting up pathfinding grid");
         bool[,] tileGrid = new bool[ReserveWidth, ReserveHeight];
-        this.SetupMovementBoundaires(tileGrid);
         for (int x=0; x<ReserveWidth; x++)
         {
             for (int y=0; y<ReserveHeight; y++)
             {
-                if (RPM.CanAccess(population, new Vector3Int(x, y, 0)))
-                {
-                    tileGrid[x, y] = true;
-                }
-                else
-                {
-                    tileGrid[x, y] = false;
-                }
+                tileGrid[x, y] = RPM.CanAccess(population, new Vector3Int(x, y, 0));
             }
         }
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
-    }
-
-    private float CalculateDistance(float x1, float y1, float x2, float y2)
-    {
-        return Mathf.Sqrt(Mathf.Pow(x2 - x1, 2) + Mathf.Pow(y2 - y1, 2));
-    }
-
-    private void SetupMovementBoundaires(bool[,] tileGrid)
-    {
-        for (int i = 0; i < this.ReserveWidth; i++)
-        {
-            for (int j = 0; j < this.ReserveHeight; j++)
-            {
-                Vector3Int loc = new Vector3Int(i, j, 0);
-                tileGrid[i, j] = true;
-            }
-        }
     }
 
     public void AddFood(Vector3Int gridPosition, int size, GameObject foodSource)
@@ -437,6 +459,12 @@ public class GridSystem : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        foreach (Tilemap t in Tilemaps)
+            t.gameObject.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", 0);
     }
 
     public struct CellData

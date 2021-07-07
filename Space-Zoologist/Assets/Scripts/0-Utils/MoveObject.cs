@@ -230,7 +230,7 @@ public class MoveObject : MonoBehaviour
         Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
 
         float cost = FixedCost + species.Size * CostPerUnitSizeFood;
-        bool valid = gridSystem.IsFoodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
+        bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && playerBalance.Balance >= cost;
 
         if (valid)
         {
