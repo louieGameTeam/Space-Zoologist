@@ -33,7 +33,6 @@ public class NeedSystemManager : MonoBehaviour
         PauseManager.TogglePause();
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
         {
-            Debug.Log("Received pop extinct message");
             this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
         });
     }
@@ -99,11 +98,6 @@ public class NeedSystemManager : MonoBehaviour
         {
             this.systems[needType].UpdateSystem();
         }
-    }
-
-    public void UpdateAccessMap()
-    {
-        this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.changedTiles);
     }
 
     /// <summary>

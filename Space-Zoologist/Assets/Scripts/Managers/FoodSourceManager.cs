@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void CreateFoodCallback(FoodSource food);
 /// <summary>
 /// Manager of all the FoodSource instance
 /// </summary>
@@ -94,6 +95,15 @@ public class FoodSourceManager : GridObjectManager
         }
         GridSystem.AddFood(GridSystem.Grid.WorldToCell(pos), species.Size, newFoodSourceGameObject);
         this.buildBufferManager.CreateSquareBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size, this.constructionColor);
+        if (ttb > 0)
+        {
+            foodSource.isUnderConstruction = true;
+            this.buildBufferManager.ConstructionFinishedCallback(() =>
+            {
+                foodSource.isUnderConstruction = false;
+            });
+        }
+
         if (!foodSourcesBySpecies.ContainsKey(foodSource.Species))
         {
             foodSourcesBySpecies.Add(foodSource.Species, new List<FoodSource>());

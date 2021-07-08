@@ -94,6 +94,10 @@ public class TileStoreSection : StoreSection
         {
             FinishPlacing();
         }
+        if (!base.CanBuy(selectedItem))
+        {
+            base.OnItemSelectionCanceled();
+        }
     }
 
     /// <summary>

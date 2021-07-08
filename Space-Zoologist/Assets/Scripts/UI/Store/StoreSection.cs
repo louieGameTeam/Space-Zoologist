@@ -105,9 +105,9 @@ public class StoreSection : MonoBehaviour
     /// <param name="item">The item that was selected.</param>
     public virtual void OnItemSelected(Item item)
     {
-        if (!this.HasSupply(item))
+        if (!this.CanBuy(item))
         {
-            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            OnItemSelectionCanceled();
             return;
         }
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
@@ -122,9 +122,9 @@ public class StoreSection : MonoBehaviour
 
     public void OnCursorItemClicked(PointerEventData eventData)
     {
-        if (!this.HasSupply(this.selectedItem))
+        if (!this.CanBuy(this.selectedItem))
         {
-            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            OnItemSelectionCanceled();
             return;
         }
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -133,12 +133,12 @@ public class StoreSection : MonoBehaviour
         }
     }
 
-    public bool HasSupply(Item item)
+    public bool CanBuy(Item item)
     {
         if (storeItems.ContainsKey(item) && playerBalance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
         {
             Debug.Log("You can't buy this!");
-            OnItemSelectionCanceled();
+            //OnItemSelectionCanceled();
             return false;
         }
         return true;
@@ -159,9 +159,9 @@ public class StoreSection : MonoBehaviour
     /// <param name="eventData"></param>
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
-        if (!this.HasSupply(this.selectedItem))
+        if (!this.CanBuy(this.selectedItem))
         {
-            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            OnItemSelectionCanceled();
             return;
         }
     }

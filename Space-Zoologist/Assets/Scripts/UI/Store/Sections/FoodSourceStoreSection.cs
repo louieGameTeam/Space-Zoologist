@@ -41,6 +41,10 @@ public class FoodSourceStoreSection : StoreSection
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
             PlaceFood(mousePosition);
         }
+        if (!base.CanBuy(selectedItem))
+        {
+            base.OnItemSelectionCanceled();
+        }
     }
 
     public void PlaceFood(Vector3 mousePosition)

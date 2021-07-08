@@ -46,9 +46,6 @@ public class DisplayInspectorText : MonoBehaviour
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
 
-        string displayText = $"{population.species.SpeciesName} Info: \n";
-
-        displayText += $"Count: {population.Count}, {population.GrowthStatus}\n";
         if (population.GrowthStatus.Equals(GrowthStatus.stagnate))
         {
             //displayText += $"Please wait 1 day for population to get accustomed to enclosure\n";
@@ -72,10 +69,8 @@ public class DisplayInspectorText : MonoBehaviour
                 detailText.text = $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days";
             }
         }
-
-        GenerateSliders(population.Needs, ref displayText);
-
-        this.inspectorWindowText.text = displayText;
+        this.inspectorWindowText.text = "";
+        GenerateSliders(population);
     }
 
     public void DisplayFoodSourceStatus(FoodSource foodSource)
@@ -86,12 +81,19 @@ public class DisplayInspectorText : MonoBehaviour
         inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
         inspectorWindowTitle.text = foodSource.Species.SpeciesName;
 
-        string displayText = $"{foodSource.name} Info: \n";
+        string displayText = $"\n";
 
-        displayText += $"Output: {foodSource.FoodOutput}\n";
+        if (foodSource.isUnderConstruction)
+        {
+            displayText += $"Under Construction \n";
 
-        GenerateSliders(foodSource.Needs, ref displayText);
+        }
+        else
+        {
+            displayText += $"Output: {foodSource.FoodOutput}\n";
 
+            GenerateSliders(foodSource);
+        }
         this.inspectorWindowText.text = displayText;
     }
 
@@ -100,7 +102,7 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
         currentDisplay = InspectorText.Area;
 
-        inspectorWindowTitle.text = $"Area {enclosedArea.id}";
+        inspectorWindowTitle.text = $"Enclosure {enclosedArea.id + 1}";
         inspectorWindowImage.sprite = enclosedAreaSprite;
         inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
 
@@ -109,25 +111,28 @@ public class DisplayInspectorText : MonoBehaviour
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
         float[] terrainComposition = enclosedArea.terrainComposition;
 
-        string displayText = $"Enclosed Area {enclosedArea.id} Info: \n";
+        string displayText = $"\n";
 
         // Atmospheric info
-        displayText += "Atmospheric composition: \n";
-        foreach (var (value, index) in atmosphericComposition.WithIndex())
-        {
-            displayText += $"{((AtmosphereComponent)index).ToString()} : {value}\n";
-        }
+        //displayText += "Atmospheric composition: \n";
+        //foreach (var (value, index) in atmosphericComposition.WithIndex())
+        //{
+        //    displayText += $"{((AtmosphereComponent)index).ToString()} : {value}\n";
+        //}
 
-        displayText += "\nTerrain: \n";
         foreach (var (value, index) in terrainComposition.WithIndex())
         {
+            if (value == 0)
+            {
+                continue;
+            }
             displayText += $"{((TileType)index).ToString()} : {value}\n";
         }
 
         displayText += "\n";
         displayText += $"Population count: {enclosedArea.populations.Count}\n";
         displayText += $"Total animal count: {enclosedArea.animals.Count}\n";
-        displayText += $"Food Source count: {enclosedArea.foodSources.Count}\n";
+        //displayText += $"Food Source count: {enclosedArea.foodSources.Count}\n";
 
         this.inspectorWindowText.text = displayText;
     }
@@ -173,52 +178,28 @@ public class DisplayInspectorText : MonoBehaviour
         needSliders.Clear();
     }
 
-    private void GenerateSliders(Dictionary<string, Need> needs, ref string displayText) {
-        Dictionary<NeedType, List<Need>> needByType = new Dictionary<NeedType, List<Need>>();
-        Dictionary<NeedType, float> needSatisfaction = new Dictionary<NeedType, float>();
-        foreach (var pair in needs)
+    private void GenerateSliders(Life life) {
+        if (life is FoodSource)
         {
-            displayText += $"\n{pair.Key}: {pair.Value.NeedValue}";
-
-            if (needByType.ContainsKey(pair.Value.NeedType))
-            {
-                needByType[pair.Value.NeedType].Add(pair.Value);
-            }
-            else {
-                needByType[pair.Value.NeedType] = new List<Need>();
-                needByType[pair.Value.NeedType].Add(pair.Value);
-            }
+            setupSlider("Liquid", ((FoodSource)life).WaterRating);
+            setupSlider("Terrain", ((FoodSource)life).TerrainRating);
         }
-
-        foreach (var pair in needByType)
+        if (life is Population)
         {
-            int numNeeds = pair.Value.Count;
-            int totalSatisfaction = 0;
-
-            foreach (Need need in pair.Value) {
-                NeedCondition condition = need.GetCondition(need.NeedValue);
-
-                //TODO Find a better function that converts the raw need value to need satisfaction (from -1 to 1).
-                //currently finding the average satisfaction in the type
-                if (condition == NeedCondition.Bad)
-                    totalSatisfaction -= 1;
-                else if (condition == NeedCondition.Good) {
-                    totalSatisfaction += 1;
-                }
-                //neutral is 0
-
-            }
-
-            needSatisfaction[pair.Key] = ((float)totalSatisfaction) / numNeeds;
+            setupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating, -5, 5);
+            setupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating, -5, 5);
+            setupSlider("Food", ((Population)life).GrowthCalculator.FoodRating, -5, 5);
         }
+    }
 
-        foreach (var pair in needSatisfaction) {
-            GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
-            needSliders.Add(sliderObj);
-
-            NeedSlider slider = sliderObj.GetComponent<NeedSlider>();
-            slider.SetName(pair.Key.ToString());
-            slider.SetValue(pair.Value);
-        }
+    private void setupSlider(string name, float value, int min = 0, int max = 10)
+    {
+        GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
+        needSliders.Add(sliderObj);
+        NeedSlider slider = sliderObj.GetComponent<NeedSlider>();
+        slider.max = max;
+        slider.min = min;
+        slider.SetName(name);
+        slider.SetValue(value);
     }
 }

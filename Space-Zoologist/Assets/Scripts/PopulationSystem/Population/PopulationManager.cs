@@ -140,6 +140,14 @@ public class PopulationManager : MonoBehaviour
         this.BehaviorPatternUpdater.RegisterPopulation(population);
     }
 
+    public void UdateAllPopulationRegistration()
+    {
+        foreach (Population population in this.ExistingPopulations)
+        {
+            HandlePopulationRegistration(population);
+        }
+    }
+
     public void UdateAllPopulationStateForChecking()
     {
         foreach (Population population in this.ExistingPopulations)
@@ -159,7 +167,20 @@ public class PopulationManager : MonoBehaviour
     // Creates new populations if population becomes split or updates population's map
     public void UpdateAccessibleLocations()
     {
-        this.NeedSystemManager.UpdateAccessMap();
+        ReservePartitionManager.UpdateAccessMap();
+        // combines populations
+        for (int i=1; i<this.Populations.Count; i++)
+        {
+            if (this.Populations[i - 1].Species.Equals(this.Populations[i].Species) && ReservePartitionManager.CanAccessPopulation(this.Populations[i - 1], this.Populations[i]))
+            {
+                for (int j = this.Populations[i - 1].AnimalPopulation.Count - 1; j >= 0; j--)
+                {
+                    GameObject animal = this.Populations[i - 1].AnimalPopulation[j];
+                    this.Populations[i].AddAnimal(animal.transform.position);
+                }
+                RemovePopulation(this.Populations[i - 1]);
+            }
+        }
         List<Population> currentPopulations = new List<Population>();
         foreach(Population population in this.Populations)
         {
@@ -170,6 +191,7 @@ public class PopulationManager : MonoBehaviour
             // Debug.Log("Accessible map updated for " + population.name);
             List<Vector3Int> accessibleLocations = ReservePartitionManager.GetLocationsWithAccess(population);
             AnimalPathfinding.Grid grid = GridSystem.GetGridWithAccess(population);
+            // checks for animals cut off from population
             for (int i = population.AnimalPopulation.Count - 1; i >= 0; i--)
             {
                 GameObject animal = population.AnimalPopulation[i];
@@ -193,8 +215,11 @@ public class PopulationManager : MonoBehaviour
 
     public void RemovePopulation(Population population)
     {
+        Debug.Log("Removing " + population);
         population.RemoveAll();
         this.Populations.Remove(population);
+        NeedSystemManager.UnregisterWithNeedSystems(population);
+        ReservePartitionManager.RemovePopulation(population);
     }
 
     public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)

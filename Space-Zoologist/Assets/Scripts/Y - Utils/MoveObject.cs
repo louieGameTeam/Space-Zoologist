@@ -38,7 +38,7 @@ public class MoveObject : MonoBehaviour
 
     private void Start()
     {
-        tempItem = new Item();
+        tempItem = (Item)ScriptableObject.CreateInstance("Item");
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
         DeleteButton = Instantiate(DeleteButtonPrefab, this.transform);
         MoveButton.GetComponent<Button>().onClick.AddListener(StartMovement);
@@ -125,6 +125,10 @@ public class MoveObject : MonoBehaviour
                 if (objectToMove != null) objectToMove.transform.position = initialPos;
                 Reset();
             }
+        }
+        else if (MoveButton.activeSelf)
+        {
+            Reset();
         }
 
     }

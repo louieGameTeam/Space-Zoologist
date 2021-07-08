@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -9,6 +9,7 @@ public class BuildBufferManager : GridObjectManager
     private bool[,] isConstructing;
     private ReservePartitionManager RPM;
     public bool IsConstructing(int x, int y) => isConstructing[x, y];
+    private Action constructionFinishedCallback = null;
     private void Awake()
     {
         LevelDataReference levelDataReference = FindObjectOfType<LevelDataReference>();
@@ -53,7 +54,7 @@ public class BuildBufferManager : GridObjectManager
         }
         this.isConstructing[pos.x, pos.y] = true;
         GameObject newGo = Instantiate(this.bufferGO, this.gameObject.transform);
-        Debug.Log("Placing item under constuction");
+        //Debug.Log("Placing item under constuction");
         newGo.transform.position = new Vector3(pos.x, pos.y, 0);
         color.a = 1; //Enforce alpha channel to be 1, prevent human error
 
@@ -68,6 +69,10 @@ public class BuildBufferManager : GridObjectManager
         this.colorTimesToCCs[colorTimePair].Add(cc);
 
     }
+    public void ConstructionFinishedCallback(Action action)
+    {
+        constructionFinishedCallback += action;
+    }
     public void CreateSquareBuffer(Vector2Int pos, int time, int size, Color color, int progress = -1)
     {
         for (int i = 0; i < size; i++)
@@ -79,6 +84,7 @@ public class BuildBufferManager : GridObjectManager
 
         }
     }
+
     public ConstructionCountdown GetBuffer(Vector2Int pos)
     {
         if (!this.isConstructing[pos.x, pos.y])
@@ -164,6 +170,10 @@ public class BuildBufferManager : GridObjectManager
                     ccs.RemoveAt(j);
                     changedTiles.Add(new Vector3Int(cc.position.x, cc.position.y, 0));
                     Destroy(cc.gameObject);
+                    if (constructionFinishedCallback != null)
+                    {
+                        constructionFinishedCallback();
+                    }
                 }
             }
             if (ccs.Count == 0)

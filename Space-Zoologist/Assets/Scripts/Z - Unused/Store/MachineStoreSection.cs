@@ -28,7 +28,7 @@ public class MachineStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData) || !base.HasSupply(base.selectedItem))
+        if (base.IsCursorOverUI(eventData) || !base.CanBuy(base.selectedItem))
         {
             base.OnItemSelectionCanceled();
             return;

@@ -44,5 +44,9 @@ public class PodSection : StoreSection
             populationManager.UpdatePopulation(selectedSpecies, position);
             base.ResourceManager.Placed(selectedSpecies, 1);
         }
+        if (!base.CanBuy(selectedItem))
+        {
+            base.OnItemSelectionCanceled();
+        }
     }
 }

@@ -26,6 +26,7 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
     [SerializeField] private GameObject ObjectivePane = null;
+    [SerializeField] private GameObject GrowthInfo = default;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -69,6 +70,11 @@ public class Inspector : MonoBehaviour
             this.IsInInspectorMode = !IsInInspectorMode;
         }
 
+    }
+
+    public void ToggleDetails()
+    {
+        this.GrowthInfo.SetActive(!this.GrowthInfo.activeSelf);
     }
 
     public void OpenInspector()

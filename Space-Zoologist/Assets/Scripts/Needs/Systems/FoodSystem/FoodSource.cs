@@ -16,6 +16,9 @@ public class FoodSource : MonoBehaviour, Life
     public bool terrainNeedMet = false;
     public bool liquidNeedMet = false;
 
+    public float TerrainRating => terrainRating;
+    public float WaterRating => waterRating;
+
     public Dictionary<string, Need> Needs => needs;
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
 
@@ -23,8 +26,10 @@ public class FoodSource : MonoBehaviour, Life
     [Expandable][SerializeField] private FoodSourceSpecies species = default;
     [SerializeField] private TileSystem tileSystem = default;
 
-    private float neutralMultiplier = 0.5f;
-    private float goodMultiplier = 1.0f;
+
+    public bool isUnderConstruction = false;
+    private float terrainRating = 0f;
+    private float waterRating = 0f;
 
     private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
     private bool hasAccessibilityChanged = default;
@@ -79,8 +84,7 @@ public class FoodSource : MonoBehaviour, Life
     {
         terrainNeedMet = false;
         liquidNeedMet = false;
-        float waterRating = 0f;
-        float terrainRating = 0f;
+        
         float numPreferredTiles = 0f;
         float survivableTiles = 0f;
         float totalNeededTiles = 0f;
@@ -110,6 +114,7 @@ public class FoodSource : MonoBehaviour, Life
                 }
             }
         }
+        //Debug.Log(gameObject.name + " surv tiles: " + survivableTiles + " pref tiles: " + numPreferredTiles);
         if (survivableTiles + numPreferredTiles >= totalNeededTiles)
         {
             terrainRating = species.BaseOutput + numPreferredTiles;
@@ -120,8 +125,8 @@ public class FoodSource : MonoBehaviour, Life
             terrainRating = species.BaseOutput - (totalNeededTiles - survivableTiles - numPreferredTiles);
             if (terrainRating < 0) terrainRating = 0;
         }
-
-        float output = output = waterRating + terrainRating;
+        //Debug.Log(gameObject.name + " waterRating: " + waterRating + " terrainRating: " + terrainRating);
+        float output = waterRating + terrainRating;
         return output;
     }
 
@@ -134,28 +139,6 @@ public class FoodSource : MonoBehaviour, Life
             return false;
         }
         return true;
-    }
-
-    // Variable output currently removed from design
-    private float calculateNeedOutput(string needType, float needValue, float severityTotal)
-    {
-        NeedCondition condition = this.needs[needType].GetCondition(needValue);
-        float multiplier = 0;
-        switch (condition)
-        {
-            case NeedCondition.Bad:
-                multiplier = 0;
-                break;
-            case NeedCondition.Neutral:
-                multiplier = neutralMultiplier;
-                break;
-            case NeedCondition.Good:
-                multiplier = goodMultiplier;
-                break;
-        }
-        float needSeverity = this.needs[needType].Severity;
-        float output = multiplier * (needSeverity / severityTotal) * species.BaseOutput;
-        return output;
     }
 
     /// <summary>

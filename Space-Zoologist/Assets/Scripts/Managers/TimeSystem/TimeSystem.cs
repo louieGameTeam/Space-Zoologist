@@ -12,8 +12,8 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] Inspector Inspector = default;
     [SerializeField] Text CurrentDayText = default;
     [SerializeField] BuildBufferManager buildBufferManager = default;
+    [SerializeField] int maxDay = 20;
     private int currentDay = 1;
-    private int maxDay = 20; //TODO implement max day?
 
     private void Start()
     {
@@ -22,20 +22,19 @@ public class TimeSystem : MonoBehaviour
 
     public void nextDay()
     {
-        //this.ReserveDraft.loadDraft();
-        // Recalculates need system values and should updates all populations needs
+        this.buildBufferManager.CountDown();
+        this.PopulationManager.UpdateAccessibleLocations();
+        this.PopulationManager.UdateAllPopulationRegistration();
+        this.NeedSystemManager.UpdateAllSystems();
         foreach (Population population in this.PopulationManager.Populations)
         {
             population.HandleGrowth();
         }
-        this.NeedSystemManager.UpdateAllSystems();
-        this.PopulationManager.UpdateAccessibleLocations();
         foreach (Population population in this.PopulationManager.Populations)
         {
             population.UpdateGrowthConditions();
         }
         this.Inspector.UpdateCurrentDisplay();
-        this.buildBufferManager.CountDown();
         UpdateDayText(++currentDay);
     }
 

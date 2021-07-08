@@ -82,7 +82,7 @@ public class LevelIO : MonoBehaviour
     {
         name = name ?? this.sceneName;
         string fullPath = this.directory + name;
-        Debug.Log("Loading from " + fullPath);
+        // Debug.Log("Loading from " + fullPath);
         this.LoadFromFile(fullPath);
     }
     private void LoadFromFile(string fullPath)

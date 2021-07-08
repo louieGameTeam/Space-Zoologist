@@ -67,7 +67,6 @@ public class FoodSourceCalculator : NeedCalculator
         FoodSource foodSource = (FoodSource)source;
 
         this.foodSources.Add(foodSource);
-
         populationsWithAccess.Add(foodSource, new HashSet<Population>());
         foreach (Population population in Consumers)
         {
@@ -92,7 +91,6 @@ public class FoodSourceCalculator : NeedCalculator
 
     public bool RemoveSource(Life source)
     {
-        Debug.Log("REMOVING " + source.ToString());
         Debug.Log(this.FoodSourceName);
         FoodSource foodSource = (FoodSource)source;
         Debug.Log(foodSources.Contains(foodSource));
@@ -114,6 +112,11 @@ public class FoodSourceCalculator : NeedCalculator
         List<FoodSource> leastToMostContested = accessibleFoodSources[population].OrderByDescending(foodSource => localDominanceRemaining[foodSource]).ToList();
         foreach (FoodSource foodSource in leastToMostContested)
         {
+            if (foodSource.isUnderConstruction)
+            {
+                //Debug.Log(foodSource.name + " at " + foodSource.gameObject.transform.position + " under construction");
+                continue;
+            }
             // 1. Calculate how much food each population can receive from available food, accounting for no food or dominance
             float dominanceRatio = population.Dominance / localDominanceRemaining[foodSource];
             if (localDominanceRemaining[foodSource] <= 0 || dominanceRatio <= 0)
@@ -143,7 +146,7 @@ public class FoodSourceCalculator : NeedCalculator
             }
         }
         population.UpdateNeed(foodSourceName, foodAcquired);
-        Debug.Log(population.gameObject.name + " receieved " + foodAcquired + " from " + this.FoodSourceName);
+        //Debug.Log(population.gameObject.name + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;
     }
 
