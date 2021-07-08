@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Y - Utils/MoveObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/TimeSystem/PauseManager.cs">
     <Files>
       <File FileName="Assets/Scripts/LevelData/SceneNavigator.cs" Line="22" Column="6" />
       <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="84" Column="32" />
@@ -12,7 +12,8 @@
       <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" Line="149" Column="11" />
       <File FileName="Assets/Scripts/Plot/LevelIO.cs" Line="85" Column="12" />
       <File FileName="Assets/Scripts/UI/Store/Item.cs" Line="26" Column="1" />
-      <File FileName="Assets/Scripts/Y - Utils/MoveObject.cs" Line="41" Column="51" />
+      <File FileName="Assets/Scripts/Y - Utils/MoveObject.cs" Line="41" Column="26" />
+      <File FileName="Assets/Scripts/Managers/TimeSystem/PauseManager.cs" Line="80" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -32,7 +33,9 @@
               <Node name="Scripts" expanded="True">
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
-                  <Node name="TimeSystem" expanded="True" />
+                  <Node name="TimeSystem" expanded="True">
+                    <Node name="PauseManager.cs" selected="True" />
+                  </Node>
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -54,9 +57,7 @@
                     <Node name="Sections" expanded="True" />
                   </Node>
                 </Node>
-                <Node name="Y - Utils" expanded="True">
-                  <Node name="MoveObject.cs" selected="True" />
-                </Node>
+                <Node name="Y - Utils" expanded="True" />
                 <Node name="Z - Unused" expanded="True">
                   <Node name="Needs" expanded="True" />
                   <Node name="Store" expanded="True" />
