@@ -348,7 +348,7 @@ public class Inspector : MonoBehaviour
             this.highLight.SetTile(pos, null);
         }
 
-        gridSystem.ClearColors();
+        gridSystem.ClearHighlights();
     }
 
     private void HighlightPopulation(GameObject population)

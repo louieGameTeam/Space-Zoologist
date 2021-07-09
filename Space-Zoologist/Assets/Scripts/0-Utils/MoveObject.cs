@@ -133,7 +133,7 @@ public class MoveObject : MonoBehaviour
         moving = false;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
-        gridSystem.ClearColors();
+        gridSystem.ClearHighlights();
     }
 
     private GameObject SelectGameObjectAtMousePosition()
@@ -200,7 +200,7 @@ public class MoveObject : MonoBehaviour
         if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
         {
             previousLocation = gridLocation;
-            gridSystem.ClearColors();
+            gridSystem.ClearHighlights();
             gridSystem.updateVisualPlacement(gridLocation, tempItem);
         }
     }

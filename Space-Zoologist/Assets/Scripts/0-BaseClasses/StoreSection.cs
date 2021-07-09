@@ -53,7 +53,7 @@ public class StoreSection : MonoBehaviour
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
             {
                 previousLocation = gridLocation;
-                GridSystem.ClearColors();
+                GridSystem.ClearHighlights();
                 GridSystem.updateVisualPlacement(gridLocation, selectedItem);
             }
         }
@@ -104,7 +104,7 @@ public class StoreSection : MonoBehaviour
     public virtual void OnItemSelectionCanceled()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
-        GridSystem.ClearColors();
+        GridSystem.ClearHighlights();
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)
