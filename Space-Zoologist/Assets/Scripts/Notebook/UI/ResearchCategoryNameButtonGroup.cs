@@ -14,7 +14,6 @@ public class ResearchCategoryNameButtonGroup
     {
         buttons.Add(button);
     }
-
     public void SetActive(bool active)
     {
         for(int i = 0; i < buttons.Count; i++)
