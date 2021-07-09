@@ -19,9 +19,9 @@ public class ResearchEntry
     [Expandable] 
     private ResearchEncyclopedia encyclopedia;
 
-    public void Awake(ResearchCategoryType type)
+    public void Setup(ResearchCategoryType type)
     {
-        category.Awake(type);
-        notes.Awake();
+        category.Setup(type);
+        notes.Setup();
     }
 }

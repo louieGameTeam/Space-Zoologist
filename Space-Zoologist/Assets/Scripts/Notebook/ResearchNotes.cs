@@ -10,11 +10,11 @@ public class ResearchNotes
     private ResearchNoteLabels labels;
 
     // For faster lookup
-    private Dictionary<string, string> notes;
+    private Dictionary<string, string> notes = new Dictionary<string, string>();
 
-    public void Awake()
+    public void Setup()
     {
-        foreach (string label in labels.Labels) notes.Add(label, null);
+        foreach (string label in labels.Labels) notes.Add(label, "");
     }
 
     public string ReadNote(string category) => notes[category];

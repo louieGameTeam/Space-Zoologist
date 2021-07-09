@@ -11,7 +11,13 @@ public class ResearchCategory
     [SerializeField]
     private string name;
 
-    public void Awake(ResearchCategoryType type)
+    public ResearchCategory(ResearchCategoryType type, string name)
+    {
+        Type = type;
+        this.name = name;
+    }
+
+    public void Setup(ResearchCategoryType type)
     {
         Type = type;
     }
