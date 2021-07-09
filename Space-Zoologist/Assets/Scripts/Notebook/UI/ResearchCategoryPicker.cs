@@ -6,6 +6,15 @@ using UnityEngine.Events;
 
 public class ResearchCategoryPicker : MonoBehaviour
 {
+    // So that the event appears in the editor
+    [System.Serializable] public class ResearchCategoryEvent : UnityEvent<ResearchCategory> { }
+
+    // Public accessors
+
+    public ResearchCategoryEvent OnResearchCategoryChanged => onResearchCategoryChanged;
+
+    // Private editor fields
+
     [SerializeField]
     [Expandable]
     [Tooltip("The research model used to pick the categories for")]
@@ -28,6 +37,12 @@ public class ResearchCategoryPicker : MonoBehaviour
     [SerializeField]
     [Tooltip("Prefab of the button used to select the research name")]
     private ResearchCategoryNameButton nameButton;
+
+    [Header("Events")]
+
+    [SerializeField]
+    [Tooltip("Event invoked when the research category picker changes category picked")]
+    private ResearchCategoryEvent onResearchCategoryChanged;
 
     // The category currently selected
     private ResearchCategory selectedCategory;
@@ -85,29 +100,6 @@ public class ResearchCategoryPicker : MonoBehaviour
         // Enable the new name button group
         // NOTE: this invokes OnResearchCategoryNameChaned immediately
         nameButtonGroups[(int)type].SetActive(true);
-
-        // Destroy all existing name buttons and remove them from the list
-        //while(currentNameButtons.Count > 0)
-        //{
-        //    Destroy(currentNameButtons[0].gameObject);
-        //    currentNameButtons.RemoveAt(0);
-        //}
-
-        //// Get the list of the names to instantiate
-        //List<string> names = typeNameMapping[type];
-        //bool isSelected = true;
-
-        //// Instantiate a button for each category name
-        //foreach(string n in names)
-        //{
-        //    ResearchCategoryNameButton clone = Instantiate(nameButton, nameGroup.transform);
-        //    // Make just the first clone set to "on" initially
-        //    // NOTE: this invokes the "OnResearchCategoryNameChanged" event immediately
-        //    clone.Setup(nameGroup, n, OnResearchCategoryNameChanged, isSelected);
-        //    isSelected = false;
-        //    // Add the clone to the list
-        //    currentNameButtons.Add(clone);
-        //}
     }
 
     private void OnResearchCategoryNameChanged(string name)
@@ -115,6 +107,6 @@ public class ResearchCategoryPicker : MonoBehaviour
         selectedCategory = new ResearchCategory(selectedCategory.Type, name);
 
         // Invoke the event
-        Debug.Log("Selected research category: " + selectedCategory.Type + ", " + name);
+        onResearchCategoryChanged.Invoke(selectedCategory);
     }
 }
