@@ -1,23 +1,13 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Audio/LoopableAudioTrack.cs">
     <Files>
-      <File FileName="Assets/Scripts/UI/SceneEffects/TextEffects.cs" Line="41" Column="15" />
-      <File FileName="Assets/Scripts/0-ScriptableObjects/SceneNavigator.cs" Line="25" Column="58" />
-      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="6" Column="2" />
-      <File FileName="Assets/Scripts/Audio/AudioManager.cs" Line="24" Column="10" />
-      <File FileName="Assets/Scripts/Audio/MusicManager.cs" Line="39" Column="54" />
-      <File FileName="Assets/Scripts/Audio/LoopableAudioTrack.cs" Line="22" Column="66" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="7" Column="5" />
-      <File FileName="Assets/Scripts/0-ScriptableObjects/AnimalSpecies.cs" Line="6" Column="14" />
-      <File FileName="Assets/Scripts/TimeSystem/TimeSystem.cs" Line="39" Column="64" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="129" Column="62" />
-      <File FileName="Assets/Scripts/Plot/ReserveDraft.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TimeSystem/PauseManager.cs" Line="91" Column="60" />
-      <File FileName="Assets/Scripts/UI/Store/Item.cs" Line="25" Column="45" />
-      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="179" Column="6" />
-      <File FileName="Assets/Scripts/Audio/SFXLibrary.cs" Line="5" Column="109" />
+      <File FileName="Assets/Scripts/0-BaseClasses/StoreSection.cs" Line="160" Column="1" />
+      <File FileName="Assets/Scripts/Audio/SFXLibrary.cs" />
       <File FileName="Assets/Scripts/UI/OptionsMenu.cs" Line="23" Column="1" />
-      <File FileName="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" Line="184" Column="1" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="246" Column="65" />
+      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="10" Column="61" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="129" Column="62" />
+      <File FileName="Assets/Scripts/Audio/LoopableAudioTrack.cs" Line="42" Column="69" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -46,7 +36,9 @@
                 <Node name="0-BaseClasses" expanded="True" />
                 <Node name="0-ScriptableObjects" expanded="True" />
                 <Node name="0-Utils" expanded="True" />
-                <Node name="Audio" expanded="True" />
+                <Node name="Audio" expanded="True">
+                  <Node name="LoopableAudioTrack.cs" selected="True" />
+                </Node>
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
                   <Node name="EventSystem" expanded="True" />
@@ -58,9 +50,7 @@
                 </Node>
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
-                  <Node name="RPS" expanded="True">
-                    <Node name="ReservePartitionManager.cs" selected="True" />
-                  </Node>
+                  <Node name="RPS" expanded="True" />
                   <Node name="Testers" expanded="True" />
                   <Node name="Utils" expanded="True" />
                 </Node>
@@ -92,7 +82,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5e7973d0-81a9-491d-a73b-c7051b1a629e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ae777dbc-99ea-4477-afaf-7cf151452dd0" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

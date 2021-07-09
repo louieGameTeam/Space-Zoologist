@@ -36,8 +36,9 @@ public class MusicManager : MonoBehaviour
     {
         isInTrasition = false;
         frequentTransition = false;
-        if (curMusic != null && !curMusic.haveStarted)
+        if (!LoopableAudioTrack.IsEmpty(curMusic) && !curMusic.haveStarted) {
             curMusic.StartTrack(curMusicSource);
+        }
     }
 
     public void SetNextTrack(LoopableAudioTrack nextTrack)
@@ -76,6 +77,7 @@ public class MusicManager : MonoBehaviour
         }
         else if (nextMusic == curMusic) {
             nextMusic = null;
+            return;
         }
 
         isInTrasition = true;
@@ -115,7 +117,8 @@ public class MusicManager : MonoBehaviour
         curMusicSource.volume = volume;
 
         curMusic = nextMusic;
-        nextMusic = null;
+        nextMusic = queuedMusic;
+        queuedMusic = null;
 
         AudioSource temp = curMusicSource;
         curMusicSource = nextMusicSource;
