@@ -23,9 +23,6 @@ public class ResearchCategoryNameButton : MonoBehaviour
     [Tooltip("Text displayed in the button")]
     private TextMeshProUGUI text;
     [SerializeField]
-    [Tooltip("Outline displayed while the toggle is activated")]
-    private Outline outline;
-    [SerializeField]
     [Tooltip("Event invoked when this button is selected")]
     private StringEvent onSelected;
 
@@ -48,13 +45,11 @@ public class ResearchCategoryNameButton : MonoBehaviour
 
         // Set initial toggle state
         myToggle.isOn = isOn;
-        outline.enabled = isOn;
     }
 
     // If the toggle is toggling on, invoke on selected event
     private void OnToggleStateChanged(bool state)
     {
         if (state) onSelected.Invoke(researchCategoryName);
-        outline.enabled = state;
     }
 }
