@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -232,8 +232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 225, y: -340}
-  m_SizeDelta: {x: 118.8, y: 46.4}
+  m_AnchoredPosition: {x: 175, y: -323.5}
+  m_SizeDelta: {x: 83.09888, y: 31.295685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &155320050
 MonoBehaviour:
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.28627452, g: 0.0627451, b: 0.4627451, a: 1}
+    m_NormalColor: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 1}
     m_HighlightedColor: {r: 0.6431373, g: 0.39607844, b: 0.09411765, a: 1}
     m_PressedColor: {r: 0.4056604, g: 0.27047214, b: 0.10524209, a: 1}
     m_SelectedColor: {r: 0.28627452, g: 0.0627451, b: 0.4627451, a: 1}
@@ -274,7 +274,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 316646827}
+  m_TargetGraphic: {fileID: 155320051}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.23529412}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -769,7 +769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &556935488
 RectTransform:
   m_ObjectHideFlags: 0
@@ -813,52 +813,6 @@ MonoBehaviour:
   - {fileID: 1195075795}
   - {fileID: 316646827}
   speed: 0.2
---- !u!1 &894005591
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 894005593}
-  - component: {fileID: 894005594}
-  m_Layer: 0
-  m_Name: Audio Source
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &894005593
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894005591}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 250.11067, y: 145.89085, z: -5328.9375}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &894005594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894005591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7701a9cf78fd3472aa6c095fba1a1c40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextTrack:
-    mainClip: {fileID: 8300000, guid: 72eb85c66c35343e0b920517de15b4be, type: 3}
-    startupClip: {fileID: 8300000, guid: bcec09b99ccd04fd7b228a76ecc29418, type: 3}
 --- !u!1 &1195075793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -173, y: -25}
+  m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 349.4, y: 444}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1416746279
@@ -1607,8 +1561,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 225, y: -230}
-  m_SizeDelta: {x: 118.8, y: 46.4}
+  m_AnchoredPosition: {x: 176.4, y: -238.3}
+  m_SizeDelta: {x: 99.57637, y: 29.9226}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2010015508
 MonoBehaviour:
@@ -1630,7 +1584,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.28332356, g: 0.05887327, b: 0.46226418, a: 1}
+    m_NormalColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
     m_HighlightedColor: {r: 0.6431373, g: 0.39607844, b: 0.09411765, a: 1}
     m_PressedColor: {r: 0.4056604, g: 0.27047214, b: 0.10524209, a: 1}
     m_SelectedColor: {r: 0.28627452, g: 0.0627451, b: 0.4627451, a: 1}
@@ -1649,7 +1603,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 429809906}
+  m_TargetGraphic: {fileID: 2010015509}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1677,7 +1631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.23529412}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

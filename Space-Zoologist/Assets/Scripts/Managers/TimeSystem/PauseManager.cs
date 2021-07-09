@@ -77,7 +77,7 @@ public class PauseManager : MonoBehaviour
         this.BehaviorPatternUpdater.IsPaused = true;
         this.PauseAllAnimalsMovementController();
         this.GridSystem.UpdateAnimalCellGrid();
-        AudioManager.instance.PlayOneShot(SFXType.Pause);
+        // AudioManager.instance.PlayOneShot(SFXType.Pause);
     }
 
     public void Unpause()
@@ -88,7 +88,7 @@ public class PauseManager : MonoBehaviour
         this.PauseButtonButton.onClick.AddListener(this.Pause);
         this.BehaviorPatternUpdater.IsPaused = false;
         this.UnpauseAllAnimalsMovementController();
-        AudioManager.instance.PlayOneShot(SFXType.Unpause);
+        // AudioManager.instance.PlayOneShot(SFXType.Unpause);
     }
 
     public void TwoTimeSpeed() {
