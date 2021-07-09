@@ -302,6 +302,12 @@ public class Inspector : MonoBehaviour
     {
         this.HighlightFoodSource(cellData.Food);
         //Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
+        // root radius here
+        float rootRadius = cellData.Food.GetComponent<FoodSource>().Species.RootRadius;
+        Vector3 foodPosition = cellData.Food.transform.position;
+        Vector3Int foodPositionInt = new Vector3Int((int)foodPosition.x, (int)foodPosition.y, (int)foodPosition.z);
+        gridSystem.HighlightRadius(foodPositionInt, Color.blue, rootRadius);
+
         this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
     }
 
@@ -341,6 +347,8 @@ public class Inspector : MonoBehaviour
         {
             this.highLight.SetTile(pos, null);
         }
+
+        gridSystem.ClearColors();
     }
 
     private void HighlightPopulation(GameObject population)

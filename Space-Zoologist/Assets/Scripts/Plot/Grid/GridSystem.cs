@@ -10,13 +10,13 @@ using UnityEngine.Tilemaps;
 /// PlaceableArea transparency can be increased or decreased when adding it
 public class GridSystem : MonoBehaviour
 {
-    [System.Flags]
     // using prime numbers instead of binary for flagging LMAO
     public enum TileFlag
     {
         LIQUID_FLAG = 0x2,
         HIGHLIGHT_FLAG = 0x3
     }
+    private const float FLAG_VALUE_MULTIPLIER = 256f;
 
     [SerializeField] public Grid Grid = default;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
@@ -25,7 +25,6 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private PopulationManager PopulationManager = default;
     public List<Tilemap> Tilemaps;
     private BuildBufferManager buildBufferManager;
-    [SerializeField] private GameTile Tile = default;
     [Header("Used to define 2d array")]
     [SerializeField] public int ReserveWidth = default;
     [SerializeField] public int ReserveHeight = default;
@@ -91,43 +90,73 @@ public class GridSystem : MonoBehaviour
         this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
 
         // temporary to show effect
-
         Tilemap Terrain = Tilemaps.Find(t => t.gameObject.name == "Terrain");
-        ApplyFlagsToTileTexture(Terrain, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
-        ApplyFlagsToTileTexture(Terrain, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
+        ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
+        ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
     }
     #endregion
 
     /// <summary>
-    /// Applies the flags to the tile in texture data.
+    /// Applies the flags to the tile in texture data. Flags can create different visual effects depending on the flag/tile.
     /// </summary>
     /// <param name="tilemap">Tilemap to be affected (mostly for terrain).</param>
     /// <param name="tilePosition">Position of tile in grid space.</param>
     /// <param name="flag">Compiled flags to be set.</param>
-    public void ApplyFlagsToTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag, Color color)
+    public void ApplyFlagToTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag, Color color)
     {
         Texture2D TilemapTex = TilemapTextureDictionary[tilemap];
 
         Color tilePixel = TilemapTex.GetPixel(tilePosition.x, tilePosition.y);
-        // replace the colors anyways since only the flag matters
+
+        // currently only in alpha channel, can expand to rgb as well
+        // note that alphas can only contain [0...1] so we're multiplying by a power of 2
+        int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
+        int flagInt = (int)flag;
+
+        // if nothing there, just set the flag
+        if (alphaBitMask == 0)
+            alphaBitMask = flagInt;
+        // otherwise if the flag isn't already there then add it
+        else if (alphaBitMask % flagInt != 0)
+            alphaBitMask *= flagInt;
+        // if there is already the flag do nothing
+        else
+            return;
+
         tilePixel.r = color.r;
         tilePixel.g = color.g;
         tilePixel.b = color.b;
 
-        // currently only in alpha channel, can expand to rgb as well
-        // note that alphas can only contain [0...1] so we're multiplying by a power of 2
-        int alphaBitMask = (int)(tilePixel.a * 256f);
+        tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
+        TilemapTex.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        TilemapTex.Apply();
 
-        // if nothing there, just set the flag
-        if (alphaBitMask == 0)
-            alphaBitMask = (int)flag;
-        // divide if already has flag to remove, multiply if not
-        else if (alphaBitMask % (int)flag == 0)
-            alphaBitMask /= (int)flag;
-        else
-            alphaBitMask *= (int)flag;
+        // add to propertyblock
+        TilemapRenderer renderer = tilemap.GetComponent<TilemapRenderer>();
+        renderer.GetPropertyBlock(TilemapPropertyBlock);
+        TilemapPropertyBlock.SetTexture("_GridInformationTexture", TilemapTex);
+        renderer.SetPropertyBlock(TilemapPropertyBlock);
+    }
 
-        tilePixel.a = (float)alphaBitMask / 256f;
+    public void RemoveFlagsFromTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag)
+    {
+        Texture2D TilemapTex = TilemapTextureDictionary[tilemap];
+
+        Color tilePixel = TilemapTex.GetPixel(tilePosition.x, tilePosition.y);
+
+        int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
+        int flagInt = (int)flag;
+
+        // return if flag is not there
+        if (alphaBitMask == 0 || alphaBitMask % flagInt != 0)
+            return;
+
+        alphaBitMask /= flagInt;
+        tilePixel.r = 0;
+        tilePixel.g = 0;
+        tilePixel.b = 0;
+
+        tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
         TilemapTex.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
         TilemapTex.Apply();
 
@@ -143,7 +172,7 @@ public class GridSystem : MonoBehaviour
         foreach (Tilemap t in Tilemaps)
         {
             foreach (Vector3Int tilePosition in HighlightedTiles)
-                ApplyFlagsToTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG, Color.clear);
+                RemoveFlagsFromTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG);
         }
 
         HighlightedTiles.Clear();
@@ -165,7 +194,21 @@ public class GridSystem : MonoBehaviour
             HighlightedTiles.Add(tilePosition);
 
             foreach (Tilemap t in Tilemaps)
-                ApplyFlagsToTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG, color);
+                ApplyFlagToTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG, color);
+        }
+    }
+
+    // super inefficient but not priority rn
+    public void HighlightRadius(Vector3Int tilePosition, Color color, float radius)
+    {
+        for (int i = 0; i < ReserveHeight; ++i)
+        {
+            for (int j = 0; j < ReserveWidth; ++j)
+            {
+                Vector3Int loopedPosition = new Vector3Int(j, i, 0);
+                if (Vector3Int.Distance(tilePosition, loopedPosition) <= radius)
+                    HighlightTile(loopedPosition, color);
+            }
         }
     }
 

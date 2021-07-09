@@ -81,9 +81,7 @@
                 // use texture's alpha channel to figure out if this tile is selected or not
 
                 // if not selected, make saturated
-                if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG == 0 && tileInformation.a != 0)
-                    col.rgb *= tileInformation.rgb;
-                else if (int(tileInformation.a) % HIGHLIGHT_FLAG != 0 || tileInformation.a == 0) {
+                if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG != 0 || tileInformation.a == 0) {
                     float2 grayScale = 0.33 * (col.r + col.g + col.b);
                     col.rgb = lerp(col.rgb, grayScale.xxx, _GridOverlayDesaturation);
                 }
@@ -129,6 +127,10 @@
                 // create grid
                 if (_GridOverlayToggle > 0)
                     col = AddGrid(col, localPixel, tilePos, tileInformation);
+
+                // add highlights if needed
+                if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG == 0 && tileInformation.a != 0)
+                    col.rgb *= tileInformation.rgb;
 
                 return col;
             }
