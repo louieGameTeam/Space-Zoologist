@@ -19,7 +19,6 @@ public class Selector : MonoBehaviour
     public EnclosedArea SelectedEnclosedArea { get; private set; }
 
     [SerializeField] private GridSystem gridSystem = default;
-    [SerializeField] private TileSystem tileSystem = default;
 
     [SerializeField] private Tilemap highLight = default;
     [SerializeField] private TerrainTile highLightTile = default;
@@ -43,8 +42,8 @@ public class Selector : MonoBehaviour
             this.gridSystem.UpdateAnimalCellGrid();
 
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int cellPos = this.tileSystem.WorldToCell(worldPos);
-            this.SelectedTile = this.tileSystem.GetGameTileAt(cellPos);
+            Vector3Int cellPos = this.gridSystem.WorldToCell(worldPos);
+            this.SelectedTile = this.gridSystem.GetGameTileAt(cellPos);
 
             //Debug.Log($"Mouse click at {cellPos}");
 
@@ -112,7 +111,7 @@ public class Selector : MonoBehaviour
         FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
 
         // Hightlight
-        List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(this.tileSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
+        List<Vector3Int> foodSourceRadiusRange = this.gridSystem.AllCellLocationsinRange(this.gridSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
         foreach (Vector3Int pos in foodSourceRadiusRange)
         {
             this.highLight.SetTile(pos, this.highLightTile);

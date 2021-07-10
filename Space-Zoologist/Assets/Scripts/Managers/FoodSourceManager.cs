@@ -19,7 +19,6 @@ public class FoodSourceManager : GridObjectManager
     [SerializeField] private GameObject foodSourcePrefab = default;
     [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
-    [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
 
     private void Awake()
@@ -53,7 +52,7 @@ public class FoodSourceManager : GridObjectManager
         foreach (GameObject food in foods)
         {
             foodSources.Add(food.GetComponent<FoodSource>());
-            Vector3Int GridPosition = TileSystem.WorldToCell(food.transform.position);
+            Vector3Int GridPosition = GridSystem.WorldToCell(food.transform.position);
             GridSystem.CellGrid[GridPosition.x, GridPosition.y].ContainsFood = true;
             GridSystem.CellGrid[GridPosition.x, GridPosition.y].Food = food;
         }

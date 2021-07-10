@@ -21,7 +21,6 @@ public class GridSystem : MonoBehaviour
     [SerializeField] public Grid Grid = default;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
-    [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     public List<Tilemap> Tilemaps;
     private BuildBufferManager buildBufferManager;
@@ -93,6 +92,23 @@ public class GridSystem : MonoBehaviour
         Tilemap Terrain = Tilemaps.Find(t => t.gameObject.name == "Terrain");
         ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
         ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
+
+        try
+        {
+            EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
+            {
+                this.changedTiles.Clear();
+            });
+
+            EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
+            {
+                // Invoke event and pass the changed tiles that are not walls
+                EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.changedTiles.FindAll(
+                        pos => this.GetGameTileAt(pos).type != TileType.Wall
+                    ));
+            });
+        }
+        catch { };
     }
     #endregion
 
@@ -222,7 +238,7 @@ public class GridSystem : MonoBehaviour
 
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
     {
-        Vector3Int gridPosition = this.TileSystem.WorldToCell(mousePosition);
+        Vector3Int gridPosition = WorldToCell(mousePosition);
         return this.CheckSurroundingTerrain(gridPosition, species);
     }
 
@@ -231,7 +247,7 @@ public class GridSystem : MonoBehaviour
         if (selectedItem)
             species = SpeciesReferenceData.FoodSources[selectedItem.ID];
 
-        Vector3Int gridPosition = Grid.WorldToCell(mousePosition);
+        Vector3Int gridPosition = WorldToCell(mousePosition);
         return CheckSurroudingTiles(gridPosition, species);
     }
 
@@ -265,7 +281,7 @@ public class GridSystem : MonoBehaviour
                 pos = cellPosition;
                 pos.x += x;
                 pos.y += y;
-                tile = this.TileSystem.GetGameTileAt(pos);
+                tile = GetGameTileAt(pos);
                 if (tile == null)
                 {
                     return false;
@@ -274,7 +290,7 @@ public class GridSystem : MonoBehaviour
                 HighlightTile(pos, selectedSpecies.AccessibleTerrain.Contains(tile.type) ? Color.green : Color.red);
             }
         }
-        tile = this.TileSystem.GetGameTileAt(cellPosition);
+        tile = GetGameTileAt(cellPosition);
         return selectedSpecies.AccessibleTerrain.Contains(tile.type);
     }
 
@@ -315,7 +331,7 @@ public class GridSystem : MonoBehaviour
     public bool IsOnWall(Vector3Int pos)
     {
         // Prevent placing on walls
-        GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
+        GameTile selectedTile = GetGameTileAt(pos);
         if (selectedTile != null && selectedTile.type.Equals(TileType.Wall))
         {
             return true;
@@ -342,7 +358,7 @@ public class GridSystem : MonoBehaviour
         {
             return false;
         }
-        GameTile selectedTile = this.TileSystem.GetGameTileAt(pos);
+        GameTile selectedTile = GetGameTileAt(pos);
 
         if (selectedTile)
         {
@@ -406,7 +422,7 @@ public class GridSystem : MonoBehaviour
             for (int y = 0; y < this.CellGrid.GetLength(1); y++)
             {
                 // if contains liquid tile, check neighbors accessibility
-                GameTile tile = this.TileSystem.GetGameTileAt(new Vector3Int(x, y, 0));
+                GameTile tile = GetGameTileAt(new Vector3Int(x, y, 0));
                 if (tile != null && tile.type == TileType.Liquid)
                 {
                     this.CellGrid[x, y].ContainsLiquid = true;
@@ -512,52 +528,8 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    [SerializeField] Tilemap GrassTilemap = default;
-    // Start is called before the first frame update
-    private List<Tilemap> tilemaps = new List<Tilemap>();
-    private Grid grid;
-
     public bool HasTerrainChanged = false;
     public List<Vector3Int> changedTiles = new List<Vector3Int>();
-
-    private void Awake()
-    {
-        grid = GetComponent<Grid>();
-        Tilemap[] unorderedTilemaps = GetComponent<TilePlacementController>().allTilemaps;
-        Dictionary<Tilemap, int> tilemapLayerOrderPairs = new Dictionary<Tilemap, int>();
-        foreach (Tilemap tilemap in unorderedTilemaps)
-        {
-            tilemapLayerOrderPairs.Add(tilemap, tilemap.GetComponent<TilemapRenderer>().sortingOrder);
-        }
-        foreach (KeyValuePair<Tilemap, int> pair in tilemapLayerOrderPairs.OrderByDescending(key => key.Value))
-        {
-            tilemaps.Add(pair.Key);
-        }
-    }
-
-    private void Start()
-    {
-        // Sanity Tests (only for testing scene)
-        print("GetLiquidBodyPositions: " + (GetLiquidBodyPositions(new Vector3Int(1, 1, 0)).Count == 2));
-
-
-        try
-        {
-            EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
-            {
-                this.changedTiles.Clear();
-            });
-
-            EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
-            {
-                // Invoke event and pass the changed tiles that are not walls
-                EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.changedTiles.FindAll(
-                        pos => this.GetGameTileAt(pos).type != TileType.Wall
-                    ));
-            });
-        }
-        catch { };
-    }
 
     /// <summary>
     /// Convert a world position to cell positions on the grid.
@@ -566,7 +538,7 @@ public class GridSystem : MonoBehaviour
     /// <returns></returns>
     public Vector3Int WorldToCell(Vector3 worldPosition)
     {
-        return grid.WorldToCell(worldPosition);
+        return Grid.WorldToCell(worldPosition);
     }
     /// <summary>
     /// Returns all liquid tiles belong to the same liquid body at the given location
@@ -629,7 +601,7 @@ public class GridSystem : MonoBehaviour
             //Debug.Log("Trying accessing tiles at negative coordinate" + cellLocation);
             return null;
         }
-        foreach (Tilemap tilemap in tilemaps)
+        foreach (Tilemap tilemap in Tilemaps)
         {
             var returnedTile = tilemap.GetTile<GameTile>(cellLocation);
             if (returnedTile != null && returnedTile.isRepresentative)
@@ -1023,40 +995,7 @@ public class GridSystem : MonoBehaviour
         }
         return true;
     }
-    public void RefreshGrassTilemapColor()
-    {
-        if (this.GrassTilemap.TryGetComponent(out TileColorManager tileColorManager))
-        {
-            foreach (Vector3Int cellLocation in this.GrassTilemap.cellBounds.allPositionsWithin)
-            {
-                tileColorManager.SetTileColor(cellLocation, (GameTile)this.GrassTilemap.GetTile(cellLocation));
-            }
-        }
-    }
 
-    public void RefreshTilemapColor(Tilemap tilemap)
-    {
-        if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
-        {
-            foreach (Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
-            {
-                if (tileAttributes.tileContents.ContainsKey(cellLocation))
-                {
-                    tileAttributes.RefreshAllColors();
-                }
-            }
-        }
-        else if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
-        {
-            foreach (Vector3Int cellLocation in tilemap.cellBounds.allPositionsWithin)
-            {
-                if (tilemap.HasTile(cellLocation))
-                {
-                    tileColorManager.SetTileColor(cellLocation, (GameTile)tilemap.GetTile(cellLocation));
-                }
-            }
-        }
-    }
     private bool IsTileInAnyOfFour(int distanceX, int distanceY, Vector3Int subjectCellLocation, GameTile tile)
     {
         Vector3Int cell_1 = new Vector3Int(subjectCellLocation.x + distanceX, subjectCellLocation.y + distanceY, subjectCellLocation.z);

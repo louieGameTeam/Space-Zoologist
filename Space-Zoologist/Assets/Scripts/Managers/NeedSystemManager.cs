@@ -15,10 +15,10 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
-    [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] LevelIO LevelIO = default;
+    [SerializeField] GridSystem GridSystem = default;
 
     /// <summary>
     /// Initialize the universal need systems
@@ -41,8 +41,8 @@ public class NeedSystemManager : MonoBehaviour
     private void setupNeedSystems()
     {
         // Add enviormental NeedSystem
-        AddSystem(new TerrainNeedSystem(ReservePartitionManager, TileSystem));
-        AddSystem(new LiquidNeedSystem(ReservePartitionManager, TileSystem));
+        AddSystem(new TerrainNeedSystem(ReservePartitionManager, GridSystem));
+        AddSystem(new LiquidNeedSystem(ReservePartitionManager, GridSystem));
 
 
         // FoodSource and Species NS

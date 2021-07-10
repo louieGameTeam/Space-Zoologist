@@ -23,7 +23,6 @@ public class MapDesigningTool : MonoBehaviour
     private bool DisplayLiquidBodyInfo = true;
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;
-    private TileSystem tileSystem;
     private Vector2 liquidScrollPos;
     private Vector2 previewBodyScrollPos;
     private Vector2 animalScrollPos;
@@ -36,7 +35,6 @@ public class MapDesigningTool : MonoBehaviour
         this.tilePlacementController = FindObjectOfType<TilePlacementController>();
         this.mainCamera = this.gameObject.GetComponent<Camera>();
         this.tilemaps = FindObjectsOfType<Tilemap>();
-        this.tileSystem = FindObjectOfType<TileSystem>();
         this.populationManager = FindObjectOfType<PopulationManager>();
         this.foodSourceManager = FindObjectOfType<FoodSourceManager>();
         this.LevelDataReference = FindObjectOfType<LevelDataReference>();

@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class MachineStoreSection : StoreSection
 {
     [SerializeField] private EnclosureSystem EnclosureSystem = default;
-    [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GameObject AtmosphereMachineHUD = default;
     [SerializeField] GameObject LiquidMachineHUD = default;
     [SerializeField] GameObject MachinePrefab = default;

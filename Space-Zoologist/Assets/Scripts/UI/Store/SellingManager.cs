@@ -5,7 +5,6 @@ using UnityEngine;
 public class SellingManager : MonoBehaviour
 {
     [SerializeField] GridSystem gridSystem = default;
-    [SerializeField] TileSystem tileSystem = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] Inspector Inspector = default;
@@ -57,10 +56,10 @@ public class SellingManager : MonoBehaviour
 
             // Find the cell that the player clicked on
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int cellPos = tileSystem.WorldToCell(worldPos);
+            Vector3Int cellPos = gridSystem.WorldToCell(worldPos);
 
             // What is on the tile?
-            GameTile tile = tileSystem.GetGameTileAt(cellPos);
+            GameTile tile = gridSystem.GetGameTileAt(cellPos);
             GridSystem.CellData cellData;
 
             // Find out what is on the tile if it is in bounds

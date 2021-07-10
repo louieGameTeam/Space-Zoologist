@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class LiquidUpdateTester : MonoBehaviour
 {
-    private TileSystem tileSystem;
+    private GridSystem tileSystem;
     private Camera mainCamera;
     private TileLayerManager tileLayerManager;
     [SerializeField] float[] comp = { 1, 1, 1 };
     // Start is called before the first frame update
     private void Awake()
     {
-        tileSystem = FindObjectOfType<TileSystem>();
+        tileSystem = FindObjectOfType<GridSystem>();
         mainCamera = FindObjectOfType<Camera>();
         tileLayerManager = this.gameObject.GetComponent<TileLayerManager>(); ;
     }

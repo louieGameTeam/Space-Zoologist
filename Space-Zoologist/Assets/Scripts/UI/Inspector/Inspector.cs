@@ -14,11 +14,7 @@ public class Inspector : MonoBehaviour
     public bool IsInInspectorMode { get; private set; }
 
     [SerializeField] private GridSystem gridSystem = null;
-    [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
-
-    [SerializeField] private Tilemap highLight = default;
-    // [SerializeField] private GameTile highLightTile = default;
 
     // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
