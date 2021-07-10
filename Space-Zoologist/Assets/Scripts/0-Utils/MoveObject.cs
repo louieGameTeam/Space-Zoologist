@@ -8,7 +8,6 @@ public class MoveObject : MonoBehaviour
 {
     [SerializeField] ReserveDraft reserveDraft = default;
     [SerializeField] GridSystem gridSystem = default;
-    [SerializeField] TileSystem tileSystem = default;
     [SerializeField] Camera referenceCamera = default;
     [SerializeField] PopulationManager populationManager = default;
     [SerializeField] FoodSourceManager foodSourceManager = default;
@@ -141,7 +140,7 @@ public class MoveObject : MonoBehaviour
         // Update animal location reference
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
+        Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
         GridSystem.CellData cellData = getCellData(pos);
         GameObject toMove = null;
 
@@ -227,7 +226,7 @@ public class MoveObject : MonoBehaviour
     {
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
-        Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
+        Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
 
         float cost = FixedCost + species.Size * CostPerUnitSizeFood;
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && playerBalance.Balance >= cost;

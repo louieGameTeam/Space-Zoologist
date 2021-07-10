@@ -82,7 +82,7 @@ public class FoodSourceManager : GridObjectManager
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
         newFoodSourceGameObject.name = species.SpeciesName;
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
-        foodSource.InitializeFoodSource(species, position, this.TileSystem);
+        foodSource.InitializeFoodSource(species, position, this.GridSystem);
         foodSources.Add(foodSource);
         Vector2 pos = position;
         if (species.Size % 2 == 0)
@@ -189,7 +189,7 @@ public class FoodSourceManager : GridObjectManager
         if (foods == null) return null;
         Vector3Int[] locations = new Vector3Int[foods.Count];
         for (int i = 0; i < foods.Count; i++) {
-            locations[i] = TileSystem.WorldToCell(foods[i].transform.position);
+            locations[i] = GridSystem.WorldToCell(foods[i].transform.position);
         }
         //Debug.Log("Returned locations");
         return locations;

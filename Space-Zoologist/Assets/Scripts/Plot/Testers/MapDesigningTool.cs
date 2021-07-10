@@ -16,6 +16,7 @@ public class MapDesigningTool : MonoBehaviour
     private string sceneName;
     private LevelIO levelIO;
     private TilePlacementController tilePlacementController;
+    private GridSystem gridSystem;
     private FoodSourceManager foodSourceManager;
     private PopulationManager populationManager;
     [SerializeField] bool godMode = true;
@@ -38,6 +39,7 @@ public class MapDesigningTool : MonoBehaviour
         this.populationManager = FindObjectOfType<PopulationManager>();
         this.foodSourceManager = FindObjectOfType<FoodSourceManager>();
         this.LevelDataReference = FindObjectOfType<LevelDataReference>();
+        this.gridSystem = FindObjectOfType<GridSystem>();
         // Load food sources from leveldata.
         // Loading other scriptable objects is possible by editing this field, but it will not be saved
         this.foodSourceSpecies = this.LevelDataReference.LevelData.FoodSourceSpecies.ToArray();
@@ -88,7 +90,7 @@ public class MapDesigningTool : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            foodSourceManager.placeFood(this.tileSystem.WorldToCell(this.mainCamera.ScreenToWorldPoint(Input.mousePosition)), this.selectedFood);
+            foodSourceManager.placeFood(this.gridSystem.WorldToCell(this.mainCamera.ScreenToWorldPoint(Input.mousePosition)), this.selectedFood);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -202,11 +204,11 @@ public class MapDesigningTool : MonoBehaviour
         GUILayout.BeginArea(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y -150 , 200, 150));
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         GUILayout.Box("World Pos: " + mousePos.ToString());
-        Vector3Int cellPosition = this.tileSystem.WorldToCell(mousePos);
+        Vector3Int cellPosition = this.gridSystem.WorldToCell(mousePos);
         GUILayout.Box("Cell Pos: " + cellPosition);
-        GameTile gameTile = this.tileSystem.GetGameTileAt(cellPosition);
+        GameTile gameTile = this.gridSystem.GetGameTileAt(cellPosition);
         string name = gameTile ? gameTile.name : "Null";
-        LiquidBody liquid = this.tileSystem.GetLiquidBodyAt(cellPosition);
+        LiquidBody liquid = this.gridSystem.GetLiquidBodyAt(cellPosition);
         string bodyID = "Null";
         string con = "Null";
         if (liquid != null)

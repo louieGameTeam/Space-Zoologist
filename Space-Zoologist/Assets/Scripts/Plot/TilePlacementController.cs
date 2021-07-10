@@ -32,7 +32,6 @@ public class TilePlacementController : MonoBehaviour
     private BuildBufferManager buildBufferManager;
     private int lastCornerX;
     private int lastCornerY;
-    [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private GridSystem GridSystem = default;
     private void Awake()
     {
@@ -68,7 +67,8 @@ public class TilePlacementController : MonoBehaviour
                             }
                         }*/
             referencedTiles = this.gameTiles.ToList();
-            RenderColorOfColorLinkedTiles(colorInitializeTiles);
+            // are different linked tiles (water) supposed to have differing color?
+            //RenderColorOfColorLinkedTiles(colorInitializeTiles);
             referencedTiles.Clear();
         }
         this.gameObject.GetComponent<PlotIO>().Initialize();
@@ -132,21 +132,23 @@ public class TilePlacementController : MonoBehaviour
         {
             this.tilemapsToTileLayerManagers[tilemap].ConfirmPlacement();
         }
-        RenderColorOfColorLinkedTiles(addedTiles.ToList());
+        //RenderColorOfColorLinkedTiles(addedTiles.ToList());
         foreach (GameTile tile in referencedTiles)
         {
+            // may have been a special case for liquid or highlighting
+            /*
             if (tile.targetTilemap.GetComponent<TileContentsManager>() == null && tile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
             {
                 foreach (Vector3Int vector3Int in addedTiles)
                 {
                     placedTileColorManager.SetTileColor(vector3Int, tile);
                 }
-            }
+            }*/
         }
 
         // Set terrain modified flag
-        this.TileSystem.HasTerrainChanged = true;
-        this.TileSystem.changedTiles.AddRange(addedTiles.ToList());
+        this.GridSystem.HasTerrainChanged = true;
+        this.GridSystem.changedTiles.AddRange(addedTiles.ToList());
 
         // Clear all dics
         this.referencedTiles.Clear();
@@ -175,13 +177,15 @@ public class TilePlacementController : MonoBehaviour
         foreach (Tilemap tilemap in tilemaps)
         {
             this.tilemapsToTileLayerManagers[tilemap].Revert();
+            // figure out what is going on here
+            /*
             if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
             {
                 List<Vector3Int> changedTiles = tileAttributes.changedTilesPositions;
                 changedTiles.AddRange(tileAttributes.addedTilePositions);
                 tileAttributes.Revert();
                 RenderColorOfColorLinkedTiles(changedTiles);
-            }
+            }*/
         }
         foreach (Vector3Int colorChangedTiles in removedTileColors.Keys)
         {
@@ -193,6 +197,7 @@ public class TilePlacementController : MonoBehaviour
         StopPreview();
     }
 
+    /*
     public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles) // Update color for linked tiles.
     {
         foreach (GameTile tile in referencedTiles)
@@ -215,7 +220,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     private void UpdatePreviewPen()
     {
@@ -341,7 +346,7 @@ public class TilePlacementController : MonoBehaviour
                     }
                 }
                 // If same tile
-                if (this.TileSystem.GetGameTileAt(cellPosition) == tile)
+                if (this.GridSystem.GetGameTileAt(cellPosition) == tile)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;

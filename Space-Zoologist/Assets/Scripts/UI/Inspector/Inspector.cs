@@ -204,8 +204,8 @@ public class Inspector : MonoBehaviour
         // Update animal location reference
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
-        GameTile tile = this.tileSystem.GetGameTileAt(pos);
+        Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
+        GameTile tile = this.gridSystem.GetGameTileAt(pos);
         GridSystem.CellData cellData = getCellData(pos);
         if (cellData.OutOfBounds)
         {
@@ -317,7 +317,7 @@ public class Inspector : MonoBehaviour
     private void DisplayLiquidText(Vector3Int cellPos)
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        float[] compositions = this.tileSystem.GetLiquidBodyAt(cellPos).contents;
+        float[] compositions = this.gridSystem.GetLiquidBodyAt(cellPos).contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 
@@ -337,11 +337,6 @@ public class Inspector : MonoBehaviour
                 child.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             }
             this.lastPopulationSelected = null;
-        }
-
-        foreach (Vector3Int pos in this.lastTilesSelected)
-        {
-            this.highLight.SetTile(pos, null);
         }
 
         gridSystem.ClearHighlights();
