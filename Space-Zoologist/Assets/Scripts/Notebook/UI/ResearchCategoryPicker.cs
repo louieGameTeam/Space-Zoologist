@@ -11,6 +11,7 @@ public class ResearchCategoryPicker : MonoBehaviour
 
     // Public accessors
 
+    public ResearchCategory SelectedCategory => selectedCategory;
     public ResearchCategoryEvent OnResearchCategoryChanged => onResearchCategoryChanged;
 
     // Private editor fields
@@ -63,7 +64,7 @@ public class ResearchCategoryPicker : MonoBehaviour
 
             // Create a clone and set it up
             ResearchCategoryNameButton clone = Instantiate(nameButton, nameGroup.transform);
-            clone.Setup(nameGroup, entry.Key.Name, OnResearchCategoryNameChanged, false);
+            clone.Setup(nameGroup, entry.Key.Name, OnResearchCategoryNameChanged);
             // Add it to the current category name button group
             nameButtonGroups[(int)entry.Key.Type].AddButton(clone);
         }

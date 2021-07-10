@@ -5,8 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class ResearchNotes
 {
+    // Public accessors
+
+    public ResearchNoteLabels Labels => labels;
+
+    // Private editor data
+
     [SerializeField]
     [Expandable]
+    [Tooltip("Lables attached to the notes in the research notes")]
     private ResearchNoteLabels labels;
 
     // For faster lookup
@@ -17,9 +24,9 @@ public class ResearchNotes
         foreach (string label in labels.Labels) notes.Add(label, "");
     }
 
-    public string ReadNote(string category) => notes[category];
-    public void WriteNote(string category, string note)
+    public string ReadNote(string label) => notes[label];
+    public void WriteNote(string label, string note)
     {
-        notes[category] = note;
+        notes[label] = note;
     }
 }

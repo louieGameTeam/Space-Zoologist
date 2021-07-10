@@ -44,5 +44,5 @@ public class ResearchModel : ScriptableObject
         }
     }
 
-    public ResearchEntry GetEntry(ResearchCategory category) => researchDictionary[category];
+    public ResearchEntry GetEntry(ResearchCategory category) => ResearchDictionary[category];
 }

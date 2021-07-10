@@ -29,7 +29,7 @@ public class ResearchCategoryNameButton : MonoBehaviour
     [Tooltip("This button's name")]
     private string researchCategoryName;
 
-    public void Setup(ToggleGroup group, string researchCategoryName, UnityAction<string> callback, bool isOn)
+    public void Setup(ToggleGroup group, string researchCategoryName, UnityAction<string> callback)
     {
         // Set the toggle group for this toggle
         myToggle.group = group;
@@ -44,7 +44,7 @@ public class ResearchCategoryNameButton : MonoBehaviour
         myToggle.onValueChanged.AddListener(OnToggleStateChanged);
 
         // Set initial toggle state
-        myToggle.isOn = isOn;
+        //myToggle.isOn = isOn;
     }
 
     // If the toggle is toggling on, invoke on selected event
