@@ -6,19 +6,19 @@ using UnityEngine;
 public class ResearchEncyclopediaArticle
 {
     // Public accessors of private data
-    public string Title => title;
-    public string Author => author;
+    public ResearchEncyclopediaArticleID ID => id;
     public string Text => text;
     public Sprite Image => image;
 
-    // Private data
+    // Private editor data
     [SerializeField]
-    private string title;
-    [SerializeField]
-    private string author;
+    [Tooltip("Identification for this encyclopedia article")]
+    private ResearchEncyclopediaArticleID id;
     [SerializeField]
     [TextArea] 
+    [Tooltip("Text in the article")]
     private string text;
     [SerializeField]
+    [Tooltip("Image that can display in the article")]
     private Sprite image;
 }

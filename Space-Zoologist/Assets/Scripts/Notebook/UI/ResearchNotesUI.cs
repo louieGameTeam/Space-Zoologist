@@ -53,7 +53,7 @@ public class ResearchNotesUI : MonoBehaviour
             groups[entry.Key].SetActive(entry.Key == categoryPicker.SelectedCategory);
         }
 
-        if (categoryPicker.SelectedCategory != null) titleText.text = "Space " + categoryPicker.SelectedCategory.Name;
+        if (categoryPicker.SelectedCategory.Name != null) titleText.text = "Space " + categoryPicker.SelectedCategory.Name;
 
         // Add listener for the research category change
         categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);

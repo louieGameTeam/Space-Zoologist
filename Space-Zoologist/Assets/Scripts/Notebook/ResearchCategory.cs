@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// NOTE: this MUST be a struct because other code needs to compare this by value, NOT by reference
-// If this has to change to a class for some reason, we need to override the Equals() method to compare
-// by value and not by reference
+// NOTE: we're making this a class so that the value can be null
+// But we need to compare by value and not by reference so that
+// it can be used in dictionaries
 [System.Serializable]
 public struct ResearchCategory
 {
@@ -12,6 +12,7 @@ public struct ResearchCategory
     public string Name => name;
 
     [SerializeField]
+    [Tooltip("Name associated with this research category")]
     private string name;
 
     public ResearchCategory(ResearchCategoryType type, string name)
@@ -35,10 +36,11 @@ public struct ResearchCategory
     }
     public override bool Equals(object obj)
     {
-        if (obj.GetType() == typeof(ResearchCategory))
-        {
-            return this == (ResearchCategory)obj;
-        }
+        // If the other object is null, it cannot be equal to this struct
+        if (obj == null) return false;
+        // If the types are equal, use the operator
+        else if (obj.GetType() == typeof(ResearchCategory)) return this == (ResearchCategory)obj;
+        // If the types are unequal, it cannot be equal to this object
         else return false;
     }
     public override int GetHashCode()

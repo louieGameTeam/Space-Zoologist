@@ -35655,6 +35655,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4661624496892425695}
     m_Modifications:
+    - target: {fileID: 6125470799405032737, guid: 3ff5c09709a541c448287c4d1ad116a5,
+        type: 3}
+      propertyPath: m_Text
+      value: Hello!  Here is some <color=red>text</color>.
+      objectReference: {fileID: 0}
     - target: {fileID: 8731580173207704173, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
       propertyPath: m_Name

@@ -23,5 +23,6 @@ public class ResearchEntry
     {
         category.Setup(type);
         notes.Setup();
+        encyclopedia.Setup();
     }
 }

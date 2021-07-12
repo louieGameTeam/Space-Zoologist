@@ -9,8 +9,8 @@ public class ResearchEncyclopediaEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        
-        SerializedProperty articles = serializedObject.FindProperty("articles");
+
+        SerializedProperty articles = serializedObject.FindProperty("articlesList");
 
         // Set out the size property
         EditorGUILayout.PropertyField(articles.FindPropertyRelative("Array.size"));
@@ -18,10 +18,10 @@ public class ResearchEncyclopediaEditor : Editor
         {
             SerializedProperty article = articles.GetArrayElementAtIndex(i);
             // Get the article title
-            string articleTitle = article.FindPropertyRelative("title").stringValue;
+            string articleTitle = article.FindPropertyRelative("id").FindPropertyRelative("title").stringValue;
             if (articleTitle == "") articleTitle = "Element " + i;
             // Set out the article with the title as the gui content label
-            EditorGUILayout.PropertyField(article, new GUIContent(articleTitle));
+            EditorGUILayout.PropertyField(article, new GUIContent(articleTitle), true);
         }
 
         serializedObject.ApplyModifiedProperties();
