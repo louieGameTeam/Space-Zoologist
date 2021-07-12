@@ -31,7 +31,6 @@ public class GridSystem : MonoBehaviour
     public Vector3Int startTile = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
-    public TileData TilemapData = default;
 
     List<Vector3Int> HighlightedTiles;
     private Dictionary<Tilemap, Texture2D> TilemapTextureDictionary;
@@ -67,6 +66,8 @@ public class GridSystem : MonoBehaviour
         Tilemaps[0].GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
         HighlightedTiles = new List<Vector3Int>();
 
+
+
         this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
         for (int i=0; i<this.ReserveWidth; i++)
         {
@@ -93,6 +94,8 @@ public class GridSystem : MonoBehaviour
         Tilemap Terrain = Tilemaps.Find(t => t.gameObject.name == "Terrain");
         ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
         ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
+
+        Terrain.SetTile(new Vector3Int(5, 5, 0), new TileBase());
 
         try
         {
@@ -557,7 +560,7 @@ public class GridSystem : MonoBehaviour
 
     private void GetNeighborLiquidLocations(Vector3Int location, GameTile tile, List<Vector3Int> liquidBodyTiles)
     {
-        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(location))
+        foreach (Vector3Int tileToCheck in FourNeighborTiles(location))
         {
             if (
                 tile.targetTilemap.GetTile(tileToCheck) == tile &&
@@ -605,7 +608,7 @@ public class GridSystem : MonoBehaviour
         foreach (Tilemap tilemap in Tilemaps)
         {
             var returnedTile = tilemap.GetTile<GameTile>(cellLocation);
-            if (returnedTile != null && returnedTile.isRepresentative)
+            if (returnedTile != null)
             {
                 return returnedTile;
             }
@@ -855,9 +858,9 @@ public class GridSystem : MonoBehaviour
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(-scanRange, scanRange))
+        foreach (int x in Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(-scanRange, scanRange))
+            foreach (int y in Range(-scanRange, scanRange))
             {
                 float distance = Mathf.Sqrt(x * x + y * y);
                 if (distance > scanRange)
@@ -885,9 +888,9 @@ public class GridSystem : MonoBehaviour
     {
         List<Vector3Int> tileLocations = new List<Vector3Int>();
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(-scanRange, scanRange))
+        foreach (int x in Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(-scanRange, scanRange))
+            foreach (int y in Range(-scanRange, scanRange))
             {
                 if (isCircleMode)
                 {
@@ -917,9 +920,9 @@ public class GridSystem : MonoBehaviour
     {
         int[] typesOfTileWithinRadius = new int[(int)TileType.TypesOfTiles];
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(-scanRange, scanRange))
+        foreach (int x in Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(-scanRange, scanRange))
+            foreach (int y in Range(-scanRange, scanRange))
             {
                 float distance = Mathf.Sqrt(x * x + y * y);
                 if (distance > scanRange)
@@ -951,9 +954,9 @@ public class GridSystem : MonoBehaviour
         List<float[]> liquidCompositions = new List<float[]>();
 
         Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in GridUtils.Range(-scanRange, scanRange))
+        foreach (int x in Range(-scanRange, scanRange))
         {
-            foreach (int y in GridUtils.Range(-scanRange, scanRange))
+            foreach (int y in Range(-scanRange, scanRange))
             {
                 float distance = Mathf.Sqrt(x * x + y * y);
                 if (distance > scanRange)
@@ -1073,11 +1076,176 @@ public class GridSystem : MonoBehaviour
         return results;
     }
 
+    // Used to assign which layer 
+    public enum TileLayer
+    {
+        Terrain,
+        Structures
+    }
+
+    // note that this will not work on web browsers, will need to find alternate solution
     private void OnApplicationQuit()
     {
         // turn off grid toggle no matter what (material is permanently changed)
         foreach (Tilemap t in Tilemaps)
             t.gameObject.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", 0);
+    }
+
+    public static Vector3Int SignsVector3(Vector3 vector)
+    {
+        Vector3Int result = new Vector3Int()
+        {
+            x = vector.x == 0 ? 0 : (int)(Mathf.Sign(vector.x)),
+            y = vector.y == 0 ? 0 : (int)(Mathf.Sign(vector.y)),
+            z = vector.z == 0 ? 0 : (int)(Mathf.Sign(vector.z))
+        };
+        return result;
+    }
+
+    public static Vector3Int SignsRoundToIntVector3(Vector3 vector)
+    {
+        Vector3Int signs = SignsVector3(vector);
+        Vector3Int result = new Vector3Int()
+        {
+            x = signs.x < 0 ? Mathf.FloorToInt(vector.x) : Mathf.CeilToInt(vector.x),
+            y = signs.y < 0 ? Mathf.FloorToInt(vector.y) : Mathf.CeilToInt(vector.y),
+            z = signs.z < 0 ? Mathf.FloorToInt(vector.z) : Mathf.CeilToInt(vector.z),
+        };
+
+        return result;
+    }
+
+    /// <summary>
+    /// Rounds down or up whichever way is further away from the origin provided.
+    /// </summary>
+    /// <param name="vector"> The vector to round. </param>
+    /// <param name="origin"> The origin that the vector rounds with respect to. </param>
+    /// <returns></returns>
+    public static Vector3Int SignsRoundToIntVector3(Vector3 vector, Vector3Int origin)
+    {
+        Vector3Int result = SignsRoundToIntVector3(vector - origin) + origin;
+
+        return result;
+    }
+
+    /// <summary>
+    /// Returns int from start to end (inclusive), default stepping is 1.
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <param name="step"></param>
+    /// <returns></returns>
+    public static IEnumerable<int> Range(int start, int end, int step = 1)
+    {
+        if (start < end)
+        {
+            for (int i = start; i <= end; i += step)
+            {
+                yield return i;
+            }
+        }
+        else
+        {
+            for (int i = start; i >= end; i -= step)
+                yield return i;
+        }
+    }
+    /// <summary>
+    /// Returns FLOAT from start to end (inclusive), default stepping is 1.
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <param name="step"></param>
+    /// <returns></returns>
+    public static IEnumerable<float> RangeFloat(float start, float end, float step = 1)
+    {
+        if (start < end)
+        {
+            for (float i = start; i <= end; i += step)
+            {
+                yield return i;
+            }
+        }
+        else
+        {
+            for (float i = start; i >= end; i -= step)
+                yield return i;
+        }
+    }
+    /// <summary>
+    /// Returns four cell locations next to the given cell location
+    /// </summary>
+    /// <param name="cellLocation"></param>
+    /// <returns></returns>
+    public static List<Vector3Int> FourNeighborTiles(Vector3Int cellLocation)
+    {
+        List<Vector3Int> fourNeighborTiles = new List<Vector3Int>();
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z));
+        return fourNeighborTiles;
+    }
+    /// <summary>
+    /// Round a number towards zero
+    /// </summary>
+    /// <param name="n"> Number to round</param>
+    /// <returns></returns>
+    public static int RoundTowardsZeroInt(float n)
+    {
+        if (n > 0)
+        {
+            return Mathf.FloorToInt(n);
+        }
+        else
+        {
+            return Mathf.CeilToInt(n);
+        }
+    }
+    /// <summary>
+    /// Round a number towards zero, returns int
+    /// </summary>
+    /// <param name="n"> Number to round </param>
+    /// <returns></returns>
+    public static int RoundAwayFromZeroInt(float n)
+    {
+        if (n < 0)
+        {
+            return Mathf.FloorToInt(n);
+        }
+        else
+        {
+            return Mathf.CeilToInt(n);
+        }
+    }
+    /// <summary>
+    /// Increase the magnitude (absolute value) of a number
+    /// </summary>
+    /// <param name="n"> Number to increase </param>
+    /// <param name="increment"> Increment </param>
+    /// <returns></returns>
+    public static float IncreaseMagnitude(float n, float increment)
+    {
+        if (n > 0)
+        {
+            return n += increment;
+        }
+        else
+        {
+            return n -= increment;
+        }
+    }
+    public static int IncreaseMagnitudeInt(int n, int increment)
+    {
+        if (n > 0)
+        {
+            return n += increment;
+        }
+        else
+        {
+            return n -= increment;
+        }
+
     }
 
     public struct CellData
@@ -1102,19 +1270,5 @@ public class GridSystem : MonoBehaviour
         public GameObject Animal { get; set; }
         public bool HomeLocation { get; set; }
         public bool OutOfBounds { get; set; }
-    }
-
-    public struct TileData
-    {
-        public TileData(int n)
-        {
-            this.NumDirtTiles = 0;
-            this.NumGrassTiles = 0;
-            this.NumSandTiles = 0;
-        }
-
-        public int NumGrassTiles { get; set; }
-        public int NumDirtTiles { get; set; }
-        public int NumSandTiles { get; set; }
     }
 }

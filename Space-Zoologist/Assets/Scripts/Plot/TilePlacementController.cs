@@ -39,16 +39,6 @@ public class TilePlacementController : MonoBehaviour
         foreach (GameTile terrainTile in this.gameTiles)// Construct list of tiles and their corresponding layers
         {
             terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
-            terrainTile.constraintTilemaps.Clear();
-            terrainTile.replacementTilemaps.Clear();
-            foreach (GridUtils.TileLayer layer in terrainTile.constraintLayers)
-            {
-                terrainTile.constraintTilemaps.Add(tilemaps[(int)layer]);
-            }
-            foreach (GridUtils.TileLayer layer in terrainTile.replacementLayers)
-            {
-                terrainTile.replacementTilemaps.Add(tilemaps[(int)layer]);
-            }
         }
         grid = GetComponent<Grid>();
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
@@ -229,11 +219,11 @@ public class TilePlacementController : MonoBehaviour
             PlaceTile(currentMouseCellPosition);
             return;
         }
-        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
+        if (!GridSystem.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
         {
             if (currentMouseCellPosition.x == lastPlacedTile.x)// Handles divide by zero exception
             {
-                foreach (int y in GridUtils.Range(lastPlacedTile.y, currentMouseCellPosition.y))
+                foreach (int y in GridSystem.Range(lastPlacedTile.y, currentMouseCellPosition.y))
                 {
                     Vector3Int location = new Vector3Int(lastPlacedTile.x, y, currentMouseCellPosition.z);
                     PlaceTile(location);
@@ -242,11 +232,11 @@ public class TilePlacementController : MonoBehaviour
             else
             {
                 float gradient = (currentMouseCellPosition.y - lastPlacedTile.y) / (currentMouseCellPosition.x - lastPlacedTile.x);
-                foreach (float x in GridUtils.RangeFloat(GridUtils.IncreaseMagnitude(lastPlacedTile.x, -0.5f), currentMouseCellPosition.x))
+                foreach (float x in GridSystem.RangeFloat(GridSystem.IncreaseMagnitude(lastPlacedTile.x, -0.5f), currentMouseCellPosition.x))
                 {
                     float interpolatedY = gradient * (x - lastPlacedTile.x);
-                    int incrementY = GridUtils.RoundTowardsZeroInt(interpolatedY);
-                    Vector3Int interpolateTileLocation = new Vector3Int(GridUtils.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
+                    int incrementY = GridSystem.RoundTowardsZeroInt(interpolatedY);
+                    Vector3Int interpolateTileLocation = new Vector3Int(GridSystem.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
                     PlaceTile(interpolateTileLocation);
                 }
             }
@@ -265,9 +255,9 @@ public class TilePlacementController : MonoBehaviour
         HashSet<Vector3Int> tilesToRemove = new HashSet<Vector3Int>();
         HashSet<Vector3Int> tilesToAdd = new HashSet<Vector3Int>();
         HashSet<Vector3Int> supposedTiles = new HashSet<Vector3Int>();
-        foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
+        foreach (int x in GridSystem.Range(dragStartPosition.x, currentMouseCellPosition.x))
         {
-            foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
+            foreach (int y in GridSystem.Range(dragStartPosition.y, currentMouseCellPosition.y))
             {
                 supposedTiles.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
                 tilesToRemove.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
@@ -276,13 +266,13 @@ public class TilePlacementController : MonoBehaviour
         tilesToRemove.ExceptWith(addedTiles); // Forcing removal of all tiles not in bound to avoid leftover tile not being removed due to lagging and tick skipping, possible optimization
         Vector3Int sweepLocation = Vector3Int.zero;
         sweepLocation.z = currentMouseCellPosition.z;
-        bool isXShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.x - dragStartPosition.x, currentMouseCellPosition.x - lastCornerX);
-        bool isYShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.y - dragStartPosition.y, currentMouseCellPosition.y - lastCornerY);
+        bool isXShrinking = (currentMouseCellPosition.x - dragStartPosition.x) * (currentMouseCellPosition.x - lastCornerX) < 0;
+        bool isYShrinking = (currentMouseCellPosition.y - dragStartPosition.y) * (currentMouseCellPosition.y - lastCornerY) < 0;
         if (currentMouseCellPosition.x != lastCornerX || !isXShrinking)
         {
-            foreach (int x in GridUtils.Range(lastCornerX, currentMouseCellPosition.x))
+            foreach (int x in GridSystem.Range(lastCornerX, currentMouseCellPosition.x))
             {
-                foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
+                foreach (int y in GridSystem.Range(dragStartPosition.y, currentMouseCellPosition.y))
                 {
                     sweepLocation.x = x;
                     sweepLocation.y = y;
@@ -292,9 +282,9 @@ public class TilePlacementController : MonoBehaviour
         }
         if (currentMouseCellPosition.y != lastCornerY || !isYShrinking)
         {
-            foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
+            foreach (int x in GridSystem.Range(dragStartPosition.x, currentMouseCellPosition.x))
             {
-                foreach (int y in GridUtils.Range(lastCornerY, currentMouseCellPosition.y))
+                foreach (int y in GridSystem.Range(lastCornerY, currentMouseCellPosition.y))
                 {
                     sweepLocation.x = x;
                     sweepLocation.y = y;
@@ -315,7 +305,7 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        foreach (Vector3Int location in GridUtils.FourNeighborTiles(cellPosition))
+        foreach (Vector3Int location in GridSystem.FourNeighborTiles(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
@@ -337,28 +327,11 @@ public class TilePlacementController : MonoBehaviour
                 {
                     return PlacementResult.Restricted;
                 }
-                // If Constrain not met
-                foreach (Tilemap constrainTilemap in tile.constraintTilemaps)
-                {
-                    if (!constrainTilemap.HasTile(cellPosition))
-                    {
-                        return PlacementResult.Restricted;
-                    }
-                }
                 // If same tile
                 if (this.GridSystem.GetGameTileAt(cellPosition) == tile)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;
-                }
-            }
-            // Check clear, place tiles
-            foreach (GameTile tile in referencedTiles)
-            {
-                tilemapsToTileLayerManagers[tile.targetTilemap].AddTile(cellPosition, tile);
-                foreach (Tilemap replacementTilemap in tile.replacementTilemaps)
-                {
-                    tilemapsToTileLayerManagers[replacementTilemap].RemoveTile(cellPosition);
                 }
             }
             this.triedToPlaceTiles.Add(cellPosition);
@@ -369,7 +342,7 @@ public class TilePlacementController : MonoBehaviour
     }
     private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile, Tilemap targetTilemap)
     {
-        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
+        foreach (Vector3Int tileToCheck in GridSystem.FourNeighborTiles(cellLocation))
         {
             if (!neighborTiles.Contains(tileToCheck) && targetTilemap.GetTile(tileToCheck) == tile)
             {
