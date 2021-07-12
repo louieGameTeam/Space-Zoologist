@@ -14,16 +14,17 @@ public class ResearchEncyclopedia : ScriptableObject
     private List<ResearchEncyclopediaArticle> articlesList;
 
     // Private data
-    [Tooltip("Maps the id of the articles to the articles for faster lookup")]
+    [Tooltip("Maps the id of the articles to the article itself for faster lookup")]
     private Dictionary<ResearchEncyclopediaArticleID, ResearchEncyclopediaArticle> articles = new Dictionary<ResearchEncyclopediaArticleID, ResearchEncyclopediaArticle>();
 
     public void Setup()
     {
         foreach(ResearchEncyclopediaArticle article in articlesList)
         {
+            Debug.Log("Adding ID: " + article.ID);
             articles.Add(article.ID, article);
         }
     }
     // Get the article with the given ID
-    public ResearchEncyclopediaArticle GetArticle(ResearchEncyclopediaArticleID id) => articles[id];
+    public ResearchEncyclopediaArticle GetArticle(ResearchEncyclopediaArticleID id) => Articles[id];
 }

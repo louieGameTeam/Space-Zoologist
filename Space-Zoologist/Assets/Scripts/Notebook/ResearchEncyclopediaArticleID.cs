@@ -48,4 +48,8 @@ public struct ResearchEncyclopediaArticleID
     {
         return title.GetHashCode() + author.GetHashCode();
     }
+    public override string ToString()
+    {
+        return "Research Encyclopedia Article ID: " + title + " -> " + author;
+    }
 }

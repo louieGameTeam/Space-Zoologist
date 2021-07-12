@@ -15,7 +15,7 @@ public class ResearchEncyclopediaArticle
     [Tooltip("Identification for this encyclopedia article")]
     private ResearchEncyclopediaArticleID id;
     [SerializeField]
-    [TextArea] 
+    [TextArea(3, 20)] 
     [Tooltip("Text in the article")]
     private string text;
     [SerializeField]
