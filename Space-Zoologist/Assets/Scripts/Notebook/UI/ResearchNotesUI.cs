@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+
 public class ResearchNotesUI : MonoBehaviour
 {
     [SerializeField]
@@ -16,6 +18,9 @@ public class ResearchNotesUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Parent that all notes are instantiated under")]
     private Transform noteParent;
+    [SerializeField]
+    [Tooltip("Text that displays the name of the current category taking notes on")]
+    private TextMeshProUGUI titleText;
 
     // Maps the group of notes to the research category
     private Dictionary<ResearchCategory, ResearchSingleNoteUIGroup> groups = new Dictionary<ResearchCategory, ResearchSingleNoteUIGroup>();
@@ -26,8 +31,6 @@ public class ResearchNotesUI : MonoBehaviour
     {
         foreach(KeyValuePair<ResearchCategory, ResearchEntry> entry in researchModel.ResearchDictionary)
         {
-            Debug.Log("Setting up for category: " + entry.Key.Type + ", " + entry.Key.Name);
-
             // Add the group for this key
             groups.Add(entry.Key, new ResearchSingleNoteUIGroup());
 
@@ -50,10 +53,10 @@ public class ResearchNotesUI : MonoBehaviour
             groups[entry.Key].SetActive(entry.Key == categoryPicker.SelectedCategory);
         }
 
+        if (categoryPicker.SelectedCategory != null) titleText.text = "Space " + categoryPicker.SelectedCategory.Name;
+
         // Add listener for the research category change
         categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);
-
-        Debug.Log("Setup research notes");
     }
 
     private void OnResearchCategoryChanged(ResearchCategory newCategory)
@@ -61,11 +64,12 @@ public class ResearchNotesUI : MonoBehaviour
         // Disable the previous group
         if (currentGroup != null) currentGroup.SetActive(false);
 
-        Debug.Log("New category: " + newCategory.Type + ", " + newCategory.Name);
-
         // Set and enable the current category
         currentGroup = groups[newCategory];
         currentGroup.SetActive(true);
+
+        // Set the title text to the name of the category
+        titleText.text = "Space " + categoryPicker.SelectedCategory.Name;
     }
 
     // Set the note with the given label on the research notes
