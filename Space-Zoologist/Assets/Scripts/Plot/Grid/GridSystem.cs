@@ -23,7 +23,8 @@ public class GridSystem : MonoBehaviour
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private PopulationManager PopulationManager = default;
-    public List<Tilemap> Tilemaps;
+    [SerializeField] public Tilemap Terrain;
+    [SerializeField] public Tilemap Structures;
     private BuildBufferManager buildBufferManager;
     [Header("Used to define 2d array")]
     [SerializeField] public int ReserveWidth = default;
@@ -33,40 +34,27 @@ public class GridSystem : MonoBehaviour
     public CellData[,] CellGrid = default;
 
     List<Vector3Int> HighlightedTiles;
-    private Dictionary<Tilemap, Texture2D> TilemapTextureDictionary;
-    private MaterialPropertyBlock TilemapPropertyBlock;
+    private Texture2D TilemapTexture;
 
     #region Monobehaviour Callbacks
     private void Awake()
     {
         // set up the information textures
-        TilemapTextureDictionary = new Dictionary<Tilemap, Texture2D>();
-        TilemapPropertyBlock = new MaterialPropertyBlock();
-        foreach (Tilemap t in Tilemaps)
+        TilemapTexture = new Texture2D(ReserveWidth, ReserveHeight);
+        // make black texture
+        for (int i = 0; i < ReserveWidth; ++i)
         {
-            Texture2D tex = new Texture2D(ReserveWidth, ReserveHeight);
-            // make black texture
-            for (int i = 0; i < ReserveWidth; ++i)
-            {
-                for (int j = 0; j < ReserveHeight; ++j)
-                    tex.SetPixel(i, j, new Color(0, 0, 0, 0));
-            }
-            tex.Apply();
-
-            tex.filterMode = FilterMode.Point;
-            tex.wrapMode = TextureWrapMode.Repeat;
-
-            TilemapRenderer renderer = t.GetComponent<TilemapRenderer>();
-            renderer.GetPropertyBlock(TilemapPropertyBlock);
-            TilemapPropertyBlock.SetTexture("_GridInformationTexture", tex);
-            renderer.SetPropertyBlock(TilemapPropertyBlock);
-
-            TilemapTextureDictionary.Add(t, tex);
+            for (int j = 0; j < ReserveHeight; ++j)
+                TilemapTexture.SetPixel(i, j, new Color(0, 0, 0, 0));
         }
-        Tilemaps[0].GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+        TilemapTexture.filterMode = FilterMode.Point;
+        TilemapTexture.wrapMode = TextureWrapMode.Repeat;
+        TilemapTexture.Apply();
+
+        TilemapRenderer renderer = Terrain.GetComponent<TilemapRenderer>();
+        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
+        Terrain.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
         HighlightedTiles = new List<Vector3Int>();
-
-
 
         this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
         for (int i=0; i<this.ReserveWidth; i++)
@@ -91,11 +79,8 @@ public class GridSystem : MonoBehaviour
         this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
 
         // temporary to show effect
-        Tilemap Terrain = Tilemaps.Find(t => t.gameObject.name == "Terrain");
         ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
         ApplyFlagToTileTexture(Terrain, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
-
-        Terrain.SetTile(new Vector3Int(5, 5, 0), new TileBase());
 
         try
         {
@@ -126,9 +111,7 @@ public class GridSystem : MonoBehaviour
     /// <param name="color">Color of the tile (in cases of highlighting or other effects that require color).</param>
     public void ApplyFlagToTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag, Color color)
     {
-        Texture2D TilemapTex = TilemapTextureDictionary[tilemap];
-
-        Color tilePixel = TilemapTex.GetPixel(tilePosition.x, tilePosition.y);
+        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
 
         // currently only in alpha channel, can expand to rgb as well
         // note that color channels can only contain [0...1] due to samplers
@@ -150,14 +133,12 @@ public class GridSystem : MonoBehaviour
         tilePixel.b = color.b;
 
         tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
-        TilemapTex.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
-        TilemapTex.Apply();
+        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        TilemapTexture.Apply();
 
         // add to propertyblock
         TilemapRenderer renderer = tilemap.GetComponent<TilemapRenderer>();
-        renderer.GetPropertyBlock(TilemapPropertyBlock);
-        TilemapPropertyBlock.SetTexture("_GridInformationTexture", TilemapTex);
-        renderer.SetPropertyBlock(TilemapPropertyBlock);
+        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
     }
 
     /// <summary>
@@ -168,9 +149,7 @@ public class GridSystem : MonoBehaviour
     /// <param name="flag">Compiled flags to be set.</param>
     public void RemoveFlagsFromTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag)
     {
-        Texture2D TilemapTex = TilemapTextureDictionary[tilemap];
-
-        Color tilePixel = TilemapTex.GetPixel(tilePosition.x, tilePosition.y);
+        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
 
         int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
         int flagInt = (int)flag;
@@ -185,31 +164,25 @@ public class GridSystem : MonoBehaviour
         tilePixel.b = 0;
 
         tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
-        TilemapTex.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
-        TilemapTex.Apply();
+        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        TilemapTexture.Apply();
 
         // add to propertyblock
         TilemapRenderer renderer = tilemap.GetComponent<TilemapRenderer>();
-        renderer.GetPropertyBlock(TilemapPropertyBlock);
-        TilemapPropertyBlock.SetTexture("_GridInformationTexture", TilemapTex);
-        renderer.SetPropertyBlock(TilemapPropertyBlock);
+        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
     }
     public void ToggleGridOverlay()
     {
         // toggle using shader here
-        float currentToggleValue = Tilemaps.Find(t => t.gameObject.name == "Terrain").gameObject.GetComponent<TilemapRenderer>().material.GetFloat("_GridOverlayToggle");
+        float currentToggleValue = Terrain.GetComponent<TilemapRenderer>().material.GetFloat("_GridOverlayToggle");
         // set up methods for updating all or only some tilemaps
-        foreach (Tilemap t in Tilemaps)
-            t.gameObject.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
+        Terrain.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
     }
 
     public void ClearHighlights()
     {
-        foreach (Tilemap t in Tilemaps)
-        {
-            foreach (Vector3Int tilePosition in HighlightedTiles)
-                RemoveFlagsFromTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG);
-        }
+        foreach (Vector3Int tilePosition in HighlightedTiles)
+            RemoveFlagsFromTileTexture(Terrain, tilePosition, TileFlag.HIGHLIGHT_FLAG);
 
         HighlightedTiles.Clear();
     }
@@ -219,9 +192,8 @@ public class GridSystem : MonoBehaviour
         if (!HighlightedTiles.Contains(tilePosition))
         {
             HighlightedTiles.Add(tilePosition);
-
-            foreach (Tilemap t in Tilemaps)
-                ApplyFlagToTileTexture(t, tilePosition, TileFlag.HIGHLIGHT_FLAG, color);
+            
+            ApplyFlagToTileTexture(Terrain, tilePosition, TileFlag.HIGHLIGHT_FLAG, color);
         }
     }
 
@@ -563,14 +535,14 @@ public class GridSystem : MonoBehaviour
         foreach (Vector3Int tileToCheck in FourNeighborTiles(location))
         {
             if (
-                tile.targetTilemap.GetTile(tileToCheck) == tile &&
+                Terrain.GetTile(tileToCheck) == tile &&
                 GetTileContentsAt(tileToCheck, tile) != null &&
                 !liquidBodyTiles.Contains(tileToCheck))
             {
                 liquidBodyTiles.Add(tileToCheck);
                 GetNeighborLiquidLocations(tileToCheck, tile, liquidBodyTiles);
             }
-            GameTile thisTile = (GameTile)tile.targetTilemap.GetTile(tileToCheck);
+            GameTile thisTile = (GameTile)Terrain.GetTile(tileToCheck);
             float[] contents = GetTileContentsAt(tileToCheck, tile);
         }
     }
@@ -582,7 +554,7 @@ public class GridSystem : MonoBehaviour
     /// <param name="isSetting">When set to true, original composition will be replaced by input composition. When set to false, input composition will be added to original Composition</param>
     public void ChangeLiquidBodyComposition(Vector3Int cellPosition, float[] composition)
     {
-        TileLayerManager tileLayerManager = GetGameTileAt(cellPosition).targetTilemap.GetComponent<TileLayerManager>();
+        TileLayerManager tileLayerManager = Terrain.GetComponent<TileLayerManager>();
         if (tileLayerManager.holdsContent)
         {
             tileLayerManager.ChangeComposition(cellPosition, composition);
@@ -605,13 +577,11 @@ public class GridSystem : MonoBehaviour
             //Debug.Log("Trying accessing tiles at negative coordinate" + cellLocation);
             return null;
         }
-        foreach (Tilemap tilemap in Tilemaps)
+
+        var returnedTile = Terrain.GetTile<GameTile>(cellLocation);
+        if (returnedTile != null)
         {
-            var returnedTile = tilemap.GetTile<GameTile>(cellLocation);
-            if (returnedTile != null)
-            {
-                return returnedTile;
-            }
+            return returnedTile;
         }
         //Debug.LogWarning("Tile does not exist at " + cellLocation);
         return null;
@@ -625,7 +595,7 @@ public class GridSystem : MonoBehaviour
     /// <returns></returns>
     public bool TileExistsAtLocation(Vector3Int cellLocation, GameTile tile)
     {
-        return tile.targetTilemap.GetTile(cellLocation) == tile;
+        return Terrain.GetTile(cellLocation) == tile;
     }
 
     /// <summary>
@@ -638,7 +608,7 @@ public class GridSystem : MonoBehaviour
         tile = tile == null ? GetGameTileAt(cellPosition) : tile;
         if (tile != null)
         {
-            TileLayerManager tileLayerManager = tile.targetTilemap.GetComponent<TileLayerManager>();
+            TileLayerManager tileLayerManager = Terrain.GetComponent<TileLayerManager>();
             if (tileLayerManager.holdsContent)
             {
                 return tileLayerManager.GetLiquidBodyAt(cellPosition).contents;
@@ -655,7 +625,7 @@ public class GridSystem : MonoBehaviour
         GameTile tile = this.GetGameTileAt(cellPosition);
         if (tile != null)
         {
-            return tile.targetTilemap.GetComponent<TileLayerManager>().GetLiquidBodyAt(cellPosition);
+            return Terrain.GetComponent<TileLayerManager>().GetLiquidBodyAt(cellPosition);
         }
         else
         {
@@ -1087,8 +1057,7 @@ public class GridSystem : MonoBehaviour
     private void OnApplicationQuit()
     {
         // turn off grid toggle no matter what (material is permanently changed)
-        foreach (Tilemap t in Tilemaps)
-            t.gameObject.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", 0);
+        Terrain.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", 0);
     }
 
     public static Vector3Int SignsVector3(Vector3 vector)

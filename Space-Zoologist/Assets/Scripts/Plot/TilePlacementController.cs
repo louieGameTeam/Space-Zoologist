@@ -36,10 +36,6 @@ public class TilePlacementController : MonoBehaviour
     private void Awake()
     {
         this.gameTiles = Resources.LoadAll("Tiles", typeof(GameTile)).Cast<GameTile>().ToArray(); // Load tiles form resources
-        foreach (GameTile terrainTile in this.gameTiles)// Construct list of tiles and their corresponding layers
-        {
-            terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
-        }
         grid = GetComponent<Grid>();
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
@@ -146,14 +142,15 @@ public class TilePlacementController : MonoBehaviour
         this.addedTiles.Clear();
         this.triedToPlaceTiles.Clear();
     }
+    // does not account for walls
     public void EraseTile()
     {
         foreach (GameTile tile in this.referencedTiles)
         {
-            GameTile currentTile = this.tilemapsToTileLayerManagers[tile.targetTilemap].GetGameTileAt(this.currentMouseCellPosition);
+            GameTile currentTile = this.tilemapsToTileLayerManagers[GridSystem.Terrain].GetGameTileAt(this.currentMouseCellPosition);
             if (currentTile != null && currentTile == tile)
             {
-                this.tilemapsToTileLayerManagers[tile.targetTilemap].RemoveTile(this.currentMouseCellPosition);
+                this.tilemapsToTileLayerManagers[GridSystem.Terrain].RemoveTile(this.currentMouseCellPosition);
             }
         }
     }
