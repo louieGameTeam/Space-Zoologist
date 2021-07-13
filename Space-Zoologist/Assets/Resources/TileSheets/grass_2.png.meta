@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 81ba44f1fb2d3104cb686fcb3007c65f
+guid: 5af977e6cd13d64448b291d35d2e574f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2410202161468959170
-    second: dirt_2_0
+      213: -6268241297508726992
+    second: grass_2_0
   - first:
-      213: -1223859435107435116
-    second: dirt_2_1
+      213: 7614708435378350768
+    second: grass_2_1
   - first:
-      213: -3001172267041309997
-    second: dirt_2_2
+      213: 8617700978347816178
+    second: grass_2_2
   - first:
-      213: -1014905116568149099
-    second: dirt_2_3
+      213: -8286597673637141814
+    second: grass_2_3
   - first:
-      213: 4210170964728211101
-    second: dirt_2_4
+      213: 4570287631264475878
+    second: grass_2_4
   - first:
-      213: 8551795615232166
-    second: dirt_2_5
+      213: -6691846772278845363
+    second: grass_2_5
   - first:
-      213: -141800307249317017
-    second: dirt_2_6
+      213: -6537391570947107705
+    second: grass_2_6
   - first:
-      213: -731828287082498946
-    second: dirt_2_7
+      213: -7883024807272858916
+    second: grass_2_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -86,9 +86,9 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,9 +98,9 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -183,7 +183,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dirt_2_0
+      name: grass_2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -197,14 +197,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3693c867ed3d8ed0800000000000000
-      internalID: -2410202161468959170
+      spriteID: 0370f8f10cbb209a0800000000000000
+      internalID: -6268241297508726992
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirt_2_1
+      name: grass_2_1
       rect:
         serializedVersion: 2
         x: 128
@@ -218,14 +218,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49d396bf35af30fe0800000000000000
-      internalID: -1223859435107435116
+      spriteID: 0baa5ee3af0eca960800000000000000
+      internalID: 7614708435378350768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirt_2_2
+      name: grass_2_2
       rect:
         serializedVersion: 2
         x: 256
@@ -239,14 +239,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dabf3959b1b956d0800000000000000
-      internalID: -3001172267041309997
+      spriteID: 2f435fa9169389770800000000000000
+      internalID: 8617700978347816178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirt_2_3
+      name: grass_2_3
       rect:
         serializedVersion: 2
         x: 384
@@ -260,14 +260,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 593aa367c255ae1f0800000000000000
-      internalID: -1014905116568149099
+      spriteID: ac2a742f157100d80800000000000000
+      internalID: -8286597673637141814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirt_2_4
+      name: grass_2_4
       rect:
         serializedVersion: 2
         x: 64
@@ -281,14 +281,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d96e94c9f288d6a30800000000000000
-      internalID: 4210170964728211101
+      spriteID: 6ea61eed26cec6f30800000000000000
+      internalID: 4570287631264475878
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirt_2_5
+      name: grass_2_5
       rect:
         serializedVersion: 2
         x: 192
@@ -302,14 +302,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a076d310d16e1000800000000000000
-      internalID: 8551795615232166
+      spriteID: d40a9f6c0d8c123a0800000000000000
+      internalID: -6691846772278845363
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirt_2_6
+      name: grass_2_6
       rect:
         serializedVersion: 2
         x: 320
@@ -323,14 +323,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76bfc513f59380ef0800000000000000
-      internalID: -141800307249317017
+      spriteID: 7849018b0058645a0800000000000000
+      internalID: -6537391570947107705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirt_2_7
+      name: grass_2_7
       rect:
         serializedVersion: 2
         x: 448
@@ -344,8 +344,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e747ddfdc0608d5f0800000000000000
-      internalID: -731828287082498946
+      spriteID: cdab8ee24bed99290800000000000000
+      internalID: -7883024807272858916
       vertices: []
       indices: 
       edges: []

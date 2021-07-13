@@ -28,7 +28,6 @@ public class TilePlacementController : MonoBehaviour
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
-    private Dictionary<Tilemap, TileLayerManager> tilemapsToTileLayerManagers = new Dictionary<Tilemap, TileLayerManager>();
     private BuildBufferManager buildBufferManager;
     private int lastCornerX;
     private int lastCornerY;
@@ -39,7 +38,6 @@ public class TilePlacementController : MonoBehaviour
         grid = GetComponent<Grid>();
         foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
         {
-            this.tilemapsToTileLayerManagers.Add(tilemap, tilemap.GetComponent<TileLayerManager>());
             List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
             /*            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
                         {
@@ -114,10 +112,7 @@ public class TilePlacementController : MonoBehaviour
         this.godMode = false;
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
-        foreach (Tilemap tilemap in tilemaps)
-        {
-            this.tilemapsToTileLayerManagers[tilemap].ConfirmPlacement();
-        }
+        GridSystem.ConfirmPlacement();
         //RenderColorOfColorLinkedTiles(addedTiles.ToList());
         foreach (GameTile tile in referencedTiles)
         {
@@ -147,10 +142,10 @@ public class TilePlacementController : MonoBehaviour
     {
         foreach (GameTile tile in this.referencedTiles)
         {
-            GameTile currentTile = this.tilemapsToTileLayerManagers[GridSystem.Terrain].GetGameTileAt(this.currentMouseCellPosition);
+            GameTile currentTile = GridSystem.GetGameTileAt(this.currentMouseCellPosition);
             if (currentTile != null && currentTile == tile)
             {
-                this.tilemapsToTileLayerManagers[GridSystem.Terrain].RemoveTile(this.currentMouseCellPosition);
+                GridSystem.RemoveTile(this.currentMouseCellPosition);
             }
         }
     }
@@ -161,19 +156,16 @@ public class TilePlacementController : MonoBehaviour
 
     public void RevertChanges() // Go through each change and revert back to original
     {
-        foreach (Tilemap tilemap in tilemaps)
+        GridSystem.Revert();
+        // figure out what is going on here
+        /*
+        if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
         {
-            this.tilemapsToTileLayerManagers[tilemap].Revert();
-            // figure out what is going on here
-            /*
-            if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
-            {
-                List<Vector3Int> changedTiles = tileAttributes.changedTilesPositions;
-                changedTiles.AddRange(tileAttributes.addedTilePositions);
-                tileAttributes.Revert();
-                RenderColorOfColorLinkedTiles(changedTiles);
-            }*/
-        }
+            List<Vector3Int> changedTiles = tileAttributes.changedTilesPositions;
+            changedTiles.AddRange(tileAttributes.addedTilePositions);
+            tileAttributes.Revert();
+            RenderColorOfColorLinkedTiles(changedTiles);
+        }*/
         foreach (Vector3Int colorChangedTiles in removedTileColors.Keys)
         {
             removedTileColors[colorChangedTiles].Values.First().SetColor(colorChangedTiles, removedTileColors[colorChangedTiles].Keys.First());

@@ -1,17 +1,15 @@
 ﻿[System.Serializable]
 public class SerializedGrid
 {
-    public SerializedTilemap[] serializedTilemaps;
+    public SerializedTilemap serializedTilemap;
+    public float width;
+    public float height;
     // TODO Add other floating objects
 
-    public SerializedGrid(TileLayerManager[] tileLayerManagers)
+    public SerializedGrid(GridSystem gridSystem)
     {
-        this.serializedTilemaps = new SerializedTilemap[tileLayerManagers.Length];
-        int i = 0;
-        foreach(TileLayerManager tileLayerManager in tileLayerManagers)
-        {
-            this.serializedTilemaps[i] = tileLayerManager.Serialize();
-            i++;
-        }
+        serializedTilemap = gridSystem.SerializedTilemap();
+        width = gridSystem.ReserveWidth;
+        height = gridSystem.ReserveHeight;
     }
 }

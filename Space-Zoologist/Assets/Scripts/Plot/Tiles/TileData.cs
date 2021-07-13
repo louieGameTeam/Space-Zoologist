@@ -118,12 +118,4 @@ public class TileData
         this.isColorChanged = false;
         this.isLiquidBodyChanged = false;
     }
-    public SerializedTileData Serialize()
-    {
-        if (this.currentTile == null)
-        {
-            Debug.LogError("Tile is null at " + this.tilePosition);
-        }
-        return new SerializedTileData(this.tilePosition, this.currentTile, this.currentColor, this.currentLiquidBody);
-    }
 }

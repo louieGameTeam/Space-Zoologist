@@ -29,7 +29,6 @@ public class MapDesigningTool : MonoBehaviour
     private Vector2 animalScrollPos;
     private Vector2 foodScrollPos;
     private Camera mainCamera;
-    private Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>> ManagersToToggles = new Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>>();
     private void Awake()
     {
         this.levelIO = FindObjectOfType<LevelIO>();
@@ -229,37 +228,19 @@ public class MapDesigningTool : MonoBehaviour
         this.DisplayLiquidBodyInfo = GUILayout.Toggle(this.DisplayLiquidBodyInfo, "Liquid Body Info Display");
         if (this.DisplayLiquidBodyInfo)
         {
-            foreach (Tilemap tilemap in tilemaps)
-            {
-                if (tilemap.TryGetComponent(out TileLayerManager tileLayerManager))
-                {
-                    if (!tileLayerManager.holdsContent)
-                    {
-                        continue;
-                    }
-                    this.LiquidBodyScroll(tileLayerManager, tilemap);
-                    this.PreviewBodyScroll(tileLayerManager);
-                }
-            }
+            this.LiquidBodyScroll(gridSystem.tilemap);
+            this.PreviewBodyScroll();
         }
         GUILayout.EndVertical();
         GUILayout.EndArea();
     }
-    private void LiquidBodyScroll(TileLayerManager tileLayerManager, Tilemap tilemap)
+    private void LiquidBodyScroll(Tilemap tilemap)
     {
-        if (!this.ManagersToToggles.ContainsKey(tileLayerManager))
-        {
-            this.ManagersToToggles.Add(tileLayerManager, new Dictionary<LiquidBody, bool>());
-        }
         GUILayout.Box("Tilemap: " + tilemap.name);
-        GUILayout.Box("Active Liquid Bodies: " + tileLayerManager.liquidBodies.Count.ToString());
+        GUILayout.Box("Active Liquid Bodies: " + gridSystem.liquidBodies.Count.ToString());
         this.liquidScrollPos = GUILayout.BeginScrollView(liquidScrollPos, GUILayout.Width(200), GUILayout.Height(210));
-        foreach (LiquidBody liquidBody in tileLayerManager.liquidBodies)
+        foreach (LiquidBody liquidBody in gridSystem.liquidBodies)
         {
-            if (!this.ManagersToToggles[tileLayerManager].ContainsKey(liquidBody))
-            {
-                this.ManagersToToggles[tileLayerManager].Add(liquidBody, false);
-            }
             GUILayout.Box("LiquidBodyID: " + liquidBody.bodyID);
             GUILayout.Box("Composition");
             for (int i = 0; i < liquidBody.contents.Length; i++)
@@ -277,7 +258,7 @@ public class MapDesigningTool : MonoBehaviour
             bool validCrossReference = true;
             foreach (Vector3Int tile in liquidBody.tiles)
             {
-                if (tileLayerManager.positionsToTileData[tile].currentLiquidBody != liquidBody)
+                if (gridSystem.positionsToTileData[tile].currentLiquidBody != liquidBody)
                 {
                     validCrossReference = false;
                     break;
@@ -285,23 +266,18 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.Box("Referenced Bodies: " + liquidBody.referencedBodies.Count);
             GUILayout.Box("Valid Cross Reference: " + validCrossReference.ToString());
-            ManagersToToggles[tileLayerManager][liquidBody] = GUILayout.Toggle(ManagersToToggles[tileLayerManager][liquidBody], "View Area");
-            if (ManagersToToggles[tileLayerManager][liquidBody])
-            {
-                // View Area
-            }
         }
         GUILayout.EndScrollView();
     }
 
 
-    private void PreviewBodyScroll(TileLayerManager tileLayerManager)
+    private void PreviewBodyScroll()
     {
         int bodyCount = 0;
         this.previewBodyScrollPos = GUILayout.BeginScrollView(previewBodyScrollPos, GUILayout.Width(200), GUILayout.Height(210));
-        GUILayout.Box("Active Preview Bodies: " + tileLayerManager.previewBodies.Count.ToString());
+        GUILayout.Box("Active Preview Bodies: " + gridSystem.previewBodies.Count.ToString());
         this.DisplayPreviewBodies = GUILayout.Toggle(this.DisplayPreviewBodies, "Display Preview Bodies");
-        foreach (LiquidBody liquidBody in tileLayerManager.previewBodies)
+        foreach (LiquidBody liquidBody in gridSystem.previewBodies)
         {
             bodyCount++;
             GUILayout.Box("Body No. " + bodyCount);
@@ -317,7 +293,7 @@ public class MapDesigningTool : MonoBehaviour
             bool validCrossReference = true;
             foreach (Vector3Int tile in liquidBody.tiles)
             {
-                if (tileLayerManager.positionsToTileData[tile].currentLiquidBody != liquidBody)
+                if (gridSystem.positionsToTileData[tile].currentLiquidBody != liquidBody)
                 {
                     validCrossReference = false;
                     break;

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 165219529732ab948ab0bbf013f649b8, type: 3}
-  m_Name: Swamp
+  m_Name: Wall
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 6322334042830991268, guid: 6da8d59112793e44889e6bfbab5b217c,
+  m_Sprite: {fileID: -282635231382982036, guid: d38102d92c199b740872af6b8933722a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
@@ -36,8 +36,8 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 1
   tileTextures: []
-  TileName: swamp
-  type: 6
+  TileName: Wall
+  type: 5
   TileID: 0
   targetLayer: 0
   defaultContents: []
