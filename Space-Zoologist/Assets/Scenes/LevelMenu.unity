@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 66629194}
   - component: {fileID: 66629193}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: Music Queuer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   nextTrack:
     mainClip: {fileID: 8300000, guid: 877b08e06f70c424b9a4ed726d51e825, type: 3}
     startupClip: {fileID: 8300000, guid: f20e8bae733f34c10a40a8fcb91127d4, type: 3}
+  fading: 0
 --- !u!4 &66629194
 Transform:
   m_ObjectHideFlags: 0
