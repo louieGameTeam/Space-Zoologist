@@ -38,12 +38,6 @@ public class PlayTrace
         set { sessionID = value; }
     }
 
-    public string SessionID
-    {
-        get { return sessionID; }
-        set { sessionID = value; }
-    }
-
     public float SessionElapsedTime
     {
         get { return sessionElapsedTime; }
