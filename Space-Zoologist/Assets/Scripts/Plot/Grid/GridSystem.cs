@@ -12,22 +12,10 @@ using System.Linq;
 public delegate void BodyEmptyCallback(LiquidBody liquidBody);
 public class GridSystem : MonoBehaviour
 {
-    public enum AbsoluteDirection { Towards, Against, Parallel }
-
+    #region Enumerations
     private enum Direction2D { X, Y }
     private enum CellStatus { Other, Self, Walked }
     private enum MoveType { Towards, Parallel1, Parallel2, Away }
-    public bool holdsContent;
-    public Tilemap tilemap;
-    public Dictionary<Vector3Int, TileData> positionsToTileData { get; private set; } = new Dictionary<Vector3Int, TileData>();
-    private HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
-    public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
-    public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
-    private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
-    private BodyEmptyCallback bodyEmptyCallback;
-    [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
-                                                           // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
-
     // using prime numbers instead of binary for flagging LMAO
     public enum TileFlag
     {
@@ -35,19 +23,33 @@ public class GridSystem : MonoBehaviour
         HIGHLIGHT_FLAG = 0x3
     }
     private const float FLAG_VALUE_MULTIPLIER = 256f;
+    #endregion
 
+                                                           // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
+
+    #region Component References
     [SerializeField] public Grid Grid = default;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] public Tilemap Tilemap;
     private BuildBufferManager buildBufferManager;
+    #endregion
+
     [Header("Used to define 2d array")]
     [SerializeField] public int ReserveWidth = default;
     [SerializeField] public int ReserveHeight = default;
     public Vector3Int startTile = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
     public CellData[,] CellGrid = default;
+    public bool holdsContent;
+    public Dictionary<Vector3Int, TileData> positionsToTileData { get; private set; } = new Dictionary<Vector3Int, TileData>();
+    private HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
+    public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
+    public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
+    private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
+    private BodyEmptyCallback bodyEmptyCallback;
+    [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
 
     List<Vector3Int> HighlightedTiles;
     private Texture2D TilemapTexture;
@@ -96,12 +98,12 @@ public class GridSystem : MonoBehaviour
     private void InitializeTileLayerManager()
     {
         this.bodyEmptyCallback = OnLiquidBodyEmpty;
-        this.tilemap = this.gameObject.GetComponent<Tilemap>();
+        this.Tilemap = this.gameObject.GetComponent<Tilemap>();
         this.positionsToTileData = new Dictionary<Vector3Int, TileData>();
         this.liquidBodies = new HashSet<LiquidBody>();
         this.previewBodies = new List<LiquidBody>();
         this.RemovedTiles = new HashSet<Vector3Int>();
-        this.tilemap.ClearAllTiles();
+        this.Tilemap.ClearAllTiles();
     }
 
     private void Start()
@@ -141,11 +143,6 @@ public class GridSystem : MonoBehaviour
     }
     public void ChangeComposition(Vector3Int cellPosition, float[] contents)
     {
-        if (!this.holdsContent)
-        {
-            Debug.LogError("This tilemap does not hold content");
-            return;
-        }
         if (positionsToTileData.ContainsKey(cellPosition))
         {
             contents.CopyTo(positionsToTileData[cellPosition].currentLiquidBody.contents, 0);

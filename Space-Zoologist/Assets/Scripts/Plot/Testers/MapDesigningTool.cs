@@ -228,7 +228,7 @@ public class MapDesigningTool : MonoBehaviour
         this.DisplayLiquidBodyInfo = GUILayout.Toggle(this.DisplayLiquidBodyInfo, "Liquid Body Info Display");
         if (this.DisplayLiquidBodyInfo)
         {
-            this.LiquidBodyScroll(gridSystem.tilemap);
+            this.LiquidBodyScroll(gridSystem.Tilemap);
             this.PreviewBodyScroll();
         }
         GUILayout.EndVertical();
