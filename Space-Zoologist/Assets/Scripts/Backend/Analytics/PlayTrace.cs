@@ -7,42 +7,52 @@ using UnityEngine;
 public class PlayTrace
 {
     // BASIC INFORMATION
-    // The player's ID
+    // The player's ID.
     private string playerID;
-    // The play session ID
+    // The play session ID.
     private string sessionID;
     
     // TIME INFORMATION
-    // The total time elapsed throughout the play session
-    private float totalElapsedTime;
-    // The time spent in level 1
-    private float level1ElapsedTime;
-    // Time spent in journal/notebook
+    // The total time elapsed throughout the play session.
+    private float sessionElapsedTime;
 
-    // PROGRESSION INFORMATION
-    // A boolean indicating completion of the tutorial
-    private bool tutorialComplete;
-    // A boolean indicating completion of level 1
-    private bool level1Complete;
-
-    // DAY INFORMATION
-    // serialized day object saved at end of day
-    // how many animals were placed, tiles, food, etc
-    // removal of tiles
-    // how long particular UIs are on the screen for
-    // population data for each species
-        // detrimental tiles placed
-        // beneficial tiles placed
-    // currency information
-        // currency at start of day
-        // currency spent throughout the day
-    // notes that students make inside the journal
-    // click information
-        // timestamp, flag, target
+    // LEVEL INFORMATION
+    // A list of LevelTrace objects containing detailed information about the actions the player took in levels.
+    private List<LevelTrace> levelTraces;
     
     // IN-GAME ASSESSMENT INFORMATION
     // recorded dialogue answers
-    // 
 
-    // Click information
+    // CLICK INFORMATION
+
+    // PUBLIC GETTERS/SETTERS
+    public string PlayerID
+    {
+        get { return playerID; }
+        set { playerID = value; }
+    }
+
+    public string SessionID
+    {
+        get { return sessionID; }
+        set { sessionID = value; }
+    }
+
+    public string SessionID
+    {
+        get { return sessionID; }
+        set { sessionID = value; }
+    }
+
+    public float SessionElapsedTime
+    {
+        get { return sessionElapsedTime; }
+        set { sessionElapsedTime = value; }
+    }
+
+    public List<LevelTrace> LevelTraces
+    {
+        get { return levelTraces; }
+        set { levelTraces = value; }
+    }
 }

@@ -14,4 +14,29 @@ public class JournalTrace
     private float journalDeltaTime;
     // A string representing the notes the player took down in the journal (if any).
     private string journalNotes;
-}
+
+    // PUBLIC GETTERS/SETTERS
+    public float JournalStartTime
+    {
+        get { return journalStartTime; }
+        set { journalStartTime = value; }
+    }
+
+    public float JournalEndTime
+    {
+        get { return journalEndTime; }
+        set { journalEndTime = value; }
+    }
+
+    public float JournalDeltaTime
+    {
+        get { return journalDeltaTime; }
+        set { journalDeltaTime = value; }
+    }
+
+    public string JournalNotes
+    {
+        get { return journalNotes; }
+        set { journalNotes = value; }
+    }
+}   
