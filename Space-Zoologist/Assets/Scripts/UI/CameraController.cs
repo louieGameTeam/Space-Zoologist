@@ -1,10 +1,13 @@
-﻿using System.Collections;
+  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
+    private const float cameraAccel = 0.75f;
+    private const float deadzone = 0.01f;
+
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] private float zoomLerpSpeed = 5f;
     [SerializeField] bool EdgeMovement = false;
@@ -19,6 +22,7 @@ public class CameraController : MonoBehaviour
     private float zoomFactor = 3f;
     private Vector3 dragOrigin;
     private Vector3 oldPos;
+    private Vector2 currentVelocity;
 
     void Start()
     {
@@ -49,30 +53,62 @@ public class CameraController : MonoBehaviour
 
     private void HandleKeyboard()
     {
-        float yValue = 0.0f;
-        float xValue = 0.0f;
-        if (Input.GetKey(KeyCode.W))
+        float xValue = currentVelocity.x;
+        float yValue = currentVelocity.y;
+        float zoomScalar = targetZoom/zoomHeight; //Scale the camera's speed by the zoom amount
+
+        float accleration = cameraAccel * zoomScalar * Time.deltaTime;
+        float maxSpeed = WASDSpeed * zoomScalar;
+
+        if (Input.GetKey(KeyCode.A)) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
         {
-            yValue = WASDSpeed;
+            if(xValue > -maxSpeed)
+                xValue -= accleration;
         }
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.D)) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
         {
-            yValue = -WASDSpeed;
+            if(xValue < maxSpeed)
+                xValue += accleration;
         }
-        if (Input.GetKey(KeyCode.A))
+        else if(Mathf.Abs(xValue) <= deadzone) //If within deadzone, set velocity to 0
         {
-            xValue = -WASDSpeed;
+            xValue = 0;
         }
-        if (Input.GetKey(KeyCode.D))
+        else //Otherwise, exert drag on the camera
         {
-            xValue = WASDSpeed;
+            xValue -= accleration * Mathf.Sign(xValue);
         }
-        Vector3 newPosition = new Vector3(transform.position.x + xValue, transform.position.y + yValue, -10);
-        if (!this.IsValidLocation(newPosition))
+
+        if (Input.GetKey(KeyCode.S)) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
         {
-            return;
+            if(yValue > -maxSpeed)
+                yValue -= accleration;
         }
-        this.transform.position = newPosition;
+        else if (Input.GetKey(KeyCode.W)) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
+        {
+            if(yValue < maxSpeed)
+                yValue += accleration;
+        }
+        else if(Mathf.Abs(yValue) <= deadzone) //If within deadzone, set velocity to 0
+        {
+            yValue = 0;
+        }
+        else //Otherwise, exert drag on the camera
+        {
+            yValue -= accleration * Mathf.Sign(yValue);
+        }
+
+        Vector3 attemptedPosition = new Vector3(transform.position.x + xValue, transform.position.y + yValue, -10);
+
+        if(attemptedPosition.x < 0 || attemptedPosition.x > MapWidth)
+            xValue = 0;
+
+        if(attemptedPosition.y < 0 || attemptedPosition.y > MapHeight)
+            yValue = 0;
+
+        this.transform.position = new Vector3(transform.position.x + xValue, transform.position.y + yValue, -10);
+
+        currentVelocity = new Vector2(xValue, yValue);
     }
 
     private void HandleMouse()
