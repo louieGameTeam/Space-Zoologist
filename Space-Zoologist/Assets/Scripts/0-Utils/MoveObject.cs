@@ -141,24 +141,24 @@ public class MoveObject : MonoBehaviour
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        GridSystem.CellData cellData = getCellData(pos);
+        GridSystem.TileData tileData = gridSystem.GetTileData(pos);
         GameObject toMove = null;
 
-        if (cellData.OutOfBounds)
+        if (tileData == null)
         {
             return null;
         }
 
-        if (cellData.ContainsAnimal)
+        if (tileData.Animal)
         {
-            toMove = cellData.Animal;
+            toMove = tileData.Animal;
             movingAnimal = true;
             string ID = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
             tempItem.SetupData(ID, "Pod", ID, 0);
         }
-        else if (cellData.ContainsFood)
+        else if (tileData.Food)
         {
-            toMove = cellData.Food;
+            toMove = tileData.Food;
             movingAnimal = false;
             string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
             tempItem.SetupData(ID, "Food", ID, 0);
@@ -274,20 +274,5 @@ public class MoveObject : MonoBehaviour
         Vector3Int FoodLocation = gridSystem.Grid.WorldToCell(initialPos);
         gridSystem.RemoveFood(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource);
-    }
-
-    private GridSystem.CellData getCellData(Vector3Int cellPos)
-    {
-        GridSystem.CellData cellData = new GridSystem.CellData();
-        // Handles index out of bound exception
-        if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
-        {
-            cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
-        }
-        else
-        {
-            cellData.OutOfBounds = true;
-        }
-        return cellData;
     }
 }

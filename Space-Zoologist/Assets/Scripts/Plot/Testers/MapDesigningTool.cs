@@ -207,7 +207,7 @@ public class MapDesigningTool : MonoBehaviour
         GUILayout.Box("Cell Pos: " + cellPosition);
         GameTile gameTile = this.gridSystem.GetGameTileAt(cellPosition);
         string name = gameTile ? gameTile.name : "Null";
-        LiquidBody liquid = this.gridSystem.GetLiquidBodyAt(cellPosition);
+        LiquidBody liquid = this.gridSystem.GetTileData(cellPosition).currentLiquidBody;
         string bodyID = "Null";
         string con = "Null";
         if (liquid != null)
@@ -256,9 +256,9 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.Box("Tile Count: " + liquidBody.tiles.Count);
             bool validCrossReference = true;
-            foreach (Vector3Int tile in liquidBody.tiles)
+            foreach (Vector3Int tilePosition in liquidBody.tiles)
             {
-                if (gridSystem.positionsToTileData[tile].currentLiquidBody != liquidBody)
+                if (gridSystem.GetTileData(tilePosition).currentLiquidBody != liquidBody)
                 {
                     validCrossReference = false;
                     break;
@@ -291,9 +291,9 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.Box("Tile Count: " + liquidBody.tiles.Count);
             bool validCrossReference = true;
-            foreach (Vector3Int tile in liquidBody.tiles)
+            foreach (Vector3Int tilePosition in liquidBody.tiles)
             {
-                if (gridSystem.positionsToTileData[tile].currentLiquidBody != liquidBody)
+                if (gridSystem.GetTileData(tilePosition).currentLiquidBody != liquidBody)
                 {
                     validCrossReference = false;
                     break;

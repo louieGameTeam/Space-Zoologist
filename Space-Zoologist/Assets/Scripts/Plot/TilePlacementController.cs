@@ -208,7 +208,7 @@ public class TilePlacementController : MonoBehaviour
             PlaceTile(currentMouseCellPosition);
             return;
         }
-        if (!GridSystem.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
+        if (!GridSystem.FourNeighborTileLocations(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
         {
             if (currentMouseCellPosition.x == lastPlacedTile.x)// Handles divide by zero exception
             {
@@ -294,7 +294,7 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        foreach (Vector3Int location in GridSystem.FourNeighborTiles(cellPosition))
+        foreach (Vector3Int location in GridSystem.FourNeighborTileLocations(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
@@ -331,7 +331,7 @@ public class TilePlacementController : MonoBehaviour
     }
     private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile, Tilemap targetTilemap)
     {
-        foreach (Vector3Int tileToCheck in GridSystem.FourNeighborTiles(cellLocation))
+        foreach (Vector3Int tileToCheck in GridSystem.FourNeighborTileLocations(cellLocation))
         {
             if (!neighborTiles.Contains(tileToCheck) && targetTilemap.GetTile(tileToCheck) == tile)
             {
@@ -350,8 +350,8 @@ public class TilePlacementController : MonoBehaviour
         {
             return false;
         }
-        GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
-        if (cellData.ContainsFood)
+        GridSystem.TileData tileData = GridSystem.GetTileData(cellLocation);
+        if (tileData.Food)
         {
             return false;
         }

@@ -53,8 +53,8 @@ public class FoodSourceManager : GridObjectManager
         {
             foodSources.Add(food.GetComponent<FoodSource>());
             Vector3Int GridPosition = GridSystem.WorldToCell(food.transform.position);
-            GridSystem.CellGrid[GridPosition.x, GridPosition.y].ContainsFood = true;
-            GridSystem.CellGrid[GridPosition.x, GridPosition.y].Food = food;
+
+            GridSystem.GetTileData(GridPosition).Food = food;
         }
 
         // Register Foodsource with NeedSystem via NeedSystemManager

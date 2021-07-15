@@ -24,9 +24,11 @@ public class EatingPattern : UniversalAnimatorPattern
                 {
                     continue;
                 }
-                if (GridSystem.isCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsFood)
+                Vector3Int loopedTile = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);
+
+                if (GridSystem.isCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.GetTileData(loopedTile).Food)
                 {
-                    if (GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
+                    if (GridSystem.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
                     {
                         this.AnimatorTriggerName = GetTriggerName(i, j);
                         base.EnterPattern(animal, animalData);

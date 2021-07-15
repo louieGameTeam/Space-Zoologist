@@ -9,7 +9,10 @@ public class SerializedGrid
     public SerializedGrid(GridSystem gridSystem)
     {
         serializedTilemap = gridSystem.SerializedTilemap();
-        width = gridSystem.ReserveWidth;
-        height = gridSystem.ReserveHeight;
+
+        UnityEngine.Vector3Int TilemapDimensions = gridSystem.GetReserveDimensions();
+
+        width = TilemapDimensions.x;
+        height = TilemapDimensions.y;
     }
 }

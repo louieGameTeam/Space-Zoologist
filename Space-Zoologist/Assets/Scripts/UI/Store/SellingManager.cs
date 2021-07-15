@@ -60,12 +60,12 @@ public class SellingManager : MonoBehaviour
 
             // What is on the tile?
             GameTile tile = gridSystem.GetGameTileAt(cellPos);
-            GridSystem.CellData cellData;
+            GridSystem.TileData tileData;
 
             // Find out what is on the tile if it is in bounds
             if (gridSystem.isCellinGrid(cellPos.x, cellPos.y))
             {
-                cellData = gridSystem.CellGrid[cellPos.x, cellPos.y];
+                tileData = gridSystem.GetTileData(cellPos);
             }
             else
             {
@@ -76,9 +76,9 @@ public class SellingManager : MonoBehaviour
 
             // Only deleting 1 item on each click, so split into if/else. By priority:
             // 1. Sell the food
-            if (cellData.ContainsFood)
+            if (tileData.Food)
             {
-                SellFoodOnTile(cellData, cellPos);
+                SellFoodOnTile(tileData, cellPos);
 
             }
             // 2. Sell the wall
@@ -89,9 +89,9 @@ public class SellingManager : MonoBehaviour
         }
     }
 
-    private void SellFoodOnTile(GridSystem.CellData cellData, Vector3Int cellPos)
+    private void SellFoodOnTile(GridSystem.TileData tileData, Vector3Int cellPos)
     {
-        GameObject food = cellData.Food;
+        GameObject food = tileData.Food;
         string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
         foreach (Item item in LevelDataReference.LevelData.Items)
         {
@@ -105,8 +105,7 @@ public class SellingManager : MonoBehaviour
 
 
         // Clean up CellData
-        gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsFood = false;
-        gridSystem.CellGrid[cellPos.x, cellPos.y].Food = null;
+        tileData.Food = null;
     }
 
     private void SellWallOnTile(Vector3Int cellPos)

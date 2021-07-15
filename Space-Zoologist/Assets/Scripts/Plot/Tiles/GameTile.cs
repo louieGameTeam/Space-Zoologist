@@ -11,7 +11,5 @@ public class GameTile : Tile
 	public Texture[] tileTextures;
 	public string TileName;
 	public TileType type;
-	public int TileID;
-	public GridSystem.TileLayer targetLayer;
 	public float[] defaultContents = null;
 }

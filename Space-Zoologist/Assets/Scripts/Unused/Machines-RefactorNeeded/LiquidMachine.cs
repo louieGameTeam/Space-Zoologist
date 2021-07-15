@@ -29,6 +29,6 @@ public class LiquidMachine : Machine
 
     public void UpdateLiquid(float[] liquidComposition)
     {
-        this.gridSystem.ChangeLiquidBodyComposition(this.position, liquidComposition);
+        this.gridSystem.SetLiquidComposition(this.position, liquidComposition);
     }
 }

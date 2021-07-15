@@ -47,24 +47,16 @@ public class Selector : MonoBehaviour
 
             //Debug.Log($"Mouse click at {cellPos}");
 
-            GridSystem.CellData cellData;
+            GridSystem.TileData cellData = gridSystem.GetTileData(cellPos);
 
-            // Handles index out of bound exception
-            if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
-            {
-                cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
-            }
-            else
-            {
-                // Debug.Log($"Grid location selected was out of bounds @ {cellPos}");
+            if (cellData == null)
                 return;
-            }
 
             this.UnHighlightAll();
             //this.ResetSelection();
 
             // Check if selection is anaiaml
-            if (cellData.ContainsAnimal)
+            if (cellData.Animal)
             {
                 // Highlight selected population 
                 this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
@@ -74,7 +66,7 @@ public class Selector : MonoBehaviour
                 this.SelectedPopulation = cellData.Animal.GetComponent<Animal>().PopulationInfo;
             }
             // Selection is food source or item
-            else if (cellData.ContainsFood)
+            else if (cellData.Food)
             {
                 this.HighlightFoodSource(cellData.Food);
 

@@ -25,8 +25,6 @@ public class GridSystem : MonoBehaviour
     private const float FLAG_VALUE_MULTIPLIER = 256f;
     #endregion
 
-                                                           // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
-
     #region Component References
     [SerializeField] public Grid Grid = default;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
@@ -37,22 +35,26 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     [Header("Used to define 2d array")]
-    [SerializeField] public int ReserveWidth = default;
-    [SerializeField] public int ReserveHeight = default;
-    public Vector3Int startTile = default;
+    [SerializeField] private int ReserveWidth = default;
+    [SerializeField] private int ReserveHeight = default;
     // Food and home locations updated when added, animal locations updated when the store opens up.
-    public CellData[,] CellGrid = default;
-    public bool holdsContent;
-    public Dictionary<Vector3Int, TileData> positionsToTileData { get; private set; } = new Dictionary<Vector3Int, TileData>();
+    // grid is accessed using [y, x] due to 2d array structure
+    private TileData[,] TileDataGrid = default;
     private HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
     private BodyEmptyCallback bodyEmptyCallback;
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
+                                                           // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
+
+    public Vector3Int startTile = default;
     List<Vector3Int> HighlightedTiles;
     private Texture2D TilemapTexture;
+
+    public bool HasTerrainChanged = false;
+    public List<Vector3Int> changedTiles = new List<Vector3Int>();
 
     #region Monobehaviour Callbacks
     private void Awake()
@@ -69,25 +71,21 @@ public class GridSystem : MonoBehaviour
         TilemapTexture.wrapMode = TextureWrapMode.Repeat;
         TilemapTexture.Apply();
 
+        // add texture to material
         TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
         renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
         HighlightedTiles = new List<Vector3Int>();
 
-        this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
-        for (int i=0; i<this.ReserveWidth; i++)
+        // set up the entire tile data grid
+        this.TileDataGrid = new TileData[this.ReserveHeight, this.ReserveWidth];
+        for (int i=0; i<this.ReserveHeight; i++)
         {
-            for (int j=0; j<this.ReserveHeight; j++)
+            for (int j=0; j<this.ReserveWidth; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
 
-                if (startTile == default)
-                {
-                    startTile = loc;
-                }
-
-                // every cell is currently in bounds if they are within the reserved size
-                this.CellGrid[i, j] = new CellData(true);
+                this.TileDataGrid[i, j] = new TileData(loc);
             }
         }
 
@@ -95,11 +93,10 @@ public class GridSystem : MonoBehaviour
         InitializeTileLayerManager();
     }
 
+    // do something about this
     private void InitializeTileLayerManager()
     {
         this.bodyEmptyCallback = OnLiquidBodyEmpty;
-        this.Tilemap = this.gameObject.GetComponent<Tilemap>();
-        this.positionsToTileData = new Dictionary<Vector3Int, TileData>();
         this.liquidBodies = new HashSet<LiquidBody>();
         this.previewBodies = new List<LiquidBody>();
         this.RemovedTiles = new HashSet<Vector3Int>();
@@ -111,8 +108,8 @@ public class GridSystem : MonoBehaviour
         this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
 
         // temporary to show effect
-        ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
-        ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
+        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
+        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
 
         try
         {
@@ -131,26 +128,17 @@ public class GridSystem : MonoBehaviour
         }
         catch { };
     }
+
+    // note that this will not work on web browsers, will need to find alternate solution
+    private void OnApplicationQuit()
+    {
+        // turn off grid toggle no matter what (material is permanently changed)
+        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", 0);
+    }
     #endregion
 
-    public LiquidBody GetLiquidBodyAt(Vector3Int cellPosition)
-    {
-        if (positionsToTileData.ContainsKey(cellPosition))
-        {
-            return positionsToTileData[cellPosition].currentLiquidBody;
-        }
-        return null;
-    }
-    public void ChangeComposition(Vector3Int cellPosition, float[] contents)
-    {
-        if (positionsToTileData.ContainsKey(cellPosition))
-        {
-            contents.CopyTo(positionsToTileData[cellPosition].currentLiquidBody.contents, 0);
-            return;
-        }
-        Debug.LogError(cellPosition + "Does not have tile present");
-
-    }
+    #region I/O
+    // todo: refactor to make parsing in more obvious
     public void ParseSerializedTilemap(SerializedTilemap serializedTilemap, GameTile[] gameTiles)
     {
         InitializeTileLayerManager();
@@ -183,6 +171,7 @@ public class GridSystem : MonoBehaviour
             ApplyChangesToTilemap(tileData.tilePosition);
             */
         }
+        // set the starting tile here for flood filling
     }
     private LiquidBody ParseSerializedLiquidBody(SerializedLiquidBody serializedLiquidBody)
     {
@@ -198,90 +187,171 @@ public class GridSystem : MonoBehaviour
         }
         return new LiquidBody(tiles, serializedLiquidBody.Contents, this.bodyEmptyCallback, serializedLiquidBody.BodyID);
     }
-    /*
-    private TileData ParseSerializedTileData(SerializedTileData serializedTileData, GameTile gameTile, Dictionary<int, LiquidBody> bodyIDsToLiquidBodies)
-    {
-        
-        Vector3Int position = new Vector3Int(serializedTileData.TilePosition[0], serializedTileData.TilePosition[1], serializedTileData.TilePosition[2]);
-        Color color = new Color(serializedTileData.Color[0], serializedTileData.Color[1], serializedTileData.Color[2], serializedTileData.Color[3]);
-        LiquidBody liquidBody = null;
-        if (serializedTileData.LiquidBodyID != 0)
-        {
-            liquidBody = bodyIDsToLiquidBodies[serializedTileData.LiquidBodyID];
-        }
-        
-        return new TileData(gameTile, position, color, liquidBody);
-    }*/
 
-    public void UpdateContents(Vector3Int tilePosition, float[] contents)
+    public SerializedTilemap SerializedTilemap()
     {
-        if (!this.holdsContent)
-        {
-            Debug.LogError("Tile at this location does not hold contents");
-            return;
-        }
-        this.positionsToTileData[tilePosition].currentLiquidBody.contents = contents;
-        // TODO Update color
+        // Debug.Log("Serialize " + this.tilemap.name);
+        // temporarily make new list until full implementation
+        return new SerializedTilemap("Tilemap", new List<TileData>(), this.liquidBodies);
+    }
+    #endregion
+
+    #region Tile Accessors
+
+    /// <summary>
+    /// Method to access the TileDataGrid without confusion due to 2d array behaviour.
+    /// </summary>
+    /// <param name="tilePosition">Vector of tile position.</param>
+    /// <returns>Tile data at that position.</returns>
+    public TileData GetTileData(Vector3Int tilePosition)
+    {
+        if (IsWithinGridBounds(tilePosition))
+            return TileDataGrid[tilePosition.y, tilePosition.x];
+        else
+            return null;
     }
 
-    public void AddTile(Vector3Int cellPosition, GameTile tile)
+    /// <summary>
+    /// Adds a tile to the tilemap and internal grid.
+    /// </summary>
+    /// <param name="tilePosition">Vector of tile position.</param>
+    /// <param name="tile">Tile to be added.</param>
+    public void AddTile(Vector3Int tilePosition, GameTile tile)
     {
+        TileData tileData = GetTileData(tilePosition);
 
-        if (!this.positionsToTileData.ContainsKey(cellPosition)) //Create empty
-        {
-            this.positionsToTileData.Add(cellPosition, new TileData(cellPosition));
-        }
-        if (this.holdsContent)
-        {
-            this.positionsToTileData[cellPosition].PreviewLiquidBody(MergeLiquidBodies(cellPosition, tile));
-        }
-        this.positionsToTileData[cellPosition].PreviewReplacement(tile);
-        this.ChangedTiles.Add(cellPosition);
-        this.ApplyChangesToTilemap(cellPosition);
-        // TODO update color
+        tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+        tileData.PreviewReplacement(tile);
+        ChangedTiles.Add(tilePosition);
+        ApplyChangesToTilemap(tilePosition);
+        // TODO update color of liquidbody
     }
-    public void RemoveTile(Vector3Int cellPosition)
+
+    /// <summary>
+    /// Removes a tile from the tilemap and internal grid.
+    /// </summary>
+    /// <param name="tilePosition">Vector of tile position.</param>
+    public void RemoveTile(Vector3Int tilePosition)
     {
-        if (this.positionsToTileData.ContainsKey(cellPosition))
+        TileData tileData = GetTileData(tilePosition);
+
+        RemovedTiles.Add(tilePosition);
+        DivideLiquidBody(tilePosition);
+        tileData.PreviewReplacement(null);
+        ChangedTiles.Add(tilePosition);
+        ApplyChangesToTilemap(tilePosition);
+    }
+
+
+    /// <summary>
+    /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
+    /// </summary>
+    /// <param name="cellLocation"> Position of the cell. </param>
+    /// <returns></returns>
+    public GameTile GetGameTileAt(Vector3Int cellLocation)
+    {
+        if (IsWithinGridBounds(cellLocation))
+            return Tilemap.GetTile<GameTile>(cellLocation);
+
+        return null;
+    }
+
+    /// <summary>
+    /// Whether a tile exists at given location, regardless to overlapping
+    /// </summary>
+    /// <param name="cellLocation"></param>
+    /// <param name="tile"></param>
+    /// <returns></returns>
+    public bool TileExistsAtLocation(Vector3Int cellLocation, GameTile tile)
+    {
+        return Tilemap.GetTile(cellLocation) == tile;
+    }
+
+    /// <summary>
+    /// Returns contents within a tile, e.g. Liquid Composition. If tile has no content, returns null.
+    /// </summary>
+    /// <param name="cellPosition"> Position of the cell. </param>
+    /// <returns></returns>
+    public float[] GetTileContentsAt(Vector3Int cellPosition, GameTile tile = null)
+    {
+        tile = tile == null ? GetGameTileAt(cellPosition) : tile;
+        if (tile != null)
         {
-            this.RemovedTiles.Add(cellPosition);
-            if (this.holdsContent)
+            return GetTileData(cellPosition).currentLiquidBody.contents;
+        }
+        return null;
+    }
+
+    public void AddFood(Vector3Int gridPosition, int size, GameObject foodSource)
+    {
+        int radius = size / 2;
+        Vector3Int pos;
+        int offset = 0;
+        if (size % 2 == 0)
+        {
+            offset = 1;
+        }
+        // Check if the whole object is in bounds
+        for (int x = (-1) * (radius - offset); x <= radius; x++)
+        {
+            for (int y = (-1) * (radius - offset); y <= radius; y++)
             {
-                this.DivideLiquidBody(cellPosition);
+                pos = gridPosition;
+                pos.x += x;
+                pos.y += y;
+                GetTileData(pos).Food = foodSource;
             }
-            this.positionsToTileData[cellPosition].PreviewReplacement(null);
-            this.ChangedTiles.Add(cellPosition);
-            this.ApplyChangesToTilemap(cellPosition);
         }
-
     }
+
+    // Remove the food source on this tile, a little inefficient
+    public void RemoveFood(Vector3Int gridPosition)
+    {
+        Vector3Int pos = gridPosition;
+        GameObject foodSource = GetTileData(pos).Food;
+        if (!foodSource) return;
+
+        int size = foodSource.GetComponent<FoodSource>().Species.Size;
+
+        for (int dx = -size; dx < size; dx++)
+        {
+            for (int dy = -size; dy < size; dy++)
+            {
+                TileData cell = GetTileData(new Vector3Int(pos.x + dx, pos.y + dy, 0));
+                if (cell.Food && ReferenceEquals(cell.Food, foodSource))
+                {
+                    cell.Food = null;
+                }
+            }
+        }
+    }
+    #endregion
+
+    // no idea what this function actually does (naming wrong?)
     public void ConfirmPlacement()
     {
-        if (!this.holdsContent)
+        foreach (Vector3Int tilePosition in this.ChangedTiles)
         {
-            foreach (Vector3Int tile in this.ChangedTiles)
-            {
-                this.positionsToTileData[tile].ConfirmReplacement();
-            }
+            GetTileData(tilePosition).ConfirmReplacement();
         }
         foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
         {
-            foreach (Vector3Int tile in previewLiquidBody.tiles)
+            foreach (Vector3Int tilePosition in previewLiquidBody.tiles)
             {
-                this.positionsToTileData[tile].ConfirmReplacement();
+                GetTileData(tilePosition).ConfirmReplacement();
             }
             this.liquidBodies.ExceptWith(previewLiquidBody.referencedBodies);
             previewLiquidBody.ClearReferencedBodies();
             this.GenerateNewLiquidBodyID(previewLiquidBody);
             this.liquidBodies.Add(previewLiquidBody);
         }
-        foreach (Vector3Int cellPosition in this.RemovedTiles)
+        foreach (Vector3Int tilePosition in this.RemovedTiles)
         {
-            this.positionsToTileData[cellPosition].ConfirmReplacement();
-            this.positionsToTileData.Remove(cellPosition);
+            this.GetTileData(tilePosition).ConfirmReplacement();
         }
         this.ClearAll();
     }
+    // no idea either
     public void Revert()
     {
         foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
@@ -289,33 +359,114 @@ public class GridSystem : MonoBehaviour
             this.ChangedTiles.UnionWith(previewLiquidBody.tiles);
             previewLiquidBody.Clear();
         }
-        foreach (Vector3Int changedTile in this.ChangedTiles)
+        foreach (Vector3Int changedTilePosition in this.ChangedTiles)
         {
-            this.positionsToTileData[changedTile].Revert();
-            this.ApplyChangesToTilemap(changedTile);
-            if (this.positionsToTileData[changedTile].currentTile == null)
-            {
-                this.positionsToTileData[changedTile].Clear();
-                this.positionsToTileData.Remove(changedTile);
-            }
+            TileData tileData = GetTileData(changedTilePosition);
+
+            tileData.Revert();
+            this.ApplyChangesToTilemap(changedTilePosition);
+            if (tileData.currentTile == null)
+                tileData.Clear();
         }
         this.ClearAll();
-        //System.GC.Collect();
     }
+    // no idea either
     private void ClearAll()
     {
         this.RemovedTiles = new HashSet<Vector3Int>();
         this.ChangedTiles = new HashSet<Vector3Int>();
         this.previewBodies = new List<LiquidBody>();
     }
-    private void ApplyChangesToTilemap(Vector3Int cellPosition)
+    private void ApplyChangesToTilemap(Vector3Int tilePosition)
     {
-        TileData data = positionsToTileData[cellPosition];
+        TileData data = GetTileData(tilePosition);
 
-        this.tilemap.SetTile(cellPosition, data.currentTile);
-        this.tilemap.SetTileFlags(cellPosition, TileFlags.None);
-        this.tilemap.SetColor(cellPosition, data.currentColor);
+        Tilemap.SetTile(tilePosition, data.currentTile);
+        Tilemap.SetTileFlags(tilePosition, TileFlags.None);
+        Tilemap.SetColor(tilePosition, data.currentColor);
     }
+
+    #region Liquidbody Methods
+    private void OnLiquidBodyEmpty(LiquidBody liquidBody)
+    {
+        if (liquidBodies.Remove(liquidBody))
+        {
+            Debug.Log("Liquid Body Removed");
+        }
+        if (previewBodies.Remove(liquidBody))
+        {
+            Debug.Log("Preview Body Removed");
+        }
+    }
+
+    private void UpdatePreviewLiquidBody(LiquidBody liquidBody)
+    {
+        foreach (Vector3Int tileCellPosition in liquidBody.tiles)
+        {
+            GetTileData(tileCellPosition).PreviewLiquidBody(liquidBody);
+        }
+    }
+
+    /// <summary>
+    /// Changes composition of liquidbody at the specified position.
+    /// Note: This only applies to liquid so far
+    /// </summary>
+    /// <param name="tilePosition">Vector of tile position.</param>
+    /// <param name="contents">Contents to be added.</param>
+    public void SetLiquidComposition(Vector3Int tilePosition, float[] contents)
+    {
+        TileData tileData = GetTileData(tilePosition);
+
+        // check if it is even liquid
+        if (tileData.currentTile.type != TileType.Liquid)
+        {
+            Debug.LogError(tilePosition + "Not a liquid tile.");
+            return;
+        }
+
+        if (tileData != null)
+        {
+            contents.CopyTo(tileData.currentLiquidBody.contents, 0);
+
+            EventManager.Instance.InvokeEvent(EventType.LiquidChange, tilePosition);
+            // TODO Update color
+            return;
+        }
+
+        Debug.LogError(tilePosition + "Does not have tile present");
+    }
+    /// <summary>
+    /// Returns all liquid tiles belong to the same liquid body at the given location
+    /// </summary>
+    /// <param name="location">Cell location of any liquid tile within the body to change</param>
+    /// <returns></returns>
+    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int location)
+    {
+        List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
+        GameTile terrainTile = GetGameTileAt(location);
+        liquidBodyTiles.Add(location);
+        GetNeighborLiquidLocations(location, terrainTile, liquidBodyTiles);
+        return liquidBodyTiles;
+    }
+
+    private void GetNeighborLiquidLocations(Vector3Int location, GameTile tile, List<Vector3Int> liquidBodyTiles)
+    {
+        foreach (Vector3Int tileToCheck in FourNeighborTileLocations(location))
+        {
+            if (
+                Tilemap.GetTile(tileToCheck) == tile &&
+                GetTileContentsAt(tileToCheck, tile) != null &&
+                !liquidBodyTiles.Contains(tileToCheck))
+            {
+                liquidBodyTiles.Add(tileToCheck);
+                GetNeighborLiquidLocations(tileToCheck, tile, liquidBodyTiles);
+            }
+            GameTile thisTile = (GameTile)Tilemap.GetTile(tileToCheck);
+            float[] contents = GetTileContentsAt(tileToCheck, tile);
+        }
+    }
+
+    // i don't even know where to begin
     private void GenerateNewLiquidBodyID(LiquidBody previewLiquidBody)
     {
         int newID = 1;
@@ -338,38 +489,30 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    public SerializedTilemap SerializedTilemap()
-    {
-        // Debug.Log("Serialize " + this.tilemap.name);
-        // temporarily make new list until full implementation
-        return new SerializedTilemap("Tilemap", new List<TileData>(), this.liquidBodies);
-    }
     /// <summary>
     /// Merge Current Tile to existing liquid bodies
     /// </summary>
-    /// <param name="cellPosition"></param>
-    /// <param name="tile"></param>
-    /// <param name="contents"></param>
-    /// <returns></returns>
-    private LiquidBody MergeLiquidBodies(Vector3Int cellPosition, GameTile tile)
+    /// <param name="tilePosition">Vector position of tile.</param>
+    /// <param name="tile">Tile to be checked.</param>
+    /// <returns>New liquid body created.</returns>
+    private LiquidBody MergeLiquidBodies(Vector3Int tilePosition, GameTile tile)
     {
-        if (!this.holdsContent)
-        {
-            return null;
-        }
         HashSet<LiquidBody> neighborLiquidBodies = new HashSet<LiquidBody>();
-        foreach (Vector3Int neighborCell in FourNeighborTileCellPositions(cellPosition))
+        // look through neighbor tiles and count their liquid bodies
+        foreach (Vector3Int neighborPosition in FourNeighborTileLocations(tilePosition))
         {
-            if (positionsToTileData.ContainsKey(neighborCell) && positionsToTileData[neighborCell].currentTile == tile)
+            TileData neightborTileData = GetTileData(neighborPosition);
+
+            if (neightborTileData.currentTile == tile)
             {
-                neighborLiquidBodies.Add(positionsToTileData[neighborCell].currentLiquidBody);
+                neighborLiquidBodies.Add(neightborTileData.currentLiquidBody);
             }
         }
         switch (neighborLiquidBodies.Count)
         {
             case 0: // Create new body
                 HashSet<Vector3Int> newBodyTiles = new HashSet<Vector3Int>();
-                newBodyTiles.Add(cellPosition);
+                newBodyTiles.Add(tilePosition);
                 LiquidBody newBody = new LiquidBody(newBodyTiles, tile.defaultContents, this.bodyEmptyCallback);
                 this.previewBodies.Add(newBody);
                 return newBody;
@@ -378,20 +521,20 @@ public class GridSystem : MonoBehaviour
                 List<LiquidBody> liquidBodyL = neighborLiquidBodies.ToList();
                 if (liquidBodyL[0].bodyID == 0) // Preview Liquid Body, newly placed tile
                 {
-                    liquidBodyL[0].AddTile(cellPosition);
+                    liquidBodyL[0].AddTile(tilePosition);
                     return liquidBodyL[0];
                 }
-                LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], cellPosition);
+                LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], tilePosition);
                 foreach (Vector3Int position in extendedBody.tiles)
                 {
-                    this.positionsToTileData[position].PreviewLiquidBody(extendedBody);
+                    this.GetTileData(position).PreviewLiquidBody(extendedBody);
                 }
                 this.previewBodies.Add(extendedBody);
                 return extendedBody;
 
             default: // Merge Multiple bodies, including new bodies generated by the placement
                 LiquidBody mergedBody = new LiquidBody(neighborLiquidBodies, bodyEmptyCallback);
-                mergedBody.AddTile(cellPosition);
+                mergedBody.AddTile(tilePosition);
                 this.previewBodies.Add(mergedBody);
                 foreach (LiquidBody liquidBody in mergedBody.referencedBodies)
                 {
@@ -404,18 +547,18 @@ public class GridSystem : MonoBehaviour
                 return mergedBody;
         }
     }
-    private void DivideLiquidBody(Vector3Int cellPosition)
+
+    /// <summary>
+    /// Divide existing liquid bodies
+    /// </summary>
+    /// <param name="tilePosition">Vector position of tile.</param>
+    private void DivideLiquidBody(Vector3Int tilePosition)
     {
         HashSet<Vector3Int> remainingTiles = new HashSet<Vector3Int>();
-        remainingTiles.UnionWith(positionsToTileData[cellPosition].currentLiquidBody.tiles);
-        //Debug.Log("Liquidbody tile count:" + remainingTiles.Count);
+        remainingTiles.UnionWith(GetTileData(tilePosition).currentLiquidBody.tiles);
         remainingTiles.ExceptWith(RemovedTiles);
-        /*        foreach(Vector3Int vector3Int in remainingTiles)
-                {
-                    Debug.Log("Remaining: " + vector3Int.ToString());
-                }*/
         List<Vector3Int> neighborTiles = new List<Vector3Int>();
-        foreach (Vector3Int neighborTile in FourNeighborTileCellPositions(cellPosition)) //Filter available liquid tiles
+        foreach (Vector3Int neighborTile in FourNeighborTileLocations(tilePosition)) //Filter available liquid tiles
         {
             if (remainingTiles.Contains(neighborTile))
             {
@@ -427,12 +570,12 @@ public class GridSystem : MonoBehaviour
             return;
         }
         bool isContinueous = true;
-        CellStatus[,] historyArray = InitializeHistoryArray(cellPosition, remainingTiles); //Create a matrix as large as meaningful iterations can go, centered at the given position. 
+        CellStatus[,] historyArray = InitializeHistoryArray(tilePosition, remainingTiles); //Create a matrix as large as meaningful iterations can go, centered at the given position. 
         historyArray[quickCheckIterations / 2, quickCheckIterations / 2] = CellStatus.Other; //Make sure the origin is other. 
         List<Vector3Int> startingTiles = new List<Vector3Int>(neighborTiles); //Copy the list to use later
         while (neighborTiles.Count > 1)
         {
-            if (QuickContinuityTest(cellPosition, neighborTiles[0], neighborTiles[1], historyArray))
+            if (QuickContinuityTest(tilePosition, neighborTiles[0], neighborTiles[1], historyArray))
             {
                 neighborTiles.RemoveAt(0);
                 ResetHistoryArray(historyArray);
@@ -444,7 +587,7 @@ public class GridSystem : MonoBehaviour
         Debug.Log("Quick continuity check result: " + isContinueous);
         if (!isContinueous) //perform complicated check and generate new bodies if necessary
         {
-            List<LiquidBody> newBodies = GenerateDividedBodies(positionsToTileData[cellPosition].currentLiquidBody, cellPosition, startingTiles, remainingTiles);
+            List<LiquidBody> newBodies = GenerateDividedBodies(GetTileData(tilePosition).currentLiquidBody, tilePosition, startingTiles, remainingTiles);
             if (newBodies != null)
             {
                 previewBodies.AddRange(newBodies);
@@ -455,6 +598,15 @@ public class GridSystem : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Creates list of divided liquid bodies.
+    /// </summary>
+    /// <param name="dividedBody">Liquid body to be divided.</param>
+    /// <param name="dividePoint">Point of initial division.</param>
+    /// <param name="startingTiles">Tiles of the initial liquid body.</param>
+    /// <param name="remainingTiles">Leftover tiles after division.</param>
+    /// <returns></returns>
     private List<LiquidBody> GenerateDividedBodies(LiquidBody dividedBody, Vector3Int dividePoint, List<Vector3Int> startingTiles, HashSet<Vector3Int> remainingTiles)
     {
         List<LiquidBody> newBodies = new List<LiquidBody>();
@@ -475,10 +627,6 @@ public class GridSystem : MonoBehaviour
                 newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, tile, bodyEmptyCallback));
 
                 Debug.Log("Generated divided body at" + tile.ToString() + "divide point: " + dividePoint.ToString());
-                /*                foreach (Vector3Int tile1 in newBodies.Last().tiles)
-                                {
-                                    Debug.Log("Body contains" + tile1.ToString());
-                                }*/
             }
             if (remainingTiles.Count == 0)
             {
@@ -493,9 +641,9 @@ public class GridSystem : MonoBehaviour
         }
         foreach (LiquidBody body in newBodies)
         {
-            foreach (Vector3Int tile in body.tiles)
+            foreach (Vector3Int tilePosition in body.tiles)
             {
-                this.positionsToTileData[tile].PreviewLiquidBody(body);
+                this.GetTileData(tilePosition).PreviewLiquidBody(body);
             }
         }
         if (dividedBody.bodyID == 0)
@@ -504,7 +652,11 @@ public class GridSystem : MonoBehaviour
         }
         return newBodies;
     }
-    private bool QuickContinuityTest(Vector3Int origin, Vector3Int start, Vector3Int stop, CellStatus[,] historyArray) // TODO not performing as expected drawing left to right, also does not repathfind when stuck. 
+    #endregion
+
+    #region Traversal Methods
+    // TODO not performing as expected drawing left to right, also does not repathfind when stuck. 
+    private bool QuickContinuityTest(Vector3Int origin, Vector3Int start, Vector3Int stop, CellStatus[,] historyArray) 
     {
         int iterations = 0;
         int maxDisplacement = this.quickCheckIterations / 2 - 1; // TODO optimization, when trying to access outside possible bound, terminate immediately
@@ -605,19 +757,15 @@ public class GridSystem : MonoBehaviour
         int maxDisplacement = quickCheckIterations / 2 - 1;
         int x = displacement[0] + maxDisplacement;
         int y = displacement[1] + maxDisplacement;
-        //Debug.Log("Displacement: " + displacement[0].ToString() + displacement[1].ToString());
-        //Debug.Log("Array pos: " + x.ToString() + y.ToString());
         if (x < 0 || x >= quickCheckIterations - 1 || y < 0 || y >= quickCheckIterations - 1) // Out of bound
         {
             return false;
         }
-        //Debug.Log(historyArray[x, y].ToString());
         if (historyArray[x, y] != CellStatus.Self)
         {
             return false;
         }
         historyArray[x, y] = CellStatus.Walked;
-        //Debug.Log("Walked");
         return true;
     }
 
@@ -633,27 +781,6 @@ public class GridSystem : MonoBehaviour
                 }
             }
         }
-    }
-    private Direction2D SwitchDirection(Direction2D direction)
-    {
-        return direction == Direction2D.X ? Direction2D.Y : Direction2D.X;
-    }
-
-    private void UpdatePreviewLiquidBody(LiquidBody liquidBody)
-    {
-        foreach (Vector3Int tileCellPosition in liquidBody.tiles)
-        {
-            this.positionsToTileData[tileCellPosition].PreviewLiquidBody(liquidBody);
-        }
-    }
-    private List<Vector3Int> FourNeighborTileCellPositions(Vector3Int cellPosition)
-    {
-        List<Vector3Int> result = new List<Vector3Int>();
-        result.Add(new Vector3Int(cellPosition.x, cellPosition.y + 1, cellPosition.z));
-        result.Add(new Vector3Int(cellPosition.x + 1, cellPosition.y, cellPosition.z));
-        result.Add(new Vector3Int(cellPosition.x, cellPosition.y - 1, cellPosition.z));
-        result.Add(new Vector3Int(cellPosition.x - 1, cellPosition.y, cellPosition.z));
-        return result;
     }
     private CellStatus[,] InitializeHistoryArray(Vector3Int originPosition, HashSet<Vector3Int> selfTiles)
     {
@@ -676,17 +803,7 @@ public class GridSystem : MonoBehaviour
         }
         return historyArray;
     }
-    private void OnLiquidBodyEmpty(LiquidBody liquidBody)
-    {
-        if (liquidBodies.Remove(liquidBody))
-        {
-            Debug.Log("Liquid Body Removed");
-        }
-        if (previewBodies.Remove(liquidBody))
-        {
-            Debug.Log("Preview Body Removed");
-        }
-    }
+    #endregion
 
     #region Flagging and Tile Effects System
     /// <summary>
@@ -799,6 +916,8 @@ public class GridSystem : MonoBehaviour
     }
     #endregion
 
+    #region Boolean Methods and Validation
+
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
     {
         Vector3Int gridPosition = WorldToCell(mousePosition);
@@ -812,25 +931,6 @@ public class GridSystem : MonoBehaviour
 
         Vector3Int gridPosition = WorldToCell(mousePosition);
         return CheckSurroudingTiles(gridPosition, species);
-    }
-
-    public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
-    {
-        if (SpeciesReferenceData.FoodSources.ContainsKey(selectedItem.ID))
-        {
-            FoodSourceSpecies species = SpeciesReferenceData.FoodSources[selectedItem.ID];
-            CheckSurroudingTiles(gridPosition, species);
-        }
-        else if (SpeciesReferenceData.AnimalSpecies.ContainsKey(selectedItem.ID))
-        {
-            AnimalSpecies species = SpeciesReferenceData.AnimalSpecies[selectedItem.ID];
-            CheckSurroundingTerrain(gridPosition, species);
-        }
-        else
-        {
-            // TODO figure out how to determine if tile is placable
-            // gridOverlay.HighlightTile(gridPosition, Color.green);
-        }
     }
 
     private bool CheckSurroundingTerrain(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
@@ -911,8 +1011,8 @@ public class GridSystem : MonoBehaviour
         }
 
         // Prevent placing on items already there.
-        CellData cellData = CellGrid[pos.x, pos.y];
-        if (cellData.ContainsFood)
+        TileData tileData = GetTileData(pos);
+        if (tileData.Food)
         {
             return false;
         }
@@ -948,19 +1048,11 @@ public class GridSystem : MonoBehaviour
 
         return isCellinGrid(loc.x, loc.y);
     }
+    #endregion
 
+    // figure out if this still works
     public void UpdateAnimalCellGrid()
     {
-        // Reset previous locations
-        for (int i=0; i<this.CellGrid.GetLength(0); i++)
-        {
-            for (int j=0; j<this.CellGrid.GetLength(1); j++)
-            {
-                this.CellGrid[i, j].ContainsAnimal = false;
-                this.CellGrid[i, j].HomeLocation = false;
-                this.CellGrid[i, j].ContainsLiquid = false;
-            }
-        }
         // Could be broken up for better efficiency since iterating through population twice
         // this.PopulationHomeLocations = this.RecalculateHomeLocation();
         // Update locations and grab reference to animal GameObject (for future use)
@@ -969,26 +1061,51 @@ public class GridSystem : MonoBehaviour
             foreach (GameObject animal in population.AnimalPopulation)
             {
                 Vector3Int animalLocation = this.Grid.WorldToCell(animal.transform.position);
-                this.CellGrid[animalLocation.x, animalLocation.y].ContainsAnimal = true;
-                this.CellGrid[animalLocation.x, animalLocation.y].Animal = animal;
+                GetTileData(animalLocation).Animal = animal;
             }
         }
     }
+
+    // this too
+    public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
+    {
+        if (SpeciesReferenceData.FoodSources.ContainsKey(selectedItem.ID))
+        {
+            FoodSourceSpecies species = SpeciesReferenceData.FoodSources[selectedItem.ID];
+            CheckSurroudingTiles(gridPosition, species);
+        }
+        else if (SpeciesReferenceData.AnimalSpecies.ContainsKey(selectedItem.ID))
+        {
+            AnimalSpecies species = SpeciesReferenceData.AnimalSpecies[selectedItem.ID];
+            CheckSurroundingTerrain(gridPosition, species);
+        }
+        else
+        {
+            // TODO figure out how to determine if tile is placable
+            // gridOverlay.HighlightTile(gridPosition, Color.green);
+        }
+    }
+
+    #region Tile Utility and Calculations
+    public Vector3Int GetReserveDimensions()
+    {
+        return new Vector3Int(ReserveWidth, ReserveHeight, 0);
+    }
+
 
     public Vector3Int FindClosestLiquidSource(Population population, GameObject animal)
     {
         Vector3Int itemLocation = new Vector3Int(-1, -1, -1);
         float closestDistance = 10000f;
         float localDistance = 0f;
-        for (int x = 0; x < this.CellGrid.GetLength(0); x++)
+        for (int x = 0; x < ReserveWidth; x++)
         {
-            for (int y = 0; y < this.CellGrid.GetLength(1); y++)
+            for (int y = 0; y < ReserveHeight; y++)
             {
                 // if contains liquid tile, check neighbors accessibility
                 GameTile tile = GetGameTileAt(new Vector3Int(x, y, 0));
                 if (tile != null && tile.type == TileType.Liquid)
                 {
-                    this.CellGrid[x, y].ContainsLiquid = true;
                     localDistance = Vector2.Distance(animal.transform.position, new Vector2(x, y));
 
                     if (population.Grid.IsAccessible(x + 1, y))
@@ -1023,7 +1140,7 @@ public class GridSystem : MonoBehaviour
                             itemLocation = new Vector3Int(x, y - 1, 0);
                         }
                     }
-                    
+
                 }
             }
         }
@@ -1035,175 +1152,14 @@ public class GridSystem : MonoBehaviour
     {
         // Debug.Log("Setting up pathfinding grid");
         bool[,] tileGrid = new bool[ReserveWidth, ReserveHeight];
-        for (int x=0; x<ReserveWidth; x++)
+        for (int x = 0; x < ReserveWidth; x++)
         {
-            for (int y=0; y<ReserveHeight; y++)
+            for (int y = 0; y < ReserveHeight; y++)
             {
                 tileGrid[x, y] = RPM.CanAccess(population, new Vector3Int(x, y, 0));
             }
         }
         return new AnimalPathfinding.Grid(tileGrid, this.Grid);
-    }
-
-    public void AddFood(Vector3Int gridPosition, int size, GameObject foodSource)
-    {
-        int radius = size / 2;
-        Vector3Int pos;
-        int offset = 0;
-        if (size % 2 == 0)
-        {
-            offset = 1;
-        }
-        // Check if the whole object is in bounds
-        for (int x = (-1) * (radius - offset); x <= radius; x++)
-        {
-            for (int y = (-1) * (radius - offset); y <= radius; y++)
-            {
-                pos = gridPosition;
-                pos.x += x;
-                pos.y += y;
-                CellGrid[pos.x, pos.y].ContainsFood = true;
-                CellGrid[pos.x, pos.y].Food = foodSource;
-            }
-        }
-    }
-
-    // Remove the food source on this tile, a little inefficient
-    public void RemoveFood(Vector3Int gridPosition)
-    {
-        Vector3Int pos = gridPosition;
-        if (!CellGrid[pos.x, pos.y].ContainsFood) return;
-
-        GameObject foodSource = CellGrid[pos.x, pos.y].Food;
-        int size = foodSource.GetComponent<FoodSource>().Species.Size;
-
-        for (int dx = -size; dx < size; dx++)
-        {
-            for (int dy = -size; dy < size; dy++)
-            {
-                CellData cell = CellGrid[pos.x + dx, pos.y + dy];
-                if (cell.ContainsFood && ReferenceEquals(cell.Food, foodSource))
-                {
-                    CellGrid[pos.x + dx, pos.y + dy].ContainsFood = false;
-                    CellGrid[pos.x + dx, pos.y + dy].Food = null;
-                }
-            }
-        }
-    }
-
-    public bool HasTerrainChanged = false;
-    public List<Vector3Int> changedTiles = new List<Vector3Int>();
-
-    /// <summary>
-    /// Convert a world position to cell positions on the grid.
-    /// </summary>
-    /// <param name="worldPosition"></param>
-    /// <returns></returns>
-    public Vector3Int WorldToCell(Vector3 worldPosition)
-    {
-        return Grid.WorldToCell(worldPosition);
-    }
-    /// <summary>
-    /// Returns all liquid tiles belong to the same liquid body at the given location
-    /// </summary>
-    /// <param name="location">Cell location of any liquid tile within the body to change</param>
-    /// <returns></returns>
-    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int location)
-    {
-        List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
-        GameTile terrainTile = GetGameTileAt(location);
-        liquidBodyTiles.Add(location);
-        GetNeighborLiquidLocations(location, terrainTile, liquidBodyTiles);
-        return liquidBodyTiles;
-    }
-
-    private void GetNeighborLiquidLocations(Vector3Int location, GameTile tile, List<Vector3Int> liquidBodyTiles)
-    {
-        foreach (Vector3Int tileToCheck in FourNeighborTiles(location))
-        {
-            if (
-                Tilemap.GetTile(tileToCheck) == tile &&
-                GetTileContentsAt(tileToCheck, tile) != null &&
-                !liquidBodyTiles.Contains(tileToCheck))
-            {
-                liquidBodyTiles.Add(tileToCheck);
-                GetNeighborLiquidLocations(tileToCheck, tile, liquidBodyTiles);
-            }
-            GameTile thisTile = (GameTile)Tilemap.GetTile(tileToCheck);
-            float[] contents = GetTileContentsAt(tileToCheck, tile);
-        }
-    }
-    /// <summary>
-    /// Change the composition of all connecting liquid tiles of the selected location
-    /// </summary>
-    /// <param name="cellPosition">Cell location of any liquid tile within the body to change </param>
-    /// <param name="composition">Composition that will either be added or used to modify original composition</param>
-    /// <param name="isSetting">When set to true, original composition will be replaced by input composition. When set to false, input composition will be added to original Composition</param>
-    public void ChangeLiquidBodyComposition(Vector3Int cellPosition, float[] composition)
-    {
-        if (holdsContent)
-        {
-            ChangeComposition(cellPosition, composition);
-
-            // Invoke event
-            EventManager.Instance.InvokeEvent(EventType.LiquidChange, cellPosition);
-            return;
-        }
-        Debug.LogError("Tile at position" + cellPosition + "does not hold content");
-    }
-    /// <summary>
-    /// Returns TerrainTile(inherited from Tilebase) at given location of a cell within the Grid.
-    /// </summary>
-    /// <param name="cellLocation"> Position of the cell. </param>
-    /// <returns></returns>
-    public GameTile GetGameTileAt(Vector3Int cellLocation)
-    {
-        if (cellLocation.x < 0 || cellLocation.y < 0) // Tiles shouldn't be in negative coordinates
-        {
-            //Debug.Log("Trying accessing tiles at negative coordinate" + cellLocation);
-            return null;
-        }
-
-        var returnedTile = Tilemap.GetTile<GameTile>(cellLocation);
-        if (returnedTile != null)
-        {
-            return returnedTile;
-        }
-        //Debug.LogWarning("Tile does not exist at " + cellLocation);
-        return null;
-    }
-
-    /// <summary>
-    /// Whether a tile exists at given location, regardless to overlapping
-    /// </summary>
-    /// <param name="cellLocation"></param>
-    /// <param name="tile"></param>
-    /// <returns></returns>
-    public bool TileExistsAtLocation(Vector3Int cellLocation, GameTile tile)
-    {
-        return Tilemap.GetTile(cellLocation) == tile;
-    }
-
-    /// <summary>
-    /// Returns contents within a tile, e.g. Liquid Composition. If tile has no content, returns null.
-    /// </summary>
-    /// <param name="cellPosition"> Position of the cell. </param>
-    /// <returns></returns>
-    public float[] GetTileContentsAt(Vector3Int cellPosition, GameTile tile = null)
-    {
-        tile = tile == null ? GetGameTileAt(cellPosition) : tile;
-        if (tile != null)
-        {
-            if (holdsContent)
-            {
-                return GetLiquidBodyAt(cellPosition).contents;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        return null;
     }
     /// <summary>
     /// Returns the cell location of the tile closest to the given center. List contains multiple if more than one tile at same distance.
@@ -1509,7 +1465,7 @@ public class GridSystem : MonoBehaviour
 
                 scanLocation.x = x + centerCellLocation.x;
                 scanLocation.y = y + centerCellLocation.y;
-                LiquidBody liquid = this.GetLiquidBodyAt(scanLocation);
+                LiquidBody liquid = this.GetTileData(scanLocation).currentLiquidBody;
                 if (liquid != null)
                 {
                     liquidCompositions.Add(liquid.contents);
@@ -1619,18 +1575,36 @@ public class GridSystem : MonoBehaviour
         return results;
     }
 
-    // Used to assign which layer 
-    public enum TileLayer
+    /// <summary>
+    /// Returns four cell locations next to the given cell location
+    /// </summary>
+    /// <param name="cellLocation"></param>
+    /// <returns></returns>
+    public static List<Vector3Int> FourNeighborTileLocations(Vector3Int cellLocation)
     {
-        Terrain,
-        Structures
+        List<Vector3Int> fourNeighborTiles = new List<Vector3Int>();
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z));
+        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z));
+        return fourNeighborTiles;
+    }
+    #endregion
+
+    #region Math Utility
+    private Direction2D SwitchDirection(Direction2D direction)
+    {
+        return direction == Direction2D.X ? Direction2D.Y : Direction2D.X;
     }
 
-    // note that this will not work on web browsers, will need to find alternate solution
-    private void OnApplicationQuit()
+    /// <summary>
+    /// Convert a world position to cell positions on the grid.
+    /// </summary>
+    /// <param name="worldPosition"></param>
+    /// <returns></returns>
+    public Vector3Int WorldToCell(Vector3 worldPosition)
     {
-        // turn off grid toggle no matter what (material is permanently changed)
-        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", 0);
+        return Grid.WorldToCell(worldPosition);
     }
 
     public static Vector3Int SignsVector3(Vector3 vector)
@@ -1714,20 +1688,7 @@ public class GridSystem : MonoBehaviour
                 yield return i;
         }
     }
-    /// <summary>
-    /// Returns four cell locations next to the given cell location
-    /// </summary>
-    /// <param name="cellLocation"></param>
-    /// <returns></returns>
-    public static List<Vector3Int> FourNeighborTiles(Vector3Int cellLocation)
-    {
-        List<Vector3Int> fourNeighborTiles = new List<Vector3Int>();
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z));
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z));
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z));
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z));
-        return fourNeighborTiles;
-    }
+
     /// <summary>
     /// Round a number towards zero
     /// </summary>
@@ -1789,28 +1750,122 @@ public class GridSystem : MonoBehaviour
         }
 
     }
+    #endregion
 
-    public struct CellData
+    public class TileData
     {
-        public CellData(bool inBounds)
+        public Vector3Int tilePosition { get; private set; }
+        public GameObject Machine { get; set; }
+        public GameObject Food { get; set; }
+        public GameObject Animal { get; set; }
+        public bool HomeLocation { get; set; }
+
+        public GameTile currentTile { get; private set; }
+        public GameTile previousTile { get; private set; }
+        public Color currentColor { get; private set; }
+        public Color previousColor { get; private set; }
+        public LiquidBody currentLiquidBody { get; private set; }
+        public LiquidBody previousLiquidBody { get; private set; }
+        public bool isTileChanged { get; private set; } = false;
+        public bool isLiquidBodyChanged { get; private set; } = false;
+        public bool isColorChanged { get; private set; } = false;
+        public TileData(Vector3Int tilePosition)
         {
-            this.ContainsFood = false;
-            this.ContainsAnimal = false;
             this.Food = null;
             this.Animal = null;
             this.Machine = null;
-            this.ContainsLiquid = false;
             this.HomeLocation = false;
-            this.OutOfBounds = !inBounds;
-        }
 
-        public bool ContainsLiquid { get; set; }
-        public GameObject Machine { get; set; }
-        public bool ContainsFood { get; set; }
-        public GameObject Food { get; set; }
-        public bool ContainsAnimal { get; set; }
-        public GameObject Animal { get; set; }
-        public bool HomeLocation { get; set; }
-        public bool OutOfBounds { get; set; }
+            this.tilePosition = tilePosition;
+            this.currentTile = null;
+            this.currentColor = Color.white;
+            this.currentLiquidBody = null;
+            this.isTileChanged = false;
+            this.isColorChanged = false;
+        }
+        public void Clear()
+        {
+            this.currentTile = null;
+            this.previousTile = null;
+            this.currentLiquidBody = null;
+            this.previousLiquidBody = null;
+        }
+        public void PreviewReplacement(GameTile tile)
+        {
+            if (isTileChanged)
+            {
+                this.currentTile = tile;
+                return;
+            }
+            this.previousTile = this.currentTile;
+            //Debug.Log("previous:" + this.previousTile ?? this.previousTile.TileName + "current:" + this.currentTile ?? this.currentTile.TileName);
+            this.currentTile = tile;
+            this.isTileChanged = true;
+        }
+        public void PreviewColorChange(Color color)
+        {
+            if (isColorChanged)
+            {
+                this.currentColor = color;
+                return;
+            }
+            this.previousColor = this.currentColor;
+            this.currentColor = color;
+            this.isColorChanged = true;
+        }
+        public void PreviewLiquidBody(LiquidBody newLiquidBody)
+        {
+            if (isLiquidBodyChanged)
+            {
+                if (newLiquidBody == this.currentLiquidBody)
+                {
+                    return;
+                }
+                this.currentLiquidBody.callback.Invoke(this.currentLiquidBody);
+                this.currentLiquidBody = newLiquidBody;
+                return;
+            }
+            this.previousLiquidBody = this.currentLiquidBody;
+            this.currentLiquidBody = newLiquidBody;
+            this.isLiquidBodyChanged = true;
+        }
+        public void ConfirmReplacement()
+        {
+            if (currentTile == null)
+            {
+                this.currentColor = Color.white;
+                if (this.currentLiquidBody != null && currentLiquidBody.bodyID != 0)
+                {
+                    this.currentLiquidBody.RemoveTile(tilePosition); // Remove Tile from liquid body
+                }
+                return;
+            }
+            ClearHistory();
+        }
+        public void Revert()
+        {
+            if (isTileChanged)
+            {
+                this.currentTile = this.previousTile;
+            }
+            if (isLiquidBodyChanged)
+            {
+                this.currentLiquidBody = this.previousLiquidBody;
+            }
+            if (isColorChanged)
+            {
+                this.currentColor = this.previousColor;
+            }
+            ClearHistory();
+        }
+        private void ClearHistory()
+        {
+            this.previousColor = Color.white;
+            this.previousLiquidBody = null;
+            this.previousTile = null;
+            this.isTileChanged = false;
+            this.isColorChanged = false;
+            this.isLiquidBodyChanged = false;
+        }
     }
 }
