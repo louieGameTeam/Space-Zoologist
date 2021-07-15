@@ -25,9 +25,9 @@ public class DayTrace
     // The amount of time this day lasted in seconds.
     private float dayDeltaTime;
     // An int representing the currency the player has at the start of the day.
-    private int currencyStart;
+    private float balanceStart;
     // An int representing the currency the player has at the end of the day.
-    private int currencyEnd;
+    private float balanceEnd;
     // The total amount of time the player had the journal open throughout the day.
     private float journalTime;
     // A list of JournalTraces detailing information about the player opening/closing the journal.
@@ -58,16 +58,16 @@ public class DayTrace
         set { dayDeltaTime = value; }
     }
 
-    public int CurrencyStart
+    public float BalanceStart
     {
-        get { return currencyStart; }
-        set { currencyStart = value; }
+        get { return balanceStart; }
+        set { balanceStart = value; }
     }
 
-    public int CurrencyEnd
+    public float BalanceEnd
     {
-        get { return currencyEnd; }
-        set { currencyEnd = value; }
+        get { return balanceEnd; }
+        set { balanceEnd = value; }
     }
 
     public float JournalTime
