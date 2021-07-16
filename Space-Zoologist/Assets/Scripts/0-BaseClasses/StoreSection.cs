@@ -105,6 +105,7 @@ public class StoreSection : MonoBehaviour
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         gridOverlay.ClearColors();
+        AudioManager.instance?.PlayOneShot(SFXType.Cancel);
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)
