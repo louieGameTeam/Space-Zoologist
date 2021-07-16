@@ -1,33 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
-/// Abstract class that all NeedSystems will inherit from. Every need system will have a list of populations 
+/// Abstract class that all NeedSystems will inherit from. Every need system will have a list of consumers (Life) 
 /// that have the need that the need system is in charge of, and keeps this need up to date for all of its 
-/// populations.
+/// consumers.
 /// </summary>
 abstract public class NeedSystem
 {
-    public string NeedName { get; private set; }
-    public bool isDirty = default;
-    protected List<Life> lives = new List<Life>();
+    public NeedType NeedType { get; private set; }
+    public bool IsDirty => this.isDirty;
 
-    public NeedSystem(string needName)
+    // Dirty flag is on to force intial update
+    protected bool isDirty = true;
+    protected List<Life> Consumers = new List<Life>();
+
+    public NeedSystem(NeedType needType)
     {
-        NeedName = needName;
+        NeedType = needType;
     }
 
-    virtual public void AddPopulation(Life life)
+    /// <summary>
+    /// Mark this system dirty
+    /// </summary>
+    /// <remarks>Any one can mark a system dirty, but only the system can unmark itself</remarks>
+    virtual public void MarkAsDirty()
     {
-        isDirty = true;
-        lives.Add(life);
+        this.isDirty = true;
     }
 
-    virtual public bool RemovePopulation(Life life)
+    virtual public void AddConsumer(Life life)
     {
-        isDirty = true;
-        return lives.Remove(life);
+        this.isDirty = true;
+        this.Consumers.Add(life);
+    }
+
+    virtual public bool RemoveConsumer(Life life)
+    {
+        this.isDirty = true;
+        return this.Consumers.Remove(life);
+    }
+
+    // Check the evnoirmental state of the consumers, currently only terrain
+    virtual public bool CheckState()
+    {
+        foreach (Life consumer in this.Consumers)
+        {
+            if (consumer.GetAccessibilityStatus())
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     abstract public void UpdateSystem();

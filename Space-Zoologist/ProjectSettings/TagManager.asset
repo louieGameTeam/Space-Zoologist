@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - FloatingObject
+  - Population
+  - FoodSource
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Background
+  - Interactive
   - 
   - 
   - 
@@ -41,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: LiquidAffected
+    uniqueID: 3610728755
     locked: 0

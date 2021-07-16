@@ -1,57 +1,83 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Food/FoodSource.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/MenuManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Animals/AnimalSpecies.cs" Line="35" Column="33" />
-      <File FileName="Assets/Scripts/Grid/TilePlacementController.cs" Line="8" Column="37" />
-      <File FileName="Assets/Scripts/Food/FoodSourceManager.cs" Line="51" Column="73" />
-      <File FileName="Assets/Scripts/Animals/PopulationManager.cs" Line="54" Column="50" />
-      <File FileName="Assets/Scripts/UI/Store/Testing/NeedTesting/NeedSystemsTester.cs" Line="23" Column="66" />
-      <File FileName="Assets/Scripts/Food/FoodSourceSpecies.cs" Line="21" Column="6" />
-      <File FileName="Assets/Scripts/Food/FoodSource.cs" Line="17" Column="41" />
-      <File FileName="Assets/Scripts/JournalSystems/JournalDataStuff/TestJournalSave.cs" Line="41" Column="27" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="211" Column="1" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" />
+      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="703" Column="1" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorNode.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Y - Utils/DialogueGenerator.cs" Line="11" Column="1" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="Animals" expanded="True" />
-                <Node name="Food" expanded="True">
-                  <Node name="FoodSource.cs" selected="True" />
+              <Node name="AnimalRepresentation" expanded="True">
+                <Node name="Behaviors" expanded="True">
+                  <Node name="Scripts" expanded="True" />
                 </Node>
-                <Node name="Grid" expanded="True" />
-                <Node name="JournalSystems" expanded="True">
-                    <Node name="JournalDataStuff" expanded="True">
-                      <Node name="TestJournalSave.cs" selected="True" />
-                <Node name="Player" expanded="True" />
-                <Node name="SelectableItems" expanded="True" />
-                <Node name="UI" expanded="True">
-                  <Node name="Store" expanded="True">
-                    <Node name="Testing" expanded="True">
-                      <Node name="NeedTesting" expanded="True" />
+                <Node name="Patterns" expanded="True">
+                  <Node name="Prefabs" expanded="True" />
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="DialogueEditor" expanded="True">
+                <Node name="Assets" expanded="True">
+                  <Node name="Scripts" expanded="True">
+                    <Node name="Editor" expanded="True" />
+                    <Node name="UI" expanded="True">
+                      <Node name="Editor" expanded="True" />
                     </Node>
                   </Node>
                 </Node>
               </Node>
+              <Node name="Scripts" expanded="True">
+                <Node name="Audio" expanded="True" />
+                <Node name="LevelData" expanded="True" />
+                <Node name="Managers" expanded="True">
+                  <Node name="TimeSystem" expanded="True" />
+                </Node>
+                <Node name="Needs" expanded="True">
+                  <Node name="Systems" expanded="True">
+                    <Node name="FoodSystem" expanded="True" />
+                  </Node>
+                </Node>
+                <Node name="Plot" expanded="True">
+                  <Node name="Grid" expanded="True" />
+                  <Node name="RPS" expanded="True" />
+                  <Node name="Tiles" expanded="True" />
+                </Node>
+                <Node name="PopulationSystem" expanded="True">
+                  <Node name="PathFinding" expanded="True" />
+                  <Node name="Population" expanded="True" />
+                  <Node name="Representation" expanded="True" />
+                </Node>
+                <Node name="UI" expanded="True">
+                  <Node name="Inspector" expanded="True" />
+                  <Node name="SceneEffects" expanded="True" />
+                  <Node name="Store" expanded="True">
+                    <Node name="Sections" expanded="True" />
+                  </Node>
+                  <Node name="MenuManager.cs" selected="True" />
+                </Node>
+                <Node name="Y - Utils" expanded="True" />
+              </Node>
             </Node>
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>need</Value>
-          <Value>needs</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1c4e19e9-68f7-4239-96b1-8e29d18debb1" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="25fec370-f3e6-4b8e-91ec-db62e1675ac2" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ethanchiang/Downloads/Space-Zoologist-FoodDistribution/Space-Zoologist/Assets/Scripts/Animals/AnimalSpecies.cs" relfile="Assets/Scripts/Animals/AnimalSpecies.cs" line="37" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

@@ -2,24 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public enum NeedType {Terrain, Liquid, Atmosphere, Food}
-public enum NeedCondition { Bad, Neutral, Good }
 
-[CreateAssetMenu]
-public class Need : ScriptableObject
+[System.Serializable]
+public class Need
 {
     public string NeedName => needName;
     public int Severity => severity;
-    public NeedType NType => needType;
+    public NeedType NeedType => needType;
     public Sprite Sprite => sprite;
+    public float NeedValue => this.needValue;
+    public bool IsPreferred => isPreferred;
+    public List<NeedBehavior> Behaviors => this.conditions;
 
     [SerializeField] private NeedType needType = default;
     [SerializeField] private string needName = default;
+    [SerializeField] private float needValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
-    [SerializeField] private List<NeedCondition> conditions = default;
+    [SerializeField] bool isPreferred = default;
+    [SerializeField] private List<NeedBehavior> conditions = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
+
+    public Need(NeedType needType, NeedConstructData needConstructData)
+    {
+        this.needType = needType;
+        this.needName = needConstructData.NeedName;
+        this.severity = needConstructData.Severity;
+        this.conditions = needConstructData.Conditions;
+        this.thresholds = needConstructData.Thresholds;
+        this.conditions = needConstructData.Conditions;
+        this.isPreferred = needConstructData.IsPreferred;
+    }
+
     /// <summary>
     /// Returns what condition the need is in based on the given need value.
     /// </summary>
@@ -28,19 +43,50 @@ public class Need : ScriptableObject
     public NeedCondition GetCondition(float value)
     {
         // If there is only one condition, return it.
+        if (conditions.Count == 1) return conditions[0].Condition;
+        for (var i = 0; i < this.thresholds.Count; i++)
+        {
+            if (value + 0.1 < this.thresholds[i])
+            {
+                return this.conditions[i].Condition;
+            }
+        }
+        return this.conditions[this.thresholds.Count].Condition;
+    }
+    public NeedBehavior GetBehavior(float value) {
+        // If there is only one condition, return it.
         if (conditions.Count == 1) return conditions[0];
-
         for (var i = 0; i < this.thresholds.Count; i++)
         {
             if (value < this.thresholds[i])
             {
                 return this.conditions[i];
             }
-        }
 
+        }
         return this.conditions[this.thresholds.Count];
     }
 
+    public float GetMaxThreshold()
+    {
+        return this.thresholds[this.thresholds.Count - 1];
+    }
+
+    public float GetMinThreshold()
+    {
+        return this.thresholds[0];
+    }
+
+    public float GetThresholdForFirstGoodCondition() {
+        for (int i = 1; i < conditions.Count; i++) {
+            if (conditions[i].Condition == NeedCondition.Good) {
+                return thresholds[i - 1];
+            }
+        }
+        return 0.01f;
+    }
+
+    // TODO what is this doing
     /// <summary>
     /// 
     /// </summary>
@@ -49,20 +95,28 @@ public class Need : ScriptableObject
     /// <returns></returns>
     public float GetThreshold(NeedCondition needCondition, int occurrence = 0, bool top = true)
     {
-        if (!conditions.Contains(needCondition))
+        int count = 0;
+        foreach(NeedBehavior needBehavior in this.conditions)
+        {
+            if (needBehavior.Condition.Equals(needCondition))
+            {
+                count++;
+            }
+        }
+        if (count == 0)
         {
             throw new System.ArgumentException($"Tried to access {needCondition.ToString()} condition in {needName} need, but the need does not have the condition.");
         }
 
         // Get the number of occurrences of the specified need condition in the need's list of need conditions
-        int numOccurrences = conditions.Sum(item => item == needCondition ? 1 : 0);
+        int numOccurrences = count;
         int sign = System.Math.Sign(occurrence);
         int occurrenceIndex = sign < 0 ? numOccurrences + occurrence : occurrence;
         occurrenceIndex = Mathf.Clamp(occurrenceIndex, 0, numOccurrences);
         List<int> conditionIndices = new List<int>();
         for (int i = 0; i < conditions.Count; i++)
         {
-            if (conditions[i] == needCondition)
+            if (conditions[i].Condition == needCondition)
             {
                 conditionIndices.Add(i);
             }
@@ -82,7 +136,7 @@ public class Need : ScriptableObject
     {
         if (conditions.Count == 0)
         {
-            conditions.Add(NeedCondition.Good);
+            conditions.Add(new NeedBehavior(NeedCondition.Good));
         }
 
         while (conditions.Count < thresholds.Count + 1)
@@ -108,5 +162,10 @@ public class Need : ScriptableObject
                 thresholds[i + 1] = thresholds[i] + 1;
             }
         }
+    }
+
+    public void UpdateNeedValue(float value)
+    {
+        this.needValue = value;
     }
 }
