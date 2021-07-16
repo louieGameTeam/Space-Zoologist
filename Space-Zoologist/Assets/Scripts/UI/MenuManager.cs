@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -126,7 +126,7 @@ public class MenuManager : MonoBehaviour
 
         MenuSelectPanel.gameObject.SetActive(false);
         CurrentMenuText.text = menuNames[curMenu];
-        // AudioManager.instance.PlayOneShot(SFXType.TabSwitch);
+        AudioManager.instance.PlayOneShot(SFXType.TabSwitch);
     }
 
     public void ToggleMenuSelectPanel() {

@@ -129,9 +129,9 @@ public class DisplayInspectorText : MonoBehaviour
             displayText += $"{((TileType)index).ToString()} : {value}\n";
         }
 
-        displayText += "\n";
-        displayText += $"Population count: {enclosedArea.populations.Count}\n";
-        displayText += $"Total animal count: {enclosedArea.animals.Count}\n";
+        //displayText += "\n";
+        //displayText += $"Population count: {enclosedArea.populations.Count}\n";
+        //displayText += $"Total animal count: {enclosedArea.animals.Count}\n";
         //displayText += $"Food Source count: {enclosedArea.foodSources.Count}\n";
 
         this.inspectorWindowText.text = displayText;

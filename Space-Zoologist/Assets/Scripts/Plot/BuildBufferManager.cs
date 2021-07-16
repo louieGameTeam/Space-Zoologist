@@ -7,7 +7,9 @@ public class BuildBufferManager : GridObjectManager
     [SerializeField] private GameObject bufferGO;
     private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
     private bool[,] isConstructing;
-    private ReservePartitionManager RPM;
+    [SerializeField] ReservePartitionManager RPM = default;
+    [SerializeField] TileSystem tileSystem = default;
+    [SerializeField] TilePlacementController tilePlacementController = default;
     public bool IsConstructing(int x, int y) => isConstructing[x, y];
     private Action constructionFinishedCallback = null;
     private void Awake()
@@ -21,7 +23,6 @@ public class BuildBufferManager : GridObjectManager
         int w = levelDataReference.LevelData.MapWidth;
         int h = levelDataReference.LevelData.MapHeight;
         this.isConstructing = new bool[w, h];
-        this.RPM = FindObjectOfType<ReservePartitionManager>();
     }
     public override void Parse()
     {
@@ -56,8 +57,7 @@ public class BuildBufferManager : GridObjectManager
         GameObject newGo = Instantiate(this.bufferGO, this.gameObject.transform);
         //Debug.Log("Placing item under constuction");
         newGo.transform.position = new Vector3(pos.x, pos.y, 0);
-        color.a = 1; //Enforce alpha channel to be 1, prevent human error
-
+        color.a = 1; //Enforce alpha channel to be 1, prevent human error       
         newGo.GetComponent<SpriteRenderer>().color = color;
         ConstructionCountdown cc = newGo.GetComponent<ConstructionCountdown>();
         cc.Initialize(pos, time, progress);
@@ -168,8 +168,13 @@ public class BuildBufferManager : GridObjectManager
                 {
                     this.isConstructing[(int)cc.position.x, (int)cc.position.y] = false;
                     ccs.RemoveAt(j);
-                    changedTiles.Add(new Vector3Int(cc.position.x, cc.position.y, 0));
+                    Vector3Int pos = new Vector3Int(cc.position.x, cc.position.y, 0);
+                    changedTiles.Add(pos);
                     Destroy(cc.gameObject);
+                    if (tilePlacementController.previousTiles.ContainsKey(pos))
+                    {
+                        tilePlacementController.previousTiles.Remove(pos);
+                    }
                     if (constructionFinishedCallback != null)
                     {
                         constructionFinishedCallback();
@@ -186,6 +191,10 @@ public class BuildBufferManager : GridObjectManager
         {
             this.RPM.UpdateAccessMapChangedAt(changedTiles);
         }
+    }
+    public void RevertPreviousTile(Vector3Int pos)
+    {
+        tilePlacementController.RevertTile(pos);
     }
     private Vector3[] GetPositionsAndTimes(List<ConstructionCountdown> cCs)
     {

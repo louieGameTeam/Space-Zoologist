@@ -33,7 +33,7 @@ public class TextEffects : MonoBehaviour
             SetupNextScene();
             if (Index == IntroductionTexts.Count)
             {
-                Introduction.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                Introduction.alignment = TMPro.TextAlignmentOptions.Center;
             }
         }
         else if (Input.GetMouseButtonDown(0))

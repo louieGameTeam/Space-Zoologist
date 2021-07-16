@@ -226,7 +226,7 @@ public class Inspector : MonoBehaviour
         {
             return;
         }
-
+        bool somethingSelected = true;
         this.UnHighlightAll();
         if (cellData.ContainsAnimal)
         {
@@ -250,9 +250,16 @@ public class Inspector : MonoBehaviour
         {
             DisplayAreaText(pos);
             selectedPosition = pos;
+            somethingSelected = false;
         }
-        AudioManager.instance.PlayOneShot(SFXType.Notification);
-
+        else
+        {
+            somethingSelected = false;
+        }
+        if (somethingSelected)
+        {
+            AudioManager.instance.PlayOneShot(SFXType.Notification);
+        }
         // Reset dropdown selections
         this.enclosedAreaDropdown.value = 0;
         this.itemsDropdown.value = 0;

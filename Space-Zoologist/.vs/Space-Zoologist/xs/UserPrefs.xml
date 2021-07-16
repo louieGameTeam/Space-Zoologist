@@ -1,23 +1,15 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/TileSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/MenuManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Plot/Tiles/TileContentsManager.cs" Line="10" Column="29" />
-      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" />
-      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" />
-      <File FileName="Assets/Scripts/Plot/LevelIO.cs" />
-      <File FileName="Assets/Scripts/UI/Store/Item.cs" />
-      <File FileName="Assets/Scripts/Audio/LoopableAudioTrack.cs" />
-      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" />
-      <File FileName="Assets/Scripts/Audio/MusicManager.cs" />
-      <File FileName="Assets/Scripts/Audio/AudioManager.cs" />
-      <File FileName="Assets/Scripts/Managers/TimeSystem/PauseManager.cs" />
-      <File FileName="Assets/Scripts/UI/SceneEffects/IntroductionSetup.cs" Line="21" Column="1" />
-      <File FileName="Assets/Scripts/Plot/TileSystem.cs" Line="113" Column="5" />
-      <File FileName="Assets/Scripts/Plot/Tiles/TileLayerManager.cs" Line="47" Column="5" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="211" Column="1" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" />
+      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="703" Column="1" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorNode.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Y - Utils/DialogueGenerator.cs" Line="11" Column="1" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -33,7 +25,16 @@
                   <Node name="Scripts" expanded="True" />
                 </Node>
               </Node>
-              <Node name="DialogueEditor" expanded="True" />
+              <Node name="DialogueEditor" expanded="True">
+                <Node name="Assets" expanded="True">
+                  <Node name="Scripts" expanded="True">
+                    <Node name="Editor" expanded="True" />
+                    <Node name="UI" expanded="True">
+                      <Node name="Editor" expanded="True" />
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="Audio" expanded="True" />
                 <Node name="LevelData" expanded="True" />
@@ -49,7 +50,6 @@
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
-                  <Node name="TileSystem.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
@@ -62,7 +62,9 @@
                   <Node name="Store" expanded="True">
                     <Node name="Sections" expanded="True" />
                   </Node>
+                  <Node name="MenuManager.cs" selected="True" />
                 </Node>
+                <Node name="Y - Utils" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -72,10 +74,10 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="81f6f5b6-ac45-4012-9575-04c93f348436" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="25fec370-f3e6-4b8e-91ec-db62e1675ac2" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/PopulationSystem/PathFinding/Pathfinding.cs" relfile="Assets/Scripts/PopulationSystem/PathFinding/Pathfinding.cs" line="65" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

@@ -79,11 +79,16 @@ public class MoveObject : MonoBehaviour
 
             if (objectToMove != null)
             {
-                Vector3 screenPos = referenceCamera.WorldToScreenPoint(objectToMove.transform.position);
-                MoveButton.SetActive(true);
-                DeleteButton.SetActive(true);
-                MoveButton.transform.position = screenPos + new Vector3(-50, 100, 0);
-                DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
+                if (objectToMove.name == "tile")
+                {
+                    Vector3 screenPos = referenceCamera.WorldToScreenPoint(objectToMove.transform.position);
+                    DeleteButton.SetActive(true);
+                    DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
+                }
+                else
+                {
+                    setMoveUI();
+                }
             }
 
             if (objectToMove != null && moving)
@@ -126,7 +131,7 @@ public class MoveObject : MonoBehaviour
                 Reset();
             }
         }
-        else if (MoveButton.activeSelf)
+        else if (DeleteButton.activeSelf)
         {
             Reset();
         }
@@ -140,6 +145,15 @@ public class MoveObject : MonoBehaviour
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
         gridOverlay.ClearColors();
+    }
+
+    private void setMoveUI()
+    {
+        Vector3 screenPos = referenceCamera.WorldToScreenPoint(objectToMove.transform.position);
+        MoveButton.SetActive(true);
+        DeleteButton.SetActive(true);
+        MoveButton.transform.position = screenPos + new Vector3(-50, 100, 0);
+        DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
     }
 
     private GameObject SelectGameObjectAtMousePosition()
@@ -170,6 +184,13 @@ public class MoveObject : MonoBehaviour
             string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
             tempItem.SetupData(ID, "Food", ID, 0);
         }
+        else if (BuildBufferManager.IsConstructing(pos.x, pos.y))
+        {
+            GameObject tileToDelete = new GameObject();
+            tileToDelete.transform.position = pos;
+            toMove = tileToDelete;
+            tileToDelete.name = "tile";
+        }
 
         if (toMove != null) initialPos = toMove.transform.position;
         return toMove;
@@ -178,10 +199,17 @@ public class MoveObject : MonoBehaviour
     public void RemoveSelectedGameObject()
     {
         if (movingAnimal)
+        {
             objectToMove.GetComponent<Animal>().PopulationInfo.RemoveAnimal(objectToMove);
+        }
+        else if (objectToMove.name == "tile")
+        {
+            BuildBufferManager.RevertPreviousTile(this.tileSystem.WorldToCell(objectToMove.transform.position));
+        }
         else
+        {
             removeOriginalFood(objectToMove.GetComponent<FoodSource>());
-
+        }
         Reset();
     }
 

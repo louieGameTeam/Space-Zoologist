@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
@@ -201,6 +201,6 @@ public class StoreSection : MonoBehaviour
                 currentAudioIndex = 0;
             }
         }
-        // AudioManager.instance.PlayOneShot(selectedItem.AudioClips[currentAudioIndex]);
+        AudioManager.instance.PlayOneShot(selectedItem.AudioClips[currentAudioIndex]);
     }
 }

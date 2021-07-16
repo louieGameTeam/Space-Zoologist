@@ -29,6 +29,7 @@ public class TilePlacementController : MonoBehaviour
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
     private Dictionary<Tilemap, TileLayerManager> tilemapsToTileLayerManagers = new Dictionary<Tilemap, TileLayerManager>();
+    public Dictionary<Vector3Int, GameTile> previousTiles = new Dictionary<Vector3Int, GameTile>();
     private BuildBufferManager buildBufferManager;
     private int lastCornerX;
     private int lastCornerY;
@@ -320,6 +321,23 @@ public class TilePlacementController : MonoBehaviour
         return false;
     }
 
+    public void RevertTile(Vector3Int loc)
+    {
+        if (!this.previousTiles.ContainsKey(loc))
+        {
+            return;
+        }
+        this.referencedTiles.Clear();
+        this.referencedTiles.Add(this.previousTiles[loc]);
+        this.buildBufferManager.DestoryBuffer(new Vector2Int(loc.x, loc.y));
+        Debug.Log("placed " + this.previousTiles[loc]);
+
+        this.previousTiles.Remove(loc);
+        Debug.Log(PlaceTile(loc, false));
+        StopPreview();
+
+    }
+
     private PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {
         if (IsPlacable(cellPosition) || !checkPlacable)
@@ -348,6 +366,11 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
             // Check clear, place tiles
+            if (!previousTiles.ContainsKey(cellPosition))
+            {
+                previousTiles.Add(cellPosition, null);
+            }
+            previousTiles[cellPosition] = this.TileSystem.GetGameTileAt(cellPosition);
             foreach (GameTile tile in referencedTiles)
             {
                 tilemapsToTileLayerManagers[tile.targetTilemap].AddTile(cellPosition, tile);
@@ -358,6 +381,7 @@ public class TilePlacementController : MonoBehaviour
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
+            
             return PlacementResult.Placed;
         }
         return PlacementResult.Restricted;

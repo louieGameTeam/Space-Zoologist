@@ -40,7 +40,7 @@ public class TimeSystem : MonoBehaviour
 
     private void UpdateDayText(int day)
     {
-        CurrentDayText.text = "DAY " + day;
+        CurrentDayText.text = "" + day;
         if (maxDay > 0)
         {
             CurrentDayText.text += " / " + maxDay;
