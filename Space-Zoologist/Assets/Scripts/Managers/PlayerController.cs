@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] ObjectiveManager ObjectiveManager = default;
     //[SerializeField] DialogueManager DialogueManager = default;
     [SerializeField] GameObject HUD = default;
-    [SerializeField] GameObject Store = default;
     //[Tooltip("Binds to numbers in order of list (Element 0 -> 1, Element 1 -> 2, etc.")]
     //[SerializeField] List<GameObject> StoreMenus = default;
     //[SerializeField] List<GameObject> MachineHUDs = default;
@@ -117,7 +116,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             this.HUD.SetActive(!this.HUD.activeSelf);
-            this.Store.SetActive(!this.Store.activeSelf);
         }
     }
 

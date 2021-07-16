@@ -25,6 +25,8 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject itemDropdownMenu = null;
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
+    [SerializeField] private GameObject ObjectivePane = null;
+    [SerializeField] private GameObject GrowthInfo = default;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -46,6 +48,7 @@ public class Inspector : MonoBehaviour
         this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
         this.itemsDropdown.onValueChanged.AddListener(selectItem);
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
+        this.inspectorWindowDisplayScript.Initialize();
 
         // Have the dropdown options be refreshed when new items created
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
@@ -57,6 +60,7 @@ public class Inspector : MonoBehaviour
     {
         if (this.IsInInspectorMode)
         {
+            this.inspectorWindowDisplayScript.ClearInspectorWindow();
             this.inspectorWindow.SetActive(false);
             //this.areaDropdownMenu.SetActive(false);
             //this.itemDropdownMenu.SetActive(false);
@@ -64,8 +68,14 @@ public class Inspector : MonoBehaviour
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
             this.IsInInspectorMode = !IsInInspectorMode;
+            AudioManager.instance.PlayOneShot(SFXType.MenuClose);
         }
 
+    }
+
+    public void ToggleDetails()
+    {
+        this.GrowthInfo.SetActive(!this.GrowthInfo.activeSelf);
     }
 
     public void OpenInspector()
@@ -79,6 +89,7 @@ public class Inspector : MonoBehaviour
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = !IsInInspectorMode;
+        AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
     }
 
     /// <summary>
@@ -86,6 +97,7 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void ToggleInspectMode()
     {
+
         // Toggle button text, displays and pause/free animals
         if (!this.IsInInspectorMode)
         {
@@ -186,7 +198,6 @@ public class Inspector : MonoBehaviour
     {
         if (this.IsInInspectorMode && Input.GetMouseButtonDown(0))
         {
-            // UI layer clicked TODO better way to handle mouse inputs?
             if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
             {
                 return;
@@ -211,12 +222,11 @@ public class Inspector : MonoBehaviour
         Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
         GameTile tile = this.tileSystem.GetGameTileAt(pos);
         GridSystem.CellData cellData = getCellData(pos);
-
         if (cellData.OutOfBounds)
         {
             return;
         }
-
+        bool somethingSelected = true;
         this.UnHighlightAll();
         if (cellData.ContainsAnimal)
         {
@@ -240,8 +250,16 @@ public class Inspector : MonoBehaviour
         {
             DisplayAreaText(pos);
             selectedPosition = pos;
+            somethingSelected = false;
         }
-
+        else
+        {
+            somethingSelected = false;
+        }
+        if (somethingSelected)
+        {
+            AudioManager.instance.PlayOneShot(SFXType.Notification);
+        }
         // Reset dropdown selections
         this.enclosedAreaDropdown.value = 0;
         this.itemsDropdown.value = 0;
@@ -308,7 +326,6 @@ public class Inspector : MonoBehaviour
 
     private void DisplayAreaText(Vector3Int cellPos)
     {
-        this.HighlightEnclosedArea(cellPos);
         this.enclosureSystem.UpdateEnclosedAreas();
         this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
         //Debug.Log($"Enclosed are @ {cellPos} selected");
@@ -316,10 +333,8 @@ public class Inspector : MonoBehaviour
 
     private void DisplayLiquidText(Vector3Int cellPos)
     {
-        this.HighlightSingleTile(cellPos);
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        GameTile tile = this.tileSystem.GetGameTileAt(selectedPosition);
-        float[] compositions = this.tileSystem.GetTileContentsAt(cellPos, tile);
+        float[] compositions = this.tileSystem.GetLiquidBodyAt(cellPos).contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 
@@ -364,38 +379,10 @@ public class Inspector : MonoBehaviour
         // Highlight food source object
         foodSourceGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         this.lastFoodSourceSelected = foodSourceGameObject;
-
-        // Hightlight
-        //FoodSource foodSource = foodSourceGameObject.GetComponent<FoodSource>();
-        //List<Vector3Int> foodSourceRadiusRange = this.tileSystem.AllCellLocationsinRange(this.tileSystem.WorldToCell(foodSourceGameObject.transform.position), foodSource.Species.RootRadius);
-        //foreach (Vector3Int pos in foodSourceRadiusRange)
-        //{
-        //    this.highLight.SetTile(pos, this.highLightTile);
-        //}
-
-        //this.lastTilesSelected = foodSourceRadiusRange;
     }
 
-    // TODO implement the "HighlightSingleTile" then use it here
-    private void HighlightEnclosedArea(Vector3Int selectedLocation)
+    public GameObject GetAnimalSelected()
     {
-
-    }
-
-    // TODO find a way to unhighlight the hightlighted tiles
-    private void UnhighlightEnclosedArea(Vector3Int selectedLocation)
-    {
-
-    }
-
-    private void UnHighSignleTile(Vector3Int location)
-    {
-
-    }
-
-    // TODO check out "HighlightFoodSource" to see how to tile can be highlighted
-    private void HighlightSingleTile(Vector3Int location)
-    {
-
+        return lastPopulationSelected;
     }
 }

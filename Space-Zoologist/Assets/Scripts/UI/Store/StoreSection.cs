@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
@@ -23,8 +23,10 @@ public class StoreSection : MonoBehaviour
     protected GridSystem GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
-
+    private GridOverlay gridOverlay = default;
     protected Item selectedItem = null;
+    private Vector3Int previousLocation = default;
+    protected int currentAudioIndex = 0;
 
     public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
     {
@@ -32,9 +34,40 @@ public class StoreSection : MonoBehaviour
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
+        gridOverlay = GridSystem.gameObject.GetComponent<GridOverlay>();
         this.playerBalance = playerBalance;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
+    }
+    public Item GetItemByID(string id)
+    {
+        foreach (Item item in this.storeItems.Keys)
+        {
+            if (item.ID.Equals(id))
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void Update()
+    {
+        if (cursorItem.IsOn)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
+            if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
+
+            Vector3Int gridLocation = GridSystem.Grid.WorldToCell(mousePosition);
+            if (this.GridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
+
+            if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
+            {
+                previousLocation = gridLocation;
+                gridOverlay.ClearColors();
+                GridSystem.PlacementValidation.updateVisualPlacement(gridLocation, selectedItem);
+            }
+        }
     }
 
     public virtual void Initialize()
@@ -70,9 +103,9 @@ public class StoreSection : MonoBehaviour
     /// <param name="item">The item that was selected.</param>
     public virtual void OnItemSelected(Item item)
     {
-        if (!this.HasSupply(item))
+        if (!this.CanBuy(item))
         {
-            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            OnItemSelectionCanceled();
             return;
         }
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
@@ -82,13 +115,14 @@ public class StoreSection : MonoBehaviour
     public virtual void OnItemSelectionCanceled()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        gridOverlay.ClearColors();
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)
     {
-        if (!this.HasSupply(this.selectedItem))
+        if (!this.CanBuy(this.selectedItem))
         {
-            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            OnItemSelectionCanceled();
             return;
         }
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -97,12 +131,12 @@ public class StoreSection : MonoBehaviour
         }
     }
 
-    public bool HasSupply(Item item)
+    public bool CanBuy(Item item)
     {
-        if (storeItems.ContainsKey(item) && storeItems[item].RemainingAmount == 0)
+        if (storeItems.ContainsKey(item) && playerBalance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
         {
-            Debug.Log("No " + item.ItemName + " remaining!");
-            OnItemSelectionCanceled();
+            Debug.Log("You can't buy this!");
+            //OnItemSelectionCanceled();
             return false;
         }
         return true;
@@ -123,9 +157,9 @@ public class StoreSection : MonoBehaviour
     /// <param name="eventData"></param>
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
-        if (!this.HasSupply(this.selectedItem))
+        if (!this.CanBuy(this.selectedItem))
         {
-            // this.PlayerBalanceDisplay.StrobeColor(2, Color.red);
+            OnItemSelectionCanceled();
             return;
         }
     }
@@ -150,5 +184,23 @@ public class StoreSection : MonoBehaviour
             }
         }
         return false;
+    }
+
+    protected virtual void HandleAudio()
+    {
+        if (selectedItem.AudioClips.Count == 0)
+        {
+            Debug.Log("Selected item " + selectedItem.ItemName + " has no audio sources!");
+            return;
+        }
+        if (selectedItem.AudioClips.Count > 1)
+        {
+            currentAudioIndex += 1;
+            if (currentAudioIndex >= selectedItem.AudioClips.Count)
+            {
+                currentAudioIndex = 0;
+            }
+        }
+        AudioManager.instance.PlayOneShot(selectedItem.AudioClips[currentAudioIndex]);
     }
 }

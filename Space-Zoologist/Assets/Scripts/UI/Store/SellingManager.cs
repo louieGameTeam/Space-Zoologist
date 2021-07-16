@@ -76,55 +76,18 @@ public class SellingManager : MonoBehaviour
 
 
             // Only deleting 1 item on each click, so split into if/else. By priority:
-            // 1. Sell the machine
-            if (cellData.ContainsMachine)
-            {
-                SellMachineOnTile(cellData, cellPos);
-
-            }
-            // 2. Sell the food
-            else if (cellData.ContainsFood)
+            // 1. Sell the food
+            if (cellData.ContainsFood)
             {
                 SellFoodOnTile(cellData, cellPos);
 
             }
-            // 3. Sell the wall
+            // 2. Sell the wall
             else if (tile.type == TileType.Wall)
             {
                 SellWallOnTile(cellPos);
             }
         }
-    }
-
-    private void SellMachineOnTile(GridSystem.CellData cellData, Vector3Int cellPos)
-    {
-        if (cellData.Machine.GetComponent<AtmosphereMachine>())
-        {
-            foreach (Item item in LevelDataReference.LevelData.Items)
-            {
-                if (item.ID.Equals("AtmosphereMachine"))
-                {
-                    PlayerBalance.SubtractFromBalance(-1 * item.Price);
-                    break;
-                }
-            }
-        }
-        else if (cellData.Machine.GetComponent<LiquidMachine>())
-        {
-            foreach (Item item in LevelDataReference.LevelData.Items)
-            {
-                if (item.ID.Equals("LiquidMachine"))
-                {
-                    PlayerBalance.SubtractFromBalance(-1 * item.Price);
-                    break;
-                }
-            }
-        }
-        Destroy(cellData.Machine);
-
-        // Clean up CellData
-        gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsMachine = false;
-        gridSystem.CellGrid[cellPos.x, cellPos.y].Machine = null;
     }
 
     private void SellFoodOnTile(GridSystem.CellData cellData, Vector3Int cellPos)

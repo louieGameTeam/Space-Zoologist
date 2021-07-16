@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] bool EdgeMovement = false;
     [SerializeField] private float edgeSpeed = 5f;
     [SerializeField] private float edgeBoundary = 10f;
-    [SerializeField] private LevelDataReference LevelDataReference = default;
+    [SerializeField] private float zoomHeight = 10f;
+    [SerializeField] private int MapWidth = default;
+    [SerializeField] private int MapHeight = default;
 
     private Camera cam = default;
     private float targetZoom;
@@ -33,9 +36,14 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom()
     {
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+        {
+            //Debug.Log("Not zooming");
+            return;
+        }
         float scrollData = Input.GetAxis("Mouse ScrollWheel");
         targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 2.5f, 10f);
+        targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
     }
 
@@ -118,12 +126,12 @@ public class CameraController : MonoBehaviour
     private bool IsValidLocation(Vector3 newPosition)
     {
         return (newPosition.x >= 0 && newPosition.y >= 0
-        && newPosition.x <= LevelDataReference.MapWidth && newPosition.y <= LevelDataReference.MapHeight);
+        && newPosition.x <= MapWidth && newPosition.y <= MapHeight);
     }
 
     private Vector3 ClampToValidLocation(Vector3 toClamp) {
-        float x = Mathf.Clamp(toClamp.x, 0, LevelDataReference.MapWidth);
-        float y = Mathf.Clamp(toClamp.y, 0, LevelDataReference.MapHeight);
+        float x = Mathf.Clamp(toClamp.x, 0, MapWidth);
+        float y = Mathf.Clamp(toClamp.y, 0, MapHeight);
         return new Vector3(x, y, toClamp.z);
     }
 }

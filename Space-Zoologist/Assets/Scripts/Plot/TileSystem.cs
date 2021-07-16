@@ -423,11 +423,40 @@ public class TileSystem : MonoBehaviour
         return tileLocations;
     }
 
-    /// <summary>
-    /// Return the count of different types of tiles within a radius range of a given cell location
-    /// </summary>
-    /// <param name="centerCellLocation">The location of the center cell</param>
-    /// <param name="scanRange">The radius range to look for</param>
+    public int[] CountOfTilesInArea(Vector3Int centerCellLocation, int size, int area)
+    {
+        int[] typesOfTileWithinRadius = new int[(int)TileType.TypesOfTiles];
+        int radius = size / 2;
+        Vector3Int pos;
+        int offset = 0;
+        if (size % 2 == 0)
+        {
+            centerCellLocation = new Vector3Int(centerCellLocation.x - 1, centerCellLocation.y - 1, 0);
+            offset = 1;
+        }
+        // Check if the whole object is in bounds
+        for (int x = (-1) * (radius - offset); x <= radius; x++)
+        {
+            for (int y = (-1) * (radius - offset); y <= radius; y++)
+            {
+                pos = centerCellLocation;
+                pos.x += x;
+                pos.y += y;
+                GameTile tile = GetGameTileAt(pos);
+                if (tile)
+                {
+                    typesOfTileWithinRadius[(int)tile.type]++;
+                }
+            }
+        }
+        return typesOfTileWithinRadius;
+    }
+
+        /// <summary>
+        /// Return the count of different types of tiles within a radius range of a given cell location
+        /// </summary>
+        /// <param name="centerCellLocation">The location of the center cell</param>
+        /// <param name="scanRange">The radius range to look for</param>
     public int[] CountOfTilesInRange(Vector3Int centerCellLocation, int scanRange)
     {
         int[] typesOfTileWithinRadius = new int[(int)TileType.TypesOfTiles];
@@ -478,20 +507,11 @@ public class TileSystem : MonoBehaviour
 
                 scanLocation.x = x + centerCellLocation.x;
                 scanLocation.y = y + centerCellLocation.y;
-
-                GameTile tile = GetGameTileAt(scanLocation);
-
-                if (tile)
+                LiquidBody liquid = this.GetLiquidBodyAt(scanLocation);
+                if (liquid != null)
                 {
-                    if (tile.type == TileType.Liquid)
-                    {
-                        float[] composition = this.GetTileContentsAt(scanLocation, tile);
+                    liquidCompositions.Add(liquid.contents);
 
-                        if (!liquidCompositions.Contains(composition))
-                        {
-                            liquidCompositions.Add(composition);
-                        }
-                    }
                 }
             }
         }

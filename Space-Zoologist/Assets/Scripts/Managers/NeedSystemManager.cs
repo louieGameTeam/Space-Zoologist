@@ -18,11 +18,11 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] PauseManager PauseManager = default;
+    [SerializeField] LevelIO LevelIO = default;
 
     /// <summary>
     /// Initialize the universal need systems
     /// </summary>
-    /// <remarks>Enviormental -> FoodSource/Species (consumable) -> Density/Symbiosis (other), this order has to be fixed</remarks>
     private void Start()
     {
         setupNeedSystems();
@@ -31,25 +31,17 @@ public class NeedSystemManager : MonoBehaviour
         this.UpdateAllSystems();
         PopulationManager.UpdateAllGrowthConditions();
         PauseManager.TogglePause();
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
+        {
+            this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
+        });
     }
 
     private void setupNeedSystems()
     {
-        // Add enviormental NeedSystem
-        AddSystem(new AtmosphereNeedSystem(EnclosureSystem));
         AddSystem(new TerrainNeedSystem(ReservePartitionManager, TileSystem));
         AddSystem(new LiquidNeedSystem(ReservePartitionManager, TileSystem));
-
-
-        // FoodSource and Species NS
         AddSystem(new FoodSourceNeedSystem(ReservePartitionManager));
-        // AddSystem(new SpeciesNeedSystem(ReservePartitionManager));
-
-        // Add Density NeedSystem
-        //AddSystem(new DensityNeedSystem(ReservePartitionManager, TileSystem));
-
-        // Add Symbiosis NeedSystem
-        // AddSystem(new SymbiosisNeedSystem(ReservePartitionManager));
     }
 
     /// <summary>
@@ -73,8 +65,6 @@ public class NeedSystemManager : MonoBehaviour
             Debug.Assert(systems.ContainsKey(need.NeedType), $"No { need } system");
             systems[need.NeedType].RemoveConsumer(life);
         }
-
-        // TODO also remove from consumed list
     }
 
     /// <summary>
@@ -108,11 +98,6 @@ public class NeedSystemManager : MonoBehaviour
         {
             this.systems[needType].UpdateSystem();
         }
-    }
-
-    public void UpdateAccessMap()
-    {
-        this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.changedTiles);
     }
 
     /// <summary>

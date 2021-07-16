@@ -43,7 +43,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     public GameTile Liquid;
     [SerializeField] private TileSystem TileSystem = default;
-
+    [SerializeField] private BuildBufferManager buildBufferManager;
     private void Awake()
     {
         // Variable initializations
@@ -63,6 +63,12 @@ public class ReservePartitionManager : MonoBehaviour
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
         populationAccessibleLiquid = new Dictionary<Population, List<float[]>>();
+    }
+
+    private void Start()
+    {
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => this.RemovePopulation((Population)EventManager.Instance.EventData));
     }
 
     /// <summary>
@@ -93,11 +99,16 @@ public class ReservePartitionManager : MonoBehaviour
     /// </summary>
     public void RemovePopulation(Population population)
     {
+        if (!Populations.Contains(population))
+        {
+            return;
+        }
         Populations.Remove(population);
         TypesOfTerrain.Remove(population);
         openID.Enqueue(PopulationToID[population]);
         PopulationByID.Remove(PopulationToID[population]);  // free ID
         PopulationToID.Remove(population);  // free ID
+        CleanupAccessMapForRecycledID();
 
     }
 
@@ -170,7 +181,13 @@ public class ReservePartitionManager : MonoBehaviour
                 // checked before, move on
                 continue;
             }
-
+            // Check tiles that are under construction, make them inaccessible
+            //if (this.buildBufferManager.IsConstructing(cur.x,cur.y))
+            //{
+            //    unaccessible.Add(cur);
+            //    population.HasAccessibilityChanged = true;
+            //    continue;
+            //}
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
             GameTile tile = _tileSystem.GetGameTileAt(cur);
             // Get liquid tile info
@@ -293,6 +310,7 @@ public class ReservePartitionManager : MonoBehaviour
         // Most intuitive implementation: recalculate map for all affected populations
         foreach (Population population in AffectedPopulations)
         {
+            Debug.Log("Updating access map for " + population.gameObject.name);
             CleanupAccessMap(PopulationToID[population]);
             GenerateMap(population);
         }

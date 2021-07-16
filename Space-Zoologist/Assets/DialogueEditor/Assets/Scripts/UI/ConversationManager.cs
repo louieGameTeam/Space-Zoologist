@@ -84,7 +84,9 @@ namespace DialogueEditor
         // Selection options
         private int m_currentSelectedIndex;
 
-
+        public GameObject BacklogGameObject;
+        public Button BacklogButton;
+        public Text Backlog;
         //--------------------------------------
         // Awake, Start, Destroy
         //--------------------------------------
@@ -362,9 +364,6 @@ namespace DialogueEditor
             }     
         }
 
-
-
-
         //--------------------------------------
         // Start / End Conversation
         //--------------------------------------
@@ -412,7 +411,16 @@ namespace DialogueEditor
             SetState(eState.freeze);
         }
 
+        public void FreezeConversation()
+        {
+            SetState(eState.freeze);
+        }
 
+        public void UnfreezeConversation()
+        {
+            print("Unfroze");
+            SetState(eState.TransitioningOptionsOff);
+        }
         //--------------------------------------
         // Public functions
         //--------------------------------------
@@ -542,6 +550,10 @@ namespace DialogueEditor
                 {
                     DialogueText.text = speech.Text;
                     DialogueText.maxVisibleCharacters = speech.Text.Length;
+                }
+                if (Backlog != null)
+                {
+                    Backlog.text += speech.Name + ":\n" + speech.Text + "\n\n";
                 }
             }
 
@@ -691,6 +703,12 @@ namespace DialogueEditor
 
             m_uiOptions[m_currentSelectedIndex].SetHovering(false);
             m_currentSelectedIndex = -1;
+        }
+
+        public void ToggleBacklog()
+        {
+            bool active = BacklogGameObject.activeSelf;
+            BacklogGameObject.SetActive(!active); // toggle backlog
         }
     }
 }

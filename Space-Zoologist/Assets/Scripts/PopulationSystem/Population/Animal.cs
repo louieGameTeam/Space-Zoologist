@@ -20,10 +20,10 @@ public class Animal : MonoBehaviour
             this.Animator = null;
             Debug.Log("Animator component not attached");
         }
-        this.MovementController = this.gameObject.GetComponent<MovementController>();
     }
     public void Initialize(Population population, MovementData data)
     {
+        this.MovementController = this.gameObject.GetComponent<MovementController>();
         this.MovementData = data;
         this.PopulationInfo = population;
         this.gameObject.GetComponent<Animator>().runtimeAnimatorController = this.PopulationInfo.Species.AnimatorController;
@@ -31,6 +31,10 @@ public class Animal : MonoBehaviour
 
     void LateUpdate()
     {
+        if (this.MovementData == null)
+        {
+            return;
+        }
         float velocity = this.PythagoreanTheorem(lastPos, this.gameObject.transform.position) / Time.deltaTime;
         lastPos = this.gameObject.transform.position;
         if (velocity < 0.01f)

@@ -8,63 +8,46 @@ public class DrinkingPattern : UniversalAnimatorPattern
     [SerializeField] private string Down = default;
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
-    [SerializeField] private GameTile liquidTile = default;
-    private TileSystem tileSystem = default;
     public override void StartUp()
     {
-        this.tileSystem = FindObjectOfType<TileSystem>();
         base.StartUp();
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
-        Vector3Int currentCell = tileSystem.WorldToCell(animal.transform.position);
-        tileSystem.GetGameTileAt(currentCell).targetTilemap.SetColor(currentCell,Color.red);
-        for (int y = -1; y < 2; y++)
+        Vector3Int currentCell = base.GridSystem.Grid.WorldToCell(animal.transform.position);
+        for (int i = -1; i < 2; i++)
         {
-            for (int x = -1; x < 2; x++)
+            for (int j = -1; j < 2; j++)
             {
-                if (Mathf.Abs(y) + Mathf.Abs(x) > 1)
+                if (GridSystem.isCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.CellGrid[currentCell[0] + j, currentCell[1] + i].ContainsLiquid)
                 {
-                    continue;
-                }
-                if (tileSystem.GetGameTileAt(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)) == liquidTile)
-                {
-                    //if (GridSystem.CellGrid[currentCell[0] + x, currentCell[1] + i].Food.SpeciesName.Equals(foodName))
-                    //{
-                        this.AnimatorTriggerName = GetTriggerName(x, y);
-                    if (AnimatorTriggerName == this.Up)
-                    {
-                        print((currentCell[0]+x)+","+ (currentCell[1] +y)+":" + tileSystem.GetGameTileAt(new Vector3Int(currentCell[0] + x, currentCell[1] + y, 0)).name);
-                    }
-                        base.EnterPattern(animal, animalData);
-                        return;
-                    //}
+                    this.AnimatorTriggerName = GetTriggerName(i, j);
+                    base.EnterPattern(animal, animalData);
+                    return;
                 }
             }
         }
-        Debug.LogError("no liquid2");
-        this.AnimatorTriggerName = this.Down;
         base.EnterPattern(animal, animalData);
+        base.ExitPattern(animal, true);
     }
-    private string GetTriggerName(int x, int y)
+    private string GetTriggerName(int i, int j)
     {
-        if (y == -1)
-        {
-            return this.Down;
-        }
-        if (x == 1)
-        {
-            return this.Right;
-        }
-        if (x == -1)
-        {
-            return this.Left;
-        }
-        if (y == 1)
+        if (i == 1)
         {
             return this.Up;
         }
-        Debug.LogError("no liquid");
-        return this.Down;
+        if (i == -1)
+        {
+            return this.Down;
+        }
+        if (j == 1)
+        {
+            return this.Right;
+        }
+        if (j == -1)
+        {
+            return this.Left;
+        }
+        return this.Up;
     }
 }

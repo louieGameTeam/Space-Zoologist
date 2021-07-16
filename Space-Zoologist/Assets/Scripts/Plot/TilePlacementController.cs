@@ -10,7 +10,7 @@ public class TilePlacementController : MonoBehaviour
     public bool isBlockMode { get; set; } = false;
     public bool PlacementPaused { get; private set; }
     [SerializeField] private Camera currentCamera = default;
-    private bool isPreviewing { get; set; } = false;
+    public bool isPreviewing { get; set; } = false;
     private bool godMode = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
@@ -23,12 +23,14 @@ public class TilePlacementController : MonoBehaviour
     public Tilemap[] allTilemaps { get { return tilemaps; } }
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     public GameTile[] gameTiles { get; private set; } = default;
-    private HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
+    public HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
     private Dictionary<Tilemap, TileLayerManager> tilemapsToTileLayerManagers = new Dictionary<Tilemap, TileLayerManager>();
+    public Dictionary<Vector3Int, GameTile> previousTiles = new Dictionary<Vector3Int, GameTile>();
+    private BuildBufferManager buildBufferManager;
     private int lastCornerX;
     private int lastCornerY;
     [SerializeField] private TileSystem TileSystem = default;
@@ -70,8 +72,8 @@ public class TilePlacementController : MonoBehaviour
             RenderColorOfColorLinkedTiles(colorInitializeTiles);
             referencedTiles.Clear();
         }
-        this.gameObject.GetComponent<GridIO>().Initialize();
-        this.gameObject.GetComponent<GridIO>().LoadGrid();
+        this.gameObject.GetComponent<PlotIO>().Initialize();
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
     }
     private void Update()
     {
@@ -319,6 +321,23 @@ public class TilePlacementController : MonoBehaviour
         return false;
     }
 
+    public void RevertTile(Vector3Int loc)
+    {
+        if (!this.previousTiles.ContainsKey(loc))
+        {
+            return;
+        }
+        this.referencedTiles.Clear();
+        this.referencedTiles.Add(this.previousTiles[loc]);
+        this.buildBufferManager.DestoryBuffer(new Vector2Int(loc.x, loc.y));
+        Debug.Log("placed " + this.previousTiles[loc]);
+
+        this.previousTiles.Remove(loc);
+        Debug.Log(PlaceTile(loc, false));
+        StopPreview();
+
+    }
+
     private PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {
         if (IsPlacable(cellPosition) || !checkPlacable)
@@ -347,6 +366,11 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
             // Check clear, place tiles
+            if (!previousTiles.ContainsKey(cellPosition))
+            {
+                previousTiles.Add(cellPosition, null);
+            }
+            previousTiles[cellPosition] = this.TileSystem.GetGameTileAt(cellPosition);
             foreach (GameTile tile in referencedTiles)
             {
                 tilemapsToTileLayerManagers[tile.targetTilemap].AddTile(cellPosition, tile);
@@ -357,6 +381,7 @@ public class TilePlacementController : MonoBehaviour
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
+            
             return PlacementResult.Placed;
         }
         return PlacementResult.Restricted;
@@ -380,11 +405,17 @@ public class TilePlacementController : MonoBehaviour
         }
         if (!GridSystem.IsWithinGridBounds(cellLocation))
         {
-            Debug.Log("outside bound");
             return false;
         }
         GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
-        // return (!cellData.ContainsAnimal && !cellData.ContainsFood && !cellData.ContainsMachine && !cellData.HomeLocation);
-        return !cellData.ContainsFood;
+        if (cellData.ContainsFood)
+        {
+            return false;
+        }
+        if (this.buildBufferManager.IsConstructing(cellLocation.x, cellLocation.y))
+        {
+            return false;
+        }
+        return true;
     }
 }

@@ -9,11 +9,20 @@ public class RandomMovementEmojiPattern : BehaviorPattern
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         int locationIndex = this.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
+        if (animalData.animal.PopulationInfo.AccessibleLocations.Count == 0)
+        {
+            ExitPattern(gameObject);
+            return;
+        }
         Vector3Int end = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         gameObject.transform.GetChild(0).GetComponent<Animator>().enabled = false;
         animalData.animal.Overlay.sprite = Emoji;
         // Debug.Log("Overlay ENABLED");
         //animalData.animal.Overlay.enabled = true;
+        if (animalData.animal.MovementController == null)
+        {
+            return;
+        }
         AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)

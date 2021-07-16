@@ -20,7 +20,7 @@ public class EnclosureSystem : MonoBehaviour
 
     // The global atmosphere
     private AtmosphericComposition GlobalAtmosphere;
-
+    private Vector3Int startPos = default;
     private byte enclosedAreaCount = 0;
 
     /// <summary>
@@ -41,6 +41,7 @@ public class EnclosureSystem : MonoBehaviour
     {
         // TODO When this is called GridSystem might not be initlized,
         // ie, cannot read from CellData
+        startPos = gridSystem.startTile;
         this.FindEnclosedAreas();
     }
 
@@ -229,8 +230,6 @@ public class EnclosureSystem : MonoBehaviour
     /// </remarks>
     public void FindEnclosedAreas()
     {
-        // This has to be inside the map
-        Vector3Int startPos = this.TileSystem.WorldToCell(new Vector3(1, 1, 0));
         // tiles to-process
         Stack<Vector3Int> stack = new Stack<Vector3Int>();
         // non-wall tiles
@@ -247,18 +246,18 @@ public class EnclosureSystem : MonoBehaviour
         newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, enclosedAreaCount));
         this.FloodFill(startPos, accessed, unaccessible, walls, enclosedAreaCount, newEnclosedAreas[enclosedAreaCount], false);
 
-
+        Vector3Int currPos = startPos;
         while (walls.Count > 0)
         {
             // this.enclosedAreaCount++;
             // newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount));
 
-            startPos = walls.Pop();
+            currPos = walls.Pop();
 
-            this.FloodFill(startPos + Vector3Int.left, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
-            this.FloodFill(startPos + Vector3Int.up, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
-            this.FloodFill(startPos + Vector3Int.right, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
-            this.FloodFill(startPos + Vector3Int.down, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
+            this.FloodFill(currPos + Vector3Int.left, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
+            this.FloodFill(currPos + Vector3Int.up, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
+            this.FloodFill(currPos + Vector3Int.right, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
+            this.FloodFill(currPos + Vector3Int.down, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
         }
 
         this.internalEnclosedAreas = newEnclosedAreas;
@@ -267,7 +266,6 @@ public class EnclosureSystem : MonoBehaviour
 
     public void UpdateEnclosedAreas()
     {
-        Vector3Int startPos = this.TileSystem.WorldToCell(new Vector3(1, 1, 0));
         // tiles to-process
         Stack<Vector3Int> stack = new Stack<Vector3Int>();
         // non-wall tiles
@@ -287,16 +285,16 @@ public class EnclosureSystem : MonoBehaviour
         // Initial flood fill
         // TODO Replace this with a better way to determine the first tile to start with
         // If the map DOES NOT contain a tile at (1,1,0), this code causes an ERROR! -> tile will not get placed in store
-        byte curEnclosedAreaIndex = this.positionToEnclosedArea[new Vector3Int(1, 1, 0)];
+        byte curEnclosedAreaIndex = this.positionToEnclosedArea[startPos];
         newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, curEnclosedAreaIndex));
         this.FloodFill(startPos, accessed, unaccessible, walls, curEnclosedAreaIndex, newEnclosedAreas[curEnclosedAreaIndex], true);
         updatedEnclosedArea.Add(curEnclosedAreaIndex);
-
+        Vector3Int currPos = startPos;
         while (walls.Count > 0)
         {
-            startPos = walls.Pop();
+            currPos = walls.Pop();
 
-            foreach (Vector3Int pos in new List<Vector3Int>() { startPos + Vector3Int.left, startPos + Vector3Int.up, startPos + Vector3Int.right, startPos + Vector3Int.down } )
+            foreach (Vector3Int pos in new List<Vector3Int>() { currPos + Vector3Int.left, currPos + Vector3Int.up, currPos + Vector3Int.right, currPos + Vector3Int.down } )
             {
                 if (!this.positionToEnclosedArea.ContainsKey(pos) || accessed.Contains(pos) || unaccessible.Contains(pos))
                 {

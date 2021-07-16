@@ -21,30 +21,17 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] EventResponseManager EventResponseManager = default;
     [SerializeField] List<ResourceData> resourceData = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();
+
+    // a copy of the dictionary before draft
+    Dictionary<string, int> initialResources = new Dictionary<string, int>();
     private Dictionary<string, StoreItemCell> itemDisplayInfo = new Dictionary<string, StoreItemCell>();
-
-    // Auto-generate the list of ResourceData for you if resourceData is empty
-    public void OnValidate()
-    {
-        //if (LevelDataRef == null) return;
-        //if (resourceData == null || resourceData.Count > 0) return;
-
-        //resourceData = new List<ResourceData>();
-        //foreach (Item item in LevelDataRef.LevelData.Items)
-        //{
-        //    resourceData.Add(new ResourceData(item.ID));
-        //}
-        //foreach (AnimalSpecies species in LevelDataRef.LevelData.AnimalSpecies)
-        //{
-        //    resourceData.Add(new ResourceData(species.SpeciesName));
-        //}
-    }
 
     public void Awake()
     {
         foreach (ResourceData data in resourceData)
         {
             remainingResources.Add(data.resourceName, data.initialAmount);
+            initialResources.Add(data.resourceName, data.initialAmount);
         }
     }
 
@@ -129,6 +116,34 @@ public class ResourceManager : MonoBehaviour
         {
             // Debug.Log("ResourceManager: " + species.SpeciesName + " does not exist!");
             return -1;
+        }
+    }
+
+
+    public void Save()
+    {
+        Copy(remainingResources, initialResources);
+    }
+
+    public void Load()
+    {
+        Copy(initialResources, remainingResources);
+    }
+
+    // Should not be too costly since # of keys is very small (n <= 30) and this won't be called many times
+    private void Copy(Dictionary<string, int> from, Dictionary<string, int> to)
+    {
+        foreach (var pair in from)
+        {
+            if (to.ContainsKey(pair.Key))
+            {
+                to[pair.Key] = pair.Value;
+            }
+            else
+            {
+                to.Add(pair.Key, pair.Value);
+            }
+            updateItemDisplayInfo(pair.Key);
         }
     }
 }

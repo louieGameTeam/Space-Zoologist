@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-//public enum NeedType {Terrain, Liquid, Atmosphere, Food}
-//public enum NeedCondition { Bad, Neutral, Good }
 
 [System.Serializable]
 public class Need
@@ -13,6 +11,7 @@ public class Need
     public NeedType NeedType => needType;
     public Sprite Sprite => sprite;
     public float NeedValue => this.needValue;
+    public bool IsPreferred => isPreferred;
     public List<NeedBehavior> Behaviors => this.conditions;
 
     [SerializeField] private NeedType needType = default;
@@ -20,6 +19,7 @@ public class Need
     [SerializeField] private float needValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;
+    [SerializeField] bool isPreferred = default;
     [SerializeField] private List<NeedBehavior> conditions = default;
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
@@ -32,6 +32,7 @@ public class Need
         this.conditions = needConstructData.Conditions;
         this.thresholds = needConstructData.Thresholds;
         this.conditions = needConstructData.Conditions;
+        this.isPreferred = needConstructData.IsPreferred;
     }
 
     /// <summary>
@@ -45,7 +46,7 @@ public class Need
         if (conditions.Count == 1) return conditions[0].Condition;
         for (var i = 0; i < this.thresholds.Count; i++)
         {
-            if (value < this.thresholds[i])
+            if (value + 0.1 < this.thresholds[i])
             {
                 return this.conditions[i].Condition;
             }
@@ -64,6 +65,25 @@ public class Need
 
         }
         return this.conditions[this.thresholds.Count];
+    }
+
+    public float GetMaxThreshold()
+    {
+        return this.thresholds[this.thresholds.Count - 1];
+    }
+
+    public float GetMinThreshold()
+    {
+        return this.thresholds[0];
+    }
+
+    public float GetThresholdForFirstGoodCondition() {
+        for (int i = 1; i < conditions.Count; i++) {
+            if (conditions[i].Condition == NeedCondition.Good) {
+                return thresholds[i - 1];
+            }
+        }
+        return 0.01f;
     }
 
     // TODO what is this doing

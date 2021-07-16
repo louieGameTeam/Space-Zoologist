@@ -51,7 +51,7 @@ public class MovementController : MonoBehaviour
     {
         if (!pathFound)
         {
-            Debug.Log("Error path not found");
+            //Debug.Log("Error path not found");
             return;
         }
         this.PathToDestination = pathToDestination;

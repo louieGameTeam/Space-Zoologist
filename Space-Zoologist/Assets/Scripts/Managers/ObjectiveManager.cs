@@ -76,7 +76,7 @@ public class ObjectiveManager : MonoBehaviour
 
     public void UpdateObjectivePanel()
     {
-        string displayText = "Main Objective:\n";
+        string displayText = "\n";
 
         foreach (Objective objective in this.mainObjectives)
         {
