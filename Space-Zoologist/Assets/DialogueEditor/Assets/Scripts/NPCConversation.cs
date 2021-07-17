@@ -48,7 +48,7 @@ namespace DialogueEditor
 
             // Look through list to find by ID
             for (int i = 0; i < NodeSerializedDataList.Count; i++)
-                if (NodeSerializedDataList[i].NodeID == id)
+                if (NodeSerializedDataList[i] != null && NodeSerializedDataList[i].NodeID == id)
                     return NodeSerializedDataList[i];
 
             // If none exist, create a new GameObject

@@ -11,7 +11,7 @@ public class DialogueParser : MonoBehaviour
     public string defaultName;
     public Sprite defaultIcon;
     public TMPro.TMP_FontAsset defaultFont;
-    private void OnValidate()
+    public void OnValidate()
     {
         if (text == null) return;
         if (NPCConversation == null) {
@@ -21,6 +21,7 @@ public class DialogueParser : MonoBehaviour
         {
             NPCConversation = gameObject.AddComponent<NPCConversation>();
         }
+
         string toParse = text.text;
         EditableConversation conversation = new EditableConversation();
         string[] nodeTexts = toParse.Split('\n');
