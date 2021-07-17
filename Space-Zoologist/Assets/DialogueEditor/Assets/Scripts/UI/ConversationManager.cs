@@ -710,5 +710,15 @@ namespace DialogueEditor
             bool active = BacklogGameObject.activeSelf;
             BacklogGameObject.SetActive(!active); // toggle backlog
         }
+        Button pingTarget;
+        public void AskForOneTimePing(Button target) {
+            PauseConversation();
+            pingTarget = target;
+            target.onClick.AddListener(OneTimeUnpause);
+        }
+        public void OneTimeUnpause() {
+            ContinueConversation();
+            pingTarget.onClick.RemoveListener(OneTimeUnpause);
+        }
     }
 }
