@@ -1,15 +1,9 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/MenuManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs">
     <Files>
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="211" Column="1" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" />
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="703" Column="1" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/UIConversationButton.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorNode.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Y - Utils/DialogueGenerator.cs" Line="11" Column="1" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseManager.cs" Line="27" Column="29" />
+      <File FileName="Assets/Scripts/Managers/ResourceManager.cs" Line="40" Column="30" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs" Line="8" Column="27" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -39,6 +33,9 @@
                 <Node name="Audio" expanded="True" />
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
+                  <Node name="EventSystem" expanded="True">
+                    <Node name="DialogueResponseManager.cs" selected="True" />
+                  </Node>
                   <Node name="TimeSystem" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
@@ -62,7 +59,6 @@
                   <Node name="Store" expanded="True">
                     <Node name="Sections" expanded="True" />
                   </Node>
-                  <Node name="MenuManager.cs" selected="True" />
                 </Node>
                 <Node name="Y - Utils" expanded="True" />
               </Node>
@@ -74,10 +70,10 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="25fec370-f3e6-4b8e-91ec-db62e1675ac2" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6c7aac77-8d35-41b2-a6d8-9df9976eaab7" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Test/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

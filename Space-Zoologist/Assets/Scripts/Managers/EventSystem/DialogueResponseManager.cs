@@ -93,43 +93,9 @@ public class DialogueResponseManager : MonoBehaviour
 	{
 		if (listening)
 		{
-			//utilize Unity Input KeyDown & ButtonDown
-			foreach (string k in listenedKeys)
-			{
-				if (Input.GetKeyDown(k))
-				{
-					Responded();
-					return;
-				}
-			}
-
-			foreach (string b in listenedButtons)
-			{
-				if (Input.GetButtonDown(b))
-				{
-					Responded();
-					return;
-				}
-			}
-
-			if (inspector.IsInInspectorMode)
-			{
-				GameObject PopulationReturned = inspector.GetAnimalSelected();
-				if (PopulationReturned != null && PopulationReturned != lastPopulationReturned)
-				{
-					AnimalSpecies species = PopulationReturned.GetComponent<Population>().Species;
-					foreach (string listened in listenedSpecies)
-					{
-						if (listened == species.SpeciesName)
-						{
-							Responded();
-							return;
-						}
-					}
-					lastPopulationReturned = PopulationReturned;
-				}
-
-			}
+			HandleListenedKeys();
+			HandleListenedButtons();
+			HandleInspectorClicked();
 		}
 	}
 
@@ -149,5 +115,51 @@ public class DialogueResponseManager : MonoBehaviour
 		conversationManager.UnfreezeConversation();
 
 		Reset();
+	}
+
+	private void HandleListenedKeys()
+	{
+		foreach (string k in listenedKeys)
+		{
+			if (Input.GetKeyDown(k))
+			{
+				Responded();
+				return;
+			}
+		}
+	}
+
+	private void HandleListenedButtons()
+	{
+		foreach (string b in listenedButtons)
+		{
+			if (Input.GetButtonDown(b))
+			{
+				Responded();
+				return;
+			}
+		}
+	}
+
+	private void HandleInspectorClicked()
+	{
+		if (!inspector.IsInInspectorMode)
+		{
+			return;
+		}
+		GameObject PopulationReturned = inspector.GetAnimalSelected();
+		if (PopulationReturned != null && PopulationReturned != lastPopulationReturned)
+		{
+			AnimalSpecies species = PopulationReturned.GetComponent<Population>().Species;
+			foreach (string listened in listenedSpecies)
+			{
+				if (listened == species.SpeciesName)
+				{
+					Responded();
+					break;
+				}
+			}
+			lastPopulationReturned = PopulationReturned;
+		}
 	}
 }
