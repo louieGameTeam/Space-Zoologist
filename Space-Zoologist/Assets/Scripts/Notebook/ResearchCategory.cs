@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// NOTE: we're making this a class so that the value can be null
-// But we need to compare by value and not by reference so that
-// it can be used in dictionaries
+// NOTE: Check if this struct has not been initialized 
+// by checking if the name is null
 [System.Serializable]
 public struct ResearchCategory
 {

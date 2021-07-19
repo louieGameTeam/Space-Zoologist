@@ -21,7 +21,7 @@ public class ResearchEncyclopedia : ScriptableObject
     {
         foreach(ResearchEncyclopediaArticle article in articlesList)
         {
-            Debug.Log("Adding ID: " + article.ID);
+            article.Setup();
             articles.Add(article.ID, article);
         }
     }

@@ -17,7 +17,6 @@ public class ResearchModel : ScriptableObject
     }
 
     // Edit each research entry category seperately
-    // This makes it easier to edit than simply 
     [SerializeField]
     [Tooltip("List of research data for all species")]
     private List<ResearchEntry> speciesResearch;
