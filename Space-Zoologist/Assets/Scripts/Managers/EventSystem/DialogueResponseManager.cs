@@ -7,6 +7,7 @@ using DialogueEditor;
 
 public class DialogueResponseManager : MonoBehaviour
 {
+	
 	bool listening = false;
 	List<string> listenedKeys;
 	List<string> listenedButtons;
