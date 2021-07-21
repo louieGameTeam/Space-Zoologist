@@ -2,8 +2,8 @@
 public class SerializedGrid
 {
     public SerializedTilemap serializedTilemap;
-    public float width;
-    public float height;
+    public int width;
+    public int height;
     // TODO Add other floating objects
 
     public SerializedGrid(GridSystem gridSystem)

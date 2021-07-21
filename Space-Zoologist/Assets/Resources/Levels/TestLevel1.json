@@ -57,57 +57,32 @@
       ]
     },
     "serializedGrid": {
-      "serializedTilemaps": [
-        {
-          "TilemapName": "Terrain",
-          "SerializedTileDatas": [
-            {
-              "TilePosition": [
-                0,
-                0,
-                0
-              ],
-              "TileName": "Dirt",
-              "Color": [
-                1,
-                1,
-                1,
-                1
-              ],
-              "LiquidBodyID": 0
-            },
-            {
-              "TilePosition": [
-                0,
-                1,
-                0
-              ],
-              "TileName": "Dirt",
-              "Color": [
-                1,
-                1,
-                1,
-                1
-              ],
-              "LiquidBodyID": 0
-            }
-          ],
-          "SerializedLiquidBodies": [
-            {
-              "BodyID": 1,
-              "TilePositions": [
-                5,
-                6
-              ],
-              "Contents": [
-                0,
-                0,
-                0
-              ]
-            }
-          ]
-        }
-      ]
+      "serializedTilemap": {
+        "TilemapName": "Tilemap",
+        "SerializedTileDatas": [
+          {
+            "TileID": 0,
+            "LiquidBodyID": 0,
+            "Repetitions": 9
+          }
+        ],
+        "SerializedLiquidBodies": [
+          {
+            "BodyID": 1,
+            "TilePositions": [
+              5,
+              6
+            ],
+            "Contents": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "width": 3,
+      "height": 3
     }
   }
 }

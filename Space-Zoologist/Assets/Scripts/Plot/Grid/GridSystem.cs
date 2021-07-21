@@ -77,18 +77,6 @@ public class GridSystem : MonoBehaviour
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
         HighlightedTiles = new List<Vector3Int>();
 
-        // set up the entire tile data grid
-        this.TileDataGrid = new TileData[this.ReserveHeight, this.ReserveWidth];
-        for (int i=0; i<this.ReserveHeight; i++)
-        {
-            for (int j=0; j<this.ReserveWidth; j++)
-            {
-                Vector3Int loc = new Vector3Int(i, j, 0);
-
-                this.TileDataGrid[i, j] = new TileData(loc);
-            }
-        }
-
         // tilelayermanager stuff
         InitializeTileLayerManager();
     }
@@ -138,40 +126,87 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region I/O
-    // todo: refactor to make parsing in more obvious
-    public void ParseSerializedTilemap(SerializedTilemap serializedTilemap, GameTile[] gameTiles)
+    public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
     {
         InitializeTileLayerManager();
+        // consider reworking liquidbodies maybe later bleh
         Dictionary<int, LiquidBody> bodyIDsToLiquidBodies = new Dictionary<int, LiquidBody>();
-        foreach (SerializedLiquidBody serializedLiquidBody in serializedTilemap.SerializedLiquidBodies)
+        foreach (SerializedLiquidBody serializedLiquidBody in serializedGrid.serializedTilemap.SerializedLiquidBodies)
         {
             LiquidBody liquidBody = ParseSerializedLiquidBody(serializedLiquidBody);
             bodyIDsToLiquidBodies.Add(liquidBody.bodyID, liquidBody);
             this.liquidBodies.Add(liquidBody);
         }
-        Dictionary<string, GameTile> namesToGameTiles = new Dictionary<string, GameTile>();
-        foreach (SerializedTileData serializedTileData in serializedTilemap.SerializedTileDatas)
+
+        // set grid dimensions
+        ReserveWidth = serializedGrid.width;
+        ReserveHeight = serializedGrid.height;
+
+        // set up the entire tile data grid
+        this.TileDataGrid = new TileData[this.ReserveHeight, this.ReserveWidth];
+        for (int i = 0; i < this.ReserveHeight; i++)
         {
-            // parse this data in properly
-            /*
-            if (!namesToGameTiles.ContainsKey(serializedTileData.TileName))
+            for (int j = 0; j < this.ReserveWidth; j++)
             {
+                Vector3Int loc = new Vector3Int(i, j, 0);
+
+                this.TileDataGrid[i, j] = new TileData(loc);
+            }
+        }
+
+        Vector3Int tilePosition = new Vector3Int();
+        foreach (SerializedTileData serializedTileData in serializedGrid.serializedTilemap.SerializedTileDatas)
+        {
+            // if the tile id is negative
+            if (serializedTileData.TileID == -1)
+            {
+                // just move the postion
+                // move x over first
+                tilePosition.x += serializedTileData.Repetitions;
+
+                // then add to the y after if overflow
+                if (tilePosition.x >= ReserveWidth)
+                {
+                    tilePosition.y += tilePosition.x / ReserveWidth;
+                    tilePosition.x = tilePosition.x % ReserveWidth;
+                }
+            }
+            else
+            {
+                // set the starting tile here for flood filling
+                if (startTile == default)
+                    startTile = tilePosition;
+
+                // search through game tiles for correct tile
                 foreach (GameTile gameTile in gameTiles)
                 {
-                    if (gameTile.name.Equals(serializedTileData.TileName))
+                    if ((int)gameTile.type == serializedTileData.TileID)
                     {
-                        namesToGameTiles.Add(serializedTileData.TileName, gameTile);
-                        break;
+                        // add tiles based on repetitions of the same tile
+                        for (int i = 0; i < serializedTileData.Repetitions; ++i)
+                        {
+                            // manually add the tile (may turn into a method later)
+                            TileData tileData = GetTileData(tilePosition);
+
+                            if (tileData == null)
+                                tileData = new TileData(tilePosition, gameTile);
+
+                            Tilemap.SetTile(tilePosition, gameTile);
+
+                            // move the tile position along
+                            tilePosition.x += 1;
+
+                            // then add to the y after if overflow
+                            if (tilePosition.x >= ReserveWidth)
+                            {
+                                tilePosition.y += 1;
+                                tilePosition.x = 0;
+                            }
+                        }
                     }
                 }
             }
-            TileData tileData = ParseSerializedTileData(serializedTileData, namesToGameTiles[serializedTileData.TileName], bodyIDsToLiquidBodies);
-            this.positionsToTileData.Add(tileData.tilePosition, tileData);
-            
-            ApplyChangesToTilemap(tileData.tilePosition);
-            */
         }
-        // set the starting tile here for flood filling
     }
     private LiquidBody ParseSerializedLiquidBody(SerializedLiquidBody serializedLiquidBody)
     {
@@ -207,15 +242,11 @@ public class GridSystem : MonoBehaviour
     {
         if (IsWithinGridBounds(tilePosition))
             return TileDataGrid[tilePosition.y, tilePosition.x];
-        else
-            return null;
+
+        return null;
     }
 
-    /// <summary>
-    /// Adds a tile to the tilemap and internal grid.
-    /// </summary>
-    /// <param name="tilePosition">Vector of tile position.</param>
-    /// <param name="tile">Tile to be added.</param>
+    // note: does not do what you think it does, could be liquid only
     public void AddTile(Vector3Int tilePosition, GameTile tile)
     {
         TileData tileData = GetTileData(tilePosition);
@@ -227,10 +258,7 @@ public class GridSystem : MonoBehaviour
         // TODO update color of liquidbody
     }
 
-    /// <summary>
-    /// Removes a tile from the tilemap and internal grid.
-    /// </summary>
-    /// <param name="tilePosition">Vector of tile position.</param>
+    // note: does not do what you think it does
     public void RemoveTile(Vector3Int tilePosition)
     {
         TileData tileData = GetTileData(tilePosition);
@@ -1769,7 +1797,7 @@ public class GridSystem : MonoBehaviour
         public bool isTileChanged { get; private set; } = false;
         public bool isLiquidBodyChanged { get; private set; } = false;
         public bool isColorChanged { get; private set; } = false;
-        public TileData(Vector3Int tilePosition)
+        public TileData(Vector3Int tilePosition, GameTile tile = null)
         {
             this.Food = null;
             this.Animal = null;
@@ -1777,7 +1805,7 @@ public class GridSystem : MonoBehaviour
             this.HomeLocation = false;
 
             this.tilePosition = tilePosition;
-            this.currentTile = null;
+            this.currentTile = tile;
             this.currentColor = Color.white;
             this.currentLiquidBody = null;
             this.isTileChanged = false;

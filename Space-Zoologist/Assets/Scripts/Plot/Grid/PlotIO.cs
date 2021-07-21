@@ -14,6 +14,7 @@ public class PlotIO : MonoBehaviour
     // Start is called before the first frame update
     public void Initialize()
     {
+        this.GridSystem = FindObjectOfType<GridSystem>().GetComponent<GridSystem>();
         this.tilePlacementController = this.gameObject.GetComponent<TilePlacementController>();
         this.ParseSerializedObjects();
     }
@@ -41,7 +42,7 @@ public class PlotIO : MonoBehaviour
             gridObjectManager.Store(this.SerializedPlot.serializedMapObjects);
             mapObjectNames.Add(gridObjectManager.MapObjectName);
         }
-        GridSystem.ParseSerializedTilemap(SerializedPlot.serializedGrid.serializedTilemap, this.tilePlacementController.gameTiles);
+        GridSystem.ParseSerializedGrid(SerializedPlot.serializedGrid, this.tilePlacementController.gameTiles);
         // Notify if a saved object is not been serialized
         if (this.SerializedPlot.serializedMapObjects.names == null)
         {
