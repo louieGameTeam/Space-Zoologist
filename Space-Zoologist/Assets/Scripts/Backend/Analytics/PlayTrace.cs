@@ -8,17 +8,17 @@ public class PlayTrace
 {
     // BASIC INFORMATION
     // The player's ID.
-    private string playerID;
+    [SerializeField] private string playerID;
     // The play session ID.
-    private string sessionID;
+    [SerializeField] private string sessionID;
     
     // TIME INFORMATION
     // The total time elapsed throughout the play session.
-    private float sessionElapsedTime;
+    [SerializeField] private float sessionElapsedTime;
 
     // LEVEL INFORMATION
     // A list of LevelTrace objects containing detailed information about the actions the player took in levels.
-    private List<LevelTrace> levelTraces;
+    [SerializeField] private List<LevelTrace> levelTraces;
     
     // IN-GAME ASSESSMENT INFORMATION
     // recorded dialogue answers

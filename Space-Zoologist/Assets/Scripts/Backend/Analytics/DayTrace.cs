@@ -17,21 +17,21 @@ public class DayTrace
         // timestamp, flag, target
     
     // An int representing the day being recorded. E.g., day 1 ID = "1"
-    private int dayID;
+    [SerializeField] private int dayID;
     // The timestamp (in elapsed seconds) that this day started.
-    private float dayStartTime;
+    [SerializeField] private float dayStartTime;
     // The timestamp (in elapsed seconds) that this day ended.
-    private float dayEndTime;
+    [SerializeField] private float dayEndTime;
     // The amount of time this day lasted in seconds.
-    private float dayDeltaTime;
+    [SerializeField] private float dayDeltaTime;
     // An int representing the currency the player has at the start of the day.
-    private float balanceStart;
+    [SerializeField] private float balanceStart;
     // An int representing the currency the player has at the end of the day.
-    private float balanceEnd;
+    [SerializeField] private float balanceEnd;
     // The total amount of time the player had the journal open throughout the day.
-    private float journalTime;
+    [SerializeField] private float journalTime;
     // A list of JournalTraces detailing information about the player opening/closing the journal.
-    private List<JournalTrace> journalTraces;
+    [SerializeField] private List<JournalTrace> journalTraces;
 
     // PUBLIC GETTERS/SETTERS
     public int DayID

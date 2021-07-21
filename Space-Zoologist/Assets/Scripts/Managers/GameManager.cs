@@ -93,6 +93,8 @@ public class GameManager : MonoBehaviour
             currentLevelTrace = null;
             currentDayTrace = null;
             DebugLevelTrace(currentPlayTrace.LevelTraces);
+            string json = ConvertPlayTraceToJSON(currentPlayTrace);
+            Debug.Log(json);
         }
     }
 
@@ -179,6 +181,13 @@ public class GameManager : MonoBehaviour
         CloseDayTrace(timestamp, currentDayTrace, playerBalance);
         DayTrace newDayTrace = CreateDayTrace(timestamp, currentDay, playerBalance);
         this.currentDayTrace = newDayTrace;
+    }
+
+    // A function that serializes the current PlayTrace object to JSON.
+    private string ConvertPlayTraceToJSON(PlayTrace playTrace)
+    {
+        string json = JsonUtility.ToJson(playTrace);
+        return json;
     }
 
     // Debug functions to help test.

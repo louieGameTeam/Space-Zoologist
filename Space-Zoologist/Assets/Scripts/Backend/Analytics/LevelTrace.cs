@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // A data class containing information about the levels played during this session.
+[System.Serializable]
 public class LevelTrace
 {
     // The ID associated with this level.
-    private int levelID;
+    [SerializeField] private int levelID;
     // The timestamp (in elapsed seconds) of the beginning of this level.
-    private float levelStartTime;
+    [SerializeField] private float levelStartTime;
     // The timestamp (in elapsed seconds) of the end of this level.
-    private float levelEndTime;
+    [SerializeField] private float levelEndTime;
     // The amount of time this level lasted in seconds.
-    private float levelDeltaTime;
+    [SerializeField] private float levelDeltaTime;
     // The total number of days passed in this level.
-    private int levelElapsedDays;
+    [SerializeField] private int levelElapsedDays;
     // A list of DayTrace objects detailing player actions throughout the day.
-    private List<DayTrace> dayTraces;
+    [SerializeField] private List<DayTrace> dayTraces;
     // A boolean indicating completion of the level.
-    private bool levelComplete;
+    [SerializeField] private bool levelComplete;
 
     // PUBLIC GETTERS/SETTERS
     public int LevelID

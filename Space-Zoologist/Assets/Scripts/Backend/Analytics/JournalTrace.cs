@@ -7,13 +7,13 @@ using UnityEngine;
 public class JournalTrace
 {
     // The timestamp (in elapsed seconds) of this journal opening.
-    private float journalStartTime;
+    [SerializeField] private float journalStartTime;
     // The timestamp (in elapsed seconds) of this journal closing.
-    private float journalEndTime;
+    [SerializeField] private float journalEndTime;
     // The amount of time this journal usage lasted in seconds.
-    private float journalDeltaTime;
+    [SerializeField] private float journalDeltaTime;
     // A string representing the notes the player took down in the journal (if any).
-    private string journalNotes;
+    [SerializeField] private string journalNotes;
 
     // PUBLIC GETTERS/SETTERS
     public float JournalStartTime
