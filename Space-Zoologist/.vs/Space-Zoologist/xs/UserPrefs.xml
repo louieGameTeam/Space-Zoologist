@@ -1,15 +1,17 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Dialogue/DialogueParser.cs">
     <Files>
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="31" Column="50" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" Line="10" Column="26" />
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="721" Column="63" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" Line="1" Column="1" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorNode.cs" Line="196" Column="22" />
-      <File FileName="Assets/Scripts/Y - Utils/DialogueGenerator.cs" Line="11" Column="1" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs" Line="59" Column="63" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="84" Column="18" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" />
+      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="339" Column="1" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorNode.cs" />
+      <File FileName="Assets/Scripts/Y - Utils/DialogueGenerator.cs" />
+      <File FileName="Assets/Scripts/UI/MenuManager.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorWindow.cs" Line="955" Column="1" />
+      <File FileName="Assets/Scripts/Dialogue/DialogueParser.cs" Line="9" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -28,9 +30,7 @@
               <Node name="DialogueEditor" expanded="True">
                 <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
-                    <Node name="Editor" expanded="True">
-                      <Node name="NPCConversationEditor.cs" selected="True" />
-                    </Node>
+                    <Node name="Editor" expanded="True" />
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
                     </Node>
@@ -39,7 +39,9 @@
               </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="Audio" expanded="True" />
-                <Node name="Dialogue" expanded="True" />
+                <Node name="Dialogue" expanded="True">
+                  <Node name="DialogueParser.cs" selected="True" />
+                </Node>
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
                   <Node name="TimeSystem" expanded="True" />
@@ -76,7 +78,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7ef4a978-1f53-4785-ba83-d46b1127d218" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="677a9064-0396-40bf-b909-f8894d4fc122" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
