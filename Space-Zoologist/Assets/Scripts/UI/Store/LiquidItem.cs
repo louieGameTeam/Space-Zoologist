@@ -5,23 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/LiquidItem")]
 public class LiquidItem : Item
 {
-    public float SaltPercent => saltPercent;
-    public float BacteriaPercent => bacteriaPercent;
+    public Vector3 LiquidContents => liquidContents;
 
-    [SerializeField] private float saltPercent = default;
-    [SerializeField] private float bacteriaPercent = default;
+    [SerializeField] private Vector3 liquidContents = default;
 
     public new void SetupData(string id, string type, string name, int price)
     {
         base.SetupData(id, type, name, price);
-        this.saltPercent = 0;
-        this.bacteriaPercent = 2;
+        this.liquidContents = new Vector3(0.98f, 0, 0.02f);
     }
 
-    public void SetupData(string id, string type, string name, int price, float saltPercent, float bacteriaPercent)
+    public void SetupData(string id, string type, string name, int price, Vector3 liquidContents)
     {
         base.SetupData(id, type, name, price);
-        this.saltPercent = saltPercent;
-        this.bacteriaPercent = bacteriaPercent;
+        this.liquidContents = liquidContents;
     }
 }

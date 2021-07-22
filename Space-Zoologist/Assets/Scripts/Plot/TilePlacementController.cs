@@ -105,7 +105,7 @@ public class TilePlacementController : MonoBehaviour
     /// Start tile placement preview.
     /// </summary>
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
-    public void StartPreview(string tileID, bool godMode = false)
+    public void StartPreview(string tileID, bool godMode = false, float[] liquidContents = null)
     {
         this.godMode = godMode;
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -119,6 +119,10 @@ public class TilePlacementController : MonoBehaviour
         {
             if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
             {
+                if(liquidContents != null)
+                {
+                    tile.defaultContents = liquidContents;
+                }
                 this.referencedTiles.Add(tile);
             }
         }
@@ -136,6 +140,7 @@ public class TilePlacementController : MonoBehaviour
         RenderColorOfColorLinkedTiles(addedTiles.ToList());
         foreach (GameTile tile in referencedTiles)
         {
+            tile.defaultContents = null;
             if (tile.targetTilemap.GetComponent<TileContentsManager>() == null && tile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
             {
                 foreach (Vector3Int vector3Int in addedTiles)
