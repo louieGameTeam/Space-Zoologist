@@ -83,23 +83,15 @@ public class ResearchEncyclopediaArticle
 
     public void RequestHighlight(int start, int end)
     {
+        // Add the highlight to the list and sort it
         ResearchEncyclopediaArticleHighlight requestedHighlight = new ResearchEncyclopediaArticleHighlight(start, end);
-
-        // Check for overlap with any of the existing highlights
-        for(int i = 0; i < highlights.Count; i++)
-        {
-            // If there is overlap, then combine them
-            if(highlights[i].Overlap(requestedHighlight))
-            {
-                highlights[i] = highlights[i].Combine(requestedHighlight);
-                return;
-            }
-        }
-
-        // If the requested highlight did not overlap any other highlights,
-        // then append it to the end and re-sort the highlights
         highlights.Add(requestedHighlight);
         highlights.Sort();
+
+        // Clean the highlights
+        CleanHighlights();
+
+        Debug.Log("Highlights for article " + ID + ":\n\t" + string.Join("\n\t", highlights));
     }
 
     private void ReportInitialHighlightError(int index, string foundDescriptor, string expectedDescriptor)
@@ -128,5 +120,26 @@ public class ResearchEncyclopediaArticle
         Debug.LogWarning("Found " + foundDescriptor + " where " + expectedDescriptor + " was expected\n" +
             "\tArticle: " + id.ToString() + "\n" +
             "\tPosition: " + reportString + "\n");
+    }
+
+    private void CleanHighlights()
+    {
+        int i = 0;
+
+        // Loop until we check up to (but not including) the last highlight
+        while(i < highlights.Count - 1)
+        {
+            // If this highlight overlaps the next one, we combine them and remove the next one
+            if (highlights[i].Overlap(highlights[i + 1]))
+            {
+                highlights[i] = highlights[i].Combine(highlights[i + 1]);
+                highlights.RemoveAt(i + 1);
+                
+                // We continue without incrementing because we need to check this same highlight again
+                // just in case it contained multiple highlights
+                continue;
+            }
+            else i++;
+        }
     }
 }

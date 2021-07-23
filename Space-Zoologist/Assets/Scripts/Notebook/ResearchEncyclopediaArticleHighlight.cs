@@ -30,7 +30,11 @@ public struct ResearchEncyclopediaArticleHighlight : System.IComparable<Research
         return other.start >= start && other.start <= end ||
             other.end >= start && other.end <= end;
     }
-
+    // True if the other highlight is fully contained in this highlight
+    public bool Contains(ResearchEncyclopediaArticleHighlight other)
+    {
+        return other.start >= start && other.end <= end;
+    }
     // Combine two research highlights by bridging the gap between them
     public ResearchEncyclopediaArticleHighlight Combine(ResearchEncyclopediaArticleHighlight other)
     {
@@ -42,5 +46,10 @@ public struct ResearchEncyclopediaArticleHighlight : System.IComparable<Research
     public int CompareTo(ResearchEncyclopediaArticleHighlight other)
     {
         return start.CompareTo(other.start);
+    }
+
+    public override string ToString()
+    {
+        return "Highlight at [" + start + ", " + end + "]";
     }
 }

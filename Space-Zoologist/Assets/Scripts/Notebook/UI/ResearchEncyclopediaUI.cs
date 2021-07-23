@@ -107,7 +107,7 @@ public class ResearchEncyclopediaUI : MonoBehaviour
         int start = articleBody.selectionAnchorPosition;
         int end = articleBody.selectionFocusPosition;
 
-        // If selection has no length, exit the function
+        // If selection has no length, exit the functionq
         if (start == end) return;
 
         // If start is bigger than end, swap them
