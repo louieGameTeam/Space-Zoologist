@@ -162,9 +162,9 @@ namespace DialogueEditor
                         if (t > 1)
                         {
                             SetState(eState.Idle);
+                            
                             return;
                         }
-
                         for (int i = 0; i < m_uiOptions.Count; i++)
                             m_uiOptions[i].SetAlpha(t);
                     }
@@ -180,14 +180,12 @@ namespace DialogueEditor
                             {
                                 if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                                 {
+                                    UpdateNextSpeech();
                                     SetState(eState.TransitioningOptionsOff);
                                 }
                             }
                         }
-                        //Added by Alex
-                        else if (Input.GetMouseButtonDown(0) || skipping) {
-                            // UpdateNextSpeech();
-                        }
+                    
                     }
                     break;
 
@@ -413,7 +411,7 @@ namespace DialogueEditor
 
         public void FreezeConversation()
         {
-            SetState(eState.freeze);
+            SetState(eState.Idle);
         }
 
         public void UnfreezeConversation()

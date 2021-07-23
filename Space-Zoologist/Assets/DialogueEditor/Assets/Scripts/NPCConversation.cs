@@ -657,6 +657,11 @@ namespace DialogueEditor
             parentUIDs = new List<int>();
             for (int i = 0; i < parents.Count; i++)
             {
+                if (parents[i] == null)
+                {
+                    Debug.Log(i);
+                    continue;
+                }
                 parentUIDs.Add(parents[i].ID);
             }
 

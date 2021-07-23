@@ -1,21 +1,12 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/TilePlacementController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseManager.cs" Line="27" Column="29" />
-      <File FileName="Assets/Scripts/Managers/ResourceManager.cs" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs" />
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Conversation.cs" />
-      <File FileName="Assets/Scripts/LevelData/SceneNavigator.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Inspector/LiquidModificationHUD.cs" Line="45" Column="48" />
-      <File FileName="Assets/Scripts/LevelData/LevelNavigator.cs" />
-      <File FileName="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" Line="31" Column="51" />
-      <File FileName="Assets/Scripts/Plot/TileSystem.cs" Line="95" Column="17" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" Line="134" Column="63" />
-      <File FileName="Assets/Scripts/Plot/Tiles/TileLayerManager.cs" Line="165" Column="17" />
+      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" Line="62" Column="61" IsPinned="True" />
+      <File FileName="Assets/Scripts/UI/GameOver.cs" Line="21" Column="1" />
+      <File FileName="Assets/Scripts/Managers/ObjectiveManager.cs" Line="9" Column="14" />
+      <File FileName="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs" Line="17" Column="17" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs" Line="80" Column="4" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="264" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -37,6 +28,7 @@
                     <Node name="Editor" expanded="True" />
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
+                      <Node name="ConversationManager.cs" selected="True" />
                     </Node>
                   </Node>
                 </Node>
@@ -57,7 +49,6 @@
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
-                  <Node name="TilePlacementController.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
@@ -81,7 +72,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5b72eebb-9001-4b6e-9672-4d0dd5532ea6" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="76260d03-a005-4707-b919-de0259c4eb8f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />

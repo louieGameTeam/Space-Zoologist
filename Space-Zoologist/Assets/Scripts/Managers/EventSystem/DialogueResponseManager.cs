@@ -74,7 +74,10 @@ public class DialogueResponseManager : MonoBehaviour
 			HandleListenedKeys();
 			HandleInspectorClicked();
 		}
-		WatchForEndOfQuiz();
+		if (conversationManager.DialogueText.text == endOfQuizText)
+		{
+			WatchForEndOfQuiz();
+		}
 	}
 
 	private void StartListening()
@@ -114,27 +117,27 @@ public class DialogueResponseManager : MonoBehaviour
 
 	private void WatchForEndOfQuiz()
 	{
-		if (conversationManager.DialogueText.text == endOfQuizText)
-		{
-			foreach (QuizResponse quizResponse in quizResponses)
+		Debug.Log("check9ing quiz results");
+		foreach (QuizResponse quizResponse in quizResponses)
+        {
+			if (tScore >= quizResponse.tScore && fScore >= quizResponse.fScore)
             {
-				if (tScore == quizResponse.tScore && fScore == quizResponse.fScore)
-                {
-					conversationManager.StartConversation(quizResponse.NPCConversation);
-
-				}
-            }
-		}
+				conversationManager.StartConversation(quizResponse.NPCConversation);
+				break;
+			}
+        }
 	}
 
 	public void increaseFScore(int score)
     {
 		fScore += score;
+		Debug.Log("fscore: " + fScore);
 	}
 
 	public void increaseTScore(int score)
 	{
 		tScore += score;
+		Debug.Log("tscore: " + tScore);
 	}
 
 	private void HandleInspectorClicked()
