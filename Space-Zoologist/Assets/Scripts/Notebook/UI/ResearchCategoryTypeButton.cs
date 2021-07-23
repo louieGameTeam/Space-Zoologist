@@ -20,12 +20,6 @@ public class ResearchCategoryTypeButton : MonoBehaviour
     [Tooltip("Text displayed in the button")]
     private TextMeshProUGUI text;
     [SerializeField]
-    [Tooltip("Color of the text when the toggle is off")]
-    private Color isOffTextColor;
-    [SerializeField]
-    [Tooltip("Color of the text when the toggle is on")]
-    private Color isOnTextColor;
-    [SerializeField]
     [Tooltip("Event invoked when this button is selected")]
     private ResearchCategoryTypeEvent onSelected;
 
@@ -56,8 +50,6 @@ public class ResearchCategoryTypeButton : MonoBehaviour
         if (state)
         {
             onSelected.Invoke(type);
-            text.color = isOnTextColor;
         }
-        else text.color = isOffTextColor;
     }
 }

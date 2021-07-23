@@ -90,8 +90,6 @@ public class ResearchEncyclopediaArticle
 
         // Clean the highlights
         CleanHighlights();
-
-        Debug.Log("Highlights for article " + ID + ":\n\t" + string.Join("\n\t", highlights));
     }
 
     private void ReportInitialHighlightError(int index, string foundDescriptor, string expectedDescriptor)
