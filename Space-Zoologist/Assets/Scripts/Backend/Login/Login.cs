@@ -69,15 +69,25 @@ public class Login : MonoBehaviour
 
         if (request.responseCode == 200)
         {
-            if (request.downloadHandler.text != "Invalid credentials.") // login success?
+            LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
+
+            if (response.code == 0) // login success?
             {
                 ActivateButtons(false);
-                Account returnedAccount = JsonUtility.FromJson<Account>(request.downloadHandler.text);
-                alertText.text = $"{returnedAccount._id} Welcome " + returnedAccount.username + "!";
+                alertText.text = "Welcome!";
             } else
             {
-                alertText.text = "Invalid credentials.";
-                ActivateButtons(true);
+                switch(response.code)
+                {
+                    case 1:
+                        alertText.text = "Invalid credentials.";
+                        ActivateButtons(true);
+                        break;
+                    default:
+                        alertText.text = "Corruption detected.";
+                        ActivateButtons(false);
+                        break;
+                }
             }
         } else
         {
@@ -128,13 +138,24 @@ public class Login : MonoBehaviour
 
         if (request.responseCode == 200)
         {
-            if (request.downloadHandler.text != "Invalid credentials." && request.downloadHandler.text != "Username is already in use.") // login success?
+            CreateResponse response = JsonUtility.FromJson<CreateResponse>(request.downloadHandler.text);
+            if (response.code == 0) // login success?
             {
-                Account returnedAccount = JsonUtility.FromJson<Account>(request.downloadHandler.text);
                 alertText.text = "Account has been created.";
             } else
             {
-                alertText.text = "Username is already in use.";
+                switch(response.code)
+                {
+                    case 1:
+                        alertText.text = "Invalid credentials.";
+                        break;
+                    case 2:
+                        alertText.text = "Username is already in use.";
+                        break;
+                    default:
+                        alertText.text = "Corruption detected.";
+                        break;
+                }
             }
         } else
         {

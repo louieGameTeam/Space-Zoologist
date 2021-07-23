@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Account
+public class CreateResponse
 {
-    public string _id;
-    public string username;
+    public int code;
+    public string msg;
+    public Account data;
 }
