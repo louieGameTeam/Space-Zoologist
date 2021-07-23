@@ -47,13 +47,13 @@ public class ResearchNotesUI : MonoBehaviour
                 groups[entry.Key].Add(note);
             }
 
-            // If category picker has not initialized itself yet, the boolean statement is always false
-            // and this simply disables all notes until the category picker initializes and calls OnResearchCategoryChanged
-            // If it has already initialized itself, then this will enable the correct group
-            groups[entry.Key].SetActive(entry.Key == categoryPicker.SelectedCategory);
+            // All research notes groups start inactive
+            groups[entry.Key].SetActive(false);
         }
 
-        if (categoryPicker.SelectedCategory.Name != null) titleText.text = "Space " + categoryPicker.SelectedCategory.Name;
+        // If category picker already has a selected category,
+        // then we know it initialized before us, so we need to update our UI
+        if (categoryPicker.SelectedCategory.Name != null) OnResearchCategoryChanged(categoryPicker.SelectedCategory);
 
         // Add listener for the research category change
         categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);
