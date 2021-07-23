@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum MenuType { Food, Tiles, Animals };
+// This enum now exists in ResearchCategoryType
+// public enum MenuType { Food, Tiles, Animals };
 public class MenuManager : MonoBehaviour
 {
     readonly string[] menuNames = { "Food", "Tiles", "Animals" };
