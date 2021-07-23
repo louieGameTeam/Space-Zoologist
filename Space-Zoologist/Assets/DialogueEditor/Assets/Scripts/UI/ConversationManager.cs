@@ -712,12 +712,12 @@ namespace DialogueEditor
         }
         Button pingTarget;
         public void AskForOneTimePing(Button target) {
-            PauseConversation();
+            FreezeConversation();
             pingTarget = target;
             target.onClick.AddListener(OneTimeUnpause);
         }
         public void OneTimeUnpause() {
-            ContinueConversation();
+            UnfreezeConversation();
             pingTarget.onClick.RemoveListener(OneTimeUnpause);
         }
     }

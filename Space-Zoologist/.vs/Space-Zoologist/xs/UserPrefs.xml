@@ -1,15 +1,27 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/TilePlacementController.cs">
     <Files>
       <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseManager.cs" Line="27" Column="29" />
       <File FileName="Assets/Scripts/Managers/ResourceManager.cs" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs" Line="10" Column="2" />
+      <File FileName="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs" />
+      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/Conversation.cs" />
+      <File FileName="Assets/Scripts/LevelData/SceneNavigator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/Inspector/LiquidModificationHUD.cs" Line="45" Column="48" />
+      <File FileName="Assets/Scripts/LevelData/LevelNavigator.cs" />
+      <File FileName="Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" Line="31" Column="51" />
+      <File FileName="Assets/Scripts/Plot/TileSystem.cs" Line="95" Column="17" />
+      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" Line="134" Column="63" />
+      <File FileName="Assets/Scripts/Plot/Tiles/TileLayerManager.cs" Line="165" Column="17" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
-            <Node name="Assets" expanded="True" selected="True">
+            <Node name="Assets" expanded="True">
               <Node name="AnimalRepresentation" expanded="True">
                 <Node name="Behaviors" expanded="True">
                   <Node name="Scripts" expanded="True" />
@@ -45,6 +57,7 @@
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
+                  <Node name="TilePlacementController.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
@@ -68,10 +81,11 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d5541173-c32b-4d8a-b39c-8a1bed0982f5" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5b72eebb-9001-4b6e-9672-4d0dd5532ea6" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/UI/Inspector/Inspector.cs" relfile="Assets/Scripts/UI/Inspector/Inspector.cs" line="205" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

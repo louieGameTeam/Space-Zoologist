@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Level: {fileID: 11400000, guid: fe4d49745a36f4941805b30a60e788fd, type: 2}
   startingBalance: 400
-  MapWidth: 12
-  MapHeight: 12
+  MapWidth: 15
+  MapHeight: 15
   LevelObjectiveData: {fileID: 11400000, guid: 0fda617c7827b4782a70ae364eb134a5, type: 2}
   foodSources:
-  - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
+  - {fileID: 11400000, guid: d25f32c20698c4ad3b53971045b65639, type: 2}
   animalSpecies:
   - {fileID: 11400000, guid: 71f359d75cd374dc2af2253ea6d39f95, type: 2}
   items:
   - {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
   - {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
+  - {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
   globalAtmosphere:
     GasX: 5
     GasY: 3
