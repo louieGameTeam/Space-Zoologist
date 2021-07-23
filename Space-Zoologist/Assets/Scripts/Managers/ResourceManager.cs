@@ -67,7 +67,7 @@ public class ResourceManager : MonoBehaviour
 
     public void Placed(Item item, int amount)
     {
-        PlacedItem(item.ID, amount);
+        PlacedItem(item.ItemName, amount);
     }
 
     public void Placed(AnimalSpecies species, int amount)
@@ -95,9 +95,9 @@ public class ResourceManager : MonoBehaviour
 
     public int CheckRemainingResource(Item item)
     {
-        if (remainingResources.ContainsKey(item.ID))
+        if (remainingResources.ContainsKey(item.ItemName))
         {
-            return remainingResources[item.ID];
+            return remainingResources[item.ItemName];
         }
         else
         {

@@ -33,11 +33,20 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void StartPlacing()
     {
+        Debug.Log("Start placing");
         numTilesPlaced = 0;
         initialAmt = ResourceManager.CheckRemainingResource(selectedItem);
         isPlacing = true;
         startingBalance = base.playerBalance.Balance;
-        tilePlacementController.StartPreview(selectedItem.ID);
+
+        float[] contents = null;
+        if(selectedItem is LiquidItem)
+        {
+            Vector3 liquidVector = ( (LiquidItem)selectedItem ).LiquidContents;
+            contents = new float[] {liquidVector.x, liquidVector.y, liquidVector.z};
+        }
+
+        tilePlacementController.StartPreview(selectedItem.ID, liquidContents: contents);
     }
 
     /// <summary>
