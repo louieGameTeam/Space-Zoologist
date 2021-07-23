@@ -59,23 +59,7 @@ public class GridSystem : MonoBehaviour
     #region Monobehaviour Callbacks
     private void Awake()
     {
-        // set up the information textures
-        TilemapTexture = new Texture2D(ReserveWidth, ReserveHeight);
-        // make black texture
-        for (int i = 0; i < ReserveWidth; ++i)
-        {
-            for (int j = 0; j < ReserveHeight; ++j)
-                TilemapTexture.SetPixel(i, j, new Color(0, 0, 0, 0));
-        }
-        TilemapTexture.filterMode = FilterMode.Point;
-        TilemapTexture.wrapMode = TextureWrapMode.Repeat;
-        TilemapTexture.Apply();
-
-        // add texture to material
-        TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
-        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
-        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
-        HighlightedTiles = new List<Vector3Int>();
+        
 
         // tilelayermanager stuff
         InitializeTileLayerManager();
@@ -99,6 +83,15 @@ public class GridSystem : MonoBehaviour
         // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
         // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
 
+        // apply changes to tilemap (for some reason it isn't working on awake)
+        for (int i = 0; i < ReserveWidth; ++i)
+        {
+            for (int j = 0; j < ReserveHeight; ++j)
+            {
+                ApplyChangesToTilemap(new Vector3Int(i, j, 0));
+            }
+        }
+
         try
         {
             EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
@@ -115,6 +108,12 @@ public class GridSystem : MonoBehaviour
             });
         }
         catch { };
+    }
+
+    private void LateUpdate()
+    {
+        // awful solution because of how unity decides to render stuff
+        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
     }
 
     // note that this will not work on web browsers, will need to find alternate solution
@@ -141,18 +140,18 @@ public class GridSystem : MonoBehaviour
         // set grid dimensions
         ReserveWidth = serializedGrid.width;
         ReserveHeight = serializedGrid.height;
-
-        // set up the entire tile data grid
         this.TileDataGrid = new TileData[this.ReserveHeight, this.ReserveWidth];
-        for (int i = 0; i < this.ReserveHeight; i++)
-        {
-            for (int j = 0; j < this.ReserveWidth; j++)
-            {
-                Vector3Int loc = new Vector3Int(i, j, 0);
 
-                this.TileDataGrid[i, j] = new TileData(loc);
-            }
+        // set up the information textures
+        TilemapTexture = new Texture2D(ReserveWidth, ReserveHeight);
+        // make black texture
+        for (int i = 0; i < ReserveWidth; ++i)
+        {
+            for (int j = 0; j < ReserveHeight; ++j)
+                TilemapTexture.SetPixel(i, j, new Color(0, 0, 0, 0));
         }
+        TilemapTexture.filterMode = FilterMode.Point;
+        TilemapTexture.wrapMode = TextureWrapMode.Repeat;
 
         Vector3Int tilePosition = new Vector3Int();
         foreach (SerializedTileData serializedTileData in serializedGrid.serializedTilemap.SerializedTileDatas)
@@ -186,12 +185,13 @@ public class GridSystem : MonoBehaviour
                         for (int i = 0; i < serializedTileData.Repetitions; ++i)
                         {
                             // manually add the tile (may turn into a method later)
-                            TileData tileData = GetTileData(tilePosition);
+                            TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, gameTile);
 
-                            if (tileData == null)
-                                tileData = new TileData(tilePosition, gameTile);
-
-                            Tilemap.SetTile(tilePosition, gameTile);
+                            // set the tile type in the red channel
+                            Color pixelColor = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+                            // add 1 to ensure a null tile type at 0
+                            pixelColor.r = serializedTileData.TileID / FLAG_VALUE_MULTIPLIER;
+                            TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, pixelColor);
 
                             // move the tile position along
                             tilePosition.x += 1;
@@ -207,6 +207,13 @@ public class GridSystem : MonoBehaviour
                 }
             }
         }
+
+        // add texture to material
+        TilemapTexture.Apply();
+        TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
+        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
+        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+        HighlightedTiles = new List<Vector3Int>();
     }
     private LiquidBody ParseSerializedLiquidBody(SerializedLiquidBody serializedLiquidBody)
     {
@@ -240,8 +247,12 @@ public class GridSystem : MonoBehaviour
     /// <returns>Tile data at that position.</returns>
     public TileData GetTileData(Vector3Int tilePosition)
     {
-        if (IsWithinGridBounds(tilePosition))
-            return TileDataGrid[tilePosition.y, tilePosition.x];
+        if (IsWithinGridBounds(tilePosition)) {
+            TileData td = TileDataGrid[tilePosition.y, tilePosition.x];
+
+            if (td != null)
+                return td;
+        }
 
         return null;
     }
@@ -327,7 +338,9 @@ public class GridSystem : MonoBehaviour
                 pos = gridPosition;
                 pos.x += x;
                 pos.y += y;
-                GetTileData(pos).Food = foodSource;
+
+                if (GetTileData(pos) != null)
+                    GetTileData(pos).Food = foodSource;
             }
         }
     }
@@ -1493,7 +1506,7 @@ public class GridSystem : MonoBehaviour
 
                 scanLocation.x = x + centerCellLocation.x;
                 scanLocation.y = y + centerCellLocation.y;
-                LiquidBody liquid = this.GetTileData(scanLocation).currentLiquidBody;
+                LiquidBody liquid = this.GetTileData(scanLocation) != null ? this.GetTileData(scanLocation).currentLiquidBody : null;
                 if (liquid != null)
                 {
                     liquidCompositions.Add(liquid.contents);

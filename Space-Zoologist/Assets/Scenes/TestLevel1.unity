@@ -2908,7 +2908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reserveDraft: {fileID: 459174929}
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
   referenceCamera: {fileID: 1054101994}
   populationManager: {fileID: 2078374405}
   foodSourceManager: {fileID: 6874327555454712160}
@@ -3587,6 +3587,7 @@ MonoBehaviour:
   Tilemap: {fileID: 895381626}
   ReserveWidth: 32
   ReserveHeight: 32
+  quickCheckIterations: 6
   startTile: {x: 0, y: 0, z: 0}
   HasTerrainChanged: 0
   changedTiles: []
@@ -5334,7 +5335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
   buildBufferManager: {fileID: 1507564720}
 --- !u!1 &1001424724
 GameObject:
@@ -8971,7 +8972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PopulationManager: {fileID: 2078374405}
   BehaviorPatternUpdater: {fileID: 1576156859}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
   PauseButton: {fileID: 6943948462633829954}
   PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
   ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
@@ -19460,7 +19461,7 @@ MonoBehaviour:
   EnclosedAreas: []
   LevelDataReference: {fileID: 320161629}
   needSystemManager: {fileID: 8743428314032458836}
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
 --- !u!1 &5632095460080269725
 GameObject:
   m_ObjectHideFlags: 0
@@ -20671,7 +20672,7 @@ MonoBehaviour:
     type: 3}
   NeedSystemManager: {fileID: 8743428314032458836}
   LevelDataReference: {fileID: 320161629}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
 --- !u!1 &6874327555454712161
 GameObject:
   m_ObjectHideFlags: 0
@@ -22694,7 +22695,7 @@ MonoBehaviour:
   ReservePartitionManager: {fileID: 936381359}
   PauseManager: {fileID: 1395149766}
   LevelIO: {fileID: 462963692}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
 --- !u!4 &8743428314032458837
 Transform:
   m_ObjectHideFlags: 0
