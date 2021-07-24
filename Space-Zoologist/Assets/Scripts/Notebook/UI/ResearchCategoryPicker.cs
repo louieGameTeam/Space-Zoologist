@@ -11,8 +11,19 @@ public class ResearchCategoryPicker : MonoBehaviour
 
     // Public accessors
 
-    public ResearchCategory SelectedCategory => selectedCategory;
+    public ResearchCategory SelectedCategory
+    {
+        get => selectedCategory;
+        set
+        {
+            // Activate the type button with this type (this invokes OnResearchCategoryTypeChanged)
+            typeButtons[(int)value.Type].MyToggle.isOn = true;
+            // Activate the name button with this name (this invokes OnResearchCategoryNameChanged)
+            nameButtonGroups[(int)value.Type].SelectButton(value.Name);
+        }
+    }
     public ResearchCategoryEvent OnResearchCategoryChanged => onResearchCategoryChanged;
+    public bool HasBeenInitialized => SelectedCategory.Name != null && SelectedCategory.Name != "";
 
     // Private editor fields
 
@@ -48,10 +59,13 @@ public class ResearchCategoryPicker : MonoBehaviour
     // The category currently selected
     private ResearchCategory selectedCategory;
     // List of name button groups
-    // NOTE: access the buttons for category type using buttonGroups[(int)ResearchCategoryType.<enum_value>]
+    // NOTE: access the buttons for category type using nameButtonGroups[(int)ResearchCategoryType]
     private List<ResearchCategoryNameButtonGroup> nameButtonGroups = new List<ResearchCategoryNameButtonGroup>();
+    // List of buttons used to select the type
+    // NOTE: access the buttons by type using typeButtons[(int)ResearchCategoryType]
+    private List<ResearchCategoryTypeButton> typeButtons = new List<ResearchCategoryTypeButton>();
 
-    private void Start()
+    private void Awake()
     {
         // Go through all research categories in the research model, adding buttons to each group in the list
         foreach (KeyValuePair<ResearchCategory, ResearchEntry> entry in researchModel.ResearchDictionary)
@@ -84,13 +98,14 @@ public class ResearchCategoryPicker : MonoBehaviour
             // Setup clone. The first one is selected.
             // NOTE: this invokes OnResearchCategoryTypeChanged immediately
             clone.Setup(typeGroup, types[i], OnResearchCategoryTypeChanged, i == 0);
+            typeButtons.Add(clone);
         }
     }
 
     private void OnResearchCategoryTypeChanged(ResearchCategoryType type)
     {
         // If a previous category has been selected, then disable it
-        if(selectedCategory != null)
+        if(selectedCategory.Name != null)
         {
             nameButtonGroups[(int)selectedCategory.Type].SetActive(false);   
         }
@@ -99,7 +114,7 @@ public class ResearchCategoryPicker : MonoBehaviour
         selectedCategory = new ResearchCategory(type, "");
 
         // Enable the new name button group
-        // NOTE: this invokes OnResearchCategoryNameChaned immediately
+        // NOTE: this invokes OnResearchCategoryNameChanged immediately
         nameButtonGroups[(int)type].SetActive(true);
     }
 

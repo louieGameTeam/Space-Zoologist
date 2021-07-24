@@ -44,6 +44,7 @@ public struct ResearchCategory
     }
     public override int GetHashCode()
     {
+        if (name == null) Debug.Log("Research category name is apparently null");
         return name.GetHashCode() + Type.GetHashCode();
     }
     public override string ToString()

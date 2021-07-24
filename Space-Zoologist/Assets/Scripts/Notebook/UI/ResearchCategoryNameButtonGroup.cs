@@ -5,24 +5,28 @@ using UnityEngine;
 [System.Serializable]
 public class ResearchCategoryNameButtonGroup
 {
-    private List<ResearchCategoryNameButton> buttons = new List<ResearchCategoryNameButton>();
+    private Dictionary<string, ResearchCategoryNameButton> buttons = new Dictionary<string, ResearchCategoryNameButton>();
 
     // Index of the button previously selected before disabling
-    private int previousSelection = 0;
+    private string previousSelection = null;
 
     public void AddButton(ResearchCategoryNameButton button)
     {
-        buttons.Add(button);
+        buttons.Add(button.ResearchCategoryName, button);
+    }
+    public void SelectButton(string categoryName)
+    {
+        buttons[categoryName].MyToggle.isOn = true;
     }
     public void SetActive(bool active)
     {
-        for(int i = 0; i < buttons.Count; i++)
+        foreach(KeyValuePair<string, ResearchCategoryNameButton> kvp in buttons)
         {
-            buttons[i].gameObject.SetActive(active);
+            kvp.Value.gameObject.SetActive(active);
             // If this button is on, set previous selection
-            if (buttons[i].MyToggle.isOn) previousSelection = i;
+            if (kvp.Value.MyToggle.isOn) previousSelection = kvp.Value.ResearchCategoryName;
         }
         // The button that was previously selected will be on when active, and off when deactivating
-        buttons[previousSelection].MyToggle.isOn = active;
+        if(previousSelection != null) buttons[previousSelection].MyToggle.isOn = active;
     }
 }

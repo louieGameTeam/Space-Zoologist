@@ -27,7 +27,7 @@ public class ResearchNotesUI : MonoBehaviour
     private ResearchSingleNoteUIGroup currentGroup;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         foreach(KeyValuePair<ResearchCategory, ResearchEntry> entry in researchModel.ResearchDictionary)
         {
@@ -53,7 +53,7 @@ public class ResearchNotesUI : MonoBehaviour
 
         // If category picker already has a selected category,
         // then we know it initialized before us, so we need to update our UI
-        if (categoryPicker.SelectedCategory.Name != null) OnResearchCategoryChanged(categoryPicker.SelectedCategory);
+        if (categoryPicker.HasBeenInitialized) OnResearchCategoryChanged(categoryPicker.SelectedCategory);
 
         // Add listener for the research category change
         categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);

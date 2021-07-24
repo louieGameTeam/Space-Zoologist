@@ -15,6 +15,7 @@ public class ResearchCategoryNameButton : MonoBehaviour
 
     // Public accessors
     public Toggle MyToggle => myToggle;
+    public string ResearchCategoryName => researchCategoryName;
 
     [SerializeField]
     [Tooltip("The toggle that manages this button")]

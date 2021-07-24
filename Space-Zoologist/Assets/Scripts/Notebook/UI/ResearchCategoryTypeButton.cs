@@ -13,9 +13,12 @@ public class ResearchCategoryTypeButton : MonoBehaviour
     [System.Serializable]
     public class ResearchCategoryTypeEvent : UnityEvent<ResearchCategoryType> { }
 
+    // Public accessors
+    public Toggle MyToggle => myToggle;
+
     [SerializeField]
     [Tooltip("The toggle that manages this button")]
-    private Toggle toggle;
+    private Toggle myToggle;
     [SerializeField]
     [Tooltip("Text displayed in the button")]
     private TextMeshProUGUI text;
@@ -29,7 +32,7 @@ public class ResearchCategoryTypeButton : MonoBehaviour
     public void Setup(ToggleGroup group, ResearchCategoryType type, UnityAction<ResearchCategoryType> callback, bool isOn)
     {
         // Set the toggle group for this toggle
-        toggle.group = group;
+        myToggle.group = group;
         // Set the type for this button
         this.type = type;
         // Add the callback to the on selected listener
@@ -38,10 +41,10 @@ public class ResearchCategoryTypeButton : MonoBehaviour
         // Set the text on the button
         text.text = type.ToString();
         // Add function to callback when the toggle is switched to on
-        toggle.onValueChanged.AddListener(OnToggleStateChanged);
+        myToggle.onValueChanged.AddListener(OnToggleStateChanged);
 
         // Set the desired initial toggle state
-        toggle.isOn = isOn;
+        myToggle.isOn = isOn;
     }
 
     // If the toggle is toggling on, invoke on selected event

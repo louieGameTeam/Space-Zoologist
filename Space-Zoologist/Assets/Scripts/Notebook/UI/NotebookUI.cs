@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NotebookUI : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         gameObject.SetActive(false);
     }

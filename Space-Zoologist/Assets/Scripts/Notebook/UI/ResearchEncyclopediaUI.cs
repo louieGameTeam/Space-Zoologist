@@ -41,14 +41,14 @@ public class ResearchEncyclopediaUI : MonoBehaviour
     // Current research article selected
     private ResearchEncyclopediaArticleID currentArticle;
 
-    private void Start()
+    private void Awake()
     {
         // Add listener for change of dropdown value
         // (is "on value changed" invoked at the start?)
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
 
         // If the category picker is already initialized, we need to update our UI
-        if(categoryPicker.SelectedCategory.Name != null)
+        if(categoryPicker.HasBeenInitialized)
         {
             OnResearchCategoryChanged(categoryPicker.SelectedCategory);
         }
