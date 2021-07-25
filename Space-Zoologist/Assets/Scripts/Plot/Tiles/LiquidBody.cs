@@ -168,6 +168,6 @@ public class LiquidBody
     }
     public SerializedLiquidBody Serialize()
     {
-        return new SerializedLiquidBody(this.bodyID, this.tiles, this.contents);
+        return new SerializedLiquidBody(this.bodyID, this.contents);
     }
 }

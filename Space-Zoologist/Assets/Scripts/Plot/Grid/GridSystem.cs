@@ -79,6 +79,8 @@ public class GridSystem : MonoBehaviour
     {
         this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
 
+        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+
         // temporary to show effect
         // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
         // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
@@ -108,12 +110,6 @@ public class GridSystem : MonoBehaviour
             });
         }
         catch { };
-    }
-
-    private void LateUpdate()
-    {
-        // awful solution because of how unity decides to render stuff
-        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
     }
 
     // note that this will not work on web browsers, will need to find alternate solution
@@ -173,7 +169,7 @@ public class GridSystem : MonoBehaviour
             else
             {
                 // set the starting tile here for flood filling
-                if (startTile == default)
+                if (startTile == default && serializedTileData.TileID != (int)TileType.Wall)
                     startTile = tilePosition;
 
                 // search through game tiles for correct tile
@@ -222,11 +218,13 @@ public class GridSystem : MonoBehaviour
         {
             Debug.LogError("Liquid Body has body ID 0. Is temporary bodies being stored or no proper ID given to the bodies");
         }
+        // find new way to parse liquidbodies
+        /*
         for (int i = 0; i < serializedLiquidBody.TilePositions.Length / 3; i++)
         {
             int index = i * 3;
             tiles.Add(new Vector3Int(serializedLiquidBody.TilePositions[index], serializedLiquidBody.TilePositions[index + 1], serializedLiquidBody.TilePositions[index + 2]));
-        }
+        }*/
         return new LiquidBody(tiles, serializedLiquidBody.Contents, this.bodyEmptyCallback, serializedLiquidBody.BodyID);
     }
 
@@ -234,7 +232,7 @@ public class GridSystem : MonoBehaviour
     {
         // Debug.Log("Serialize " + this.tilemap.name);
         // temporarily make new list until full implementation
-        return new SerializedTilemap("Tilemap", new List<TileData>(), this.liquidBodies);
+        return new SerializedTilemap("Tilemap", TileDataGrid, ReserveWidth, ReserveHeight, this.liquidBodies);
     }
     #endregion
 
@@ -873,9 +871,7 @@ public class GridSystem : MonoBehaviour
         else
             return;
 
-        tilePixel.r = color.r;
-        tilePixel.g = color.g;
-        tilePixel.b = color.b;
+        tilemap.SetColor(tilePosition, color);
 
         tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
         TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
@@ -904,9 +900,9 @@ public class GridSystem : MonoBehaviour
             return;
 
         alphaBitMask /= flagInt;
-        tilePixel.r = 0;
-        tilePixel.g = 0;
-        tilePixel.b = 0;
+
+        if (flag == TileFlag.HIGHLIGHT_FLAG)
+            tilemap.SetColor(tilePosition, Color.white);
 
         tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
         TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);

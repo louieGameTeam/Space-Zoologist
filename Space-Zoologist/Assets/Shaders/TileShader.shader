@@ -30,6 +30,7 @@
             #pragma vertex vert
             #pragma fragment frag
             #define PIXELS_PER_TILE 64
+            #define TILE_TYPE_LIQUID 6
             // flags as determined in GridSystem
             #define LIQUID_FLAG 0x2
             #define HIGHLIGHT_FLAG 0x3
@@ -54,7 +55,7 @@
             sampler2D _MainTex;
             float4 _MainTex_ST;
 
-            v2f vert (appdata v)
+            v2f vert(appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
@@ -114,7 +115,7 @@
 
             float _TileNoiseDistribution;
 
-            float4 frag (v2f i) : SV_Target
+            float4 frag(v2f i) : SV_Target
             {
                 float4 col = 1;
                 int2 tilePos = int2(i.worldPos.xy);
@@ -129,7 +130,7 @@
 
                 // create local matrix for edge detections
                 int3x3 tileTypeMatrix =
-                { 
+                {
                     0, 0, 0,
                     0, 0, 0,
                     0, 0, 0
@@ -137,15 +138,15 @@
 
                 // set matrix values
                 tileTypeMatrix[0][0] = tex2D(_GridInformationTexture, float2(tilePos + int2(-1, -1)) / _GridTextureDimensions).r * 256;
-                tileTypeMatrix[0][1] = tex2D(_GridInformationTexture, float2(tilePos + int2(-1, 0)) / _GridTextureDimensions).r * 256;
-                tileTypeMatrix[0][2] = tex2D(_GridInformationTexture, float2(tilePos + int2(-1, 1)) / _GridTextureDimensions).r * 256;
+                tileTypeMatrix[0][1] = tex2D(_GridInformationTexture, float2(tilePos + int2(0, -1)) / _GridTextureDimensions).r * 256;
+                tileTypeMatrix[0][2] = tex2D(_GridInformationTexture, float2(tilePos + int2(1, -1)) / _GridTextureDimensions).r * 256;
 
-                tileTypeMatrix[1][0] = tex2D(_GridInformationTexture, float2(tilePos + int2(0, -1)) / _GridTextureDimensions).r * 256;
+                tileTypeMatrix[1][0] = tex2D(_GridInformationTexture, float2(tilePos + int2(-1, 0)) / _GridTextureDimensions).r * 256;
                 tileTypeMatrix[1][1] = tex2D(_GridInformationTexture, float2(tilePos + int2(0, 0)) / _GridTextureDimensions).r * 256;
-                tileTypeMatrix[1][2] = tex2D(_GridInformationTexture, float2(tilePos + int2(0, 1)) / _GridTextureDimensions).r * 256;
+                tileTypeMatrix[1][2] = tex2D(_GridInformationTexture, float2(tilePos + int2(1, 0)) / _GridTextureDimensions).r * 256;
 
-                tileTypeMatrix[2][0] = tex2D(_GridInformationTexture, float2(tilePos + int2(1, -1)) / _GridTextureDimensions).r * 256;
-                tileTypeMatrix[2][1] = tex2D(_GridInformationTexture, float2(tilePos + int2(1, 0)) / _GridTextureDimensions).r * 256;
+                tileTypeMatrix[2][0] = tex2D(_GridInformationTexture, float2(tilePos + int2(-1, 1)) / _GridTextureDimensions).r * 256;
+                tileTypeMatrix[2][1] = tex2D(_GridInformationTexture, float2(tilePos + int2(0, 1)) / _GridTextureDimensions).r * 256;
                 tileTypeMatrix[2][2] = tex2D(_GridInformationTexture, float2(tilePos + int2(1, 1)) / _GridTextureDimensions).r * 256;
 
                 // get the correct tileset
@@ -165,62 +166,86 @@
 
                 // add borders
                 // edges first
-                if (tilePos.x == 1) {
+                if (tilePos.x == 1 || tileTypeMatrix[1][0] == TILE_TYPE_LIQUID) {
                     float4 leftBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
 
                     if (localUV.x < 0.5)
                         col = lerp(col, leftBar, leftBar.a);
                 }
-
-                if (tilePos.x == _GridTextureDimensions.x) {
+                if (tilePos.x == _GridTextureDimensions.x || tileTypeMatrix[1][2] == TILE_TYPE_LIQUID) {
                     float4 rightBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
 
                     if (localUV.x > 0.5)
                         col = lerp(col, rightBar, rightBar.a);
                 }
-                
-                if (tilePos.y  == 1) {
+                if (tilePos.y == 1 || tileTypeMatrix[0][1] == TILE_TYPE_LIQUID) {
                     float4 bottomBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
 
                     if (localUV.y < 0.5)
                         col = lerp(col, bottomBar, bottomBar.a);
                 }
-
-                if (tilePos.y == _GridTextureDimensions.y || tileTypeMatrix[1][1] == 7) {
+                if (tilePos.y == _GridTextureDimensions.y || tileTypeMatrix[2][1] == TILE_TYPE_LIQUID) {
                     float4 topBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
 
                     if (localUV.y > 0.5)
                         col = lerp(col, topBar, topBar.a);
                 }
 
-                
                 // corners after
-                if (tilePos.x == 1 && tilePos.y == 1) {
+                // outer corners
+                if ((tilePos.x == 1 && tilePos.y == 1) ||
+                    (tileTypeMatrix[1][0] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] == TILE_TYPE_LIQUID)) {
                     float4 blCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
 
                     if (localUV.x < 0.5 && localUV.y < 0.5)
                         col = lerp(col, blCorner, blCorner.a);
                 }
-
-                if (tilePos.x == _GridTextureDimensions.x && tilePos.y == 1) {
+                if ((tilePos.x == _GridTextureDimensions.x && tilePos.y == 1) ||
+                    (tileTypeMatrix[1][2] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] == TILE_TYPE_LIQUID)) {
                     float4 brCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
 
                     if (localUV.x > 0.5 && localUV.y < 0.5)
                         col = lerp(col, brCorner, brCorner.a);
                 }
-
-                if (tilePos.x == 1 && tilePos.y == _GridTextureDimensions.y) {
+                if ((tilePos.x == 1 && tilePos.y == _GridTextureDimensions.y) ||
+                    (tileTypeMatrix[1][0] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] == TILE_TYPE_LIQUID)) {
                     float4 tlCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
 
                     if (localUV.x < 0.5 && localUV.y > 0.5)
                         col = lerp(col, tlCorner, tlCorner.a);
                 }
-
-                if (tilePos.x == _GridTextureDimensions.x && tilePos.y == _GridTextureDimensions.y) {
+                if ((tilePos.x == _GridTextureDimensions.x && tilePos.y == _GridTextureDimensions.y) ||
+                    (tileTypeMatrix[1][2] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] == TILE_TYPE_LIQUID)) {
                     float4 trCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
 
                     if (localUV.x > 0.5 && localUV.y > 0.5)
                         col = lerp(col, trCorner, trCorner.a);
+                }
+                
+                // inner corners
+                if (tileTypeMatrix[0][0] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID) {
+                    float4 blInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+
+                    if (localUV.x < 0.5 && localUV.y < 0.5)
+                        col = lerp(col, blInnerCorner, blInnerCorner.a);
+                }
+                if (tileTypeMatrix[0][2] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID) {
+                    float4 brInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+
+                    if (localUV.x > 0.5 && localUV.y < 0.5)
+                        col = lerp(col, brInnerCorner, brInnerCorner.a);
+                }
+                if (tileTypeMatrix[2][0] == TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID) {
+                    float4 tlInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+
+                    if (localUV.x < 0.5 && localUV.y > 0.5)
+                        col = lerp(col, tlInnerCorner, tlInnerCorner.a);
+                }
+                if (tileTypeMatrix[2][2] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID) {
+                    float4 trInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+
+                    if (localUV.x > 0.5 && localUV.y > 0.5)
+                        col = lerp(col, trInnerCorner, trInnerCorner.a);
                 }
                 
 
@@ -229,7 +254,7 @@
                     col = AddLiquid(col, localPixel, i.worldPos.xy);
                 
                 // then add color modifier
-                //col *= i.color;
+                col *= i.color;
 
                 // create grid
                 //if (_GridOverlayToggle > 0)
