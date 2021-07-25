@@ -24,6 +24,7 @@ public class DialogueResponseManager : MonoBehaviour
 	List<UnityEvent> toTrigger; // Generic unity events to be triggered after response
 	private int fScore = 0;
 	private int tScore = 0;
+	private int wScore = 0;
 
 	private GameObject lastPopulationReturned = null;
 
@@ -120,7 +121,7 @@ public class DialogueResponseManager : MonoBehaviour
 		Debug.Log("check9ing quiz results");
 		foreach (QuizResponse quizResponse in quizResponses)
         {
-			if (tScore >= quizResponse.tScore && fScore >= quizResponse.fScore)
+			if (tScore >= quizResponse.tScore && fScore >= quizResponse.fScore && wScore >= quizResponse.wScore)
             {
 				conversationManager.StartConversation(quizResponse.NPCConversation);
 				break;
@@ -138,6 +139,12 @@ public class DialogueResponseManager : MonoBehaviour
 	{
 		tScore += score;
 		Debug.Log("tscore: " + tScore);
+	}
+
+	public void increaseWScore(int score)
+	{
+		wScore += score;
+		Debug.Log("wscore: " + tScore);
 	}
 
 	private void HandleInspectorClicked()
@@ -168,5 +175,6 @@ public class QuizResponse
 {
 	[SerializeField] public int tScore = 0;
 	[SerializeField] public int fScore = 0;
+	[SerializeField] public int wScore = 0;
 	[SerializeField] public DialogueEditor.NPCConversation NPCConversation;
 }

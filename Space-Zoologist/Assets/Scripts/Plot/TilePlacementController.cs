@@ -119,6 +119,11 @@ public class TilePlacementController : MonoBehaviour
         {
             if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
             {
+                // TODO remove when initial liquid values implemented
+                if (tile.type.Equals(TileType.Liquid))
+                {
+                    tile.defaultContents = new float[] { 0.98f, 0, 0.02f };
+                }
                 this.referencedTiles.Add(tile);
             }
         }
