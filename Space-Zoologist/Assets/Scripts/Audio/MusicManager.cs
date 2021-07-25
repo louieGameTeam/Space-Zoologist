@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
 {
     public LoopableAudioTrack curMusic;
     public LoopableAudioTrack nextMusic;
-    public LoopableAudioTrack queuedMusic;
 
     public AudioSource curMusicSource;
     public AudioSource nextMusicSource;
 
-    bool isInTrasition;
-    bool frequentTransition;
+    [SerializeField] Image backgroundImage;
+
+    bool isInTransition;
 
     const int TEMPO = 112;                                      // tempo of track, in beats per minute
     const int BEATS_PER_BAR = 2;                                // the tracks have 4 beats per bar, but I'm allowing half-bar transitions
@@ -34,36 +35,54 @@ public class MusicManager : MonoBehaviour
 
     void Start()
     {
-        isInTrasition = false;
-        frequentTransition = false;
+        isInTransition = false;
         if (!LoopableAudioTrack.IsEmpty(curMusic) && !curMusic.haveStarted) {
             curMusic.StartTrack(curMusicSource);
         }
     }
 
-    public void SetNextTrack(LoopableAudioTrack nextTrack)
+    public bool SetNextTrack(LoopableAudioTrack nextTrack, bool overwriteTransitioningMusic = false)
     {
-        if (nextTrack == curMusic) return;
+        if (nextTrack == curMusic) return false;
 
-        if(LoopableAudioTrack.IsEmpty(nextMusic))
+        if (LoopableAudioTrack.IsEmpty(nextMusic) || !isInTransition)
+        {
             nextMusic = nextTrack;
-        else
-            queuedMusic = nextTrack; // if there is queued music that isn't played, just overwrite it
+            return true;
+        }
+        else if (overwriteTransitioningMusic)
+        {
+            StopTransition();
+            nextMusic = nextTrack;
+            return true;
+        }
+
+        return false;
     }
 
-    // !! CALL THIS TO SWITCH FROM PROLOGUE MUSIC TO MAIN MENU MUSIC !!
-    public void StartTransition()
-    {
-        if (isInTrasition)
-        {
-            if (LoopableAudioTrack.IsEmpty(queuedMusic)) return; // cancel if the transition isn't queued up
+    public void StopTransition() {
+        nextMusic.StopTrack();
+        StopCoroutine(transition);
+        transition = null;
+        isInTransition = false;
+    }
 
-            nextMusic.StopTrack();
-            StopCoroutine(transition);
-            nextMusic = queuedMusic;
-            queuedMusic = null;
-            transition = null;
+    /// <summary>
+    /// Starts a transition (instantaneous if withFading = true) to the next track with aligned tempo and bars.
+    /// </summary>
+    /// <param name="withFading">Whether the transition involves fading.</param>
+    /// <param name="track">The track to play. Setting track will force a transition to start.</param>
+    public void StartTransition(bool withFading, LoopableAudioTrack track = null)
+    {
+        if (track != null) {
+            //Attempt to forcibly set the next track
+            if (!SetNextTrack(track, true) && isInTransition)
+            {
+                // only true if nextTrack == track and is being transitioned
+                return;
+            }
         }
+
         if (LoopableAudioTrack.IsEmpty(nextMusic))
         {
             return;
@@ -75,12 +94,37 @@ public class MusicManager : MonoBehaviour
             curMusic.StartTrack(curMusicSource);
             return;
         }
-        else if (nextMusic == curMusic) {
+        else if (nextMusic == curMusic)
+        {
             nextMusic = null;
             return;
         }
 
-        isInTrasition = true;
+        if (!withFading) {
+            if (!LoopableAudioTrack.IsEmpty(nextMusic))
+            {
+                if (isInTransition)
+                {
+                    StopTransition();
+                }
+
+                curMusic.StopTrack(); //wait for main menu to start before stopping prologue
+                curMusicSource.volume = volume;
+
+                curMusic = nextMusic;
+                nextMusic = null;
+
+                curMusic.StartTrack(curMusicSource);
+            }
+            return;
+        }
+
+        if (isInTransition)
+        {
+            return;
+        }
+
+        isInTransition = true;
 
         float curPlayheadTime = curMusic.GetCurrentTime();
         int nextBar = Mathf.CeilToInt(curPlayheadTime / SECONDS_PER_BAR);
@@ -117,17 +161,17 @@ public class MusicManager : MonoBehaviour
         curMusicSource.volume = volume;
 
         curMusic = nextMusic;
-        nextMusic = queuedMusic;
-        queuedMusic = null;
+        nextMusic = null;
 
+        // Switch cur and next music source to reuse code
         AudioSource temp = curMusicSource;
         curMusicSource = nextMusicSource;
         nextMusicSource = temp;
 
-        isInTrasition = false;
-        frequentTransition = false;
+        isInTransition = false;
         transition = null;
     }
+
 
     public void SetVolume(float vol)
     {
