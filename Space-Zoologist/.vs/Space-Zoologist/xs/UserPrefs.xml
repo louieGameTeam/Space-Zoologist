@@ -1,20 +1,11 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/RPS/EnclosureSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs">
     <Files>
       <File FileName="Assets/Scripts/Managers/DialogueManager.cs" Line="62" Column="61" IsPinned="True" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/GameOver.cs" Line="11" Column="1" />
-      <File FileName="Assets/Scripts/Notebook/UI/NotebookUI.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Notebook/UI/ResearchNotesUI.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs" Line="138" Column="39" />
-      <File FileName="Assets/Scripts/Plot/TilePlacementController.cs" Line="125" Column="73" />
-      <File FileName="Assets/Scripts/Plot/Tiles/GameTile.cs" Line="6" Column="50" />
-      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="130" Column="1" />
-      <File FileName="Assets/Resources/Levels/Level1E2.json" Line="16" Column="34" />
-      <File FileName="Assets/Resources/Levels/Level1E1.json" Line="16" Column="34" />
-      <File FileName="Assets/Resources/Levels/Level1E3.json" Line="16" Column="34" />
-      <File FileName="Assets/Resources/Levels/Level1E4.json" Line="16" Column="34" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" Line="288" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="44" Column="25" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="10" Column="14" />
+      <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="135" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -57,15 +48,15 @@
                 </Node>
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
-                  <Node name="RPS" expanded="True">
-                    <Node name="EnclosureSystem.cs" selected="True" />
-                  </Node>
+                  <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True" />
+                  <Node name="Representation" expanded="True">
+                    <Node name="GrowthCalculator.cs" selected="True" />
+                  </Node>
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="Inspector" expanded="True" />
