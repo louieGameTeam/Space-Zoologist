@@ -19,8 +19,7 @@ public class GridSystem : MonoBehaviour
     // using prime numbers instead of binary for flagging LMAO
     public enum TileFlag
     {
-        LIQUID_FLAG = 0x2,
-        HIGHLIGHT_FLAG = 0x3
+        HIGHLIGHT_FLAG = 0x2
     }
     private const float FLAG_VALUE_MULTIPLIER = 256f;
     #endregion
@@ -124,14 +123,7 @@ public class GridSystem : MonoBehaviour
     public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
     {
         InitializeTileLayerManager();
-        // consider reworking liquidbodies maybe later bleh
-        Dictionary<int, LiquidBody> bodyIDsToLiquidBodies = new Dictionary<int, LiquidBody>();
-        foreach (SerializedLiquidBody serializedLiquidBody in serializedGrid.serializedTilemap.SerializedLiquidBodies)
-        {
-            LiquidBody liquidBody = ParseSerializedLiquidBody(serializedLiquidBody);
-            bodyIDsToLiquidBodies.Add(liquidBody.bodyID, liquidBody);
-            this.liquidBodies.Add(liquidBody);
-        }
+        
 
         // set grid dimensions
         ReserveWidth = serializedGrid.width;
@@ -150,6 +142,10 @@ public class GridSystem : MonoBehaviour
         TilemapTexture.wrapMode = TextureWrapMode.Repeat;
 
         Vector3Int tilePosition = new Vector3Int();
+        Dictionary<int, HashSet<Vector3Int>> liquidbodyIDToTiles = new Dictionary<int, HashSet<Vector3Int>>();
+        foreach (SerializedLiquidBody serializedLiquidBody in serializedGrid.serializedTilemap.SerializedLiquidBodies)
+            liquidbodyIDToTiles.Add(serializedLiquidBody.BodyID, new HashSet<Vector3Int>());
+
         foreach (SerializedTileData serializedTileData in serializedGrid.serializedTilemap.SerializedTileDatas)
         {
             // if the tile id is negative
@@ -183,6 +179,10 @@ public class GridSystem : MonoBehaviour
                             // manually add the tile (may turn into a method later)
                             TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, gameTile);
 
+                            // if it is a liquid, add it to the dictionary
+                            if (gameTile.type == TileType.Liquid)
+                                liquidbodyIDToTiles[serializedTileData.LiquidBodyID].Add(tilePosition);
+
                             // set the tile type in the red channel
                             Color pixelColor = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
                             // add 1 to ensure a null tile type at 0
@@ -204,28 +204,25 @@ public class GridSystem : MonoBehaviour
             }
         }
 
+        foreach (SerializedLiquidBody serializedLiquidBody in serializedGrid.serializedTilemap.SerializedLiquidBodies)
+        {
+            // create the liquidbody based on previously parsed tiles
+            LiquidBody liquidBody = new LiquidBody(liquidbodyIDToTiles[serializedLiquidBody.BodyID], serializedLiquidBody.Contents, bodyEmptyCallback, serializedLiquidBody.BodyID);
+
+            // add the liquidbody reference to the tile data
+            foreach (Vector3Int liquidTilePosition in liquidbodyIDToTiles[serializedLiquidBody.BodyID])
+                TileDataGrid[liquidTilePosition.y, liquidTilePosition.x].currentLiquidBody = liquidBody;
+
+            // add it to the list
+            this.liquidBodies.Add(liquidBody);
+        }
+
         // add texture to material
         TilemapTexture.Apply();
         TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
         renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
         HighlightedTiles = new List<Vector3Int>();
-    }
-    private LiquidBody ParseSerializedLiquidBody(SerializedLiquidBody serializedLiquidBody)
-    {
-        HashSet<Vector3Int> tiles = new HashSet<Vector3Int>();
-        if (serializedLiquidBody.BodyID == 0)
-        {
-            Debug.LogError("Liquid Body has body ID 0. Is temporary bodies being stored or no proper ID given to the bodies");
-        }
-        // find new way to parse liquidbodies
-        /*
-        for (int i = 0; i < serializedLiquidBody.TilePositions.Length / 3; i++)
-        {
-            int index = i * 3;
-            tiles.Add(new Vector3Int(serializedLiquidBody.TilePositions[index], serializedLiquidBody.TilePositions[index + 1], serializedLiquidBody.TilePositions[index + 2]));
-        }*/
-        return new LiquidBody(tiles, serializedLiquidBody.Contents, this.bodyEmptyCallback, serializedLiquidBody.BodyID);
     }
 
     public SerializedTilemap SerializedTilemap()
@@ -1801,7 +1798,7 @@ public class GridSystem : MonoBehaviour
         public GameTile previousTile { get; private set; }
         public Color currentColor { get; private set; }
         public Color previousColor { get; private set; }
-        public LiquidBody currentLiquidBody { get; private set; }
+        public LiquidBody currentLiquidBody { get; set; }
         public LiquidBody previousLiquidBody { get; private set; }
         public bool isTileChanged { get; private set; } = false;
         public bool isLiquidBodyChanged { get; private set; } = false;

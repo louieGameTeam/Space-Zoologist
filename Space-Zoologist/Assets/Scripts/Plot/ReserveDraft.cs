@@ -45,6 +45,7 @@ public class ReserveDraft : MonoBehaviour
         PauseManager.TryToPause();
 
         // save current resources
+        // this is currently an issue
         resourceManager.Save();
         initialBalance = playerBalance.Balance;
         UpdateUI(false);
