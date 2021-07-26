@@ -25,6 +25,10 @@ public class ResearchEncyclopediaUI : MonoBehaviour
                 dropdown.value = index;
                 dropdown.RefreshShownValue();
             }
+            else
+            {
+                Debug.LogWarning("Encyclopedia article " + value.ToString() + " was not found in the dropdown, so the new value will be ignored");
+            }
         }
     }
 
@@ -180,13 +184,23 @@ public class ResearchEncyclopediaUI : MonoBehaviour
     }
     public static string ArticleIDToDropdownLabel(ResearchEncyclopediaArticleID id)
     {
-        return "\"" + id.Title + "\" by " + id.Author;
+        string label = "\"" + id.Title + "\"";
+        // Only include the author if it has an author
+        if (id.Author != "") label += " by " + id.Author;
+        return label;
     }
     public static ResearchEncyclopediaArticleID DropdownLabelToArticleID(string label)
     {
         string[] titleAndAuthor = Regex.Split(label, " by ");
         // Trim the quotes off of the title
         titleAndAuthor[0] = titleAndAuthor[0].Trim('"');
-        return new ResearchEncyclopediaArticleID(titleAndAuthor[0], titleAndAuthor[1]);
+
+        // If there are two items in the split string, use them both
+        if(titleAndAuthor.Length > 1)
+        {
+            return new ResearchEncyclopediaArticleID(titleAndAuthor[0], titleAndAuthor[1]);
+        }
+        // If there was only one item, we know that there was not author
+        else return new ResearchEncyclopediaArticleID(titleAndAuthor[0], "");
     }
 }
