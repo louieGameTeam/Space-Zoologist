@@ -9,6 +9,7 @@ public struct ResearchCategory
 {
     public ResearchCategoryType Type => type;
     public string Name => name;
+    public Sprite Image => image;
 
     [SerializeField]
     [Tooltip("Type for the research category")]
@@ -16,11 +17,15 @@ public struct ResearchCategory
     [SerializeField]
     [Tooltip("Name associated with this research category")]
     private string name;
+    [SerializeField]
+    [Tooltip("Image associated with this research category")]
+    private Sprite image;
 
-    public ResearchCategory(ResearchCategoryType type, string name)
+    public ResearchCategory(ResearchCategoryType type, string name, Sprite image)
     {
         this.type = type;
         this.name = name;
+        this.image = image;
     }
 
     public void Setup(ResearchCategoryType type)

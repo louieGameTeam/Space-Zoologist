@@ -31,6 +31,10 @@ public class ResearchCategoryTypeEditableDrawer : PropertyDrawer
                 }
                 // In any case, add a property field for the research category name
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("name"));
+                position.y += position.height;
+
+                // Add property field for the image
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("image"));
 
                 EditorGUI.indentLevel--;
             }
@@ -53,7 +57,7 @@ public class ResearchCategoryTypeEditableDrawer : PropertyDrawer
                     height += EditorGUIUtility.standardVerticalSpacing + EditorGUIUtility.singleLineHeight;
                 }
 
-                height += EditorGUIUtility.standardVerticalSpacing + EditorGUIUtility.singleLineHeight;
+                height += 2f * (EditorGUIUtility.standardVerticalSpacing + EditorGUIUtility.singleLineHeight);
             }
             return height;
         }

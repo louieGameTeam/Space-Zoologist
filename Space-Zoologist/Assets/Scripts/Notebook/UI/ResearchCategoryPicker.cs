@@ -78,7 +78,7 @@ public class ResearchCategoryPicker : MonoBehaviour
 
             // Create a clone and set it up
             ResearchCategoryNameButton clone = Instantiate(nameButton, nameGroup.transform);
-            clone.Setup(nameGroup, entry.Key.Name, OnResearchCategoryNameChanged);
+            clone.Setup(nameGroup, entry.Key.Name, entry.Key.Image, OnResearchCategoryNameChanged);
             // Add it to the current category name button group
             nameButtonGroups[(int)entry.Key.Type].AddButton(clone);
         }
@@ -111,16 +111,16 @@ public class ResearchCategoryPicker : MonoBehaviour
         }
 
         // Create the currently selected category
-        selectedCategory = new ResearchCategory(type, "");
+        selectedCategory = new ResearchCategory(type, "", null);
 
         // Enable the new name button group
         // NOTE: this invokes OnResearchCategoryNameChanged immediately
         nameButtonGroups[(int)type].SetActive(true);
     }
 
-    private void OnResearchCategoryNameChanged(string name)
+    private void OnResearchCategoryNameChanged(string name, Sprite image)
     {
-        selectedCategory = new ResearchCategory(selectedCategory.Type, name);
+        selectedCategory = new ResearchCategory(selectedCategory.Type, name, image);
 
         // Invoke the event
         onResearchCategoryChanged.Invoke(selectedCategory);
