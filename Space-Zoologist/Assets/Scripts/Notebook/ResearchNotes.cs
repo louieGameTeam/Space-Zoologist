@@ -21,6 +21,7 @@ public class ResearchNotes
 
     public void Setup()
     {
+        // Each note begins with the same value as the label
         foreach (string label in labels.Labels) notes.Add(label, "");
     }
 
