@@ -30,8 +30,8 @@ public class PodSection : StoreSection
         else if (eventData.button == PointerEventData.InputButton.Left)
         {
             Vector2 position = Camera.main.ScreenToWorldPoint(eventData.position);
-            selectedSpecies = base.GridSystem.PlacementValidation.GetAnimalSpecies(selectedItem);
-            if (!this.GridSystem.PlacementValidation.IsPodPlacementValid(position, selectedSpecies))
+            selectedSpecies = populationManager.GetAnimalSpecies(selectedItem);
+            if (!this.GridSystem.IsPodPlacementValid(position, selectedSpecies))
             {
                 Debug.Log("Can't place species there");
                 return;

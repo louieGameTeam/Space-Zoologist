@@ -24,7 +24,7 @@ public class FoodSource : MonoBehaviour, Life
 
     // For runtime instances of a food source
     [Expandable][SerializeField] private FoodSourceSpecies species = default;
-    [SerializeField] private TileSystem tileSystem = default;
+    [SerializeField] private GridSystem gridSystem = default;
 
 
     public bool isUnderConstruction = false;
@@ -35,8 +35,6 @@ public class FoodSource : MonoBehaviour, Life
     private bool hasAccessibilityChanged = default;
     private bool hasAccessibilityChecked = default;
 
-    private TileSystem TileSystem = default;
-
     // To figure out if the output has changed, in order to invoke vent
     private float prevOutput = 0;
 
@@ -44,7 +42,7 @@ public class FoodSource : MonoBehaviour, Life
     {
         if (species)
         {
-            InitializeFoodSource(species, transform.position, this.tileSystem);
+            InitializeFoodSource(species, transform.position, this.gridSystem);
         }
     }
 
@@ -65,14 +63,14 @@ public class FoodSource : MonoBehaviour, Life
         }
     }
 
-    public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position, TileSystem tileSystem)
+    public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position, GridSystem gridSystem)
     {
         this.species = species;
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
-        this.TileSystem = tileSystem;
-        this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        this.gridSystem = gridSystem;
+        this.accessibleTerrian = this.gridSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 
     private void InitializeNeedValues()
@@ -174,7 +172,7 @@ public class FoodSource : MonoBehaviour, Life
     public bool GetAccessibilityStatus()
     {
         // No need to check if terrain was not modified
-        if (!this.TileSystem.HasTerrainChanged)
+        if (!this.gridSystem.HasTerrainChanged)
         {
             return false;
         }
@@ -186,7 +184,7 @@ public class FoodSource : MonoBehaviour, Life
         }
 
         var preTerrain = this.accessibleTerrian;
-        var curTerrain = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        var curTerrain = this.gridSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
 
         // Accessible terrain had changed
         this.hasAccessibilityChecked = true;
@@ -205,7 +203,7 @@ public class FoodSource : MonoBehaviour, Life
     {
         if (this.hasAccessibilityChanged)
         {
-            this.accessibleTerrian = this.TileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+            this.accessibleTerrian = this.gridSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
         }
 
         // Reset flags

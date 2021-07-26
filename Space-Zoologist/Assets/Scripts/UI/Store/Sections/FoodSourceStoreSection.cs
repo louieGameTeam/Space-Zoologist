@@ -49,7 +49,7 @@ public class FoodSourceStoreSection : StoreSection
 
     public void PlaceFood(Vector3 mousePosition)
     {
-        if (!base.GridSystem.PlacementValidation.IsFoodPlacementValid(mousePosition, base.selectedItem))
+        if (!base.GridSystem.IsFoodPlacementValid(mousePosition, base.selectedItem))
         {
             Debug.Log("Cannot place item that location");
             return;

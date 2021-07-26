@@ -16,6 +16,7 @@ public class MapDesigningTool : MonoBehaviour
     private string sceneName;
     private LevelIO levelIO;
     private TilePlacementController tilePlacementController;
+    private GridSystem gridSystem;
     private FoodSourceManager foodSourceManager;
     private PopulationManager populationManager;
     [SerializeField] bool godMode = true;
@@ -23,23 +24,21 @@ public class MapDesigningTool : MonoBehaviour
     private bool DisplayLiquidBodyInfo = true;
     private bool DisplayPreviewBodies;
     private Tilemap[] tilemaps;
-    private TileSystem tileSystem;
     private Vector2 liquidScrollPos;
     private Vector2 previewBodyScrollPos;
     private Vector2 animalScrollPos;
     private Vector2 foodScrollPos;
     private Camera mainCamera;
-    private Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>> ManagersToToggles = new Dictionary<TileLayerManager, Dictionary<LiquidBody, bool>>();
     private void Awake()
     {
         this.levelIO = FindObjectOfType<LevelIO>();
         this.tilePlacementController = FindObjectOfType<TilePlacementController>();
         this.mainCamera = this.gameObject.GetComponent<Camera>();
         this.tilemaps = FindObjectsOfType<Tilemap>();
-        this.tileSystem = FindObjectOfType<TileSystem>();
         this.populationManager = FindObjectOfType<PopulationManager>();
         this.foodSourceManager = FindObjectOfType<FoodSourceManager>();
         this.LevelDataReference = FindObjectOfType<LevelDataReference>();
+        this.gridSystem = FindObjectOfType<GridSystem>();
         // Load food sources from leveldata.
         // Loading other scriptable objects is possible by editing this field, but it will not be saved
         this.foodSourceSpecies = this.LevelDataReference.LevelData.FoodSourceSpecies.ToArray();
@@ -90,7 +89,7 @@ public class MapDesigningTool : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            foodSourceManager.placeFood(this.tileSystem.WorldToCell(this.mainCamera.ScreenToWorldPoint(Input.mousePosition)), this.selectedFood);
+            foodSourceManager.placeFood(this.gridSystem.WorldToCell(this.mainCamera.ScreenToWorldPoint(Input.mousePosition)), this.selectedFood);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -204,11 +203,11 @@ public class MapDesigningTool : MonoBehaviour
         GUILayout.BeginArea(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y -150 , 200, 150));
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         GUILayout.Box("World Pos: " + mousePos.ToString());
-        Vector3Int cellPosition = this.tileSystem.WorldToCell(mousePos);
+        Vector3Int cellPosition = this.gridSystem.WorldToCell(mousePos);
         GUILayout.Box("Cell Pos: " + cellPosition);
-        GameTile gameTile = this.tileSystem.GetGameTileAt(cellPosition);
+        GameTile gameTile = this.gridSystem.GetGameTileAt(cellPosition);
         string name = gameTile ? gameTile.name : "Null";
-        LiquidBody liquid = this.tileSystem.GetLiquidBodyAt(cellPosition);
+        LiquidBody liquid = this.gridSystem.GetTileData(cellPosition).currentLiquidBody;
         string bodyID = "Null";
         string con = "Null";
         if (liquid != null)
@@ -229,37 +228,19 @@ public class MapDesigningTool : MonoBehaviour
         this.DisplayLiquidBodyInfo = GUILayout.Toggle(this.DisplayLiquidBodyInfo, "Liquid Body Info Display");
         if (this.DisplayLiquidBodyInfo)
         {
-            foreach (Tilemap tilemap in tilemaps)
-            {
-                if (tilemap.TryGetComponent(out TileLayerManager tileLayerManager))
-                {
-                    if (!tileLayerManager.holdsContent)
-                    {
-                        continue;
-                    }
-                    this.LiquidBodyScroll(tileLayerManager, tilemap);
-                    this.PreviewBodyScroll(tileLayerManager);
-                }
-            }
+            this.LiquidBodyScroll(gridSystem.Tilemap);
+            this.PreviewBodyScroll();
         }
         GUILayout.EndVertical();
         GUILayout.EndArea();
     }
-    private void LiquidBodyScroll(TileLayerManager tileLayerManager, Tilemap tilemap)
+    private void LiquidBodyScroll(Tilemap tilemap)
     {
-        if (!this.ManagersToToggles.ContainsKey(tileLayerManager))
-        {
-            this.ManagersToToggles.Add(tileLayerManager, new Dictionary<LiquidBody, bool>());
-        }
         GUILayout.Box("Tilemap: " + tilemap.name);
-        GUILayout.Box("Active Liquid Bodies: " + tileLayerManager.liquidBodies.Count.ToString());
+        GUILayout.Box("Active Liquid Bodies: " + gridSystem.liquidBodies.Count.ToString());
         this.liquidScrollPos = GUILayout.BeginScrollView(liquidScrollPos, GUILayout.Width(200), GUILayout.Height(210));
-        foreach (LiquidBody liquidBody in tileLayerManager.liquidBodies)
+        foreach (LiquidBody liquidBody in gridSystem.liquidBodies)
         {
-            if (!this.ManagersToToggles[tileLayerManager].ContainsKey(liquidBody))
-            {
-                this.ManagersToToggles[tileLayerManager].Add(liquidBody, false);
-            }
             GUILayout.Box("LiquidBodyID: " + liquidBody.bodyID);
             GUILayout.Box("Composition");
             for (int i = 0; i < liquidBody.contents.Length; i++)
@@ -275,9 +256,9 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.Box("Tile Count: " + liquidBody.tiles.Count);
             bool validCrossReference = true;
-            foreach (Vector3Int tile in liquidBody.tiles)
+            foreach (Vector3Int tilePosition in liquidBody.tiles)
             {
-                if (tileLayerManager.positionsToTileData[tile].currentLiquidBody != liquidBody)
+                if (gridSystem.GetTileData(tilePosition).currentLiquidBody != liquidBody)
                 {
                     validCrossReference = false;
                     break;
@@ -285,23 +266,18 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.Box("Referenced Bodies: " + liquidBody.referencedBodies.Count);
             GUILayout.Box("Valid Cross Reference: " + validCrossReference.ToString());
-            ManagersToToggles[tileLayerManager][liquidBody] = GUILayout.Toggle(ManagersToToggles[tileLayerManager][liquidBody], "View Area");
-            if (ManagersToToggles[tileLayerManager][liquidBody])
-            {
-                // View Area
-            }
         }
         GUILayout.EndScrollView();
     }
 
 
-    private void PreviewBodyScroll(TileLayerManager tileLayerManager)
+    private void PreviewBodyScroll()
     {
         int bodyCount = 0;
         this.previewBodyScrollPos = GUILayout.BeginScrollView(previewBodyScrollPos, GUILayout.Width(200), GUILayout.Height(210));
-        GUILayout.Box("Active Preview Bodies: " + tileLayerManager.previewBodies.Count.ToString());
+        GUILayout.Box("Active Preview Bodies: " + gridSystem.previewBodies.Count.ToString());
         this.DisplayPreviewBodies = GUILayout.Toggle(this.DisplayPreviewBodies, "Display Preview Bodies");
-        foreach (LiquidBody liquidBody in tileLayerManager.previewBodies)
+        foreach (LiquidBody liquidBody in gridSystem.previewBodies)
         {
             bodyCount++;
             GUILayout.Box("Body No. " + bodyCount);
@@ -315,9 +291,9 @@ public class MapDesigningTool : MonoBehaviour
             }
             GUILayout.Box("Tile Count: " + liquidBody.tiles.Count);
             bool validCrossReference = true;
-            foreach (Vector3Int tile in liquidBody.tiles)
+            foreach (Vector3Int tilePosition in liquidBody.tiles)
             {
-                if (tileLayerManager.positionsToTileData[tile].currentLiquidBody != liquidBody)
+                if (gridSystem.GetTileData(tilePosition).currentLiquidBody != liquidBody)
                 {
                     validCrossReference = false;
                     break;

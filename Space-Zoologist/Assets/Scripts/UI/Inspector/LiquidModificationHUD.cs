@@ -9,13 +9,13 @@ public class LiquidModificationHUD : MonoBehaviour
     [SerializeField] GameObject liquidModificationHUD = default;
     [SerializeField] List<TMPro.TMP_InputField> Values = default;
     [SerializeField] Camera mainCamera = default;
-    private TileSystem tileSystem;
+    private GridSystem GridSystem;
     private bool isOpened = false;
     private Vector3 worldPos;
     private LiquidBody liquidBody;
     void Start()
     {
-        this.tileSystem = FindObjectOfType<TileSystem>();
+        this.GridSystem = FindObjectOfType<GridSystem>();
         liquidModificationHUD.SetActive(false);
     }
     public void ParseValues()
@@ -42,7 +42,7 @@ public class LiquidModificationHUD : MonoBehaviour
         if (liquidBody != null)
         {
             Debug.Log("Updated values");
-            this.tileSystem.ChangeLiquidBodyComposition(this.tileSystem.WorldToCell(this.worldPos), liquidBody.contents);
+            this.GridSystem.SetLiquidComposition(this.GridSystem.WorldToCell(this.worldPos), liquidBody.contents);
         }
     }
     void Update()
@@ -51,13 +51,13 @@ public class LiquidModificationHUD : MonoBehaviour
         {
             liquidModificationHUD.SetActive(true);
             Vector3 mousePos = this.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int cellPosition = this.tileSystem.WorldToCell(mousePos);
-            LiquidBody liquid = this.tileSystem.GetLiquidBodyAt(cellPosition);
+            Vector3Int cellPosition = this.GridSystem.WorldToCell(mousePos);
+            LiquidBody liquid = this.GridSystem.GetTileData(cellPosition).currentLiquidBody;
             if (liquid != null)
             {
                 this.worldPos = new Vector3(mousePos.x, mousePos.y, mousePos.z);
                 this.isOpened = true;
-                this.liquidBody = this.tileSystem.GetLiquidBodyAt(cellPosition);
+                this.liquidBody = liquid;
                 for (int i = 0; i < Values.Count; i++)
                 {
                     Values[i].text = "";

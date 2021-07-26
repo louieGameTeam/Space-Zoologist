@@ -11,10 +11,10 @@ public class DensityNeedSystem : NeedSystem
     private readonly ReservePartitionManager rpm = null;
     private DensityCalculator densityCalculator = null;
 
-    public DensityNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, NeedType needType = NeedType.Density) : base(needType)
+    public DensityNeedSystem(ReservePartitionManager rpm, GridSystem GridSystem, NeedType needType = NeedType.Density) : base(needType)
     {
         this.rpm = rpm;
-        this.densityCalculator = new DensityCalculator(rpm, tileSystem);
+        this.densityCalculator = new DensityCalculator(rpm, GridSystem);
         this.densityCalculator.Init();
     }
 

@@ -11,12 +11,12 @@ public class TerrainNeedSystem : NeedSystem
     // For `Population` consumers
     private readonly ReservePartitionManager rpm = null;
     // For `FoodSource` consumers
-    private TileSystem tileSystem = null;
+    private GridSystem gridSystem = null;
 
-    public TerrainNeedSystem(ReservePartitionManager rpm, TileSystem tileSystem, NeedType needType = NeedType.Terrain) : base(needType)
+    public TerrainNeedSystem(ReservePartitionManager rpm, GridSystem gridSystem, NeedType needType = NeedType.Terrain) : base(needType)
     {
         this.rpm = rpm;
-        this.tileSystem = tileSystem;
+        this.gridSystem = gridSystem;
 
         EventManager.Instance.SubscribeToEvent(EventType.TerrainChange, () =>
         {
@@ -51,7 +51,7 @@ public class TerrainNeedSystem : NeedSystem
         {
             if (closed.Contains(position)) continue;
 
-            TileType type = tileSystem.GetGameTileAt(position).type;
+            TileType type = gridSystem.GetGameTileAt(position).type;
             if (!ConnectedTilesByType.ContainsKey(type))
             {
                 ConnectedTilesByType.Add(type, new List<int>());
@@ -91,7 +91,7 @@ public class TerrainNeedSystem : NeedSystem
             Vector3Int next = position;
             next += new Vector3Int(colNbr[i], rowNbr[i], 0);
             if (closed.Contains(next)) continue;
-            if (rpm.CanAccess(population, position) && tileSystem.GetGameTileAt(next) != null && tileSystem.GetGameTileAt(next).type == type)
+            if (rpm.CanAccess(population, position) && gridSystem.GetGameTileAt(next) != null && gridSystem.GetGameTileAt(next).type == type)
             {
                 total += DFS(population, next, ref closed, type);
             }
