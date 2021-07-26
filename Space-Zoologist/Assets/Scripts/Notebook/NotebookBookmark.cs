@@ -7,7 +7,7 @@ using UnityEngine;
 public class NotebookBookmark
 {
     // Public accessors
-    public string Label => prefix + " -> " + category.Name;
+    public virtual string Label => string.Format(formatLabel, category.Name);
     public NotebookTab Tab => tab;
     public ResearchCategory Category => category;
     public string PickerName => pickerName;
@@ -15,31 +15,31 @@ public class NotebookBookmark
 
     [SerializeField]
     [Tooltip("Label used to identify the bookmark")]
-    private string prefix;
+    protected string formatLabel;
     [SerializeField]
     [Tooltip("Tab in the notebook for this bookmark")]
-    private NotebookTab tab;
+    protected NotebookTab tab;
     [SerializeField]
     [Tooltip("Research category for the bookmark's picker")]
-    private ResearchCategory category;
+    protected ResearchCategory category;
     [SerializeField]
     [Tooltip("Name of the object in the scene that picks the category for this page")]
     // NOTE: we can't just store the research category picker here in the object
     // This bookmark is stored in a serialized object, so it survives after the picker is destroyed
     // Instead, we ID the picker by the game object's name, and let the NotebookUI provide the
     // picker to the bookmark
-    private string pickerName;
+    protected string pickerName;
 
-    public NotebookBookmark(string prefix, NotebookTab tab, ResearchCategory category, string pickerName)
+    public NotebookBookmark(string formatLabel, NotebookTab tab, ResearchCategory category, string pickerName)
     {
-        this.prefix = prefix;
+        this.formatLabel = formatLabel;
         this.tab = tab;
         this.category = category;
         this.pickerName = pickerName;
     }
-    public static NotebookBookmark Create(string prefix, NotebookTab tab, ResearchCategoryPicker picker)
+    public static NotebookBookmark Create(string formatLabel, NotebookTab tab, ResearchCategoryPicker picker)
     {
-        return new NotebookBookmark(prefix, tab, picker.SelectedCategory, picker.name);
+        return new NotebookBookmark(formatLabel, tab, picker.SelectedCategory, picker.name);
     }
     public void NavigateTo(NotebookTabPicker tabPicker, Dictionary<string, ResearchCategoryPicker> namePickerMap, Component component)
     {

@@ -19,7 +19,7 @@ public class NotebookBookmarkAddButton : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Prefix to attach to the name of the bookmark")]
-    protected string prefix;
+    protected string formatLabel;
     [SerializeField]
     [Tooltip("Tab to set for the bookmark button")]
     protected NotebookTab tab;
@@ -36,7 +36,7 @@ public class NotebookBookmarkAddButton : MonoBehaviour
     // If adding the bookmark succeeds, then make the bookmark UI create a new bookmark
     protected virtual void OnClick()
     {
-        NotebookBookmark bookmark = NotebookBookmark.Create(prefix, tab, categoryPicker);
+        NotebookBookmark bookmark = NotebookBookmark.Create(formatLabel, tab, categoryPicker);
         if(notebook.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);

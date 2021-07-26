@@ -180,11 +180,13 @@ public class ResearchEncyclopediaUI : MonoBehaviour
     }
     public static string ArticleIDToDropdownLabel(ResearchEncyclopediaArticleID id)
     {
-        return id.Title + " -> " + id.Author;
+        return "\"" + id.Title + "\" by " + id.Author;
     }
     public static ResearchEncyclopediaArticleID DropdownLabelToArticleID(string label)
     {
-        string[] titleAndAuthor = Regex.Split(label, " -> ");
+        string[] titleAndAuthor = Regex.Split(label, " by ");
+        // Trim the quotes off of the title
+        titleAndAuthor[0] = titleAndAuthor[0].Trim('"');
         return new ResearchEncyclopediaArticleID(titleAndAuthor[0], titleAndAuthor[1]);
     }
 }

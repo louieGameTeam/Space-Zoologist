@@ -33,7 +33,7 @@ public class EncyclopediaBookmarkAddButton : MonoBehaviour
     // If adding the bookmark succeeds, then make the bookmark UI create a new bookmark
     protected virtual void OnClick()
     {
-        EncyclopediaBookmark bookmark = EncyclopediaBookmark.Create("Encyclopedia", NotebookTab.Research, categoryPicker, ui.CurrentArticleID);
+        EncyclopediaBookmark bookmark = EncyclopediaBookmark.Create("{0} Encyclopedia: {1}", NotebookTab.Research, categoryPicker, ui.CurrentArticleID);
         if (notebook.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
