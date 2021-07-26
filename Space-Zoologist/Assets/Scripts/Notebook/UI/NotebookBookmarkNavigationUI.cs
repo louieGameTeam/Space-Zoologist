@@ -19,16 +19,14 @@ public class NotebookBookmarkNavigationUI : MonoBehaviour
 
     private void Awake()
     {
-        // NOTE: for now, on each play, remove all bookmarks
-        // Unity's serialization system seems to serialize the bookmarks to their base class,
-        // breaking their heirarchy. We'll have to solve this in a different way later
-        notebook.Bookmarks.Clear();
-
         // Create a bookmark for each bookmark currently in the notebook
-        //for (int i = 0; i < notebook.Bookmarks.Count; i++)
-        //{
-        //    CreateBookmarkButton(notebook.Bookmarks[i]);
-        //}
+        // NOTE: doesn't work because the bookmarks can't be serialized - they lose their base type
+        // Probably wouldn't work on the client't end anyways, there must be some way to associate
+        // it with the player's account or something
+        for (int i = 0; i < notebook.Bookmarks.Count; i++)
+        {
+            CreateBookmarkButton(notebook.Bookmarks[i]);
+        }
     }
 
     // When a new bookmark is created, then instantiate a new button for it
