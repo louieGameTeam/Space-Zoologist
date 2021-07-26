@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 33.56, y: 14.95}
+  m_AnchoredPosition: {x: 33.559998, y: 14.95}
   m_SizeDelta: {x: 67.12033, y: 23.90821}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &13473216
@@ -7357,7 +7357,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 2.4}
+  m_AnchoredPosition: {x: 0, y: 2.4000015}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1121061550
@@ -22772,7 +22772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -91.8, y: -0}
+  m_AnchoredPosition: {x: -91.8, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072119238
@@ -27111,7 +27111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 165.94995, y: -62.963585}
+  m_AnchoredPosition: {x: 165.94995, y: -62.963577}
   m_SizeDelta: {x: 2779.9, y: 339.2717}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &791081009576542408
@@ -28404,7 +28404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 73, y: -64.47608}
+  m_AnchoredPosition: {x: 73, y: -64.47609}
   m_SizeDelta: {x: 1000, y: 369.5216}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2447286258590673488
@@ -31255,7 +31255,7 @@ MonoBehaviour:
   m_ScaleFactor: 0.42
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -31270,8 +31270,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 2667232788154893268, guid: 95471df97e31240dd8bad388031ef830,
-    type: 3}
+  m_Camera: {fileID: 1054101994}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -35693,6 +35692,16 @@ PrefabInstance:
     - target: {fileID: 1010728533, guid: 3ff5c09709a541c448287c4d1ad116a5, type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 420348580726398334, guid: 3ff5c09709a541c448287c4d1ad116a5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00010681152
+      objectReference: {fileID: 0}
+    - target: {fileID: 420348582388986548, guid: 3ff5c09709a541c448287c4d1ad116a5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 2345946599428007173, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
