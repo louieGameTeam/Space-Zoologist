@@ -25044,23 +25044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EventResponseManager: {fileID: 208159620}
-  resourceData:
-  - resourceName: Dirt
-    initialAmount: 20
-  - resourceName: Space Maple
-    initialAmount: 5
-  - resourceName: CapraX Ziegrun
-    initialAmount: 5
-  - resourceName: Fresh Water
-    initialAmount: 20
-  - resourceName: Grass
-    initialAmount: 20
-  - resourceName: Berries
-    initialAmount: 10
-  - resourceName: Legumes
-    initialAmount: 10
-  - resourceName: Gold Space Maple
-    initialAmount: 5
+  LevelDataReference: {fileID: 320161629}
 --- !u!1 &1758878516
 GameObject:
   m_ObjectHideFlags: 0
