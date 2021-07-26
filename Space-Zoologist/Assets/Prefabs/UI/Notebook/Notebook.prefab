@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 521095564}
   - component: {fileID: 521095563}
   - component: {fileID: 521095562}
-  - component: {fileID: 5184441979092484092}
+  - component: {fileID: 6615439376388167824}
   m_Layer: 5
   m_Name: BookmarkButton
   m_TagString: Untagged
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5184441979092484092
+--- !u!114 &6615439376388167824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,15 +189,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 521095560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed1770d9ac58434bb2de639a3ff7bea, type: 3}
+  m_Script: {fileID: 11500000, guid: bb510b9576b935f48b0aa5c16cdb49dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   notebook: {fileID: 11400000, guid: 80149ca5b923b1b468d6d4ec23b05e18, type: 2}
   button: {fileID: 521095562}
   bookmarkUI: {fileID: 6224273231973208617}
-  prefix: Encyclopedia
-  tab: 1
   categoryPicker: {fileID: 2946712157590739144}
+  ui: {fileID: 730928387113696736}
 --- !u!1 &1010728531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,11 +2307,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notebook: {fileID: 11400000, guid: 80149ca5b923b1b468d6d4ec23b05e18, type: 2}
+  notebookUI: {fileID: 2028698093}
   buttonPrefab: {fileID: 5837523646480909994, guid: 5437a66a5de499b4fb6e9a78c0900fac,
     type: 3}
   tabPicker: {fileID: 8737488178317972168}
   buttonParent: {fileID: 2930226115976658693}
-  notebookRoot: {fileID: 8731580173207704173}
 --- !u!1 &5788522811714097032
 GameObject:
   m_ObjectHideFlags: 0
@@ -3715,6 +3714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce446bebbaa89c047b2851e4b2c06744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tabPicker: {fileID: 8737488178317972168}
 --- !u!1 &8731580173846743029
 GameObject:
   m_ObjectHideFlags: 0

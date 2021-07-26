@@ -8,7 +8,7 @@ public class ResearchNotesUI : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Reference to the research model used to take notes in")]
-    private ResearchModel researchModel;
+    private Research researchModel;
     [SerializeField]
     [Tooltip("Reference to the picker object that selects the research category")]
     private ResearchCategoryPicker categoryPicker;

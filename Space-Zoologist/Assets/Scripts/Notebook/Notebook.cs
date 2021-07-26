@@ -19,7 +19,7 @@ public class Notebook : ScriptableObject
     [SerializeField]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
-    private ResearchModel research;
+    private Research research;
 
     [SerializeField]
     [Tooltip("List of the bookmarks in this notebook")]

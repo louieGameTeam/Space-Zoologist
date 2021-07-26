@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -8,12 +9,29 @@ using TMPro;
 public class ResearchEncyclopediaUI : MonoBehaviour
 {
     public ResearchEncyclopedia CurrentEncyclopedia => researchModel.GetEntry(currentCategory).Encyclopedia;
-    public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia.GetArticle(currentArticle);
+    public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia.GetArticle(currentArticleID);
+
+    public ResearchEncyclopediaArticleID CurrentArticleID
+    {
+        get => currentArticleID;
+        set
+        {
+            List<ResearchEncyclopediaArticleID> ids = GetDropdownIDs();
+            int index = ids.FindIndex(x => x == value);
+
+            if(index >= 0 && index < dropdown.options.Count)
+            {
+                // NOTE: this invokes "OnDropdownValueChanged" immediately
+                dropdown.value = index;
+                dropdown.RefreshShownValue();
+            }
+        }
+    }
 
     [SerializeField]
     [Expandable]
     [Tooltip("Object that holds all the research data")]
-    private ResearchModel researchModel;
+    private Research researchModel;
 
     [SerializeField]
     [Tooltip("Reference to the widget that selects the category for the encyclopedia")]
@@ -39,7 +57,7 @@ public class ResearchEncyclopediaUI : MonoBehaviour
     // Current research category selected
     private ResearchCategory currentCategory;
     // Current research article selected
-    private ResearchEncyclopediaArticleID currentArticle;
+    private ResearchEncyclopediaArticleID currentArticleID;
 
     private void Awake()
     {
@@ -72,7 +90,7 @@ public class ResearchEncyclopediaUI : MonoBehaviour
         // Loop through all articles in the current encyclopedia and add their title-author pairs to the dropdown list
         foreach(KeyValuePair<ResearchEncyclopediaArticleID, ResearchEncyclopediaArticle> article in CurrentEncyclopedia.Articles)
         {
-            dropdown.options.Add(new TMP_Dropdown.OptionData(article.Key.Title + " -> " + article.Key.Author));
+            dropdown.options.Add(new TMP_Dropdown.OptionData(ArticleIDToDropdownLabel(article.Key)));
         }
         // Select the first article in the list
         if (previousSelected.ContainsKey(category)) dropdown.value = previousSelected[category];
@@ -91,10 +109,8 @@ public class ResearchEncyclopediaUI : MonoBehaviour
     {
         if (dropdown.options.Count > 0)
         {
-            // Get the title and author from the dropdown string
-            string[] titleAndAuthor = Regex.Split(dropdown.options[dropdown.value].text, " -> ");
             // Create the id object
-            currentArticle = new ResearchEncyclopediaArticleID(titleAndAuthor[0], titleAndAuthor[1]);
+            currentArticleID = DropdownLabelToArticleID(dropdown.options[value].text);
             // Set the text of the article GUI element
             articleBody.text = RichEncyclopediaArticleText(CurrentArticle, highlightTags);
         }
@@ -107,7 +123,7 @@ public class ResearchEncyclopediaUI : MonoBehaviour
         int start = articleBody.selectionAnchorPosition;
         int end = articleBody.selectionFocusPosition;
 
-        // If selection has no length, exit the functionq
+        // If selection has no length, exit the function
         if (start == end) return;
 
         // If start is bigger than end, swap them
@@ -154,5 +170,21 @@ public class ResearchEncyclopediaUI : MonoBehaviour
         }
 
         return richText;
+    }
+    // Get a list of the research article IDs currently in the dropdown
+    public List<ResearchEncyclopediaArticleID> GetDropdownIDs()
+    {
+        return dropdown.options
+            .Select(o => DropdownLabelToArticleID(o.text))
+            .ToList();
+    }
+    public static string ArticleIDToDropdownLabel(ResearchEncyclopediaArticleID id)
+    {
+        return id.Title + " -> " + id.Author;
+    }
+    public static ResearchEncyclopediaArticleID DropdownLabelToArticleID(string label)
+    {
+        string[] titleAndAuthor = Regex.Split(label, " -> ");
+        return new ResearchEncyclopediaArticleID(titleAndAuthor[0], titleAndAuthor[1]);
     }
 }

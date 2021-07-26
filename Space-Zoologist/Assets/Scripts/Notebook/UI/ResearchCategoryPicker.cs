@@ -30,7 +30,7 @@ public class ResearchCategoryPicker : MonoBehaviour
     [SerializeField]
     [Expandable]
     [Tooltip("The research model used to pick the categories for")]
-    private ResearchModel researchModel;
+    private Research researchModel;
 
     [Header("Research Category Type Selection")]
 

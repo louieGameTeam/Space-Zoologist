@@ -15,17 +15,14 @@ public class NotebookBookmarkNavigateButton : MonoBehaviour
     private TextMeshProUGUI text;
 
     // Reference to the script that manages navigation between notebook tabs
-    private NotebookTabPicker tabPicker;
-    // Category picker to setup when the bookmark is activated
-    private ResearchCategoryPicker categoryPicker;
+    private NotebookUI notebookUI;
     // Bookmark represented by this button
     private NotebookBookmark bookmark;
 
-    public void Setup(NotebookBookmark bookmark, NotebookTabPicker tabPicker, ResearchCategoryPicker categoryPicker)
+    public void Setup(NotebookUI notebookUI, NotebookBookmark bookmark)
     {
+        this.notebookUI = notebookUI;
         this.bookmark = bookmark;
-        this.tabPicker = tabPicker;
-        this.categoryPicker = categoryPicker;
 
         text.text = bookmark.Label;
         myButton.onClick.AddListener(OnClick);
@@ -34,7 +31,6 @@ public class NotebookBookmarkNavigateButton : MonoBehaviour
     // On click select the correct tab, and setup the category picker
     private void OnClick()
     {
-        tabPicker.SelectTab(bookmark.Tab);
-        categoryPicker.SelectedCategory = bookmark.Category;
+        notebookUI.NavigateToBookmark(bookmark);
     }
 }
