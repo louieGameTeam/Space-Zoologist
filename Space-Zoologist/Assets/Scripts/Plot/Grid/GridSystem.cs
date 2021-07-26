@@ -9,7 +9,6 @@ using System.Linq;
 /// Translates the tilemap into a 2d array for keeping track of object locations.
 /// </summary>
 /// PlaceableArea transparency can be increased or decreased when adding it
-public delegate void BodyEmptyCallback(LiquidBody liquidBody);
 public class GridSystem : MonoBehaviour
 {
     #region Enumerations
@@ -43,7 +42,6 @@ public class GridSystem : MonoBehaviour
     public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
-    private BodyEmptyCallback bodyEmptyCallback;
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
@@ -58,8 +56,6 @@ public class GridSystem : MonoBehaviour
     #region Monobehaviour Callbacks
     private void Awake()
     {
-        
-
         // tilelayermanager stuff
         InitializeTileLayerManager();
     }
@@ -67,7 +63,6 @@ public class GridSystem : MonoBehaviour
     // do something about this
     private void InitializeTileLayerManager()
     {
-        this.bodyEmptyCallback = OnLiquidBodyEmpty;
         this.liquidBodies = new HashSet<LiquidBody>();
         this.previewBodies = new List<LiquidBody>();
         this.RemovedTiles = new HashSet<Vector3Int>();
@@ -80,11 +75,6 @@ public class GridSystem : MonoBehaviour
 
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
 
-        // temporary to show effect
-        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
-        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
-
-        // apply changes to tilemap (for some reason it isn't working on awake)
         for (int i = 0; i < ReserveWidth; ++i)
         {
             for (int j = 0; j < ReserveHeight; ++j)
@@ -92,6 +82,13 @@ public class GridSystem : MonoBehaviour
                 ApplyChangesToTilemap(new Vector3Int(i, j, 0));
             }
         }
+
+        // temporary to show effect
+        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
+        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
+
+        // apply changes to tilemap (for some reason it isn't working on awake)
+
 
         try
         {
@@ -207,7 +204,7 @@ public class GridSystem : MonoBehaviour
         foreach (SerializedLiquidBody serializedLiquidBody in serializedGrid.serializedTilemap.SerializedLiquidBodies)
         {
             // create the liquidbody based on previously parsed tiles
-            LiquidBody liquidBody = new LiquidBody(liquidbodyIDToTiles[serializedLiquidBody.BodyID], serializedLiquidBody.Contents, bodyEmptyCallback, serializedLiquidBody.BodyID);
+            LiquidBody liquidBody = new LiquidBody(liquidbodyIDToTiles[serializedLiquidBody.BodyID], serializedLiquidBody.Contents, serializedLiquidBody.BodyID);
 
             // add the liquidbody reference to the tile data
             foreach (Vector3Int liquidTilePosition in liquidbodyIDToTiles[serializedLiquidBody.BodyID])
@@ -252,19 +249,17 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
-    // note: does not do what you think it does, could be liquid only
     public void AddTile(Vector3Int tilePosition, GameTile tile)
     {
         TileData tileData = GetTileData(tilePosition);
 
-        tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+        if (tile.type == TileType.Liquid)
+            tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
         tileData.PreviewReplacement(tile);
         ChangedTiles.Add(tilePosition);
         ApplyChangesToTilemap(tilePosition);
         // TODO update color of liquidbody
     }
-
-    // note: does not do what you think it does
     public void RemoveTile(Vector3Int tilePosition)
     {
         TileData tileData = GetTileData(tilePosition);
@@ -417,24 +412,17 @@ public class GridSystem : MonoBehaviour
     {
         TileData data = GetTileData(tilePosition);
 
+        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+        tilePixel.r = (int)data.currentTile.type / FLAG_VALUE_MULTIPLIER;
+        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        TilemapTexture.Apply();
+
         Tilemap.SetTile(tilePosition, data.currentTile);
         Tilemap.SetTileFlags(tilePosition, TileFlags.None);
         Tilemap.SetColor(tilePosition, data.currentColor);
     }
 
     #region Liquidbody Methods
-    private void OnLiquidBodyEmpty(LiquidBody liquidBody)
-    {
-        if (liquidBodies.Remove(liquidBody))
-        {
-            Debug.Log("Liquid Body Removed");
-        }
-        if (previewBodies.Remove(liquidBody))
-        {
-            Debug.Log("Preview Body Removed");
-        }
-    }
-
     private void UpdatePreviewLiquidBody(LiquidBody liquidBody)
     {
         foreach (Vector3Int tileCellPosition in liquidBody.tiles)
@@ -537,11 +525,14 @@ public class GridSystem : MonoBehaviour
         // look through neighbor tiles and count their liquid bodies
         foreach (Vector3Int neighborPosition in FourNeighborTileLocations(tilePosition))
         {
-            TileData neightborTileData = GetTileData(neighborPosition);
+            TileData neighborTileData = GetTileData(neighborPosition);
 
-            if (neightborTileData.currentTile == tile)
+            if (neighborTileData != null)
             {
-                neighborLiquidBodies.Add(neightborTileData.currentLiquidBody);
+                if (neighborTileData.currentTile == tile)
+                {
+                    neighborLiquidBodies.Add(neighborTileData.currentLiquidBody);
+                }
             }
         }
         switch (neighborLiquidBodies.Count)
@@ -549,7 +540,7 @@ public class GridSystem : MonoBehaviour
             case 0: // Create new body
                 HashSet<Vector3Int> newBodyTiles = new HashSet<Vector3Int>();
                 newBodyTiles.Add(tilePosition);
-                LiquidBody newBody = new LiquidBody(newBodyTiles, tile.defaultContents, this.bodyEmptyCallback);
+                LiquidBody newBody = new LiquidBody(newBodyTiles, tile.defaultContents);
                 this.previewBodies.Add(newBody);
                 return newBody;
 
@@ -569,7 +560,7 @@ public class GridSystem : MonoBehaviour
                 return extendedBody;
 
             default: // Merge Multiple bodies, including new bodies generated by the placement
-                LiquidBody mergedBody = new LiquidBody(neighborLiquidBodies, bodyEmptyCallback);
+                LiquidBody mergedBody = new LiquidBody(neighborLiquidBodies);
                 mergedBody.AddTile(tilePosition);
                 this.previewBodies.Add(mergedBody);
                 foreach (LiquidBody liquidBody in mergedBody.referencedBodies)
@@ -660,7 +651,7 @@ public class GridSystem : MonoBehaviour
             }
             if (!skip)
             {
-                newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, tile, bodyEmptyCallback));
+                newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, tile));
 
                 Debug.Log("Generated divided body at" + tile.ToString() + "divide point: " + dividePoint.ToString());
             }
@@ -681,10 +672,6 @@ public class GridSystem : MonoBehaviour
             {
                 this.GetTileData(tilePosition).PreviewLiquidBody(body);
             }
-        }
-        if (dividedBody.bodyID == 0)
-        {
-            dividedBody.callback.Invoke(dividedBody);
         }
         return newBodies;
     }
@@ -1087,6 +1074,14 @@ public class GridSystem : MonoBehaviour
     // figure out if this still works
     public void UpdateAnimalCellGrid()
     {
+        for (int i = 0; i < this.TileDataGrid.GetLength(0); i++)
+        {
+            for (int j = 0; j < this.TileDataGrid.GetLength(1); j++)
+            {
+                this.TileDataGrid[i, j].Animal = null;
+                this.TileDataGrid[i, j].HomeLocation = false;
+            }
+        }
         // Could be broken up for better efficiency since iterating through population twice
         // this.PopulationHomeLocations = this.RecalculateHomeLocation();
         // Update locations and grab reference to animal GameObject (for future use)
@@ -1803,6 +1798,7 @@ public class GridSystem : MonoBehaviour
         public bool isTileChanged { get; private set; } = false;
         public bool isLiquidBodyChanged { get; private set; } = false;
         public bool isColorChanged { get; private set; } = false;
+        public bool isTilePlaceable { get; set; } = false;
         public TileData(Vector3Int tilePosition, GameTile tile = null)
         {
             this.Food = null;
@@ -1855,7 +1851,6 @@ public class GridSystem : MonoBehaviour
                 {
                     return;
                 }
-                this.currentLiquidBody.callback.Invoke(this.currentLiquidBody);
                 this.currentLiquidBody = newLiquidBody;
                 return;
             }

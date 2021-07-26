@@ -257,8 +257,8 @@
                 col *= i.color;
 
                 // create grid
-                //if (_GridOverlayToggle > 0)
-                    //col = AddGrid(col, localPixel, tilePos, tileInformation);
+                if (_GridOverlayToggle > 0)
+                    col = AddGrid(col, localPixel, tilePos, tileInformation);
 
                 // add highlights if needed
                 //if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG == 0 && tileInformation.a != 0)

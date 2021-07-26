@@ -1539,12 +1539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plotIO: {fileID: 765609360}
   PauseManager: {fileID: 1395149766}
   PauseButton: {fileID: 6943948462633829954}
   NextDayButton: {fileID: 5434642601341158969}
   PlayerController: {fileID: 1290313821}
-  resourceManager: {fileID: 1738013071}
   playerBalance: {fileID: 4661624496553112467}
 --- !u!1 &462963690
 GameObject:
@@ -15453,7 +15451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
   enclosureSystem: {fileID: 5592442342188060214}
   areaDropdownMenu: {fileID: 906585590226742735}
   itemDropdownMenu: {fileID: 4799730373970479878}
@@ -15536,7 +15534,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2615640745541295455}
   m_HandleRect: {fileID: 2110857668092513228}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -18042,7 +18040,7 @@ MonoBehaviour:
   PlayerBalanceDisplay: {fileID: 162745541}
   LevelDataReference: {fileID: 320161629}
   CursorItem: {fileID: 4661624496595948998}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
   UIElements: []
   StoreCanvas: {fileID: 493638996}
   MenuSelectPanel: {fileID: 1239608748}
@@ -18796,17 +18794,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 459174929}
         m_MethodName: toggleDrafting
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ToggleGridOverlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

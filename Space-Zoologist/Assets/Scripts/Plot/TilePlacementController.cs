@@ -323,6 +323,10 @@ public class TilePlacementController : MonoBehaviour
                     return PlacementResult.AlreadyExisted;
                 }
             }
+            foreach (GameTile tile in referencedTiles)
+            {
+                GridSystem.AddTile(cellPosition, tile);
+            }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
             return PlacementResult.Placed;

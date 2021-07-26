@@ -8,7 +8,6 @@ public enum TileType { Dirt, Grass, Stone, Sand, Swamp, Wall, Liquid, TypesOfTil
 [System.Serializable]
 public class GameTile : Tile
 {
-	public Texture[] tileTextures;
 	public string TileName;
 	public TileType type;
 	public float[] defaultContents = null;
