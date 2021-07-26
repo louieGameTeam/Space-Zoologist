@@ -30,7 +30,12 @@ public class NotebookUI : MonoBehaviour
     public void NavigateToBookmark(NotebookBookmark bookmark)
     {
         // Get the expected component in the children of the notebook somewhere
-        Component component = GetComponentInChildren(bookmark.ExpectedComponentType, true);
+        Component component;
+
+        // Set component based on if type is null
+        if (bookmark.ExpectedComponentType != null) component = GetComponentInChildren(bookmark.ExpectedComponentType, true);
+        else component = null;
+
         bookmark.NavigateTo(tabPicker, namePickerMap, component);
     }
 }

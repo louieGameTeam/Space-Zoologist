@@ -34,8 +34,11 @@ public class ResearchEncyclopediaArticle
     public void Setup()
     {
         // Clear all highlights and reset the true text to the written text
+        // NOTE: this "highlights.Clear()" will have to change later when the user has saved data
         highlights.Clear();
         trueText = text;
+
+        // IMPORTANT: I don't think we can keep doing this. If the player wants to remove an initial highlight, this will just put the highlight back in
 
         // Set start and end indices
         int start = -1;
