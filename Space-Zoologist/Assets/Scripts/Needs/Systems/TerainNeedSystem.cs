@@ -139,7 +139,7 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = tileSystem.CountOfTilesInArea(tileSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.Size, foodSource.Species.RootArea);
+            terrainCountsByType = gridSystem.CountOfTilesInArea(gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.Size, foodSource.Species.RootArea);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
@@ -149,7 +149,7 @@ public class TerrainNeedSystem : NeedSystem
                 {
                     if (needName.Equals("Liquid"))
                     {
-                        int liquidCount = tileSystem.CountOfTilesInRange(tileSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[index];
+                        int liquidCount = gridSystem.CountOfTilesInRange(gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[index];
                         //Debug.Log(foodSource.name + " updated " + needName + " with value: " + liquidCount);
                         foodSource.UpdateNeed(needName, liquidCount);
                         continue;

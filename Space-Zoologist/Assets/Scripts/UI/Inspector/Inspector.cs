@@ -219,7 +219,7 @@ public class Inspector : MonoBehaviour
         GameTile tile = this.gridSystem.GetGameTileAt(pos);
         GridSystem.TileData cellData = gridSystem.GetTileData(pos);
 
-        if (cellData == null)
+        if (cellData == null) { 
             return;
         }
         bool somethingSelected = true;

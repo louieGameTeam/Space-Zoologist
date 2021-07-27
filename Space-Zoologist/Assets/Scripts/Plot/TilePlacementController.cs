@@ -309,22 +309,6 @@ public class TilePlacementController : MonoBehaviour
         return false;
     }
 
-    public void RevertTile(Vector3Int loc)
-    {
-        if (!this.previousTiles.ContainsKey(loc))
-        {
-            return;
-        }
-        this.referencedTiles.Clear();
-        this.referencedTiles.Add(this.previousTiles[loc]);
-        this.buildBufferManager.DestoryBuffer(new Vector2Int(loc.x, loc.y));
-        Debug.Log("placed " + this.previousTiles[loc]);
-
-        this.previousTiles.Remove(loc);
-        Debug.Log(PlaceTile(loc, false));
-        StopPreview();
-
-    }
 
     private PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {

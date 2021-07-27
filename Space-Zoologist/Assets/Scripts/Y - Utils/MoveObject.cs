@@ -200,10 +200,6 @@ public class MoveObject : MonoBehaviour
         {
             objectToMove.GetComponent<Animal>().PopulationInfo.RemoveAnimal(objectToMove);
         }
-        else if (objectToMove.name == "tile")
-        {
-            BuildBufferManager.RevertPreviousTile(this.tileSystem.WorldToCell(objectToMove.transform.position));
-        }
         else
         {
             removeOriginalFood(objectToMove.GetComponent<FoodSource>());

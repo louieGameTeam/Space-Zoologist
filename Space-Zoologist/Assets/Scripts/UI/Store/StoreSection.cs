@@ -33,7 +33,6 @@ public class StoreSection : MonoBehaviour
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
-        audioSource = this.GetComponent<AudioSource>();
         this.playerBalance = playerBalance;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;

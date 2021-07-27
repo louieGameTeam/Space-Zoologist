@@ -8,7 +8,6 @@ public class BuildBufferManager : GridObjectManager
     private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
     private bool[,] isConstructing;
     [SerializeField] ReservePartitionManager RPM = default;
-    [SerializeField] TileSystem tileSystem = default;
     [SerializeField] TilePlacementController tilePlacementController = default;
     public bool IsConstructing(int x, int y) => isConstructing[x, y];
     private Action constructionFinishedCallback = null;
@@ -171,10 +170,7 @@ public class BuildBufferManager : GridObjectManager
                     Vector3Int pos = new Vector3Int(cc.position.x, cc.position.y, 0);
                     changedTiles.Add(pos);
                     Destroy(cc.gameObject);
-                    if (tilePlacementController.previousTiles.ContainsKey(pos))
-                    {
-                        tilePlacementController.previousTiles.Remove(pos);
-                    }
+                    
                     if (constructionFinishedCallback != null)
                     {
                         constructionFinishedCallback();
@@ -192,10 +188,7 @@ public class BuildBufferManager : GridObjectManager
             this.RPM.UpdateAccessMapChangedAt(changedTiles);
         }
     }
-    public void RevertPreviousTile(Vector3Int pos)
-    {
-        tilePlacementController.RevertTile(pos);
-    }
+
     private Vector3[] GetPositionsAndTimes(List<ConstructionCountdown> cCs)
     {
         Vector3[] positions = new Vector3[cCs.Count];

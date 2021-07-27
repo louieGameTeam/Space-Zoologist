@@ -1,11 +1,14 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AnimalRepresentation/Patterns/Scripts/RandomMovementEmojiPattern.cs">
     <Files>
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" Line="62" Column="61" IsPinned="True" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="44" Column="25" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="10" Column="14" />
-      <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="135" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/FoodSourceStoreSection.cs" Line="64" Column="73" />
+      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" Line="228" Column="1" />
+      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Plot/LevelIO.cs" Line="103" Column="1" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="74" Column="41" />
+      <File FileName="Assets/Scripts/Managers/TimeSystem/PauseManager.cs" Line="80" Column="1" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Scripts/RandomMovementEmojiPattern.cs" Line="26" Column="1" />
+      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="11" Column="33" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,7 +21,9 @@
                 </Node>
                 <Node name="Patterns" expanded="True">
                   <Node name="Prefabs" expanded="True" />
-                  <Node name="Scripts" expanded="True" />
+                  <Node name="Scripts" expanded="True">
+                    <Node name="RandomMovementEmojiPattern.cs" selected="True" />
+                  </Node>
                 </Node>
               </Node>
               <Node name="DialogueEditor" expanded="True">
@@ -54,9 +59,7 @@
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True">
-                    <Node name="GrowthCalculator.cs" selected="True" />
-                  </Node>
+                  <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="Inspector" expanded="True" />
@@ -75,11 +78,12 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="aa374cbd-f283-4e22-bedb-f12462a20b5b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4210f0bb-d249-4871-b5c1-ea26ba869c27" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
       <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/UI/Inspector/Inspector.cs" relfile="Assets/Scripts/UI/Inspector/Inspector.cs" line="205" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/AnimalRepresentation/Patterns/Scripts/RandomMovementEmojiPattern.cs" relfile="Assets/AnimalRepresentation/Patterns/Scripts/RandomMovementEmojiPattern.cs" line="26" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
