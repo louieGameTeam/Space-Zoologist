@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
             DebugLevelTrace(currentPlayTrace.LevelTraces);
             string json = ConvertPlayTraceToJSON(currentPlayTrace);
             Debug.Log(json);
+            StartCoroutine(SubmitPlayTrace.TrySubmitPlayTrace(json));
         }
     }
 
