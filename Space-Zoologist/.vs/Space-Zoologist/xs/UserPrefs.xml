@@ -1,17 +1,13 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/RPS/AtmosphericComposition.cs">
     <Files>
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" Line="15" Column="40" />
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorNode.cs" />
-      <File FileName="Assets/Scripts/Y - Utils/DialogueGenerator.cs" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs" Line="26" Column="46" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorWindow.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="43" Column="25" />
-      <File FileName="Assets/Scripts/Dialogue/DialogueParser.cs" Line="29" Column="48" />
+      <File FileName="Assets/Scripts/Y - Utils/SpeciesReferenceData.cs" Line="18" Column="1" />
+      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" Line="306" Column="19" />
+      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" Line="52" Column="57" />
+      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="26" Column="23" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="330" Column="11" />
+      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="104" Column="1" />
+      <File FileName="Assets/Scripts/Plot/RPS/AtmosphericComposition.cs" Line="52" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -30,9 +26,7 @@
               <Node name="DialogueEditor" expanded="True">
                 <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
-                    <Node name="Editor" expanded="True">
-                      <Node name="NPCConversationEditor.cs" selected="True" />
-                    </Node>
+                    <Node name="Editor" expanded="True" />
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
                     </Node>
@@ -53,7 +47,9 @@
                 </Node>
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
-                  <Node name="RPS" expanded="True" />
+                  <Node name="RPS" expanded="True">
+                    <Node name="AtmosphericComposition.cs" selected="True" />
+                  </Node>
                   <Node name="Tiles" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
@@ -78,7 +74,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="aa22f911-e386-489e-a0ab-39662b27c30f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="674cc074-3190-4df6-a5f5-8b9ca93c52d2" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
