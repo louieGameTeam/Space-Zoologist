@@ -100,7 +100,6 @@ public class EnclosureSystem : MonoBehaviour
     public EnclosedArea GetEnclosedAreaByCellPosition(Vector3Int cellPos)
     {
         Vector3Int position = this.TileSystem.WorldToCell(cellPos);
-
         return this.GetEnclosedAreaById(positionToEnclosedArea[position]);
     }
 
@@ -140,7 +139,7 @@ public class EnclosureSystem : MonoBehaviour
     /// This deletes enclosed areas that has nothing in it.
     /// To fix issues with creating enclosed area for areas outside of the border walls
     /// </summary>
-    private void updatePublicEnlcosedAreas()
+    private void updatePublicEnclosedAreas()
     {
         this.EnclosedAreas.Clear();
 
@@ -194,7 +193,7 @@ public class EnclosureSystem : MonoBehaviour
                 // Updating enclosed area
                 if (isUpdate && this.positionToEnclosedArea.ContainsKey(cur) && this.GetEnclosedAreaById(this.positionToEnclosedArea[cur]) != null)
                 {
-                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.GetEnclosedAreaById(this.positionToEnclosedArea[cur]).atmosphericComposition);
+                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.GetEnclosedAreaById(this.positionToEnclosedArea[cur]));
                 }
                 // Initial round
                 else
@@ -203,7 +202,6 @@ public class EnclosureSystem : MonoBehaviour
                 }
 
                 this.positionToEnclosedArea[cur] = atmosphereCount;
-
                 FloodFill(cur + Vector3Int.left, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
                 FloodFill(cur + Vector3Int.up, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
                 FloodFill(cur + Vector3Int.right, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
@@ -230,8 +228,6 @@ public class EnclosureSystem : MonoBehaviour
     /// </remarks>
     public void FindEnclosedAreas()
     {
-        // tiles to-process
-        Stack<Vector3Int> stack = new Stack<Vector3Int>();
         // non-wall tiles
         HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
         // wall or null tiles
@@ -243,31 +239,35 @@ public class EnclosureSystem : MonoBehaviour
 
         // Initial flood fill
         this.enclosedAreaCount = 0;
-        newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, enclosedAreaCount));
-        this.FloodFill(startPos, accessed, unaccessible, walls, enclosedAreaCount, newEnclosedAreas[enclosedAreaCount], false);
+        EnclosedArea area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount);
+        newEnclosedAreas.Add(area);
+        this.FloodFill(startPos, accessed, unaccessible, walls, enclosedAreaCount, area, false);
 
         Vector3Int currPos = startPos;
         while (walls.Count > 0)
         {
-            // this.enclosedAreaCount++;
-            // newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount));
+
+            if (area.coordinates.Count != 0)
+            {
+                this.enclosedAreaCount++;
+                area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount);
+                newEnclosedAreas.Add(area);
+            }
 
             currPos = walls.Pop();
 
-            this.FloodFill(currPos + Vector3Int.left, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
-            this.FloodFill(currPos + Vector3Int.up, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
-            this.FloodFill(currPos + Vector3Int.right, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
-            this.FloodFill(currPos + Vector3Int.down, accessed, unaccessible, walls, this.enclosedAreaCount, newEnclosedAreas[this.enclosedAreaCount], false);
+            this.FloodFill(currPos + Vector3Int.left, accessed, unaccessible, walls, this.enclosedAreaCount, area, false);
+            this.FloodFill(currPos + Vector3Int.up, accessed, unaccessible, walls, this.enclosedAreaCount, area, false);
+            this.FloodFill(currPos + Vector3Int.right, accessed, unaccessible, walls, this.enclosedAreaCount, area, false);
+            this.FloodFill(currPos + Vector3Int.down, accessed, unaccessible, walls, this.enclosedAreaCount, area, false);
         }
-
         this.internalEnclosedAreas = newEnclosedAreas;
-        this.updatePublicEnlcosedAreas();
+        this.updatePublicEnclosedAreas();
     }
 
     public void UpdateEnclosedAreas()
     {
-        // tiles to-process
-        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+
         // non-wall tiles
         HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
         // wall or null tiles
@@ -277,58 +277,40 @@ public class EnclosureSystem : MonoBehaviour
 
         List<EnclosedArea> newEnclosedAreas = new List<EnclosedArea>();
 
-        // Stores the ids of the enclosed areas that has been updated
-        HashSet<byte> updatedEnclosedArea = new HashSet<byte>();
-
-        bool createdNewEclosedArea = false;
-
         // Initial flood fill
-        // TODO Replace this with a better way to determine the first tile to start with
-        // If the map DOES NOT contain a tile at (1,1,0), this code causes an ERROR! -> tile will not get placed in store
-        byte curEnclosedAreaIndex = this.positionToEnclosedArea[startPos];
-        newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, curEnclosedAreaIndex));
-        this.FloodFill(startPos, accessed, unaccessible, walls, curEnclosedAreaIndex, newEnclosedAreas[curEnclosedAreaIndex], true);
-        updatedEnclosedArea.Add(curEnclosedAreaIndex);
+        this.enclosedAreaCount = 0;
+        EnclosedArea area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount);
+        newEnclosedAreas.Add(area);
+        this.FloodFill(startPos, accessed, unaccessible, walls, enclosedAreaCount, area, false);
+
         Vector3Int currPos = startPos;
         while (walls.Count > 0)
         {
+
+            if (area.coordinates.Count != 0)
+            {
+                this.enclosedAreaCount++;
+                area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount);
+                newEnclosedAreas.Add(area);
+            }
+
             currPos = walls.Pop();
 
-            foreach (Vector3Int pos in new List<Vector3Int>() { currPos + Vector3Int.left, currPos + Vector3Int.up, currPos + Vector3Int.right, currPos + Vector3Int.down } )
-            {
-                if (!this.positionToEnclosedArea.ContainsKey(pos) || accessed.Contains(pos) || unaccessible.Contains(pos))
-                {
-                    continue;
-                }
-                else
-                {
-                    if (updatedEnclosedArea.Contains(this.positionToEnclosedArea[pos]))
-                    {
-                        curEnclosedAreaIndex = ++this.enclosedAreaCount;
-                        createdNewEclosedArea = true;
-                    }
-                    else
-                    {
-                        curEnclosedAreaIndex = this.positionToEnclosedArea[pos];
-                    }
-                }
-               
+            this.FloodFill(currPos + Vector3Int.left, accessed, unaccessible, walls, this.enclosedAreaCount, area, true);
+            this.FloodFill(currPos + Vector3Int.up, accessed, unaccessible, walls, this.enclosedAreaCount, area, true);
+            this.FloodFill(currPos + Vector3Int.right, accessed, unaccessible, walls, this.enclosedAreaCount, area, true);
+            this.FloodFill(currPos + Vector3Int.down, accessed, unaccessible, walls, this.enclosedAreaCount, area, true);
+        }
 
-                newEnclosedAreas.Add(new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, curEnclosedAreaIndex));
-                this.FloodFill(pos, accessed, unaccessible, walls, curEnclosedAreaIndex, newEnclosedAreas[newEnclosedAreas.Count-1], true);
-                updatedEnclosedArea.Add(curEnclosedAreaIndex);
-
-
-                if (createdNewEclosedArea)
-                {
-                    EnclosedArea newlyCreatedEnclosedArea = newEnclosedAreas[newEnclosedAreas.Count - 1];
-                    EventManager.Instance.InvokeEvent(EventType.NewEnclosedArea, newlyCreatedEnclosedArea);
-                    createdNewEclosedArea = false;
-                }
+        foreach (EnclosedArea newArea in newEnclosedAreas) {
+            Dictionary<AtmosphericComposition, float> composition = new Dictionary<AtmosphericComposition, float>();
+            foreach (var pair in newArea.previousArea) {
+                composition.Add(GetEnclosedAreaById(pair.Key).atmosphericComposition, pair.Value);
             }
+            newArea.atmosphericComposition = AtmosphericComposition.Merge(composition);
         }
 
         this.internalEnclosedAreas = newEnclosedAreas;
-        this.updatePublicEnlcosedAreas();
+        this.updatePublicEnclosedAreas();
     }
 }

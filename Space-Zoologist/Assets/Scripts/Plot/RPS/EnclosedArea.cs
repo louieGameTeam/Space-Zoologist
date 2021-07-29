@@ -29,6 +29,7 @@ public class EnclosedArea
     public List<Population> populations;
     public List<FoodSource> foodSources;
     public byte id;
+    public Dictionary<byte, float> previousArea = new Dictionary<byte, float>();
 
     private readonly GridSystem gridSystem;
 
@@ -48,6 +49,7 @@ public class EnclosedArea
         this.coordinates = new HashSet<Coordinate>();
         this.populations = new List<Population>();
         this.foodSources = new List<FoodSource>();
+        this.previousArea = new Dictionary<byte, float>();
         this.id = id;
     }
 
@@ -61,7 +63,7 @@ public class EnclosedArea
         return this.coordinates.Contains(coordinate);
     }
 
-    public void AddCoordinate(Coordinate coordinate, int tileType, AtmosphericComposition oldComposition)
+    public void AddCoordinate(Coordinate coordinate, int tileType, EnclosedArea prevArea = null)
     {
         if (gridSystem.isCellinGrid(coordinate.x, coordinate.y))
         {
@@ -88,6 +90,18 @@ public class EnclosedArea
         }
 
         this.terrainComposition[tileType]++;
+
+        if (prevArea != null)
+        {
+            if (previousArea.ContainsKey(prevArea.id))
+            {
+                previousArea[prevArea.id]++;
+            }
+            else
+            {
+                previousArea.Add(prevArea.id, 1);
+            }
+        }
     }
 
     // Update the population/food list for this enclosed area

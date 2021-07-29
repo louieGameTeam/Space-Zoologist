@@ -51,6 +51,32 @@ public class AtmosphericComposition
             (lhs.GasZ + rhs.GasZ) / 2.0f, (lhs.temperature + rhs.temperature) / 2.0f);
     }
 
+    public static AtmosphericComposition Merge(AtmosphericComposition atmOne, float atmOneSize, AtmosphericComposition atmTwo, float atmTwoSize) {
+        float fraction = atmOneSize / (atmOneSize + atmTwoSize);
+        return new AtmosphericComposition(
+            atmOne.GasX * fraction + atmTwo.GasX * (1 - fraction),
+            atmOne.GasY * fraction + atmTwo.GasY * (1 - fraction),
+            atmOne.GasZ * fraction + atmTwo.GasZ * (1 - fraction),
+            atmOne.Temperature * fraction + atmTwo.Temperature * (1 - fraction)
+            );
+    }
+
+    public static KeyValuePair<AtmosphericComposition, float> Merge(KeyValuePair<AtmosphericComposition, float> atmOne, KeyValuePair<AtmosphericComposition, float> atmTwo)
+    {
+        return new KeyValuePair<AtmosphericComposition, float>( Merge(atmOne.Key,atmOne.Value,atmTwo.Key,atmTwo.Value), atmOne.Value + atmTwo.Value );
+    }
+
+
+    public static AtmosphericComposition Merge(Dictionary<AtmosphericComposition, float> compositions)
+    {
+        KeyValuePair<AtmosphericComposition, float> result = new KeyValuePair<AtmosphericComposition, float>(new AtmosphericComposition(), 0);
+        foreach (var composition in compositions) {
+            result = Merge(result, composition);
+        }
+
+        return result.Key;
+    }
+
     public override string ToString()
     {
         return "GasX = " + GasX + " GasY = " + GasY + " GasZ = " + GasZ + " Temp = " + temperature;

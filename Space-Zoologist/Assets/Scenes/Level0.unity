@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -41646,13 +41646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EventResponseManager: {fileID: 208159620}
-  resourceData:
-  - resourceName: Grass Tiles
-    initialAmount: 21
-  - resourceName: Space Maple
-    initialAmount: 2
-  - resourceName: Goat
-    initialAmount: 5
+  LevelDataReference: {fileID: 320161629}
 --- !u!1 &1758878516
 GameObject:
   m_ObjectHideFlags: 0

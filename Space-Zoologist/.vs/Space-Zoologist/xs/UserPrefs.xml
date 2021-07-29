@@ -1,17 +1,15 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/BuildBufferManager.cs">
     <Files>
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NodeEventHolder.cs" Line="15" Column="40" />
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorNode.cs" />
-      <File FileName="Assets/Scripts/Y - Utils/DialogueGenerator.cs" />
-      <File FileName="Assets/Scripts/UI/MenuManager.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs" Line="26" Column="46" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorWindow.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" />
-      <File FileName="Assets/Scripts/Dialogue/DialogueParser.cs" />
+      <File FileName="Assets/Scripts/Y - Utils/SpeciesReferenceData.cs" Line="18" Column="1" />
+      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" Line="314" Column="42" />
+      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" />
+      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" />
+      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" />
+      <File FileName="Assets/Scripts/Plot/RPS/AtmosphericComposition.cs" />
+      <File FileName="Assets/Scripts/Managers/TimeSystem/PauseManager.cs" Line="91" Column="31" />
+      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="174" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -43,7 +41,9 @@
                 <Node name="Dialogue" expanded="True" />
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
-                  <Node name="TimeSystem" expanded="True" />
+                  <Node name="TimeSystem" expanded="True">
+                    <Node name="PauseManager.cs" selected="True" />
+                  </Node>
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -54,6 +54,7 @@
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
+                  <Node name="BuildBufferManager.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
