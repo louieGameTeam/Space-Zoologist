@@ -10,8 +10,8 @@
       <File FileName="Assets/Scripts/UI/MenuManager.cs" />
       <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/NPCConversationEditor.cs" Line="26" Column="46" />
       <File FileName="Assets/DialogueEditor/Assets/Scripts/Editor/DialogueEditorWindow.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="43" Column="25" />
-      <File FileName="Assets/Scripts/Dialogue/DialogueParser.cs" Line="29" Column="48" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" />
+      <File FileName="Assets/Scripts/Dialogue/DialogueParser.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -30,12 +30,11 @@
               <Node name="DialogueEditor" expanded="True">
                 <Node name="Assets" expanded="True">
                   <Node name="Scripts" expanded="True">
-                    <Node name="Editor" expanded="True">
-                      <Node name="NPCConversationEditor.cs" selected="True" />
-                    </Node>
+                    <Node name="Editor" expanded="True" />
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
                     </Node>
+                    <Node name="NodeEventHolder.cs" selected="True" />
                   </Node>
                 </Node>
               </Node>
@@ -78,7 +77,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="aa22f911-e386-489e-a0ab-39662b27c30f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8984bae9-076f-4607-9ac6-40f01fdc4b58" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
