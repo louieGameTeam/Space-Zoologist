@@ -185,7 +185,7 @@ public class ExpandableAttributeDrawer : PropertyDrawer
             {
                 field.objectReferenceValue = null;
                 Debug.LogError("Detected self-nesting cauisng a StackOverflowException, avoid using the same " +
-                    "object iside a nested structure.");
+                    "object inside a nested structure.");
             }
 
             index++;
