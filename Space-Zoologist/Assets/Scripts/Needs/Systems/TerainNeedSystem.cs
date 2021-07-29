@@ -106,7 +106,6 @@ public class TerrainNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
-
         // Unmark dirty when there is not consumer then exit
         if (this.Consumers.Count == 0)
         {
@@ -121,11 +120,22 @@ public class TerrainNeedSystem : NeedSystem
         //Number of tiles needed by a given population
         Dictionary<Population, int> tilesNeeded = new Dictionary<Population, int>();
         //Number of tiles allocated to a given population
-        Dictionary<Population, int> tilesAllocated = new Dictionary<Population, int>();
+        Dictionary<Population, Dictionary<TileType, int>> tilesAllocated = new Dictionary<Population, Dictionary<TileType, int>>();
+        
+        int sumAllocatedTiles(Population population)
+        {
+            int sum = 0;
+            foreach(TileType tile in tilesAllocated[population].Keys)
+            {
+                sum += tilesAllocated[population][tile];
+            }
+            return sum;
+        }
 
         foreach (Population population in populationsByDominance)
         {
             tilesNeeded[population] = population.Count * population.species.TerrainTilesRequired;
+            tilesAllocated[population] = new Dictionary<TileType, int>();
 
             foreach(Vector3Int position in rpm.GetLocationsWithAccess(population))
             {
@@ -144,15 +154,24 @@ public class TerrainNeedSystem : NeedSystem
 
             foreach(Population population in populationsByDominance)
             {
-                if (population.Needs.ContainsKey(tile.ToString()) && tilesAllocated[population] < tilesNeeded[population])
+                int totalAllocatedTiles = sumAllocatedTiles(population);
+
+                if (population.Needs.ContainsKey(tile.ToString()) && accessibleTilesByTileType.ContainsKey(tile) && totalAllocatedTiles < tilesNeeded[population])
                 {
-                    foreach(Vector3Int position in accessibleTilesByTileType[tile])
+                    Debug.Log(population.Species.SpeciesName + " needs " + tile.ToString() + " and need is not met");
+                    foreach(Vector3Int position in accessibleTilesByTileType[tile].ToArray<Vector3Int>())
                     {
                         if(rpm.CanAccess(population, position))
                         {
                             accessibleTilesByTileType[tile].Remove(position);
-                            tilesAllocated[population] += tileContribution;
-                            if(tilesAllocated[population] >= tilesNeeded[population])
+
+                            if(!tilesAllocated[population].ContainsKey(tile))
+                                tilesAllocated[population][tile] = 0;
+
+                            tilesAllocated[population][tile] += tileContribution;
+                            totalAllocatedTiles += tileContribution;
+
+                            if(totalAllocatedTiles >= tilesNeeded[population])
                                 break;
                         }
                     }
@@ -170,8 +189,11 @@ public class TerrainNeedSystem : NeedSystem
         {
             foreach(Population population in populationsByDominance)
             {
-                population.UpdateNeed(tile.ToString(), tilesAllocated[population]);
-                Debug.Log("Tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population]);
+                string needName = tile.ToString();
+                if(tilesAllocated[population].ContainsKey(tile)) {
+                    population.UpdateNeed(needName, tilesAllocated[population][tile]);
+                    Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                }
             }
         }
 
