@@ -10257,7 +10257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
   buildBufferManager: {fileID: 799223294}
 --- !u!1 &937003167
 GameObject:
@@ -21062,7 +21062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111eb3ad57f04c548aa453096a787a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
   behaviorPatterns: []
   IsPaused: 0
 --- !u!4 &1576156860
@@ -27474,7 +27474,7 @@ MonoBehaviour:
   PopulationPrefab: {fileID: 2404175397146934353, guid: 88a3ba85465d242a2b30639be12248b4,
     type: 3}
   ReservePartitionManager: {fileID: 936381359}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
   GenericBehaviors:
   - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
   - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}

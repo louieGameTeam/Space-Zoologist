@@ -92,9 +92,6 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < ReserveHeight; ++j)
             {
-                if (i == 16)
-                    print("what");
-
                 ApplyChangesToTilemap(new Vector3Int(i, j, 0));
             }
         }
@@ -144,7 +141,7 @@ public class GridSystem : MonoBehaviour
         this.TileDataGrid = new TileData[this.ReserveHeight, this.ReserveWidth];
 
         // set up the information textures
-        TilemapTexture = new Texture2D(ReserveWidth, ReserveHeight);
+        TilemapTexture = new Texture2D(ReserveWidth + 1, ReserveHeight + 1);
         // make black texture
         for (int i = 0; i < ReserveWidth; ++i)
         {

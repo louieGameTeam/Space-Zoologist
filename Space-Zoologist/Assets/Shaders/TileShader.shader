@@ -122,8 +122,6 @@
                 float2 localUV = frac(i.worldPos.xy);
                 int2 localPixel = localUV * PIXELS_PER_TILE;
 
-
-                tilePos += int2(1, 1);
                 float tileNoise = tex2D(_NoiseTexture, float2(tilePos) / _TileNoiseDistribution);
                 // r: tile type, a: flag information
                 float4 tileInformation = tex2D(_GridInformationTexture, float2(tilePos) / _GridTextureDimensions);
@@ -166,7 +164,7 @@
 
                 // add borders
                 // edges first
-                if (tilePos.x == 1 || tileTypeMatrix[1][0] == TILE_TYPE_LIQUID || tileTypeMatrix[1][0] == TILE_TYPE_EMPTY) {
+                if (tilePos.x == 0 || tileTypeMatrix[1][0] == TILE_TYPE_LIQUID || tileTypeMatrix[1][0] == TILE_TYPE_EMPTY) {
                     float4 leftBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
 
                     if (localUV.x < 0.5)
@@ -178,7 +176,7 @@
                     if (localUV.x > 0.5)
                         col = lerp(col, rightBar, rightBar.a);
                 }
-                if (tilePos.y == 1 || tileTypeMatrix[0][1] == TILE_TYPE_LIQUID || tileTypeMatrix[0][1] == TILE_TYPE_EMPTY) {
+                if (tilePos.y == 0 || tileTypeMatrix[0][1] == TILE_TYPE_LIQUID || tileTypeMatrix[0][1] == TILE_TYPE_EMPTY) {
                     float4 bottomBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
 
                     if (localUV.y < 0.5)
@@ -193,7 +191,7 @@
 
                 // corners after
                 // outer corners
-                if ((tilePos.x == 1 && tilePos.y == 1) ||
+                if ((tilePos.x == 0 && tilePos.y == 0) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] == TILE_TYPE_LIQUID) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] == TILE_TYPE_EMPTY)) {
                     float4 blCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
@@ -201,7 +199,7 @@
                     if (localUV.x < 0.5 && localUV.y < 0.5)
                         col = lerp(col, blCorner, blCorner.a);
                 }
-                if ((tilePos.x == _GridTextureDimensions.x && tilePos.y == 1) ||
+                if ((tilePos.x == _GridTextureDimensions.x && tilePos.y == 0) ||
                     (tileTypeMatrix[1][2] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] == TILE_TYPE_LIQUID) ||
                     (tileTypeMatrix[1][2] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] == TILE_TYPE_EMPTY)) {
                     float4 brCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
@@ -209,7 +207,7 @@
                     if (localUV.x > 0.5 && localUV.y < 0.5)
                         col = lerp(col, brCorner, brCorner.a);
                 }
-                if ((tilePos.x == 1 && tilePos.y == _GridTextureDimensions.y) ||
+                if ((tilePos.x == 0 && tilePos.y == _GridTextureDimensions.y) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] == TILE_TYPE_LIQUID) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_EMPTY && tileTypeMatrix[2][1] == TILE_TYPE_EMPTY)) {
                     float4 tlCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
@@ -271,9 +269,6 @@
                 // add highlights if needed
                 //if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG == 0 && tileInformation.a != 0)
                     //col.rgb *= tileInformation.rgb;
-
-                //if (tileTypeMatrix[1][1] == 0)
-                    //col = 0;
 
                 return col;
             }
