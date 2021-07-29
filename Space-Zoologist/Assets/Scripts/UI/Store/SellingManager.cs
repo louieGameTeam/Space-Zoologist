@@ -94,8 +94,9 @@ public class SellingManager : MonoBehaviour
     {
         GameObject food = cellData.Food;
         string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
-        foreach (Item item in LevelDataReference.LevelData.Items)
+        foreach (LevelData.ItemData data in LevelDataReference.LevelData.ItemQuantities)
         {
+            Item item = data.itemObject;
             if (item.ID.Equals(id))
             {
                 PlayerBalance.SubtractFromBalance(-1 * item.Price);
