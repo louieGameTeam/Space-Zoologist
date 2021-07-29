@@ -92,6 +92,9 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < ReserveHeight; ++j)
             {
+                if (i == 16)
+                    print("what");
+
                 ApplyChangesToTilemap(new Vector3Int(i, j, 0));
             }
         }
@@ -161,7 +164,8 @@ public class GridSystem : MonoBehaviour
             // if the tile id is negative
             if (serializedTileData.TileID == -1)
             {
-                // just move the postion
+                TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, null);
+
                 // move x over first
                 tilePosition.x += serializedTileData.Repetitions;
 
@@ -196,7 +200,7 @@ public class GridSystem : MonoBehaviour
                             // set the tile type in the red channel
                             Color pixelColor = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
                             // add 1 to ensure a null tile type at 0
-                            pixelColor.r = serializedTileData.TileID / FLAG_VALUE_MULTIPLIER;
+                            pixelColor.r = (serializedTileData.TileID + 1) / FLAG_VALUE_MULTIPLIER;
                             TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, pixelColor);
 
                             // move the tile position along
@@ -425,14 +429,26 @@ public class GridSystem : MonoBehaviour
     {
         TileData data = GetTileData(tilePosition);
 
-        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
-        tilePixel.r = (int)data.currentTile.type / FLAG_VALUE_MULTIPLIER;
-        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
-        TilemapTexture.Apply();
+        if (data == null || data.currentTile == null)
+        {
+            Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+            tilePixel.r = 0;
+            TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+            TilemapTexture.Apply();
 
-        Tilemap.SetTile(tilePosition, data.currentTile);
-        Tilemap.SetTileFlags(tilePosition, TileFlags.None);
-        Tilemap.SetColor(tilePosition, data.currentColor);
+            Tilemap.SetTile(tilePosition, null);
+        }
+        else
+        {
+            Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+            tilePixel.r = ((int)data.currentTile.type + 1) / FLAG_VALUE_MULTIPLIER;
+            TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+            TilemapTexture.Apply();
+
+            Tilemap.SetTile(tilePosition, data.currentTile);
+            Tilemap.SetTileFlags(tilePosition, TileFlags.None);
+            Tilemap.SetColor(tilePosition, data.currentColor);
+        }
     }
 
     #region Liquidbody Methods
@@ -1091,8 +1107,11 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < this.TileDataGrid.GetLength(1); j++)
             {
-                this.TileDataGrid[i, j].Animal = null;
-                this.TileDataGrid[i, j].HomeLocation = false;
+                if (this.TileDataGrid[i, j] != null)
+                {
+                    this.TileDataGrid[i, j].Animal = null;
+                    this.TileDataGrid[i, j].HomeLocation = false;
+                }
             }
         }
         // Could be broken up for better efficiency since iterating through population twice

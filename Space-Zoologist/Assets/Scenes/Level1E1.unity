@@ -10608,7 +10608,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9b2c58e2a02495b489ff33581af15917, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12038,7 +12038,7 @@ Camera:
   m_GameObject: {fileID: 1054101993}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -18379,7 +18379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PopulationManager: {fileID: 2078374405}
   BehaviorPatternUpdater: {fileID: 1576156859}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
   PauseButton: {fileID: 915008188}
   PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
   ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
@@ -28012,7 +28012,7 @@ MonoBehaviour:
   EnclosedAreas: []
   LevelDataReference: {fileID: 320161629}
   needSystemManager: {fileID: 8743428314032458836}
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
 --- !u!4 &6874327555454712159
 Transform:
   m_ObjectHideFlags: 0
@@ -28081,7 +28081,7 @@ MonoBehaviour:
   ReservePartitionManager: {fileID: 936381359}
   PauseManager: {fileID: 1395149766}
   LevelIO: {fileID: 462963692}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
 --- !u!4 &8743428314032458837
 Transform:
   m_ObjectHideFlags: 0
