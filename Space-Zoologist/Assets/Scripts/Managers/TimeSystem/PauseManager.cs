@@ -72,7 +72,7 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1;
         this.IsPaused = true;
         this.PauseButtonSprite.sprite = this.ResumeSprite;
-        this.PauseButtonButton.onClick.RemoveAllListeners();
+        this.PauseButtonButton.onClick.RemoveListener(this.Pause);
         this.PauseButtonButton.onClick.AddListener(this.Unpause);
         this.BehaviorPatternUpdater.IsPaused = true;
         this.PauseAllAnimalsMovementController();
@@ -84,7 +84,7 @@ public class PauseManager : MonoBehaviour
     {
         this.IsPaused = false;
         this.PauseButtonSprite.sprite = this.PauseSprite;
-        this.PauseButtonButton.onClick.RemoveAllListeners();
+        this.PauseButtonButton.onClick.RemoveListener(this.Unpause);
         this.PauseButtonButton.onClick.AddListener(this.Pause);
         this.BehaviorPatternUpdater.IsPaused = false;
         this.UnpauseAllAnimalsMovementController();
