@@ -7871,7 +7871,7 @@ MonoBehaviour:
   isErasing: 0
   tilemaps:
   - {fileID: 940519983}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
 --- !u!156049354 &765609363
 Grid:
   m_ObjectHideFlags: 0
@@ -11398,11 +11398,10 @@ MonoBehaviour:
   DetailButton: {fileID: 983550913}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
-  enclosedAreaSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
+  enclosedAreaSprite: {fileID: 21300000, guid: bf566e80557acbc45b9a695fcaa25327, type: 3}
+  liquidSprite: {fileID: -685630598450486675, guid: e8ad723fed35b43e1a9de5d338c67512,
     type: 3}
-  liquidSprite: {fileID: 4912832600191625089, guid: 023822bed12eea94b8b63bfc8e6fba12,
-    type: 3}
-  defaultSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
+  defaultSprite: {fileID: -2362283647837652871, guid: 223980609fb064a66819bf72318cd16b,
     type: 3}
 --- !u!114 &996204903
 MonoBehaviour:
@@ -28043,7 +28042,7 @@ MonoBehaviour:
     type: 3}
   NeedSystemManager: {fileID: 8743428314032458836}
   LevelDataReference: {fileID: 320161629}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
   buildBufferManager: {fileID: 799223294}
   constructionColor: {r: 0.5, g: 1, b: 0.5, a: 1}
 --- !u!1 &6874327555454712161
