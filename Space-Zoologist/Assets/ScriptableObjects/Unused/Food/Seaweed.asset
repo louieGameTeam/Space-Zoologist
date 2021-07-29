@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
   m_Name: Seaweed
   m_EditorClassIdentifier: 
-  accessibleTerrain: 04000000
+  size: 1
+  accessibleTerrain: 06000000
   speciesName: Seaweed
   rootRadius: 1
+  rootArea: 0
   baseOutput: 10
   needsList:
   - needType: 4
     needs:
     - needName: MineralX
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}

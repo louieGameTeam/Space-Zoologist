@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: Level1Kelp
   m_EditorClassIdentifier: 
   size: 1
-  accessibleTerrain: 04000000
+  accessibleTerrain: 06000000
   speciesName: Kelp
   rootRadius: 1
+  rootArea: 0
   baseOutput: 12
   needsList:
   - needType: 0
     needs:
     - needName: Liquid
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
@@ -33,6 +35,7 @@ MonoBehaviour:
     needs:
     - needName: Water
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
@@ -42,6 +45,7 @@ MonoBehaviour:
       - 0.969
     - needName: Bacteria
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}

@@ -52,7 +52,7 @@ public class LiquidModificationHUD : MonoBehaviour
             liquidModificationHUD.SetActive(true);
             Vector3 mousePos = this.mainCamera.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPosition = this.GridSystem.WorldToCell(mousePos);
-            LiquidBody liquid = this.GridSystem.GetTileData(cellPosition).currentLiquidBody;
+            LiquidBody liquid = this.GridSystem.GetTileData(cellPosition) != null ? this.GridSystem.GetTileData(cellPosition).currentLiquidBody : null;
             if (liquid != null)
             {
                 this.worldPos = new Vector3(mousePos.x, mousePos.y, mousePos.z);

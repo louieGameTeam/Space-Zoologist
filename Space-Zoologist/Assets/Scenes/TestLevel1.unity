@@ -498,12 +498,9 @@ MonoBehaviour:
   DetailButton: {fileID: 924270665}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
-  enclosedAreaSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
-    type: 3}
-  liquidSprite: {fileID: 4912832600191625089, guid: 023822bed12eea94b8b63bfc8e6fba12,
-    type: 3}
-  defaultSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
-    type: 3}
+  enclosedAreaSprite: {fileID: 21300000, guid: 096685ade7dc84440b54c83bb481c48a, type: 3}
+  liquidSprite: {fileID: 21300000, guid: 096685ade7dc84440b54c83bb481c48a, type: 3}
+  defaultSprite: {fileID: 21300000, guid: d0fb82b95358940efa32650c5f71681a, type: 3}
 --- !u!114 &126934983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3241,7 +3238,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 765609361}
         m_MethodName: ToggleGridOverlay
         m_Mode: 1
         m_Arguments:
@@ -11203,8 +11200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bufferGO: {fileID: 857420968307824151, guid: 94d62094d4e08fb4389ce407dedb4baf, type: 3}
-  RPM: {fileID: 0}
-  tilePlacementController: {fileID: 0}
+  RPM: {fileID: 936381359}
+  tilePlacementController: {fileID: 765609362}
 --- !u!1 &1512513564
 GameObject:
   m_ObjectHideFlags: 0
@@ -20849,6 +20846,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 459174929}
         m_MethodName: toggleDrafting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 765609361}
+        m_MethodName: ToggleGridOverlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

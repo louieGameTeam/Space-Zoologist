@@ -15,16 +15,19 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: e28c40730e812434993f5de4a67f674f, type: 2}
   speciesName: Strot
   dominance: 5
+  growthScaleFactor: 0
   growthRate: 10
+  decayRate: 3
   range: 8.28
   size: 5
-  accessibleTerrain: 0100000004000000
+  accessibleTerrain: 0300000006000000
   icon: {fileID: -1914521655128638079, guid: ac0bdecbbb9ee4d6698c4c59ceb7d50c, type: 3}
   needsList:
   - needType: 1
     needs:
     - needName: GasX
       severity: 10
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 27e7f99b8959e4c9ab66dee5dc0925e1, type: 2}
@@ -37,6 +40,7 @@ MonoBehaviour:
       - 20
     - needName: GasY
       severity: 10
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 27e7f99b8959e4c9ab66dee5dc0925e1, type: 2}
@@ -49,6 +53,7 @@ MonoBehaviour:
       - 20
     - needName: GasZ
       severity: 10
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 27e7f99b8959e4c9ab66dee5dc0925e1, type: 2}
@@ -63,6 +68,7 @@ MonoBehaviour:
     needs:
     - needName: Density
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
@@ -77,6 +83,7 @@ MonoBehaviour:
     needs:
     - needName: MineralZ
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
@@ -91,6 +98,7 @@ MonoBehaviour:
     needs:
     - needName: Seaweed
       severity: 10
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}

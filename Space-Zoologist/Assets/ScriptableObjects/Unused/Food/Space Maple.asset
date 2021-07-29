@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
   m_Name: Space Maple
   m_EditorClassIdentifier: 
-  accessibleTerrain: 0200000003000000
+  size: 1
+  accessibleTerrain: 0000000001000000
   speciesName: Space Maple
   rootRadius: 2
+  rootArea: 0
   baseOutput: 10
   needsList:
   - needType: 0
     needs:
     - needName: Sand
       severity: 1
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}
@@ -30,6 +33,7 @@ MonoBehaviour:
       - 3
     - needName: Dirt
       severity: 1
+      isPreferred: 0
       conditions: []
       thresholds:
       - 6
@@ -38,12 +42,14 @@ MonoBehaviour:
     needs:
     - needName: GasX
       severity: 1
+      isPreferred: 0
       conditions: []
       thresholds:
       - 3
       - 6
     - needName: GasY
       severity: 1
+      isPreferred: 0
       conditions: []
       thresholds:
       - 6

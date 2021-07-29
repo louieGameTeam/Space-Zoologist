@@ -15,16 +15,19 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
   speciesName: Goat
   dominance: 5
+  growthScaleFactor: 0
   growthRate: 60
+  decayRate: 3
   range: 10
   size: 10
-  accessibleTerrain: 020000000300000001000000
+  accessibleTerrain: 000000000100000002000000
   icon: {fileID: 2448977029927984085, guid: 04e2d8cdf6caf4aedaf0c41eb47adac2, type: 3}
   needsList:
   - needType: 0
     needs:
     - needName: Sand
       severity: 5
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 9d9ceb9fa4c3d4c20a66b481424e6599, type: 2}
@@ -39,6 +42,7 @@ MonoBehaviour:
     needs:
     - needName: MineralX
       severity: 2
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 22a8eaead9cd6494183c84860d5d861e, type: 2}
