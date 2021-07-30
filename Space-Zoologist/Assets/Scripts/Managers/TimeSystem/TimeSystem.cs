@@ -14,7 +14,6 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] BuildBufferManager buildBufferManager = default;
     [SerializeField] int maxDay = 20;
     private int currentDay = 1;
-    private int maxDay = 20; //TODO implement max day?
     // Initialize next day event to listen to.
     public static NextDayEvent onNextDay = new NextDayEvent();
 
@@ -41,7 +40,7 @@ public class TimeSystem : MonoBehaviour
         UpdateDayText(++currentDay);
 
         // Fire next day event.
-        onNextDay.Invoke();
+        EventManager.Instance.InvokeEvent(EventType.OnNextDay, null);
     }
 
     private void UpdateDayText(int day)

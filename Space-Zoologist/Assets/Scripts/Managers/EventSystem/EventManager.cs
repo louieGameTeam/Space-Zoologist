@@ -13,7 +13,8 @@ public enum EventType {
     AtmosphereChange, // Pass the enclosed area
     LiquidChange, // Pass the cell posistion
     NPCDialogue,
-    MainObjectivesCompleted, GameOver // Pass null is fine
+    MainObjectivesCompleted, GameOver, // Pass null is fine
+    OnNextDay, // Pass null
 };
 
 /// <summary>

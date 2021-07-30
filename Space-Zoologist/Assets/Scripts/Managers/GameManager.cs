@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -52,7 +53,8 @@ public class GameManager : MonoBehaviour
         currentPlayTrace.LevelTraces = new List<LevelTrace>();
 
         // Listen to next day events being fired.
-        TimeSystem.onNextDay.AddListener(() => NextDayTrace(currentPlayTrace.SessionElapsedTime, currentDayTrace));
+        Action onNextDay += NextDayTrace(currentPlayTrace.SessionElapsedTime, currentDayTrace);   
+        EventManager.Instance.SubscribeToEvent(EventType.OnNextDay, onNextDay);
     }
 
     // Update is called once per frame
