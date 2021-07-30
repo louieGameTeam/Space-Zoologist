@@ -11,15 +11,17 @@ public class Notebook : ScriptableObject
         get => generalNotes;
         set => generalNotes = value;
     }
+    public Research NotebookResearch => notebookResearch;
     public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
 
     //[SerializeField]
     [Tooltip("General notes that the player has made about the game")]
     private string generalNotes;
     [SerializeField]
+    [Expandable]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
-    private Research research;
+    private Research notebookResearch;
 
     // Add the bookmark if the notebook doesn't already have it in the list
     public bool TryAddBookmark(NotebookBookmark bookmark)

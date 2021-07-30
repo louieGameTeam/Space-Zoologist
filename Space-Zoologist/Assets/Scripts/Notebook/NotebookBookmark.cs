@@ -70,6 +70,7 @@ public class NotebookBookmark
     protected virtual void ProcessComponent(Component component)
     {
         // PASS - only used by sub-classes
+        // But we also can't make this class abstract because it is possible to have a base bookmark
     }
     private void LogBookmarkComponentWarning(Component component)
     {

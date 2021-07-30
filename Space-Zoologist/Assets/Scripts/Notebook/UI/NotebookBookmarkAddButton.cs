@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NotebookBookmarkAddButton : MonoBehaviour
+public class NotebookBookmarkAddButton : NotebookUIChild
 {
-    [SerializeField]
-    [Tooltip("Reference to the notebook object to add a bookmark to")]
-    private Notebook notebook;
     [SerializeField]
     [Tooltip("Reference to the button that adds the bookmark when clicked")]
     private Button button;
@@ -27,8 +24,9 @@ public class NotebookBookmarkAddButton : MonoBehaviour
     [Tooltip("Reference to the category picker to add a bookmark for")]
     protected ResearchCategoryPicker categoryPicker;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         button.onClick.AddListener(OnClick);
     }
 
@@ -37,7 +35,7 @@ public class NotebookBookmarkAddButton : MonoBehaviour
     protected virtual void OnClick()
     {
         NotebookBookmark bookmark = NotebookBookmark.Create(formatLabel, tab, categoryPicker);
-        if(notebook.TryAddBookmark(bookmark))
+        if(UIParent.NotebookModel.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
         }

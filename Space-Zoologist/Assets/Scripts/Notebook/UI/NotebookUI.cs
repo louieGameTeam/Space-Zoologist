@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class NotebookUI : MonoBehaviour
 {
+    // Public accessors
+    public Notebook NotebookModel => notebookModel;
+
+    [SerializeField]
+    [Expandable]
+    [Tooltip("Reference to the serialized object that holds all info about the notebook")]
+    private Notebook notebookModel;
     [SerializeField]
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
     private NotebookTabPicker tabPicker;

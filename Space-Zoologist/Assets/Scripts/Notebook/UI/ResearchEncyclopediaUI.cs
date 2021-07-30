@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ResearchEncyclopediaUI : MonoBehaviour
+public class ResearchEncyclopediaUI : NotebookUIChild
 {
-    public ResearchEncyclopedia CurrentEncyclopedia => researchModel.GetEntry(currentCategory).Encyclopedia;
+    public ResearchEncyclopedia CurrentEncyclopedia => UIParent.NotebookModel.NotebookResearch.GetEntry(currentCategory).Encyclopedia;
     public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia.GetArticle(currentArticleID);
 
     public ResearchEncyclopediaArticleID CurrentArticleID
@@ -31,11 +31,6 @@ public class ResearchEncyclopediaUI : MonoBehaviour
             }
         }
     }
-
-    [SerializeField]
-    [Expandable]
-    [Tooltip("Object that holds all the research data")]
-    private Research researchModel;
 
     [SerializeField]
     [Tooltip("Reference to the widget that selects the category for the encyclopedia")]
@@ -63,8 +58,10 @@ public class ResearchEncyclopediaUI : MonoBehaviour
     // Current research article selected
     private ResearchEncyclopediaArticleID currentArticleID;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // Add listener for change of dropdown value
         // (is "on value changed" invoked at the start?)
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);

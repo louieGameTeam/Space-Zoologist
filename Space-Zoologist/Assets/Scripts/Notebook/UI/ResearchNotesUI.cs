@@ -4,11 +4,8 @@ using UnityEngine;
 
 using TMPro;
 
-public class ResearchNotesUI : MonoBehaviour
+public class ResearchNotesUI : NotebookUIChild
 {
-    [SerializeField]
-    [Tooltip("Reference to the research model used to take notes in")]
-    private Research researchModel;
     [SerializeField]
     [Tooltip("Reference to the picker object that selects the research category")]
     private ResearchCategoryPicker categoryPicker;
@@ -27,9 +24,11 @@ public class ResearchNotesUI : MonoBehaviour
     private ResearchSingleNoteUIGroup currentGroup;
 
     // Start is called before the first frame update
-    void Awake()
+    protected override void Awake()
     {
-        foreach(KeyValuePair<ResearchCategory, ResearchEntry> entry in researchModel.ResearchDictionary)
+        base.Awake();
+
+        foreach(KeyValuePair<ResearchCategory, ResearchEntry> entry in UIParent.NotebookModel.NotebookResearch.ResearchDictionary)
         {
             // Add the group for this key
             groups.Add(entry.Key, new ResearchSingleNoteUIGroup());
@@ -75,6 +74,6 @@ public class ResearchNotesUI : MonoBehaviour
     // Set the note with the given label on the research notes
     private void OnNoteValueChanged(string label, string newNote)
     {
-        researchModel.GetEntry(categoryPicker.SelectedCategory).Notes.WriteNote(label, newNote);
+        UIParent.NotebookModel.NotebookResearch.GetEntry(categoryPicker.SelectedCategory).Notes.WriteNote(label, newNote);
     }
 }

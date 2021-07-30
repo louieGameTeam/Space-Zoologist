@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EncyclopediaBookmarkAddButton : MonoBehaviour
+public class EncyclopediaBookmarkAddButton : NotebookUIChild
 {
-    [SerializeField]
-    [Tooltip("Reference to the notebook object to add a bookmark to")]
-    private Notebook notebook;
     [SerializeField]
     [Tooltip("Reference to the button that adds the bookmark when clicked")]
     private Button button;
@@ -24,8 +21,9 @@ public class EncyclopediaBookmarkAddButton : MonoBehaviour
     [Tooltip("Reference to the encyclopedia ui to create a bookmark for")]
     protected ResearchEncyclopediaUI ui;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         button.onClick.AddListener(OnClick);
     }
 
@@ -34,7 +32,7 @@ public class EncyclopediaBookmarkAddButton : MonoBehaviour
     protected virtual void OnClick()
     {
         EncyclopediaBookmark bookmark = EncyclopediaBookmark.Create("{0} Encyclopedia: {1}", NotebookTab.Research, categoryPicker, ui.CurrentArticleID);
-        if (notebook.TryAddBookmark(bookmark))
+        if (UIParent.NotebookModel.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
         }
