@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -89,7 +90,7 @@ public class ResearchCategoryPicker : NotebookUIChild
         // Get all research category types
         ResearchCategoryType[] types = (ResearchCategoryType[])System.Enum.GetValues(typeof(ResearchCategoryType));
         // Loop through all types.  Instantiate a button for each type
-        for(int i = 0; i < types.Length; i++)
+        for (int i = 0; i < types.Length; i++)
         {
             ResearchCategoryTypeButton clone = Instantiate(typeButton, typeGroup.transform);
             // Setup clone. The first one is selected.
