@@ -20,7 +20,7 @@ public class GameOver : MonoBehaviour
     {
         EventManager.Instance.SubscribeToEvent(EventType.GameOver, this.HandleGameOver);
         this.RestartButton.onClick.AddListener(() => {this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel);});
-        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadNextLevel(); } );
+        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); } );
     }
 
     public void HandleGameOver()

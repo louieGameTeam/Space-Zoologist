@@ -67,6 +67,7 @@ public class ReservePartitionManager : MonoBehaviour
 
     private void Start()
     {
+        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => this.RemovePopulation((Population)EventManager.Instance.EventData));
     }
 
@@ -181,12 +182,12 @@ public class ReservePartitionManager : MonoBehaviour
                 continue;
             }
             // Check tiles that are under construction, make them inaccessible
-            if (this.buildBufferManager.IsConstructing(cur.x,cur.y))
-            {
-                unaccessible.Add(cur);
-                population.HasAccessibilityChanged = true;
-                continue;
-            }
+            //if (this.buildBufferManager.IsConstructing(cur.x,cur.y))
+            //{
+            //    unaccessible.Add(cur);
+            //    population.HasAccessibilityChanged = true;
+            //    continue;
+            //}
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
             GameTile tile = _tileSystem.GetGameTileAt(cur);
             // Get liquid tile info

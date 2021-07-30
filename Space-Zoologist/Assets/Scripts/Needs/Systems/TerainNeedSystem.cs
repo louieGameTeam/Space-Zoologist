@@ -114,6 +114,10 @@ public class TerrainNeedSystem : NeedSystem
 
         foreach (Population population in Consumers.OfType<Population>())
         {
+            if (!rpm.TypesOfTerrain.ContainsKey(population))
+            {
+                continue;
+            }
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
             terrainCountsByType = rpm.GetTypesOfTiles(population);
             foreach (var (count, index) in terrainCountsByType.WithIndex())
@@ -134,7 +138,7 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = tileSystem.CountOfTilesInRange(Vector3Int.FloorToInt(foodSource.GetPosition()), foodSource.Species.Size);
+            terrainCountsByType = tileSystem.CountOfTilesInArea(tileSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.Size, foodSource.Species.RootArea);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
@@ -142,6 +146,14 @@ public class TerrainNeedSystem : NeedSystem
 
                 if (foodSource.GetNeedValues().ContainsKey(needName))
                 {
+                    if (needName.Equals("Liquid"))
+                    {
+                        int liquidCount = tileSystem.CountOfTilesInRange(tileSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[index];
+                        //Debug.Log(foodSource.name + " updated " + needName + " with value: " + liquidCount);
+                        foodSource.UpdateNeed(needName, liquidCount);
+                        continue;
+                    }
+                    //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
                     foodSource.UpdateNeed(needName, count);
                 }
             }

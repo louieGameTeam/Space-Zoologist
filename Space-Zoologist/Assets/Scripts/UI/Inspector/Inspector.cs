@@ -26,6 +26,7 @@ public class Inspector : MonoBehaviour
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private Text inspectorWindowText = null;
     [SerializeField] private GameObject ObjectivePane = null;
+    [SerializeField] private GameObject GrowthInfo = default;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -47,6 +48,7 @@ public class Inspector : MonoBehaviour
         this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
         this.itemsDropdown.onValueChanged.AddListener(selectItem);
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
+        this.inspectorWindowDisplayScript.Initialize();
 
         // Have the dropdown options be refreshed when new items created
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
@@ -58,6 +60,7 @@ public class Inspector : MonoBehaviour
     {
         if (this.IsInInspectorMode)
         {
+            this.inspectorWindowDisplayScript.ClearInspectorWindow();
             this.inspectorWindow.SetActive(false);
             //this.areaDropdownMenu.SetActive(false);
             //this.itemDropdownMenu.SetActive(false);
@@ -65,8 +68,14 @@ public class Inspector : MonoBehaviour
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
             this.IsInInspectorMode = !IsInInspectorMode;
+            AudioManager.instance.PlayOneShot(SFXType.MenuClose);
         }
 
+    }
+
+    public void ToggleDetails()
+    {
+        this.GrowthInfo.SetActive(!this.GrowthInfo.activeSelf);
     }
 
     public void OpenInspector()
@@ -80,6 +89,7 @@ public class Inspector : MonoBehaviour
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = !IsInInspectorMode;
+        AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
     }
 
     /// <summary>
@@ -87,6 +97,7 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void ToggleInspectMode()
     {
+
         // Toggle button text, displays and pause/free animals
         if (!this.IsInInspectorMode)
         {
@@ -215,7 +226,7 @@ public class Inspector : MonoBehaviour
         {
             return;
         }
-
+        bool somethingSelected = true;
         this.UnHighlightAll();
         if (cellData.ContainsAnimal)
         {
@@ -239,8 +250,16 @@ public class Inspector : MonoBehaviour
         {
             DisplayAreaText(pos);
             selectedPosition = pos;
+            somethingSelected = false;
         }
-
+        else
+        {
+            somethingSelected = false;
+        }
+        if (somethingSelected)
+        {
+            AudioManager.instance.PlayOneShot(SFXType.Notification);
+        }
         // Reset dropdown selections
         this.enclosedAreaDropdown.value = 0;
         this.itemsDropdown.value = 0;

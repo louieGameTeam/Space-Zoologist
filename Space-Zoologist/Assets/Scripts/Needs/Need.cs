@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-//public enum NeedType {Terrain, Liquid, Atmosphere, Food}
-//public enum NeedCondition { Bad, Neutral, Good }
 
 [System.Serializable]
 public class Need
@@ -77,6 +75,15 @@ public class Need
     public float GetMinThreshold()
     {
         return this.thresholds[0];
+    }
+
+    public float GetThresholdForFirstGoodCondition() {
+        for (int i = 1; i < conditions.Count; i++) {
+            if (conditions[i].Condition == NeedCondition.Good) {
+                return thresholds[i - 1];
+            }
+        }
+        return 0.01f;
     }
 
     // TODO what is this doing

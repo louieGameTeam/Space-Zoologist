@@ -14,6 +14,7 @@ public class TextEffects : MonoBehaviour
     [SerializeField] Image BackgroundImage = default;
     [SerializeField] Image PreviousBackgroundImage = default;
     [SerializeField] SceneNavigator SceneNavigator = default;
+    [SerializeField] MusicManager musicManager = default;
     private int Index = 0;
 
 
@@ -32,11 +33,12 @@ public class TextEffects : MonoBehaviour
             SetupNextScene();
             if (Index == IntroductionTexts.Count)
             {
-                Introduction.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                Introduction.alignment = TMPro.TextAlignmentOptions.Center;
             }
         }
         else if (Input.GetMouseButtonDown(0))
         {
+            //musicManager.StartTransition();
             SceneNavigator.LoadMainMenu();
         }
         FadeNextSceneIn(Introduction);

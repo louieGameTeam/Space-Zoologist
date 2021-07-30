@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void CreateFoodCallback(FoodSource food);
 /// <summary>
 /// Manager of all the FoodSource instance
 /// </summary>
@@ -21,7 +22,8 @@ public class FoodSourceManager : GridObjectManager
     [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GridSystem GridSystem = default;
-
+    [SerializeField] BuildBufferManager buildBufferManager = default;
+    public Color constructionColor = new Color(0.5f, 1f, 0.5f, 1f);//Green
     private void Awake()
     {
         if (ins != null)
@@ -92,6 +94,16 @@ public class FoodSourceManager : GridObjectManager
             pos.y -= 1;
         }
         GridSystem.AddFood(GridSystem.Grid.WorldToCell(pos), species.Size, newFoodSourceGameObject);
+        this.buildBufferManager.CreateSquareBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size, this.constructionColor);
+        if (ttb > 0)
+        {
+            foodSource.isUnderConstruction = true;
+            this.buildBufferManager.ConstructionFinishedCallback(() =>
+            {
+                foodSource.isUnderConstruction = false;
+            });
+        }
+
         if (!foodSourcesBySpecies.ContainsKey(foodSource.Species))
         {
             foodSourcesBySpecies.Add(foodSource.Species, new List<FoodSource>());
@@ -125,12 +137,6 @@ public class FoodSourceManager : GridObjectManager
         NeedSystemManager.UnregisterWithNeedSystems(foodSource);
         this.GridSystem.RemoveFood(this.GridSystem.Grid.WorldToCell(foodSource.gameObject.transform.position));
         Destroy(foodSource.gameObject);
-    }
-
-    // TODO: not sure what this does
-    public void UpdateFoodSourceSpecies(FoodSourceSpecies species)
-    {
-        this.foodSourceSpecies.Add(species.SpeciesName, species);
     }
 
     /// <summary>
@@ -248,7 +254,7 @@ public class FoodSourceManager : GridObjectManager
         }
     }
 
-    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
+    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species, int ttb = -1)
     {
         Vector3 FoodLocation = this.GridSystem.Grid.CellToWorld(mouseGridPosition);
         FoodLocation.x += 1;
@@ -258,6 +264,6 @@ public class FoodSourceManager : GridObjectManager
             FoodLocation.x -= 0.5f;
             FoodLocation.y -= 0.5f;
         }
-        CreateFoodSource(species, FoodLocation);
+        CreateFoodSource(species, FoodLocation, ttb);
     }
 }
