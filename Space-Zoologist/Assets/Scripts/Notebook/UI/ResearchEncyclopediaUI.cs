@@ -181,7 +181,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     }
     public static string ArticleIDToDropdownLabel(ResearchEncyclopediaArticleID id)
     {
-        string label = "\"" + id.Title + "\"";
+        string label = id.Title;
         // Only include the author if it has an author
         if (id.Author != "") label += " by " + id.Author;
         return label;
@@ -189,8 +189,6 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     public static ResearchEncyclopediaArticleID DropdownLabelToArticleID(string label)
     {
         string[] titleAndAuthor = Regex.Split(label, " by ");
-        // Trim the quotes off of the title
-        titleAndAuthor[0] = titleAndAuthor[0].Trim('"');
 
         // If there are two items in the split string, use them both
         if(titleAndAuthor.Length > 1)
