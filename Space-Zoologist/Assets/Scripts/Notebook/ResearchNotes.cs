@@ -8,6 +8,7 @@ public class ResearchNotes
     // Public accessors
 
     public ResearchNoteLabels Labels => labels;
+    public string Notes { get; set; }
 
     // Private editor data
 
@@ -16,18 +17,13 @@ public class ResearchNotes
     [Tooltip("Lables attached to the notes in the research notes")]
     private ResearchNoteLabels labels;
 
-    // For faster lookup
-    private Dictionary<string, string> notes = new Dictionary<string, string>();
-
     public void Setup()
     {
-        // Each note begins with the same value as the label
-        foreach (string label in labels.Labels) notes.Add(label, "");
-    }
-
-    public string ReadNote(string label) => notes[label];
-    public void WriteNote(string label, string note)
-    {
-        notes[label] = note;
+        // Instead, we will have to load the player's data
+        Notes = "";
+        foreach(string label in Labels.Labels)
+        {
+            Notes += "<color=yellow>" + label + "</color>: \n\n";
+        }
     }
 }
