@@ -112,8 +112,6 @@ public class ResearchEncyclopediaArticle
             // Advance past the negation results just added
             i += negation.Count;
         }
-
-        Debug.Log("Removed " + negator.ToString() + ", new list:\n\t" + string.Join("\n\t", highlights));
     }
 
     private void ReportInitialHighlightError(int index, string foundDescriptor, string expectedDescriptor)

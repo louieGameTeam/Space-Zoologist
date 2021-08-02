@@ -40,19 +40,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     private TMP_Dropdown dropdown;
     [SerializeField]
     [Tooltip("Input field used to display the encyclopedia article")]
-    private TMP_InputField articleBody;
-    [SerializeField]
-    [Tooltip("Button used to add a highlight to the article")]
-    private Button highlightButton;
-    [SerializeField]
-    [Tooltip("Button used to remove a highlight from the article")]
-    private Button highlightRemoveButton;
-
-    [Header("Rich Text")]
-
-    [SerializeField]
-    [Tooltip("List of tags used to render highlighted encyclopedia article text")]
-    private List<RichTextTag> highlightTags;
+    private ResearchEncyclopediaArticleInputField articleBody;
 
     // Maps the research category to the index of the article previously selected
     private Dictionary<ResearchCategory, int> previousSelected = new Dictionary<ResearchCategory, int>();
@@ -77,9 +65,6 @@ public class ResearchEncyclopediaUI : NotebookUIChild
 
         // Add listener for changes in the research category selected
         categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);
-        // Add listener for highlight button
-        highlightButton.onClick.AddListener(RequestHighlightAdd);
-        highlightRemoveButton.onClick.AddListener(RequestHighlightRemove);
     }
 
     private void OnResearchCategoryChanged(ResearchCategory category)
@@ -116,89 +101,12 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         {
             // Create the id object
             currentArticleID = DropdownLabelToArticleID(dropdown.options[value].text);
-            // Set the text of the article GUI element
-            articleBody.text = RichEncyclopediaArticleText(CurrentArticle, highlightTags);
+            // Update the article on the script
+            articleBody.UpdateArticle(CurrentArticle);
         }
-        else articleBody.text = "<color=#aaa>This encyclopedia has no entries</color>";
+        else articleBody.UpdateArticle(null);
     }
 
-    private void RequestHighlightAdd()
-    {
-        // Use selection position on the input field to determine position of highlights
-        int start = articleBody.selectionAnchorPosition;
-        int end = articleBody.selectionFocusPosition;
-
-        // If selection has no length, exit the function
-        if (start == end) return;
-
-        // If start is bigger than end, swap them
-        if(start > end)
-        {
-            int temp = start;
-            start = end;
-            end = temp;
-        }
-
-        // Request a highlight on the current article
-        CurrentArticle.RequestHighlightAdd(start, end);
-        // Update the text on the article
-        articleBody.text = RichEncyclopediaArticleText(CurrentArticle, highlightTags);
-    }
-
-    private void RequestHighlightRemove()
-    {
-        // Use selection position on the input field to determine position of highlights
-        int start = articleBody.selectionAnchorPosition;
-        int end = articleBody.selectionFocusPosition;
-
-        // If selection has no length, exit the function
-        if (start == end) return;
-
-        // If start is bigger than end, swap them
-        if (start > end)
-        {
-            int temp = start;
-            start = end;
-            end = temp;
-        }
-
-        // Request a highlight on the current article
-        CurrentArticle.RequestHighlightRemove(start, end);
-        // Update the text on the article
-        articleBody.text = RichEncyclopediaArticleText(CurrentArticle, highlightTags);
-    }
-
-    public static string RichEncyclopediaArticleText(ResearchEncyclopediaArticle article, List<RichTextTag> tags)
-    {
-        string richText = article.Text;
-        int globalIndexAdjuster = 0;    // Adjust the index for each highlight
-        int globalIndexIncrementer = 0; // Length of all the tags used in each highlight
-        int localIndexAdjuster; // Used to adjust the index as each tag is applied
-
-        // Compute the index incrementer by incrementing tag lengths
-        foreach(RichTextTag tag in tags)
-        {
-            globalIndexIncrementer += tag.Length;
-        }
-        // Go through all highlights
-        foreach(ResearchEncyclopediaArticleHighlight highlight in article.Highlights)
-        {
-            // Reset local adjuster to 0
-            localIndexAdjuster = 0;
-
-            // Apply each of the tags used to highlight
-            foreach(RichTextTag tag in tags)
-            {
-                richText = tag.Apply(richText, highlight.Start + globalIndexAdjuster + localIndexAdjuster, highlight.Length);
-                localIndexAdjuster += tag.OpeningTag.Length;
-            }
-
-            // Increase the global index adjuster
-            globalIndexAdjuster += globalIndexIncrementer;
-        }
-
-        return richText;
-    }
     // Get a list of the research article IDs currently in the dropdown
     public List<ResearchEncyclopediaArticleID> GetDropdownIDs()
     {
