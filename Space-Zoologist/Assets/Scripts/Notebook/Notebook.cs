@@ -11,6 +11,7 @@ public class Notebook : ScriptableObject
         get => generalNotes;
         set => generalNotes = value;
     }
+    public string Acronym => acronym;
     public Research NotebookResearch => notebookResearch;
     public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
     public Dictionary<char, string> AcronymNotes
@@ -46,8 +47,8 @@ public class Notebook : ScriptableObject
         }
     }
 
-    public string ReadNote(char c) => AcronymNotes[c];
-    public void WriteNote(char c, string note) => AcronymNotes[c] = note;
+    public string ReadAcronymNote(char c) => AcronymNotes[c];
+    public void WriteAcronymNote(char c, string note) => AcronymNotes[c] = note;
 
     // Add the bookmark if the notebook doesn't already have it in the list
     public bool TryAddBookmark(NotebookBookmark bookmark)
