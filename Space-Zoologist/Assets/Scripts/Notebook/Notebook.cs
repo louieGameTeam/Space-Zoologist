@@ -5,12 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Notebook/Notebook")]
 public class Notebook : ScriptableObject
 {
-    // General notes for this notebook
-    public string GeneralNotes
-    {
-        get => generalNotes;
-        set => generalNotes = value;
-    }
     public string Acronym => acronym;
     public Research NotebookResearch => notebookResearch;
     public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
@@ -22,10 +16,6 @@ public class Notebook : ScriptableObject
             return acronymNotes;
         }
     }
-
-    //[SerializeField]
-    [Tooltip("General notes that the player has made about the game")]
-    private string generalNotes;
 
     [SerializeField]
     [Tooltip("Acronym that the player gets to spell out on the home page")]
