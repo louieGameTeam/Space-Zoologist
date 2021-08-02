@@ -44,6 +44,9 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Button used to add a highlight to the article")]
     private Button highlightButton;
+    [SerializeField]
+    [Tooltip("Button used to remove a highlight from the article")]
+    private Button highlightRemoveButton;
 
     [Header("Rich Text")]
 
@@ -75,7 +78,8 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         // Add listener for changes in the research category selected
         categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);
         // Add listener for highlight button
-        highlightButton.onClick.AddListener(RequestHighlight);
+        highlightButton.onClick.AddListener(RequestHighlightAdd);
+        highlightRemoveButton.onClick.AddListener(RequestHighlightRemove);
     }
 
     private void OnResearchCategoryChanged(ResearchCategory category)
@@ -118,7 +122,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         else articleBody.text = "<color=#aaa>This encyclopedia has no entries</color>";
     }
 
-    private void RequestHighlight()
+    private void RequestHighlightAdd()
     {
         // Use selection position on the input field to determine position of highlights
         int start = articleBody.selectionAnchorPosition;
@@ -136,7 +140,30 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         }
 
         // Request a highlight on the current article
-        CurrentArticle.RequestHighlight(start, end);
+        CurrentArticle.RequestHighlightAdd(start, end);
+        // Update the text on the article
+        articleBody.text = RichEncyclopediaArticleText(CurrentArticle, highlightTags);
+    }
+
+    private void RequestHighlightRemove()
+    {
+        // Use selection position on the input field to determine position of highlights
+        int start = articleBody.selectionAnchorPosition;
+        int end = articleBody.selectionFocusPosition;
+
+        // If selection has no length, exit the function
+        if (start == end) return;
+
+        // If start is bigger than end, swap them
+        if (start > end)
+        {
+            int temp = start;
+            start = end;
+            end = temp;
+        }
+
+        // Request a highlight on the current article
+        CurrentArticle.RequestHighlightRemove(start, end);
         // Update the text on the article
         articleBody.text = RichEncyclopediaArticleText(CurrentArticle, highlightTags);
     }

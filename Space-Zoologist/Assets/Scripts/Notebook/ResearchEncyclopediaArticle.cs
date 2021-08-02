@@ -84,7 +84,7 @@ public class ResearchEncyclopediaArticle
         }
     }
 
-    public void RequestHighlight(int start, int end)
+    public void RequestHighlightAdd(int start, int end)
     {
         // Add the highlight to the list and sort it
         ResearchEncyclopediaArticleHighlight requestedHighlight = new ResearchEncyclopediaArticleHighlight(start, end);
@@ -93,6 +93,27 @@ public class ResearchEncyclopediaArticle
 
         // Clean the highlights
         CleanHighlights();
+    }
+
+    public void RequestHighlightRemove(int start, int end)
+    {
+        ResearchEncyclopediaArticleHighlight negator = new ResearchEncyclopediaArticleHighlight(start, end);
+
+        int i = 0;
+        while(i < highlights.Count)
+        {
+            // Negate the current highlight
+            List<ResearchEncyclopediaArticleHighlight> negation = highlights[i].Negate(negator);
+
+            // Remove the highlight and replace it with the results of the negation
+            highlights.RemoveAt(i);
+            highlights.InsertRange(i, negation);
+
+            // Advance past the negation results just added
+            i += negation.Count;
+        }
+
+        Debug.Log("Removed " + negator.ToString() + ", new list:\n\t" + string.Join("\n\t", highlights));
     }
 
     private void ReportInitialHighlightError(int index, string foundDescriptor, string expectedDescriptor)
@@ -133,7 +154,7 @@ public class ResearchEncyclopediaArticle
             // If this highlight overlaps the next one, we combine them and remove the next one
             if (highlights[i].Overlap(highlights[i + 1]))
             {
-                highlights[i] = highlights[i].Combine(highlights[i + 1]);
+                highlights[i] = highlights[i].Union(highlights[i + 1]);
                 highlights.RemoveAt(i + 1);
                 
                 // We continue without incrementing because we need to check this same highlight again
