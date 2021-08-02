@@ -23,7 +23,7 @@ public class ResearchNotes
         Notes = "";
         foreach(string label in Labels.Labels)
         {
-            Notes += "<color=yellow>" + label + "</color>: \n\n";
+            Notes += "<color=#000044ff>" + label + ":</color> \n\n";
         }
     }
 }
