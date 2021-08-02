@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 857335ca450634d41951df7ce9e84e43, type: 3}
+  m_Name: FreshWater
+  m_EditorClassIdentifier: 
+  id: Liquid
+  type: 1
+  itemName: Fresh Water
+  price: 2
+  description: 
+  icon: {fileID: 2260833772868242544, guid: 023822bed12eea94b8b63bfc8e6fba12, type: 3}
+  audio:
+  - {fileID: 8300000, guid: 221e6dfa44d6f474b9bc67484d15a20f, type: 3}
+  - {fileID: 8300000, guid: fcdfc46f6dcf24a7a978284de9d39914, type: 3}
+  BuildTime: 1
+  liquidContents: {x: 0.98, y: 0, z: 0.02}

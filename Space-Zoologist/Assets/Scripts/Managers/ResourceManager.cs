@@ -5,21 +5,10 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class ResourceData
-    {
-        public string resourceName;
-        public int initialAmount;
-
-        public ResourceData(string ID)
-        {
-            resourceName = ID;
-        }
-    }
 
     // [SerializeField] LevelDataReference LevelDataRef = default;
     [SerializeField] EventResponseManager EventResponseManager = default;
-    [SerializeField] List<ResourceData> resourceData = default;
+    [SerializeField] LevelDataReference LevelDataReference = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();
 
     // a copy of the dictionary before draft
@@ -28,10 +17,10 @@ public class ResourceManager : MonoBehaviour
 
     public void Awake()
     {
-        foreach (ResourceData data in resourceData)
+        foreach(LevelData.ItemData item in LevelDataReference.LevelData.itemQuantities)
         {
-            remainingResources.Add(data.resourceName, data.initialAmount);
-            initialResources.Add(data.resourceName, data.initialAmount);
+            remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
+            initialResources.Add(item.itemObject.ItemName, item.initialAmount);
         }
     }
 
@@ -67,7 +56,7 @@ public class ResourceManager : MonoBehaviour
 
     public void Placed(Item item, int amount)
     {
-        PlacedItem(item.ID, amount);
+        PlacedItem(item.ItemName, amount);
     }
 
     public void Placed(AnimalSpecies species, int amount)
@@ -95,9 +84,9 @@ public class ResourceManager : MonoBehaviour
 
     public int CheckRemainingResource(Item item)
     {
-        if (remainingResources.ContainsKey(item.ID))
+        if (remainingResources.ContainsKey(item.ItemName))
         {
-            return remainingResources[item.ID];
+            return remainingResources[item.ItemName];
         }
         else
         {

@@ -73,8 +73,9 @@ public class StoreSection : MonoBehaviour
     public virtual void Initialize()
     {
         LevelData levelData = LevelDataReference.LevelData;
-        foreach (Item item in levelData.Items)
+        foreach (LevelData.ItemData data in levelData.ItemQuantities)
         {
+            Item item = data.itemObject;
             if (item.Type.Equals(itemType))
             {
                 this.AddItem(item);
@@ -116,6 +117,7 @@ public class StoreSection : MonoBehaviour
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         gridOverlay.ClearColors();
+        AudioManager.instance?.PlayOneShot(SFXType.Cancel);
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)

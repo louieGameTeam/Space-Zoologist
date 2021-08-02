@@ -8,6 +8,7 @@ using UnityEngine;
 public class MusicQueuer : MonoBehaviour
 {
     [SerializeField] LoopableAudioTrack nextTrack = default;
+    [SerializeField] bool fading;
     
     private void Start()
     {
@@ -23,7 +24,6 @@ public class MusicQueuer : MonoBehaviour
 
     public void QueueAndTrigger()
     {
-        QueueMusic();
-        AudioManager.instance?.MusicManager.StartTransition();
+        AudioManager.instance?.MusicManager.StartTransition(fading, nextTrack);
     }
 }

@@ -121,6 +121,75 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &6170805
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.141408
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.839453
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -467.83258
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380203, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 92345d16d3a984156b81ba7cb42f1cee, type: 3}
 --- !u!1 &13473214
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,13 +1978,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plotIO: {fileID: 765609360}
   PauseManager: {fileID: 1395149766}
   PauseButton: {fileID: 6943948462633829954}
   NextDayButton: {fileID: 5434642601341158969}
   PlayerController: {fileID: 1290313821}
-  resourceManager: {fileID: 1738013071}
-  playerBalance: {fileID: 4661624496553112467}
 --- !u!1 &462963690
 GameObject:
   m_ObjectHideFlags: 0
@@ -11050,6 +11116,7 @@ MonoBehaviour:
   Inspector: {fileID: 2522856074633993946}
   CurrentDayText: {fileID: 3940803004895190224}
   buildBufferManager: {fileID: 1507564720}
+  maxDay: 20
 --- !u!114 &1395149766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11069,9 +11136,6 @@ MonoBehaviour:
   PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
   ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
     type: 3}
-  PlayPause:
-  - {fileID: 8300000, guid: 1b51526c445c241d293338445b1e8afc, type: 3}
-  - {fileID: 8300000, guid: 5ae6e3e1682e149a68f1f8fe11cdde1f, type: 3}
 --- !u!82 &1395149767
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11458,6 +11522,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bufferGO: {fileID: 857420968307824151, guid: 94d62094d4e08fb4389ce407dedb4baf, type: 3}
+  RPM: {fileID: 936381359}
+  tileSystem: {fileID: 765609361}
+  tilePlacementController: {fileID: 765609362}
 --- !u!1 &1526067898
 GameObject:
   m_ObjectHideFlags: 0
@@ -28774,6 +28841,7 @@ MonoBehaviour:
   inspectorWindow: {fileID: 9178815343093200085}
   inspectorWindowText: {fileID: 9178815341901447406}
   ObjectivePane: {fileID: 3368074591926353176}
+  GrowthInfo: {fileID: 0}
 --- !u!1 &2535077653345000887
 GameObject:
   m_ObjectHideFlags: 0
@@ -28850,7 +28918,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2615640745541295455}
   m_HandleRect: {fileID: 2110857668092513228}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -32418,6 +32486,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 647dac234a1564032b39aded20369bc2, type: 2}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

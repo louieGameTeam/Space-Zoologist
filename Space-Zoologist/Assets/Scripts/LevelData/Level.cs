@@ -8,5 +8,6 @@ public class Level : ScriptableObject
     [SerializeField] public string Description = default;
     [SerializeField] public string Name = default;
     [SerializeField] public Sprite Sprite = default;
+    [SerializeField] public LoopableAudioTrack Music = default;
     [Expandable] public LevelData Data = default;
 }

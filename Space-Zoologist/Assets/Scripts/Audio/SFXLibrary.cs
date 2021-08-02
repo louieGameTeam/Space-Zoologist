@@ -2,7 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SFXType { None, Unpause, Pause, FastForward, MenuOpen, MenuClose, Notification, TabSwitch, Dirt, NumTypes }
+public enum SFXType
+{
+    None,
+    Unpause, Pause, FastForward,
+    MenuOpen, MenuClose, Notification, TabSwitch,
+    Cancel, Observation,
+    Valid, Locked, Unavailable,
+    NumTypes
+}
 
 [CreateAssetMenu]
 public class SFXLibrary : ScriptableObject
@@ -23,7 +31,6 @@ public class SFXLibrary : ScriptableObject
 
     public AudioObject[] SoundEffects => soundEffects;
     [SerializeField] AudioObject[] soundEffects;
-
 
     private void OnValidate()
     {

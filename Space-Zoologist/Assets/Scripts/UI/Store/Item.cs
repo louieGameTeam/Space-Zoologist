@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ItemType {Food, Terrain, Machine, Pod}
 // Modify as needed
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
     public string ID => id;
