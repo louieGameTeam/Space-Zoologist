@@ -3,11 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NotebookBookmarkAddButton : NotebookUIChild
+using TMPro;
+
+public abstract class NotebookBookmarkAddButton : NotebookUIChild
 {
+    // Get the suggested title for the bookmark
+    protected abstract string SuggestedBookmarkTitle { get; }
+
+    [SerializeField]
+    [Tooltip("Toggle that displays the dropdown that lets the user name the bookmark")]
+    private Toggle dropdownToggle;
+    [SerializeField]
+    [Tooltip("Game object enabled over the toggle when it is enabled")]
+    private GameObject isOnObject;
+    [SerializeField]
+    [Tooltip("Dropdown menu that appears when the button is clicked")]
+    private GameObject dropdown;
+    [SerializeField]
+    [Tooltip("Text used to input the name of the new bookmark")]
+    private TMP_InputField bookmarkTitle;
     [SerializeField]
     [Tooltip("Reference to the button that adds the bookmark when clicked")]
-    private Button button;
+    private Button confirmButton;
+    [SerializeField]
+    [Tooltip("Reference to the button that cancels addinga bookmark")]
+    private Button cancelButton;
     [SerializeField]
     [Tooltip("Reference to the script that manages the UI for the bookmarks")]
     private NotebookBookmarkNavigationUI bookmarkUI;
@@ -15,29 +35,65 @@ public class NotebookBookmarkAddButton : NotebookUIChild
     [Header("Bookmark data")]
 
     [SerializeField]
-    [Tooltip("Prefix to attach to the name of the bookmark")]
-    protected string formatLabel;
-    [SerializeField]
-    [Tooltip("Tab to set for the bookmark button")]
-    protected NotebookTab tab;
-    [SerializeField]
     [Tooltip("Reference to the category picker to add a bookmark for")]
     protected ResearchCategoryPicker categoryPicker;
 
     protected override void Awake()
     {
         base.Awake();
-        button.onClick.AddListener(OnClick);
+
+        dropdownToggle.onValueChanged.AddListener(OnDropdownToggleStateChange);
+        confirmButton.onClick.AddListener(TryAddBookmark);
+        cancelButton.onClick.AddListener(CancelBookmarkAdd);
+        bookmarkTitle.onSubmit.AddListener(s => TryAddBookmark());
+
+        // Update dropdown based on initial state of the toggle
+        OnDropdownToggleStateChange(dropdownToggle.isOn);
+    }
+
+    private void OnDropdownToggleStateChange(bool active)
+    {
+        // If activating, we need to check if the notebook already exists
+        // If it does, we should not bother opening the dropdown
+        if (active)
+        {
+            // Set title to suggested title
+            bookmarkTitle.text = SuggestedBookmarkTitle;
+            NotebookBookmark intendedBookmark = BookmarkToAdd(bookmarkTitle.text);
+
+            // If the bookmark already exists, disable the toggle
+            if (UIParent.NotebookModel.HasBookmark(intendedBookmark))
+            {
+                dropdownToggle.SetIsOnWithoutNotify(false);
+            }
+            // If the bookmark does not exist yet, we need the dropdown
+            else dropdown.SetActive(true);
+        }
+        else dropdown.SetActive(false);
+
+        // Make sure is on object has the correct state
+        isOnObject.SetActive(dropdownToggle.isOn);
     }
 
     // On click, try to add the bookmark
     // If adding the bookmark succeeds, then make the bookmark UI create a new bookmark
-    protected virtual void OnClick()
+    protected virtual void TryAddBookmark()
     {
-        NotebookBookmark bookmark = NotebookBookmark.Create(formatLabel, tab, categoryPicker);
+        NotebookBookmark bookmark = BookmarkToAdd(bookmarkTitle.text);
         if(UIParent.NotebookModel.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
+
+            // Disable the toggle now, immediately invokes OnDropdownToggleStateChanged
+            dropdownToggle.isOn = false;
         }
     }
+
+    private void CancelBookmarkAdd()
+    {
+        // Immediately invokes OnDropdownToggleStateChanged
+        dropdownToggle.isOn = false;
+    }
+
+    protected abstract NotebookBookmark BookmarkToAdd(string inputText);
 }

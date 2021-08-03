@@ -81,7 +81,6 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
-
     public void UpdateArticle(ResearchEncyclopediaArticle article)
     {
         currentArticle = article;

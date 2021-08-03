@@ -3,38 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EncyclopediaBookmarkAddButton : NotebookUIChild
+public class EncyclopediaBookmarkAddButton : NotebookBookmarkAddButton
 {
-    [SerializeField]
-    [Tooltip("Reference to the button that adds the bookmark when clicked")]
-    private Button button;
-    [SerializeField]
-    [Tooltip("Reference to the script that manages the UI for the bookmarks")]
-    private NotebookBookmarkNavigationUI bookmarkUI;
+    protected override string SuggestedBookmarkTitle => categoryPicker.SelectedCategory.Name + " Encyclopedia: " + ui.CurrentArticleID;
 
-    [Header("Bookmark data")]
-
-    [SerializeField]
-    [Tooltip("Reference to the category picker to add a bookmark for")]
-    protected ResearchCategoryPicker categoryPicker;
     [SerializeField]
     [Tooltip("Reference to the encyclopedia ui to create a bookmark for")]
     protected ResearchEncyclopediaUI ui;
 
-    protected override void Awake()
+    protected override NotebookBookmark BookmarkToAdd(string inputText)
     {
-        base.Awake();
-        button.onClick.AddListener(OnClick);
-    }
-
-    // On click, try to add the bookmark
-    // If adding the bookmark succeeds, then make the bookmark UI create a new bookmark
-    protected virtual void OnClick()
-    {
-        EncyclopediaBookmark bookmark = EncyclopediaBookmark.Create("{0} Encyclopedia: {1}", NotebookTab.Research, categoryPicker, ui.CurrentArticleID);
-        if (UIParent.NotebookModel.TryAddBookmark(bookmark))
-        {
-            bookmarkUI.CreateBookmarkButton(bookmark);
-        }
+        return EncyclopediaBookmark.Create(inputText, categoryPicker, ui.CurrentArticleID);
     }
 }

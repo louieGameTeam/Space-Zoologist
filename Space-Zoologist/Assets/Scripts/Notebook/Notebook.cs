@@ -40,6 +40,8 @@ public class Notebook : ScriptableObject
     public string ReadAcronymNote(char c) => AcronymNotes[c];
     public void WriteAcronymNote(char c, string note) => AcronymNotes[c] = note;
 
+    // Return true/false if the notebook already has this bookmark
+    public bool HasBookmark(NotebookBookmark bookmark) => Bookmarks.Contains(bookmark);
     // Add the bookmark if the notebook doesn't already have it in the list
     public bool TryAddBookmark(NotebookBookmark bookmark)
     {

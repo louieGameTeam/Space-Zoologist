@@ -6,39 +6,31 @@ using UnityEngine;
 public class NotebookBookmark
 {
     // Public accessors
-    public virtual string Label => string.Format(formatLabel, category.Name);
+    public string Label => label;
     public NotebookTab Tab => tab;
     public ResearchCategory Category => category;
     public string PickerName => pickerName;
     public virtual Type ExpectedComponentType => null;
 
-    [SerializeField]
-    [Tooltip("Label used to identify the bookmark")]
-    protected string formatLabel;
-    [SerializeField]
-    [Tooltip("Tab in the notebook for this bookmark")]
+    protected string label;
     protected NotebookTab tab;
-    [SerializeField]
-    [Tooltip("Research category for the bookmark's picker")]
     protected ResearchCategory category;
-    [SerializeField]
-    [Tooltip("Name of the object in the scene that picks the category for this page")]
     // NOTE: we can't just store the research category picker here in the object
     // This bookmark is stored in a serialized object, so it survives after the picker is destroyed
     // Instead, we ID the picker by the game object's name, and let the NotebookUI provide the
     // picker to the bookmark
     protected string pickerName;
 
-    public NotebookBookmark(string formatLabel, NotebookTab tab, ResearchCategory category, string pickerName)
+    public NotebookBookmark(string label, NotebookTab tab, ResearchCategory category, string pickerName)
     {
-        this.formatLabel = formatLabel;
+        this.label = label;
         this.tab = tab;
         this.category = category;
         this.pickerName = pickerName;
     }
-    public static NotebookBookmark Create(string formatLabel, NotebookTab tab, ResearchCategoryPicker picker)
+    public static NotebookBookmark Create(string label, NotebookTab tab, ResearchCategoryPicker picker)
     {
-        return new NotebookBookmark(formatLabel, tab, picker.SelectedCategory, picker.name);
+        return new NotebookBookmark(label, tab, picker.SelectedCategory, picker.name);
     }
     public void NavigateTo(NotebookTabPicker tabPicker, Dictionary<string, ResearchCategoryPicker> namePickerMap, Component component)
     {

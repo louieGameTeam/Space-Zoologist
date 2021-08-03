@@ -5,20 +5,17 @@ using UnityEngine;
 
 public class EncyclopediaBookmark : NotebookBookmark
 {
-    public override string Label => string.Format(formatLabel, Category.Name, articleID);
     public override Type ExpectedComponentType => typeof(ResearchEncyclopediaUI);
 
-    [SerializeField]
-    [Tooltip("Identification of the article bookmarked in the encyclopedia")]
     private ResearchEncyclopediaArticleID articleID;
 
-    public EncyclopediaBookmark(string stringFormat, NotebookTab tab, ResearchCategory category, string pickerName, ResearchEncyclopediaArticleID articleID) : base(stringFormat, tab, category, pickerName)
+    public EncyclopediaBookmark(string label, ResearchCategory category, string pickerName, ResearchEncyclopediaArticleID articleID) : base(label, NotebookTab.Research, category, pickerName)
     {
         this.articleID = articleID;
     }
-    public static EncyclopediaBookmark Create(string prefix, NotebookTab tab, ResearchCategoryPicker picker, ResearchEncyclopediaArticleID articleID)
+    public static EncyclopediaBookmark Create(string prefix, ResearchCategoryPicker picker, ResearchEncyclopediaArticleID articleID)
     {
-        return new EncyclopediaBookmark(prefix, tab, picker.SelectedCategory, picker.name, articleID);
+        return new EncyclopediaBookmark(prefix, picker.SelectedCategory, picker.name, articleID);
     }
     protected override void ProcessComponent(Component component)
     {
