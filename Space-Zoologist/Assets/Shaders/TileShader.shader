@@ -19,10 +19,9 @@
     }
     SubShader
     {
-        Tags { "RenderType" = "Transparent" "Queue" = "Transparent"}
+        Tags {"Queue" = "Background"}
 
         Blend SrcAlpha OneMinusSrcAlpha
-        Cull Off
 
         Pass
         {

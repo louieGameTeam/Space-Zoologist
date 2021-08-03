@@ -26,7 +26,7 @@ public class EatingPattern : UniversalAnimatorPattern
                 }
                 Vector3Int loopedTile = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);
 
-                if (GridSystem.isCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.GetTileData(loopedTile).Food)
+                if (GridSystem.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.GetTileData(loopedTile).Food)
                 {
                     if (GridSystem.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
                     {

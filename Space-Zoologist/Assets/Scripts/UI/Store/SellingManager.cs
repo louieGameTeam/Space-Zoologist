@@ -63,7 +63,7 @@ public class SellingManager : MonoBehaviour
             GridSystem.TileData tileData;
 
             // Find out what is on the tile if it is in bounds
-            if (gridSystem.isCellinGrid(cellPos.x, cellPos.y))
+            if (gridSystem.IsCellinGrid(cellPos.x, cellPos.y))
             {
                 tileData = gridSystem.GetTileData(cellPos);
             }

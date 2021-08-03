@@ -63,7 +63,7 @@ public class EnclosedArea
 
     public void AddCoordinate(Coordinate coordinate, int tileType, AtmosphericComposition oldComposition)
     {
-        if (gridSystem.isCellinGrid(coordinate.x, coordinate.y))
+        if (gridSystem.IsCellinGrid(coordinate.x, coordinate.y))
         {
             GridSystem.TileData tileData = this.gridSystem.GetTileData(new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0));
 

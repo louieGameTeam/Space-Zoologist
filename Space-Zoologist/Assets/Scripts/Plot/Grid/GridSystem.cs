@@ -133,7 +133,6 @@ public class GridSystem : MonoBehaviour
     public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
     {
         InitializeTileLayerManager();
-        
 
         // set grid dimensions
         ReserveWidth = serializedGrid.width;
@@ -162,6 +161,7 @@ public class GridSystem : MonoBehaviour
             if (serializedTileData.TileID == -1)
             {
                 TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, null);
+                TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
 
                 // move x over first
                 tilePosition.x += serializedTileData.Repetitions;
@@ -189,6 +189,7 @@ public class GridSystem : MonoBehaviour
                         {
                             // manually add the tile (may turn into a method later)
                             TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, gameTile);
+                            TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
 
                             // if it is a liquid, add it to the dictionary
                             if (gameTile.type == TileType.Liquid)
@@ -1084,7 +1085,7 @@ public class GridSystem : MonoBehaviour
         return false;
     }
 
-    public bool isCellinGrid(int x, int y)
+    public bool IsCellinGrid(int x, int y)
     {
         return x >= 0 && y >= 0 && x < ReserveWidth && y < ReserveHeight;
     }
@@ -1093,7 +1094,7 @@ public class GridSystem : MonoBehaviour
     {
         Vector3Int loc = Grid.WorldToCell(mousePosition);
 
-        return isCellinGrid(loc.x, loc.y);
+        return IsCellinGrid(loc.x, loc.y);
     }
     #endregion
 
