@@ -6,8 +6,8 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance = null;
-    public AudioSource SFX => sfx;
     public MusicManager MusicManager => musicManager;
+    public AudioSource SFX => sfx;
     [SerializeField] MusicManager musicManager;
     [SerializeField] AudioSource sfx;
     float masterVolume = 1;
@@ -75,6 +75,10 @@ public class AudioManager : MonoBehaviour
         sfx.volume = masterVolume * sfxVolume;
     }
 
+    /// <summary>
+    /// Play the audioclip.
+    /// </summary>
+    /// <param name="clip"></param>
     public void PlayOneShot(AudioClip clip)
     {
         // introduce a little bit of variety
@@ -82,7 +86,7 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Play the sfx from SFXType in order.
+    /// Play the sfx from SFXType in order. If there is only one, repeat that sound each time this is called.
     /// </summary>
     /// <param name="type"></param>
     public void PlayOneShot(SFXType type)

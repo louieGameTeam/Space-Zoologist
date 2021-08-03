@@ -1,15 +1,13 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/BuildBufferManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LevelData/Level.cs">
     <Files>
-      <File FileName="Assets/Scripts/Y - Utils/SpeciesReferenceData.cs" Line="18" Column="1" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" Line="314" Column="42" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" />
-      <File FileName="Assets/Scripts/Plot/RPS/AtmosphericComposition.cs" />
-      <File FileName="Assets/Scripts/Managers/TimeSystem/PauseManager.cs" Line="91" Column="31" />
-      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="174" Column="1" />
+      <File FileName="Assets/Resources/Audio/For Build Use (07-29) - new audio system/Scripts/CustomMusicLoopController.cs" Line="116" Column="62" />
+      <File FileName="Assets/Scripts/Audio/MusicManager.cs" Line="36" Column="1" />
+      <File FileName="Assets/Resources/Audio/For Build Use (07-29) - new audio system/Scripts/MainMenuMusicManager.cs" Line="15" Column="37" />
+      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="20" Column="75" />
+      <File FileName="Assets/Scripts/Audio/AudioManager.cs" Line="74" Column="22" />
+      <File FileName="Assets/Scripts/Audio/LoopableAudioTrack.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/LevelData/Level.cs" Line="10" Column="53" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -32,18 +30,24 @@
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
                     </Node>
-                    <Node name="NodeEventHolder.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Resources" expanded="True">
+                <Node name="Audio" expanded="True">
+                  <Node name="For Build Use (07-29) - new audio system" expanded="True">
+                    <Node name="Scripts" expanded="True" />
                   </Node>
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="Audio" expanded="True" />
                 <Node name="Dialogue" expanded="True" />
-                <Node name="LevelData" expanded="True" />
+                <Node name="LevelData" expanded="True">
+                  <Node name="Level.cs" selected="True" />
+                </Node>
                 <Node name="Managers" expanded="True">
-                  <Node name="TimeSystem" expanded="True">
-                    <Node name="PauseManager.cs" selected="True" />
-                  </Node>
+                  <Node name="TimeSystem" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -54,7 +58,6 @@
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
-                  <Node name="BuildBufferManager.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
@@ -78,7 +81,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8984bae9-076f-4607-9ac6-40f01fdc4b58" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="baec1a8c-4bf5-434c-b38b-a6d6bf1218b5" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />

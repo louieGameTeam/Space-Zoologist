@@ -5,13 +5,8 @@ using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
 {
-    public LoopableAudioTrack curMusic;
-    public LoopableAudioTrack nextMusic;
-
-    public AudioSource curMusicSource;
-    public AudioSource nextMusicSource;
-
-    [SerializeField] Image backgroundImage;
+    public CustomMusicLoopController curMusic;
+    public CustomMusicLoopController nextMusic;
 
     bool isInTransition;
 
@@ -23,36 +18,29 @@ public class MusicManager : MonoBehaviour
 
     Coroutine transition = null;
 
-    private void Awake()
-    {
-        if (curMusicSource == null) {
-            curMusicSource = gameObject.AddComponent<AudioSource>();
-        }
-        if (nextMusicSource == null) {
-            nextMusicSource = gameObject.AddComponent<AudioSource>();
-        }
-    }
-
     void Start()
     {
         isInTransition = false;
-        if (!LoopableAudioTrack.IsEmpty(curMusic) && !curMusic.haveStarted) {
-            curMusic.StartTrack(curMusicSource);
+        if (curMusic != null && !curMusic.isPlaying) {
+            curMusic.StartTrack();
         }
     }
 
-    public bool SetNextTrack(LoopableAudioTrack nextTrack, bool overwriteTransitioningMusic = false)
+    public bool SetNextTrack(CustomMusicLoopController nextTrack, bool overwriteTransitioningMusic = false)
     {
-        if (nextTrack == curMusic) return false;
+        if (nextTrack?.Source.clip == nextMusic?.Source.clip) return false;
 
-        if (LoopableAudioTrack.IsEmpty(nextMusic) || !isInTransition)
+        if (nextMusic != null || !isInTransition)
         {
+            if(nextMusic) Destroy(nextMusic.gameObject); // not needed anymore
+
             nextMusic = nextTrack;
             return true;
         }
         else if (overwriteTransitioningMusic)
         {
             StopTransition();
+            Destroy(nextMusic.gameObject); // not needed anymore
             nextMusic = nextTrack;
             return true;
         }
@@ -72,7 +60,7 @@ public class MusicManager : MonoBehaviour
     /// </summary>
     /// <param name="withFading">Whether the transition involves fading.</param>
     /// <param name="track">The track to play. Setting track will force a transition to start.</param>
-    public void StartTransition(bool withFading, LoopableAudioTrack track = null)
+    public void StartTransition(bool withFading, CustomMusicLoopController track = null)
     {
         if (track != null) {
             //Attempt to forcibly set the next track
@@ -83,15 +71,15 @@ public class MusicManager : MonoBehaviour
             }
         }
 
-        if (LoopableAudioTrack.IsEmpty(nextMusic))
+        if (nextMusic == null)
         {
             return;
         }
-        else if (LoopableAudioTrack.IsEmpty(curMusic))
+        else if (curMusic == null)
         {
             curMusic = nextMusic;
             nextMusic = null;
-            curMusic.StartTrack(curMusicSource);
+            curMusic.StartTrack();
             return;
         }
         else if (nextMusic == curMusic)
@@ -101,7 +89,7 @@ public class MusicManager : MonoBehaviour
         }
 
         if (!withFading) {
-            if (!LoopableAudioTrack.IsEmpty(nextMusic))
+            if (nextMusic != null)
             {
                 if (isInTransition)
                 {
@@ -109,12 +97,13 @@ public class MusicManager : MonoBehaviour
                 }
 
                 curMusic.StopTrack(); //wait for main menu to start before stopping prologue
-                curMusicSource.volume = volume;
+                curMusic.SetVolume(volume);
+                Destroy(curMusic.gameObject); // not needed anymore
 
                 curMusic = nextMusic;
                 nextMusic = null;
 
-                curMusic.StartTrack(curMusicSource);
+                curMusic.StartTrack();
             }
             return;
         }
@@ -135,38 +124,32 @@ public class MusicManager : MonoBehaviour
     // timed sequence of events to make the transition smooth
     IEnumerator MusicTransition(float delay)
     {
-        float buffer = (float)LoopableAudioTrack.BUFFER + Time.deltaTime; //HACK to deal with start buffer
-
-        delay -= buffer;
-        if (delay < 0) delay += SECONDS_PER_BAR;
-
         yield return new WaitForSeconds(delay); // wait for the beat
 
-        nextMusic.StartTrack(nextMusicSource); // start the main menu music
+        nextMusic.StartTrack();
 
-        float waitTime = SECONDS_PER_BAR * 1f; // wait for a full bar
+        float waitTime = SECONDS_PER_BAR * 0.5f; // wait for a full bar
         yield return new WaitForSeconds(waitTime);
-        float fadeTime = SECONDS_PER_BAR * 1.25f; // fade for a bit longer
+
+        float fadeTime = SECONDS_PER_BAR * 0.5f; // fade for a bit longer
 
         // fade out the prologue
         float p = 0f;
+        float startVolume = curMusic.GetVolume();
+
         while (p < 1f)
         { // we only need to fade most of the way out
-            curMusic.SetVolume(volume * (1 - p));
+            curMusic.SetVolume(startVolume * (1 - p));
             p += Time.deltaTime / fadeTime;
             yield return null;
         }
 
-        curMusic.StopTrack(); //wait for main menu to start before stopping prologue
-        curMusicSource.volume = volume;
+        curMusic.StopTrack(); // wait for main menu to start before stopping prologue
+        curMusic.SetVolume(startVolume); // revert the track to its original volume, just in case
+        Destroy(curMusic.gameObject); // not needed anymore
 
         curMusic = nextMusic;
         nextMusic = null;
-
-        // Switch cur and next music source to reuse code
-        AudioSource temp = curMusicSource;
-        curMusicSource = nextMusicSource;
-        nextMusicSource = temp;
 
         isInTransition = false;
         transition = null;
@@ -176,7 +159,7 @@ public class MusicManager : MonoBehaviour
     public void SetVolume(float vol)
     {
         volume = vol;
-        curMusicSource.volume = volume;
-        nextMusicSource.volume = volume;
+        curMusic?.SetVolume(volume);
+        nextMusic?.SetVolume(volume);
     }
 }
