@@ -30,6 +30,7 @@
             #pragma fragment frag
             #define PIXELS_PER_TILE 64
             #define TILE_TYPE_EMPTY 0 
+            #define TILE_TYPE_WALL 6
             #define TILE_TYPE_LIQUID 7
             // flags as determined in GridSystem
             #define HIGHLIGHT_FLAG 0x3
@@ -163,25 +164,29 @@
 
                 // add borders
                 // edges first
-                if (tilePos.x == 0 || tileTypeMatrix[1][0] == TILE_TYPE_LIQUID || tileTypeMatrix[1][0] == TILE_TYPE_EMPTY) {
+                if (tilePos.x == 0 || tileTypeMatrix[1][0] == TILE_TYPE_LIQUID || tileTypeMatrix[1][0] == TILE_TYPE_EMPTY || 
+                    (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[1][0] != TILE_TYPE_WALL)) {
                     float4 leftBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
 
                     if (localUV.x < 0.5)
                         col = lerp(col, leftBar, leftBar.a);
                 }
-                if (tilePos.x == _GridTextureDimensions.x || tileTypeMatrix[1][2] == TILE_TYPE_LIQUID || tileTypeMatrix[1][2] == TILE_TYPE_EMPTY) {
+                if (tilePos.x == _GridTextureDimensions.x || tileTypeMatrix[1][2] == TILE_TYPE_LIQUID || tileTypeMatrix[1][2] == TILE_TYPE_EMPTY ||
+                    (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[1][2] != TILE_TYPE_WALL)) {
                     float4 rightBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
 
                     if (localUV.x > 0.5)
                         col = lerp(col, rightBar, rightBar.a);
                 }
-                if (tilePos.y == 0 || tileTypeMatrix[0][1] == TILE_TYPE_LIQUID || tileTypeMatrix[0][1] == TILE_TYPE_EMPTY) {
+                if (tilePos.y == 0 || tileTypeMatrix[0][1] == TILE_TYPE_LIQUID || tileTypeMatrix[0][1] == TILE_TYPE_EMPTY ||
+                    (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[0][1] != TILE_TYPE_WALL)) {
                     float4 bottomBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
 
                     if (localUV.y < 0.5)
                         col = lerp(col, bottomBar, bottomBar.a);
                 }
-                if (tilePos.y == _GridTextureDimensions.y || tileTypeMatrix[2][1] == TILE_TYPE_LIQUID || tileTypeMatrix[2][1] == TILE_TYPE_EMPTY) {
+                if (tilePos.y == _GridTextureDimensions.y || tileTypeMatrix[2][1] == TILE_TYPE_LIQUID || tileTypeMatrix[2][1] == TILE_TYPE_EMPTY ||
+                    (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[2][1] != TILE_TYPE_WALL)) {
                     float4 topBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
 
                     if (localUV.y > 0.5)
@@ -224,28 +229,28 @@
                 }
                 
                 // inner corners
-                if ((tileTypeMatrix[0][0] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID) ||
+                if ((tileTypeMatrix[0][0] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[0][0] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] != TILE_TYPE_EMPTY && tileTypeMatrix[1][0] != TILE_TYPE_EMPTY)) {
                     float4 blInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
 
                     if (localUV.x < 0.5 && localUV.y < 0.5)
                         col = lerp(col, blInnerCorner, blInnerCorner.a);
                 }
-                if ((tileTypeMatrix[0][2] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID) ||
+                if ((tileTypeMatrix[0][2] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[0][2] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] != TILE_TYPE_EMPTY && tileTypeMatrix[1][2] != TILE_TYPE_EMPTY)) {
                     float4 brInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
 
                     if (localUV.x > 0.5 && localUV.y < 0.5)
                         col = lerp(col, brInnerCorner, brInnerCorner.a);
                 }
-                if ((tileTypeMatrix[2][0] == TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID) ||
+                if ((tileTypeMatrix[2][0] == TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[2][0] == TILE_TYPE_EMPTY && tileTypeMatrix[1][0] != TILE_TYPE_EMPTY && tileTypeMatrix[2][1] != TILE_TYPE_EMPTY)) {
                     float4 tlInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
 
                     if (localUV.x < 0.5 && localUV.y > 0.5)
                         col = lerp(col, tlInnerCorner, tlInnerCorner.a);
                 }
-                if ((tileTypeMatrix[2][2] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID) ||
+                if ((tileTypeMatrix[2][2] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[2][2] == TILE_TYPE_EMPTY && tileTypeMatrix[2][1] != TILE_TYPE_EMPTY && tileTypeMatrix[1][2] != TILE_TYPE_EMPTY)) {
                     float4 trInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
 
@@ -264,10 +269,6 @@
                 // create grid
                 if (_GridOverlayToggle > 0)
                     col = AddGrid(col, localPixel, tilePos, tileInformation);
-
-                // add highlights if needed
-                //if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG == 0 && tileInformation.a != 0)
-                    //col.rgb *= tileInformation.rgb;
 
                 return col;
             }
