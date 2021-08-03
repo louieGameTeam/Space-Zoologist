@@ -15,7 +15,7 @@ public class NeedSystemsTester : MonoBehaviour
         string populationStatsText = "";
         foreach (Population population in PopulationManager.Populations)
         {
-            populationStatsText += $"***{ population.Species.SpeciesName } {population.GetInstanceID()}; Count: {population.Count}; Dominance: {population.Dominance}***\n";
+            populationStatsText += $"***{ population.Species.SpeciesName } {population.GetInstanceID()}; Count: {population.Count}; Dominance: {population.FoodDominance}***\n";
             foreach (KeyValuePair<string, Need> needValue in population.Needs)
             {
                 populationStatsText += $"- {needValue.Key}: { needValue.Value.NeedValue } -- Condition: {population.Needs[needValue.Key].GetCondition(needValue.Value.NeedValue)}\n";

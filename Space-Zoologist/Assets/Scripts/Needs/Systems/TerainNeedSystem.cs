@@ -229,7 +229,7 @@ public class TerrainNeedSystem : NeedSystem
     {
         public int Compare(Population x, Population y)
         {
-            return y.Dominance - x.Dominance;
+            return y.FoodDominance - x.FoodDominance;
         }
     }
 }

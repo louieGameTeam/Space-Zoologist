@@ -78,7 +78,7 @@ public class FoodSourceNeedSystem : NeedSystem
             {
                 float preferredAmount = 0;
                 float compatibleAmount = 0;
-                if (population.Species.Dominance == dominance)
+                if (population.Species.FoodDominance == dominance)
                 {
                     // 2. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
                     for (int j=1; j>=0; j--)

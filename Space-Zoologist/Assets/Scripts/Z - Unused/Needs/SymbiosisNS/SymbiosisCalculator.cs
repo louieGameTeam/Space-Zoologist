@@ -139,7 +139,7 @@ public class SymbiosisCalculator : NeedCalculator
         // Initialize totalLocalDominance and localDominanceRemaining.
         foreach (Population population in populations)
         {
-            float total = populationsWithAccess[population].Sum(p => p.Dominance);
+            float total = populationsWithAccess[population].Sum(p => p.FoodDominance);
             totalLocalDominance.Add(population, total);
             localDominanceRemaining.Add(population, total);
 
@@ -174,7 +174,7 @@ public class SymbiosisCalculator : NeedCalculator
 
                 accessibleAreaRatio[life][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
                 int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[life][population]);
-                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (life.Dominance / totalLocalDominance[population]));
+                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (life.FoodDominance / totalLocalDominance[population]));
             }
 
             // If the food available to the Population is more than enough, only take enough and update its need.
@@ -187,7 +187,7 @@ public class SymbiosisCalculator : NeedCalculator
                     float populationCountAcquired = amountRequiredForGoodCondition;
                     amountPopulationCountRemaining[population] -= populationCountAcquired;
                     totalPopulationCountAcquired += populationCountAcquired;
-                    localDominanceRemaining[population] -= life.Dominance;
+                    localDominanceRemaining[population] -= life.FoodDominance;
                 }
                 float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / life.Count;
                 this.distributAmount[life] = populationCountAcquiredPerIndividual;
@@ -211,7 +211,7 @@ public class SymbiosisCalculator : NeedCalculator
                 //List<Vector3Int> overlapArea = accessibleArea.Where(cell => rpm.CanAccess((Population)life, cell)).ToList();
                 //float accessibleAreaRatio = (float)overlapArea.Count / (float)accessibleArea.Count;
 
-                float dominanceRatio = life.Dominance / localDominanceRemaining[population];
+                float dominanceRatio = life.FoodDominance / localDominanceRemaining[population];
                 totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[life][population] * amountPopulationCountRemaining[population]);
                 //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {totalPopulationCountAcquired} pop count from {population.Species.SpeciesName} {population.GetInstanceID()}");
             }
