@@ -181,13 +181,7 @@ public class ReservePartitionManager : MonoBehaviour
                 // checked before, move on
                 continue;
             }
-            // Check tiles that are under construction, make them inaccessible
-            //if (this.buildBufferManager.IsConstructing(cur.x,cur.y))
-            //{
-            //    unaccessible.Add(cur);
-            //    population.HasAccessibilityChanged = true;
-            //    continue;
-            //}
+            
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
             GameTile tile = _tileSystem.GetGameTileAt(cur);
             // Get liquid tile info
@@ -202,7 +196,13 @@ public class ReservePartitionManager : MonoBehaviour
 
                 newLiquidCompositions.Add(composition);
             }
-
+            // Check tiles that are under construction, make them inaccessible
+            if (this.buildBufferManager.IsConstructing(cur.x, cur.y))
+            {
+                unaccessible.Add(cur);
+                population.HasAccessibilityChanged = true;
+                continue;
+            }
             if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
             {
                 // save the accessible location

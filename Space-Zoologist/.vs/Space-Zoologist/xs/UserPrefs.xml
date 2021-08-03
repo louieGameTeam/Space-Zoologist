@@ -1,15 +1,20 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Managers/EventSystem/EventResponseManager.cs" Line="27" Column="29" />
-      <File FileName="Assets/Scripts/Managers/ResourceManager.cs" />
-      <File FileName="Assets/Scripts/Managers/EventSystem/DialogueResponseManager.cs" Line="10" Column="2" />
+      <File FileName="Assets/Scripts/PopulationSystem/PathFinding/PathRequestManager.cs" Line="47" Column="24" />
+      <File FileName="Assets/Scripts/PopulationSystem/PathFinding/Pathfinding.cs" Line="7" Column="30" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="285" Column="48" />
+      <File FileName="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs" Line="37" Column="24" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="314" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="86" Column="38" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="110" Column="23" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/PodSection.cs" Line="44" Column="31" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Space-Zoologist" expanded="True">
-            <Node name="Assets" expanded="True" selected="True">
+            <Node name="Assets" expanded="True">
               <Node name="AnimalRepresentation" expanded="True">
                 <Node name="Behaviors" expanded="True">
                   <Node name="Scripts" expanded="True" />
@@ -48,7 +53,9 @@
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
-                  <Node name="Population" expanded="True" />
+                  <Node name="Population" expanded="True">
+                    <Node name="PopulationManager.cs" selected="True" />
+                  </Node>
                   <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
@@ -68,7 +75,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d5541173-c32b-4d8a-b39c-8a1bed0982f5" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4a6b18ec-ba73-4355-9694-ad0e5143fbb7" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />

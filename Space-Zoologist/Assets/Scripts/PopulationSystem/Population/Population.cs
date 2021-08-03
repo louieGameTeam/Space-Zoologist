@@ -113,6 +113,11 @@ public class Population : MonoBehaviour, Life
     /// Could improve by checking what shape the accessible area is in
     public void UpdateAccessibleArea(List<Vector3Int> accessibleLocations, AnimalPathfinding.Grid grid)
     {
+        if (accessibleLocations.Count == 0)
+        {
+            Debug.Log("No accessible locations");
+            
+        }
         this.AccessibleLocations = accessibleLocations;
         this.Grid = grid;
     }

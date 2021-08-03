@@ -74,10 +74,19 @@ public class GrowthCalculator
         }
         if (this.GrowthStatus.Equals(GrowthStatus.declining))
         {
+            if (populationIncreaseRate == 0)
+            {
+                populationIncreaseRate = 1f;
+            }
             populationIncreaseRate *= numAnimals * Population.Species.GrowthScaleFactor;
             if (populationIncreaseRate < numAnimals * -0.25f)
             {
                 populationIncreaseRate = numAnimals * -0.25f;
+            }
+            // Handle rounding issues
+            if (populationIncreaseRate < 0 && populationIncreaseRate > -1)
+            {
+                populationIncreaseRate = -1;
             }
         }
         // 2.
@@ -88,7 +97,11 @@ public class GrowthCalculator
             {
                 populationIncreaseRate = numAnimals * 1.5f;
             }
-            //Debug.Log(Population.gameObject.name + " will increase at a rate of " + populationIncreaseRate);
+            // Handle rounding issues
+            if (populationIncreaseRate > 0 && populationIncreaseRate < 1)
+            {
+                populationIncreaseRate = 1;
+            }
 
         }
         populationIncreaseRate = (int)Math.Round(populationIncreaseRate, 0, MidpointRounding.AwayFromZero);

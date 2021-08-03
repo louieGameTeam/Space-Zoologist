@@ -23,7 +23,9 @@ public class BuildBufferManager : GridObjectManager
         int w = levelDataReference.LevelData.MapWidth;
         int h = levelDataReference.LevelData.MapHeight;
         this.isConstructing = new bool[w, h];
+        
     }
+
     public override void Parse()
     {
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)
@@ -192,6 +194,7 @@ public class BuildBufferManager : GridObjectManager
             this.RPM.UpdateAccessMapChangedAt(changedTiles);
         }
     }
+
     public void RevertPreviousTile(Vector3Int pos)
     {
         tilePlacementController.RevertTile(pos);

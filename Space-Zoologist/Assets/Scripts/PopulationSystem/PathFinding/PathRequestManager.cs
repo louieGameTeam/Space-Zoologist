@@ -41,29 +41,19 @@ namespace AnimalPathfinding
         /// <param name="grid"></param>
         public static void RequestPath(Vector3Int start, Vector3Int end, Action<List<Vector3>, bool> callback, Grid grid)
         {
+            if (end.x == -1 && end.y == -1)
+            {
+                Debug.Log("No accessible locations, pathfinding returning early");
+                return;
+            }
             if (instance == null)
             {
                 Debug.Log("PathRequestManager not attached to GameObject, Pathfinding will not work");
                 return;
             }
-            // for (int x=0; x<30; x++)
-            // {
-            //     for (int y=0; y<20; y++)
-            //     {
-            //         Debug.Log("(" + x + ", " + y + ") can access: " + grid.nodes[x, y].walkable);
-            //     }
-            // }
-            // Debug.Log("Grid Size: " + grid.nodes.GetLength(0) +" x " + grid.nodes.GetLength(1));
-            // Debug.Log("Start map position: ");
-            // Debug.Log("("+start.x+","+start.y+")");
-            // Debug.Log("End map position: ");
-            // Debug.Log("("+end.x+","+end.y+")");
             AnimalPathfinding.Node nodeStart = grid.GetNode(start.x, start.y);
             AnimalPathfinding.Node nodeEnd = grid.GetNode(end.x, end.y);
-            // Debug.Log("Start grid position: ");
-            // Debug.Log("("+nodeStart.gridX+","+nodeStart.gridY+")");
-            // Debug.Log("End grid position: ");
-            // Debug.Log("("+nodeEnd.gridX+","+nodeEnd.gridY+")");
+
             PathRequest newRequest = new PathRequest(nodeStart, nodeEnd, callback, grid);
             instance.pathRequestQueue.Enqueue(newRequest);
             instance.TryProcessNext();
