@@ -165,4 +165,12 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
     {
         return !(lhs == rhs);
     }
+    public override bool Equals(object o)
+    {
+        return base.Equals(o);
+    }
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }

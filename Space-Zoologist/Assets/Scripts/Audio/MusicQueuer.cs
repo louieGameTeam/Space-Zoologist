@@ -16,8 +16,6 @@ public class MusicQueuer : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        gameObject.name = nextTrack.Source.clip.name;
-        transform.SetParent(AudioManager.instance.MusicManager.transform);
         QueueAndTrigger();
         Destroy(this);
     }

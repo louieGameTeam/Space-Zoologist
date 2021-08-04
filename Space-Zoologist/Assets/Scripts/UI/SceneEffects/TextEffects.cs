@@ -73,7 +73,10 @@ public class TextEffects : MonoBehaviour
 
         if (Index == IntroductionTexts.Count - 1)
         {
-            musicManager.StartTransition(true);
+            // HACK hardcoded coordination
+            float delay = musicManager.StartTransition(true);
+            int numIntroBars = 3;
+            speed = 1 / (delay + MusicManager.SECONDS_PER_BAR * numIntroBars);
             color = Color.black;
             speed = 0.55f;
         }

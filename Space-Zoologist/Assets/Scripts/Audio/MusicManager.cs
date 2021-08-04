@@ -12,7 +12,7 @@ public class MusicManager : MonoBehaviour
 
     const int TEMPO = 112;                                      // tempo of track, in beats per minute
     const int BEATS_PER_BAR = 2;                                // the tracks have 4 beats per bar, but I'm allowing half-bar transitions
-    const float SECONDS_PER_BAR = BEATS_PER_BAR * 60f / TEMPO;  // (beats / bars) * (60 seconds / 1 minute) * (minutes / beats)
+    public const float SECONDS_PER_BAR = BEATS_PER_BAR * 60f / TEMPO;  // (beats / bars) * (60 seconds / 1 minute) * (minutes / beats)
 
     float volume = 1f;
 
@@ -29,30 +29,48 @@ public class MusicManager : MonoBehaviour
 
     public bool SetNextTrack(CustomMusicLoopController nextTrack, bool overwriteTransitioningMusic = false)
     {
-        if (nextMusic == null && nextTrack == curMusic || nextTrack?.Source.clip == nextMusic?.Source.clip) return false;
+        if (nextMusic == null && nextTrack == curMusic || nextTrack == nextMusic) {
+            return false;
+        }
 
-        if (nextMusic != null || !isInTransition)
+        if (nextMusic == null || !isInTransition)
         {
             if (nextMusic) Destroy(nextMusic.gameObject); // not needed anymore
 
-            nextMusic = nextTrack;
+            PrepareTrack(nextTrack);
             return true;
         }
         else if (overwriteTransitioningMusic)
         {
             StopTransition();
             Destroy(nextMusic.gameObject); // not needed anymore
-            nextMusic = nextTrack;
-            return true;
+
+            if (nextTrack == curMusic)
+            {
+                return false;
+            }
+            else
+            {
+                PrepareTrack(nextTrack);
+                return true;
+            }
         }
 
         return false;
+    }
+
+    private void PrepareTrack(CustomMusicLoopController nextTrack) {
+        nextMusic = nextTrack;
+        nextMusic.gameObject.name = nextMusic.Source.clip.name;
+        nextMusic.transform.SetParent(transform);
+        SetVolume(volume);
     }
 
     public void StopTransition()
     {
         nextMusic.StopTrack();
         StopCoroutine(transition);
+        SetVolume(volume);
         transition = null;
         isInTransition = false;
     }
@@ -62,33 +80,34 @@ public class MusicManager : MonoBehaviour
     /// </summary>
     /// <param name="withFading">Whether the transition involves fading.</param>
     /// <param name="track">The track to play. Setting track will force a transition to start.</param>
-    public void StartTransition(bool withFading, CustomMusicLoopController track = null)
+    /// <returns>returns -1 if no transition happened, 0 if it was instant, or the delay before the transition will start.</returns>
+    public float StartTransition(bool withFading, CustomMusicLoopController track = null)
     {
         if (track != null)
         {
             //Attempt to forcibly set the next track
-            if (!SetNextTrack(track, true) && isInTransition)
+            if (!SetNextTrack(track, true) || isInTransition || track != nextMusic)
             {
-                // only true if nextTrack == track and is being transitioned
-                return;
+                // failed to set a new track, abort
+                return -1;
             }
         }
 
         if (nextMusic == null)
         {
-            return;
+            return -1;
         }
         else if (curMusic == null)
         {
             curMusic = nextMusic;
             nextMusic = null;
             curMusic.StartTrack();
-            return;
+            return 0;
         }
         else if (nextMusic == curMusic)
         {
             nextMusic = null;
-            return;
+            return -1;
         }
 
         if (!withFading)
@@ -108,13 +127,14 @@ public class MusicManager : MonoBehaviour
                 nextMusic = null;
 
                 curMusic.StartTrack();
+                return 0;
             }
-            return;
+            return -1;
         }
 
         if (isInTransition)
         {
-            return;
+            return -1;
         }
 
         isInTransition = true;
@@ -123,6 +143,7 @@ public class MusicManager : MonoBehaviour
         int nextBar = Mathf.CeilToInt(curPlayheadTime / SECONDS_PER_BAR);
         float nextBarTime = nextBar * SECONDS_PER_BAR;
         transition = StartCoroutine(MusicTransition(nextBarTime - curPlayheadTime));
+        return nextBarTime - curPlayheadTime;
     }
 
     // timed sequence of events to make the transition smooth
