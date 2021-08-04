@@ -31,11 +31,22 @@ public class AudioManager : MonoBehaviour
         musicManager = GetComponentInChildren<MusicManager>();
 
         //initialized from prefab
-        if (musicManager == null && transform.childCount > 0)
+        if (musicManager == null)
         {
-            musicManager = transform.GetChild(0).gameObject.AddComponent<MusicManager>();
+            if (transform.childCount > 0)
+            {
+                musicManager = transform.GetChild(0).gameObject.AddComponent<MusicManager>();
+            }
+            else
+            {
+                musicManager = new GameObject("Music Manager", typeof(MusicManager)).GetComponent<MusicManager>();
+                musicManager.transform.SetParent(transform);
+            }
         }
+    }
 
+    private void Start()
+    {
         //TODO Load Volume Settings from player preferences
 
         LoadSFX();
@@ -103,7 +114,8 @@ public class AudioManager : MonoBehaviour
     /// Pick a random sound to play from in the SFXType
     /// </summary>
     /// <param name="type"></param>
-    public void PlayOneShotRandom(SFXType type) {
+    public void PlayOneShotRandom(SFXType type)
+    {
         if (type == SFXType.None) return;
         var audio = SFXDict[type];
 

@@ -36,23 +36,18 @@ public class TextEffects : MonoBehaviour
                 Introduction.alignment = TMPro.TextAlignmentOptions.Center;
             }
         }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            //musicManager.StartTransition();
-            SceneNavigator.LoadMainMenu();
-        }
         FadeNextSceneIn(Introduction);
     }
 
     private void FadeNextSceneIn(TMPro.TextMeshProUGUI line)
     {
-        if (line.color.a <= 255)
+        if (line.color.a <= 1)
         {
             var color = line.color;
             color.a += Time.deltaTime * speed;
             line.color = color;
         }
-        if (BackgroundImage.color.a <= 255)
+        if (BackgroundImage.color.a <= 1)
         {
             var color = BackgroundImage.color;
             color.a += Time.deltaTime * speed;
@@ -61,17 +56,34 @@ public class TextEffects : MonoBehaviour
             color.a += Time.deltaTime * speed;
             PreviousBackgroundImage.color = color;
         }
+        else if (Index == IntroductionTexts.Count)
+        {
+            SceneNavigator.LoadMainMenu();
+        }
     }
 
     private void SetupNextScene()
     {
+        if (Index >= IntroductionTexts.Count) return;
+
         var color = Introduction.color;
         color.a = 0;
         Introduction.color = color;
         PreviousBackgroundImage.sprite = BackgroundImage.sprite;
-        Introduction.text = IntroductionTexts[Index];
-        BackgroundImage.sprite = PrologueIllustrations[Index];
-        color = BackgroundImage.color;
+
+        if (Index == IntroductionTexts.Count - 1)
+        {
+            musicManager.StartTransition(true);
+            color = Color.black;
+            speed = 0.55f;
+        }
+        else
+        {
+            Introduction.text = IntroductionTexts[Index];
+            BackgroundImage.sprite = PrologueIllustrations[Index];
+            color = BackgroundImage.color;
+        }
+
         color.a = 0;
         BackgroundImage.color = color;
         Index++;

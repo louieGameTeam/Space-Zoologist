@@ -22,7 +22,7 @@ public class MusicQueuer : MonoBehaviour
         Destroy(this);
     }
 
-    
+
     public void QueueMusic()
     {
         AudioManager.instance?.MusicManager.SetNextTrack(nextTrack);

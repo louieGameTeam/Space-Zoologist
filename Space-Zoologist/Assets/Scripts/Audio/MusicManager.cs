@@ -21,18 +21,19 @@ public class MusicManager : MonoBehaviour
     void Start()
     {
         isInTransition = false;
-        if (curMusic != null && !curMusic.isPlaying) {
+        if (curMusic != null && !curMusic.isPlaying)
+        {
             curMusic.StartTrack();
         }
     }
 
     public bool SetNextTrack(CustomMusicLoopController nextTrack, bool overwriteTransitioningMusic = false)
     {
-        if (nextTrack?.Source.clip == nextMusic?.Source.clip) return false;
+        if (nextMusic == null && nextTrack == curMusic || nextTrack?.Source.clip == nextMusic?.Source.clip) return false;
 
         if (nextMusic != null || !isInTransition)
         {
-            if(nextMusic) Destroy(nextMusic.gameObject); // not needed anymore
+            if (nextMusic) Destroy(nextMusic.gameObject); // not needed anymore
 
             nextMusic = nextTrack;
             return true;
@@ -48,7 +49,8 @@ public class MusicManager : MonoBehaviour
         return false;
     }
 
-    public void StopTransition() {
+    public void StopTransition()
+    {
         nextMusic.StopTrack();
         StopCoroutine(transition);
         transition = null;
@@ -62,7 +64,8 @@ public class MusicManager : MonoBehaviour
     /// <param name="track">The track to play. Setting track will force a transition to start.</param>
     public void StartTransition(bool withFading, CustomMusicLoopController track = null)
     {
-        if (track != null) {
+        if (track != null)
+        {
             //Attempt to forcibly set the next track
             if (!SetNextTrack(track, true) && isInTransition)
             {
@@ -88,7 +91,8 @@ public class MusicManager : MonoBehaviour
             return;
         }
 
-        if (!withFading) {
+        if (!withFading)
+        {
             if (nextMusic != null)
             {
                 if (isInTransition)

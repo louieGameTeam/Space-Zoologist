@@ -9,7 +9,8 @@ using UnityEngine;
 /// </summary>
 
 [RequireComponent(typeof(AudioSource))]
-public class CustomMusicLoopController : MonoBehaviour {
+public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<CustomMusicLoopController>
+{
     bool hasCustomLoopData;         // whether this audio clip has special looping behavior
     int loopLength;                 // the length, in samples, of the portion of the track which is looped
     int loopEndSample;              // the sample which indicates that we should loop back to the start of the loop
@@ -19,12 +20,14 @@ public class CustomMusicLoopController : MonoBehaviour {
     public AudioSource Source => source;
     public bool isPlaying => source.isPlaying;
 
-    void Awake() {
+    void Awake()
+    {
         AudioSource attachedSource = GetComponent<AudioSource>();
         Initialize(attachedSource);
     }
 
-    void Initialize(AudioSource refSource) {
+    void Initialize(AudioSource refSource)
+    {
         source = refSource;
         string clipName = source.clip.name;
 
@@ -32,11 +35,13 @@ public class CustomMusicLoopController : MonoBehaviour {
         int openBracketIndex = clipName.IndexOf('['); // first, find the index of the '['
         hasCustomLoopData = openBracketIndex > -1; // if we don't find '[', assume we have no loop data
 
-        if (hasCustomLoopData) {
+        if (hasCustomLoopData)
+        {
             source.loop = false; // we handle looping on this script, so don't use the AudioSource's loop functionality
 
             int closeBracketIndex = clipName.IndexOf(']');
-            if (closeBracketIndex == -1) { // if we don't find a close bracket, 
+            if (closeBracketIndex == -1)
+            { // if we don't find a close bracket, 
                 Debug.LogError("Loop data is invalid: no ']' found!");
                 return;
             }
@@ -44,7 +49,8 @@ public class CustomMusicLoopController : MonoBehaviour {
             // start with the character after the open bracket, and before the close bracket
             string loopData = clipName.Substring(openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1);
             string[] tokens = loopData.Split('-');
-            if (tokens.Length != 3) {
+            if (tokens.Length != 3)
+            {
                 Debug.LogError("Loop data is invalid: incorrect number of tokens found!");
                 return;
             }
@@ -58,23 +64,29 @@ public class CustomMusicLoopController : MonoBehaviour {
 
             // the length of the loop is (loopEnd - "loop start")
             loopLength = loopEndSample - (source.clip.samples * loopStartBar / totalBarCount);
-        } else {
+        }
+        else
+        {
             source.loop = true;
         }
     }
 
-    void Update() {
+    void Update()
+    {
         if (!source.isPlaying || !hasCustomLoopData) return;
 
         // once we have passed the end of the loop, go back to the start of the loop (automatically offset correctly)
-        if (source.timeSamples > loopEndSample) {
+        if (source.timeSamples > loopEndSample)
+        {
             source.timeSamples -= loopLength;
         }
     }
 
     // start playing the track
-    public void StartTrack() {
-        if (source.isPlaying) {
+    public void StartTrack()
+    {
+        if (source.isPlaying)
+        {
             Debug.LogWarning("Trying to start a track that is already playing!");
             return;
         }
@@ -84,8 +96,10 @@ public class CustomMusicLoopController : MonoBehaviour {
     }
 
     // stop playing the track
-    public void StopTrack() {
-        if (!source.isPlaying) {
+    public void StopTrack()
+    {
+        if (!source.isPlaying)
+        {
             Debug.LogWarning("Trying to stop a track that isn't playing!");
             return;
         }
@@ -95,8 +109,10 @@ public class CustomMusicLoopController : MonoBehaviour {
     }
 
     // pause the track
-    public void PauseTrack() {
-        if (!source.isPlaying) {
+    public void PauseTrack()
+    {
+        if (!source.isPlaying)
+        {
             Debug.LogWarning("Trying to pause a track that isn't playing!");
             return;
         }
@@ -106,8 +122,10 @@ public class CustomMusicLoopController : MonoBehaviour {
     }
 
     // unpause the track
-    public void UnpauseTrack() {
-        if (source.isPlaying) {
+    public void UnpauseTrack()
+    {
+        if (source.isPlaying)
+        {
             Debug.LogWarning("Trying to unpause a track that is already playing!");
             return;
         }
@@ -117,17 +135,34 @@ public class CustomMusicLoopController : MonoBehaviour {
     }
 
     // returns the realtime position of the track
-    public float GetCurrentTime() {
+    public float GetCurrentTime()
+    {
         return source.time;
     }
 
     // changes the volume of this track
-    public void SetVolume(float volume) {
+    public void SetVolume(float volume)
+    {
         source.volume = volume;
     }
 
     // get the volume of this track
-    public float GetVolume() {
+    public float GetVolume()
+    {
         return source.volume;
+    }
+
+    public virtual bool Equals(CustomMusicLoopController other)
+    {
+        return source?.clip == other?.source?.clip;
+    }
+    public static bool operator ==(CustomMusicLoopController lhs, CustomMusicLoopController rhs)
+    {
+        return lhs?.source?.clip == rhs?.source?.clip;
+    }
+
+    public static bool operator !=(CustomMusicLoopController lhs, CustomMusicLoopController rhs)
+    {
+        return !(lhs == rhs);
     }
 }
