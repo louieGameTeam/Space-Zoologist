@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private LevelTrace currentLevelTrace = null;
     // Initialize a day trace to use for the current day in the level being played.
     private DayTrace currentDayTrace = null;
+    // Initialize a journal trace.
+    private JournalTrace currentJournalTrace = null;
 
     // On Awake, check the status of the instance. If the instance is null, replace it with the current GameManager.
     // Else, destroy the gameObject this script is attached to. There can only be one.
@@ -51,10 +53,6 @@ public class GameManager : MonoBehaviour
 
         // Initialize the list of level traces.
         currentPlayTrace.LevelTraces = new List<LevelTrace>();
-
-        // Listen to next day events being fired.
-        Action onNextDay += NextDayTrace(currentPlayTrace.SessionElapsedTime, currentDayTrace);   
-        EventManager.Instance.SubscribeToEvent(EventType.OnNextDay, onNextDay);
     }
 
     // Update is called once per frame
@@ -79,6 +77,11 @@ public class GameManager : MonoBehaviour
             // Create the starting day trace.
             currentDayTrace = CreateDayTrace(currentPlayTrace.SessionElapsedTime, currentDay, playerBalance);
             DebugDayTrace(currentDayTrace);
+            // Listen to next day events being fired.   
+            EventManager.Instance.SubscribeToEvent(EventType.OnNextDay, NextDayTrace);
+            // Listen to journal events being fired.
+            EventManager.Instance.SubscribeToEvent(EventType.OnJournalOpened, CreateJournalTrace);
+            EventManager.Instance.SubscribeToEvent(EventType.OnJournalClosed, CloseJournalTrace);
             StartCoroutine(ChangeScene());
         }
     }
@@ -151,10 +154,8 @@ public class GameManager : MonoBehaviour
     // Input: timestamp - the time (in elapsed seconds) this day started
     private DayTrace CreateDayTrace(float timestamp, int currentDay, float playerBalance)
     {
-        //Debug.Log("creating new day trace...");
         // Initialize the day trace.
         DayTrace dayTrace = new DayTrace();
-        //Debug.Log("Current day is: " + timeSystem.GetComponent<TimeSystem>().CurrentDay);
         dayTrace.DayID = currentDay;
         dayTrace.DayStartTime = timestamp;
         dayTrace.BalanceStart = playerBalance;
@@ -175,15 +176,38 @@ public class GameManager : MonoBehaviour
     }
 
     // A function that modifies the current day trace, pushes it to the list of day traces for the level, and sets a new current day trace.
-    // Initiated by the onNextDay event.
-    private void NextDayTrace(float timestamp, DayTrace currentDayTrace)
+    // Initiated by the OnNextDay event.
+    private void NextDayTrace()
     {
         // Get references to the TimeSystem object and the PlayerBalance object.
         int currentDay = GameObject.Find("TimeSystem").GetComponent<TimeSystem>().CurrentDay;
         float playerBalance = GameObject.Find("PlayerBalance").GetComponent<PlayerBalance>().Balance;
+        float timestamp = this.currentPlayTrace.SessionElapsedTime;
         CloseDayTrace(timestamp, currentDayTrace, playerBalance);
         DayTrace newDayTrace = CreateDayTrace(timestamp, currentDay, playerBalance);
         this.currentDayTrace = newDayTrace;
+    }
+
+    // A function that creates a journal trace object and sets the current journal trace to this new object. Initiated by the OnJournalOpened event.
+    private void CreateJournalTrace()
+    {
+        JournalTrace journalTrace = new JournalTrace();
+        float timestamp = this.currentPlayTrace.SessionElapsedTime;
+        journalTrace.JournalStartTime = timestamp;
+        this.currentJournalTrace = journalTrace;
+    }
+
+    // A function that modifies the current journal trace, pushes it to the list of journal traces for the current day, and sets the current journal trace
+    // to null. Initiated by the OnJournalClosed event.
+    private void CloseJournalTrace()
+    {
+        JournalTrace journalTrace = this.currentJournalTrace;
+        float timestamp = this.currentPlayTrace.SessionElapsedTime;
+        journalTrace.JournalEndTime = timestamp;
+        journalTrace.JournalDeltaTime = journalTrace.JournalEndTime - journalTrace.JournalStartTime;
+        this.currentDayTrace.JournalTime += journalTrace.JournalDeltaTime;
+        this.currentDayTrace.JournalTraces.Add(journalTrace);
+        this.currentJournalTrace = null;
     }
 
     // A function that serializes the current PlayTrace object to JSON.

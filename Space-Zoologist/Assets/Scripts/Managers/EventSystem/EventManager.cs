@@ -15,6 +15,8 @@ public enum EventType {
     NPCDialogue,
     MainObjectivesCompleted, GameOver, // Pass null is fine
     OnNextDay, // Pass null
+    OnJournalOpened, // Pass null
+    OnJournalClosed, // Pass null
 };
 
 /// <summary>
