@@ -15,7 +15,9 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: fbeeb191ec21d4b8d89f731e0e4c19b5, type: 2}
   speciesName: Goat
   dominance: 5
+  growthScaleFactor: 0
   growthRate: 40
+  decayRate: 3
   range: 10
   size: 10
   accessibleTerrain: 020000000100000003000000
@@ -25,6 +27,7 @@ MonoBehaviour:
     needs:
     - needName: Sand
       severity: 5
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
@@ -37,18 +40,20 @@ MonoBehaviour:
       - 40
     - needName: Grass
       severity: 5
+      isPreferred: 0
       conditions:
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: 096330ea0e494a44a8134ddf865eb903, type: 2}
+        Behavior: {fileID: 0}
       - Condition: 1
-        Behavior: {fileID: 11400000, guid: 096330ea0e494a44a8134ddf865eb903, type: 2}
+        Behavior: {fileID: 0}
       - Condition: 2
-        Behavior: {fileID: 11400000, guid: 096330ea0e494a44a8134ddf865eb903, type: 2}
+        Behavior: {fileID: 0}
       thresholds:
       - 10
       - 20
     - needName: Dirt
       severity: 5
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: d92755225fc454a2e8a58c01f234aa84, type: 2}
@@ -63,6 +68,7 @@ MonoBehaviour:
     needs:
     - needName: MineralX
       severity: 2
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 6650622ca46d5497ca217005b2091d91, type: 2}
@@ -81,6 +87,7 @@ MonoBehaviour:
       - 0.7
     - needName: MineralZ
       severity: 5
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 6650622ca46d5497ca217005b2091d91, type: 2}
@@ -101,9 +108,10 @@ MonoBehaviour:
     needs:
     - needName: Space Maple
       severity: 2
+      isPreferred: 0
       conditions:
       - Condition: 0
-        Behavior: {fileID: 11400000, guid: e264c503462b04119899ac3bac045c6a, type: 2}
+        Behavior: {fileID: 0}
       - Condition: 0
         Behavior: {fileID: 11400000, guid: d8db50c154b53314db35cc28d7bacbde, type: 2}
       - Condition: 1
@@ -116,6 +124,7 @@ MonoBehaviour:
       - 7
     - needName: Bush
       severity: 2
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 53a4c7a523e59478a906d174e1b1dd60, type: 2}
@@ -130,6 +139,7 @@ MonoBehaviour:
     needs:
     - needName: Density
       severity: 2
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 053c04e90329b4ff9bac97445f3223ec, type: 2}
@@ -144,6 +154,7 @@ MonoBehaviour:
     needs:
     - needName: GasX
       severity: 2
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 78e81f6121ed84fe5b3576a08f87d8fb, type: 2}
@@ -158,6 +169,7 @@ MonoBehaviour:
     needs:
     - needName: Strot
       severity: 2
+      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 11400000, guid: 4023f3ff0e2b0487db4164c962f591bc, type: 2}

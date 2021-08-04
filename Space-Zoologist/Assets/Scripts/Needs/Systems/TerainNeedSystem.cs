@@ -124,13 +124,14 @@ public class TerrainNeedSystem : NeedSystem
             {
                 int numTiles = count;
                 string needName = ((TileType)index).ToString();
+                
                 if (population.GetNeedValues().ContainsKey(needName))
                 {
                     if (needName.Equals("Liquid"))
                     {
                         numTiles = rpm.GetLiquidComposition(population).Count;
+                        Debug.Log("terrain count" + count + ", numtiles: " + numTiles);
                     }
-
                     population.UpdateNeed(needName, numTiles);
                 }
             }

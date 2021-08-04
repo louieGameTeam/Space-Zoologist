@@ -14,6 +14,7 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] BuildBufferManager buildBufferManager = default;
     [SerializeField] int maxDay = 20;
     private int currentDay = 1;
+    public bool LessThanMaxDay => currentDay <= maxDay;
 
     private void Start()
     {

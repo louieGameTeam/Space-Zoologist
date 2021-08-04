@@ -15,8 +15,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
     [SerializeField] private GameObject DialogueButton = default;
-    [SerializeField] private Image DefaultImage = default;
-    [SerializeField] private Image NotificationImage = default;
     private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
 
     private bool ContinueSpeech = false;
@@ -54,8 +52,6 @@ public class DialogueManager : MonoBehaviour
         {
             return;
         }
-        this.DialogueButton.GetComponent<Button>().targetGraphic = NotificationImage;
-        NotificationImage.gameObject.SetActive(true);
         queuedConversations.Enqueue(newDialogue);
     }
 
@@ -64,11 +60,6 @@ public class DialogueManager : MonoBehaviour
         if (queuedConversations.Count > 0)
         {
             currentDialogue = queuedConversations.Dequeue();
-            if (queuedConversations.Count == 0)
-            {
-                this.DialogueButton.GetComponent<Button>().targetGraphic = DefaultImage;
-                NotificationImage.gameObject.SetActive(false);
-            }
         }
         else
         {

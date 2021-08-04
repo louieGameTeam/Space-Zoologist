@@ -13,12 +13,11 @@ public class GridSystem : MonoBehaviour
     [HideInInspector]
     public PlacementValidation PlacementValidation = default;
     [SerializeField] public Grid Grid = default;
-    [SerializeField] public Tilemap PlacableArea = default;
+    [SerializeField] public Tilemap GridOverlay = default;
     [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private PopulationManager PopulationManager = default;
-    [SerializeField] private Tilemap TilePlacementValidation = default;
     [SerializeField] private GameTile Tile = default;
     [Header("Used to define 2d array")]
     [SerializeField] private int ReserveWidth = default;
@@ -36,11 +35,11 @@ public class GridSystem : MonoBehaviour
             for (int j=0; j<this.ReserveHeight; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
-                if (startTile == default && PlacableArea.HasTile(loc))
+                if (startTile == default && GridOverlay.HasTile(loc))
                 {
                     startTile = loc;
                 }
-                this.CellGrid[i, j] = new CellData(PlacableArea.HasTile(loc));
+                this.CellGrid[i, j] = new CellData(GridOverlay.HasTile(loc));
             }
         }
     }
@@ -145,7 +144,7 @@ public class GridSystem : MonoBehaviour
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         Vector3Int loc = Grid.WorldToCell(mousePosition);
-        return PlacableArea.HasTile(loc);
+        return GridOverlay.HasTile(loc);
     }
 
     // Will need to make the grid the size of the max tilemap size
@@ -183,7 +182,7 @@ public class GridSystem : MonoBehaviour
             for (int j = 0; j < this.ReserveHeight; j++)
             {
                 Vector3Int loc = new Vector3Int(i, j, 0);
-                tileGrid[i, j] = PlacableArea.HasTile(loc);
+                tileGrid[i, j] = GridOverlay.HasTile(loc);
             }
         }
     }

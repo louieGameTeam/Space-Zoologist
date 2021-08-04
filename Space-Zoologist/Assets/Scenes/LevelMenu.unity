@@ -221,6 +221,11 @@ PrefabInstance:
       propertyPath: curMusic.startupClip
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380176, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -360,10 +365,20 @@ PrefabInstance:
       propertyPath: nextTrack.startupClip
       value: 
       objectReference: {fileID: 8300000, guid: f20e8bae733f34c10a40a8fcb91127d4, type: 3}
+    - target: {fileID: 5423665932188050014, guid: 6238c2724e7624d0580fcf5738f4fd83,
+        type: 3}
+      propertyPath: fading
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5423665932188050015, guid: 6238c2724e7624d0580fcf5738f4fd83,
         type: 3}
       propertyPath: m_Name
       value: MusicQueuer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5423665932188050015, guid: 6238c2724e7624d0580fcf5738f4fd83,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6238c2724e7624d0580fcf5738f4fd83, type: 3}

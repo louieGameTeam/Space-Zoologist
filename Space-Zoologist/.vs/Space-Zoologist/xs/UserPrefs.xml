@@ -1,15 +1,11 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/BuildBufferManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs">
     <Files>
-      <File FileName="Assets/Scripts/Y - Utils/SpeciesReferenceData.cs" Line="18" Column="1" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" Line="314" Column="42" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" />
-      <File FileName="Assets/Scripts/Plot/RPS/AtmosphericComposition.cs" />
-      <File FileName="Assets/Scripts/Managers/TimeSystem/PauseManager.cs" Line="91" Column="31" />
-      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="174" Column="1" />
+      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" Line="62" Column="61" IsPinned="True" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="44" Column="25" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="10" Column="14" />
+      <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" Line="135" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -32,34 +28,35 @@
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
                     </Node>
-                    <Node name="NodeEventHolder.cs" selected="True" />
                   </Node>
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="Audio" expanded="True" />
-                <Node name="Dialogue" expanded="True" />
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
-                  <Node name="TimeSystem" expanded="True">
-                    <Node name="PauseManager.cs" selected="True" />
-                  </Node>
+                  <Node name="EventSystem" expanded="True" />
+                  <Node name="TimeSystem" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
                     <Node name="FoodSystem" expanded="True" />
                   </Node>
                 </Node>
+                <Node name="Notebook" expanded="True">
+                  <Node name="UI" expanded="True" />
+                </Node>
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
-                  <Node name="BuildBufferManager.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True" />
+                  <Node name="Representation" expanded="True">
+                    <Node name="GrowthCalculator.cs" selected="True" />
+                  </Node>
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="Inspector" expanded="True" />
@@ -78,10 +75,11 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8984bae9-076f-4607-9ac6-40f01fdc4b58" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="aa374cbd-f283-4e22-bedb-f12462a20b5b" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/UI/Inspector/Inspector.cs" relfile="Assets/Scripts/UI/Inspector/Inspector.cs" line="205" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

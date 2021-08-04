@@ -68,10 +68,12 @@ public class LiquidModificationHUD : MonoBehaviour
             else //If not clicked on a liquid tile, close HUD
             {
                 liquidModificationHUD.SetActive(false);
+                ParseValues();
             }
         }
-        else if (!MenuManager.IsInStore)
+        else if (!MenuManager.IsInStore && liquidModificationHUD.activeSelf)
         {
+            ParseValues();
             liquidModificationHUD.SetActive(false);
         }
     }
