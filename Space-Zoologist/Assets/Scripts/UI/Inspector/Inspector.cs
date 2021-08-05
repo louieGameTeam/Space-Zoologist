@@ -282,6 +282,7 @@ public class Inspector : MonoBehaviour
 
     public void UpdateCurrentDisplay()
     {
+        this.gridSystem.UpdateAnimalCellGrid();
         GridSystem.CellData cellData = getCellData(selectedPosition);
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
