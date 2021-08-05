@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef2edab3d2645437d872ebb87024a9be, type: 3}
-  m_Name: E1Objective
+  m_Name: L2E1Objective
   m_EditorClassIdentifier: 
   survivalObjectiveDatas:
   - targetSpecies: {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
     targetPopulationCount: 1
-    targetPopulationSize: 30
+    targetPopulationSize: 20
+    timeRequirement: 0
+  - targetSpecies: {fileID: 11400000, guid: 092bd2408667e324f9b3995e5a4a2428, type: 2}
+    targetPopulationCount: 1
+    targetPopulationSize: 20
     timeRequirement: 0
   resourceObjectiveDatas: []
