@@ -12,43 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: E1Data 2
   m_EditorClassIdentifier: 
-  Level: {fileID: 11400000, guid: fe4d49745a36f4941805b30a60e788fd, type: 2}
+  Level: {fileID: 11400000, guid: 07f3acd3171dd473b8414ffc249451a1, type: 2}
   startingBalance: 200
-  MapWidth: 30
-  MapHeight: 30
+  MapWidth: 29
+  MapHeight: 29
   LevelObjectiveData: {fileID: 11400000, guid: e39f7b2122c9a4760be98e31f69160c4, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
   - {fileID: 11400000, guid: df43116331ac049f6a18327890673ac5, type: 2}
   - {fileID: 11400000, guid: 09079a79eb6ae41a887cdcfd15c7b359, type: 2}
   - {fileID: 11400000, guid: b65662df451a6444ebdb1ef6d79cddb1, type: 2}
+  - {fileID: 11400000, guid: 8bbed6e11bf70469684ca67fd7eb95a3, type: 2}
   animalSpecies:
   - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
-  items:
-  - {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
-  - {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
-  - {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
-  - {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
-  - {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}
-  - {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
-  - {fileID: 11400000, guid: 011aebdeac608401ea2bece03b01dd8c, type: 2}
-  - {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
   itemQuantities:
   - itemObject: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-    initialAmount: 20
+    initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
-    initialAmount: 20
+    initialAmount: 15
   - itemObject: {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
-    initialAmount: 20
+    initialAmount: 50
   - itemObject: {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}
     initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
-    initialAmount: 10
+    initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 011aebdeac608401ea2bece03b01dd8c, type: 2}
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
