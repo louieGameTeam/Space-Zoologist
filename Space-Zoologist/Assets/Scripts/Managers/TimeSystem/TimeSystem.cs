@@ -27,9 +27,9 @@ public class TimeSystem : MonoBehaviour
         this.PopulationManager.UpdateAccessibleLocations();
         this.PopulationManager.UdateAllPopulationRegistration();
         this.NeedSystemManager.UpdateAllSystems();
-        foreach (Population population in this.PopulationManager.Populations)
+        for (int i=PopulationManager.Populations.Count - 1; i>= 0; i--)
         {
-            population.HandleGrowth();
+            PopulationManager.Populations[i].HandleGrowth();
         }
         foreach (Population population in this.PopulationManager.Populations)
         {
