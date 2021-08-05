@@ -171,7 +171,7 @@
                     if (localUV.x < 0.5)
                         col = lerp(col, leftBar, leftBar.a);
                 }
-                if (tilePos.x == _GridTextureDimensions.x || tileTypeMatrix[1][2] == TILE_TYPE_LIQUID || tileTypeMatrix[1][2] == TILE_TYPE_EMPTY ||
+                if (tilePos.x == _GridTextureDimensions.x - 1 || tileTypeMatrix[1][2] == TILE_TYPE_LIQUID || tileTypeMatrix[1][2] == TILE_TYPE_EMPTY ||
                     (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[1][2] != TILE_TYPE_WALL)) {
                     float4 rightBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
 
@@ -185,7 +185,7 @@
                     if (localUV.y < 0.5)
                         col = lerp(col, bottomBar, bottomBar.a);
                 }
-                if (tilePos.y == _GridTextureDimensions.y || tileTypeMatrix[2][1] == TILE_TYPE_LIQUID || tileTypeMatrix[2][1] == TILE_TYPE_EMPTY ||
+                if (tilePos.y == _GridTextureDimensions.y - 1 || tileTypeMatrix[2][1] == TILE_TYPE_LIQUID || tileTypeMatrix[2][1] == TILE_TYPE_EMPTY ||
                     (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[2][1] != TILE_TYPE_WALL)) {
                     float4 topBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
 

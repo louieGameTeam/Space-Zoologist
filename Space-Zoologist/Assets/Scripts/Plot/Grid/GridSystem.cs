@@ -38,7 +38,7 @@ public class GridSystem : MonoBehaviour
     // Food and home locations updated when added, animal locations updated when the store opens up.
     // grid is accessed using [y, x] due to 2d array structure
     private TileData[,] TileDataGrid = default;
-    private HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
+    public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
@@ -51,24 +51,10 @@ public class GridSystem : MonoBehaviour
     private Texture2D TilemapTexture;
 
     public bool HasTerrainChanged = false;
-    public List<Vector3Int> changedTiles = new List<Vector3Int>();
 
     #region Monobehaviour Callbacks
     private void Awake()
     {
-        // this.CellGrid = new CellData[this.ReserveWidth, this.ReserveHeight];
-        // for (int i=0; i<this.ReserveWidth; i++)
-        // {
-        //     for (int j=0; j<this.ReserveHeight; j++)
-        //     {
-        //         Vector3Int loc = new Vector3Int(i, j, 0);
-        //         if (startTile == default && GridOverlay.HasTile(loc))
-        //         {
-        //             startTile = loc;
-        //         }
-        //         this.CellGrid[i, j] = new CellData(GridOverlay.HasTile(loc));
-        //     }
-        // }
         // tilelayermanager stuff
         InitializeTileLayerManager();
     }
@@ -96,26 +82,24 @@ public class GridSystem : MonoBehaviour
             }
         }
 
-        // temporary to show effect
-        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 1, 0), TileFlag.LIQUID_FLAG, Color.clear);
-        // ApplyFlagToTileTexture(Tilemap, new Vector3Int(1, 2, 0), TileFlag.LIQUID_FLAG, Color.clear);
-
-        // apply changes to tilemap (for some reason it isn't working on awake)
-
-
         try
         {
             EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
             {
-                this.changedTiles.Clear();
+                this.ChangedTiles.Clear();
             });
+
+            List<Vector3Int> changedTilesNoWall = new List<Vector3Int>();
+            foreach (Vector3Int tilePosition in ChangedTiles)
+            {
+                if (this.GetGameTileAt(tilePosition).type != TileType.Wall)
+                    changedTilesNoWall.Add(tilePosition);
+            }
 
             EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
             {
                 // Invoke event and pass the changed tiles that are not walls
-                EventManager.Instance.InvokeEvent(EventType.TerrainChange, this.changedTiles.FindAll(
-                        pos => this.GetGameTileAt(pos).type != TileType.Wall
-                    ));
+                EventManager.Instance.InvokeEvent(EventType.TerrainChange, changedTilesNoWall);
             });
         }
         catch { };
@@ -264,15 +248,86 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
-    public void AddTile(Vector3Int tilePosition, GameTile tile)
+    public void AddTile(Vector3Int tilePosition, GameTile tile, bool godmode = false)
     {
         TileData tileData = GetTileData(tilePosition);
 
-        if (tile.type == TileType.Liquid)
-            tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
-        tileData.PreviewReplacement(tile);
-        ChangedTiles.Add(tilePosition);
-        ApplyChangesToTilemap(tilePosition);
+        if (godmode)
+        {
+            if (IsWithinGridBounds(tilePosition))
+            {
+                if (tile.type == TileType.Liquid)
+                    tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                tileData.PreviewReplacement(tile);
+                ChangedTiles.Add(tilePosition);
+                ApplyChangesToTilemap(tilePosition);
+            }
+            else if ((tilePosition.x >= ReserveWidth && tilePosition.y > 0) ||
+                (tilePosition.x > 0 && tilePosition.y >= ReserveHeight))
+            {
+                // if it isn't within grid bounds and is bigger than the current reserve size
+                // change the array such that it will now contain the new tile
+                TileData[,] TileDataGridCopy = TileDataGrid.Clone() as TileData[,];
+
+                // get new maximum boundaries
+                int maxWidth = tilePosition.x >= ReserveWidth ? tilePosition.x + 1 : ReserveWidth;
+                int maxHeight = tilePosition.y >= ReserveHeight ? tilePosition.y + 1 : ReserveHeight;
+                // create the new array and texture
+                TileDataGrid = new TileData[maxHeight, maxWidth];
+                Texture2D newTilemapTexture = new Texture2D(maxWidth + 1, maxHeight + 1);
+
+                // fill the array and texture with values
+                for (int i = 0; i < TileDataGrid.GetLength(1); ++i)
+                {
+                    for (int j = 0; j < TileDataGrid.GetLength(0); ++j)
+                    {
+                        if (i < ReserveWidth && j < ReserveHeight)
+                        {
+                            TileDataGrid[j, i] = TileDataGridCopy[j, i];
+                            newTilemapTexture.SetPixel(i, j, TilemapTexture.GetPixel(i, j));
+                        }
+                        else
+                        {
+                            TileDataGrid[j, i] = new TileData(new Vector3Int(i, j, 0));
+                            newTilemapTexture.SetPixel(i, j, new Color(0, 0, 0, 0));
+                        }
+                    }
+                }
+
+                // update old values
+                ReserveWidth = maxWidth;
+                ReserveHeight = maxHeight;
+                TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition);
+                tileData = GetTileData(tilePosition);
+
+                // add texture to the buffer
+                newTilemapTexture.filterMode = FilterMode.Point;
+                newTilemapTexture.wrapMode = TextureWrapMode.Repeat;
+                newTilemapTexture.Apply();
+                TilemapTexture = newTilemapTexture;
+
+                TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
+                renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
+                Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+
+                if (tile.type == TileType.Liquid)
+                    tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                tileData.PreviewReplacement(tile);
+                ChangedTiles.Add(tilePosition);
+                ApplyChangesToTilemap(tilePosition);
+            }
+        }
+        else
+        {
+            if (tileData != null)
+            {
+                if (tile.type == TileType.Liquid)
+                    tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                tileData.PreviewReplacement(tile);
+                ChangedTiles.Add(tilePosition);
+                ApplyChangesToTilemap(tilePosition);
+            }
+        }
         // TODO update color of liquidbody
     }
     public void RemoveTile(Vector3Int tilePosition)
@@ -378,7 +433,8 @@ public class GridSystem : MonoBehaviour
     {
         foreach (Vector3Int tilePosition in this.ChangedTiles)
         {
-            GetTileData(tilePosition).ConfirmReplacement();
+            if (GetTileData(tilePosition) != null)
+                GetTileData(tilePosition).ConfirmReplacement();
         }
         foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
         {

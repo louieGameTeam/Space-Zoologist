@@ -207,7 +207,7 @@ public class MapDesigningTool : MonoBehaviour
         GUILayout.Box("Cell Pos: " + cellPosition);
         GameTile gameTile = this.gridSystem.GetGameTileAt(cellPosition);
         string name = gameTile ? gameTile.name : "Null";
-        LiquidBody liquid = this.gridSystem.GetTileData(cellPosition).currentLiquidBody;
+        LiquidBody liquid = this.gridSystem.GetTileData(cellPosition) == null ? null : this.gridSystem.GetTileData(cellPosition).currentLiquidBody;
         string bodyID = "Null";
         string con = "Null";
         if (liquid != null)

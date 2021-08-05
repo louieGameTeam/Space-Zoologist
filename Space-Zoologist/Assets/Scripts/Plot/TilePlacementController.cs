@@ -118,23 +118,10 @@ public class TilePlacementController : MonoBehaviour
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
         GridSystem.ConfirmPlacement();
-        //RenderColorOfColorLinkedTiles(addedTiles.ToList());
-        foreach (GameTile tile in referencedTiles)
-        {
-            // may have been a special case for liquid or highlighting
-            /*
-            if (tile.targetTilemap.GetComponent<TileContentsManager>() == null && tile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
-            {
-                foreach (Vector3Int vector3Int in addedTiles)
-                {
-                    placedTileColorManager.SetTileColor(vector3Int, tile);
-                }
-            }*/
-        }
 
         // Set terrain modified flag
         this.GridSystem.HasTerrainChanged = true;
-        this.GridSystem.changedTiles.AddRange(addedTiles.ToList());
+        this.GridSystem.ChangedTiles.UnionWith(addedTiles);
 
         // Clear all dics
         this.referencedTiles.Clear();
@@ -331,7 +318,7 @@ public class TilePlacementController : MonoBehaviour
             }
             foreach (GameTile tile in referencedTiles)
             {
-                GridSystem.AddTile(cellPosition, tile);
+                GridSystem.AddTile(cellPosition, tile, godMode);
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
