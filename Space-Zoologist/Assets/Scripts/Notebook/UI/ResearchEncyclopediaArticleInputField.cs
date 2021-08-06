@@ -21,6 +21,15 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     [Tooltip("Text field used to display the encyclopedia article")]
     private TMP_InputField textField;
     [SerializeField]
+    [Tooltip("Layout group used to layout the article text and image")]
+    private LayoutGroup articleLayout;
+    [SerializeField]
+    [Tooltip("Image component used to render the image for the encyclopedia article")]
+    private Image image;
+    [SerializeField]
+    [Tooltip("Empty sprite to display if the article doesn't have one for us")]
+    private Sprite noneSprite;
+    [SerializeField]
     [Tooltip("Toggle used to determine if highlights are being added or removed")]
     private Toggle highlightToggle;
     [SerializeField]
@@ -64,7 +73,7 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             else currentArticle.RequestHighlightRemove(start, end);
 
             // Udpate the text for this article
-            UpdateArticleText();
+            UpdateArticleDisplay();
 
             // Deactivate the input field
             textField.DeactivateInputField(true);
@@ -84,15 +93,26 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     public void UpdateArticle(ResearchEncyclopediaArticle article)
     {
         currentArticle = article;
-        UpdateArticleText();
+        UpdateArticleDisplay();
     }
 
-    public void UpdateArticleText()
+    public void UpdateArticleDisplay()
     {
         // If an article was given, set the text with the highlights
-        if (currentArticle != null) textField.text = RichEncyclopediaArticleText(currentArticle, highlightTags);
+        if (currentArticle != null) 
+        { 
+            textField.text = RichEncyclopediaArticleText(currentArticle, highlightTags);
+
+            // Set the correct sprite
+            if (currentArticle.Image) image.sprite = currentArticle.Image;
+            else image.sprite = noneSprite;
+        }
         // No article given implies this encyclopedia has no entries
         else textField.text = "<color=#aaa>This encyclopedia has no entries</color>";
+
+        // Update the layout component since the text amount just changed
+        articleLayout.SetLayoutHorizontal();
+        articleLayout.SetLayoutVertical();
     }
 
     public static string RichEncyclopediaArticleText(ResearchEncyclopediaArticle article, List<RichTextTag> tags)
