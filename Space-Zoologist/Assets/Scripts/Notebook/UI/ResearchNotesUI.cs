@@ -38,7 +38,7 @@ public class ResearchNotesUI : NotebookUIChild
     private void OnResearchCategoryChanged(ResearchCategory newCategory)
     {
         // Set the title text to the name of the category
-        titleText.text = "Space " + categoryPicker.SelectedCategory.Name;
+        titleText.text = categoryPicker.SelectedCategory.Name;
 
         // Set the text on the input field to the text in the notes of the current entry
         notesInputField.SetTextWithoutNotify(CurrentNotes.Notes);
