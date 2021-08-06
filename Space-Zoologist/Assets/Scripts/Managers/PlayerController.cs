@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            this.HUD.SetActive(!this.HUD.activeSelf);
+            this.HUD.SetActive(!this.HUD.activeSelf);   
         }
     }
 

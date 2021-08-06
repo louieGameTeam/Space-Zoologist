@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class ResearchCategoryPicker : MonoBehaviour
+public class ResearchCategoryPicker : NotebookUIChild
 {
     // So that the event appears in the editor
     [System.Serializable] public class ResearchCategoryEvent : UnityEvent<ResearchCategory> { }
@@ -26,11 +27,6 @@ public class ResearchCategoryPicker : MonoBehaviour
     public bool HasBeenInitialized => SelectedCategory.Name != null && SelectedCategory.Name != "";
 
     // Private editor fields
-
-    [SerializeField]
-    [Expandable]
-    [Tooltip("The research model used to pick the categories for")]
-    private ResearchModel researchModel;
 
     [Header("Research Category Type Selection")]
 
@@ -65,10 +61,12 @@ public class ResearchCategoryPicker : MonoBehaviour
     // NOTE: access the buttons by type using typeButtons[(int)ResearchCategoryType]
     private List<ResearchCategoryTypeButton> typeButtons = new List<ResearchCategoryTypeButton>();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // Go through all research categories in the research model, adding buttons to each group in the list
-        foreach (KeyValuePair<ResearchCategory, ResearchEntry> entry in researchModel.ResearchDictionary)
+        foreach (KeyValuePair<ResearchCategory, ResearchEntry> entry in UIParent.NotebookModel.NotebookResearch.ResearchDictionary)
         {
             // Add groups until the count exceeds the current index we need to insert into
             while(nameButtonGroups.Count <= (int)entry.Key.Type)
@@ -78,7 +76,7 @@ public class ResearchCategoryPicker : MonoBehaviour
 
             // Create a clone and set it up
             ResearchCategoryNameButton clone = Instantiate(nameButton, nameGroup.transform);
-            clone.Setup(nameGroup, entry.Key.Name, OnResearchCategoryNameChanged);
+            clone.Setup(nameGroup, entry.Key.Name, entry.Key.Image, OnResearchCategoryNameChanged);
             // Add it to the current category name button group
             nameButtonGroups[(int)entry.Key.Type].AddButton(clone);
         }
@@ -92,7 +90,7 @@ public class ResearchCategoryPicker : MonoBehaviour
         // Get all research category types
         ResearchCategoryType[] types = (ResearchCategoryType[])System.Enum.GetValues(typeof(ResearchCategoryType));
         // Loop through all types.  Instantiate a button for each type
-        for(int i = 0; i < types.Length; i++)
+        for (int i = 0; i < types.Length; i++)
         {
             ResearchCategoryTypeButton clone = Instantiate(typeButton, typeGroup.transform);
             // Setup clone. The first one is selected.
@@ -111,16 +109,16 @@ public class ResearchCategoryPicker : MonoBehaviour
         }
 
         // Create the currently selected category
-        selectedCategory = new ResearchCategory(type, "");
+        selectedCategory = new ResearchCategory(type, "", null);
 
         // Enable the new name button group
         // NOTE: this invokes OnResearchCategoryNameChanged immediately
         nameButtonGroups[(int)type].SetActive(true);
     }
 
-    private void OnResearchCategoryNameChanged(string name)
+    private void OnResearchCategoryNameChanged(string name, Sprite image)
     {
-        selectedCategory = new ResearchCategory(selectedCategory.Type, name);
+        selectedCategory = new ResearchCategory(selectedCategory.Type, name, image);
 
         // Invoke the event
         onResearchCategoryChanged.Invoke(selectedCategory);

@@ -50,6 +50,8 @@ public struct ResearchEncyclopediaArticleID
     }
     public override string ToString()
     {
-        return "Research Encyclopedia Article ID: " + title + " -> " + author;
+        string str = "\"" + title + "\"";
+        if (author != "") str += " by " + author;
+        return str;
     }
 }

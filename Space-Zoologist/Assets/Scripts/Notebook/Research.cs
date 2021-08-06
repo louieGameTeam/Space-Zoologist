@@ -1,9 +1,10 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Notebook/ResearchModel")]
-public class ResearchModel : ScriptableObject
+public class Research : ScriptableObject
 {
     // Public accessor for the dictionary
     // Uses lazy loading to load the dictionary the first time it is requested

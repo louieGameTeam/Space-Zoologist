@@ -8,6 +8,7 @@ public class ResearchNotes
     // Public accessors
 
     public ResearchNoteLabels Labels => labels;
+    public string Notes { get; set; }
 
     // Private editor data
 
@@ -16,17 +17,22 @@ public class ResearchNotes
     [Tooltip("Lables attached to the notes in the research notes")]
     private ResearchNoteLabels labels;
 
-    // For faster lookup
-    private Dictionary<string, string> notes = new Dictionary<string, string>();
-
     public void Setup()
     {
-        foreach (string label in labels.Labels) notes.Add(label, "");
-    }
+        // Tags used to decorate the labels in the notes
+        List<RichTextTag> labelTags = new List<RichTextTag>()
+        {
+            new RichTextTag("color", "white"),
+            new RichTextTag("b")
+        };
 
-    public string ReadNote(string label) => notes[label];
-    public void WriteNote(string label, string note)
-    {
-        notes[label] = note;
+        // Instead, we will have to load the player's data
+        Notes = "";
+        
+        foreach(string label in labels.Labels)
+        {
+            string richLabel = RichTextTag.ApplyMultiple(labelTags, label + ":");
+            Notes += richLabel + " \n\n";
+        }
     }
 }
