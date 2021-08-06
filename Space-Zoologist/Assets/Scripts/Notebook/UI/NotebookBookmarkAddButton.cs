@@ -66,13 +66,11 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
             {
                 dropdownToggle.SetIsOnWithoutNotify(false);
             }
-            // If the bookmark does not exist yet, we need the dropdown
-            else dropdown.SetActive(true);
         }
-        else dropdown.SetActive(false);
 
-        // Make sure is on object has the correct state
+        // Set is on and dropdown based on toggle state
         isOnObject.SetActive(dropdownToggle.isOn);
+        dropdown.SetActive(dropdownToggle.isOn);
     }
 
     // On click, try to add the bookmark
@@ -92,6 +90,11 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
     private void CancelBookmarkAdd()
     {
         // Immediately invokes OnDropdownToggleStateChanged
+        dropdownToggle.isOn = false;
+    }
+    // On disabled disable the dropdown, immediately invokes OnDropdownToggleStateChanged
+    private void OnDisable()
+    {
         dropdownToggle.isOn = false;
     }
 

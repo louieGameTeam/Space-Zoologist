@@ -11,7 +11,7 @@ public class CursorTexture
         get
         {
             if (texture != null) return new Vector2(texture.width * hotspotAnchor.x, texture.height * hotspotAnchor.y);
-            else return hotspotAnchor;
+            else return Vector2.zero;
         }
     }
 
