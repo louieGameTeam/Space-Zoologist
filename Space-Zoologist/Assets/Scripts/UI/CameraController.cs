@@ -1,6 +1,7 @@
   using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
@@ -8,6 +9,8 @@ public class CameraController : MonoBehaviour
     private const float cameraAccel = 0.75f;
     private const float deadzone = 0.01f;
 
+    // Used to determine if the mouse is currently over the world space or over some UI element
+    [SerializeField] private UnityEngine.EventSystems.EventTrigger mouseCatcher;
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] private float zoomLerpSpeed = 5f;
     [SerializeField] bool EdgeMovement = false;
@@ -15,7 +18,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float edgeBoundary = 10f;
     [SerializeField] private float zoomHeight = 10f;
     [SerializeField] private int MapWidth = default;
-    [SerializeField] private int MapHeight = default;
+    [SerializeField] private int MapHeight = default;   
 
     private Camera cam = default;
     private float targetZoom;
@@ -23,28 +26,47 @@ public class CameraController : MonoBehaviour
     private Vector3 dragOrigin;
     private Vector3 oldPos;
     private Vector2 currentVelocity;
+    // True if the mouse is over the world space and not some other UI element
+    private bool hasMouse = true;
 
     void Start()
     {
         cam = this.GetComponent<Camera>();
         targetZoom = cam.orthographicSize;
+
+        // Setup an event trigger entry that resets "hasMouse" to true when the pointer enters
+        UnityEngine.EventSystems.EventTrigger.Entry pointerEnterTrigger = new UnityEngine.EventSystems.EventTrigger.Entry();
+        pointerEnterTrigger.eventID = EventTriggerType.PointerEnter;
+        pointerEnterTrigger.callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent();
+        pointerEnterTrigger.callback.AddListener(eventData => hasMouse = true);
+        // Setup an event trigger entry that sets "hasMouse" to false when the pointer exits
+        UnityEngine.EventSystems.EventTrigger.Entry pointerExitTrigger = new UnityEngine.EventSystems.EventTrigger.Entry();
+        pointerExitTrigger.eventID = EventTriggerType.PointerExit;
+        pointerExitTrigger.callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent();
+        pointerExitTrigger.callback.AddListener(eventData => hasMouse = false);
+        // Add the entries to the list of triggers on the mouse catcher event trigger
+        mouseCatcher.triggers.Add(pointerEnterTrigger);
+        mouseCatcher.triggers.Add(pointerExitTrigger);
     }
 
     void Update()
     {
-        this.HandleKeyboard();
-        this.HandleMouse();
-        this.HandleZoom();
-        if (this.EdgeMovement) this.HandleEdgeScreen();
+        if(hasMouse)
+        {
+            this.HandleKeyboard();
+            this.HandleMouse();
+            this.HandleZoom();
+            if (this.EdgeMovement) this.HandleEdgeScreen();
+        }
     }
 
     private void HandleZoom()
     {
-        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
-        {
-            //Debug.Log("Not zooming");
-            return;
-        }
+        //if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+        //{
+        //    //Debug.Log("Not zooming");
+        //    return;
+        //}
         float scrollData = Input.GetAxis("Mouse ScrollWheel");
         targetZoom -= scrollData * zoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
