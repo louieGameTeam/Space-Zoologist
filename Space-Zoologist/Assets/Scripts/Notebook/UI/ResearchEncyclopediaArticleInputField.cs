@@ -98,30 +98,20 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     public static string RichEncyclopediaArticleText(ResearchEncyclopediaArticle article, List<RichTextTag> tags)
     {
         string richText = article.Text;
-        int globalIndexAdjuster = 0;    // Adjust the index for each highlight
-        int globalIndexIncrementer = 0; // Length of all the tags used in each highlight
-        int localIndexAdjuster; // Used to adjust the index as each tag is applied
+        int indexAdjuster = 0;    // Adjust the index for each highlight
+        int indexIncrementer = 0; // Length of all the tags used in each highlight
 
         // Compute the index incrementer by incrementing tag lengths
         foreach (RichTextTag tag in tags)
         {
-            globalIndexIncrementer += tag.Length;
+            indexIncrementer += tag.Length;
         }
         // Go through all highlights
         foreach (ResearchEncyclopediaArticleHighlight highlight in article.Highlights)
         {
-            // Reset local adjuster to 0
-            localIndexAdjuster = 0;
-
-            // Apply each of the tags used to highlight
-            foreach (RichTextTag tag in tags)
-            {
-                richText = tag.Apply(richText, highlight.Start + globalIndexAdjuster + localIndexAdjuster, highlight.Length);
-                localIndexAdjuster += tag.OpeningTag.Length;
-            }
-
+            richText = RichTextTag.ApplyMultiple(tags, richText, highlight.Start + indexAdjuster, highlight.Length);
             // Increase the global index adjuster
-            globalIndexAdjuster += globalIndexIncrementer;
+            indexAdjuster += indexIncrementer;
         }
 
         return richText;

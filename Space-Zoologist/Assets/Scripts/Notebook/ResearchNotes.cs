@@ -19,11 +19,20 @@ public class ResearchNotes
 
     public void Setup()
     {
+        // Tags used to decorate the labels in the notes
+        List<RichTextTag> labelTags = new List<RichTextTag>()
+        {
+            new RichTextTag("color", "white"),
+            new RichTextTag("b")
+        };
+
         // Instead, we will have to load the player's data
         Notes = "";
-        foreach(string label in Labels.Labels)
+        
+        foreach(string label in labels.Labels)
         {
-            Notes += "<color=#000044ff>" + label + ":</color> \n\n";
+            string richLabel = RichTextTag.ApplyMultiple(labelTags, label + ":");
+            Notes += richLabel + " \n\n";
         }
     }
 }
