@@ -11,17 +11,25 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private Text inspectorWindowText = default;
     [SerializeField] private GameObject DetailButton = default;
     [SerializeField] private GameObject NeedSliderPrefab = null;
+    [SerializeField] private GameObject TileCountPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
     public enum InspectorText { Population, Food, Area, Liquid }
 
-    private List<GameObject> needSliders = new List<GameObject>();
+    private List<GameObject> tempInfo = new List<GameObject>();
 
     [Header("Temporary sprites")]
     [SerializeField] Sprite enclosedAreaSprite = default;
-    [SerializeField] Sprite liquidSprite = default;
     [SerializeField] Sprite defaultSprite = default;
 
+    // Matches type to sprite
+    [SerializeField] List<TileAndSprite> sprites = default;
+    Dictionary<TileType, Sprite> tileToSprite;
+    [System.Serializable]
+    public class TileAndSprite {
+        public TileType type;
+        public Sprite sprite;
+    }
 
     GameObject detailBackground;
     Text detailText;
@@ -32,6 +40,10 @@ public class DisplayInspectorText : MonoBehaviour
 
         detailBackground = DetailButton.transform.GetChild(0).gameObject;
         detailText = detailBackground.GetComponentInChildren<Text>(true);
+        tileToSprite = new Dictionary<TileType, Sprite>();
+        foreach (var pair in sprites) {
+            tileToSprite.Add(pair.type, pair.sprite);
+        }
     }
 
     public void DisplayPopulationStatus(Population population)
@@ -46,6 +58,15 @@ public class DisplayInspectorText : MonoBehaviour
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
 
+        DetailButton.GetComponent<Button>().onClick.AddListener(() => UpdatePopulationDetails(population));
+
+        UpdatePopulationDetails(population);
+
+        this.inspectorWindowText.text = "";
+        GenerateSliders(population);
+    }
+
+    public void UpdatePopulationDetails(Population population) {
         if (population.GrowthStatus.Equals(GrowthStatus.stagnate))
         {
             //displayText += $"Please wait 1 day for population to get accustomed to enclosure\n";
@@ -69,8 +90,6 @@ public class DisplayInspectorText : MonoBehaviour
                 detailText.text = $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days";
             }
         }
-        this.inspectorWindowText.text = "";
-        GenerateSliders(population);
     }
 
     public void DisplayFoodSourceStatus(FoodSource foodSource)
@@ -126,7 +145,9 @@ public class DisplayInspectorText : MonoBehaviour
             {
                 continue;
             }
-            displayText += $"{((TileType)index).ToString()} : {value}\n";
+            TileType type = (TileType)index;
+            if (!tileToSprite.ContainsKey(type)) tileToSprite[type] = defaultSprite;
+            SetupTileCount(type.ToString(), (int)value, tileToSprite[type]);
         }
 
         //displayText += "\n";
@@ -143,7 +164,7 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Liquid;
 
         inspectorWindowTitle.text = "Body of Water";
-        inspectorWindowImage.sprite = liquidSprite;
+        inspectorWindowImage.sprite = tileToSprite[TileType.Liquid];
         inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
 
 
@@ -164,7 +185,9 @@ public class DisplayInspectorText : MonoBehaviour
         this.inspectorWindowText.text = displayText;
     }
 
-    public void ClearInspectorWindow() {
+    public void ClearInspectorWindow()
+    {
+        DetailButton.GetComponent<Button>().onClick.RemoveAllListeners();
         DetailButton.SetActive(false);
         detailBackground.SetActive(false);
         detailText.text = "";
@@ -172,34 +195,44 @@ public class DisplayInspectorText : MonoBehaviour
         inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
 
         inspectorWindowTitle.text = "Title";
-        foreach (GameObject obj in needSliders) {
+        foreach (GameObject obj in tempInfo) {
             Destroy(obj);
         }
-        needSliders.Clear();
+        tempInfo.Clear();
     }
 
     private void GenerateSliders(Life life) {
         if (life is FoodSource)
         {
-            setupSlider("Liquid", ((FoodSource)life).WaterRating);
-            setupSlider("Terrain", ((FoodSource)life).TerrainRating);
+            SetupSlider("Liquid", ((FoodSource)life).WaterRating);
+            SetupSlider("Terrain", ((FoodSource)life).TerrainRating);
         }
         if (life is Population)
         {
-            setupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating, -5, 5);
-            setupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating, -5, 5);
-            setupSlider("Food", ((Population)life).GrowthCalculator.FoodRating, -5, 5);
+            SetupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating, -5, 5);
+            SetupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating, -5, 5);
+            SetupSlider("Food", ((Population)life).GrowthCalculator.FoodRating, -5, 5);
         }
     }
 
-    private void setupSlider(string name, float value, int min = 0, int max = 10)
+    private void SetupSlider(string name, float value, int min = 0, int max = 10)
     {
         GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
-        needSliders.Add(sliderObj);
+        tempInfo.Add(sliderObj);
         NeedSlider slider = sliderObj.GetComponent<NeedSlider>();
         slider.max = max;
         slider.min = min;
         slider.SetName(name);
         slider.SetValue(value);
+    }
+
+    private void SetupTileCount(string name, int count, Sprite image)
+    {
+        GameObject tileCountObj = Instantiate(TileCountPrefab, layoutGroupRect);
+        tempInfo.Add(tileCountObj);
+        TileCount script = tileCountObj.GetComponent<TileCount>();
+        script.SetName(name);
+        script.SetCount(count);
+        script.SetImage(image);
     }
 }

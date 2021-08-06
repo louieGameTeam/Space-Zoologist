@@ -1,15 +1,14 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/BuildBufferManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Inspector/TileCount.cs">
     <Files>
-      <File FileName="Assets/Scripts/Y - Utils/SpeciesReferenceData.cs" Line="18" Column="1" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" Line="314" Column="42" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" />
+      <File FileName="Assets/Scripts/Audio/MusicManager.cs" Line="79" Column="61" />
+      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" />
+      <File FileName="Assets/Scripts/Audio/AudioManager.cs" />
+      <File FileName="Assets/Scripts/LevelData/Level.cs" />
+      <File FileName="Assets/Scripts/UI/SceneEffects/TextEffects.cs" />
       <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" />
-      <File FileName="Assets/Scripts/Plot/RPS/AtmosphericComposition.cs" />
-      <File FileName="Assets/Scripts/Managers/TimeSystem/PauseManager.cs" Line="91" Column="31" />
-      <File FileName="Assets/Scripts/Plot/BuildBufferManager.cs" Line="174" Column="1" />
+      <File FileName="Assets/Scripts/UI/Inspector/NeedSlider.cs" />
+      <File FileName="Assets/Scripts/UI/Inspector/TileCount.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -32,18 +31,20 @@
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
                     </Node>
-                    <Node name="NodeEventHolder.cs" selected="True" />
                   </Node>
                 </Node>
               </Node>
-              <Node name="Scripts" expanded="True">
+              <Node name="Resources" expanded="True">
                 <Node name="Audio" expanded="True" />
+              </Node>
+              <Node name="Scripts" expanded="True">
+                <Node name="Audio" expanded="True">
+                  <Node name="MusicManager.cs" selected="True" />
+                </Node>
                 <Node name="Dialogue" expanded="True" />
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
-                  <Node name="TimeSystem" expanded="True">
-                    <Node name="PauseManager.cs" selected="True" />
-                  </Node>
+                  <Node name="TimeSystem" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -54,7 +55,6 @@
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
                   <Node name="Tiles" expanded="True" />
-                  <Node name="BuildBufferManager.cs" selected="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
@@ -78,7 +78,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8984bae9-076f-4607-9ac6-40f01fdc4b58" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="01583a7a-333e-454e-95c4-83ae1ad9c856" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="387" column="1" />

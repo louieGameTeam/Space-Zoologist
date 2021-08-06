@@ -11402,12 +11402,36 @@ MonoBehaviour:
   DetailButton: {fileID: 983550913}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
+  TileCountPrefab: {fileID: 1975106059445481102, guid: 3338962ae06b84118bd13c87f39faf76,
+    type: 3}
   enclosedAreaSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
     type: 3}
   liquidSprite: {fileID: 4912832600191625089, guid: 023822bed12eea94b8b63bfc8e6fba12,
     type: 3}
   defaultSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
     type: 3}
+  sprites:
+  - type: 0
+    sprite: {fileID: 8399011212269539787, guid: 441771a373ba2434b994a5ff796b68ee,
+      type: 3}
+  - type: 1
+    sprite: {fileID: 8610565575992400378, guid: 5c45237c93acfef4cb4b168592ffd344,
+      type: 3}
+  - type: 2
+    sprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
+      type: 3}
+  - type: 3
+    sprite: {fileID: -1347532211411968617, guid: 40dfdc042b489cd4d9616473473c0922,
+      type: 3}
+  - type: 4
+    sprite: {fileID: 4912832600191625089, guid: 023822bed12eea94b8b63bfc8e6fba12,
+      type: 3}
+  - type: 5
+    sprite: {fileID: 1856567207279646495, guid: 1863acd83f712ef4c998dbd95207a950,
+      type: 3}
+  - type: 6
+    sprite: {fileID: 4912832600191625089, guid: 023822bed12eea94b8b63bfc8e6fba12,
+      type: 3}
 --- !u!114 &996204903
 MonoBehaviour:
   m_ObjectHideFlags: 0
