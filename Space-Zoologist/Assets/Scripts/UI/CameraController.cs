@@ -51,13 +51,10 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if(hasMouse)
-        {
-            this.HandleKeyboard();
-            this.HandleMouse();
-            this.HandleZoom();
-            if (this.EdgeMovement) this.HandleEdgeScreen();
-        }
+        this.HandleKeyboard();
+        this.HandleMouse();
+        this.HandleZoom();
+        if (this.EdgeMovement) this.HandleEdgeScreen();
     }
 
     private void HandleZoom()
@@ -67,7 +64,11 @@ public class CameraController : MonoBehaviour
         //    //Debug.Log("Not zooming");
         //    return;
         //}
-        float scrollData = Input.GetAxis("Mouse ScrollWheel");
+
+        // Only receive input if we have the mouse
+        float scrollData = 0;
+        if (hasMouse) scrollData = Input.GetAxis("Mouse ScrollWheel");
+
         targetZoom -= scrollData * zoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
@@ -82,12 +83,12 @@ public class CameraController : MonoBehaviour
         float accleration = cameraAccel * zoomScalar * Time.deltaTime;
         float maxSpeed = WASDSpeed * zoomScalar;
 
-        if (Input.GetKey(KeyCode.A)) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
+        if (Input.GetKey(KeyCode.A) && hasMouse) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
         {
             if(xValue > -maxSpeed)
                 xValue -= accleration;
         }
-        else if (Input.GetKey(KeyCode.D)) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
+        else if (Input.GetKey(KeyCode.D) && hasMouse) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
         {
             if(xValue < maxSpeed)
                 xValue += accleration;
@@ -101,12 +102,12 @@ public class CameraController : MonoBehaviour
             xValue -= accleration * Mathf.Sign(xValue);
         }
 
-        if (Input.GetKey(KeyCode.S)) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
+        if (Input.GetKey(KeyCode.S) && hasMouse) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
         {
             if(yValue > -maxSpeed)
                 yValue -= accleration;
         }
-        else if (Input.GetKey(KeyCode.W)) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
+        else if (Input.GetKey(KeyCode.W) && hasMouse) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
         {
             if(yValue < maxSpeed)
                 yValue += accleration;
@@ -135,7 +136,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouse()
     {
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(2) && hasMouse)
         {
             dragOrigin = Input.mousePosition;
             oldPos = this.transform.position;
