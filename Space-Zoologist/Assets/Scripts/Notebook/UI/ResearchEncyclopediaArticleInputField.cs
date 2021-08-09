@@ -22,7 +22,7 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     private TMP_InputField textField;
     [SerializeField]
     [Tooltip("Layout group used to layout the article text and image")]
-    private LayoutGroup articleLayout;
+    private ContentSizeFitter articleLayout;
     [SerializeField]
     [Tooltip("Image component used to render the image for the encyclopedia article")]
     private Image image;

@@ -61,7 +61,7 @@ public class ResearchCategoryPicker : NotebookUIChild
         {
             TypeFilteredResearchCategoryDropdown clone = Instantiate(dropdown, dropdownParent);
             // Setup the clone's type and add a listener for the category change
-            clone.Type = type;
+            clone.SetTypeFilter(type);
             clone.OnResearchCategorySelected.AddListener(ResearchCategoryChanged);
             // Add to the list of our dropdowns
             dropdowns.Add(clone);
@@ -80,7 +80,7 @@ public class ResearchCategoryPicker : NotebookUIChild
         // Set the colors of the backgrounds of the dropdown images
         foreach(TypeFilteredResearchCategoryDropdown dropdown in dropdowns)
         {
-            if (dropdown.Type == category.Type) dropdown.Dropdown.image.color = selectedColor;
+            if (dropdown.TypeFilter[0] == category.Type) dropdown.Dropdown.image.color = selectedColor;
             else dropdown.Dropdown.image.color = notSelectedColor;
         }
     }

@@ -49,7 +49,7 @@ public class ResearchCategoryDropdown : NotebookUIChild
         // Setup the value changed callback
         dropdown.onValueChanged.AddListener(SetDropdownValue);
         // Setup the value to the first one
-        SetDropdownValueWithoutNotify(0);
+        if (dropdown.options.Count > 0) SetDropdownValueWithoutNotify(0);
     }
 
     // Set the value of the dropdown
