@@ -13,7 +13,7 @@ public class NotebookAcronymEditor : NotebookUIChild
         base.Awake();
 
         // Create all UI elements that edit each character in the acronym
-        foreach(char c in UIParent.NotebookModel.Acronym)
+        foreach(char c in UIParent.Notebook.Acronym)
         {
             NotebookAcronymSingleNoteEditor clone = Instantiate(noteEditorPrefab, transform);
             clone.Setup(c);

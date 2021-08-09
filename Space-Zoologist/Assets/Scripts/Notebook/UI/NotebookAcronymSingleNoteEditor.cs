@@ -34,13 +34,13 @@ public class NotebookAcronymSingleNoteEditor : NotebookUIChild
         label.text = acronymChar.ToString();
 
         // Read the note for this acronym into the 
-        inputField.text = UIParent.NotebookModel.ReadAcronymNote(acronymChar);
+        inputField.text = UIParent.Notebook.ReadAcronymNote(acronymChar);
         inputField.onEndEdit.AddListener(OnInputFieldEndEdit);
     }
 
     private void OnInputFieldEndEdit(string text)
     {
-        UIParent.NotebookModel.WriteAcronymNote(acronymChar, text);
+        UIParent.Notebook.WriteAcronymNote(acronymChar, text);
         onNoteEdited.Invoke(acronymChar, text);
     }
 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Notebook/Notebook")]
-public class Notebook : ScriptableObject
+public class NotebookModel : ScriptableObject
 {
     public string Acronym => acronym;
-    public Research NotebookResearch => notebookResearch;
+    public ResearchModel Research => research;
     public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
     public Dictionary<char, string> AcronymNotes
     {
@@ -24,7 +24,7 @@ public class Notebook : ScriptableObject
     [Expandable]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
-    private Research notebookResearch;
+    private ResearchModel research;
 
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Research))]
+[CustomEditor(typeof(ResearchModel))]
 public class ResearchEditor : Editor
 {
     public override void OnInspectorGUI()

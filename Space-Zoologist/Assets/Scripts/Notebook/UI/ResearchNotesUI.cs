@@ -7,7 +7,7 @@ using TMPro;
 public class ResearchNotesUI : NotebookUIChild
 {
     // Current notes to edit
-    public ResearchNotes CurrentNotes => UIParent.NotebookModel.NotebookResearch.GetEntry(categoryPicker.SelectedCategory).Notes;
+    public ResearchNotes CurrentNotes => UIParent.Notebook.Research.GetEntry(categoryPicker.SelectedCategory).Notes;
 
     [SerializeField]
     [Tooltip("Reference to the picker object that selects the research category")]

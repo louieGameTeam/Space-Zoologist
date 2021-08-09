@@ -62,7 +62,7 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
             NotebookBookmark intendedBookmark = BookmarkToAdd(bookmarkTitle.text);
 
             // If the bookmark already exists, disable the toggle
-            if (UIParent.NotebookModel.HasBookmark(intendedBookmark))
+            if (UIParent.Notebook.HasBookmark(intendedBookmark))
             {
                 dropdownToggle.SetIsOnWithoutNotify(false);
             }
@@ -78,7 +78,7 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
     protected virtual void TryAddBookmark()
     {
         NotebookBookmark bookmark = BookmarkToAdd(bookmarkTitle.text);
-        if(UIParent.NotebookModel.TryAddBookmark(bookmark))
+        if(UIParent.Notebook.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
 

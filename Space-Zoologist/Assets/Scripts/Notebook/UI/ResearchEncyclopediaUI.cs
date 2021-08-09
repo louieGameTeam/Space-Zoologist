@@ -8,7 +8,7 @@ using TMPro;
 
 public class ResearchEncyclopediaUI : NotebookUIChild
 {
-    public ResearchEncyclopedia CurrentEncyclopedia => UIParent.NotebookModel.NotebookResearch.GetEntry(currentCategory).Encyclopedia;
+    public ResearchEncyclopedia CurrentEncyclopedia => UIParent.Notebook.Research.GetEntry(currentCategory).Encyclopedia;
     public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia.GetArticle(currentArticleID);
 
     public ResearchEncyclopediaArticleID CurrentArticleID
