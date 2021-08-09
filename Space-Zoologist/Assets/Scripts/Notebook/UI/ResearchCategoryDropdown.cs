@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,51 +11,44 @@ public class ResearchCategoryDropdown : NotebookUIChild
     public class ResearchCategoryEvent : UnityEvent<ResearchCategory> { }
 
     // Public accessors
-    public ResearchCategoryType Type => type;
     public TMP_Dropdown Dropdown => dropdown;
+    public ResearchCategoryEvent OnResearchCategorySelected => onResearchCategorySelected;
 
     // Private editor data
 
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the research category")]
-    private TMP_Dropdown dropdown;
+    protected TMP_Dropdown dropdown;
+    [SerializeField]
+    [Tooltip("True if text and image should display simultaneously")]
+    protected bool textAndImage = false;
     [SerializeField]
     [Tooltip("Event invoked when this dropdown selects a research category")]
-    private ResearchCategoryEvent onResearchCategorySelected;
+    protected ResearchCategoryEvent onResearchCategorySelected;
 
     // Maps a selected item in the dropdown to a research category
-    private Dictionary<TMP_Dropdown.OptionData, ResearchCategory> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ResearchCategory>();
-    private ResearchCategoryType type;
+    protected Dictionary<TMP_Dropdown.OptionData, ResearchCategory> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ResearchCategory>();
 
-    public void Setup(ResearchCategoryType type, UnityAction<ResearchCategory> callback)
+    protected override void Awake()
     {
         base.Awake();
 
-        // Set this type
-        this.type = type;
-
-        // Select all categories with the given type
-        ResearchCategory[] categories = UIParent.Notebook.Research.ResearchDictionary
-            .Where(kvp => kvp.Key.Type == type)
-            .Select(kvp => kvp.Key)
-            .ToArray();
-
-        // Clear any existing options
+        // Clear any existing data
         dropdown.ClearOptions();
+        optionCategoryMap.Clear();
 
-        // Setup the dropdown with all the correct text/image options
-        foreach(ResearchCategory category in categories)
+        foreach(ResearchCategory category in GetResearchCategories())
         {
+            // Get the current option
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(category.Name, category.Image);
+            // Add the option to the dropdown and the dictionary
             dropdown.options.Add(option);
             optionCategoryMap.Add(option, category);
         }
 
         // Setup the value changed callback
         dropdown.onValueChanged.AddListener(SetDropdownValue);
-        onResearchCategorySelected.AddListener(callback);
-
-        // Set the dropdown value
+        // Setup the value to the first one
         SetDropdownValueWithoutNotify(0);
     }
 
@@ -92,8 +84,8 @@ public class ResearchCategoryDropdown : NotebookUIChild
         TMP_Dropdown.OptionData selection = dropdown.options[value];
 
         // Display image if it is not null, otherwise display text
-        dropdown.captionImage.enabled = selection.image != null;
-        dropdown.captionText.enabled = selection.image == null;
+        dropdown.captionImage.enabled = textAndImage || selection.image != null;
+        dropdown.captionText.enabled = textAndImage || selection.image == null;
 
         // Set the value and refresh the shown value
         dropdown.value = value;
@@ -101,5 +93,11 @@ public class ResearchCategoryDropdown : NotebookUIChild
 
         // If we are notifying then raise the event
         if (notify) onResearchCategorySelected.Invoke(optionCategoryMap[selection]);
+    }
+    protected virtual ResearchCategory[] GetResearchCategories()
+    {
+        return UIParent.Notebook.Research.ResearchDictionary
+            .Select(kvp => kvp.Key)
+            .ToArray();
     }
 }

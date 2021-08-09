@@ -31,7 +31,7 @@ public class ResearchCategoryPicker : NotebookUIChild
 
     [SerializeField]
     [Tooltip("Reference to the prefab used to select a research category")]
-    private ResearchCategoryDropdown dropdown;
+    private TypeFilteredResearchCategoryDropdown dropdown;
     [SerializeField]
     [Tooltip("Parent transform that the dropdowns are instantiated into")]
     private Transform dropdownParent;
@@ -59,8 +59,11 @@ public class ResearchCategoryPicker : NotebookUIChild
         // Instantiate a dropdown for each type and set it up
         foreach(ResearchCategoryType type in types)
         {
-            ResearchCategoryDropdown clone = Instantiate(dropdown, dropdownParent);
-            clone.Setup(type, ResearchCategoryChanged);
+            TypeFilteredResearchCategoryDropdown clone = Instantiate(dropdown, dropdownParent);
+            // Setup the clone's type and add a listener for the category change
+            clone.Type = type;
+            clone.OnResearchCategorySelected.AddListener(ResearchCategoryChanged);
+            // Add to the list of our dropdowns
             dropdowns.Add(clone);
         }
 
@@ -75,7 +78,7 @@ public class ResearchCategoryPicker : NotebookUIChild
         onResearchCategoryChanged.Invoke(category);
 
         // Set the colors of the backgrounds of the dropdown images
-        foreach(ResearchCategoryDropdown dropdown in dropdowns)
+        foreach(TypeFilteredResearchCategoryDropdown dropdown in dropdowns)
         {
             if (dropdown.Type == category.Type) dropdown.Dropdown.image.color = selectedColor;
             else dropdown.Dropdown.image.color = notSelectedColor;
