@@ -11,6 +11,9 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
     [Tooltip("Button that navigates to the bookmark when clicked")]
     private Button myButton;
     [SerializeField]
+    [Tooltip("Reference to the toggle that will delete the bookmark when navigating to another page")]
+    private Toggle myToggle;
+    [SerializeField]
     [Tooltip("Reference to the object used to display the text of the button")]
     private TextMeshProUGUI text;
 
@@ -29,5 +32,10 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
     private void OnClick()
     {
         UIParent.NavigateToBookmark(bookmark);
+    }
+
+    private void OnDisable()
+    {
+        if (!myToggle.isOn) Destroy(gameObject);
     }
 }

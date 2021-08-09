@@ -42,7 +42,7 @@ public class ResearchCategoryDropdown : NotebookUIChild
             .ToArray();
 
         // Clear any existing options
-        dropdown.options.Clear();
+        dropdown.ClearOptions();
 
         // Setup the dropdown with all the correct text/image options
         foreach(ResearchCategory category in categories)

@@ -4,13 +4,30 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class NotebookDebugging : MonoBehaviour, IScrollHandler
-{
-    public ScrollRect scroller;
+using TMPro;
 
-    // Delegate the on scroll event back up to some parent
-    public void OnScroll(PointerEventData data)
+public class NotebookDebugging : MonoBehaviour
+{
+    public TMP_Dropdown dropdown;
+    public GameObject itemRoot;
+    public Toggle toggle;
+    
+    private int index = 0;
+    
+    private void Start()
     {
-        scroller.OnScroll(data);
+        string indexString = itemRoot.name;
+        string prefix = "Index ";
+        int endSubstringIndex = indexString.IndexOf(':');
+
+        indexString = indexString.Substring(prefix.Length - 1, endSubstringIndex - prefix.Length + 1);
+        index = int.Parse(indexString);
+
+        GetComponent<Button>().onClick.AddListener(() =>
+        {
+            toggle.isOn = true;
+            toggle.onValueChanged.Invoke(true);
+            dropdown.onValueChanged.Invoke(index);
+        });
     }
 }
