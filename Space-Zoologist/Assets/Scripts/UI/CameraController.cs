@@ -1,7 +1,6 @@
   using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
@@ -9,8 +8,6 @@ public class CameraController : MonoBehaviour
     private const float cameraAccel = 0.75f;
     private const float deadzone = 0.01f;
 
-    // Used to determine if the mouse is currently over the world space or over some UI element
-    [SerializeField] private UnityEngine.EventSystems.EventTrigger mouseCatcher;
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] private float zoomLerpSpeed = 5f;
     [SerializeField] bool EdgeMovement = false;
@@ -18,7 +15,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float edgeBoundary = 10f;
     [SerializeField] private float zoomHeight = 10f;
     [SerializeField] private int MapWidth = default;
-    [SerializeField] private int MapHeight = default;   
+    [SerializeField] private int MapHeight = default;
 
     private Camera cam = default;
     private float targetZoom;
@@ -26,27 +23,11 @@ public class CameraController : MonoBehaviour
     private Vector3 dragOrigin;
     private Vector3 oldPos;
     private Vector2 currentVelocity;
-    // True if the mouse is over the world space and not some other UI element
-    private bool hasMouse = true;
 
     void Start()
     {
         cam = this.GetComponent<Camera>();
         targetZoom = cam.orthographicSize;
-
-        // Setup an event trigger entry that resets "hasMouse" to true when the pointer enters
-        UnityEngine.EventSystems.EventTrigger.Entry pointerEnterTrigger = new UnityEngine.EventSystems.EventTrigger.Entry();
-        pointerEnterTrigger.eventID = EventTriggerType.PointerEnter;
-        pointerEnterTrigger.callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent();
-        pointerEnterTrigger.callback.AddListener(eventData => hasMouse = true);
-        // Setup an event trigger entry that sets "hasMouse" to false when the pointer exits
-        UnityEngine.EventSystems.EventTrigger.Entry pointerExitTrigger = new UnityEngine.EventSystems.EventTrigger.Entry();
-        pointerExitTrigger.eventID = EventTriggerType.PointerExit;
-        pointerExitTrigger.callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent();
-        pointerExitTrigger.callback.AddListener(eventData => hasMouse = false);
-        // Add the entries to the list of triggers on the mouse catcher event trigger
-        mouseCatcher.triggers.Add(pointerEnterTrigger);
-        mouseCatcher.triggers.Add(pointerExitTrigger);
     }
 
     void Update()
@@ -59,16 +40,12 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom()
     {
-        //if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
-        //{
-        //    //Debug.Log("Not zooming");
-        //    return;
-        //}
-
-        // Only receive input if we have the mouse
-        float scrollData = 0;
-        if (hasMouse) scrollData = Input.GetAxis("Mouse ScrollWheel");
-
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+        {
+            //Debug.Log("Not zooming");
+            return;
+        }
+        float scrollData = Input.GetAxis("Mouse ScrollWheel");
         targetZoom -= scrollData * zoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
@@ -83,12 +60,12 @@ public class CameraController : MonoBehaviour
         float accleration = cameraAccel * zoomScalar * Time.deltaTime;
         float maxSpeed = WASDSpeed * zoomScalar;
 
-        if (Input.GetKey(KeyCode.A) && hasMouse) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
+        if (Input.GetKey(KeyCode.A)) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
         {
             if(xValue > -maxSpeed)
                 xValue -= accleration;
         }
-        else if (Input.GetKey(KeyCode.D) && hasMouse) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
+        else if (Input.GetKey(KeyCode.D)) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
         {
             if(xValue < maxSpeed)
                 xValue += accleration;
@@ -102,12 +79,12 @@ public class CameraController : MonoBehaviour
             xValue -= accleration * Mathf.Sign(xValue);
         }
 
-        if (Input.GetKey(KeyCode.S) && hasMouse) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
+        if (Input.GetKey(KeyCode.S)) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
         {
             if(yValue > -maxSpeed)
                 yValue -= accleration;
         }
-        else if (Input.GetKey(KeyCode.W) && hasMouse) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
+        else if (Input.GetKey(KeyCode.W)) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
         {
             if(yValue < maxSpeed)
                 yValue += accleration;
@@ -136,7 +113,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouse()
     {
-        if (Input.GetMouseButtonDown(2) && hasMouse)
+        if (Input.GetMouseButtonDown(2))
         {
             dragOrigin = Input.mousePosition;
             oldPos = this.transform.position;

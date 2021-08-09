@@ -13750,7 +13750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26fec6d600a584107a0137ea49b1dd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseCatcher: {fileID: 1782313615}
   WASDSpeed: 0.3
   zoomLerpSpeed: 5
   EdgeMovement: 0
@@ -29483,7 +29482,6 @@ GameObject:
   - component: {fileID: 1782313612}
   - component: {fileID: 1782313614}
   - component: {fileID: 1782313613}
-  - component: {fileID: 1782313615}
   m_Layer: 8
   m_Name: BackgroundImage
   m_TagString: Untagged
@@ -29547,19 +29545,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1782313611}
   m_CullTransparentMesh: 0
---- !u!114 &1782313615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782313611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
 --- !u!1 &1797214983
 GameObject:
   m_ObjectHideFlags: 0
