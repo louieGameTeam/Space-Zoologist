@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class NotebookTabPicker : MonoBehaviour
+public class NotebookTabPicker : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Prefab of the button used to select notebook tabs")]
@@ -12,26 +12,25 @@ public class NotebookTabPicker : MonoBehaviour
     [SerializeField]
     [Tooltip("Toggle group used to make only one button selected")]
     private ToggleGroup parent;
-    [SerializeField]
-    [Tooltip("List of the parents of the game objects for each notebook page.  " +
-        "NOTE: these must match up with the same order as the NotebookTab enum")]
-    private List<GameObject> pages;
 
     // Current tab of the picker
     private NotebookTab currentTab;
     // List of the buttons used to select a tab
     private List<NotebookTabSelectButton> buttons = new List<NotebookTabSelectButton>();
 
-    private void Awake()
+    protected override void Awake()
     {
-        // By default, each page is inactive
-        foreach(GameObject page in pages)
-        {
-            page.SetActive(false);
-        }
+        base.Awake();
 
-        // Instantiate a selection button for each value in the notebook tab enum
+        // Get all notebook tabs
         NotebookTab[] tabs = (NotebookTab[])System.Enum.GetValues(typeof(NotebookTab));
+        
+        // Set all pages false
+        for(int i = 0; i < tabs.Length; i++)
+        {
+            UIParent.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        
         for(int i = 0; i < tabs.Length; i++)
         {
             NotebookTabSelectButton button = Instantiate(buttonPrefab, parent.transform);
@@ -44,15 +43,10 @@ public class NotebookTabPicker : MonoBehaviour
 
     private void OnTabSelected(NotebookTab tab)
     {
-        int i = (int)tab;
-        // Make sure that the page exists
-        if(i < pages.Count)
-        {
-            // Disable the current page and enable the new page
-            pages[(int)currentTab].SetActive(false);
-            pages[i].SetActive(true);
-            currentTab = tab;
-        }
+        // Disable the current page and enable the new page
+        UIParent.transform.GetChild((int)currentTab).gameObject.SetActive(false);
+        UIParent.transform.GetChild((int)tab).gameObject.SetActive(true);
+        currentTab = tab;
     }
     // Select a specific notebook tab by selecting one of the buttons
     public void SelectTab(NotebookTab tab)
