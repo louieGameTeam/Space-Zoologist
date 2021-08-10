@@ -35,13 +35,15 @@ public class NotebookTabPicker : NotebookUIChild
         {
             NotebookTabSelectButton button = Instantiate(buttonPrefab, parent.transform);
             // Only the first selector will be on. NOTE: this invokes "OnTabSelected" immediately
-            button.Setup(tabs[i], parent, OnTabSelected, i == 0);
+            button.Setup(tabs[i], parent, SetTabSelected, i == 0);
             // Add this button to the list
             buttons.Add(button);
+
+            Need need;
         }
     }
 
-    private void OnTabSelected(NotebookTab tab)
+    private void SetTabSelected(NotebookTab tab)
     {
         // Disable the current page and enable the new page
         UIParent.transform.GetChild((int)currentTab).gameObject.SetActive(false);

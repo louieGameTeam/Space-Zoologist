@@ -8,14 +8,6 @@ public class NotebookModel : ScriptableObject
     public string Acronym => acronym;
     public ResearchModel Research => research;
     public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
-    public Dictionary<char, string> AcronymNotes
-    {
-        get
-        {
-            if (acronymNotes.Count <= 0) Setup();
-            return acronymNotes;
-        }
-    }
 
     [SerializeField]
     [Tooltip("Acronym that the player gets to spell out on the home page")]
@@ -35,10 +27,11 @@ public class NotebookModel : ScriptableObject
         {
             acronymNotes.Add(c, "");
         }
+        research.Setup();
     }
 
-    public string ReadAcronymNote(char c) => AcronymNotes[c];
-    public void WriteAcronymNote(char c, string note) => AcronymNotes[c] = note;
+    public string ReadAcronymNote(char c) => acronymNotes[c];
+    public void WriteAcronymNote(char c, string note) => acronymNotes[c] = note;
 
     // Return true/false if the notebook already has this bookmark
     public bool HasBookmark(NotebookBookmark bookmark) => Bookmarks.Contains(bookmark);

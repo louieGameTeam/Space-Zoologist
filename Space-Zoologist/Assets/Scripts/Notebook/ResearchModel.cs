@@ -10,12 +10,8 @@ public class ResearchModel : ScriptableObject
     // Uses lazy loading to load the dictionary the first time it is requested
     public Dictionary<ResearchCategory, ResearchEntry> ResearchDictionary
     {
-        get
-        {
-            if (researchDictionary.Count <= 0) Setup();
-            return researchDictionary;
-        }
-    }
+        get; private set;
+    } = new Dictionary<ResearchCategory, ResearchEntry>();
 
     // Edit each research entry category seperately
     [SerializeField]
@@ -28,10 +24,7 @@ public class ResearchModel : ScriptableObject
     [Tooltip("List of research data for all tiles")]
     private List<ResearchEntry> tileResearch;
 
-    // Maps all research categories to all research entries
-    private Dictionary<ResearchCategory, ResearchEntry> researchDictionary = new Dictionary<ResearchCategory, ResearchEntry>();
-
-    private void Setup()
+    public void Setup()
     {
         InitResearchEntries(speciesResearch, ResearchCategoryType.Species);
         InitResearchEntries(foodResearch, ResearchCategoryType.Food);
@@ -43,7 +36,7 @@ public class ResearchModel : ScriptableObject
         foreach (ResearchEntry entry in entries)
         {
             entry.Setup(type);
-            researchDictionary.Add(entry.Category, entry);
+            ResearchDictionary.Add(entry.Category, entry);
         }
     }
 

@@ -23,6 +23,9 @@ public class NotebookUI : MonoBehaviour
     // I thought that this was called when the game object is inactive but apparently it is not
     private void Awake()
     {
+        // Setup the notebook at the start
+        notebook.Setup();
+
         // This line of code prevents the notebook from turning off the first time that it is turned on,
         // while also making sure it is turned off at the start
         if(!isOpen) SetIsOpen(false);
