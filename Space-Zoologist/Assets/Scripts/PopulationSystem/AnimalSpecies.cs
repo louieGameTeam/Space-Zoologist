@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum SpeciesType { Goat, Cow, Anteater, Spider, Slug, Momo }
+
 [CreateAssetMenu]
 public class AnimalSpecies : ScriptableObject
 {
     // Getters
     public string SpeciesName => speciesName;
+    public SpeciesType Species => species;
     public int FoodDominance => foodDominance;
     public int TerrainTilesRequired => terrainTilesRequired;
     public float GrowthScaleFactor => growthScaleFactor;
@@ -25,6 +28,7 @@ public class AnimalSpecies : ScriptableObject
     // Values
     [SerializeField] private RuntimeAnimatorController animatorController = default;
     [SerializeField] private string speciesName = default;
+    [SerializeField] private SpeciesType species = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int foodDominance = default;
     [SerializeField] private int terrainTilesRequired = default;

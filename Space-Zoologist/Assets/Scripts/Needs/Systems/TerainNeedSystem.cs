@@ -9,9 +9,22 @@ using System.Linq;
 public class TerrainNeedSystem : NeedSystem
 {
     //The order of terrain from least number of population preferences to most.
-    private readonly TileType[] terrainOrder = new TileType[] {TileType.Sand, TileType.Liquid, TileType.Dirt, TileType.Swamp, TileType.Stone, TileType.Grass};
+    private static readonly TileType[] terrainOrder = new TileType[] {TileType.Sand, TileType.Liquid, TileType.Dirt, TileType.Swamp, TileType.Stone, TileType.Grass};
+
+    //The ratios of terrain allocation sorted by dominance
+    private static readonly Dictionary<TileType, Dictionary<SpeciesType, float>> dominanceRatiosByTileType = new Dictionary<TileType, Dictionary<SpeciesType, float>>
+    {
+        { TileType.Grass, new Dictionary<SpeciesType, float> { {SpeciesType.Anteater, 0.4f}, {SpeciesType.Cow, 0.3f}, {SpeciesType.Goat, 0.2f}, {SpeciesType.Spider, 0.1f} } },
+        { TileType.Dirt, new Dictionary<SpeciesType, float> { {SpeciesType.Cow, 0.6f}, {SpeciesType.Goat, 0.4f} } },
+        { TileType.Sand, new Dictionary<SpeciesType, float> { {SpeciesType.Spider, 1f} } },
+        { TileType.Stone, new Dictionary<SpeciesType, float> { {SpeciesType.Spider, 0.6f}, {SpeciesType.Anteater, 0.4f} } },
+        { TileType.Swamp, new Dictionary<SpeciesType, float> { {SpeciesType.Slug, 0.6f}, {SpeciesType.Anteater, 0.4f} } },
+        { TileType.Liquid, new Dictionary<SpeciesType, float> { {SpeciesType.Slug, 1f} } }
+    };
+
     // For `Population` consumers
     private readonly ReservePartitionManager rpm = null;
+
     // For `FoodSource` consumers
     private GridSystem gridSystem = null;
 
@@ -115,8 +128,8 @@ public class TerrainNeedSystem : NeedSystem
         
         //All tiles in the grid that can be accessed by some population, organized by tiletype
         Dictionary<TileType, HashSet<Vector3Int>> accessibleTilesByTileType = new Dictionary<TileType, HashSet<Vector3Int>>();
-        //All populations currently in the level, in order of dominance
-        SortedSet<Population> populationsByDominance = new SortedSet<Population>(Consumers.OfType<Population>(), new DominanceComparer());
+        //All populations currently in the level, organized by speciesType
+        Dictionary<SpeciesType, HashSet<Population>> populationsBySpeciesType = new Dictionary<SpeciesType, HashSet<Population>>();
         //Number of tiles needed by a given population
         Dictionary<Population, int> tilesNeeded = new Dictionary<Population, int>();
         //Number of tiles allocated to a given population
@@ -127,72 +140,147 @@ public class TerrainNeedSystem : NeedSystem
             int sum = 0;
             foreach(TileType tile in tilesAllocated[population].Keys)
             {
-                sum += tilesAllocated[population][tile];
+                int tileContribution = (tile == TileType.Grass ? 2 : 1);
+                sum += tilesAllocated[population][tile] * tileContribution;
             }
             return sum;
         }
 
-        foreach (Population population in populationsByDominance)
+        //Organize the populations currently in the level by their SpeciesType
+        foreach(Population population in Consumers.OfType<Population>())
         {
-            tilesNeeded[population] = population.Count * population.species.TerrainTilesRequired;
-            tilesAllocated[population] = new Dictionary<TileType, int>();
+            SpeciesType type = population.Species.Species;
+            if(!populationsBySpeciesType.ContainsKey(type))
+                populationsBySpeciesType.Add(type, new HashSet<Population>());
 
-            foreach(Vector3Int position in rpm.GetLocationsWithAccess(population))
-            {
-                TileType type = gridSystem.GetTileData(position).currentTile.type;
-
-                if(!accessibleTilesByTileType.ContainsKey(type))
-                    accessibleTilesByTileType.Add(type, new HashSet<Vector3Int>());
-
-                accessibleTilesByTileType[type].Add(position);
-            }
+            populationsBySpeciesType[type].Add(population);
         }
 
-        foreach (TileType tile in terrainOrder)
+        //Calculate the tiles needed for each population and add all the tiles that the population can access to the tile dictionary
+        foreach(HashSet<Population> populations in populationsBySpeciesType.Values)
         {
-            int tileContribution = tile == TileType.Grass ? 2 : 1;
-
-            foreach(Population population in populationsByDominance)
+            foreach (Population population in populations)
             {
-                int totalAllocatedTiles = sumAllocatedTiles(population);
+                tilesNeeded[population] = population.Count * population.species.TerrainTilesRequired;
+                tilesAllocated[population] = new Dictionary<TileType, int>();
 
-                if (population.Needs.ContainsKey(tile.ToString()) && accessibleTilesByTileType.ContainsKey(tile) && totalAllocatedTiles < tilesNeeded[population])
+                foreach(Vector3Int position in rpm.GetLocationsWithAccess(population))
                 {
-                    Debug.Log(population.Species.SpeciesName + " needs " + tile.ToString() + " and need is not met");
-                    foreach(Vector3Int position in accessibleTilesByTileType[tile].ToArray<Vector3Int>())
-                    {
-                        if(rpm.CanAccess(population, position))
-                        {
-                            accessibleTilesByTileType[tile].Remove(position);
+                    TileType type = gridSystem.GetTileData(position).currentTile.type;
 
-                            if(!tilesAllocated[population].ContainsKey(tile))
-                                tilesAllocated[population][tile] = 0;
+                    if(!accessibleTilesByTileType.ContainsKey(type))
+                        accessibleTilesByTileType.Add(type, new HashSet<Vector3Int>());
 
-                            tilesAllocated[population][tile] += tileContribution;
-                            totalAllocatedTiles += tileContribution;
-
-                            if(totalAllocatedTiles >= tilesNeeded[population])
-                                break;
-                        }
-                    }
+                    accessibleTilesByTileType[type].Add(position);
                 }
             }
         }
 
-        // I am uncertain what this code accomplishes
-        // if (needName.Equals("Liquid"))
-        // {
-        //     numTiles = rpm.GetLiquidComposition(population).Count;
-        //     Debug.Log("terrain count" + count + ", numtiles: " + numTiles);
-        // }
+        //Iterate through all of the tiles and assign them to populations according to their dominance ratios
         foreach (TileType tile in terrainOrder)
         {
-            foreach(Population population in populationsByDominance)
+            //If there are no tiles of this tile type in the level, move on to the next tile type
+            if(!accessibleTilesByTileType.ContainsKey(tile))
+                continue;
+
+            //Get all of the populations that require this TileType
+            List<Population> accessiblePopulations = new List<Population>();
+            foreach(SpeciesType species in dominanceRatiosByTileType[tile].Keys)
             {
-                string needName = tile.ToString();
-                if(tilesAllocated[population].ContainsKey(tile)) {
-                    population.UpdateNeed(needName, tilesAllocated[population][tile]);
-                    Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                if(populationsBySpeciesType.ContainsKey(species))
+                    accessiblePopulations.AddRange(populationsBySpeciesType[species]);
+            }
+
+            //If no populations require this tileType, move on to next tile type
+            if(accessiblePopulations.Count == 0)
+                continue;
+
+            //Keep assigning tiles to the accessiblePopulations until either:
+            // 1. All populations in accessiblePopulations have their terrain need satisfied, or
+            // 2. There are no tiles left to assign
+            bool keepIterating = true;
+            while(keepIterating)
+            {
+                //Convert the remaining accessible tiles into a list so we can remove tiles from the HashSet as we iterate on it
+                Vector3Int[] tileArray = accessibleTilesByTileType[tile].ToArray<Vector3Int>();
+                if(tileArray.Length == 0)
+                    break;
+
+                //Calculate the number of tiles of the current tile type allocated to a population taking into account its dominance ratio (lower ratios return a higher weighted value, resulting in less total tiles received)
+                float allocatedTilesWeighted(Population population)
+                {
+                    if(!tilesAllocated[population].ContainsKey(tile))
+                        return 0;
+                        
+                    return tilesAllocated[population][tile] / dominanceRatiosByTileType[tile][population.species.Species];
+                }
+
+                //Find the population with the least tiles allocated (weighted). Also find the next lowest weighted allocation, to use as a stopping place
+                Population populationMostInNeed = null;
+                float minAllocation = float.MaxValue;
+                float secondLeastAllocation = float.MaxValue;
+                foreach(Population population in accessiblePopulations)
+                {
+                    //If this population has already satisfied its terrain need, move on to the next one
+                    if(sumAllocatedTiles(population) >= tilesNeeded[population])
+                        continue;
+
+                    float allocation = allocatedTilesWeighted(population);
+                    if(allocation < minAllocation)
+                    {
+                        populationMostInNeed = population;
+                        secondLeastAllocation = minAllocation;
+                        minAllocation = allocation;
+                    }
+                }
+
+                //If there are no populations left that need the current tile type, move on to the next tile type
+                if(populationMostInNeed == null)
+                    break;
+
+                //Protect against the edge case where a population needs this terrain type but can't reach any of the tiles
+                bool populationCanAccess = false;
+
+                //Iterate through the array of all tiles of the current tile type. Stop if:
+                // 1. There are no tiles left
+                // 2. This population surpasses the next most-in-need population for tiles allocated
+                // 3. This population has its terrain need satisfied
+                int tileIndex = 0;
+                while(tileIndex < tileArray.Length && allocatedTilesWeighted(populationMostInNeed) < secondLeastAllocation && sumAllocatedTiles(populationMostInNeed) < tilesNeeded[populationMostInNeed])
+                {
+                    if (rpm.CanAccess(populationMostInNeed, tileArray[tileIndex]))
+                    {
+                        accessibleTilesByTileType[tile].Remove(tileArray[tileIndex]);
+
+                        if(!tilesAllocated[populationMostInNeed].ContainsKey(tile))
+                            tilesAllocated[populationMostInNeed][tile] = 0;
+
+                        ++tilesAllocated[populationMostInNeed][tile];
+
+                        populationCanAccess = true;
+                    }
+
+                    ++tileIndex;
+                }
+
+                //If we iterate through all of the current tile type and this population couldn't reach a single tile, remove them from the list of accessible populations
+                if(!populationCanAccess)
+                    accessiblePopulations.Remove(populationMostInNeed);
+            }
+        }
+
+        //Go through each tile type and update the need value for that tile for each population that needs it
+        foreach (TileType tile in terrainOrder)
+        {
+            foreach(HashSet<Population> populationSet in populationsBySpeciesType.Values)
+            {
+                foreach(Population population in populationSet)
+                {
+                    if(tilesAllocated[population].ContainsKey(tile)) {
+                        string needName = tile.ToString();
+                        population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
+                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                    }
                 }
             }
         }
@@ -224,12 +312,22 @@ public class TerrainNeedSystem : NeedSystem
         this.isDirty = false;
     }
 
-
+    //Compares two populations based on the number of tiles allocated, weighted by their dominance ratio
     private class DominanceComparer : IComparer<Population>
     {
+        private Dictionary<Population, Dictionary<TileType, int>> tilesAllocated;
+        private TileType tileType;
+        public DominanceComparer(TileType tile, Dictionary<Population, Dictionary<TileType, int>> allocated)
+        {
+            tileType = tile;
+            tilesAllocated = allocated;
+        }
+
         public int Compare(Population x, Population y)
         {
-            return y.FoodDominance - x.FoodDominance;
+            return (int) 
+               (tilesAllocated[x][tileType] / dominanceRatiosByTileType[tileType][x.Species.Species] -
+                tilesAllocated[y][tileType] / dominanceRatiosByTileType[tileType][y.Species.Species]);
         }
     }
 }
