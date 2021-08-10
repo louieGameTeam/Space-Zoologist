@@ -15,7 +15,7 @@ public class TerrainNeedSystem : NeedSystem
     private static readonly Dictionary<TileType, Dictionary<SpeciesType, float>> dominanceRatiosByTileType = new Dictionary<TileType, Dictionary<SpeciesType, float>>
     {
         { TileType.Grass, new Dictionary<SpeciesType, float> { {SpeciesType.Anteater, 0.4f}, {SpeciesType.Cow, 0.3f}, {SpeciesType.Goat, 0.2f}, {SpeciesType.Spider, 0.1f} } },
-        { TileType.Dirt, new Dictionary<SpeciesType, float> { {SpeciesType.Cow, 0.6f}, {SpeciesType.Goat, 0.4f} } },
+        { TileType.Dirt, new Dictionary<SpeciesType, float> { {SpeciesType.Goat, 0.6f}, {SpeciesType.Cow, 0.4f} } },
         { TileType.Sand, new Dictionary<SpeciesType, float> { {SpeciesType.Spider, 1f} } },
         { TileType.Stone, new Dictionary<SpeciesType, float> { {SpeciesType.Spider, 0.6f}, {SpeciesType.Anteater, 0.4f} } },
         { TileType.Swamp, new Dictionary<SpeciesType, float> { {SpeciesType.Slug, 0.6f}, {SpeciesType.Anteater, 0.4f} } },
