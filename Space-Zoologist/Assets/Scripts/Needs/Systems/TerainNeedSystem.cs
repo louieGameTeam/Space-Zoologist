@@ -276,8 +276,13 @@ public class TerrainNeedSystem : NeedSystem
             {
                 foreach(Population population in populationSet)
                 {
-                    if(tilesAllocated[population].ContainsKey(tile)) {
-                        string needName = tile.ToString();
+                    string needName = tile.ToString();
+                    if (needName.Equals("Liquid"))
+                    {
+                        population.UpdateNeed(needName, rpm.GetLiquidComposition(population).Count);
+                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + rpm.GetLiquidComposition(population).Count);
+                    }
+                    else if(tilesAllocated[population].ContainsKey(tile)) {
                         population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
                         Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
                     }
