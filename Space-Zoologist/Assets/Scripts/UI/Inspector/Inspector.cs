@@ -327,9 +327,9 @@ public class Inspector : MonoBehaviour
 
     private void DisplayAreaText(Vector3Int cellPos)
     {
+        //Debug.Log($"Enclosed are @ {cellPos} selected");
         this.enclosureSystem.UpdateEnclosedAreas();
         this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
-        //Debug.Log($"Enclosed are @ {cellPos} selected");
     }
 
     private void DisplayLiquidText(Vector3Int cellPos)
