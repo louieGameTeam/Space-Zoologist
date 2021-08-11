@@ -11,7 +11,7 @@ public class TilePlacementController : MonoBehaviour
     public bool PlacementPaused { get; private set; }
     [SerializeField] private Camera currentCamera = default;
     public bool isPreviewing { get; set; } = false;
-    private bool godMode = false;
+    [SerializeField] public bool godMode = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
@@ -19,7 +19,7 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int lastPlacedTile;
     private List<GameTile> referencedTiles = new List<GameTile>();
     private bool isFirstTile;
-    public bool isErasing = false;
+    [SerializeField] public bool isErasing = false;
     public Tilemap[] allTilemaps { get { return tilemaps; } }
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     public GameTile[] gameTiles { get; private set; } = default;
@@ -90,7 +90,6 @@ public class TilePlacementController : MonoBehaviour
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
     public void StartPreview(string tileID, bool godMode = false)
     {
-        this.godMode = godMode;
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         this.dragStartPosition = this.grid.WorldToCell(mouseWorldPosition);
         if (!Enum.IsDefined(typeof(TileType), tileID))
@@ -114,7 +113,6 @@ public class TilePlacementController : MonoBehaviour
     }
     public void StopPreview()
     {
-        this.godMode = false;
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
         GridSystem.ConfirmPlacement();
@@ -135,7 +133,7 @@ public class TilePlacementController : MonoBehaviour
         foreach (GameTile tile in this.referencedTiles)
         {
             GameTile currentTile = GridSystem.GetGameTileAt(this.currentMouseCellPosition);
-            if (currentTile != null && currentTile == tile)
+            if (currentTile != null)
             {
                 GridSystem.RemoveTile(this.currentMouseCellPosition);
             }

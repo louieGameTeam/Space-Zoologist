@@ -10,7 +10,7 @@ public class SerializedTileData
     public int Repetitions;
     public SerializedTileData(GameTile tile, LiquidBody liquidBody, bool placeable, int repetitions)
     {
-        this.TileID = (int)tile.type;
+        this.TileID = tile == null ? -1 : (int)tile.type;
         this.LiquidBodyID = liquidBody != null ? liquidBody.bodyID : 0;
         this.Placeable = placeable;
         this.Repetitions = repetitions;

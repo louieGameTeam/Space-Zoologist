@@ -72,8 +72,6 @@ public class GridSystem : MonoBehaviour
     {
         this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
 
-        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
-
         for (int i = 0; i < ReserveWidth; ++i)
         {
             for (int j = 0; j < ReserveHeight; ++j)
@@ -144,17 +142,20 @@ public class GridSystem : MonoBehaviour
             // if the tile id is negative
             if (serializedTileData.TileID == -1)
             {
-                TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, null);
-                TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
-
-                // move x over first
-                tilePosition.x += serializedTileData.Repetitions;
-
-                // then add to the y after if overflow
-                if (tilePosition.x >= ReserveWidth)
+                for (int i = 0; i < serializedTileData.Repetitions; ++i)
                 {
-                    tilePosition.y += tilePosition.x / ReserveWidth;
-                    tilePosition.x = tilePosition.x % ReserveWidth;
+                    TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, null);
+                    TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
+
+                    // move x over first
+                    tilePosition.x += 1;
+
+                    // then add to the y after if overflow
+                    if (tilePosition.x >= ReserveWidth)
+                    {
+                        tilePosition.y += 1;
+                        tilePosition.x = 0;
+                    }
                 }
             }
             else
@@ -219,6 +220,14 @@ public class GridSystem : MonoBehaviour
         renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
         HighlightedTiles = new List<Vector3Int>();
+
+        for (int i = 0; i < ReserveWidth; ++i)
+        {
+            for (int j = 0; j < ReserveHeight; ++j)
+            {
+                ApplyChangesToTilemap(new Vector3Int(i, j, 0));
+            }
+        }
     }
 
     public SerializedTilemap SerializedTilemap()
@@ -258,6 +267,8 @@ public class GridSystem : MonoBehaviour
             {
                 if (tile.type == TileType.Liquid)
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                if (tile.type != TileType.Wall)
+                    TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
                 ApplyChangesToTilemap(tilePosition);
@@ -298,6 +309,10 @@ public class GridSystem : MonoBehaviour
                 ReserveWidth = maxWidth;
                 ReserveHeight = maxHeight;
                 TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition);
+                // set placeable here, but idk what to do lol
+                if (tile.type != TileType.Wall)
+                    TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
+
                 tileData = GetTileData(tilePosition);
 
                 // add texture to the buffer
@@ -334,11 +349,19 @@ public class GridSystem : MonoBehaviour
     {
         TileData tileData = GetTileData(tilePosition);
 
-        RemovedTiles.Add(tilePosition);
-        DivideLiquidBody(tilePosition);
-        tileData.PreviewReplacement(null);
-        ChangedTiles.Add(tilePosition);
-        ApplyChangesToTilemap(tilePosition);
+        if (tileData != null)
+        {
+            RemovedTiles.Add(tilePosition);
+
+            // resize the array if row/column is empty and is in outer ranges (may work on later)
+
+            tileData.isTilePlaceable = false;
+            if (tileData.currentTile.type == TileType.Liquid)
+                DivideLiquidBody(tilePosition);
+            tileData.PreviewReplacement(null);
+            ChangedTiles.Add(tilePosition);
+            ApplyChangesToTilemap(tilePosition);
+        }
     }
 
 

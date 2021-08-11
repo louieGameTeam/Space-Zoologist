@@ -10,6 +10,7 @@ public class PodSection : StoreSection
     [SerializeField] Transform PodItemContainer = default;
     [Header("Dependencies")]
     [SerializeField] PopulationManager populationManager = default;
+    [SerializeField] TilePlacementController tilePlacementController = default;
 
     AnimalSpecies selectedSpecies = null;
 
@@ -36,7 +37,7 @@ public class PodSection : StoreSection
                 Debug.Log("Can't place species there");
                 return;
             }
-            if (base.ResourceManager.CheckRemainingResource(selectedSpecies) <= 0)
+            if (base.ResourceManager.CheckRemainingResource(selectedSpecies) <= 0 && !tilePlacementController.godMode)
             {
                 base.OnItemSelectionCanceled();
                 return;
