@@ -5,10 +5,10 @@ using UnityEngine;
 // TODO setup so can only be placed in liquid and only modifies the values in that liquid
 public class LiquidMachine : Machine
 {
-    private TileSystem TileSystem = default;
+    private GridSystem gridSystem = default;
     public override void Initialize()
     {
-        this.TileSystem = FindObjectOfType<TileSystem>();
+        this.gridSystem = FindObjectOfType<GridSystem>();
         base.Initialize();
     }
     // TODO Input handler
@@ -22,13 +22,13 @@ public class LiquidMachine : Machine
         this.machineHUDGO.SetActive(!this.machineHUDGO.activeSelf);
         if (this.machineHUDGO.activeSelf)
         {
-            GameTile tile = this.TileSystem.GetGameTileAt(this.position);
+            GameTile tile = this.gridSystem.GetGameTileAt(this.position);
             this.machineHUD.Initialize(this);
         }
     }
 
     public void UpdateLiquid(float[] liquidComposition)
     {
-        this.TileSystem.ChangeLiquidBodyComposition(this.position, liquidComposition);
+        this.gridSystem.SetLiquidComposition(this.position, liquidComposition);
     }
 }

@@ -23,7 +23,6 @@ public class StoreSection : MonoBehaviour
     protected GridSystem GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
-    private GridOverlay gridOverlay = default;
     protected Item selectedItem = null;
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
@@ -34,7 +33,6 @@ public class StoreSection : MonoBehaviour
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
-        gridOverlay = GridSystem.gameObject.GetComponent<GridOverlay>();
         this.playerBalance = playerBalance;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
@@ -59,13 +57,13 @@ public class StoreSection : MonoBehaviour
             if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
 
             Vector3Int gridLocation = GridSystem.Grid.WorldToCell(mousePosition);
-            if (this.GridSystem.PlacementValidation.IsOnWall(gridLocation)) return;
+            if (this.GridSystem.IsOnWall(gridLocation)) return;
 
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
             {
                 previousLocation = gridLocation;
-                gridOverlay.ClearColors();
-                GridSystem.PlacementValidation.updateVisualPlacement(gridLocation, selectedItem);
+                GridSystem.ClearHighlights();
+                GridSystem.updateVisualPlacement(gridLocation, selectedItem);
             }
         }
     }
@@ -76,9 +74,12 @@ public class StoreSection : MonoBehaviour
         foreach (LevelData.ItemData data in levelData.ItemQuantities)
         {
             Item item = data.itemObject;
-            if (item.Type.Equals(itemType))
+            if (item)
             {
-                this.AddItem(item);
+                if (item.Type.Equals(itemType))
+                {
+                    this.AddItem(item);
+                }
             }
         }
     }
@@ -116,8 +117,8 @@ public class StoreSection : MonoBehaviour
     public virtual void OnItemSelectionCanceled()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
-        gridOverlay.ClearColors();
         AudioManager.instance?.PlayOneShot(SFXType.Cancel);
+        GridSystem.ClearHighlights();
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)
