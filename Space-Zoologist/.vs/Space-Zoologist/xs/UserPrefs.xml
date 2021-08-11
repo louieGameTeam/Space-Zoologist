@@ -1,15 +1,18 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Audio/AudioSlider.cs">
     <Files>
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" Line="62" Column="61" IsPinned="True" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="44" Column="25" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="101" Column="14" />
+      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" Line="245" Column="1" />
+      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" Line="32" Column="38" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" />
       <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" />
       <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" />
       <File FileName="Assets/Scripts/PopulationSystem/PathFinding/PathRequestManager.cs" Line="48" Column="14" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="285" Column="48" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="229" Column="40" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="330" Column="1" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" />
       <File FileName="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs" Line="30" Column="1" />
+      <File FileName="Assets/Scripts/Audio/AudioSlider.cs" Line="8" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -36,13 +39,13 @@
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Audio" expanded="True" />
+                <Node name="Audio" expanded="True">
+                  <Node name="AudioSlider.cs" selected="True" />
+                </Node>
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
                   <Node name="EventSystem" expanded="True" />
-                  <Node name="TimeSystem" expanded="True">
-                    <Node name="TimeSystem.cs" selected="True" />
-                  </Node>
+                  <Node name="TimeSystem" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -79,10 +82,10 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="89deefc4-eeff-4b46-a572-cf5b966f0af6" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5c2a7f83-a6a7-4058-8a81-b9b389561f6c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/travisgarcia/Cell/Test/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
+      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
