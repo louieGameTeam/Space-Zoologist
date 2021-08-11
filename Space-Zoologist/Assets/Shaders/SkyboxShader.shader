@@ -57,7 +57,7 @@
                 // box out the background
                 // [0... 1]
                 noiseUV = float2(int2(noiseUV)) / _Scale.xy;
-                float noise = frac(tex2D(_NoiseTex, noiseUV) + _Time.x * _Speed);
+                float noise = frac(tex2D(_NoiseTex, noiseUV));// +_Time.x * _Speed);
                 noise *= 8;
                 noise = float(int(noise));
 
