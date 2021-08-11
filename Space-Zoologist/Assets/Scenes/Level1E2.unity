@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -637,6 +637,7 @@ MonoBehaviour:
     type: 3}
   PodItemContainer: {fileID: 1064887328}
   populationManager: {fileID: 2078374405}
+  tilePlacementController: {fileID: 0}
 --- !u!224 &47254747
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3662,7 +3663,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9b2c58e2a02495b489ff33581af15917, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6179,7 +6180,7 @@ MonoBehaviour:
   PlayerBalanceDisplay: {fileID: 491272613}
   LevelDataReference: {fileID: 320161629}
   CursorItem: {fileID: 380907109}
-  GridSystem: {fileID: 0}
+  GridSystem: {fileID: 765609361}
   UIElements: []
   StoreCanvas: {fileID: 407822466}
   MenuSelectPanel: {fileID: 1445722836}
@@ -11066,6 +11067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 1054101994}
+  godMode: 0
   isErasing: 0
   tilemaps:
   - {fileID: 63948169}
@@ -12129,7 +12131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reserveDraft: {fileID: 459174929}
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
   referenceCamera: {fileID: 1054101994}
   populationManager: {fileID: 2078374405}
   foodSourceManager: {fileID: 6874327555454712160}
@@ -26514,7 +26516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
   enclosureSystem: {fileID: 5592442342188060214}
   areaDropdownMenu: {fileID: 1259954979}
   itemDropdownMenu: {fileID: 1084171904}
@@ -27392,6 +27394,7 @@ MonoBehaviour:
     type: 3}
   EnclosureSystem: {fileID: 5592442342188060214}
   tilePlacementController: {fileID: 765609362}
+  rpm: {fileID: 0}
 --- !u!1 &1999547570
 GameObject:
   m_ObjectHideFlags: 0

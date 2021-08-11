@@ -32,7 +32,6 @@ public class PlotIO : MonoBehaviour
     {
         //Debug.Log(serializedPlot.serializedMapObjects.names);
         this.SerializedPlot = serializedPlot;
-        ParseSerializedObjects();
     }
     public void ParseSerializedObjects()
     {

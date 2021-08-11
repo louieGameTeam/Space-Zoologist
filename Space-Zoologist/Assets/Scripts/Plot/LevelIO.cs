@@ -103,6 +103,7 @@ public class LevelIO : MonoBehaviour
         this.plotIO.LoadPlot(serializedLevel.serializedPlot);
         //Animals loaded after map to avoid path finding issues
         this.presetMap = serializedLevel;
+        Reload();
     }
 
     public void Reload()
