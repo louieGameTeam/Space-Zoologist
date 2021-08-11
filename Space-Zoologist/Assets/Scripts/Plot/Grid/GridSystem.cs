@@ -1139,10 +1139,7 @@ public class GridSystem : MonoBehaviour
 
         // Prevent placing on items already there.
         TileData tileData = GetTileData(pos);
-        if (tileData == null)
-            return false;
-
-        if (tileData.Food)
+        if (tileData == null || tileData.Food)
         {
             return false;
         }
