@@ -20,6 +20,8 @@ public class LevelTrace
     [SerializeField] private List<DayTrace> dayTraces;
     // A boolean indicating completion of the level.
     [SerializeField] private bool levelComplete;
+    // An overall species trace object containing detailed information about species in the level.
+    [SerializeField] private OverallSpeciesTrace overallSpeciesTrace;
 
     // PUBLIC GETTERS/SETTERS
     public int LevelID
@@ -62,5 +64,11 @@ public class LevelTrace
     {
         get { return levelComplete; }
         set { levelComplete = value; }
+    }
+
+    public OverallSpeciesTrace OverallSpeciesTrace
+    {
+        get { return overallSpeciesTrace; }
+        set { overallSpeciesTrace = value; }
     }
 }

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private DayTrace currentDayTrace = null;
     // Initialize a journal trace.
     private JournalTrace currentJournalTrace = null;
+    // Initialize an overall species trace.
+    private OverallSpeciesTrace currentOverallSpeciesTrace = null;
 
     // On Awake, check the status of the instance. If the instance is null, replace it with the current GameManager.
     // Else, destroy the gameObject this script is attached to. There can only be one.
@@ -69,20 +71,19 @@ public class GameManager : MonoBehaviour
         // If the buildIndex of the scene is greater than 2 (i.e. not the introduction, main menu, or level menu), get level information for trace.
         if (scene.buildIndex > 2)
         {
+            SubscribeToEvents();
             // Get references to the TimeSystem object and the PlayerBalance object.
             int currentDay = GameObject.Find("TimeSystem").GetComponent<TimeSystem>().CurrentDay;
             float playerBalance = GameObject.Find("PlayerBalance").GetComponent<PlayerBalance>().Balance;
+            LevelDataReference levelData = GameObject.Find("LevelData").GetComponent<LevelDataReference>();
             // Set the current level trace.
             currentLevelTrace = GetLevelStartInformation(scene.buildIndex, currentPlayTrace.SessionElapsedTime);
             // Create the starting day trace.
             currentDayTrace = CreateDayTrace(currentPlayTrace.SessionElapsedTime, currentDay, playerBalance);
+            // Create the overall species trace.
+            currentOverallSpeciesTrace = CreateOverallSpeciesTrace(levelData);
             DebugDayTrace(currentDayTrace);
-            // Listen to next day events being fired.   
-            EventManager.Instance.SubscribeToEvent(EventType.OnNextDay, NextDayTrace);
-            // Listen to journal events being fired.
-            EventManager.Instance.SubscribeToEvent(EventType.OnJournalOpened, CreateJournalTrace);
-            EventManager.Instance.SubscribeToEvent(EventType.OnJournalClosed, CloseJournalTrace);
-            StartCoroutine(ChangeScene());
+            // StartCoroutine(ChangeScene());
         }
     }
 
@@ -208,6 +209,27 @@ public class GameManager : MonoBehaviour
         this.currentDayTrace.JournalTime += journalTrace.JournalDeltaTime;
         this.currentDayTrace.JournalTraces.Add(journalTrace);
         this.currentJournalTrace = null;
+    }
+
+    // A function that creates an overall species trace object from the level data reference. Initiated on start of level.
+    private OverallSpeciesTrace CreateOverallSpeciesTrace(LevelDataReference levelData)
+    {
+        OverallSpeciesTrace overallSpeciesTrace = new OverallSpeciesTrace();
+        overallSpeciesTrace.Species = new List<string>();
+        foreach (AnimalSpecies species in levelData.LevelData.animalSpecies) 
+        {
+            overallSpeciesTrace.Species.Add(species.SpeciesName);
+        }
+        return overallSpeciesTrace;
+    }
+
+    private void SubscribeToEvents()
+    {
+        // Listen to next day events being fired.   
+        EventManager.Instance.SubscribeToEvent(EventType.OnNextDay, NextDayTrace);
+        // Listen to journal events being fired.
+        EventManager.Instance.SubscribeToEvent(EventType.OnJournalOpened, CreateJournalTrace);
+        EventManager.Instance.SubscribeToEvent(EventType.OnJournalClosed, CloseJournalTrace);
     }
 
     // A function that serializes the current PlayTrace object to JSON.
