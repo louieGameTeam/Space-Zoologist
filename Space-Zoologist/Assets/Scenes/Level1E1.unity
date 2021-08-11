@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -637,6 +637,7 @@ MonoBehaviour:
     type: 3}
   PodItemContainer: {fileID: 1064887328}
   populationManager: {fileID: 2078374405}
+  tilePlacementController: {fileID: 0}
 --- !u!224 &47254747
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7867,6 +7868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 1054101994}
+  godMode: 0
   isErasing: 0
   tilemaps:
   - {fileID: 940519983}
@@ -10256,7 +10258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
-  gridSystem: {fileID: 0}
+  gridSystem: {fileID: 765609361}
   buildBufferManager: {fileID: 799223294}
 --- !u!1 &937003167
 GameObject:
@@ -11397,11 +11399,11 @@ MonoBehaviour:
   DetailButton: {fileID: 983550913}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
-  enclosedAreaSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
+  enclosedAreaSprite: {fileID: -3045895970611929965, guid: 0314811df211bb7418f88854e78f8bbb,
     type: 3}
-  liquidSprite: {fileID: 4912832600191625089, guid: 023822bed12eea94b8b63bfc8e6fba12,
+  liquidSprite: {fileID: 2590806747968669933, guid: 0314811df211bb7418f88854e78f8bbb,
     type: 3}
-  defaultSprite: {fileID: -8275502208090371910, guid: 3453f0993e49cdd47a17df06d851dce5,
+  defaultSprite: {fileID: -3045895970611929965, guid: 0314811df211bb7418f88854e78f8bbb,
     type: 3}
 --- !u!114 &996204903
 MonoBehaviour:
@@ -25906,6 +25908,7 @@ MonoBehaviour:
     type: 3}
   EnclosureSystem: {fileID: 5592442342188060214}
   tilePlacementController: {fileID: 765609362}
+  rpm: {fileID: 0}
 --- !u!1 &1999547570
 GameObject:
   m_ObjectHideFlags: 0
