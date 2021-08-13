@@ -16,6 +16,12 @@ public struct EnclosureID
     [Tooltip("ID number of the enclosure")]
     private byte id;
 
+    public EnclosureID(string levelName, byte id)
+    {
+        this.levelName = levelName;
+        this.id = id;
+    }
+
     public static bool operator==(EnclosureID a, EnclosureID b)
     {
         return a.levelName == b.levelName && a.id == b.id;

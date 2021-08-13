@@ -8,6 +8,7 @@ public class NotebookModel : ScriptableObject
     public string Acronym => acronym;
     public ResearchModel Research => research;
     public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
+    public List<EnclosureID> GetEnclosureIDs => new List<EnclosureID>(testAndMetricData.Keys);
 
     [SerializeField]
     [Tooltip("Acronym that the player gets to spell out on the home page")]
@@ -18,7 +19,10 @@ public class NotebookModel : ScriptableObject
         "about the different species, foods, and tiles")]
     private ResearchModel research;
 
+    // Notes on each character in the acronym
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
+    // Map the test and metric data to the enclosure it applies to
+    private Dictionary<EnclosureID, TestAndMetricsDataSet> testAndMetricData = new Dictionary<EnclosureID, TestAndMetricsDataSet>();
 
     public void Setup()
     {
@@ -48,5 +52,9 @@ public class NotebookModel : ScriptableObject
     private void AddBookmark(NotebookBookmark bookmark)
     {
         Bookmarks.Add(bookmark);
+    }
+    public void TryAddEnclosureID(EnclosureID id)
+    {
+        if (!testAndMetricData.ContainsKey(id)) testAndMetricData.Add(id, new TestAndMetricsDataSet());
     }
 }
