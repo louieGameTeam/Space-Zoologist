@@ -20,9 +20,9 @@ public class ResearchNotesUI : NotebookUIChild
     private TextMeshProUGUI titleText;
 
     // Start is called before the first frame update
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         // Call the method when the input field ends edit
         notesInputField.onEndEdit.AddListener(OnNoteValueChanged);

@@ -22,6 +22,7 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
 
     public void Setup(NotebookBookmark bookmark)
     {
+        base.Setup();
         this.bookmark = bookmark;
 
         text.text = bookmark.Label;

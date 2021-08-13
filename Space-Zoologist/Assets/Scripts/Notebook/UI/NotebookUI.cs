@@ -39,16 +39,20 @@ public class NotebookUI : MonoBehaviour
         // Whenever a new enclosed area appears, update the test and metrics model
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, UpdateEnclosureIDs);
 
-        // This line of code prevents the notebook from turning off the first time that it is turned on,
-        // while also making sure it is turned off at the start
-        if(!isOpen) SetIsOpen(false);
-
         // Map all pickers to their corresponding name
         ResearchCategoryPicker[] allPickers = GetComponentsInChildren<ResearchCategoryPicker>(true);
         foreach (ResearchCategoryPicker picker in allPickers)
         {
             namePickerMap.Add(picker.name, picker);
         }
+
+        // Setup all children, ensuring correct initialization order
+        NotebookUIChild[] children = GetComponentsInChildren<NotebookUIChild>(true);
+        foreach (NotebookUIChild child in children) child.Setup();
+
+        // This line of code prevents the notebook from turning off the first time that it is turned on,
+        // while also making sure it is turned off at the start
+        if (!isOpen) SetIsOpen(false);
     }
     public void Toggle()
     {

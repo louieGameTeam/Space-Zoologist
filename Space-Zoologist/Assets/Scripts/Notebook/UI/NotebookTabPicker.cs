@@ -18,9 +18,9 @@ public class NotebookTabPicker : NotebookUIChild
     // List of the buttons used to select a tab
     private List<NotebookTabSelectButton> buttons = new List<NotebookTabSelectButton>();
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         // Get all notebook tabs
         NotebookTab[] tabs = (NotebookTab[])System.Enum.GetValues(typeof(NotebookTab));
@@ -38,8 +38,6 @@ public class NotebookTabPicker : NotebookUIChild
             button.Setup(tabs[i], parent, SetTabSelected, i == 0);
             // Add this button to the list
             buttons.Add(button);
-
-            Need need;
         }
     }
 

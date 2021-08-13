@@ -27,7 +27,7 @@ public class NotebookAcronymSingleNoteEditor : NotebookUIChild
     public void Setup(char acronymChar)
     {
         // Call the base awake method
-        base.Awake();
+        base.Setup();
 
         // Set the acronym character
         this.acronymChar = acronymChar;

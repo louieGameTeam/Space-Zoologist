@@ -9,10 +9,8 @@ public class EnclosureIDPicker : NotebookUIChild
     [Tooltip("Reference to the dropdown used to select the enclosure ID")]
     private TMP_Dropdown dropdown;
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
-
-        
+        base.Setup();
     }
 }

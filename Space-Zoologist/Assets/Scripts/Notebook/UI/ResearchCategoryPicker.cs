@@ -50,9 +50,9 @@ public class ResearchCategoryPicker : NotebookUIChild
     // The category currently selected
     private ResearchCategory selectedCategory;
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         ResearchCategoryType[] types = (ResearchCategoryType[])System.Enum.GetValues(typeof(ResearchCategoryType));
 
@@ -61,7 +61,7 @@ public class ResearchCategoryPicker : NotebookUIChild
         {
             TypeFilteredResearchCategoryDropdown clone = Instantiate(dropdown, dropdownParent);
             // Setup the clone's type and add a listener for the category change
-            clone.SetTypeFilter(type);
+            clone.Setup(type);
             clone.OnResearchCategorySelected.AddListener(ResearchCategoryChanged);
             // Add to the list of our dropdowns
             dropdowns.Add(clone);

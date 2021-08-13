@@ -21,9 +21,9 @@ public class NeedTypeDropdown : NotebookUIChild
     [Tooltip("Event raised when the dropdown value changes")]
     private NeedTypeEvent onNeedTypeSelected;
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         // Clear any existing options
         dropdown.ClearOptions();

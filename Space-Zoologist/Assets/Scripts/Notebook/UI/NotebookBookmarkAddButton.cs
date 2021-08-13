@@ -38,9 +38,9 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
     [Tooltip("Reference to the category picker to add a bookmark for")]
     protected ResearchCategoryPicker categoryPicker;
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         dropdownToggle.onValueChanged.AddListener(OnDropdownToggleStateChange);
         confirmButton.onClick.AddListener(TryAddBookmark);

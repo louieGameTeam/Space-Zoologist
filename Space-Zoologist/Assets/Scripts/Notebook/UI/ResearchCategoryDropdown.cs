@@ -29,13 +29,15 @@ public class ResearchCategoryDropdown : NotebookUIChild
     // Maps a selected item in the dropdown to a research category
     protected Dictionary<TMP_Dropdown.OptionData, ResearchCategory> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ResearchCategory>();
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         // Clear any existing data
         dropdown.ClearOptions();
         optionCategoryMap.Clear();
+
+        ResearchCategory[] allCategories = GetResearchCategories();
 
         foreach(ResearchCategory category in GetResearchCategories())
         {

@@ -49,9 +49,9 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     // Current research article selected
     private ResearchEncyclopediaArticleID currentArticleID;
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         // Add listener for change of dropdown value
         // (is "on value changed" invoked at the start?)

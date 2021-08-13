@@ -11,9 +11,9 @@ public class NotebookBookmarkNavigationUI : NotebookUIChild
     [Tooltip("Parent object for all navigation buttons")]
     private Transform buttonParent;
 
-    protected override void Awake()
+    public override void Setup()
     {
-        base.Awake();
+        base.Setup();
 
         // Create a bookmark for each bookmark currently in the notebook
         // NOTE: doesn't work because the bookmarks can't be serialized - they lose their base type

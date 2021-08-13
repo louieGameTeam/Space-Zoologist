@@ -7,12 +7,12 @@ public class NotebookUIChild : MonoBehaviour
 {
     public NotebookUI UIParent { get; private set; }
 
-    protected virtual void Awake()
+    public virtual void Setup()
     {
         UIParent = GetComponentInParent<NotebookUI>();
 
         // Log a warning if no UI parent is found
-        if(UIParent == null)
+        if (UIParent == null)
         {
             Debug.LogWarning("Component type " + GetType() + " on game object named " + name +
                 " expects a component of type 'NotebookUI' attached to one of its parents, " +

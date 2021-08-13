@@ -13,14 +13,16 @@ public class TypeFilteredResearchCategoryDropdown : ResearchCategoryDropdown
     [Tooltip("Research category type that this dropdown represents")]
     private List<ResearchCategoryType> typeFilter;
 
-    public void SetTypeFilter(params ResearchCategoryType[] types)
+    public void Setup(params ResearchCategoryType[] types)
     {
         typeFilter.Clear();
         foreach(ResearchCategoryType type in types)
         {
             typeFilter.Add(type);
         }
-        Awake();
+
+        // Now that type filter is set we will setup the base class
+        base.Setup();
     }
 
     protected override ResearchCategory[] GetResearchCategories()
