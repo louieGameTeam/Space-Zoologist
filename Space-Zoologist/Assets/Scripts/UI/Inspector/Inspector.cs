@@ -45,7 +45,7 @@ public class Inspector : MonoBehaviour
         this.itemsDropdown.onValueChanged.AddListener(selectItem);
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
-
+        OpenInspector();
         // Have the dropdown options be refreshed when new items created
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
         EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, this.UpdateDropdownMenu);
@@ -85,7 +85,6 @@ public class Inspector : MonoBehaviour
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = !IsInInspectorMode;
-        AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
     }
 
     /// <summary>
