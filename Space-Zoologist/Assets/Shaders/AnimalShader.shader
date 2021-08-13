@@ -31,6 +31,7 @@
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
             struct v2f
@@ -38,6 +39,7 @@
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
                 float2 centerUV : TEXCOORD1;
+                float4 color : COLOR;
             };
 
             sampler2D _MainTex;
@@ -59,6 +61,7 @@
                 o.vertex = UnityObjectToClipPos(v.vertex * _ShadowArea);
                 o.uv = v.uv;
                 o.centerUV = (_Max_UV + _Min_UV) / 2;
+                o.color = v.color;
                 return o;
             }
 
@@ -66,7 +69,7 @@
             {
                 i.uv = (i.uv - i.centerUV) * _ShadowArea + i.centerUV;
 
-                fixed4 col = tex2D(_MainTex, i.uv) * _LightColor;
+                fixed4 col = tex2D(_MainTex, i.uv) * _LightColor * i.color;
 
                 // transform shadow uv
                 float2 lightDirection = normalize(_LightDirection.xy);
