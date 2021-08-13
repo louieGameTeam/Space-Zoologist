@@ -8,7 +8,7 @@ public class NotebookModel : ScriptableObject
     public string Acronym => acronym;
     public ResearchModel Research => research;
     public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
-    public List<EnclosureID> GetEnclosureIDs => new List<EnclosureID>(testAndMetricData.Keys);
+    public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(testAndMetricData.Keys);
 
     [SerializeField]
     [Tooltip("Acronym that the player gets to spell out on the home page")]

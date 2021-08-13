@@ -27,6 +27,7 @@ public class ResearchCategoryDropdown : NotebookUIChild
     protected ResearchCategoryEvent onResearchCategorySelected;
 
     // Maps a selected item in the dropdown to a research category
+    // NOTE: why don't we just change this to two conversion functions to change betweeen types?
     protected Dictionary<TMP_Dropdown.OptionData, ResearchCategory> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ResearchCategory>();
 
     public override void Setup()

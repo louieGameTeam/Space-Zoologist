@@ -8,7 +8,6 @@ public class NotebookUI : MonoBehaviour
 {
     // Public accessors
     public NotebookModel Notebook => notebook;
-    public UnityEvent OnEnclosureIDsUpdated => onEnclosureIDsUpdated;
 
     [SerializeField]
     [Expandable]
@@ -17,15 +16,11 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
     private NotebookTabPicker tabPicker;
-    [SerializeField]
-    [Tooltip("Event invoked whenever the test and metrics model updates")]
-    private UnityEvent onEnclosureIDsUpdated;
 
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, ResearchCategoryPicker> namePickerMap = new Dictionary<string, ResearchCategoryPicker>();
     private bool isOpen = false;
-    private EnclosureSystem enclosureSystem;
 
     // I thought that this was called when the game object is inactive but apparently it is not
     private void Awake()
@@ -33,11 +28,8 @@ public class NotebookUI : MonoBehaviour
         // Setup the notebook at the start
         notebook.Setup();
 
-        // Setup the test and metric data with the current level name and enclosure set
-        enclosureSystem = FindObjectOfType<EnclosureSystem>();
-        UpdateEnclosureIDs();
-        // Whenever a new enclosed area appears, update the test and metrics model
-        EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, UpdateEnclosureIDs);
+        // Update the enclosure IDs
+        notebook.TryAddEnclosureID(EnclosureID.FromCurrentSceneName());
 
         // Map all pickers to their corresponding name
         ResearchCategoryPicker[] allPickers = GetComponentsInChildren<ResearchCategoryPicker>(true);
@@ -75,34 +67,5 @@ public class NotebookUI : MonoBehaviour
         else component = null;
 
         bookmark.NavigateTo(tabPicker, namePickerMap, component);
-    }
-
-    /// <summary>
-    /// Get a list of the current ids in the level
-    /// </summary>
-    /// <returns>A list of enclosure IDs</returns>
-    public List<EnclosureID> CurrentIDs()
-    {
-        List<EnclosureID> ids = new List<EnclosureID>();
-        string sceneName = SceneManager.GetActiveScene().name;
-
-        foreach(EnclosedArea area in enclosureSystem.EnclosedAreas)
-        {
-            ids.Add(new EnclosureID(sceneName, area.id));
-        }
-
-        return ids;
-    }
-
-    /// <summary>
-    /// Update the test and metrics model by adding any ids that did not exist before
-    /// </summary>
-    private void UpdateEnclosureIDs()
-    {
-        foreach(EnclosureID id in CurrentIDs())
-        {
-            Notebook.TryAddEnclosureID(id);
-        }
-        onEnclosureIDsUpdated.Invoke();
     }
 }
