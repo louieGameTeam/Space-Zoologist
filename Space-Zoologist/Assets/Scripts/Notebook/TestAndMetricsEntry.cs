@@ -8,6 +8,27 @@ using UnityEngine;
 [System.Serializable]
 public class TestAndMetricsEntry
 {
+    public ResearchCategory Category
+    {
+        get => category;
+        set => category = value;
+    }
+    public NeedType Need
+    {
+        get => need;
+        set => need = value;
+    }
+    public bool Improved
+    {
+        get => imporoved;
+        set => imporoved = value;
+    }
+    public string Notes
+    {
+        get => notes;
+        set => notes = value;
+    }
+
     [SerializeField]
     [Tooltip("The research category on this entry")]
     private ResearchCategory category;
@@ -16,7 +37,7 @@ public class TestAndMetricsEntry
     private NeedType need;
     [SerializeField]
     [Tooltip("True if this marks an increase in need, and false if it marks a decrease")]
-    private bool increase;
+    private bool imporoved;
     [SerializeField]
     [Tooltip("Main text in the entry")]
     private string notes;

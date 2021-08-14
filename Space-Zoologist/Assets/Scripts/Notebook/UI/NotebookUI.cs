@@ -46,6 +46,16 @@ public class NotebookUI : MonoBehaviour
         // while also making sure it is turned off at the start
         if (!isOpen) SetIsOpen(false);
     }
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            string numberString = SceneManager.GetActiveScene().name;
+            numberString = numberString.Substring("TestLevel".Length, 1);
+            int number = int.Parse(numberString);
+            SceneManager.LoadScene("TestLevel" + (number % 3 + 1));
+        }
+    }
     public void Toggle()
     {
         SetIsOpen(!isOpen);

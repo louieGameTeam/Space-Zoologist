@@ -22,6 +22,7 @@ public class OnScrollEventInterceptor : MonoBehaviour, IScrollHandler
                 + " but found none");
             return interceptTarget;
         }
+        set => interceptTarget = value;
     }
 
     // Throw the event back to the intercept target

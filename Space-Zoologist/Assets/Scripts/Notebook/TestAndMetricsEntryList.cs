@@ -6,8 +6,11 @@ using UnityEngine;
 /// A set of test and metric enries
 /// </summary>
 [System.Serializable]
-public class TestAndMetricsDataSet
+public class TestAndMetricsEntryList
 {
+    // Access the list of entries
+    public List<TestAndMetricsEntry> Entries => entries;
+
     [SerializeField]
     [Tooltip("List of entries in this data set")]
     private List<TestAndMetricsEntry> entries = new List<TestAndMetricsEntry>();

@@ -26,11 +26,8 @@ public struct EnclosureID
         this.enclosureNumber = enclosureNumber;
     }
 
-    // Parse the scene name to get the enclosure ID
-    public static EnclosureID FromCurrentSceneName()
+    public static EnclosureID FromSceneName(string name)
     {
-        // Get the name of the active scene
-        string name = SceneManager.GetActiveScene().name;
         string levelPrefix = "Level";
         string enclosurePrefix = "E";
 
@@ -46,28 +43,39 @@ public struct EnclosureID
         string levelNumberString = string.Empty;
         string enclosureNumberString = string.Empty;
 
-        if(levelIndex >= 0 && levelIndex < name.Length)
+        if (levelIndex >= 0 && levelIndex < name.Length)
         {
             if (enclosureIndex >= 0 && enclosureIndex < name.Length)
             {
-                levelNumberString = name.Substring(levelIndex, enclosureIndex - levelIndex);
+                levelNumberString = name.Substring(levelIndex, enclosureIndex - levelIndex - 1);
                 enclosureNumberString = name.Substring(enclosureIndex);
             }
             else levelNumberString = name.Substring(levelIndex);
         }
 
         // Try to parse the level number string and enclosure number string
-        if(!int.TryParse(levelNumberString, out int levelNumber))
+        if (!int.TryParse(levelNumberString, out int levelNumber))
         {
             levelNumber = -1;
         }
-        if(!int.TryParse(enclosureNumberString, out int enclosureNumber))
+        if (!int.TryParse(enclosureNumberString, out int enclosureNumber))
         {
             enclosureNumber = 1;
         }
 
         // Return the enclosure ID
         return new EnclosureID(levelNumber, enclosureNumber);
+    }
+
+    public static EnclosureID FromSceneName(Scene scene)
+    {
+        return FromSceneName(scene.name);
+    }
+
+    // Parse the scene name to get the enclosure ID
+    public static EnclosureID FromCurrentSceneName()
+    {
+        return FromSceneName(SceneManager.GetActiveScene().name);
     }
 
     public static bool operator==(EnclosureID a, EnclosureID b)

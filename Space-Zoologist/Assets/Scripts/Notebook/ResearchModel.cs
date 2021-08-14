@@ -36,7 +36,7 @@ public class ResearchModel : ScriptableObject
         foreach (ResearchEntry entry in entries)
         {
             entry.Setup(type);
-            ResearchDictionary.Add(entry.Category, entry);
+            if (!ResearchDictionary.ContainsKey(entry.Category)) ResearchDictionary.Add(entry.Category, entry);
         }
     }
 

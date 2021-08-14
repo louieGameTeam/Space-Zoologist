@@ -13,6 +13,7 @@ public class ResearchCategoryDropdown : NotebookUIChild
     // Public accessors
     public TMP_Dropdown Dropdown => dropdown;
     public ResearchCategoryEvent OnResearchCategorySelected => onResearchCategorySelected;
+    public ResearchCategory SelectedCategory => optionCategoryMap[dropdown.options[dropdown.value]];
 
     // Private editor data
 

@@ -22,14 +22,14 @@ public class NotebookModel : ScriptableObject
     // Notes on each character in the acronym
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
     // Map the test and metric data to the enclosure it applies to
-    private Dictionary<EnclosureID, TestAndMetricsDataSet> testAndMetricData = new Dictionary<EnclosureID, TestAndMetricsDataSet>();
+    private Dictionary<EnclosureID, TestAndMetricsEntryList> testAndMetricData = new Dictionary<EnclosureID, TestAndMetricsEntryList>();
 
     public void Setup()
     {
         // Foreach letter in the acronym, add an empty string to the dictionary
         foreach(char c in acronym)
         {
-            acronymNotes.Add(c, "");
+            if (!acronymNotes.ContainsKey(c)) acronymNotes.Add(c, "");
         }
         research.Setup();
     }
@@ -55,6 +55,7 @@ public class NotebookModel : ScriptableObject
     }
     public void TryAddEnclosureID(EnclosureID id)
     {
-        if (!testAndMetricData.ContainsKey(id)) testAndMetricData.Add(id, new TestAndMetricsDataSet());
+        if (!testAndMetricData.ContainsKey(id)) testAndMetricData.Add(id, new TestAndMetricsEntryList());
     }
+    public TestAndMetricsEntryList GetTestAndMetricsEntryList(EnclosureID id) => testAndMetricData[id];
 }
