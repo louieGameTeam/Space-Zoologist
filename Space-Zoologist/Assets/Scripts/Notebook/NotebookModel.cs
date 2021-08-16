@@ -23,6 +23,8 @@ public class NotebookModel : ScriptableObject
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
     // Map the test and metric data to the enclosure it applies to
     private Dictionary<EnclosureID, TestAndMetricsEntryList> testAndMetricData = new Dictionary<EnclosureID, TestAndMetricsEntryList>();
+    // Map the observation entries to the enclosure it applies to
+    private Dictionary<EnclosureID, ObservationEntryList> observationData = new Dictionary<EnclosureID, ObservationEntryList>();
 
     public void Setup()
     {
@@ -55,7 +57,12 @@ public class NotebookModel : ScriptableObject
     }
     public void TryAddEnclosureID(EnclosureID id)
     {
-        if (!testAndMetricData.ContainsKey(id)) testAndMetricData.Add(id, new TestAndMetricsEntryList());
+        if (!testAndMetricData.ContainsKey(id) && !observationData.ContainsKey(id))
+        {
+            testAndMetricData.Add(id, new TestAndMetricsEntryList());
+            observationData.Add(id, ObservationEntryList.Default());
+        }
     }
     public TestAndMetricsEntryList GetTestAndMetricsEntryList(EnclosureID id) => testAndMetricData[id];
+    public ObservationEntryList GetObservationEntryList(EnclosureID id) => observationData[id];
 }

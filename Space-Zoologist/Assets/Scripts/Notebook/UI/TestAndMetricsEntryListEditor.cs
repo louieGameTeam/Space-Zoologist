@@ -15,7 +15,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     [Tooltip("Parent transform for the editor of the individual entries")]
     private LayoutGroup editorParent;
 
-    private List<TestAndMetricEntryEditor> currentEntries = new List<TestAndMetricEntryEditor>();
+    private List<TestAndMetricEntryEditor> currentEditors = new List<TestAndMetricEntryEditor>();
 
     public override void Setup()
     {
@@ -28,22 +28,20 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 
     private void OnEnclosureSelected(EnclosureID id)
     {
-        Debug.Log("Enclosure selected: " + id);
-
         // Destroy all existing editors
-        foreach(TestAndMetricEntryEditor editor in currentEntries)
+        foreach(TestAndMetricEntryEditor editor in currentEditors)
         {
             Destroy(editor.gameObject);
         }
         // Clear out the list
-        currentEntries.Clear();
+        currentEditors.Clear();
 
         // Foreach entry in the selected list, add an editor
         foreach(TestAndMetricsEntry entry in UIParent.Notebook.GetTestAndMetricsEntryList(id).Entries)
         {
             TestAndMetricEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
             editor.Setup(id, entry);
-            currentEntries.Add(editor);
+            currentEditors.Add(editor);
         }
 
         // If the enclosure selected is the current enclosure, then add a new editor
@@ -52,10 +50,6 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
         {
             CreateAddingEntry();
         }
-
-        // Force the layout group to update
-        //editorParent.SetLayoutHorizontal();
-        //editorParent.SetLayoutVertical();
     }
 
     private void OnNewEntryCreated()
@@ -68,6 +62,6 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
         TestAndMetricEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
         editor.Setup(EnclosureID.FromCurrentSceneName(), null);
         editor.OnNewEntryCreated.AddListener(OnNewEntryCreated);
-        currentEntries.Add(editor);
+        currentEditors.Add(editor);
     }
 }

@@ -83,11 +83,13 @@ public class TestAndMetricEntryEditor : NotebookUIChild
             researchCategoryDropdown.SetDropdownValueWithoutNotify(0);
             needDropdown.SetDropdownValue(0);
             differenceDropdown.value = 0;
-            inputField.text = "when: \n\nDoes this meet target specifications? \n\nRelated notes: ";
+            inputField.text = "when: \n\nDoes this meet target specifications?: \n\nRelated notes: ";
         }
 
+        // Cache the current id
+        EnclosureID current = EnclosureID.FromCurrentSceneName();
         // Only add the listeners if this editor is in the current scene
-        if (enclosureID == EnclosureID.FromCurrentSceneName())
+        if (enclosureID == current)
         {
             // Add event listeners for everything
             researchCategoryDropdown.OnResearchCategorySelected.AddListener(x => Entry.Category = x);
@@ -95,13 +97,12 @@ public class TestAndMetricEntryEditor : NotebookUIChild
             differenceDropdown.onValueChanged.AddListener(x => Entry.Improved = x == 1);
             inputField.onValueChanged.AddListener(x => Entry.Notes = x);
         }
-        else
-        {
-            researchCategoryDropdown.Dropdown.interactable = false;
-            needDropdown.Dropdown.interactable = false;
-            differenceDropdown.interactable = false;
-            inputField.readOnly = true;
-        }
+
+        // Elements are only interactable if id is the same as the current scene
+        researchCategoryDropdown.Dropdown.interactable = enclosureID == current;
+        needDropdown.Dropdown.interactable = enclosureID == current;
+        differenceDropdown.interactable = enclosureID == current;
+        inputField.readOnly = enclosureID == current;
 
         // Make sure the scroll event is taken away from the input field
         OnScrollEventInterceptor interceptor = inputField.gameObject.AddComponent<OnScrollEventInterceptor>();
