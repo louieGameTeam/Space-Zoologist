@@ -63,7 +63,7 @@ public class TestAndMetricEntryEditor : NotebookUIChild
 
         // Setup each dropdown
         researchCategoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
-        needDropdown.Setup(NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid);
+        needDropdown.Setup(new NeedType[]{ NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
         // Reset the difference options
         differenceDropdown.ClearOptions();
         differenceDropdown.options.Add(new TMP_Dropdown.OptionData("Deteriorated"));

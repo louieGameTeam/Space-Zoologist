@@ -25,18 +25,13 @@ public class NeedTypeDropdown : NotebookUIChild
 
     private const string suffix = " Need";
 
-    public void Setup(params NeedType[] needs)
+    public override void Setup()
     {
-        base.Setup();
-
-        // Setup the needs list
-        this.needs = new List<NeedType>(needs);
-
         // Clear any existing options
         dropdown.ClearOptions();
 
         // Create a dropdown option for each need
-        foreach(NeedType need in needs)
+        foreach (NeedType need in needs)
         {
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(need.ToString() + suffix);
             dropdown.options.Add(option);
@@ -44,6 +39,14 @@ public class NeedTypeDropdown : NotebookUIChild
 
         // Add a listener for the dropdown value change
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
+    }
+
+    public void Setup(NeedType[] needs)
+    {
+        // Setup the needs list
+        this.needs = new List<NeedType>(needs);
+        // Call the setup function
+        Setup();
     }
 
     public void OnDropdownValueChanged(int value)
