@@ -5,7 +5,6 @@ using UnityEngine;
 public class SellingManager : MonoBehaviour
 {
     [SerializeField] GridSystem gridSystem = default;
-    [SerializeField] TileSystem tileSystem = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] Inspector Inspector = default;
@@ -57,16 +56,16 @@ public class SellingManager : MonoBehaviour
 
             // Find the cell that the player clicked on
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int cellPos = tileSystem.WorldToCell(worldPos);
+            Vector3Int cellPos = gridSystem.WorldToCell(worldPos);
 
             // What is on the tile?
-            GameTile tile = tileSystem.GetGameTileAt(cellPos);
-            GridSystem.CellData cellData;
+            GameTile tile = gridSystem.GetGameTileAt(cellPos);
+            GridSystem.TileData tileData;
 
             // Find out what is on the tile if it is in bounds
-            if (gridSystem.isCellinGrid(cellPos.x, cellPos.y))
+            if (gridSystem.IsCellinGrid(cellPos.x, cellPos.y))
             {
-                cellData = gridSystem.CellGrid[cellPos.x, cellPos.y];
+                tileData = gridSystem.GetTileData(cellPos);
             }
             else
             {
@@ -77,9 +76,9 @@ public class SellingManager : MonoBehaviour
 
             // Only deleting 1 item on each click, so split into if/else. By priority:
             // 1. Sell the food
-            if (cellData.ContainsFood)
+            if (tileData.Food)
             {
-                SellFoodOnTile(cellData, cellPos);
+                SellFoodOnTile(tileData, cellPos);
 
             }
             // 2. Sell the wall
@@ -90,9 +89,9 @@ public class SellingManager : MonoBehaviour
         }
     }
 
-    private void SellFoodOnTile(GridSystem.CellData cellData, Vector3Int cellPos)
+    private void SellFoodOnTile(GridSystem.TileData tileData, Vector3Int cellPos)
     {
-        GameObject food = cellData.Food;
+        GameObject food = tileData.Food;
         string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
         foreach (LevelData.ItemData data in LevelDataReference.LevelData.ItemQuantities)
         {
@@ -107,8 +106,7 @@ public class SellingManager : MonoBehaviour
 
 
         // Clean up CellData
-        gridSystem.CellGrid[cellPos.x, cellPos.y].ContainsFood = false;
-        gridSystem.CellGrid[cellPos.x, cellPos.y].Food = null;
+        tileData.Food = null;
     }
 
     private void SellWallOnTile(Vector3Int cellPos)

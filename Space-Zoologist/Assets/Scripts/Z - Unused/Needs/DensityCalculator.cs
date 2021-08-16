@@ -9,17 +9,17 @@ using UnityEngine.Tilemaps;
 public class DensityCalculator
 {
     private ReservePartitionManager rpm = null;
-    private TileSystem tileSystem = null;
+    private GridSystem GridSystem = null;
 
     /// <summary>
     /// Mask for showing the demo.
     /// </summary>
     public Tilemap mask;
 
-    public DensityCalculator(ReservePartitionManager rpm, TileSystem tileSystem)
+    public DensityCalculator(ReservePartitionManager rpm, GridSystem GridSystem)
     {
         this.rpm = rpm;
-        this.tileSystem = tileSystem;
+        this.GridSystem = GridSystem;
     }
 
     //Dictionary<ID, population> initialized from rpm
@@ -141,7 +141,7 @@ public class DensityCalculator
 
         //starting location
         //Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
-        Vector3Int location = tileSystem.WorldToCell(pop.transform.position);
+        Vector3Int location = GridSystem.WorldToCell(pop.transform.position);
         stack.Push(location);
 
         //iterate until no tile left in list, ends in iteration 1 if pop.location is not accessible
@@ -213,7 +213,7 @@ public class DensityCalculator
 
         //starting location
         //Vector3Int location = FindObjectOfType<TileSystem>().WorldToCell(pop.transform.position);
-        Vector3Int location = tileSystem.WorldToCell(pop.transform.position);
+        Vector3Int location = GridSystem.WorldToCell(pop.transform.position);
         stack.Push(location);
 
         GenerateDensityMap(pop);

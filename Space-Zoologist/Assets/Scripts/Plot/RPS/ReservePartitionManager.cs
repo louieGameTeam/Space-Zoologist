@@ -42,7 +42,7 @@ public class ReservePartitionManager : MonoBehaviour
     private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
 
     public GameTile Liquid;
-    [SerializeField] private TileSystem TileSystem = default;
+    [SerializeField] private GridSystem gridSystem = default;
     [SerializeField] private BuildBufferManager buildBufferManager;
     private void Awake()
     {
@@ -162,10 +162,8 @@ public class ReservePartitionManager : MonoBehaviour
         long[] SharedTiles = new long[maxPopulation];
 
         // starting location
-        Vector3Int location = this.TileSystem.WorldToCell(population.transform.position);
+        Vector3Int location = this.gridSystem.WorldToCell(population.transform.position);
         stack.Push(location);
-
-        TileSystem _tileSystem = this.TileSystem;
 
         // Clear TypesOfTerrain for given population
         this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
@@ -189,11 +187,11 @@ public class ReservePartitionManager : MonoBehaviour
             //    continue;
             //}
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
-            GameTile tile = _tileSystem.GetGameTileAt(cur);
+            GameTile tile = gridSystem.GetGameTileAt(cur);
             // Get liquid tile info
             if (tile != null && tile.type == TileType.Liquid)
             {
-                float[] composition = _tileSystem.GetTileContentsAt(cur, tile);
+                float[] composition = gridSystem.GetTileContentsAt(cur, tile);
 
                 if (!this.populationAccessibleLiquid.ContainsKey(population))
                 {
@@ -341,7 +339,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = this.TileSystem.WorldToCell(toWorldPos);
+        Vector3Int mapPos = this.gridSystem.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -393,7 +391,7 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = this.TileSystem.WorldToCell(toWorldPos);
+        Vector3Int cellPos = this.gridSystem.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)

@@ -2,12 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum SpeciesType { Goat, Cow, Anteater, Spider, Slug, Momo }
+
 [CreateAssetMenu]
 public class AnimalSpecies : ScriptableObject
 {
     // Getters
     public string SpeciesName => speciesName;
-    public int Dominance => dominance;
+    public SpeciesType Species => species;
+    public int FoodDominance => foodDominance;
+    public int TerrainTilesRequired => terrainTilesRequired;
     public float GrowthScaleFactor => growthScaleFactor;
     public int GrowthRate => growthRate;
     public int DecayRate => decayRate;
@@ -24,8 +28,10 @@ public class AnimalSpecies : ScriptableObject
     // Values
     [SerializeField] private RuntimeAnimatorController animatorController = default;
     [SerializeField] private string speciesName = default;
+    [SerializeField] private SpeciesType species = default;
     [Range(1.0f, 10.0f)]
-    [SerializeField] private int dominance = default;
+    [SerializeField] private int foodDominance = default;
+    [SerializeField] private int terrainTilesRequired = default;
     [SerializeField] private float growthScaleFactor = default;
     [Range(1, 30)]
     [SerializeField] private int growthRate = 3;
@@ -103,7 +109,7 @@ public class AnimalSpecies : ScriptableObject
     {
         // TODO setup behaviors and accessible terrain
         this.speciesName = name;
-        this.dominance = dominance;
+        this.foodDominance = dominance;
         this.growthRate = growthRate;
         this.accessibleTerrain = new List<TileType>();
         foreach (string tileType in accessibleTerrain)

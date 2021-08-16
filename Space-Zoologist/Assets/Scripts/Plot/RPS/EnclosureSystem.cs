@@ -14,7 +14,6 @@ public class EnclosureSystem : MonoBehaviour
     private List<EnclosedArea> internalEnclosedAreas;
 
     [SerializeField] private LevelDataReference LevelDataReference = default;
-    [SerializeField] private TileSystem TileSystem = default;
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GridSystem gridSystem = default;
 
@@ -39,8 +38,6 @@ public class EnclosureSystem : MonoBehaviour
         this.internalEnclosedAreas = new List<EnclosedArea>();
         this.EnclosedAreas = new List<EnclosedArea>();
         this.GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
-        // TODO Hard fix to reference issue
-        this.TileSystem = FindObjectOfType<TileSystem>();
     }
 
     private void Start()
@@ -62,7 +59,7 @@ public class EnclosureSystem : MonoBehaviour
     /// <returns></returns>
     public AtmosphericComposition GetAtmosphericComposition(Vector3 worldPosition)
     {
-        Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
+        Vector3Int position = this.gridSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position) && this.GetEnclosedAreaById(positionToEnclosedArea[position]) != null)
         {
             return this.GetEnclosedAreaById(positionToEnclosedArea[position]).atmosphericComposition;
@@ -109,7 +106,8 @@ public class EnclosureSystem : MonoBehaviour
 
     public EnclosedArea GetEnclosedAreaByCellPosition(Vector3Int cellPos)
     {
-        Vector3Int position = this.TileSystem.WorldToCell(cellPos);
+        Vector3Int position = this.gridSystem.WorldToCell(cellPos);
+
         return this.GetEnclosedAreaById(positionToEnclosedArea[position]);
     }
 
@@ -128,7 +126,7 @@ public class EnclosureSystem : MonoBehaviour
 
     public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
     {
-        Vector3Int position = this.TileSystem.WorldToCell(worldPosition);
+        Vector3Int position = this.gridSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position))
         {
             this.GetEnclosedAreaById(positionToEnclosedArea[position]).UpdateAtmosphericComposition(atmosphericComposition);
@@ -191,7 +189,7 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         // check if tilemap has tile
-        GameTile tile = this.TileSystem.GetGameTileAt(cur);
+        GameTile tile = this.gridSystem.GetGameTileAt(cur);
         if (tile != null)
         {
             if (tile.type != TileType.Wall)
