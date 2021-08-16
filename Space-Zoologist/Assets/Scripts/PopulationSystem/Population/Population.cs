@@ -19,7 +19,6 @@ public class Population : MonoBehaviour, Life
     public System.Random random = new System.Random();
 
     public Dictionary<string, Need> Needs => needs;
-    public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> NeedBehaviors => needBehaviors;
     public AnimalPathfinding.Grid Grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
@@ -38,7 +37,6 @@ public class Population : MonoBehaviour, Life
     [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
 
     private Dictionary<string, Need> needs = new Dictionary<string, Need>();
-    private Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviors = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
 
     private Vector3 origin = Vector3.zero;
     public GrowthCalculator GrowthCalculator;
@@ -97,7 +95,6 @@ public class Population : MonoBehaviour, Life
     {
         this.GrowthCalculator = new GrowthCalculator(this);
         this.needs = this.Species.SetupNeeds();
-        this.needBehaviors = this.Species.SetupBehaviors(this.needs);
         this.PopulationBehaviorManager.InitializeBehaviors(this.needs);
         this.NeedEditorTesting = new List<Need>();
         foreach (KeyValuePair<string, Need> need in this.needs)

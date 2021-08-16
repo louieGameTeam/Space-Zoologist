@@ -240,7 +240,7 @@ public class GrowthCalculator
         this.DecayCountdown--;
         if (this.DecayCountdown == 0)
         {
-            this.DecayCountdown = Population.Species.GrowthRate;
+            this.DecayCountdown = Population.Species.DecayRate;
             return true;
         }
         return false;
