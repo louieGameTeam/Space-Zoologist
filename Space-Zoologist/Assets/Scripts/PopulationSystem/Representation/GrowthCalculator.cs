@@ -40,11 +40,22 @@ public class GrowthCalculator
     }
 
     /*
+        0. if any predators nearby, population set to decrease next day
         1. if any need not met, handle growth logic and set growth status
         2. if all needs met, handle growth logic
     */
     public void CalculateGrowth()
     {
+        float predatorValue = calculatePredatorPreyNeed();
+        if (predatorValue > 0f)
+        {
+            this.GrowthStatus = GrowthStatus.declining;
+            this.DecayCountdown = 1;
+            this.populationIncreaseRate = -1 * predatorValue;
+            return;
+        }
+        this.CalculateTerrainNeed();
+        this.CalculateWaterNeed();
         this.GrowthStatus = GrowthStatus.growing;
         int numAnimals = Population.AnimalPopulation.Count;
 
@@ -53,7 +64,7 @@ public class GrowthCalculator
         Dictionary<NeedType, bool> resetNeedTracker = new Dictionary<NeedType, bool>(IsNeedMet);
         foreach (KeyValuePair<NeedType, bool> need in IsNeedMet)
         {
-            if (!IsNeedMet[need.Key])
+            if (!need.Key.Equals(NeedType.Prey) && !IsNeedMet[need.Key])
             {
                 //Debug.Log(need.Key + " is not met");
                 GrowthStatus = GrowthStatus.declining;
@@ -74,6 +85,10 @@ public class GrowthCalculator
         }
         if (this.GrowthStatus.Equals(GrowthStatus.declining))
         {
+            if (populationIncreaseRate == 0)
+            {
+                populationIncreaseRate = 1;
+            }
             populationIncreaseRate *= numAnimals * Population.Species.GrowthScaleFactor;
             if (populationIncreaseRate < numAnimals * -0.25f)
             {
@@ -233,6 +248,19 @@ public class GrowthCalculator
             terrainRating = (totalTilesOccupied - totalNeededTiles) / numAnimals;
         }
         //Debug.Log(Population.gameObject.name + " terrain Rating: " + terrainRating + ", comfortable tiles: " + comfortableTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
+    }
+
+    public float calculatePredatorPreyNeed()
+    {
+        float predatorValue = 0;
+        foreach (KeyValuePair<string, Need> need in Population.Needs)
+        {
+            if (need.Value.NeedType.Equals(NeedType.Prey))
+            {
+                predatorValue += need.Value.NeedValue;
+            }
+        }
+        return predatorValue;
     }
 
     public bool ReadyForDecay()

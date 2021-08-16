@@ -241,8 +241,6 @@ public class Population : MonoBehaviour, Life
     public void UpdateGrowthConditions()
     {
         if (this.Species == null) return;
-        this.GrowthCalculator.CalculateTerrainNeed();
-        this.GrowthCalculator.CalculateWaterNeed();
         this.GrowthCalculator.CalculateGrowth();
     }
 
