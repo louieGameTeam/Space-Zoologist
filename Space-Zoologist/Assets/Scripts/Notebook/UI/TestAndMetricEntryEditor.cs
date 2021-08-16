@@ -83,7 +83,7 @@ public class TestAndMetricEntryEditor : NotebookUIChild
             researchCategoryDropdown.SetDropdownValueWithoutNotify(0);
             needDropdown.SetDropdownValue(0);
             differenceDropdown.value = 0;
-            inputField.text = "";
+            inputField.text = "when: \n\nDoes this meet target specifications? \n\nRelated notes: ";
         }
 
         // Only add the listeners if this editor is in the current scene

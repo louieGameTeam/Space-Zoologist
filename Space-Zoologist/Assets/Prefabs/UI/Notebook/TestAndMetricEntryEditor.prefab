@@ -1505,7 +1505,18 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4568447998653275226}
+        m_MethodName: MarkThisLayoutForRebuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1518,7 +1529,7 @@ MonoBehaviour:
   m_ReadOnly: 0
   m_RichText: 1
   m_GlobalFontAsset: {fileID: 11400000, guid: 3bb7845b5958df04aa431782781df82c, type: 2}
-  m_OnFocusSelectAll: 1
+  m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
@@ -1569,6 +1580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 558687385973548161}
+  - component: {fileID: 1523602853503570006}
   - component: {fileID: 1702607652418549039}
   m_Layer: 5
   m_Name: TopSection
@@ -1599,6 +1611,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1523602853503570006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652764469616673973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 50
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &1702607652418549039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1873,7 +1905,8 @@ GameObject:
   - component: {fileID: 392013690078994367}
   - component: {fileID: 7543367058896916836}
   - component: {fileID: 169569767507076209}
-  - component: {fileID: 70441054477415969}
+  - component: {fileID: 1265731591943683985}
+  - component: {fileID: 4568447998653275226}
   m_Layer: 5
   m_Name: TestAndMetricEntryEditor
   m_TagString: Untagged
@@ -1958,7 +1991,7 @@ MonoBehaviour:
   onNewEntryCreated:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &70441054477415969
+--- !u!114 &1265731591943683985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1967,17 +2000,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 5699916864411835190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Script: {fileID: 11500000, guid: 14671af5eb284e34e98ca43ce55717e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 200
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
+  m_layoutPriority: 0
+  horizontalSpan:
+    span: []
+    extraSpace: 0
+  verticalSpan:
+    span:
+    - {fileID: 558687385973548161}
+    - {fileID: 6417504307545074676}
+    extraSpace: 20
+--- !u!114 &4568447998653275226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699916864411835190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 232a2b82eeb663843ba3e2f4dd72a13d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5773983682457589958
 GameObject:
   m_ObjectHideFlags: 0
