@@ -16,6 +16,9 @@
         _LiquidColor("Liquid Color", COLOR) = (1, 1, 1, 1)
         _LiquidSubColor("Liquid Sub Color", COLOR) = (1, 1, 1, 1)
         _LiquidTextureScaling("Liquid Texture Scaling", Vector) = (1, 1, 0, 0)
+
+        _BlendBorderWidth("Blend Border Width", float) = 0
+        _BlendUVScale("Blend UV Scale", float) = 1
     }
     SubShader
     {
@@ -113,7 +116,40 @@
                 return col;
             }
 
+            float2 GetFirstTileUV(int tileType, float2 localUV) {
+                // get the correct tileset
+                // 8 tiles in x, 6 tiles in y
+                float xuvDim = float(1) / 8;
+                float yuvDim = float(1) / 6;
+
+                float yOffset = 5 - (tileType - 1) + localUV.y;
+                return float2(xuvDim * localUV.x, yuvDim * yOffset);
+            }
+
+            float2 GetTileUV(int tileType, float2 localUV, float tileNoise) {
+                float2 firstTileUV = GetFirstTileUV(tileType, localUV);
+                float xuvDim = float(1) / 8;
+                float yuvDim = float(1) / 6;
+
+                // get random between 4 base tiles
+                int xOffset = int(tileNoise * 4);
+                return firstTileUV + float2(xuvDim * xOffset, 0);
+            }
+
+            float2 GetTileUV(float2 firstTileUV, float tileNoise) {
+                float xuvDim = float(1) / 8;
+                float yuvDim = float(1) / 6;
+
+                // get random between 4 base tiles
+                int xOffset = int(tileNoise * 4);
+                return firstTileUV + float2(xuvDim * xOffset, 0);
+            }
+
             float _TileNoiseDistribution;
+
+            float _BlendBorderWidth;
+            float _BlendUVScale;
+            float _BlendBorderNoiseThreshold;
 
             float4 frag(v2f i) : SV_Target
             {
@@ -147,47 +183,66 @@
                 tileTypeMatrix[2][1] = tex2D(_GridInformationTexture, float2(tilePos + int2(0, 1)) / _GridTextureDimensions).r * 256;
                 tileTypeMatrix[2][2] = tex2D(_GridInformationTexture, float2(tilePos + int2(1, 1)) / _GridTextureDimensions).r * 256;
 
-                // get the correct tileset
-                // 8 tiles in x, 6 tiles in y
-                float xuvDim = float(1) / 8;
-                float yuvDim = float(1) / 6;
-
-                float yOffset = 5 - (tileTypeMatrix[1][1] - 1) + localUV.y;
-                float2 firstTilePosition = float2(xuvDim * localUV.x, yuvDim * yOffset);
-                // get random between 4 base tiles
-                int xOffset = int(tileNoise * 4);
-                float2 tileAtlasPosition = firstTilePosition + float2(xuvDim * xOffset, 0);
-
-                float4 tile = tex2D(_TileAtlas, tileAtlasPosition);
+                float2 tileUVUnit = float2(float(1) / 8, float(1) / 6);
+                float2 firstTileUV = GetFirstTileUV(tileTypeMatrix[1][1], localUV);
+                float4 tile = tex2D(_TileAtlas, GetTileUV(firstTileUV, tileNoise));
 
                 col = tile;
+
+                // blend tiles
+                // get noise uv based on world position and pixelate it
+                float2 noiseUV = float2(int2(frac(i.worldPos.xy) * PIXELS_PER_TILE)) / PIXELS_PER_TILE * _BlendUVScale;
+                // left tile
+                if (localPixel.x < _BlendBorderWidth && tileTypeMatrix[1][1] != TILE_TYPE_WALL && tileTypeMatrix[1][0] != TILE_TYPE_WALL && tileTypeMatrix[1][0] != TILE_TYPE_EMPTY && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID) {
+                    float4 leftTile = tex2D(_TileAtlas, GetTileUV(tileTypeMatrix[1][0], localUV, tileNoise));
+                    float dist = 1 - (float(_BlendBorderWidth) - localPixel.x) / _BlendBorderWidth;
+                    col = tex2D(_NoiseTexture, noiseUV) > 0.5 - dist * 0.5 ? col : leftTile;
+                }
+                // right tile
+                if (localPixel.x > PIXELS_PER_TILE - _BlendBorderWidth && tileTypeMatrix[1][1] != TILE_TYPE_WALL && tileTypeMatrix[1][2] != TILE_TYPE_WALL && tileTypeMatrix[1][2] != TILE_TYPE_EMPTY && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID) {
+                    float4 rightTile = tex2D(_TileAtlas, GetTileUV(tileTypeMatrix[1][2], localUV, tileNoise));
+                    float dist = (PIXELS_PER_TILE - localPixel.x) / _BlendBorderWidth;
+                    col = tex2D(_NoiseTexture, noiseUV) > 0.5 - dist * 0.5 ? col : rightTile;
+                }
+                // bottom tile
+                if (localPixel.y < _BlendBorderWidth && tileTypeMatrix[1][1] != TILE_TYPE_WALL && tileTypeMatrix[0][1] != TILE_TYPE_WALL && tileTypeMatrix[0][1] != TILE_TYPE_EMPTY && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID) {
+                    float4 bottomTile = tex2D(_TileAtlas, GetTileUV(tileTypeMatrix[0][1], localUV, tileNoise));
+                    float dist = 1 - (float(_BlendBorderWidth) - localPixel.y) / _BlendBorderWidth;
+                    col = tex2D(_NoiseTexture, noiseUV) > 0.5 - dist * 0.5 ? col : bottomTile;
+                }
+                // top tile
+                if (localPixel.y > PIXELS_PER_TILE - _BlendBorderWidth && tileTypeMatrix[1][1] != TILE_TYPE_WALL && tileTypeMatrix[2][1] != TILE_TYPE_WALL && tileTypeMatrix[2][1] != TILE_TYPE_EMPTY && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID) {
+                    float4 topTile = tex2D(_TileAtlas, GetTileUV(tileTypeMatrix[2][1], localUV, tileNoise));
+                    float dist = (PIXELS_PER_TILE - localPixel.y) / _BlendBorderWidth;
+                    col = tex2D(_NoiseTexture, noiseUV) > 0.5 - dist * 0.5 ? col : topTile;
+                }
 
                 // add borders
                 // edges first
                 if (tilePos.x == 0 || tileTypeMatrix[1][0] == TILE_TYPE_LIQUID || tileTypeMatrix[1][0] == TILE_TYPE_EMPTY || 
                     (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[1][0] != TILE_TYPE_WALL)) {
-                    float4 leftBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
+                    float4 leftBar = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 5, 0));
 
                     if (localUV.x < 0.5)
                         col = lerp(col, leftBar, leftBar.a);
                 }
                 if (tilePos.x == _GridTextureDimensions.x - 1 || tileTypeMatrix[1][2] == TILE_TYPE_LIQUID || tileTypeMatrix[1][2] == TILE_TYPE_EMPTY ||
                     (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[1][2] != TILE_TYPE_WALL)) {
-                    float4 rightBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 5, 0));
+                    float4 rightBar = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 5, 0));
 
                     if (localUV.x > 0.5)
                         col = lerp(col, rightBar, rightBar.a);
                 }
                 if (tilePos.y == 0 || tileTypeMatrix[0][1] == TILE_TYPE_LIQUID || tileTypeMatrix[0][1] == TILE_TYPE_EMPTY ||
                     (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[0][1] != TILE_TYPE_WALL)) {
-                    float4 bottomBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
+                    float4 bottomBar = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 4, 0));
 
                     if (localUV.y < 0.5)
                         col = lerp(col, bottomBar, bottomBar.a);
                 }
                 if (tilePos.y == _GridTextureDimensions.y - 1 || tileTypeMatrix[2][1] == TILE_TYPE_LIQUID || tileTypeMatrix[2][1] == TILE_TYPE_EMPTY ||
                     (tileTypeMatrix[1][1] == TILE_TYPE_WALL && tileTypeMatrix[2][1] != TILE_TYPE_WALL)) {
-                    float4 topBar = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 4, 0));
+                    float4 topBar = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 4, 0));
 
                     if (localUV.y > 0.5)
                         col = lerp(col, topBar, topBar.a);
@@ -198,7 +253,7 @@
                 if ((tilePos.x == 0 && tilePos.y == 0) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] == TILE_TYPE_LIQUID) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] == TILE_TYPE_EMPTY)) {
-                    float4 blCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
+                    float4 blCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 6, 0));
 
                     if (localUV.x < 0.5 && localUV.y < 0.5)
                         col = lerp(col, blCorner, blCorner.a);
@@ -206,7 +261,7 @@
                 if ((tilePos.x == _GridTextureDimensions.x && tilePos.y == 0) ||
                     (tileTypeMatrix[1][2] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] == TILE_TYPE_LIQUID) ||
                     (tileTypeMatrix[1][2] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] == TILE_TYPE_EMPTY)) {
-                    float4 brCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
+                    float4 brCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 6, 0));
 
                     if (localUV.x > 0.5 && localUV.y < 0.5)
                         col = lerp(col, brCorner, brCorner.a);
@@ -214,7 +269,7 @@
                 if ((tilePos.x == 0 && tilePos.y == _GridTextureDimensions.y) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] == TILE_TYPE_LIQUID) ||
                     (tileTypeMatrix[1][0] == TILE_TYPE_EMPTY && tileTypeMatrix[2][1] == TILE_TYPE_EMPTY)) {
-                    float4 tlCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
+                    float4 tlCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 6, 0));
 
                     if (localUV.x < 0.5 && localUV.y > 0.5)
                         col = lerp(col, tlCorner, tlCorner.a);
@@ -222,7 +277,7 @@
                 if ((tilePos.x == _GridTextureDimensions.x && tilePos.y == _GridTextureDimensions.y) ||
                     (tileTypeMatrix[1][2] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] == TILE_TYPE_LIQUID) ||
                     (tileTypeMatrix[1][2] == TILE_TYPE_EMPTY && tileTypeMatrix[2][1] == TILE_TYPE_EMPTY)) {
-                    float4 trCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 6, 0));
+                    float4 trCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 6, 0));
 
                     if (localUV.x > 0.5 && localUV.y > 0.5)
                         col = lerp(col, trCorner, trCorner.a);
@@ -231,33 +286,32 @@
                 // inner corners
                 if ((tileTypeMatrix[0][0] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[0][0] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] != TILE_TYPE_EMPTY && tileTypeMatrix[1][0] != TILE_TYPE_EMPTY)) {
-                    float4 blInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+                    float4 blInnerCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 7, 0));
 
                     if (localUV.x < 0.5 && localUV.y < 0.5)
                         col = lerp(col, blInnerCorner, blInnerCorner.a);
                 }
                 if ((tileTypeMatrix[0][2] == TILE_TYPE_LIQUID && tileTypeMatrix[0][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[0][2] == TILE_TYPE_EMPTY && tileTypeMatrix[0][1] != TILE_TYPE_EMPTY && tileTypeMatrix[1][2] != TILE_TYPE_EMPTY)) {
-                    float4 brInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+                    float4 brInnerCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 7, 0));
 
                     if (localUV.x > 0.5 && localUV.y < 0.5)
                         col = lerp(col, brInnerCorner, brInnerCorner.a);
                 }
                 if ((tileTypeMatrix[2][0] == TILE_TYPE_LIQUID && tileTypeMatrix[1][0] != TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[2][0] == TILE_TYPE_EMPTY && tileTypeMatrix[1][0] != TILE_TYPE_EMPTY && tileTypeMatrix[2][1] != TILE_TYPE_EMPTY)) {
-                    float4 tlInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+                    float4 tlInnerCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 7, 0));
 
                     if (localUV.x < 0.5 && localUV.y > 0.5)
                         col = lerp(col, tlInnerCorner, tlInnerCorner.a);
                 }
                 if ((tileTypeMatrix[2][2] == TILE_TYPE_LIQUID && tileTypeMatrix[2][1] != TILE_TYPE_LIQUID && tileTypeMatrix[1][2] != TILE_TYPE_LIQUID && tileTypeMatrix[1][1] != TILE_TYPE_WALL) ||
                     (tileTypeMatrix[2][2] == TILE_TYPE_EMPTY && tileTypeMatrix[2][1] != TILE_TYPE_EMPTY && tileTypeMatrix[1][2] != TILE_TYPE_EMPTY)) {
-                    float4 trInnerCorner = tex2D(_TileAtlas, firstTilePosition + float2(xuvDim * 7, 0));
+                    float4 trInnerCorner = tex2D(_TileAtlas, firstTileUV + float2(tileUVUnit.x * 7, 0));
 
                     if (localUV.x > 0.5 && localUV.y > 0.5)
                         col = lerp(col, trInnerCorner, trInnerCorner.a);
                 }
-                
 
                 // add liquid and other animated tiles first
                 if (tileTypeMatrix[1][1] == 7)

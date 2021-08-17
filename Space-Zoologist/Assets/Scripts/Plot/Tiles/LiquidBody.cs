@@ -129,8 +129,12 @@ public class LiquidBody
             }
         }
     }
-    public void AddTile(Vector3Int tileToAdd)
+    public void AddTile(Vector3Int tileToAdd, float[] tileContents)
     {
+        // update the contents with the values
+        for (int i = 0; i < contents.Length; ++i)
+            contents[i] = (contents[i] * tiles.Count + tileContents[i]) / (tiles.Count + 1);
+
         if (!this.tiles.Add(tileToAdd))
         {
             Debug.LogError("Duplicated Tile added to liquid body " + this.bodyID);
