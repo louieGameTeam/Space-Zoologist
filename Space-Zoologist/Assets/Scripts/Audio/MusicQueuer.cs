@@ -5,18 +5,22 @@ using UnityEngine;
 /// <summary>
 /// Current implementation is to play the music of the current scene and then self-destruct, probably changed later to coordinate with fade in/out
 /// </summary>
+///
+
+[RequireComponent(typeof(CustomMusicLoopController))]
 public class MusicQueuer : MonoBehaviour
 {
-    [SerializeField] LoopableAudioTrack nextTrack = default;
+    [SerializeField] CustomMusicLoopController nextTrack = default;
     [SerializeField] bool fading;
-    
+
+    // Start is called before the first frame update
     private void Start()
     {
         QueueAndTrigger();
-        Destroy(gameObject);
+        Destroy(this);
     }
 
-    // Start is called before the first frame update
+
     public void QueueMusic()
     {
         AudioManager.instance?.MusicManager.SetNextTrack(nextTrack);

@@ -55,7 +55,7 @@ public class BuildBufferManager : GridObjectManager
         this.isConstructing[pos.x, pos.y] = true;
         GameObject newGo = Instantiate(this.bufferGO, this.gameObject.transform);
         //Debug.Log("Placing item under constuction");
-        newGo.transform.position = new Vector3(pos.x, pos.y, 0);
+        newGo.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0);
         color.a = 1; //Enforce alpha channel to be 1, prevent human error       
         newGo.GetComponent<SpriteRenderer>().color = color;
         ConstructionCountdown cc = newGo.GetComponent<ConstructionCountdown>();

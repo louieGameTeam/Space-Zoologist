@@ -21,7 +21,7 @@ public class BuildTester : MonoBehaviour
         Vector3Int cellPos = GridSystem.WorldToCell(this.Camera.ScreenToWorldPoint(Input.mousePosition));
         if (Input.GetMouseButtonDown(2))
         {
-            this.FoodSourceStoreSection.ManuallyPlaceItem(this.LevelDataReference.LevelData.items[0], cellPos);
+            this.FoodSourceStoreSection.ManuallyPlaceItem(this.LevelDataReference.LevelData.itemQuantities[0].itemObject, cellPos);
         }
     }
 }

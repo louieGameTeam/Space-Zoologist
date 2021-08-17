@@ -7,22 +7,30 @@ using UnityEngine;
 [System.Serializable]
 public struct ResearchCategory
 {
-    public ResearchCategoryType Type { get; private set; }
+    public ResearchCategoryType Type => type;
     public string Name => name;
+    public Sprite Image => image;
 
+    [SerializeField]
+    [Tooltip("Type for the research category")]
+    private ResearchCategoryType type;
     [SerializeField]
     [Tooltip("Name associated with this research category")]
     private string name;
+    [SerializeField]
+    [Tooltip("Image associated with this research category")]
+    private Sprite image;
 
-    public ResearchCategory(ResearchCategoryType type, string name)
+    public ResearchCategory(ResearchCategoryType type, string name, Sprite image)
     {
-        Type = type;
+        this.type = type;
         this.name = name;
+        this.image = image;
     }
 
     public void Setup(ResearchCategoryType type)
     {
-        Type = type;
+        this.type = type;
     }
 
     public static bool operator==(ResearchCategory a, ResearchCategory b)

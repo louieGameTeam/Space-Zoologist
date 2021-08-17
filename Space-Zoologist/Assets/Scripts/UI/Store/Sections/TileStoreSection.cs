@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,6 +12,7 @@ public class TileStoreSection : StoreSection
 {
     [SerializeField] private EnclosureSystem EnclosureSystem = default;
     [SerializeField] private TilePlacementController tilePlacementController = default;
+    [SerializeField] private ReservePartitionManager rpm = default;
 
     private float startingBalance;
     private int initialAmt;
@@ -33,11 +35,20 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void StartPlacing()
     {
+        Debug.Log("Start placing");
         numTilesPlaced = 0;
         initialAmt = ResourceManager.CheckRemainingResource(selectedItem);
         isPlacing = true;
         startingBalance = base.playerBalance.Balance;
-        tilePlacementController.StartPreview(selectedItem.ID);
+
+        float[] contents = null;
+        if(selectedItem is LiquidItem)
+        {
+            Vector3 liquidVector = ( (LiquidItem)selectedItem ).LiquidContents;
+            contents = new float[] {liquidVector.x, liquidVector.y, liquidVector.z};
+        }
+
+        tilePlacementController.StartPreview(selectedItem.ID, liquidContents: contents);
     }
 
     /// <summary>
@@ -59,7 +70,10 @@ public class TileStoreSection : StoreSection
         isPlacing = false;
         foreach (Vector3Int pos in this.tilePlacementController.addedTiles)
         {
-            this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x,pos.y), this.selectedItem.buildTime, constructionColor);
+            if (tilePlacementController.godMode)
+                rpm.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
+            else
+                this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x,pos.y), this.selectedItem.buildTime, constructionColor);
         }
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();

@@ -63,7 +63,7 @@ public class SellingManager : MonoBehaviour
             GridSystem.TileData tileData;
 
             // Find out what is on the tile if it is in bounds
-            if (gridSystem.isCellinGrid(cellPos.x, cellPos.y))
+            if (gridSystem.IsCellinGrid(cellPos.x, cellPos.y))
             {
                 tileData = gridSystem.GetTileData(cellPos);
             }
@@ -93,8 +93,9 @@ public class SellingManager : MonoBehaviour
     {
         GameObject food = tileData.Food;
         string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
-        foreach (Item item in LevelDataReference.LevelData.Items)
+        foreach (LevelData.ItemData data in LevelDataReference.LevelData.ItemQuantities)
         {
+            Item item = data.itemObject;
             if (item.ID.Equals(id))
             {
                 PlayerBalance.SubtractFromBalance(-1 * item.Price);

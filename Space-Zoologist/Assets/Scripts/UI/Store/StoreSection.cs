@@ -71,8 +71,9 @@ public class StoreSection : MonoBehaviour
     public virtual void Initialize()
     {
         LevelData levelData = LevelDataReference.LevelData;
-        foreach (Item item in levelData.Items)
+        foreach (LevelData.ItemData data in levelData.ItemQuantities)
         {
+            Item item = data.itemObject;
             if (item)
             {
                 if (item.Type.Equals(itemType))

@@ -12,6 +12,7 @@ public class ResearchEntry
 
     // Private data
     [SerializeField]
+    [ResearchCategoryTypeEditable(false)]
     private ResearchCategory category;
     [SerializeField]
     private ResearchNotes notes;

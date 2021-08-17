@@ -11,7 +11,7 @@ public class TilePlacementController : MonoBehaviour
     public bool PlacementPaused { get; private set; }
     [SerializeField] private Camera currentCamera = default;
     public bool isPreviewing { get; set; } = false;
-    private bool godMode = false;
+    [SerializeField] public bool godMode = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
@@ -19,7 +19,7 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int lastPlacedTile;
     private List<GameTile> referencedTiles = new List<GameTile>();
     private bool isFirstTile;
-    public bool isErasing = false;
+    [SerializeField] public bool isErasing = false;
     public Tilemap[] allTilemaps { get { return tilemaps; } }
     [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     public GameTile[] gameTiles { get; private set; } = default;
@@ -88,9 +88,8 @@ public class TilePlacementController : MonoBehaviour
     /// Start tile placement preview.
     /// </summary>
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
-    public void StartPreview(string tileID, bool godMode = false)
+    public void StartPreview(string tileID, bool godMode = false, float[] liquidContents = null)
     {
-        this.godMode = godMode;
         Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
         this.dragStartPosition = this.grid.WorldToCell(mouseWorldPosition);
         if (!Enum.IsDefined(typeof(TileType), tileID))
@@ -102,10 +101,9 @@ public class TilePlacementController : MonoBehaviour
         {
             if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
             {
-                // TODO remove when initial liquid values implemented
-                if (tile.type.Equals(TileType.Liquid))
+                if(liquidContents != null)
                 {
-                    tile.defaultContents = new float[] { 0.98f, 0, 0.02f };
+                    tile.defaultContents = liquidContents;
                 }
                 this.referencedTiles.Add(tile);
             }
@@ -114,27 +112,13 @@ public class TilePlacementController : MonoBehaviour
     }
     public void StopPreview()
     {
-        this.godMode = false;
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
         GridSystem.ConfirmPlacement();
-        //RenderColorOfColorLinkedTiles(addedTiles.ToList());
-        foreach (GameTile tile in referencedTiles)
-        {
-            // may have been a special case for liquid or highlighting
-            /*
-            if (tile.targetTilemap.GetComponent<TileContentsManager>() == null && tile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
-            {
-                foreach (Vector3Int vector3Int in addedTiles)
-                {
-                    placedTileColorManager.SetTileColor(vector3Int, tile);
-                }
-            }*/
-        }
 
         // Set terrain modified flag
         this.GridSystem.HasTerrainChanged = true;
-        this.GridSystem.changedTiles.AddRange(addedTiles.ToList());
+        this.GridSystem.ChangedTiles.UnionWith(addedTiles);
 
         // Clear all dics
         this.referencedTiles.Clear();
@@ -148,7 +132,7 @@ public class TilePlacementController : MonoBehaviour
         foreach (GameTile tile in this.referencedTiles)
         {
             GameTile currentTile = GridSystem.GetGameTileAt(this.currentMouseCellPosition);
-            if (currentTile != null && currentTile == tile)
+            if (currentTile != null)
             {
                 GridSystem.RemoveTile(this.currentMouseCellPosition);
             }
@@ -331,7 +315,7 @@ public class TilePlacementController : MonoBehaviour
             }
             foreach (GameTile tile in referencedTiles)
             {
-                GridSystem.AddTile(cellPosition, tile);
+                GridSystem.AddTile(cellPosition, tile, godMode);
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);

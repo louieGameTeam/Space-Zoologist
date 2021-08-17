@@ -45,6 +45,7 @@ public class Inspector : MonoBehaviour
         this.itemsDropdown.onValueChanged.AddListener(selectItem);
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
+        OpenInspector();
 
         // Have the dropdown options be refreshed when new items created
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
@@ -64,7 +65,6 @@ public class Inspector : MonoBehaviour
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
             this.IsInInspectorMode = !IsInInspectorMode;
-            AudioManager.instance.PlayOneShot(SFXType.MenuClose);
         }
 
     }
@@ -85,7 +85,6 @@ public class Inspector : MonoBehaviour
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = !IsInInspectorMode;
-        AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
     }
 
     /// <summary>
@@ -313,9 +312,9 @@ public class Inspector : MonoBehaviour
 
     private void DisplayAreaText(Vector3Int cellPos)
     {
+        //Debug.Log($"Enclosed are @ {cellPos} selected");
         this.enclosureSystem.UpdateEnclosedAreas();
         this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
-        //Debug.Log($"Enclosed are @ {cellPos} selected");
     }
 
     private void DisplayLiquidText(Vector3Int cellPos)

@@ -106,7 +106,7 @@ public class NeedSystemManager : MonoBehaviour
 
     public void UpdateAccessMap()
     {
-        this.ReservePartitionManager.UpdateAccessMapChangedAt(this.GridSystem.changedTiles);
+        this.ReservePartitionManager.UpdateAccessMapChangedAt(this.GridSystem.ChangedTiles.ToList<Vector3Int>());
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public class NeedSystemManager : MonoBehaviour
         if (this.GridSystem.HasTerrainChanged)
         {
             // TODO: Update population's accessible map only for changed terrain
-            this.ReservePartitionManager.UpdateAccessMapChangedAt(this.GridSystem.changedTiles);
+            this.ReservePartitionManager.UpdateAccessMapChangedAt(this.GridSystem.ChangedTiles.ToList<Vector3Int>());
         }
 
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
