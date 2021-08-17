@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
             // Create the overall species trace.
             currentOverallSpeciesTrace = CreateOverallSpeciesTrace(levelData);
             DebugDayTrace(currentDayTrace);
-            // StartCoroutine(ChangeScene());
+            StartCoroutine(ChangeScene());
         }
     }
 
