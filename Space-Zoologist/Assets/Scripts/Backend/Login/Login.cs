@@ -7,8 +7,10 @@ using UnityEngine.UI;
 
 public class Login : MonoBehaviour
 {
-    [SerializeField] private string loginEndpoint = "http://127.0.0.1:13756/account/login";
-    [SerializeField] private string createEndpoint = "http://127.0.0.1:13756/account/create";
+    const string devLoginEndpoint = "http://127.0.0.1:13756/account/login";
+    const string devCreateEndpoint = "http://127.0.0.1:13756/account/create";
+    const string prodLoginEndpoint = "https://frozen-temple-20085.herokuapp.com/account/login";
+    const string prodCreateEndpoint = "https://frozen-temple-20085.herokuapp.com/account/create"; 
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private TMP_InputField passwordInputField;
     [SerializeField] private TextMeshProUGUI alertText;
@@ -52,7 +54,7 @@ public class Login : MonoBehaviour
         form.AddField("username", username);
         form.AddField("password", password);
 
-        UnityWebRequest request = UnityWebRequest.Post(loginEndpoint, form);
+        UnityWebRequest request = UnityWebRequest.Post(prodLoginEndpoint, form);
         var handler = request.SendWebRequest();
 
         float startTime = 0.0f;
@@ -121,7 +123,7 @@ public class Login : MonoBehaviour
         form.AddField("username", username);
         form.AddField("password", password);
 
-        UnityWebRequest request = UnityWebRequest.Post(createEndpoint, form);
+        UnityWebRequest request = UnityWebRequest.Post(prodCreateEndpoint, form);
         var handler = request.SendWebRequest();
 
         float startTime = 0.0f;
