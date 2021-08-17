@@ -59,7 +59,7 @@ public class LiquidNeedSystem : NeedSystem
                             string needName = ((LiquidComposition)index).ToString();
                             if (population.GetNeedValues().ContainsKey(needName))
                             {
-                                curScore += ((int)(population.Needs[needName].GetCondition(value))) * population.Needs[needName].Severity;
+                                curScore += ((int)(population.Needs[needName].GetCondition(value)));
                             }
                         }
 

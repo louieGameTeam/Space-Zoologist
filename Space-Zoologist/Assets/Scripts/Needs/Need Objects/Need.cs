@@ -4,10 +4,42 @@ using UnityEngine;
 using System.Linq;
 
 [System.Serializable]
+public class TerrainNeed : Need
+{
+    public TerrainNeed(NeedConstructData needConstructData) : base(needConstructData) {}
+
+    protected override NeedType GetNeedType()
+    {
+        return NeedType.Terrain;
+    }
+}
+
+[System.Serializable]
+public class FoodNeed : Need
+{
+    public FoodNeed(NeedConstructData needConstructData) : base(needConstructData) {}
+
+    protected override NeedType GetNeedType()
+    {
+        return NeedType.FoodSource;
+    }
+}
+
+[System.Serializable]
+public class LiquidNeed : Need
+{
+    public LiquidNeed(NeedConstructData needConstructData) : base(needConstructData) {}
+
+    protected override NeedType GetNeedType()
+    {
+        return NeedType.Liquid;
+    }
+}
+
+[System.Serializable]
 public abstract class Need
 {
     public string NeedName => needName;
-    public int Severity => severity;
     public NeedType NeedType => GetNeedType();
     public Sprite Sprite => sprite;
     public float NeedValue => this.needValue;
@@ -28,7 +60,6 @@ public abstract class Need
     protected Need(NeedConstructData needConstructData)
     {
         this.needName = needConstructData.NeedName;
-        this.severity = needConstructData.Severity;
         this.conditions = needConstructData.Conditions;
         this.thresholds = needConstructData.Thresholds;
         this.conditions = needConstructData.Conditions;

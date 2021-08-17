@@ -20,9 +20,9 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int rootArea = default;
     [SerializeField] private int baseOutput = default;
-    [SerializeField] private List<NeedConstructData> terrainNeeds = default;
-    [SerializeField] private List<NeedConstructData> foodNeeds = default;
-    [SerializeField] private List<NeedConstructData> waterNeeds = default;
+    [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
+    [SerializeField] private List<FoodNeedConstructData> foodNeeds = default;
+    [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
     [SerializeField] private Item FoodSource = default;
 
 
@@ -43,7 +43,7 @@ public class FoodSourceSpecies : ScriptableObject
         }
 
         //Water Needs
-        foreach (NeedConstructData need in waterNeeds)
+        foreach (NeedConstructData need in liquidNeeds)
         {
             needs.Add(need.NeedName, new LiquidNeed(need));
         }
@@ -57,18 +57,49 @@ public class FoodSourceSpecies : ScriptableObject
         this.rootRadius = rootRadius;
         this.baseOutput = output;
 
+        
         for(int i = 0; i < needs.Count; ++i)
         {
             switch(i)
             {
                 case 0:
-                    terrainNeeds = needs[i];
+                    terrainNeeds = new List<TerrainNeedConstructData>();
+                    foreach(NeedConstructData data in needs[i])
+                    {
+                        if(!(data is TerrainNeedConstructData))
+                        {
+                            Debug.LogError("Invalid needs data: NeedConstructData was not a TerrainNeedConstructData");
+                            return;
+                        }
+
+                        terrainNeeds.Add((TerrainNeedConstructData)data);
+                    }
                     break;
                 case 1:
-                    foodNeeds = needs[i];
+                    foodNeeds = new List<FoodNeedConstructData>();
+                    foreach(NeedConstructData data in needs[i])
+                    {
+                        if(!(data is FoodNeedConstructData))
+                        {
+                            Debug.LogError("Invalid needs data: NeedConstructData was not a FoodNeedConstructData");
+                            return;
+                        }
+
+                        foodNeeds.Add((FoodNeedConstructData)data);
+                    }
                     break;
                 case 2:
-                    waterNeeds = needs[i];
+                    liquidNeeds = new List<LiquidNeedConstructData>();
+                    foreach(NeedConstructData data in needs[i])
+                    {
+                        if(!(data is LiquidNeedConstructData))
+                        {
+                            Debug.LogError("Invalid needs data: NeedConstructData was not a LiquidNeedConstructData");
+                            return;
+                        }
+
+                        liquidNeeds.Add((LiquidNeedConstructData)data);
+                    }
                     break;
                 default:
                     return;

@@ -42,9 +42,9 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
 
-    [SerializeField] private List<NeedConstructData> terrainNeeds = default;
-    [SerializeField] private List<NeedConstructData> foodNeeds = default;
-    [SerializeField] private List<NeedConstructData> waterNeeds = default;
+    [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
+    [SerializeField] private List<FoodNeedConstructData> foodNeeds = default;
+    [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
@@ -66,7 +66,7 @@ public class AnimalSpecies : ScriptableObject
         }
 
         //Water Needs
-        foreach (NeedConstructData need in waterNeeds)
+        foreach (NeedConstructData need in liquidNeeds)
         {
             needs.Add(need.NeedName, new LiquidNeed(need));
         }
@@ -77,40 +77,48 @@ public class AnimalSpecies : ScriptableObject
     public List<PopulationBehavior> GetBehaviors()
     {
         List<PopulationBehavior> behaviors = new List<PopulationBehavior>();
-        foreach (List<NeedConstructData> needsList in new List<NeedConstructData>[]{terrainNeeds, foodNeeds, waterNeeds})
+
+        List<NeedConstructData> allNeeds = new List<NeedConstructData>();
+        allNeeds.AddRange(terrainNeeds);
+        allNeeds.AddRange(foodNeeds);
+        allNeeds.AddRange(liquidNeeds);
+
+        foreach (NeedConstructData need in allNeeds)
         {
-            foreach (NeedConstructData need in needsList)
+            foreach (NeedBehavior needBehavior in need.Conditions)
             {
-                foreach (NeedBehavior needBehavior in need.Conditions)
+                if (needBehavior.Behavior != null)
                 {
-                    if (needBehavior.Behavior != null)
-                    {
-                        behaviors.Add(needBehavior.Behavior);
-                    }
+                    behaviors.Add(needBehavior.Behavior);
                 }
             }
         }
+
         return behaviors;
     }
 
     public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> SetupBehaviors(Dictionary<string, Need> needs)
     {
         Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviorDict = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
-        foreach (List<NeedConstructData> needsList in new List<NeedConstructData>[]{terrainNeeds, foodNeeds, waterNeeds})
+
+        List<NeedConstructData> allNeeds = new List<NeedConstructData>();
+        allNeeds.AddRange(terrainNeeds);
+        allNeeds.AddRange(foodNeeds);
+        allNeeds.AddRange(liquidNeeds);
+        
+        foreach (NeedConstructData need in allNeeds)
         {
-            foreach (NeedConstructData need in needsList)
+            Dictionary<NeedCondition, PopulationBehavior> needBehaviors = new Dictionary<NeedCondition, PopulationBehavior>();
+            foreach (NeedBehavior needBehavior in need.Conditions)
             {
-                Dictionary<NeedCondition, PopulationBehavior> needBehaviors = new Dictionary<NeedCondition, PopulationBehavior>();
-                foreach (NeedBehavior needBehavior in need.Conditions)
+                if (!needBehaviors.ContainsKey(needBehavior.Condition))
                 {
-                    if (!needBehaviors.ContainsKey(needBehavior.Condition))
-                    {
-                        needBehaviors.Add(needBehavior.Condition, needBehavior.Behavior);
-                    }
+                    needBehaviors.Add(needBehavior.Condition, needBehavior.Behavior);
                 }
-                needBehaviorDict.Add(needs[need.NeedName], needBehaviors);
             }
+            needBehaviorDict.Add(needs[need.NeedName], needBehaviors);
         }
+
         return needBehaviorDict;
     }
 
@@ -154,13 +162,43 @@ public class AnimalSpecies : ScriptableObject
             switch(i)
             {
                 case 0:
-                    terrainNeeds = needsLists[i];
+                    terrainNeeds = new List<TerrainNeedConstructData>();
+                    foreach(NeedConstructData data in needsLists[i])
+                    {
+                        if(!(data is TerrainNeedConstructData))
+                        {
+                            Debug.LogError("Invalid needs data: NeedConstructData was not a TerrainNeedConstructData");
+                            return;
+                        }
+
+                        terrainNeeds.Add((TerrainNeedConstructData)data);
+                    }
                     break;
                 case 1:
-                    foodNeeds = needsLists[i];
+                    foodNeeds = new List<FoodNeedConstructData>();
+                    foreach(NeedConstructData data in needsLists[i])
+                    {
+                        if(!(data is FoodNeedConstructData))
+                        {
+                            Debug.LogError("Invalid needs data: NeedConstructData was not a FoodNeedConstructData");
+                            return;
+                        }
+
+                        foodNeeds.Add((FoodNeedConstructData)data);
+                    }
                     break;
                 case 2:
-                    waterNeeds = needsLists[i];
+                    liquidNeeds = new List<LiquidNeedConstructData>();
+                    foreach(NeedConstructData data in needsLists[i])
+                    {
+                        if(!(data is LiquidNeedConstructData))
+                        {
+                            Debug.LogError("Invalid needs data: NeedConstructData was not a LiquidNeedConstructData");
+                            return;
+                        }
+
+                        liquidNeeds.Add((LiquidNeedConstructData)data);
+                    }
                     break;
                 default:
                     return;
