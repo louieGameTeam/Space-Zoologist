@@ -90,21 +90,24 @@ public class FoodSourceNeedSystem : NeedSystem
             float compatibleAmount = 0;
 
             // 3. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
-            for (int j=1; j>=0; j--)
+            for (int j = 0; j <= 1; j++)
             {
                 foreach (KeyValuePair<string, Need> need in population.Needs)
                 {
                     float maxThreshold = need.Value.GetMaxThreshold() * population.Count;
                     // 4. Calculate preferred and available food, skipping if need already met
-                    if (need.Value.NeedType.Equals(NeedType.FoodSource) && preferredAmount == maxThreshold || compatibleAmount == maxThreshold || !foodSourceCalculators.ContainsKey(need.Key))
+                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || preferredAmount == maxThreshold || compatibleAmount == maxThreshold || !foodSourceCalculators.ContainsKey(need.Key))
                     {
                         continue;
                     }
+
                     if (j == 0 && need.Value.IsPreferred)
                     {
                         preferredAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
+                        continue;
                     }
-                    else
+
+                    if (j == 1 && !need.Value.IsPreferred)
                     {
                         compatibleAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
                     }
@@ -187,7 +190,7 @@ public class FoodSourceNeedSystem : NeedSystem
     {
         public int Compare(Population a, Population b)
         {
-            return (int)(b.FoodDominance - a.FoodDominance);
+            return (int)(100*(b.FoodDominance - a.FoodDominance));
         }
     }
 }

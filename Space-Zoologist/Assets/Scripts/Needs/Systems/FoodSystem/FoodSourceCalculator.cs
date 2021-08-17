@@ -141,12 +141,12 @@ public class FoodSourceCalculator : NeedCalculator
                 float excessFood = foodAcquired - maxThreshold;
                 foodAcquired = maxThreshold;
                 foodRemaining[foodSource] += excessFood;
-                UpdateLocalDominance(population);
                 break;
             }
         }
+        UpdateLocalDominance(population);
         population.UpdateNeed(foodSourceName, foodAcquired);
-        Debug.Log(population.species.SpeciesName + " receieved " + foodAcquired + " from " + this.FoodSourceName);
+        //Debug.Log(population.species.SpeciesName + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;
     }
 
