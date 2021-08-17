@@ -4,17 +4,16 @@ using UnityEngine;
 using System.Linq;
 
 [System.Serializable]
-public class Need
+public abstract class Need
 {
     public string NeedName => needName;
     public int Severity => severity;
-    public NeedType NeedType => needType;
+    public NeedType NeedType => GetNeedType();
     public Sprite Sprite => sprite;
     public float NeedValue => this.needValue;
     public bool IsPreferred => isPreferred;
     public List<NeedBehavior> Behaviors => this.conditions;
 
-    [SerializeField] private NeedType needType = default;
     [SerializeField] private string needName = default;
     [SerializeField] private float needValue = default;
     [Range(1.0f, 10.0f)]
@@ -24,9 +23,10 @@ public class Need
     [SerializeField] private List<float> thresholds = default;
     [SerializeField] private Sprite sprite = default;
 
-    public Need(NeedType needType, NeedConstructData needConstructData)
+    protected abstract NeedType GetNeedType();
+
+    protected Need(NeedConstructData needConstructData)
     {
-        this.needType = needType;
         this.needName = needConstructData.NeedName;
         this.severity = needConstructData.Severity;
         this.conditions = needConstructData.Conditions;

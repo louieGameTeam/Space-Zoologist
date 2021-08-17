@@ -20,31 +20,59 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int rootArea = default;
     [SerializeField] private int baseOutput = default;
-    [SerializeField] private List<NeedTypeConstructData> needsList = default;
+    [SerializeField] private List<NeedConstructData> terrainNeeds = default;
+    [SerializeField] private List<NeedConstructData> foodNeeds = default;
+    [SerializeField] private List<NeedConstructData> waterNeeds = default;
     [SerializeField] private Item FoodSource = default;
 
 
     public Dictionary<string, Need> SetupNeeds()
     {
         Dictionary<string, Need> needs = new Dictionary<string, Need>();
-        foreach (NeedTypeConstructData needData in needsList)
+
+        //Terrain Needs
+        foreach (NeedConstructData need in terrainNeeds)
         {
-            foreach (NeedConstructData need in needData.Needs)
-            {
-                // Use the NeedData to create Need
-                needs.Add(need.NeedName, new Need(needData.NeedType, need));
-                //Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
-            }
+            needs.Add(need.NeedName, new TerrainNeed(need));
         }
+
+        //Food Needs
+        foreach (NeedConstructData need in foodNeeds)
+        {
+            needs.Add(need.NeedName, new FoodNeed(need));
+        }
+
+        //Water Needs
+        foreach (NeedConstructData need in waterNeeds)
+        {
+            needs.Add(need.NeedName, new LiquidNeed(need));
+        }
+
         return needs;
     }
 
-    public void SetupData(string name, int rootRadius, int output, List<NeedTypeConstructData> needs)
+    public void SetupData(string name, int rootRadius, int output, List<List<NeedConstructData>> needs)
     {
-        this.needsList = new List<NeedTypeConstructData>();
         this.speciesName = name;
         this.rootRadius = rootRadius;
         this.baseOutput = output;
-        this.needsList = needs;
+
+        for(int i = 0; i < needs.Count; ++i)
+        {
+            switch(i)
+            {
+                case 0:
+                    terrainNeeds = needs[i];
+                    break;
+                case 1:
+                    foodNeeds = needs[i];
+                    break;
+                case 2:
+                    waterNeeds = needs[i];
+                    break;
+                default:
+                    return;
+            }
+        }
     }
 }

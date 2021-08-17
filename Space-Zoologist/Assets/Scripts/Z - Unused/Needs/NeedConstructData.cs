@@ -6,17 +6,6 @@ using System;
 public enum NeedType { Terrain, Atmosphere, Density, FoodSource, Liquid, Species, Temperature, Symbiosis };
 public enum NeedCondition { Bad, Neutral, Good }
 
-[System.Serializable]
-public class NeedTypeConstructData
-{
-
-    public NeedType NeedType => needType;
-    public List<NeedConstructData> Needs => needs;
-
-    [SerializeField] private NeedType needType = default;
-    [SerializeField] public List<NeedConstructData> needs = default;
-}
-
 /// <summary>
 /// A data object that holds the information to create a Need object.
 /// </summary>

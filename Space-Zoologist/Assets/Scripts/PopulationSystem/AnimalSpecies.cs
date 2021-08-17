@@ -42,8 +42,9 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
 
-    [SerializeField]
-    private List<NeedTypeConstructData> needsList = new List<NeedTypeConstructData>();
+    [SerializeField] private List<NeedConstructData> terrainNeeds = default;
+    [SerializeField] private List<NeedConstructData> foodNeeds = default;
+    [SerializeField] private List<NeedConstructData> waterNeeds = default;
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
@@ -51,24 +52,34 @@ public class AnimalSpecies : ScriptableObject
     public Dictionary<string, Need> SetupNeeds()
     {
         Dictionary<string, Need> needs = new Dictionary<string, Need>();
-        foreach (NeedTypeConstructData needData in needsList)
+        
+        //Terrain Needs
+        foreach (NeedConstructData need in terrainNeeds)
         {
-            foreach (NeedConstructData need in needData.Needs)
-            {
-                // Use the NeedData to create Need
-                needs.Add(need.NeedName, new Need(needData.NeedType, need));
-                //Debug.Log($"Add {need.NeedName} Need for {this.SpeciesName}");
-            }
+            needs.Add(need.NeedName, new TerrainNeed(need));
         }
+
+        //Food Needs
+        foreach (NeedConstructData need in foodNeeds)
+        {
+            needs.Add(need.NeedName, new FoodNeed(need));
+        }
+
+        //Water Needs
+        foreach (NeedConstructData need in waterNeeds)
+        {
+            needs.Add(need.NeedName, new LiquidNeed(need));
+        }
+
         return needs;
     }
 
     public List<PopulationBehavior> GetBehaviors()
     {
         List<PopulationBehavior> behaviors = new List<PopulationBehavior>();
-        foreach (NeedTypeConstructData needData in needsList)
+        foreach (List<NeedConstructData> needsList in new List<NeedConstructData>[]{terrainNeeds, foodNeeds, waterNeeds})
         {
-            foreach (NeedConstructData need in needData.Needs)
+            foreach (NeedConstructData need in needsList)
             {
                 foreach (NeedBehavior needBehavior in need.Conditions)
                 {
@@ -85,9 +96,9 @@ public class AnimalSpecies : ScriptableObject
     public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> SetupBehaviors(Dictionary<string, Need> needs)
     {
         Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviorDict = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
-        foreach (NeedTypeConstructData needData in needsList)
+        foreach (List<NeedConstructData> needsList in new List<NeedConstructData>[]{terrainNeeds, foodNeeds, waterNeeds})
         {
-            foreach (NeedConstructData need in needData.Needs)
+            foreach (NeedConstructData need in needsList)
             {
                 Dictionary<NeedCondition, PopulationBehavior> needBehaviors = new Dictionary<NeedCondition, PopulationBehavior>();
                 foreach (NeedBehavior needBehavior in need.Conditions)
@@ -103,7 +114,7 @@ public class AnimalSpecies : ScriptableObject
         return needBehaviorDict;
     }
 
-    public void SetupData(string name, int growthRate, List<string> accessibleTerrain, List<NeedTypeConstructData> needsList)
+    public void SetupData(string name, int growthRate, List<string> accessibleTerrain, List<List<NeedConstructData>> needsLists)
     {
         // TODO setup behaviors and accessible terrain
         this.speciesName = name;
@@ -137,6 +148,23 @@ public class AnimalSpecies : ScriptableObject
             }
         }
         //this.accessibleTerrain = accessibleTerrain;
-        this.needsList = needsList;
+
+        for(int i = 0; i < needsLists.Count; ++i)
+        {
+            switch(i)
+            {
+                case 0:
+                    terrainNeeds = needsLists[i];
+                    break;
+                case 1:
+                    foodNeeds = needsLists[i];
+                    break;
+                case 2:
+                    waterNeeds = needsLists[i];
+                    break;
+                default:
+                    return;
+            }
+        }
     }
 }
