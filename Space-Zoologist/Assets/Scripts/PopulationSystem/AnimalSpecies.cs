@@ -10,7 +10,6 @@ public class AnimalSpecies : ScriptableObject
     // Getters
     public string SpeciesName => speciesName;
     public SpeciesType Species => species;
-    public int FoodDominance => foodDominance;
     public int TerrainTilesRequired => terrainTilesRequired;
     public float GrowthScaleFactor => growthScaleFactor;
     public int GrowthRate => growthRate;
@@ -30,7 +29,6 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private string speciesName = default;
     [SerializeField] private SpeciesType species = default;
     [Range(1.0f, 10.0f)]
-    [SerializeField] private int foodDominance = default;
     [SerializeField] private int terrainTilesRequired = default;
     [SerializeField] private float growthScaleFactor = default;
     [Range(1, 30)]
@@ -105,11 +103,10 @@ public class AnimalSpecies : ScriptableObject
         return needBehaviorDict;
     }
 
-    public void SetupData(string name, int dominance, int growthRate, List<string> accessibleTerrain, List<NeedTypeConstructData> needsList)
+    public void SetupData(string name, int growthRate, List<string> accessibleTerrain, List<NeedTypeConstructData> needsList)
     {
         // TODO setup behaviors and accessible terrain
         this.speciesName = name;
-        this.foodDominance = dominance;
         this.growthRate = growthRate;
         this.accessibleTerrain = new List<TileType>();
         foreach (string tileType in accessibleTerrain)
