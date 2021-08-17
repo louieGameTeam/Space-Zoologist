@@ -62,7 +62,7 @@ public class ResourceRequestEditor : NotebookUIChild
     // Resource request to edit
     private ResourceRequest request;
 
-    public void Setup(EnclosureID enclosureID, ResourceRequest request)
+    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget)
     {
         base.Setup();
 
@@ -119,10 +119,9 @@ public class ResourceRequestEditor : NotebookUIChild
 
         // Add scroll intercecptors to the input fields so that the scroll event goes to the 
         // containing scroll rect instead of the input fields
-        IScrollHandler target = GetComponentInParent<ScrollRect>();
         OnScrollEventInterceptor interceptor = priorityInput.gameObject.AddComponent<OnScrollEventInterceptor>();
-        interceptor.InterceptTarget = target;
+        interceptor.InterceptTarget = scrollTarget;
         interceptor = quantityInput.gameObject.AddComponent<OnScrollEventInterceptor>();
-        interceptor.InterceptTarget = target;
+        interceptor.InterceptTarget = scrollTarget;
     }
 }

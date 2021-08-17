@@ -14,6 +14,9 @@ public class ObservationEntryListEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Parent transform for the editor of the individual entries")]
     private LayoutGroup editorParent;
+    [SerializeField]
+    [Tooltip("Reference to the scroll rect that the editors will fit into")]
+    private ScrollRect editorScroller;
 
     private List<ObservationEntryEditor> currentEditors = new List<ObservationEntryEditor>();
 
@@ -39,7 +42,7 @@ public class ObservationEntryListEditor : NotebookUIChild
         foreach(ObservationEntry entry in UIParent.Notebook.GetObservationEntryList(id).Entries)
         {
             ObservationEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
-            editor.Setup(entry, id);
+            editor.Setup(entry, id, editorScroller);
             currentEditors.Add(editor);
         }
     }

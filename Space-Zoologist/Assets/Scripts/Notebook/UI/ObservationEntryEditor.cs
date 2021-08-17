@@ -15,7 +15,7 @@ public class ObservationEntryEditor : NotebookUIChild
     private TMP_InputField textInput;
 
     // Setup this editor with the entry that it will edit
-    public void Setup(ObservationEntry entry, EnclosureID id)
+    public void Setup(ObservationEntry entry, EnclosureID id, ScrollRect scrollTarget)
     {
         base.Setup();
 
@@ -36,12 +36,11 @@ public class ObservationEntryEditor : NotebookUIChild
         titleInput.readOnly = id != current;
         textInput.readOnly = id != current;
 
-        IScrollHandler target = GetComponentInParent<ScrollRect>();
         // Add scroll interceptor to the title input
         OnScrollEventInterceptor interceptor = titleInput.gameObject.AddComponent<OnScrollEventInterceptor>();
-        interceptor.InterceptTarget = target;
+        interceptor.InterceptTarget = scrollTarget;
         // Add scroll interceptor to the text input
         interceptor = textInput.gameObject.AddComponent<OnScrollEventInterceptor>();
-        interceptor.InterceptTarget = target;
+        interceptor.InterceptTarget = scrollTarget;
     }
 }

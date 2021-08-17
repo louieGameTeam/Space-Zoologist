@@ -14,6 +14,9 @@ public class ResourceRequestListEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Parent transform for the editor of the individual entries")]
     private LayoutGroup editorParent;
+    [SerializeField]
+    [Tooltip("Reference to the scroll rect that the editors will fit into")]
+    private ScrollRect editorScroller;
 
     private List<ResourceRequestEditor> currentEditors = new List<ResourceRequestEditor>();
 
@@ -40,7 +43,7 @@ public class ResourceRequestListEditor : NotebookUIChild
         foreach (ResourceRequest request in UIParent.Notebook.GetResourceRequestList(id).Requests)
         {
             ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-            editor.Setup(id, request);
+            editor.Setup(id, request, editorScroller);
             currentEditors.Add(editor);
         }
 
@@ -60,7 +63,7 @@ public class ResourceRequestListEditor : NotebookUIChild
     private void CreateAddingEntry()
     {
         ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(EnclosureID.FromCurrentSceneName(), null);
+        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller);
         editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
     }

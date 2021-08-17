@@ -14,6 +14,9 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Parent transform for the editor of the individual entries")]
     private LayoutGroup editorParent;
+    [SerializeField]
+    [Tooltip("Reference to the scroll rect that the editors will fit into")]
+    private ScrollRect editorScroller;
 
     private List<TestAndMetricEntryEditor> currentEditors = new List<TestAndMetricEntryEditor>();
 
@@ -40,7 +43,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
         foreach(TestAndMetricsEntry entry in UIParent.Notebook.GetTestAndMetricsEntryList(id).Entries)
         {
             TestAndMetricEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
-            editor.Setup(id, entry);
+            editor.Setup(id, entry, editorScroller);
             currentEditors.Add(editor);
         }
 
@@ -60,7 +63,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     private void CreateAddingEntry()
     {
         TestAndMetricEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(EnclosureID.FromCurrentSceneName(), null);
+        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller);
         editor.OnNewEntryCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
     }

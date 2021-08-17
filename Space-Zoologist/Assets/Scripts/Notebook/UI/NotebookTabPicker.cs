@@ -7,6 +7,9 @@ using UnityEngine.Events;
 public class NotebookTabPicker : NotebookUIChild
 {
     [SerializeField]
+    [Tooltip("Root object where all of the pages will be found")]
+    private Transform pagesRoot;
+    [SerializeField]
     [Tooltip("Prefab of the button used to select notebook tabs")]
     private NotebookTabSelectButton buttonPrefab;
     [SerializeField]
@@ -28,7 +31,7 @@ public class NotebookTabPicker : NotebookUIChild
         // Set all pages false
         for(int i = 0; i < tabs.Length; i++)
         {
-            UIParent.transform.GetChild(i).gameObject.SetActive(false);
+            pagesRoot.GetChild(i).gameObject.SetActive(false);
         }
         
         for(int i = 0; i < tabs.Length; i++)
@@ -44,8 +47,8 @@ public class NotebookTabPicker : NotebookUIChild
     private void SetTabSelected(NotebookTab tab)
     {
         // Disable the current page and enable the new page
-        UIParent.transform.GetChild((int)currentTab).gameObject.SetActive(false);
-        UIParent.transform.GetChild((int)tab).gameObject.SetActive(true);
+        pagesRoot.GetChild((int)currentTab).gameObject.SetActive(false);
+        pagesRoot.GetChild((int)tab).gameObject.SetActive(true);
         currentTab = tab;
     }
     // Select a specific notebook tab by selecting one of the buttons

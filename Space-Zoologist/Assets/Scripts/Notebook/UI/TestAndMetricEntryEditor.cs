@@ -53,7 +53,7 @@ public class TestAndMetricEntryEditor : NotebookUIChild
     // The entry that is edited by this UI
     private TestAndMetricsEntry entry;
 
-    public void Setup(EnclosureID enclosureID, TestAndMetricsEntry entry)
+    public void Setup(EnclosureID enclosureID, TestAndMetricsEntry entry, ScrollRect scrollTarget)
     {
         base.Setup();
 
@@ -106,6 +106,6 @@ public class TestAndMetricEntryEditor : NotebookUIChild
 
         // Make sure the scroll event is taken away from the input field
         OnScrollEventInterceptor interceptor = inputField.gameObject.AddComponent<OnScrollEventInterceptor>();
-        interceptor.InterceptTarget = GetComponentInParent<ScrollRect>();
+        interceptor.InterceptTarget = scrollTarget;
     }
 }
