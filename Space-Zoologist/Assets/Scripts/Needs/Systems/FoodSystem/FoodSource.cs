@@ -91,7 +91,7 @@ public class FoodSource : MonoBehaviour, Life
             string needType = needValuePair.Key;
             Need needValue = needValuePair.Value;
      
-            if (needType.Equals("Liquid") && needValue.NeedType.Equals(NeedType.Liquid))
+            if (needType.Equals("Water") && needValue.NeedType.Equals(NeedType.Liquid))
             {
                 if (needIsSatisified(needType, needValue.NeedValue))
                 {
