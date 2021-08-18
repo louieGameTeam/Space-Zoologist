@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4893,7 +4893,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 297f1c09493284a96b45b18dec5a3ecb, type: 3}
+      objectReference: {fileID: 8300000, guid: 7ef1040392485431c9bf1118478109ed, type: 3}
     - target: {fileID: 5423665932188050013, guid: 6238c2724e7624d0580fcf5738f4fd83,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18318,6 +18318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSystem: {fileID: 765609361}
   enclosureSystem: {fileID: 5592442342188060214}
+  reservePartitionManager: {fileID: 0}
   areaDropdownMenu: {fileID: 1259954979}
   itemDropdownMenu: {fileID: 1084171904}
   inspectorWindow: {fileID: 996204900}
@@ -21899,7 +21900,9 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   needSystemManager: {fileID: 8743428314032458836}
   gridSystem: {fileID: 765609361}
-  startingPositions: []
+  startingPositions:
+  - {x: 2, y: 2, z: 0}
+  - {x: 17, y: 3, z: 0}
 --- !u!4 &6874327555454712159
 Transform:
   m_ObjectHideFlags: 0
