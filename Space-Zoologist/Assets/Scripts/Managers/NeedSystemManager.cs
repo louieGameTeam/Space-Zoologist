@@ -46,6 +46,7 @@ public class NeedSystemManager : MonoBehaviour
 
         // FoodSource and Species NS
         AddSystem(new FoodSourceNeedSystem(ReservePartitionManager));
+        AddSystem(new PredatoryPreySystem(ReservePartitionManager, GridSystem));
     }
 
     /// <summary>

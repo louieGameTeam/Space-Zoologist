@@ -126,6 +126,10 @@ public class FoodSourceManager : GridObjectManager
 
     public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
     {
+        if (!foodSourceSpecies.ContainsKey(foodsourceSpeciesID))
+        {
+            Debug.Log($"{foodsourceSpeciesID} not in level data");
+        }
         return CreateFoodSource(foodSourceSpecies[foodsourceSpeciesID], position);
     }
 

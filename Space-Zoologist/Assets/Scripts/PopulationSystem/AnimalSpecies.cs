@@ -10,6 +10,7 @@ public class AnimalSpecies : ScriptableObject
     // Getters
     public string SpeciesName => speciesName;
     public SpeciesType Species => species;
+    public int FoodDominance => foodDominance;
     public int TerrainTilesRequired => terrainTilesRequired;
     public float GrowthScaleFactor => growthScaleFactor;
     public int GrowthRate => growthRate;
@@ -20,8 +21,6 @@ public class AnimalSpecies : ScriptableObject
     public Sprite Sprite => icon;
     public float Range => range;
     public Sprite Representation => representation;
-    // TODO setup tile weights for species
-    public Dictionary<TileType, byte> TilePreference = default;
     public RuntimeAnimatorController AnimatorController => animatorController;
 
     // Values
@@ -29,6 +28,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private string speciesName = default;
     [SerializeField] private SpeciesType species = default;
     [Range(1.0f, 10.0f)]
+    [SerializeField] private int foodDominance = default;
     [SerializeField] private int terrainTilesRequired = default;
     [SerializeField] private float growthScaleFactor = default;
     [Range(1, 30)]
@@ -80,63 +80,5 @@ public class AnimalSpecies : ScriptableObject
             }
         }
         return behaviors;
-    }
-
-    public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> SetupBehaviors(Dictionary<string, Need> needs)
-    {
-        Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviorDict = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
-        foreach (NeedTypeConstructData needData in needsList)
-        {
-            foreach (NeedConstructData need in needData.Needs)
-            {
-                Dictionary<NeedCondition, PopulationBehavior> needBehaviors = new Dictionary<NeedCondition, PopulationBehavior>();
-                foreach (NeedBehavior needBehavior in need.Conditions)
-                {
-                    if (!needBehaviors.ContainsKey(needBehavior.Condition))
-                    {
-                        needBehaviors.Add(needBehavior.Condition, needBehavior.Behavior);
-                    }
-                }
-                needBehaviorDict.Add(needs[need.NeedName], needBehaviors);
-            }
-        }
-        return needBehaviorDict;
-    }
-
-    public void SetupData(string name, int growthRate, List<string> accessibleTerrain, List<NeedTypeConstructData> needsList)
-    {
-        // TODO setup behaviors and accessible terrain
-        this.speciesName = name;
-        this.growthRate = growthRate;
-        this.accessibleTerrain = new List<TileType>();
-        foreach (string tileType in accessibleTerrain)
-        {
-            if (tileType.Equals("Sand", StringComparison.OrdinalIgnoreCase))
-            {
-                this.accessibleTerrain.Add(TileType.Sand);
-            }
-            if (tileType.Equals("Grass", StringComparison.OrdinalIgnoreCase))
-            {
-                this.accessibleTerrain.Add(TileType.Grass);
-            }
-            if (tileType.Equals("Dirt", StringComparison.OrdinalIgnoreCase))
-            {
-                this.accessibleTerrain.Add(TileType.Dirt);
-            }
-            if (tileType.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
-            {
-                this.accessibleTerrain.Add(TileType.Liquid);
-            }
-            if (tileType.Equals("Rock", StringComparison.OrdinalIgnoreCase))
-            {
-                this.accessibleTerrain.Add(TileType.Stone);
-            }
-            if (tileType.Equals("Wall", StringComparison.OrdinalIgnoreCase))
-            {
-                this.accessibleTerrain.Add(TileType.Wall);
-            }
-        }
-        //this.accessibleTerrain = accessibleTerrain;
-        this.needsList = needsList;
     }
 }

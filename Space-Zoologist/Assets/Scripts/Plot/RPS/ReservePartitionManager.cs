@@ -350,7 +350,7 @@ public class ReservePartitionManager : MonoBehaviour
     {
         // if accessible
         // check if the nth bit is set (i.e. accessible for the population)
-         if (AccessMap.ContainsKey(cellPos))
+         if (AccessMap.ContainsKey(cellPos) && PopulationToID.ContainsKey(population))
         {
             if (((AccessMap[cellPos] >> PopulationToID[population]) & 1L) == 1L)
             {
@@ -383,6 +383,29 @@ public class ReservePartitionManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Check if populationA's and populationB's accessible area overlaps.
+    /// </summary>
+    /// <param name="populationA">Ususally the consumer population</param>
+    /// <param name="populationB">Ususally the consumed population</param>
+    /// <remarks><c>populationA</c> and <c>populationB</c> is interchangeable</remarks>
+    /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
+    public int NumOverlapTiles(Population populationA, Population populationB)
+    {
+        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
+        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
+        int numOverlapTiles = 0;
+        foreach (Vector3Int cellPos in AccessibleArea_A)
+        {
+            if (AccessibleArea_B.Contains(cellPos))
+            {
+                numOverlapTiles++;
+            }
+        }
+
+        return numOverlapTiles;
     }
 
     /// <summary>
