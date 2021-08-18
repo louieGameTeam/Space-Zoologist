@@ -117,13 +117,13 @@ public class GrowthCalculator
             if (need.Value.NeedType.Equals(NeedType.Terrain) && need.Key.Equals("Liquid"))
             {
                 waterSourceSize = need.Value.NeedValue;
-                totalNeedWaterTiles = need.Value.GetMaxThreshold() * numAnimals;
+                totalNeedWaterTiles = need.Value.GetThreshold() * numAnimals;
                 //Debug.Log("Total needed water tiles: " + totalNeedWaterTiles);
             }
             if (need.Value.NeedType.Equals(NeedType.Liquid) && need.Key.Equals("Water"))
             {
                 percentPureWater = need.Value.NeedValue;
-                neededPureWaterThreshold = need.Value.GetMaxThreshold();
+                neededPureWaterThreshold = need.Value.GetThreshold();
             }
         }
         float waterTilesUsed = 0;
@@ -162,7 +162,7 @@ public class GrowthCalculator
         {
             if (need.Value.NeedType.Equals(NeedType.FoodSource))
             {
-                totalMinFoodNeeded = need.Value.GetMinThreshold() * numAnimals;
+                totalMinFoodNeeded = need.Value.GetThreshold() * numAnimals;
                 break;
             }
         }
@@ -202,7 +202,7 @@ public class GrowthCalculator
                 {
                     availableSurvivableTiles += need.Value.NeedValue;
                 }
-                totalNeededTiles = need.Value.GetMaxThreshold() * numAnimals;
+                totalNeededTiles = need.Value.GetThreshold() * numAnimals;
             }
         }
         if (availableComfortableTiles >= totalNeededTiles)

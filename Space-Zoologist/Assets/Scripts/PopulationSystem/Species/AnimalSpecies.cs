@@ -76,50 +76,12 @@ public class AnimalSpecies : ScriptableObject
 
     public List<PopulationBehavior> GetBehaviors()
     {
-        List<PopulationBehavior> behaviors = new List<PopulationBehavior>();
-
-        List<NeedConstructData> allNeeds = new List<NeedConstructData>();
-        allNeeds.AddRange(terrainNeeds);
-        allNeeds.AddRange(foodNeeds);
-        allNeeds.AddRange(liquidNeeds);
-
-        foreach (NeedConstructData need in allNeeds)
-        {
-            foreach (NeedBehavior needBehavior in need.Conditions)
-            {
-                if (needBehavior.Behavior != null)
-                {
-                    behaviors.Add(needBehavior.Behavior);
-                }
-            }
-        }
-
-        return behaviors;
+        return new List<PopulationBehavior>();
     }
 
     public Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> SetupBehaviors(Dictionary<string, Need> needs)
     {
-        Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>> needBehaviorDict = new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
-
-        List<NeedConstructData> allNeeds = new List<NeedConstructData>();
-        allNeeds.AddRange(terrainNeeds);
-        allNeeds.AddRange(foodNeeds);
-        allNeeds.AddRange(liquidNeeds);
-        
-        foreach (NeedConstructData need in allNeeds)
-        {
-            Dictionary<NeedCondition, PopulationBehavior> needBehaviors = new Dictionary<NeedCondition, PopulationBehavior>();
-            foreach (NeedBehavior needBehavior in need.Conditions)
-            {
-                if (!needBehaviors.ContainsKey(needBehavior.Condition))
-                {
-                    needBehaviors.Add(needBehavior.Condition, needBehavior.Behavior);
-                }
-            }
-            needBehaviorDict.Add(needs[need.NeedName], needBehaviors);
-        }
-
-        return needBehaviorDict;
+        return new Dictionary<Need, Dictionary<NeedCondition, PopulationBehavior>>();
     }
 
     public void SetupData(string name, int growthRate, List<string> accessibleTerrain, List<List<NeedConstructData>> needsLists)

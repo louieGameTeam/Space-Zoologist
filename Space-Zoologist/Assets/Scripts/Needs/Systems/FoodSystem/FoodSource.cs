@@ -95,13 +95,13 @@ public class FoodSource : MonoBehaviour, Life
             {
                 if (needIsSatisified(needType, needValue.NeedValue))
                 {
-                    waterRating = 1 + (needValue.NeedValue - needValue.GetMaxThreshold());
+                    waterRating = 1 + (needValue.NeedValue - needValue.GetThreshold());
                     liquidNeedMet = true;
                 }
             }
             if (needValue.NeedType.Equals(NeedType.Terrain))
             {
-                totalNeededTiles = needValue.GetMaxThreshold();
+                totalNeededTiles = needValue.GetThreshold();
                 if (needValue.IsPreferred)
                 {
                     numPreferredTiles = needValue.NeedValue;
@@ -130,13 +130,7 @@ public class FoodSource : MonoBehaviour, Life
 
     private bool needIsSatisified(string needType, float needValue)
     {
-        NeedCondition condition = this.needs[needType].GetCondition(needValue);
-        // A need is not satisfied
-        if (condition != NeedCondition.Good)
-        {
-            return false;
-        }
-        return true;
+        return this.needs[needType].IsThresholdMet(needValue);
     }
 
     /// <summary>

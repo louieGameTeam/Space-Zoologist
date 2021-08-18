@@ -9,30 +9,63 @@ public enum NeedCondition { Bad, Neutral, Good }
 [System.Serializable]
 public class TerrainNeedConstructData : NeedConstructData
 {
-    public TerrainNeedConstructData(string name, List<string> conditions, List<float> thresholds) 
-        : base(name, conditions, thresholds)
+    public float TerrainNeedThreshold => terrainNeedThreshold;
+
+    [SerializeField] private float terrainNeedThreshold;
+
+    public TerrainNeedConstructData(string name) 
+        : base(name)
     {
         
+    }
+
+    public override float GetSurvivableThreshold()
+    {
+        return terrainNeedThreshold;
     }
 }
 
 [System.Serializable]
 public class FoodNeedConstructData : NeedConstructData
 {
-    public FoodNeedConstructData(string name, List<string> conditions, List<float> thresholds) 
-        : base(name, conditions, thresholds)
+    public float FoodNeedThreshold => foodNeedThreshold;
+
+    [SerializeField] private float foodNeedThreshold;
+
+    public FoodNeedConstructData(string name) 
+        : base(name)
     {
         
+    }
+
+    public override float GetSurvivableThreshold()
+    {
+        return foodNeedThreshold;
     }
 }
 
 [System.Serializable]
 public class LiquidNeedConstructData : NeedConstructData
 {
-    public LiquidNeedConstructData(string name, List<string> conditions, List<float> thresholds) 
-        : base(name, conditions, thresholds)
+    public float LiquidTileNeedThreshold => liquidTileNeedThreshold;
+    public float FreshWaterThreshold => freshWaterThreshold;
+    public float SaltThreshold => saltThreshold;
+    public float BacteriaThreshold => bacteriaThreshold;
+
+    [SerializeField] private float liquidTileNeedThreshold;
+    [SerializeField] private float freshWaterThreshold;
+    [SerializeField] private float saltThreshold;
+    [SerializeField] private float bacteriaThreshold;
+
+    public LiquidNeedConstructData(string name) 
+        : base(name)
     {
         
+    }
+
+    public override float GetSurvivableThreshold()
+    {
+        return liquidTileNeedThreshold;
     }
 }
 
@@ -43,35 +76,15 @@ public class LiquidNeedConstructData : NeedConstructData
 public abstract class NeedConstructData
 {
     public string NeedName => needName;
-    public List<NeedBehavior> Conditions => conditions;
-    public List<float> Thresholds => thresholds;
     public bool IsPreferred => isPreferred;
 
     [SerializeField] private string needName = default;
     [SerializeField] private bool isPreferred = false;
-    [SerializeField] private List<NeedBehavior> conditions = default;
-    [SerializeField] private List<float> thresholds = default;
 
-    public NeedConstructData(string name, List<string> conditions, List<float> thresholds)
+    public NeedConstructData(string name)
     {
-        this.conditions = new List<NeedBehavior>();
-        this.thresholds = new List<float>();
         this.needName = name;
-        foreach(string condition in conditions)
-        {
-            if (condition.Equals("Good", StringComparison.OrdinalIgnoreCase))
-            {
-                this.conditions.Add(new NeedBehavior(NeedCondition.Good));
-            }
-            if (condition.Equals("Neutral", StringComparison.OrdinalIgnoreCase))
-            {
-                this.conditions.Add(new NeedBehavior(NeedCondition.Neutral));
-            }
-            if (condition.Equals("Bad", StringComparison.OrdinalIgnoreCase))
-            {
-                this.conditions.Add(new NeedBehavior(NeedCondition.Bad));
-            }
-        }
-        this.thresholds = thresholds;
     }
+
+    public abstract float GetSurvivableThreshold();
 }

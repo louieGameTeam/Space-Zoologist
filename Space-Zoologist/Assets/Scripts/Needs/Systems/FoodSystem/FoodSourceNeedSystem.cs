@@ -94,7 +94,7 @@ public class FoodSourceNeedSystem : NeedSystem
             {
                 foreach (KeyValuePair<string, Need> need in population.Needs)
                 {
-                    float maxThreshold = need.Value.GetMaxThreshold() * population.Count;
+                    float maxThreshold = need.Value.GetThreshold() * population.Count;
                     // 4. Calculate preferred and available food, skipping if need already met
                     if (!need.Value.NeedType.Equals(NeedType.FoodSource) || preferredAmount == maxThreshold || compatibleAmount == maxThreshold || !foodSourceCalculators.ContainsKey(need.Key))
                     {
