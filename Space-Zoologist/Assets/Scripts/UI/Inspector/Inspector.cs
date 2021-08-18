@@ -15,6 +15,7 @@ public class Inspector : MonoBehaviour
 
     [SerializeField] private GridSystem gridSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
+    [SerializeField] private ReservePartitionManager reservePartitionManager = null;
 
     // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
@@ -46,6 +47,7 @@ public class Inspector : MonoBehaviour
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
         OpenInspector();
+
         // Have the dropdown options be refreshed when new items created
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
         EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, this.UpdateDropdownMenu);
@@ -64,7 +66,6 @@ public class Inspector : MonoBehaviour
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
             this.IsInInspectorMode = !IsInInspectorMode;
-            AudioManager.instance.PlayOneShot(SFXType.MenuClose);
         }
 
     }
@@ -293,6 +294,7 @@ public class Inspector : MonoBehaviour
     private void DisplayPopulationText(GridSystem.TileData tileData)
     {
         this.HighlightPopulation(tileData.Animal.transform.parent.gameObject);
+
         //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
         this.inspectorWindowDisplayScript.DisplayPopulationStatus(tileData.Animal.GetComponent<Animal>().PopulationInfo);
     }
@@ -352,6 +354,13 @@ public class Inspector : MonoBehaviour
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
+
+        // highlight their accessible terrain too
+        Population populationScript = population.GetComponent<Population>();
+        List<Vector3Int> accessibleTiles = reservePartitionManager.AccessibleArea[populationScript];
+
+        foreach (Vector3Int tilePosition in accessibleTiles)
+            gridSystem.HighlightTile(tilePosition, Color.green);
 
         this.lastPopulationSelected = population;
     }

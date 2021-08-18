@@ -198,8 +198,7 @@ public class TerrainNeedSystem : NeedSystem
             //Keep assigning tiles to the accessiblePopulations until either:
             // 1. All populations in accessiblePopulations have their terrain need satisfied, or
             // 2. There are no tiles left to assign
-            bool keepIterating = true;
-            while(keepIterating)
+            while(true)
             {
                 //Convert the remaining accessible tiles into a list so we can remove tiles from the HashSet as we iterate on it
                 Vector3Int[] tileArray = accessibleTilesByTileType[tile].ToArray<Vector3Int>();

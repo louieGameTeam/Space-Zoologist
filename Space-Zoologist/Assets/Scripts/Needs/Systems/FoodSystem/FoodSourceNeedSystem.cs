@@ -11,6 +11,15 @@ public class FoodSourceNeedSystem : NeedSystem
     //private List<FoodSource> foodSources = new List<FoodSource>();
     private readonly ReservePartitionManager rpm = null;
 
+    public static readonly Dictionary<SpeciesType, float> foodDominanceRatios = new Dictionary<SpeciesType, float>() 
+    {
+        {SpeciesType.Cow, 0.3f}, 
+        {SpeciesType.Anteater, 0.25f}, 
+        {SpeciesType.Goat, 0.20f}, 
+        {SpeciesType.Slug, 0.15f}, 
+        {SpeciesType.Spider, 0.10f}
+    };
+
     // Food name to food calculators
     private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
 
@@ -66,44 +75,45 @@ public class FoodSourceNeedSystem : NeedSystem
     /// </summary>
     public override void UpdateSystem()
     {
-        // 0. Reset all calculators remaining food
+        // 1. Reset all calculators remaining food
         foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
             foodSourceCalculator.ResetCalculator();
         }
-        // 1. Iterate through populations based on most dominant (inefficient, could be refactored to first calculate list of ordered populations)
-        for (int dominance=5; dominance >= 1; dominance--)
+
+        // 2. Iterate through populations based on most dominant
+        foreach (Population population in new SortedSet<Population>(rpm.Populations, new DominanceComparer()))
         {
-            foreach (Population population in rpm.Populations)
+            Debug.Log(population.gameObject.name);
+
+            float preferredAmount = 0;
+            float compatibleAmount = 0;
+
+            // 3. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
+            for (int j = 0; j <= 1; j++)
             {
-                float preferredAmount = 0;
-                float compatibleAmount = 0;
-                if (population.Species.FoodDominance == dominance)
+                foreach (KeyValuePair<string, Need> need in population.Needs)
                 {
-                    // 2. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
-                    for (int j=1; j>=0; j--)
+                    float maxThreshold = need.Value.GetMaxThreshold() * population.Count;
+                    // 4. Calculate preferred and available food, skipping if need already met
+                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || preferredAmount == maxThreshold || compatibleAmount == maxThreshold || !foodSourceCalculators.ContainsKey(need.Key))
                     {
-                        foreach (KeyValuePair<string, Need> need in population.Needs)
-                        {
-                            float maxThreshold = need.Value.GetMaxThreshold() * population.Count;
-                            // 3. Calculate preferred and available food, skipping if need already met
-                            if (need.Value.NeedType.Equals(NeedType.FoodSource) && preferredAmount == maxThreshold || compatibleAmount == maxThreshold || !foodSourceCalculators.ContainsKey(need.Key))
-                            {
-                                continue;
-                            }
-                            if (j == 0 && need.Value.IsPreferred)
-                            {
-                                preferredAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
-                            }
-                            else
-                            {
-                                compatibleAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
-                            }
-                        }
+                        continue;
                     }
-                    population.UpdateFoodNeed(preferredAmount, compatibleAmount);
+
+                    if (j == 0 && need.Value.IsPreferred)
+                    {
+                        preferredAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
+                        continue;
+                    }
+
+                    if (j == 1 && !need.Value.IsPreferred)
+                    {
+                        compatibleAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
+                    }
                 }
             }
+            population.UpdateFoodNeed(preferredAmount, compatibleAmount);
         }
     }
 
@@ -173,6 +183,14 @@ public class FoodSourceNeedSystem : NeedSystem
         foreach (FoodSourceCalculator foodSourceCalculator in this.foodSourceCalculators.Values)
         {
             foodSourceCalculator.MarkDirty();
+        }
+    }
+
+    private class DominanceComparer : IComparer<Population>
+    {
+        public int Compare(Population a, Population b)
+        {
+            return (int)(100*(b.FoodDominance - a.FoodDominance));
         }
     }
 }
