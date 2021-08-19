@@ -1,21 +1,11 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Audio/MusicQueuer.cs">
     <Files>
-      <File FileName="Assets/Scripts/Managers/DialogueManager.cs" Line="1" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" />
-      <File FileName="Assets/Scripts/Plot/RPS/EnclosedArea.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/TerainNeedSystem.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/PathFinding/PathRequestManager.cs" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" />
-      <File FileName="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs" />
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="44" Column="1" />
-      <File FileName="Assets/Scripts/Plot/PlotIO.cs" Line="64" Column="1" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="57" Column="49" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" Line="81" Column="37" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="138" Column="87" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/Editor/ConversationManagerEditor.cs" Line="37" Column="79" />
+      <File FileName="Assets/Resources/Audio/For Build Use (07-29) - new audio system/Scripts/CustomMusicLoopController.cs" Line="32" Column="1" />
+      <File FileName="Assets/Scripts/Managers/ResourceManager.cs" Line="20" Column="1" />
+      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -36,15 +26,22 @@
                   <Node name="Scripts" expanded="True">
                     <Node name="Editor" expanded="True" />
                     <Node name="UI" expanded="True">
-                      <Node name="Editor" expanded="True">
-                        <Node name="ConversationManagerEditor.cs" selected="True" />
-                      </Node>
+                      <Node name="Editor" expanded="True" />
                     </Node>
                   </Node>
                 </Node>
               </Node>
+              <Node name="Resources" expanded="True">
+                <Node name="Audio" expanded="True">
+                  <Node name="For Build Use (07-29) - new audio system" expanded="True">
+                    <Node name="Scripts" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Audio" expanded="True" />
+                <Node name="Audio" expanded="True">
+                  <Node name="MusicQueuer.cs" selected="True" />
+                </Node>
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
                   <Node name="EventSystem" expanded="True" />
@@ -76,6 +73,9 @@
                   </Node>
                 </Node>
                 <Node name="Y - Utils" expanded="True" />
+                <Node name="Z - Unused" expanded="True">
+                  <Node name="Needs" expanded="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
@@ -85,7 +85,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b42232f8-9fef-4824-a385-e4070f0efe81" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1a761973-9aa3-4c3c-b6e5-7e91ea7d570e" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />

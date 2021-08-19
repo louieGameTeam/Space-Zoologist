@@ -34,7 +34,7 @@ namespace DialogueEditor
             ScrollTextProperty = serializedObject.FindProperty("ScrollText");
             ScrollTextSpeedProperty = serializedObject.FindProperty("ScrollSpeed");
             AllowMouseInteractionProperty = serializedObject.FindProperty("AllowMouseInteraction");
-            BacklogProperty = serializedObject.FindProperty("Backlog");
+            BacklogProperty = serializedObject.FindProperty("BacklogGameObject");
             ButtonPrefabProperty = serializedObject.FindProperty("ButtonPrefab");
         }
 

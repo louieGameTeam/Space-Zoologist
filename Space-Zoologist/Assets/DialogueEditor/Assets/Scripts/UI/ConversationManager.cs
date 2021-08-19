@@ -86,7 +86,8 @@ namespace DialogueEditor
 
         public GameObject BacklogGameObject;
         public Button BacklogButton;
-        public Text Backlog;
+        public TMPro.TextMeshProUGUI Backlog;
+        public ScrollRect BacklogScrollRect;
         //--------------------------------------
         // Awake, Start, Destroy
         //--------------------------------------
@@ -107,6 +108,9 @@ namespace DialogueEditor
         {
             NpcIcon.sprite = BlankSprite;
             DialogueText.text = "";
+            Backlog = BacklogGameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>(true);
+            BacklogButton = BacklogGameObject.GetComponentInChildren<Button>(true);
+            BacklogScrollRect = BacklogGameObject.GetComponentInChildren<ScrollRect>(true);
             TurnOffUI();
         }
 
@@ -129,6 +133,12 @@ namespace DialogueEditor
                 {
                     skipping = !skipping;
                 }
+            }
+
+            if (Input.mouseScrollDelta.y > 0.2f && !BacklogGameObject.activeSelf) {
+                ToggleBacklog();
+            } else if (Input.mouseScrollDelta.y < -0.2f && BacklogGameObject.activeSelf) {
+                ToggleBacklog();
             }
 
             switch (m_state)
@@ -707,6 +717,7 @@ namespace DialogueEditor
         {
             bool active = BacklogGameObject.activeSelf;
             BacklogGameObject.SetActive(!active); // toggle backlog
+            BacklogScrollRect.normalizedPosition = new Vector2(0.5f, 0); // scroll to buttom
         }
         Button pingTarget;
         public void AskForOneTimePing(Button target) {
