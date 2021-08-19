@@ -16,6 +16,7 @@ public class AnimalSpecies : ScriptableObject
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
     public float Range => range;
+    public int MoveCost => moveCost;
     public Sprite Representation => representation;
     // TODO setup tile weights for species
     public Dictionary<TileType, byte> TilePreference = default;
@@ -32,6 +33,7 @@ public class AnimalSpecies : ScriptableObject
     [Range(1, 30)]
     [SerializeField] private int decayRate = 3;
     [SerializeField] private float range = default;
+    [SerializeField] private int moveCost = default;
 
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;

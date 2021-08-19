@@ -31,6 +31,7 @@ public class MoveObject : MonoBehaviour
     Vector3 initialPos;
     Vector3 curPos;
     bool moving;
+    int moveCost;
 
     const float FixedCost = 0;
     const float CostPerUnitSizeAnimal = 10;
@@ -154,6 +155,15 @@ public class MoveObject : MonoBehaviour
         DeleteButton.SetActive(true);
         MoveButton.transform.position = screenPos + new Vector3(-50, 100, 0);
         DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
+
+        if (movingAnimal) {
+            moveCost = objectToMove.GetComponent<Animal>().PopulationInfo.species.MoveCost;
+        }
+        else
+        {
+            moveCost = objectToMove.GetComponent<FoodSource>().Species.MoveCost;
+        }
+        MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
     }
 
     private GameObject SelectGameObjectAtMousePosition()
@@ -244,7 +254,7 @@ public class MoveObject : MonoBehaviour
         Population population = toMove.GetComponent<Animal>().PopulationInfo;
         AnimalSpecies species = population.Species;
 
-        float cost = FixedCost + species.Size * CostPerUnitSizeAnimal;
+        float cost = moveCost; //FixedCost + species.Size * CostPerUnitSizeAnimal;
         bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
 
         // placement is valid and population did not already reach here
@@ -263,7 +273,7 @@ public class MoveObject : MonoBehaviour
         FoodSourceSpecies species = foodSource.Species;
         Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
 
-        float cost = FixedCost + species.Size * CostPerUnitSizeFood;
+        float cost = moveCost; // FixedCost + species.Size * CostPerUnitSizeFood;
         bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
 
         if (valid)
@@ -285,6 +295,7 @@ public class MoveObject : MonoBehaviour
         }
     }
 
+    // placing food is more complicated due to grid
     public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
     {
         Vector3Int Temp = mouseGridPosition;
