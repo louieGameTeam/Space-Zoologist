@@ -51,6 +51,10 @@ public class FoodSourceStoreSection : StoreSection
 
     public void PlaceFood(Vector3 mousePosition)
     {
+        // if over ui don't do it
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+            return;
+
         if (!base.GridSystem.IsFoodPlacementValid(mousePosition, base.selectedItem))
         {
             Debug.Log("Cannot place item that location");

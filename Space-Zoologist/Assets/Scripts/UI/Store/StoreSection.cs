@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
@@ -10,6 +11,8 @@ using System.Collections.Generic;
 public class StoreSection : MonoBehaviour
 {
     public ItemType ItemType => itemType;
+
+    [SerializeField] private GraphicRaycaster raycaster;
 
     protected ItemType itemType = default;
     [Header("Dependencies")]
@@ -177,16 +180,13 @@ public class StoreSection : MonoBehaviour
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
     }
 
-    public bool IsCursorOverUI(PointerEventData eventData)
+    public bool IsCursorOverUI(PointerEventData pointerEventData)
     {
-        foreach (RectTransform UIElement in this.UIElements)
-        {
-            if (RectTransformUtility.RectangleContainsScreenPoint(UIElement, eventData.position))
-            {
-                return true;
-            }
-        }
-        return false;
+        List<RaycastResult> castResults = new List<RaycastResult>();
+        raycaster.Raycast(pointerEventData, castResults);
+
+        // the one result should only be the cursor item
+        return castResults.Count > 1;
     }
 
     protected virtual void HandleAudio()

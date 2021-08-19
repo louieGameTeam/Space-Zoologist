@@ -116,6 +116,9 @@ public class GridSystem : MonoBehaviour
     {
         InitializeTileLayerManager();
 
+        if (gameTiles == null)
+            return;
+
         // set grid dimensions
         ReserveWidth = serializedGrid.width;
         ReserveHeight = serializedGrid.height;
