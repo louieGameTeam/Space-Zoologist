@@ -56,21 +56,26 @@
                 float2 noiseUV = screenUV * _Scale.xy;
                 // box out the background
                 // [0... 1]
-                noiseUV = float2(int2(noiseUV)) / _Scale.xy;
-                float noise = frac(tex2D(_NoiseTex, noiseUV));// +_Time.x * _Speed);
-                noise *= 8;
-                noise = float(int(noise));
+                noiseUV = float2(int2(noiseUV)) / _Scale.xy; 
+                float noise = (tex2D(_NoiseTex, noiseUV) - 0.25) * 2 + 0.5;
+                float delay = frac(noise + _Time.x * _Speed * noise);
+                delay *= 9;
+                // {0, 1, 2, 3, 4, 5, 6, 7, 8}
+                delay = float(int(delay));
 
                 // scale the uvs
                 screenUV *= _Scale.xy;
                 // tile the background
                 screenUV = frac(screenUV); 
-                screenUV.x *= noise;
                 screenUV.x /= 9;
+                screenUV.x += delay / 9;
 
                 
                 fixed4 col = tex2D(_MainTex, screenUV);
+                //col = float4(noise.xxx, 1);
+                //col = tex2D(_NoiseTex, screenUV);
 
+                //col = float4(noiseUV, 0, 1);
 
                 return col;
             }
