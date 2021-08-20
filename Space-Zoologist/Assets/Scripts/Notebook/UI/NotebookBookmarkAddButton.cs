@@ -11,23 +11,17 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
     protected abstract string SuggestedBookmarkTitle { get; }
 
     [SerializeField]
-    [Tooltip("Toggle that displays the dropdown that lets the user name the bookmark")]
-    private Toggle dropdownToggle;
+    [Tooltip("Reference to the script to assist with the dropdown functionality")]
+    private GeneralDropdown dropdown;
     [SerializeField]
-    [Tooltip("Game object enabled over the toggle when it is enabled")]
-    private GameObject isOnObject;
-    [SerializeField]
-    [Tooltip("Dropdown menu that appears when the button is clicked")]
-    private GameObject dropdown;
+    [Tooltip("Game object that is enabled if the current page has a bookmark")]
+    private GameObject hasBookmarkGraphic;
     [SerializeField]
     [Tooltip("Text used to input the name of the new bookmark")]
     private TMP_InputField bookmarkTitle;
     [SerializeField]
     [Tooltip("Reference to the button that adds the bookmark when clicked")]
     private Button confirmButton;
-    [SerializeField]
-    [Tooltip("Reference to the button that cancels addinga bookmark")]
-    private Button cancelButton;
     [SerializeField]
     [Tooltip("Reference to the script that manages the UI for the bookmarks")]
     private NotebookBookmarkNavigationUI bookmarkUI;
@@ -42,35 +36,18 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
     {
         base.Setup();
 
-        dropdownToggle.onValueChanged.AddListener(OnDropdownToggleStateChange);
+        dropdown.OnDropdownEnabled.AddListener(OnDropdownActivated);
         confirmButton.onClick.AddListener(TryAddBookmark);
-        cancelButton.onClick.AddListener(CancelBookmarkAdd);
         bookmarkTitle.onSubmit.AddListener(s => TryAddBookmark());
 
-        // Update dropdown based on initial state of the toggle
-        OnDropdownToggleStateChange(dropdownToggle.isOn);
+        UpdateInteractable();
     }
 
-    private void OnDropdownToggleStateChange(bool active)
+    private void OnDropdownActivated()
     {
-        // If activating, we need to check if the notebook already exists
-        // If it does, we should not bother opening the dropdown
-        if (active)
-        {
-            // Set title to suggested title
-            bookmarkTitle.text = SuggestedBookmarkTitle;
-            NotebookBookmark intendedBookmark = BookmarkToAdd(bookmarkTitle.text);
-
-            // If the bookmark already exists, disable the toggle
-            if (UIParent.Notebook.HasBookmark(intendedBookmark))
-            {
-                dropdownToggle.SetIsOnWithoutNotify(false);
-            }
-        }
-
-        // Set is on and dropdown based on toggle state
-        isOnObject.SetActive(dropdownToggle.isOn);
-        dropdown.SetActive(dropdownToggle.isOn);
+        // When the dropdown is activated then set the suggested bookmark title
+        bookmarkTitle.text = SuggestedBookmarkTitle;
+        Debug.Log("Hello");
     }
 
     // On click, try to add the bookmark
@@ -82,20 +59,22 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
 
-            // Disable the toggle now, immediately invokes OnDropdownToggleStateChanged
-            dropdownToggle.isOn = false;
+            // Deactivate the dropdown now that we added the bookmark
+            dropdown.DisableDropdown();
+            dropdown.Interactable = false;
         }
     }
 
-    private void CancelBookmarkAdd()
+    private void OnEnable()
     {
-        // Immediately invokes OnDropdownToggleStateChanged
-        dropdownToggle.isOn = false;
+        if (IsSetUp) UpdateInteractable();
     }
-    // On disabled disable the dropdown, immediately invokes OnDropdownToggleStateChanged
-    private void OnDisable()
+
+    public void UpdateInteractable()
     {
-        dropdownToggle.isOn = false;
+        NotebookBookmark bookmark = BookmarkToAdd(bookmarkTitle.text);
+        dropdown.Interactable = !UIParent.Notebook.HasBookmark(bookmark);
+        hasBookmarkGraphic.SetActive(!dropdown.Interactable);
     }
 
     protected abstract NotebookBookmark BookmarkToAdd(string inputText);

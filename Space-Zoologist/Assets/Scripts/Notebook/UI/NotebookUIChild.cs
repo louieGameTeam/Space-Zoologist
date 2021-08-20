@@ -6,6 +6,7 @@ using UnityEngine;
 public class NotebookUIChild : MonoBehaviour
 {
     public NotebookUI UIParent { get; private set; }
+    public bool IsSetUp => UIParent != null;
 
     public virtual void Setup()
     {
@@ -14,9 +15,8 @@ public class NotebookUIChild : MonoBehaviour
         // Log a warning if no UI parent is found
         if (UIParent == null)
         {
-            Debug.LogWarning("Component type " + GetType() + " on game object named " + name +
-                " expects a component of type 'NotebookUI' attached to one of its parents, " +
-                "but no such component was found.  Did you place the object in the heirarchy correctly?");
+            Debug.LogWarning(GetType() + ": expecting a component of type 'NotebookUI' attached to one of its parents, " +
+                "but no such component was found.  Did you place the object in the heirarchy correctly?", gameObject);
         }
     }
 }

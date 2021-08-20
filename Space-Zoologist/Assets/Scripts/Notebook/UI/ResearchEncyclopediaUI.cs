@@ -118,12 +118,12 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     {
         string label = id.Title;
         // Only include the author if it has an author
-        if (id.Author != "") label += " by " + id.Author;
+        if (id.Author != "") label += "\n" + id.Author;
         return label;
     }
     public static ResearchEncyclopediaArticleID DropdownLabelToArticleID(string label)
     {
-        string[] titleAndAuthor = Regex.Split(label, " by ");
+        string[] titleAndAuthor = Regex.Split(label, "\n");
 
         // If there are two items in the split string, use them both
         if(titleAndAuthor.Length > 1)
