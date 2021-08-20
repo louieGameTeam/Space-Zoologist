@@ -37,10 +37,10 @@ public class ResearchCategoryPicker : NotebookUIChild
     private Transform dropdownParent;
     [SerializeField]
     [Tooltip("Color of the dropdown when it is selected")]
-    private Color selectedColor = Color.white;
+    private Sprite selectedSprite;
     [SerializeField]
     [Tooltip("Color of the dropdown when it is not selected")]
-    private Color notSelectedColor = Color.white;
+    private Sprite notSelectedSprite;
     [SerializeField]
     [Tooltip("Event invoked when the research category picker changes category picked")]
     private ResearchCategoryEvent onResearchCategoryChanged;
@@ -77,11 +77,11 @@ public class ResearchCategoryPicker : NotebookUIChild
         selectedCategory = category;
         onResearchCategoryChanged.Invoke(category);
 
-        // Set the colors of the backgrounds of the dropdown images
+        // Set the sprites of the backgrounds of the dropdown images
         foreach(TypeFilteredResearchCategoryDropdown dropdown in dropdowns)
         {
-            if (dropdown.TypeFilter[0] == category.Type) dropdown.Dropdown.image.color = selectedColor;
-            else dropdown.Dropdown.image.color = notSelectedColor;
+            if (dropdown.TypeFilter[0] == category.Type) dropdown.Dropdown.image.sprite = selectedSprite;
+            else dropdown.Dropdown.image.sprite = notSelectedSprite;
         }
     }
 }
