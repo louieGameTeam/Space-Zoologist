@@ -31,10 +31,7 @@ public class TimeSystem : MonoBehaviour
         {
             PopulationManager.Populations[i].HandleGrowth();
         }
-        foreach (Population population in this.PopulationManager.Populations)
-        {
-            population.UpdateGrowthConditions();
-        }
+        this.PopulationManager.UpdateAllGrowthConditions();
         this.Inspector.UpdateCurrentDisplay();
         UpdateDayText(++currentDay);
     }

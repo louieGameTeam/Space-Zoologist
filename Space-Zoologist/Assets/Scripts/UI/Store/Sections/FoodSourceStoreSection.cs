@@ -9,9 +9,11 @@ using UnityEngine.EventSystems;
 public class FoodSourceStoreSection : StoreSection
 {
     [SerializeField] FoodSourceManager FoodSourceManager = default;
+    private PopulationManager populationManager = default;
 
     public override void Initialize()
     {
+        populationManager = FindObjectOfType<PopulationManager>();
         base.itemType = ItemType.Food;
         base.Initialize();
     }
@@ -49,7 +51,7 @@ public class FoodSourceStoreSection : StoreSection
 
     public void PlaceFood(Vector3 mousePosition)
     {
-        if (!base.GridSystem.PlacementValidation.IsFoodPlacementValid(mousePosition, base.selectedItem))
+        if (!base.GridSystem.IsFoodPlacementValid(mousePosition, base.selectedItem))
         {
             Debug.Log("Cannot place item that location");
             return;
@@ -59,6 +61,6 @@ public class FoodSourceStoreSection : StoreSection
         base.HandleAudio();
         Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
         
-        FoodSourceManager.placeFood(mouseGridPosition, base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem), this.selectedItem.buildTime);
+        FoodSourceManager.placeFood(mouseGridPosition, populationManager.GetFoodSpecies(selectedItem), this.selectedItem.buildTime);
     }
 }

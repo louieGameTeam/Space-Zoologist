@@ -10,26 +10,23 @@ public class LiquidBody
     public HashSet<Vector3Int> tiles { get; private set; }
     public float[] contents;
     public HashSet<LiquidBody> referencedBodies { get; private set; }
-    public BodyEmptyCallback callback;
     public void Clear()
     {
         this.tiles.Clear();
         this.referencedBodies.Clear();
-        this.callback = null;
     }
     /// <summary>
     /// Creates of initializes a new body
     /// </summary>
     /// <param name="tilePositions"></param>
     /// <param name="contents"></param>
-    public LiquidBody(HashSet<Vector3Int> tilePositions, float[] contents, BodyEmptyCallback bodyEmptyCallback, int bodyID = 0)
+    public LiquidBody(HashSet<Vector3Int> tilePositions, float[] contents, int bodyID = 0)
     {
         this.bodyID = bodyID;
         this.tiles = tilePositions;
         this.contents = new float[contents.Length];
         contents.CopyTo(this.contents, 0);
         this.referencedBodies = new HashSet<LiquidBody>();
-        this.callback = bodyEmptyCallback;
     }
     /// <summary>
     /// Extend a existing body
@@ -46,13 +43,12 @@ public class LiquidBody
         liquidBody.contents.CopyTo(this.contents, 0);
         this.referencedBodies = new HashSet<LiquidBody>();
         this.referencedBodies.Add(liquidBody);
-        this.callback = liquidBody.callback;
     }
     /// <summary>
     /// Merge multiple bodies
     /// </summary>
     /// <param name="liquidBodies"></param>
-    public LiquidBody(HashSet<LiquidBody> liquidBodies, BodyEmptyCallback bodyEmptyCallback)
+    public LiquidBody(HashSet<LiquidBody> liquidBodies)
     {
         this.bodyID = 0;
         this.tiles = new HashSet<Vector3Int>();
@@ -83,7 +79,6 @@ public class LiquidBody
             Debug.Log("Merged tile count" + tileCount.ToString());
             this.contents[i] /= tileCount;
         }
-        this.callback = bodyEmptyCallback;
     }
     /// <summary>
     /// Divide bodies
@@ -92,7 +87,7 @@ public class LiquidBody
     /// <param name="remainingTile"></param>
     /// <param name="dividePoint"></param>
     /// <param name="direction"></param>
-    public LiquidBody(LiquidBody dividedBody, HashSet<Vector3Int> remainingTiles, Vector3Int dividePoint, Vector3Int startPoint, BodyEmptyCallback bodyEmptyCallback)
+    public LiquidBody(LiquidBody dividedBody, HashSet<Vector3Int> remainingTiles, Vector3Int dividePoint, Vector3Int startPoint)
     {
         Debug.Log("Divided body ID: " + dividedBody.bodyID.ToString() + " Divided body tile count: " + dividedBody.tiles.Count);
         this.bodyID = 0;
@@ -112,8 +107,6 @@ public class LiquidBody
             this.referencedBodies.Remove(dividedBody);
         }
         //this.RemoveReferencedPreviewBodies();
-
-        this.callback = bodyEmptyCallback;
     }
     /// <summary>
     /// Recursively find all tiles connecting to the initial one
@@ -123,7 +116,7 @@ public class LiquidBody
     /// <param name="sourceDirectionHistory"></param>
     private void CheckNeighbors(HashSet<Vector3Int> existingTile, Vector3Int cellPosition)
     {
-        foreach (Vector3Int position in GridUtils.FourNeighborTiles(cellPosition))
+        foreach (Vector3Int position in GridSystem.FourNeighborTileLocations(cellPosition))
         {
             if (existingTile.Remove(position))
             {
@@ -136,8 +129,12 @@ public class LiquidBody
             }
         }
     }
-    public void AddTile(Vector3Int tileToAdd)
+    public void AddTile(Vector3Int tileToAdd, float[] tileContents)
     {
+        // update the contents with the values
+        for (int i = 0; i < contents.Length; ++i)
+            contents[i] = (contents[i] * tiles.Count + tileContents[i]) / (tiles.Count + 1);
+
         if (!this.tiles.Add(tileToAdd))
         {
             Debug.LogError("Duplicated Tile added to liquid body " + this.bodyID);
@@ -146,10 +143,6 @@ public class LiquidBody
     public void RemoveTile(Vector3Int tileToRemove)
     {
         this.tiles.Remove(tileToRemove);
-        if (this.tiles.Count == 0)
-        {
-            this.callback.Invoke(this);
-        }
     }
     public void ClearReferencedBodies()
     {
@@ -162,12 +155,11 @@ public class LiquidBody
             if (liquidBody.bodyID == 0)
             {
                 this.referencedBodies.Remove(liquidBody);
-                liquidBody.callback.Invoke(liquidBody);
             }
         }
     }
     public SerializedLiquidBody Serialize()
     {
-        return new SerializedLiquidBody(this.bodyID, this.tiles, this.contents);
+        return new SerializedLiquidBody(this.bodyID, this.contents);
     }
 }

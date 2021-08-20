@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 using TMPro;
 
-public class NotebookBookmarkNavigateButton : MonoBehaviour
+public class NotebookBookmarkNavigateButton : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Button that navigates to the bookmark when clicked")]
@@ -14,18 +14,12 @@ public class NotebookBookmarkNavigateButton : MonoBehaviour
     [Tooltip("Reference to the object used to display the text of the button")]
     private TextMeshProUGUI text;
 
-    // Reference to the script that manages navigation between notebook tabs
-    private NotebookTabPicker tabPicker;
-    // Category picker to setup when the bookmark is activated
-    private ResearchCategoryPicker categoryPicker;
     // Bookmark represented by this button
     private NotebookBookmark bookmark;
 
-    public void Setup(NotebookBookmark bookmark, NotebookTabPicker tabPicker, ResearchCategoryPicker categoryPicker)
+    public void Setup(NotebookBookmark bookmark)
     {
         this.bookmark = bookmark;
-        this.tabPicker = tabPicker;
-        this.categoryPicker = categoryPicker;
 
         text.text = bookmark.Label;
         myButton.onClick.AddListener(OnClick);
@@ -34,7 +28,6 @@ public class NotebookBookmarkNavigateButton : MonoBehaviour
     // On click select the correct tab, and setup the category picker
     private void OnClick()
     {
-        tabPicker.SelectTab(bookmark.Tab);
-        categoryPicker.SelectedCategory = bookmark.Category;
+        UIParent.NavigateToBookmark(bookmark);
     }
 }

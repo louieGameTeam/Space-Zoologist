@@ -13,9 +13,6 @@ public class ResearchSingleNoteUI : MonoBehaviour
     [System.Serializable] public class StringStringEvent : UnityEvent<string, string> { }
 
     [SerializeField]
-    [Tooltip("Text that labels this single note")]
-    private TextMeshProUGUI labelText;
-    [SerializeField]
     [Tooltip("Input field used to write the note")]
     private TMP_InputField myInputField;
     [SerializeField]
@@ -28,7 +25,12 @@ public class ResearchSingleNoteUI : MonoBehaviour
     public void Setup(string label, string initialNote, UnityAction<string, string> callback)
     {
         this.label = label;
-        labelText.text = label + ":";
+
+        // Set the placeholder text to the label
+        TextMeshProUGUI placeholderText = (TextMeshProUGUI)myInputField.placeholder;
+        placeholderText.text = label;
+
+        // Setup the initial note on the input field
         myInputField.text = initialNote;
 
         // Add the callback to the note changed event
