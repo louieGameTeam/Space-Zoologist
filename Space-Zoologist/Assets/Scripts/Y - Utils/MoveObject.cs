@@ -31,7 +31,8 @@ public class MoveObject : MonoBehaviour
     Vector3 initialPos;
     Vector3 curPos;
     bool moving;
-    int moveCost;
+    int moveCost = 0;
+    int sellBackCost = 0;
 
     const float FixedCost = 0;
     const float CostPerUnitSizeAnimal = 10;
@@ -48,10 +49,14 @@ public class MoveObject : MonoBehaviour
         DeleteButton.SetActive(false);
         Reset();
     }
+
     public void StartMovement()
     {
         moving = true;
+        MoveButton.SetActive(false);
+        DeleteButton.SetActive(false);
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -64,11 +69,15 @@ public class MoveObject : MonoBehaviour
 
                 if (notPlacingItem)
                 {
-
                     // Imported from Inspector.cs -- prevents selecting UI element
                     if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
                     {
                         return;
+                    }
+                    else if (DeleteButton.activeSelf)
+                    {
+                        // The UI is initialized: reset it
+                        Reset();
                     }
 
                     // Select the food or animal at mouse position
@@ -78,17 +87,22 @@ public class MoveObject : MonoBehaviour
                 }
             }
 
-            if (objectToMove != null)
+            if (objectToMove != null && !moving)
             {
-                if (objectToMove.name == "tile")
+                // Initialize UI
+                if (!DeleteButton.activeSelf)
                 {
-                    Vector3 screenPos = referenceCamera.WorldToScreenPoint(objectToMove.transform.position);
-                    DeleteButton.SetActive(true);
-                    DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
-                }
-                else
-                {
-                    setMoveUI();
+                    if (objectToMove.name == "tile")
+                    {
+                        Vector3 screenPos = referenceCamera.WorldToScreenPoint(objectToMove.transform.position);
+                        DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
+                        DeleteButton.SetActive(true);
+                        DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
+                    }
+                    else
+                    {
+                        SetMoveUI();
+                    }
                 }
             }
 
@@ -141,14 +155,21 @@ public class MoveObject : MonoBehaviour
 
     private void Reset()
     {
+        if (objectToMove?.name == "tile")
+        {
+            Destroy(objectToMove);
+        }
         objectToMove = null;
         moving = false;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
         gridOverlay.ClearColors();
+        moveCost = 0;
+        sellBackCost = 0;
     }
 
-    private void setMoveUI()
+    // Set up UI for move and delete
+    private void SetMoveUI()
     {
         Vector3 screenPos = referenceCamera.WorldToScreenPoint(objectToMove.transform.position);
         MoveButton.SetActive(true);
@@ -158,14 +179,19 @@ public class MoveObject : MonoBehaviour
 
         if (movingAnimal) {
             moveCost = objectToMove.GetComponent<Animal>().PopulationInfo.species.MoveCost;
+            sellBackCost = 0;
         }
         else
         {
-            moveCost = objectToMove.GetComponent<FoodSource>().Species.MoveCost;
+            FoodSourceSpecies species = objectToMove.GetComponent<FoodSource>().Species;
+            moveCost = species.MoveCost;
+            sellBackCost = species.SellBackPrice;
         }
         MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
+        DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
     }
 
+    // Find what the mouse clicked on
     private GameObject SelectGameObjectAtMousePosition()
     {
         // Update animal location reference
@@ -218,7 +244,9 @@ public class MoveObject : MonoBehaviour
         }
         else
         {
-            removeOriginalFood(objectToMove.GetComponent<FoodSource>());
+            FoodSource food = objectToMove.GetComponent<FoodSource>();
+            playerBalance.SubtractFromBalance(-sellBackCost);
+            removeOriginalFood(food);
         }
         Reset();
     }

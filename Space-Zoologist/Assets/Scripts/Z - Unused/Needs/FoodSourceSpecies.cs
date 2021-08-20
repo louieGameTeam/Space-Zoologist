@@ -14,6 +14,7 @@ public class FoodSourceSpecies : ScriptableObject
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public int Size => size;
     public int MoveCost => moveCost;
+    public int SellBackPrice => sellBackPrice;
 
     [SerializeField] private int size = 1; // default to 1 tile big
     [SerializeField] private List<TileType> accessibleTerrain = default;
@@ -22,6 +23,7 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private int rootArea = default;
     [SerializeField] private int baseOutput = default;
     [SerializeField] private int moveCost = default;
+    [SerializeField] private int sellBackPrice = default;
     [SerializeField] private List<NeedTypeConstructData> needsList = default;
     [SerializeField] private Item FoodSource = default;
 
