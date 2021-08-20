@@ -55,6 +55,23 @@ public class GeneralDropdown : UIBehaviour
     {
         base.Start();
 
+        // Make the dropdown invisible invisible
+        dropdownPanel.SetActive(false);
+
+        foreach(Button button in dropdownDisableButtons)
+        {
+            button.onClick.AddListener(DisableDropdown);
+        }
+
+        // When the button is clicked create the dropdown
+        button.onClick.AddListener(EnableDropdown);
+    }
+
+    public void EnableDropdown()
+    {
+        // Enable the dropdown panel
+        dropdownPanel.SetActive(true);
+
         // Add a child canvas to the panel
         Canvas dropdownCanvas = dropdownPanel.gameObject.GetOrAddComponent<Canvas>();
         dropdownCanvas.overrideSorting = true;
@@ -72,23 +89,6 @@ public class GeneralDropdown : UIBehaviour
         dropdownGroup.interactable = true;
         dropdownGroup.blocksRaycasts = true;
         dropdownGroup.ignoreParentGroups = false;
-
-        // Make the dropdown invisible invisible
-        dropdownPanel.SetActive(false);
-
-        foreach(Button button in dropdownDisableButtons)
-        {
-            button.onClick.AddListener(DisableDropdown);
-        }
-
-        // When the button is clicked create the dropdown
-        button.onClick.AddListener(EnableDropdown);
-    }
-
-    public void EnableDropdown()
-    {
-        // Enable the dropdown panel
-        dropdownPanel.SetActive(true);
 
         // Get the canvas in the parents of this object
         Canvas parent = GetComponentInParent<Canvas>();

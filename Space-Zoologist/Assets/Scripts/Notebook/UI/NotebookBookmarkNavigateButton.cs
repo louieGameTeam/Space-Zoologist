@@ -27,6 +27,15 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
 
         text.text = bookmark.Label;
         myButton.onClick.AddListener(OnClick);
+        myToggle.onValueChanged.AddListener(OnToggleStateChanged);
+    }
+
+    private void OnToggleStateChanged(bool isOn)
+    {
+        myButton.interactable = isOn;
+
+        if (isOn) text.text = bookmark.Label;
+        else text.text = "<marked for deletion>";
     }
 
     // On click select the correct tab, and setup the category picker
@@ -37,6 +46,10 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
 
     private void OnDisable()
     {
-        if (!myToggle.isOn) Destroy(gameObject);
+        if (!myToggle.isOn)
+        {
+            UIParent.Notebook.RemoveBookmark(bookmark);
+            Destroy(gameObject);
+        }
     }
 }

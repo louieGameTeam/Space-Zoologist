@@ -47,7 +47,6 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
     {
         // When the dropdown is activated then set the suggested bookmark title
         bookmarkTitle.text = SuggestedBookmarkTitle;
-        Debug.Log("Hello");
     }
 
     // On click, try to add the bookmark
@@ -59,9 +58,8 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
 
-            // Deactivate the dropdown now that we added the bookmark
-            dropdown.DisableDropdown();
-            dropdown.Interactable = false;
+            // Update interactable state of the button
+            UpdateInteractable();
         }
     }
 

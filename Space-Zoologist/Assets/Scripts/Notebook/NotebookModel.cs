@@ -57,6 +57,10 @@ public class NotebookModel : ScriptableObject
     {
         Bookmarks.Add(bookmark);
     }
+    public void RemoveBookmark(NotebookBookmark bookmark)
+    {
+        Bookmarks.Remove(bookmark);
+    }
     public void TryAddEnclosureID(EnclosureID id)
     {
         if (!testAndMetricData.ContainsKey(id))

@@ -6,7 +6,7 @@ using UnityEngine;
 public class NotebookUIChild : MonoBehaviour
 {
     public NotebookUI UIParent { get; private set; }
-    public bool IsSetUp => UIParent != null;
+    public bool IsSetUp => UIParent;
 
     public virtual void Setup()
     {
