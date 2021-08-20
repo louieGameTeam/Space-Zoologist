@@ -9,8 +9,6 @@ public class CameraController : MonoBehaviour
     private const float cameraAccel = 0.75f;
     private const float deadzone = 0.01f;
 
-    // Used to determine if the mouse is currently over the world space or over some UI element
-    [SerializeField] private UnityEngine.EventSystems.EventTrigger mouseCatcher;
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] private float zoomLerpSpeed = 5f;
     [SerializeField] bool EdgeMovement = false;
@@ -28,25 +26,46 @@ public class CameraController : MonoBehaviour
     private Vector2 currentVelocity;
     // True if the mouse is over the world space and not some other UI element
     private bool hasMouse = true;
+    // True when the camera is being dragged using the center mouse button
+    private bool hasMouseDrag = false;
 
     void Start()
     {
         cam = this.GetComponent<Camera>();
         targetZoom = cam.orthographicSize;
 
-        // Setup an event trigger entry that resets "hasMouse" to true when the pointer enters
-        UnityEngine.EventSystems.EventTrigger.Entry pointerEnterTrigger = new UnityEngine.EventSystems.EventTrigger.Entry();
-        pointerEnterTrigger.eventID = EventTriggerType.PointerEnter;
-        pointerEnterTrigger.callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent();
-        pointerEnterTrigger.callback.AddListener(eventData => hasMouse = true);
-        // Setup an event trigger entry that sets "hasMouse" to false when the pointer exits
-        UnityEngine.EventSystems.EventTrigger.Entry pointerExitTrigger = new UnityEngine.EventSystems.EventTrigger.Entry();
-        pointerExitTrigger.eventID = EventTriggerType.PointerExit;
-        pointerExitTrigger.callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent();
-        pointerExitTrigger.callback.AddListener(eventData => hasMouse = false);
-        // Add the entries to the list of triggers on the mouse catcher event trigger
-        mouseCatcher.triggers.Add(pointerEnterTrigger);
-        mouseCatcher.triggers.Add(pointerExitTrigger);
+        Canvas canvas = GetComponentInChildren<Canvas>();
+
+        if(canvas)
+        {
+            // Setup an event trigger entry that resets "hasMouse" to true when the pointer enters
+            UnityEngine.EventSystems.EventTrigger.Entry pointerEnterTrigger = new UnityEngine.EventSystems.EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter,
+                callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent()
+            };
+            pointerEnterTrigger.callback.AddListener(eventData => hasMouse = true);
+            // Setup an event trigger entry that sets "hasMouse" to false when the pointer exits
+            UnityEngine.EventSystems.EventTrigger.Entry pointerExitTrigger = new UnityEngine.EventSystems.EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit,
+                callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent()
+            };
+            pointerExitTrigger.callback.AddListener(eventData => hasMouse = false);
+            // Add the entries to the list of triggers on the mouse catcher event trigger
+            UnityEngine.EventSystems.EventTrigger mouseCatcher = canvas.gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+            mouseCatcher.triggers.Add(pointerEnterTrigger);
+            mouseCatcher.triggers.Add(pointerExitTrigger);
+        }
+        else
+        {
+            Debug.LogWarning("CameraController: no active canvas component found on this object or any of it's children, " +
+                "but camera movement cannot be sensitive to UI changes without one.  " +
+                "Please add a child object with a canvas component attached");
+            hasMouse = true;
+        }
+
+        
     }
 
     void Update()
@@ -140,18 +159,21 @@ public class CameraController : MonoBehaviour
         {
             dragOrigin = Input.mousePosition;
             oldPos = this.transform.position;
-            return;
+            hasMouseDrag = true;
         }
 
-        if (!Input.GetMouseButton(2)) return;
+        if (!Input.GetMouseButton(2)) hasMouseDrag = false;
 
-        Vector3 displacement = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Camera.main.ScreenToWorldPoint(dragOrigin);
-        Vector3 newPosition = new Vector3(oldPos.x + displacement.x * -1, oldPos.y + displacement.y * -1, -10);
-        if (!this.IsValidLocation(newPosition))
+        if(hasMouseDrag)
         {
-            newPosition = ClampToValidLocation(newPosition);
+            Vector3 displacement = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Camera.main.ScreenToWorldPoint(dragOrigin);
+            Vector3 newPosition = new Vector3(oldPos.x + displacement.x * -1, oldPos.y + displacement.y * -1, -10);
+            if (!this.IsValidLocation(newPosition))
+            {
+                newPosition = ClampToValidLocation(newPosition);
+            }
+            this.transform.position = newPosition;
         }
-        this.transform.position = newPosition;
     }
 
     private void HandleEdgeScreen()
