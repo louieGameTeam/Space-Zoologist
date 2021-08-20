@@ -39,7 +39,7 @@ public class TileStoreSection : StoreSection
         numTilesPlaced = 0;
         initialAmt = ResourceManager.CheckRemainingResource(selectedItem);
         isPlacing = true;
-        startingBalance = base.playerBalance.Balance;
+        startingBalance = GameManager.Instance.Balance;
 
         float[] contents = null;
         if(selectedItem is LiquidItem)
@@ -58,7 +58,7 @@ public class TileStoreSection : StoreSection
     {
         isPlacing = false;
         tilePlacementController.RevertChanges();
-        base.playerBalance.SetBalance(startingBalance);
+        GameManager.Instance.SetBalance(startingBalance);
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public class TileStoreSection : StoreSection
         }
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
-        base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+        GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, numTilesPlaced);
     }
 
@@ -141,8 +141,8 @@ public class TileStoreSection : StoreSection
                     base.HandleAudio();
                     prevTilesPlaced = numTilesPlaced;
                 }
-                base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
-                if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
+                GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+                if (GameManager.Instance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
                 {
                     FinishPlacing();
                     base.OnItemSelectionCanceled();

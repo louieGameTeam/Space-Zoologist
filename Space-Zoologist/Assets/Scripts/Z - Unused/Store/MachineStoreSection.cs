@@ -40,7 +40,7 @@ public class MachineStoreSection : StoreSection
             //    Debug.Log("Cannot place item that location");
             //    return;
             //}
-            base.playerBalance.SubtractFromBalance(selectedItem.Price);
+            GameManager.Instance.SubtractFromBalance(selectedItem.Price);
             base.ResourceManager.Placed(selectedItem, 1);
             CreateMachine(mousePosition);
         }

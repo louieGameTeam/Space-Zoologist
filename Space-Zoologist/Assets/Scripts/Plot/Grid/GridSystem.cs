@@ -25,7 +25,6 @@ public class GridSystem : MonoBehaviour
 
     #region Component References
     [SerializeField] public Grid Grid = default;
-    [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] public Tilemap Tilemap;
@@ -1057,7 +1056,7 @@ public class GridSystem : MonoBehaviour
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem = null, FoodSourceSpecies species = null)
     {
         if (selectedItem)
-            species = SpeciesReferenceData.FoodSources[selectedItem.ID];
+            species = GameManager.Instance.FoodSources[selectedItem.ID];
 
         Vector3Int gridPosition = WorldToCell(mousePosition);
         return CheckSurroudingTiles(gridPosition, species);
@@ -1210,14 +1209,14 @@ public class GridSystem : MonoBehaviour
     // this too
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
-        if (SpeciesReferenceData.FoodSources.ContainsKey(selectedItem.ID))
+        if (GameManager.Instance.FoodSources.ContainsKey(selectedItem.ID))
         {
-            FoodSourceSpecies species = SpeciesReferenceData.FoodSources[selectedItem.ID];
+            FoodSourceSpecies species = GameManager.Instance.FoodSources[selectedItem.ID];
             CheckSurroudingTiles(gridPosition, species);
         }
-        else if (SpeciesReferenceData.AnimalSpecies.ContainsKey(selectedItem.ID))
+        else if (GameManager.Instance.AnimalSpecies.ContainsKey(selectedItem.ID))
         {
-            AnimalSpecies species = SpeciesReferenceData.AnimalSpecies[selectedItem.ID];
+            AnimalSpecies species = GameManager.Instance.AnimalSpecies[selectedItem.ID];
             CheckSurroundingTerrain(gridPosition, species);
         }
         else

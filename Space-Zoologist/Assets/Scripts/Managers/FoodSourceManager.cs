@@ -19,7 +19,6 @@ public class FoodSourceManager : GridObjectManager
     private Dictionary<string, FoodSourceSpecies> foodSourceSpecies = new Dictionary<string, FoodSourceSpecies>();
     [SerializeField] private GameObject foodSourcePrefab = default;
     [SerializeField] NeedSystemManager NeedSystemManager = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] GridSystem GridSystem = default;
     [SerializeField] BuildBufferManager buildBufferManager = default;
     public Color constructionColor = new Color(0.5f, 1f, 0.5f, 1f);//Green
@@ -36,7 +35,7 @@ public class FoodSourceManager : GridObjectManager
 
     public void Start()
     {
-        foreach (FoodSourceSpecies species in this.LevelDataReference.LevelData.FoodSourceSpecies)
+        foreach (FoodSourceSpecies species in GameManager.Instance.LevelData.FoodSourceSpecies)
         {
             foodSourceSpecies.Add(species.SpeciesName, species);
         }

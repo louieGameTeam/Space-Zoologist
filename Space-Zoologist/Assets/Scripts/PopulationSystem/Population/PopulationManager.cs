@@ -16,8 +16,6 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] public GridSystem GridSystem = default;
     [SerializeField] private List<PopulationBehavior> GenericBehaviors = default;
-    [SerializeField] private LevelIO levelIO = default;
-    [SerializeField] public SpeciesReferenceData speciesReferenceData = default;
 
     public void Start()
     {
@@ -27,7 +25,7 @@ public class PopulationManager : MonoBehaviour
 
     public void Initialize()
     {
-        SerializedPopulation[] serializedPopulations = this.levelIO.presetMap.serializedPopulations;
+        SerializedPopulation[] serializedPopulations = GameManager.Instance.presetMap.serializedPopulations;
         serializedPopulations = serializedPopulations ?? new SerializedPopulation[0];
         for (int i = 0; i < serializedPopulations.Length; i++)
         {
@@ -44,9 +42,9 @@ public class PopulationManager : MonoBehaviour
 
     private AnimalSpecies LoadSpecies(string name)
     {
-        if (this.speciesReferenceData.AnimalSpecies.ContainsKey(name))
+        if (GameManager.Instance.AnimalSpecies.ContainsKey(name))
         {
-            return this.speciesReferenceData.AnimalSpecies[name];
+            return GameManager.Instance.AnimalSpecies[name];
         }
         Debug.LogError("No animal match the name '" + name + "' can be found in the species list. Did you attach the AnimalSpecies ScriptableObjects to the Population Manager?");
         return null;
@@ -242,15 +240,5 @@ public class PopulationManager : MonoBehaviour
         }
 
         return populations;
-    }
-
-    public FoodSourceSpecies GetFoodSpecies(Item item)
-    {
-        return speciesReferenceData.FoodSources[item.ID];
-    }
-
-    public AnimalSpecies GetAnimalSpecies(Item item)
-    {
-        return speciesReferenceData.AnimalSpecies[item.ID];
     }
 }

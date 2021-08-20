@@ -15,9 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] ResourceManager ResourceManager = default;
     [SerializeField] PauseManager PauseManager = default;
     [Header("Shared menu dependencies")]
-    [SerializeField] PlayerBalance PlayerBalance = default;
     [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] GridSystem GridSystem = default;
     [SerializeField] List<RectTransform> UIElements = default;
@@ -33,10 +31,9 @@ public class MenuManager : MonoBehaviour
         this.IsInStore = false;
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu?.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay, this.ResourceManager);
+            storeMenu?.SetupDependencies(this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalanceDisplay, this.ResourceManager);
             storeMenu?.Initialize();
         }
-        this.PlayerBalanceHUD.GetComponent<TopHUD>().SetupPlayerBalance(this.PlayerBalance);
         StoreMenus[curMenu]?.gameObject.SetActive(true);
         StoreCanvas.localScale = Vector3.zero;
 

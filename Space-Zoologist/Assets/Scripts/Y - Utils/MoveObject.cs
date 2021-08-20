@@ -13,12 +13,10 @@ public class MoveObject : MonoBehaviour
     [SerializeField] FoodSourceManager foodSourceManager = default;
     [SerializeField] ReservePartitionManager reservePartitionManager = default;
     [SerializeField] CursorItem cursorItem = default;
-    [SerializeField] PlayerBalance playerBalance = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
     [SerializeField] GameObject DeleteButtonPrefab = default;
     [SerializeField] BuildBufferManager BuildBufferManager = default;
     [SerializeField] FoodSourceStoreSection FoodSourceStoreSection = default;
-    [SerializeField] SpeciesReferenceData SpeciesReferenceData;
     Item tempItem;
 
     GameObject objectToMove = null;
@@ -239,13 +237,13 @@ public class MoveObject : MonoBehaviour
         AnimalSpecies species = population.Species;
 
         float cost = FixedCost + species.Size * CostPerUnitSizeAnimal;
-        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
+        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) && GameManager.Instance.Balance >= cost;
 
         // placement is valid and population did not already reach here
         if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
         {
             populationManager.UpdatePopulation(species, worldPos);
-            playerBalance.SubtractFromBalance(cost);
+            GameManager.Instance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
         toMove.transform.position = worldPos; // always place animal back because animal movement will be handled by pop manager
@@ -258,7 +256,7 @@ public class MoveObject : MonoBehaviour
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
 
         float cost = FixedCost + species.Size * CostPerUnitSizeFood;
-        bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && playerBalance.Balance >= cost;
+        bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
 
         if (valid)
         {
@@ -271,7 +269,7 @@ public class MoveObject : MonoBehaviour
             //foodSourceManager.PlaceFood(pos, species, ttb);
             removeOriginalFood(foodSource);
             placeFood(pos, species);
-            playerBalance.SubtractFromBalance(cost);
+            GameManager.Instance.SubtractFromBalance(cost);
         }
         else
         {
@@ -309,7 +307,7 @@ public class MoveObject : MonoBehaviour
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
     {
         string itemID = "";
-        foreach (KeyValuePair<string, FoodSourceSpecies> nameToFoodSpecies in this.SpeciesReferenceData.FoodSources)
+        foreach (KeyValuePair<string, FoodSourceSpecies> nameToFoodSpecies in GameManager.Instance.FoodSources)
         {
             if (nameToFoodSpecies.Value == foodSourceSpecies)
             {

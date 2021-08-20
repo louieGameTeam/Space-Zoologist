@@ -8,7 +8,6 @@ public class SellingManager : MonoBehaviour
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] Inspector Inspector = default;
-    [SerializeField] PlayerBalance PlayerBalance = default;
     [SerializeField] LevelDataReference LevelDataReference = default;
     public bool IsSelling { get; private set; }
 
@@ -98,7 +97,7 @@ public class SellingManager : MonoBehaviour
             Item item = data.itemObject;
             if (item.ID.Equals(id))
             {
-                PlayerBalance.SubtractFromBalance(-1 * item.Price);
+                GameManager.Instance.SubtractFromBalance(-1 * item.Price);
                 break;
             }
         }

@@ -21,8 +21,6 @@ public class StoreSection : MonoBehaviour
     protected CanvasObjectStrobe PlayerBalanceDisplay = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
-    protected PlayerBalance playerBalance = default;
-    protected LevelDataReference LevelDataReference = default;
     protected GridSystem GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
@@ -30,13 +28,11 @@ public class StoreSection : MonoBehaviour
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
+    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
     {
-        this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = gridSystem;
-        this.playerBalance = playerBalance;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
     }
@@ -73,7 +69,7 @@ public class StoreSection : MonoBehaviour
 
     public virtual void Initialize()
     {
-        LevelData levelData = LevelDataReference.LevelData;
+        LevelData levelData = GameManager.Instance.LevelData;
         foreach (LevelData.ItemData data in levelData.ItemQuantities)
         {
             Item item = data.itemObject;
@@ -139,7 +135,7 @@ public class StoreSection : MonoBehaviour
 
     public bool CanBuy(Item item)
     {
-        if (storeItems.ContainsKey(item) && playerBalance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
+        if (storeItems.ContainsKey(item) && GameManager.Instance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
         {
             Debug.Log("You can't buy this!");
             //OnItemSelectionCanceled();

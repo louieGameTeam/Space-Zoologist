@@ -8,16 +8,12 @@ using UnityEngine.UI;
 /// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
-    [Expandable] public LevelDataReference LevelDataReference = default;
     private LevelObjectiveData LevelObjectiveData = default;
 
     public bool IsGameOver => this.isGameOver;
 
     private bool isOpen = true;
     private bool isGameOver = false;
-
-    // To access the player balance
-    [SerializeField] private PlayerBalance playerBalance = default;
 
     // Objective panel
     [SerializeField] private GameObject objectivePanel = default;
@@ -101,7 +97,7 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        this.LevelObjectiveData = this.LevelDataReference.LevelData.LevelObjectiveData;
+        this.LevelObjectiveData = GameManager.Instance.LevelData.LevelObjectiveData;
 
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)
@@ -117,7 +113,7 @@ public class ObjectiveManager : MonoBehaviour
         // Create the resource objective
         foreach (ResourceObjectiveData objectiveData in this.LevelObjectiveData.resourceObjectiveDatas)
         {
-            this.secondaryObjectives.Add(new ResourceObjective(this.playerBalance, objectiveData.amountToKeep));
+            this.secondaryObjectives.Add(new ResourceObjective(objectiveData.amountToKeep));
         }
 
         // Add the population to related objective if not seen before

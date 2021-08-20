@@ -8,7 +8,6 @@ public class ResourceManager : MonoBehaviour
 
     // [SerializeField] LevelDataReference LevelDataRef = default;
     [SerializeField] EventResponseManager EventResponseManager = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();
 
     // a copy of the dictionary before draft
@@ -17,7 +16,7 @@ public class ResourceManager : MonoBehaviour
 
     public void Awake()
     {
-        foreach(LevelData.ItemData item in LevelDataReference.LevelData.itemQuantities)
+        foreach(LevelData.ItemData item in GameManager.Instance.LevelData.itemQuantities)
         {
             remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
             initialResources.Add(item.itemObject.ItemName, item.initialAmount);

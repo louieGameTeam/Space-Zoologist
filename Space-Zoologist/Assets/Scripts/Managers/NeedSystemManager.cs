@@ -17,7 +17,6 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] EnclosureSystem EnclosureSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] PauseManager PauseManager = default;
-    [SerializeField] LevelIO LevelIO = default;
     [SerializeField] GridSystem GridSystem = default;
 
     /// <summary>

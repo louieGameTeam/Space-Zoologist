@@ -13,7 +13,6 @@ public class EnclosureSystem : MonoBehaviour
     public List<EnclosedArea> EnclosedAreas;
     private List<EnclosedArea> internalEnclosedAreas;
 
-    [SerializeField] private LevelDataReference LevelDataReference = default;
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GridSystem gridSystem = default;
 
@@ -37,7 +36,7 @@ public class EnclosureSystem : MonoBehaviour
         Atmospheres = new List<AtmosphericComposition>();
         this.internalEnclosedAreas = new List<EnclosedArea>();
         this.EnclosedAreas = new List<EnclosedArea>();
-        this.GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
+        this.GlobalAtmosphere = GameManager.Instance.LevelData.GlobalAtmosphere;
     }
 
     private void Start()
