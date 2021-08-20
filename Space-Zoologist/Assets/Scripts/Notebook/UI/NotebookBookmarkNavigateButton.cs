@@ -9,10 +9,10 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Button that navigates to the bookmark when clicked")]
-    private Button myButton;
+    private Button navigateButton;
     [SerializeField]
     [Tooltip("Reference to the toggle that will delete the bookmark when navigating to another page")]
-    private Toggle myToggle;
+    private Toggle deleteToggle;
     [SerializeField]
     [Tooltip("Reference to the object used to display the text of the button")]
     private TextMeshProUGUI text;
@@ -26,27 +26,27 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
         this.bookmark = bookmark;
 
         text.text = bookmark.Label;
-        myButton.onClick.AddListener(OnClick);
-        myToggle.onValueChanged.AddListener(OnToggleStateChanged);
+        navigateButton.onClick.AddListener(OnNavigateButtonClicked);
+        deleteToggle.onValueChanged.AddListener(OnDeleteToggleChanged);
     }
 
-    private void OnToggleStateChanged(bool isOn)
+    // On click select the correct tab, and setup the category picker
+    private void OnNavigateButtonClicked()
     {
-        myButton.interactable = isOn;
+        UIParent.NavigateToBookmark(bookmark);
+    }
+
+    private void OnDeleteToggleChanged(bool isOn)
+    {
+        navigateButton.interactable = isOn;
 
         if (isOn) text.text = bookmark.Label;
         else text.text = "<marked for deletion>";
     }
 
-    // On click select the correct tab, and setup the category picker
-    private void OnClick()
-    {
-        UIParent.NavigateToBookmark(bookmark);
-    }
-
     private void OnDisable()
     {
-        if (!myToggle.isOn)
+        if (!deleteToggle.isOn)
         {
             UIParent.Notebook.RemoveBookmark(bookmark);
             Destroy(gameObject);

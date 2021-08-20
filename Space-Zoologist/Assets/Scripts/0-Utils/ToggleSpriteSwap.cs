@@ -16,8 +16,14 @@ public class ToggleSpriteSwap : UIBehaviour
     [Tooltip("Sprite while the toggle is on")]
     private Sprite onSprite;
     [SerializeField]
+    [Tooltip("Color of the image while the toggle is on")]
+    private Color onColor = Color.white;
+    [SerializeField]
     [Tooltip("Sprite while the toggle is off")]
     private Sprite offSprite;
+    [SerializeField]
+    [Tooltip("Color of the image while the toggle is off")]
+    private Color offColor = Color.white;
 
     protected override void Start()
     {
@@ -27,7 +33,15 @@ public class ToggleSpriteSwap : UIBehaviour
 
     private void OnToggleStateChanged(bool isOn)
     {
-        if (isOn) image.sprite = onSprite;
-        else image.sprite = offSprite;
+        if (isOn)
+        {
+            image.sprite = onSprite;
+            image.color = onColor;
+        }
+        else
+        {
+            image.sprite = offSprite;
+            image.color = offColor;
+        }
     }
 }
