@@ -1,6 +1,7 @@
   using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
@@ -34,10 +35,12 @@ public class CameraController : MonoBehaviour
         cam = this.GetComponent<Camera>();
         targetZoom = cam.orthographicSize;
 
-        Canvas canvas = GetComponentInChildren<Canvas>();
+        Canvas canvas = FindObjectOfType<Canvas>();
 
         if(canvas)
         {
+            RectTransform canvasTransform = canvas.GetComponent<RectTransform>();
+
             // Setup an event trigger entry that resets "hasMouse" to true when the pointer enters
             UnityEngine.EventSystems.EventTrigger.Entry pointerEnterTrigger = new UnityEngine.EventSystems.EventTrigger.Entry
             {
@@ -45,6 +48,7 @@ public class CameraController : MonoBehaviour
                 callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent()
             };
             pointerEnterTrigger.callback.AddListener(eventData => hasMouse = true);
+
             // Setup an event trigger entry that sets "hasMouse" to false when the pointer exits
             UnityEngine.EventSystems.EventTrigger.Entry pointerExitTrigger = new UnityEngine.EventSystems.EventTrigger.Entry
             {
@@ -52,16 +56,33 @@ public class CameraController : MonoBehaviour
                 callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent()
             };
             pointerExitTrigger.callback.AddListener(eventData => hasMouse = false);
+
+            // Create a new object with a rect transform
+            GameObject mouseCatcherObject = new GameObject("Background");
+            RectTransform mouseCatcherTransform = mouseCatcherObject.AddComponent<RectTransform>();
+
+            // Make this a child of the canvas
+            mouseCatcherTransform.SetParent(canvas.transform);
+            mouseCatcherTransform.SetAsFirstSibling();
+
+            // Stretch the object so it fills the canvas
+            mouseCatcherTransform.anchorMin = Vector2.zero;
+            mouseCatcherTransform.anchorMax = Vector2.one;
+            mouseCatcherTransform.offsetMin = mouseCatcherTransform.offsetMax = Vector2.zero;
+
+            // Add a clear image to the object so that the event system still receives pointer events for it
+            mouseCatcherObject.AddComponent<CanvasRenderer>();
+            Image mouseCatcherImage = mouseCatcherObject.AddComponent<Image>();
+            mouseCatcherImage.color = Color.clear;
+
             // Add the entries to the list of triggers on the mouse catcher event trigger
-            UnityEngine.EventSystems.EventTrigger mouseCatcher = canvas.gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+            UnityEngine.EventSystems.EventTrigger mouseCatcher = mouseCatcherObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
             mouseCatcher.triggers.Add(pointerEnterTrigger);
             mouseCatcher.triggers.Add(pointerExitTrigger);
         }
         else
         {
-            Debug.LogWarning("CameraController: no active canvas component found on this object or any of it's children, " +
-                "but camera movement cannot be sensitive to UI changes without one.  " +
-                "Please add a child object with a canvas component attached");
+            Debug.LogWarning("CameraController: no active canvas component found in the scene");
             hasMouse = true;
         }
 
