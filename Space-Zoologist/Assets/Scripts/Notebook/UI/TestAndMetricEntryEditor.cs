@@ -102,7 +102,7 @@ public class TestAndMetricEntryEditor : NotebookUIChild
         researchCategoryDropdown.Dropdown.interactable = enclosureID == current;
         needDropdown.Dropdown.interactable = enclosureID == current;
         differenceDropdown.interactable = enclosureID == current;
-        inputField.readOnly = enclosureID == current;
+        inputField.readOnly = enclosureID != current;
 
         // Make sure the scroll event is taken away from the input field
         OnScrollEventInterceptor interceptor = inputField.gameObject.AddComponent<OnScrollEventInterceptor>();
