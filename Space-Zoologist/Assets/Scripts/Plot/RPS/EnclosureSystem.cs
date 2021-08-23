@@ -13,7 +13,6 @@ public class EnclosureSystem : MonoBehaviour
     public List<EnclosedArea> EnclosedAreas;
     private List<EnclosedArea> internalEnclosedAreas;
 
-    [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GridSystem gridSystem = default;
 
     [Tooltip("Leave this empty if using TileSystem's default starting position")]
@@ -131,7 +130,7 @@ public class EnclosureSystem : MonoBehaviour
             this.GetEnclosedAreaById(positionToEnclosedArea[position]).UpdateAtmosphericComposition(atmosphericComposition);
 
             // Mark Atmosphere NS dirty
-            this.needSystemManager.Systems[NeedType.Atmosphere].MarkAsDirty();
+            GameManager.Instance.NeedSystems[NeedType.Atmosphere].MarkAsDirty();
 
             // Invoke event
             EventManager.Instance.InvokeEvent(EventType.AtmosphereChange, this.GetEnclosedAreaById(positionToEnclosedArea[position]));

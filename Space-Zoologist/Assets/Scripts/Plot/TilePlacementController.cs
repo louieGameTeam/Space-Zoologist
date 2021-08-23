@@ -20,8 +20,6 @@ public class TilePlacementController : MonoBehaviour
     private List<GameTile> referencedTiles = new List<GameTile>();
     private bool isFirstTile;
     [SerializeField] public bool isErasing = false;
-    public Tilemap[] allTilemaps { get { return tilemaps; } }
-    [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
     public GameTile[] gameTiles { get; private set; } = default;
     public HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
@@ -34,30 +32,28 @@ public class TilePlacementController : MonoBehaviour
     [SerializeField] private GridSystem GridSystem = default;
     private void Awake()
     {
-        this.gameTiles = Resources.LoadAll("Tiles", typeof(GameTile)).Cast<GameTile>().ToArray(); // Load tiles form resources
+         // Load tiles form resources
         grid = GetComponent<Grid>();
-        foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
-        {
-            List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
-            /*            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
+        List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
+        /*            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
+                    {
+                        foreach (GameTile tile in tileColorManager.linkedTiles)
                         {
-                            foreach (GameTile tile in tileColorManager.linkedTiles)
+                            if (!colorLinkedTiles.ContainsKey(tile))
                             {
-                                if (!colorLinkedTiles.ContainsKey(tile))
-                                {
-                                    colorLinkedTiles.Add(tile, new List<Tilemap>());
-                                }
-                                colorLinkedTiles[tile].Add(tilemap);
+                                colorLinkedTiles.Add(tile, new List<Tilemap>());
                             }
-                        }*/
-            referencedTiles = this.gameTiles.ToList();
-            // are different linked tiles (water) supposed to have differing color?
-            //RenderColorOfColorLinkedTiles(colorInitializeTiles);
-            referencedTiles.Clear();
-        }
+                            colorLinkedTiles[tile].Add(tilemap);
+                        }
+                    }*/
+        referencedTiles = this.gameTiles.ToList();
+        // are different linked tiles (water) supposed to have differing color?
+        //RenderColorOfColorLinkedTiles(colorInitializeTiles);
+        referencedTiles.Clear();
         this.gameObject.GetComponent<PlotIO>().Initialize();
         this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
     }
+
     private void Update()
     {
         if (isPreviewing) // Update for preview
@@ -84,6 +80,12 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
+    public void LoadResources()
+    {
+        this.gameTiles = Resources.LoadAll("Tiles", typeof(GameTile)).Cast<GameTile>().ToArray();
+    }
+
     /// <summary>
     /// Start tile placement preview.
     /// </summary>

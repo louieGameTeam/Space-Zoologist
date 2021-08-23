@@ -8,15 +8,12 @@ using System.Linq;
 /// </summary>
 public class FoodSourceNeedSystem : NeedSystem
 {
-    //private List<FoodSource> foodSources = new List<FoodSource>();
-    private readonly ReservePartitionManager rpm = null;
 
     // Food name to food calculators
     private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
 
-    public FoodSourceNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.FoodSource) : base(needType)
+    public FoodSourceNeedSystem(NeedType needType = NeedType.FoodSource) : base(needType)
     {
-        this.rpm = rpm;
     }
 
     public override bool CheckState()
@@ -74,7 +71,7 @@ public class FoodSourceNeedSystem : NeedSystem
         // 1. Iterate through populations based on most dominant (inefficient, could be refactored to first calculate list of ordered populations)
         for (int dominance=5; dominance >= 1; dominance--)
         {
-            foreach (Population population in rpm.Populations)
+            foreach (Population population in GameManager.Instance.m_reservePartitionManager.Populations)
             {
                 float preferredAmount = 0;
                 float compatibleAmount = 0;
@@ -111,7 +108,7 @@ public class FoodSourceNeedSystem : NeedSystem
     {
         if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
         {
-            this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(rpm, foodSource.Species.SpeciesName));
+            this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(foodSource.Species.SpeciesName));
         }
 
         this.foodSourceCalculators[foodSource.Species.SpeciesName].AddSource(foodSource);
@@ -139,7 +136,7 @@ public class FoodSourceNeedSystem : NeedSystem
                 // if not already exist
                 if (!this.foodSourceCalculators.ContainsKey(need.NeedName))
                 {
-                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(rpm, need.NeedName));
+                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(need.NeedName));
                 }
 
                 // Add consumer to food source calculator

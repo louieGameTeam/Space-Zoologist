@@ -10,7 +10,6 @@ public class PopulationManager : MonoBehaviour
     // FindTag population to populate
     public List<Population> Populations => ExistingPopulations;
     private List<Population> ExistingPopulations = new List<Population>();
-    [SerializeField] private NeedSystemManager NeedSystemManager = default;
     [SerializeField] private BehaviorPatternUpdater BehaviorPatternUpdater = default;
     [SerializeField] private GameObject PopulationPrefab = default;
     [SerializeField] private ReservePartitionManager ReservePartitionManager = default;
@@ -135,7 +134,7 @@ public class PopulationManager : MonoBehaviour
         this.ReservePartitionManager.AddPopulation(population);
         population.UpdateAccessibleArea(this.ReservePartitionManager.GetLocationsWithAccess(population),
         this.GridSystem.GetGridWithAccess(population));
-        this.NeedSystemManager.RegisterWithNeedSystems(population);
+        GameManager.Instance.RegisterWithNeedSystems(population);
         this.BehaviorPatternUpdater.RegisterPopulation(population);
     }
 
@@ -222,7 +221,7 @@ public class PopulationManager : MonoBehaviour
         Debug.Log("Removing " + population);
         population.RemoveAll();
         this.Populations.Remove(population);
-        NeedSystemManager.UnregisterWithNeedSystems(population);
+        GameManager.Instance.UnregisterWithNeedSystems(population);
         ReservePartitionManager.RemovePopulation(population);
         Destroy(population.gameObject);
     }

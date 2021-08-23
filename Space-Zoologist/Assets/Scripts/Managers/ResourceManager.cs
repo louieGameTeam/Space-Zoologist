@@ -14,17 +14,14 @@ public class ResourceManager : MonoBehaviour
     Dictionary<string, int> initialResources = new Dictionary<string, int>();
     private Dictionary<string, StoreItemCell> itemDisplayInfo = new Dictionary<string, StoreItemCell>();
 
-    public void Awake()
+    public void Initialize()
     {
-        foreach(LevelData.ItemData item in GameManager.Instance.LevelData.itemQuantities)
+        foreach (LevelData.ItemData item in GameManager.Instance.LevelData.itemQuantities)
         {
             remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
             initialResources.Add(item.itemObject.ItemName, item.initialAmount);
         }
-    }
 
-    public void Start()
-    {
         EventResponseManager.InitializeResponseHandler(EventType.PopulationCountIncreased, AddItem);
     }
 

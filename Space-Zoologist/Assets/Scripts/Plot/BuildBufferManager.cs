@@ -8,10 +8,10 @@ public class BuildBufferManager : GridObjectManager
     private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
     private bool[,] isConstructing;
     [SerializeField] ReservePartitionManager RPM = default;
-    [SerializeField] TilePlacementController tilePlacementController = default;
     public bool IsConstructing(int x, int y) => isConstructing[x, y];
     private Action constructionFinishedCallback = null;
-    private void Awake()
+
+    public void Initialize()
     {
         LevelData levelData = GameManager.Instance.LevelData;
         if (levelData == null)
@@ -19,10 +19,12 @@ public class BuildBufferManager : GridObjectManager
             Debug.LogWarning("Level data reference not found, using default width and height values");
             this.isConstructing = new bool[100, 100];
         }
-        int w = levelData.MapWidth;
-        int h = levelData.MapHeight;
-        this.isConstructing = new bool[w, h];
+        else
+        {
+            this.isConstructing = new bool[levelData.MapWidth, levelData.MapHeight];
+        }
     }
+
     public override void Parse()
     {
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)

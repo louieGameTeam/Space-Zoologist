@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class TimeSystem : MonoBehaviour
 {
     [SerializeField] ReserveDraft ReserveDraft = default;
-    [SerializeField] NeedSystemManager NeedSystemManager = default;
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] Inspector Inspector = default;
     [SerializeField] Text CurrentDayText = default;
@@ -26,7 +25,7 @@ public class TimeSystem : MonoBehaviour
         this.buildBufferManager.CountDown();
         this.PopulationManager.UpdateAccessibleLocations();
         this.PopulationManager.UdateAllPopulationRegistration();
-        this.NeedSystemManager.UpdateAllSystems();
+        GameManager.Instance.UpdateAllNeedSystems();
         for (int i=PopulationManager.Populations.Count - 1; i>= 0; i--)
         {
             PopulationManager.Populations[i].HandleGrowth();
