@@ -19,13 +19,17 @@ public class ResearchNotes
 
     public void Setup()
     {
+        // Later, we need to load the existing data
+        Notes = string.Empty;
+
         if(Notes == string.Empty)
         {
             // Tags used to decorate the labels in the notes
             List<RichTextTag> labelTags = new List<RichTextTag>()
             {
                 new RichTextTag("color", "white"),
-                new RichTextTag("b")
+                new RichTextTag("b"),
+                new RichTextTag("font", "\"times new roman SDF\"")
             };
             // Add the labels to the notes if they are not empty
             foreach (string label in labels.Labels)
