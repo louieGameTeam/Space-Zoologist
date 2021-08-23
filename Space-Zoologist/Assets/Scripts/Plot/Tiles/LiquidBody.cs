@@ -33,14 +33,16 @@ public class LiquidBody
     /// </summary>
     /// <param name="liquidBody"></param>
     /// <param name="newCellPosition"></param>
-    public LiquidBody(LiquidBody liquidBody, Vector3Int newCellPosition)
+    public LiquidBody(LiquidBody liquidBody, Vector3Int newCellPosition, float[] newContents)
     {
         this.bodyID = 0;
         this.tiles = new HashSet<Vector3Int>();
         this.tiles.UnionWith(liquidBody.tiles);
-        this.tiles.Add(newCellPosition);
         this.contents = new float[liquidBody.contents.Length];
-        liquidBody.contents.CopyTo(this.contents, 0);
+        for (int i = 0; i < contents.Length; ++i)
+            this.contents[i] = (this.tiles.Count * liquidBody.contents[i] + newContents[i]) / (this.tiles.Count + 1);
+        
+        this.tiles.Add(newCellPosition);
         this.referencedBodies = new HashSet<LiquidBody>();
         this.referencedBodies.Add(liquidBody);
     }

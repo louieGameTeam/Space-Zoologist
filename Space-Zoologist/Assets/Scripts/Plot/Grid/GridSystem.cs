@@ -659,7 +659,7 @@ public class GridSystem : MonoBehaviour
                     liquidBodyL[0].AddTile(tilePosition, tile.defaultContents);
                     return liquidBodyL[0];
                 }
-                LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], tilePosition);
+                LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], tilePosition, tile.defaultContents);
                 foreach (Vector3Int position in extendedBody.tiles)
                 {
                     this.GetTileData(position).PreviewLiquidBody(extendedBody);

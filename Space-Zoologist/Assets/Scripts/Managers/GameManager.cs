@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
         
         SetManagers();
         LoadResources();
-        LoadLevelData();
         SetNeedSystems();
+        LoadLevelData();
         InitializeManagers();
         InitialNeedSystemUpdate();
     }

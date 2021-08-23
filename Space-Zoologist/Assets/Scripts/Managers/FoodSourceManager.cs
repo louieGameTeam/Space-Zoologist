@@ -13,8 +13,6 @@ public class FoodSourceManager : GridObjectManager
     private List<FoodSource> foodSources = new List<FoodSource>();
     private Dictionary<FoodSourceSpecies, List<FoodSource>> foodSourcesBySpecies = new Dictionary<FoodSourceSpecies, List<FoodSource>>();
 
-    // A reference to the food source need system
-    private FoodSourceNeedSystem foodSourceNeedSystems = default;
     // FoodSourceSpecies to string name
     private Dictionary<string, FoodSourceSpecies> foodSourceSpecies = new Dictionary<string, FoodSourceSpecies>();
     [SerializeField] private GameObject foodSourcePrefab = default;
@@ -40,9 +38,6 @@ public class FoodSourceManager : GridObjectManager
 
     public void Initialize()
     {
-        // Get the FoodSourceNeedSystems from NeedSystemManager
-        this.foodSourceNeedSystems = (FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource];
-
         // Get all FoodSource at start of level
         // TODO make use of saved tile
         GameObject[] foods = GameObject.FindGameObjectsWithTag("FoodSource");
@@ -67,7 +62,7 @@ public class FoodSourceManager : GridObjectManager
                 foodSourcesBySpecies[foodSource.Species].Add(foodSource);
             }
             
-            this.foodSourceNeedSystems.AddFoodSource(foodSource);
+            ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).AddFoodSource(foodSource);
             GameManager.Instance.RegisterWithNeedSystems(foodSource);
             EventManager.Instance.InvokeEvent(EventType.NewFoodSource, foodSource);
         }
@@ -110,7 +105,7 @@ public class FoodSourceManager : GridObjectManager
         }
 
         //Debug.Log("Food source being added: " + foodSource.Species.SpeciesName);
-        this.foodSourceNeedSystems.AddFoodSource(foodSource);
+        ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).AddFoodSource(foodSource);
 
         // Register with NeedSystemManager
         GameManager.Instance.RegisterWithNeedSystems(foodSource);
@@ -127,7 +122,7 @@ public class FoodSourceManager : GridObjectManager
 
     public void DestroyFoodSource(FoodSource foodSource) {
         foodSources.Remove(foodSource);
-        foodSourceNeedSystems.RemoveFoodSource(foodSource);
+        ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).RemoveFoodSource(foodSource);
         foodSourcesBySpecies[foodSource.Species].Remove(foodSource);
         GameManager.Instance.UnregisterWithNeedSystems(foodSource);
         this.GridSystem.RemoveFood(this.GridSystem.Grid.WorldToCell(foodSource.gameObject.transform.position));

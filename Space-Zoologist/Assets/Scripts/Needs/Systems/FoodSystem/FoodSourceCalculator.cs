@@ -65,13 +65,17 @@ public class FoodSourceCalculator : NeedCalculator
         FoodSource foodSource = (FoodSource)source;
 
         this.foodSources.Add(foodSource);
-        populationsWithAccess.Add(foodSource, new HashSet<Population>());
-        foreach (Population population in Consumers)
+        if (!populationsWithAccess.ContainsKey(foodSource))
         {
-            if (GameManager.Instance.m_reservePartitionManager.CanAccess(population, foodSource.Position))
+            populationsWithAccess.Add(foodSource, new HashSet<Population>());
+
+            foreach (Population population in Consumers)
             {
-                accessibleFoodSources[population].Add(foodSource);
-                populationsWithAccess[foodSource].Add(population);
+                if (GameManager.Instance.m_reservePartitionManager.CanAccess(population, foodSource.Position))
+                {
+                    accessibleFoodSources[population].Add(foodSource);
+                    populationsWithAccess[foodSource].Add(population);
+                }
             }
         }
 
