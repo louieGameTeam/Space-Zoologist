@@ -1580,7 +1580,7 @@ public class GridSystem : MonoBehaviour
         return typesOfTileWithinRadius;
     }
 
-    public int[] CountOfTilesInArea(Vector3Int centerCellLocation, int size, int area)
+    public int[] CountOfTilesInArea(Vector3Int centerCellLocation, int size)
     {
         int[] typesOfTileWithinRadius = new int[(int)TileType.TypesOfTiles];
         int radius = size / 2;

@@ -8,7 +8,6 @@ public class FoodSourceSpecies : ScriptableObject
 {
     public string SpeciesName => speciesName;
     public int RootRadius => rootRadius;
-    public int RootArea => rootArea;
     public int BaseOutput => baseOutput;
     public Item FoodSourceItem => FoodSource;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
@@ -18,7 +17,6 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private string speciesName = default;
     [SerializeField] private int rootRadius = default;
-    [SerializeField] private int rootArea = default;
     [SerializeField] private int baseOutput = default;
     [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
     [SerializeField] private List<FoodNeedConstructData> foodNeeds = default;
@@ -33,7 +31,7 @@ public class FoodSourceSpecies : ScriptableObject
         //Terrain Needs
         foreach (NeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.NeedName, new TerrainNeed(need));
+            needs.Add(need.NeedName, new TerrainNeed(need, this));
         }
 
         //Food Needs

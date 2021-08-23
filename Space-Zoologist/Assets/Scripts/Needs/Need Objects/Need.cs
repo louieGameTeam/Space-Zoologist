@@ -6,11 +6,33 @@ using System.Linq;
 [System.Serializable]
 public class TerrainNeed : Need
 {
-    public TerrainNeed(NeedConstructData needConstructData) : base(needConstructData) {}
+    private AnimalSpecies animalSpecies;
+    private FoodSourceSpecies foodSourceSpecies;
+
+    public TerrainNeed(NeedConstructData needConstructData, AnimalSpecies species) : base(needConstructData) 
+    { 
+        animalSpecies = species;
+    }
+
+    public TerrainNeed(NeedConstructData needConstructData, FoodSourceSpecies species) : base(needConstructData) 
+    {
+        foodSourceSpecies = species;
+    }
 
     protected override NeedType GetNeedType()
     {
         return NeedType.Terrain;
+    }
+
+    new public float GetThreshold()
+    {
+        if(animalSpecies)
+            return animalSpecies.TerrainTilesRequired;
+        
+        if(foodSourceSpecies)
+            return Mathf.Pow(foodSourceSpecies.Size, 2);
+        
+        return needConstructData.GetSurvivableThreshold();
     }
 }
 
@@ -40,6 +62,21 @@ public class LiquidNeed : Need
     public float GetFreshThreshold() { return needConstructData.FreshWaterThreshold; }
     public float GetSaltThreshold() { return needConstructData.SaltThreshold; }
     public float GetBacteriaThreshold() { return needConstructData.BacteriaThreshold; }
+    
+    public bool IsFreshThresholdMet(float value)
+    {
+        return value >= GetFreshThreshold();
+    }
+    
+    public bool IsSaltThresholdMet(float value)
+    {
+        return value >= GetSaltThreshold();
+    }
+    
+    public bool IsBacteriaThresholdMet(float value)
+    {
+        return value >= GetBacteriaThreshold();
+    }
 }
 
 [System.Serializable]

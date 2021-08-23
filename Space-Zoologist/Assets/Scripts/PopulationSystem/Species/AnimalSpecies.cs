@@ -18,7 +18,6 @@ public class AnimalSpecies : ScriptableObject
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
-    public float Range => range;
     public Sprite Representation => representation;
     // TODO setup tile weights for species
     public Dictionary<TileType, byte> TilePreference = default;
@@ -35,7 +34,6 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int growthRate = 3;
     [Range(1, 30)]
     [SerializeField] private int decayRate = 3;
-    [SerializeField] private float range = default;
 
     [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
@@ -56,7 +54,7 @@ public class AnimalSpecies : ScriptableObject
         //Terrain Needs
         foreach (NeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.NeedName, new TerrainNeed(need));
+            needs.Add(need.NeedName, new TerrainNeed(need, this));
         }
 
         //Food Needs
@@ -68,7 +66,15 @@ public class AnimalSpecies : ScriptableObject
         //Water Needs
         foreach (NeedConstructData need in liquidNeeds)
         {
-            needs.Add(need.NeedName, new LiquidNeed(need));
+            LiquidNeed liquidneed = new LiquidNeed(need);
+            if(liquidneed.GetFreshThreshold() != 0)
+                needs.Add("Water", liquidneed);
+
+            if(liquidneed.GetBacteriaThreshold() != 0)
+                needs.Add("Bacteria", liquidneed);
+
+            if(liquidneed.GetSaltThreshold() != 0)
+                needs.Add("Salt", liquidneed);
         }
 
         return needs;

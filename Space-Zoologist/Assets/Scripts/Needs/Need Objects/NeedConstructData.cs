@@ -9,9 +9,7 @@ public enum NeedCondition { Bad, Neutral, Good }
 [System.Serializable]
 public class TerrainNeedConstructData : NeedConstructData
 {
-    public float TerrainNeedThreshold => terrainNeedThreshold;
-
-    [SerializeField] private float terrainNeedThreshold;
+    [SerializeField] private bool isPreferred;
 
     public TerrainNeedConstructData(string name) 
         : base(name)
@@ -19,10 +17,12 @@ public class TerrainNeedConstructData : NeedConstructData
         
     }
 
-    public override float GetSurvivableThreshold()
+    protected override bool getIsPreferred()
     {
-        return terrainNeedThreshold;
+        return isPreferred;
     }
+
+    public override float GetSurvivableThreshold() { return -1f; }
 }
 
 [System.Serializable]
@@ -31,6 +31,7 @@ public class FoodNeedConstructData : NeedConstructData
     public float FoodNeedThreshold => foodNeedThreshold;
 
     [SerializeField] private float foodNeedThreshold;
+    [SerializeField] private bool isPreferred;
 
     public FoodNeedConstructData(string name) 
         : base(name)
@@ -42,17 +43,22 @@ public class FoodNeedConstructData : NeedConstructData
     {
         return foodNeedThreshold;
     }
+
+    protected override bool getIsPreferred()
+    {
+        return isPreferred;
+    }
 }
 
 [System.Serializable]
 public class LiquidNeedConstructData : NeedConstructData
 {
-    public float LiquidTileNeedThreshold => liquidTileNeedThreshold;
+    public float TileNeedThreshold => tileNeedThreshold;
     public float FreshWaterThreshold => freshWaterThreshold;
     public float SaltThreshold => saltThreshold;
     public float BacteriaThreshold => bacteriaThreshold;
 
-    [SerializeField] private float liquidTileNeedThreshold;
+    [SerializeField] private float tileNeedThreshold;
     [SerializeField] private float freshWaterThreshold;
     [SerializeField] private float saltThreshold;
     [SerializeField] private float bacteriaThreshold;
@@ -65,7 +71,12 @@ public class LiquidNeedConstructData : NeedConstructData
 
     public override float GetSurvivableThreshold()
     {
-        return liquidTileNeedThreshold;
+        return tileNeedThreshold;
+    }
+
+    protected override bool getIsPreferred()
+    {
+        return false;
     }
 }
 
@@ -76,10 +87,9 @@ public class LiquidNeedConstructData : NeedConstructData
 public abstract class NeedConstructData
 {
     public string NeedName => needName;
-    public bool IsPreferred => isPreferred;
+    public bool IsPreferred => getIsPreferred();
 
     [SerializeField] private string needName = default;
-    [SerializeField] private bool isPreferred = false;
 
     public NeedConstructData(string name)
     {
@@ -87,4 +97,6 @@ public abstract class NeedConstructData
     }
 
     public abstract float GetSurvivableThreshold();
+
+    protected abstract bool getIsPreferred();
 }
