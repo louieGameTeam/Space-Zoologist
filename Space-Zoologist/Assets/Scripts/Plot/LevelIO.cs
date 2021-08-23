@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 public class LevelIO : MonoBehaviour
@@ -17,7 +18,6 @@ public class LevelIO : MonoBehaviour
         this.plotIO = FindObjectOfType<PlotIO>();
         this.populationManager = FindObjectOfType<PopulationManager>();
         this.LoadPreset();
-
     }
     
     public void Save(string name = null)
@@ -103,6 +103,7 @@ public class LevelIO : MonoBehaviour
         this.plotIO.LoadPlot(serializedLevel.serializedPlot);
         //Animals loaded after map to avoid path finding issues
         this.presetMap = serializedLevel;
+        Reload();
     }
 
     public void Reload()

@@ -14,11 +14,8 @@ public class Inspector : MonoBehaviour
     public bool IsInInspectorMode { get; private set; }
 
     [SerializeField] private GridSystem gridSystem = null;
-    [SerializeField] private TileSystem tileSystem = null;
     [SerializeField] private EnclosureSystem enclosureSystem = null;
-
-    [SerializeField] private Tilemap highLight = default;
-    // [SerializeField] private GameTile highLightTile = default;
+    [SerializeField] private ReservePartitionManager reservePartitionManager = null;
 
     // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
@@ -49,6 +46,7 @@ public class Inspector : MonoBehaviour
         this.itemsDropdown.onValueChanged.AddListener(selectItem);
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
+        OpenInspector();
 
         // Have the dropdown options be refreshed when new items created
         EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
@@ -68,7 +66,6 @@ public class Inspector : MonoBehaviour
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
             this.IsInInspectorMode = !IsInInspectorMode;
-            AudioManager.instance.PlayOneShot(SFXType.MenuClose);
         }
 
     }
@@ -89,7 +86,6 @@ public class Inspector : MonoBehaviour
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = !IsInInspectorMode;
-        AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
     }
 
     /// <summary>
@@ -219,22 +215,22 @@ public class Inspector : MonoBehaviour
         // Update animal location reference
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = this.tileSystem.WorldToCell(worldPos);
-        GameTile tile = this.tileSystem.GetGameTileAt(pos);
-        GridSystem.CellData cellData = getCellData(pos);
-        if (cellData.OutOfBounds)
-        {
+        Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
+        GameTile tile = this.gridSystem.GetGameTileAt(pos);
+        GridSystem.TileData cellData = gridSystem.GetTileData(pos);
+
+        if (cellData == null) { 
             return;
         }
         bool somethingSelected = true;
         this.UnHighlightAll();
-        if (cellData.ContainsAnimal)
+        if (cellData.Animal)
         {
             DisplayPopulationText(cellData);
             selectedPosition = pos;
         }
         // Selection is food source or item
-        else if (cellData.ContainsFood)
+        else if (cellData.Food)
         {
             DisplayFoodText(cellData);
             selectedPosition = pos;
@@ -265,36 +261,20 @@ public class Inspector : MonoBehaviour
         this.itemsDropdown.value = 0;
     }
 
-    private GridSystem.CellData getCellData(Vector3Int cellPos)
-    {
-        GridSystem.CellData cellData = new GridSystem.CellData();
-        // Handles index out of bound exception
-        if (this.gridSystem.isCellinGrid(cellPos.x, cellPos.y))
-        {
-            cellData = this.gridSystem.CellGrid[cellPos.x, cellPos.y];
-        }
-        else
-        {
-            cellData.OutOfBounds = true;
-        }
-        return cellData;
-    }
-
     public void UpdateCurrentDisplay()
     {
-        this.gridSystem.UpdateAnimalCellGrid();
-        GridSystem.CellData cellData = getCellData(selectedPosition);
+        GridSystem.TileData cellData = gridSystem.GetTileData(selectedPosition);
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
-                if (!cellData.ContainsAnimal)
+                if (!cellData.Animal)
                 {
                     return;
                 }
                 DisplayPopulationText(cellData);
                 break;
             case DisplayInspectorText.InspectorText.Food:
-                if (!cellData.ContainsFood)
+                if (!cellData.Food)
                 {
                     return;
                 }
@@ -311,17 +291,24 @@ public class Inspector : MonoBehaviour
         }
     }
 
-    private void DisplayPopulationText(GridSystem.CellData cellData)
+    private void DisplayPopulationText(GridSystem.TileData tileData)
     {
-        this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
+        this.HighlightPopulation(tileData.Animal.transform.parent.gameObject);
+
         //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
-        this.inspectorWindowDisplayScript.DisplayPopulationStatus(cellData.Animal.GetComponent<Animal>().PopulationInfo);
+        this.inspectorWindowDisplayScript.DisplayPopulationStatus(tileData.Animal.GetComponent<Animal>().PopulationInfo);
     }
 
-    private void DisplayFoodText(GridSystem.CellData cellData)
+    private void DisplayFoodText(GridSystem.TileData cellData)
     {
         this.HighlightFoodSource(cellData.Food);
         //Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
+        // root radius here
+        float rootRadius = cellData.Food.GetComponent<FoodSource>().Species.RootRadius;
+        Vector3 foodPosition = cellData.Food.transform.position;
+        Vector3Int foodPositionInt = new Vector3Int((int)foodPosition.x, (int)foodPosition.y, (int)foodPosition.z);
+        gridSystem.HighlightRadius(foodPositionInt, Color.blue, rootRadius);
+
         this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
     }
 
@@ -335,7 +322,7 @@ public class Inspector : MonoBehaviour
     private void DisplayLiquidText(Vector3Int cellPos)
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        float[] compositions = this.tileSystem.GetLiquidBodyAt(cellPos).contents;
+        float[] compositions = this.gridSystem.GetTileData(cellPos).currentLiquidBody.contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 
@@ -357,10 +344,7 @@ public class Inspector : MonoBehaviour
             this.lastPopulationSelected = null;
         }
 
-        foreach (Vector3Int pos in this.lastTilesSelected)
-        {
-            this.highLight.SetTile(pos, null);
-        }
+        gridSystem.ClearHighlights();
     }
 
     private void HighlightPopulation(GameObject population)
@@ -370,6 +354,13 @@ public class Inspector : MonoBehaviour
         {
             child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
+
+        // highlight their accessible terrain too
+        Population populationScript = population.GetComponent<Population>();
+        List<Vector3Int> accessibleTiles = reservePartitionManager.AccessibleArea[populationScript];
+
+        foreach (Vector3Int tilePosition in accessibleTiles)
+            gridSystem.HighlightTile(tilePosition, Color.green);
 
         this.lastPopulationSelected = population;
     }
