@@ -41,6 +41,8 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
         bookmarkTitle.onSubmit.AddListener(s => TryAddBookmark());
 
         UpdateInteractable();
+
+        UIParent.OnContentChanged.AddListener(UpdateInteractable);
     }
 
     private void OnDropdownActivated()

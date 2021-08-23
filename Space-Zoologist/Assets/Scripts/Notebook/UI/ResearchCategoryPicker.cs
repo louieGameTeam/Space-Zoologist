@@ -25,9 +25,9 @@ public class ResearchCategoryPicker : NotebookUIChild
         }
     }
     public ResearchCategoryEvent OnResearchCategoryChanged => onResearchCategoryChanged;
-    public bool HasBeenInitialized => SelectedCategory.Name != null && SelectedCategory.Name != "";
+    public bool HasBeenInitialized => !string.IsNullOrEmpty(selectedCategory.Name);
 
-    // Private editor fields
+    #region Private Editor Fields
 
     [SerializeField]
     [Tooltip("Reference to the prefab used to select a research category")]
@@ -44,6 +44,8 @@ public class ResearchCategoryPicker : NotebookUIChild
     [SerializeField]
     [Tooltip("Event invoked when the research category picker changes category picked")]
     private ResearchCategoryEvent onResearchCategoryChanged;
+
+    #endregion
 
     // List of the dropdowns used by the category picker
     private List<ResearchCategoryDropdown> dropdowns = new List<ResearchCategoryDropdown>();
@@ -75,7 +77,6 @@ public class ResearchCategoryPicker : NotebookUIChild
     private void ResearchCategoryChanged(ResearchCategory category)
     {
         selectedCategory = category;
-        onResearchCategoryChanged.Invoke(category);
 
         // Set the sprites of the backgrounds of the dropdown images
         foreach(TypeFilteredResearchCategoryDropdown dropdown in dropdowns)
@@ -83,5 +84,8 @@ public class ResearchCategoryPicker : NotebookUIChild
             if (dropdown.TypeFilter[0] == category.Type) dropdown.Dropdown.image.sprite = selectedSprite;
             else dropdown.Dropdown.image.sprite = notSelectedSprite;
         }
+
+        onResearchCategoryChanged.Invoke(category);
+        UIParent.OnContentChanged.Invoke();
     }
 }

@@ -8,6 +8,7 @@ public class NotebookUI : MonoBehaviour
 {
     // Public accessors
     public NotebookModel Notebook => notebook;
+    public UnityEvent OnContentChanged => onContentChanged;
 
     [SerializeField]
     [Expandable]
@@ -16,6 +17,9 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
     private NotebookTabPicker tabPicker;
+    [SerializeField]
+    [Tooltip("Event invoked when the content on the notebook changes")]
+    private UnityEvent onContentChanged;
 
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
@@ -46,21 +50,10 @@ public class NotebookUI : MonoBehaviour
         // while also making sure it is turned off at the start
         if (!isOpen) SetIsOpen(false);
     }
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            string numberString = SceneManager.GetActiveScene().name;
-            numberString = numberString.Substring("TestLevel".Length, 1);
-            int number = int.Parse(numberString);
-            SceneManager.LoadScene("TestLevel" + (number % 3 + 1));
-        }
-    }
     public void Toggle()
     {
         SetIsOpen(!isOpen);
     }
-
     public void SetIsOpen(bool isOpen)
     {
         this.isOpen = isOpen;
