@@ -58,9 +58,9 @@ public class GeneralDropdown : UIBehaviour
         // Make the dropdown invisible invisible
         dropdownPanel.SetActive(false);
 
-        foreach(Button button in dropdownDisableButtons)
+        foreach(Button disableButton in dropdownDisableButtons)
         {
-            button.onClick.AddListener(DisableDropdown);
+            disableButton.onClick.AddListener(DisableDropdown);
         }
 
         // When the button is clicked create the dropdown
@@ -93,7 +93,7 @@ public class GeneralDropdown : UIBehaviour
         // Get the canvas in the parents of this object
         Canvas parent = GetComponentInParent<Canvas>();
 
-        if(parent)
+        if(parent && !blocker)
         {
             blocker = new GameObject("Blocker");
             RectTransform blockerTransform = blocker.AddComponent<RectTransform>();
