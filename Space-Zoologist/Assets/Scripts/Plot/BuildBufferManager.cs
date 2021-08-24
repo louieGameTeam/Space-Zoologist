@@ -7,7 +7,6 @@ public class BuildBufferManager : GridObjectManager
     [SerializeField] private GameObject bufferGO;
     private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
     private bool[,] isConstructing;
-    [SerializeField] ReservePartitionManager RPM = default;
     public bool IsConstructing(int x, int y) => isConstructing[x, y];
     private Action constructionFinishedCallback = null;
 
@@ -150,7 +149,7 @@ public class BuildBufferManager : GridObjectManager
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
-            this.RPM.UpdateAccessMapChangedAt(changedTiles);
+            GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
     public void CountDown()
@@ -187,7 +186,7 @@ public class BuildBufferManager : GridObjectManager
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
-            this.RPM.UpdateAccessMapChangedAt(changedTiles);
+            GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
 

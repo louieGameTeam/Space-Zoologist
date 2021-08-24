@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     #region Managers
     public ReservePartitionManager m_reservePartitionManager { get; private set; }
     public FoodSourceManager m_foodSourceManager { get; private set; }
+    public ObjectiveManager m_objectiveManager { get; private set; }
     public PopulationManager m_populationManager { get; private set; }
     public ResourceManager m_resourceManager { get; private set; }
     public BuildBufferManager m_buildBufferManager { get; private set; }
@@ -156,9 +157,7 @@ public class GameManager : MonoBehaviour
         // add the references to the managers here
         // temporary find function until scene reorganization
 
-        // no longer necessary
-        // m_needSystemManager = FindObjectOfType<NeedSystemManager>();
-
+        m_objectiveManager = FindObjectOfType<ObjectiveManager>();
         m_reservePartitionManager = FindObjectOfType<ReservePartitionManager>();
         m_foodSourceManager = FindObjectOfType<FoodSourceManager>();
         m_populationManager = FindObjectOfType<PopulationManager>();
@@ -174,11 +173,11 @@ public class GameManager : MonoBehaviour
     {
         // load everything from resources folder here and I mean EVERYTHING
         m_tilePlacementController.LoadResources();
-        m_foodSourceManager.LoadResources();
     }
 
     private void InitializeManagers()
     {
+        m_reservePartitionManager.Initialize();
         m_foodSourceManager.Initialize();
         m_buildBufferManager.Initialize();
         m_resourceManager.Initialize();

@@ -9,7 +9,7 @@ public class FoodPathfinding : GeneralPathfinding
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        Vector3Int[] destinations = FoodSourceManager.ins.GetFoodSourcesLocationWithSpecies(FoodSpeciesName);
+        Vector3Int[] destinations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(FoodSpeciesName);
         Vector3Int destination = new Vector3Int(-1,-1,-1);
         if (destinations != null)
         {
