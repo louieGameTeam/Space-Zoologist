@@ -56,12 +56,13 @@ public class GridSystem : MonoBehaviour
     private void Awake()
     {
         // tilelayermanager stuff
-        InitializeTileLayerManager();
+        //InitializeTileLayerManager();
     }
 
     // do something about this
     private void InitializeTileLayerManager()
     {
+        Debug.Log("Initialize");
         this.liquidBodies = new HashSet<LiquidBody>();
         this.previewBodies = new List<LiquidBody>();
         this.RemovedTiles = new HashSet<Vector3Int>();
@@ -134,6 +135,8 @@ public class GridSystem : MonoBehaviour
 
         Vector3Int tilePosition = new Vector3Int();
         Dictionary<int, HashSet<Vector3Int>> liquidbodyIDToTiles = new Dictionary<int, HashSet<Vector3Int>>();
+
+        Debug.Log(serializedGrid.serializedTilemap.SerializedLiquidBodies.Length);
         foreach (SerializedLiquidBody serializedLiquidBody in serializedGrid.serializedTilemap.SerializedLiquidBodies)
             liquidbodyIDToTiles.Add(serializedLiquidBody.BodyID, new HashSet<Vector3Int>());
 

@@ -28,12 +28,56 @@ public class LiquidNeedSystem : NeedSystem
             return;
         }
 
+        Dictionary<Population, float> liquidTilesPerPopulation = new Dictionary<Population, float>();
+
+        foreach(Population population in Consumers.OfType<Population>())
+        {
+            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("LiquidTiles"))
+                liquidTilesPerPopulation.Add(population, 0);
+        }
+
+        //Go through each body of water in the level and divide it between all populations that can access it
+        foreach(LiquidBody liquidBody in gridSystem.liquidBodies)
+        {
+            HashSet<Population> accessiblePopulations = new HashSet<Population>();
+            foreach(Population population in Consumers.OfType<Population>())
+            {
+                //If the population needs water, check if it can access the current liquidbody. If it can, add it to the set
+                if(population.GetNeedValues().ContainsKey("LiquidTiles"))
+                {
+                    bool populationCanAccess = false;
+                    foreach(Vector3Int location in rpm.GetLiquidLocations(population))
+                    {
+                        if(liquidBody.tiles.Contains(location))
+                        {
+                            populationCanAccess = true;
+                            break;
+                        }
+                    }
+
+                    if(populationCanAccess)
+                        accessiblePopulations.Add(population);
+                }
+            }
+
+            float waterSplit = liquidBody.tiles.Count / (float)accessiblePopulations.Count;
+            foreach(Population population in accessiblePopulations)
+            {
+                liquidTilesPerPopulation[population] += waterSplit;
+            }
+        }
+
         float[] liquidCompositionToUpdate = default; 
         foreach (Life life in Consumers)
         {
-            if (life.GetType() == typeof(Population))
+            if (life is Population)
             {
-                List<float[]> liquidCompositions = rpm.GetLiquidComposition((Population)life);
+                Population population = (Population)life;
+                
+                population.UpdateNeed("LiquidTiles", liquidTilesPerPopulation[population]);
+                Debug.Log(population.name + " updated LiquidTiles with value: " + liquidTilesPerPopulation[population]);
+
+                List<float[]> liquidCompositions = rpm.GetLiquidComposition(population);
                 int highScore = 0;
 
                 // Check is there is found composition
@@ -52,14 +96,27 @@ public class LiquidNeedSystem : NeedSystem
                         // TODO: Decide which liquid source to take from
                         int curScore = 0;
 
-                        Population population = (Population)life;
-
                         foreach (var (value, index) in composition.WithIndex())
                         {
                             string needName = ((LiquidComposition)index).ToString();
                             if (population.GetNeedValues().ContainsKey(needName))
                             {
-                                curScore += population.Needs[needName].IsThresholdMet(value) ? 1 : 0;
+                                LiquidNeed need = (LiquidNeed)population.Needs[needName];
+
+                                switch(needName)
+                                {
+                                    case "Water":
+                                        curScore += need.IsFreshThresholdMet(value) ? 1 : 0;
+                                        break;
+
+                                    case "Salt":
+                                        curScore += need.IsSaltThresholdMet(value) ? 1 : 0;
+                                        break;
+
+                                    case "Bacteria":
+                                        curScore += need.IsBacteriaThresholdMet(value) ? 1 : 0;
+                                        break;
+                                }
                             }
                         }
 
@@ -76,9 +133,14 @@ public class LiquidNeedSystem : NeedSystem
                     continue;
                 }
             }
-            else if (life.GetType() == typeof(FoodSource))
+            else if (life is FoodSource)
             {
                 FoodSource foodSource = (FoodSource)life;
+
+                int liquidCount = gridSystem.CountOfTilesInRange(gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[(int)TileType.Liquid];
+                foodSource.UpdateNeed("LiquidTiles", liquidCount);
+                Debug.Log(foodSource.name + " updated LiquidTiles with value: " + liquidCount);
+
                 List<float[]> liquidCompositions = gridSystem.GetLiquidCompositionWithinRange(gridSystem.WorldToCell(life.GetPosition()), foodSource.Species.RootRadius);
                 // Check is there is found composition
                 if (liquidCompositions != null)
@@ -113,6 +175,7 @@ public class LiquidNeedSystem : NeedSystem
                 if (life.GetNeedValues().ContainsKey(needName))
                 {
                     life.UpdateNeed(needName, value);
+                    Debug.Log("Life: " + ((MonoBehaviour)life).gameObject.name + " updates need of type: " + needName + " with value " + value);
                 }
             }
         }

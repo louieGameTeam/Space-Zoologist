@@ -14,7 +14,6 @@ public class TerrainNeedConstructData : NeedConstructData
     public TerrainNeedConstructData(string name) 
         : base(name)
     {
-        
     }
 
     protected override bool getIsPreferred()
@@ -36,7 +35,6 @@ public class FoodNeedConstructData : NeedConstructData
     public FoodNeedConstructData(string name) 
         : base(name)
     {
-        
     }
 
     public override float GetSurvivableThreshold()
@@ -66,7 +64,6 @@ public class LiquidNeedConstructData : NeedConstructData
     public LiquidNeedConstructData(string name) 
         : base(name)
     {
-        
     }
 
     public override float GetSurvivableThreshold()

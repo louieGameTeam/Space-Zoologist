@@ -118,12 +118,14 @@ public class GrowthCalculator
             {
                 waterSourceSize = need.Value.NeedValue;
                 totalNeedWaterTiles = need.Value.GetThreshold() * numAnimals;
-                //Debug.Log("Total needed water tiles: " + totalNeedWaterTiles);
+                Debug.Log("Water tiles received: " + waterSourceSize + " out of " + totalNeedWaterTiles);
             }
             if (need.Value.NeedType.Equals(NeedType.Liquid) && need.Key.Equals("Water"))
             {
-                percentPureWater = need.Value.NeedValue;
-                neededPureWaterThreshold = need.Value.GetThreshold();
+                LiquidNeed liquidNeed = (LiquidNeed)need.Value;
+                percentPureWater = liquidNeed.NeedValue;
+                neededPureWaterThreshold = liquidNeed.GetFreshThreshold();
+                Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
             }
         }
         float waterTilesUsed = 0;
@@ -139,18 +141,20 @@ public class GrowthCalculator
         {
             IsNeedMet[NeedType.Liquid] = true;
             waterRating = 1 + (percentPureWater - neededPureWaterThreshold) * 100.0f;
+            Debug.Log("Water need met");
         }
         else if (waterTilesUsed >= totalNeedWaterTiles && percentPureWater < neededPureWaterThreshold)
         {
             IsNeedMet[NeedType.Liquid] = false;
             waterRating = (percentPureWater - neededPureWaterThreshold) * 100.0f;
+            Debug.Log("Water need met");
         }
         else
         {
             IsNeedMet[NeedType.Liquid] = false;
             waterRating = (waterTilesUsed - totalNeedWaterTiles) / numAnimals;
         }
-        //Debug.Log(Population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
+        Debug.Log(Population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
     }
 
     // Updates IsNeedMet and foodRating

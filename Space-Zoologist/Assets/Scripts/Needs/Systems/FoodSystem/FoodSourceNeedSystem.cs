@@ -84,8 +84,6 @@ public class FoodSourceNeedSystem : NeedSystem
         // 2. Iterate through populations based on most dominant
         foreach (Population population in new SortedSet<Population>(rpm.Populations, new DominanceComparer()))
         {
-            Debug.Log(population.gameObject.name);
-
             float preferredAmount = 0;
             float compatibleAmount = 0;
 

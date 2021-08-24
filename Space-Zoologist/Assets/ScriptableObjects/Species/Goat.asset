@@ -19,15 +19,13 @@ MonoBehaviour:
   growthScaleFactor: 0.125
   growthRate: 3
   decayRate: 3
-  size: 0
+  size: 3
   accessibleTerrain: 020000000100000000000000
   icon: {fileID: -2660005681641717123, guid: 69e7603fc8d1441cf8cb64f8bd8fc5a8, type: 3}
   terrainNeeds:
   - needName: Dirt
     isPreferred: 1
   - needName: Grass
-    isPreferred: 0
-  - needName: Liquid
     isPreferred: 0
   foodNeeds:
   - needName: Space Maple

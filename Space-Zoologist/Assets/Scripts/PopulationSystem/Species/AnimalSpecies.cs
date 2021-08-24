@@ -52,21 +52,27 @@ public class AnimalSpecies : ScriptableObject
         Dictionary<string, Need> needs = new Dictionary<string, Need>();
         
         //Terrain Needs
-        foreach (NeedConstructData need in terrainNeeds)
+        foreach (TerrainNeedConstructData need in terrainNeeds)
         {
             needs.Add(need.NeedName, new TerrainNeed(need, this));
         }
 
         //Food Needs
-        foreach (NeedConstructData need in foodNeeds)
+        foreach (FoodNeedConstructData need in foodNeeds)
         {
             needs.Add(need.NeedName, new FoodNeed(need));
         }
 
         //Water Needs
-        foreach (NeedConstructData need in liquidNeeds)
+        foreach (LiquidNeedConstructData need in liquidNeeds)
         {
             LiquidNeed liquidneed = new LiquidNeed(need);
+
+            if(liquidneed.GetThreshold() <= 0)
+                continue;
+
+            needs.Add("LiquidTiles", liquidneed);
+
             if(liquidneed.GetFreshThreshold() != 0)
                 needs.Add("Water", liquidneed);
 

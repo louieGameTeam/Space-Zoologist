@@ -9,12 +9,12 @@ public class TerrainNeed : Need
     private AnimalSpecies animalSpecies;
     private FoodSourceSpecies foodSourceSpecies;
 
-    public TerrainNeed(NeedConstructData needConstructData, AnimalSpecies species) : base(needConstructData) 
+    public TerrainNeed(TerrainNeedConstructData needConstructData, AnimalSpecies species) : base(needConstructData) 
     { 
         animalSpecies = species;
     }
 
-    public TerrainNeed(NeedConstructData needConstructData, FoodSourceSpecies species) : base(needConstructData) 
+    public TerrainNeed(TerrainNeedConstructData needConstructData, FoodSourceSpecies species) : base(needConstructData) 
     {
         foodSourceSpecies = species;
     }
@@ -39,7 +39,7 @@ public class TerrainNeed : Need
 [System.Serializable]
 public class FoodNeed : Need
 {
-    public FoodNeed(NeedConstructData needConstructData) : base(needConstructData) {}
+    public FoodNeed(FoodNeedConstructData needConstructData) : base(needConstructData) {}
 
     protected override NeedType GetNeedType()
     {
@@ -52,7 +52,7 @@ public class LiquidNeed : Need
 {
     private new LiquidNeedConstructData needConstructData;
 
-    public LiquidNeed(NeedConstructData needConstructData) : base(needConstructData) { needConstructData = (LiquidNeedConstructData)needConstructData; }
+    public LiquidNeed(LiquidNeedConstructData needConstructData) : base(needConstructData) { this.needConstructData = needConstructData; }
 
     protected override NeedType GetNeedType()
     {
