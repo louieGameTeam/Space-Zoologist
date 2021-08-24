@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5892994195613623914}
   - component: {fileID: 5892994195613623913}
   - component: {fileID: 4985465186544508037}
+  - component: {fileID: 7402859124686276361}
   m_Layer: 8
   m_Name: ResearchCategoryPicker
   m_TagString: Untagged
@@ -54,6 +55,7 @@ MonoBehaviour:
   dropdownParent: {fileID: 5892994195613623914}
   selectedSprite: {fileID: 21300000, guid: 41b5844cf105260418101f7bc1eda0bf, type: 3}
   notSelectedSprite: {fileID: 21300000, guid: 15fa5d67fc407064e88243ed2d7f0433, type: 3}
+  bookmarkTarget: {fileID: 7402859124686276361}
   onResearchCategoryChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -82,3 +84,15 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &7402859124686276361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5892994195613623915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95959e3341cfe844b985ec69ba2e7961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

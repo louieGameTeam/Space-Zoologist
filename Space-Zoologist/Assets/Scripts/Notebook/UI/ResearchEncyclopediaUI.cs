@@ -41,6 +41,9 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Input field used to display the encyclopedia article")]
     private ResearchEncyclopediaArticleInputField articleBody;
+    [SerializeField]
+    [Tooltip("Script that is targetted by the bookmarking system")]
+    private BookmarkTarget bookmarkTarget;
 
     // Maps the research category to the index of the article previously selected
     private Dictionary<ResearchCategory, int> previousSelected = new Dictionary<ResearchCategory, int>();
@@ -65,6 +68,9 @@ public class ResearchEncyclopediaUI : NotebookUIChild
 
         // Add listener for changes in the research category selected
         categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);
+
+        // Setup the bookmark target to get/set the article id
+        bookmarkTarget.Setup(() => CurrentArticleID, x => CurrentArticleID = (ResearchEncyclopediaArticleID)x);
     }
 
     private void OnResearchCategoryChanged(ResearchCategory category)

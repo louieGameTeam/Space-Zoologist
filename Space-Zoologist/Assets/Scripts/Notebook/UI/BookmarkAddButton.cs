@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
 
-public abstract class NotebookBookmarkAddButton : NotebookUIChild
+public class BookmarkAddButton : NotebookUIChild
 {
-    // Get the suggested title for the bookmark
-    protected abstract string SuggestedBookmarkTitle { get; }
-
+    [SerializeField]
+    [Tooltip("Suggested title of the bookmark")]
+    private string suggestedTitle = "New Bookmark";
     [SerializeField]
     [Tooltip("Reference to the script to assist with the dropdown functionality")]
     private GeneralDropdown dropdown;
@@ -25,12 +26,9 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
     [SerializeField]
     [Tooltip("Reference to the script that manages the UI for the bookmarks")]
     private NotebookBookmarkNavigationUI bookmarkUI;
-
-    [Header("Bookmark data")]
-
     [SerializeField]
-    [Tooltip("Reference to the category picker to add a bookmark for")]
-    protected ResearchCategoryPicker categoryPicker;
+    [Tooltip("List of components to target when navigating to the newly added bookmark")]
+    protected BookmarkTarget[] bookmarkTargets;
 
     public override void Setup()
     {
@@ -40,25 +38,24 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
         confirmButton.onClick.AddListener(TryAddBookmark);
         bookmarkTitle.onSubmit.AddListener(s => TryAddBookmark());
 
-        UpdateInteractable();
-
         UIParent.OnContentChanged.AddListener(UpdateInteractable);
     }
 
     private void OnDropdownActivated()
     {
         // When the dropdown is activated then set the suggested bookmark title
-        bookmarkTitle.text = SuggestedBookmarkTitle;
+        bookmarkTitle.text = suggestedTitle;
     }
 
     // On click, try to add the bookmark
     // If adding the bookmark succeeds, then make the bookmark UI create a new bookmark
     protected virtual void TryAddBookmark()
     {
-        NotebookBookmark bookmark = BookmarkToAdd(bookmarkTitle.text);
-        if(UIParent.Notebook.TryAddBookmark(bookmark))
+        Bookmark bookmark = new Bookmark(bookmarkTitle.text, bookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
+        if (UIParent.Notebook.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
+            dropdown.DisableDropdown();
 
             // Update interactable state of the button
             UpdateInteractable();
@@ -72,10 +69,8 @@ public abstract class NotebookBookmarkAddButton : NotebookUIChild
 
     public void UpdateInteractable()
     {
-        NotebookBookmark bookmark = BookmarkToAdd(bookmarkTitle.text);
+        Bookmark bookmark = new Bookmark(suggestedTitle, bookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
         dropdown.Interactable = !UIParent.Notebook.HasBookmark(bookmark);
         hasBookmarkGraphic.SetActive(!dropdown.Interactable);
     }
-
-    protected abstract NotebookBookmark BookmarkToAdd(string inputText);
 }

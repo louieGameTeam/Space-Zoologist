@@ -11,7 +11,7 @@ public class ResearchCategoryPicker : NotebookUIChild
     [System.Serializable] public class ResearchCategoryEvent : UnityEvent<ResearchCategory> { }
 
     // Public accessors
-
+    #region Public Properties
     public ResearchCategory SelectedCategory
     {
         get => selectedCategory;
@@ -26,9 +26,9 @@ public class ResearchCategoryPicker : NotebookUIChild
     }
     public ResearchCategoryEvent OnResearchCategoryChanged => onResearchCategoryChanged;
     public bool HasBeenInitialized => !string.IsNullOrEmpty(selectedCategory.Name);
+    #endregion
 
     #region Private Editor Fields
-
     [SerializeField]
     [Tooltip("Reference to the prefab used to select a research category")]
     private TypeFilteredResearchCategoryDropdown dropdown;
@@ -42,19 +42,27 @@ public class ResearchCategoryPicker : NotebookUIChild
     [Tooltip("Color of the dropdown when it is not selected")]
     private Sprite notSelectedSprite;
     [SerializeField]
+    [Tooltip("Reference to the script targetted by the bookmarking system")]
+    private BookmarkTarget bookmarkTarget;
+    [SerializeField]
     [Tooltip("Event invoked when the research category picker changes category picked")]
     private ResearchCategoryEvent onResearchCategoryChanged;
-
     #endregion
 
+    #region Private Fields
     // List of the dropdowns used by the category picker
     private List<ResearchCategoryDropdown> dropdowns = new List<ResearchCategoryDropdown>();
     // The category currently selected
     private ResearchCategory selectedCategory;
+    #endregion
 
+    #region Public Methods
     public override void Setup()
     {
         base.Setup();
+
+        // Setup the bookmark target
+        bookmarkTarget.Setup(() => SelectedCategory, c => SelectedCategory = (ResearchCategory)c);
 
         ResearchCategoryType[] types = (ResearchCategoryType[])System.Enum.GetValues(typeof(ResearchCategoryType));
 
@@ -73,7 +81,9 @@ public class ResearchCategoryPicker : NotebookUIChild
         // NOTE: this should invoke ResearchCategoryChanged immediately
         dropdowns[0].SetDropdownValue(0);
     }
+    #endregion
 
+    #region Private Methods
     private void ResearchCategoryChanged(ResearchCategory category)
     {
         selectedCategory = category;
@@ -88,4 +98,5 @@ public class ResearchCategoryPicker : NotebookUIChild
         onResearchCategoryChanged.Invoke(category);
         UIParent.OnContentChanged.Invoke();
     }
+    #endregion
 }

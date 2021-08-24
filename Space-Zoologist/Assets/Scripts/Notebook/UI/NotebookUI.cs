@@ -23,7 +23,7 @@ public class NotebookUI : MonoBehaviour
 
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
-    private Dictionary<string, ResearchCategoryPicker> namePickerMap = new Dictionary<string, ResearchCategoryPicker>();
+    private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
     private bool isOpen = false;
 
     // I thought that this was called when the game object is inactive but apparently it is not
@@ -36,10 +36,10 @@ public class NotebookUI : MonoBehaviour
         notebook.TryAddEnclosureID(EnclosureID.FromCurrentSceneName());
 
         // Map all pickers to their corresponding name
-        ResearchCategoryPicker[] allPickers = GetComponentsInChildren<ResearchCategoryPicker>(true);
-        foreach (ResearchCategoryPicker picker in allPickers)
+        BookmarkTarget[] allBookmarkTargets = GetComponentsInChildren<BookmarkTarget>(true);
+        foreach (BookmarkTarget bookmarkTarget in allBookmarkTargets)
         {
-            namePickerMap.Add(picker.name, picker);
+            nameTargetMap.Add(bookmarkTarget.name, bookmarkTarget);
         }
 
         // Setup all children, ensuring correct initialization order
@@ -60,15 +60,8 @@ public class NotebookUI : MonoBehaviour
         gameObject.SetActive(isOpen);
     }
 
-    public void NavigateToBookmark(NotebookBookmark bookmark)
+    public void NavigateToBookmark(Bookmark bookmark)
     {
-        // Get the expected component in the children of the notebook somewhere
-        Component component;
-
-        // Set component based on if type is null
-        if (bookmark.ExpectedComponentType != null) component = GetComponentInChildren(bookmark.ExpectedComponentType, true);
-        else component = null;
-
-        bookmark.NavigateTo(tabPicker, namePickerMap, component);
+        bookmark.Navigate(nameTargetMap);
     }
 }

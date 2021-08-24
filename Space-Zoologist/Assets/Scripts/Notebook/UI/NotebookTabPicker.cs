@@ -15,6 +15,9 @@ public class NotebookTabPicker : NotebookUIChild
     [SerializeField]
     [Tooltip("Toggle group used to make only one button selected")]
     private ToggleGroup parent;
+    [SerializeField]
+    [Tooltip("Reference to the bookmark target to use")]
+    private BookmarkTarget bookmarkTarget;
 
     // Current tab of the picker
     private NotebookTab currentTab;
@@ -24,6 +27,9 @@ public class NotebookTabPicker : NotebookUIChild
     public override void Setup()
     {
         base.Setup();
+
+        // Setup the bookmark target
+        bookmarkTarget.Setup(() => currentTab, t => SelectTab((NotebookTab)t));
 
         // Get all notebook tabs
         NotebookTab[] tabs = (NotebookTab[])System.Enum.GetValues(typeof(NotebookTab));
@@ -38,13 +44,13 @@ public class NotebookTabPicker : NotebookUIChild
         {
             NotebookTabSelectButton button = Instantiate(buttonPrefab, parent.transform);
             // Only the first selector will be on. NOTE: this invokes "OnTabSelected" immediately
-            button.Setup(tabs[i], parent, SetTabSelected, i == 0);
+            button.Setup(tabs[i], parent, OnTagSelected, i == 0);
             // Add this button to the list
             buttons.Add(button);
         }
     }
 
-    private void SetTabSelected(NotebookTab tab)
+    private void OnTagSelected(NotebookTab tab)
     {
         // Disable the current page and enable the new page
         pagesRoot.GetChild((int)currentTab).gameObject.SetActive(false);

@@ -19,7 +19,7 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
     private TextMeshProUGUI text;
 
     // Bookmark represented by this button
-    private NotebookBookmark bookmark;
+    private Bookmark bookmark;
     // The game object previously selected on the event system
     private GameObject previousSelectedGameObject;
     // The number of clicks this button has received while selected
@@ -39,7 +39,7 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
         previousSelectedGameObject = currentSelectedGameObject;
     }
 
-    public void Setup(NotebookBookmark bookmark)
+    public void Setup(Bookmark bookmark)
     {
         base.Setup();
         this.bookmark = bookmark;

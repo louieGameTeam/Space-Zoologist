@@ -1522,6 +1522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6847048554650783010}
   - component: {fileID: 254471932961645661}
+  - component: {fileID: 7777639559005465016}
   m_Layer: 5
   m_Name: EnclosureIDPicker
   m_TagString: Untagged
@@ -1564,9 +1565,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelDropdown: {fileID: 8661536556826096212}
   enclosureDropdown: {fileID: 4510683833613518246}
+  bookmarkTarget: {fileID: 7777639559005465016}
   onEnclosureIDPicked:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7777639559005465016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5194204258741175099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95959e3341cfe844b985ec69ba2e7961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5608986721035811892
 GameObject:
   m_ObjectHideFlags: 0

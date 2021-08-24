@@ -7,7 +7,7 @@ public class NotebookModel : ScriptableObject
 {
     public string Acronym => acronym;
     public ResearchModel Research => research;
-    public List<NotebookBookmark> Bookmarks { get; private set; } = new List<NotebookBookmark>();
+    public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
     public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(testAndMetricData.Keys);
 
     [SerializeField]
@@ -42,9 +42,9 @@ public class NotebookModel : ScriptableObject
     public void WriteAcronymNote(char c, string note) => acronymNotes[c] = note;
 
     // Return true/false if the notebook already has this bookmark
-    public bool HasBookmark(NotebookBookmark bookmark) => Bookmarks.Contains(bookmark);
+    public bool HasBookmark(Bookmark bookmark) => Bookmarks.Contains(bookmark);
     // Add the bookmark if the notebook doesn't already have it in the list
-    public bool TryAddBookmark(NotebookBookmark bookmark)
+    public bool TryAddBookmark(Bookmark bookmark)
     {
         if (!Bookmarks.Contains(bookmark))
         {
@@ -53,11 +53,11 @@ public class NotebookModel : ScriptableObject
         }
         else return false;
     }
-    private void AddBookmark(NotebookBookmark bookmark)
+    private void AddBookmark(Bookmark bookmark)
     {
         Bookmarks.Add(bookmark);
     }
-    public void RemoveBookmark(NotebookBookmark bookmark)
+    public void RemoveBookmark(Bookmark bookmark)
     {
         Bookmarks.Remove(bookmark);
     }

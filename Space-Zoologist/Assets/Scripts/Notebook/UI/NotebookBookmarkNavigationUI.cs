@@ -26,7 +26,7 @@ public class NotebookBookmarkNavigationUI : NotebookUIChild
     }
 
     // When a new bookmark is created, then instantiate a new button for it
-    public void CreateBookmarkButton(NotebookBookmark newBookmark)
+    public void CreateBookmarkButton(Bookmark newBookmark)
     {
         NotebookBookmarkNavigateButton clone = Instantiate(buttonPrefab, buttonParent);
         clone.Setup(newBookmark);
