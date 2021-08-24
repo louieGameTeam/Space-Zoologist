@@ -24,7 +24,7 @@ MonoBehaviour:
       in most ecosystems and may have formed a significant portion of Planet X\u2019s
       terrestrial animal biomass. Formica Collis tend to build complex subterranean
       nests, foraging from local plant and animal life. \r"
-    image: {fileID: 0}
+    sprites: []
   - id:
       title: Transport Log
       author: Barry Wchmann
@@ -34,7 +34,8 @@ MonoBehaviour:
       leaves, some dead bugs, bunch of water in their terrarium. I bet they\u2019re
       eager to rebuild their nest\u2026 Bugs generally freak me out, but these are
       surprisingly pretty, especially the green ones."
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: eafa1d0c03d910b4b9cf6a1dcc8a681b, type: 3}
   - id:
       title: Observation Log Session #5
       author: Juno Fornax
@@ -46,7 +47,8 @@ MonoBehaviour:
       ants have returned to their nest. Upon approach, the ants scurried inside the
       subterranean safety of their home. The nest appears to align with terran patterns,
       except for a highly voluminous population. Taking samples now.\r\n"
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: beddf7a8da63324499296f502395465e, type: 3}
   - id:
       title: Research Abstract
       author: Dr. Aurora Star
@@ -59,4 +61,4 @@ MonoBehaviour:
       Under water stress, the trees have smaller carbon pools. The degree to which
       water limitation may increase the strength of a carbon-based mutualism is uncertain
       for Planet X plant life. \r"
-    image: {fileID: 0}
+    sprites: []

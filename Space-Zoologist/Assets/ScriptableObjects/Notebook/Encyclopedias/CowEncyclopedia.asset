@@ -25,7 +25,7 @@ MonoBehaviour:
       companions, space cows were not observed with predatory tendencies. Herds have
       been recorded at Caloris Basin, Marineris Grasslands, and the outskirts of
       the Pastillion Mountain Range."
-    image: {fileID: 0}
+    sprites: []
   - id:
       title: Transport Log
       author: Barry Wachmann
@@ -38,7 +38,8 @@ MonoBehaviour:
       I heard one talk. I mean, it was probably just a moo. And we\u2019ve been travelling
       understaffed with so many endangered species, I\u2019m sure I\u2019m hearing
       things."
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: d930a59c551c9d84fba833c623d6c1e1, type: 3}
   - id:
       title: Observation Log Session #12
       author: Juno Fornax
@@ -48,7 +49,8 @@ MonoBehaviour:
       more open. Almost like canines, the cows would often tilt their heads and sniff
       my extremities. They do not appear to have interacted with other human(oid)s,
       which aligns with the lack of intelligent peoples thus far.
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: 03009ada22174a140a929dc54e9838f3, type: 3}
   - id:
       title: Research Abstract
       author: Dr. Aurora Star
@@ -67,4 +69,5 @@ MonoBehaviour:
       observe the degree to which the cattle do or do not vocalize. The herds do
       appear to interact with each other and behave similarly to Terran cows, which
       suggests an alternative method of communication.'
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: 324041bda96dbcf4ba3dea3986e15817, type: 3}

@@ -21,7 +21,7 @@ MonoBehaviour:
       heterokont consisting of flat, leaf-like structures known as blades. Kelp forests
       typically support a large number of animals and larger invertebrates are secondary
       consumers of kelp, although they are rarely found inside dense kelp forests."
-    image: {fileID: 0}
+    sprites: []
   - id:
       title: Transport Log
       author: Barry Wachmann
@@ -30,7 +30,8 @@ MonoBehaviour:
       I imagine only aquatic creatures would enjoy eating Planet X\u2019s kelp--and
       perhaps humans? This is an endangered plant, so I really shouldn\u2019t test
       that hypothesis out. They don\u2019t seem hard to get to grow, though..."
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: d5146e8bc1d29de4da195fa4d13676e5, type: 3}
   - id:
       title: Observation Log Session #3
       author: Juno Fornax
@@ -41,7 +42,8 @@ MonoBehaviour:
       currently 10,000 ft below sea level. A larger abundance of bristle worms, scud,
       prawns, and snails are traveling through the kelp forests. Imaging indicates
       an atypical hue to the creatures.\r"
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: 0bb7039fa90f4584a84d9de6c8489798, type: 3}
   - id:
       title: Research Abstract - Under Review
       author: Aurora Star
@@ -55,4 +57,5 @@ MonoBehaviour:
       emissions. One possibility lies within the flora of Planet X. This study will
       investigate Planet X\u2019s prominent kelp species, Coruscent Laminar, and
       its ability (or proposed lack thereof) to capture carbon.\r"
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: 56fad59c9c4920c4d9e14bce9065a58a, type: 3}

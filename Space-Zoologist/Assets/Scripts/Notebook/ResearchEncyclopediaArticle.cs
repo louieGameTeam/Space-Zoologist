@@ -9,7 +9,7 @@ public class ResearchEncyclopediaArticle
     // Public accessors of private data
     public ResearchEncyclopediaArticleID ID => id;
     public string Text => trueText;
-    public Sprite Image => image;
+    public Sprite[] Sprites => sprites;
     public List<ResearchEncyclopediaArticleHighlight> Highlights => highlights;
 
     // Private editor data
@@ -22,7 +22,7 @@ public class ResearchEncyclopediaArticle
     private string text;
     [SerializeField]
     [Tooltip("Image that can display in the article")]
-    private Sprite image;
+    private Sprite[] sprites;
 
     [Tooltip("List of all the highlights made in this article")]
     private List<ResearchEncyclopediaArticleHighlight> highlights = new List<ResearchEncyclopediaArticleHighlight>();
