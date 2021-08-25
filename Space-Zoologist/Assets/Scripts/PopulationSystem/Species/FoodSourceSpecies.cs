@@ -34,30 +34,28 @@ public class FoodSourceSpecies : ScriptableObject
             needs.Add(need.NeedName, new TerrainNeed(need, this));
         }
 
-        //Food Needs
-        foreach (FoodNeedConstructData need in foodNeeds)
-        {
-            needs.Add(need.NeedName, new FoodNeed(need));
-        }
+        //Food sources shouldn't need food but here's the logic if we ever end up needed that behavior
+        // foreach (FoodNeedConstructData need in foodNeeds)
+        // {
+        //     needs.Add(need.NeedName, new FoodNeed(need, 0));
+        // }
 
         //Water Needs
         foreach (LiquidNeedConstructData need in liquidNeeds)
         {
-            LiquidNeed liquidneed = new LiquidNeed(need);
-
-            if(liquidneed.GetThreshold() <= 0)
+            if(need.TileNeedThreshold <= 0)
                 continue;
 
-            needs.Add("LiquidTiles", liquidneed);
-            
-            if(liquidneed.GetFreshThreshold() != 0)
-                needs.Add("Water", liquidneed);
+            needs.Add("LiquidTiles", new LiquidNeed("LiquidTiles", need));
 
-            if(liquidneed.GetBacteriaThreshold() != 0)
-                needs.Add("Bacteria", liquidneed);
+            if(need.FreshWaterThreshold != 0)
+                needs.Add("Water", new LiquidNeed("Water", need));
 
-            if(liquidneed.GetSaltThreshold() != 0)
-                needs.Add("Salt", liquidneed);
+            if(need.SaltThreshold != 0)
+                needs.Add("Salt", new LiquidNeed("Salt", need));
+
+            if(need.BacteriaThreshold != 0)
+                needs.Add("Bacteria", new LiquidNeed("Bacteria", need));
         }
 
 

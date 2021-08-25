@@ -16,6 +16,8 @@ MonoBehaviour:
   speciesName: Eligans Impar
   species: 1
   terrainTilesRequired: 8
+  minFoodRequired: 8
+  maxFoodRequired: 10
   growthScaleFactor: 0.125
   growthRate: 4
   decayRate: 3
@@ -29,13 +31,10 @@ MonoBehaviour:
     isPreferred: 1
   foodNeeds:
   - needName: Space Maple
-    foodNeedThreshold: 8
     isPreferred: 0
   - needName: Berries
-    foodNeedThreshold: 8
     isPreferred: 0
   - needName: Gold Space Maple
-    foodNeedThreshold: 8
     isPreferred: 1
   liquidNeeds:
   - needName: Water

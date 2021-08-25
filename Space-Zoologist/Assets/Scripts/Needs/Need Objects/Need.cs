@@ -24,7 +24,7 @@ public class TerrainNeed : Need
         return NeedType.Terrain;
     }
 
-    new public float GetThreshold()
+    public override float GetThreshold()
     {
         if(animalSpecies)
             return animalSpecies.TerrainTilesRequired;
@@ -39,11 +39,21 @@ public class TerrainNeed : Need
 [System.Serializable]
 public class FoodNeed : Need
 {
-    public FoodNeed(FoodNeedConstructData needConstructData) : base(needConstructData) {}
+    private int foodThreshold;
+
+    public FoodNeed(FoodNeedConstructData needConstructData, int minFoodThreshold) : base(needConstructData) 
+    {
+        foodThreshold = minFoodThreshold;
+    }
 
     protected override NeedType GetNeedType()
     {
         return NeedType.FoodSource;
+    }
+
+    public override float GetThreshold()
+    {
+        return foodThreshold;
     }
 }
 
@@ -51,32 +61,60 @@ public class FoodNeed : Need
 public class LiquidNeed : Need
 {
     private new LiquidNeedConstructData needConstructData;
+    private string needType;
 
-    public LiquidNeed(LiquidNeedConstructData needConstructData) : base(needConstructData) { this.needConstructData = needConstructData; }
+    public LiquidNeed(string needType, LiquidNeedConstructData needConstructData) : base(needConstructData) 
+    { 
+        this.needConstructData = needConstructData; 
+        this.needType = needType;
+    }
 
     protected override NeedType GetNeedType()
     {
         return NeedType.Liquid;
     }
 
-    public float GetFreshThreshold() { return needConstructData.FreshWaterThreshold; }
-    public float GetSaltThreshold() { return needConstructData.SaltThreshold; }
-    public float GetBacteriaThreshold() { return needConstructData.BacteriaThreshold; }
-    
-    public bool IsFreshThresholdMet(float value)
+    public override float GetThreshold()
     {
-        return value >= GetFreshThreshold();
+        switch(needType)
+        {
+            case "LiquidTiles":
+                return base.GetThreshold();
+            case "Water":
+                return GetFreshThreshold();
+            case "Salt":
+                return GetSaltThreshold();
+            case "Bacteria":
+                return GetBacteriaThreshold();
+            default:
+                return base.GetThreshold();
+        }
+    }
+
+    private float GetFreshThreshold() { return needConstructData.FreshWaterThreshold; }
+    private float GetSaltThreshold() { return needConstructData.SaltThreshold; }
+    private float GetBacteriaThreshold() { return needConstructData.BacteriaThreshold; }
+
+    public override bool IsThresholdMet(float value)
+    {
+        switch(needType)
+        {
+            case "LiquidTiles":
+                return base.IsThresholdMet(value);
+            case "Water":
+                return IsFreshThresholdMet(value);
+            case "Salt":
+                return IsSaltThresholdMet(value);
+            case "Bacteria":
+                return IsBacteriaThresholdMet(value);
+            default:
+                return base.IsThresholdMet(value);
+        }
     }
     
-    public bool IsSaltThresholdMet(float value)
-    {
-        return value >= GetSaltThreshold();
-    }
-    
-    public bool IsBacteriaThresholdMet(float value)
-    {
-        return value >= GetBacteriaThreshold();
-    }
+    private bool IsFreshThresholdMet(float value) { return value >= GetFreshThreshold(); }
+    private bool IsSaltThresholdMet(float value) { return value >= GetSaltThreshold(); }
+    private bool IsBacteriaThresholdMet(float value) { return value >= GetBacteriaThreshold(); }
 }
 
 [System.Serializable]
@@ -108,17 +146,17 @@ public abstract class Need
     /// </summary>
     /// <param name="value">The value to compare to the need thresholds</param>
     /// <returns></returns>
-    public bool IsThresholdMet(float value)
+    public virtual bool IsThresholdMet(float value)
     {
         return value >= needConstructData.GetSurvivableThreshold();
     }
 
-    public float GetThreshold()
+    public virtual float GetThreshold()
     {
         return needConstructData.GetSurvivableThreshold();
     }
 
-    public void UpdateNeedValue(float value)
+    public virtual void UpdateNeedValue(float value)
     {
         this.needValue = value;
     }

@@ -16,6 +16,8 @@ MonoBehaviour:
   speciesName: CapraX Zeigrun
   species: 0
   terrainTilesRequired: 4
+  minFoodRequired: 4
+  maxFoodRequired: 6
   growthScaleFactor: 0.125
   growthRate: 3
   decayRate: 3
@@ -29,13 +31,10 @@ MonoBehaviour:
     isPreferred: 0
   foodNeeds:
   - needName: Space Maple
-    foodNeedThreshold: 4
     isPreferred: 0
   - needName: Berries
-    foodNeedThreshold: 4
     isPreferred: 0
   - needName: Gold Space Maple
-    foodNeedThreshold: 4
     isPreferred: 1
   liquidNeeds:
   - needName: Water

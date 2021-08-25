@@ -245,7 +245,7 @@ public class TerrainNeedSystem : NeedSystem
                 // 2. This population surpasses the next most-in-need population for tiles allocated
                 // 3. This population has its terrain need satisfied
                 int tileIndex = 0;
-                while(tileIndex < tileArray.Length && allocatedTilesWeighted(populationMostInNeed) < secondLeastAllocation && sumAllocatedTiles(populationMostInNeed) < tilesNeeded[populationMostInNeed])
+                while(tileIndex < tileArray.Length && allocatedTilesWeighted(populationMostInNeed) < secondLeastAllocation) //  && sumAllocatedTiles(populationMostInNeed) < tilesNeeded[populationMostInNeed]
                 {
                     if (rpm.CanAccess(populationMostInNeed, tileArray[tileIndex]))
                     {
@@ -283,7 +283,7 @@ public class TerrainNeedSystem : NeedSystem
                     // } else 
                     if(tilesAllocated[population].ContainsKey(tile)) {
                         population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
-                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                        //Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
                     }
                 }
             }

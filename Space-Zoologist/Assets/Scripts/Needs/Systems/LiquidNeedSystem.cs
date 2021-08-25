@@ -29,6 +29,7 @@ public class LiquidNeedSystem : NeedSystem
         }
 
         Dictionary<Population, float> liquidTilesPerPopulation = new Dictionary<Population, float>();
+        Dictionary<Population, HashSet<LiquidBody>> liquidBodiesPerPopulation = new Dictionary<Population, HashSet<LiquidBody>>();
 
         foreach(Population population in Consumers.OfType<Population>())
         {
@@ -42,11 +43,17 @@ public class LiquidNeedSystem : NeedSystem
             HashSet<Population> accessiblePopulations = new HashSet<Population>();
             foreach(Population population in Consumers.OfType<Population>())
             {
-                //If the population needs water, check if it can access the current liquidbody. If it can, add it to the set
-                if(population.GetNeedValues().ContainsKey("LiquidTiles"))
+                Dictionary<string, Need> popNeeds = population.GetNeedValues();
+
+                if(!popNeeds.ContainsKey("LiquidTiles"))
+                    continue;
+                
+                if (!(popNeeds.ContainsKey("Water") && liquidBody.contents[(int)LiquidComposition.Water] < popNeeds["Water"].GetThreshold()) && //If the populations either doesn't need fresh water or the fresh water threshold is met
+                    !(popNeeds.ContainsKey("Salt") && liquidBody.contents[(int)LiquidComposition.Salt] < popNeeds["Salt"].GetThreshold()) &&  //and it either doesn't need salt or the salt threshold is met
+                    !(popNeeds.ContainsKey("Bacteria") && liquidBody.contents[(int)LiquidComposition.Bacteria] < popNeeds["Bacteria"].GetThreshold()) ) //and it either doesn't need bacteria or the bacteria threshold is met
                 {
                     bool populationCanAccess = false;
-                    foreach(Vector3Int location in rpm.GetLiquidLocations(population))
+                    foreach(Vector3Int location in rpm.GetLiquidLocations(population)) //check if any of the liquidbody's tiles are accessible to this population
                     {
                         if(liquidBody.tiles.Contains(location))
                         {
@@ -55,15 +62,21 @@ public class LiquidNeedSystem : NeedSystem
                         }
                     }
 
-                    if(populationCanAccess)
+                    if(populationCanAccess) //if the population can access this water source, add it to the set
                         accessiblePopulations.Add(population);
                 }
             }
 
+            //split this water source equally between all populations that have access to it, regardless of that population's size
             float waterSplit = liquidBody.tiles.Count / (float)accessiblePopulations.Count;
             foreach(Population population in accessiblePopulations)
             {
                 liquidTilesPerPopulation[population] += waterSplit;
+
+                if(!liquidBodiesPerPopulation.ContainsKey(population))
+                    liquidBodiesPerPopulation.Add(population, new HashSet<LiquidBody>());
+                
+                liquidBodiesPerPopulation[population].Add(liquidBody);
             }
         }
 
@@ -75,56 +88,29 @@ public class LiquidNeedSystem : NeedSystem
                 Population population = (Population)life;
                 
                 population.UpdateNeed("LiquidTiles", liquidTilesPerPopulation[population]);
-                Debug.Log(population.name + " updated LiquidTiles with value: " + liquidTilesPerPopulation[population]);
-
-                List<float[]> liquidCompositions = rpm.GetLiquidComposition(population);
-                int highScore = 0;
+                //Debug.Log(population.name + " updates LiquidTiles with value: " + liquidTilesPerPopulation[population]);
 
                 // Check is there is found composition
-                if (liquidCompositions != null)
+                if (liquidBodiesPerPopulation.ContainsKey(population))
                 {
-                    if (liquidCompositions.Count == 0)
+                    int totalTiles = 0;
+
+                    //Average out all the liquid compositions
+                    liquidCompositionToUpdate = new float[]{0, 0, 0};
+
+                    foreach (LiquidBody liquidBody in liquidBodiesPerPopulation[population])
                     {
-                        this.isDirty = false;
-                        return;
+                        //Weight each composition based on the number of tiles in the liquidbody
+                        liquidCompositionToUpdate[0] += liquidBody.contents[0] * liquidBody.tiles.Count;
+                        liquidCompositionToUpdate[1] += liquidBody.contents[1] * liquidBody.tiles.Count;
+                        liquidCompositionToUpdate[2] += liquidBody.contents[2] * liquidBody.tiles.Count;
+
+                        totalTiles += liquidBody.tiles.Count;
                     }
 
-                    liquidCompositionToUpdate = liquidCompositions[0];
-
-                    foreach (float[] composition in liquidCompositions)
+                    for(int i = 0; i <= 2; ++i)
                     {
-                        // TODO: Decide which liquid source to take from
-                        int curScore = 0;
-
-                        foreach (var (value, index) in composition.WithIndex())
-                        {
-                            string needName = ((LiquidComposition)index).ToString();
-                            if (population.GetNeedValues().ContainsKey(needName))
-                            {
-                                LiquidNeed need = (LiquidNeed)population.Needs[needName];
-
-                                switch(needName)
-                                {
-                                    case "Water":
-                                        curScore += need.IsFreshThresholdMet(value) ? 1 : 0;
-                                        break;
-
-                                    case "Salt":
-                                        curScore += need.IsSaltThresholdMet(value) ? 1 : 0;
-                                        break;
-
-                                    case "Bacteria":
-                                        curScore += need.IsBacteriaThresholdMet(value) ? 1 : 0;
-                                        break;
-                                }
-                            }
-                        }
-
-                        if (curScore > highScore)
-                        {
-                            liquidCompositionToUpdate = composition;
-                            highScore = curScore;
-                        }
+                        liquidCompositionToUpdate[i] /= totalTiles;
                     }
                 }
                 else
@@ -139,7 +125,7 @@ public class LiquidNeedSystem : NeedSystem
 
                 int liquidCount = gridSystem.CountOfTilesInRange(gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[(int)TileType.Liquid];
                 foodSource.UpdateNeed("LiquidTiles", liquidCount);
-                Debug.Log(foodSource.name + " updated LiquidTiles with value: " + liquidCount);
+                //Debug.Log(foodSource.name + " updated LiquidTiles with value: " + liquidCount);
 
                 List<float[]> liquidCompositions = gridSystem.GetLiquidCompositionWithinRange(gridSystem.WorldToCell(life.GetPosition()), foodSource.Species.RootRadius);
                 // Check is there is found composition
@@ -175,7 +161,7 @@ public class LiquidNeedSystem : NeedSystem
                 if (life.GetNeedValues().ContainsKey(needName))
                 {
                     life.UpdateNeed(needName, value);
-                    Debug.Log("Life: " + ((MonoBehaviour)life).gameObject.name + " updates need of type: " + needName + " with value " + value);
+                    //Debug.Log("Life: " + ((MonoBehaviour)life).gameObject.name + " updates need of type: " + needName + " with value " + value);
                 }
             }
         }

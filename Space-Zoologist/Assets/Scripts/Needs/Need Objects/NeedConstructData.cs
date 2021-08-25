@@ -27,9 +27,6 @@ public class TerrainNeedConstructData : NeedConstructData
 [System.Serializable]
 public class FoodNeedConstructData : NeedConstructData
 {
-    public float FoodNeedThreshold => foodNeedThreshold;
-
-    [SerializeField] private float foodNeedThreshold;
     [SerializeField] private bool isPreferred;
 
     public FoodNeedConstructData(string name) 
@@ -39,7 +36,7 @@ public class FoodNeedConstructData : NeedConstructData
 
     public override float GetSurvivableThreshold()
     {
-        return foodNeedThreshold;
+        return -1;
     }
 
     protected override bool getIsPreferred()

@@ -9,6 +9,10 @@ public enum GrowthStatus {declining, stagnate, growing}
 /// </summary>
 public class GrowthCalculator
 {
+    private const float maxFreshWaterTilePercent = 0.98f; //Someday this will need to be changed to get the value from the scriptableObject
+    private const float maxSaltTilePercent = 0.04f; //Someday this will need to be changed to get the value from the scriptableObject
+    private const float maxBacteriaTilePercent = 0.09f; //Someday this will need to be changed to get the value from the scriptableObject
+
     public GrowthStatus GrowthStatus { get; private set; }
     public Dictionary<NeedType, bool> IsNeedMet = new Dictionary<NeedType, bool>();
     public int GrowthCountdown = 0;
@@ -16,7 +20,7 @@ public class GrowthCalculator
     public float FoodRating => foodRating;
     public float WaterRating => waterRating;
     public float TerrainRating => terrainRating;
-    Population Population = default;
+    Population population = default;
     private float foodRating = 0f;
     private float waterRating = 0f;
     private float terrainRating = 0f;
@@ -24,7 +28,7 @@ public class GrowthCalculator
 
     public GrowthCalculator(Population population)
     {
-        this.Population = population;
+        this.population = population;
         this.GrowthCountdown = population.Species.GrowthRate;
         this.DecayCountdown = population.Species.DecayRate;
         this.GrowthStatus = GrowthStatus.stagnate;
@@ -46,197 +50,179 @@ public class GrowthCalculator
     public void CalculateGrowth()
     {
         this.GrowthStatus = GrowthStatus.growing;
-        int numAnimals = Population.AnimalPopulation.Count;
-
-        populationIncreaseRate = 0f;
-        // 1.
-        Dictionary<NeedType, bool> resetNeedTracker = new Dictionary<NeedType, bool>(IsNeedMet);
-        foreach (KeyValuePair<NeedType, bool> need in IsNeedMet)
+        
+        foreach (KeyValuePair<NeedType, bool> need in new Dictionary<NeedType, bool>(IsNeedMet))
         {
             if (!IsNeedMet[need.Key])
             {
-                //Debug.Log(need.Key + " is not met");
+                //If any need is not being met, set the growth status to declining
                 GrowthStatus = GrowthStatus.declining;
-                if (need.Key.Equals(NeedType.FoodSource))
-                {
-                    populationIncreaseRate += foodRating;
-                }
-                if (need.Key.Equals(NeedType.Liquid))
-                {
-                    populationIncreaseRate += waterRating;
-                }
-                if (need.Key.Equals(NeedType.Terrain))
-                {
-                    populationIncreaseRate += terrainRating;
-                }
             }
-            resetNeedTracker[need.Key] = false;
+            IsNeedMet[need.Key] = false;
         }
-        if (this.GrowthStatus.Equals(GrowthStatus.declining))
+
+        populationIncreaseRate = 0f;
+
+        if(this.GrowthStatus == GrowthStatus.growing)
         {
-            populationIncreaseRate *= numAnimals * Population.Species.GrowthScaleFactor;
-            if (populationIncreaseRate < numAnimals * -0.25f)
-            {
-                populationIncreaseRate = numAnimals * -0.25f;
-            }
-            // Handle rounding issues
-            if (populationIncreaseRate < 0 && populationIncreaseRate > -1)
-            {
-                populationIncreaseRate = -1;
-            }
+            //Scales the increase rate between 100% and 200% population increase
+            populationIncreaseRate = (waterRating + foodRating + terrainRating)/3f;
         }
-        // 2.
         else
         {
-            populationIncreaseRate = (foodRating + waterRating + terrainRating) * Population.Species.GrowthScaleFactor * numAnimals;
-            if (populationIncreaseRate > numAnimals * 1.5f)
-            {
-                populationIncreaseRate = numAnimals * 1.5f;
-            }
-            //Debug.Log(Population.gameObject.name + " will increase at a rate of " + populationIncreaseRate);
-            // Handle rounding issues
-            if (populationIncreaseRate > 0 && populationIncreaseRate < 1)
-            {
-                populationIncreaseRate = 1;
-            }
-
+            //Scales the increase rate between 0% and 100% population decrease (could potentially wipe out a population if the player is failing as much as possible)
+            populationIncreaseRate = (Mathf.Min(waterRating, 0) + Mathf.Min(foodRating, 0) + Mathf.Min(terrainRating, 0))/3f;
         }
-        populationIncreaseRate = (int)Math.Round(populationIncreaseRate, 0, MidpointRounding.AwayFromZero);
-        IsNeedMet = resetNeedTracker;
+
+        Debug.Log("Population status: " + this.GrowthStatus.ToString() + ", increase rate: " + populationIncreaseRate);
     }
 
     public void CalculateWaterNeed()
     {
-        float totalNeedWaterTiles = 0f;
-        float percentPureWater = 0f;
-        float waterSourceSize = 0f;
-        float neededPureWaterThreshold = 0f;
-        int numAnimals = Population.AnimalPopulation.Count;
-        foreach (KeyValuePair<string, Need> need in Population.Needs)
+        if(!population.Needs.ContainsKey("LiquidTiles"))
         {
-            if (need.Value.NeedType.Equals(NeedType.Terrain) && need.Key.Equals("Liquid"))
+            waterRating = 0;
+            return;
+        }
+
+        LiquidNeed tileNeed = (LiquidNeed)population.Needs["LiquidTiles"];
+
+        LiquidNeed waterNeed = null;
+        if(population.Needs.ContainsKey("Water"))
+            waterNeed = (LiquidNeed)population.Needs["Water"];
+
+        LiquidNeed saltNeed = null;
+        if(population.Needs.ContainsKey("Salt"))
+            saltNeed = (LiquidNeed)population.Needs["Salt"];
+
+        LiquidNeed bacteriaNeed = null;
+        if(population.Needs.ContainsKey("Bacteria"))
+            bacteriaNeed = (LiquidNeed)population.Needs["Bacteria"];
+
+        int numAnimals = population.AnimalPopulation.Count;
+        float waterSourceSize = tileNeed.NeedValue;
+        float totalNeedWaterTiles = tileNeed.GetThreshold() * numAnimals;
+        float waterTilesUsed = Mathf.Min(waterSourceSize, totalNeedWaterTiles);
+
+        if (waterTilesUsed >= totalNeedWaterTiles)
+        {
+            Debug.Log("Water need met");
+            IsNeedMet[NeedType.Liquid] = true;
+            waterRating = 0;
+
+            if(waterNeed != null)
             {
-                waterSourceSize = need.Value.NeedValue;
-                totalNeedWaterTiles = need.Value.GetThreshold() * numAnimals;
-                Debug.Log("Water tiles received: " + waterSourceSize + " out of " + totalNeedWaterTiles);
-            }
-            if (need.Value.NeedType.Equals(NeedType.Liquid) && need.Key.Equals("Water"))
-            {
-                LiquidNeed liquidNeed = (LiquidNeed)need.Value;
-                percentPureWater = liquidNeed.NeedValue;
-                neededPureWaterThreshold = liquidNeed.GetFreshThreshold();
+                float percentPureWater = waterNeed.NeedValue;
+                float neededPureWaterThreshold = waterNeed.GetThreshold();
+                waterRating += (percentPureWater - neededPureWaterThreshold) / (maxFreshWaterTilePercent - neededPureWaterThreshold);
                 Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
             }
-        }
-        float waterTilesUsed = 0;
-        if (waterSourceSize > totalNeedWaterTiles)
-        {
-            waterTilesUsed = totalNeedWaterTiles;
-        }
-        else
-        {
-            waterTilesUsed = waterSourceSize;
-        }
-        if (waterTilesUsed >= totalNeedWaterTiles && percentPureWater >= neededPureWaterThreshold)
-        {
-            IsNeedMet[NeedType.Liquid] = true;
-            waterRating = 1 + (percentPureWater - neededPureWaterThreshold) * 100.0f;
-            Debug.Log("Water need met");
-        }
-        else if (waterTilesUsed >= totalNeedWaterTiles && percentPureWater < neededPureWaterThreshold)
-        {
-            IsNeedMet[NeedType.Liquid] = false;
-            waterRating = (percentPureWater - neededPureWaterThreshold) * 100.0f;
-            Debug.Log("Water need met");
+
+            if(saltNeed != null)
+            {
+                float percentSalt = saltNeed.NeedValue;
+                float neededSaltThreshold = saltNeed.GetThreshold();
+                waterRating += (percentSalt - neededSaltThreshold) / (maxSaltTilePercent - neededSaltThreshold);
+                Debug.Log("Salt received: " + percentSalt + " out of " + neededSaltThreshold);
+            }
+
+            if(bacteriaNeed != null)
+            {
+                float percentBacteria = bacteriaNeed.NeedValue;
+                float neededBacteriaThreshold = bacteriaNeed.GetThreshold();
+                waterRating += (percentBacteria - neededBacteriaThreshold) / (maxBacteriaTilePercent - neededBacteriaThreshold);
+                Debug.Log("Bacteria received: " + percentBacteria + " out of " + neededBacteriaThreshold);
+            }
         }
         else
         {
             IsNeedMet[NeedType.Liquid] = false;
-            waterRating = (waterTilesUsed - totalNeedWaterTiles) / numAnimals;
+            waterRating = (waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles;
         }
-        Debug.Log(Population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
+
+        Debug.Log(population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
     }
 
     // Updates IsNeedMet and foodRating
     public void CalculateFoodNeed(float availablePreferredFood, float availableCompatibleFood)
     {
-        float totalMinFoodNeeded = 0f;
-        int numAnimals = Population.AnimalPopulation.Count;
-        foreach (KeyValuePair<string, Need> need in Population.Needs)
-        {
-            if (need.Value.NeedType.Equals(NeedType.FoodSource))
-            {
-                totalMinFoodNeeded = need.Value.GetThreshold() * numAnimals;
-                break;
-            }
-        }
-        float totalFoodConsumed = availablePreferredFood + availableCompatibleFood;
+        int numAnimals = population.AnimalPopulation.Count;
+        float totalMinFoodNeeded = numAnimals * population.species.MinFoodRequired;
+        float totalMaxFoodNeeded = numAnimals * population.species.MaxFoodRequired;
+        float totalFoodConsumed = Mathf.Min(availablePreferredFood + availableCompatibleFood, totalMaxFoodNeeded);
+
         if (totalFoodConsumed >= totalMinFoodNeeded)
         {
             IsNeedMet[NeedType.FoodSource] = true;
-            foodRating = (availablePreferredFood / numAnimals) + ((totalFoodConsumed - totalMinFoodNeeded) / numAnimals);
+            foodRating = 0.5f * ((totalFoodConsumed - totalMinFoodNeeded) / (totalMaxFoodNeeded - totalMinFoodNeeded)) + 0.5f * (availablePreferredFood / totalFoodConsumed);
         }
         else
         {
             IsNeedMet[NeedType.FoodSource] = false;
-            foodRating = (totalFoodConsumed - totalMinFoodNeeded) / numAnimals;
+            foodRating = (totalFoodConsumed - totalMinFoodNeeded) / totalMinFoodNeeded;
         }
-        //Debug.Log(Population.gameObject.name + " food rating: " + foodRating + ", preferred food value: " + availablePreferredFood + ", compatible food value: " + availableCompatibleFood);
 
+        Debug.Log(population.gameObject.name + " food rating: " + foodRating + ", total food eaten: " + totalFoodConsumed + ", percent of food is preferred: " + (availablePreferredFood / totalFoodConsumed));
     }
 
     public void CalculateTerrainNeed()
     {
-        float totalNeededTiles = 0f;
-        float comfortableTilesOccupied = 0f;
+        int numAnimals = population.AnimalPopulation.Count;
+
+        float totalNeededTiles = population.species.TerrainTilesRequired * numAnimals;
+        float availablePreferredTiles = 0f;
+        float availableSurvivableTiles = 0f;
+
+        float preferredTilesOccupied = 0f;
         float survivableTilesOccupied = 0f;
         float totalTilesOccupied = 0f;
-        float availableComfortableTiles = 0f;
-        float availableSurvivableTiles = 0f;
-        int numAnimals = Population.AnimalPopulation.Count;
-        foreach (KeyValuePair<string, Need> need in Population.Needs)
+
+        foreach (KeyValuePair<string, Need> need in population.Needs)
         {
-            if (need.Value.NeedType.Equals(NeedType.Terrain) && !need.Key.Equals("Liquid"))
+            if (need.Value.NeedType.Equals(NeedType.Terrain))
             {
                 if (need.Value.IsPreferred)
                 {
-                    availableComfortableTiles = need.Value.NeedValue;
+                    availablePreferredTiles += need.Value.NeedValue;
                 }
                 else
                 {
                     availableSurvivableTiles += need.Value.NeedValue;
                 }
-                totalNeededTiles = need.Value.GetThreshold() * numAnimals;
             }
         }
-        if (availableComfortableTiles >= totalNeededTiles)
+
+        if (availablePreferredTiles >= totalNeededTiles)
         {
-            comfortableTilesOccupied = totalNeededTiles;
+            preferredTilesOccupied = totalNeededTiles;
         }
         else
         {
-            comfortableTilesOccupied = availableSurvivableTiles;
+            preferredTilesOccupied = availableSurvivableTiles;
         }
-        if (availableSurvivableTiles >= totalNeededTiles - comfortableTilesOccupied)
+
+        if (availableSurvivableTiles >= totalNeededTiles - preferredTilesOccupied)
         {
-            survivableTilesOccupied = totalNeededTiles - comfortableTilesOccupied;
+            survivableTilesOccupied = totalNeededTiles - preferredTilesOccupied;
         }
         else
         {
             survivableTilesOccupied = availableSurvivableTiles;
         }
-        totalTilesOccupied = survivableTilesOccupied + comfortableTilesOccupied;
+
+        totalTilesOccupied = survivableTilesOccupied + preferredTilesOccupied;
         if (totalTilesOccupied >= totalNeededTiles)
         {
             IsNeedMet[NeedType.Terrain] = true;
-            terrainRating = 1 + comfortableTilesOccupied / numAnimals;
+            terrainRating = preferredTilesOccupied / totalNeededTiles;
         }
         else
         {
             IsNeedMet[NeedType.Terrain] = false;
-            terrainRating = (totalTilesOccupied - totalNeededTiles) / numAnimals;
+            terrainRating = (totalTilesOccupied - totalNeededTiles) / totalNeededTiles;
         }
-        //Debug.Log(Population.gameObject.name + " terrain Rating: " + terrainRating + ", comfortable tiles: " + comfortableTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
+
+        Debug.Log(population.gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + preferredTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
     }
 
     public bool ReadyForDecay()
@@ -244,7 +230,7 @@ public class GrowthCalculator
         this.DecayCountdown--;
         if (this.DecayCountdown == 0)
         {
-            this.DecayCountdown = Population.Species.GrowthRate;
+            this.DecayCountdown = population.Species.GrowthRate;
             return true;
         }
         return false;
@@ -255,7 +241,7 @@ public class GrowthCalculator
         this.GrowthCountdown--;
         if (this.GrowthCountdown == 0)
         {
-            this.GrowthCountdown = Population.Species.GrowthRate;
+            this.GrowthCountdown = population.Species.GrowthRate;
             return true;
         }
         return false;

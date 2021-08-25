@@ -11,6 +11,8 @@ public class AnimalSpecies : ScriptableObject
     public string SpeciesName => speciesName;
     public SpeciesType Species => species;
     public int TerrainTilesRequired => terrainTilesRequired;
+    public int MinFoodRequired => minFoodRequired;
+    public int MaxFoodRequired => maxFoodRequired;
     public float GrowthScaleFactor => growthScaleFactor;
     public int GrowthRate => growthRate;
     public int DecayRate => decayRate;
@@ -27,15 +29,13 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private RuntimeAnimatorController animatorController = default;
     [SerializeField] private string speciesName = default;
     [SerializeField] private SpeciesType species = default;
-    [Range(1.0f, 10.0f)]
     [SerializeField] private int terrainTilesRequired = default;
+    [SerializeField] private int minFoodRequired = default;
+    [SerializeField] private int maxFoodRequired = default;
     [SerializeField] private float growthScaleFactor = default;
-    [Range(1, 30)]
     [SerializeField] private int growthRate = 3;
-    [Range(1, 30)]
     [SerializeField] private int decayRate = 3;
 
-    [Range(0.0f, 10.0f)]
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
@@ -60,27 +60,25 @@ public class AnimalSpecies : ScriptableObject
         //Food Needs
         foreach (FoodNeedConstructData need in foodNeeds)
         {
-            needs.Add(need.NeedName, new FoodNeed(need));
+            needs.Add(need.NeedName, new FoodNeed(need, minFoodRequired));
         }
 
         //Water Needs
         foreach (LiquidNeedConstructData need in liquidNeeds)
         {
-            LiquidNeed liquidneed = new LiquidNeed(need);
-
-            if(liquidneed.GetThreshold() <= 0)
+            if(need.TileNeedThreshold <= 0)
                 continue;
 
-            needs.Add("LiquidTiles", liquidneed);
+            needs.Add("LiquidTiles", new LiquidNeed("LiquidTiles", need));
 
-            if(liquidneed.GetFreshThreshold() != 0)
-                needs.Add("Water", liquidneed);
+            if(need.FreshWaterThreshold != 0)
+                needs.Add("Water", new LiquidNeed("Water", need));
 
-            if(liquidneed.GetBacteriaThreshold() != 0)
-                needs.Add("Bacteria", liquidneed);
+            if(need.SaltThreshold != 0)
+                needs.Add("Salt", new LiquidNeed("Salt", need));
 
-            if(liquidneed.GetSaltThreshold() != 0)
-                needs.Add("Salt", liquidneed);
+            if(need.BacteriaThreshold != 0)
+                needs.Add("Bacteria", new LiquidNeed("Bacteria", need));
         }
 
         return needs;
