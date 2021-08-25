@@ -1709,7 +1709,7 @@ PrefabInstance:
     - target: {fileID: 8946323213000099164, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 51.1
+      value: 51.100098
       objectReference: {fileID: 0}
     - target: {fileID: 8946323213000099164, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
@@ -1765,6 +1765,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OptionsMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946323213052720316, guid: c617b7d1f8241406caf4b82976917ae9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 514.99023
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946323213052720316, guid: c617b7d1f8241406caf4b82976917ae9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -45.924805
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946323213844492402, guid: c617b7d1f8241406caf4b82976917ae9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 617.9922
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946323213844492402, guid: c617b7d1f8241406caf4b82976917ae9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -63.21045
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c617b7d1f8241406caf4b82976917ae9, type: 3}
@@ -17579,49 +17599,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 22
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-109,\"yPos\":123},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Level
-    Progression\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":118,\"yPos\":126},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Population
-    Stagnation\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":373,\"yPos\":141},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"UI\",\"parentUIDs\":[5,1,1],\"SpeechUID\":20},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-112,\"yPos\":491},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Encyclopedia
-    & Notebook\",\"parentUIDs\":[5,20,20],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":115,\"yPos\":497},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Observation
-    tool\",\"parentUIDs\":[10,20,20],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":205,\"yPos\":825},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Place
-    Food\",\"parentUIDs\":[15,20,20],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":411,\"yPos\":684},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Place
-    Terrain\",\"parentUIDs\":[17,20,20],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":400,\"yPos\":515},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Accessing
-    build mode\",\"parentUIDs\":[20,20],\"SpeechUID\":15}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":47,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
-    it going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-128,\"yPos\":226},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Like
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-69,\"yPos\":95},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Level
+    Progression\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":158,\"yPos\":98},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Population
+    Stagnation\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":413,\"yPos\":113},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"UI\",\"parentUIDs\":[5,1,1],\"SpeechUID\":20},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-72,\"yPos\":463},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Encyclopedia
+    & Notebook\",\"parentUIDs\":[5,20,20],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":155,\"yPos\":469},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Observation
+    tool\",\"parentUIDs\":[10,20,20],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":245,\"yPos\":797},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Place
+    Food\",\"parentUIDs\":[15,20,20],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":451,\"yPos\":656},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Place
+    Terrain\",\"parentUIDs\":[17,20,20],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":440,\"yPos\":487},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Accessing
+    build mode\",\"parentUIDs\":[20,20],\"SpeechUID\":15}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":87,\"yPos\":-6},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
+    it going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-88,\"yPos\":198},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Like
     I mentioned during your orientation, after 30 days, or after you complete your
     goal, we\u2019ll be having a one-on-one report-back. I\u2019ll ask you a series
     of questions about what you\u2019ve observed. Use the Notebook to track the responses
     you see in the CapraX Zeigrun based on variable changes, like different food
-    sources, changes in terrain, and increases or decreases in resources.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112,\"yPos\":215},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
+    sources, changes in terrain, and increases or decreases in resources.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":152,\"yPos\":187},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
     species population is represented by the animals moving around in the reserve.
     We are most concerned with how the population as a whole is doing, which means
     that each signal given to us by an individual animal is indicative of how the
     whole population is doing. Make sure to use the observation tool! Depending on
     what you observe, try buying different resources and use our time accelerator,
-    to see their effect on the population. Remember, change isn\u2019t instantaneous!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-76,\"yPos\":612},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"On
+    to see their effect on the population. Remember, change isn\u2019t instantaneous!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-36,\"yPos\":584},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
     one that looks like this to open your notebook and encyclopedia. In the Encyclopedia,
     you can find current research observations, drawings, photos, and more of your
-    selected topic. To select a species of plant or animal, use the tabs on the Encyclopedia.\",\"parentUIDs\":[6,8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-53,\"yPos\":768},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"On
+    selected topic. To select a species of plant or animal, use the tabs on the Encyclopedia.\",\"parentUIDs\":[6,8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-13,\"yPos\":740},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"On
     the side is the Notebook, where you can take freehand notes here at any time
     as you read through the Encyclopedia. You can also use our special highlighting
     feature. Whenever I\u2014or someone else\u2014is talking with you, you can click
-    and drag over any words they say, and it\u2019ll fill into a column in your notebook.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":139,\"yPos\":604},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"On
+    and drag over any words they say, and it\u2019ll fill into a column in your notebook.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":179,\"yPos\":576},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
     one that looks like this to observe tiles, creatures, and objects you select
-    with your mouse.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":586,\"yPos\":584},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"On
+    with your mouse.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":626,\"yPos\":556},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
     one that looks like this to enter Build Mode. In Build Mode, you can design a
     concept, i.e. modify terrain, add vegetation...but there is a limited number
     of terrain, like dirt, and vegetation, like space maples, available at the moment.
-    Remember to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":166,\"yPos\":930},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Enter
+    Remember to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":206,\"yPos\":902},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Enter
     build mode, then filter for food using the dropdown menu, and select the food
     you want to place. For now, try placing the space maple on dirt patches. Remember
-    to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":443,\"yPos\":871},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Enter
+    to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":483,\"yPos\":843},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Enter
     build mode, then filter for terrain using the dropdown menu, and select the terrain
     you want to place. Terrain can be placed in all locations except for a population's
     starting location, which is shaded gray. Remember to apply any changes you make,
-    and that should build the new modifications.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":50,\"yPos\":346},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Which
+    and that should build the new modifications.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":90,\"yPos\":318},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Which
     part of the UI can I clarify?\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[8,11,16,18,21],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
@@ -18296,7 +18316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1857669705}
   - component: {fileID: 1857669703}
-  - component: {fileID: 1857669704}
   m_Layer: 5
   m_Name: Inspector
   m_TagString: Untagged
@@ -18318,31 +18337,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSystem: {fileID: 765609361}
   enclosureSystem: {fileID: 5592442342188060214}
+  reservePartitionManager: {fileID: 936381359}
   areaDropdownMenu: {fileID: 1259954979}
   itemDropdownMenu: {fileID: 1084171904}
   inspectorWindow: {fileID: 996204900}
   inspectorWindowText: {fileID: 1713310041}
   ObjectivePane: {fileID: 655684759}
   GrowthInfo: {fileID: 29261896}
---- !u!114 &1857669704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857669702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98038b5d402be48be91ec263425d2dde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MenuManager: {fileID: 363993209}
-  liquidModificationHUD: {fileID: 2096932704}
-  Values:
-  - {fileID: 91648088}
-  - {fileID: 1712361520}
-  - {fileID: 1888547033}
-  mainCamera: {fileID: 1054101994}
 --- !u!224 &1857669705
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20941,38 +20942,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 35
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-115,\"yPos\":143},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Who?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":204,\"yPos\":140},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi!\",\"parentUIDs\":[4,1,1],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-122,\"yPos\":840},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Well,
-    some of those food resources are species.\",\"parentUIDs\":[8,8],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":174,\"yPos\":841},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
-    up to the challenge!\",\"parentUIDs\":[10,8,8],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":45,\"yPos\":1332},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Player
-    opens the encyclopedia\",\"parentUIDs\":[13,17,13,17],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-468,\"yPos\":1587},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Candentis
-    Acernis\",\"parentUIDs\":[15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-214,\"yPos\":1594},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
-    Spatium Bacca\",\"parentUIDs\":[17,15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":1595},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Formica
-    Collis\",\"parentUIDs\":[15,15],\"SpeechUID\":25},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":32,\"yPos\":1600},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Humidum
-    Limax\",\"parentUIDs\":[25,15,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":47,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, I\u2019m Juno.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-120,\"yPos\":226},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"...Dr.
-    Star said she would mention me to you\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-117,\"yPos\":340},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Anyways.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":522},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"My
-    job here is a lot like yours, but I focus on the special variant of Candentis
-    Acernis.\",\"parentUIDs\":[5,4,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":622},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
-    leaves are actual gold, you know. If you haven\u2019t snuck down to the enclosure...it\u2019s
-    worth it.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":721},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Dr.
-    Star indicated that you haven\u2019t managed an enclosure with more than one
-    species yet.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-127,\"yPos\":935},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"When
-    we use them as food, though, we don\u2019t need to focus on other needs typical
-    of a species, like safety concerns.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":1122},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"It\u2019ll
-    be a fun challenge, probably. I\u2019ll show you the ropes.\",\"parentUIDs\":[11,10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":1222},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"First,
-    open up the new Eligans Impar encyclopedia entry. Take a bit to read through
-    it.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":34,\"yPos\":1424},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Based
-    on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[16,20,24,26],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-254,\"yPos\":1428},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"G-go
-    read your encyclopedia again.\",\"parentUIDs\":[16,20,26,16,20,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":45,\"yPos\":1711},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Yep.
-    Same as CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":46,\"yPos\":1835},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"As
-    you might have guessed, the two species have basically the same food preferences.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":42,\"yPos\":1965},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"The
-    challenging part is figuring out how to feed both species at once, off the same
-    resources.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":43,\"yPos\":2062},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Your
-    goal is to get both populations up to 20.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":43,\"yPos\":2173},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Be
-    meticulous with your enclosure modifications. I hope to be impressed by your
-    engineering skills when it\u2019s time for the report-back.\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":44,\"yPos\":2300},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Oh,
-    and I\u2019m not an easy grader, unlike Dr. Star.\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  CurrentIDCounter: 41
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-92,\"yPos\":-60},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Thalassius
+    Succo\",\"parentUIDs\":[7,7],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":205,\"yPos\":-65},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Humidum
+    Limax\",\"parentUIDs\":[10,7,7],\"SpeechUID\":40},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-45.5,\"yPos\":-509},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"Q-quiz?!\",\"parentUIDs\":[4,4],\"SpeechUID\":38},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":182.5,\"yPos\":-504},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Got
+    it, boss.\",\"parentUIDs\":[4,4],\"SpeechUID\":6}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":77,\"yPos\":-878},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
+    again. Congrats on not messing up the previous enclosures.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":72,\"yPos\":-721},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"This
+    time, you\u2019ll be working with Eligans Impar, Thalassius Succo, and Ligurio
+    Vermis.\",\"parentUIDs\":[1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":69,\"yPos\":-612},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Go
+    over your research in the notebook before I quiz you.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[35,37],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":77,\"yPos\":-378},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Alright,let\u2019s
+    begin.\",\"parentUIDs\":[4,37,38,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":77,\"yPos\":-280},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Ligurio
+    Vermis is a predator to what species?\",\"parentUIDs\":[6,6,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-97,\"yPos\":35},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Yeah,
+    that's right.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":77,\"yPos\":220},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    got 30 days to increase Eligans Impar\u2019s population to 10, Ligurio Vermis\u2019
+    population to 16, and Thalassius Succo\u2019s population to 24.\",\"parentUIDs\":[10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":77,\"yPos\":322},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Unfortunately,
+    if you have questions, you know where to find me.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-165.5,\"yPos\":-441},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"I
+    can\u2019t just let you play with species for fun. You have to know what you\u2019re
+    doing...\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":154,\"yPos\":24},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"I
+    told you to read, didn't I?! This is serious!\",\"parentUIDs\":[11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -20983,18 +20970,9 @@ MonoBehaviour:
   - {fileID: 2333585776831829418}
   - {fileID: 2333585776831829419}
   - {fileID: 2333585776831829416}
-  - {fileID: 2333585776831829417}
   - {fileID: 2333585776831829422}
   - {fileID: 2333585776831829423}
   - {fileID: 2333585776831829420}
-  - {fileID: 2333585776831829421}
-  - {fileID: 2333585776831829410}
-  - {fileID: 2333585776831829411}
-  - {fileID: 2333585776831829408}
-  - {fileID: 2333585776831829409}
-  - {fileID: 2333585776831829414}
-  - {fileID: 2333585776831829415}
-  - {fileID: 2333585776831829412}
   - {fileID: 2333585776831829413}
   - {fileID: 2333585776831829402}
   - {fileID: 2333585776831829403}
@@ -21010,6 +20988,10 @@ MonoBehaviour:
   - {fileID: 2333585776831829393}
   - {fileID: 2333585776831829398}
   - {fileID: 2333585776831829399}
+  - {fileID: 2333585776831829411}
+  - {fileID: 2333585776831829410}
+  - {fileID: 2333585776831829409}
+  - {fileID: 2333585776831829408}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -21132,18 +21114,9 @@ GameObject:
   - component: {fileID: 2333585776831829418}
   - component: {fileID: 2333585776831829419}
   - component: {fileID: 2333585776831829416}
-  - component: {fileID: 2333585776831829417}
   - component: {fileID: 2333585776831829422}
   - component: {fileID: 2333585776831829423}
   - component: {fileID: 2333585776831829420}
-  - component: {fileID: 2333585776831829421}
-  - component: {fileID: 2333585776831829410}
-  - component: {fileID: 2333585776831829411}
-  - component: {fileID: 2333585776831829408}
-  - component: {fileID: 2333585776831829409}
-  - component: {fileID: 2333585776831829414}
-  - component: {fileID: 2333585776831829415}
-  - component: {fileID: 2333585776831829412}
   - component: {fileID: 2333585776831829413}
   - component: {fileID: 2333585776831829402}
   - component: {fileID: 2333585776831829403}
@@ -21159,6 +21132,10 @@ GameObject:
   - component: {fileID: 2333585776831829393}
   - component: {fileID: 2333585776831829398}
   - component: {fileID: 2333585776831829399}
+  - component: {fileID: 2333585776831829411}
+  - component: {fileID: 2333585776831829410}
+  - component: {fileID: 2333585776831829409}
+  - component: {fileID: 2333585776831829408}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -21368,12 +21345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodeID: 30
+  NodeID: 40
   Event:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
+  Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!114 &2333585776831829409
 MonoBehaviour:
@@ -21387,12 +21364,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodeID: 31
+  NodeID: 37
   Event:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
+  Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!114 &2333585776831829410
 MonoBehaviour:
@@ -21406,12 +21383,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodeID: 17
+  NodeID: 35
   Event:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
+  Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!114 &2333585776831829411
 MonoBehaviour:
@@ -21425,31 +21402,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodeID: 25
+  NodeID: 38
   Event:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &2333585776831829412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2333585776831829397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 34
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
+  Icon: {fileID: 0}
   Audio: {fileID: 0}
 --- !u!114 &2333585776831829413
 MonoBehaviour:
@@ -21470,44 +21428,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &2333585776831829414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2333585776831829397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 32
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &2333585776831829415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2333585776831829397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 33
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
-  Audio: {fileID: 0}
 --- !u!114 &2333585776831829416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21521,25 +21441,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 7
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &2333585776831829417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2333585776831829397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 8
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -21597,25 +21498,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 13
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &2333585776831829421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2333585776831829397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 15
   Event:
     m_PersistentCalls:
       m_Calls: []

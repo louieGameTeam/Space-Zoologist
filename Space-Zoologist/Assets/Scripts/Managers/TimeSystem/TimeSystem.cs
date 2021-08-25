@@ -27,11 +27,20 @@ public class TimeSystem : MonoBehaviour
         this.PopulationManager.UpdateAccessibleLocations();
         this.PopulationManager.UdateAllPopulationRegistration();
         this.NeedSystemManager.UpdateAllSystems();
+        this.PopulationManager.UpdateAllGrowthConditions();
+        bool populaitonDidGrow = false;
         for (int i=PopulationManager.Populations.Count - 1; i>= 0; i--)
         {
-            PopulationManager.Populations[i].HandleGrowth();
+            if (PopulationManager.Populations[i].HandleGrowth())
+            {
+                populaitonDidGrow = true;
+            }
         }
-        this.PopulationManager.UpdateAllGrowthConditions();
+        if (populaitonDidGrow)
+        {
+            this.NeedSystemManager.UpdateAllSystems();
+            this.PopulationManager.UpdateAllGrowthConditions();
+        }
         this.Inspector.UpdateCurrentDisplay();
         UpdateDayText(++currentDay);
     }

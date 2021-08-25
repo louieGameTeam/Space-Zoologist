@@ -244,12 +244,14 @@ public class Population : MonoBehaviour, Life
         this.GrowthCalculator.CalculateGrowth();
     }
 
-    public void HandleGrowth()
+    public bool HandleGrowth()
     {
+        bool readyForGrowth = false;
         switch (this.GrowthCalculator.GrowthStatus)
         {
             case GrowthStatus.growing:
-                if (this.GrowthCalculator.ReadyForGrowth())
+                readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
+                if (readyForGrowth)
                 {
                     for (int i=0; i<(int)this.GrowthCalculator.populationIncreaseRate; i++)
                     {
@@ -258,7 +260,8 @@ public class Population : MonoBehaviour, Life
                 }
                 break;
             case GrowthStatus.declining:
-                if (this.GrowthCalculator.ReadyForDecay())
+                readyForGrowth = this.GrowthCalculator.ReadyForDecay();
+                if (readyForGrowth)
                 {
                     for (int i = 0; i < (int)this.GrowthCalculator.populationIncreaseRate * -1; i++)
                     {
@@ -269,6 +272,7 @@ public class Population : MonoBehaviour, Life
             default:
                 break;
         }
+        return readyForGrowth;
     }
 
     public void AddAnimal(Vector3 position)

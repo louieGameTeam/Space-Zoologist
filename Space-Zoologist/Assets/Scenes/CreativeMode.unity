@@ -637,6 +637,7 @@ MonoBehaviour:
     type: 3}
   PodItemContainer: {fileID: 1064887328}
   populationManager: {fileID: 2078374405}
+  tilePlacementController: {fileID: 0}
 --- !u!224 &47254747
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2822,7 +2823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fddaa2072f642548f2acfc0c5f8743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}
+  LevelData: {fileID: 0}
 --- !u!4 &320161630
 Transform:
   m_ObjectHideFlags: 0
@@ -7854,7 +7855,6 @@ MonoBehaviour:
   quickCheckIterations: 6
   startTile: {x: 0, y: 0, z: 0}
   HasTerrainChanged: 0
-  changedTiles: []
 --- !u!114 &765609362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7868,6 +7868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 1054101994}
+  godMode: 0
   isErasing: 0
   tilemaps:
   - {fileID: 940519983}
@@ -11045,12 +11046,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960957951}
   m_CullTransparentMesh: 0
---- !u!82 &971291348 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1335803119446807721, guid: 92345d16d3a984156b81ba7cb42f1cee,
-    type: 3}
-  m_PrefabInstance: {fileID: 1662974632}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &972990251
 GameObject:
   m_ObjectHideFlags: 0
@@ -21614,7 +21609,7 @@ PrefabInstance:
         type: 3}
       propertyPath: nextMusicSource
       value: 
-      objectReference: {fileID: 971291348}
+      objectReference: {fileID: 0}
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24317,23 +24312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EventResponseManager: {fileID: 208159620}
-  resourceData:
-  - resourceName: Dirt
-    initialAmount: 20
-  - resourceName: Space Maple
-    initialAmount: 5
-  - resourceName: CapraX Zeigrun
-    initialAmount: 5
-  - resourceName: Liquid
-    initialAmount: 20
-  - resourceName: Grass
-    initialAmount: 20
-  - resourceName: Berries
-    initialAmount: 10
-  - resourceName: Ants
-    initialAmount: 10
-  - resourceName: Gold Space Maple
-    initialAmount: 5
+  LevelDataReference: {fileID: 0}
 --- !u!1 &1741774360
 GameObject:
   m_ObjectHideFlags: 0
@@ -25031,6 +25010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSystem: {fileID: 765609361}
   enclosureSystem: {fileID: 5592442342188060214}
+  reservePartitionManager: {fileID: 0}
   areaDropdownMenu: {fileID: 1259954979}
   itemDropdownMenu: {fileID: 1084171904}
   inspectorWindow: {fileID: 996204900}
@@ -25907,6 +25887,7 @@ MonoBehaviour:
     type: 3}
   EnclosureSystem: {fileID: 5592442342188060214}
   tilePlacementController: {fileID: 765609362}
+  rpm: {fileID: 0}
 --- !u!1 &1999547570
 GameObject:
   m_ObjectHideFlags: 0
@@ -28013,6 +27994,7 @@ MonoBehaviour:
   LevelDataReference: {fileID: 320161629}
   needSystemManager: {fileID: 8743428314032458836}
   gridSystem: {fileID: 765609361}
+  startingPositions: []
 --- !u!4 &6874327555454712159
 Transform:
   m_ObjectHideFlags: 0

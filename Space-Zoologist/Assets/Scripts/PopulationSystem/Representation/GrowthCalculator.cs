@@ -66,7 +66,7 @@ public class GrowthCalculator
         {
             if (!need.Key.Equals(NeedType.Prey) && !IsNeedMet[need.Key])
             {
-                //Debug.Log(need.Key + " is not met");
+                Debug.Log(need.Key + " is not met");
                 GrowthStatus = GrowthStatus.declining;
                 if (need.Key.Equals(NeedType.FoodSource))
                 {

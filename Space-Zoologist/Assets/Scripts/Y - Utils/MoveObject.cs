@@ -161,7 +161,6 @@ public class MoveObject : MonoBehaviour
         moving = false;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
-        gridOverlay.ClearColors();
         moveCost = 0;
         sellBackCost = 0;
     }
@@ -277,7 +276,7 @@ public class MoveObject : MonoBehaviour
         AnimalSpecies species = population.Species;
 
         float cost = moveCost; //FixedCost + species.Size * CostPerUnitSizeAnimal;
-        bool valid = gridSystem.PlacementValidation.IsPodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
+        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
 
         // placement is valid and population did not already reach here
         if (valid && !reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
@@ -296,7 +295,7 @@ public class MoveObject : MonoBehaviour
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
 
         float cost = moveCost; // FixedCost + species.Size * CostPerUnitSizeFood;
-        bool valid = gridSystem.PlacementValidation.IsFoodPlacementValid(worldPos, species) && playerBalance.Balance >= cost;
+        bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && playerBalance.Balance >= cost;
 
         if (valid)
         {

@@ -18156,7 +18156,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1857669705}
   - component: {fileID: 1857669703}
-  - component: {fileID: 1857669704}
   m_Layer: 5
   m_Name: Inspector
   m_TagString: Untagged
@@ -18185,25 +18184,6 @@ MonoBehaviour:
   inspectorWindowText: {fileID: 1713310041}
   ObjectivePane: {fileID: 655684759}
   GrowthInfo: {fileID: 29261896}
---- !u!114 &1857669704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857669702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98038b5d402be48be91ec263425d2dde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MenuManager: {fileID: 363993209}
-  liquidModificationHUD: {fileID: 2096932704}
-  Values:
-  - {fileID: 91648088}
-  - {fileID: 1712361520}
-  - {fileID: 1888547033}
-  mainCamera: {fileID: 1054101994}
 --- !u!224 &1857669705
 RectTransform:
   m_ObjectHideFlags: 0
