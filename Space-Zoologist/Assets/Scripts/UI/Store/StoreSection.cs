@@ -55,7 +55,7 @@ public class StoreSection : MonoBehaviour
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
             if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
 
-            Vector3Int gridLocation = GridSystem.Grid.WorldToCell(mousePosition);
+            Vector3Int gridLocation = GridSystem.WorldToCell(mousePosition);
             if (this.GridSystem.IsOnWall(gridLocation)) return;
 
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)

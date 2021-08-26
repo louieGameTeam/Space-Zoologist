@@ -16,7 +16,7 @@ public class PopulationManager : MonoBehaviour
 
     public void Initialize()
     {
-        SerializedPopulation[] serializedPopulations = GameManager.Instance.presetMap.serializedPopulations;
+        SerializedPopulation[] serializedPopulations = GameManager.Instance.PresetMap.serializedPopulations;
         serializedPopulations = serializedPopulations ?? new SerializedPopulation[0];
         for (int i = 0; i < serializedPopulations.Length; i++)
         {

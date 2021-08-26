@@ -14,7 +14,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
-        Vector3Int currentCell = base.GridSystem.Grid.WorldToCell(animal.transform.position);
+        Vector3Int currentCell = base.GridSystem.WorldToCell(animal.transform.position);
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)

@@ -63,7 +63,7 @@ public class FoodSourceStoreSection : StoreSection
         GameManager.Instance.SubtractFromBalance(selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, 1);
         base.HandleAudio();
-        Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
+        Vector3Int mouseGridPosition = base.GridSystem.WorldToCell(mousePosition);
         
         FoodSourceManager.placeFood(mouseGridPosition, GameManager.Instance.FoodSources[selectedItem.ID], this.selectedItem.buildTime);
     }

@@ -15,7 +15,7 @@ public class TimeSystem : MonoBehaviour
     private int currentDay = 1;
     public bool LessThanMaxDay => currentDay <= maxDay;
 
-    private void Start()
+    public void Initialize()
     {
         UpdateDayText(currentDay);
     }

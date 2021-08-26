@@ -24,7 +24,7 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region Component References
-    [SerializeField] public Grid Grid = default;
+    [SerializeField] private Grid Grid = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] public Tilemap Tilemap;
@@ -34,12 +34,11 @@ public class GridSystem : MonoBehaviour
     [Header("Used to define 2d array")]
     [SerializeField] private int ReserveWidth = default;
     [SerializeField] private int ReserveHeight = default;
-    // Food and home locations updated when added, animal locations updated when the store opens up.
     // grid is accessed using [y, x] due to 2d array structure
     private TileData[,] TileDataGrid = default;
-    public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
+    public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
@@ -52,14 +51,8 @@ public class GridSystem : MonoBehaviour
     public bool HasTerrainChanged = false;
 
     #region Monobehaviour Callbacks
-    private void Awake()
-    {
-        // tilelayermanager stuff
-        InitializeTileLayerManager();
-    }
-
     // do something about this
-    private void InitializeTileLayerManager()
+    private void Initialize()
     {
         this.liquidBodies = new HashSet<LiquidBody>();
         this.previewBodies = new List<LiquidBody>();
@@ -113,7 +106,7 @@ public class GridSystem : MonoBehaviour
     #region I/O
     public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
     {
-        InitializeTileLayerManager();
+        Initialize();
 
         if (gameTiles == null)
             return;
@@ -1775,6 +1768,12 @@ public class GridSystem : MonoBehaviour
     {
         return Grid.WorldToCell(worldPosition);
     }
+
+    public Vector3 CellToWorld(Vector3Int worldPosition)
+    {
+        return Grid.CellToWorld(worldPosition);
+    }
+    
 
     public static Vector3Int SignsVector3(Vector3 vector)
     {

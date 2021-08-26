@@ -4,21 +4,48 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
-    #region Level Data
+    #region Level Data Variables
+    private string sceneName;
+    [SerializeField] private string directory = "Levels/";
     [Expandable, SerializeField] private LevelData m_levelData;
     public LevelData LevelData { get { return m_levelData; } }
+    public SerializedLevel PresetMap { get; private set; }
     public Dictionary<string, FoodSourceSpecies> FoodSources = new Dictionary<string, FoodSourceSpecies>();
     public Dictionary<string, AnimalSpecies> AnimalSpecies = new Dictionary<string, AnimalSpecies>();
     public float Balance { get; private set; }
-    [SerializeField] private string directory = "Levels/";
-    private string sceneName;
-    public SerializedLevel presetMap { get; private set; }
+    #endregion
+
+    #region Game State Variables
+    [Space(20)]
+    [SerializeField] SceneNavigator SceneNavigator = default;
+    [SerializeField] Button RestartButton = default;
+    [SerializeField] Button NextLevelButton = default;
+    [SerializeField] GameObject IngameUI = default;
+    [SerializeField] DialogueEditor.NPCConversation passedConversation = default;
+    [SerializeField] DialogueEditor.NPCConversation failedConversation = default;
+    [SerializeField] GameObject GameOverHUD = default;
+    [SerializeField] TextMeshProUGUI gameOverTitle = default;
+    [SerializeField] TextMeshProUGUI gameOverText = default;
+
+    public bool IsGameOver { get { return m_isGameOver; } }
+    private bool m_isGameOver = false;
+    private List<Objective> m_mainObjectives = new List<Objective>();
+    private List<Objective> m_secondaryObjectives = new List<Objective>();
+    public bool isMainObjectivesCompleted { get; private set; }
+    public int numSecondaryObjectivesCompleted { get; private set; }
+
+    private bool isObjectivePanelOpen;
+    [Space(20)]
+    [SerializeField] private GameObject objectivePane = default;
+    [SerializeField] private Text objectivePanelText = default;
     #endregion
 
     #region Need System Variables
@@ -27,9 +54,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Managers
+    public DialogueManager m_dialogueManager { get; private set; }
     public ReservePartitionManager m_reservePartitionManager { get; private set; }
     public FoodSourceManager m_foodSourceManager { get; private set; }
-    public ObjectiveManager m_objectiveManager { get; private set; }
     public PopulationManager m_populationManager { get; private set; }
     public ResourceManager m_resourceManager { get; private set; }
     public BuildBufferManager m_buildBufferManager { get; private set; }
@@ -37,6 +64,7 @@ public class GameManager : MonoBehaviour
     public TilePlacementController m_tilePlacementController { get; private set; }
     public PlotIO m_plotIO { get; private set; }
     public GridSystem m_gridSystem { get; private set; }
+    public TimeSystem m_timeSystem { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -50,14 +78,36 @@ public class GameManager : MonoBehaviour
         SetManagers();
         LoadResources();
         SetNeedSystems();
-        LoadLevelData();
         InitializeManagers();
+        LoadLevelData();
         InitialNeedSystemUpdate();
+        SetupObjectives();
     }
 
     void Update()
     {
+        isMainObjectivesCompleted = true;
+        numSecondaryObjectivesCompleted = 0;
+        UpdateObjectives();
 
+        if (isObjectivePanelOpen)
+        {
+            this.UpdateObjectivePanel();
+        }
+
+        // All objectives had reach end state
+        if (isMainObjectivesCompleted && !this.m_isGameOver)
+        {
+            this.m_isGameOver = true;
+
+            // TODO figure out what should happen when the main objectives are complete
+            EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
+
+            // GameOver.cs listens for the event and handles gameover
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+
+            Debug.Log($"Level Completed!");
+        }
     }
     #endregion
 
@@ -111,7 +161,7 @@ public class GameManager : MonoBehaviour
         }
         m_plotIO.LoadPlot(serializedLevel.serializedPlot);
         //Animals loaded after map to avoid path finding issues
-        this.presetMap = serializedLevel;
+        this.PresetMap = serializedLevel;
         Reload();
     }
 
@@ -146,6 +196,11 @@ public class GameManager : MonoBehaviour
         // set the animal dictionary
         foreach (AnimalSpecies animalSpecies in m_levelData.AnimalSpecies)
             this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
+        
+        // set up the game state
+        EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
+        this.RestartButton.onClick.AddListener(() => { this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel); });
+        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
 
         // load in the tilemap
         this.sceneName = SceneManager.GetActiveScene().name;
@@ -157,7 +212,7 @@ public class GameManager : MonoBehaviour
         // add the references to the managers here
         // temporary find function until scene reorganization
 
-        m_objectiveManager = FindObjectOfType<ObjectiveManager>();
+        m_dialogueManager = FindObjectOfType<DialogueManager>();
         m_reservePartitionManager = FindObjectOfType<ReservePartitionManager>();
         m_foodSourceManager = FindObjectOfType<FoodSourceManager>();
         m_populationManager = FindObjectOfType<PopulationManager>();
@@ -167,6 +222,7 @@ public class GameManager : MonoBehaviour
         m_tilePlacementController = FindObjectOfType<TilePlacementController>();
         m_plotIO = FindObjectOfType<PlotIO>();
         m_gridSystem = FindObjectOfType<GridSystem>();
+        m_timeSystem = FindObjectOfType<TimeSystem>();
     }
 
     private void LoadResources()
@@ -181,8 +237,55 @@ public class GameManager : MonoBehaviour
         m_foodSourceManager.Initialize();
         m_buildBufferManager.Initialize();
         m_resourceManager.Initialize();
+        m_timeSystem.Initialize();
     }
 
+    private void SetupObjectives()
+    {
+        isObjectivePanelOpen = true;
+
+        // Create the survival objectives
+        foreach (SurvivalObjectiveData objectiveData in LevelData.LevelObjectiveData.survivalObjectiveDatas)
+        {
+            m_mainObjectives.Add(new SurvivalObjective(
+                objectiveData.targetSpecies,
+                objectiveData.targetPopulationCount,
+                objectiveData.targetPopulationSize,
+                objectiveData.timeRequirement
+            ));
+        }
+
+        // Create the resource objective
+        foreach (ResourceObjectiveData objectiveData in LevelData.LevelObjectiveData.resourceObjectiveDatas)
+        {
+            m_secondaryObjectives.Add(new ResourceObjective(objectiveData.amountToKeep));
+        }
+
+        // Add the population to related objective if not seen before
+        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, () =>
+        {
+            Population population = (Population)EventManager.Instance.EventData;
+            this.RegisterWithSurvivalObjectives(population);
+        });
+        this.UpdateObjectivePanel();
+    }
+
+    private void RegisterWithSurvivalObjectives(Population population)
+    {
+        // Debug.Log(population.gameObject.name + " attempting to update survival objective");
+        foreach (Objective objective in m_mainObjectives)
+        {
+            if (objective.GetType() == typeof(SurvivalObjective))
+            {
+                SurvivalObjective survivalObjective = (SurvivalObjective)objective;
+                if (survivalObjective.AnimalSpecies == population.species && !survivalObjective.Populations.Contains(population))
+                {
+                    // Debug.Log(population.name + " was added to survival objective");
+                    survivalObjective.Populations.Add(population);
+                }
+            }
+        }
+    }
     #endregion
 
     #region Balance Functions
@@ -330,6 +433,112 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region Game State Functions
+    public void HandleNPCEndConversation()
+    {
+        if (!m_timeSystem.LessThanMaxDay)
+        {
+            m_dialogueManager.SetNewDialogue(failedConversation);
+        }
+        else
+        {
+            m_dialogueManager.SetNewDialogue(passedConversation);
+        }
+        m_dialogueManager.StartInteractiveConversation();
+        this.IngameUI.SetActive(false);
+    }
+
+    public void HandleGameOver()
+    {
+        m_pauseManager.Pause();
+        this.GameOverHUD.SetActive(true);
+        this.IngameUI.SetActive(false);
+
+
+        // Game completed
+        if (isMainObjectivesCompleted)
+        {
+            if (NextLevelButton != null)
+                NextLevelButton.interactable = true;
+            // title.text = "Objectives Complete";
+            //text.text = "Completed Secondary Objectives: " + objectiveManager.NumSecondaryObjectivesCompleted;
+        }
+        else
+        {
+            // Game lost
+            if (NextLevelButton != null)
+                NextLevelButton.interactable = false;
+            gameOverTitle.text = "Mission Failed";
+            gameOverText.text = "";
+        }
+    }
+
+    public void ToggleObjectivePanel()
+    {
+        this.isObjectivePanelOpen = !this.isObjectivePanelOpen;
+        this.objectivePane.SetActive(this.isObjectivePanelOpen);
+        UpdateObjectives();
+        this.UpdateObjectivePanel();
+    }
+
+    public void TurnObjectivePanelOff()
+    {
+        this.isObjectivePanelOpen = false;
+        this.objectivePane.SetActive(this.isObjectivePanelOpen);
+        UpdateObjectives();
+        this.UpdateObjectivePanel();
+    }
+
+    private void UpdateObjectives()
+    {
+        // Level is completed when all mian objectives are done, failed when one has failed
+        foreach (Objective objective in m_mainObjectives)
+        {
+            if (objective.UpdateStatus() == ObjectiveStatus.InProgress)
+            {
+                isMainObjectivesCompleted = false;
+            }
+
+            if (objective.UpdateStatus() == ObjectiveStatus.Failed)
+            {
+                // GameOver.cs listens for the event and handles gameover
+                EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+            }
+        }
+
+        // Secondary objective status can be viewed on screen
+        foreach (Objective objective in m_secondaryObjectives)
+        {
+            if (objective.UpdateStatus() == ObjectiveStatus.Completed)
+            {
+                numSecondaryObjectivesCompleted++;
+            }
+        }
+    }
+
+    public void UpdateObjectivePanel()
+    {
+        string displayText = "\n";
+
+        foreach (Objective objective in m_mainObjectives)
+        {
+            displayText += objective.GetObjectiveText();
+        }
+        if (m_secondaryObjectives.Count == 0)
+        {
+            this.objectivePanelText.text = displayText;
+            return;
+        }
+        displayText += "Secondary Objectives:\n";
+        foreach (Objective objective in m_secondaryObjectives)
+        {
+            displayText += objective.GetObjectiveText();
+        }
+
+        this.objectivePanelText.text = displayText;
+    }
+    #endregion
+
     #region Other Functions
     // no idea what these two do
     public void ClearAnimals()
@@ -338,7 +547,7 @@ public class GameManager : MonoBehaviour
         level.SetPopulations(m_populationManager);
         level.SetPlot(m_plotIO.SavePlot());
         level.serializedPopulations = new SerializedPopulation[0];
-        this.presetMap = level;
+        this.PresetMap = level;
 
         foreach (Population population in m_populationManager.Populations)
         {

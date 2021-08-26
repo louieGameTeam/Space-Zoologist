@@ -19,7 +19,7 @@ public class GeneralPathfinding : BehaviorPattern
             int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
             destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         }
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {

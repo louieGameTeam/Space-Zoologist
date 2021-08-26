@@ -2330,7 +2330,7 @@ Transform:
   m_LocalScale: {x: 0.325, y: 0.325, z: 0.325}
   m_Children: []
   m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &370814153
 GameObject:
@@ -3931,7 +3931,7 @@ Transform:
   - {fileID: 1242613438}
   - {fileID: 208159619}
   m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &529284906
 GameObject:
@@ -6210,7 +6210,7 @@ GameObject:
   - component: {fileID: 740143010}
   - component: {fileID: 740143009}
   m_Layer: 5
-  m_Name: GameOverText
+  m_Name: Game Over Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6869,10 +6869,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c0611965dbfe64ba3647e409e3790b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCamera: {fileID: 1054101994}
   godMode: 0
   isErasing: 0
-  GridSystem: {fileID: 765609361}
 --- !u!156049354 &765609363
 Grid:
   m_ObjectHideFlags: 0
@@ -7078,7 +7076,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &799223294
 MonoBehaviour:
@@ -7093,7 +7091,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bufferGO: {fileID: 857420968307824151, guid: 94d62094d4e08fb4389ce407dedb4baf, type: 3}
-  RPM: {fileID: 936381359}
 --- !u!1 &800900338
 GameObject:
   m_ObjectHideFlags: 0
@@ -8249,7 +8246,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1071554013843798300}
+      - m_Target: {fileID: 0}
         m_MethodName: TurnObjectivePanelOff
         m_Mode: 1
         m_Arguments:
@@ -9021,9 +9018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320d3a1b49d9e93499e06413cacdbe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
-  gridSystem: {fileID: 765609361}
-  buildBufferManager: {fileID: 799223294}
 --- !u!1 &937003167
 GameObject:
   m_ObjectHideFlags: 0
@@ -10346,7 +10340,7 @@ GameObject:
   - component: {fileID: 1043611556}
   - component: {fileID: 1043611555}
   m_Layer: 5
-  m_Name: GameOverText (1)
+  m_Name: Game Over Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14552,7 +14546,7 @@ PrefabInstance:
     - target: {fileID: 8731580173207704174, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00012207031
+      value: -0.00024414062
       objectReference: {fileID: 0}
     - target: {fileID: 8731580173207704174, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
@@ -15632,7 +15626,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1296419643
 GameObject:
@@ -16223,7 +16217,7 @@ Transform:
   - {fileID: 595932787}
   - {fileID: 1725569626}
   m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1370191617
 MonoBehaviour:
@@ -16288,7 +16282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReserveDraft: {fileID: 459174929}
-  NeedSystemManager: {fileID: 0}
   PopulationManager: {fileID: 2078374405}
   Inspector: {fileID: 1857669703}
   CurrentDayText: {fileID: 1549372359}
@@ -18190,7 +18183,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1071554013843798300}
+      - m_Target: {fileID: 0}
         m_MethodName: TurnObjectivePanelOff
         m_Mode: 1
         m_Arguments:
@@ -19033,7 +19026,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1629923769}
   - component: {fileID: 1629923771}
-  - component: {fileID: 1629923770}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
@@ -19061,31 +19053,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1629923770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629923768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e570691bf5e1b40a1967773f34dcd9a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameOverHUD: {fileID: 602359351}
-  IngameUI: {fileID: 0}
-  RestartButton: {fileID: 1410644951}
-  NextLevelButton: {fileID: 1246903123}
-  title: {fileID: 1043611555}
-  text: {fileID: 740143009}
-  PauseManager: {fileID: 1395149766}
-  SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
-  objectiveManager: {fileID: 1071554013843798300}
-  TimeSystem: {fileID: 1395149765}
-  dialogueManager: {fileID: 3395325107312024775}
-  passedConversation: {fileID: 497199108}
-  restertEnclosureConversation: {fileID: 411464672}
 --- !u!222 &1629923771
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20268,7 +20235,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1071554013843798300}
+      - m_Target: {fileID: 0}
         m_MethodName: TurnObjectivePanelOff
         m_Mode: 1
         m_Arguments:
@@ -21752,7 +21719,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1738013071
 MonoBehaviour:
@@ -24364,7 +24331,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1071554013843798300}
+      - m_Target: {fileID: 0}
         m_MethodName: TurnObjectivePanelOff
         m_Mode: 1
         m_Arguments:
@@ -24814,12 +24781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9549afc7087a6b14aaec260caad611d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedSystemManager: {fileID: 0}
   BehaviorPatternUpdater: {fileID: 1576156859}
   PopulationPrefab: {fileID: 2404175397146934353, guid: 88a3ba85465d242a2b30639be12248b4,
     type: 3}
-  ReservePartitionManager: {fileID: 936381359}
-  GridSystem: {fileID: 765609361}
   GenericBehaviors:
   - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
   - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
@@ -25105,7 +25069,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6874327555454712159}
-  - {fileID: 5311105242782422814}
   - {fileID: 3395325107312024776}
   - {fileID: 1738013070}
   - {fileID: 497773653}
@@ -25116,37 +25079,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &707684121534041709
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5311105242782422814}
-  - component: {fileID: 1071554013843798300}
-  m_Layer: 0
-  m_Name: ObjectiveManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1071554013843798300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 707684121534041709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e83d68ea3bf4ae1bd4a7f234c314f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectivePanel: {fileID: 655684759}
-  objectivePanelText: {fileID: 800900341}
 --- !u!1 &3082869182686246170
 GameObject:
   m_ObjectHideFlags: 0
@@ -25207,8 +25139,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e878e43196dddf549b41633c1adc7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_levelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}
   directory: Levels/
+  m_levelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}
+  SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
+  RestartButton: {fileID: 1410644951}
+  NextLevelButton: {fileID: 1246903123}
+  IngameUI: {fileID: 0}
+  passedConversation: {fileID: 497199108}
+  failedConversation: {fileID: 411464672}
+  GameOverHUD: {fileID: 602359351}
+  gameOverTitle: {fileID: 1043611555}
+  gameOverText: {fileID: 740143009}
+  objectivePane: {fileID: 655684759}
+  objectivePanelText: {fileID: 800900341}
 --- !u!114 &3395325107312024775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25246,7 +25189,7 @@ Transform:
   - {fileID: 1555640506}
   - {fileID: 121015477}
   m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3395325107312024778
 GameObject:
@@ -25295,20 +25238,6 @@ MonoBehaviour:
   conversationManager: {fileID: 750348922}
   sceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
   endOfQuizText: "Alright, give me a minute to process your answers\u2026"
---- !u!4 &5311105242782422814
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 707684121534041709}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 26666793554278037}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5592442342188060214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25322,8 +25251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnclosedAreas: []
-  needSystemManager: {fileID: 0}
-  gridSystem: {fileID: 765609361}
   startingPositions: []
 --- !u!4 &6874327555454712159
 Transform:
@@ -25353,9 +25280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodSourcePrefab: {fileID: 8671077070872712137, guid: d92a30a7c5d43471ea1985c8867892e1,
     type: 3}
-  NeedSystemManager: {fileID: 0}
-  GridSystem: {fileID: 765609361}
-  buildBufferManager: {fileID: 799223294}
   constructionColor: {r: 0.5, g: 1, b: 0.5, a: 1}
 --- !u!1 &6874327555454712161
 GameObject:

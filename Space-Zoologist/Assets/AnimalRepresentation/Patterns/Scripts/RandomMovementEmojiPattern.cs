@@ -23,7 +23,7 @@ public class RandomMovementEmojiPattern : BehaviorPattern
         {
             return;
         }
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {

@@ -9,7 +9,6 @@ public class TilePlacementController : MonoBehaviour
     private enum PlacementResult { Placed, Restricted, AlreadyExisted }
     public bool isBlockMode { get; set; } = false;
     public bool PlacementPaused { get; private set; }
-    [SerializeField] private Camera currentCamera = default;
     public bool isPreviewing { get; set; } = false;
     [SerializeField] public bool godMode = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
@@ -26,10 +25,8 @@ public class TilePlacementController : MonoBehaviour
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
-    private BuildBufferManager buildBufferManager;
     private int lastCornerX;
     private int lastCornerY;
-    [SerializeField] private GridSystem GridSystem = default;
     private void Awake()
     {
          // Load tiles form resources
@@ -46,19 +43,15 @@ public class TilePlacementController : MonoBehaviour
                             colorLinkedTiles[tile].Add(tilemap);
                         }
                     }*/
-        referencedTiles = this.gameTiles.ToList();
         // are different linked tiles (water) supposed to have differing color?
         //RenderColorOfColorLinkedTiles(colorInitializeTiles);
-        referencedTiles.Clear();
-        this.gameObject.GetComponent<PlotIO>().Initialize();
-        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
     }
 
     private void Update()
     {
         if (isPreviewing) // Update for preview
         {
-            Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             this.currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
             this.PlacementPaused = false;
             if (this.currentMouseCellPosition != this.lastMouseCellPosition || this.isFirstTile)
@@ -92,7 +85,7 @@ public class TilePlacementController : MonoBehaviour
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
     public void StartPreview(string tileID, bool godMode = false, float[] liquidContents = null)
     {
-        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         this.dragStartPosition = this.grid.WorldToCell(mouseWorldPosition);
         if (!Enum.IsDefined(typeof(TileType), tileID))
         {
@@ -116,11 +109,11 @@ public class TilePlacementController : MonoBehaviour
     {
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
-        GridSystem.ConfirmPlacement();
+        GameManager.Instance.m_gridSystem.ConfirmPlacement();
 
         // Set terrain modified flag
-        this.GridSystem.HasTerrainChanged = true;
-        this.GridSystem.ChangedTiles.UnionWith(addedTiles);
+        GameManager.Instance.m_gridSystem.HasTerrainChanged = true;
+        GameManager.Instance.m_gridSystem.ChangedTiles.UnionWith(addedTiles);
 
         // Clear all dics
         this.referencedTiles.Clear();
@@ -133,10 +126,10 @@ public class TilePlacementController : MonoBehaviour
     {
         foreach (GameTile tile in this.referencedTiles)
         {
-            GameTile currentTile = GridSystem.GetGameTileAt(this.currentMouseCellPosition);
+            GameTile currentTile = GameManager.Instance.m_gridSystem.GetGameTileAt(this.currentMouseCellPosition);
             if (currentTile != null)
             {
-                GridSystem.RemoveTile(this.currentMouseCellPosition);
+                GameManager.Instance.m_gridSystem.RemoveTile(this.currentMouseCellPosition);
             }
         }
     }
@@ -147,7 +140,7 @@ public class TilePlacementController : MonoBehaviour
 
     public void RevertChanges() // Go through each change and revert back to original
     {
-        GridSystem.Revert();
+        GameManager.Instance.m_gridSystem.Revert();
         // figure out what is going on here
         /*
         if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
@@ -309,7 +302,7 @@ public class TilePlacementController : MonoBehaviour
                     return PlacementResult.Restricted;
                 }
                 // If same tile
-                if (this.GridSystem.GetGameTileAt(cellPosition) == tile)
+                if (GameManager.Instance.m_gridSystem.GetGameTileAt(cellPosition) == tile)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;
@@ -317,7 +310,7 @@ public class TilePlacementController : MonoBehaviour
             }
             foreach (GameTile tile in referencedTiles)
             {
-                GridSystem.AddTile(cellPosition, tile, godMode);
+                GameManager.Instance.m_gridSystem.AddTile(cellPosition, tile, godMode);
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
@@ -343,16 +336,16 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        if (!GridSystem.IsWithinGridBounds(cellLocation))
+        if (!GameManager.Instance.m_gridSystem.IsWithinGridBounds(cellLocation))
         {
             return false;
         }
-        GridSystem.TileData tileData = GridSystem.GetTileData(cellLocation);
+        GridSystem.TileData tileData = GameManager.Instance.m_gridSystem.GetTileData(cellLocation);
         if (tileData.Food)
         {
             return false;
         }
-        if (this.buildBufferManager.IsConstructing(cellLocation.x, cellLocation.y))
+        if (GameManager.Instance.m_buildBufferManager.IsConstructing(cellLocation.x, cellLocation.y))
         {
             return false;
         }

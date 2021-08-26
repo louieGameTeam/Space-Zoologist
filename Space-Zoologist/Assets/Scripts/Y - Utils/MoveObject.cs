@@ -219,7 +219,7 @@ public class MoveObject : MonoBehaviour
         curPos = referenceCamera.ScreenToWorldPoint(Input.mousePosition);
         if (!gridSystem.IsWithinGridBounds(curPos)) return;
 
-        Vector3Int gridLocation = gridSystem.Grid.WorldToCell(curPos);
+        Vector3Int gridLocation = gridSystem.WorldToCell(curPos);
         if (this.gridSystem.IsOnWall(gridLocation)) return;
 
         // Different position: need to repaint
@@ -285,7 +285,7 @@ public class MoveObject : MonoBehaviour
         if (species.Size % 2 == 1)
         {
             //size is odd: center it
-            Vector3 FoodLocation = gridSystem.Grid.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
+            Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
             FoodLocation += Temp;
             FoodLocation /= 2f;
 
@@ -297,7 +297,7 @@ public class MoveObject : MonoBehaviour
         else
         {
             //size is even: place it at cross-center (position of tile)
-            Vector3 FoodLocation = gridSystem.Grid.CellToWorld(Temp); //equivalent since cell and world is 1:1, but in Vector3
+            Vector3 FoodLocation = gridSystem.CellToWorld(Temp); //equivalent since cell and world is 1:1, but in Vector3
             GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
             gridSystem.AddFood(mouseGridPosition, species.Size, Food);
@@ -318,7 +318,7 @@ public class MoveObject : MonoBehaviour
     }
     public void removeOriginalFood(FoodSource foodSource)
     {
-        Vector3Int FoodLocation = gridSystem.Grid.WorldToCell(initialPos);
+        Vector3Int FoodLocation = gridSystem.WorldToCell(initialPos);
         gridSystem.RemoveFood(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource);
         int sizeShift = foodSource.Species.Size - 1; // Finds the lower left cell the food occupies
