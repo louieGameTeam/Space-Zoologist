@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: GoldSpaceMaple
   m_EditorClassIdentifier: 
   size: 2
-  accessibleTerrain: 0200000003000000
+  accessibleTerrain: 0000000001000000
   speciesName: Gold Space Maple
   rootRadius: 4
   rootArea: 4
   baseOutput: 7
+  moveCost: 15
+  sellBackPrice: 10
   needsList:
   - needType: 0
     needs:

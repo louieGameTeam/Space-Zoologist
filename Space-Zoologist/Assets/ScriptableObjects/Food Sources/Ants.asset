@@ -13,37 +13,19 @@ MonoBehaviour:
   m_Name: Ants
   m_EditorClassIdentifier: 
   size: 1
-  accessibleTerrain: 020000000300000001000000
+  accessibleTerrain: 00000000010000000300000002000000
   speciesName: Ants
   rootRadius: 1
   rootArea: 2
   baseOutput: 10
+  moveCost: 5
+  sellBackPrice: 2
   needsList:
   - needType: 0
     needs:
     - needName: Grass
       severity: 1
       isPreferred: 1
-      conditions:
-      - Condition: 0
-        Behavior: {fileID: 0}
-      - Condition: 2
-        Behavior: {fileID: 0}
-      thresholds:
-      - 1
-    - needName: Sand
-      severity: 1
-      isPreferred: 0
-      conditions:
-      - Condition: 0
-        Behavior: {fileID: 0}
-      - Condition: 2
-        Behavior: {fileID: 0}
-      thresholds:
-      - 1
-    - needName: Dirt
-      severity: 1
-      isPreferred: 0
       conditions:
       - Condition: 0
         Behavior: {fileID: 0}

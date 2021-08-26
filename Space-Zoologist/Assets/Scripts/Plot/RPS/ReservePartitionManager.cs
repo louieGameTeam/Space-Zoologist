@@ -42,7 +42,7 @@ public class ReservePartitionManager : MonoBehaviour
     private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
 
     public GameTile Liquid;
-    [SerializeField] private TileSystem TileSystem = default;
+    [SerializeField] private GridSystem gridSystem = default;
     [SerializeField] private BuildBufferManager buildBufferManager;
     private void Awake()
     {
@@ -162,10 +162,8 @@ public class ReservePartitionManager : MonoBehaviour
         long[] SharedTiles = new long[maxPopulation];
 
         // starting location
-        Vector3Int location = this.TileSystem.WorldToCell(population.transform.position);
+        Vector3Int location = this.gridSystem.WorldToCell(population.transform.position);
         stack.Push(location);
-
-        TileSystem _tileSystem = this.TileSystem;
 
         // Clear TypesOfTerrain for given population
         this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
@@ -189,11 +187,11 @@ public class ReservePartitionManager : MonoBehaviour
             //    continue;
             //}
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
-            GameTile tile = _tileSystem.GetGameTileAt(cur);
+            GameTile tile = gridSystem.GetGameTileAt(cur);
             // Get liquid tile info
             if (tile != null && tile.type == TileType.Liquid)
             {
-                float[] composition = _tileSystem.GetTileContentsAt(cur, tile);
+                float[] composition = gridSystem.GetTileContentsAt(cur, tile);
 
                 if (!this.populationAccessibleLiquid.ContainsKey(population))
                 {
@@ -341,7 +339,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = this.TileSystem.WorldToCell(toWorldPos);
+        Vector3Int mapPos = this.gridSystem.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -352,7 +350,7 @@ public class ReservePartitionManager : MonoBehaviour
     {
         // if accessible
         // check if the nth bit is set (i.e. accessible for the population)
-         if (AccessMap.ContainsKey(cellPos))
+         if (AccessMap.ContainsKey(cellPos) && PopulationToID.ContainsKey(population))
         {
             if (((AccessMap[cellPos] >> PopulationToID[population]) & 1L) == 1L)
             {
@@ -388,12 +386,35 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Check if populationA's and populationB's accessible area overlaps.
+    /// </summary>
+    /// <param name="populationA">Ususally the consumer population</param>
+    /// <param name="populationB">Ususally the consumed population</param>
+    /// <remarks><c>populationA</c> and <c>populationB</c> is interchangeable</remarks>
+    /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
+    public int NumOverlapTiles(Population populationA, Population populationB)
+    {
+        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
+        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
+        int numOverlapTiles = 0;
+        foreach (Vector3Int cellPos in AccessibleArea_A)
+        {
+            if (AccessibleArea_B.Contains(cellPos))
+            {
+                numOverlapTiles++;
+            }
+        }
+
+        return numOverlapTiles;
+    }
+
+    /// <summary>
     /// Go through Populations and return a list of populations that has access to the tile corresponding to toWorldPos.
     /// </summary>
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = this.TileSystem.WorldToCell(toWorldPos);
+        Vector3Int cellPos = this.gridSystem.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)

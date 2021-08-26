@@ -118,7 +118,7 @@ public class FoodSourceCalculator : NeedCalculator
                 continue;
             }
             // 1. Calculate how much food each population can receive from available food, accounting for no food or dominance
-            float dominanceRatio = population.Dominance / localDominanceRemaining[foodSource];
+            float dominanceRatio = population.FoodDominance / localDominanceRemaining[foodSource];
             if (localDominanceRemaining[foodSource] <= 0 || dominanceRatio <= 0)
             {
                 dominanceRatio = 1;
@@ -141,12 +141,12 @@ public class FoodSourceCalculator : NeedCalculator
                 float excessFood = foodAcquired - maxThreshold;
                 foodAcquired = maxThreshold;
                 foodRemaining[foodSource] += excessFood;
-                UpdateLocalDominance(population);
                 break;
             }
         }
+        UpdateLocalDominance(population);
         population.UpdateNeed(foodSourceName, foodAcquired);
-        //Debug.Log(population.gameObject.name + " receieved " + foodAcquired + " from " + this.FoodSourceName);
+        //Debug.Log(population.species.SpeciesName + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;
     }
 
@@ -154,7 +154,7 @@ public class FoodSourceCalculator : NeedCalculator
     {
         foreach (FoodSource foodSource in accessibleFoodSources[population])
         {
-            localDominanceRemaining[foodSource] -= population.Dominance;
+            localDominanceRemaining[foodSource] -= population.FoodDominance;
         }
     }
 
@@ -171,7 +171,7 @@ public class FoodSourceCalculator : NeedCalculator
             {
                 localDominanceRemaining[foodSource] = 0f;
             }
-            float total = populationsWithAccess[foodSource].Sum(p => p.Dominance);
+            float total = populationsWithAccess[foodSource].Sum(p => p.FoodDominance);
             localDominanceRemaining[foodSource] = total;
             foodRemaining[foodSource] = foodSource.FoodOutput;
         }

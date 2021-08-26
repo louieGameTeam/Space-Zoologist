@@ -107,7 +107,7 @@ public class SurvivalObjective : Objective
         if (this.TargetTime.Equals(0f))
         {
             displayText += $"Reach a population size of {this.TargetPopulationSize} {this.AnimalSpecies.SpeciesName}s\n\n";
-            displayText += $"Current population size: {totalPopulationCount}\n";
+            displayText += $"Current population size: {totalPopulationCount}\n\n";
             return displayText;
         }
         displayText += $"Maintain at least {this.satisfiedPopulationCount}/{this.TargetPopulationCount} ";

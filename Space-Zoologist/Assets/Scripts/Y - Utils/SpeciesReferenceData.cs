@@ -16,9 +16,12 @@ public class SpeciesReferenceData : MonoBehaviour
             foreach (LevelData.ItemData data in LevelDataReference.LevelData.ItemQuantities)
             {
                 Item item = data.itemObject;
-                if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName))
+                if (item)
                 {
-                    this.FoodSources.Add(item.ID, foodSource);
+                    if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName))
+                    {
+                        this.FoodSources.Add(item.ID, foodSource);
+                    }
                 }
             }
         }
