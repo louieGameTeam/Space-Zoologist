@@ -18,11 +18,15 @@ public class GameOver : MonoBehaviour
     [SerializeField] TimeSystem TimeSystem = default;
 
     [SerializeField] DialogueManager dialogueManager = default;
-    [SerializeField] DialogueEditor.NPCConversation passedConversation = default;
-    [SerializeField] DialogueEditor.NPCConversation restertEnclosureConversation = default;
+    private DialogueEditor.NPCConversation passedConversation = default;
+    private DialogueEditor.NPCConversation restartEnclosureConversation = default;
+    LevelDataReference levelDataReference = default;
 
     private void Start()
     {
+        levelDataReference = FindObjectOfType<LevelDataReference>();
+        passedConversation = levelDataReference.LevelData.PassedConversation;
+        restartEnclosureConversation = levelDataReference.LevelData.RestartConversation;
         EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
         this.RestartButton.onClick.AddListener(() => {this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel);});
         this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); } );
@@ -32,7 +36,7 @@ public class GameOver : MonoBehaviour
     {
         if (!this.TimeSystem.LessThanMaxDay)
         {
-            dialogueManager.SetNewDialogue(restertEnclosureConversation);
+            dialogueManager.SetNewDialogue(restartEnclosureConversation);
         }
         else
         {

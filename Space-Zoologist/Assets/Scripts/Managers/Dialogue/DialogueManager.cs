@@ -11,19 +11,24 @@ public class DialogueManager : MonoBehaviour
 {
     private NPCConversation currentDialogue = default;
     [SerializeField] private bool HideNPC = default;
-    [SerializeField] private NPCConversation startingConversation = default;
-    [SerializeField] private NPCConversation defaultConversation = default;
+    private NPCConversation startingConversation = default;
+    private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
     [SerializeField] private GameObject DialogueButton = default;
+    private LevelDataReference levelDataReference = default;
     private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
 
     private bool ContinueSpeech = false;
+
 
     /// <summary>
     /// Initialize stuffs here
     /// </summary>
     private void Start()
     {
+        levelDataReference = FindObjectOfType<LevelDataReference>();
+        startingConversation = levelDataReference.LevelData.StartingConversation;
+        defaultConversation = levelDataReference.LevelData.DefaultConversation;
         ConversationManager.OnConversationEnded = ConversationEnded;
         if (this.startingConversation != null)
         {

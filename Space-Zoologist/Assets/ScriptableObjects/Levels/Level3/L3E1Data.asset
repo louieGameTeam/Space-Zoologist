@@ -63,8 +63,13 @@ MonoBehaviour:
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: bbfbb40c97bab4ec69618bda24523c73, type: 2}
     initialAmount: 4
-  globalAtmosphere:
-    GasX: 5
-    GasY: 3
-    GasZ: 1
-    temperature: 90
+  startingConversation: {fileID: 492502004931850185, guid: 14cafe0bb96a54d769df0401e323ef30,
+    type: 3}
+  defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
+    type: 3}
+  passedConversation: {fileID: 6635029123290305080, guid: 06e1457ce5da543d5974a587d40bfe7b,
+    type: 3}
+  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+    type: 3}
+  startingPositions:
+  - {x: 1, y: 1, z: 0}

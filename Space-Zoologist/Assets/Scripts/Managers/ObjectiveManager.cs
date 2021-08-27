@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
-    [Expandable] public LevelDataReference LevelDataReference = default;
+    private LevelDataReference levelDataReference = default;
     private LevelObjectiveData LevelObjectiveData = default;
 
     public bool IsGameOver => this.isGameOver;
@@ -29,7 +29,6 @@ public class ObjectiveManager : MonoBehaviour
 
     public bool IsMainObjectivesCompleted { get; private set; }
     public int NumSecondaryObjectivesCompleted { get; private set; }
-
 
     public void ToggleObjectivePanel()
     {
@@ -101,7 +100,8 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        this.LevelObjectiveData = this.LevelDataReference.LevelData.LevelObjectiveData;
+        levelDataReference = FindObjectOfType<LevelDataReference>();
+        this.LevelObjectiveData = this.levelDataReference.LevelData.LevelObjectiveData;
 
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)

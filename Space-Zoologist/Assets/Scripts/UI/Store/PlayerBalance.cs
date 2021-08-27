@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerBalance : MonoBehaviour
 {
-    [SerializeField] LevelDataReference LevelDataReference = default;
+    private LevelDataReference levelDataReference = default;
     public float Balance { get; private set; }
 
     private void Awake()
     {
-        this.Balance = this.LevelDataReference.LevelData.StartingBalance;
+        levelDataReference = FindObjectOfType<LevelDataReference>();
+        this.Balance = this.levelDataReference.LevelData.StartingBalance;
     }
 
     public void SubtractFromBalance(float value)
