@@ -1,15 +1,14 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PopulationSystem/Population/Population.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/Dialogue/DialogueWarning.cs">
     <Files>
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="1054" Column="17" />
-      <File FileName="Assets/Scripts/Y - Utils/MoveObject.cs" Line="298" Column="69" />
-      <File FileName="Assets/Scripts/UI/CameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Inspector/LiquidModificationHUD.cs" Line="50" Column="13" />
-      <File FileName="Assets/Scripts/Needs/Systems/LiquidNeedSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="164" Column="37" />
-      <File FileName="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs" Line="33" Column="51" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="247" Column="12" />
-      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" Line="277" Column="17" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="11" Column="29" />
+      <File FileName="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs" />
+      <File FileName="Assets/Scripts/Managers/Dialogue/DialogueWarning.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Plot/RPS/EnclosureSystem.cs" />
+      <File FileName="Assets/Scripts/Z - Unused/Dialogue/EventDialogueGenerator.cs" />
+      <File FileName="Assets/Scripts/Managers/Dialogue/DialogueManager.cs" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/GrowthCalculator.cs" />
+      <File FileName="Assets/Scripts/Managers/ResourceManager.cs" Line="6" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -39,6 +38,7 @@
                 <Node name="Audio" expanded="True" />
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
+                  <Node name="Dialogue" expanded="True" />
                   <Node name="EventSystem" expanded="True" />
                   <Node name="TimeSystem" expanded="True" />
                 </Node>
@@ -54,7 +54,7 @@
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="Population" expanded="True">
-                    <Node name="Population.cs" selected="True" />
+                    <Node name="PopulationManager.cs" selected="True" />
                   </Node>
                   <Node name="Representation" expanded="True" />
                 </Node>
@@ -63,6 +63,7 @@
                 </Node>
                 <Node name="Y - Utils" expanded="True" />
                 <Node name="Z - Unused" expanded="True">
+                  <Node name="Dialogue" expanded="True" />
                   <Node name="Needs" expanded="True" />
                 </Node>
               </Node>

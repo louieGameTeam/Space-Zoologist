@@ -43,6 +43,7 @@ public class TimeSystem : MonoBehaviour
         }
         this.Inspector.UpdateCurrentDisplay();
         UpdateDayText(++currentDay);
+        EventManager.Instance.InvokeEvent(EventType.NextDay, this);
     }
 
     private void UpdateDayText(int day)
