@@ -55,6 +55,8 @@ MonoBehaviour:
   dropdownParent: {fileID: 5892994195613623914}
   selectedSprite: {fileID: 21300000, guid: 41b5844cf105260418101f7bc1eda0bf, type: 3}
   notSelectedSprite: {fileID: 21300000, guid: 15fa5d67fc407064e88243ed2d7f0433, type: 3}
+  selectedScale: 0.2
+  sizeChangeTime: 0.5
   bookmarkTarget: {fileID: 7402859124686276361}
   onResearchCategoryChanged:
     m_PersistentCalls:
@@ -76,13 +78,13 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 3
+  m_ChildAlignment: 6
   m_Spacing: 5
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
+  m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
 --- !u!114 &7402859124686276361
 MonoBehaviour:

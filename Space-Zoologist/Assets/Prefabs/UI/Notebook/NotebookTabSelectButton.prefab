@@ -112,8 +112,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0528c35d3ed264e880fffa3c576eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 5839791725404973758}
   myToggle: {fileID: 5839791725404973745}
   tabName: {fileID: 5839791726330627991}
+  selectedGrowthSize: 0.1
+  sizeChangeTime: 0.5
   selectedEvent:
     m_PersistentCalls:
       m_Calls: []

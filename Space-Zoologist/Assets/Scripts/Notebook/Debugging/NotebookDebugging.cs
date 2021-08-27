@@ -23,6 +23,7 @@ public class NotebookDebugging : MonoBehaviour
 
         // Set the parent, size, and anchors of the image rect transform
         imageTransform.SetParent(imageHolder);
+        // So that it renders below the example
         imageTransform.SetAsFirstSibling();
         // Anchor/pivot in the center
         imageTransform.anchorMin = imageTransform.anchorMax = imageTransform.pivot = Vector2.one * 0.5f;

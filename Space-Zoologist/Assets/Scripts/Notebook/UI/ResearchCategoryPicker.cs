@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+using DG.Tweening;
+
 public class ResearchCategoryPicker : NotebookUIChild
 {
     // So that the event appears in the editor
@@ -36,11 +38,17 @@ public class ResearchCategoryPicker : NotebookUIChild
     [Tooltip("Parent transform that the dropdowns are instantiated into")]
     private Transform dropdownParent;
     [SerializeField]
-    [Tooltip("Color of the dropdown when it is selected")]
+    [Tooltip("Sprite of the dropdown when it is selected")]
     private Sprite selectedSprite;
     [SerializeField]
-    [Tooltip("Color of the dropdown when it is not selected")]
+    [Tooltip("Sprite of the dropdown when it is not selected")]
     private Sprite notSelectedSprite;
+    [SerializeField]
+    [Tooltip("Scale of the button when it is selected")]
+    private float selectedScale = 0.2f;
+    [SerializeField]
+    [Tooltip("Time it takes for the button to grow/shrink when selected/deselected")]
+    private float sizeChangeTime = 0.5f;
     [SerializeField]
     [Tooltip("Reference to the script targetted by the bookmarking system")]
     private BookmarkTarget bookmarkTarget;
@@ -91,8 +99,24 @@ public class ResearchCategoryPicker : NotebookUIChild
         // Set the sprites of the backgrounds of the dropdown images
         foreach(TypeFilteredResearchCategoryDropdown dropdown in dropdowns)
         {
-            if (dropdown.TypeFilter[0] == category.Type) dropdown.Dropdown.image.sprite = selectedSprite;
-            else dropdown.Dropdown.image.sprite = notSelectedSprite;
+            // Get this dropdown rect transform. Make sure it finishes any scale animations
+            RectTransform dropdownRect = dropdown.GetComponent<RectTransform>();
+            //dropdownRect.DOComplete(true);
+
+            if (dropdown.TypeFilter[0] == category.Type)
+            {
+                // Make this dropdown a little bigger
+                dropdownRect.DOScale(1f + selectedScale, sizeChangeTime);
+                // Set the correct sprite
+                dropdown.Dropdown.image.sprite = selectedSprite;
+            }
+            else
+            {
+                // Make this dropdown the default size
+                dropdownRect.DOScale(1f, sizeChangeTime);
+                // Set the correct sprite
+                dropdown.Dropdown.image.sprite = notSelectedSprite;
+            }
         }
 
         onResearchCategoryChanged.Invoke(category);

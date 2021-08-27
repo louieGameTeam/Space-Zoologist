@@ -21,14 +21,8 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     [Tooltip("Text field used to display the encyclopedia article")]
     private TMP_InputField textField;
     [SerializeField]
-    [Tooltip("Rect transform that contains all the content for the article")]
-    private RectTransform articleLayout;
-    [SerializeField]
     [Tooltip("Parent of the image objects for this article")]
     private RectTransform imageParent;
-    [SerializeField]
-    [Tooltip("Empty sprite to display if the article doesn't have any for us")]
-    private Sprite noneSprite;
     [SerializeField]
     [Tooltip("Toggle used to determine if highlights are being added or removed")]
     private Toggle highlightToggle;
@@ -107,14 +101,9 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             foreach (Transform child in imageParent) Destroy(child.gameObject);
             // Create an image object for each sprite
             foreach (Sprite sprite in currentArticle.Sprites) CreateImage(sprite);
-            // Rebuild the image parent layout
-            //LayoutRebuilder.MarkLayoutForRebuild(imageParent);
         }
         // No article given implies this encyclopedia has no entries
         else textField.text = "<color=#aaa>This encyclopedia has no entries</color>";
-
-        // Rebuild the layout since we just changed the text
-        //LayoutRebuilder.MarkLayoutForRebuild(articleLayout);
     }
 
     public static string RichEncyclopediaArticleText(ResearchEncyclopediaArticle article, List<RichTextTag> tags)
@@ -155,6 +144,5 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
         image.maskable = true;
         image.type = Image.Type.Simple;
         image.preserveAspect = true;
-
     }
 }
