@@ -122,14 +122,31 @@ public class LiquidNeedSystem : NeedSystem
             else if (life is FoodSource)
             {
                 FoodSource foodSource = (FoodSource)life;
+                Dictionary<string, Need> foodNeeds = foodSource.GetNeedValues();
 
-                int liquidCount = gridSystem.CountOfTilesInRange(gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[(int)TileType.Liquid];
+                float liquidCount = 0;
+                List<float[]> liquidCompositions = new List<float[]>();
+
+                for(int i = 1; i <= foodSource.Species.RootRadius; ++i)
+                {
+                    List<float[]> compositions = gridSystem.GetLiquidCompositionWithinRange(gridSystem.WorldToCell(life.GetPosition()), i, true);
+                    foreach(float[] composition in compositions)
+                    {
+                        if (!(foodNeeds.ContainsKey("Water") && composition[(int)LiquidComposition.Water] < foodNeeds["Water"].GetThreshold()) && //If the food source either doesn't need fresh water or the fresh water threshold is met
+                            !(foodNeeds.ContainsKey("Salt") && composition[(int)LiquidComposition.Salt] < foodNeeds["Salt"].GetThreshold()) &&  //and it either doesn't need salt or the salt threshold is met
+                            !(foodNeeds.ContainsKey("Bacteria") && composition[(int)LiquidComposition.Bacteria] < foodNeeds["Bacteria"].GetThreshold()) ) //and it either doesn't need bacteria or the bacteria threshold is met
+                        {
+                            liquidCount += 1f/i;
+                            liquidCompositions.Add(composition);
+                        }
+                    }
+                }
+
                 foodSource.UpdateNeed("LiquidTiles", liquidCount);
                 //Debug.Log(foodSource.name + " updated LiquidTiles with value: " + liquidCount);
 
-                List<float[]> liquidCompositions = gridSystem.GetLiquidCompositionWithinRange(gridSystem.WorldToCell(life.GetPosition()), foodSource.Species.RootRadius);
                 // Check is there is found composition
-                if (liquidCompositions != null)
+                if (liquidCompositions.Count > 0)
                 {
                     float[] sumComposition = new float[liquidCompositions[0].Count()];
 

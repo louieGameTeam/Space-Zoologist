@@ -1615,8 +1615,9 @@ public class GridSystem : MonoBehaviour
     /// </summary>
     /// <param name="centerCellLocation">The location of the center cell</param>
     /// <param name="scanRange">The radius range to look for</param>
-    /// <returns>A list of the compositions, null is there is no liquid within range</returns>
-    public List<float[]> GetLiquidCompositionWithinRange(Vector3Int centerCellLocation, int scanRange)
+    /// <param name="scanRing">Scans the full circle when false. Scans only the outermost ring when true.</param>
+    /// <returns>A list of the compositions, can have a length of 0</returns>
+    public List<float[]> GetLiquidCompositionWithinRange(Vector3Int centerCellLocation, int scanRange, bool scanRing = false)
     {
         List<float[]> liquidCompositions = new List<float[]>();
 
@@ -1631,6 +1632,11 @@ public class GridSystem : MonoBehaviour
                     continue;
                 }
 
+                if(scanRing && distance <= scanRange - 1)
+                {
+                    continue;
+                }
+
                 scanLocation.x = x + centerCellLocation.x;
                 scanLocation.y = y + centerCellLocation.y;
                 LiquidBody liquid = this.GetTileData(scanLocation) != null ? this.GetTileData(scanLocation).currentLiquidBody : null;
@@ -1640,11 +1646,6 @@ public class GridSystem : MonoBehaviour
 
                 }
             }
-        }
-
-        if (liquidCompositions.Count == 0)
-        {
-            return null;
         }
 
         return liquidCompositions;

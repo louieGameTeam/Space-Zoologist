@@ -9,9 +9,9 @@ public enum GrowthStatus {declining, stagnate, growing}
 /// </summary>
 public class GrowthCalculator
 {
-    private const float maxFreshWaterTilePercent = 0.98f; //Someday this will need to be changed to get the value from the scriptableObject
-    private const float maxSaltTilePercent = 0.04f; //Someday this will need to be changed to get the value from the scriptableObject
-    private const float maxBacteriaTilePercent = 0.09f; //Someday this will need to be changed to get the value from the scriptableObject
+    public const float maxFreshWaterTilePercent = 0.98f; //Someday this will need to be changed to get the value from the scriptableObject
+    public const float maxSaltTilePercent = 0.04f; //Someday this will need to be changed to get the value from the scriptableObject
+    public const float maxBacteriaTilePercent = 0.09f; //Someday this will need to be changed to get the value from the scriptableObject
 
     public GrowthStatus GrowthStatus { get; private set; }
     public Dictionary<NeedType, bool> IsNeedMet = new Dictionary<NeedType, bool>();
