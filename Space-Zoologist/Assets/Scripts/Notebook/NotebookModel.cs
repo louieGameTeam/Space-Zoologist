@@ -7,7 +7,7 @@ public class NotebookModel : ScriptableObject
 {
     public string Acronym => acronym;
     public ResearchModel Research => research;
-    public TestAndMetricModel TestAndMetrics => testAndMetrics;
+    public TestAndMetricsModel TestAndMetrics => testAndMetrics;
     public ObservationModel Observations => observations;
     public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
     public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(requestData.Keys);
@@ -25,7 +25,7 @@ public class NotebookModel : ScriptableObject
     private ObservationModel observations;
     [SerializeField]
     [Tooltip("Test and metrics that the player has taken")]
-    private TestAndMetricModel testAndMetrics;
+    private TestAndMetricsModel testAndMetrics;
 
     // Notes on each character in the acronym
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();

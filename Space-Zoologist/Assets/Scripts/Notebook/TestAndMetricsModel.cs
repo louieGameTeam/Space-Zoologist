@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TestAndMetricModel
+public class TestAndMetricsModel
 {
     #region Private Editor Fields
     [SerializeField]

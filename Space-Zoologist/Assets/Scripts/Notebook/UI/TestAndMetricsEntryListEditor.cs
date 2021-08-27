@@ -10,7 +10,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     private EnclosureIDPicker enclosurePicker;
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
-    private TestAndMetricEntryEditor editorPrefab;
+    private TestAndMetricsEntryEditor editorPrefab;
     [SerializeField]
     [Tooltip("Parent transform for the editor of the individual entries")]
     private LayoutGroup editorParent;
@@ -18,7 +18,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     [Tooltip("Reference to the scroll rect that the editors will fit into")]
     private ScrollRect editorScroller;
 
-    private List<TestAndMetricEntryEditor> currentEditors = new List<TestAndMetricEntryEditor>();
+    private List<TestAndMetricsEntryEditor> currentEditors = new List<TestAndMetricsEntryEditor>();
 
     public override void Setup()
     {
@@ -32,7 +32,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     private void OnEnclosureSelected(EnclosureID id)
     {
         // Destroy all existing editors
-        foreach(TestAndMetricEntryEditor editor in currentEditors)
+        foreach(TestAndMetricsEntryEditor editor in currentEditors)
         {
             Destroy(editor.gameObject);
         }
@@ -42,7 +42,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
         // Foreach entry in the selected list, add an editor
         foreach(TestAndMetricsEntry entry in UIParent.Notebook.TestAndMetrics.GetEntryList(id).Entries)
         {
-            TestAndMetricEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
+            TestAndMetricsEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
             editor.Setup(id, entry, editorScroller);
             currentEditors.Add(editor);
         }
@@ -62,7 +62,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 
     private void CreateAddingEntry()
     {
-        TestAndMetricEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
+        TestAndMetricsEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
         editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller);
         editor.OnNewEntryCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);

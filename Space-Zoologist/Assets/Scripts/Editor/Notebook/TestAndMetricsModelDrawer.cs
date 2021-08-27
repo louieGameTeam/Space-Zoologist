@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(TestAndMetricModel))]
-public class TestAndMetricModelDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(TestAndMetricsModel))]
+public class TestAndMetricsModelDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
