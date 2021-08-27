@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class BehaviorPatternUpdater : MonoBehaviour
 {
-    [SerializeField] GridSystem GridSystem = default;
     public List<BehaviorPattern> behaviorPatterns = new List<BehaviorPattern>();
-    public bool IsPaused = false;
     // TODO manage pause for all behaviors
     void Update()
     {
-        if (this.IsPaused)
+        if (GameManager.Instance.IsPaused)
         {
             return;
         }
@@ -24,7 +22,6 @@ public class BehaviorPatternUpdater : MonoBehaviour
     {
         if (!behaviorPatterns.Contains(behaviorPattern))
         {
-            behaviorPattern.SetupDependencies(this.GridSystem);
             behaviorPattern.StartUp();
             behaviorPatterns.Add(behaviorPattern);
         }

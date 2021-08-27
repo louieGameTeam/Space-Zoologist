@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game State Variables
-    [Space(20)]
+    [Header("Game State Variables")]
     [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] Button RestartButton = default;
     [SerializeField] Button NextLevelButton = default;
@@ -35,6 +35,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI gameOverTitle = default;
     [SerializeField] TextMeshProUGUI gameOverText = default;
 
+    [Header("Time Variables")]
+    [SerializeField] int maxDay = 20;
+    private int currentDay = 1;
+    [SerializeField] Text CurrentDayText = default;
+    public bool IsPaused { get; private set; }
+    public bool WasPaused { get; private set; }
+    [SerializeField] public GameObject PauseButton = default;
+    private Image PauseButtonSprite = default;
+    private Button PauseButtonButton = default;
+    [SerializeField] private Sprite PauseSprite = default;
+    [SerializeField] private Sprite ResumeSprite = default;
+
     public bool IsGameOver { get { return m_isGameOver; } }
     private bool m_isGameOver = false;
     private List<Objective> m_mainObjectives = new List<Objective>();
@@ -43,7 +55,8 @@ public class GameManager : MonoBehaviour
     public int numSecondaryObjectivesCompleted { get; private set; }
 
     private bool isObjectivePanelOpen;
-    [Space(20)]
+    
+    [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
     [SerializeField] private Text objectivePanelText = default;
     #endregion
@@ -61,10 +74,11 @@ public class GameManager : MonoBehaviour
     public ResourceManager m_resourceManager { get; private set; }
     public BuildBufferManager m_buildBufferManager { get; private set; }
     public PauseManager m_pauseManager { get; private set; }
+    public BehaviorPatternUpdater m_behaviorPatternUpdater { get; private set; }
     public TilePlacementController m_tilePlacementController { get; private set; }
     public PlotIO m_plotIO { get; private set; }
     public GridSystem m_gridSystem { get; private set; }
-    public TimeSystem m_timeSystem { get; private set; }
+    public Inspector m_inspector { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -80,8 +94,9 @@ public class GameManager : MonoBehaviour
         SetNeedSystems();
         InitializeManagers();
         LoadLevelData();
-        InitialNeedSystemUpdate();
         SetupObjectives();
+        InitializeGameStateVariables();
+        InitialNeedSystemUpdate();
     }
 
     void Update()
@@ -196,11 +211,6 @@ public class GameManager : MonoBehaviour
         // set the animal dictionary
         foreach (AnimalSpecies animalSpecies in m_levelData.AnimalSpecies)
             this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
-        
-        // set up the game state
-        EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
-        this.RestartButton.onClick.AddListener(() => { this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel); });
-        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
 
         // load in the tilemap
         this.sceneName = SceneManager.GetActiveScene().name;
@@ -219,10 +229,11 @@ public class GameManager : MonoBehaviour
         m_resourceManager = FindObjectOfType<ResourceManager>();
         m_buildBufferManager = FindObjectOfType<BuildBufferManager>();
         m_pauseManager = FindObjectOfType<PauseManager>();
+        m_behaviorPatternUpdater = FindObjectOfType<BehaviorPatternUpdater>();
         m_tilePlacementController = FindObjectOfType<TilePlacementController>();
         m_plotIO = FindObjectOfType<PlotIO>();
         m_gridSystem = FindObjectOfType<GridSystem>();
-        m_timeSystem = FindObjectOfType<TimeSystem>();
+        m_inspector = FindObjectOfType<Inspector>();
     }
 
     private void LoadResources()
@@ -237,7 +248,6 @@ public class GameManager : MonoBehaviour
         m_foodSourceManager.Initialize();
         m_buildBufferManager.Initialize();
         m_resourceManager.Initialize();
-        m_timeSystem.Initialize();
     }
 
     private void SetupObjectives()
@@ -286,6 +296,19 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    private void InitializeGameStateVariables()
+    {
+        // set up the game state
+        EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
+        this.RestartButton.onClick.AddListener(() => { this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel); });
+        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
+        UpdateDayText(currentDay);
+        this.IsPaused = false;
+        this.WasPaused = false;
+        this.PauseButtonSprite = this.PauseButton.GetComponent<Image>();
+        this.PauseButtonButton = this.PauseButton.GetComponent<Button>();
+    }
     #endregion
 
     #region Balance Functions
@@ -321,7 +344,7 @@ public class GameManager : MonoBehaviour
     {
         this.UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
-        m_pauseManager.TogglePause();
+        TogglePause();
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
         {
             this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
@@ -434,9 +457,73 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game State Functions
+    public void TryToPause()
+    {
+        // prevents accidentally unpausing when should not (two different accessors)
+        if (this.IsPaused)
+            this.WasPaused = true;
+        else
+            this.Pause();
+    }
+
+    public void TryToUnpause()
+    {
+        // prevents accidentally pausing when should not (two different accessors)
+        if (this.WasPaused)
+            this.WasPaused = false;
+        else
+            this.Unpause();
+    }
+
+    public void TogglePause()
+    {
+        if (this.IsPaused)
+        {
+            this.Unpause();
+        }
+        else
+        {
+            this.Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 1;
+        this.IsPaused = true;
+        this.PauseButtonSprite.sprite = this.ResumeSprite;
+        this.PauseButtonButton.onClick.RemoveListener(this.Pause);
+        this.PauseButtonButton.onClick.AddListener(this.Unpause);
+        foreach (Population population in m_populationManager.Populations)
+            population.PauseAnimalsMovementController();
+        m_gridSystem.UpdateAnimalCellGrid();
+        AudioManager.instance?.PlayOneShot(SFXType.Pause);
+    }
+
+    public void Unpause()
+    {
+        this.IsPaused = false;
+        this.PauseButtonSprite.sprite = this.PauseSprite;
+        this.PauseButtonButton.onClick.RemoveListener(this.Unpause);
+        this.PauseButtonButton.onClick.AddListener(this.Pause);
+        foreach (Population population in m_populationManager.Populations)
+            population.UnpauseAnimalsMovementController();
+        AudioManager.instance?.PlayOneShot(SFXType.Unpause);
+    }
+
+    public void TwoTimeSpeed()
+    {
+        Time.timeScale = 2;
+    }
+
+    public void FourTimeSpeed()
+    {
+        Time.timeScale = 4;
+    }
+
     public void HandleNPCEndConversation()
     {
-        if (!m_timeSystem.LessThanMaxDay)
+        if (!(currentDay < maxDay))
         {
             m_dialogueManager.SetNewDialogue(failedConversation);
         }
@@ -450,7 +537,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleGameOver()
     {
-        m_pauseManager.Pause();
+        Pause();
         this.GameOverHUD.SetActive(true);
         this.IngameUI.SetActive(false);
 
@@ -536,6 +623,33 @@ public class GameManager : MonoBehaviour
         }
 
         this.objectivePanelText.text = displayText;
+    }
+
+    private void UpdateDayText(int day)
+    {
+        CurrentDayText.text = "" + day;
+        if (maxDay > 0)
+        {
+            CurrentDayText.text += " / " + maxDay;
+        }
+    }
+
+    public void nextDay()
+    {
+        m_buildBufferManager.CountDown();
+        m_populationManager.UpdateAccessibleLocations();
+        m_populationManager.UpdateAllPopulationRegistration();
+        UpdateAllNeedSystems();
+        for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
+        {
+            m_populationManager.Populations[i].HandleGrowth();
+        }
+        foreach (Population population in m_populationManager.Populations)
+        {
+            population.UpdateGrowthConditions();
+        }
+        m_inspector.UpdateCurrentDisplay();
+        UpdateDayText(++currentDay);
     }
     #endregion
 

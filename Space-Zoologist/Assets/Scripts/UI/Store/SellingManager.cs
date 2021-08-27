@@ -15,7 +15,7 @@ public class SellingManager : MonoBehaviour
     {
         if (!IsSelling)
         {
-            this.PauseManager.TryToPause();
+            GameManager.Instance.TryToPause();
             if (Inspector.IsInInspectorMode)
             {
                 Inspector.CloseInspector();

@@ -27,13 +27,13 @@ public class ReserveDraft : MonoBehaviour
 
     public void startDrafting()
     {
-        PauseManager.TryToPause();
+        GameManager.Instance.TryToPause();
         UpdateUI(false);
     }
 
     public void finishDrafting()
     {
-        PauseManager.Unpause();
+        GameManager.Instance.Unpause();
         UpdateUI(true);
     }
 

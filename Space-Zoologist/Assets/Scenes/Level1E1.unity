@@ -2028,7 +2028,7 @@ PrefabInstance:
         type: 3}
       propertyPath: PauseManager
       value: 
-      objectReference: {fileID: 1395149766}
+      objectReference: {fileID: 0}
     - target: {fileID: 8946323213000099165, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
       propertyPath: IngameUI
@@ -2310,7 +2310,7 @@ MonoBehaviour:
   - {fileID: 1976025393}
   - {fileID: 47254746}
   ResourceManager: {fileID: 1738013071}
-  PauseManager: {fileID: 1395149766}
+  PauseManager: {fileID: 0}
   PlayerBalanceDisplay: {fileID: 491272613}
   CursorItem: {fileID: 380907109}
   GridSystem: {fileID: 765609361}
@@ -3466,7 +3466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da1c47da73374f9db1291410ce0c2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseManager: {fileID: 1395149766}
+  PauseManager: {fileID: 0}
   PauseButton: {fileID: 915008188}
   NextDayButton: {fileID: 1012412230}
   PlayerController: {fileID: 1290313821}
@@ -6159,7 +6159,7 @@ PrefabInstance:
     - target: {fileID: 5423665932188050013, guid: 6238c2724e7624d0580fcf5738f4fd83,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5423665932188050013, guid: 6238c2724e7624d0580fcf5738f4fd83,
         type: 3}
@@ -7265,7 +7265,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1712921983}
   m_HandleRect: {fileID: 1712921982}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -8926,7 +8926,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1395149766}
+      - m_Target: {fileID: 3291930203106343763}
         m_MethodName: TogglePause
         m_Mode: 1
         m_Arguments:
@@ -10280,7 +10280,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1395149765}
+      - m_Target: {fileID: 3291930203106343763}
         m_MethodName: nextDay
         m_Mode: 1
         m_Arguments:
@@ -16236,172 +16236,6 @@ MonoBehaviour:
   defaultConversation: {fileID: 215227612}
   ConversationManagerGameObject: {fileID: 0}
   DialogueButton: {fileID: 0}
---- !u!1 &1395149763
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1395149764}
-  - component: {fileID: 1395149765}
-  - component: {fileID: 1395149766}
-  - component: {fileID: 1395149767}
-  m_Layer: 0
-  m_Name: TimeSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1395149764
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1395149763}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1395149765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1395149763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e722719f15584a84ae60052f6aff8f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ReserveDraft: {fileID: 459174929}
-  PopulationManager: {fileID: 2078374405}
-  Inspector: {fileID: 1857669703}
-  CurrentDayText: {fileID: 1549372359}
-  buildBufferManager: {fileID: 799223294}
-  maxDay: 30
---- !u!114 &1395149766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1395149763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 954e95fea8d8f476080f48fd16068a4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PopulationManager: {fileID: 2078374405}
-  BehaviorPatternUpdater: {fileID: 1576156859}
-  GridSystem: {fileID: 765609361}
-  PauseButton: {fileID: 915008188}
-  PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
-  ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
-    type: 3}
---- !u!82 &1395149767
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1395149763}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1403307984
 GameObject:
   m_ObjectHideFlags: 0
@@ -16876,7 +16710,7 @@ RectTransform:
   - {fileID: 750348921}
   - {fileID: 228618992}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18787,9 +18621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111eb3ad57f04c548aa453096a787a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridSystem: {fileID: 765609361}
   behaviorPatterns: []
-  IsPaused: 0
 --- !u!4 &1576156860
 Transform:
   m_ObjectHideFlags: 0
@@ -19274,7 +19106,7 @@ PrefabInstance:
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
@@ -25150,6 +24982,12 @@ MonoBehaviour:
   GameOverHUD: {fileID: 602359351}
   gameOverTitle: {fileID: 1043611555}
   gameOverText: {fileID: 740143009}
+  maxDay: 20
+  CurrentDayText: {fileID: 1549372359}
+  PauseButton: {fileID: 915008188}
+  PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
+  ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
+    type: 3}
   objectivePane: {fileID: 655684759}
   objectivePanelText: {fileID: 800900341}
 --- !u!114 &3395325107312024775

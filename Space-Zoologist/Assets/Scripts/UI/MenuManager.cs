@@ -45,7 +45,7 @@ public class MenuManager : MonoBehaviour
         {
             if (!this.IsInStore)
             {
-                this.PauseManager.TryToPause();
+                GameManager.Instance.TryToPause();
                 EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
             }
             this.StoreToggledOn(menu);
@@ -73,7 +73,7 @@ public class MenuManager : MonoBehaviour
     {
         if (!this.IsInStore)
         {
-            this.PauseManager.TryToPause();
+            GameManager.Instance.TryToPause();
             EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
         }
         StoreCanvas.DOScale(0.8f, 0.5f);
@@ -108,7 +108,7 @@ public class MenuManager : MonoBehaviour
             this.currentMenu = null;
             ///this.PlayerBalanceHUD.SetActive(false);
             this.IsInStore = false;
-            this.PauseManager.TryToUnpause();
+            GameManager.Instance.TryToUnpause();
         }
 
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);

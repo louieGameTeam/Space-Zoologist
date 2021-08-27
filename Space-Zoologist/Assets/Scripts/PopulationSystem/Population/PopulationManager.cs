@@ -133,7 +133,7 @@ public class PopulationManager : MonoBehaviour
         this.BehaviorPatternUpdater.RegisterPopulation(population);
     }
 
-    public void UdateAllPopulationRegistration()
+    public void UpdateAllPopulationRegistration()
     {
         foreach (Population population in this.ExistingPopulations)
         {
