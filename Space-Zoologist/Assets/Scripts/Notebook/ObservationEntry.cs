@@ -20,6 +20,7 @@ public class ObservationEntry
     [Tooltip("The title applied to this entry")]
     private string title;
     [SerializeField]
+    [TextArea(3, 20)]
     [Tooltip("Text in the entry")]
     private string text;
 }

@@ -7,8 +7,10 @@ public class NotebookModel : ScriptableObject
 {
     public string Acronym => acronym;
     public ResearchModel Research => research;
+    public TestAndMetricModel TestAndMetrics => testAndMetrics;
+    public ObservationModel Observations => observations;
     public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
-    public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(testAndMetricData.Keys);
+    public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(requestData.Keys);
 
     [SerializeField]
     [Tooltip("Acronym that the player gets to spell out on the home page")]
@@ -18,13 +20,15 @@ public class NotebookModel : ScriptableObject
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
     private ResearchModel research;
+    [SerializeField]
+    [Tooltip("Player observation notes")]
+    private ObservationModel observations;
+    [SerializeField]
+    [Tooltip("Test and metrics that the player has taken")]
+    private TestAndMetricModel testAndMetrics;
 
     // Notes on each character in the acronym
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
-    // Map the test and metric data to the enclosure it applies to
-    private Dictionary<EnclosureID, TestAndMetricsEntryList> testAndMetricData = new Dictionary<EnclosureID, TestAndMetricsEntryList>();
-    // Map the observation entries to the enclosure it applies to
-    private Dictionary<EnclosureID, ObservationEntryList> observationData = new Dictionary<EnclosureID, ObservationEntryList>();
     // Map the resource requests to the enclosure it applies to
     private Dictionary<EnclosureID, ResourceRequestList> requestData = new Dictionary<EnclosureID, ResourceRequestList>();
 
@@ -63,14 +67,12 @@ public class NotebookModel : ScriptableObject
     }
     public void TryAddEnclosureID(EnclosureID id)
     {
-        if (!testAndMetricData.ContainsKey(id))
+        if (!requestData.ContainsKey(id))
         {
-            testAndMetricData.Add(id, new TestAndMetricsEntryList());
-            observationData.Add(id, ObservationEntryList.Default());
             requestData.Add(id, new ResourceRequestList());
         }
+        observations.TryAddEnclosureID(id);
+        testAndMetrics.TryAddEnclosureID(id);
     }
-    public TestAndMetricsEntryList GetTestAndMetricsEntryList(EnclosureID id) => testAndMetricData[id];
-    public ObservationEntryList GetObservationEntryList(EnclosureID id) => observationData[id];
     public ResourceRequestList GetResourceRequestList(EnclosureID id) => requestData[id];
 }

@@ -40,7 +40,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
         currentEditors.Clear();
 
         // Foreach entry in the selected list, add an editor
-        foreach(TestAndMetricsEntry entry in UIParent.Notebook.GetTestAndMetricsEntryList(id).Entries)
+        foreach(TestAndMetricsEntry entry in UIParent.Notebook.TestAndMetrics.GetEntryList(id).Entries)
         {
             TestAndMetricEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
             editor.Setup(id, entry, editorScroller);

@@ -22,7 +22,7 @@ public class TestAndMetricEntryEditor : NotebookUIChild
                     Notes = inputField.text
                 };
                 // Add the new entry to the list on the notebook object
-                TestAndMetricsEntryList list = UIParent.Notebook.GetTestAndMetricsEntryList(enclosureID);
+                TestAndMetricsEntryList list = UIParent.Notebook.TestAndMetrics.GetEntryList(enclosureID);
                 list.Entries.Add(entry);
                 // Invoke the new entry created event
                 onNewEntryCreated.Invoke();
@@ -83,7 +83,7 @@ public class TestAndMetricEntryEditor : NotebookUIChild
             researchCategoryDropdown.SetDropdownValueWithoutNotify(0);
             needDropdown.SetDropdownValue(0);
             differenceDropdown.value = 0;
-            inputField.text = "when: \n\nDoes this meet target specifications?: \n\nRelated notes: ";
+            inputField.text = UIParent.Notebook.TestAndMetrics.GetInitialEntryText(enclosureID);
         }
 
         // Cache the current id
