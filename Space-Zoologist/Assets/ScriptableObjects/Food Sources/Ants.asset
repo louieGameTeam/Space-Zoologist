@@ -19,18 +19,21 @@ MonoBehaviour:
   baseOutput: 8
   terrainNeeds:
   - needName: Grass
-    isPreferred: 1
+    isPreferred: 0
   - needName: Dirt
     isPreferred: 0
   - needName: Sand
     isPreferred: 0
   - needName: Stone
-    isPreferred: 0
+    isPreferred: 1
   foodNeeds: []
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 2
-    freshWaterThreshold: 0.95
-    saltThreshold: 0
-    bacteriaThreshold: 0
+    freshWaterMinThreshold: 0.95
+    freshWaterMaxThreshold: 1
+    saltMinThreshold: 0
+    saltMaxThreshold: 1
+    bacteriaMinThreshold: 0
+    bacteriaMaxThreshold: 1
   FoodSource: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}

@@ -131,7 +131,7 @@ public class FoodSource : MonoBehaviour, Life
             terrainRating = (totalTilesAvailable - totalNeededTiles) / totalNeededTiles;
         }
 
-        Debug.Log(gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + availablePreferredTiles + ", survivable tiles: " + availableSurvivableTiles);
+        //Debug.Log(gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + availablePreferredTiles + ", survivable tiles: " + availableSurvivableTiles);
     }
 
     public void CalculateWaterNeed()

@@ -47,10 +47,10 @@ public class LiquidNeedSystem : NeedSystem
 
                 if(!popNeeds.ContainsKey("LiquidTiles"))
                     continue;
-                
-                if (!(popNeeds.ContainsKey("Water") && liquidBody.contents[(int)LiquidComposition.Water] < popNeeds["Water"].GetThreshold()) && //If the populations either doesn't need fresh water or the fresh water threshold is met
-                    !(popNeeds.ContainsKey("Salt") && liquidBody.contents[(int)LiquidComposition.Salt] < popNeeds["Salt"].GetThreshold()) &&  //and it either doesn't need salt or the salt threshold is met
-                    !(popNeeds.ContainsKey("Bacteria") && liquidBody.contents[(int)LiquidComposition.Bacteria] < popNeeds["Bacteria"].GetThreshold()) ) //and it either doesn't need bacteria or the bacteria threshold is met
+
+                if ((!popNeeds.ContainsKey("Water") || popNeeds["Water"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) && //If the population either doesn't need fresh water or the fresh water threshold is met
+                    (!popNeeds.ContainsKey("Salt") || popNeeds["Salt"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
+                    (!popNeeds.ContainsKey("Bacteria") || popNeeds["Bacteria"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
                 {
                     bool populationCanAccess = false;
                     foreach(Vector3Int location in rpm.GetLiquidLocations(population)) //check if any of the liquidbody's tiles are accessible to this population
@@ -71,7 +71,17 @@ public class LiquidNeedSystem : NeedSystem
             float waterSplit = liquidBody.tiles.Count / (float)accessiblePopulations.Count;
             foreach(Population population in accessiblePopulations)
             {
-                liquidTilesPerPopulation[population] += waterSplit;
+                Dictionary<string, Need> popNeeds = population.GetNeedValues();
+                if((popNeeds.ContainsKey("WaterPoison") && popNeeds["WaterPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) || //If the food source has a fresh water poison threshold and that threshold is surpassed
+                   (popNeeds.ContainsKey("SaltPoison") && popNeeds["SaltPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) ||  //or it has a salt poison threshold and that threshold is surpassed
+                   (popNeeds.ContainsKey("BacteriaPoison") && popNeeds["BacteriaPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //or it has a bacteria poison threshold and that threshold is surpassed
+                {
+                    liquidTilesPerPopulation[population] -= waterSplit;
+                }
+                else
+                {
+                    liquidTilesPerPopulation[population] += waterSplit;
+                }
 
                 if(!liquidBodiesPerPopulation.ContainsKey(population))
                     liquidBodiesPerPopulation.Add(population, new HashSet<LiquidBody>());
@@ -132,9 +142,9 @@ public class LiquidNeedSystem : NeedSystem
                     List<float[]> compositions = gridSystem.GetLiquidCompositionWithinRange(gridSystem.WorldToCell(life.GetPosition()), i, true);
                     foreach(float[] composition in compositions)
                     {
-                        if (!(foodNeeds.ContainsKey("Water") && composition[(int)LiquidComposition.Water] < foodNeeds["Water"].GetThreshold()) && //If the food source either doesn't need fresh water or the fresh water threshold is met
-                            !(foodNeeds.ContainsKey("Salt") && composition[(int)LiquidComposition.Salt] < foodNeeds["Salt"].GetThreshold()) &&  //and it either doesn't need salt or the salt threshold is met
-                            !(foodNeeds.ContainsKey("Bacteria") && composition[(int)LiquidComposition.Bacteria] < foodNeeds["Bacteria"].GetThreshold()) ) //and it either doesn't need bacteria or the bacteria threshold is met
+                        if ((!foodNeeds.ContainsKey("Water") || foodNeeds["Water"].IsThresholdMet(composition[(int)LiquidComposition.Water])) && //If the food source either doesn't need fresh water or the fresh water threshold is met
+                            (!foodNeeds.ContainsKey("Salt") || foodNeeds["Salt"].IsThresholdMet(composition[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
+                            (!foodNeeds.ContainsKey("Bacteria") || foodNeeds["Bacteria"].IsThresholdMet(composition[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
                         {
                             liquidCount += 1f/i;
                             liquidCompositions.Add(composition);

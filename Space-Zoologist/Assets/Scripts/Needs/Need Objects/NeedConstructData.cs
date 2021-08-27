@@ -49,14 +49,20 @@ public class FoodNeedConstructData : NeedConstructData
 public class LiquidNeedConstructData : NeedConstructData
 {
     public float TileNeedThreshold => tileNeedThreshold;
-    public float FreshWaterThreshold => freshWaterThreshold;
-    public float SaltThreshold => saltThreshold;
-    public float BacteriaThreshold => bacteriaThreshold;
+    public float FreshWaterMinThreshold => freshWaterMinThreshold;
+    public float FreshWaterMaxThreshold => freshWaterMaxThreshold;
+    public float SaltMinThreshold => saltMinThreshold;
+    public float SaltMaxThreshold => saltMaxThreshold;
+    public float BacteriaMinThreshold => bacteriaMinThreshold;
+    public float BacteriaMaxThreshold => bacteriaMaxThreshold;
 
     [SerializeField] private float tileNeedThreshold;
-    [SerializeField] private float freshWaterThreshold;
-    [SerializeField] private float saltThreshold;
-    [SerializeField] private float bacteriaThreshold;
+    [Range(0,1)] [SerializeField] private float freshWaterMinThreshold;
+    [Range(0,1)] [SerializeField] private float freshWaterMaxThreshold = 1;
+    [Range(0,1)] [SerializeField] private float saltMinThreshold;
+    [Range(0,1)] [SerializeField] private float saltMaxThreshold = 1;
+    [Range(0,1)] [SerializeField] private float bacteriaMinThreshold;
+    [Range(0,1)] [SerializeField] private float bacteriaMaxThreshold = 1;
 
     public LiquidNeedConstructData(string name) 
         : base(name)

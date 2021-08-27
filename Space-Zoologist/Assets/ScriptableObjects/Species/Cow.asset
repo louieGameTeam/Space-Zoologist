@@ -39,7 +39,10 @@ MonoBehaviour:
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 3
-    freshWaterThreshold: 0.96
-    saltThreshold: 0
-    bacteriaThreshold: 0
+    freshWaterMinThreshold: 0.96
+    freshWaterMaxThreshold: 1
+    saltMinThreshold: 0.005
+    saltMaxThreshold: 0.025
+    bacteriaMinThreshold: 0
+    bacteriaMaxThreshold: 0.02
   representation: {fileID: 0}

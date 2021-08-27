@@ -71,14 +71,23 @@ public class AnimalSpecies : ScriptableObject
 
             needs.Add("LiquidTiles", new LiquidNeed("LiquidTiles", need));
 
-            if(need.FreshWaterThreshold != 0)
+            if(need.FreshWaterMinThreshold != 0)
                 needs.Add("Water", new LiquidNeed("Water", need));
 
-            if(need.SaltThreshold != 0)
+            if(need.FreshWaterMaxThreshold != 1)
+                needs.Add("WaterPoison", new LiquidNeed("WaterPoison", need));
+
+            if(need.SaltMinThreshold != 0)
                 needs.Add("Salt", new LiquidNeed("Salt", need));
 
-            if(need.BacteriaThreshold != 0)
+            if(need.SaltMaxThreshold != 1)
+                needs.Add("SaltPoison", new LiquidNeed("SaltPoison", need));
+
+            if(need.BacteriaMinThreshold != 0)
                 needs.Add("Bacteria", new LiquidNeed("Bacteria", need));
+
+            if(need.BacteriaMaxThreshold != 1)
+                needs.Add("BacteriaPoison", new LiquidNeed("BacteriaPoison", need));
         }
 
         return needs;

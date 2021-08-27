@@ -137,7 +137,7 @@ public class GrowthCalculator
         else
         {
             IsNeedMet[NeedType.Liquid] = false;
-            waterRating = (waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles;
+            waterRating = Mathf.Clamp01((waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles);
         }
 
         Debug.Log(population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);

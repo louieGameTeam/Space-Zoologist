@@ -74,6 +74,11 @@ public class LiquidNeed : Need
         return NeedType.Liquid;
     }
 
+    public override bool IsThresholdMet(float value)
+    {
+        return value >= GetThreshold();
+    }
+
     public override float GetThreshold()
     {
         switch(needType)
@@ -82,39 +87,27 @@ public class LiquidNeed : Need
                 return base.GetThreshold();
             case "Water":
                 return GetFreshThreshold();
+            case "WaterPoison":
+                return GetFreshPoisonThreshold();
             case "Salt":
                 return GetSaltThreshold();
+            case "SaltPoison":
+                return GetSaltPoisonThreshold();
             case "Bacteria":
                 return GetBacteriaThreshold();
+            case "BacteriaPoison":
+                return GetBacteriaPoisonThreshold();
             default:
                 return base.GetThreshold();
         }
     }
 
-    private float GetFreshThreshold() { return needConstructData.FreshWaterThreshold; }
-    private float GetSaltThreshold() { return needConstructData.SaltThreshold; }
-    private float GetBacteriaThreshold() { return needConstructData.BacteriaThreshold; }
-
-    public override bool IsThresholdMet(float value)
-    {
-        switch(needType)
-        {
-            case "LiquidTiles":
-                return base.IsThresholdMet(value);
-            case "Water":
-                return IsFreshThresholdMet(value);
-            case "Salt":
-                return IsSaltThresholdMet(value);
-            case "Bacteria":
-                return IsBacteriaThresholdMet(value);
-            default:
-                return base.IsThresholdMet(value);
-        }
-    }
-    
-    private bool IsFreshThresholdMet(float value) { return value >= GetFreshThreshold(); }
-    private bool IsSaltThresholdMet(float value) { return value >= GetSaltThreshold(); }
-    private bool IsBacteriaThresholdMet(float value) { return value >= GetBacteriaThreshold(); }
+    private float GetFreshThreshold() { return needConstructData.FreshWaterMinThreshold; }
+    private float GetFreshPoisonThreshold() { return needConstructData.FreshWaterMaxThreshold; }
+    private float GetSaltThreshold() { return needConstructData.SaltMinThreshold; }
+    private float GetSaltPoisonThreshold() { return needConstructData.SaltMaxThreshold; }
+    private float GetBacteriaThreshold() { return needConstructData.BacteriaMinThreshold; }
+    private float GetBacteriaPoisonThreshold() { return needConstructData.BacteriaMaxThreshold; }
 }
 
 [System.Serializable]
