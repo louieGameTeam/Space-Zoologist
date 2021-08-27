@@ -108,13 +108,13 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             // Create an image object for each sprite
             foreach (Sprite sprite in currentArticle.Sprites) CreateImage(sprite);
             // Rebuild the image parent layout
-            LayoutRebuilder.MarkLayoutForRebuild(imageParent);
+            //LayoutRebuilder.MarkLayoutForRebuild(imageParent);
         }
         // No article given implies this encyclopedia has no entries
         else textField.text = "<color=#aaa>This encyclopedia has no entries</color>";
 
         // Rebuild the layout since we just changed the text
-        LayoutRebuilder.MarkLayoutForRebuild(articleLayout);
+        //LayoutRebuilder.MarkLayoutForRebuild(articleLayout);
     }
 
     public static string RichEncyclopediaArticleText(ResearchEncyclopediaArticle article, List<RichTextTag> tags)
@@ -146,6 +146,7 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
         // Add a rect transform and parent it under the desired parent
         RectTransform imageTransform = imageObject.AddComponent<RectTransform>();
         imageTransform.SetParent(imageParent);
+        imageTransform.localScale = Vector3.one;
 
         // Add the image component that renders the sprite
         imageObject.AddComponent<CanvasRenderer>();
@@ -154,5 +155,6 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
         image.maskable = true;
         image.type = Image.Type.Simple;
         image.preserveAspect = true;
+
     }
 }

@@ -2,32 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-
-using TMPro;
 
 public class NotebookDebugging : MonoBehaviour
 {
-    public TMP_Dropdown dropdown;
-    public GameObject itemRoot;
-    public Toggle toggle;
-    
-    private int index = 0;
-    
+    public RectTransform imageHolder;
+    public Sprite sprite;
+        
     private void Start()
     {
-        string indexString = itemRoot.name;
-        string prefix = "Index ";
-        int endSubstringIndex = indexString.IndexOf(':');
+        // Create the image object
+        GameObject imageObject = new GameObject(sprite.name);
 
-        indexString = indexString.Substring(prefix.Length - 1, endSubstringIndex - prefix.Length + 1);
-        index = int.Parse(indexString);
+        // Add a rect transform 
+        RectTransform imageTransform = imageObject.AddComponent<RectTransform>();
 
-        GetComponent<Button>().onClick.AddListener(() =>
-        {
-            toggle.isOn = true;
-            toggle.onValueChanged.Invoke(true);
-            dropdown.onValueChanged.Invoke(index);
-        });
+        // Add the image component that renders the sprite
+        imageObject.AddComponent<CanvasRenderer>();
+        Image image = imageObject.AddComponent<Image>();
+        image.sprite = sprite;
+
+        // Set the parent, size, and anchors of the image rect transform
+        imageTransform.SetParent(imageHolder);
+        imageTransform.SetAsFirstSibling();
+        // Anchor/pivot in the center
+        imageTransform.anchorMin = imageTransform.anchorMax = imageTransform.pivot = Vector2.one * 0.5f;
+        // Put the position in the center
+        imageTransform.anchoredPosition = Vector2.zero;
+        // Set the size to (150, 150)
+        imageTransform.sizeDelta = Vector2.one * 150f;
     }
 }

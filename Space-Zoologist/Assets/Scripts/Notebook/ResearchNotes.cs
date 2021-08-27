@@ -28,7 +28,6 @@ public class ResearchNotes
             List<RichTextTag> labelTags = new List<RichTextTag>()
             {
                 new RichTextTag("color", "white"),
-                new RichTextTag("b"),
                 new RichTextTag("font", "\"times new roman SDF\"")
             };
             // Add the labels to the notes if they are not empty
