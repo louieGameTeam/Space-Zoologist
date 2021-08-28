@@ -10,6 +10,7 @@ public class PodSection : StoreSection
     [SerializeField] Transform PodItemContainer = default;
     [Header("Dependencies")]
     [SerializeField] PopulationManager populationManager = default;
+    [SerializeField] TilePlacementController tilePlacementController = default;
 
     AnimalSpecies selectedSpecies = null;
 
@@ -30,19 +31,23 @@ public class PodSection : StoreSection
         else if (eventData.button == PointerEventData.InputButton.Left)
         {
             Vector2 position = Camera.main.ScreenToWorldPoint(eventData.position);
-            selectedSpecies = base.GridSystem.PlacementValidation.GetAnimalSpecies(selectedItem);
-            if (!this.GridSystem.PlacementValidation.IsPodPlacementValid(position, selectedSpecies))
+            selectedSpecies = populationManager.GetAnimalSpecies(selectedItem);
+            if (!this.GridSystem.IsPodPlacementValid(position, selectedSpecies))
             {
                 Debug.Log("Can't place species there");
                 return;
             }
-            if (base.ResourceManager.CheckRemainingResource(selectedSpecies) <= 0)
+            if (base.ResourceManager.CheckRemainingResource(selectedSpecies) <= 0 && !tilePlacementController.godMode)
             {
                 base.OnItemSelectionCanceled();
                 return;
             }
             populationManager.UpdatePopulation(selectedSpecies, position);
             base.ResourceManager.Placed(selectedSpecies, 1);
+        }
+        if (!base.CanBuy(selectedItem))
+        {
+            base.OnItemSelectionCanceled();
         }
     }
 }

@@ -22,6 +22,7 @@ public class PopulationManager : MonoBehaviour
     public void Start()
     {
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
+        EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, UpdateAccessibleLocations);
     }
 
     public void Initialize()
@@ -32,10 +33,12 @@ public class PopulationManager : MonoBehaviour
         {
             Vector3[] pos = SerializationUtils.ParseVector3(serializedPopulations[i].population.coords);
             AnimalSpecies species = this.LoadSpecies(serializedPopulations[i].population.name);
+            Population pop = null;
             foreach (Vector3 position in pos)
             {
-                UpdatePopulation(species, position);
+                pop = UpdatePopulation(species, position);
             }
+            pop.LoadGrowthRate(serializedPopulations[i].populationIncreaseRate);
         }
     }
 
@@ -104,7 +107,7 @@ public class PopulationManager : MonoBehaviour
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public void UpdatePopulation(AnimalSpecies species, Vector3 position)
+    public Population UpdatePopulation(AnimalSpecies species, Vector3 position)
     {
         Population population = DoesPopulationExist(species, position);
         if (population == null)
@@ -112,6 +115,7 @@ public class PopulationManager : MonoBehaviour
             population = CreatePopulation(species, position);
         }
         population.AddAnimal(position);
+        return population;
     }
 
     private Population DoesPopulationExist(AnimalSpecies species, Vector3 position)
@@ -137,6 +141,14 @@ public class PopulationManager : MonoBehaviour
         this.BehaviorPatternUpdater.RegisterPopulation(population);
     }
 
+    public void UdateAllPopulationRegistration()
+    {
+        foreach (Population population in this.ExistingPopulations)
+        {
+            HandlePopulationRegistration(population);
+        }
+    }
+
     public void UdateAllPopulationStateForChecking()
     {
         foreach (Population population in this.ExistingPopulations)
@@ -153,45 +165,68 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    // Creates new populations if population becomes split or updates population's map
     public void UpdateAccessibleLocations()
     {
-        this.NeedSystemManager.UpdateAccessMap();
+        ReservePartitionManager.UpdateAccessMap();
+        CombinePopulations();
         List<Population> currentPopulations = new List<Population>();
-        foreach(Population population in this.Populations)
-        {
-            currentPopulations.Add(population);
-        }
+        currentPopulations = this.Populations.GetRange(0, this.ExistingPopulations.Count);
         foreach (Population population in currentPopulations)
         {
-            // Debug.Log("Accessible map updated for " + population.name);
-            List<Vector3Int> accessibleLocations = ReservePartitionManager.GetLocationsWithAccess(population);
-            AnimalPathfinding.Grid grid = GridSystem.GetGridWithAccess(population);
-            for (int i = population.AnimalPopulation.Count - 1; i >= 0; i--)
+            HandlePopulationSplitting(population);
+        }
+    }
+
+    private void CombinePopulations()
+    {
+        // combines populations
+        for (int i = 1; i < this.ExistingPopulations.Count; i++)
+        {
+            if (this.ExistingPopulations[i - 1].Species.Equals(this.ExistingPopulations[i].Species) && ReservePartitionManager.CanAccessPopulation(this.ExistingPopulations[i - 1], this.ExistingPopulations[i]))
             {
-                GameObject animal = population.AnimalPopulation[i];
-                if (!accessibleLocations.Contains(grid.grid.WorldToCell(animal.transform.position)))
+                for (int j = this.ExistingPopulations[i - 1].AnimalPopulation.Count - 1; j >= 0; j--)
                 {
-                    UpdatePopulation(population.Species, animal.transform.position);
-                    population.RemoveAnimal(animal);
+                    GameObject animal = this.ExistingPopulations[i - 1].AnimalPopulation[j];
+                    this.ExistingPopulations[i].AddAnimal(animal.transform.position);
                 }
+                RemovePopulation(this.ExistingPopulations[i - 1]);
             }
-            if (accessibleLocations.Count == 0 || population.AnimalPopulation.Count == 0)
+        }
+    }
+
+    private void HandlePopulationSplitting(Population population)
+    {
+        List<Vector3Int> accessibleLocations = ReservePartitionManager.GetLocationsWithAccess(population);
+        for (int i = population.AnimalPopulation.Count - 1; i >= 0; i--)
+        {
+            GameObject animal = population.AnimalPopulation[i];
+            Vector3Int animalLocation = GridSystem.Grid.WorldToCell(animal.transform.position);
+            if (!accessibleLocations.Contains(animalLocation))
             {
-                RemovePopulation(population);
+                Debug.Log("Creating new population");
+                UpdatePopulation(population.Species, animal.transform.position);
+                population.RemoveAnimal(animal);
             }
-            else
-            {
-                population.UpdateAccessibleArea(accessibleLocations, grid);
-            }
-            
+        }
+        if (accessibleLocations.Count == 0 || population.AnimalPopulation.Count == 0)
+        {
+            RemovePopulation(population);
+        }
+        else
+        {
+            AnimalPathfinding.Grid grid = GridSystem.GetGridWithAccess(population);
+            population.UpdateAccessibleArea(accessibleLocations, grid);
         }
     }
 
     public void RemovePopulation(Population population)
     {
+        Debug.Log("Removing " + population);
         population.RemoveAll();
         this.Populations.Remove(population);
+        NeedSystemManager.UnregisterWithNeedSystems(population);
+        ReservePartitionManager.RemovePopulation(population);
+        Destroy(population.gameObject);
     }
 
     public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)
@@ -207,5 +242,15 @@ public class PopulationManager : MonoBehaviour
         }
 
         return populations;
+    }
+
+    public FoodSourceSpecies GetFoodSpecies(Item item)
+    {
+        return speciesReferenceData.FoodSources[item.ID];
+    }
+
+    public AnimalSpecies GetAnimalSpecies(Item item)
+    {
+        return speciesReferenceData.AnimalSpecies[item.ID];
     }
 }

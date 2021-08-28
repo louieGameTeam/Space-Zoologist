@@ -113,10 +113,15 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            //this.HUD.SetActive(!this.HUD.activeSelf);   
-        }
+        // DESIGN UPDATE: the "O" key no longer disables the HUD
+        // Actually... maybe this could still work if we make a proper distinction between 
+        // "HUD" - heads up display meant to AUGMENT play (such as information about currently enclosure)
+        // "UI" - interactive elements that are the FOCUS of play (such as the store and notebook)
+        
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    this.HUD.SetActive(!this.HUD.activeSelf);
+        //}
     }
 
     private void UpdateGameOver()

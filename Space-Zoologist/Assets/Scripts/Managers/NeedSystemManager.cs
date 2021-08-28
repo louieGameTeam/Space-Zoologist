@@ -15,10 +15,10 @@ public class NeedSystemManager : MonoBehaviour
     [SerializeField] PopulationManager PopulationManager = default;
     [SerializeField] FoodSourceManager FoodSourceManager = default;
     [SerializeField] EnclosureSystem EnclosureSystem = default;
-    [SerializeField] TileSystem TileSystem = default;
     [SerializeField] ReservePartitionManager ReservePartitionManager = default;
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] LevelIO LevelIO = default;
+    [SerializeField] GridSystem GridSystem = default;
 
     /// <summary>
     /// Initialize the universal need systems
@@ -33,7 +33,6 @@ public class NeedSystemManager : MonoBehaviour
         PauseManager.TogglePause();
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
         {
-            Debug.Log("Received pop extinct message");
             this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
         });
     }
@@ -41,12 +40,13 @@ public class NeedSystemManager : MonoBehaviour
     private void setupNeedSystems()
     {
         // Add enviormental NeedSystem
-        AddSystem(new TerrainNeedSystem(ReservePartitionManager, TileSystem));
-        AddSystem(new LiquidNeedSystem(ReservePartitionManager, TileSystem));
+        AddSystem(new TerrainNeedSystem(ReservePartitionManager, GridSystem));
+        AddSystem(new LiquidNeedSystem(ReservePartitionManager, GridSystem));
 
 
         // FoodSource and Species NS
         AddSystem(new FoodSourceNeedSystem(ReservePartitionManager));
+        AddSystem(new PredatoryPreySystem(ReservePartitionManager, GridSystem));
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class NeedSystemManager : MonoBehaviour
 
     public void UpdateAccessMap()
     {
-        this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.changedTiles);
+        this.ReservePartitionManager.UpdateAccessMapChangedAt(this.GridSystem.ChangedTiles.ToList<Vector3Int>());
     }
 
     /// <summary>
@@ -122,10 +122,10 @@ public class NeedSystemManager : MonoBehaviour
     public void UpdateSystems()
     {
         // Update populations' accessible map when terrain was modified
-        if (this.TileSystem.HasTerrainChanged)
+        if (this.GridSystem.HasTerrainChanged)
         {
             // TODO: Update population's accessible map only for changed terrain
-            this.ReservePartitionManager.UpdateAccessMapChangedAt(this.TileSystem.changedTiles);
+            this.ReservePartitionManager.UpdateAccessMapChangedAt(this.GridSystem.ChangedTiles.ToList<Vector3Int>());
         }
 
         foreach (KeyValuePair<NeedType, NeedSystem> entry in systems)
@@ -150,7 +150,7 @@ public class NeedSystemManager : MonoBehaviour
         FoodSourceManager.UpdateAccessibleTerrainInfoForAll();
 
         // Reset terrain modified flag
-        TileSystem.HasTerrainChanged = false;
+        GridSystem.HasTerrainChanged = false;
     }
 
 }

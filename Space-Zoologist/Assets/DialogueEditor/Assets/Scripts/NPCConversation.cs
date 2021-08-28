@@ -48,7 +48,7 @@ namespace DialogueEditor
 
             // Look through list to find by ID
             for (int i = 0; i < NodeSerializedDataList.Count; i++)
-                if (NodeSerializedDataList[i].NodeID == id)
+                if (NodeSerializedDataList[i] != null && NodeSerializedDataList[i].NodeID == id)
                     return NodeSerializedDataList[i];
 
             // If none exist, create a new GameObject
@@ -73,9 +73,14 @@ namespace DialogueEditor
             if (NodeSerializedDataList == null)
                 return;
 
-            for (int i = 0; i < NodeSerializedDataList.Count; i++)
+            for (int i = NodeSerializedDataList.Count-1; i >= 0; i--)
             {
-                if (NodeSerializedDataList[i].NodeID == id)
+                while (NodeSerializedDataList[i] == null)
+                {
+                    NodeSerializedDataList.RemoveAt(i);
+                    i--;
+                }
+                if (i >= 0 && NodeSerializedDataList[i].NodeID == id)
                 {
                     GameObject.DestroyImmediate(NodeSerializedDataList[i]);
                     NodeSerializedDataList.RemoveAt(i);
@@ -224,6 +229,14 @@ namespace DialogueEditor
             ms.Close();
 
             return conversation;
+        }
+
+        public void Clear() {
+            foreach (var node in NodeSerializedDataList) {
+                DeleteDataForNode(node.NodeID);
+            }
+            json = null;
+            CurrentIDCounter = 1;
         }
     }
 
@@ -644,6 +657,11 @@ namespace DialogueEditor
             parentUIDs = new List<int>();
             for (int i = 0; i < parents.Count; i++)
             {
+                if (parents[i] == null)
+                {
+                    Debug.Log(i);
+                    continue;
+                }
                 parentUIDs.Add(parents[i].ID);
             }
 

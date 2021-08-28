@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System.Linq;
 
 /// <summary>
 /// Calculates food distribution of a certain food type
@@ -68,7 +67,6 @@ public class FoodSourceCalculator : NeedCalculator
         FoodSource foodSource = (FoodSource)source;
 
         this.foodSources.Add(foodSource);
-
         populationsWithAccess.Add(foodSource, new HashSet<Population>());
         foreach (Population population in Consumers)
         {
@@ -93,7 +91,6 @@ public class FoodSourceCalculator : NeedCalculator
 
     public bool RemoveSource(Life source)
     {
-        Debug.Log("REMOVING " + source.ToString());
         Debug.Log(this.FoodSourceName);
         FoodSource foodSource = (FoodSource)source;
         Debug.Log(foodSources.Contains(foodSource));
@@ -115,8 +112,13 @@ public class FoodSourceCalculator : NeedCalculator
         List<FoodSource> leastToMostContested = accessibleFoodSources[population].OrderByDescending(foodSource => localDominanceRemaining[foodSource]).ToList();
         foreach (FoodSource foodSource in leastToMostContested)
         {
+            if (foodSource.isUnderConstruction)
+            {
+                //Debug.Log(foodSource.name + " at " + foodSource.gameObject.transform.position + " under construction");
+                continue;
+            }
             // 1. Calculate how much food each population can receive from available food, accounting for no food or dominance
-            float dominanceRatio = population.Dominance / localDominanceRemaining[foodSource];
+            float dominanceRatio = population.FoodDominance / localDominanceRemaining[foodSource];
             if (localDominanceRemaining[foodSource] <= 0 || dominanceRatio <= 0)
             {
                 dominanceRatio = 1;
@@ -139,11 +141,12 @@ public class FoodSourceCalculator : NeedCalculator
                 float excessFood = foodAcquired - maxThreshold;
                 foodAcquired = maxThreshold;
                 foodRemaining[foodSource] += excessFood;
-                UpdateLocalDominance(population);
                 break;
             }
         }
-        Debug.Log(population.gameObject.name + " receieved " + foodAcquired + " from " + this.FoodSourceName);
+        UpdateLocalDominance(population);
+        population.UpdateNeed(foodSourceName, foodAcquired);
+        //Debug.Log(population.species.SpeciesName + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;
     }
 
@@ -151,7 +154,7 @@ public class FoodSourceCalculator : NeedCalculator
     {
         foreach (FoodSource foodSource in accessibleFoodSources[population])
         {
-            localDominanceRemaining[foodSource] -= population.Dominance;
+            localDominanceRemaining[foodSource] -= population.FoodDominance;
         }
     }
 
@@ -168,7 +171,7 @@ public class FoodSourceCalculator : NeedCalculator
             {
                 localDominanceRemaining[foodSource] = 0f;
             }
-            float total = populationsWithAccess[foodSource].Sum(p => p.Dominance);
+            float total = populationsWithAccess[foodSource].Sum(p => p.FoodDominance);
             localDominanceRemaining[foodSource] = total;
             foodRemaining[foodSource] = foodSource.FoodOutput;
         }

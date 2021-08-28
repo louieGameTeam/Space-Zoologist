@@ -5,51 +5,22 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class ResourceData
-    {
-        public string resourceName;
-        public int initialAmount;
-
-        public ResourceData(string ID)
-        {
-            resourceName = ID;
-        }
-    }
 
     // [SerializeField] LevelDataReference LevelDataRef = default;
     [SerializeField] EventResponseManager EventResponseManager = default;
-    [SerializeField] List<ResourceData> resourceData = default;
+    [SerializeField] LevelDataReference LevelDataReference = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();
 
     // a copy of the dictionary before draft
     Dictionary<string, int> initialResources = new Dictionary<string, int>();
     private Dictionary<string, StoreItemCell> itemDisplayInfo = new Dictionary<string, StoreItemCell>();
 
-    // Auto-generate the list of ResourceData for you if resourceData is empty
-    //public LevelDataReference LevelDataRef = default;
-    //public void OnValidate()
-    //{
-    //    if (LevelDataRef == null) return;
-    //    if (resourceData == null || resourceData.Count > 0) return;
-
-    //    resourceData = new List<ResourceData>();
-    //    foreach (Item item in LevelDataRef.LevelData.Items)
-    //    {
-    //        resourceData.Add(new ResourceData(item.ID));
-    //    }
-    //    foreach (AnimalSpecies species in LevelDataRef.LevelData.AnimalSpecies)
-    //    {
-    //        resourceData.Add(new ResourceData(species.SpeciesName));
-    //    }
-    //}
-
     public void Awake()
     {
-        foreach (ResourceData data in resourceData)
+        foreach(LevelData.ItemData item in LevelDataReference.LevelData.itemQuantities)
         {
-            remainingResources.Add(data.resourceName, data.initialAmount);
-            initialResources.Add(data.resourceName, data.initialAmount);
+            remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
+            initialResources.Add(item.itemObject.ItemName, item.initialAmount);
         }
     }
 
@@ -85,7 +56,7 @@ public class ResourceManager : MonoBehaviour
 
     public void Placed(Item item, int amount)
     {
-        PlacedItem(item.ID, amount);
+        PlacedItem(item.ItemName, amount);
     }
 
     public void Placed(AnimalSpecies species, int amount)
@@ -113,9 +84,9 @@ public class ResourceManager : MonoBehaviour
 
     public int CheckRemainingResource(Item item)
     {
-        if (remainingResources.ContainsKey(item.ID))
+        if (remainingResources.ContainsKey(item.ItemName))
         {
-            return remainingResources[item.ID];
+            return remainingResources[item.ItemName];
         }
         else
         {

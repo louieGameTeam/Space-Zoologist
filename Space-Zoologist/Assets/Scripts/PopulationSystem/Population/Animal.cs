@@ -31,6 +31,30 @@ public class Animal : MonoBehaviour
 
     void LateUpdate()
     {
+        // set the shader data
+        SpriteRenderer AnimalSpriteRenderer = GetComponent<SpriteRenderer>();
+        Vector2[] uvs = AnimalSpriteRenderer.sprite.uv;
+        Vector2 maxUV = new Vector2(0, 0);
+        Vector2 minUV = new Vector2(1, 1);
+
+        // since the sprites have a weird number of uvs (probably generated during runtime)
+        // find min and max values to use for center uv calculation
+        foreach (Vector2 uvCoordinate in uvs)
+        {
+            if (uvCoordinate.x > maxUV.x)
+                maxUV.x = uvCoordinate.x;
+            if (uvCoordinate.x < minUV.x)
+                minUV.x = uvCoordinate.x;
+            if (uvCoordinate.y > maxUV.y)
+                maxUV.y = uvCoordinate.y;
+            if (uvCoordinate.y < minUV.y)
+                minUV.y = uvCoordinate.y;
+        }
+
+        AnimalSpriteRenderer.material.SetVector("_Max_UV", maxUV);
+        AnimalSpriteRenderer.material.SetVector("_Min_UV", minUV);
+
+
         if (this.MovementData == null)
         {
             return;

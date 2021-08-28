@@ -13,6 +13,9 @@ public class GrowthCalculator
     public Dictionary<NeedType, bool> IsNeedMet = new Dictionary<NeedType, bool>();
     public int GrowthCountdown = 0;
     public int DecayCountdown = 0;
+    public float FoodRating => foodRating;
+    public float WaterRating => waterRating;
+    public float TerrainRating => terrainRating;
     Population Population = default;
     private float foodRating = 0f;
     private float waterRating = 0f;
@@ -37,11 +40,22 @@ public class GrowthCalculator
     }
 
     /*
+        0. if any predators nearby, population set to decrease next day
         1. if any need not met, handle growth logic and set growth status
         2. if all needs met, handle growth logic
     */
     public void CalculateGrowth()
     {
+        float predatorValue = calculatePredatorPreyNeed();
+        if (predatorValue > 0f)
+        {
+            this.GrowthStatus = GrowthStatus.declining;
+            this.DecayCountdown = 1;
+            this.populationIncreaseRate = -1 * predatorValue;
+            return;
+        }
+        this.CalculateTerrainNeed();
+        this.CalculateWaterNeed();
         this.GrowthStatus = GrowthStatus.growing;
         int numAnimals = Population.AnimalPopulation.Count;
 
@@ -50,9 +64,9 @@ public class GrowthCalculator
         Dictionary<NeedType, bool> resetNeedTracker = new Dictionary<NeedType, bool>(IsNeedMet);
         foreach (KeyValuePair<NeedType, bool> need in IsNeedMet)
         {
-            if (!IsNeedMet[need.Key])
+            if (!need.Key.Equals(NeedType.Prey) && !IsNeedMet[need.Key])
             {
-                Debug.Log(need.Key + " is not met");
+                //Debug.Log(need.Key + " is not met");
                 GrowthStatus = GrowthStatus.declining;
                 if (need.Key.Equals(NeedType.FoodSource))
                 {
@@ -71,10 +85,19 @@ public class GrowthCalculator
         }
         if (this.GrowthStatus.Equals(GrowthStatus.declining))
         {
+            if (populationIncreaseRate == 0)
+            {
+                populationIncreaseRate = 1;
+            }
             populationIncreaseRate *= numAnimals * Population.Species.GrowthScaleFactor;
             if (populationIncreaseRate < numAnimals * -0.25f)
             {
                 populationIncreaseRate = numAnimals * -0.25f;
+            }
+            // Handle rounding issues
+            if (populationIncreaseRate < 0 && populationIncreaseRate > -1)
+            {
+                populationIncreaseRate = -1;
             }
         }
         // 2.
@@ -85,7 +108,12 @@ public class GrowthCalculator
             {
                 populationIncreaseRate = numAnimals * 1.5f;
             }
-            Debug.Log(Population.gameObject.name + " will increase at a rate of " + populationIncreaseRate);
+            //Debug.Log(Population.gameObject.name + " will increase at a rate of " + populationIncreaseRate);
+            // Handle rounding issues
+            if (populationIncreaseRate > 0 && populationIncreaseRate < 1)
+            {
+                populationIncreaseRate = 1;
+            }
 
         }
         populationIncreaseRate = (int)Math.Round(populationIncreaseRate, 0, MidpointRounding.AwayFromZero);
@@ -105,7 +133,7 @@ public class GrowthCalculator
             {
                 waterSourceSize = need.Value.NeedValue;
                 totalNeedWaterTiles = need.Value.GetMaxThreshold() * numAnimals;
-                Debug.Log("Total needed water tiles: " + totalNeedWaterTiles);
+                //Debug.Log("Total needed water tiles: " + totalNeedWaterTiles);
             }
             if (need.Value.NeedType.Equals(NeedType.Liquid) && need.Key.Equals("Water"))
             {
@@ -137,7 +165,7 @@ public class GrowthCalculator
             IsNeedMet[NeedType.Liquid] = false;
             waterRating = (waterTilesUsed - totalNeedWaterTiles) / numAnimals;
         }
-        Debug.Log(Population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
+        //Debug.Log(Population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
     }
 
     // Updates IsNeedMet and foodRating
@@ -164,7 +192,7 @@ public class GrowthCalculator
             IsNeedMet[NeedType.FoodSource] = false;
             foodRating = (totalFoodConsumed - totalMinFoodNeeded) / numAnimals;
         }
-        Debug.Log(Population.gameObject.name + " food rating: " + foodRating + ", preferred food value: " + availablePreferredFood + ", compatible food value: " + availableCompatibleFood);
+        //Debug.Log(Population.gameObject.name + " food rating: " + foodRating + ", preferred food value: " + availablePreferredFood + ", compatible food value: " + availableCompatibleFood);
 
     }
 
@@ -219,7 +247,20 @@ public class GrowthCalculator
             IsNeedMet[NeedType.Terrain] = false;
             terrainRating = (totalTilesOccupied - totalNeededTiles) / numAnimals;
         }
-        Debug.Log(Population.gameObject.name + " terrain Rating: " + terrainRating + ", comfortable tiles: " + comfortableTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
+        //Debug.Log(Population.gameObject.name + " terrain Rating: " + terrainRating + ", comfortable tiles: " + comfortableTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
+    }
+
+    public float calculatePredatorPreyNeed()
+    {
+        float predatorValue = 0;
+        foreach (KeyValuePair<string, Need> need in Population.Needs)
+        {
+            if (need.Value.NeedType.Equals(NeedType.Prey))
+            {
+                predatorValue += need.Value.NeedValue;
+            }
+        }
+        return predatorValue;
     }
 
     public bool ReadyForDecay()
@@ -227,7 +268,7 @@ public class GrowthCalculator
         this.DecayCountdown--;
         if (this.DecayCountdown == 0)
         {
-            this.DecayCountdown = Population.Species.GrowthRate;
+            this.DecayCountdown = Population.Species.DecayRate;
             return true;
         }
         return false;

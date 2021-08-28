@@ -9,12 +9,11 @@ using UnityEngine.EventSystems;
 public class FoodSourceStoreSection : StoreSection
 {
     [SerializeField] FoodSourceManager FoodSourceManager = default;
-    private BuildBufferManager buildBufferManager;
-    private Color constructionColor = new Color(0.5f, 0.5f, 1f, 1f);//Green
+    private PopulationManager populationManager = default;
 
     public override void Initialize()
     {
-        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
+        populationManager = FindObjectOfType<PopulationManager>();
         base.itemType = ItemType.Food;
         base.Initialize();
     }
@@ -44,11 +43,15 @@ public class FoodSourceStoreSection : StoreSection
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
             PlaceFood(mousePosition);
         }
+        if (!base.CanBuy(selectedItem))
+        {
+            base.OnItemSelectionCanceled();
+        }
     }
 
     public void PlaceFood(Vector3 mousePosition)
     {
-        if (!base.GridSystem.PlacementValidation.IsFoodPlacementValid(mousePosition, base.selectedItem))
+        if (!base.GridSystem.IsFoodPlacementValid(mousePosition, base.selectedItem))
         {
             Debug.Log("Cannot place item that location");
             return;
@@ -56,9 +59,8 @@ public class FoodSourceStoreSection : StoreSection
         base.playerBalance.SubtractFromBalance(selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, 1);
         base.HandleAudio();
-        base.audioSource.Play();
         Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
-        this.buildBufferManager.CreateBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.selectedItem.buildTime, this.constructionColor);
-        FoodSourceManager.placeFood(mouseGridPosition, base.GridSystem.PlacementValidation.GetFoodSpecies(selectedItem));
+        
+        FoodSourceManager.placeFood(mouseGridPosition, populationManager.GetFoodSpecies(selectedItem), this.selectedItem.buildTime);
     }
 }

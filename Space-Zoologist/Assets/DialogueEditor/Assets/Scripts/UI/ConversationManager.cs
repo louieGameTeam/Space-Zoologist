@@ -84,9 +84,11 @@ namespace DialogueEditor
         // Selection options
         private int m_currentSelectedIndex;
 
+        public RectTransform Background;
         public GameObject BacklogGameObject;
         public Button BacklogButton;
-        public Text Backlog;
+        public TMPro.TextMeshProUGUI Backlog;
+        public ScrollRect BacklogScrollRect;
         //--------------------------------------
         // Awake, Start, Destroy
         //--------------------------------------
@@ -105,8 +107,13 @@ namespace DialogueEditor
 
         private void Start()
         {
+            Background = transform.GetChild(1).GetComponent<RectTransform>();
+            Background.sizeDelta = new Vector2(1400, Background.sizeDelta.y);
             NpcIcon.sprite = BlankSprite;
             DialogueText.text = "";
+            Backlog = BacklogGameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>(true);
+            BacklogButton = BacklogGameObject.GetComponentInChildren<Button>(true);
+            BacklogScrollRect = BacklogGameObject.GetComponentInChildren<ScrollRect>(true);
             TurnOffUI();
         }
 
@@ -129,6 +136,12 @@ namespace DialogueEditor
                 {
                     skipping = !skipping;
                 }
+            }
+
+            if (Input.mouseScrollDelta.y > 0.2f && !BacklogGameObject.activeSelf) {
+                ToggleBacklog();
+            } else if (Input.mouseScrollDelta.y < -0.2f && BacklogGameObject.activeSelf) {
+                ToggleBacklog();
             }
 
             switch (m_state)
@@ -162,6 +175,7 @@ namespace DialogueEditor
                         if (t > 1)
                         {
                             SetState(eState.Idle);
+                            
                             return;
                         }
 
@@ -180,14 +194,12 @@ namespace DialogueEditor
                             {
                                 if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                                 {
+                                    UpdateNextSpeech();
                                     SetState(eState.TransitioningOptionsOff);
                                 }
                             }
                         }
-                        //Added by Alex
-                        else if (Input.GetMouseButtonDown(0) || skipping) {
-                            // UpdateNextSpeech();
-                        }
+                    
                     }
                     break;
 
@@ -302,7 +314,21 @@ namespace DialogueEditor
         }
 
 
+        IEnumerator<int> ExpandDialogue() {
+            while (Vector2.Distance(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y)) > 10){
+                Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y), 20);
+                yield return 0;
+            }
+        }
 
+        IEnumerator<int> ShrinkDialogue()
+        {
+            while (Vector2.Distance(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y)) > 10)
+            {
+                Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y), 20);
+                yield return 0;
+            }
+        }
 
         //--------------------------------------
         // Set state
@@ -364,9 +390,6 @@ namespace DialogueEditor
             }     
         }
 
-
-
-
         //--------------------------------------
         // Start / End Conversation
         //--------------------------------------
@@ -416,7 +439,7 @@ namespace DialogueEditor
 
         public void FreezeConversation()
         {
-            SetState(eState.freeze);
+            SetState(eState.Idle);
         }
 
         public void UnfreezeConversation()
@@ -575,6 +598,7 @@ namespace DialogueEditor
             // Display new options
             if (speech.Options.Count > 0)
             {
+                StartCoroutine(ShrinkDialogue());
                 for (int i = 0; i < speech.Options.Count; i++)
                 {
                     UIConversationButton option = GameObject.Instantiate(ButtonPrefab, OptionsPanel);
@@ -585,6 +609,7 @@ namespace DialogueEditor
             }
             else
             {
+                StartCoroutine(ExpandDialogue());
                 // Display "Continue" / "End" if we should.
                 //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
@@ -712,6 +737,17 @@ namespace DialogueEditor
         {
             bool active = BacklogGameObject.activeSelf;
             BacklogGameObject.SetActive(!active); // toggle backlog
+            BacklogScrollRect.normalizedPosition = new Vector2(0.5f, 0); // scroll to buttom
+        }
+        Button pingTarget;
+        public void AskForOneTimePing(Button target) {
+            FreezeConversation();
+            pingTarget = target;
+            target.onClick.AddListener(OneTimeUnpause);
+        }
+        public void OneTimeUnpause() {
+            UnfreezeConversation();
+            pingTarget.onClick.RemoveListener(OneTimeUnpause);
         }
     }
 }

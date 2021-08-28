@@ -15,12 +15,31 @@ public class GameOver : MonoBehaviour
     [SerializeField] PauseManager PauseManager = default;
     [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] ObjectiveManager objectiveManager = default;
+    [SerializeField] TimeSystem TimeSystem = default;
+
+    [SerializeField] DialogueManager dialogueManager = default;
+    [SerializeField] DialogueEditor.NPCConversation passedConversation = default;
+    [SerializeField] DialogueEditor.NPCConversation restertEnclosureConversation = default;
 
     private void Start()
     {
-        EventManager.Instance.SubscribeToEvent(EventType.GameOver, this.HandleGameOver);
+        EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
         this.RestartButton.onClick.AddListener(() => {this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel);});
-        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadNextLevel(); } );
+        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); } );
+    }
+
+    public void HandleNPCEndConversation()
+    {
+        if (!this.TimeSystem.LessThanMaxDay)
+        {
+            dialogueManager.SetNewDialogue(restertEnclosureConversation);
+        }
+        else
+        {
+            dialogueManager.SetNewDialogue(passedConversation);
+        }
+        dialogueManager.StartInteractiveConversation();
+        this.IngameUI.SetActive(false);
     }
 
     public void HandleGameOver()
