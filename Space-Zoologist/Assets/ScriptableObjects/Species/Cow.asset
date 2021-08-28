@@ -18,8 +18,7 @@ MonoBehaviour:
   terrainTilesRequired: 8
   minFoodRequired: 8
   maxFoodRequired: 10
-  growthScaleFactor: 0.125
-  growthRate: 4
+  growthRate: 5
   decayRate: 3
   moveCost: 0
   size: 3
@@ -38,7 +37,7 @@ MonoBehaviour:
   - needName: Gold Space Maple
     isPreferred: 1
   liquidNeeds:
-  - needName: Water
+  - needName: 
     tileNeedThreshold: 3
     freshWaterMinThreshold: 0.96
     freshWaterMaxThreshold: 1
@@ -46,4 +45,6 @@ MonoBehaviour:
     saltMaxThreshold: 0.025
     bacteriaMinThreshold: 0
     bacteriaMaxThreshold: 0.02
+  preyNeeds:
+  - needName: Humidum Limax
   representation: {fileID: 0}

@@ -80,6 +80,15 @@ public class LiquidNeedConstructData : NeedConstructData
     }
 }
 
+[System.Serializable]
+public class PreyNeedConstructData : NeedConstructData
+{
+    public PreyNeedConstructData(string name) : base(name) {}
+
+    public override float GetSurvivableThreshold() { return 0; }
+    protected override bool getIsPreferred() { return false; }
+}
+
 /// <summary>
 /// A data object that holds the information to create a Need object.
 /// </summary>

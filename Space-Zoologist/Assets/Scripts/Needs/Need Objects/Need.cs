@@ -110,16 +110,25 @@ public class LiquidNeed : Need
     private float GetBacteriaPoisonThreshold() { return needConstructData.BacteriaMaxThreshold; }
 }
 
+public class PreyNeed : Need
+{
+    public PreyNeed(NeedConstructData needConstructData) : base(needConstructData) { }
+
+    protected override NeedType GetNeedType()
+    {
+        return NeedType.Prey;
+    }
+}
+
 [System.Serializable]
 public abstract class Need
 {
-    public string NeedName => needName;
+    public string NeedName => needConstructData.NeedName;
     public NeedType NeedType => GetNeedType();
     public Sprite Sprite => sprite;
     public float NeedValue => this.needValue;
     public bool IsPreferred => needConstructData.IsPreferred;
 
-    [SerializeField] private string needName => needConstructData.NeedName;
     [SerializeField] private float needValue = default;
     [Range(1.0f, 10.0f)]
     [SerializeField] private int severity = 1;

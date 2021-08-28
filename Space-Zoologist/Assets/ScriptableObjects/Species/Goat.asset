@@ -18,8 +18,7 @@ MonoBehaviour:
   terrainTilesRequired: 4
   minFoodRequired: 4
   maxFoodRequired: 6
-  growthScaleFactor: 0.125
-  growthRate: 3
+  growthRate: 2
   decayRate: 3
   moveCost: 0
   size: 3
@@ -38,7 +37,7 @@ MonoBehaviour:
   - needName: Gold Space Maple
     isPreferred: 1
   liquidNeeds:
-  - needName: Water
+  - needName: 
     tileNeedThreshold: 2
     freshWaterMinThreshold: 0.96
     freshWaterMaxThreshold: 1

@@ -23,7 +23,6 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private int moveCost = default;
     [SerializeField] private int sellBackPrice = default;
     [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
-    [SerializeField] private List<FoodNeedConstructData> foodNeeds = default;
     [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
     [SerializeField] private Item FoodSource = default;
 
@@ -37,12 +36,6 @@ public class FoodSourceSpecies : ScriptableObject
         {
             needs.Add(need.NeedName, new TerrainNeed(need, this));
         }
-
-        //Food sources shouldn't need food but here's the logic if we ever end up needed that behavior
-        // foreach (FoodNeedConstructData need in foodNeeds)
-        // {
-        //     needs.Add(need.NeedName, new FoodNeed(need, 0));
-        // }
 
         //Water Needs
         foreach (LiquidNeedConstructData need in liquidNeeds)
@@ -93,19 +86,6 @@ public class FoodSourceSpecies : ScriptableObject
                     }
                     break;
                 case 1:
-                    foodNeeds = new List<FoodNeedConstructData>();
-                    foreach(NeedConstructData data in needs[i])
-                    {
-                        if(!(data is FoodNeedConstructData))
-                        {
-                            Debug.LogError("Invalid needs data: NeedConstructData was not a FoodNeedConstructData");
-                            return;
-                        }
-
-                        foodNeeds.Add((FoodNeedConstructData)data);
-                    }
-                    break;
-                case 2:
                     liquidNeeds = new List<LiquidNeedConstructData>();
                     foreach(NeedConstructData data in needs[i])
                     {

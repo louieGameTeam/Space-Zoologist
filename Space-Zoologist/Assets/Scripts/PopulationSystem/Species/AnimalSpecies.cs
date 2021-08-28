@@ -13,7 +13,6 @@ public class AnimalSpecies : ScriptableObject
     public int TerrainTilesRequired => terrainTilesRequired;
     public int MinFoodRequired => minFoodRequired;
     public int MaxFoodRequired => maxFoodRequired;
-    public float GrowthScaleFactor => growthScaleFactor;
     public int GrowthRate => growthRate;
     public int DecayRate => decayRate;
     public float Size => size;
@@ -33,7 +32,6 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int terrainTilesRequired = default;
     [SerializeField] private int minFoodRequired = default;
     [SerializeField] private int maxFoodRequired = default;
-    [SerializeField] private float growthScaleFactor = default;
     [SerializeField] private int growthRate = 3;
     [SerializeField] private int decayRate = 3;
     [SerializeField] private int moveCost = default;
@@ -45,6 +43,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
     [SerializeField] private List<FoodNeedConstructData> foodNeeds = default;
     [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
+    [SerializeField] private List<PreyNeedConstructData> preyNeeds = default;
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
@@ -90,6 +89,12 @@ public class AnimalSpecies : ScriptableObject
 
             if(need.BacteriaMaxThreshold != 1)
                 needs.Add("BacteriaPoison", new LiquidNeed("BacteriaPoison", need));
+        }
+
+        //Prey Needs
+        foreach (PreyNeedConstructData need in preyNeeds)
+        {
+            needs.Add(need.NeedName, new PreyNeed(need));
         }
 
         return needs;
