@@ -24,8 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b65662df451a6444ebdb1ef6d79cddb1, type: 2}
   - {fileID: 11400000, guid: 8bbed6e11bf70469684ca67fd7eb95a3, type: 2}
   animalSpecies:
+  - {fileID: 11400000, guid: 092bd2408667e324f9b3995e5a4a2428, type: 2}
   - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
-  - {fileID: 11400000, guid: b19757b4d113c9047afc67b8ca20f94e, type: 2}
   itemQuantities:
   - itemObject: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
     initialAmount: 3
@@ -56,6 +56,8 @@ MonoBehaviour:
   - itemObject: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+    initialAmount: 5
+  - itemObject: {fileID: 11400000, guid: 38cda74f699f241129cf6815fa33a73c, type: 2}
     initialAmount: 5
   globalAtmosphere:
     GasX: 5

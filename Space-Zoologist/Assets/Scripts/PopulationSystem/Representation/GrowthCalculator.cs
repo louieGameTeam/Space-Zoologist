@@ -44,16 +44,27 @@ public class GrowthCalculator
     }
 
     /*
+        0. if any predators nearby, population set to decrease next day
         1. if any need not met, handle growth logic and set growth status
         2. if all needs met, handle growth logic
     */
     public void CalculateGrowth()
     {
+        float predatorValue = calculatePredatorPreyNeed();
+        if (predatorValue > 0f)
+        {
+            this.GrowthStatus = GrowthStatus.declining;
+            this.DecayCountdown = 1;
+            this.populationIncreaseRate = -1 * predatorValue;
+            return;
+        }
+        this.CalculateTerrainNeed();
+        this.CalculateWaterNeed();
         this.GrowthStatus = GrowthStatus.growing;
         
         foreach (KeyValuePair<NeedType, bool> need in new Dictionary<NeedType, bool>(IsNeedMet))
         {
-            if (!IsNeedMet[need.Key])
+            if (!need.Key.Equals(NeedType.Prey) && !IsNeedMet[need.Key])
             {
                 //If any need is not being met, set the growth status to declining
                 GrowthStatus = GrowthStatus.declining;
@@ -225,12 +236,25 @@ public class GrowthCalculator
         Debug.Log(population.gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + preferredTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
     }
 
+    public float calculatePredatorPreyNeed()
+    {
+        float predatorValue = 0;
+        foreach (KeyValuePair<string, Need> need in population.Needs)
+        {
+            if (need.Value.NeedType.Equals(NeedType.Prey))
+            {
+                predatorValue += need.Value.NeedValue;
+            }
+        }
+        return predatorValue;
+    }
+
     public bool ReadyForDecay()
     {
         this.DecayCountdown--;
         if (this.DecayCountdown == 0)
         {
-            this.DecayCountdown = population.Species.GrowthRate;
+            this.DecayCountdown = population.Species.DecayRate;
             return true;
         }
         return false;

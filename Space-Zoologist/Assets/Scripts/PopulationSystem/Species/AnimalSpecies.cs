@@ -20,6 +20,7 @@ public class AnimalSpecies : ScriptableObject
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
+    public int MoveCost => moveCost;
     public Sprite Representation => representation;
     // TODO setup tile weights for species
     public Dictionary<TileType, byte> TilePreference = default;
@@ -35,6 +36,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private float growthScaleFactor = default;
     [SerializeField] private int growthRate = 3;
     [SerializeField] private int decayRate = 3;
+    [SerializeField] private int moveCost = default;
 
     [SerializeField] private float size = default;
     [SerializeField] private List<TileType> accessibleTerrain = default;

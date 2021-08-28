@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
   m_Name: Cow
   m_EditorClassIdentifier: 
-  animatorController: {fileID: 9100000, guid: afe80bc84a5bc22449b95bda8c01671b, type: 2}
+  animatorController: {fileID: 9100000, guid: 06bdde8720ee148999e71ea56f897401, type: 2}
   speciesName: Eligans Impar
   species: 1
   terrainTilesRequired: 8
@@ -21,6 +21,7 @@ MonoBehaviour:
   growthScaleFactor: 0.125
   growthRate: 4
   decayRate: 3
+  moveCost: 0
   size: 3
   accessibleTerrain: 02000000010000000000000003000000
   icon: {fileID: 7585194069153929163, guid: 6967f3801b637e540acdb61c1e9c9e46, type: 3}
