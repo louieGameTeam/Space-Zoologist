@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ObservationEntry
+public class ObservationsEntry
 {
     public string Title
     {

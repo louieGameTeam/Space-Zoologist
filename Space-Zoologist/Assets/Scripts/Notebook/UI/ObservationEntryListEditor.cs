@@ -39,7 +39,7 @@ public class ObservationEntryListEditor : NotebookUIChild
         currentEditors.Clear();
 
         // Add editors for the current entry list
-        foreach(ObservationEntry entry in UIParent.Notebook.Observations.GetEntryList(id).Entries)
+        foreach(ObservationsEntry entry in UIParent.Notebook.Observations.GetEntryList(id).Entries)
         {
             ObservationEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
             editor.Setup(entry, id, editorScroller);

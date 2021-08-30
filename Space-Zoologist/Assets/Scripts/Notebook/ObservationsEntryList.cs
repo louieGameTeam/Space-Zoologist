@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ObservationEntryList
+public class ObservationsEntryList
 {
-    public List<ObservationEntry> Entries => entries;
+    public List<ObservationsEntry> Entries => entries;
 
     [SerializeField]
     [Tooltip("List of the observation entries")]
-    private List<ObservationEntry> entries;
+    private List<ObservationsEntry> entries;
 
-    public ObservationEntryList(ObservationEntryList other)
+    public ObservationsEntryList(ObservationsEntryList other)
     {
-        entries = new List<ObservationEntry>(other.entries);
+        entries = new List<ObservationsEntry>(other.entries);
     }
-    public static ObservationEntryList Default()
+    public static ObservationsEntryList Default()
     {
         throw new System.NotImplementedException("This factory method is deprecated and no longer usable");
     }

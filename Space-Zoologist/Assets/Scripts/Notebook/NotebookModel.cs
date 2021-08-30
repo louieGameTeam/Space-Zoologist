@@ -8,7 +8,7 @@ public class NotebookModel : ScriptableObject
     public string Acronym => acronym;
     public ResearchModel Research => research;
     public TestAndMetricsModel TestAndMetrics => testAndMetrics;
-    public ObservationModel Observations => observations;
+    public ObservationsModel Observations => observations;
     public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
     public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(requestData.Keys);
 
@@ -22,7 +22,7 @@ public class NotebookModel : ScriptableObject
     private ResearchModel research;
     [SerializeField]
     [Tooltip("Player observation notes")]
-    private ObservationModel observations;
+    private ObservationsModel observations;
     [SerializeField]
     [Tooltip("Test and metrics that the player has taken")]
     private TestAndMetricsModel testAndMetrics;
