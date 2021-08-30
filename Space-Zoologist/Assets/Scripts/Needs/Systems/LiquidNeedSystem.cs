@@ -146,7 +146,7 @@ public class LiquidNeedSystem : NeedSystem
                             (!foodNeeds.ContainsKey("Salt") || foodNeeds["Salt"].IsThresholdMet(composition[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
                             (!foodNeeds.ContainsKey("Bacteria") || foodNeeds["Bacteria"].IsThresholdMet(composition[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
                         {
-                            liquidCount += 1f/i;
+                            ++liquidCount;
                             liquidCompositions.Add(composition);
                         }
                     }
