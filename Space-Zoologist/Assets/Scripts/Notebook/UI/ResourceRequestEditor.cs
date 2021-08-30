@@ -14,7 +14,7 @@ public class ResourceRequestEditor : NotebookUIChild
         {
             if(request == null)
             {
-                if (string.IsNullOrEmpty(priorityInput.text)) priorityInput.text = "0";
+                if (string.IsNullOrWhiteSpace(priorityInput.text)) priorityInput.text = "0";
                 if (string.IsNullOrWhiteSpace(quantityInput.text)) quantityInput.text = "0";
 
                 // Create a new request

@@ -24,6 +24,8 @@ public class NotebookUI : MonoBehaviour
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
+    // Referene to the data for this level
+    private LevelDataReference levelDataReference;
     private bool isOpen = false;
 
     // I thought that this was called when the game object is inactive but apparently it is not
@@ -35,7 +37,7 @@ public class NotebookUI : MonoBehaviour
         // Update the enclosure IDs
         notebook.TryAddEnclosureID(EnclosureID.FromCurrentSceneName());
 
-        // Map all pickers to their corresponding name
+        // Map all bookmark targets to their corresponding game object names
         BookmarkTarget[] allBookmarkTargets = GetComponentsInChildren<BookmarkTarget>(true);
         foreach (BookmarkTarget bookmarkTarget in allBookmarkTargets)
         {
