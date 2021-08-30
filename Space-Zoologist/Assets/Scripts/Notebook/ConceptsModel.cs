@@ -34,10 +34,11 @@ public class ConceptsModel
         // Loop through all resources and review them
         foreach(ResourceRequest request in toReview)
         {
+            int remainingRequests = RemainingRequests(current);
             int remainingResources = RemainingResources(current);
 
             // If there are remaining resources, compute quantity to grant
-            if (remainingResources > 0)
+            if (remainingRequests > 0 && remainingResources > 0)
             {
                 int quantityGranted = Mathf.Min(request.QuantityRequested, remainingResources);
 
@@ -46,7 +47,8 @@ public class ConceptsModel
                 // If quantity granted is less than quantity requested then partially grant the request 
                 else request.GrantPartially("Insufficient resources to fully grant this request", quantityGranted, request.ItemRequested);
             }
-            else request.Deny("Insufficient resources to grant this request");
+            else if (remainingResources <= 0) request.Deny("Insufficient resources to grant this request");
+            else request.Deny("No more requests remaining");
         }
     }
     #endregion
