@@ -15,8 +15,4 @@ public class ObservationsEntryList
     {
         entries = new List<ObservationsEntry>(other.entries);
     }
-    public static ObservationsEntryList Default()
-    {
-        throw new System.NotImplementedException("This factory method is deprecated and no longer usable");
-    }
 }
