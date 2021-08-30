@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class ResourceRequestListEditor : NotebookUIChild
 {
     [SerializeField]
-    [Tooltip("Script used to pick the enclosure we are currently taking notes on")]
-    private EnclosureIDPicker enclosurePicker;
-    [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
     private ResourceRequestEditor editorPrefab;
     [SerializeField]
@@ -20,16 +17,8 @@ public class ResourceRequestListEditor : NotebookUIChild
 
     private List<ResourceRequestEditor> currentEditors = new List<ResourceRequestEditor>();
 
-    public override void Setup()
-    {
-        base.Setup();
-
-        // Add listener for the enclosure picked event
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureSelected);
-        OnEnclosureSelected(EnclosureID.FromCurrentSceneName());
-    }
-
-    private void OnEnclosureSelected(EnclosureID id)
+    #region Public Methods
+    public void UpdateListEdited(EnclosureID id, ResourceRequestList list)
     {
         // Destroy all existing editors
         foreach (ResourceRequestEditor editor in currentEditors)
@@ -40,7 +29,7 @@ public class ResourceRequestListEditor : NotebookUIChild
         currentEditors.Clear();
 
         // Foreach entry in the selected list, add an editor
-        foreach (ResourceRequest request in UIParent.Notebook.GetResourceRequestList(id).Requests)
+        foreach (ResourceRequest request in list.Requests)
         {
             ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
             editor.Setup(id, request, editorScroller);
@@ -54,7 +43,17 @@ public class ResourceRequestListEditor : NotebookUIChild
             CreateAddingEntry();
         }
     }
+    public void UpdateReviewUI()
+    {
+        foreach(ResourceRequestEditor editor in currentEditors)
+        {
+            editor.UpdateReviewUI();
+        }
+        // Reorder them visually
+    }
+    #endregion
 
+    #region Private Methods
     private void OnNewEntryCreated()
     {
         CreateAddingEntry();
@@ -67,4 +66,5 @@ public class ResourceRequestListEditor : NotebookUIChild
         editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
     }
+    #endregion
 }

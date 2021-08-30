@@ -8,7 +8,8 @@ using TMPro;
 
 public class ResourceRequestEditor : NotebookUIChild
 {
-    public ResourceRequest Request
+    #region Public Properties
+    private ResourceRequest Request
     {
         get
         {
@@ -23,12 +24,12 @@ public class ResourceRequestEditor : NotebookUIChild
                     Priority = int.Parse(priorityInput.text),
                     Target = categoryDropdown.SelectedCategory,
                     ImprovedNeed = needDropdown.SelectedNeed,
-                    Quantity = int.Parse(quantityInput.text),
-                    Item = resourcePicker.ItemSelected
+                    QuantityRequested = int.Parse(quantityInput.text),
+                    ItemRequested = resourcePicker.ItemSelected
                 };
 
                 // Get the list and add the new request
-                ResourceRequestList list = UIParent.Notebook.GetResourceRequestList(enclosureID);
+                ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
                 list.Requests.Add(request);
                 // Invoke the event for creating a new request
                 onNewRequestCreated.Invoke();
@@ -37,7 +38,9 @@ public class ResourceRequestEditor : NotebookUIChild
         }
     }
     public UnityEvent OnNewRequestCreated => onNewRequestCreated;
+    #endregion
 
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Text input field that sets the priority of the request editor")]
     private TMP_InputField priorityInput;
@@ -54,14 +57,21 @@ public class ResourceRequestEditor : NotebookUIChild
     [Tooltip("Dropdown used to select the item name to request")]
     private ResourcePicker resourcePicker;
     [SerializeField]
+    [Tooltip("UI element used to display the status of the request")]
+    private ResourceRequestStatusUI statusUI;
+    [SerializeField]
     [Tooltip("Event invoked when the editor creates a new request")]
     private UnityEvent onNewRequestCreated;
+    #endregion
 
+    #region Private Fields
     // ID of the request to edit
     private EnclosureID enclosureID;
     // Resource request to edit
     private ResourceRequest request;
+    #endregion
 
+    #region Public Methods
     public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget)
     {
         base.Setup();
@@ -80,8 +90,8 @@ public class ResourceRequestEditor : NotebookUIChild
             priorityInput.text = request.Priority.ToString();
             categoryDropdown.SetResearchCategory(request.Target);
             needDropdown.SetNeedTypeValue(request.ImprovedNeed);
-            quantityInput.text = request.Quantity.ToString();
-            resourcePicker.ItemSelected = request.Item;
+            quantityInput.text = request.QuantityRequested.ToString();
+            resourcePicker.ItemSelected = request.ItemRequested;
         }
         else
         {
@@ -106,9 +116,9 @@ public class ResourceRequestEditor : NotebookUIChild
             needDropdown.OnNeedTypeSelected.AddListener(x => Request.ImprovedNeed = x);
             quantityInput.onEndEdit.AddListener(x =>
             {
-                if (!string.IsNullOrWhiteSpace(x)) Request.Quantity = int.Parse(x);
+                if (!string.IsNullOrWhiteSpace(x)) Request.QuantityRequested = int.Parse(x);
             });
-            resourcePicker.OnItemSelected.AddListener(x => Request.Item = x);
+            resourcePicker.OnItemSelected.AddListener(x => Request.ItemRequested = x);
         }
 
         // Elements only interactable if editing for the current enclosure
@@ -118,6 +128,9 @@ public class ResourceRequestEditor : NotebookUIChild
         quantityInput.readOnly = current != enclosureID;
         resourcePicker.Dropdown.interactable = current == enclosureID;
 
+        // Update status display
+        statusUI.UpdateDisplay(request);
+
         // Add scroll intercecptors to the input fields so that the scroll event goes to the 
         // containing scroll rect instead of the input fields
         OnScrollEventInterceptor interceptor = priorityInput.gameObject.AddComponent<OnScrollEventInterceptor>();
@@ -125,4 +138,11 @@ public class ResourceRequestEditor : NotebookUIChild
         interceptor = quantityInput.gameObject.AddComponent<OnScrollEventInterceptor>();
         interceptor.InterceptTarget = scrollTarget;
     }
+
+    // Update the review UI for this resource request
+    public void UpdateReviewUI()
+    {
+        statusUI.UpdateDisplay(request);
+    }
+    #endregion
 }
