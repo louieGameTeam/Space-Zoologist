@@ -73,12 +73,13 @@ public class GameManager : MonoBehaviour
     public PopulationManager m_populationManager { get; private set; }
     public ResourceManager m_resourceManager { get; private set; }
     public BuildBufferManager m_buildBufferManager { get; private set; }
-    public PauseManager m_pauseManager { get; private set; }
     public BehaviorPatternUpdater m_behaviorPatternUpdater { get; private set; }
     public TilePlacementController m_tilePlacementController { get; private set; }
     public PlotIO m_plotIO { get; private set; }
     public GridSystem m_gridSystem { get; private set; }
+    public EnclosureSystem m_enclosureSystem { get; private set; }
     public Inspector m_inspector { get; private set; }
+    public PlayerController m_playerController { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -228,12 +229,13 @@ public class GameManager : MonoBehaviour
         m_populationManager = FindObjectOfType<PopulationManager>();
         m_resourceManager = FindObjectOfType<ResourceManager>();
         m_buildBufferManager = FindObjectOfType<BuildBufferManager>();
-        m_pauseManager = FindObjectOfType<PauseManager>();
         m_behaviorPatternUpdater = FindObjectOfType<BehaviorPatternUpdater>();
         m_tilePlacementController = FindObjectOfType<TilePlacementController>();
         m_plotIO = FindObjectOfType<PlotIO>();
         m_gridSystem = FindObjectOfType<GridSystem>();
+        m_enclosureSystem = FindObjectOfType<EnclosureSystem>();
         m_inspector = FindObjectOfType<Inspector>();
+        m_playerController = FindObjectOfType<PlayerController>();
     }
 
     private void LoadResources()
@@ -244,6 +246,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeManagers()
     {
+        m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
         m_foodSourceManager.Initialize();
         m_buildBufferManager.Initialize();

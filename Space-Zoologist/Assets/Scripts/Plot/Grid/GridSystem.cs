@@ -31,6 +31,11 @@ public class GridSystem : MonoBehaviour
     private BuildBufferManager buildBufferManager;
     #endregion
 
+    #region UI
+    [SerializeField] GameObject PauseButton = default;
+    [SerializeField] GameObject NextDayButton = default;
+    #endregion
+
     [Header("Used to define 2d array")]
     [SerializeField] private int ReserveWidth = default;
     [SerializeField] private int ReserveHeight = default;
@@ -49,6 +54,7 @@ public class GridSystem : MonoBehaviour
     private Texture2D TilemapTexture;
 
     public bool HasTerrainChanged = false;
+    public bool IsDrafting { get; private set; }
 
     #region Monobehaviour Callbacks
     // do something about this
@@ -443,6 +449,41 @@ public class GridSystem : MonoBehaviour
                 }
             }
         }
+    }
+    #endregion
+
+    #region Drafting Functions
+    public void ToggleDrafting()
+    {
+        if (!IsDrafting)
+        {
+            StartDrafting();
+            IsDrafting = true;
+        }
+        else
+        {
+            FinishDrafting();
+            IsDrafting = false;
+        }
+    }
+
+    private void StartDrafting()
+    {
+        GameManager.Instance.TryToPause();
+        UpdateUI(false);
+    }
+
+    private void FinishDrafting()
+    {
+        GameManager.Instance.Unpause();
+        UpdateUI(true);
+    }
+
+    private void UpdateUI(bool onOff)
+    {
+        GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
+        PauseButton.SetActive(onOff);
+        NextDayButton.SetActive(onOff);
     }
     #endregion
 

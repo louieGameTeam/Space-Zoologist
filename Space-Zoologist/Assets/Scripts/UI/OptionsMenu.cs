@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class OptionsMenu : MonoBehaviour
 {
-    [SerializeField] PauseManager PauseManager = default;
     [SerializeField] GameObject IngameUI = default;
     public bool IsInOptionsMenu => gameObject.activeSelf;
 

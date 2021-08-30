@@ -8,14 +8,13 @@ public class LiquidModificationHUD : MonoBehaviour
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] GameObject liquidModificationHUD = default;
     [SerializeField] List<TMPro.TMP_InputField> Values = default;
-    [SerializeField] Camera mainCamera = default;
     private GridSystem GridSystem;
     private bool isOpened = false;
     private Vector3 worldPos;
     private LiquidBody liquidBody;
     void Start()
     {
-        this.GridSystem = FindObjectOfType<GridSystem>();
+        this.GridSystem = GameManager.Instance.m_gridSystem;
         liquidModificationHUD.SetActive(false);
     }
     public void ParseValues()
@@ -50,7 +49,7 @@ public class LiquidModificationHUD : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && MenuManager.IsInStore) //If clicking MMB on liquid tile, open HUD
         {
             liquidModificationHUD.SetActive(true);
-            Vector3 mousePos = this.mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPosition = this.GridSystem.WorldToCell(mousePos);
             LiquidBody liquid = this.GridSystem.GetTileData(cellPosition) != null ? this.GridSystem.GetTileData(cellPosition).currentLiquidBody : null;
             if (liquid != null)

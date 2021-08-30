@@ -28,11 +28,11 @@ public class StoreSection : MonoBehaviour
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
 
-    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
+    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
     {
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
-        this.GridSystem = gridSystem;
+        this.GridSystem = GameManager.Instance.m_gridSystem;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
     }

@@ -10,9 +10,9 @@ using UnityEngine.EventSystems;
 /// Figure out how to handle case when more than one machine present after changes
 public class TileStoreSection : StoreSection
 {
-    [SerializeField] private EnclosureSystem EnclosureSystem = default;
-    [SerializeField] private TilePlacementController tilePlacementController = default;
-    [SerializeField] private ReservePartitionManager rpm = default;
+    private EnclosureSystem EnclosureSystem = default;
+    private TilePlacementController tilePlacementController = default;
+    private ReservePartitionManager rpm = default;
 
     private float startingBalance;
     private int initialAmt;
@@ -24,7 +24,9 @@ public class TileStoreSection : StoreSection
     private Color constructionColor = new Color(1f, 0.6f, 0.2f, 1f);//Orange
     public override void Initialize()
     {
-        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
+        this.buildBufferManager = GameManager.Instance.m_buildBufferManager;
+        EnclosureSystem = GameManager.Instance.m_enclosureSystem;
+        tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemType.Terrain;
         base.Initialize();
         Debug.Assert(tilePlacementController != null);

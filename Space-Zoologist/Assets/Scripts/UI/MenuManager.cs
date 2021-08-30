@@ -13,11 +13,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject PlayerBalanceHUD = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
     [SerializeField] ResourceManager ResourceManager = default;
-    [SerializeField] PauseManager PauseManager = default;
     [Header("Shared menu dependencies")]
     [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
     [SerializeField] CursorItem CursorItem = default;
-    [SerializeField] GridSystem GridSystem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
     [SerializeField] RectTransform MenuSelectPanel = default;
@@ -31,7 +29,7 @@ public class MenuManager : MonoBehaviour
         this.IsInStore = false;
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu?.SetupDependencies(this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalanceDisplay, this.ResourceManager);
+            storeMenu?.SetupDependencies(this.CursorItem, this.UIElements, this.PlayerBalanceDisplay, this.ResourceManager);
             storeMenu?.Initialize();
         }
         StoreMenus[curMenu]?.gameObject.SetActive(true);

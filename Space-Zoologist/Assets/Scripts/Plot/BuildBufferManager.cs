@@ -108,7 +108,7 @@ public class BuildBufferManager : GridObjectManager
         }
         return null;
     }
-    public void DestoryBuffer(Vector2Int pos, int size = 1)
+    public void DestroyBuffer(Vector2Int pos, int size = 1)
     {
         if (!this.isConstructing[pos.x, pos.y])
         {
