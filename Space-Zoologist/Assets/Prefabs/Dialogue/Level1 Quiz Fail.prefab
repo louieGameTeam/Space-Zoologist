@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6499480476369920182}
   - component: {fileID: 6499480476369920181}
+  - component: {fileID: 652633543101036833}
   m_Layer: 0
   m_Name: Level1 Quiz Fail
   m_TagString: Untagged
@@ -45,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 3
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":63.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Your
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":28.5,\"yPos\":26},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Your
     responses indicate that your knowledge of both food and terrain needs for CapraX
-    Zeigrun deviates heavily from our anticipated observed results from other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":63.5,\"yPos\":121},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Based
+    Zeigrun deviates heavily from our anticipated observed results from other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":28.5,\"yPos\":125},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Based
     on these results, I\u2019d like to set you up with another group of CapraX Zeigrun,
     where I\u2019ll ask you to focus on collecting data again, to confirm or deny
     your deviation from our expectations.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
@@ -61,9 +62,8 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5322779444230752718, guid: 5a72d83bd84714f998c4861efde5d80e,
-          type: 3}
-        m_MethodName: LoadLevel
+      - m_Target: {fileID: 652633543101036833}
+        m_MethodName: LoadNextLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -73,6 +73,19 @@ MonoBehaviour:
           m_StringArgument: Level1E2
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &652633543101036833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6499480476369920183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0c668cbccaa4f1d8769650843d3123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizResponses: []
 --- !u!1 &6499480477233048531
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,9 +153,8 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5322779444230752718, guid: 5a72d83bd84714f998c4861efde5d80e,
-          type: 3}
-        m_MethodName: LoadLevel
+      - m_Target: {fileID: 652633543101036833}
+        m_MethodName: LoadNextLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

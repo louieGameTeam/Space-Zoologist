@@ -8,21 +8,15 @@ using UnityEngine.UI;
 
 public class DialogueResponseManager : MonoBehaviour
 {
-	/*
-	 * 
-	 * TODO create a quiz class that maps strings to number of correct. DialogueResponse will update the quiz class's
-	 * number of correct (F + 1, F + 2) and quiz class will then update the specific dialogue once it has been reached.
-	 */
+	#region QuizResponse
 	[SerializeField] List<QuizResponse> quizResponses = default;
-	private ConversationManager conversationManager;
 	private int fScore = 0;
 	private int tScore = 0;
 	private int wScore = 0;
 
 	public void EndOfQuiz()
 	{
-		Debug.Log("check9ing quiz results");
-		conversationManager = FindObjectOfType<ConversationManager>();
+		ConversationManager conversationManager = FindObjectOfType<ConversationManager>();
 		foreach (QuizResponse quizResponse in quizResponses)
         {
 			if (tScore >= quizResponse.tScore && fScore >= quizResponse.fScore && wScore >= quizResponse.wScore)
@@ -31,6 +25,19 @@ public class DialogueResponseManager : MonoBehaviour
 				break;
 			}
         }
+	}
+
+	public void LoadNextLevel(string level)
+    {
+		LevelDataLoader levelDataLoader = FindObjectOfType<LevelDataLoader>();
+		Debug.Log("Loading next level: " + level);
+		levelDataLoader.LoadLevel(level);
+    }
+
+	public void ReloadLevel()
+    {
+		LevelDataLoader levelDataLoader = FindObjectOfType<LevelDataLoader>();
+		levelDataLoader.ReloadLevel();
 	}
 
 	public void increaseFScore(int score)
@@ -50,6 +57,7 @@ public class DialogueResponseManager : MonoBehaviour
 		wScore += score;
 		Debug.Log("wscore: " + tScore);
 	}
+	#endregion
 }
 
 [System.Serializable]

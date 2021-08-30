@@ -8,7 +8,6 @@ using UnityEngine.UI;
 /// </summary>
 public class ObjectiveManager : MonoBehaviour
 {
-    private LevelDataReference levelDataReference = default;
     private LevelObjectiveData LevelObjectiveData = default;
 
     public bool IsGameOver => this.isGameOver;
@@ -100,8 +99,7 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        levelDataReference = FindObjectOfType<LevelDataReference>();
-        this.LevelObjectiveData = this.levelDataReference.LevelData.LevelObjectiveData;
+        this.LevelObjectiveData = LevelDataReference.instance.LevelData.LevelObjectiveData;
 
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in this.LevelObjectiveData.survivalObjectiveDatas)

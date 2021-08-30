@@ -13,14 +13,13 @@ public class BuildBufferManager : GridObjectManager
     private Action constructionFinishedCallback = null;
     private void Awake()
     {
-        LevelDataReference levelDataReference = FindObjectOfType<LevelDataReference>();
-        if (levelDataReference == null)
+        if (LevelDataReference.instance == null)
         {
             Debug.LogWarning("Level data reference not found, using default width and height values");
             this.isConstructing = new bool[100, 100];
         }
-        int w = levelDataReference.LevelData.MapWidth;
-        int h = levelDataReference.LevelData.MapHeight;
+        int w = LevelDataReference.instance.LevelData.MapWidth;
+        int h = LevelDataReference.instance.LevelData.MapHeight;
         this.isConstructing = new bool[w, h];
     }
     public override void Parse()

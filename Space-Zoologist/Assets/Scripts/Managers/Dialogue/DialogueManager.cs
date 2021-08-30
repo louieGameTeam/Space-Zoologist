@@ -15,7 +15,6 @@ public class DialogueManager : MonoBehaviour
     private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
     [SerializeField] private GameObject DialogueButton = default;
-    private LevelDataReference levelDataReference = default;
     private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
 
     private bool ContinueSpeech = false;
@@ -26,9 +25,8 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        levelDataReference = FindObjectOfType<LevelDataReference>();
-        startingConversation = levelDataReference.LevelData.StartingConversation;
-        defaultConversation = levelDataReference.LevelData.DefaultConversation;
+        startingConversation = LevelDataReference.instance.LevelData.StartingConversation;
+        defaultConversation = LevelDataReference.instance.LevelData.DefaultConversation;
         ConversationManager.OnConversationEnded = ConversationEnded;
         if (this.startingConversation != null)
         {

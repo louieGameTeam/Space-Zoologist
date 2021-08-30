@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4477804778286551811}
   - component: {fileID: 4477804778286551868}
+  - component: {fileID: 905645883055992201}
   m_Layer: 0
   m_Name: Level1Failed
   m_TagString: Untagged
@@ -45,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 94
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-7.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-20,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Hey
     there, newbie. I notice you weren\u2019t able to reach this enclosure\u2019s
-    goal.\",\"parentUIDs\":[0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-0.5,\"yPos\":135},\"ID\":92,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    goal.\",\"parentUIDs\":[0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-13,\"yPos\":135},\"ID\":92,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
     alright. No harm, no foul. We\u2019ll just get another engineer to resurface
     this enclosure so you can try again.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
@@ -99,8 +100,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5322779444230752718, guid: 5a72d83bd84714f998c4861efde5d80e,
-          type: 3}
+      - m_Target: {fileID: 905645883055992201}
         m_MethodName: ReloadLevel
         m_Mode: 1
         m_Arguments:
@@ -111,6 +111,19 @@ MonoBehaviour:
           m_StringArgument: Level1E1
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &905645883055992201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477804778286551810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0c668cbccaa4f1d8769650843d3123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizResponses: []
 --- !u!1 &4477804779105979190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,8 +1242,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5322779444230752718, guid: 5a72d83bd84714f998c4861efde5d80e,
-          type: 3}
+      - m_Target: {fileID: 905645883055992201}
         m_MethodName: ReloadLevel
         m_Mode: 1
         m_Arguments:

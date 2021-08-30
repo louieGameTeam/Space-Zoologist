@@ -9,7 +9,6 @@ public class SellingManager : MonoBehaviour
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] Inspector Inspector = default;
     [SerializeField] PlayerBalance PlayerBalance = default;
-    LevelDataReference levelDataReference = default;
     public bool IsSelling { get; private set; }
 
     public void OnToggleSell()
@@ -37,7 +36,6 @@ public class SellingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelDataReference = FindObjectOfType<LevelDataReference>();
         IsSelling = false;
         // stop selling when store opens
         EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
@@ -94,7 +92,7 @@ public class SellingManager : MonoBehaviour
     {
         GameObject food = tileData.Food;
         string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
-        foreach (LevelData.ItemData data in levelDataReference.LevelData.ItemQuantities)
+        foreach (LevelData.ItemData data in LevelDataReference.instance.LevelData.ItemQuantities)
         {
             Item item = data.itemObject;
             if (item.ID.Equals(id))

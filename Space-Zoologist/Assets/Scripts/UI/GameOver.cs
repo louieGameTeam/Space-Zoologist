@@ -20,13 +20,11 @@ public class GameOver : MonoBehaviour
     [SerializeField] DialogueManager dialogueManager = default;
     private DialogueEditor.NPCConversation passedConversation = default;
     private DialogueEditor.NPCConversation restartEnclosureConversation = default;
-    LevelDataReference levelDataReference = default;
 
     private void Start()
     {
-        levelDataReference = FindObjectOfType<LevelDataReference>();
-        passedConversation = levelDataReference.LevelData.PassedConversation;
-        restartEnclosureConversation = levelDataReference.LevelData.RestartConversation;
+        passedConversation = LevelDataReference.instance.LevelData.PassedConversation;
+        restartEnclosureConversation = LevelDataReference.instance.LevelData.RestartConversation;
         EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
         this.RestartButton.onClick.AddListener(() => {this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel);});
         this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); } );

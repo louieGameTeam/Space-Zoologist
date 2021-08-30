@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7087672933058657655}
   - component: {fileID: 7087672933058657652}
+  - component: {fileID: 2018955406944478970}
   m_Layer: 0
   m_Name: Level1 Quiz Pass
   m_TagString: Untagged
@@ -65,9 +66,8 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5322779444230752718, guid: 5a72d83bd84714f998c4861efde5d80e,
-          type: 3}
-        m_MethodName: LoadLevel
+      - m_Target: {fileID: 2018955406944478970}
+        m_MethodName: LoadNextLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -77,6 +77,19 @@ MonoBehaviour:
           m_StringArgument: Level1E4
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2018955406944478970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7087672933058657654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0c668cbccaa4f1d8769650843d3123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizResponses: []
 --- !u!1 &7087672933868351682
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,9 +197,8 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5322779444230752718, guid: 5a72d83bd84714f998c4861efde5d80e,
-          type: 3}
-        m_MethodName: LoadLevel
+      - m_Target: {fileID: 2018955406944478970}
+        m_MethodName: LoadNextLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

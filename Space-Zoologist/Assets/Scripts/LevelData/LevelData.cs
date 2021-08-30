@@ -31,6 +31,7 @@ public class LevelData : ScriptableObject
     public NPCConversation PassedConversation => passedConversation;
     public NPCConversation RestartConversation => restertEnclosureConversation;
     public List<Vector3Int> StartinPositions => startingPositions;
+    public AudioClip LevelMusic => levelMusic;
 
     [SerializeField] public float startingBalance = default;
     [SerializeField] public int MapWidth = default;
@@ -40,11 +41,12 @@ public class LevelData : ScriptableObject
     [Expandable] public List<AnimalSpecies> animalSpecies = default;
     [SerializeField] public List<ItemData> itemQuantities = default;
 
+    [SerializeField] private AudioClip levelMusic = default;
+    [SerializeField] private List<Vector3Int> startingPositions = default;
     [SerializeField] private NPCConversation startingConversation = default;
     [SerializeField] private NPCConversation defaultConversation = default;
     [Header("After level completed")]
     [SerializeField] NPCConversation passedConversation = default;
     [SerializeField] NPCConversation restertEnclosureConversation = default;
-    [SerializeField] private List<Vector3Int> startingPositions = default;
 
 }

@@ -13,7 +13,6 @@ public class EnclosureSystem : MonoBehaviour
     public List<EnclosedArea> EnclosedAreas;
     private List<EnclosedArea> internalEnclosedAreas;
 
-    private LevelDataReference levelDataReference = default;
     [SerializeField] private NeedSystemManager needSystemManager = default;
     [SerializeField] private GridSystem gridSystem = default;
 
@@ -33,8 +32,7 @@ public class EnclosureSystem : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        levelDataReference = FindObjectOfType<LevelDataReference>();
-        startingPositions = levelDataReference.LevelData.StartinPositions;
+        startingPositions = LevelDataReference.instance.LevelData.StartinPositions;
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
         this.internalEnclosedAreas = new List<EnclosedArea>();

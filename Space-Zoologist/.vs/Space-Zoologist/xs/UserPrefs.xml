@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LevelData/CurrentLevel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LevelData/LevelData.cs">
     <Files>
-      <File FileName="Assets/Scripts/LevelData/Level.cs" Line="11" Column="31" />
-      <File FileName="Assets/Scripts/LevelData/LevelDataReference.cs" Line="3" Column="14" />
-      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" Line="31" Column="32" />
-      <File FileName="Assets/Scripts/LevelData/LevelNavigator.cs" Line="27" Column="40" />
-      <File FileName="Assets/Scripts/LevelData/SceneNavigator.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/LevelData/CurrentLevel.cs" Line="7" Column="40" />
+      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" Line="22" Column="47" />
+      <File FileName="Assets/Scripts/LevelData/LevelDataReference.cs" Line="5" Column="27" />
+      <File FileName="Assets/Scripts/LevelData/LevelMenuSelector.cs" Line="7" Column="31" />
+      <File FileName="Assets/Scripts/LevelData/LevelNavigator.cs" Line="20" Column="58" />
+      <File FileName="Assets/Scripts/Audio/AudioManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="20" Column="27" />
+      <File FileName="Assets/Scripts/LevelData/LevelData.cs" Line="10" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -42,7 +43,7 @@
               <Node name="Scripts" expanded="True">
                 <Node name="Audio" expanded="True" />
                 <Node name="LevelData" expanded="True">
-                  <Node name="CurrentLevel.cs" selected="True" />
+                  <Node name="LevelData.cs" selected="True" />
                 </Node>
                 <Node name="Managers" expanded="True">
                   <Node name="Dialogue" expanded="True" />
@@ -57,9 +58,11 @@
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
+                  <Node name="Testers" expanded="True" />
                   <Node name="Tiles" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
+                  <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True" />
                 </Node>
@@ -77,11 +80,16 @@
           </Node>
         </State>
       </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="Space-Zoologist" expanded="True" selected="True" />
+        </State>
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1e073ac9-fcf1-4505-9d00-0c987e7e0b9f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a565fda3-8463-4657-b93e-831ee47bb1e2" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />

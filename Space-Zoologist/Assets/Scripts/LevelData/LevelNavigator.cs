@@ -11,13 +11,13 @@ public class LevelNavigator : MonoBehaviour
     [SerializeField] GameObject LevelUIPrefab = default;
     [SerializeField] GameObject LevelContent = default;
     public List<GameObject> DisplayedLevels = default;
-    private CurrentLevel currentLevel = default;
+    private LevelMenuSelector currentLevel = default;
 
     public void Start()
     {
         this.DisplayedLevels = new List<GameObject>();
         this.InitializeLevelDisplay();
-        currentLevel = FindObjectOfType<CurrentLevel>();
+        currentLevel = FindObjectOfType<LevelMenuSelector>();
     }
 
     private void InitializeLevelDisplay()

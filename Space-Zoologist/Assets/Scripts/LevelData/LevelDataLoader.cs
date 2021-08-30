@@ -8,7 +8,6 @@ public class LevelDataLoader : MonoBehaviour
     [Expandable] public List<LevelData> levelDatas = new List<LevelData>();
     [Header("Used when playing level scene directly")]
     [SerializeField] string LevelOnPlay = "Level1E1";
-    private LevelDataReference levelDataReference = default;
     string currentLevel = "Level1E1";
 
     private void Awake()
@@ -20,16 +19,15 @@ public class LevelDataLoader : MonoBehaviour
         }
         else
         {
-            CurrentLevel level = FindObjectOfType<CurrentLevel>();
-            levelDataReference = FindObjectOfType<LevelDataReference>();
-            if (level != null)
+            LevelMenuSelector selectedLevel = FindObjectOfType<LevelMenuSelector>();
+            if (selectedLevel != null)
             {
-                UpdateLevelData(level.levelName);
-                Destroy(level.gameObject);
+                LevelDataReference.instance.LevelData = GetLevelData(selectedLevel.levelName);
+                Destroy(selectedLevel.gameObject);
             }
             else
             {
-                UpdateLevelData(LevelOnPlay);
+                LevelDataReference.instance.LevelData = GetLevelData(LevelOnPlay);
             }
             DontDestroyOnLoad(this);
         }
@@ -37,32 +35,26 @@ public class LevelDataLoader : MonoBehaviour
 
     public void LoadLevel(string levelToLoad)
     {
-        Debug.Log("Loading: " + levelToLoad);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        UpdateLevelData(levelToLoad);
+        LevelDataReference.instance.LevelData = GetLevelData(levelToLoad);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 
     public void ReloadLevel()
     {
+        LevelDataReference.instance.LevelData = GetLevelData(currentLevel);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        if (levelDataReference == null)
-        {
-            return;
-        }
-        UpdateLevelData(currentLevel);
     }
 
-    private void UpdateLevelData(string levelToLoad)
+    private LevelData GetLevelData(string levelToLoad)
     {
         currentLevel = levelToLoad;
         foreach (LevelData levelData in levelDatas)
         {
             if (levelData.Level.SceneName.Equals(levelToLoad))
             {
-                Debug.Log("Updated level data reference: " + levelToLoad);
-                levelDataReference.LevelData = levelData;
-                break;
+                return levelData;
             }
         }
+        return null;
     }
 }

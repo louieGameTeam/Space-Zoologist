@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PlayerBalance : MonoBehaviour
 {
-    private LevelDataReference levelDataReference = default;
     public float Balance { get; private set; }
 
     private void Awake()
     {
-        levelDataReference = FindObjectOfType<LevelDataReference>();
-        this.Balance = this.levelDataReference.LevelData.StartingBalance;
+        this.Balance = LevelDataReference.instance.LevelData.StartingBalance;
     }
 
     public void SubtractFromBalance(float value)

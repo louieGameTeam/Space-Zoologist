@@ -43,6 +43,9 @@ MonoBehaviour:
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
     initialAmount: 5
+  levelMusic: {fileID: 8300000, guid: 4b3de81b62c1a4d359bd4f7c2c75d59f, type: 3}
+  startingPositions:
+  - {x: 10, y: 1, z: 0}
   startingConversation: {fileID: 1457721165643981872, guid: 23c4c98263bcf4d90813d5b738862142,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
@@ -51,5 +54,3 @@ MonoBehaviour:
     type: 3}
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}
-  startingPositions:
-  - {x: 10, y: 1, z: 0}
