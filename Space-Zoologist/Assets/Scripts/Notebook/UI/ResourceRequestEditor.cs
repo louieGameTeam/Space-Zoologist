@@ -9,38 +9,16 @@ using TMPro;
 public class ResourceRequestEditor : NotebookUIChild
 {
     #region Public Properties
-    private ResourceRequest Request
-    {
-        get
-        {
-            if(request == null)
-            {
-                if (string.IsNullOrWhiteSpace(priorityInput.text)) priorityInput.text = "0";
-                if (string.IsNullOrWhiteSpace(quantityInput.text)) quantityInput.text = "0";
-
-                // Create a new request
-                request = new ResourceRequest
-                {
-                    Priority = int.Parse(priorityInput.text),
-                    Target = categoryDropdown.SelectedCategory,
-                    ImprovedNeed = needDropdown.SelectedNeed,
-                    QuantityRequested = int.Parse(quantityInput.text),
-                    ItemRequested = resourcePicker.ItemSelected
-                };
-
-                // Get the list and add the new request
-                ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
-                list.Requests.Add(request);
-                // Invoke the event for creating a new request
-                onNewRequestCreated.Invoke();
-            }
-            return request;
-        }
-    }
+    public RectTransform RectTransform => rectTransform;
+    public ResourceRequest Request => request;
     public UnityEvent OnNewRequestCreated => onNewRequestCreated;
+    public UnityEvent OnPriorityUpdate => onPriorityUpdated;
     #endregion
 
     #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Reference to the rect transform of this editor")]
+    private RectTransform rectTransform;
     [SerializeField]
     [Tooltip("Text input field that sets the priority of the request editor")]
     private TMP_InputField priorityInput;
@@ -62,6 +40,9 @@ public class ResourceRequestEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Event invoked when the editor creates a new request")]
     private UnityEvent onNewRequestCreated;
+    [SerializeField]
+    [Tooltip("Event invoked whenever the priority of the request changes")]
+    private UnityEvent onPriorityUpdated;
     #endregion
 
     #region Private Fields
@@ -72,13 +53,14 @@ public class ResourceRequestEditor : NotebookUIChild
     #endregion
 
     #region Public Methods
-    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget)
+    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget, UnityAction priorityUpdatedCallback)
     {
         base.Setup();
 
         // Set private data
         this.enclosureID = enclosureID;
         this.request = request;
+        onPriorityUpdated.AddListener(priorityUpdatedCallback);
 
         // Setup each dropdown
         categoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
@@ -108,17 +90,21 @@ public class ResourceRequestEditor : NotebookUIChild
         if(enclosureID == current)
         {
             // Add listeners
+            priorityInput.onEndEdit.AddListener(x =>
+            {
+                if (!string.IsNullOrWhiteSpace(x))
+                {
+                    GetOrCreateResourceRequest().Priority = int.Parse(x);
+                    onPriorityUpdated.Invoke();
+                }
+            });
+            categoryDropdown.OnResearchCategorySelected.AddListener(x => GetOrCreateResourceRequest().Target = x);
+            needDropdown.OnNeedTypeSelected.AddListener(x => GetOrCreateResourceRequest().ImprovedNeed = x);
             quantityInput.onEndEdit.AddListener(x =>
             {
-                if (!string.IsNullOrWhiteSpace(x)) Request.Priority = int.Parse(x);
+                if (!string.IsNullOrWhiteSpace(x)) GetOrCreateResourceRequest().QuantityRequested = int.Parse(x);
             });
-            categoryDropdown.OnResearchCategorySelected.AddListener(x => Request.Target = x);
-            needDropdown.OnNeedTypeSelected.AddListener(x => Request.ImprovedNeed = x);
-            quantityInput.onEndEdit.AddListener(x =>
-            {
-                if (!string.IsNullOrWhiteSpace(x)) Request.QuantityRequested = int.Parse(x);
-            });
-            resourcePicker.OnItemSelected.AddListener(x => Request.ItemRequested = x);
+            resourcePicker.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().ItemRequested = x);
         }
 
         // Elements only interactable if editing for the current enclosure
@@ -143,6 +129,34 @@ public class ResourceRequestEditor : NotebookUIChild
     public void UpdateReviewUI()
     {
         statusUI.UpdateDisplay(request);
+    }
+    #endregion
+
+    #region Private Methods
+    private ResourceRequest GetOrCreateResourceRequest()
+    {
+        if (request == null)
+        {
+            if (string.IsNullOrWhiteSpace(priorityInput.text)) priorityInput.text = "0";
+            if (string.IsNullOrWhiteSpace(quantityInput.text)) quantityInput.text = "0";
+
+            // Create a new request
+            request = new ResourceRequest
+            {
+                Priority = int.Parse(priorityInput.text),
+                Target = categoryDropdown.SelectedCategory,
+                ImprovedNeed = needDropdown.SelectedNeed,
+                QuantityRequested = int.Parse(quantityInput.text),
+                ItemRequested = resourcePicker.ItemSelected
+            };
+
+            // Get the list and add the new request
+            ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
+            list.Requests.Add(request);
+            // Invoke the event for creating a new request
+            onNewRequestCreated.Invoke();
+        }
+        return request;
     }
     #endregion
 }

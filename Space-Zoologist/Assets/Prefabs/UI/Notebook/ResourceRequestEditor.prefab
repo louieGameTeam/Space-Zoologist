@@ -795,6 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c575dda1f406a547bbb748992a871da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 7584775176707301220}
   priorityInput: {fileID: 4528398639604123195}
   categoryDropdown: {fileID: 7795337099045834644}
   needDropdown: {fileID: 4082654020923041996}
@@ -802,6 +803,9 @@ MonoBehaviour:
   resourcePicker: {fileID: 2355837587003029386}
   statusUI: {fileID: 6393359553504419053}
   onNewRequestCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onPriorityUpdated:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1930610016210439345
