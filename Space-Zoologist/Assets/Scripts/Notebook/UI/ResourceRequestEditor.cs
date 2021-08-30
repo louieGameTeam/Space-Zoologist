@@ -24,7 +24,7 @@ public class ResourceRequestEditor : NotebookUIChild
                     Target = categoryDropdown.SelectedCategory,
                     ImprovedNeed = needDropdown.SelectedNeed,
                     Quantity = int.Parse(quantityInput.text),
-                    ItemName = itemNameDropdown.options[itemNameDropdown.value].text
+                    Item = resourcePicker.ItemSelected
                 };
 
                 // Get the list and add the new request
@@ -52,7 +52,7 @@ public class ResourceRequestEditor : NotebookUIChild
     private TMP_InputField quantityInput;
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
-    private TMP_Dropdown itemNameDropdown;
+    private ResourcePicker resourcePicker;
     [SerializeField]
     [Tooltip("Event invoked when the editor creates a new request")]
     private UnityEvent onNewRequestCreated;
@@ -73,6 +73,7 @@ public class ResourceRequestEditor : NotebookUIChild
         // Setup each dropdown
         categoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
         needDropdown.Setup(new NeedType[] { NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
+        resourcePicker.Setup();
 
         if (request != null)
         {
@@ -80,7 +81,7 @@ public class ResourceRequestEditor : NotebookUIChild
             categoryDropdown.SetResearchCategory(request.Target);
             needDropdown.SetNeedTypeValue(request.ImprovedNeed);
             quantityInput.text = request.Quantity.ToString();
-            // Do something for the item name dropdown
+            resourcePicker.ItemSelected = request.Item;
         }
         else
         {
@@ -88,7 +89,7 @@ public class ResourceRequestEditor : NotebookUIChild
             categoryDropdown.SetDropdownValue(0);
             needDropdown.SetDropdownValue(0);
             quantityInput.text = "0";
-            // Do something for the item name dropdown
+            resourcePicker.Dropdown.value = 0;
         }
 
         // Cache current id
@@ -99,15 +100,15 @@ public class ResourceRequestEditor : NotebookUIChild
             // Add listeners
             quantityInput.onEndEdit.AddListener(x =>
             {
-                if (!string.IsNullOrEmpty(x)) Request.Priority = int.Parse(x);
+                if (!string.IsNullOrWhiteSpace(x)) Request.Priority = int.Parse(x);
             });
             categoryDropdown.OnResearchCategorySelected.AddListener(x => Request.Target = x);
             needDropdown.OnNeedTypeSelected.AddListener(x => Request.ImprovedNeed = x);
             quantityInput.onEndEdit.AddListener(x =>
             {
-                if (!string.IsNullOrEmpty(x)) Request.Quantity = int.Parse(x);
+                if (!string.IsNullOrWhiteSpace(x)) Request.Quantity = int.Parse(x);
             });
-            itemNameDropdown.onValueChanged.AddListener(x => Request.ItemName = itemNameDropdown.options[x].text);
+            resourcePicker.OnItemSelected.AddListener(x => Request.Item = x);
         }
 
         // Elements only interactable if editing for the current enclosure
@@ -115,7 +116,7 @@ public class ResourceRequestEditor : NotebookUIChild
         categoryDropdown.Dropdown.interactable = current == enclosureID;
         needDropdown.Dropdown.interactable = current == enclosureID;
         quantityInput.readOnly = current != enclosureID;
-        itemNameDropdown.interactable = current == enclosureID;
+        resourcePicker.Dropdown.interactable = current == enclosureID;
 
         // Add scroll intercecptors to the input fields so that the scroll event goes to the 
         // containing scroll rect instead of the input fields

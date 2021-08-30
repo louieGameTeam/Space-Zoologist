@@ -34,10 +34,10 @@ public class ResourceRequest
         get => quantity;
         set => quantity = value;
     }
-    public string ItemName
+    public Item Item
     {
-        get => itemName;
-        set => itemName = value;
+        get => item;
+        set => item = value;
     }
 
     [SerializeField]
@@ -53,8 +53,8 @@ public class ResourceRequest
     [Tooltip("Quantity of the resource requested")]
     private int quantity;
     [SerializeField]
-    [Tooltip("Name of the item requested")]
-    private string itemName;
+    [Tooltip("The item that is requested")]
+    private Item item;
     [SerializeField]
     [Tooltip("Current status of the resource request")]
     private Status status;

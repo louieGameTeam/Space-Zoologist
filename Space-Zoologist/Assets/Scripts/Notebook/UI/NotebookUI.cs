@@ -8,6 +8,7 @@ public class NotebookUI : MonoBehaviour
 {
     // Public accessors
     public NotebookModel Notebook => notebook;
+    public LevelDataReference LevelDataReference => levelDataReference;
     public UnityEvent OnContentChanged => onContentChanged;
 
     [SerializeField]
@@ -43,6 +44,9 @@ public class NotebookUI : MonoBehaviour
         {
             nameTargetMap.Add(bookmarkTarget.name, bookmarkTarget);
         }
+
+        // Find the level data reference in the scene
+        levelDataReference = FindObjectOfType<LevelDataReference>();
 
         // Setup all children, ensuring correct initialization order
         NotebookUIChild[] children = GetComponentsInChildren<NotebookUIChild>(true);
