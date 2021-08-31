@@ -10,7 +10,6 @@ using TMPro;
 public class NPCDialogueGenerator : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dialogueTextMeshPro = default;
-    [SerializeField] private ObjectiveManager objectiveManager = default;
     [SerializeField] private Selector selector = default;
 
     // Loader script to read in dialogue ouuputs
@@ -98,7 +97,7 @@ public class NPCDialogueGenerator : MonoBehaviour
     {
         string dialogue = template;
 
-        if (this.objectiveManager.IsGameOver)
+        if (GameManager.Instance.IsGameOver)
         {
             List<string> parsed = new List<string>(dialogue.Split(' '));
 

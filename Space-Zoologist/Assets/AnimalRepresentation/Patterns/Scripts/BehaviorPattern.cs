@@ -5,12 +5,13 @@ using UnityEngine;
 public class BehaviorPattern : MonoBehaviour
 {
     public Dictionary<GameObject, AnimalData> AnimalsToAnimalData; // The dictionary that holds all animal gameObjects to their data. If you want custom data to be stored, add another dictionary like this one
-    protected GridSystem GridSystem = default;
+    protected GridSystem GridSystem;
     private List<GameObject> compeletedAnimals; //Lists to remove animals from updating before updating to avoid modifying while iterating
     private List<GameObject> alternativeCompletedAnimals;
     private List<GameObject> forceRemoveAnimals;
     public virtual void StartUp()
     {
+        GridSystem = GameManager.Instance.m_gridSystem;
         this.AnimalsToAnimalData = new Dictionary<GameObject, AnimalData>();
         this.compeletedAnimals = new List<GameObject>();
         this.alternativeCompletedAnimals = new List<GameObject>();
@@ -33,11 +34,6 @@ public class BehaviorPattern : MonoBehaviour
         // Debug.Log((this.GetType().ToString(),animal));
         AnimalsToAnimalData.Add(animal, animalData);
         EnterPattern(animal, animalData);
-    }
-
-    public void SetupDependencies(GridSystem gridSystem)
-    {
-        this.GridSystem = gridSystem;
     }
     /// <summary>
     /// Executes once after initialization, override if you have additional initializations

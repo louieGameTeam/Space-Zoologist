@@ -24,23 +24,26 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region Component References
-    [SerializeField] public Grid Grid = default;
-    [SerializeField] public SpeciesReferenceData SpeciesReferenceData = default;
+    [SerializeField] private Grid Grid = default;
     [SerializeField] private ReservePartitionManager RPM = default;
     [SerializeField] private PopulationManager PopulationManager = default;
     [SerializeField] public Tilemap Tilemap;
     private BuildBufferManager buildBufferManager;
     #endregion
 
+    #region UI
+    [SerializeField] GameObject PauseButton = default;
+    [SerializeField] GameObject NextDayButton = default;
+    #endregion
+
     [Header("Used to define 2d array")]
     [SerializeField] private int ReserveWidth = default;
     [SerializeField] private int ReserveHeight = default;
-    // Food and home locations updated when added, animal locations updated when the store opens up.
     // grid is accessed using [y, x] due to 2d array structure
     private TileData[,] TileDataGrid = default;
-    public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
+    public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
@@ -51,16 +54,11 @@ public class GridSystem : MonoBehaviour
     private Texture2D TilemapTexture;
 
     public bool HasTerrainChanged = false;
+    public bool IsDrafting { get; private set; }
 
     #region Monobehaviour Callbacks
-    private void Awake()
-    {
-        // tilelayermanager stuff
-        InitializeTileLayerManager();
-    }
-
     // do something about this
-    private void InitializeTileLayerManager()
+    private void Initialize()
     {
         this.liquidBodies = new HashSet<LiquidBody>();
         this.previewBodies = new List<LiquidBody>();
@@ -114,7 +112,10 @@ public class GridSystem : MonoBehaviour
     #region I/O
     public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
     {
-        InitializeTileLayerManager();
+        Initialize();
+
+        if (gameTiles == null)
+            return;
 
         // set grid dimensions
         ReserveWidth = serializedGrid.width;
@@ -451,6 +452,41 @@ public class GridSystem : MonoBehaviour
     }
     #endregion
 
+    #region Drafting Functions
+    public void ToggleDrafting()
+    {
+        if (!IsDrafting)
+        {
+            StartDrafting();
+            IsDrafting = true;
+        }
+        else
+        {
+            FinishDrafting();
+            IsDrafting = false;
+        }
+    }
+
+    private void StartDrafting()
+    {
+        GameManager.Instance.TryToPause();
+        UpdateUI(false);
+    }
+
+    private void FinishDrafting()
+    {
+        GameManager.Instance.Unpause();
+        UpdateUI(true);
+    }
+
+    private void UpdateUI(bool onOff)
+    {
+        GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
+        PauseButton.SetActive(onOff);
+        NextDayButton.SetActive(onOff);
+    }
+    #endregion
+
     // no idea what this function actually does (naming wrong?)
     public void ConfirmPlacement()
     {
@@ -657,7 +693,7 @@ public class GridSystem : MonoBehaviour
                     liquidBodyL[0].AddTile(tilePosition, tile.defaultContents);
                     return liquidBodyL[0];
                 }
-                LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], tilePosition);
+                LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], tilePosition, tile.defaultContents);
                 foreach (Vector3Int position in extendedBody.tiles)
                 {
                     this.GetTileData(position).PreviewLiquidBody(extendedBody);
@@ -1054,7 +1090,7 @@ public class GridSystem : MonoBehaviour
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem = null, FoodSourceSpecies species = null)
     {
         if (selectedItem)
-            species = SpeciesReferenceData.FoodSources[selectedItem.ID];
+            species = GameManager.Instance.FoodSources[selectedItem.ID];
 
         Vector3Int gridPosition = WorldToCell(mousePosition);
         return CheckSurroudingTiles(gridPosition, species);
@@ -1207,14 +1243,14 @@ public class GridSystem : MonoBehaviour
     // this too
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
-        if (SpeciesReferenceData.FoodSources.ContainsKey(selectedItem.ID))
+        if (GameManager.Instance.FoodSources.ContainsKey(selectedItem.ID))
         {
-            FoodSourceSpecies species = SpeciesReferenceData.FoodSources[selectedItem.ID];
+            FoodSourceSpecies species = GameManager.Instance.FoodSources[selectedItem.ID];
             CheckSurroudingTiles(gridPosition, species);
         }
-        else if (SpeciesReferenceData.AnimalSpecies.ContainsKey(selectedItem.ID))
+        else if (GameManager.Instance.AnimalSpecies.ContainsKey(selectedItem.ID))
         {
-            AnimalSpecies species = SpeciesReferenceData.AnimalSpecies[selectedItem.ID];
+            AnimalSpecies species = GameManager.Instance.AnimalSpecies[selectedItem.ID];
             CheckSurroundingTerrain(gridPosition, species);
         }
         else
@@ -1773,6 +1809,12 @@ public class GridSystem : MonoBehaviour
     {
         return Grid.WorldToCell(worldPosition);
     }
+
+    public Vector3 CellToWorld(Vector3Int worldPosition)
+    {
+        return Grid.CellToWorld(worldPosition);
+    }
+    
 
     public static Vector3Int SignsVector3(Vector3 vector)
     {

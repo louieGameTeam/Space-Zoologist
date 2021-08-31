@@ -11,13 +11,10 @@ public enum LiquidComposition { Water, Salt, Bacteria };
 public class LiquidNeedSystem : NeedSystem
 {
     // TODO: Find the right helper system
-    private readonly GridSystem gridSystem = default;
-    private readonly ReservePartitionManager rpm = default;
 
-    public LiquidNeedSystem(ReservePartitionManager rpm, GridSystem gridSystem, NeedType needType = NeedType.Liquid) : base(needType)
+    public LiquidNeedSystem(NeedType needType = NeedType.Liquid) : base(needType)
     {
-        this.rpm = rpm;
-        this.gridSystem = gridSystem;
+
     }
 
     public override void UpdateSystem()
@@ -33,7 +30,7 @@ public class LiquidNeedSystem : NeedSystem
         {
             if (life.GetType() == typeof(Population))
             {
-                List<float[]> liquidCompositions = rpm.GetLiquidComposition((Population)life);
+                List<float[]> liquidCompositions = GameManager.Instance.m_reservePartitionManager.GetLiquidComposition((Population)life);
                 int highScore = 0;
 
                 // Check is there is found composition
@@ -79,7 +76,7 @@ public class LiquidNeedSystem : NeedSystem
             else if (life.GetType() == typeof(FoodSource))
             {
                 FoodSource foodSource = (FoodSource)life;
-                List<float[]> liquidCompositions = gridSystem.GetLiquidCompositionWithinRange(gridSystem.WorldToCell(life.GetPosition()), foodSource.Species.RootRadius);
+                List<float[]> liquidCompositions = GameManager.Instance.m_gridSystem.GetLiquidCompositionWithinRange(GameManager.Instance.m_gridSystem.WorldToCell(life.GetPosition()), foodSource.Species.RootRadius);
                 // Check is there is found composition
                 if (liquidCompositions != null)
                 {

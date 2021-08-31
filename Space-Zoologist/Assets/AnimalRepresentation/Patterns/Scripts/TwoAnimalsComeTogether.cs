@@ -6,8 +6,8 @@ public class TwoAnimalsComeTogether : BehaviorPattern
 {
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        Vector3Int homeLocation = base.GridSystem.Grid.WorldToCell(animalData.animal.PopulationInfo.transform.position);
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position),
+        Vector3Int homeLocation = base.GridSystem.WorldToCell(animalData.animal.PopulationInfo.transform.position);
+        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.WorldToCell(gameObject.transform.position),
         homeLocation, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
@@ -28,7 +28,7 @@ public class TwoAnimalsComeTogether : BehaviorPattern
         }
         if (animalData.animal.MovementController.DestinationReached)
         {
-            Vector3Int test = base.GridSystem.Grid.WorldToCell(this.gameObject.transform.position);
+            Vector3Int test = base.GridSystem.WorldToCell(this.gameObject.transform.position);
             animalData.animal.MovementController.ResetPathfindingConditions();
             return true;
         }

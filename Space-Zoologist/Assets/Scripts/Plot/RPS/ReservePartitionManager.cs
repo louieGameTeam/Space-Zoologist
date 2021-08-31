@@ -41,14 +41,12 @@ public class ReservePartitionManager : MonoBehaviour
     public Dictionary<Population, List<float[]>> PopulationAccessibleLiquid => this.PopulationAccessibleLiquid;
     private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
 
-    public GameTile Liquid;
-    [SerializeField] private GridSystem gridSystem = default;
-    [SerializeField] private BuildBufferManager buildBufferManager;
-    private void Awake()
+    public void Initialize()
     {
         // Variable initializations
 
         // long mask is limited to 64 bits
+
         openID = new Queue<int>();
         lastRecycledID = maxPopulation - 1; // 63
         for (int i = maxPopulation - 1; i >= 0; i--)
@@ -63,11 +61,7 @@ public class ReservePartitionManager : MonoBehaviour
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
         populationAccessibleLiquid = new Dictionary<Population, List<float[]>>();
-    }
 
-    private void Start()
-    {
-        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => this.RemovePopulation((Population)EventManager.Instance.EventData));
     }
 
@@ -160,9 +154,10 @@ public class ReservePartitionManager : MonoBehaviour
 
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
+        GridSystem gridSystemReference = GameManager.Instance.m_gridSystem;
 
         // starting location
-        Vector3Int location = this.gridSystem.WorldToCell(population.transform.position);
+        Vector3Int location = gridSystemReference.WorldToCell(population.transform.position);
         stack.Push(location);
 
         // Clear TypesOfTerrain for given population
@@ -187,11 +182,11 @@ public class ReservePartitionManager : MonoBehaviour
             //    continue;
             //}
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
-            GameTile tile = gridSystem.GetGameTileAt(cur);
+            GameTile tile = gridSystemReference.GetGameTileAt(cur);
             // Get liquid tile info
             if (tile != null && tile.type == TileType.Liquid)
             {
-                float[] composition = gridSystem.GetTileContentsAt(cur, tile);
+                float[] composition = gridSystemReference.GetTileContentsAt(cur, tile);
 
                 if (!this.populationAccessibleLiquid.ContainsKey(population))
                 {
@@ -339,7 +334,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = this.gridSystem.WorldToCell(toWorldPos);
+        Vector3Int mapPos = GameManager.Instance.m_gridSystem.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -414,7 +409,7 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = this.gridSystem.WorldToCell(toWorldPos);
+        Vector3Int cellPos = GameManager.Instance.m_gridSystem.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)

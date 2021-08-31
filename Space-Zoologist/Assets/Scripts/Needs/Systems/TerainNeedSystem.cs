@@ -22,17 +22,8 @@ public class TerrainNeedSystem : NeedSystem
         { TileType.Liquid, new Dictionary<SpeciesType, float> { {SpeciesType.Slug, 1f} } }
     };
 
-    // For `Population` consumers
-    private readonly ReservePartitionManager rpm = null;
-
-    // For `FoodSource` consumers
-    private GridSystem gridSystem = null;
-
-    public TerrainNeedSystem(ReservePartitionManager rpm, GridSystem gridSystem, NeedType needType = NeedType.Terrain) : base(needType)
+    public TerrainNeedSystem(NeedType needType = NeedType.Terrain) : base(needType)
     {
-        this.rpm = rpm;
-        this.gridSystem = gridSystem;
-
         EventManager.Instance.SubscribeToEvent(EventType.TerrainChange, () =>
         {
             this.isDirty = true;
@@ -55,7 +46,7 @@ public class TerrainNeedSystem : NeedSystem
     /// <returns></returns>
     public Dictionary<TileType, List<int>> CountConnectedTerrain(Population population)
     {
-        List<Vector3Int> accessiblePositions = rpm.GetLocationsWithAccess(population);
+        List<Vector3Int> accessiblePositions = GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population);
 
         HashSet<Vector3Int> closed = new HashSet<Vector3Int>();
 
@@ -66,7 +57,7 @@ public class TerrainNeedSystem : NeedSystem
         {
             if (closed.Contains(position)) continue;
 
-            TileType type = gridSystem.GetGameTileAt(position).type;
+            TileType type = GameManager.Instance.m_gridSystem.GetGameTileAt(position).type;
             if (!ConnectedTilesByType.ContainsKey(type))
             {
                 ConnectedTilesByType.Add(type, new List<int>());
@@ -106,7 +97,7 @@ public class TerrainNeedSystem : NeedSystem
             Vector3Int next = position;
             next += new Vector3Int(colNbr[i], rowNbr[i], 0);
             if (closed.Contains(next)) continue;
-            if (rpm.CanAccess(population, position) && gridSystem.GetGameTileAt(next) != null && gridSystem.GetGameTileAt(next).type == type)
+            if (GameManager.Instance.m_reservePartitionManager.CanAccess(population, position) && GameManager.Instance.m_gridSystem.GetGameTileAt(next) != null && GameManager.Instance.m_gridSystem.GetGameTileAt(next).type == type)
             {
                 total += DFS(population, next, ref closed, type);
             }
@@ -164,9 +155,9 @@ public class TerrainNeedSystem : NeedSystem
                 tilesNeeded[population] = population.Count * population.species.TerrainTilesRequired;
                 tilesAllocated[population] = new Dictionary<TileType, int>();
 
-                foreach(Vector3Int position in rpm.GetLocationsWithAccess(population))
+                foreach(Vector3Int position in GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population))
                 {
-                    TileType type = gridSystem.GetTileData(position).currentTile.type;
+                    TileType type = GameManager.Instance.m_gridSystem.GetTileData(position).currentTile.type;
 
                     if(!accessibleTilesByTileType.ContainsKey(type))
                         accessibleTilesByTileType.Add(type, new HashSet<Vector3Int>());
@@ -247,7 +238,7 @@ public class TerrainNeedSystem : NeedSystem
                 int tileIndex = 0;
                 while(tileIndex < tileArray.Length && allocatedTilesWeighted(populationMostInNeed) < secondLeastAllocation && sumAllocatedTiles(populationMostInNeed) < tilesNeeded[populationMostInNeed])
                 {
-                    if (rpm.CanAccess(populationMostInNeed, tileArray[tileIndex]))
+                    if (GameManager.Instance.m_reservePartitionManager.CanAccess(populationMostInNeed, tileArray[tileIndex]))
                     {
                         accessibleTilesByTileType[tile].Remove(tileArray[tileIndex]);
 
@@ -278,8 +269,8 @@ public class TerrainNeedSystem : NeedSystem
                     string needName = tile.ToString();
                     if (needName.Equals("Liquid"))
                     {
-                        population.UpdateNeed(needName, rpm.GetLiquidComposition(population).Count);
-                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + rpm.GetLiquidComposition(population).Count);
+                        population.UpdateNeed(needName, GameManager.Instance.m_reservePartitionManager.GetLiquidComposition(population).Count);
+                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + GameManager.Instance.m_reservePartitionManager.GetLiquidComposition(population).Count);
                     }
                     else if(tilesAllocated[population].ContainsKey(tile)) {
                         population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
@@ -292,7 +283,7 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = gridSystem.CountOfTilesInArea(gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.Size, foodSource.Species.RootArea);
+            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesInArea(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.Size, foodSource.Species.RootArea);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
@@ -302,7 +293,7 @@ public class TerrainNeedSystem : NeedSystem
                 {
                     if (needName.Equals("Liquid"))
                     {
-                        int liquidCount = gridSystem.CountOfTilesInRange(gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[index];
+                        int liquidCount = GameManager.Instance.m_gridSystem.CountOfTilesInRange(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[index];
                         //Debug.Log(foodSource.name + " updated " + needName + " with value: " + liquidCount);
                         foodSource.UpdateNeed(needName, liquidCount);
                         continue;

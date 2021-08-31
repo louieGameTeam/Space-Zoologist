@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ public class StoreSection : MonoBehaviour
 {
     public ItemType ItemType => itemType;
 
+    [SerializeField] private GraphicRaycaster raycaster;
+
     protected ItemType itemType = default;
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
@@ -18,8 +21,6 @@ public class StoreSection : MonoBehaviour
     protected CanvasObjectStrobe PlayerBalanceDisplay = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
-    protected PlayerBalance playerBalance = default;
-    protected LevelDataReference LevelDataReference = default;
     protected GridSystem GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
@@ -27,13 +28,11 @@ public class StoreSection : MonoBehaviour
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
 
-    public void SetupDependencies(LevelDataReference levelData, CursorItem cursorItem, List<RectTransform> UIElements, GridSystem gridSystem, PlayerBalance playerBalance, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
+    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
     {
-        this.LevelDataReference = levelData;
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
-        this.GridSystem = gridSystem;
-        this.playerBalance = playerBalance;
+        this.GridSystem = GameManager.Instance.m_gridSystem;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
     }
@@ -56,7 +55,7 @@ public class StoreSection : MonoBehaviour
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
             if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
 
-            Vector3Int gridLocation = GridSystem.Grid.WorldToCell(mousePosition);
+            Vector3Int gridLocation = GridSystem.WorldToCell(mousePosition);
             if (this.GridSystem.IsOnWall(gridLocation)) return;
 
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
@@ -70,7 +69,7 @@ public class StoreSection : MonoBehaviour
 
     public virtual void Initialize()
     {
-        LevelData levelData = LevelDataReference.LevelData;
+        LevelData levelData = GameManager.Instance.LevelData;
         foreach (LevelData.ItemData data in levelData.ItemQuantities)
         {
             Item item = data.itemObject;
@@ -95,7 +94,8 @@ public class StoreSection : MonoBehaviour
         if (this.ResourceManager.hasLimitedSupply(item.ItemName))
         {
             this.ResourceManager.setupItemSupplyTracker(itemCell);
-            storeItems.Add(item, itemCell);
+            if (!storeItems.ContainsKey(item))
+                storeItems.Add(item, itemCell);
         }
     }
 
@@ -136,7 +136,7 @@ public class StoreSection : MonoBehaviour
 
     public bool CanBuy(Item item)
     {
-        if (storeItems.ContainsKey(item) && playerBalance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
+        if (storeItems.ContainsKey(item) && GameManager.Instance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
         {
             Debug.Log("You can't buy this!");
             //OnItemSelectionCanceled();
@@ -177,16 +177,13 @@ public class StoreSection : MonoBehaviour
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
     }
 
-    public bool IsCursorOverUI(PointerEventData eventData)
+    public bool IsCursorOverUI(PointerEventData pointerEventData)
     {
-        foreach (RectTransform UIElement in this.UIElements)
-        {
-            if (RectTransformUtility.RectangleContainsScreenPoint(UIElement, eventData.position))
-            {
-                return true;
-            }
-        }
-        return false;
+        List<RaycastResult> castResults = new List<RaycastResult>();
+        raycaster.Raycast(pointerEventData, castResults);
+
+        // the one result should only be the cursor item
+        return castResults.Count > 2;
     }
 
     protected virtual void HandleAudio()

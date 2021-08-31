@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Initialize stuffs here
     /// </summary>
-    private void Start()
+    public void Initialize()
     {
         ConversationManager.OnConversationEnded = ConversationEnded;
         if (this.startingConversation != null)

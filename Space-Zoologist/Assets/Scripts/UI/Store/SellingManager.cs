@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class SellingManager : MonoBehaviour
 {
-    [SerializeField] GridSystem gridSystem = default;
-    [SerializeField] PauseManager PauseManager = default;
+    private GridSystem gridSystem = default;
+    private Inspector Inspector = default;
     [SerializeField] MenuManager MenuManager = default;
-    [SerializeField] Inspector Inspector = default;
-    [SerializeField] PlayerBalance PlayerBalance = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
     public bool IsSelling { get; private set; }
+
 
     public void OnToggleSell()
     {
         if (!IsSelling)
         {
-            this.PauseManager.TryToPause();
+            GameManager.Instance.TryToPause();
             if (Inspector.IsInInspectorMode)
             {
                 Inspector.CloseInspector();
@@ -37,6 +35,9 @@ public class SellingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gridSystem = GameManager.Instance.m_gridSystem;
+        Inspector = GameManager.Instance.m_inspector;
+
         IsSelling = false;
         // stop selling when store opens
         EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
@@ -93,12 +94,12 @@ public class SellingManager : MonoBehaviour
     {
         GameObject food = tileData.Food;
         string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
-        foreach (LevelData.ItemData data in LevelDataReference.LevelData.ItemQuantities)
+        foreach (LevelData.ItemData data in GameManager.Instance.LevelData.ItemQuantities)
         {
             Item item = data.itemObject;
             if (item.ID.Equals(id))
             {
-                PlayerBalance.SubtractFromBalance(-1 * item.Price);
+                GameManager.Instance.SubtractFromBalance(-1 * item.Price);
                 break;
             }
         }

@@ -40,7 +40,7 @@ public class MachineStoreSection : StoreSection
             //    Debug.Log("Cannot place item that location");
             //    return;
             //}
-            base.playerBalance.SubtractFromBalance(selectedItem.Price);
+            GameManager.Instance.SubtractFromBalance(selectedItem.Price);
             base.ResourceManager.Placed(selectedItem, 1);
             CreateMachine(mousePosition);
         }
@@ -54,7 +54,7 @@ public class MachineStoreSection : StoreSection
         newMachineGameObject.name = base.selectedItem.name;
         newMachineGameObject.GetComponent<SpriteRenderer>().sprite = base.selectedItem.Icon;
 
-        Vector3Int position = base.GridSystem.Grid.WorldToCell(mousePosition);
+        Vector3Int position = base.GridSystem.WorldToCell(mousePosition);
         base.GridSystem.GetTileData(position).Machine = newMachineGameObject;
         if (!this.namesToMachines.ContainsKey(base.selectedItem.ID)) { Debug.LogError("Machine named" + base.selectedItem.ID + "not found"); return; }
         newMachineGameObject.AddComponent(namesToMachines[base.selectedItem.ID].GetType());

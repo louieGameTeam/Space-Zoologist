@@ -103,11 +103,12 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShot(SFXType type)
     {
         if (type == SFXType.None) return;
-        var audio = SFXDict[type];
-        PlayOneShot(audio.clips[audio.index]);
+        // temporary
+        //var audio = SFXDict[type];
+        //PlayOneShot(audio.clips[audio.index]);
 
-        audio.index++;
-        if (audio.index == audio.clips.Length) audio.index = 0;
+        //audio.index++;
+        //if (audio.index == audio.clips.Length) audio.index = 0;
     }
 
     /// <summary>
