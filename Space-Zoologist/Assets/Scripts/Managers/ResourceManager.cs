@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-
     // [SerializeField] LevelDataReference LevelDataRef = default;
     [SerializeField] EventResponseManager EventResponseManager = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();

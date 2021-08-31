@@ -236,7 +236,7 @@ public class TerrainNeedSystem : NeedSystem
                 // 2. This population surpasses the next most-in-need population for tiles allocated
                 // 3. This population has its terrain need satisfied
                 int tileIndex = 0;
-                while(tileIndex < tileArray.Length && allocatedTilesWeighted(populationMostInNeed) < secondLeastAllocation && sumAllocatedTiles(populationMostInNeed) < tilesNeeded[populationMostInNeed])
+                while(tileIndex < tileArray.Length && allocatedTilesWeighted(populationMostInNeed) < secondLeastAllocation) //  && sumAllocatedTiles(populationMostInNeed) < tilesNeeded[populationMostInNeed]
                 {
                     if (GameManager.Instance.m_reservePartitionManager.CanAccess(populationMostInNeed, tileArray[tileIndex]))
                     {
@@ -274,7 +274,7 @@ public class TerrainNeedSystem : NeedSystem
                     }
                     else if(tilesAllocated[population].ContainsKey(tile)) {
                         population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
-                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                        //Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
                     }
                 }
             }
@@ -283,7 +283,7 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesInArea(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.Size, foodSource.Species.RootArea);
+            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesInArea(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {

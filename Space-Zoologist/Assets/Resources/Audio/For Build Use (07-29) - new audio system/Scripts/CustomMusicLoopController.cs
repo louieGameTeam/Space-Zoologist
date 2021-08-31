@@ -29,6 +29,11 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
     void Initialize(AudioSource refSource)
     {
         source = refSource;
+        if (source.clip == null)
+        {
+            Debug.LogWarning("Abort: initializing an empty audio source!");
+            return;
+        }
         string clipName = source.clip.name;
 
         // the clips are named as follows: "TRACK_NAME[LOOP_START-LOOP_END-NUM_BARS].wav"

@@ -84,9 +84,11 @@ namespace DialogueEditor
         // Selection options
         private int m_currentSelectedIndex;
 
+        public RectTransform Background;
         public GameObject BacklogGameObject;
         public Button BacklogButton;
-        public Text Backlog;
+        public TMPro.TextMeshProUGUI Backlog;
+        public ScrollRect BacklogScrollRect;
         //--------------------------------------
         // Awake, Start, Destroy
         //--------------------------------------
@@ -102,6 +104,9 @@ namespace DialogueEditor
 
             NpcIcon.sprite = BlankSprite;
             DialogueText.text = "";
+            Backlog = BacklogGameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>(true);
+            BacklogButton = BacklogGameObject.GetComponentInChildren<Button>(true);
+            BacklogScrollRect = BacklogGameObject.GetComponentInChildren<ScrollRect>(true);
             TurnOffUI();
 
             m_uiOptions = new List<UIConversationButton>();
@@ -126,6 +131,12 @@ namespace DialogueEditor
                 {
                     skipping = !skipping;
                 }
+            }
+
+            if (Input.mouseScrollDelta.y > 0.2f && !BacklogGameObject.activeSelf) {
+                ToggleBacklog();
+            } else if (Input.mouseScrollDelta.y < -0.2f && BacklogGameObject.activeSelf) {
+                ToggleBacklog();
             }
 
             switch (m_state)
@@ -162,6 +173,7 @@ namespace DialogueEditor
                             
                             return;
                         }
+
                         for (int i = 0; i < m_uiOptions.Count; i++)
                             m_uiOptions[i].SetAlpha(t);
                     }
@@ -297,7 +309,21 @@ namespace DialogueEditor
         }
 
 
+        IEnumerator<int> ExpandDialogue() {
+            while (Vector2.Distance(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y)) > 10){
+                Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y), 20);
+                yield return 0;
+            }
+        }
 
+        IEnumerator<int> ShrinkDialogue()
+        {
+            while (Vector2.Distance(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y)) > 10)
+            {
+                Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y), 20);
+                yield return 0;
+            }
+        }
 
         //--------------------------------------
         // Set state
@@ -567,6 +593,7 @@ namespace DialogueEditor
             // Display new options
             if (speech.Options.Count > 0)
             {
+                StartCoroutine(ShrinkDialogue());
                 for (int i = 0; i < speech.Options.Count; i++)
                 {
                     UIConversationButton option = GameObject.Instantiate(ButtonPrefab, OptionsPanel);
@@ -577,6 +604,7 @@ namespace DialogueEditor
             }
             else
             {
+                StartCoroutine(ExpandDialogue());
                 // Display "Continue" / "End" if we should.
                 //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
@@ -704,6 +732,7 @@ namespace DialogueEditor
         {
             bool active = BacklogGameObject.activeSelf;
             BacklogGameObject.SetActive(!active); // toggle backlog
+            BacklogScrollRect.normalizedPosition = new Vector2(0.5f, 0); // scroll to buttom
         }
         Button pingTarget;
         public void AskForOneTimePing(Button target) {
