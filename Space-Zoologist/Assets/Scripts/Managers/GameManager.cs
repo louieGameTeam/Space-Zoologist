@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Managers
+    public DialogueEditor.ConversationManager m_conversationManager { get; private set; }
     public DialogueManager m_dialogueManager { get; private set; }
     public ReservePartitionManager m_reservePartitionManager { get; private set; }
     public FoodSourceManager m_foodSourceManager { get; private set; }
@@ -89,7 +90,19 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             _instance = this;
-        
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        print("Scene loading function set.");
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        print("Loading functions...");
         SetManagers();
         LoadResources();
         SetNeedSystems();
@@ -222,7 +235,7 @@ public class GameManager : MonoBehaviour
     {
         // add the references to the managers here
         // temporary find function until scene reorganization
-
+        m_conversationManager = FindObjectOfType<DialogueEditor.ConversationManager>();
         m_dialogueManager = FindObjectOfType<DialogueManager>();
         m_reservePartitionManager = FindObjectOfType<ReservePartitionManager>();
         m_foodSourceManager = FindObjectOfType<FoodSourceManager>();
@@ -246,6 +259,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeManagers()
     {
+        m_conversationManager.Initialize();
         m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
         m_foodSourceManager.Initialize();

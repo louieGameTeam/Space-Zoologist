@@ -91,7 +91,7 @@ namespace DialogueEditor
         // Awake, Start, Destroy
         //--------------------------------------
 
-        private void Awake()
+        public void Initialize()
         {
             // Destroy myself if I am not the singleton
             if (Instance != null && Instance != this)
@@ -100,14 +100,11 @@ namespace DialogueEditor
             }
             Instance = this;
 
-            m_uiOptions = new List<UIConversationButton>();
-        }
-
-        private void Start()
-        {
             NpcIcon.sprite = BlankSprite;
             DialogueText.text = "";
             TurnOffUI();
+
+            m_uiOptions = new List<UIConversationButton>();
         }
 
         private void OnDestroy()
