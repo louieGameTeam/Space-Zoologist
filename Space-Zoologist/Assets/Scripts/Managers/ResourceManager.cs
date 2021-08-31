@@ -17,8 +17,13 @@ public class ResourceManager : MonoBehaviour
     {
         foreach (LevelData.ItemData item in GameManager.Instance.LevelData.itemQuantities)
         {
-            remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
-            initialResources.Add(item.itemObject.ItemName, item.initialAmount);
+            if (!remainingResources.ContainsKey(item.itemObject.ItemName))
+            {
+                remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
+                initialResources.Add(item.itemObject.ItemName, item.initialAmount);
+            }
+            remainingResources[item.itemObject.ItemName] = item.initialAmount;
+            initialResources[item.itemObject.ItemName] = item.initialAmount;
         }
 
         EventResponseManager.InitializeResponseHandler(EventType.PopulationCountIncreased, AddItem);

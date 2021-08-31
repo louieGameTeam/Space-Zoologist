@@ -159,7 +159,6 @@ public class MoveObject : MonoBehaviour
         moving = false;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
-        gridSystem.ClearHighlights();
         moveCost = 0;
         sellBackCost = 0;
     }

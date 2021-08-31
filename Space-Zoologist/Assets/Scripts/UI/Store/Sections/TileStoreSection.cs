@@ -29,7 +29,7 @@ public class TileStoreSection : StoreSection
         tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemType.Terrain;
         base.Initialize();
-        Debug.Assert(tilePlacementController != null);
+        //Debug.Assert(tilePlacementController != null);
     }
 
     /// <summary>

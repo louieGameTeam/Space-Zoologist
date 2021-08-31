@@ -29,12 +29,12 @@ public class EnclosureSystem : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        startingPositions = LevelDataReference.instance.LevelData.StartinPositions;
+        startingPositions = GameManager.Instance.LevelData.StartinPositions;
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
         this.internalEnclosedAreas = new List<EnclosedArea>();
         this.EnclosedAreas = new List<EnclosedArea>();
-        this.GlobalAtmosphere = GameManager.Instance.LevelData.GlobalAtmosphere;
+        this.GlobalAtmosphere = new AtmosphericComposition(0, 0, 0, 0);
     }
 
     private void Start()

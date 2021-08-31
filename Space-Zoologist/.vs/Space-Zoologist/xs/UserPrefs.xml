@@ -1,22 +1,10 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/ObjectiveManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Testers/MapDesignUIHandler.cs">
     <Files>
-      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" Line="15" Column="9" />
-      <File FileName="Assets/Scripts/LevelData/LevelDataReference.cs" Line="5" Column="27" />
-      <File FileName="Assets/Scripts/LevelData/LevelMenuSelector.cs" Line="16" Column="49" />
-      <File FileName="Assets/Scripts/LevelData/LevelNavigator.cs" />
-      <File FileName="Assets/Scripts/Audio/AudioManager.cs" />
-      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="19" Column="103" />
-      <File FileName="Assets/Scripts/LevelData/LevelData.cs" />
-      <File FileName="Assets/Scripts/Managers/Dialogue/DialogueManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="110" Column="25" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/NPCConversation.cs" Line="102" Column="25" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/Conversation.cs" Line="11" Column="18" />
-      <File FileName="Assets/Scripts/UI/CameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Y - Utils/MoveObject.cs" Line="277" Column="1" />
-      <File FileName="Assets/Scripts/Managers/TimeSystem/TimeSystem.cs" Line="54" Column="8" />
-      <File FileName="Assets/Scripts/UI/GameOver.cs" Line="15" Column="1" />
-      <File FileName="Assets/Scripts/Managers/ObjectiveManager.cs" Line="118" Column="1" />
+      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="76" Column="1" />
+      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="160" Column="45" />
+      <File FileName="Assets/Scripts/Plot/Testers/MapDesignUIHandler.cs" Line="14" Column="73" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -54,9 +42,6 @@
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
                   <Node name="Dialogue" expanded="True" />
-                  <Node name="EventSystem" expanded="True" />
-                  <Node name="TimeSystem" expanded="True" />
-                  <Node name="ObjectiveManager.cs" selected="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -66,7 +51,9 @@
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
-                  <Node name="Testers" expanded="True" />
+                  <Node name="Testers" expanded="True">
+                    <Node name="MapDesignUIHandler.cs" selected="True" />
+                  </Node>
                   <Node name="Tiles" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
@@ -76,7 +63,9 @@
                 </Node>
                 <Node name="UI" expanded="True">
                   <Node name="Inspector" expanded="True" />
-                  <Node name="Store" expanded="True" />
+                  <Node name="Store" expanded="True">
+                    <Node name="Sections" expanded="True" />
+                  </Node>
                 </Node>
                 <Node name="Y - Utils" expanded="True" />
                 <Node name="Z - Unused" expanded="True">

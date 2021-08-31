@@ -25,8 +25,8 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        startingConversation = LevelDataReference.instance.LevelData.StartingConversation;
-        defaultConversation = LevelDataReference.instance.LevelData.DefaultConversation;
+        startingConversation = GameManager.Instance.LevelData.StartingConversation;
+        defaultConversation = GameManager.Instance.LevelData.DefaultConversation;
         ConversationManager.OnConversationEnded = ConversationEnded;
         if (this.startingConversation != null)
         {

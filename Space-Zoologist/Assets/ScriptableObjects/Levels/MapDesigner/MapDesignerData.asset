@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: MapDesignerData
   m_EditorClassIdentifier: 
-  Level: {fileID: 11400000, guid: fe4d49745a36f4941805b30a60e788fd, type: 2}
+  Level: {fileID: 11400000, guid: 41dedc8cf980244ae933611f07f0678b, type: 2}
   startingBalance: 400
   MapWidth: 34
   MapHeight: 32
@@ -26,6 +26,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09079a79eb6ae41a887cdcfd15c7b359, type: 2}
   animalSpecies:
   - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
+  - {fileID: 11400000, guid: 353741bf0f87e4f57b50cba9f7d44e91, type: 2}
+  - {fileID: 11400000, guid: b19757b4d113c9047afc67b8ca20f94e, type: 2}
+  - {fileID: 11400000, guid: 2c8a5d582d11a4b359ffb31db9796e95, type: 2}
+  - {fileID: 11400000, guid: 9b6e89509c2c941f9b66cec391d19c43, type: 2}
   itemQuantities:
   - itemObject: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
     initialAmount: 9999
@@ -57,8 +61,22 @@ MonoBehaviour:
     initialAmount: 9999
   - itemObject: {fileID: 11400000, guid: 611d10484ac544bc9812f39f3b1630ce, type: 2}
     initialAmount: 9999
-  globalAtmosphere:
-    GasX: 5
-    GasY: 3
-    GasZ: 1
-    temperature: 90
+  - itemObject: {fileID: 11400000, guid: f14f48275cb6c0c408cb6a6304049322, type: 2}
+    initialAmount: 9999
+  - itemObject: {fileID: 11400000, guid: bbfbb40c97bab4ec69618bda24523c73, type: 2}
+    initialAmount: 9999
+  - itemObject: {fileID: 11400000, guid: 659b28bf8183e489ab6ba4b28a5a6dc8, type: 2}
+    initialAmount: 9999
+  - itemObject: {fileID: 11400000, guid: e94f6a290327543b992ad34919ac953e, type: 2}
+    initialAmount: 9999
+  levelMusic: {fileID: 8300000, guid: 7ef1040392485431c9bf1118478109ed, type: 3}
+  startingPositions:
+  - {x: 0, y: 0, z: 0}
+  startingConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
+    type: 3}
+  defaultConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
+    type: 3}
+  passedConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
+    type: 3}
+  restertEnclosureConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
+    type: 3}

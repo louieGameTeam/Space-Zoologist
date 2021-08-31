@@ -76,9 +76,9 @@ namespace DialogueEditor
             EditorGUILayout.Space();
 
             // Backlog
-            GUILayout.Label("Backlog", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(BacklogProperty);
-            EditorGUILayout.Space();
+            //GUILayout.Label("Backlog", EditorStyles.boldLabel);
+            //EditorGUILayout.PropertyField(BacklogProperty);
+            //EditorGUILayout.Space();
 
             //Button Prefab
             GUILayout.Label("Button Prefab", EditorStyles.boldLabel);

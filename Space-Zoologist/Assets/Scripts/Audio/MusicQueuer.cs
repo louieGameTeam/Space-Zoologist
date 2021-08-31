@@ -16,7 +16,7 @@ public class MusicQueuer : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        gameObject.GetComponent<AudioSource>().clip = LevelDataReference.instance.LevelData.LevelMusic;
+        if (GameManager.Instance != null) gameObject.GetComponent<AudioSource>().clip = GameManager.Instance.LevelData.LevelMusic;
         QueueAndTrigger();
         Destroy(this);
     }

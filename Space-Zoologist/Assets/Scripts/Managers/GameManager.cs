@@ -9,11 +9,12 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance;
+    private static GameManager _instance = null;
     public static GameManager Instance { get { return _instance; } }
 
     #region Level Data Variables
-    private string sceneName;
+    [Header("Used when playing level scene directly")]
+    [SerializeField] string LevelOnPlay = "Level1E1";
     [SerializeField] private string directory = "Levels/";
     [Expandable, SerializeField] private LevelData m_levelData;
     public LevelData LevelData { get { return m_levelData; } }
@@ -29,8 +30,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button RestartButton = default;
     [SerializeField] Button NextLevelButton = default;
     [SerializeField] GameObject IngameUI = default;
-    [SerializeField] DialogueEditor.NPCConversation passedConversation = default;
-    [SerializeField] DialogueEditor.NPCConversation failedConversation = default;
     [SerializeField] GameObject GameOverHUD = default;
     [SerializeField] TextMeshProUGUI gameOverTitle = default;
     [SerializeField] TextMeshProUGUI gameOverText = default;
@@ -91,18 +90,7 @@ public class GameManager : MonoBehaviour
         else
             _instance = this;
 
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        print("Scene loading function set.");
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        print("Loading functions...");
+        m_levelData = LevelDataReference.instance.LevelData;
         SetManagers();
         LoadResources();
         SetNeedSystems();
@@ -143,7 +131,7 @@ public class GameManager : MonoBehaviour
     #region Loading Functions
     public void SaveMap(string name = null, bool preset = true)
     {
-        name = name ?? this.sceneName;
+        name = name ?? LevelOnPlay;
         name = name + ".json";
         string fullPath = preset ? this.directory + name : Path.Combine(Application.persistentDataPath, name);
 
@@ -171,7 +159,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadMap(string name = null, bool preset = true)
     {
-        name = name ?? this.sceneName;
+        name = name ?? m_levelData.Level.SceneName;
         string fullPath = preset ? this.directory + name : Path.Combine(Application.persistentDataPath, name);
 
         SerializedLevel serializedLevel;
@@ -188,6 +176,7 @@ public class GameManager : MonoBehaviour
             serializedLevel.SetPlot(new SerializedPlot(new SerializedMapObjects(),
                 JsonUtility.FromJson<SerializedGrid>(File.ReadAllText(this.directory + "_defaultGrid.json"))));
         }
+        Debug.Log("Loading " + name);
         m_plotIO.LoadPlot(serializedLevel.serializedPlot);
         //Animals loaded after map to avoid path finding issues
         this.PresetMap = serializedLevel;
@@ -214,7 +203,7 @@ public class GameManager : MonoBehaviour
                 Item item = data.itemObject;
                 if (item)
                 {
-                    if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName))
+                    if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName) && !FoodSources.ContainsKey(item.ID))
                     {
                         this.FoodSources.Add(item.ID, foodSource);
                     }
@@ -224,10 +213,11 @@ public class GameManager : MonoBehaviour
 
         // set the animal dictionary
         foreach (AnimalSpecies animalSpecies in m_levelData.AnimalSpecies)
+        {
+            if (AnimalSpecies.ContainsKey(animalSpecies.SpeciesName)) continue;
             this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
+        }
 
-        // load in the tilemap
-        this.sceneName = SceneManager.GetActiveScene().name;
         LoadMap();
     }
 
@@ -543,11 +533,11 @@ public class GameManager : MonoBehaviour
     {
         if (!(currentDay < maxDay))
         {
-            m_dialogueManager.SetNewDialogue(failedConversation);
+            m_dialogueManager.SetNewDialogue(m_levelData.RestartConversation);
         }
         else
         {
-            m_dialogueManager.SetNewDialogue(passedConversation);
+            m_dialogueManager.SetNewDialogue(m_levelData.PassedConversation);
         }
         m_dialogueManager.StartInteractiveConversation();
         this.IngameUI.SetActive(false);
@@ -650,6 +640,11 @@ public class GameManager : MonoBehaviour
         {
             CurrentDayText.text += " / " + maxDay;
         }
+    }
+
+    public bool LessThanMaxDay()
+    {
+        return currentDay <= maxDay;
     }
 
     public void nextDay()

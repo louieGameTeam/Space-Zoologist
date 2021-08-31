@@ -30,7 +30,6 @@ public class DialogueResponseManager : MonoBehaviour
 	public void LoadNextLevel(string level)
     {
 		LevelDataLoader levelDataLoader = FindObjectOfType<LevelDataLoader>();
-		Debug.Log("Loading next level: " + level);
 		levelDataLoader.LoadLevel(level);
     }
 

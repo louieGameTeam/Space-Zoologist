@@ -28,7 +28,6 @@ public class LevelNavigator : MonoBehaviour
             newLevel.GetComponent<LevelUI>().InitializeLevelUI(level.Level);
             newLevel.GetComponent<Button>().onClick.AddListener(() => {
                 currentLevel.levelName = level.Level.SceneName;
-                Debug.Log(currentLevel.levelName);
                 SceneManager.LoadScene("MainLevel");
             });
             this.DisplayedLevels.Add(newLevel);
