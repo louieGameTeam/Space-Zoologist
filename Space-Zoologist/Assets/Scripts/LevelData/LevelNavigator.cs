@@ -2,52 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Runtime.InteropServices;
-
-// TODO resolve scrolling issue when more levels are added beyond screen
+using UnityEngine.SceneManagement;
 
 public class LevelNavigator : MonoBehaviour
 {
 
-    [DllImport("__Internal")]
-    private static extern void SendCurrentLevelToWeb(string levelName);
-
-
-
-
-    // Then create a function that is going to trigger
-    // the imported function from our JSLib.
-
-
-
-    [SerializeField] SceneNavigator SceneNavigator = default;
+    [SerializeField] LevelDataLoader LevelLoader = default;
     [SerializeField] GameObject LevelUIPrefab = default;
     [SerializeField] GameObject LevelContent = default;
     public List<GameObject> DisplayedLevels = default;
+    private LevelMenuSelector currentLevel = default;
 
     public void Start()
     {
         this.DisplayedLevels = new List<GameObject>();
         this.InitializeLevelDisplay();
+        currentLevel = FindObjectOfType<LevelMenuSelector>();
     }
 
     private void InitializeLevelDisplay()
     {
-        foreach (Level level in this.SceneNavigator.Levels)
+        foreach (LevelData level in this.LevelLoader.levelDatas)
         {
             GameObject newLevel = Instantiate(LevelUIPrefab, LevelContent.transform);
-            newLevel.GetComponent<LevelUI>().InitializeLevelUI(level);
+            newLevel.GetComponent<LevelUI>().InitializeLevelUI(level.Level);
             newLevel.GetComponent<Button>().onClick.AddListener(() => {
-                this.SceneNavigator.LoadLevel(level.SceneName);
-                //try
-                //{
-                //    SendCurrentLevelToWeb(level.SceneName);
-                //}
-                //catch
-                //{
-                //    Debug.Log("Level loaded, not hooked up to React");
-                //}
-
+                currentLevel.levelName = level.Level.SceneName;
+                Debug.Log(currentLevel.levelName);
+                SceneManager.LoadScene("MainLevel");
             });
             this.DisplayedLevels.Add(newLevel);
         }

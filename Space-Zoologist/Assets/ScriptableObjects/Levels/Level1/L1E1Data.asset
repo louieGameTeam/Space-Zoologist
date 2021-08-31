@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L1E1Data
   m_EditorClassIdentifier: 
   Level: {fileID: 11400000, guid: 07f3acd3171dd473b8414ffc249451a1, type: 2}
-  startingBalance: 200
+  startingBalance: 300
   MapWidth: 29
   MapHeight: 29
   LevelObjectiveData: {fileID: 11400000, guid: e39f7b2122c9a4760be98e31f69160c4, type: 2}
@@ -43,8 +43,14 @@ MonoBehaviour:
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
     initialAmount: 5
-  globalAtmosphere:
-    GasX: 5
-    GasY: 3
-    GasZ: 1
-    temperature: 90
+  levelMusic: {fileID: 8300000, guid: 4b3de81b62c1a4d359bd4f7c2c75d59f, type: 3}
+  startingPositions:
+  - {x: 10, y: 1, z: 0}
+  startingConversation: {fileID: 9220982753481905088, guid: b43c828bd4c92413a827b531fa21638c,
+    type: 3}
+  defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
+    type: 3}
+  passedConversation: {fileID: 38569793853273014, guid: 150e836e8621c4ac79df01c7dafa057f,
+    type: 3}
+  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+    type: 3}

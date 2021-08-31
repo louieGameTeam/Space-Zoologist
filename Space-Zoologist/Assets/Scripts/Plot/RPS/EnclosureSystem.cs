@@ -29,6 +29,7 @@ public class EnclosureSystem : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        startingPositions = LevelDataReference.instance.LevelData.StartinPositions;
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
         this.internalEnclosedAreas = new List<EnclosedArea>();
