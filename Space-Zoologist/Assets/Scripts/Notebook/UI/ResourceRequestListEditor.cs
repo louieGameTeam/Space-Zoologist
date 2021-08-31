@@ -73,11 +73,14 @@ public class ResourceRequestListEditor : NotebookUIChild
         editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller, SortEditors);
         editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
+
+        // Sort the editors now that the new one is added
+        SortEditors();
     }
     private void SortEditors()
     {
         currentEditors.Sort((x, y) => ResourceRequestVisualComparer(x.Request, y.Request));
-        
+
         // Set the sibling index of each editor transform
         for(int i = 0; i < currentEditors.Count; i++)
         {

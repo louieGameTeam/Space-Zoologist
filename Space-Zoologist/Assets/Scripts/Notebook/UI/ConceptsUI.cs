@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ConceptsUI : NotebookUIChild
 {
@@ -15,6 +16,12 @@ public class ConceptsUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Button used to request resources")]
     private Button requestButton;
+    [SerializeField]
+    [Tooltip("Text that displays the requests remaining")]
+    private TextMeshProUGUI requestsText;
+    [SerializeField]
+    [Tooltip("Text that displays the resources remaining")]
+    private TextMeshProUGUI resourcesText;
     #endregion
 
     #region Public Methods
@@ -40,6 +47,9 @@ public class ConceptsUI : NotebookUIChild
         // Make request button interactable only if the id picked is the current id
         EnclosureID current = EnclosureID.FromCurrentSceneName();
         requestButton.interactable = id == current;
+
+        // Update the text displayed
+        UpdateText(id);
     }
     private void ReviewResourceRequests()
     {
@@ -48,6 +58,17 @@ public class ConceptsUI : NotebookUIChild
 
         // Update review ui for all editors
         listEditor.UpdateReviewUI();
+
+        // Update the text displayed
+        UpdateText(EnclosureID.FromCurrentSceneName());
+    }
+    private void UpdateText(EnclosureID id)
+    {
+        int requestsLeft = UIParent.Notebook.Concepts.RemainingRequests(id);
+        int resourcesLeft = UIParent.Notebook.Concepts.RemainingResources(id);
+
+        requestsText.text = requestsLeft.ToString() + " Requests Left";
+        resourcesText.text = resourcesLeft.ToString() + " Resources Left";
     }
     #endregion
 }

@@ -20,6 +20,9 @@ public class ResourceRequestEditor : NotebookUIChild
     [Tooltip("Reference to the rect transform of this editor")]
     private RectTransform rectTransform;
     [SerializeField]
+    [Tooltip("Reference to the canvas group used to adjust the alpha transparency and interactability of the full editor")]
+    private CanvasGroup group;
+    [SerializeField]
     [Tooltip("Text input field that sets the priority of the request editor")]
     private TMP_InputField priorityInput;
     [SerializeField]
@@ -108,11 +111,11 @@ public class ResourceRequestEditor : NotebookUIChild
         }
 
         // Elements only interactable if editing for the current enclosure
-        priorityInput.readOnly = current != enclosureID;
-        categoryDropdown.Dropdown.interactable = current == enclosureID;
-        needDropdown.Dropdown.interactable = current == enclosureID;
-        quantityInput.readOnly = current != enclosureID;
-        resourcePicker.Dropdown.interactable = current == enclosureID;
+        group.interactable = enclosureID == current;
+
+        // If request is null then the group is slightly faded - it is a group that adds a new request once it is edited
+        if (request != null) group.alpha = 1f;
+        else group.alpha = 0.5f;
 
         // Update status display
         statusUI.UpdateDisplay(request);
@@ -153,6 +156,10 @@ public class ResourceRequestEditor : NotebookUIChild
             // Get the list and add the new request
             ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
             list.Requests.Add(request);
+
+            // Put all elements at full alpha again
+            group.alpha = 1f;
+
             // Invoke the event for creating a new request
             onNewRequestCreated.Invoke();
         }

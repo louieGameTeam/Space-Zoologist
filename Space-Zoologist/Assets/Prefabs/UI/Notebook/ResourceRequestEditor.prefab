@@ -733,6 +733,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7584775176707301220}
   - component: {fileID: 5141770018437179842}
+  - component: {fileID: 367507072220731492}
   - component: {fileID: 3050810732024236643}
   m_Layer: 5
   m_Name: ResourceRequestEditor
@@ -783,6 +784,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!225 &367507072220731492
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766581153236739533}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &3050810732024236643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,6 +809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 7584775176707301220}
+  group: {fileID: 367507072220731492}
   priorityInput: {fileID: 4528398639604123195}
   categoryDropdown: {fileID: 7795337099045834644}
   needDropdown: {fileID: 4082654020923041996}
