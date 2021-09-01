@@ -375,7 +375,7 @@ public class GridSystem : MonoBehaviour
     public GameTile GetGameTileAt(Vector3Int cellLocation)
     {
         if (IsWithinGridBounds(cellLocation))
-            return Tilemap.GetTile<GameTile>(cellLocation);
+            return TileDataGrid[cellLocation.y, cellLocation.x].currentTile;//Tilemap.GetTile<GameTile>(cellLocation);
 
         return null;
     }
@@ -1208,7 +1208,7 @@ public class GridSystem : MonoBehaviour
 
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
-        Vector3Int loc = Grid.WorldToCell(mousePosition);
+        Vector3Int loc = new Vector3Int((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.z);//Grid.WorldToCell(mousePosition); old implementation that causes stack overflow
 
         return IsCellinGrid(loc.x, loc.y);
     }

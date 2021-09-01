@@ -10,8 +10,11 @@
         _TileNoiseDistribution("Tile Noise Distribution", float) = 1
         
         [Toggle]_GridOverlayToggle("Grid Overlay Toggle", float) = 0
-        _GridOverlayLineWidth("Grid OverLay Line Width", Range(0, 32)) = 0
+        _GridOverlayLineWidth("Grid Overlay Line Width", Range(0, 32)) = 0
         _GridOverlayDesaturation("Grid Overlay Desaturation", Range(0, 1)) = 0
+        _GridOverlayRulerTiles("Grid Overlay Ruler Tiles", Range(0, 32)) = 0
+        _GridOverlayRulerColor("Grid Overlay Ruler Color", COLOR) = (1, 1, 1, 1)
+        _GridOverlayRulerLineWidth("Grid Overlay Ruler Line Width", Range(0, 32)) = 0
 
         _LiquidColor("Liquid Color", COLOR) = (1, 1, 1, 1)
         _LiquidSubColor("Liquid Sub Color", COLOR) = (1, 1, 1, 1)
@@ -22,7 +25,7 @@
     }
     SubShader
     {
-        Tags {"Queue" = "Background"}
+        Tags {"Queue" = "Background" "PreviewType" = "Plane"}
 
         Blend SrcAlpha OneMinusSrcAlpha
 
@@ -80,6 +83,9 @@
             float _GridOverlayToggle;
             int _GridOverlayLineWidth;
             float _GridOverlayDesaturation;
+            int _GridOverlayRulerTiles;
+            float4 _GridOverlayRulerColor;
+            int _GridOverlayRulerLineWidth;
 
             float4 AddGrid(float4 col, float2 localPixel, int2 tilePos, float4 tileInformation) {
                 // add the outlines
@@ -87,13 +93,18 @@
                     || (localPixel.y < _GridOverlayLineWidth || localPixel.y >= PIXELS_PER_TILE - _GridOverlayLineWidth))
                     col = 1;
 
-                // use texture's alpha channel to figure out if this tile is selected or not
-
                 // if not selected, make saturated
                 if (int(tileInformation.a * 256) % HIGHLIGHT_FLAG != 0 || tileInformation.a == 0) {
                     float2 grayScale = 0.33 * (col.r + col.g + col.b);
                     col.rgb = lerp(col.rgb, grayScale.xxx, _GridOverlayDesaturation);
                 }
+
+                // different outlines for measurement
+                if ((tilePos.x % _GridOverlayRulerTiles == 0 && localPixel.x < _GridOverlayRulerLineWidth) ||
+                    ((tilePos.x + 1) % _GridOverlayRulerTiles == 0 && localPixel.x >= PIXELS_PER_TILE - _GridOverlayRulerLineWidth) ||
+                    (tilePos.y % _GridOverlayRulerTiles == 0 && localPixel.y < _GridOverlayRulerLineWidth) ||
+                    ((tilePos.y + 1) % _GridOverlayRulerTiles == 0 && localPixel.y >= PIXELS_PER_TILE - _GridOverlayRulerLineWidth))
+                    col = _GridOverlayRulerColor;
 
                 return col;
             }

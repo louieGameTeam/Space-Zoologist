@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     {
         name = name ?? LevelOnPlay;
         name = name + ".json";
-        string fullPath = preset ? this.directory + name : Path.Combine(Application.persistentDataPath, name);
+        string fullPath = preset ? "Assets/Resources/" + this.directory + name : Path.Combine(Application.persistentDataPath, name);
 
         Debug.Log("Saving Grid to " + fullPath);
         if (File.Exists(fullPath))

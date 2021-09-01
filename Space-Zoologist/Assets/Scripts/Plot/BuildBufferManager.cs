@@ -7,7 +7,7 @@ public class BuildBufferManager : GridObjectManager
     [SerializeField] private GameObject bufferGO;
     private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
     private bool[,] isConstructing;
-    public bool IsConstructing(int x, int y) => isConstructing[x, y];
+    public bool IsConstructing(int x, int y) => (x < isConstructing.GetLength(0) && y < isConstructing.GetLength(1)) ? isConstructing[x, y] : false;
     private Action constructionFinishedCallback = null;
 
     public void Initialize()

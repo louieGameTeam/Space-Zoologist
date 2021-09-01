@@ -215,13 +215,17 @@ public class MoveObject : MonoBehaviour
             string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
             tempItem.SetupData(ID, "Food", ID, 0);
         }
-        else if (buildBufferManager.IsConstructing(pos.x, pos.y))
+        else if (true)
         {
-            GameObject tileToDelete = new GameObject();
-            tileToDelete.transform.position = pos;
-            toMove = tileToDelete;
-            tileToDelete.name = "tile";
+            if (buildBufferManager.IsConstructing(pos.x, pos.y))
+            {
+                GameObject tileToDelete = new GameObject();
+                tileToDelete.transform.position = pos;
+                toMove = tileToDelete;
+                tileToDelete.name = "tile";
+            }
         }
+        
 
         if (toMove != null) initialPos = toMove.transform.position;
         return toMove;

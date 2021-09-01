@@ -12,7 +12,6 @@ public class TileStoreSection : StoreSection
 {
     private EnclosureSystem EnclosureSystem = default;
     private TilePlacementController tilePlacementController = default;
-    private ReservePartitionManager rpm = default;
 
     private float startingBalance;
     private int initialAmt;
@@ -73,7 +72,7 @@ public class TileStoreSection : StoreSection
         foreach (Vector3Int pos in this.tilePlacementController.addedTiles)
         {
             if (tilePlacementController.godMode)
-                rpm.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
+                GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
             else
                 this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x,pos.y), this.selectedItem.buildTime, constructionColor);
         }
