@@ -70,7 +70,7 @@ public class AnimalSpecies : ScriptableObject
             if(need.TileNeedThreshold <= 0)
                 continue;
 
-            needs.Add("LiquidTiles", new LiquidNeed("LiquidTiles", need));
+            needs.Add("Liquid", new LiquidNeed("Liquid", need));
 
             if(need.FreshWaterMinThreshold != 0)
                 needs.Add("Water", new LiquidNeed("Water", need));
