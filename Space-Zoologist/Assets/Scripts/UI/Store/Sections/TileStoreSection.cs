@@ -74,7 +74,9 @@ public class TileStoreSection : StoreSection
             if (tilePlacementController.godMode)
                 GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
             else
-                this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x,pos.y), this.selectedItem.buildTime, constructionColor);
+            {
+                this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x, pos.y), this.selectedItem.buildTime, constructionColor);
+            }
         }
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();

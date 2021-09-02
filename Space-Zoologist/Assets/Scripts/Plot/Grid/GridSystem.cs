@@ -336,7 +336,7 @@ public class GridSystem : MonoBehaviour
         }
         else
         {
-            if (tileData != null)
+            if (tileData != null && tileData.isTilePlaceable)
             {
                 if (tile.type == TileType.Liquid)
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));

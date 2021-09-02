@@ -109,6 +109,7 @@ public class TilePlacementController : MonoBehaviour
     {
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
+        //temporarily removed because of revert bug
         GameManager.Instance.m_gridSystem.ConfirmPlacement();
 
         // Set terrain modified flag
@@ -274,15 +275,18 @@ public class TilePlacementController : MonoBehaviour
 
     private bool IsPlacable(Vector3Int cellPosition)
     {
+        if (godMode)
+            return true;
+
         if (currentMouseCellPosition == dragStartPosition)
         {
-            return true;
+            return GameManager.Instance.m_gridSystem.GetTileData(cellPosition).isTilePlaceable;
         }
         foreach (Vector3Int location in GridSystem.FourNeighborTileLocations(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
-                return true;
+                return GameManager.Instance.m_gridSystem.GetTileData(location).isTilePlaceable;
             }
         }
         return false;

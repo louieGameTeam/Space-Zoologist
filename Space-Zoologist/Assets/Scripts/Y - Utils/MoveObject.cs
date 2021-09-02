@@ -237,11 +237,21 @@ public class MoveObject : MonoBehaviour
         {
             objectToMove.GetComponent<Animal>().PopulationInfo.RemoveAnimal(objectToMove);
         }
-        else
+        else if (objectToMove.TryGetComponent<FoodSource>(out FoodSource foodSource))
         {
-            FoodSource food = objectToMove.GetComponent<FoodSource>();
             GameManager.Instance.SubtractFromBalance(-sellBackCost);
-            removeOriginalFood(food);
+            removeOriginalFood(foodSource);
+        }
+        else if (objectToMove.name.Equals("tile"))
+        {
+            GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
+            tileData.Revert();
+            //gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
+            if (tileData.currentTile == null)
+                tileData.Clear();
+            //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
+            buildBufferManager.DestroyBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
+            GameManager.Instance.SubtractFromBalance(-sellBackCost);
         }
         Reset();
     }
