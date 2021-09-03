@@ -37,16 +37,52 @@ public class ResourceRequestStatusUI : NotebookUIChild
 
             // Set the text on the status reason
             statusReasonText.text = request.StatusReason;
+            // By default status reason is inactive
+            statusReasonObject.SetActive(false);
 
+            // If the request was denied or only partially granted then we need to set up
+            // hover events to display the status reason
             if(request.CurrentStatus == ResourceRequest.Status.Denied || 
                 (request.CurrentStatus == ResourceRequest.Status.Granted && request.PartiallyGranted))
             {
+                // Clear any existing triggers
                 statusTrigger.triggers.Clear();
 
+                // Create the pointer enter event trigger
+                UnityEngine.EventSystems.EventTrigger.Entry pointerEnter = new UnityEngine.EventSystems.EventTrigger.Entry()
+                {
+                    eventID = EventTriggerType.PointerEnter,
+                    callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent()
+                };
+                pointerEnter.callback.AddListener(x => OnStatusPointerEnter());
 
+                // Create the pointer enter event trigger
+                UnityEngine.EventSystems.EventTrigger.Entry pointerExit = new UnityEngine.EventSystems.EventTrigger.Entry()
+                {
+                    eventID = EventTriggerType.PointerExit,
+                    callback = new UnityEngine.EventSystems.EventTrigger.TriggerEvent()
+                };
+                pointerExit.callback.AddListener(x => OnStatusPointerExit());
+
+                // Add the entries to the list of triggers
+                statusTrigger.triggers.Add(pointerEnter);
+                statusTrigger.triggers.Add(pointerExit);
             }
         }
         else parentObject.SetActive(false);
+    }
+    #endregion
+
+    #region Private Methods
+    private void OnStatusPointerEnter()
+    {
+        Debug.Log("Pointer enter", statusReasonObject);
+        statusReasonObject.SetActive(true);
+    }
+    private void OnStatusPointerExit()
+    {
+        Debug.Log("Pointer exit", statusReasonObject);
+        statusReasonObject.SetActive(false);
     }
     #endregion
 }

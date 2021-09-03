@@ -26,8 +26,7 @@ public class NotebookUI : MonoBehaviour
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
     private bool isOpen = false;
 
-    // I thought that this was called when the game object is inactive but apparently it is not
-    private void Awake()
+    private void Start()
     {
         // Setup the notebook at the start
         notebook.Setup();
@@ -59,7 +58,6 @@ public class NotebookUI : MonoBehaviour
         this.isOpen = isOpen;
         gameObject.SetActive(isOpen);
     }
-
     public void NavigateToBookmark(Bookmark bookmark)
     {
         bookmark.Navigate(nameTargetMap);
