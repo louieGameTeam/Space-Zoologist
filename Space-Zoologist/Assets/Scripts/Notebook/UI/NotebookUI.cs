@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class NotebookUI : MonoBehaviour
 {
+    [System.Serializable]
+    public class BoolEvent : UnityEvent<bool> { }
+
     // Public accessors
     public NotebookModel Notebook => notebook;
     public UnityEvent OnContentChanged => onContentChanged;
+    public BoolEvent OnNotebookToggle => onNotebookToggle;
 
     [SerializeField]
     [Expandable]
@@ -20,6 +24,9 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
     private UnityEvent onContentChanged;
+    [SerializeField]
+    [Tooltip("Event invoked each time the notebook is enabled/disabled")]
+    private BoolEvent onNotebookToggle;
 
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
@@ -57,6 +64,7 @@ public class NotebookUI : MonoBehaviour
     {
         this.isOpen = isOpen;
         gameObject.SetActive(isOpen);
+        onNotebookToggle.Invoke(isOpen);
     }
     public void NavigateToBookmark(Bookmark bookmark)
     {
