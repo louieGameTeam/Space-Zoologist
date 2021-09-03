@@ -6,7 +6,6 @@ using System.Linq;
 
 public class PlotIO : MonoBehaviour
 {
-    [SerializeField] LevelIO levelIO = default;
     private TilePlacementController tilePlacementController;
     private GridSystem GridSystem;
     private List<GridObjectManager> gridObjectManagers = new List<GridObjectManager>();

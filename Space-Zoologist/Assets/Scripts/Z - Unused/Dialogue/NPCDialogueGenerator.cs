@@ -10,7 +10,6 @@ using TMPro;
 public class NPCDialogueGenerator : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dialogueTextMeshPro = default;
-    [SerializeField] private ObjectiveManager objectiveManager = default;
     [SerializeField] private Selector selector = default;
 
     // Loader script to read in dialogue ouuputs
@@ -98,7 +97,7 @@ public class NPCDialogueGenerator : MonoBehaviour
     {
         string dialogue = template;
 
-        if (this.objectiveManager.IsGameOver)
+        if (GameManager.Instance.IsGameOver)
         {
             List<string> parsed = new List<string>(dialogue.Split(' '));
 
@@ -136,11 +135,11 @@ public class NPCDialogueGenerator : MonoBehaviour
         // Compute a list of good needs and bad needs
         foreach (Need need in population.Needs.Values)
         {
-            if (need.GetCondition(need.NeedValue) == NeedCondition.Good)
+            if (need.IsThresholdMet(need.NeedValue))
             {
                 goodNeeds.Add(need.NeedName);
             }
-            else if (need.GetCondition(need.NeedValue) == NeedCondition.Bad)
+            else
             {
                 badNeeds.Add(need.NeedName);
             }

@@ -39,7 +39,7 @@ namespace DialogueEditor
         public Sprite OptionImage;
         public bool OptionImageSliced;
         public bool AllowMouseInteraction;
-
+        public RectTransform Background;
         // Non-User facing 
         // Not exposed via custom inspector
         //
@@ -84,16 +84,15 @@ namespace DialogueEditor
         // Selection options
         private int m_currentSelectedIndex;
 
-        public RectTransform Background;
-        public GameObject BacklogGameObject;
-        public Button BacklogButton;
-        public TMPro.TextMeshProUGUI Backlog;
-        public ScrollRect BacklogScrollRect;
+        //public GameObject BacklogGameObject;
+        //public Button BacklogButton;
+        //public TMPro.TextMeshProUGUI Backlog;
+        //public ScrollRect BacklogScrollRect;
         //--------------------------------------
         // Awake, Start, Destroy
         //--------------------------------------
 
-        private void Awake()
+        public void Initialize()
         {
             // Destroy myself if I am not the singleton
             if (Instance != null && Instance != this)
@@ -102,19 +101,14 @@ namespace DialogueEditor
             }
             Instance = this;
 
-            m_uiOptions = new List<UIConversationButton>();
-        }
-
-        private void Start()
-        {
-            Background = transform.GetChild(1).GetComponent<RectTransform>();
-            Background.sizeDelta = new Vector2(1400, Background.sizeDelta.y);
             NpcIcon.sprite = BlankSprite;
             DialogueText.text = "";
-            Backlog = BacklogGameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>(true);
-            BacklogButton = BacklogGameObject.GetComponentInChildren<Button>(true);
-            BacklogScrollRect = BacklogGameObject.GetComponentInChildren<ScrollRect>(true);
+            //Backlog = BacklogGameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>(true);
+            //BacklogButton = BacklogGameObject.GetComponentInChildren<Button>(true);
+            //BacklogScrollRect = BacklogGameObject.GetComponentInChildren<ScrollRect>(true);
             TurnOffUI();
+
+            m_uiOptions = new List<UIConversationButton>();
         }
 
         private void OnDestroy()
@@ -138,11 +132,11 @@ namespace DialogueEditor
                 }
             }
 
-            if (Input.mouseScrollDelta.y > 0.2f && !BacklogGameObject.activeSelf) {
-                ToggleBacklog();
-            } else if (Input.mouseScrollDelta.y < -0.2f && BacklogGameObject.activeSelf) {
-                ToggleBacklog();
-            }
+            //if (Input.mouseScrollDelta.y > 0.2f && !BacklogGameObject.activeSelf) {
+            //    ToggleBacklog();
+            //} else if (Input.mouseScrollDelta.y < -0.2f && BacklogGameObject.activeSelf) {
+            //    ToggleBacklog();
+            //}
 
             switch (m_state)
             {
@@ -314,21 +308,21 @@ namespace DialogueEditor
         }
 
 
-        IEnumerator<int> ExpandDialogue() {
-            while (Vector2.Distance(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y)) > 10){
-                Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y), 20);
-                yield return 0;
-            }
-        }
+        //IEnumerator<int> ExpandDialogue() {
+        //    while (Vector2.Distance(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y)) > 10){
+        //        Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y), 20);
+        //        yield return 0;
+        //    }
+        //}
 
-        IEnumerator<int> ShrinkDialogue()
-        {
-            while (Vector2.Distance(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y)) > 10)
-            {
-                Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y), 20);
-                yield return 0;
-            }
-        }
+        //IEnumerator<int> ShrinkDialogue()
+        //{
+        //    while (Vector2.Distance(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y)) > 10)
+        //    {
+        //        Background.sizeDelta = Vector2.MoveTowards(Background.sizeDelta, new Vector2(1100, Background.sizeDelta.y), 20);
+        //        yield return 0;
+        //    }
+        //}
 
         //--------------------------------------
         // Set state
@@ -577,10 +571,10 @@ namespace DialogueEditor
                     DialogueText.text = speech.Text;
                     DialogueText.maxVisibleCharacters = speech.Text.Length;
                 }
-                if (Backlog != null)
-                {
-                    Backlog.text += speech.Name + ":\n" + speech.Text + "\n\n";
-                }
+                //if (Backlog != null)
+                //{
+                //    Backlog.text += speech.Name + ":\n" + speech.Text + "\n\n";
+                //}
             }
 
 
@@ -598,7 +592,7 @@ namespace DialogueEditor
             // Display new options
             if (speech.Options.Count > 0)
             {
-                StartCoroutine(ShrinkDialogue());
+                //StartCoroutine(ShrinkDialogue());
                 for (int i = 0; i < speech.Options.Count; i++)
                 {
                     UIConversationButton option = GameObject.Instantiate(ButtonPrefab, OptionsPanel);
@@ -609,7 +603,7 @@ namespace DialogueEditor
             }
             else
             {
-                StartCoroutine(ExpandDialogue());
+                //StartCoroutine(ExpandDialogue());
                 // Display "Continue" / "End" if we should.
                 //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
@@ -735,9 +729,9 @@ namespace DialogueEditor
 
         public void ToggleBacklog()
         {
-            bool active = BacklogGameObject.activeSelf;
-            BacklogGameObject.SetActive(!active); // toggle backlog
-            BacklogScrollRect.normalizedPosition = new Vector2(0.5f, 0); // scroll to buttom
+            //bool active = BacklogGameObject.activeSelf;
+            //BacklogGameObject.SetActive(!active); // toggle backlog
+            //BacklogScrollRect.normalizedPosition = new Vector2(0.5f, 0); // scroll to buttom
         }
         Button pingTarget;
         public void AskForOneTimePing(Button target) {

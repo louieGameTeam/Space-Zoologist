@@ -190,7 +190,7 @@ public class Population : MonoBehaviour, Life
     {
         if (this.PopulationBehaviorManager.ActiveBehaviors.ContainsKey(need))
         {
-            this.PopulationBehaviorManager.ActiveBehaviors[need] = this.needs[need].GetBehavior(needs[need].NeedValue).Behavior;
+            this.PopulationBehaviorManager.ActiveBehaviors[need] = null;
         }
     }
 
@@ -244,23 +244,30 @@ public class Population : MonoBehaviour, Life
         this.GrowthCalculator.CalculateGrowth();
     }
 
-    public void HandleGrowth()
+    public bool HandleGrowth()
     {
+        bool readyForGrowth = false;
         switch (this.GrowthCalculator.GrowthStatus)
         {
             case GrowthStatus.growing:
-                if (this.GrowthCalculator.ReadyForGrowth())
+                readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
+                if (readyForGrowth)
                 {
-                    for (int i=0; i<(int)this.GrowthCalculator.populationIncreaseRate; i++)
+                    //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
+                    float populationIncreaseAmount = AnimalPopulation.Count * this.GrowthCalculator.populationIncreaseRate;
+                    for (int i = 0; i < populationIncreaseAmount; ++i)
                     {
                         this.AddAnimal(this.gameObject.transform.position);
                     }
                 }
                 break;
             case GrowthStatus.declining:
-                if (this.GrowthCalculator.ReadyForDecay())
+                readyForGrowth = this.GrowthCalculator.ReadyForDecay();
+                if (readyForGrowth)
                 {
-                    for (int i = 0; i < (int)this.GrowthCalculator.populationIncreaseRate * -1; i++)
+                    //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
+                    float populationDecreaseAmount = AnimalPopulation.Count * this.GrowthCalculator.populationIncreaseRate * -1;
+                    for (int i = 0; i < populationDecreaseAmount; ++i)
                     {
                         this.RemoveAnimal(this.AnimalPopulation[i]);
                     }
@@ -269,6 +276,7 @@ public class Population : MonoBehaviour, Life
             default:
                 break;
         }
+        return readyForGrowth;
     }
 
     public void AddAnimal(Vector3 position)

@@ -8,8 +8,6 @@ using System.Linq;
 /// </summary>
 public class FoodSourceNeedSystem : NeedSystem
 {
-    //private List<FoodSource> foodSources = new List<FoodSource>();
-    private readonly ReservePartitionManager rpm = null;
 
     public static readonly Dictionary<SpeciesType, float> foodDominanceRatios = new Dictionary<SpeciesType, float>() 
     {
@@ -23,9 +21,8 @@ public class FoodSourceNeedSystem : NeedSystem
     // Food name to food calculators
     private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
 
-    public FoodSourceNeedSystem(ReservePartitionManager rpm, NeedType needType = NeedType.FoodSource) : base(needType)
+    public FoodSourceNeedSystem(NeedType needType = NeedType.FoodSource) : base(needType)
     {
-        this.rpm = rpm;
     }
 
     public override bool CheckState()
@@ -82,10 +79,8 @@ public class FoodSourceNeedSystem : NeedSystem
         }
 
         // 2. Iterate through populations based on most dominant
-        foreach (Population population in new SortedSet<Population>(rpm.Populations, new DominanceComparer()))
+        foreach (Population population in new SortedSet<Population>(GameManager.Instance.m_reservePartitionManager.Populations, new DominanceComparer()))
         {
-            Debug.Log(population.gameObject.name);
-
             float preferredAmount = 0;
             float compatibleAmount = 0;
 
@@ -94,22 +89,21 @@ public class FoodSourceNeedSystem : NeedSystem
             {
                 foreach (KeyValuePair<string, Need> need in population.Needs)
                 {
-                    float maxThreshold = need.Value.GetMaxThreshold() * population.Count;
                     // 4. Calculate preferred and available food, skipping if need already met
-                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || preferredAmount == maxThreshold || compatibleAmount == maxThreshold || !foodSourceCalculators.ContainsKey(need.Key))
+                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(need.Key))
                     {
                         continue;
                     }
 
                     if (j == 0 && need.Value.IsPreferred)
                     {
-                        preferredAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
+                        preferredAmount += foodSourceCalculators[need.Key].CalculateDistribution(population);
                         continue;
                     }
 
                     if (j == 1 && !need.Value.IsPreferred)
                     {
-                        compatibleAmount += foodSourceCalculators[need.Key].CalculateDistribution(population, maxThreshold);
+                        compatibleAmount += foodSourceCalculators[need.Key].CalculateDistribution(population);
                     }
                 }
             }
@@ -121,7 +115,7 @@ public class FoodSourceNeedSystem : NeedSystem
     {
         if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
         {
-            this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(rpm, foodSource.Species.SpeciesName));
+            this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(foodSource.Species.SpeciesName));
         }
 
         this.foodSourceCalculators[foodSource.Species.SpeciesName].AddSource(foodSource);
@@ -149,7 +143,7 @@ public class FoodSourceNeedSystem : NeedSystem
                 // if not already exist
                 if (!this.foodSourceCalculators.ContainsKey(need.NeedName))
                 {
-                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(rpm, need.NeedName));
+                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(need.NeedName));
                 }
 
                 // Add consumer to food source calculator

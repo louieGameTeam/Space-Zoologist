@@ -7,24 +7,25 @@ public class ResourceManager : MonoBehaviour
 {
     // [SerializeField] LevelDataReference LevelDataRef = default;
     [SerializeField] EventResponseManager EventResponseManager = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();
 
     // a copy of the dictionary before draft
     Dictionary<string, int> initialResources = new Dictionary<string, int>();
     private Dictionary<string, StoreItemCell> itemDisplayInfo = new Dictionary<string, StoreItemCell>();
 
-    public void Awake()
+    public void Initialize()
     {
-        foreach(LevelData.ItemData item in LevelDataReference.LevelData.itemQuantities)
+        foreach (LevelData.ItemData item in GameManager.Instance.LevelData.itemQuantities)
         {
-            remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
-            initialResources.Add(item.itemObject.ItemName, item.initialAmount);
+            if (!remainingResources.ContainsKey(item.itemObject.ItemName))
+            {
+                remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
+                initialResources.Add(item.itemObject.ItemName, item.initialAmount);
+            }
+            remainingResources[item.itemObject.ItemName] = item.initialAmount;
+            initialResources[item.itemObject.ItemName] = item.initialAmount;
         }
-    }
 
-    public void Start()
-    {
         EventResponseManager.InitializeResponseHandler(EventType.PopulationCountIncreased, AddItem);
     }
 
@@ -35,8 +36,11 @@ public class ResourceManager : MonoBehaviour
 
     public void setupItemSupplyTracker(StoreItemCell storeItem)
     {
-        itemDisplayInfo.Add(storeItem.item.ItemName, storeItem);
-        storeItem.RemainingAmount = remainingResources[storeItem.item.ItemName];
+        if (!itemDisplayInfo.ContainsKey(storeItem.item.ItemName))
+        {
+            itemDisplayInfo.Add(storeItem.item.ItemName, storeItem);
+            storeItem.RemainingAmount = remainingResources[storeItem.item.ItemName];
+        }
     }
 
     void AddItem(string itemName, int amount)

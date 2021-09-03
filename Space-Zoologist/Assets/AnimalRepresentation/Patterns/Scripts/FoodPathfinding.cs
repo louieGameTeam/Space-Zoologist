@@ -9,7 +9,7 @@ public class FoodPathfinding : GeneralPathfinding
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        Vector3Int[] destinations = FoodSourceManager.ins.GetFoodSourcesLocationWithSpecies(FoodSpeciesName);
+        Vector3Int[] destinations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(FoodSpeciesName);
         Vector3Int destination = new Vector3Int(-1,-1,-1);
         if (destinations != null)
         {
@@ -40,7 +40,7 @@ public class FoodPathfinding : GeneralPathfinding
                 destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
             }
 
-            AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+            AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
         }
         else {
             // If the edible food doesn't exist, just go to a random food (or whatever ItemType destination is set to)

@@ -13,10 +13,6 @@ public class EnclosureSystem : MonoBehaviour
     public List<EnclosedArea> EnclosedAreas;
     private List<EnclosedArea> internalEnclosedAreas;
 
-    [SerializeField] private LevelDataReference LevelDataReference = default;
-    [SerializeField] private NeedSystemManager needSystemManager = default;
-    [SerializeField] private GridSystem gridSystem = default;
-
     [Tooltip("Leave this empty if using TileSystem's default starting position")]
     [SerializeField] private List<Vector3Int> startingPositions = default;
 
@@ -33,16 +29,17 @@ public class EnclosureSystem : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        startingPositions = GameManager.Instance.LevelData.StartinPositions;
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
         Atmospheres = new List<AtmosphericComposition>();
         this.internalEnclosedAreas = new List<EnclosedArea>();
         this.EnclosedAreas = new List<EnclosedArea>();
-        this.GlobalAtmosphere = this.LevelDataReference.LevelData.GlobalAtmosphere;
+        this.GlobalAtmosphere = new AtmosphericComposition(0, 0, 0, 0);
     }
 
     private void Start()
     {
-        startPos = gridSystem.startTile;
+        startPos = GameManager.Instance.m_gridSystem.startTile;
 
         if (startingPositions.Count == 0)
         {
@@ -59,7 +56,7 @@ public class EnclosureSystem : MonoBehaviour
     /// <returns></returns>
     public AtmosphericComposition GetAtmosphericComposition(Vector3 worldPosition)
     {
-        Vector3Int position = this.gridSystem.WorldToCell(worldPosition);
+        Vector3Int position = GameManager.Instance.m_gridSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position) && this.GetEnclosedAreaById(positionToEnclosedArea[position]) != null)
         {
             return this.GetEnclosedAreaById(positionToEnclosedArea[position]).atmosphericComposition;
@@ -106,7 +103,7 @@ public class EnclosureSystem : MonoBehaviour
 
     public EnclosedArea GetEnclosedAreaByCellPosition(Vector3Int cellPos)
     {
-        Vector3Int position = this.gridSystem.WorldToCell(cellPos);
+        Vector3Int position = GameManager.Instance.m_gridSystem.WorldToCell(cellPos);
 
         return this.GetEnclosedAreaById(positionToEnclosedArea[position]);
     }
@@ -126,13 +123,13 @@ public class EnclosureSystem : MonoBehaviour
 
     public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
     {
-        Vector3Int position = this.gridSystem.WorldToCell(worldPosition);
+        Vector3Int position = GameManager.Instance.m_gridSystem.WorldToCell(worldPosition);
         if (positionToEnclosedArea.ContainsKey(position))
         {
             this.GetEnclosedAreaById(positionToEnclosedArea[position]).UpdateAtmosphericComposition(atmosphericComposition);
 
             // Mark Atmosphere NS dirty
-            this.needSystemManager.Systems[NeedType.Atmosphere].MarkAsDirty();
+            GameManager.Instance.NeedSystems[NeedType.Atmosphere].MarkAsDirty();
 
             // Invoke event
             EventManager.Instance.InvokeEvent(EventType.AtmosphereChange, this.GetEnclosedAreaById(positionToEnclosedArea[position]));
@@ -189,7 +186,7 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         // check if tilemap has tile
-        GameTile tile = this.gridSystem.GetGameTileAt(cur);
+        GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(cur);
         if (tile != null)
         {
             if (tile.type != TileType.Wall)
@@ -248,7 +245,7 @@ public class EnclosureSystem : MonoBehaviour
 
         // Initial flood fill
         this.enclosedAreaCount = 0;
-        EnclosedArea area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount);
+        EnclosedArea area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.enclosedAreaCount);
         newEnclosedAreas.Add(area);
 
         // If startingPositions is empty on start, startingPositions will contain gridSystem.startTile by default.
@@ -257,7 +254,7 @@ public class EnclosureSystem : MonoBehaviour
             if (area.coordinates.Count > 0)
             {
                 this.enclosedAreaCount++;
-                area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount);
+                area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.enclosedAreaCount);
                 newEnclosedAreas.Add(area);
             }
             this.FloodFill(startingPos, accessed, unaccessible, walls, enclosedAreaCount, area, isUpdate);
@@ -268,7 +265,7 @@ public class EnclosureSystem : MonoBehaviour
                 if (area.coordinates.Count != 0)
                 {
                     this.enclosedAreaCount++;
-                    area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.gridSystem, this.enclosedAreaCount);
+                    area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.enclosedAreaCount);
                     newEnclosedAreas.Add(area);
                 }
 

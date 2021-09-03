@@ -124,23 +124,21 @@ public class SurvivalObjective : Objective
 /// </summary>
 public class ResourceObjective : Objective
 {
-    private PlayerBalance playerBalance;
     public int amountToKeep { get; private set; }
 
     public override ObjectiveStatus Status => this.status;
 
     private ObjectiveStatus status;
 
-    public ResourceObjective(PlayerBalance playerBalance, int amountToKeep)
+    public ResourceObjective(int amountToKeep)
     {
-        this.playerBalance = playerBalance;
         this.amountToKeep = amountToKeep;
         this.status = ObjectiveStatus.InProgress;
     }
 
     public override ObjectiveStatus UpdateStatus()
     {
-        if (this.playerBalance.Balance >= this.amountToKeep)
+        if (GameManager.Instance.Balance >= this.amountToKeep)
         {
             this.status = ObjectiveStatus.Completed;
         }

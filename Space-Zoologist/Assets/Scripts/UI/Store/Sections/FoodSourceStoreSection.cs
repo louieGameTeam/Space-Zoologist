@@ -32,7 +32,7 @@ public class FoodSourceStoreSection : StoreSection
         Debug.Log("Attempting to place food");
         base.OnCursorPointerUp(eventData);
         if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Right ||
-            base.playerBalance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
+            GameManager.Instance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
             Debug.Log("Cannot place item that location");
             base.OnItemSelectionCanceled();
@@ -51,16 +51,20 @@ public class FoodSourceStoreSection : StoreSection
 
     public void PlaceFood(Vector3 mousePosition)
     {
+        // if over ui don't do it
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+            return;
+
         if (!base.GridSystem.IsFoodPlacementValid(mousePosition, base.selectedItem))
         {
             Debug.Log("Cannot place item that location");
             return;
         }
-        base.playerBalance.SubtractFromBalance(selectedItem.Price);
+        GameManager.Instance.SubtractFromBalance(selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, 1);
         base.HandleAudio();
-        Vector3Int mouseGridPosition = base.GridSystem.Grid.WorldToCell(mousePosition);
+        Vector3Int mouseGridPosition = base.GridSystem.WorldToCell(mousePosition);
         
-        FoodSourceManager.placeFood(mouseGridPosition, populationManager.GetFoodSpecies(selectedItem), this.selectedItem.buildTime);
+        FoodSourceManager.placeFood(mouseGridPosition, GameManager.Instance.FoodSources[selectedItem.ID], this.selectedItem.buildTime);
     }
 }

@@ -14,7 +14,6 @@ public class FoodSourceCalculator : NeedCalculator
     public bool IsDirty => this.isDirty;
 
     private string foodSourceName = default;
-    private readonly ReservePartitionManager rpm = null;
     private List<FoodSource> foodSources = new List<FoodSource>();
     private List<Population> consumers = new List<Population>();
     private bool isDirty = default;
@@ -27,10 +26,9 @@ public class FoodSourceCalculator : NeedCalculator
     private Dictionary<FoodSource, float> foodRemaining = new Dictionary<FoodSource, float>();
     Dictionary<FoodSource, float> localDominanceRemaining = new Dictionary<FoodSource, float>();
 
-    public FoodSourceCalculator(ReservePartitionManager rpm, string foodSourceName)
+    public FoodSourceCalculator(string foodSourceName)
     {
         this.foodSourceName = foodSourceName;
-        this.rpm = rpm;
     }
 
     public void MarkDirty()
@@ -52,7 +50,7 @@ public class FoodSourceCalculator : NeedCalculator
         accessibleFoodSources.Add(consumer, new HashSet<FoodSource>());
         foreach (FoodSource foodSource in foodSources)
         {
-            if (rpm.CanAccess(consumer, foodSource.Position))
+            if (GameManager.Instance.m_reservePartitionManager.CanAccess(consumer, foodSource.Position))
             {
                 accessibleFoodSources[consumer].Add(foodSource);
                 populationsWithAccess[foodSource].Add(consumer);
@@ -67,13 +65,17 @@ public class FoodSourceCalculator : NeedCalculator
         FoodSource foodSource = (FoodSource)source;
 
         this.foodSources.Add(foodSource);
-        populationsWithAccess.Add(foodSource, new HashSet<Population>());
-        foreach (Population population in Consumers)
+        if (!populationsWithAccess.ContainsKey(foodSource))
         {
-            if (rpm.CanAccess(population, foodSource.Position))
+            populationsWithAccess.Add(foodSource, new HashSet<Population>());
+
+            foreach (Population population in Consumers)
             {
-                accessibleFoodSources[population].Add(foodSource);
-                populationsWithAccess[foodSource].Add(population);
+                if (GameManager.Instance.m_reservePartitionManager.CanAccess(population, foodSource.Position))
+                {
+                    accessibleFoodSources[population].Add(foodSource);
+                    populationsWithAccess[foodSource].Add(population);
+                }
             }
         }
 
@@ -106,7 +108,7 @@ public class FoodSourceCalculator : NeedCalculator
         return true;
     }
 
-    public float CalculateDistribution(Population population, float maxThreshold)
+    public float CalculateDistribution(Population population)
     {
         float foodAcquired = 0.0f;
         List<FoodSource> leastToMostContested = accessibleFoodSources[population].OrderByDescending(foodSource => localDominanceRemaining[foodSource]).ToList();
@@ -134,14 +136,6 @@ public class FoodSourceCalculator : NeedCalculator
             {
                 foodAcquired += foodToAcquire;
                 foodRemaining[foodSource] -= foodToAcquire;
-            }
-            // 3. Population has already received enough food, return any excess food and remove them from dominance of any local food
-            if (foodAcquired >= maxThreshold)
-            {
-                float excessFood = foodAcquired - maxThreshold;
-                foodAcquired = maxThreshold;
-                foodRemaining[foodSource] += excessFood;
-                break;
             }
         }
         UpdateLocalDominance(population);

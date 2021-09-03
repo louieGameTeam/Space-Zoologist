@@ -13,9 +13,8 @@ public class Inspector : MonoBehaviour
 {
     public bool IsInInspectorMode { get; private set; }
 
-    [SerializeField] private GridSystem gridSystem = null;
-    [SerializeField] private EnclosureSystem enclosureSystem = null;
-    [SerializeField] private ReservePartitionManager reservePartitionManager = null;
+    private GridSystem gridSystem = null;
+    private EnclosureSystem enclosureSystem = null;
 
     // The inspector window
     [SerializeField] private GameObject areaDropdownMenu = null;
@@ -39,6 +38,9 @@ public class Inspector : MonoBehaviour
 
     private void Start()
     {
+        gridSystem = GameManager.Instance.m_gridSystem;
+        enclosureSystem = GameManager.Instance.m_enclosureSystem;
+
         this.IsInInspectorMode = false;
         this.enclosedAreaDropdown = this.areaDropdownMenu.GetComponent<Dropdown>();
         this.itemsDropdown = this.itemDropdownMenu.GetComponent<Dropdown>();
@@ -357,7 +359,7 @@ public class Inspector : MonoBehaviour
 
         // highlight their accessible terrain too
         Population populationScript = population.GetComponent<Population>();
-        List<Vector3Int> accessibleTiles = reservePartitionManager.AccessibleArea[populationScript];
+        List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.AccessibleArea[populationScript];
 
         foreach (Vector3Int tilePosition in accessibleTiles)
             gridSystem.HighlightTile(tilePosition, Color.green);

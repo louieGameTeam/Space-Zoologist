@@ -7,6 +7,7 @@ using System.IO;
 public class LevelIO : MonoBehaviour
 {
     [SerializeField] private string directory = "Levels/";
+    [SerializeField] LevelDataReference levelDataReference = default;
     private string sceneName;
     private PlotIO plotIO;
     private PopulationManager populationManager;
@@ -14,7 +15,7 @@ public class LevelIO : MonoBehaviour
     // Start is called before the first frame update
     public void Awake()
     {
-        this.sceneName = SceneManager.GetActiveScene().name;
+        this.sceneName = LevelDataReference.instance.LevelData.Level.SceneName;
         this.plotIO = FindObjectOfType<PlotIO>();
         this.populationManager = FindObjectOfType<PopulationManager>();
         this.LoadPreset();

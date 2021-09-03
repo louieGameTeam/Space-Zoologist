@@ -7,22 +7,23 @@ public class BuildBufferManager : GridObjectManager
     [SerializeField] private GameObject bufferGO;
     private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
     private bool[,] isConstructing;
-    [SerializeField] ReservePartitionManager RPM = default;
-    [SerializeField] TilePlacementController tilePlacementController = default;
     public bool IsConstructing(int x, int y) => isConstructing[x, y];
     private Action constructionFinishedCallback = null;
-    private void Awake()
+
+    public void Initialize()
     {
-        LevelDataReference levelDataReference = FindObjectOfType<LevelDataReference>();
-        if (levelDataReference == null)
+        LevelData levelData = GameManager.Instance.LevelData;
+        if (levelData == null)
         {
             Debug.LogWarning("Level data reference not found, using default width and height values");
             this.isConstructing = new bool[100, 100];
         }
-        int w = levelDataReference.LevelData.MapWidth;
-        int h = levelDataReference.LevelData.MapHeight;
-        this.isConstructing = new bool[w, h];
+        else
+        {
+            this.isConstructing = new bool[levelData.MapWidth, levelData.MapHeight];
+        }
     }
+
     public override void Parse()
     {
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)
@@ -107,7 +108,7 @@ public class BuildBufferManager : GridObjectManager
         }
         return null;
     }
-    public void DestoryBuffer(Vector2Int pos, int size = 1)
+    public void DestroyBuffer(Vector2Int pos, int size = 1)
     {
         if (!this.isConstructing[pos.x, pos.y])
         {
@@ -148,7 +149,7 @@ public class BuildBufferManager : GridObjectManager
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
-            this.RPM.UpdateAccessMapChangedAt(changedTiles);
+            GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
     public void CountDown()
@@ -185,7 +186,7 @@ public class BuildBufferManager : GridObjectManager
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
-            this.RPM.UpdateAccessMapChangedAt(changedTiles);
+            GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
 

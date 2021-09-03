@@ -1,16 +1,10 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Inspector/Inspector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Testers/MapDesignUIHandler.cs">
     <Files>
-      <File FileName="Assets/Scripts/Plot/Grid/GridSystem.cs" Line="115" Column="33" />
-      <File FileName="Assets/Scripts/Plot/Tiles/LiquidBody.cs" />
-      <File FileName="Assets/Scripts/Managers/FoodSourceManager.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSource.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceCalculator.cs" />
-      <File FileName="Assets/Scripts/Needs/Systems/FoodSystem/FoodSourceNeedSystem.cs" />
-      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" />
-      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="108" Column="10" />
-      <File FileName="Assets/Scripts/Y - Utils/MoveObject.cs" Line="299" Column="72" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="360" Column="1" />
+      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="76" Column="1" />
+      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="160" Column="45" />
+      <File FileName="Assets/Scripts/Plot/Testers/MapDesignUIHandler.cs" Line="14" Column="73" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -36,12 +30,18 @@
                   </Node>
                 </Node>
               </Node>
+              <Node name="Resources" expanded="True">
+                <Node name="Audio" expanded="True">
+                  <Node name="For Build Use (07-29) - new audio system" expanded="True">
+                    <Node name="Scripts" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="Audio" expanded="True" />
                 <Node name="LevelData" expanded="True" />
                 <Node name="Managers" expanded="True">
-                  <Node name="EventSystem" expanded="True" />
-                  <Node name="TimeSystem" expanded="True" />
+                  <Node name="Dialogue" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
                   <Node name="Systems" expanded="True">
@@ -51,19 +51,25 @@
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
+                  <Node name="Testers" expanded="True">
+                    <Node name="MapDesignUIHandler.cs" selected="True" />
+                  </Node>
                   <Node name="Tiles" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
+                  <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
                   <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
-                  <Node name="Inspector" expanded="True">
-                    <Node name="Inspector.cs" selected="True" />
+                  <Node name="Inspector" expanded="True" />
+                  <Node name="Store" expanded="True">
+                    <Node name="Sections" expanded="True" />
                   </Node>
                 </Node>
                 <Node name="Y - Utils" expanded="True" />
                 <Node name="Z - Unused" expanded="True">
+                  <Node name="Dialogue" expanded="True" />
                   <Node name="Needs" expanded="True" />
                 </Node>
               </Node>
@@ -75,10 +81,10 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ec6a1f82-971e-477d-8bb8-577f894c2bc1" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c4b7545e-b7f3-4edd-b80f-0477ac5dcd6c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist.nosync/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

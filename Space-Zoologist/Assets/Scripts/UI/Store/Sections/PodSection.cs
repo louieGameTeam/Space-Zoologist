@@ -8,14 +8,15 @@ public class PodSection : StoreSection
 {
     [Header("Handled by Prefab")]
     [SerializeField] Transform PodItemContainer = default;
-    [Header("Dependencies")]
-    [SerializeField] PopulationManager populationManager = default;
-    [SerializeField] TilePlacementController tilePlacementController = default;
+    private PopulationManager populationManager = default;
+    private TilePlacementController tilePlacementController = default;
 
     AnimalSpecies selectedSpecies = null;
 
     public override void Initialize()
     {
+        populationManager = GameManager.Instance.m_populationManager;
+        tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemType.Pod;
         base.Initialize();
     }
@@ -31,7 +32,7 @@ public class PodSection : StoreSection
         else if (eventData.button == PointerEventData.InputButton.Left)
         {
             Vector2 position = Camera.main.ScreenToWorldPoint(eventData.position);
-            selectedSpecies = populationManager.GetAnimalSpecies(selectedItem);
+            selectedSpecies = GameManager.Instance.AnimalSpecies[selectedItem.ID];
             if (!this.GridSystem.IsPodPlacementValid(position, selectedSpecies))
             {
                 Debug.Log("Can't place species there");
