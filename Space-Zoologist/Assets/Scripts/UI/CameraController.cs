@@ -10,23 +10,7 @@ public class CameraController : MonoBehaviour
     private const float cameraAccel = 0.75f;
     private const float deadzone = 0.01f;
 
-    private bool ControlsEnabled
-    {
-        get
-        {
-            if(!notebook)
-            {
-                notebook = FindObjectOfType<NotebookUI>();
-
-                // If the notebook cannot be found then assume we are allowed to move
-                if (!notebook)
-                {
-                    return true;
-                }
-            }
-            return !notebook.gameObject.activeInHierarchy;
-        }
-    }
+    public bool ControlsEnabled { get; set; } = true;
 
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] private float zoomLerpSpeed = 5f;
@@ -45,8 +29,6 @@ public class CameraController : MonoBehaviour
     private Vector2 currentVelocity;
     // True when the camera is being dragged using the center mouse button
     private bool hasMouseDrag = false;
-    // A reference to the notebook. We are not allowed to move the camera while this is active in the heirarchy
-    private NotebookUI notebook;
 
     void Start()
     {
