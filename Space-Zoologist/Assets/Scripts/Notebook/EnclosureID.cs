@@ -74,15 +74,21 @@ public struct EnclosureID : System.IComparable<EnclosureID>
         return new EnclosureID(levelNumber, enclosureNumber);
     }
 
-    public static EnclosureID FromSceneName(Scene scene)
-    {
-        return FromSceneName(scene.name);
-    }
-
     // Parse the scene name to get the enclosure ID
     public static EnclosureID FromCurrentSceneName()
     {
-        return FromSceneName(SceneManager.GetActiveScene().name);
+        GameManager instance = GameManager.Instance;
+
+        if(instance)
+        {
+            return FromSceneName(instance.LevelData.Level.SceneName);
+        }
+        else
+        {
+            Debug.LogWarning("EnclosureID: attempted to get the enclosure ID of the current scene name, " +
+                "but no GameManager instance was found.");
+            return new EnclosureID(-1, -1);
+        }
     }
     #endregion
 
