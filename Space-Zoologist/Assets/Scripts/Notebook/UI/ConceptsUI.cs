@@ -67,8 +67,8 @@ public class ConceptsUI : NotebookUIChild
         int requestsLeft = UIParent.Notebook.Concepts.RemainingRequests(id);
         int resourcesLeft = UIParent.Notebook.Concepts.RemainingResources(id);
 
-        requestsText.text = requestsLeft.ToString() + " Requests Left";
-        resourcesText.text = resourcesLeft.ToString() + " Resources Left";
+        requestsText.text = requestsLeft.ToString();
+        resourcesText.text = resourcesLeft.ToString();
     }
     #endregion
 }
