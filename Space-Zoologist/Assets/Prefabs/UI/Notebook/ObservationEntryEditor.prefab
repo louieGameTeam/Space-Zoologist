@@ -642,6 +642,7 @@ GameObject:
   - component: {fileID: 4501573332791222197}
   - component: {fileID: 5012020761734381523}
   - component: {fileID: 429685764693012131}
+  - component: {fileID: 2813925804214160147}
   m_Layer: 5
   m_Name: ObservationEntryEditor
   m_TagString: Untagged
@@ -682,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec9872a354731d4190acc2e5be17ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  group: {fileID: 2813925804214160147}
   titleInput: {fileID: 2737255707510548503}
   textInput: {fileID: 2704484643200810732}
 --- !u!114 &5012020761734381523
@@ -717,6 +719,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232a2b82eeb663843ba3e2f4dd72a13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &2813925804214160147
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111184262599452405}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2828138965041328951
 GameObject:
   m_ObjectHideFlags: 0

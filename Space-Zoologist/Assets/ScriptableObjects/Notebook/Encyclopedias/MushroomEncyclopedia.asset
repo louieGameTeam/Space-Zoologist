@@ -21,7 +21,7 @@ MonoBehaviour:
       growing species, the developing primordium from which Boletus Anceps develops
       is unusually large, at around 4 millimeters in diameter. Similarly, production
       rates for nearby predators appear to be 5-8 edible caps and extensions.
-    image: {fileID: 0}
+    sprites: []
   - id:
       title: Transport Log
       author: Barry Wachmann
@@ -29,7 +29,8 @@ MonoBehaviour:
       very well, particularly allowing for more salt and bacteria than other flora
       I\u2019ve transported. Bacteria is usually akin to poison for most flora and
       fauna from Planet X, but this species seems comfortable with a diverse composition."
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: f59cf9bc0f249aa46a0e57172c30614a, type: 3}
   - id:
       title: Observation Log
       author: Barry Wachmann
@@ -39,7 +40,8 @@ MonoBehaviour:
       mycelium, have rapidly grown in swamp, dirt, and grass biomes. They must have
       a preference for terrain with soil and relative ease of access to water. No
       indication of hyphae strands are present in deserts thus far.\r"
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: e5cc4e21980e1a540ac5500f245ea22b, type: 3}
   - id:
       title: Research Abstract
       author: Dr. Aurora Star
@@ -52,4 +54,4 @@ MonoBehaviour:
       rely on water for survival, Boletus Anceps only finding thriving terrain in
       swamps and Coruscent Laminar only present in water pools, the degree of variance
       requires further investigation. \r"
-    image: {fileID: 0}
+    sprites: []

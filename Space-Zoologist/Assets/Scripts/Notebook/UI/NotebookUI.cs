@@ -11,7 +11,6 @@ public class NotebookUI : MonoBehaviour
 
     // Public accessors
     public NotebookModel Notebook => notebook;
-    public LevelDataReference LevelDataReference => levelDataReference;
     public UnityEvent OnContentChanged => onContentChanged;
     public BoolEvent OnNotebookToggle => onNotebookToggle;
 
@@ -32,12 +31,9 @@ public class NotebookUI : MonoBehaviour
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
-    // Referene to the data for this level
-    private LevelDataReference levelDataReference;
     private bool isOpen = false;
 
-    // I thought that this was called when the game object is inactive but apparently it is not
-    private void Awake()
+    private void Start()
     {
         // Setup the notebook at the start
         notebook.Setup();
@@ -51,9 +47,6 @@ public class NotebookUI : MonoBehaviour
         {
             nameTargetMap.Add(bookmarkTarget.name, bookmarkTarget);
         }
-
-        // Find the level data reference in the scene
-        levelDataReference = FindObjectOfType<LevelDataReference>();
 
         // Setup all children, ensuring correct initialization order
         NotebookUIChild[] children = GetComponentsInChildren<NotebookUIChild>(true);
@@ -73,7 +66,6 @@ public class NotebookUI : MonoBehaviour
         gameObject.SetActive(isOpen);
         onNotebookToggle.Invoke(isOpen);
     }
-
     public void NavigateToBookmark(Bookmark bookmark)
     {
         bookmark.Navigate(nameTargetMap);

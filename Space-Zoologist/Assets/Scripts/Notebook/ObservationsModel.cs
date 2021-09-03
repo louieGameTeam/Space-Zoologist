@@ -5,6 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class ObservationsModel
 {
+    #region Public Properties
+    public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(observationsEntries.Keys);
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Scaffolding of the observation page based on the current enclosure level")]
@@ -16,16 +20,16 @@ public class ObservationsModel
 
     #region Private Fields
     // Map the list to the enclosure it applies to
-    private Dictionary<EnclosureID, ObservationsEntryList> data = new Dictionary<EnclosureID, ObservationsEntryList>();
+    private Dictionary<EnclosureID, ObservationsEntryList> observationsEntries = new Dictionary<EnclosureID, ObservationsEntryList>();
     #endregion
 
     #region Public Methods
-    public ObservationsEntryList GetEntryList(EnclosureID id) => data[id];
+    public ObservationsEntryList GetEntryList(EnclosureID id) => observationsEntries[id];
     public void TryAddEnclosureID(EnclosureID id)
     {
-        if (!data.ContainsKey(id))
+        if (!observationsEntries.ContainsKey(id))
         {
-            data.Add(id, new ObservationsEntryList(initialEntries[enclosureScaffold.ScaffoldLevel(id)]));
+            observationsEntries.Add(id, new ObservationsEntryList(initialEntries[enclosureScaffold.ScaffoldLevel(id)]));
         }
     }
     #endregion

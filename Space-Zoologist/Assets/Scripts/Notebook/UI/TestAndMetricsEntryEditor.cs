@@ -7,6 +7,7 @@ using TMPro;
 
 public class TestAndMetricsEntryEditor : NotebookUIChild
 {
+    #region Public Properties
     public TestAndMetricsEntry Entry
     {
         get
@@ -24,6 +25,10 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
                 // Add the new entry to the list on the notebook object
                 TestAndMetricsEntryList list = UIParent.Notebook.TestAndMetrics.GetEntryList(enclosureID);
                 list.Entries.Add(entry);
+
+                // Editor is no longer faded
+                group.alpha = 1f;
+
                 // Invoke the new entry created event
                 onNewEntryCreated.Invoke();
             }
@@ -31,7 +36,12 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         }
     }
     public UnityEvent OnNewEntryCreated => onNewEntryCreated;
+    #endregion
 
+    #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Reference to the canvas group that handles all child elements")]
+    private CanvasGroup group;
     [SerializeField]
     [Tooltip("Reference to the dropdown to select the research category")]
     private TypeFilteredResearchCategoryDropdown researchCategoryDropdown;
@@ -47,12 +57,16 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Event invoked when this editor creates a new entry")]
     private UnityEvent onNewEntryCreated;
+    #endregion
 
+    #region Private Fields
     // Enclosure ID for the entry we are editing
     private EnclosureID enclosureID;
     // The entry that is edited by this UI
     private TestAndMetricsEntry entry;
+    #endregion
 
+    #region Public Methods
     public void Setup(EnclosureID enclosureID, TestAndMetricsEntry entry, ScrollRect scrollTarget)
     {
         base.Setup();
@@ -99,13 +113,15 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         }
 
         // Elements are only interactable if id is the same as the current scene
-        researchCategoryDropdown.Dropdown.interactable = enclosureID == current;
-        needDropdown.Dropdown.interactable = enclosureID == current;
-        differenceDropdown.interactable = enclosureID == current;
-        inputField.readOnly = enclosureID != current;
+        group.interactable = enclosureID == current;
+
+        // Make elements faded if the entry is null - meaning editing this will add a new entry
+        if (entry != null) group.alpha = 1f;
+        else group.alpha = 0.5f;
 
         // Make sure the scroll event is taken away from the input field
         OnScrollEventInterceptor interceptor = inputField.gameObject.AddComponent<OnScrollEventInterceptor>();
         interceptor.InterceptTarget = scrollTarget;
     }
+    #endregion
 }
