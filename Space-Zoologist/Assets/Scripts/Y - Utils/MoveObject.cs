@@ -176,11 +176,18 @@ public class MoveObject : MonoBehaviour
             moveCost = objectToMove.GetComponent<Animal>().PopulationInfo.species.MoveCost;
             sellBackCost = 0;
         }
-        else
+        else if (objectToMove.TryGetComponent<FoodSource>(out FoodSource foodSource))
         {
-            FoodSourceSpecies species = objectToMove.GetComponent<FoodSource>().Species;
+            FoodSourceSpecies species = foodSource.Species;
             moveCost = species.MoveCost;
             sellBackCost = species.SellBackPrice;
+        }
+        else if (objectToMove.CompareTag("tiletodelete"))
+        {
+            MoveButton.SetActive(false);
+
+            LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
+            sellBackCost = tileItemData.itemObject.Price;
         }
         MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
         DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
@@ -215,17 +222,20 @@ public class MoveObject : MonoBehaviour
             string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
             tempItem.SetupData(ID, "Food", ID, 0);
         }
-        else if (true)
+        else if (gridSystem.IsWithinGridBounds(pos))
         {
             if (buildBufferManager.IsConstructing(pos.x, pos.y))
             {
-                GameObject tileToDelete = new GameObject();
+                GameObject tileToDelete = GameObject.FindGameObjectWithTag("tiletodelete");
+                if (!tileToDelete)
+                    tileToDelete = new GameObject();
+                tileToDelete.tag = "tiletodelete";
+
                 tileToDelete.transform.position = pos;
                 toMove = tileToDelete;
-                tileToDelete.name = "tile";
+                tileToDelete.name = gridSystem.GetGameTileAt(pos).TileName;
             }
         }
-        
 
         if (toMove != null) initialPos = toMove.transform.position;
         return toMove;
@@ -242,11 +252,11 @@ public class MoveObject : MonoBehaviour
             GameManager.Instance.SubtractFromBalance(-sellBackCost);
             removeOriginalFood(foodSource);
         }
-        else if (objectToMove.name.Equals("tile"))
+        else if (objectToMove.CompareTag("tiletodelete"))
         {
             GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
             tileData.Revert();
-            //gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
+            gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
             if (tileData.currentTile == null)
                 tileData.Clear();
             //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));

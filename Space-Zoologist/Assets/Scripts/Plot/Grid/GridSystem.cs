@@ -375,7 +375,7 @@ public class GridSystem : MonoBehaviour
     public GameTile GetGameTileAt(Vector3Int cellLocation)
     {
         if (IsWithinGridBounds(cellLocation))
-            return TileDataGrid[cellLocation.y, cellLocation.x].currentTile;//Tilemap.GetTile<GameTile>(cellLocation);
+            return TileDataGrid[cellLocation.y, cellLocation.x].currentTile;//Tilemap.GetTile<GameTile>(cellLocation); removed because tilemaps cannot handle that many tiles
 
         return null;
     }
@@ -539,7 +539,7 @@ public class GridSystem : MonoBehaviour
         this.ChangedTiles = new HashSet<Vector3Int>();
         this.previewBodies = new List<LiquidBody>();
     }
-    private void ApplyChangesToTilemap(Vector3Int tilePosition)
+    public void ApplyChangesToTilemap(Vector3Int tilePosition)
     {
         TileData data = GetTileData(tilePosition);
 
@@ -2051,7 +2051,7 @@ public class GridSystem : MonoBehaviour
                 }
                 return;
             }
-            ClearHistory();
+            //ClearHistory();
         }
         public void Revert()
         {
