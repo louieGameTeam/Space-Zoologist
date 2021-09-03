@@ -2448,7 +2448,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -8278,6 +8278,9 @@ MonoBehaviour:
   notebook: {fileID: 11400000, guid: 80149ca5b923b1b468d6d4ec23b05e18, type: 2}
   tabPicker: {fileID: 8737488178317972168}
   onContentChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onNotebookToggle:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1544793317518152117

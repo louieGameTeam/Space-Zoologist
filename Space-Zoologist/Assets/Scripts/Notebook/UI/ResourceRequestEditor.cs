@@ -13,6 +13,7 @@ public class ResourceRequestEditor : NotebookUIChild
     public ResourceRequest Request => request;
     public UnityEvent OnNewRequestCreated => onNewRequestCreated;
     public UnityEvent OnPriorityUpdate => onPriorityUpdated;
+    public UnityEvent OnRequestDeleted => onRequestDeleted;
     #endregion
 
     #region Private Editor Fields
@@ -22,6 +23,12 @@ public class ResourceRequestEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Reference to the canvas group used to adjust the alpha transparency and interactability of the full editor")]
     private CanvasGroup group;
+    [SerializeField]
+    [Tooltip("UI element used to display the status of the request")]
+    private ResourceRequestStatusUI statusUI;
+
+    [Space]
+
     [SerializeField]
     [Tooltip("Text input field that sets the priority of the request editor")]
     private TMP_InputField priorityInput;
@@ -37,15 +44,24 @@ public class ResourceRequestEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
     private ResourcePicker resourcePicker;
+
+    [Space]
+
     [SerializeField]
-    [Tooltip("UI element used to display the status of the request")]
-    private ResourceRequestStatusUI statusUI;
+    [Tooltip("Button that deletes this request when clicked")]
+    private Button deleteButton;
+    
+    [Space]
+
     [SerializeField]
     [Tooltip("Event invoked when the editor creates a new request")]
     private UnityEvent onNewRequestCreated;
     [SerializeField]
     [Tooltip("Event invoked whenever the priority of the request changes")]
     private UnityEvent onPriorityUpdated;
+    [SerializeField]
+    [Tooltip("Event invoked when this request is deleted")]
+    private UnityEvent onRequestDeleted;
     #endregion
 
     #region Private Fields
@@ -56,7 +72,7 @@ public class ResourceRequestEditor : NotebookUIChild
     #endregion
 
     #region Public Methods
-    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget, UnityAction priorityUpdatedCallback)
+    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget, UnityAction priorityUpdatedCallback, UnityAction requestDeletedCallback)
     {
         base.Setup();
 
@@ -64,6 +80,7 @@ public class ResourceRequestEditor : NotebookUIChild
         this.enclosureID = enclosureID;
         this.request = request;
         onPriorityUpdated.AddListener(priorityUpdatedCallback);
+        onRequestDeleted.AddListener(requestDeletedCallback);
 
         // Setup each dropdown
         categoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
@@ -120,6 +137,9 @@ public class ResourceRequestEditor : NotebookUIChild
         // Update status display
         statusUI.UpdateDisplay(request);
 
+        // Delete the request when the button is clicked
+        deleteButton.onClick.AddListener(DeleteRequest);
+
         // Add scroll intercecptors to the input fields so that the scroll event goes to the 
         // containing scroll rect instead of the input fields
         OnScrollEventInterceptor interceptor = priorityInput.gameObject.AddComponent<OnScrollEventInterceptor>();
@@ -164,6 +184,17 @@ public class ResourceRequestEditor : NotebookUIChild
             onNewRequestCreated.Invoke();
         }
         return request;
+    }
+    private void DeleteRequest()
+    {
+        if(request != null && request.CurrentStatus == ResourceRequest.Status.NotReviewed)
+        {
+            // Remove this request from the requests on the notebook
+            UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID).Requests.Remove(request);
+            onRequestDeleted.Invoke();
+            // Destroy this editor
+            Destroy(gameObject);
+        }
     }
     #endregion
 }

@@ -40,7 +40,7 @@ public class ResourceRequestListEditor : NotebookUIChild
         foreach (ResourceRequest request in sortedRequests)
         {
             ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-            editor.Setup(id, request, editorScroller, SortEditors);
+            editor.Setup(id, request, editorScroller, SortEditors, () => OnRequestDeleted(editor));
             currentEditors.Add(editor);
         }
 
@@ -70,12 +70,16 @@ public class ResourceRequestListEditor : NotebookUIChild
     private void CreateAddingEntry()
     {
         ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller, SortEditors);
+        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller, SortEditors, () => OnRequestDeleted(editor));
         editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
 
         // Sort the editors now that the new one is added
         SortEditors();
+    }
+    private void OnRequestDeleted(ResourceRequestEditor editorDeleted)
+    {
+        currentEditors.Remove(editorDeleted);
     }
     private void SortEditors()
     {
