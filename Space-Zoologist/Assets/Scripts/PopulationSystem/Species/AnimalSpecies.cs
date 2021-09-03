@@ -4,7 +4,7 @@ using System;
 
 public enum SpeciesType { Goat, Cow, Anteater, Spider, Slug, Momo }
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "AnimalSpecies/Default")]
 public class AnimalSpecies : ScriptableObject
 {
     // Getters

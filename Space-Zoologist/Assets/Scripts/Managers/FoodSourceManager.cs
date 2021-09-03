@@ -9,6 +9,7 @@ public delegate void CreateFoodCallback(FoodSource food);
 public class FoodSourceManager : GridObjectManager
 {
     public List<FoodSource> FoodSources => foodSources;
+    public Dictionary<FoodSourceSpecies, List<FoodSource>> FoodSourcesBySpecies => foodSourcesBySpecies;
     private List<FoodSource> foodSources = new List<FoodSource>();
     private Dictionary<FoodSourceSpecies, List<FoodSource>> foodSourcesBySpecies = new Dictionary<FoodSourceSpecies, List<FoodSource>>();
 

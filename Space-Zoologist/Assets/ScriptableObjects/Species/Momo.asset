@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814a58193f6bf4a03b9ee913bf7b8670, type: 3}
+  m_Name: Momo
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: afe80bc84a5bc22449b95bda8c01671b, type: 2}
+  speciesName: Momo
+  species: 5
+  terrainTilesRequired: 0
+  minFoodRequired: 0
+  maxFoodRequired: 0
+  growthRate: 3
+  decayRate: 1
+  moveCost: 0
+  size: 0
+  accessibleTerrain: 00000000010000000200000003000000040000000500000006000000
+  icon: {fileID: 0}
+  terrainNeeds: []
+  foodNeeds: []
+  liquidNeeds:
+  - needName: 
+    tileNeedThreshold: 2
+    freshWaterMinThreshold: 0.96
+    freshWaterMaxThreshold: 0
+    saltMinThreshold: 0.005
+    saltMaxThreshold: 0.025
+    bacteriaMinThreshold: 0
+    bacteriaMaxThreshold: 0.015
+  preyNeeds: []
+  representation: {fileID: 0}
+  socialNeed:
+  - needName: Goat
+    FriendSetThreshold: 1
+    isPreferred: 1
+  - needName: Cow
+    FriendSetThreshold: 1
+    isPreferred: 1
+  - needName: Anteater
+    FriendSetThreshold: 1
+    isPreferred: 0
+  - needName: Slug
+    FriendSetThreshold: 1
+    isPreferred: 0
+  - needName: Spider
+    FriendSetThreshold: 1
+    isPreferred: 0
+  treeTerrainNeed:
+  - needName: Gold Space Maple
+    NumTreeThreshold: 1
+    isPreferred: 1
+  - needName: Space Maple
+    NumTreeThreshold: 1
+    isPreferred: 0
+  - needName: Berry Bush
+    NumTreeThreshold: 1
+    isPreferred: 0

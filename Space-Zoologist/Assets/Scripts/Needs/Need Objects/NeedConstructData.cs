@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 // Each NeedType holds a list of unique needs
-public enum NeedType { Terrain, Atmosphere, Density, FoodSource, Liquid, Species, Temperature, Symbiosis, Prey };
+public enum NeedType { Terrain, Atmosphere, Density, FoodSource, Liquid, Species, Temperature, Symbiosis, Prey, Social, TreeTerrain };
 public enum NeedCondition { Bad, Neutral, Good }
 
 [System.Serializable]
@@ -87,6 +87,42 @@ public class PreyNeedConstructData : NeedConstructData
 
     public override float GetSurvivableThreshold() { return 0; }
     protected override bool getIsPreferred() { return false; }
+}
+
+[System.Serializable]
+public class SocialNeedConstructData : NeedConstructData
+{
+    public SocialNeedConstructData(string name) : base(name) { }
+    [SerializeField] float FriendSetThreshold = 1f;
+    [SerializeField] private bool isPreferred;
+
+    public override float GetSurvivableThreshold()
+    {
+        return FriendSetThreshold;
+    }
+
+    protected override bool getIsPreferred()
+    {
+        return isPreferred;
+    }
+}
+
+[System.Serializable]
+public class TreeTerrainConstructData : NeedConstructData
+{
+    public TreeTerrainConstructData(string name) : base(name) { }
+    [SerializeField] float NumTreeThreshold = 1f;
+    [SerializeField] private bool isPreferred;
+
+    public override float GetSurvivableThreshold()
+    {
+        return NumTreeThreshold;
+    }
+
+    protected override bool getIsPreferred()
+    {
+        return isPreferred;
+    }
 }
 
 /// <summary>

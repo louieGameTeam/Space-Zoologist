@@ -110,6 +110,7 @@ public class LiquidNeed : Need
     private float GetBacteriaPoisonThreshold() { return needConstructData.BacteriaMaxThreshold; }
 }
 
+[System.Serializable]
 public class PreyNeed : Need
 {
     public PreyNeed(NeedConstructData needConstructData) : base(needConstructData) { }
@@ -117,6 +118,28 @@ public class PreyNeed : Need
     protected override NeedType GetNeedType()
     {
         return NeedType.Prey;
+    }
+}
+
+[System.Serializable]
+public class SocialNeed : Need
+{
+    public SocialNeed(NeedConstructData needConstructData) : base(needConstructData) { }
+
+    protected override NeedType GetNeedType()
+    {
+        return NeedType.Social;
+    }
+}
+
+[System.Serializable]
+public class TreeTerrainNeed : Need
+{
+    public TreeTerrainNeed(NeedConstructData needConstructData) : base(needConstructData) { }
+
+    protected override NeedType GetNeedType()
+    {
+        return NeedType.TreeTerrain;
     }
 }
 

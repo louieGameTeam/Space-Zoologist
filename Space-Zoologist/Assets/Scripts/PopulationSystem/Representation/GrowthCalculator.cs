@@ -249,6 +249,50 @@ public class GrowthCalculator
         return predatorValue;
     }
 
+    public float calculateSocialNeed()
+    {
+        foreach (KeyValuePair<string, Need> need in population.Needs)
+        {
+            if (need.Value.NeedType.Equals(NeedType.Social))
+            {
+                
+            }
+        }
+        return 0f;
+    }
+
+    public void calculateTreeTerrainNeed()
+    {
+        int numPreferrred = 0;
+        int numSurvivable = 0;
+        int totalNeededTrees = 0;
+        foreach (KeyValuePair<string, Need> need in population.Needs)
+        {
+            if (need.Value.NeedType.Equals(NeedType.TreeTerrain))
+            {
+                totalNeededTrees += (int)need.Value.GetThreshold();
+                if (need.Value.IsPreferred)
+                {
+                    numPreferrred += (int)need.Value.NeedValue;
+                }
+                else
+                {
+                    numSurvivable += (int)need.Value.NeedValue;
+                }
+            }
+        }
+        int totalOccupiedTrees = numPreferrred + numSurvivable;
+        
+        if (totalOccupiedTrees >= totalNeededTrees)
+        {
+            terrainRating = 1 + numPreferrred / population.AnimalPopulation.Count;
+        }
+        else
+        {
+            terrainRating = (totalOccupiedTrees - totalNeededTrees) / population.AnimalPopulation.Count;
+        }
+    }
+
     public bool ReadyForDecay()
     {
         this.DecayCountdown--;
