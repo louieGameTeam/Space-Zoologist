@@ -8,15 +8,15 @@ public class ResourcePicker : NotebookUIChild
 {
     #region Typedefs
     [System.Serializable]
-    public class ItemDataEvent : UnityEvent<Item> { }
+    public class ItemEvent : UnityEvent<Item> { }
     #endregion
 
     #region Public Properties
     public TMP_Dropdown Dropdown => dropdown;
-    public ItemDataEvent OnItemSelected => onItemSelected;
+    public ItemEvent OnItemSelected => onItemSelected;
     public Item ItemSelected
     {
-        get => OptionDataToItemData(dropdown.options[dropdown.value]);
+        get => OptionDataToItem(dropdown.options[dropdown.value]);
         set
         {
             TMP_Dropdown.OptionData option = ItemDataToOptionData(value);
@@ -39,7 +39,7 @@ public class ResourcePicker : NotebookUIChild
     private TMP_Dropdown dropdown;
     [SerializeField]
     [Tooltip("Event invoked when a resource is selected from the list")]
-    private ItemDataEvent onItemSelected;
+    private ItemEvent onItemSelected;
     #endregion
 
     #region Public Methods
@@ -49,13 +49,31 @@ public class ResourcePicker : NotebookUIChild
 
         // Add all options to the list of options
         dropdown.ClearOptions();
-        // Only add options that are not pods so we cannot request animals as resources
-        foreach(LevelData.ItemData item in UIParent.LevelDataReference.LevelData.ItemQuantities)
+
+        // Get the instance of the game manager
+        GameManager instance = GameManager.Instance;
+
+        if(instance)
         {
-            if(item.itemObject.Type != ItemType.Pod && item.itemObject.Type != ItemType.Machine)
+            // Only add options that are not pods so we cannot request animals as resources
+            foreach (LevelData.ItemData item in instance.LevelData.ItemQuantities)
             {
-                dropdown.options.Add(ItemDataToOptionData(item.itemObject));
+                if (item.itemObject.Type != ItemType.Pod && item.itemObject.Type != ItemType.Machine)
+                {
+                    dropdown.options.Add(ItemDataToOptionData(item.itemObject));
+                }
             }
+        }
+        else
+        {
+            Debug.Log("ResourcePicker: the resource picker could not be set up " +
+                "because no instance of the GameManager could be found");
+
+            // Add some placeholder options
+            dropdown.AddOptions(new List<string>()
+            {
+                "Item 1", "Item 2", "Item 3"
+            });
         }
 
         // Add listener to the value changed event
@@ -70,27 +88,39 @@ public class ResourcePicker : NotebookUIChild
     {
         onItemSelected.Invoke(ItemSelected);
     }
-
     private TMP_Dropdown.OptionData ItemDataToOptionData(Item item)
     {
         return new TMP_Dropdown.OptionData(item.ItemName, item.Icon);
     }
-    private Item OptionDataToItemData(TMP_Dropdown.OptionData option)
+    private Item OptionDataToItem(TMP_Dropdown.OptionData option)
     {
-        List<LevelData.ItemData> itemDatas = UIParent.LevelDataReference.LevelData.ItemQuantities;
-        itemDatas = itemDatas.FindAll(x => x.itemObject.ItemName == option.text && x.itemObject.Icon == option.image);
+        GameManager instance = GameManager.Instance;
 
-        if (itemDatas.Count <= 0) return null;
+        // Double check to make sure there is a game manager
+        if(instance)
+        {
+            List<LevelData.ItemData> itemDatas = instance.LevelData.ItemQuantities;
+            itemDatas = itemDatas.FindAll(x => x.itemObject.ItemName == option.text && x.itemObject.Icon == option.image);
+
+            if (itemDatas.Count <= 0) return null;
+            else
+            {
+                // This should never happen, but we log a warning just in case
+                if (itemDatas.Count > 1)
+                {
+                    Debug.LogWarning("ResourcePicker: found multiple item datas with the same item name and icon, " +
+                        "so we will have to pick the first one");
+                }
+
+                return itemDatas[0].itemObject;
+            }
+        }
+        // If instance is null, return null
         else
         {
-            // This should never happen, but we log a warning just in case
-            if(itemDatas.Count > 1)
-            {
-                Debug.LogWarning("ResourcePicker: found multiple item datas with the same item name and icon, " +
-                    "so we will have to pick the first one");
-            }
-
-            return itemDatas[0].itemObject;
+            Debug.Log("ResourcePicker: cannot convert an option data to item if no instance " +
+                "of the GameManager exists");
+            return null;
         }
     }
     #endregion

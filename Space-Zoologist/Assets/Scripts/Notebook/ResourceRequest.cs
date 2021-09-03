@@ -104,6 +104,23 @@ public class ResourceRequest
         this.statusReason = statusReason;
         this.quantityGranted = quantityGranted;
         this.itemGranted = itemGranted;
+
+        // If the request was granted then we need to tell the resource manager
+        if(currentStatus == Status.Granted)
+        {
+            GameManager instance = GameManager.Instance;
+
+            // If the game manager exists then use it to get the resource manager and add the item requested
+            if(instance)
+            {
+                instance.m_resourceManager.AddItem(itemGranted.ItemName, quantityGranted);
+            }
+            else
+            {
+                Debug.Log("ResourceRequest: granted request will not go through to the resource manager " +
+                    "because no instance of the GameManager could be found");
+            }
+        }
     }
     #endregion
 }

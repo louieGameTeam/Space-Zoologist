@@ -85,7 +85,7 @@ public struct EnclosureID : System.IComparable<EnclosureID>
         }
         else
         {
-            Debug.LogWarning("EnclosureID: attempted to get the enclosure ID of the current scene name, " +
+            Debug.Log("EnclosureID: attempted to get the enclosure ID of the current scene name, " +
                 "but no GameManager instance was found.");
             return new EnclosureID(-1, -1);
         }
