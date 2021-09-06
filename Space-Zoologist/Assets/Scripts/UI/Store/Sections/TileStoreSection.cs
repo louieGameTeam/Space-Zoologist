@@ -19,11 +19,9 @@ public class TileStoreSection : StoreSection
     private int numTilesPlaced = 0;
     private int prevTilesPlaced = 0;
 
-    private BuildBufferManager buildBufferManager;
     private Color constructionColor = new Color(1f, 0.6f, 0.2f, 1f);//Orange
     public override void Initialize()
     {
-        this.buildBufferManager = GameManager.Instance.m_buildBufferManager;
         EnclosureSystem = GameManager.Instance.m_enclosureSystem;
         tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemType.Terrain;
@@ -75,7 +73,7 @@ public class TileStoreSection : StoreSection
                 GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
             else
             {
-                this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x, pos.y), this.selectedItem.buildTime, constructionColor);
+                GridSystem.CreateUnitBuffer(new Vector2Int(pos.x, pos.y), this.selectedItem.buildTime, constructionColor);
             }
         }
         this.EnclosureSystem.UpdateEnclosedAreas();

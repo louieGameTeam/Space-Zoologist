@@ -72,7 +72,6 @@ public class GameManager : MonoBehaviour
     public FoodSourceManager m_foodSourceManager { get; private set; }
     public PopulationManager m_populationManager { get; private set; }
     public ResourceManager m_resourceManager { get; private set; }
-    public BuildBufferManager m_buildBufferManager { get; private set; }
     public BehaviorPatternUpdater m_behaviorPatternUpdater { get; private set; }
     public TilePlacementController m_tilePlacementController { get; private set; }
     public PlotIO m_plotIO { get; private set; }
@@ -231,7 +230,6 @@ public class GameManager : MonoBehaviour
         m_foodSourceManager = FindObjectOfType<FoodSourceManager>();
         m_populationManager = FindObjectOfType<PopulationManager>();
         m_resourceManager = FindObjectOfType<ResourceManager>();
-        m_buildBufferManager = FindObjectOfType<BuildBufferManager>();
         m_behaviorPatternUpdater = FindObjectOfType<BehaviorPatternUpdater>();
         m_tilePlacementController = FindObjectOfType<TilePlacementController>();
         m_plotIO = FindObjectOfType<PlotIO>();
@@ -253,8 +251,8 @@ public class GameManager : MonoBehaviour
         m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
         m_foodSourceManager.Initialize();
-        m_buildBufferManager.Initialize();
         m_resourceManager.Initialize();
+        m_tilePlacementController.Initialize();
     }
 
     private void SetupObjectives()
@@ -649,7 +647,7 @@ public class GameManager : MonoBehaviour
 
     public void nextDay()
     {
-        m_buildBufferManager.CountDown();
+        m_gridSystem.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
         UpdateAllNeedSystems();

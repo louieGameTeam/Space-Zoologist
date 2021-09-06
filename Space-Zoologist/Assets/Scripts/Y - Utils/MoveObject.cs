@@ -11,7 +11,6 @@ public class MoveObject : MonoBehaviour
     [SerializeField] CursorItem cursorItem = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
     [SerializeField] GameObject DeleteButtonPrefab = default;
-    private BuildBufferManager buildBufferManager = default;
     [SerializeField] FoodSourceStoreSection FoodSourceStoreSection = default;
     Item tempItem;
 
@@ -34,7 +33,6 @@ public class MoveObject : MonoBehaviour
     {
         gridSystem = GameManager.Instance.m_gridSystem;
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
-        buildBufferManager = GameManager.Instance.m_buildBufferManager;
 
         tempItem = (Item)ScriptableObject.CreateInstance("Item");
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
@@ -224,7 +222,7 @@ public class MoveObject : MonoBehaviour
         }
         else if (gridSystem.IsWithinGridBounds(pos))
         {
-            if (buildBufferManager.IsConstructing(pos.x, pos.y))
+            if (gridSystem.IsConstructing(pos.x, pos.y))
             {
                 GameObject tileToDelete = GameObject.FindGameObjectWithTag("tiletodelete");
                 if (!tileToDelete)
@@ -260,7 +258,7 @@ public class MoveObject : MonoBehaviour
             if (tileData.currentTile == null)
                 tileData.Clear();
             //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
-            buildBufferManager.DestroyBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
+            gridSystem.DestroyBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
             GameManager.Instance.SubtractFromBalance(-sellBackCost);
         }
         Reset();
@@ -353,7 +351,7 @@ public class MoveObject : MonoBehaviour
             GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
             gridSystem.AddFood(mouseGridPosition, species.Size, Food);
-            buildBufferManager.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size, foodSourceManager.constructionColor);
+            gridSystem.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size, foodSourceManager.constructionColor);
         }
         else
         {
@@ -362,7 +360,7 @@ public class MoveObject : MonoBehaviour
             GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
             gridSystem.AddFood(mouseGridPosition, species.Size, Food);
-            buildBufferManager.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size, foodSourceManager.constructionColor);
+            gridSystem.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size, foodSourceManager.constructionColor);
         }
     }
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
@@ -384,6 +382,6 @@ public class MoveObject : MonoBehaviour
         foodSourceManager.DestroyFoodSource(foodSource);
         int sizeShift = foodSource.Species.Size - 1; // Finds the lower left cell the food occupies
         Vector2Int shiftedPos = new Vector2Int(FoodLocation.x - sizeShift, FoodLocation.y - sizeShift);
-        buildBufferManager.DestroyBuffer(shiftedPos, foodSource.Species.Size);
+        gridSystem.DestroyBuffer(shiftedPos, foodSource.Species.Size);
     }
 }
