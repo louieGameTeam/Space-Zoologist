@@ -11,6 +11,9 @@ public class ConceptsCanvasUI : NotebookUIChild
     [Tooltip("Rect transform that expands and contracts when the canvas folds in/out")]
     private RectTransform foldoutRect;
     [SerializeField]
+    [Tooltip("Reference to the script that handles drawing on the canvas")]
+    private DrawingCanvas drawingCanvas;
+    [SerializeField]
     [Tooltip("Toggle that expands/collapses the concept canvas")]
     private Toggle foldoutToggle;
 
@@ -28,18 +31,27 @@ public class ConceptsCanvasUI : NotebookUIChild
         // Apply foldout state when toggle state changes
         foldoutToggle.isOn = false;
         foldoutToggle.onValueChanged.AddListener(ApplyFoldoutState);
+        ApplyFoldoutState(false);
     }
     #endregion
 
     #region Private Methods
     private void ApplyFoldoutState(bool state)
     {
-        // Kill any tweening animations
+        // Complete any tweening animations
         foldoutRect.DOKill();
 
         // Change the anchor to either the far right of the parent or the middle of the parent
-        if (state) foldoutRect.DOAnchorMax(new Vector2(1f, foldoutRect.anchorMax.y), foldoutTime);
-        else foldoutRect.DOAnchorMax(new Vector2(0.5f, foldoutRect.anchorMax.y), foldoutTime);
+        if (state)
+        {
+            foldoutRect.DOAnchorMax(new Vector2(1f, foldoutRect.anchorMax.y), foldoutTime)
+                .OnComplete(() => drawingCanvas.gameObject.SetActive(true));
+        }
+        else
+        {
+            drawingCanvas.gameObject.SetActive(false);
+            foldoutRect.DOAnchorMax(new Vector2(0.5f, foldoutRect.anchorMax.y), foldoutTime);
+        }
     }
     #endregion
 }
