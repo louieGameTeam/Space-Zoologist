@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DrawingCanvas : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DrawingCanvas : MonoBehaviour, IDragHandler
 {
     #region Constants 
-    public static readonly float[] STROKE_THICKNESS = { 50, 100, 200 };
+    public static readonly int[] STROKE_THICKNESS = { 10, 20, 40 };
     #endregion
 
     #region Public Typedefs
@@ -31,20 +31,16 @@ public class DrawingCanvas : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         get => currentWeight;
         set => currentWeight = value;
     }
-    // List of drawing objects matching the "currentMode"
-    public CanvasDrawingObject[] DrawingObjects => new CanvasDrawingObject[2] { freehandLinePrefab, null };
-    // Current drawing object based on "currentMode"
-    public CanvasDrawingObject CurrentDrawingObject => DrawingObjects[(int)currentMode];
-    public float CurrentStrokeThickness => STROKE_THICKNESS[(int)currentWeight];
+    public int CurrentStrokeThickness => STROKE_THICKNESS[(int)currentWeight];
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
-    [Tooltip("Reference to the cursor used to draw objects")]
-    private DrawingCursor cursor = new DrawingCursor();
+    [Tooltip("Rect transform of this canvas")]
+    private RectTransform rectTransform;
     [SerializeField]
-    [Tooltip("Reference to the prefab to create for freehand lines")]
-    private FreehandLine freehandLinePrefab;
+    [Tooltip("Background color of the canvas")]
+    private Color backgroundColor;
 
     [Space]
 
@@ -57,131 +53,47 @@ public class DrawingCanvas : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField]
     [Tooltip("Current weight of the lines to draw")]
     private StrokeWeight currentWeight;
+    #endregion
 
-    [SerializeField]
-    private int texturePixelSize;
-    [SerializeField, Range(0, 1)]
-    private float canvasBackgroundTransparency;
-    private Texture2D DrawingTexture;
-    private Material DrawingMaterial;
-    private Color defaultColor;
+    #region Private Fields
+    private Texture2D drawingTexture;
+    private Material drawingMaterial;
     #endregion
 
     #region Public Methods
-    public void OnBeginDrag(PointerEventData data)
-    {
-        Debug.Log("Started dragging");
-        cursor.StartDrawing(this, data.position);
-    }
     public void OnDrag(PointerEventData data)
     {
-        cursor.UpdateDrawing(data.position);
-    }
-    public void OnEndDrag(PointerEventData data)
-    {
-        cursor.FinishDrawing();
+        // Get the position of the mouse inside the rect
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, data.position, null, out Vector2 localMousePoint);
+
+        // Transform local mouse point to the bottom left, instead of measuring from center
+        localMousePoint -= rectTransform.rect.size / 2f;
+
+        // Draw a circle at this position
+        drawingTexture.FillCircle((int)localMousePoint.x, (int)localMousePoint.y, CurrentStrokeThickness, CurrentColor);
+        drawingTexture.Apply();
     }
     #endregion
 
-    #region Monobehaviour Callbacks
+    #region Monobehaviour Messages
     private void Start()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
 
-        DrawingTexture = new Texture2D((int)rectTransform.rect.width / texturePixelSize, (int)rectTransform.rect.height / texturePixelSize);
-        defaultColor = Color.white;
-        defaultColor.a = canvasBackgroundTransparency;
-        for (int i = 0; i < DrawingTexture.width; ++i)
+        // Create a new texture to use for freehand drawings
+        drawingTexture = new Texture2D((int)rectTransform.rect.width, (int)rectTransform.rect.height);
+        for (int i = 0; i < drawingTexture.width; ++i)
         {
-            for (int j = 0; j < DrawingTexture.height; ++j)
+            for (int j = 0; j < drawingTexture.height; ++j)
             {
-                DrawingTexture.SetPixel(i, j, defaultColor);
+                drawingTexture.SetPixel(i, j, backgroundColor);
             }
         }
-        DrawingTexture.Apply();
-        DrawingTexture.filterMode = FilterMode.Point;
-        DrawingMaterial = GetComponent<Image>().material;
-        DrawingMaterial.SetTexture("_MainTex", DrawingTexture);
-    }
+        drawingTexture.filterMode = FilterMode.Point;
+        drawingTexture.Apply();
 
-    private void Update()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            // calculate line
-
-            PaintCircleOnTexture(Input.mousePosition, 8, Color.red);
-        }
-    }
-
-    private void PaintCircleOnTexture(Vector3 mouseCoordinate, float radius, Color color)
-    {
-        Vector3[] corners = new Vector3[4];
-        GetComponent<RectTransform>().GetWorldCorners(corners);
-
-        float canvasWidth = corners[2].x - corners[0].x;
-        float canvasHeight = corners[2].y - corners[0].y;
-        // 0 is bottom left, 2 is top right
-
-        for (int i = 0; i < DrawingTexture.width; ++i)
-        {
-            for (int j = 0; j < DrawingTexture.height; ++j)
-            {
-                Vector3 pixelWorldPosition = new Vector3((float)i / DrawingTexture.width * canvasWidth, (float)j / DrawingTexture.height * canvasHeight, 0) + corners[0];
-
-                if (Vector3.Distance(pixelWorldPosition, mouseCoordinate) < radius)
-                {
-                    DrawingTexture.SetPixel(i, j, color);
-                }
-            }
-        }
-
-        DrawingTexture.Apply();
-        DrawingMaterial.SetTexture("_MainTex", DrawingTexture);
-    }
-
-    private void EraseCircleOnTexture(Vector3 mouseCoordinate, float radius, Color color)
-    {
-        Vector3[] corners = new Vector3[4];
-        GetComponent<RectTransform>().GetWorldCorners(corners);
-
-        float canvasWidth = corners[2].x - corners[0].x;
-        float canvasHeight = corners[2].y - corners[0].y;
-        // 0 is bottom left, 2 is top right
-
-        for (int i = 0; i < DrawingTexture.width; ++i)
-        {
-            for (int j = 0; j < DrawingTexture.height; ++j)
-            {
-                Vector3 pixelWorldPosition = new Vector3((float)i / DrawingTexture.width * canvasWidth, (float)j / DrawingTexture.height * canvasHeight, 0) + corners[0];
-
-                if (Vector3.Distance(pixelWorldPosition, mouseCoordinate) < radius)
-                {
-                    DrawingTexture.SetPixel(i, j, defaultColor);
-                }
-            }
-        }
-
-        DrawingTexture.Apply();
-        DrawingMaterial.SetTexture("_MainTex", DrawingTexture);
-    }
-
-    private void EraseAllColorsOnTexture()
-    {
-        for (int i = 0; i < DrawingTexture.width; ++i)
-        {
-            for (int j = 0; j < DrawingTexture.height; ++j)
-            {
-                DrawingTexture.SetPixel(i, j, defaultColor);
-            }
-        }
-
-        DrawingTexture.Apply();
-        DrawingMaterial.SetTexture("_MainTex", DrawingTexture);
-    }
-
-    private void LateUpdate()
-    {
+        // Get the material on the image and set the texture of the material
+        GetComponent<Image>().material.SetTexture("_MainTex", drawingTexture);
     }
     #endregion
 }

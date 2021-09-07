@@ -9203,14 +9203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b0123c243caf09f47935f30acafb3ec4, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 61225a1cf6d07c94a88b36a951d825f2, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9232,8 +9232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3b7894cbae99a4db4bf52f3016b7ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freehandLinePrefab: {fileID: 6158799120692070900, guid: a7e85cb62e9c3724295e2a98c1d175ad,
-    type: 3}
+  rectTransform: {fileID: 954257544398074017}
+  backgroundColor: {r: 1, g: 1, b: 1, a: 0.2627451}
   currentMode: 0
   currentColor: {r: 1, g: 0, b: 0, a: 1}
   currentWeight: 0
