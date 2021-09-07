@@ -267,12 +267,7 @@ public class TerrainNeedSystem : NeedSystem
                 foreach(Population population in populationSet)
                 {
                     string needName = tile.ToString();
-                    if (needName.Equals("Liquid"))
-                    {
-                        population.UpdateNeed(needName, GameManager.Instance.m_reservePartitionManager.GetLiquidComposition(population).Count);
-                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + GameManager.Instance.m_reservePartitionManager.GetLiquidComposition(population).Count);
-                    }
-                    else if(tilesAllocated[population].ContainsKey(tile)) {
+                    if(tilesAllocated[population].ContainsKey(tile)) {
                         population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
                         //Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
                     }
