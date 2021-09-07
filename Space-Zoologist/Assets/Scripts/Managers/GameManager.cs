@@ -198,17 +198,7 @@ public class GameManager : MonoBehaviour
         // set the food source dictionary
         foreach (FoodSourceSpecies foodSource in m_levelData.FoodSourceSpecies)
         {
-            foreach (LevelData.ItemData data in m_levelData.ItemQuantities)
-            {
-                Item item = data.itemObject;
-                if (item)
-                {
-                    if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName) && !FoodSources.ContainsKey(item.ID))
-                    {
-                        this.FoodSources.Add(item.ID, foodSource);
-                    }
-                }
-            }
+            this.FoodSources.Add(foodSource.SpeciesName, foodSource);
         }
 
         // set the animal dictionary
