@@ -39,6 +39,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GridInfoTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GridInformationTexture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -72,7 +76,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TileAtlas:
-        m_Texture: {fileID: 2800000, guid: d92a3bb850d22154baea500709ad2697, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a6d2da94b0e1b142b8c0e70b59d1906, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -96,10 +100,11 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _RoundingDist: 0.577
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TileNoiseDistribution: 88.13
+    - _TileNoiseDistribution: 0.19
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

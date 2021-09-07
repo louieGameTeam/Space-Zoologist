@@ -233,8 +233,8 @@ public class GridSystem : MonoBehaviour
         // add texture to material
         TilemapTexture.Apply();
         TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
-        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
-        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+        renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
+        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTexDim", new Vector2(ReserveWidth, ReserveHeight));
         HighlightedTiles = new List<Vector3Int>();
 
         for (int i = 0; i < ReserveWidth; ++i)
@@ -338,8 +338,8 @@ public class GridSystem : MonoBehaviour
                 TilemapTexture = newTilemapTexture;
 
                 TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
-                renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
-                Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTextureDimensions", new Vector2(ReserveWidth, ReserveHeight));
+                renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
+                Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTexDim", new Vector2(ReserveWidth, ReserveHeight));
 
                 if (tile.type == TileType.Liquid)
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
@@ -1175,7 +1175,7 @@ public class GridSystem : MonoBehaviour
 
         // add to propertyblock
         TilemapRenderer renderer = tilemap.GetComponent<TilemapRenderer>();
-        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
+        renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
     }
 
     /// <summary>
@@ -1206,7 +1206,7 @@ public class GridSystem : MonoBehaviour
 
         // add to propertyblock
         TilemapRenderer renderer = tilemap.GetComponent<TilemapRenderer>();
-        renderer.sharedMaterial.SetTexture("_GridInformationTexture", TilemapTexture);
+        renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
     }
     public void ToggleGridOverlay()
     {
