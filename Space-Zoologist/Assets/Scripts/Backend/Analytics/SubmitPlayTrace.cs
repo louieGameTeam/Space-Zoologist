@@ -6,11 +6,12 @@ using System.Text;
 
 public class SubmitPlayTrace : MonoBehaviour
 {
-    [SerializeField] private static string playtraceEndpoint = "http://127.0.0.1:13756/traces/playtrace";
+    [SerializeField] private static string prodPlaytraceEndpoint = "http://spacezoologist.herokuapp.com/traces/playtrace"; 
+    [SerializeField] private static string devPlaytraceEndpoint = "http://127.0.0.1:13756/traces/playtrace";
 
     public static IEnumerator TrySubmitPlayTrace(string json)
     {
-        var request = new UnityWebRequest(playtraceEndpoint, "POST");
+        var request = new UnityWebRequest(prodPlaytraceEndpoint, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
         request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
