@@ -70,12 +70,12 @@ public class CameraController : MonoBehaviour
         float accleration = WASDAcceleration * zoomScalar * Time.deltaTime;
         float maxSpeed = WASDSpeed * zoomScalar;
 
-        if (Input.GetKey(KeyCode.A) && ControlsEnabled) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && ControlsEnabled) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
         {
             if(xValue > -maxSpeed)
                 xValue -= accleration;
         }
-        else if (Input.GetKey(KeyCode.D) && ControlsEnabled) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
+        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && ControlsEnabled) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
         {
             if(xValue < maxSpeed)
                 xValue += accleration;
@@ -89,12 +89,12 @@ public class CameraController : MonoBehaviour
             xValue -= accleration * Mathf.Sign(xValue);
         }
 
-        if (Input.GetKey(KeyCode.S) && ControlsEnabled) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
+        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && ControlsEnabled) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
         {
             if(yValue > -maxSpeed)
                 yValue -= accleration;
         }
-        else if (Input.GetKey(KeyCode.W) && ControlsEnabled) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
+        else if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && ControlsEnabled) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
         {
             if(yValue < maxSpeed)
                 yValue += accleration;
