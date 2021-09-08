@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class ResourceRequestListEditor : NotebookUIChild
 {
-    [SerializeField]
-    [Tooltip("Script used to pick the enclosure we are currently taking notes on")]
-    private EnclosureIDPicker enclosurePicker;
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
     private ResourceRequestEditor editorPrefab;
@@ -17,19 +15,14 @@ public class ResourceRequestListEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Reference to the scroll rect that the editors will fit into")]
     private ScrollRect editorScroller;
+    #endregion
 
+    #region Private Fields
     private List<ResourceRequestEditor> currentEditors = new List<ResourceRequestEditor>();
+    #endregion
 
-    public override void Setup()
-    {
-        base.Setup();
-
-        // Add listener for the enclosure picked event
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureSelected);
-        OnEnclosureSelected(EnclosureID.FromCurrentSceneName());
-    }
-
-    private void OnEnclosureSelected(EnclosureID id)
+    #region Public Methods
+    public void UpdateListEdited(EnclosureID id, ResourceRequestList list)
     {
         // Destroy all existing editors
         foreach (ResourceRequestEditor editor in currentEditors)
@@ -39,11 +32,15 @@ public class ResourceRequestListEditor : NotebookUIChild
         // Clear out the list
         currentEditors.Clear();
 
+        // Get the requests and sort them
+        List<ResourceRequest> sortedRequests = new List<ResourceRequest>(list.Requests);
+        sortedRequests.Sort();
+
         // Foreach entry in the selected list, add an editor
-        foreach (ResourceRequest request in UIParent.Notebook.GetResourceRequestList(id).Requests)
+        foreach (ResourceRequest request in sortedRequests)
         {
             ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-            editor.Setup(id, request, editorScroller);
+            editor.Setup(id, request, editorScroller, SortEditors);
             currentEditors.Add(editor);
         }
 
@@ -54,17 +51,73 @@ public class ResourceRequestListEditor : NotebookUIChild
             CreateAddingEntry();
         }
     }
+    public void UpdateReviewUI()
+    {
+        foreach(ResourceRequestEditor editor in currentEditors)
+        {
+            editor.UpdateReviewUI();
+        }
+        // Reorder them visually
+        SortEditors();
+    }
+    #endregion
 
+    #region Private Methods
     private void OnNewEntryCreated()
     {
         CreateAddingEntry();
     }
-
     private void CreateAddingEntry()
     {
         ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller);
+        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller, SortEditors);
         editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
+
+        // Sort the editors now that the new one is added
+        SortEditors();
     }
+    private void SortEditors()
+    {
+        currentEditors.Sort((x, y) => ResourceRequestVisualComparer(x.Request, y.Request));
+
+        // Set the sibling index of each editor transform
+        for(int i = 0; i < currentEditors.Count; i++)
+        {
+            currentEditors[i].RectTransform.SetSiblingIndex(i);
+        }
+    }
+    private int ResourceRequestVisualComparer(ResourceRequest x, ResourceRequest y)
+    {
+        // If x is null check if y is null
+        if (x == null)
+        {
+            // If y is not null
+            if (y != null)
+            {
+                // null goes below not reviewed requests and above reviewed requests
+                if (y.CurrentStatus == ResourceRequest.Status.NotReviewed) return 1;
+                else return -1;
+            }
+            // Nulls are equal
+            else return 0;
+        }
+        // If x is not null and y is null
+        else if (y == null)
+        {
+            // not reviewed requests go above null
+            if (x.CurrentStatus == ResourceRequest.Status.NotReviewed) return -1;
+            // reviewed requests go below null
+            else return 1;
+        }
+        // If x and y are not null
+        else
+        {
+            // Sort by higher priority for equal statuses
+            if (x.CurrentStatus == y.CurrentStatus) return y.Priority.CompareTo(x.Priority);
+            // Unequal status compare by status
+            else return x.CurrentStatus.CompareTo(y.CurrentStatus);
+        }
+    }
+    #endregion
 }
