@@ -7,12 +7,12 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
-    private const float cameraAccel = 0.75f;
     private const float deadzone = 0.01f;
 
     public bool ControlsEnabled { get; set; } = true;
 
     [SerializeField] float WASDSpeed = 0.5f;
+    [SerializeField] float WASDAcceleration = 0.75f;
     [SerializeField] private float zoomLerpSpeed = 5f;
     [SerializeField] bool EdgeMovement = false;
     [SerializeField] private float edgeSpeed = 5f;
@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour
         float yValue = currentVelocity.y;
         float zoomScalar = targetZoom/zoomHeight; //Scale the camera's speed by the zoom amount
 
-        float accleration = cameraAccel * zoomScalar * Time.deltaTime;
+        float accleration = WASDAcceleration * zoomScalar * Time.deltaTime;
         float maxSpeed = WASDSpeed * zoomScalar;
 
         if (Input.GetKey(KeyCode.A) && ControlsEnabled) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
