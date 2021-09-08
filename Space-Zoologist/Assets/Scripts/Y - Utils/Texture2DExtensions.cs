@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Texture2DExtensions
 {
+    #region Public Extension Methods
     public static Texture2D SetAllPixels(this Texture2D tex, Color c)
     {
         for(int x = 0; x < tex.width; x++)
@@ -71,4 +72,35 @@ public static class Texture2DExtensions
 
         return texture;
     }
+    public static Texture2D StrokeThickLine(this Texture2D texture, int x1, int y1, int x2, int y2, int t, Color c)
+    {
+        // Different in x values
+        int xDiff = Mathf.Abs(x2 - x1);
+        // Difference in y values. It must be negative
+        int yDiff = Mathf.Abs(y2 - y1);
+
+        // If x difference is bigger, thick line is drawn with vertical cap
+        if(xDiff > yDiff)
+        {
+            for(int dy = -(t / 2); dy <= (t / 2); dy++)
+            {
+                texture.StrokeLine(x1, y1 + dy, x2, y2 + dy, c);
+            }
+        }
+        // If y difference is bigger, thick line is drawn with horizontal cap
+        else
+        {
+            for (int dx = -(t / 2); dx <= (t / 2); dx++)
+            {
+                texture.StrokeLine(x1 + dx, y1, x2 + dx, y2, c);
+            }
+        }
+
+        return texture;
+    }
+    #endregion
+
+    #region Private Methods
+    //private static void StrokeLineOverlap(Texture2D texture) 
+    #endregion
 }

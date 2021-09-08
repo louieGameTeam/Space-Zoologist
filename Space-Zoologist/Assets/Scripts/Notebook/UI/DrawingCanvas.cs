@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DrawingCanvas : MonoBehaviour, IDragHandler
+public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
 {
     #region Constants 
     public static readonly int[] STROKE_THICKNESS = { 10, 20, 40 };
@@ -39,6 +39,12 @@ public class DrawingCanvas : MonoBehaviour, IDragHandler
     [Tooltip("Rect transform of this canvas")]
     private RectTransform rectTransform;
     [SerializeField]
+    [Tooltip("Image used to render the drawing material")]
+    private Image image;
+    [SerializeField]
+    [Tooltip("Material to draw on")]
+    private Material drawingMaterial;
+    [SerializeField]
     [Tooltip("Background color of the canvas")]
     private Color backgroundColor;
 
@@ -57,43 +63,54 @@ public class DrawingCanvas : MonoBehaviour, IDragHandler
 
     #region Private Fields
     private Texture2D drawingTexture;
-    private Material drawingMaterial;
+    private Vector2 previousTexturePosition = Vector2.zero;
     #endregion
 
     #region Public Methods
+    public void OnBeginDrag(PointerEventData data)
+    {
+        previousTexturePosition = MousePositionToPositionInTexture(data.position);
+    }
     public void OnDrag(PointerEventData data)
     {
-        // Get the position of the mouse inside the rect
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, data.position, null, out Vector2 localMousePoint);
-
-        // Transform local mouse point to the bottom left, instead of measuring from center
-        localMousePoint -= rectTransform.rect.size / 2f;
+        Vector2 currentTexturePosition = MousePositionToPositionInTexture(data.position);
 
         // Draw a circle at this position
-        drawingTexture.FillCircle((int)localMousePoint.x, (int)localMousePoint.y, CurrentStrokeThickness, CurrentColor);
+        drawingTexture.StrokeThickLine((int)previousTexturePosition.x, 
+            (int)previousTexturePosition.y, 
+            (int)currentTexturePosition.x, 
+            (int)currentTexturePosition.y, 
+            CurrentStrokeThickness, 
+            currentColor);
         drawingTexture.Apply();
+
+        // Set previous position to current before continuing
+        previousTexturePosition = currentTexturePosition;
     }
     #endregion
 
     #region Monobehaviour Messages
     private void Start()
     {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-
-        // Create a new texture to use for freehand drawings
+        // Make the image render the material
+        image.material = drawingMaterial;
+        // Create a new drawing texture
         drawingTexture = new Texture2D((int)rectTransform.rect.width, (int)rectTransform.rect.height);
-        for (int i = 0; i < drawingTexture.width; ++i)
-        {
-            for (int j = 0; j < drawingTexture.height; ++j)
-            {
-                drawingTexture.SetPixel(i, j, backgroundColor);
-            }
-        }
-        drawingTexture.filterMode = FilterMode.Point;
+        drawingTexture.SetAllPixels(backgroundColor);
         drawingTexture.Apply();
+        // Make the material show the texture that will actually be modified
+        drawingMaterial.SetTexture("_MainTex", drawingTexture);
+    }
+    #endregion
 
-        // Get the material on the image and set the texture of the material
-        GetComponent<Image>().material.SetTexture("_MainTex", drawingTexture);
+    #region Private Methods
+    private Vector2 MousePositionToPositionInTexture(Vector2 mousePosition)
+    {
+        // Get the position of the mouse inside the rect
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, mousePosition, null, out Vector2 localMousePoint);
+
+        // Move mouse point to correct place in texture
+        return localMousePoint - rectTransform.rect.size / 2f;
     }
     #endregion
 }
