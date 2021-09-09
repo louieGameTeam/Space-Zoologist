@@ -41,57 +41,30 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private int ReserveHeight = default;
     // grid is accessed using [y, x] due to 2d array structure
     private TileData[,] TileDataGrid = default;
+    private List<ConstructionCluster> ConstructionClusters;
+    public Vector3Int startTile = default;
     public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
+    private List<Vector3Int> HighlightedTiles;
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
-    [SerializeField] private GameObject bufferGO;
-    private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
-    private bool[,] isConstructing;
-    public bool IsConstructing(int x, int y) => (x < isConstructing.GetLength(0) && y < isConstructing.GetLength(1)) ? isConstructing[x, y] : false;
+    public bool IsConstructing(int x, int y) => (y < TileDataGrid.GetLength(0) && x < TileDataGrid.GetLength(1)) ? TileDataGrid[y, x].isConstructing : false;
     private Action constructionFinishedCallback = null;
 
-    public Vector3Int startTile = default;
-    List<Vector3Int> HighlightedTiles;
     private Texture2D TilemapTexture;
+    [SerializeField] private GameObject bufferGameObject;
+    private Texture2D BufferTexture;
 
     public bool HasTerrainChanged = false;
     public bool IsDrafting { get; private set; }
 
     #region Monobehaviour Callbacks
-    // do something about this
-    private void Initialize()
-    {
-        this.liquidBodies = new HashSet<LiquidBody>();
-        this.previewBodies = new List<LiquidBody>();
-        this.RemovedTiles = new HashSet<Vector3Int>();
-        this.Tilemap.ClearAllTiles();
-
-        LevelData levelData = GameManager.Instance.LevelData;
-        if (levelData == null)
-        {
-            Debug.LogWarning("Level data reference not found, using default width and height values");
-            this.isConstructing = new bool[100, 100];
-        }
-        else
-        {
-            this.isConstructing = new bool[levelData.MapWidth, levelData.MapHeight];
-        }
-    }
 
     private void Start()
     {
-        for (int i = 0; i < ReserveWidth; ++i)
-        {
-            for (int j = 0; j < ReserveHeight; ++j)
-            {
-                ApplyChangesToTilemap(new Vector3Int(i, j, 0));
-            }
-        }
-
         try
         {
             EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
@@ -126,7 +99,11 @@ public class GridSystem : MonoBehaviour
     #region I/O
     public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
     {
-        Initialize();
+        this.liquidBodies = new HashSet<LiquidBody>();
+        this.previewBodies = new List<LiquidBody>();
+        this.RemovedTiles = new HashSet<Vector3Int>();
+        this.Tilemap.ClearAllTiles();
+        ConstructionClusters = new List<ConstructionCluster>();
 
         if (gameTiles == null)
             return;
@@ -229,6 +206,44 @@ public class GridSystem : MonoBehaviour
             // add it to the list
             this.liquidBodies.Add(liquidBody);
         }
+
+        // generate buffer plane
+        Mesh bufferMesh = bufferGameObject.GetComponent<MeshFilter>().mesh;
+        bufferMesh.Clear();
+        Vector3[] bufferMeshVertices = new Vector3[4];
+
+        bufferMeshVertices[0] = new Vector3(0, 0, 0);
+        bufferMeshVertices[1] = new Vector3(ReserveWidth, 0, 0);
+        bufferMeshVertices[2] = new Vector3(0, 0, ReserveHeight);
+        bufferMeshVertices[3] = new Vector3(ReserveWidth, 0, ReserveHeight);
+
+        bufferMesh.vertices = bufferMeshVertices;
+        bufferMesh.triangles = new int[]
+        {
+            2, 1, 0,
+            1, 2, 3
+        };
+        bufferMesh.uv = new Vector2[] {
+            new Vector2(0, 0),
+            new Vector2(1, 0),
+            new Vector2(0, 1),
+            new Vector2(1, 1)
+        };
+        bufferMesh.RecalculateNormals();
+
+        BufferTexture = new Texture2D(ReserveWidth, ReserveHeight);
+        for (int i = 0; i < ReserveWidth; ++i)
+        {
+            for (int j = 0; j < ReserveWidth; ++j)
+                BufferTexture.SetPixel(i, j, new Color(0, 0, 0, 0));
+        }
+        
+        BufferTexture.filterMode = FilterMode.Point;
+        BufferTexture.wrapMode = TextureWrapMode.Repeat;
+        BufferTexture.Apply();
+        Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
+        bufferMaterial.SetTexture("_MainTex", BufferTexture);
+
 
         // add texture to material
         TilemapTexture.Apply();
@@ -509,21 +524,61 @@ public class GridSystem : MonoBehaviour
         {
             return;
         }
-        this.isConstructing[pos.x, pos.y] = true;
-        GameObject newGo = Instantiate(this.bufferGO, this.gameObject.transform);
-        //Debug.Log("Placing item under constuction");
-        newGo.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0);
-        color.a = 1; //Enforce alpha channel to be 1, prevent human error       
-        newGo.GetComponent<SpriteRenderer>().color = color;
-        ConstructionCountdown cc = newGo.GetComponent<ConstructionCountdown>();
-        cc.Initialize(pos, time, progress);
-        Vector4 colorTimePair = new Vector4(color.r, color.g, color.b, time);
-        if (!this.colorTimesToCCs.ContainsKey(colorTimePair))
-        {
-            this.colorTimesToCCs.Add(colorTimePair, new List<ConstructionCountdown>());
-        }
-        this.colorTimesToCCs[colorTimePair].Add(cc);
 
+        // find the total cluster that are adjacent
+        List<ConstructionCluster> adjacentClusters = new List<ConstructionCluster>();
+        foreach (ConstructionCluster cluster in ConstructionClusters)
+        {
+            if (cluster.IsTileAdjacent(pos))
+                adjacentClusters.Add(cluster);
+        }
+        
+        switch (adjacentClusters.Count())
+        {
+            case 0:
+                // nothing adjacent, make a new cluster
+                ConstructionClusters.Add(new ConstructionCluster(pos, time));
+                break;
+            case 1:
+                // check if the timing and color is the same, and if so add it
+                if (adjacentClusters[0].IsMatching(time, color))
+                    adjacentClusters[0].AddTilePosition(pos);
+                break;
+            default:
+                // remove any clusters that aren't matching
+                foreach (ConstructionCluster cluster in adjacentClusters)
+                {
+                    if (!cluster.IsMatching(time, color))
+                        adjacentClusters.Remove(cluster);
+                }
+
+                // merge the rest
+                if (adjacentClusters.Count() != 0)
+                {
+                    ConstructionCluster sourceCluster = adjacentClusters[0];
+                    adjacentClusters.Remove(sourceCluster);
+
+                    foreach (ConstructionCluster cluster in adjacentClusters)
+                    {
+                        // merge into source
+                        sourceCluster.MergeCluster(cluster);
+                        // remove from overall
+                        ConstructionClusters.Remove(cluster);
+                    }
+
+                    // finally add the tile
+                    sourceCluster.AddTilePosition(pos);
+                }
+                break;
+        }
+
+        // update buffer texture
+        BufferTexture.SetPixel(pos.x, pos.y, color);
+        BufferTexture.Apply();
+        Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
+        bufferMaterial.SetTexture("_MainTex", BufferTexture);
+
+        TileDataGrid[pos.x, pos.y].isConstructing = true;
     }
     public void ConstructionFinishedCallback(Action action)
     {
@@ -540,32 +595,9 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    public ConstructionCountdown GetBuffer(Vector2Int pos)
+    public void RemoveBuffer(Vector2Int pos, int size = 1)
     {
-        if (!this.isConstructing[pos.x, pos.y])
-        {
-            return null;
-        }
-        Vector4[] av4 = this.colorTimesToCCs.Keys.ToArray();
-        List<Vector3Int> changedTiles = new List<Vector3Int>();
-        List<ConstructionCountdown>[] aCCs = this.colorTimesToCCs.Values.ToArray();
-        for (int i = this.colorTimesToCCs.Values.Count - 1; i >= 0; i--)
-        {
-            List<ConstructionCountdown> ccs = aCCs[i];
-            for (int j = ccs.Count - 1; j >= 0; j--)
-            {
-                ConstructionCountdown cc = ccs[j];
-                if (pos == cc.position)
-                {
-                    return cc;
-                }
-            }
-        }
-        return null;
-    }
-    public void DestroyBuffer(Vector2Int pos, int size = 1)
-    {
-        if (!this.isConstructing[pos.x, pos.y])
+        if (!TileDataGrid[pos.y, pos.x].isConstructing)
         {
             Debug.Log("No construction buffer to remove, proceeding");
             return;
@@ -579,9 +611,8 @@ public class GridSystem : MonoBehaviour
             }
 
         }
-        Vector4[] av4 = this.colorTimesToCCs.Keys.ToArray();
         List<Vector3Int> changedTiles = new List<Vector3Int>();
-        List<ConstructionCountdown>[] aCCs = this.colorTimesToCCs.Values.ToArray();
+        /*
         for (int i = this.colorTimesToCCs.Values.Count - 1; i >= 0; i--)
         {
             List<ConstructionCountdown> ccs = aCCs[i];
@@ -590,7 +621,7 @@ public class GridSystem : MonoBehaviour
                 ConstructionCountdown cc = ccs[j];
                 if (bufferToRemove.Contains(cc.position))
                 {
-                    this.isConstructing[(int)cc.position.x, (int)cc.position.y] = false;
+                    TileDataGrid[(int)cc.position.y, (int)cc.position.x].isConstructing = false;
                     ccs.RemoveAt(j);
                     changedTiles.Add(new Vector3Int(cc.position.x, cc.position.y, 0));
                     Destroy(cc.gameObject);
@@ -600,7 +631,7 @@ public class GridSystem : MonoBehaviour
             {
                 this.colorTimesToCCs.Remove(av4[i]);
             }
-        }
+        }*/
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
@@ -609,8 +640,9 @@ public class GridSystem : MonoBehaviour
     }
     public void CountDown()
     {
-        Vector4[] av4 = this.colorTimesToCCs.Keys.ToArray();
         List<Vector3Int> changedTiles = new List<Vector3Int>();
+        /*
+        Vector4[] av4 = this.colorTimesToCCs.Keys.ToArray();
         List<ConstructionCountdown>[] aCCs = this.colorTimesToCCs.Values.ToArray();
         for (int i = this.colorTimesToCCs.Values.Count - 1; i >= 0; i--)
         {
@@ -621,7 +653,7 @@ public class GridSystem : MonoBehaviour
                 cc.CountDown();
                 if (cc.IsFinished())
                 {
-                    this.isConstructing[(int)cc.position.x, (int)cc.position.y] = false;
+                    TileDataGrid[(int)cc.position.y, (int)cc.position.x].isConstructing = false;
                     ccs.RemoveAt(j);
                     Vector3Int pos = new Vector3Int(cc.position.x, cc.position.y, 0);
                     changedTiles.Add(pos);
@@ -637,23 +669,12 @@ public class GridSystem : MonoBehaviour
             {
                 this.colorTimesToCCs.Remove(av4[i]);
             }
-        }
+        }*/
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
             GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
-    }
-
-    private Vector3[] GetPositionsAndTimes(List<ConstructionCountdown> cCs)
-    {
-        Vector3[] positions = new Vector3[cCs.Count];
-        for (int i = 0; i < cCs.Count; i++)
-        {
-            Vector2 pos = cCs[i].position;
-            positions[i] = new Vector3(pos.x, pos.y, cCs[i].progress);
-        }
-        return positions;
     }
     #endregion
 
@@ -2150,6 +2171,7 @@ public class GridSystem : MonoBehaviour
         public bool isLiquidBodyChanged { get; private set; } = false;
         public bool isColorChanged { get; private set; } = false;
         public bool isTilePlaceable { get; set; } = false;
+        public bool isConstructing { get; set; } = false;
         public TileData(Vector3Int tilePosition, GameTile tile = null)
         {
             this.Food = null;
@@ -2247,5 +2269,77 @@ public class GridSystem : MonoBehaviour
             this.isColorChanged = false;
             this.isLiquidBodyChanged = false;
         }
+    }
+
+    public class ConstructionCluster
+    {
+        public List<Vector2Int> ConstructionTilePositions { get; private set; }
+        private Vector2Int CenterPosition;
+        private Color color;
+        private int targetDays;
+        private int currentDays;
+
+        public ConstructionCluster(Vector2Int tilePosition, int targetDays)
+        {
+            ConstructionTilePositions.Add(tilePosition);
+            CenterPosition = tilePosition;
+            this.targetDays = targetDays;
+            currentDays = 0;
+        }
+
+        public void MergeCluster(ConstructionCluster cluster)
+        {
+            foreach (Vector2Int tilePosition in cluster.ConstructionTilePositions)
+            {
+                if (!ConstructionTilePositions.Contains(tilePosition))
+                    ConstructionTilePositions.Add(tilePosition);
+            }
+
+            CenterPosition = FindCenter();
+        }
+
+        public void AddTilePosition(Vector2Int tilePosition)
+        {
+            if (!ConstructionTilePositions.Contains(tilePosition))
+            {
+                ConstructionTilePositions.Add(tilePosition);
+                CenterPosition = FindCenter();
+            }
+        }
+
+        private Vector2Int FindCenter()
+        {
+            // first find complete center, possibly outside of the listed tiles
+            Vector2 trueCenter = new Vector2(0, 0);
+            foreach (Vector2Int constructionTilePosition in ConstructionTilePositions)
+                trueCenter += (Vector2)constructionTilePosition;
+            trueCenter /= ConstructionTilePositions.Count();
+
+            // find tile in the list that is closest to the true center
+            Vector2Int tileClosestToTrueCenter = new Vector2Int(-100, -100);
+            foreach (Vector2Int constructionTilePosition in ConstructionTilePositions)
+            {
+                // if the distance from the closest tile right now is less than the new tile
+                if (Vector2.Distance((Vector2)tileClosestToTrueCenter, trueCenter) < Vector2.Distance((Vector2)constructionTilePosition, trueCenter))
+                    // change the center to that
+                    tileClosestToTrueCenter = constructionTilePosition;
+            }
+
+            return tileClosestToTrueCenter;
+        }
+
+        public bool IsTileAdjacent(Vector2Int tilePosition)
+        {
+            foreach (Vector2Int constructionTilePosition in ConstructionTilePositions)
+            {
+                if (Mathf.Abs((tilePosition.x - constructionTilePosition.x) + (tilePosition.y - constructionTilePosition.y)) == 1)
+                    return true;
+            }
+            return false;
+        }
+
+        public bool IsMatching(int targetDays, Color color)  {   return this.targetDays == targetDays && currentDays != 0 && this.color == color;   }
+        public bool IsFinished()                    {   return currentDays >= targetDays;  }
+        public void CountDown()                     {   this.currentDays += 1;  }
     }
 }

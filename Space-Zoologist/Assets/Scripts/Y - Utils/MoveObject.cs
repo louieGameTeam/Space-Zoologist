@@ -258,7 +258,7 @@ public class MoveObject : MonoBehaviour
             if (tileData.currentTile == null)
                 tileData.Clear();
             //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
-            gridSystem.DestroyBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
+            gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
             GameManager.Instance.SubtractFromBalance(-sellBackCost);
         }
         Reset();
@@ -382,6 +382,6 @@ public class MoveObject : MonoBehaviour
         foodSourceManager.DestroyFoodSource(foodSource);
         int sizeShift = foodSource.Species.Size - 1; // Finds the lower left cell the food occupies
         Vector2Int shiftedPos = new Vector2Int(FoodLocation.x - sizeShift, FoodLocation.y - sizeShift);
-        gridSystem.DestroyBuffer(shiftedPos, foodSource.Species.Size);
+        gridSystem.RemoveBuffer(shiftedPos, foodSource.Species.Size);
     }
 }
