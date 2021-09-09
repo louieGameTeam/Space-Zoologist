@@ -15,6 +15,10 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     public enum Mode { Drawing, Erasing }
     #endregion
 
+    #region Private Properties
+    private Color DrawingColor => currentMode == Mode.Drawing ? currentColor : backgroundColor;
+    #endregion
+
     #region Public Properties
     public Mode CurrentMode 
     {
@@ -70,22 +74,38 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     public void OnBeginDrag(PointerEventData data)
     {
         previousTexturePosition = MousePositionToPositionInTexture(data.position);
+
+        // Fill a circle as the cap of this line
+        drawingTexture.FillCircle((int)previousTexturePosition.x, 
+            (int)previousTexturePosition.y, 
+            CurrentStrokeThickness / 2, 
+            DrawingColor);
     }
     public void OnDrag(PointerEventData data)
     {
         Vector2 currentTexturePosition = MousePositionToPositionInTexture(data.position);
 
-        // Draw a circle at this position
+        // Draw a line connecting this and the previous position
         drawingTexture.StrokeThickLine((int)previousTexturePosition.x, 
-            (int)previousTexturePosition.y, 
-            (int)currentTexturePosition.x, 
-            (int)currentTexturePosition.y, 
-            CurrentStrokeThickness, 
-            currentColor);
-        drawingTexture.Apply();
+                (int)previousTexturePosition.y, 
+                (int)currentTexturePosition.x, 
+                (int)currentTexturePosition.y, 
+                CurrentStrokeThickness, 
+                currentColor)
+            // Draw a circle to cap this line
+            .FillCircle((int)currentTexturePosition.x, 
+                (int)currentTexturePosition.y, 
+                CurrentStrokeThickness / 2,
+                DrawingColor)
+            // Apply the changes
+            .Apply();
 
         // Set previous position to current before continuing
         previousTexturePosition = currentTexturePosition;
+    }
+    public void Clear()
+    {
+        drawingTexture.SetAllPixels(backgroundColor).Apply();
     }
     #endregion
 
