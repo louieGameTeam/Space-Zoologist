@@ -64,10 +64,4 @@ public class MoveAwayFromWithEmoji : BehaviorPattern
         base.ExitPattern(gameObject, callCallback);
     }
 
-    protected override void ForceExit(GameObject gameObject)
-    {
-        // Debug.Log("Overlay DISABLED " + gameObject.GetComponent<AnimalBehaviorManager>().activeBehaviorPatterns[0].gameObject.name);
-        gameObject.GetComponent<Animal>().Overlay.enabled = false;
-        base.ForceExit(gameObject);
-    }
 }
