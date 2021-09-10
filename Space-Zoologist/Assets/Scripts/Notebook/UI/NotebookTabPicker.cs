@@ -44,7 +44,7 @@ public class NotebookTabPicker : NotebookUIChild
         {
             NotebookTabSelectButton button = Instantiate(buttonPrefab, parent.transform);
             // Only the first selector will be on. NOTE: this invokes "OnTabSelected" immediately
-            button.Setup(tabs[i], parent, OnTagSelected, i == 0);
+            button.Setup(tabs[i], parent, OnTagSelected);
             // Add this button to the list
             buttons.Add(button);
         }
