@@ -15,7 +15,6 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
-    private Grid grid;
     private Vector3Int lastPlacedTile;
     private List<GameTile> referencedTiles = new List<GameTile>();
     private bool isFirstTile;
@@ -53,7 +52,7 @@ public class TilePlacementController : MonoBehaviour
         if (isPreviewing) // Update for preview
         {
             Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            this.currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
+            this.currentMouseCellPosition = gridSystemReference.WorldToCell(mouseWorldPosition);
             this.PlacementPaused = false;
             if (this.currentMouseCellPosition != this.lastMouseCellPosition || this.isFirstTile)
             {
