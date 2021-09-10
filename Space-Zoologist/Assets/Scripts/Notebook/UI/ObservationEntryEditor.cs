@@ -8,6 +8,9 @@ using TMPro;
 public class ObservationEntryEditor : NotebookUIChild
 {
     [SerializeField]
+    [Tooltip("Canvas group used to control alpha of all graphics")]
+    private CanvasGroup group;
+    [SerializeField]
     [Tooltip("Input field used to edit the title of the observations")]
     private TMP_InputField titleInput;
     [SerializeField]
@@ -35,6 +38,10 @@ public class ObservationEntryEditor : NotebookUIChild
         // Input only interactable if the id for this editor is the same as the current id
         titleInput.readOnly = id != current;
         textInput.readOnly = id != current;
+
+        // Dim the elements if they are not interactable
+        if (id == current) group.alpha = 1f;
+        else group.alpha = 0.5f;
 
         // Add scroll interceptor to the title input
         OnScrollEventInterceptor interceptor = titleInput.gameObject.AddComponent<OnScrollEventInterceptor>();

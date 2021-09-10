@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class NotebookUI : MonoBehaviour
 {
+    [System.Serializable]
+    public class BoolEvent : UnityEvent<bool> { }
+
     // Public accessors
     public NotebookModel Notebook => notebook;
-    public LevelDataReference LevelDataReference => levelDataReference;
     public UnityEvent OnContentChanged => onContentChanged;
+    public BoolEvent OnNotebookToggle => onNotebookToggle;
 
     [SerializeField]
     [Expandable]
@@ -21,16 +24,16 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
     private UnityEvent onContentChanged;
+    [SerializeField]
+    [Tooltip("Event invoked each time the notebook is enabled/disabled")]
+    private BoolEvent onNotebookToggle;
 
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
-    // Referene to the data for this level
-    private LevelDataReference levelDataReference;
     private bool isOpen = false;
 
-    // I thought that this was called when the game object is inactive but apparently it is not
-    private void Awake()
+    private void Start()
     {
         // Setup the notebook at the start
         notebook.Setup();
@@ -44,9 +47,6 @@ public class NotebookUI : MonoBehaviour
         {
             nameTargetMap.Add(bookmarkTarget.name, bookmarkTarget);
         }
-
-        // Find the level data reference in the scene
-        levelDataReference = FindObjectOfType<LevelDataReference>();
 
         // Setup all children, ensuring correct initialization order
         NotebookUIChild[] children = GetComponentsInChildren<NotebookUIChild>(true);
@@ -64,8 +64,8 @@ public class NotebookUI : MonoBehaviour
     {
         this.isOpen = isOpen;
         gameObject.SetActive(isOpen);
+        onNotebookToggle.Invoke(isOpen);
     }
-
     public void NavigateToBookmark(Bookmark bookmark)
     {
         bookmark.Navigate(nameTargetMap);

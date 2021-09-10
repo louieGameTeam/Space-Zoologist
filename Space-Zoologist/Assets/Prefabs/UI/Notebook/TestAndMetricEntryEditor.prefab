@@ -816,6 +816,7 @@ GameObject:
   - component: {fileID: 169569767507076209}
   - component: {fileID: 1265731591943683985}
   - component: {fileID: 4568447998653275226}
+  - component: {fileID: 291669096375991072}
   m_Layer: 5
   m_Name: TestAndMetricEntryEditor
   m_TagString: Untagged
@@ -893,6 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f1c5e3f4108e048a41eed685046eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  group: {fileID: 291669096375991072}
   researchCategoryDropdown: {fileID: 5568112994967482379}
   needDropdown: {fileID: 294207407042786445}
   differenceDropdown: {fileID: 4841366615052725366}
@@ -933,6 +935,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232a2b82eeb663843ba3e2f4dd72a13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &291669096375991072
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699916864411835190}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5825418843702952588
 GameObject:
   m_ObjectHideFlags: 0

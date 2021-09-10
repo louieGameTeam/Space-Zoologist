@@ -1,10 +1,17 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Plot/Testers/MapDesignUIHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs">
     <Files>
-      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" Line="33" Column="1" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" Line="76" Column="1" />
-      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="160" Column="45" />
+      <File FileName="Assets/Scripts/Audio/MusicManager.cs" Line="89" Column="22" />
+      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" />
+      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" />
+      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="656" Column="21" />
       <File FileName="Assets/Scripts/Plot/Testers/MapDesignUIHandler.cs" Line="14" Column="73" />
+      <File FileName="Assets/Resources/Audio/Scripts/CustomMusicLoopController.cs" Line="31" Column="28" />
+      <File FileName="Assets/Scripts/LevelData/LevelDataReference.cs" Line="5" Column="29" />
+      <File FileName="Assets/Scripts/LevelData/LevelData.cs" Line="34" Column="27" />
+      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="32" Column="55" />
+      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="270" Column="50" />
+      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="14" Column="50" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -32,9 +39,7 @@
               </Node>
               <Node name="Resources" expanded="True">
                 <Node name="Audio" expanded="True">
-                  <Node name="For Build Use (07-29) - new audio system" expanded="True">
-                    <Node name="Scripts" expanded="True" />
-                  </Node>
+                  <Node name="Scripts" expanded="True" />
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
@@ -51,9 +56,7 @@
                 <Node name="Plot" expanded="True">
                   <Node name="Grid" expanded="True" />
                   <Node name="RPS" expanded="True" />
-                  <Node name="Testers" expanded="True">
-                    <Node name="MapDesignUIHandler.cs" selected="True" />
-                  </Node>
+                  <Node name="Testers" expanded="True" />
                   <Node name="Tiles" expanded="True" />
                 </Node>
                 <Node name="PopulationSystem" expanded="True">
@@ -62,7 +65,9 @@
                   <Node name="Representation" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
-                  <Node name="Inspector" expanded="True" />
+                  <Node name="Inspector" expanded="True">
+                    <Node name="DisplayInspectorText.cs" selected="True" />
+                  </Node>
                   <Node name="Store" expanded="True">
                     <Node name="Sections" expanded="True" />
                   </Node>
@@ -81,10 +86,10 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c4b7545e-b7f3-4edd-b80f-0477ac5dcd6c" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d40943e4-46ae-4e4a-9110-e5b0f38b042c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
+      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist.nosync/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
