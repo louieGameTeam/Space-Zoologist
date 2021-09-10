@@ -181,19 +181,16 @@ namespace DialogueEditor
                 case eState.Idle:
                     {
                         m_stateTime += Time.deltaTime;
-
-                        if (m_currentSpeech.AutomaticallyAdvance)
+                        if (m_currentSpeech.Dialogue != null || m_currentSpeech.Options == null || m_currentSpeech.Options.Count == 0)
                         {
-                            if (m_currentSpeech.Dialogue != null || m_currentSpeech.Options == null || m_currentSpeech.Options.Count == 0)
+                            if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
-                                if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
+                                if (Input.GetMouseButtonDown(0) || skipping)
                                 {
-                                    UpdateNextSpeech();
                                     SetState(eState.TransitioningOptionsOff);
                                 }
                             }
                         }
-                    
                     }
                     break;
 
@@ -264,15 +261,6 @@ namespace DialogueEditor
                     break;
                 case eState.freeze:
                     break;
-            }
-        }
-
-        public void UpdateNextSpeech()
-        {
-            if (m_currentSpeech.Options.Count == 0)
-            {
-                SetState(eState.TransitioningOptionsOff);
-                m_currentSpeech.Event?.Invoke();
             }
         }
 
@@ -579,7 +567,7 @@ namespace DialogueEditor
 
 
             // Call the event
-            // speech.Event?.Invoke();
+            speech.Event?.Invoke();
 
             // Play the audio
             if (speech.Audio != null)
