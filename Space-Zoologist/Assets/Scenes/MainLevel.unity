@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3108,8 +3108,8 @@ MonoBehaviour:
           m_StringArgument: Clicked
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: toggleDrafting
+      - m_Target: {fileID: 765609361}
+        m_MethodName: ToggleDrafting
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7597,7 +7597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26fec6d600a584107a0137ea49b1dd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WASDSpeed: 0.3
+  WASDSpeed: 0.15
+  WASDAcceleration: 0.75
   zoomLerpSpeed: 5
   EdgeMovement: 0
   edgeSpeed: 10
@@ -9098,7 +9099,7 @@ PrefabInstance:
     - target: {fileID: 2930226115976658693, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -24.999878
+      value: -24.999756
       objectReference: {fileID: 0}
     - target: {fileID: 2946712157590739147, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
@@ -9183,7 +9184,7 @@ PrefabInstance:
     - target: {fileID: 5457110591860775917, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -24.999878
+      value: -24.999756
       objectReference: {fileID: 0}
     - target: {fileID: 5603727996679447543, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
@@ -11699,6 +11700,11 @@ PrefabInstance:
         type: 3}
       propertyPath: nextMusicSource
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380176, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
@@ -14582,8 +14588,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14, y: 200}
-  m_SizeDelta: {x: 600, y: 200}
+  m_AnchoredPosition: {x: 675, y: -315}
+  m_SizeDelta: {x: 550, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105030991
 MonoBehaviour:
@@ -14708,6 +14714,7 @@ MonoBehaviour:
   GameOverHUD: {fileID: 602359351}
   gameOverTitle: {fileID: 1043611555}
   gameOverText: {fileID: 740143009}
+  notebookUI: {fileID: 9730707}
   maxDay: 20
   CurrentDayText: {fileID: 1549372359}
   PauseButton: {fileID: 915008188}

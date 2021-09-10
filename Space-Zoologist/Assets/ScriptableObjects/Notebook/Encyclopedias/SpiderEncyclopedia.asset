@@ -22,7 +22,7 @@ MonoBehaviour:
       terrain using intricate webs. The animal and its extruded silk vary between
       blues and greens. Thalassius Succo was observed to survive in three different
       terrain types, despite an increase of predators in grasslands.
-    image: {fileID: 0}
+    sprites: []
   - id:
       title: Transport Log
       author: Barry Wachmann
@@ -32,7 +32,8 @@ MonoBehaviour:
       them, though. They seemed to like eating insects and various types of mushrooms.
       They\u2019re pretty small, so they didn\u2019t consume much of my stock, maybe
       3-5 bits of food per animal."
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: b46f15e84e38f7143a572ed58719e996, type: 3}
   - id:
       title: Observation Log
       author: Juno Fornax
@@ -42,7 +43,8 @@ MonoBehaviour:
       \r\n\r\nMarch 29, 3020, 12:00 pm\r\nIncoming report of Thalassius Succo sighted
       in the Atacail Desert. Odd. Given the species\u2019 previous adherence to rock
       and grass-based terrain, this is highly unusual. Repositioning now."
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: d0fd6c20946694a4984aeeb24b0b9d21, type: 3}
   - id:
       title: Research Abstract
       author: Juno Fornax
@@ -55,4 +57,5 @@ MonoBehaviour:
       Due to its natural proximity to water, however, Thalassius Succo appears to
       be prey to Humidum Limax. Further predator-prey relationships necessitate further
       study and experimentation with differing species."
-    image: {fileID: 0}
+    sprites:
+    - {fileID: 21300000, guid: 0e539e0d91146074ea5b6ebb769db90b, type: 3}

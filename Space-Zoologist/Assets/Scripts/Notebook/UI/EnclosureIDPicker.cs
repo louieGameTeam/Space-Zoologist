@@ -18,7 +18,6 @@ public class EnclosureIDPicker : NotebookUIChild
     private const string enclosurePrefix = "Enclosure ";
     #endregion
 
-    // Public accessors
     #region Public Properties
     public EnclosureIDEvent OnEnclosureIDPicked => onEnclosureIDPicked;
     public EnclosureID CurrentEnclosureID
