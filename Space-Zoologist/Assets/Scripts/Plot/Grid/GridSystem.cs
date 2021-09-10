@@ -252,6 +252,7 @@ public class GridSystem : MonoBehaviour
         Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
         bufferMaterial.SetTexture("_MainTex", BufferTexture);
         bufferMaterial.SetTexture("_CenterTex", BufferCenterTexture);
+        bufferGameObject.GetComponent<MeshRenderer>().sortingOrder = 100;
 
 
         // add texture to material
@@ -527,7 +528,7 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region Building Functions
-    public void CreateUnitBuffer(Vector2Int pos, int time, Color color, int progress = -1)
+    public void CreateUnitBuffer(Vector2Int pos, int time, ConstructionCluster.ConstructionType constructionType, int progress = -1)
     {
         if (time == 0 || time == -1)
         {
@@ -546,13 +547,13 @@ public class GridSystem : MonoBehaviour
         {
             case 0:
                 // nothing adjacent, make a new cluster
-                ConstructionCluster newCluster = new ConstructionCluster(pos, time, color);
+                ConstructionCluster newCluster = new ConstructionCluster(pos, time, constructionType);
                 ConstructionClusters.Add(newCluster);
                 BufferCenterTexture.SetPixel(newCluster.CenterPosition.x, newCluster.CenterPosition.y, new Color(0, 0, 0, 1));
                 break;
             case 1:
-                // check if the timing and color is the same, and if so add it
-                if (adjacentClusters[0].IsMatching(time, color))
+                // check if the timing and type is the same (tile), and if so add it
+                if (adjacentClusters[0].IsMatching(time, constructionType) && constructionType == ConstructionCluster.ConstructionType.TILE)
                 {
                     // remove the original center
                     Vector2Int clusterCenter = adjacentClusters[0].CenterPosition;
@@ -567,7 +568,7 @@ public class GridSystem : MonoBehaviour
                 }
                 else
                 {
-                    newCluster = new ConstructionCluster(pos, time, color);
+                    newCluster = new ConstructionCluster(pos, time, constructionType);
                     ConstructionClusters.Add(newCluster);
                     BufferCenterTexture.SetPixel(newCluster.CenterPosition.x, newCluster.CenterPosition.y, new Color(0, 0, 0, 1));
                 }
@@ -577,7 +578,7 @@ public class GridSystem : MonoBehaviour
                 List<ConstructionCluster> matchingClusters = new List<ConstructionCluster>();
                 foreach (ConstructionCluster cluster in adjacentClusters)
                 {
-                    if (cluster.IsMatching(time, color))
+                    if (cluster.IsMatching(time, constructionType) && constructionType == ConstructionCluster.ConstructionType.TILE)
                         matchingClusters.Add(cluster);
                 }
 
@@ -607,11 +608,23 @@ public class GridSystem : MonoBehaviour
                     clusterCenter = sourceCluster.CenterPosition;
                     BufferCenterTexture.SetPixel(clusterCenter.x, clusterCenter.y, new Color(0, 0, 0, 1));
                 }
+                else
+                {
+                    newCluster = new ConstructionCluster(pos, time, constructionType);
+                    ConstructionClusters.Add(newCluster);
+                    BufferCenterTexture.SetPixel(newCluster.CenterPosition.x, newCluster.CenterPosition.y, new Color(0, 0, 0, 1));
+                }
                 break;
         }
 
         // update buffer texture
-        BufferTexture.SetPixel(pos.x, pos.y, color);
+        Color bufferColorInformation = new Color(
+                (float)((int)constructionType) / FLAG_VALUE_MULTIPLIER,       // which construction type it is
+                0,
+                0,                                                          // the progress towards target
+                (float)time / FLAG_VALUE_MULTIPLIER                         // the total time
+            );
+        BufferTexture.SetPixel(pos.x, pos.y, bufferColorInformation);
         BufferTexture.Apply();
         BufferCenterTexture.Apply();
         Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
@@ -624,15 +637,37 @@ public class GridSystem : MonoBehaviour
     {
         constructionFinishedCallback += action;
     }
-    public void CreateSquareBuffer(Vector2Int pos, int time, int size, Color color)
+    public void CreateSquareBuffer(Vector2Int pos, int time, int size, ConstructionCluster.ConstructionType type)
     {
-        for (int i = 0; i < size; i++)
+        // only considering non food sources right now
+        if (type != ConstructionCluster.ConstructionType.TILE)
         {
-            for (int j = 0; j < size; j++)
+            // first find all positions
+            List<Vector2Int> bufferPositions = new List<Vector2Int>();
+            for (int i = 0; i < size; i++)
             {
-                this.CreateUnitBuffer(new Vector2Int(pos.x + i, pos.y + j), time, color);
+                for (int j = 0; j < size; j++)
+                {
+                    Vector2Int bufferPosition = new Vector2Int(pos.x + i, pos.y + j);
+                    Color bufferColorInformation = new Color(
+                        (float)((int)type) / FLAG_VALUE_MULTIPLIER,                 // which construction type it is
+                        0,                                                          // which tile it is in the set (currently not being used)
+                        0,                                                          // the progress towards target
+                        (float)time / FLAG_VALUE_MULTIPLIER                         // the total time
+                    );
+                    BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, bufferColorInformation);
+                    bufferPositions.Add(bufferPosition);
+                }
             }
+
+            // then actually create the buffer, regardless of where it actually is
+            ConstructionCluster newCluster = new ConstructionCluster(bufferPositions, time, type);
+            ConstructionClusters.Add(newCluster);
         }
+
+        BufferTexture.Apply();
+        Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
+        bufferMaterial.SetTexture("_MainTex", BufferTexture);
     }
 
     public void RemoveBuffer(Vector2Int pos, int size = 1)
@@ -720,45 +755,17 @@ public class GridSystem : MonoBehaviour
             else
             {
                 // update the textures
-
+                foreach (Vector2Int tilePosition in cluster.ConstructionTilePositions)
+                {
+                    Color bufferColorInformation = BufferTexture.GetPixel(tilePosition.x, tilePosition.y);
+                    bufferColorInformation.b = (bufferColorInformation.b * FLAG_VALUE_MULTIPLIER + 1) / FLAG_VALUE_MULTIPLIER;
+                    BufferTexture.SetPixel(tilePosition.x, tilePosition.y, bufferColorInformation);
+                }
             }
-
-
         }
 
         foreach (ConstructionCluster cluster in finishedClusters)
             ConstructionClusters.Remove(cluster);
-
-
-        /*
-        Vector4[] av4 = this.colorTimesToCCs.Keys.ToArray();
-        List<ConstructionCountdown>[] aCCs = this.colorTimesToCCs.Values.ToArray();
-        for (int i = this.colorTimesToCCs.Values.Count - 1; i >= 0; i--)
-        {
-            List<ConstructionCountdown> ccs = aCCs[i];
-            for (int j = ccs.Count - 1; j >= 0; j--)
-            {
-                ConstructionCountdown cc = ccs[j];
-                cc.CountDown();
-                if (cc.IsFinished())
-                {
-                    TileDataGrid[(int)cc.position.y, (int)cc.position.x].isConstructing = false;
-                    ccs.RemoveAt(j);
-                    Vector3Int pos = new Vector3Int(cc.position.x, cc.position.y, 0);
-                    changedTiles.Add(pos);
-                    Destroy(cc.gameObject);
-
-                    if (constructionFinishedCallback != null)
-                    {
-                        constructionFinishedCallback();
-                    }
-                }
-            }
-            if (ccs.Count == 0)
-            {
-                this.colorTimesToCCs.Remove(av4[i]);
-            }
-        }*/
 
         BufferTexture.Apply();
         BufferCenterTexture.Apply();
@@ -2369,19 +2376,29 @@ public class GridSystem : MonoBehaviour
 
     public class ConstructionCluster
     {
+        public enum ConstructionType { TREE, ONEFOOD, TILE }
         public List<Vector2Int> ConstructionTilePositions { get; private set; }
         public Vector2Int CenterPosition { get; private set; }
-        private Color color;
+        private ConstructionType type;
         private int targetDays;
         private int currentDays;
 
-        public ConstructionCluster(Vector2Int tilePosition, int targetDays, Color color)
+        public ConstructionCluster(Vector2Int tilePosition, int targetDays, ConstructionType type)
         {
             ConstructionTilePositions = new List<Vector2Int>();
             ConstructionTilePositions.Add(tilePosition);
             CenterPosition = tilePosition;
             this.targetDays = targetDays;
-            this.color = color;
+            this.type = type;
+            currentDays = 0;
+        }
+
+        public ConstructionCluster(List<Vector2Int> tilePositions, int targetDays, ConstructionType type)
+        {
+            ConstructionTilePositions = tilePositions; 
+            CenterPosition = FindCenter();
+            this.targetDays = targetDays;
+            this.type = type;
             currentDays = 0;
         }
 
@@ -2445,7 +2462,7 @@ public class GridSystem : MonoBehaviour
             return false;
         }
 
-        public bool IsMatching(int targetDays, Color color)   {   return this.targetDays == targetDays && currentDays == 0 && this.color == color;  }
+        public bool IsMatching(int targetDays, ConstructionType type)   {   return this.targetDays == targetDays && currentDays == 0 && this.type == type;  }
         public bool IsFinished()                    {   return currentDays >= targetDays;  }
         public void CountDown()                     {   this.currentDays += 1;  }
     }

@@ -14,7 +14,6 @@ public class FoodSourceManager : GridObjectManager
 
     // FoodSourceSpecies to string name
     [SerializeField] private GameObject foodSourcePrefab = default;
-    public Color constructionColor = new Color(0.5f, 1f, 0.5f, 1f);//Green
     private GridSystem m_gridSystemReference;
 
     public void Initialize()
@@ -72,9 +71,10 @@ public class FoodSourceManager : GridObjectManager
             pos.y -= 1;
         }
         m_gridSystemReference.AddFood(m_gridSystemReference.WorldToCell(pos), species.Size, newFoodSourceGameObject);
-        m_gridSystemReference.CreateSquareBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size, this.constructionColor);
         if (ttb > 0)
         {
+            m_gridSystemReference.CreateSquareBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
+                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
             foodSource.isUnderConstruction = true;
             m_gridSystemReference.ConstructionFinishedCallback(() =>
             {
