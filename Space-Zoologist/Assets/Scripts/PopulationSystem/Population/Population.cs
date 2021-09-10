@@ -31,7 +31,6 @@ public class Population : MonoBehaviour, Life
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [Header("Lowest Priority Behaviors")]
-    [Expandable] public List<PopulationBehavior> DefaultBehaviors = default;
     [Header("Modify values and thresholds for testing")]
     [SerializeField] private List<Need> NeedEditorTesting = default;
     [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
@@ -47,12 +46,6 @@ public class Population : MonoBehaviour, Life
 
     private void Start()
     {
-        int i=0;
-        foreach(PopulationBehavior behaviorPattern in this.DefaultBehaviors)
-        {
-            this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
-            i++;
-        }
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
     }
 
@@ -69,7 +62,6 @@ public class Population : MonoBehaviour, Life
         this.species = species;
         this.origin = origin;
         this.transform.position = origin;
-        this.SetupBehaviors();
         this.GrowthCalculator = new GrowthCalculator(this);
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
@@ -80,22 +72,10 @@ public class Population : MonoBehaviour, Life
         this.GrowthCalculator.populationIncreaseRate = growthRate;
     }
 
-    private void SetupBehaviors()
-    {
-        this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
-        int i = 0;
-        foreach (PopulationBehavior behaviorPattern in this.DefaultBehaviors)
-        {
-            this.PopulationBehaviorManager.ActiveBehaviors.Add("default" + i, behaviorPattern);
-            i++;
-        }
-    }
-
     private void SetupNeeds()
     {
         this.GrowthCalculator = new GrowthCalculator(this);
         this.needs = this.Species.SetupNeeds();
-        this.PopulationBehaviorManager.InitializeBehaviors(this.needs);
         this.NeedEditorTesting = new List<Need>();
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
@@ -180,18 +160,6 @@ public class Population : MonoBehaviour, Life
     public void UpdateFoodNeed(float preferredValue, float compatibleValue)
     {
         this.GrowthCalculator.CalculateFoodNeed(preferredValue, compatibleValue);
-    }
-
-    /// <summary>
-    /// Updates the needs behaviors based on the need's current condition
-    /// </summary>
-    /// Currently filtering behaviors using null, may want to change.
-    public void FilterBehaviors(string need, NeedCondition needCondition)
-    {
-        if (this.PopulationBehaviorManager.ActiveBehaviors.ContainsKey(need))
-        {
-            this.PopulationBehaviorManager.ActiveBehaviors[need] = null;
-        }
     }
 
     /// <summary>

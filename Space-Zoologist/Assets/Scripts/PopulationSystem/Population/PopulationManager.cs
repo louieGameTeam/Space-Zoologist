@@ -57,7 +57,7 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
-        population.GetComponent<PopulationBehaviorManager>().tempBehaviors = CopyBehaviors();
+        population.GetComponent<PopulationBehaviorManager>().defaultBehaviors = CopyBehaviors();
         population.InitializeNewPopulation(species, position);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
