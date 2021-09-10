@@ -23,15 +23,13 @@ public class BehaviorPattern : MonoBehaviour
     /// <param name="animal"></param>
     /// <param name="callBack"></param>
     /// <param name="collaboratingAnimals"></param>
-    public void InitializePattern(GameObject animal, StepCompletedCallBack callBack, StepCompletedCallBack alternativeCallback, List<GameObject> collaboratingAnimals = null)
+    public void InitializePattern(GameObject animal, StepCompletedCallBack callBack, StepCompletedCallBack alternativeCallback)
     {
         AnimalData animalData = new AnimalData();
         animalData.animal = animal.GetComponent<Animal>();
         animalData.callback = callBack;
         animalData.alternativeCallback = alternativeCallback;
-        animalData.collaboratingAnimals = collaboratingAnimals;
-        // Debug.Log(gameObject.name + " is trying to be initial");
-        // Debug.Log((this.GetType().ToString(),animal));
+
         AnimalsToAnimalData.Add(animal, animalData);
         EnterPattern(animal, animalData);
     }
@@ -109,11 +107,10 @@ public class BehaviorPattern : MonoBehaviour
     {
         animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
         StepCompletedCallBack callback = AnimalsToAnimalData[animal].callback;
-        List<GameObject> collab = AnimalsToAnimalData[animal].collaboratingAnimals;
         AnimalsToAnimalData.Remove(animal);
         if (callCallback)
         {
-            callback.Invoke(animal, collab);
+            callback.Invoke(animal);
         }
     }
     protected virtual void ExitPatternAlternative(GameObject animal)
@@ -121,30 +118,13 @@ public class BehaviorPattern : MonoBehaviour
         animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
         AnimalData Animal = AnimalsToAnimalData[animal];
         AnimalsToAnimalData.Remove(animal);
-        Animal.alternativeCallback?.Invoke(animal, Animal.collaboratingAnimals);
-        // Moved above callback to prevent adding duplicate keys
-        // AnimalsToAnimalData.Remove(animal);
+        Animal.alternativeCallback?.Invoke(animal);
     }
-    public void QueueForForceExit(GameObject animal, bool isDriven = false)
-    {
-        this.ForceExit(animal);
-        if (isDriven)
-        {
-            foreach (GameObject collab in AnimalsToAnimalData[animal].collaboratingAnimals)
-            {
-                collab.GetComponent<AnimalBehaviorManager>().ForceExit(true);
-            }
-        }
-
-    }
-    /// <summary>
-    /// Called when behavior is overridden by other behaviors
-    /// </summary>
-    /// <param name="animal"></param>
-    protected virtual void ForceExit(GameObject animal)
+    public void ForceExit(GameObject animal)
     {
         ExitPattern(animal, false);
     }
+
     public struct AnimalData
     {
         public Animal animal;
