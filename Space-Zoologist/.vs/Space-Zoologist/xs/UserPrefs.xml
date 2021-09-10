@@ -1,17 +1,15 @@
 ﻿<Properties StartupConfiguration="{A459D260-E338-EAF5-2ABE-0A8DC1A6AE6D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Audio/MusicManager.cs" Line="89" Column="22" />
-      <File FileName="Assets/Scripts/LevelData/LevelDataLoader.cs" />
-      <File FileName="Assets/Scripts/UI/Store/Sections/TileStoreSection.cs" />
-      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="656" Column="21" />
-      <File FileName="Assets/Scripts/Plot/Testers/MapDesignUIHandler.cs" Line="14" Column="73" />
-      <File FileName="Assets/Resources/Audio/Scripts/CustomMusicLoopController.cs" Line="31" Column="28" />
-      <File FileName="Assets/Scripts/LevelData/LevelDataReference.cs" Line="5" Column="29" />
-      <File FileName="Assets/Scripts/LevelData/LevelData.cs" Line="34" Column="27" />
-      <File FileName="Assets/Scripts/Audio/MusicQueuer.cs" Line="32" Column="55" />
-      <File FileName="Assets/Scripts/UI/Inspector/Inspector.cs" Line="270" Column="50" />
-      <File FileName="Assets/Scripts/UI/Inspector/DisplayInspectorText.cs" Line="14" Column="50" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/PopulationManager.cs" Line="60" Column="75" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Population.cs" Line="297" Column="49" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/PopulationBehaviorManager.cs" Line="132" Column="121" />
+      <File FileName="Assets/Scripts/PopulationSystem/Population/Animal.cs" Line="24" Column="17" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/Data/BehaviorExecutionData.cs" Line="18" Column="30" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/PopulationBehavior.cs" Line="42" Column="140" />
+      <File FileName="Assets/Scripts/PopulationSystem/Representation/AnimalBehaviorManager.cs" Line="23" Column="33" />
+      <File FileName="Assets/AnimalRepresentation/Patterns/Unused/Scripts/BehaviorPattern.cs" Line="26" Column="17" />
+      <File FileName="Assets/DialogueEditor/Assets/Scripts/UI/ConversationManager.cs" Line="191" Column="37" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,11 +17,8 @@
           <Node name="Space-Zoologist" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="AnimalRepresentation" expanded="True">
-                <Node name="Behaviors" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
+                <Node name="Behaviors" expanded="True" />
                 <Node name="Patterns" expanded="True">
-                  <Node name="Prefabs" expanded="True" />
                   <Node name="Scripts" expanded="True" />
                 </Node>
               </Node>
@@ -33,14 +28,13 @@
                     <Node name="Editor" expanded="True" />
                     <Node name="UI" expanded="True">
                       <Node name="Editor" expanded="True" />
+                      <Node name="ConversationManager.cs" selected="True" />
                     </Node>
                   </Node>
                 </Node>
               </Node>
               <Node name="Resources" expanded="True">
-                <Node name="Audio" expanded="True">
-                  <Node name="Scripts" expanded="True" />
-                </Node>
+                <Node name="Audio" expanded="True" />
               </Node>
               <Node name="Scripts" expanded="True">
                 <Node name="Audio" expanded="True" />
@@ -49,6 +43,7 @@
                   <Node name="Dialogue" expanded="True" />
                 </Node>
                 <Node name="Needs" expanded="True">
+                  <Node name="Need Objects" expanded="True" />
                   <Node name="Systems" expanded="True">
                     <Node name="FoodSystem" expanded="True" />
                   </Node>
@@ -62,12 +57,13 @@
                 <Node name="PopulationSystem" expanded="True">
                   <Node name="PathFinding" expanded="True" />
                   <Node name="Population" expanded="True" />
-                  <Node name="Representation" expanded="True" />
+                  <Node name="Representation" expanded="True">
+                    <Node name="Data" expanded="True" />
+                  </Node>
+                  <Node name="Species" expanded="True" />
                 </Node>
                 <Node name="UI" expanded="True">
-                  <Node name="Inspector" expanded="True">
-                    <Node name="DisplayInspectorText.cs" selected="True" />
-                  </Node>
+                  <Node name="Inspector" expanded="True" />
                   <Node name="Store" expanded="True">
                     <Node name="Sections" expanded="True" />
                   </Node>
@@ -86,10 +82,10 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d40943e4-46ae-4e4a-9110-e5b0f38b042c" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="331e347e-b48c-4d52-8e78-a25cf03e8c07" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/alexchiu/Desktop/School/Space-Zoologist.nosync/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
+      <Breakpoint file="/Users/travisgarcia/Cell/Space-Zoologist/Space-Zoologist/Assets/Scripts/Plot/TilePlacementController.cs" relfile="Assets/Scripts/Plot/TilePlacementController.cs" line="392" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
