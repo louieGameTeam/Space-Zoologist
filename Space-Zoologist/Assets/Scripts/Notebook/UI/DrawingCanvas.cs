@@ -90,8 +90,8 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
                 (int)previousTexturePosition.y, 
                 (int)currentTexturePosition.x, 
                 (int)currentTexturePosition.y, 
-                CurrentStrokeThickness, 
-                currentColor)
+                CurrentStrokeThickness,
+                DrawingColor)
             // Draw a circle to cap this line
             .FillCircle((int)currentTexturePosition.x, 
                 (int)currentTexturePosition.y, 

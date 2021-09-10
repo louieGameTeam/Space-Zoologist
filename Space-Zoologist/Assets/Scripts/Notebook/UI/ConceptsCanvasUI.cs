@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using DG.Tweening;
 
 public class ConceptsCanvasUI : NotebookUIChild
@@ -23,8 +24,17 @@ public class ConceptsCanvasUI : NotebookUIChild
     [Tooltip("Reference to the script that handles drawing on the canvas")]
     private DrawingCanvas drawingCanvas;
     [SerializeField]
+    [Tooltip("Script that is used to select a drawing mode for the canvas")]
+    private DrawingCanvasModeGroupPicker modePicker;
+    [SerializeField]
     [Tooltip("Picker group used to select the color of the drawing canvas")]
     private ColorToggleGroupPicker colorPicker;
+    [SerializeField]
+    [Tooltip("Script used to select a stroke weight for the canvas")]
+    private StrokeWeightGroupPicker strokeWeightPicker;
+    [SerializeField]
+    [Tooltip("Button used to clear the canvas")]
+    private Button clearButton;
     #endregion
 
     #region Monobehaviour Messages
@@ -35,14 +45,22 @@ public class ConceptsCanvasUI : NotebookUIChild
         foldoutToggle.isOn = false;
         foldoutToggle.onValueChanged.AddListener(ApplyFoldoutState);
         ApplyFoldoutState(false);
+
+        // Set the object picked on each picker to whatever the canvas's current setting is
+        modePicker.SetObjectPicked(drawingCanvas.CurrentMode);
+        strokeWeightPicker.SetObjectPicked(drawingCanvas.CurrentWeight);
+
+        // Set the color to the first in the list
+        colorPicker.SetTogglePicked(0);
+        drawingCanvas.CurrentColor = colorPicker.FirstObjectPicked;
+
         // Add listeners for groups that change the canvas parameters
-        colorPicker.OnToggleStateChanged.AddListener(() =>
-        {
-            if(colorPicker.ObjectsPicked.Count > 0)
-            {
-                drawingCanvas.CurrentColor = colorPicker.ObjectsPicked[0];
-            }
-        });
+        modePicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentMode = modePicker.FirstObjectPicked);
+        colorPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentColor = colorPicker.FirstObjectPicked);
+        strokeWeightPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentWeight = strokeWeightPicker.FirstObjectPicked);
+
+        // Clear canvas when clear button clicked
+        clearButton.onClick.AddListener(drawingCanvas.Clear);
     }
     #endregion
 
