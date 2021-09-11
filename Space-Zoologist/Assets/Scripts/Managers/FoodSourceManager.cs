@@ -204,6 +204,7 @@ public class FoodSourceManager : GridObjectManager
     }
     public override void Parse()
     {
+        DestroyAll();
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)
         {
             if (keyValuePair.Key.Equals(this.MapObjectName))

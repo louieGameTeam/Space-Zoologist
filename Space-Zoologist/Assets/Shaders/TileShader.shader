@@ -374,7 +374,8 @@
                     col = AddLiquid(col, localPixel, i.worldPos.xy);
                 
                 // then add color modifier
-                col *= i.color;
+                if (i.color.r + i.color.g + i.color.b != 3)
+                    col.rgb = col.rgb * (col.a / (col.a + i.color.a)) + i.color.rgb * (i.color.a / (col.a + i.color.a));
 
                 // create grid
                 if (_GridOverlayToggle > 0)

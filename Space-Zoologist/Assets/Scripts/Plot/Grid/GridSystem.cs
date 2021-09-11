@@ -473,6 +473,8 @@ public class GridSystem : MonoBehaviour
     public void RemoveFood(Vector3Int gridPosition)
     {
         Vector3Int pos = gridPosition;
+        TileData tileData = GetTileData(pos);
+        if (tileData == null) return;
         GameObject foodSource = GetTileData(pos).Food;
         if (!foodSource) return;
 

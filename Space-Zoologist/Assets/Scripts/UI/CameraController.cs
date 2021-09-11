@@ -35,6 +35,8 @@ public class CameraController : MonoBehaviour
     {
         cam = this.GetComponent<Camera>();
         targetZoom = cam.orthographicSize;
+
+        transform.position = new Vector3(GameManager.Instance.LevelData.MapWidth / 2, GameManager.Instance.LevelData.MapHeight / 2, transform.position.z);
         originalPosition = transform.position;
 
         Canvas canvas = FindObjectOfType<Canvas>();
