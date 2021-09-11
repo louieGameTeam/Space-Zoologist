@@ -244,12 +244,13 @@ public class Inspector : MonoBehaviour
             selectedPosition = pos;
         }
         // Selection is enclosed area
-        else if (tile && tile.type != TileType.Wall)
-        {
-            DisplayAreaText(pos);
-            selectedPosition = pos;
-            somethingSelected = false;
-        }
+        // Disabled
+        //else if (tile && tile.type != TileType.Wall)
+        //{
+        //    DisplayAreaText(pos);
+        //    selectedPosition = pos;
+        //    somethingSelected = false;
+        //}
         else
         {
             somethingSelected = false;

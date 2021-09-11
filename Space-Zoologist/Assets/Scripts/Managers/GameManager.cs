@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject GameOverHUD = default;
     [SerializeField] TextMeshProUGUI gameOverTitle = default;
     [SerializeField] TextMeshProUGUI gameOverText = default;
+    [SerializeField] NotebookUI notebookUI = default;
 
     [Header("Time Variables")]
     [SerializeField] int maxDay = 20;
@@ -79,6 +80,7 @@ public class GameManager : MonoBehaviour
     public EnclosureSystem m_enclosureSystem { get; private set; }
     public Inspector m_inspector { get; private set; }
     public PlayerController m_playerController { get; private set; }
+    public CameraController m_cameraController { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -197,17 +199,7 @@ public class GameManager : MonoBehaviour
         // set the food source dictionary
         foreach (FoodSourceSpecies foodSource in m_levelData.FoodSourceSpecies)
         {
-            foreach (LevelData.ItemData data in m_levelData.ItemQuantities)
-            {
-                Item item = data.itemObject;
-                if (item)
-                {
-                    if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName) && !FoodSources.ContainsKey(item.ID))
-                    {
-                        this.FoodSources.Add(item.ID, foodSource);
-                    }
-                }
-            }
+            this.FoodSources.Add(foodSource.SpeciesName, foodSource);
         }
 
         // set the animal dictionary
@@ -237,6 +229,7 @@ public class GameManager : MonoBehaviour
         m_enclosureSystem = FindObjectOfType<EnclosureSystem>();
         m_inspector = FindObjectOfType<Inspector>();
         m_playerController = FindObjectOfType<PlayerController>();
+        m_cameraController = FindObjectOfType<CameraController>();
     }
 
     private void LoadResources()
@@ -252,6 +245,8 @@ public class GameManager : MonoBehaviour
         m_reservePartitionManager.Initialize();
         m_foodSourceManager.Initialize();
         m_resourceManager.Initialize();
+
+        notebookUI.OnNotebookToggle.AddListener(x => m_cameraController.ControlsEnabled = !x);
         m_tilePlacementController.Initialize();
     }
 

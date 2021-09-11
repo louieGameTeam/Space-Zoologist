@@ -5,33 +5,49 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Notebook/Notebook")]
 public class NotebookModel : ScriptableObject
 {
+    #region Public Properties
     public string Acronym => acronym;
     public ResearchModel Research => research;
-    public TestAndMetricsModel TestAndMetrics => testAndMetrics;
     public ObservationsModel Observations => observations;
+    public ConceptsModel Concepts => concepts;
+    public TestAndMetricsModel TestAndMetrics => testAndMetrics;
     public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
-    public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(requestData.Keys);
+    // This should be the same for concepts and testAndMetrics also
+    public List<EnclosureID> EnclosureIDs => observations.EnclosureIDs;
+    #endregion
 
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Acronym that the player gets to spell out on the home page")]
     private string acronym = "ROCTM";
+    
+    [Space]
+    
     [SerializeField]
     [Expandable]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
     private ResearchModel research;
+
+    [Space]
+
     [SerializeField]
     [Tooltip("Player observation notes")]
     private ObservationsModel observations;
     [SerializeField]
+    [Tooltip("Player's proposal of concepts and requests for resources")]
+    private ConceptsModel concepts;
+    [SerializeField]
     [Tooltip("Test and metrics that the player has taken")]
     private TestAndMetricsModel testAndMetrics;
+    #endregion
 
+    #region Private Fields
     // Notes on each character in the acronym
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
-    // Map the resource requests to the enclosure it applies to
-    private Dictionary<EnclosureID, ResourceRequestList> requestData = new Dictionary<EnclosureID, ResourceRequestList>();
+    #endregion
 
+    #region Public Methods
     public void Setup()
     {
         // Foreach letter in the acronym, add an empty string to the dictionary
@@ -67,12 +83,9 @@ public class NotebookModel : ScriptableObject
     }
     public void TryAddEnclosureID(EnclosureID id)
     {
-        if (!requestData.ContainsKey(id))
-        {
-            requestData.Add(id, new ResourceRequestList());
-        }
         observations.TryAddEnclosureID(id);
+        concepts.TryAddEnclosureId(id);
         testAndMetrics.TryAddEnclosureID(id);
     }
-    public ResourceRequestList GetResourceRequestList(EnclosureID id) => requestData[id];
+    #endregion
 }

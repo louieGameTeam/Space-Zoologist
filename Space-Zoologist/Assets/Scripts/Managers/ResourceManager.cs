@@ -43,7 +43,7 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    void AddItem(string itemName, int amount)
+    public void AddItem(string itemName, int amount)
     {
         if (remainingResources.ContainsKey(itemName))
         {
