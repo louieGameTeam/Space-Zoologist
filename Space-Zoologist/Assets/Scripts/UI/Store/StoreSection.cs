@@ -12,7 +12,8 @@ public class StoreSection : MonoBehaviour
 {
     public ItemType ItemType => itemType;
 
-    [SerializeField] private GraphicRaycaster raycaster;
+    // Can't display in editor anymore because it is in a prefab
+    /*[SerializeField] */private GraphicRaycaster raycaster;
 
     protected ItemType itemType = default;
     [Header("Dependencies")]
@@ -69,6 +70,10 @@ public class StoreSection : MonoBehaviour
 
     public virtual void Initialize()
     {
+        // Try to get the raycaster in the parent
+        raycaster = GetComponentInParent<GraphicRaycaster>();
+
+        // Add the items to the store section
         LevelData levelData = GameManager.Instance.LevelData;
         foreach (LevelData.ItemData data in levelData.ItemQuantities)
         {

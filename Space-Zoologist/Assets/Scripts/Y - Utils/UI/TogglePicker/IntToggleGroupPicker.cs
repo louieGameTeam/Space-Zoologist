@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawingCanvasModePicker : GenericTogglePicker<DrawingCanvas.Mode>
+public class IntToggleGroupPicker : GenericToggleGroupPicker<int>
 {
     
 }
