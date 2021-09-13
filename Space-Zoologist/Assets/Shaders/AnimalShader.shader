@@ -3,6 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _DeathFlashTex("Death Flash Texture", 2D) = "white" {}
 
         _LightColor("Light Color", COLOR) = (1, 1, 1, 1)
         _LightDirection("Light Direction", Vector) = (0, 1, 0, 0)
@@ -44,6 +45,8 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            sampler2D _DeathFlashTex;
+            float4 _DeathFlashTex_ST;
             float2 _Max_UV;
             float2 _Min_UV;
 
@@ -70,6 +73,10 @@
                 i.uv = (i.uv - i.centerUV) * _ShadowArea + i.centerUV;
 
                 fixed4 col = tex2D(_MainTex, i.uv) * _LightColor * i.color;
+                fixed4 flashColor = tex2D(_DeathFlashTex, float2(_Time.y * 20 / 11, 0));
+
+                // add in death flash
+                col.rgb = lerp(col.rgb, flashColor.rgb, flashColor.a);
 
                 // transform shadow uv
                 float2 lightDirection = normalize(_LightDirection.xy);

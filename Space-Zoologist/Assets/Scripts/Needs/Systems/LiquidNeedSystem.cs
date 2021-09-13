@@ -32,7 +32,7 @@ public class LiquidNeedSystem : NeedSystem
 
         foreach(Population population in Consumers.OfType<Population>())
         {
-            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("LiquidTiles"))
+            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("Liquid"))
                 liquidTilesPerPopulation.Add(population, 0);
         }
 
@@ -96,7 +96,7 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Population population = (Population)life;
                 
-                population.UpdateNeed("LiquidTiles", liquidTilesPerPopulation[population]);
+                population.UpdateNeed("Liquid", liquidTilesPerPopulation[population]);
                 //Debug.Log(population.name + " updates LiquidTiles with value: " + liquidTilesPerPopulation[population]);
 
                 // Check is there is found composition

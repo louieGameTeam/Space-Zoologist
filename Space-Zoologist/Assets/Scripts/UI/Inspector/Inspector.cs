@@ -158,7 +158,7 @@ public class Inspector : MonoBehaviour
         // Set item selection to placeholder option
         this.itemsDropdown.value = 0;
 
-        this.inspectorWindowDisplayScript.DislplayEnclosedArea(enclosedAreaSelected);
+        this.inspectorWindowDisplayScript.DisplayEnclosedArea(enclosedAreaSelected);
     }
 
     private void selectItem(int selection)
@@ -304,13 +304,24 @@ public class Inspector : MonoBehaviour
 
     private void DisplayFoodText(GridSystem.TileData cellData)
     {
-        this.HighlightFoodSource(cellData.Food);
+        GameObject FoodObject = cellData.Food;
+
+        this.HighlightFoodSource(FoodObject);
         //Debug.Log($"Foudn item {cellData.Food} @ {cellPos}");
         // root radius here
-        float rootRadius = cellData.Food.GetComponent<FoodSource>().Species.RootRadius;
-        Vector3 foodPosition = cellData.Food.transform.position;
+        FoodSource foodSource = FoodObject.GetComponent<FoodSource>();
+        float rootRadius = foodSource.Species.RootRadius;
+        int foodSize = foodSource.Species.Size;
+
+        Vector3 foodPosition = FoodObject.transform.position;
         Vector3Int foodPositionInt = new Vector3Int((int)foodPosition.x, (int)foodPosition.y, (int)foodPosition.z);
-        gridSystem.HighlightRadius(foodPositionInt, Color.blue, rootRadius);
+        for (int dx = -foodSize / 2; dx < Mathf.Ceil((float)foodSize / 2); dx++)
+        {
+            for (int dy = -foodSize / 2; dy < Mathf.Ceil((float)foodSize / 2); dy++)
+            { 
+                gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(dx, dy, 0), Color.blue, rootRadius);
+            }
+        }
 
         this.inspectorWindowDisplayScript.DisplayFoodSourceStatus(cellData.Food.GetComponent<FoodSource>());
     }
@@ -319,7 +330,7 @@ public class Inspector : MonoBehaviour
     {
         //Debug.Log($"Enclosed are @ {cellPos} selected");
         this.enclosureSystem.UpdateEnclosedAreas();
-        this.inspectorWindowDisplayScript.DislplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
+        this.inspectorWindowDisplayScript.DisplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
     }
 
     private void DisplayLiquidText(Vector3Int cellPos)
