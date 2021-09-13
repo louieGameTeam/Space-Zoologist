@@ -116,6 +116,7 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
         image.material = drawingMaterial;
         // Create a new drawing texture
         drawingTexture = new Texture2D((int)rectTransform.rect.width, (int)rectTransform.rect.height);
+        
         drawingTexture.SetAllPixels(backgroundColor);
         drawingTexture.Apply();
         // Make the material show the texture that will actually be modified

@@ -76,7 +76,8 @@
                 fixed4 flashColor = tex2D(_DeathFlashTex, float2(_Time.y * 20 / 11, 0));
 
                 // add in death flash
-                col.rgb = lerp(col.rgb, flashColor.rgb, flashColor.a);
+				// removed temporarily until behaviour rework
+                // col.rgb = lerp(col.rgb, flashColor.rgb, flashColor.a);
 
                 // transform shadow uv
                 float2 lightDirection = normalize(_LightDirection.xy);

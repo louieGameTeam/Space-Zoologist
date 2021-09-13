@@ -301,8 +301,6 @@ public class GameManager : MonoBehaviour
         UpdateDayText(currentDay);
         this.IsPaused = false;
         this.WasPaused = false;
-        //this.PauseButtonSprite = this.PauseButton.GetComponent<Image>();
-        //this.PauseButtonButton = this.PauseButton.GetComponent<Button>();
     }
     #endregion
 

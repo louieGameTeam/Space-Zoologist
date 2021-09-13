@@ -6,10 +6,11 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" }
+        Tags { "RenderType"="Transparent" "Queue"="Overlay"}
         
         Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
+		ZTest Always
 
         Pass
         {
