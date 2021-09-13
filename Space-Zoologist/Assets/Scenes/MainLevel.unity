@@ -4856,8 +4856,6 @@ MonoBehaviour:
   RPM: {fileID: 936381359}
   PopulationManager: {fileID: 2078374405}
   Tilemap: {fileID: 940519983}
-  PauseButton: {fileID: 915008188}
-  NextDayButton: {fileID: 1012412230}
   ReserveWidth: 0
   ReserveHeight: 0
   startTile: {x: 0, y: 0, z: 0}
@@ -5418,7 +5416,6 @@ RectTransform:
   m_Children:
   - {fileID: 1188877838}
   - {fileID: 1012412231}
-  - {fileID: 915008189}
   - {fileID: 1549372358}
   - {fileID: 1677705753}
   m_Father: {fileID: 170123771}
@@ -5718,136 +5715,6 @@ MonoBehaviour:
   DeleteButtonPrefab: {fileID: 4319639836530594827, guid: 5d6f628a32ac249fe945c3e9408f293e,
     type: 3}
   FoodSourceStoreSection: {fileID: 370814157}
---- !u!1 &915008188
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 915008189}
-  - component: {fileID: 915008192}
-  - component: {fileID: 915008191}
-  - component: {fileID: 915008190}
-  m_Layer: 5
-  m_Name: TogglePause
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &915008189
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915008188}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 876844968}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 686.18, y: -1.4400005}
-  m_SizeDelta: {x: 41.884537, y: 36.892075}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &915008190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915008188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_PressedColor: {r: 0.60784316, g: 0.60784316, b: 0.60784316, a: 1}
-    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 915008191}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3291930203106343763}
-        m_MethodName: TogglePause
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &915008191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915008188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
-    type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &915008192
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915008188}
-  m_CullTransparentMesh: 0
 --- !u!1 &918041966
 GameObject:
   m_ObjectHideFlags: 0
@@ -5985,7 +5852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320d3a1b49d9e93499e06413cacdbe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Liquid: {fileID: 11400000, guid: 5ea5acb6ffe71104596b0ed713e9a371, type: 2}
+  Liquid: {fileID: 0}
 --- !u!1 &937003167
 GameObject:
   m_ObjectHideFlags: 0
@@ -6947,11 +6814,10 @@ MonoBehaviour:
   DetailButton: {fileID: 983550913}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
-  enclosedAreaSprite: {fileID: -3045895970611929965, guid: 0314811df211bb7418f88854e78f8bbb,
+  enclosedAreaSprite: {fileID: -1894061046826888279, guid: 5a6d2da94b0e1b142b8c0e70b59d1906,
     type: 3}
-  liquidSprite: {fileID: 2590806747968669933, guid: 0314811df211bb7418f88854e78f8bbb,
-    type: 3}
-  defaultSprite: {fileID: -3045895970611929965, guid: 0314811df211bb7418f88854e78f8bbb,
+  liquidSprite: {fileID: 21300000, guid: 0fb96b2961813ad4687cb1edb119dd22, type: 3}
+  defaultSprite: {fileID: -1894061046826888279, guid: 5a6d2da94b0e1b142b8c0e70b59d1906,
     type: 3}
 --- !u!114 &996204903
 MonoBehaviour:
@@ -10917,7 +10783,7 @@ RectTransform:
   m_Children:
   - {fileID: 2077071647}
   m_Father: {fileID: 876844968}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11667,7 +11533,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 876844968}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14456,10 +14322,6 @@ MonoBehaviour:
   notebookUI: {fileID: 9730707}
   maxDay: 20
   CurrentDayText: {fileID: 1549372359}
-  PauseButton: {fileID: 915008188}
-  PauseSprite: {fileID: 21300000, guid: 7c66d3d51e10347579444b7cf7d8f026, type: 3}
-  ResumeSprite: {fileID: -7658842688791707013, guid: 6b5d9729ea25c42848ff15c546a2b8e5,
-    type: 3}
   objectivePane: {fileID: 655684759}
   objectivePanelText: {fileID: 800900341}
 --- !u!114 &3395325107312024775

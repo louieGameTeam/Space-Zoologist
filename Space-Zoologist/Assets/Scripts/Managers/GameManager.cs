@@ -41,11 +41,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text CurrentDayText = default;
     public bool IsPaused { get; private set; }
     public bool WasPaused { get; private set; }
-    [SerializeField] public GameObject PauseButton = default;
-    private Image PauseButtonSprite = default;
-    private Button PauseButtonButton = default;
-    [SerializeField] private Sprite PauseSprite = default;
-    [SerializeField] private Sprite ResumeSprite = default;
 
     public bool IsGameOver { get { return m_isGameOver; } }
     private bool m_isGameOver = false;
@@ -306,8 +301,6 @@ public class GameManager : MonoBehaviour
         UpdateDayText(currentDay);
         this.IsPaused = false;
         this.WasPaused = false;
-        this.PauseButtonSprite = this.PauseButton.GetComponent<Image>();
-        this.PauseButtonButton = this.PauseButton.GetComponent<Button>();
     }
     #endregion
 
@@ -492,9 +485,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         this.IsPaused = true;
-        this.PauseButtonSprite.sprite = this.ResumeSprite;
-        this.PauseButtonButton.onClick.RemoveListener(this.Pause);
-        this.PauseButtonButton.onClick.AddListener(this.Unpause);
         foreach (Population population in m_populationManager.Populations)
             population.PauseAnimalsMovementController();
         m_gridSystem.UpdateAnimalCellGrid();
@@ -504,9 +494,6 @@ public class GameManager : MonoBehaviour
     public void Unpause()
     {
         this.IsPaused = false;
-        this.PauseButtonSprite.sprite = this.PauseSprite;
-        this.PauseButtonButton.onClick.RemoveListener(this.Unpause);
-        this.PauseButtonButton.onClick.AddListener(this.Pause);
         foreach (Population population in m_populationManager.Populations)
             population.UnpauseAnimalsMovementController();
         AudioManager.instance?.PlayOneShot(SFXType.Unpause);
