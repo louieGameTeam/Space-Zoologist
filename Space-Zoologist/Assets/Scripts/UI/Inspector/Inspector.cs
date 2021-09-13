@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /// <summary>
 /// This script is to attached to the inspector button and handles
@@ -13,47 +14,24 @@ public class Inspector : MonoBehaviour
 {
     public bool IsInInspectorMode { get; private set; }
 
-    private GridSystem gridSystem = null;
-    private EnclosureSystem enclosureSystem = null;
-
     // The inspector window
-    [SerializeField] private GameObject areaDropdownMenu = null;
-    [SerializeField] private GameObject itemDropdownMenu = null;
     [SerializeField] private GameObject inspectorWindow = null;
-    [SerializeField] private Text inspectorWindowText = null;
-    [SerializeField] private GameObject ObjectivePane = null;
+    [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript;
     [SerializeField] private GameObject GrowthInfo = default;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
-    private Dropdown enclosedAreaDropdown;
-    private Dropdown itemsDropdown;
-    private DisplayInspectorText inspectorWindowDisplayScript;
     private GameObject PopulationHighlighted = null;
     private Vector3Int selectedPosition;
 
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
 
-    private void Start()
+    public void Initialize()
     {
-        gridSystem = GameManager.Instance.m_gridSystem;
-        enclosureSystem = GameManager.Instance.m_enclosureSystem;
-
         this.IsInInspectorMode = false;
-        this.enclosedAreaDropdown = this.areaDropdownMenu.GetComponent<Dropdown>();
-        this.itemsDropdown = this.itemDropdownMenu.GetComponent<Dropdown>();
-        this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
-        this.itemsDropdown.onValueChanged.AddListener(selectItem);
-        this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
-        OpenInspector();
-
-        // Have the dropdown options be refreshed when new items created
-        EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
-        EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, this.UpdateDropdownMenu);
-        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, this.UpdateDropdownMenu);
     }
 
     public void CloseInspector()
@@ -62,16 +40,15 @@ public class Inspector : MonoBehaviour
         {
             this.inspectorWindowDisplayScript.ClearInspectorWindow();
             this.inspectorWindow.SetActive(false);
-            //this.areaDropdownMenu.SetActive(false);
-            //this.itemDropdownMenu.SetActive(false);
             //this.HUD.SetActive(true);
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
-            this.IsInInspectorMode = !IsInInspectorMode;
+            this.IsInInspectorMode = false;
         }
 
     }
 
+    // Referenced by the details button
     public void ToggleDetails()
     {
         this.GrowthInfo.SetActive(!this.GrowthInfo.activeSelf);
@@ -79,113 +56,11 @@ public class Inspector : MonoBehaviour
 
     public void OpenInspector()
     {
-        this.inspectorWindowText.text = "Click on a point of interest to gather information";
         this.inspectorWindow.SetActive(true);
-        this.gridSystem.UpdateAnimalCellGrid();
-        //this.UpdateDropdownMenu();
-        //this.areaDropdownMenu.SetActive(true);
-        //this.itemDropdownMenu.SetActive(true);
+        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
-        this.IsInInspectorMode = !IsInInspectorMode;
-    }
-
-    /// <summary>
-    /// Toggle displays
-    /// </summary>
-    public void ToggleInspectMode()
-    {
-
-        // Toggle button text, displays and pause/free animals
-        if (!this.IsInInspectorMode)
-        {
-            this.OpenInspector();
-        }
-        else
-        {
-            this.CloseInspector();
-        }
-
-        //Debug.Log($"Inspector mode is {this.IsInInspectorMode}");
-    }
-
-    private void UpdateDropdownMenu()
-    {
-        this.enclosedAreaDropdown.options.Clear();
-
-        this.itemsDropdown.options.Clear();
-        this.itemsInEnclosedArea.Clear();
-        this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
-
-        // Add empty option
-        this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Select an area" });
-
-        foreach (EnclosedArea enclosedArea in this.enclosureSystem.EnclosedAreas)
-        {
-            this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Enclosed Area {enclosedArea.id}"});
-        }
-    }
-
-    private void selectEnclosedArea(int selection)
-    {
-        // Selected placeholder option
-        if (selection == 0)
-        {
-            return;
-        }
-
-        EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection-1];
-
-        //Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
-
-        this.itemsDropdown.options.Clear();
-        this.itemsInEnclosedArea.Clear();
-
-        this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
-
-        foreach (Population population in enclosedAreaSelected.populations)
-        {
-            this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{population.Species.SpeciesName}" });
-            this.itemsInEnclosedArea.Add(population);
-        }
-
-        foreach (FoodSource foodSource in enclosedAreaSelected.foodSources)
-        {
-            this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{foodSource.Species.SpeciesName}" });
-            this.itemsInEnclosedArea.Add(foodSource);
-        }
-
-        // Set item selection to placeholder option
-        this.itemsDropdown.value = 0;
-
-        this.inspectorWindowDisplayScript.DisplayEnclosedArea(enclosedAreaSelected);
-    }
-
-    private void selectItem(int selection)
-    {
-        // Selected placeholder option
-        if (selection == 0)
-        {
-            return;
-        }
-
-        //Debug.Log($"selected item {selection} from dropdown");
-
-        Life itemSelected = this.itemsInEnclosedArea[selection-1];
-
-        if (itemSelected.GetType() == typeof(Population))
-        {
-            this.HighlightPopulation(((Population)itemSelected).gameObject);
-            this.inspectorWindowDisplayScript.DisplayPopulationStatus((Population)itemSelected);
-        }
-        if (itemSelected.GetType() == typeof(FoodSource))
-        {
-            this.HighlightFoodSource(((FoodSource)itemSelected).gameObject);
-            this.inspectorWindowDisplayScript.DisplayFoodSourceStatus((FoodSource)itemSelected);
-        }
-
-        // Set enclosed area dropdown to placeholder selection
-        this.enclosedAreaDropdown.value = 0;
+        this.IsInInspectorMode = true;
     }
 
     /// <summary>
@@ -215,11 +90,11 @@ public class Inspector : MonoBehaviour
     public void UpdateInspectorValues()
     {
         // Update animal location reference
-        this.gridSystem.UpdateAnimalCellGrid();
+        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        GameTile tile = this.gridSystem.GetGameTileAt(pos);
-        GridSystem.TileData cellData = gridSystem.GetTileData(pos);
+        Vector3Int pos = GameManager.Instance.m_gridSystem.WorldToCell(worldPos);
+        GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(pos);
+        GridSystem.TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(pos);
 
         if (cellData == null) { 
             return;
@@ -259,14 +134,11 @@ public class Inspector : MonoBehaviour
         {
             AudioManager.instance.PlayOneShot(SFXType.Notification);
         }
-        // Reset dropdown selections
-        this.enclosedAreaDropdown.value = 0;
-        this.itemsDropdown.value = 0;
     }
 
     public void UpdateCurrentDisplay()
     {
-        GridSystem.TileData cellData = gridSystem.GetTileData(selectedPosition);
+        GridSystem.TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(selectedPosition);
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
@@ -318,8 +190,8 @@ public class Inspector : MonoBehaviour
         for (int dx = -foodSize / 2; dx < Mathf.Ceil((float)foodSize / 2); dx++)
         {
             for (int dy = -foodSize / 2; dy < Mathf.Ceil((float)foodSize / 2); dy++)
-            { 
-                gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(dx, dy, 0), Color.blue, rootRadius);
+            {
+                GameManager.Instance.m_gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(dx, dy, 0), Color.blue, rootRadius);
             }
         }
 
@@ -329,14 +201,13 @@ public class Inspector : MonoBehaviour
     private void DisplayAreaText(Vector3Int cellPos)
     {
         //Debug.Log($"Enclosed are @ {cellPos} selected");
-        this.enclosureSystem.UpdateEnclosedAreas();
-        this.inspectorWindowDisplayScript.DisplayEnclosedArea(this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos));
+        GameManager.Instance.m_enclosureSystem.UpdateEnclosedAreas();
     }
 
     private void DisplayLiquidText(Vector3Int cellPos)
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        float[] compositions = this.gridSystem.GetTileData(cellPos).currentLiquidBody.contents;
+        float[] compositions = GameManager.Instance.m_gridSystem.GetTileData(cellPos).currentLiquidBody.contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 
@@ -358,7 +229,7 @@ public class Inspector : MonoBehaviour
             this.lastPopulationSelected = null;
         }
 
-        gridSystem.ClearHighlights();
+        GameManager.Instance.m_gridSystem.ClearHighlights();
     }
 
     private void HighlightPopulation(GameObject population)
@@ -374,7 +245,7 @@ public class Inspector : MonoBehaviour
         List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.AccessibleArea[populationScript];
 
         foreach (Vector3Int tilePosition in accessibleTiles)
-            gridSystem.HighlightTile(tilePosition, Color.green);
+            GameManager.Instance.m_gridSystem.HighlightTile(tilePosition, Color.green);
 
         this.lastPopulationSelected = population;
     }

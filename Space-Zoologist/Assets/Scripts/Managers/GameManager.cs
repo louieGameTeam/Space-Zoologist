@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
-    [SerializeField] private Text objectivePanelText = default;
+    [SerializeField] private TextMeshProUGUI objectivePanelText = default;
     #endregion
 
     #region Need System Variables
@@ -593,7 +593,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateObjectivePanel()
     {
-        string displayText = "\n";
+        string displayText = "";
 
         foreach (Objective objective in m_mainObjectives)
         {
