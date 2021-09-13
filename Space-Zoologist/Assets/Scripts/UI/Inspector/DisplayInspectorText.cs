@@ -9,6 +9,7 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI inspectorWindowTitle = default;
     [SerializeField] private RectTransform layoutGroupRect = default;
     [SerializeField] private TextMeshProUGUI inspectorWindowText = default;
+    [SerializeField] private TextMeshProUGUI populationInfoText = default;
     [SerializeField] private GameObject DetailButton = default;
     [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
@@ -37,6 +38,7 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
         currentDisplay = InspectorText.Population;
         inspectorWindowTitle.text = population.species.SpeciesName;
+        populationInfoText.text = "Population: " + population.Count;
 
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
@@ -77,6 +79,7 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
         currentDisplay = InspectorText.Food;
         inspectorWindowTitle.text = foodSource.Species.SpeciesName;
+        populationInfoText.text = "";
 
         string displayText;
 
@@ -100,6 +103,7 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Area;
 
         inspectorWindowTitle.text = $"Enclosure {enclosedArea.id + 1}";
+        populationInfoText.text = "";
 
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
@@ -137,6 +141,7 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Liquid;
 
         inspectorWindowTitle.text = "Body of Water";
+        populationInfoText.text = "";
 
         string displayText = "";
         if (compositions == null)

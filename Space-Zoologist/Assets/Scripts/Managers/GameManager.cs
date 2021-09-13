@@ -562,7 +562,7 @@ public class GameManager : MonoBehaviour
             gameOverText.text = "";
         }
     }
-    [System.Obsolete("This method is obsolete because there is no design for disabling the objective panel")]
+
     public void ToggleObjectivePanel()
     {
         this.isObjectivePanelOpen = !this.isObjectivePanelOpen;
@@ -570,7 +570,7 @@ public class GameManager : MonoBehaviour
         UpdateObjectives();
         this.UpdateObjectivePanel();
     }
-    [System.Obsolete("This method is obsolete because there is no design for disabling the objective panel")]
+
     public void TurnObjectivePanelOff()
     {
         this.isObjectivePanelOpen = false;

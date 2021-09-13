@@ -906,7 +906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &792866393976539712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -944,6 +944,7 @@ MonoBehaviour:
   inspectorWindowTitle: {fileID: 8542442934588200798}
   layoutGroupRect: {fileID: 747709578288877666}
   inspectorWindowText: {fileID: 2454266187531293449}
+  populationInfoText: {fileID: 1301564626824900752}
   DetailButton: {fileID: 7243082126261897956}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
@@ -1731,7 +1732,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7243082126261897952
 CanvasRenderer:
