@@ -11,6 +11,7 @@ public class NotebookModel : ScriptableObject
     public ObservationsModel Observations => observations;
     public ConceptsModel Concepts => concepts;
     public TestAndMetricsModel TestAndMetrics => testAndMetrics;
+    public NotebookTabScaffold TabScaffold => tabScaffold;
     public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
     // This should be the same for concepts and testAndMetrics also
     public List<EnclosureID> EnclosureIDs => observations.EnclosureIDs;
@@ -40,6 +41,12 @@ public class NotebookModel : ScriptableObject
     [SerializeField]
     [Tooltip("Test and metrics that the player has taken")]
     private TestAndMetricsModel testAndMetrics;
+
+    [Space]
+
+    [SerializeField]
+    [Tooltip("Controls which tabs are available in what levels")]
+    private NotebookTabScaffold tabScaffold;
     #endregion
 
     #region Private Fields

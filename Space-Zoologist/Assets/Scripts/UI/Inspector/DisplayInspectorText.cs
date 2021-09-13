@@ -97,7 +97,7 @@ public class DisplayInspectorText : MonoBehaviour
         this.inspectorWindowText.text = displayText;
     }
 
-    public void DislplayEnclosedArea(EnclosedArea enclosedArea)
+    public void DisplayEnclosedArea(EnclosedArea enclosedArea)
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Area;

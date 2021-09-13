@@ -22,6 +22,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private int MapHeight = default;   
 
     private Camera cam = default;
+    private Vector3 originalPosition;
     private float targetZoom;
     private float zoomFactor = 3f;
     private Vector3 dragOrigin;
@@ -34,6 +35,9 @@ public class CameraController : MonoBehaviour
     {
         cam = this.GetComponent<Camera>();
         targetZoom = cam.orthographicSize;
+
+        transform.position = new Vector3(GameManager.Instance.LevelData.MapWidth / 2, GameManager.Instance.LevelData.MapHeight / 2, transform.position.z);
+        originalPosition = transform.position;
     }
 
     void Update()
@@ -110,11 +114,19 @@ public class CameraController : MonoBehaviour
 
         Vector3 attemptedPosition = new Vector3(transform.position.x + xValue, transform.position.y + yValue, -10);
 
-        if(attemptedPosition.x < 0 || attemptedPosition.x > MapWidth)
-            xValue = 0;
+        if (!GameManager.Instance.m_tilePlacementController.godMode)
+        {
+            if(attemptedPosition.x < 0 || attemptedPosition.x > MapWidth)
+                xValue = 0;
 
-        if(attemptedPosition.y < 0 || attemptedPosition.y > MapHeight)
-            yValue = 0;
+            if(attemptedPosition.y < 0 || attemptedPosition.y > MapHeight)
+                yValue = 0;
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Z))
+                transform.position = originalPosition;
+        }
 
         this.transform.position = new Vector3(transform.position.x + xValue, transform.position.y + yValue, -10);
 

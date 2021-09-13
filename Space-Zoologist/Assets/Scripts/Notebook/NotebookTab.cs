@@ -4,5 +4,10 @@ using UnityEngine;
 
 public enum NotebookTab
 {
-    Home, Research, Observe, Concepts, TestAndMetrics, Reports
+    Home, 
+    Research, 
+    Observe, 
+    Concepts, 
+    TestAndMetrics, 
+    Reports
 }
