@@ -31,7 +31,6 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region UI
-    [SerializeField] GameObject PauseButton = default;
     [SerializeField] GameObject NextDayButton = default;
     #endregion
 
@@ -524,7 +523,6 @@ public class GridSystem : MonoBehaviour
     private void UpdateUI(bool onOff)
     {
         GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
-        PauseButton.SetActive(onOff);
         NextDayButton.SetActive(onOff);
     }
     #endregion
