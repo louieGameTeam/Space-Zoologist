@@ -8,6 +8,7 @@ using TMPro;
 
 public class NotebookBookmarkNavigateButton : NotebookUIChild
 {
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Button that navigates to the bookmark when clicked")]
     private Button navigateButton;
@@ -17,14 +18,18 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
     [SerializeField]
     [Tooltip("Reference to the object used to display the text of the button")]
     private TextMeshProUGUI text;
+    #endregion
 
+    #region Private Fields
     // Bookmark represented by this button
     private Bookmark bookmark;
     // The game object previously selected on the event system
     private GameObject previousSelectedGameObject;
     // The number of clicks this button has received while selected
     private int clicksWhileSelected = 0;
+    #endregion
 
+    #region Monobehaviour Callbacks
     private void Update()
     {
         GameObject currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
@@ -38,7 +43,9 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
         // Set the previous selected object at the end of the frame
         previousSelectedGameObject = currentSelectedGameObject;
     }
+    #endregion
 
+    #region Public Methods
     public void Setup(Bookmark bookmark)
     {
         base.Setup();
@@ -48,7 +55,9 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
         navigateButton.onClick.AddListener(OnNavigateButtonClicked);
         deleteToggle.onValueChanged.AddListener(OnDeleteToggleChanged);
     }
+    #endregion
 
+    #region Private Methods
     // On click select the correct tab, and setup the category picker
     private void OnNavigateButtonClicked()
     {
@@ -61,9 +70,6 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
     private void OnDeleteToggleChanged(bool isOn)
     {
         navigateButton.interactable = isOn;
-
-        if (isOn) text.text = bookmark.Label;
-        else text.text = "<marked for deletion>";
     }
 
     private void OnDisable()
@@ -74,4 +80,5 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
             Destroy(gameObject);
         }
     }
+    #endregion
 }
