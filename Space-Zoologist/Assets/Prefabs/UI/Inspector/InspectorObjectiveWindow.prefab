@@ -938,12 +938,6 @@ MonoBehaviour:
   DetailButton: {fileID: 7243082126261897956}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
-  enclosedAreaSprite: {fileID: -3045895970611929965, guid: 0314811df211bb7418f88854e78f8bbb,
-    type: 3}
-  liquidSprite: {fileID: 2590806747968669933, guid: 0314811df211bb7418f88854e78f8bbb,
-    type: 3}
-  defaultSprite: {fileID: -3045895970611929965, guid: 0314811df211bb7418f88854e78f8bbb,
-    type: 3}
 --- !u!114 &3168205392388878789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1818,7 +1812,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3168205392388878789}
         m_MethodName: ToggleDetails
         m_Mode: 1
         m_Arguments:

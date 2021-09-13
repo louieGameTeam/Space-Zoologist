@@ -26,6 +26,7 @@ public class InspectorObjectiveUI : MonoBehaviour
         // Initialize the inspector
         inspector.Initialize();
 
+        // Add listeners to the toggle events
         objectiveToggle.onValueChanged.AddListener(objectivePanel.SetActive);
         inspectorToggle.onValueChanged.AddListener(x =>
         {
@@ -33,7 +34,9 @@ public class InspectorObjectiveUI : MonoBehaviour
             else inspector.CloseInspector();
         });
 
+        // Enable the toggle and invoke the event
         inspectorToggle.isOn = true;
+        inspectorToggle.onValueChanged.Invoke(true);
     }
     #endregion
 }

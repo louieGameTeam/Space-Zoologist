@@ -18,12 +18,6 @@ public class DisplayInspectorText : MonoBehaviour
 
     private List<GameObject> needSliders = new List<GameObject>();
 
-    [Header("Temporary sprites")]
-    [SerializeField] Sprite enclosedAreaSprite = default;
-    [SerializeField] Sprite liquidSprite = default;
-    [SerializeField] Sprite defaultSprite = default;
-
-
     GameObject detailBackground;
     Text detailText;
     float defaultHeight;

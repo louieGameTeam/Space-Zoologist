@@ -14,9 +14,6 @@ public class Inspector : MonoBehaviour
 {
     public bool IsInInspectorMode { get; private set; }
 
-    private GridSystem gridSystem = null;
-    private EnclosureSystem enclosureSystem = null;
-
     // The inspector window
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private GameObject GrowthInfo = default;
@@ -33,9 +30,6 @@ public class Inspector : MonoBehaviour
 
     public void Initialize()
     {
-        gridSystem = GameManager.Instance.m_gridSystem;
-        enclosureSystem = GameManager.Instance.m_enclosureSystem;
-
         this.IsInInspectorMode = false;
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
@@ -64,7 +58,7 @@ public class Inspector : MonoBehaviour
     public void OpenInspector()
     {
         this.inspectorWindow.SetActive(true);
-        this.gridSystem.UpdateAnimalCellGrid();
+        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = true;
@@ -97,11 +91,11 @@ public class Inspector : MonoBehaviour
     public void UpdateInspectorValues()
     {
         // Update animal location reference
-        this.gridSystem.UpdateAnimalCellGrid();
+        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        GameTile tile = this.gridSystem.GetGameTileAt(pos);
-        GridSystem.TileData cellData = gridSystem.GetTileData(pos);
+        Vector3Int pos = GameManager.Instance.m_gridSystem.WorldToCell(worldPos);
+        GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(pos);
+        GridSystem.TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(pos);
 
         if (cellData == null) { 
             return;
@@ -145,7 +139,7 @@ public class Inspector : MonoBehaviour
 
     public void UpdateCurrentDisplay()
     {
-        GridSystem.TileData cellData = gridSystem.GetTileData(selectedPosition);
+        GridSystem.TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(selectedPosition);
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
@@ -197,8 +191,8 @@ public class Inspector : MonoBehaviour
         for (int dx = -foodSize / 2; dx < Mathf.Ceil((float)foodSize / 2); dx++)
         {
             for (int dy = -foodSize / 2; dy < Mathf.Ceil((float)foodSize / 2); dy++)
-            { 
-                gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(dx, dy, 0), Color.blue, rootRadius);
+            {
+                GameManager.Instance.m_gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(dx, dy, 0), Color.blue, rootRadius);
             }
         }
 
@@ -208,13 +202,13 @@ public class Inspector : MonoBehaviour
     private void DisplayAreaText(Vector3Int cellPos)
     {
         //Debug.Log($"Enclosed are @ {cellPos} selected");
-        this.enclosureSystem.UpdateEnclosedAreas();
+        GameManager.Instance.m_enclosureSystem.UpdateEnclosedAreas();
     }
 
     private void DisplayLiquidText(Vector3Int cellPos)
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        float[] compositions = this.gridSystem.GetTileData(cellPos).currentLiquidBody.contents;
+        float[] compositions = GameManager.Instance.m_gridSystem.GetTileData(cellPos).currentLiquidBody.contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 
@@ -236,7 +230,7 @@ public class Inspector : MonoBehaviour
             this.lastPopulationSelected = null;
         }
 
-        gridSystem.ClearHighlights();
+        GameManager.Instance.m_gridSystem.ClearHighlights();
     }
 
     private void HighlightPopulation(GameObject population)
@@ -252,7 +246,7 @@ public class Inspector : MonoBehaviour
         List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.AccessibleArea[populationScript];
 
         foreach (Vector3Int tilePosition in accessibleTiles)
-            gridSystem.HighlightTile(tilePosition, Color.green);
+            GameManager.Instance.m_gridSystem.HighlightTile(tilePosition, Color.green);
 
         this.lastPopulationSelected = population;
     }
