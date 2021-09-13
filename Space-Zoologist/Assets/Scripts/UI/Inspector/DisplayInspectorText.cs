@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DisplayInspectorText : MonoBehaviour
 {
-    [SerializeField] private Text inspectorWindowTitle = default;
-    [SerializeField] private Image inspectorWindowImage = default;
+    [SerializeField] private TextMeshProUGUI inspectorWindowTitle = default;
     [SerializeField] private RectTransform layoutGroupRect = default;
-    [SerializeField] private Text inspectorWindowText = default;
+    [SerializeField] private TextMeshProUGUI inspectorWindowText = default;
     [SerializeField] private GameObject DetailButton = default;
     [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
@@ -28,8 +28,6 @@ public class DisplayInspectorText : MonoBehaviour
     float defaultHeight;
     public void Initialize()
     {
-        defaultHeight = inspectorWindowImage.rectTransform.sizeDelta.y;
-
         detailBackground = DetailButton.transform.GetChild(0).gameObject;
         detailText = detailBackground.GetComponentInChildren<Text>(true);
     }
@@ -38,9 +36,6 @@ public class DisplayInspectorText : MonoBehaviour
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Population;
-        inspectorWindowImage.sprite = population.species.Icon;
-
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0,inspectorWindowImage.sprite.rect.size.x,defaultHeight/inspectorWindowImage.sprite.rect.size.y), defaultHeight);
         inspectorWindowTitle.text = population.species.SpeciesName;
 
         DetailButton.SetActive(true);
@@ -81,20 +76,18 @@ public class DisplayInspectorText : MonoBehaviour
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Food;
-        inspectorWindowImage.sprite = foodSource.Species?.FoodSourceItem.Icon;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
         inspectorWindowTitle.text = foodSource.Species.SpeciesName;
 
-        string displayText = $"\n";
+        string displayText;
 
         if (foodSource.isUnderConstruction)
         {
-            displayText += $"Under Construction \n";
+            displayText = $"Under Construction \n";
 
         }
         else
         {
-            displayText += $"Output: {foodSource.FoodOutput}\n";
+            displayText = $"Output: {foodSource.FoodOutput}\n";
 
             GenerateSliders(foodSource);
         }
@@ -107,15 +100,12 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Area;
 
         inspectorWindowTitle.text = $"Enclosure {enclosedArea.id + 1}";
-        inspectorWindowImage.sprite = enclosedAreaSprite;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
-
 
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
         float[] terrainComposition = enclosedArea.terrainComposition;
 
-        string displayText = $"\n";
+        string displayText = "";
 
         // Atmospheric info
         //displayText += "Atmospheric composition: \n";
@@ -147,9 +137,6 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Liquid;
 
         inspectorWindowTitle.text = "Body of Water";
-        inspectorWindowImage.sprite = liquidSprite;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
-
 
         string displayText = "";
         if (compositions == null)
@@ -172,8 +159,6 @@ public class DisplayInspectorText : MonoBehaviour
         DetailButton.SetActive(false);
         detailBackground.SetActive(false);
         detailText.text = "";
-        inspectorWindowImage.sprite = defaultSprite;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
 
         inspectorWindowTitle.text = "Title";
         foreach (GameObject obj in needSliders) {

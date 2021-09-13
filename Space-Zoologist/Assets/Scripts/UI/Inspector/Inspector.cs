@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /// <summary>
 /// This script is to attached to the inspector button and handles
@@ -17,18 +18,17 @@ public class Inspector : MonoBehaviour
     private EnclosureSystem enclosureSystem = null;
 
     // The inspector window
-    [SerializeField] private GameObject areaDropdownMenu = null;
-    [SerializeField] private GameObject itemDropdownMenu = null;
+    //[SerializeField] private GameObject areaDropdownMenu = null;
+    //[SerializeField] private GameObject itemDropdownMenu = null;
     [SerializeField] private GameObject inspectorWindow = null;
-    [SerializeField] private Text inspectorWindowText = null;
-    [SerializeField] private GameObject ObjectivePane = null;
+    //[SerializeField] private GameObject ObjectivePane = null;
     [SerializeField] private GameObject GrowthInfo = default;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
-    private Dropdown enclosedAreaDropdown;
-    private Dropdown itemsDropdown;
+    //private Dropdown enclosedAreaDropdown;
+    //private Dropdown itemsDropdown;
     private DisplayInspectorText inspectorWindowDisplayScript;
     private GameObject PopulationHighlighted = null;
     private Vector3Int selectedPosition;
@@ -42,18 +42,18 @@ public class Inspector : MonoBehaviour
         enclosureSystem = GameManager.Instance.m_enclosureSystem;
 
         this.IsInInspectorMode = false;
-        this.enclosedAreaDropdown = this.areaDropdownMenu.GetComponent<Dropdown>();
-        this.itemsDropdown = this.itemDropdownMenu.GetComponent<Dropdown>();
-        this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
-        this.itemsDropdown.onValueChanged.AddListener(selectItem);
+        //this.enclosedAreaDropdown = this.areaDropdownMenu.GetComponent<Dropdown>();
+        //this.itemsDropdown = this.itemDropdownMenu.GetComponent<Dropdown>();
+        //this.enclosedAreaDropdown.onValueChanged.AddListener(selectEnclosedArea);
+        //this.itemsDropdown.onValueChanged.AddListener(selectItem);
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
         OpenInspector();
 
         // Have the dropdown options be refreshed when new items created
-        EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
-        EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, this.UpdateDropdownMenu);
-        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, this.UpdateDropdownMenu);
+        //EventManager.Instance.SubscribeToEvent(EventType.NewEnclosedArea, this.UpdateDropdownMenu);
+        //EventManager.Instance.SubscribeToEvent(EventType.NewFoodSource, this.UpdateDropdownMenu);
+        //EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, this.UpdateDropdownMenu);
     }
 
     public void CloseInspector()
@@ -79,7 +79,6 @@ public class Inspector : MonoBehaviour
 
     public void OpenInspector()
     {
-        this.inspectorWindowText.text = "Click on a point of interest to gather information";
         this.inspectorWindow.SetActive(true);
         this.gridSystem.UpdateAnimalCellGrid();
         //this.UpdateDropdownMenu();
@@ -111,54 +110,57 @@ public class Inspector : MonoBehaviour
 
     private void UpdateDropdownMenu()
     {
-        this.enclosedAreaDropdown.options.Clear();
+        throw new System.NotImplementedException("Inspector: dropdowns are no longer implemented for the inspector");
+        //this.enclosedAreaDropdown.options.Clear();
 
-        this.itemsDropdown.options.Clear();
-        this.itemsInEnclosedArea.Clear();
-        this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
+        //this.itemsDropdown.options.Clear();
+        //this.itemsInEnclosedArea.Clear();
+        //this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
 
-        // Add empty option
-        this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Select an area" });
+        //// Add empty option
+        //this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Select an area" });
 
-        foreach (EnclosedArea enclosedArea in this.enclosureSystem.EnclosedAreas)
-        {
-            this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Enclosed Area {enclosedArea.id}"});
-        }
+        //foreach (EnclosedArea enclosedArea in this.enclosureSystem.EnclosedAreas)
+        //{
+        //    this.enclosedAreaDropdown.options.Add(new Dropdown.OptionData { text = $"Enclosed Area {enclosedArea.id}" });
+        //}
     }
 
     private void selectEnclosedArea(int selection)
     {
+        throw new System.NotImplementedException("Inspector: enclosed area selection is no longer implemented for the inspector");
+
         // Selected placeholder option
-        if (selection == 0)
-        {
-            return;
-        }
+        //if (selection == 0)
+        //{
+        //    return;
+        //}
 
-        EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection-1];
+        //EnclosedArea enclosedAreaSelected = this.enclosureSystem.EnclosedAreas[selection - 1];
 
-        //Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
+        ////Debug.Log($"Enclosed area {enclosedAreaSelected.id} selected from dropdown");
 
-        this.itemsDropdown.options.Clear();
-        this.itemsInEnclosedArea.Clear();
+        //this.itemsDropdown.options.Clear();
+        //this.itemsInEnclosedArea.Clear();
 
-        this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
+        //this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"Select an item" });
 
-        foreach (Population population in enclosedAreaSelected.populations)
-        {
-            this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{population.Species.SpeciesName}" });
-            this.itemsInEnclosedArea.Add(population);
-        }
+        //foreach (Population population in enclosedAreaSelected.populations)
+        //{
+        //    this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{population.Species.SpeciesName}" });
+        //    this.itemsInEnclosedArea.Add(population);
+        //}
 
-        foreach (FoodSource foodSource in enclosedAreaSelected.foodSources)
-        {
-            this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{foodSource.Species.SpeciesName}" });
-            this.itemsInEnclosedArea.Add(foodSource);
-        }
+        //foreach (FoodSource foodSource in enclosedAreaSelected.foodSources)
+        //{
+        //    this.itemsDropdown.options.Add(new Dropdown.OptionData { text = $"{foodSource.Species.SpeciesName}" });
+        //    this.itemsInEnclosedArea.Add(foodSource);
+        //}
 
-        // Set item selection to placeholder option
-        this.itemsDropdown.value = 0;
+        //// Set item selection to placeholder option
+        //this.itemsDropdown.value = 0;
 
-        this.inspectorWindowDisplayScript.DislplayEnclosedArea(enclosedAreaSelected);
+        //this.inspectorWindowDisplayScript.DislplayEnclosedArea(enclosedAreaSelected);
     }
 
     private void selectItem(int selection)
@@ -185,7 +187,7 @@ public class Inspector : MonoBehaviour
         }
 
         // Set enclosed area dropdown to placeholder selection
-        this.enclosedAreaDropdown.value = 0;
+        //this.enclosedAreaDropdown.value = 0;
     }
 
     /// <summary>
@@ -260,8 +262,8 @@ public class Inspector : MonoBehaviour
             AudioManager.instance.PlayOneShot(SFXType.Notification);
         }
         // Reset dropdown selections
-        this.enclosedAreaDropdown.value = 0;
-        this.itemsDropdown.value = 0;
+        //this.enclosedAreaDropdown.value = 0;
+        //this.itemsDropdown.value = 0;
     }
 
     public void UpdateCurrentDisplay()
