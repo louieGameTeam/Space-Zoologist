@@ -31,7 +31,7 @@ public class Inspector : MonoBehaviour
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
 
-    private void Start()
+    public void Initialize()
     {
         gridSystem = GameManager.Instance.m_gridSystem;
         enclosureSystem = GameManager.Instance.m_enclosureSystem;
@@ -39,7 +39,6 @@ public class Inspector : MonoBehaviour
         this.IsInInspectorMode = false;
         this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
-        OpenInspector();
     }
 
     public void CloseInspector()
@@ -51,11 +50,12 @@ public class Inspector : MonoBehaviour
             //this.HUD.SetActive(true);
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
-            this.IsInInspectorMode = !IsInInspectorMode;
+            this.IsInInspectorMode = false;
         }
 
     }
 
+    // Referenced by the details button
     public void ToggleDetails()
     {
         this.GrowthInfo.SetActive(!this.GrowthInfo.activeSelf);
@@ -67,50 +67,7 @@ public class Inspector : MonoBehaviour
         this.gridSystem.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
-        this.IsInInspectorMode = !IsInInspectorMode;
-    }
-
-    /// <summary>
-    /// Toggle displays
-    /// </summary>
-    public void ToggleInspectMode()
-    {
-
-        // Toggle button text, displays and pause/free animals
-        if (!this.IsInInspectorMode)
-        {
-            this.OpenInspector();
-        }
-        else
-        {
-            this.CloseInspector();
-        }
-
-        //Debug.Log($"Inspector mode is {this.IsInInspectorMode}");
-    }
-
-    private void selectItem(int selection)
-    {
-        // Selected placeholder option
-        if (selection == 0)
-        {
-            return;
-        }
-
-        //Debug.Log($"selected item {selection} from dropdown");
-
-        Life itemSelected = this.itemsInEnclosedArea[selection-1];
-
-        if (itemSelected.GetType() == typeof(Population))
-        {
-            this.HighlightPopulation(((Population)itemSelected).gameObject);
-            this.inspectorWindowDisplayScript.DisplayPopulationStatus((Population)itemSelected);
-        }
-        if (itemSelected.GetType() == typeof(FoodSource))
-        {
-            this.HighlightFoodSource(((FoodSource)itemSelected).gameObject);
-            this.inspectorWindowDisplayScript.DisplayFoodSourceStatus((FoodSource)itemSelected);
-        }
+        this.IsInInspectorMode = true;
     }
 
     /// <summary>

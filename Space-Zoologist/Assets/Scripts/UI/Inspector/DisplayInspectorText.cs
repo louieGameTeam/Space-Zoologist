@@ -27,6 +27,7 @@ public class DisplayInspectorText : MonoBehaviour
     GameObject detailBackground;
     Text detailText;
     float defaultHeight;
+
     public void Initialize()
     {
         detailBackground = DetailButton.transform.GetChild(0).gameObject;

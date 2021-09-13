@@ -782,18 +782,7 @@ MonoBehaviour:
   m_Group: {fileID: 1700516046312071863}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4368926420888670963}
-        m_MethodName: SetActive
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 0
 --- !u!114 &8466992493831755301
 MonoBehaviour:
@@ -900,13 +889,14 @@ GameObject:
   m_Component:
   - component: {fileID: 792866393976539712}
   - component: {fileID: 7331818809557388825}
+  - component: {fileID: 3168205392388878789}
   m_Layer: 5
   m_Name: Inspector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &792866393976539712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -954,6 +944,20 @@ MonoBehaviour:
     type: 3}
   defaultSprite: {fileID: -3045895970611929965, guid: 0314811df211bb7418f88854e78f8bbb,
     type: 3}
+--- !u!114 &3168205392388878789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4368926420888670963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inspectorWindow: {fileID: 4368926420888670963}
+  GrowthInfo: {fileID: 7243082125307740525}
 --- !u!1 &5178308865991020555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,7 +1736,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7243082126261897952
 CanvasRenderer:
@@ -1850,7 +1854,7 @@ GameObject:
   - component: {fileID: 7243082126267867200}
   - component: {fileID: 7243082126267867213}
   - component: {fileID: 7243082126267867202}
-  - component: {fileID: 8127524310336005437}
+  - component: {fileID: 6037491244839071911}
   m_Layer: 5
   m_Name: InspectorObjectiveWindow
   m_TagString: Untagged
@@ -1916,7 +1920,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.1
---- !u!114 &8127524310336005437
+--- !u!114 &6037491244839071911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1925,11 +1929,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7243082126267867201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
+  m_Script: {fileID: 11500000, guid: f4d43938f4c30cc449cb08bfb9b8b00e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inspectorWindow: {fileID: 4368926420888670963}
-  GrowthInfo: {fileID: 7243082125307740525}
+  objectiveToggle: {fileID: 5256070083433968182}
+  objectivePanel: {fileID: 5848914588836196529}
+  inspectorToggle: {fileID: 6781891701553658211}
+  inspector: {fileID: 3168205392388878789}
 --- !u!1 &7536904850095213284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2809,18 +2815,7 @@ MonoBehaviour:
   m_Group: {fileID: 1700516046312071863}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5848914588836196529}
-        m_MethodName: SetActive
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 0
 --- !u!114 &6537591906956441390
 MonoBehaviour:
