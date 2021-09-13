@@ -44,7 +44,7 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Dictionary<string, Need> popNeeds = population.GetNeedValues();
 
-                if(!popNeeds.ContainsKey("LiquidTiles"))
+                if(!popNeeds.ContainsKey("Liquid"))
                     continue;
 
                 if ((!popNeeds.ContainsKey("Water") || popNeeds["Water"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) && //If the population either doesn't need fresh water or the fresh water threshold is met
