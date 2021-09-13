@@ -175,20 +175,19 @@ public class DisplayInspectorText : MonoBehaviour
         }
         if (life is Population)
         {
-            setupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating, -5, 5);
-            setupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating, -5, 5);
-            setupSlider("Food", ((Population)life).GrowthCalculator.FoodRating, -5, 5);
+            setupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating);
+            setupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating);
+            setupSlider("Food", ((Population)life).GrowthCalculator.FoodRating);
         }
     }
 
-    private void setupSlider(string name, float value, int min = 0, int max = 10)
+    private void setupSlider(string name, float value, int min = -1, int max = 1)
     {
         GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
         needSliders.Add(sliderObj);
         NeedSlider slider = sliderObj.GetComponent<NeedSlider>();
-        slider.max = max;
-        slider.min = min;
         slider.SetName(name);
+        slider.SetMinMax(min, max);
         slider.SetValue(value);
     }
 }
