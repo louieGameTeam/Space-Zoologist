@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
-    [SerializeField] private Text objectivePanelText = default;
+    [SerializeField] private TextMeshProUGUI objectivePanelText = default;
     #endregion
 
     #region Need System Variables
@@ -562,7 +562,7 @@ public class GameManager : MonoBehaviour
             gameOverText.text = "";
         }
     }
-
+    [System.Obsolete("This method is obsolete because there is no design for disabling the objective panel")]
     public void ToggleObjectivePanel()
     {
         this.isObjectivePanelOpen = !this.isObjectivePanelOpen;
@@ -570,7 +570,7 @@ public class GameManager : MonoBehaviour
         UpdateObjectives();
         this.UpdateObjectivePanel();
     }
-
+    [System.Obsolete("This method is obsolete because there is no design for disabling the objective panel")]
     public void TurnObjectivePanelOff()
     {
         this.isObjectivePanelOpen = false;
@@ -608,7 +608,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateObjectivePanel()
     {
-        string displayText = "\n";
+        string displayText = "";
 
         foreach (Objective objective in m_mainObjectives)
         {
