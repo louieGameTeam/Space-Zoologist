@@ -30,11 +30,6 @@ public class GridSystem : MonoBehaviour
     [SerializeField] public Tilemap Tilemap;
     #endregion
 
-    #region UI
-    [SerializeField] GameObject PauseButton = default;
-    [SerializeField] GameObject NextDayButton = default;
-    #endregion
-
     [Header("Used to define 2d array")]
     [SerializeField] private int ReserveWidth = default;
     [SerializeField] private int ReserveHeight = default;
@@ -252,7 +247,7 @@ public class GridSystem : MonoBehaviour
         Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
         bufferMaterial.SetTexture("_MainTex", BufferTexture);
         bufferMaterial.SetTexture("_CenterTex", BufferCenterTexture);
-        bufferGameObject.GetComponent<MeshRenderer>().sortingOrder = 100;
+        bufferGameObject.GetComponent<MeshRenderer>().sortingOrder = 4;
 
 
         // add texture to material
@@ -524,8 +519,6 @@ public class GridSystem : MonoBehaviour
     private void UpdateUI(bool onOff)
     {
         GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
-        PauseButton.SetActive(onOff);
-        NextDayButton.SetActive(onOff);
     }
     #endregion
 
