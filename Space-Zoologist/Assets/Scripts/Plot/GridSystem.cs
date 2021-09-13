@@ -30,6 +30,10 @@ public class GridSystem : MonoBehaviour
     [SerializeField] public Tilemap Tilemap;
     #endregion
 
+    #region UI
+    [SerializeField] GameObject NextDayButton = default;
+    #endregion
+
     [Header("Used to define 2d array")]
     [SerializeField] private int ReserveWidth = default;
     [SerializeField] private int ReserveHeight = default;
@@ -519,6 +523,7 @@ public class GridSystem : MonoBehaviour
     private void UpdateUI(bool onOff)
     {
         GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
+        NextDayButton.SetActive(onOff);
     }
     #endregion
 
