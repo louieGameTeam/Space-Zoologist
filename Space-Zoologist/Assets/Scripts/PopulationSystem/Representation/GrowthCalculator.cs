@@ -90,13 +90,14 @@ public class GrowthCalculator
 
     public void CalculateWaterNeed()
     {
-        if(!population.Needs.ContainsKey("LiquidTiles"))
+        Debug.Log(population.species.SpeciesName + " has liquid need " + population.Needs.ContainsKey("Liquid"));
+        if(!population.Needs.ContainsKey("Liquid"))
         {
             waterRating = 0;
             return;
         }
 
-        LiquidNeed tileNeed = (LiquidNeed)population.Needs["LiquidTiles"];
+        LiquidNeed tileNeed = (LiquidNeed)population.Needs["Liquid"];
 
         LiquidNeed waterNeed = null;
         if(population.Needs.ContainsKey("Water"))
@@ -148,7 +149,7 @@ public class GrowthCalculator
         else
         {
             IsNeedMet[NeedType.Liquid] = false;
-            waterRating = Mathf.Clamp01((waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles);
+            waterRating = (waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles;
         }
 
         Debug.Log(population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
