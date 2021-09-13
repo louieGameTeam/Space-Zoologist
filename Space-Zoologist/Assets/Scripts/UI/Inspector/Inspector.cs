@@ -16,12 +16,12 @@ public class Inspector : MonoBehaviour
 
     // The inspector window
     [SerializeField] private GameObject inspectorWindow = null;
+    [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript;
     [SerializeField] private GameObject GrowthInfo = default;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
-    private DisplayInspectorText inspectorWindowDisplayScript;
     private GameObject PopulationHighlighted = null;
     private Vector3Int selectedPosition;
 
@@ -31,7 +31,6 @@ public class Inspector : MonoBehaviour
     public void Initialize()
     {
         this.IsInInspectorMode = false;
-        this.inspectorWindowDisplayScript = this.inspectorWindow.GetComponent<DisplayInspectorText>();
         this.inspectorWindowDisplayScript.Initialize();
     }
 
