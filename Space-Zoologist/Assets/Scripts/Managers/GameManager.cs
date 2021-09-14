@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     public Inspector m_inspector { get; private set; }
     public PlayerController m_playerController { get; private set; }
     public CameraController m_cameraController { get; private set; }
+    public  MenuManager m_menuManager { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -225,6 +226,7 @@ public class GameManager : MonoBehaviour
         m_inspector = FindObjectOfType<Inspector>();
         m_playerController = FindObjectOfType<PlayerController>();
         m_cameraController = FindObjectOfType<CameraController>();
+        m_menuManager = FindObjectOfType<MenuManager>();
     }
 
     private void LoadResources()
