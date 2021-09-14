@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
+    [SerializeField] List<GameObject> UI = default;
     public bool IsInStore { get; private set; }
     private int curMenu = 0;
 
@@ -119,5 +120,23 @@ public class MenuManager : MonoBehaviour
         StoreMenus[curMenu]?.gameObject.SetActive(true);
 
         AudioManager.instance.PlayOneShot(SFXType.TabSwitch);
+    }
+
+    public void ToggleUI(bool isActive)
+    {
+        foreach(GameObject ui in UI)
+        {
+            ui.SetActive(isActive);
+        }
+        if (!isActive)
+        {
+            GameManager.Instance.m_inspector.CloseInspector();
+            GameManager.Instance.TurnObjectivePanelOn();
+        }
+        else
+        {
+            GameManager.Instance.m_inspector.OpenInspector();
+            GameManager.Instance.TurnObjectivePanelOff();
+        }
     }
 }

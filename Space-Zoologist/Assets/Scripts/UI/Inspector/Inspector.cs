@@ -44,6 +44,7 @@ public class Inspector : MonoBehaviour
             this.UnHighlightAll();
             EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
             this.IsInInspectorMode = false;
+            Debug.Log("Inspector closed");
         }
 
     }

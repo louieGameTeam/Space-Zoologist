@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
     [SerializeField] private GameObject DialogueButton = default;
+    [SerializeField] private MenuManager menuManager = default;
     private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
 
     private bool ContinueSpeech = false;
@@ -38,8 +39,7 @@ public class DialogueManager : MonoBehaviour
         }
         if (ConversationManager.Instance != null)
         {
-            ConversationManager.Instance.StartConversation(currentDialogue);
-            ContinueSpeech = true;
+            StartNewConversation();
         }
     }
 
@@ -47,6 +47,7 @@ public class DialogueManager : MonoBehaviour
     {
         ContinueSpeech = false;
         ConversationManagerGameObject.SetActive(false);
+        menuManager.ToggleUI(true);
     }
 
     public void SetNewDialogue(NPCConversation newDialogue)
@@ -83,6 +84,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (!ConversationManagerGameObject.activeSelf)
             {
+                UpdateCurrentDialogue();
                 StartNewConversation();
             }
             else
@@ -94,8 +96,8 @@ public class DialogueManager : MonoBehaviour
 
     private void StartNewConversation()
     {
+        menuManager.ToggleUI(false);
         ConversationManagerGameObject.SetActive(true);
-        UpdateCurrentDialogue();
         ConversationManager.Instance.StartConversation(currentDialogue);
         ContinueSpeech = true;
     }
