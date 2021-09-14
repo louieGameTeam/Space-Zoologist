@@ -71,7 +71,7 @@ public class FoodSourceManager : GridObjectManager
         m_gridSystemReference.AddFood(m_gridSystemReference.WorldToCell(pos), species.Size, newFoodSourceGameObject);
         if (ttb > 0)
         {
-            m_gridSystemReference.CreateSquareBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
+            m_gridSystemReference.CreateRectangleBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
                 species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
             foodSource.isUnderConstruction = true;
             m_gridSystemReference.ConstructionFinishedCallback(() =>

@@ -314,7 +314,8 @@ public class Inspector : MonoBehaviour
         Vector2Int foodSize = foodSource.Species.Size;
 
         Vector3 foodPosition = FoodObject.transform.position;
-        Vector3Int foodPositionInt = new Vector3Int((int)foodPosition.x, (int)foodPosition.y, (int)foodPosition.z);
+        Vector3Int foodPositionInt = new Vector3Int((int)foodPosition.x - foodSize.x / 2, (int)foodPosition.y - foodSize.y / 2, (int)foodPosition.z);
+        
         for (int x = -(foodSize.x - 1) / 2; x <= foodSize.x / 2; x++)
         {
             for (int y = -(foodSize.x - 1) / 2; y <= foodSize.y / 2; y++)

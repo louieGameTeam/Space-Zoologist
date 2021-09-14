@@ -344,7 +344,7 @@ public class MoveObject : MonoBehaviour
         GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
         gridSystem.AddFood(mouseGridPosition, species.Size, Food);
-        gridSystem.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
+        gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
         species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
     }
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)

@@ -626,7 +626,7 @@ public class GridSystem : MonoBehaviour
     {
         constructionFinishedCallback += action;
     }
-    public void CreateSquareBuffer(Vector2Int pos, int time, Vector2Int size, ConstructionCluster.ConstructionType type)
+    public void CreateRectangleBuffer(Vector2Int pos, int time, Vector2Int size, ConstructionCluster.ConstructionType type)
     {
         // only considering non food sources right now
         if (type != ConstructionCluster.ConstructionType.TILE)
@@ -638,6 +638,9 @@ public class GridSystem : MonoBehaviour
                 for (int j = 0; j < size.y; j++)
                 {
                     Vector2Int bufferPosition = new Vector2Int(pos.x + i, pos.y + j);
+
+                    TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = true;
+
                     Color bufferColorInformation = new Color(
                         (float)((int)type) / FLAG_VALUE_MULTIPLIER,                 // which construction type it is
                         0,                                                          // which tile it is in the set (currently not being used)
@@ -1405,14 +1408,15 @@ public class GridSystem : MonoBehaviour
 
     private bool CheckSurroudingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
     {
-        // size 1 -> rad 0, size 3 -> rad 1 ...
         Vector3Int pos;
         bool isValid = true;
         // Size is even, offset by 1
         // Check if the whole object is in bounds
-        for (int x = Mathf.CeilToInt(-(float)species.Size.x / 2); x <= species.Size.x / 2 + 1; x++)
+        print(Mathf.CeilToInt(-(float)species.Size.x / 2));
+
+        for (int x = Mathf.CeilToInt(-(float)(species.Size.x - 1) / 2); x <= species.Size.x / 2; x++)
         {
-            for (int y = Mathf.CeilToInt(-(float)species.Size.y / 2); y <= species.Size.y / 2 + 1; y++)
+            for (int y = Mathf.CeilToInt(-(float)(species.Size.y - 1) / 2); y <= species.Size.y / 2; y++)
             {
                 pos = cellPosition;
                 pos.x += x;
