@@ -49,11 +49,11 @@ public class GameManager : MonoBehaviour
     public bool isMainObjectivesCompleted { get; private set; }
     public int numSecondaryObjectivesCompleted { get; private set; }
 
-    private bool isObjectivePanelOpen;
+    public bool isObjectivePanelOpen { get; private set; }
     
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
-    [SerializeField] private Text objectivePanelText = default;
+    [SerializeField] private TextMeshProUGUI objectivePanelText = default;
     #endregion
 
     #region Need System Variables
@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     public Inspector m_inspector { get; private set; }
     public PlayerController m_playerController { get; private set; }
     public CameraController m_cameraController { get; private set; }
+    public  MenuManager m_menuManager { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -225,6 +226,7 @@ public class GameManager : MonoBehaviour
         m_inspector = FindObjectOfType<Inspector>();
         m_playerController = FindObjectOfType<PlayerController>();
         m_cameraController = FindObjectOfType<CameraController>();
+        m_menuManager = FindObjectOfType<MenuManager>();
     }
 
     private void LoadResources()
@@ -548,10 +550,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ToggleObjectivePanel()
+    public void TurnObjectivePanelOn()
     {
-        this.isObjectivePanelOpen = !this.isObjectivePanelOpen;
-        this.objectivePane.SetActive(this.isObjectivePanelOpen);
+        this.isObjectivePanelOpen = true;
+        this.objectivePane.SetActive(true);
         UpdateObjectives();
         this.UpdateObjectivePanel();
     }
@@ -593,7 +595,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateObjectivePanel()
     {
-        string displayText = "\n";
+        string displayText = "";
 
         foreach (Objective objective in m_mainObjectives)
         {

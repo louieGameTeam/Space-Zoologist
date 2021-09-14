@@ -5,65 +5,59 @@ using UnityEngine.UI;
 
 public class NeedSlider : MonoBehaviour
 {
+    #region Private Editor Fields
     [SerializeField] Text Name;
-    [SerializeField] Slider badSlider;
-    [SerializeField] Slider goodSlider;
-    Image badHandle;
-    Image goodHandle;
+    [SerializeField] Slider lowSlider;
+    [SerializeField] Slider highSlider;
+    #endregion
 
-    public int max = 10;
-    public int min = 0;
-
+    #region Monobehaviour Messages
     public void Awake()
     {
-        badHandle = badSlider.handleRect.GetComponent<Image>();
-        goodHandle = goodSlider.handleRect.GetComponent<Image>();
         SetValue(0);
     }
+    #endregion
 
+    #region Public Methods
     public void SetName(string name) {
         Name.text = name;
     }
 
+    public void SetMinMax(float min, float max)
+    {
+        float midpoint = min + ((max - min) / 2);
+
+        lowSlider.minValue = min;
+        lowSlider.maxValue = midpoint;
+        highSlider.minValue = midpoint;
+        highSlider.maxValue = max;
+    }
+
     public void SetValue(float value) {
-        badSlider.minValue = min;
-        badSlider.maxValue = 0;
-        goodSlider.minValue = 0;
-        goodSlider.maxValue = max;
-        
-
-        if (value >= 0f)
-        {
-            updateGoodSlider(value);
-        }
-        else if (value <= 0f) {
-            updateBadSlider(-value);
-        }
+        lowSlider.value = value;
+        highSlider.value = value;
     }
+    #endregion
 
-    private void updateGoodSlider(float value)
-    {
-        if (value > max)
-        {
-            value = max;
-        }
-        goodSlider.value = value;
-        badSlider.value = min;
-        badHandle.enabled = false;
-        goodHandle.enabled = true;
-    }
+    //private void updateGoodSlider(float value)
+    //{
+    //    if (value > max)
+    //    {
+    //        value = max;
+    //    }
+    //    highSlider.value = value;
+    //    lowSlider.value = min;
+    //}
 
-    private void updateBadSlider(float value)
-    {
-        if (value < min)
-        {
-            value = min;
-        }
-        badSlider.value = value;
-        goodSlider.value = 0;
-        badHandle.enabled = true;
-        goodHandle.enabled = false;
-    }
+    //private void updateBadSlider(float value)
+    //{
+    //    if (value < min)
+    //    {
+    //        value = min;
+    //    }
+    //    lowSlider.value = value;
+    //    highSlider.value = 0;
+    //}
 
     //public void SetCondition(NeedCondition condition) {
     //    switch (condition) {

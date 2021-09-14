@@ -38,8 +38,7 @@ public class DialogueManager : MonoBehaviour
         }
         if (ConversationManager.Instance != null)
         {
-            ConversationManager.Instance.StartConversation(currentDialogue);
-            ContinueSpeech = true;
+            StartNewConversation();
         }
     }
 
@@ -47,6 +46,7 @@ public class DialogueManager : MonoBehaviour
     {
         ContinueSpeech = false;
         ConversationManagerGameObject.SetActive(false);
+        GameManager.Instance.m_menuManager.ToggleUI(true);
     }
 
     public void SetNewDialogue(NPCConversation newDialogue)
@@ -83,6 +83,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (!ConversationManagerGameObject.activeSelf)
             {
+                UpdateCurrentDialogue();
                 StartNewConversation();
             }
             else
@@ -94,8 +95,8 @@ public class DialogueManager : MonoBehaviour
 
     private void StartNewConversation()
     {
+        GameManager.Instance.m_menuManager.ToggleUI(false);
         ConversationManagerGameObject.SetActive(true);
-        UpdateCurrentDialogue();
         ConversationManager.Instance.StartConversation(currentDialogue);
         ContinueSpeech = true;
     }

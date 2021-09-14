@@ -76,6 +76,7 @@ namespace DialogueEditor
         private Conversation m_conversation;
         private List<UIConversationButton> m_uiOptions;
         private bool skipping;
+        private bool isFrozen = false;
 
         private SpeechNode m_pendingDialogue;
         private OptionNode m_selectedOption;
@@ -185,7 +186,7 @@ namespace DialogueEditor
                         {
                             if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
-                                if (Input.GetMouseButtonDown(0) || skipping)
+                                if ((Input.GetMouseButtonDown(0) || skipping) && !isFrozen)
                                 {
                                     SetState(eState.TransitioningOptionsOff);
                                 }
@@ -421,12 +422,14 @@ namespace DialogueEditor
 
         public void FreezeConversation()
         {
+            isFrozen = true;
             SetState(eState.Idle);
         }
 
         public void UnfreezeConversation()
         {
             print("Unfroze");
+            isFrozen = false;
             SetState(eState.TransitioningOptionsOff);
         }
         //--------------------------------------
