@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     public bool isMainObjectivesCompleted { get; private set; }
     public int numSecondaryObjectivesCompleted { get; private set; }
 
-    private bool isObjectivePanelOpen;
+    public bool isObjectivePanelOpen { get; private set; }
     
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
@@ -548,10 +548,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ToggleObjectivePanel()
+    public void TurnObjectivePanelOn()
     {
-        this.isObjectivePanelOpen = !this.isObjectivePanelOpen;
-        this.objectivePane.SetActive(this.isObjectivePanelOpen);
+        this.isObjectivePanelOpen = true;
+        this.objectivePane.SetActive(true);
         UpdateObjectives();
         this.UpdateObjectivePanel();
     }
