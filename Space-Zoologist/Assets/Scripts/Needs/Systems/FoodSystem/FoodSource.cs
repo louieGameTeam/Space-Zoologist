@@ -97,7 +97,7 @@ public class FoodSource : MonoBehaviour, Life
 
     public void CalculateTerrainNeed()
     {
-        float totalNeededTiles = species.Size.sqrMagnitude;
+        float totalNeededTiles = species.Size.x * species.Size.y;
         float availablePreferredTiles = 0f;
         float availableSurvivableTiles = 0f;
         float totalTilesAvailable = 0f;

@@ -278,22 +278,19 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesInArea(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius);
+            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesUnderSpecies(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 string needName = ((TileType)index).ToString();
+                if (needName.Equals("Liquid"))
+                {
+                    continue;
+                }
 
                 if (foodSource.GetNeedValues().ContainsKey(needName))
                 {
-                    if (needName.Equals("Liquid"))
-                    {
-                        int liquidCount = GameManager.Instance.m_gridSystem.CountOfTilesInRange(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[index];
-                        //Debug.Log(foodSource.name + " updated " + needName + " with value: " + liquidCount);
-                        foodSource.UpdateNeed(needName, liquidCount);
-                        continue;
-                    }
-                    //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
+                    Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
                     foodSource.UpdateNeed(needName, count);
                 }
             }
