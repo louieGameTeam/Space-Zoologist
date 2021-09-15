@@ -65,15 +65,13 @@ public class FoodSourceManager : GridObjectManager
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
         Vector2 pos = position;
-        if (species.Size % 2 == 0)
-        {
-            pos.x -= 1;
-            pos.y -= 1;
-        }
+        pos.x -= species.Size.x / 2;
+        pos.y -= species.Size.y / 2;
+
         m_gridSystemReference.AddFood(m_gridSystemReference.WorldToCell(pos), species.Size, newFoodSourceGameObject);
         if (ttb > 0)
         {
-            m_gridSystemReference.CreateSquareBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
+            m_gridSystemReference.CreateRectangleBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
                 species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
             foodSource.isUnderConstruction = true;
             m_gridSystemReference.ConstructionFinishedCallback(() =>
@@ -236,13 +234,8 @@ public class FoodSourceManager : GridObjectManager
     public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species, int ttb = -1)
     {
         Vector3 FoodLocation = m_gridSystemReference.CellToWorld(mouseGridPosition);
-        FoodLocation.x += 1;
-        FoodLocation.y += 1;
-        if (species.Size % 2 == 1)
-        {
-            FoodLocation.x -= 0.5f;
-            FoodLocation.y -= 0.5f;
-        }
+        FoodLocation.x += (float)species.Size.x / 2;
+        FoodLocation.y += (float)species.Size.y / 2;
         CreateFoodSource(species, FoodLocation, ttb);
     }
 }

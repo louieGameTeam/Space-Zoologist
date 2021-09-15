@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
   m_Name: GoldSpaceMaple
   m_EditorClassIdentifier: 
-  size: 2
+  size: {x: 2, y: 2}
   accessibleTerrain: 0000000001000000020000000300000004000000
   speciesName: Gold Space Maple
   rootRadius: 4
@@ -24,7 +24,6 @@ MonoBehaviour:
     isPreferred: 1
   - needName: Grass
     isPreferred: 0
-  foodNeeds: []
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 4

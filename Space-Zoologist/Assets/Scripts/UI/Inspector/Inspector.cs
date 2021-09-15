@@ -184,15 +184,16 @@ public class Inspector : MonoBehaviour
         // root radius here
         FoodSource foodSource = FoodObject.GetComponent<FoodSource>();
         float rootRadius = foodSource.Species.RootRadius;
-        int foodSize = foodSource.Species.Size;
+        Vector2Int foodSize = foodSource.Species.Size;
 
         Vector3 foodPosition = FoodObject.transform.position;
-        Vector3Int foodPositionInt = new Vector3Int((int)foodPosition.x, (int)foodPosition.y, (int)foodPosition.z);
-        for (int dx = -foodSize / 2; dx < Mathf.Ceil((float)foodSize / 2); dx++)
+        Vector3Int foodPositionInt = new Vector3Int((int)foodPosition.x - foodSize.x / 2, (int)foodPosition.y - foodSize.y / 2, (int)foodPosition.z);
+        
+        for (int x = -(foodSize.x - 1) / 2; x <= foodSize.x / 2; x++)
         {
-            for (int dy = -foodSize / 2; dy < Mathf.Ceil((float)foodSize / 2); dy++)
+            for (int y = -(foodSize.x - 1) / 2; y <= foodSize.y / 2; y++)
             {
-                GameManager.Instance.m_gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(dx, dy, 0), Color.blue, rootRadius);
+                gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(x, y, 0), Color.blue, rootRadius);
             }
         }
 

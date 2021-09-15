@@ -444,19 +444,13 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
-    public void AddFood(Vector3Int gridPosition, int size, GameObject foodSource)
+    public void AddFood(Vector3Int gridPosition, Vector2Int size, GameObject foodSource)
     {
-        int radius = size / 2;
         Vector3Int pos;
-        int offset = 0;
-        if (size % 2 == 0)
-        {
-            offset = 1;
-        }
         // Check if the whole object is in bounds
-        for (int x = (-1) * (radius - offset); x <= radius; x++)
+        for (int x = 0; x < size.x; x++)
         {
-            for (int y = (-1) * (radius - offset); y <= radius; y++)
+            for (int y = 0; y < size.y; y++)
             {
                 pos = gridPosition;
                 pos.x += x;
@@ -477,11 +471,11 @@ public class GridSystem : MonoBehaviour
         GameObject foodSource = GetTileData(pos).Food;
         if (!foodSource) return;
 
-        int size = foodSource.GetComponent<FoodSource>().Species.Size;
+        Vector2Int size = foodSource.GetComponent<FoodSource>().Species.Size;
 
-        for (int dx = -size; dx < size; dx++)
+        for (int dx = -size.x; dx < size.x; dx++)
         {
-            for (int dy = -size; dy < size; dy++)
+            for (int dy = -size.y; dy < size.y; dy++)
             {
                 TileData cell = GetTileData(new Vector3Int(pos.x + dx, pos.y + dy, 0));
                 if (cell.Food && ReferenceEquals(cell.Food, foodSource))
@@ -637,18 +631,21 @@ public class GridSystem : MonoBehaviour
     {
         constructionFinishedCallback += action;
     }
-    public void CreateSquareBuffer(Vector2Int pos, int time, int size, ConstructionCluster.ConstructionType type)
+    public void CreateRectangleBuffer(Vector2Int pos, int time, Vector2Int size, ConstructionCluster.ConstructionType type)
     {
         // only considering non food sources right now
         if (type != ConstructionCluster.ConstructionType.TILE)
         {
             // first find all positions
             List<Vector2Int> bufferPositions = new List<Vector2Int>();
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size.x; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < size.y; j++)
                 {
                     Vector2Int bufferPosition = new Vector2Int(pos.x + i, pos.y + j);
+
+                    TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = true;
+
                     Color bufferColorInformation = new Color(
                         (float)((int)type) / FLAG_VALUE_MULTIPLIER,                 // which construction type it is
                         0,                                                          // which tile it is in the set (currently not being used)
@@ -670,7 +667,7 @@ public class GridSystem : MonoBehaviour
         bufferMaterial.SetTexture("_MainTex", BufferTexture);
     }
 
-    public void RemoveBuffer(Vector2Int pos, int size = 1)
+    public void RemoveBuffer(Vector2Int pos, int sizeX = 1, int sizeY = 1)
     {
         if (!TileDataGrid[pos.y, pos.x].isConstructing)
         {
@@ -678,9 +675,9 @@ public class GridSystem : MonoBehaviour
             return;
         }
         List<Vector3Int> changedTiles = new List<Vector3Int>();
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < sizeX; i++)
         {
-            for (int j = 0; j < size; j++)
+            for (int j = 0; j < sizeY; j++)
             {
                 Vector2Int removeBufferPosition = new Vector2Int(pos.x + i, pos.y + j);
 
@@ -1416,20 +1413,15 @@ public class GridSystem : MonoBehaviour
 
     private bool CheckSurroudingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
     {
-        // size 1 -> rad 0, size 3 -> rad 1 ...
-        int radius = species.Size / 2;
         Vector3Int pos;
         bool isValid = true;
-        int offset = 0;
         // Size is even, offset by 1
-        if (species.Size % 2 == 0)
-        {
-            offset = 1;
-        }
         // Check if the whole object is in bounds
-        for (int x = (-1 - offset) * (radius - offset); x <= radius; x++)
+        print(Mathf.CeilToInt(-(float)species.Size.x / 2));
+
+        for (int x = Mathf.CeilToInt(-(float)(species.Size.x - 1) / 2); x <= species.Size.x / 2; x++)
         {
-            for (int y = (-1 - offset) * (radius - offset); y <= radius; y++)
+            for (int y = Mathf.CeilToInt(-(float)(species.Size.y - 1) / 2); y <= species.Size.y / 2; y++)
             {
                 pos = cellPosition;
                 pos.x += x;

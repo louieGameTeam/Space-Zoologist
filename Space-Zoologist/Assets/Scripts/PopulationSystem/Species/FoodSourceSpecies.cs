@@ -11,11 +11,11 @@ public class FoodSourceSpecies : ScriptableObject
     public int BaseOutput => baseOutput;
     public Item FoodSourceItem => FoodSource;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
-    public int Size => size;
+    public Vector2Int Size => size;
     public int MoveCost => moveCost;
     public int SellBackPrice => sellBackPrice;
 
-    [SerializeField] private int size = 1; // default to 1 tile big
+    [SerializeField] private Vector2Int size = new Vector2Int(1, 1); // default to 1 tile big
     [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private string speciesName = default;
     [SerializeField] private int rootRadius = default;

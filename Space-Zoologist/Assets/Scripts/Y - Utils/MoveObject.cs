@@ -338,32 +338,14 @@ public class MoveObject : MonoBehaviour
     // placing food is more complicated due to grid
     public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
     {
-        Vector3Int Temp = mouseGridPosition;
-        Temp.x += 1;
-        Temp.y += 1;
-        if (species.Size % 2 == 1)
-        {
-            //size is odd: center it
-            Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
-            FoodLocation += Temp;
-            FoodLocation /= 2f;
+        Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
+        FoodLocation += new Vector3((float)species.Size.x / 2, (float)species.Size.y / 2, 0);
 
-            GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
+        GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
 
-            gridSystem.AddFood(mouseGridPosition, species.Size, Food);
-            gridSystem.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-            species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
-        }
-        else
-        {
-            //size is even: place it at cross-center (position of tile)
-            Vector3 FoodLocation = gridSystem.CellToWorld(Temp); //equivalent since cell and world is 1:1, but in Vector3
-            GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
-
-            gridSystem.AddFood(mouseGridPosition, species.Size, Food);
-            gridSystem.CreateSquareBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-            species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
-        }
+        gridSystem.AddFood(mouseGridPosition, species.Size, Food);
+        gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
+        species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
     }
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
     {
@@ -381,9 +363,8 @@ public class MoveObject : MonoBehaviour
     {
         Vector3Int FoodLocation = gridSystem.WorldToCell(initialPos);
         gridSystem.RemoveFood(FoodLocation);
-        foodSourceManager.DestroyFoodSource(foodSource);
-        int sizeShift = foodSource.Species.Size - 1; // Finds the lower left cell the food occupies
-        Vector2Int shiftedPos = new Vector2Int(FoodLocation.x - sizeShift, FoodLocation.y - sizeShift);
-        gridSystem.RemoveBuffer(shiftedPos, foodSource.Species.Size);
+        foodSourceManager.DestroyFoodSource(foodSource); // Finds the lower left cell the food occupies
+        Vector2Int shiftedPos = new Vector2Int(FoodLocation.x, FoodLocation.y) - foodSource.Species.Size / 2;
+        gridSystem.RemoveBuffer(shiftedPos, foodSource.Species.Size.x, foodSource.Species.Size.y);
     }
 }
