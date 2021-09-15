@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Slug
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: afe80bc84a5bc22449b95bda8c01671b, type: 2}
+  speciesName: Humidum Limax
+  species: 4
+  terrainTilesRequired: 2
+  minFoodRequired: 2
+  maxFoodRequired: 3
+  growthRate: 2
+  decayRate: 2
+  moveCost: 0
+  size: 1
+  accessibleTerrain: 040000000600000000000000
+  icon: {fileID: -2984124832550384540, guid: 5015206299b8e40848efa2bad0e91dd4, type: 3}
+  terrainNeeds:
+  - needName: Liquid
+    isPreferred: 0
+  - needName: Swamp
+    isPreferred: 1
+  foodNeeds:
+  - needName: Kelp
+    isPreferred: 1
+  - needName: Mushroom
+    isPreferred: 0
+  liquidNeeds:
+  - needName: 
+    tileNeedThreshold: 1
+    freshWaterMinThreshold: 0.95
+    freshWaterMaxThreshold: 1
+    saltMinThreshold: 0
+    saltMaxThreshold: 0.015
+    bacteriaMinThreshold: 0
+    bacteriaMaxThreshold: 1
+  preyNeeds:
+  - needName: Thalassius Succo
+  representation: {fileID: 0}

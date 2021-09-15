@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb43224d6f3ee97448552e334a6e0c8f, type: 3}
+  m_Name: MushroomItem
+  m_EditorClassIdentifier: 
+  id: Mushrooms
+  type: 0
+  itemName: Mushrooms
+  price: 3
+  description: 
+  icon: {fileID: 21300000, guid: 6ad7400d4524245f89f5b613637e4fad, type: 3}
+  audio:
+  - {fileID: 8300000, guid: 448073918c14d4df7a9d77652e3edc24, type: 3}
+  - {fileID: 8300000, guid: 76aac770e4e4d473a94afc9a601d72f1, type: 3}
+  BuildTime: 3

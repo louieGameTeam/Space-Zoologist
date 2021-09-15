@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
+  m_Name: Mushrooms
+  m_EditorClassIdentifier: 
+  size: 1
+  accessibleTerrain: 0000000001000000020000000300000004000000
+  speciesName: Mushrooms
+  rootRadius: 1
+  baseOutput: 5
+  moveCost: 1
+  sellBackPrice: 1
+  terrainNeeds:
+  - needName: Swamp
+    isPreferred: 1
+  - needName: Dirt
+    isPreferred: 0
+  - needName: Grass
+    isPreferred: 0
+  foodNeeds: []
+  liquidNeeds:
+  - needName: Water
+    tileNeedThreshold: 1
+    freshWaterMinThreshold: 0.94
+    freshWaterMaxThreshold: 1
+    saltMinThreshold: 0
+    saltMaxThreshold: 1
+    bacteriaMinThreshold: 0.02
+    bacteriaMaxThreshold: 1
+  FoodSource: {fileID: 11400000, guid: 38cda74f699f241129cf6815fa33a73c, type: 2}

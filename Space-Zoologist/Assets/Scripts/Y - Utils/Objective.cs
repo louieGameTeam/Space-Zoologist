@@ -107,7 +107,7 @@ public class SurvivalObjective : Objective
         if (this.TargetTime.Equals(0f))
         {
             displayText += $"Reach a population size of {this.TargetPopulationSize} {this.AnimalSpecies.SpeciesName}s\n\n";
-            displayText += $"Current population size: {totalPopulationCount}\n";
+            displayText += $"Current population size: {totalPopulationCount}\n\n";
             return displayText;
         }
         displayText += $"Maintain at least {this.satisfiedPopulationCount}/{this.TargetPopulationCount} ";
@@ -124,23 +124,21 @@ public class SurvivalObjective : Objective
 /// </summary>
 public class ResourceObjective : Objective
 {
-    private PlayerBalance playerBalance;
     public int amountToKeep { get; private set; }
 
     public override ObjectiveStatus Status => this.status;
 
     private ObjectiveStatus status;
 
-    public ResourceObjective(PlayerBalance playerBalance, int amountToKeep)
+    public ResourceObjective(int amountToKeep)
     {
-        this.playerBalance = playerBalance;
         this.amountToKeep = amountToKeep;
         this.status = ObjectiveStatus.InProgress;
     }
 
     public override ObjectiveStatus UpdateStatus()
     {
-        if (this.playerBalance.Balance >= this.amountToKeep)
+        if (GameManager.Instance.Balance >= this.amountToKeep)
         {
             this.status = ObjectiveStatus.Completed;
         }

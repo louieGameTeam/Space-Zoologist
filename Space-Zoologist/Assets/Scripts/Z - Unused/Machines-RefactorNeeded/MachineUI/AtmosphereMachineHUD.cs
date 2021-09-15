@@ -7,12 +7,6 @@ public class AtmosphereMachineHUD : MonoBehaviour
 {
     [SerializeField] List<MachineValues> MachineValues = default;
     AtmosphereMachine CurrentMachine = default;
-    private NeedSystemManager NeedSystemManager = default;
-
-    public void SetupDependencies(NeedSystemManager needSystemManager)
-    {
-        this.NeedSystemManager = needSystemManager;
-    }
 
     public void Initialize(AtmosphericComposition atmosphericComposition, AtmosphereMachine currentMachine)
     {
@@ -58,7 +52,7 @@ public class AtmosphereMachineHUD : MonoBehaviour
             }
         }
         this.CurrentMachine.UpdateAtmosphere(atmosphericComposition);
-        this.NeedSystemManager.UpdateSystem(NeedType.Atmosphere);
+        GameManager.Instance.UpdateNeedSystem(NeedType.Atmosphere);
     }
 
     public void ApplyStartingValues()

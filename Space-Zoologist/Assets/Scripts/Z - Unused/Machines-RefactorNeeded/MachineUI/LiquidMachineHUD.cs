@@ -7,12 +7,6 @@ public class LiquidMachineHUD : MonoBehaviour
 {
     [SerializeField] List<MachineValues> MachineValues = default;
     LiquidMachine CurrentMachine = default;
-    private NeedSystemManager NeedSystemManager = default;
-
-    public void SetupDependencies(NeedSystemManager needSystemManager)
-    {
-        this.NeedSystemManager = needSystemManager;
-    }
 
     public void Initialize(float[] liquidComposition, LiquidMachine currentMachine)
     {
@@ -58,7 +52,7 @@ public class LiquidMachineHUD : MonoBehaviour
             }
         }
         this.CurrentMachine.UpdateLiquid(liquidComposition);
-        this.NeedSystemManager.UpdateSystem(NeedType.Liquid);
+        GameManager.Instance.UpdateNeedSystem(NeedType.Liquid);
     }
 
     public void ApplyStartingValues()

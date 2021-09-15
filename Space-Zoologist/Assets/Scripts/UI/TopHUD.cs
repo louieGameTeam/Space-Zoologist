@@ -11,12 +11,6 @@ public class TopHUD : MonoBehaviour
     [SerializeField] private Text playerBalanceText = default;
     [SerializeField] private GameObject Warning = default;
     [SerializeField] private Text WarningText = default;
-    private PlayerBalance PlayerBalance = default;
-
-    public void SetupPlayerBalance(PlayerBalance playerBalance)
-    {
-        this.PlayerBalance = playerBalance;
-    }
 
     public IEnumerator FlashWarning(string text)
     {
@@ -33,6 +27,6 @@ public class TopHUD : MonoBehaviour
 
     private void Update()
     {
-        playerBalanceText.text = $"${this.PlayerBalance.Balance}";
+        playerBalanceText.text = $"${GameManager.Instance.Balance}";
     }
 }

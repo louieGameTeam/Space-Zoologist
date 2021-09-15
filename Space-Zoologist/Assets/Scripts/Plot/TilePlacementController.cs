@@ -9,9 +9,8 @@ public class TilePlacementController : MonoBehaviour
     private enum PlacementResult { Placed, Restricted, AlreadyExisted }
     public bool isBlockMode { get; set; } = false;
     public bool PlacementPaused { get; private set; }
-    [SerializeField] private Camera currentCamera = default;
     public bool isPreviewing { get; set; } = false;
-    private bool godMode = false;
+    [SerializeField] public bool godMode = false;
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
@@ -19,67 +18,40 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int lastPlacedTile;
     private List<GameTile> referencedTiles = new List<GameTile>();
     private bool isFirstTile;
-    public bool isErasing = false;
-    public Tilemap[] allTilemaps { get { return tilemaps; } }
-    [SerializeField] private Tilemap[] tilemaps = default; // Order according to GridUtils.TileLayer
+    [SerializeField] public bool isErasing = false;
     public GameTile[] gameTiles { get; private set; } = default;
     public HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
     private Dictionary<Vector3Int, Dictionary<Color, Tilemap>> removedTileColors = new Dictionary<Vector3Int, Dictionary<Color, Tilemap>>();
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
-    private Dictionary<Tilemap, TileLayerManager> tilemapsToTileLayerManagers = new Dictionary<Tilemap, TileLayerManager>();
-    public Dictionary<Vector3Int, GameTile> previousTiles = new Dictionary<Vector3Int, GameTile>();
-    private BuildBufferManager buildBufferManager;
     private int lastCornerX;
     private int lastCornerY;
-    [SerializeField] private TileSystem TileSystem = default;
-    [SerializeField] private GridSystem GridSystem = default;
     private void Awake()
     {
-        this.gameTiles = Resources.LoadAll("Tiles", typeof(GameTile)).Cast<GameTile>().ToArray(); // Load tiles form resources
-        foreach (GameTile terrainTile in this.gameTiles)// Construct list of tiles and their corresponding layers
-        {
-            terrainTile.targetTilemap = tilemaps[(int)terrainTile.targetLayer];
-            terrainTile.constraintTilemaps.Clear();
-            terrainTile.replacementTilemaps.Clear();
-            foreach (GridUtils.TileLayer layer in terrainTile.constraintLayers)
-            {
-                terrainTile.constraintTilemaps.Add(tilemaps[(int)layer]);
-            }
-            foreach (GridUtils.TileLayer layer in terrainTile.replacementLayers)
-            {
-                terrainTile.replacementTilemaps.Add(tilemaps[(int)layer]);
-            }
-        }
+         // Load tiles form resources
         grid = GetComponent<Grid>();
-        foreach (Tilemap tilemap in tilemaps)// Construct list of affected colors
-        {
-            this.tilemapsToTileLayerManagers.Add(tilemap, tilemap.GetComponent<TileLayerManager>());
-            List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
-            /*            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
+        List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
+        /*            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
+                    {
+                        foreach (GameTile tile in tileColorManager.linkedTiles)
                         {
-                            foreach (GameTile tile in tileColorManager.linkedTiles)
+                            if (!colorLinkedTiles.ContainsKey(tile))
                             {
-                                if (!colorLinkedTiles.ContainsKey(tile))
-                                {
-                                    colorLinkedTiles.Add(tile, new List<Tilemap>());
-                                }
-                                colorLinkedTiles[tile].Add(tilemap);
+                                colorLinkedTiles.Add(tile, new List<Tilemap>());
                             }
-                        }*/
-            referencedTiles = this.gameTiles.ToList();
-            RenderColorOfColorLinkedTiles(colorInitializeTiles);
-            referencedTiles.Clear();
-        }
-        this.gameObject.GetComponent<PlotIO>().Initialize();
-        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
+                            colorLinkedTiles[tile].Add(tilemap);
+                        }
+                    }*/
+        // are different linked tiles (water) supposed to have differing color?
+        //RenderColorOfColorLinkedTiles(colorInitializeTiles);
     }
+
     private void Update()
     {
         if (isPreviewing) // Update for preview
         {
-            Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             this.currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
             this.PlacementPaused = false;
             if (this.currentMouseCellPosition != this.lastMouseCellPosition || this.isFirstTile)
@@ -101,14 +73,19 @@ public class TilePlacementController : MonoBehaviour
             }
         }
     }
+
+    public void LoadResources()
+    {
+        this.gameTiles = Resources.LoadAll("Tiles", typeof(GameTile)).Cast<GameTile>().ToArray();
+    }
+
     /// <summary>
     /// Start tile placement preview.
     /// </summary>
     /// <param name="tileID">The ID of the tile to preview its placement.</param>
-    public void StartPreview(string tileID, bool godMode = false)
+    public void StartPreview(string tileID, bool godMode = false, float[] liquidContents = null)
     {
-        this.godMode = godMode;
-        Vector3 mouseWorldPosition = currentCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         this.dragStartPosition = this.grid.WorldToCell(mouseWorldPosition);
         if (!Enum.IsDefined(typeof(TileType), tileID))
         {
@@ -119,6 +96,10 @@ public class TilePlacementController : MonoBehaviour
         {
             if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
             {
+                if(liquidContents != null)
+                {
+                    tile.defaultContents = liquidContents;
+                }
                 this.referencedTiles.Add(tile);
             }
         }
@@ -126,28 +107,13 @@ public class TilePlacementController : MonoBehaviour
     }
     public void StopPreview()
     {
-        this.godMode = false;
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
-        foreach (Tilemap tilemap in tilemaps)
-        {
-            this.tilemapsToTileLayerManagers[tilemap].ConfirmPlacement();
-        }
-        RenderColorOfColorLinkedTiles(addedTiles.ToList());
-        foreach (GameTile tile in referencedTiles)
-        {
-            if (tile.targetTilemap.GetComponent<TileContentsManager>() == null && tile.targetTilemap.TryGetComponent(out TileColorManager placedTileColorManager))
-            {
-                foreach (Vector3Int vector3Int in addedTiles)
-                {
-                    placedTileColorManager.SetTileColor(vector3Int, tile);
-                }
-            }
-        }
+        GameManager.Instance.m_gridSystem.ConfirmPlacement();
 
         // Set terrain modified flag
-        this.TileSystem.HasTerrainChanged = true;
-        this.TileSystem.changedTiles.AddRange(addedTiles.ToList());
+        GameManager.Instance.m_gridSystem.HasTerrainChanged = true;
+        GameManager.Instance.m_gridSystem.ChangedTiles.UnionWith(addedTiles);
 
         // Clear all dics
         this.referencedTiles.Clear();
@@ -155,14 +121,15 @@ public class TilePlacementController : MonoBehaviour
         this.addedTiles.Clear();
         this.triedToPlaceTiles.Clear();
     }
+    // does not account for walls
     public void EraseTile()
     {
         foreach (GameTile tile in this.referencedTiles)
         {
-            GameTile currentTile = this.tilemapsToTileLayerManagers[tile.targetTilemap].GetGameTileAt(this.currentMouseCellPosition);
-            if (currentTile != null && currentTile == tile)
+            GameTile currentTile = GameManager.Instance.m_gridSystem.GetGameTileAt(this.currentMouseCellPosition);
+            if (currentTile != null)
             {
-                this.tilemapsToTileLayerManagers[tile.targetTilemap].RemoveTile(this.currentMouseCellPosition);
+                GameManager.Instance.m_gridSystem.RemoveTile(this.currentMouseCellPosition);
             }
         }
     }
@@ -173,17 +140,16 @@ public class TilePlacementController : MonoBehaviour
 
     public void RevertChanges() // Go through each change and revert back to original
     {
-        foreach (Tilemap tilemap in tilemaps)
+        GameManager.Instance.m_gridSystem.Revert();
+        // figure out what is going on here
+        /*
+        if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
         {
-            this.tilemapsToTileLayerManagers[tilemap].Revert();
-            if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
-            {
-                List<Vector3Int> changedTiles = tileAttributes.changedTilesPositions;
-                changedTiles.AddRange(tileAttributes.addedTilePositions);
-                tileAttributes.Revert();
-                RenderColorOfColorLinkedTiles(changedTiles);
-            }
-        }
+            List<Vector3Int> changedTiles = tileAttributes.changedTilesPositions;
+            changedTiles.AddRange(tileAttributes.addedTilePositions);
+            tileAttributes.Revert();
+            RenderColorOfColorLinkedTiles(changedTiles);
+        }*/
         foreach (Vector3Int colorChangedTiles in removedTileColors.Keys)
         {
             removedTileColors[colorChangedTiles].Values.First().SetColor(colorChangedTiles, removedTileColors[colorChangedTiles].Keys.First());
@@ -194,6 +160,7 @@ public class TilePlacementController : MonoBehaviour
         StopPreview();
     }
 
+    /*
     public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles) // Update color for linked tiles.
     {
         foreach (GameTile tile in referencedTiles)
@@ -216,7 +183,7 @@ public class TilePlacementController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     private void UpdatePreviewPen()
     {
@@ -225,11 +192,11 @@ public class TilePlacementController : MonoBehaviour
             PlaceTile(currentMouseCellPosition);
             return;
         }
-        if (!GridUtils.FourNeighborTiles(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
+        if (!GridSystem.FourNeighborTileLocations(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
         {
             if (currentMouseCellPosition.x == lastPlacedTile.x)// Handles divide by zero exception
             {
-                foreach (int y in GridUtils.Range(lastPlacedTile.y, currentMouseCellPosition.y))
+                foreach (int y in GridSystem.Range(lastPlacedTile.y, currentMouseCellPosition.y))
                 {
                     Vector3Int location = new Vector3Int(lastPlacedTile.x, y, currentMouseCellPosition.z);
                     PlaceTile(location);
@@ -238,11 +205,11 @@ public class TilePlacementController : MonoBehaviour
             else
             {
                 float gradient = (currentMouseCellPosition.y - lastPlacedTile.y) / (currentMouseCellPosition.x - lastPlacedTile.x);
-                foreach (float x in GridUtils.RangeFloat(GridUtils.IncreaseMagnitude(lastPlacedTile.x, -0.5f), currentMouseCellPosition.x))
+                foreach (float x in GridSystem.RangeFloat(GridSystem.IncreaseMagnitude(lastPlacedTile.x, -0.5f), currentMouseCellPosition.x))
                 {
                     float interpolatedY = gradient * (x - lastPlacedTile.x);
-                    int incrementY = GridUtils.RoundTowardsZeroInt(interpolatedY);
-                    Vector3Int interpolateTileLocation = new Vector3Int(GridUtils.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
+                    int incrementY = GridSystem.RoundTowardsZeroInt(interpolatedY);
+                    Vector3Int interpolateTileLocation = new Vector3Int(GridSystem.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
                     PlaceTile(interpolateTileLocation);
                 }
             }
@@ -261,9 +228,9 @@ public class TilePlacementController : MonoBehaviour
         HashSet<Vector3Int> tilesToRemove = new HashSet<Vector3Int>();
         HashSet<Vector3Int> tilesToAdd = new HashSet<Vector3Int>();
         HashSet<Vector3Int> supposedTiles = new HashSet<Vector3Int>();
-        foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
+        foreach (int x in GridSystem.Range(dragStartPosition.x, currentMouseCellPosition.x))
         {
-            foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
+            foreach (int y in GridSystem.Range(dragStartPosition.y, currentMouseCellPosition.y))
             {
                 supposedTiles.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
                 tilesToRemove.Add(new Vector3Int(x, y, currentMouseCellPosition.z));
@@ -272,13 +239,13 @@ public class TilePlacementController : MonoBehaviour
         tilesToRemove.ExceptWith(addedTiles); // Forcing removal of all tiles not in bound to avoid leftover tile not being removed due to lagging and tick skipping, possible optimization
         Vector3Int sweepLocation = Vector3Int.zero;
         sweepLocation.z = currentMouseCellPosition.z;
-        bool isXShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.x - dragStartPosition.x, currentMouseCellPosition.x - lastCornerX);
-        bool isYShrinking = GridUtils.IsOppositeSign(currentMouseCellPosition.y - dragStartPosition.y, currentMouseCellPosition.y - lastCornerY);
+        bool isXShrinking = (currentMouseCellPosition.x - dragStartPosition.x) * (currentMouseCellPosition.x - lastCornerX) < 0;
+        bool isYShrinking = (currentMouseCellPosition.y - dragStartPosition.y) * (currentMouseCellPosition.y - lastCornerY) < 0;
         if (currentMouseCellPosition.x != lastCornerX || !isXShrinking)
         {
-            foreach (int x in GridUtils.Range(lastCornerX, currentMouseCellPosition.x))
+            foreach (int x in GridSystem.Range(lastCornerX, currentMouseCellPosition.x))
             {
-                foreach (int y in GridUtils.Range(dragStartPosition.y, currentMouseCellPosition.y))
+                foreach (int y in GridSystem.Range(dragStartPosition.y, currentMouseCellPosition.y))
                 {
                     sweepLocation.x = x;
                     sweepLocation.y = y;
@@ -288,9 +255,9 @@ public class TilePlacementController : MonoBehaviour
         }
         if (currentMouseCellPosition.y != lastCornerY || !isYShrinking)
         {
-            foreach (int x in GridUtils.Range(dragStartPosition.x, currentMouseCellPosition.x))
+            foreach (int x in GridSystem.Range(dragStartPosition.x, currentMouseCellPosition.x))
             {
-                foreach (int y in GridUtils.Range(lastCornerY, currentMouseCellPosition.y))
+                foreach (int y in GridSystem.Range(lastCornerY, currentMouseCellPosition.y))
                 {
                     sweepLocation.x = x;
                     sweepLocation.y = y;
@@ -311,7 +278,7 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        foreach (Vector3Int location in GridUtils.FourNeighborTiles(cellPosition))
+        foreach (Vector3Int location in GridSystem.FourNeighborTileLocations(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
@@ -321,22 +288,6 @@ public class TilePlacementController : MonoBehaviour
         return false;
     }
 
-    public void RevertTile(Vector3Int loc)
-    {
-        if (!this.previousTiles.ContainsKey(loc))
-        {
-            return;
-        }
-        this.referencedTiles.Clear();
-        this.referencedTiles.Add(this.previousTiles[loc]);
-        this.buildBufferManager.DestoryBuffer(new Vector2Int(loc.x, loc.y));
-        Debug.Log("placed " + this.previousTiles[loc]);
-
-        this.previousTiles.Remove(loc);
-        Debug.Log(PlaceTile(loc, false));
-        StopPreview();
-
-    }
 
     private PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {
@@ -350,34 +301,16 @@ public class TilePlacementController : MonoBehaviour
                 {
                     return PlacementResult.Restricted;
                 }
-                // If Constrain not met
-                foreach (Tilemap constrainTilemap in tile.constraintTilemaps)
-                {
-                    if (!constrainTilemap.HasTile(cellPosition))
-                    {
-                        return PlacementResult.Restricted;
-                    }
-                }
                 // If same tile
-                if (this.TileSystem.GetGameTileAt(cellPosition) == tile)
+                if (GameManager.Instance.m_gridSystem.GetGameTileAt(cellPosition) == tile)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;
                 }
             }
-            // Check clear, place tiles
-            if (!previousTiles.ContainsKey(cellPosition))
-            {
-                previousTiles.Add(cellPosition, null);
-            }
-            previousTiles[cellPosition] = this.TileSystem.GetGameTileAt(cellPosition);
             foreach (GameTile tile in referencedTiles)
             {
-                tilemapsToTileLayerManagers[tile.targetTilemap].AddTile(cellPosition, tile);
-                foreach (Tilemap replacementTilemap in tile.replacementTilemaps)
-                {
-                    tilemapsToTileLayerManagers[replacementTilemap].RemoveTile(cellPosition);
-                }
+                GameManager.Instance.m_gridSystem.AddTile(cellPosition, tile, godMode);
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
@@ -388,7 +321,7 @@ public class TilePlacementController : MonoBehaviour
     }
     private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile, Tilemap targetTilemap)
     {
-        foreach (Vector3Int tileToCheck in GridUtils.FourNeighborTiles(cellLocation))
+        foreach (Vector3Int tileToCheck in GridSystem.FourNeighborTileLocations(cellLocation))
         {
             if (!neighborTiles.Contains(tileToCheck) && targetTilemap.GetTile(tileToCheck) == tile)
             {
@@ -403,16 +336,16 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        if (!GridSystem.IsWithinGridBounds(cellLocation))
+        if (!GameManager.Instance.m_gridSystem.IsWithinGridBounds(cellLocation))
         {
             return false;
         }
-        GridSystem.CellData cellData = GridSystem.CellGrid[cellLocation[0], cellLocation[1]];
-        if (cellData.ContainsFood)
+        GridSystem.TileData tileData = GameManager.Instance.m_gridSystem.GetTileData(cellLocation);
+        if (tileData.Food)
         {
             return false;
         }
-        if (this.buildBufferManager.IsConstructing(cellLocation.x, cellLocation.y))
+        if (GameManager.Instance.m_buildBufferManager.IsConstructing(cellLocation.x, cellLocation.y))
         {
             return false;
         }

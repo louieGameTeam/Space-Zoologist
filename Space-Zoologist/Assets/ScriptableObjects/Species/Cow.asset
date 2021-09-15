@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Cow
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: 06bdde8720ee148999e71ea56f897401, type: 2}
+  speciesName: Eligans Impar
+  species: 1
+  terrainTilesRequired: 8
+  minFoodRequired: 8
+  maxFoodRequired: 10
+  growthRate: 5
+  decayRate: 3
+  moveCost: 0
+  size: 3
+  accessibleTerrain: 02000000010000000000000003000000
+  icon: {fileID: 7585194069153929163, guid: 6967f3801b637e540acdb61c1e9c9e46, type: 3}
+  terrainNeeds:
+  - needName: Dirt
+    isPreferred: 0
+  - needName: Grass
+    isPreferred: 1
+  foodNeeds:
+  - needName: Space Maple
+    isPreferred: 0
+  - needName: Berries
+    isPreferred: 0
+  - needName: Gold Space Maple
+    isPreferred: 1
+  liquidNeeds:
+  - needName: 
+    tileNeedThreshold: 3
+    freshWaterMinThreshold: 0.96
+    freshWaterMaxThreshold: 1
+    saltMinThreshold: 0.005
+    saltMaxThreshold: 0.025
+    bacteriaMinThreshold: 0
+    bacteriaMaxThreshold: 0.02
+  preyNeeds:
+  - needName: Humidum Limax
+  representation: {fileID: 0}

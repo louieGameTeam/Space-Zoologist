@@ -157,7 +157,7 @@ public class SpeciesCalculator : NeedCalculator
         // Initialize totalLocalDominance and localDominanceRemaining.
         foreach (Population population in populations)
         {
-            float total = populationsWithAccess[population].Sum(p => p.Dominance);
+            float total = populationsWithAccess[population].Sum(p => p.FoodDominance);
             totalLocalDominance.Add(population, total);
             localDominanceRemaining.Add(population, total);
 
@@ -192,7 +192,7 @@ public class SpeciesCalculator : NeedCalculator
 
                 accessibleAreaRatio[consumer][population] = (float)overlapArea.Count / (float)accessibleArea.Count;
                 int accessiblePopulationCout = (int)Math.Floor(population.Count * accessibleAreaRatio[consumer][population]);
-                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (consumer.Dominance / totalLocalDominance[population]));
+                availablePopulationCount += (int)Math.Floor(accessiblePopulationCout * (consumer.FoodDominance / totalLocalDominance[population]));
                 //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} can took {availablePopulationCount}");
             }
 
@@ -206,7 +206,7 @@ public class SpeciesCalculator : NeedCalculator
                     amountPopulationCountRemaining[population] -= amountRequiredForGoodCondition;
                     totalPopulationCountAcquired += amountRequiredForGoodCondition;
                     newDistributedAmount[population] += (int)totalPopulationCountAcquired;
-                    localDominanceRemaining[population] -= consumer.Dominance;
+                    localDominanceRemaining[population] -= consumer.FoodDominance;
                 }
                 float populationCountAcquiredPerIndividual = totalPopulationCountAcquired / consumer.Count;
                 this.amountConsumerWasDistributed[consumer] = populationCountAcquiredPerIndividual;
@@ -224,7 +224,7 @@ public class SpeciesCalculator : NeedCalculator
             float totalPopulationCountAcquired = 0.0f;
             foreach (Population population in accessiblePopulation[consumer])
             {
-                float dominanceRatio = consumer.Dominance / localDominanceRemaining[population];
+                float dominanceRatio = consumer.FoodDominance / localDominanceRemaining[population];
                 totalPopulationCountAcquired += (float)Math.Floor(dominanceRatio * accessibleAreaRatio[consumer][population] * amountPopulationCountRemaining[population]);
                 newDistributedAmount[population] += (int)totalPopulationCountAcquired;
                 //Debug.Log($"{life.Species.SpeciesName} {life.GetInstanceID()} population took {totalPopulationCountAcquired} pop count from {population.Species.SpeciesName} {population.GetInstanceID()}");

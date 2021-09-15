@@ -5,38 +5,27 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class ResourceData
-    {
-        public string resourceName;
-        public int initialAmount;
-
-        public ResourceData(string ID)
-        {
-            resourceName = ID;
-        }
-    }
-
     // [SerializeField] LevelDataReference LevelDataRef = default;
     [SerializeField] EventResponseManager EventResponseManager = default;
-    [SerializeField] List<ResourceData> resourceData = default;
     Dictionary<string, int> remainingResources = new Dictionary<string, int>();
 
     // a copy of the dictionary before draft
     Dictionary<string, int> initialResources = new Dictionary<string, int>();
     private Dictionary<string, StoreItemCell> itemDisplayInfo = new Dictionary<string, StoreItemCell>();
 
-    public void Awake()
+    public void Initialize()
     {
-        foreach (ResourceData data in resourceData)
+        foreach (LevelData.ItemData item in GameManager.Instance.LevelData.itemQuantities)
         {
-            remainingResources.Add(data.resourceName, data.initialAmount);
-            initialResources.Add(data.resourceName, data.initialAmount);
+            if (!remainingResources.ContainsKey(item.itemObject.ItemName))
+            {
+                remainingResources.Add(item.itemObject.ItemName, item.initialAmount);
+                initialResources.Add(item.itemObject.ItemName, item.initialAmount);
+            }
+            remainingResources[item.itemObject.ItemName] = item.initialAmount;
+            initialResources[item.itemObject.ItemName] = item.initialAmount;
         }
-    }
 
-    public void Start()
-    {
         EventResponseManager.InitializeResponseHandler(EventType.PopulationCountIncreased, AddItem);
     }
 
@@ -47,8 +36,11 @@ public class ResourceManager : MonoBehaviour
 
     public void setupItemSupplyTracker(StoreItemCell storeItem)
     {
-        itemDisplayInfo.Add(storeItem.item.ItemName, storeItem);
-        storeItem.RemainingAmount = remainingResources[storeItem.item.ItemName];
+        if (!itemDisplayInfo.ContainsKey(storeItem.item.ItemName))
+        {
+            itemDisplayInfo.Add(storeItem.item.ItemName, storeItem);
+            storeItem.RemainingAmount = remainingResources[storeItem.item.ItemName];
+        }
     }
 
     void AddItem(string itemName, int amount)
@@ -67,7 +59,7 @@ public class ResourceManager : MonoBehaviour
 
     public void Placed(Item item, int amount)
     {
-        PlacedItem(item.ID, amount);
+        PlacedItem(item.ItemName, amount);
     }
 
     public void Placed(AnimalSpecies species, int amount)
@@ -95,9 +87,9 @@ public class ResourceManager : MonoBehaviour
 
     public int CheckRemainingResource(Item item)
     {
-        if (remainingResources.ContainsKey(item.ID))
+        if (remainingResources.ContainsKey(item.ItemName))
         {
-            return remainingResources[item.ID];
+            return remainingResources[item.ItemName];
         }
         else
         {

@@ -7,23 +7,23 @@ public class BuildBufferManager : GridObjectManager
     [SerializeField] private GameObject bufferGO;
     private Dictionary<Vector4, List<ConstructionCountdown>> colorTimesToCCs = new Dictionary<Vector4, List<ConstructionCountdown>>();// For serialization
     private bool[,] isConstructing;
-    [SerializeField] ReservePartitionManager RPM = default;
-    [SerializeField] TileSystem tileSystem = default;
-    [SerializeField] TilePlacementController tilePlacementController = default;
     public bool IsConstructing(int x, int y) => isConstructing[x, y];
     private Action constructionFinishedCallback = null;
-    private void Awake()
+
+    public void Initialize()
     {
-        LevelDataReference levelDataReference = FindObjectOfType<LevelDataReference>();
-        if (levelDataReference == null)
+        LevelData levelData = GameManager.Instance.LevelData;
+        if (levelData == null)
         {
             Debug.LogWarning("Level data reference not found, using default width and height values");
             this.isConstructing = new bool[100, 100];
         }
-        int w = levelDataReference.LevelData.MapWidth;
-        int h = levelDataReference.LevelData.MapHeight;
-        this.isConstructing = new bool[w, h];
+        else
+        {
+            this.isConstructing = new bool[levelData.MapWidth, levelData.MapHeight];
+        }
     }
+
     public override void Parse()
     {
         foreach (KeyValuePair<string, GridItemSet> keyValuePair in SerializedMapObjects)
@@ -56,7 +56,7 @@ public class BuildBufferManager : GridObjectManager
         this.isConstructing[pos.x, pos.y] = true;
         GameObject newGo = Instantiate(this.bufferGO, this.gameObject.transform);
         //Debug.Log("Placing item under constuction");
-        newGo.transform.position = new Vector3(pos.x, pos.y, 0);
+        newGo.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0);
         color.a = 1; //Enforce alpha channel to be 1, prevent human error       
         newGo.GetComponent<SpriteRenderer>().color = color;
         ConstructionCountdown cc = newGo.GetComponent<ConstructionCountdown>();
@@ -108,7 +108,7 @@ public class BuildBufferManager : GridObjectManager
         }
         return null;
     }
-    public void DestoryBuffer(Vector2Int pos, int size = 1)
+    public void DestroyBuffer(Vector2Int pos, int size = 1)
     {
         if (!this.isConstructing[pos.x, pos.y])
         {
@@ -149,7 +149,7 @@ public class BuildBufferManager : GridObjectManager
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
-            this.RPM.UpdateAccessMapChangedAt(changedTiles);
+            GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
     public void CountDown()
@@ -171,10 +171,7 @@ public class BuildBufferManager : GridObjectManager
                     Vector3Int pos = new Vector3Int(cc.position.x, cc.position.y, 0);
                     changedTiles.Add(pos);
                     Destroy(cc.gameObject);
-                    if (tilePlacementController.previousTiles.ContainsKey(pos))
-                    {
-                        tilePlacementController.previousTiles.Remove(pos);
-                    }
+                    
                     if (constructionFinishedCallback != null)
                     {
                         constructionFinishedCallback();
@@ -189,13 +186,10 @@ public class BuildBufferManager : GridObjectManager
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
-            this.RPM.UpdateAccessMapChangedAt(changedTiles);
+            GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
-    public void RevertPreviousTile(Vector3Int pos)
-    {
-        tilePlacementController.RevertTile(pos);
-    }
+
     private Vector3[] GetPositionsAndTimes(List<ConstructionCountdown> cCs)
     {
         Vector3[] positions = new Vector3[cCs.Count];

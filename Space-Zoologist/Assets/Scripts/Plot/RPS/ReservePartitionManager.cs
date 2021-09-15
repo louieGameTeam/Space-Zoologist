@@ -38,17 +38,21 @@ public class ReservePartitionManager : MonoBehaviour
 
     public Dictionary<Population, int[]> TypesOfTerrain;
 
-    public Dictionary<Population, List<float[]>> PopulationAccessibleLiquid => this.PopulationAccessibleLiquid;
-    private Dictionary<Population, List<float[]>> populationAccessibleLiquid;
+    public Dictionary<Population, List<float[]>> PopulationAccessibleLiquidCompositions => this.populationAccessibleLiquidCompositions;
+    private Dictionary<Population, List<float[]>> populationAccessibleLiquidCompositions;
+
+    public Dictionary<Population, List<Vector3Int>> PopulationAccessibleLiquidLocations => this.populationAccessibleLiquidLocations;
+    private Dictionary<Population, List<Vector3Int>> populationAccessibleLiquidLocations;
 
     public GameTile Liquid;
-    [SerializeField] private TileSystem TileSystem = default;
-    [SerializeField] private BuildBufferManager buildBufferManager;
-    private void Awake()
+    private GridSystem gridSystem = default;
+    public void Initialize()
     {
         // Variable initializations
+        gridSystem = GameManager.Instance.m_gridSystem;
 
         // long mask is limited to 64 bits
+
         openID = new Queue<int>();
         lastRecycledID = maxPopulation - 1; // 63
         for (int i = maxPopulation - 1; i >= 0; i--)
@@ -62,12 +66,9 @@ public class ReservePartitionManager : MonoBehaviour
         AccessibleArea = new Dictionary<Population, List<Vector3Int>>();
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
-        populationAccessibleLiquid = new Dictionary<Population, List<float[]>>();
-    }
+        populationAccessibleLiquidCompositions = new Dictionary<Population, List<float[]>>();
+        populationAccessibleLiquidLocations = new Dictionary<Population, List<Vector3Int>>();
 
-    private void Start()
-    {
-        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => this.RemovePopulation((Population)EventManager.Instance.EventData));
     }
 
@@ -151,6 +152,7 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
         List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
+        List<Vector3Int> newLiquidLocations = new List<Vector3Int>();
         List<float[]> newLiquidCompositions = new List<float[]>();
 
         if (!this.AccessibleArea.ContainsKey(population))
@@ -160,12 +162,11 @@ public class ReservePartitionManager : MonoBehaviour
 
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
+        GridSystem gridSystemReference = GameManager.Instance.m_gridSystem;
 
         // starting location
-        Vector3Int location = this.TileSystem.WorldToCell(population.transform.position);
+        Vector3Int location = gridSystemReference.WorldToCell(population.transform.position);
         stack.Push(location);
-
-        TileSystem _tileSystem = this.TileSystem;
 
         // Clear TypesOfTerrain for given population
         this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
@@ -189,18 +190,24 @@ public class ReservePartitionManager : MonoBehaviour
             //    continue;
             //}
             // check if tilemap has tile and if population can access the tile (e.g. some cannot move through water)
-            GameTile tile = _tileSystem.GetGameTileAt(cur);
+            GameTile tile = gridSystemReference.GetGameTileAt(cur);
             // Get liquid tile info
             if (tile != null && tile.type == TileType.Liquid)
             {
-                float[] composition = _tileSystem.GetTileContentsAt(cur, tile);
+                float[] composition = gridSystemReference.GetTileContentsAt(cur, tile);
 
-                if (!this.populationAccessibleLiquid.ContainsKey(population))
+                if (!this.populationAccessibleLiquidCompositions.ContainsKey(population))
                 {
-                    this.populationAccessibleLiquid.Add(population, new List<float[]>());
+                    this.populationAccessibleLiquidCompositions.Add(population, new List<float[]>());
+                }
+
+                if (!this.populationAccessibleLiquidLocations.ContainsKey(population))
+                {
+                    this.populationAccessibleLiquidLocations.Add(population, new List<Vector3Int>());
                 }
 
                 newLiquidCompositions.Add(composition);
+                newLiquidLocations.Add(cur);
             }
 
             if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
@@ -258,7 +265,8 @@ public class ReservePartitionManager : MonoBehaviour
         if(population.HasAccessibilityChanged)
         {
             this.AccessibleArea[population] = newAccessibleLocations;
-            this.populationAccessibleLiquid[population] = newLiquidCompositions;
+            this.populationAccessibleLiquidCompositions[population] = newLiquidCompositions;
+            this.populationAccessibleLiquidLocations[population] = newLiquidLocations;
         }
     }
 
@@ -341,7 +349,7 @@ public class ReservePartitionManager : MonoBehaviour
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = this.TileSystem.WorldToCell(toWorldPos);
+        Vector3Int mapPos = GameManager.Instance.m_gridSystem.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -352,7 +360,7 @@ public class ReservePartitionManager : MonoBehaviour
     {
         // if accessible
         // check if the nth bit is set (i.e. accessible for the population)
-         if (AccessMap.ContainsKey(cellPos))
+         if (AccessMap.ContainsKey(cellPos) && PopulationToID.ContainsKey(population))
         {
             if (((AccessMap[cellPos] >> PopulationToID[population]) & 1L) == 1L)
             {
@@ -388,12 +396,35 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Check if populationA's and populationB's accessible area overlaps.
+    /// </summary>
+    /// <param name="populationA">Ususally the consumer population</param>
+    /// <param name="populationB">Ususally the consumed population</param>
+    /// <remarks><c>populationA</c> and <c>populationB</c> is interchangeable</remarks>
+    /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
+    public int NumOverlapTiles(Population populationA, Population populationB)
+    {
+        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
+        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
+        int numOverlapTiles = 0;
+        foreach (Vector3Int cellPos in AccessibleArea_A)
+        {
+            if (AccessibleArea_B.Contains(cellPos))
+            {
+                numOverlapTiles++;
+            }
+        }
+
+        return numOverlapTiles;
+    }
+
+    /// <summary>
     /// Go through Populations and return a list of populations that has access to the tile corresponding to toWorldPos.
     /// </summary>
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = this.TileSystem.WorldToCell(toWorldPos);
+        Vector3Int cellPos = GameManager.Instance.m_gridSystem.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)
@@ -436,11 +467,21 @@ public class ReservePartitionManager : MonoBehaviour
 
     public List<float[]> GetLiquidComposition(Population population)
     {
-        if (!this.populationAccessibleLiquid.ContainsKey(population))
+        if (!this.populationAccessibleLiquidCompositions.ContainsKey(population))
         {
             return null;
         }
 
-        return this.populationAccessibleLiquid[population];
+        return this.populationAccessibleLiquidCompositions[population];
+    }
+
+    public List<Vector3Int> GetLiquidLocations(Population population)
+    {
+        if (!this.populationAccessibleLiquidLocations.ContainsKey(population))
+        {
+            return null;
+        }
+
+        return this.populationAccessibleLiquidLocations[population];
     }
 }

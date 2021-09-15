@@ -70,6 +70,10 @@ public class DisplayInspectorText : MonoBehaviour
             }
         }
         this.inspectorWindowText.text = "";
+        if (population.GrowthCalculator.calculatePredatorPreyNeed() > 0)
+        {
+            this.inspectorWindowText.text = $"{population.gameObject.name} looks frightened...";
+        }
         GenerateSliders(population);
     }
 

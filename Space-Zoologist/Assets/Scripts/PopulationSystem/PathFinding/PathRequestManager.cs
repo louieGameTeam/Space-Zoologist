@@ -41,6 +41,11 @@ namespace AnimalPathfinding
         /// <param name="grid"></param>
         public static void RequestPath(Vector3Int start, Vector3Int end, Action<List<Vector3>, bool> callback, Grid grid)
         {
+            if (end.x == -1 && end.y == -1)
+            {
+                Debug.Log("No accessible locations, pathfinding returning early");
+                return;
+            }
             if (instance == null)
             {
                 Debug.Log("PathRequestManager not attached to GameObject, Pathfinding will not work");

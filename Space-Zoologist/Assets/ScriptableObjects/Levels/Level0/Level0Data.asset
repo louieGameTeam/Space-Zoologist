@@ -20,12 +20,24 @@ MonoBehaviour:
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
   animalSpecies:
-  - {fileID: 11400000, guid: 71f359d75cd374dc2af2253ea6d39f95, type: 2}
-  items:
-  - {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-  - {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
-  globalAtmosphere:
-    GasX: 5
-    GasY: 3
-    GasZ: 1
-    temperature: 90
+  - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
+  itemQuantities:
+  - itemObject: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+    initialAmount: 2
+  - itemObject: {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
+    initialAmount: 20
+  - itemObject: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
+    initialAmount: 5
+  - itemObject: {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
+    initialAmount: 10
+  levelMusic: {fileID: 8300000, guid: e4af200c658c1474a9c50c71d549d812, type: 3}
+  startingPositions:
+  - {x: 1, y: 1, z: 0}
+  startingConversation: {fileID: 2862583905648361958, guid: 94cacda425a1f4f2e9474db9bd386117,
+    type: 3}
+  defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
+    type: 3}
+  passedConversation: {fileID: 3897354896603145716, guid: eb6f90f9020e14ec3803e0d34a89f111,
+    type: 3}
+  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+    type: 3}

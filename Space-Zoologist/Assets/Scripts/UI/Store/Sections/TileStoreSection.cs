@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,8 +10,9 @@ using UnityEngine.EventSystems;
 /// Figure out how to handle case when more than one machine present after changes
 public class TileStoreSection : StoreSection
 {
-    [SerializeField] private EnclosureSystem EnclosureSystem = default;
-    [SerializeField] private TilePlacementController tilePlacementController = default;
+    private EnclosureSystem EnclosureSystem = default;
+    private TilePlacementController tilePlacementController = default;
+    private ReservePartitionManager rpm = default;
 
     private float startingBalance;
     private int initialAmt;
@@ -22,10 +24,12 @@ public class TileStoreSection : StoreSection
     private Color constructionColor = new Color(1f, 0.6f, 0.2f, 1f);//Orange
     public override void Initialize()
     {
-        this.buildBufferManager = FindObjectOfType<BuildBufferManager>();
+        this.buildBufferManager = GameManager.Instance.m_buildBufferManager;
+        EnclosureSystem = GameManager.Instance.m_enclosureSystem;
+        tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemType.Terrain;
         base.Initialize();
-        Debug.Assert(tilePlacementController != null);
+        //Debug.Assert(tilePlacementController != null);
     }
 
     /// <summary>
@@ -33,11 +37,20 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void StartPlacing()
     {
+        Debug.Log("Start placing");
         numTilesPlaced = 0;
         initialAmt = ResourceManager.CheckRemainingResource(selectedItem);
         isPlacing = true;
-        startingBalance = base.playerBalance.Balance;
-        tilePlacementController.StartPreview(selectedItem.ID);
+        startingBalance = GameManager.Instance.Balance;
+
+        float[] contents = null;
+        if(selectedItem is LiquidItem)
+        {
+            Vector3 liquidVector = ( (LiquidItem)selectedItem ).LiquidContents;
+            contents = new float[] {liquidVector.x, liquidVector.y, liquidVector.z};
+        }
+
+        tilePlacementController.StartPreview(selectedItem.ID, liquidContents: contents);
     }
 
     /// <summary>
@@ -47,7 +60,7 @@ public class TileStoreSection : StoreSection
     {
         isPlacing = false;
         tilePlacementController.RevertChanges();
-        base.playerBalance.SetBalance(startingBalance);
+        GameManager.Instance.SetBalance(startingBalance);
     }
 
     /// <summary>
@@ -59,11 +72,14 @@ public class TileStoreSection : StoreSection
         isPlacing = false;
         foreach (Vector3Int pos in this.tilePlacementController.addedTiles)
         {
-            this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x,pos.y), this.selectedItem.buildTime, constructionColor);
+            if (tilePlacementController.godMode)
+                rpm.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
+            else
+                this.buildBufferManager.CreateUnitBuffer(new Vector2Int(pos.x,pos.y), this.selectedItem.buildTime, constructionColor);
         }
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
-        base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+        GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, numTilesPlaced);
     }
 
@@ -127,8 +143,8 @@ public class TileStoreSection : StoreSection
                     base.HandleAudio();
                     prevTilesPlaced = numTilesPlaced;
                 }
-                base.playerBalance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
-                if (base.playerBalance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
+                GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+                if (GameManager.Instance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
                 {
                     FinishPlacing();
                     base.OnItemSelectionCanceled();

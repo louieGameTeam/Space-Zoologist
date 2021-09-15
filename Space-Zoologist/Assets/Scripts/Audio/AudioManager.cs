@@ -6,8 +6,8 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance = null;
-    public AudioSource SFX => sfx;
     public MusicManager MusicManager => musicManager;
+    public AudioSource SFX => sfx;
     [SerializeField] MusicManager musicManager;
     [SerializeField] AudioSource sfx;
     float masterVolume = 1;
@@ -31,11 +31,22 @@ public class AudioManager : MonoBehaviour
         musicManager = GetComponentInChildren<MusicManager>();
 
         //initialized from prefab
-        if (musicManager == null && transform.childCount > 0)
+        if (musicManager == null)
         {
-            musicManager = transform.GetChild(0).gameObject.AddComponent<MusicManager>();
+            if (transform.childCount > 0)
+            {
+                musicManager = transform.GetChild(0).gameObject.AddComponent<MusicManager>();
+            }
+            else
+            {
+                musicManager = new GameObject("Music Manager", typeof(MusicManager)).GetComponent<MusicManager>();
+                musicManager.transform.SetParent(transform);
+            }
         }
+    }
 
+    private void Start()
+    {
         //TODO Load Volume Settings from player preferences
 
         LoadSFX();
@@ -75,6 +86,10 @@ public class AudioManager : MonoBehaviour
         sfx.volume = masterVolume * sfxVolume;
     }
 
+    /// <summary>
+    /// Play the audioclip.
+    /// </summary>
+    /// <param name="clip"></param>
     public void PlayOneShot(AudioClip clip)
     {
         // introduce a little bit of variety
@@ -82,24 +97,26 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Play the sfx from SFXType in order.
+    /// Play the sfx from SFXType in order. If there is only one, repeat that sound each time this is called.
     /// </summary>
     /// <param name="type"></param>
     public void PlayOneShot(SFXType type)
     {
         if (type == SFXType.None) return;
-        var audio = SFXDict[type];
-        PlayOneShot(audio.clips[audio.index]);
+        // temporary
+        //var audio = SFXDict[type];
+        //PlayOneShot(audio.clips[audio.index]);
 
-        audio.index++;
-        if (audio.index == audio.clips.Length) audio.index = 0;
+        //audio.index++;
+        //if (audio.index == audio.clips.Length) audio.index = 0;
     }
 
     /// <summary>
     /// Pick a random sound to play from in the SFXType
     /// </summary>
     /// <param name="type"></param>
-    public void PlayOneShotRandom(SFXType type) {
+    public void PlayOneShotRandom(SFXType type)
+    {
         if (type == SFXType.None) return;
         var audio = SFXDict[type];
 

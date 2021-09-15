@@ -32,14 +32,12 @@ public class SceneNavigator : ScriptableObject
 
     public void LoadMainMenu()
     {
-        this.UpdateRecentlyLoadedLevel("MainMenu");
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        LoadLevel("MainMenu");
     }
 
     public void LoadLevelMenu()
     {
-        this.UpdateRecentlyLoadedLevel("LevelMenu");
-        SceneManager.LoadScene("LevelMenu", LoadSceneMode.Single);
+        LoadLevel("LevelMenu");
     }
 
     private void UpdateRecentlyLoadedLevel(string levelName)

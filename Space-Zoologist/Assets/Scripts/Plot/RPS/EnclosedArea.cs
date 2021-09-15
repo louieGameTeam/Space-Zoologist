@@ -29,8 +29,7 @@ public class EnclosedArea
     public List<Population> populations;
     public List<FoodSource> foodSources;
     public byte id;
-
-    private readonly GridSystem gridSystem;
+    public Dictionary<byte, float> previousArea = new Dictionary<byte, float>();
 
     /// <summary>
     /// This represents the all the (x,y) coordinates inside this enclosed area.
@@ -39,15 +38,15 @@ public class EnclosedArea
     /// <remarks>Using hash set for O(1)look up</remarks>
     public HashSet<Coordinate> coordinates;
 
-    public EnclosedArea(AtmosphericComposition atmosphericComposition, GridSystem gridSystem, byte id)
+    public EnclosedArea(AtmosphericComposition atmosphericComposition, byte id)
     {
         this.atmosphericComposition = atmosphericComposition;
         this.terrainComposition = new float[(int)TileType.TypesOfTiles];
-        this.gridSystem = gridSystem;
         this.animals = new List<Animal>();
         this.coordinates = new HashSet<Coordinate>();
         this.populations = new List<Population>();
         this.foodSources = new List<FoodSource>();
+        this.previousArea = new Dictionary<byte, float>();
         this.id = id;
     }
 
@@ -61,33 +60,45 @@ public class EnclosedArea
         return this.coordinates.Contains(coordinate);
     }
 
-    public void AddCoordinate(Coordinate coordinate, int tileType, AtmosphericComposition oldComposition)
+    public void AddCoordinate(Coordinate coordinate, int tileType, EnclosedArea prevArea = null)
     {
-        if (gridSystem.isCellinGrid(coordinate.x, coordinate.y))
+        if (GameManager.Instance.m_gridSystem.IsCellinGrid(coordinate.x, coordinate.y))
         {
-            GridSystem.CellData cellData = this.gridSystem.CellGrid[coordinate.x, coordinate.y];
+            GridSystem.TileData tileData = GameManager.Instance.m_gridSystem.GetTileData(new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0));
 
             this.coordinates.Add(coordinate);
 
-            if (cellData.ContainsAnimal)
+            if (tileData.Animal)
             {
-                this.animals.Add(cellData.Animal.GetComponent<Animal>());
+                this.animals.Add(tileData.Animal.GetComponent<Animal>());
 
-                Population population = cellData.Animal.GetComponent<Animal>().PopulationInfo;
+                Population population = tileData.Animal.GetComponent<Animal>().PopulationInfo;
 
                 if (!this.populations.Contains(population))
                 {
                     this.populations.Add(population);
                 }
             }
-            if (cellData.ContainsFood)
+            if (tileData.Food)
             {
-                this.foodSources.Add(cellData.Food.GetComponent<FoodSource>());
+                this.foodSources.Add(tileData.Food.GetComponent<FoodSource>());
             }
 
         }
 
         this.terrainComposition[tileType]++;
+
+        if (prevArea != null)
+        {
+            if (previousArea.ContainsKey(prevArea.id))
+            {
+                previousArea[prevArea.id]++;
+            }
+            else
+            {
+                previousArea.Add(prevArea.id, 1);
+            }
+        }
     }
 
     // Update the population/food list for this enclosed area
@@ -98,14 +109,17 @@ public class EnclosedArea
 
         foreach (Coordinate coordinate in this.coordinates)
         {
-            if (this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsAnimal)
+            UnityEngine.Vector3Int coordinateVector = new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0);
+            GridSystem.TileData coordinateTileData = GameManager.Instance.m_gridSystem.GetTileData(coordinateVector);
+
+            if (coordinateTileData.Animal)
             {
-                this.populations.Add(this.gridSystem.CellGrid[coordinate.x, coordinate.y].Animal.GetComponent<Animal>().PopulationInfo);
+                this.populations.Add(coordinateTileData.Animal.GetComponent<Animal>().PopulationInfo);
                 continue;
             }
-            if (this.gridSystem.CellGrid[coordinate.x, coordinate.y].ContainsFood)
+            if (coordinateTileData.Food)
             {
-                this.foodSources.Add(this.gridSystem.CellGrid[coordinate.x, coordinate.y].Food.GetComponent<FoodSource>());
+                this.foodSources.Add(coordinateTileData.Food.GetComponent<FoodSource>());
                 continue;
             }
         }

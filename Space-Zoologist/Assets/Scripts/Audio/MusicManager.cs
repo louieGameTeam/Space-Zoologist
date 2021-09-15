@@ -1,138 +1,190 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
 {
-    public LoopableAudioTrack curMusic;
-    public LoopableAudioTrack nextMusic;
-    public LoopableAudioTrack queuedMusic;
+    public CustomMusicLoopController curMusic;
+    public CustomMusicLoopController nextMusic;
 
-    public AudioSource curMusicSource;
-    public AudioSource nextMusicSource;
-
-    bool isInTrasition;
-    bool frequentTransition;
+    bool isInTransition;
 
     const int TEMPO = 112;                                      // tempo of track, in beats per minute
     const int BEATS_PER_BAR = 2;                                // the tracks have 4 beats per bar, but I'm allowing half-bar transitions
-    const float SECONDS_PER_BAR = BEATS_PER_BAR * 60f / TEMPO;  // (beats / bars) * (60 seconds / 1 minute) * (minutes / beats)
+    public const float SECONDS_PER_BAR = BEATS_PER_BAR * 60f / TEMPO;  // (beats / bars) * (60 seconds / 1 minute) * (minutes / beats)
 
     float volume = 1f;
 
     Coroutine transition = null;
 
-    private void Awake()
-    {
-        if (curMusicSource == null) {
-            curMusicSource = gameObject.AddComponent<AudioSource>();
-        }
-        if (nextMusicSource == null) {
-            nextMusicSource = gameObject.AddComponent<AudioSource>();
-        }
-    }
-
     void Start()
     {
-        isInTrasition = false;
-        frequentTransition = false;
-        if (!LoopableAudioTrack.IsEmpty(curMusic) && !curMusic.haveStarted) {
-            curMusic.StartTrack(curMusicSource);
+        isInTransition = false;
+        if (curMusic != null && !curMusic.isPlaying)
+        {
+            curMusic.StartTrack();
         }
     }
 
-    public void SetNextTrack(LoopableAudioTrack nextTrack)
+    public bool SetNextTrack(CustomMusicLoopController nextTrack, bool overwriteTransitioningMusic = false)
     {
-        if (nextTrack == curMusic) return;
+        if (nextMusic == null && nextTrack == curMusic || nextTrack == nextMusic) {
+            return false;
+        }
 
-        if(LoopableAudioTrack.IsEmpty(nextMusic))
-            nextMusic = nextTrack;
-        else
-            queuedMusic = nextTrack; // if there is queued music that isn't played, just overwrite it
+        if (nextMusic == null || !isInTransition)
+        {
+            if (nextMusic) Destroy(nextMusic.gameObject); // not needed anymore
+
+            PrepareTrack(nextTrack);
+            return true;
+        }
+        else if (overwriteTransitioningMusic)
+        {
+            StopTransition();
+            Destroy(nextMusic.gameObject); // not needed anymore
+
+            if (nextTrack == curMusic)
+            {
+                return false;
+            }
+            else
+            {
+                PrepareTrack(nextTrack);
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    // !! CALL THIS TO SWITCH FROM PROLOGUE MUSIC TO MAIN MENU MUSIC !!
-    public void StartTransition()
-    {
-        if (isInTrasition)
-        {
-            if (LoopableAudioTrack.IsEmpty(queuedMusic)) return; // cancel if the transition isn't queued up
+    private void PrepareTrack(CustomMusicLoopController nextTrack) {
+        nextMusic = nextTrack;
+        nextMusic.gameObject.name = nextMusic.Source.clip.name;
+        nextMusic.transform.SetParent(transform);
+        SetVolume(volume);
+    }
 
-            nextMusic.StopTrack();
-            StopCoroutine(transition);
-            nextMusic = queuedMusic;
-            queuedMusic = null;
-            transition = null;
-        }
-        if (LoopableAudioTrack.IsEmpty(nextMusic))
+    public void StopTransition()
+    {
+        nextMusic.StopTrack();
+        StopCoroutine(transition);
+        SetVolume(volume);
+        transition = null;
+        isInTransition = false;
+    }
+
+    /// <summary>
+    /// Starts a transition (instantaneous if withFading = true) to the next track with aligned tempo and bars.
+    /// </summary>
+    /// <param name="withFading">Whether the transition involves fading.</param>
+    /// <param name="track">The track to play. Setting track will force a transition to start.</param>
+    /// <returns>returns -1 if no transition happened, 0 if it was instant, or the delay before the transition will start.</returns>
+    public float StartTransition(bool withFading, CustomMusicLoopController track = null)
+    {
+        if (track != null)
         {
-            return;
+            //Attempt to forcibly set the next track
+            if (!SetNextTrack(track, true) || isInTransition || track != nextMusic)
+            {
+                // failed to set a new track, abort
+                return -1;
+            }
         }
-        else if (LoopableAudioTrack.IsEmpty(curMusic))
+
+        if (nextMusic == null)
+        {
+            return -1;
+        }
+        else if (curMusic == null)
         {
             curMusic = nextMusic;
             nextMusic = null;
-            curMusic.StartTrack(curMusicSource);
-            return;
+            curMusic.StartTrack();
+            return 0;
         }
-        else if (nextMusic == curMusic) {
+        else if (nextMusic == curMusic)
+        {
             nextMusic = null;
-            return;
+            return -1;
         }
 
-        isInTrasition = true;
+        if (!withFading)
+        {
+            if (nextMusic != null)
+            {
+                if (isInTransition)
+                {
+                    StopTransition();
+                }
+
+                curMusic.StopTrack(); //wait for main menu to start before stopping prologue
+                curMusic.SetVolume(volume);
+                Destroy(curMusic.gameObject); // not needed anymore
+
+                curMusic = nextMusic;
+                nextMusic = null;
+
+                curMusic.StartTrack();
+                return 0;
+            }
+            return -1;
+        }
+
+        if (isInTransition)
+        {
+            return -1;
+        }
+
+        isInTransition = true;
 
         float curPlayheadTime = curMusic.GetCurrentTime();
         int nextBar = Mathf.CeilToInt(curPlayheadTime / SECONDS_PER_BAR);
         float nextBarTime = nextBar * SECONDS_PER_BAR;
         transition = StartCoroutine(MusicTransition(nextBarTime - curPlayheadTime));
+        return nextBarTime - curPlayheadTime;
     }
 
     // timed sequence of events to make the transition smooth
     IEnumerator MusicTransition(float delay)
     {
-        float buffer = (float)LoopableAudioTrack.BUFFER + Time.deltaTime; //HACK to deal with start buffer
-
-        delay -= buffer;
-        if (delay < 0) delay += SECONDS_PER_BAR;
-
         yield return new WaitForSeconds(delay); // wait for the beat
 
-        nextMusic.StartTrack(nextMusicSource); // start the main menu music
+        nextMusic.StartTrack();
 
-        float waitTime = SECONDS_PER_BAR * 1f; // wait for a full bar
+        float waitTime = SECONDS_PER_BAR * 0.5f; // wait for a full bar
         yield return new WaitForSeconds(waitTime);
-        float fadeTime = SECONDS_PER_BAR * 1.25f; // fade for a bit longer
+
+        float fadeTime = SECONDS_PER_BAR * 0.5f; // fade for a bit longer
 
         // fade out the prologue
         float p = 0f;
+        float startVolume = curMusic.GetVolume();
+
         while (p < 1f)
         { // we only need to fade most of the way out
-            curMusic.SetVolume(volume * (1 - p));
+            curMusic.SetVolume(startVolume * (1 - p));
             p += Time.deltaTime / fadeTime;
             yield return null;
         }
 
-        curMusic.StopTrack(); //wait for main menu to start before stopping prologue
-        curMusicSource.volume = volume;
+        curMusic.StopTrack(); // wait for main menu to start before stopping prologue
+        curMusic.SetVolume(startVolume); // revert the track to its original volume, just in case
+        Destroy(curMusic.gameObject); // not needed anymore
 
         curMusic = nextMusic;
-        nextMusic = queuedMusic;
-        queuedMusic = null;
+        nextMusic = null;
 
-        AudioSource temp = curMusicSource;
-        curMusicSource = nextMusicSource;
-        nextMusicSource = temp;
-
-        isInTrasition = false;
-        frequentTransition = false;
+        isInTransition = false;
         transition = null;
     }
+
 
     public void SetVolume(float vol)
     {
         volume = vol;
-        curMusicSource.volume = volume;
-        nextMusicSource.volume = volume;
+        curMusic?.SetVolume(volume);
+        nextMusic?.SetVolume(volume);
     }
 }

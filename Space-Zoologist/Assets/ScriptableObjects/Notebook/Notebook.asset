@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3a78d076434f0d41a4e5aabaa0c9b9b, type: 3}
+  m_Name: Notebook
+  m_EditorClassIdentifier: 
+  acronym: ROCTM
+  research: {fileID: 11400000, guid: c5f58637365d268459e99748ffe0a624, type: 2}
+  observations:
+    enclosureScaffold: {fileID: 11400000, guid: 4288bb66b31c80a4993552b1c8d9a539,
+      type: 2}
+    initialEntries:
+    - entries:
+      - title: Food
+        text: 'Current situation:
+
+
+          Good for which species?:
+
+
+          What
+          more does each species still need to meet target specifications?:
+
+'
+      - title: Water
+        text: 'Current situation:
+
+
+          Good for which species?:
+
+
+          What
+          more does each species still need to meet target specifications?:
+
+'
+      - title: Terrain
+        text: 'Current situation:
+
+
+          Good for which species?:
+
+
+          What
+          more does each species still need to meet target specifications?:
+
+'
+      - title: Other
+        text: 'What can each species access?:
+
+
+          What are available resources?:
+
+'
+    - entries:
+      - title: Food
+        text: 
+      - title: Water
+        text: 
+      - title: Terrain
+        text: 
+      - title: Other
+        text: 
+  testAndMetrics:
+    enclosureScaffold: {fileID: 11400000, guid: 4288bb66b31c80a4993552b1c8d9a539,
+      type: 2}
+    initialTexts:
+    - 'when:
+
+
+      Does this meet target specifications?:
+
+
+      Related notes:'
+    - 'when:'

@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class SpeciesReferenceData : MonoBehaviour
 {
-    [SerializeField] public LevelDataReference LevelDataReference = default;
     public Dictionary<string, FoodSourceSpecies> FoodSources = new Dictionary<string, FoodSourceSpecies>();
     public Dictionary<string, AnimalSpecies> AnimalSpecies = new Dictionary<string, AnimalSpecies>();
 
     // Ensure the Species are all indexed by their name
     public void Start()
     {
-        foreach (FoodSourceSpecies foodSource in this.LevelDataReference.LevelData.FoodSourceSpecies)
+        foreach (FoodSourceSpecies foodSource in LevelDataReference.instance.LevelData.FoodSourceSpecies)
         {
-            foreach (Item item in this.LevelDataReference.LevelData.Items)
+            foreach (LevelData.ItemData data in LevelDataReference.instance.LevelData.ItemQuantities)
             {
-                if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName))
+                Item item = data.itemObject;
+                if (item)
                 {
-                    this.FoodSources.Add(item.ID, foodSource);
+                    if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName))
+                    {
+                        this.FoodSources.Add(item.ID, foodSource);
+                    }
                 }
             }
         }
-        foreach (AnimalSpecies animalSpecies in this.LevelDataReference.LevelData.AnimalSpecies)
+        foreach (AnimalSpecies animalSpecies in LevelDataReference.instance.LevelData.AnimalSpecies)
         {
             this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
         }

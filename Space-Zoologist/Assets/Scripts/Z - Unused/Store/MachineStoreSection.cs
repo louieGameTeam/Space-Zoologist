@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class MachineStoreSection : StoreSection
 {
     [SerializeField] private EnclosureSystem EnclosureSystem = default;
-    [SerializeField] TileSystem TileSystem = default;
     [SerializeField] GameObject AtmosphereMachineHUD = default;
     [SerializeField] GameObject LiquidMachineHUD = default;
     [SerializeField] GameObject MachinePrefab = default;
@@ -41,7 +40,7 @@ public class MachineStoreSection : StoreSection
             //    Debug.Log("Cannot place item that location");
             //    return;
             //}
-            base.playerBalance.SubtractFromBalance(selectedItem.Price);
+            GameManager.Instance.SubtractFromBalance(selectedItem.Price);
             base.ResourceManager.Placed(selectedItem, 1);
             CreateMachine(mousePosition);
         }
@@ -55,8 +54,8 @@ public class MachineStoreSection : StoreSection
         newMachineGameObject.name = base.selectedItem.name;
         newMachineGameObject.GetComponent<SpriteRenderer>().sprite = base.selectedItem.Icon;
 
-        Vector3Int position = base.GridSystem.Grid.WorldToCell(mousePosition);
-        base.GridSystem.CellGrid[position.x, position.y].Machine = newMachineGameObject;
+        Vector3Int position = base.GridSystem.WorldToCell(mousePosition);
+        base.GridSystem.GetTileData(position).Machine = newMachineGameObject;
         if (!this.namesToMachines.ContainsKey(base.selectedItem.ID)) { Debug.LogError("Machine named" + base.selectedItem.ID + "not found"); return; }
         newMachineGameObject.AddComponent(namesToMachines[base.selectedItem.ID].GetType());
         newMachineGameObject.GetComponent<Machine>().SetPosition(position);

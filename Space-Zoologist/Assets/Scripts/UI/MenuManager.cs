@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum MenuType { Food, Tiles, Animals };
+// This enum now exists in ResearchCategoryType
+// public enum MenuType { Food, Tiles, Animals };
 public class MenuManager : MonoBehaviour
 {
     readonly string[] menuNames = { "Food", "Tiles", "Animals" };
@@ -12,13 +13,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject PlayerBalanceHUD = default;
     [SerializeField] List<StoreSection> StoreMenus = default;
     [SerializeField] ResourceManager ResourceManager = default;
-    [SerializeField] PauseManager PauseManager = default;
     [Header("Shared menu dependencies")]
-    [SerializeField] PlayerBalance PlayerBalance = default;
     [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
-    [SerializeField] LevelDataReference LevelDataReference = default;
     [SerializeField] CursorItem CursorItem = default;
-    [SerializeField] GridSystem GridSystem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
     [SerializeField] RectTransform MenuSelectPanel = default;
@@ -32,10 +29,9 @@ public class MenuManager : MonoBehaviour
         this.IsInStore = false;
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu?.SetupDependencies(this.LevelDataReference, this.CursorItem, this.UIElements, this.GridSystem, this.PlayerBalance, this.PlayerBalanceDisplay, this.ResourceManager);
+            storeMenu?.SetupDependencies(this.CursorItem, this.UIElements, this.PlayerBalanceDisplay, this.ResourceManager);
             storeMenu?.Initialize();
         }
-        this.PlayerBalanceHUD.GetComponent<TopHUD>().SetupPlayerBalance(this.PlayerBalance);
         StoreMenus[curMenu]?.gameObject.SetActive(true);
         StoreCanvas.localScale = Vector3.zero;
 
@@ -47,7 +43,7 @@ public class MenuManager : MonoBehaviour
         {
             if (!this.IsInStore)
             {
-                this.PauseManager.TryToPause();
+                GameManager.Instance.TryToPause();
                 EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
             }
             this.StoreToggledOn(menu);
@@ -75,7 +71,7 @@ public class MenuManager : MonoBehaviour
     {
         if (!this.IsInStore)
         {
-            this.PauseManager.TryToPause();
+            GameManager.Instance.TryToPause();
             EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
         }
         StoreCanvas.DOScale(0.8f, 0.5f);
@@ -110,7 +106,7 @@ public class MenuManager : MonoBehaviour
             this.currentMenu = null;
             ///this.PlayerBalanceHUD.SetActive(false);
             this.IsInStore = false;
-            this.PauseManager.TryToUnpause();
+            GameManager.Instance.TryToUnpause();
         }
 
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);

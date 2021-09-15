@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951993a75a9771b449cbf8df97211d50, type: 3}
+  m_Name: Anteater
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 9100000, guid: 44d06f4ffdcee4844a340c774dcfe7af, type: 2}
+  speciesName: Ligurio Vermis
+  species: 2
+  terrainTilesRequired: 4
+  minFoodRequired: 6
+  maxFoodRequired: 8
+  growthRate: 4
+  decayRate: 2
+  moveCost: 0
+  size: 2
+  accessibleTerrain: 01000000040000000200000000000000
+  icon: {fileID: -3508657767902738148, guid: 8b1f20dcb4d89490ba37a48668ed6fac, type: 3}
+  terrainNeeds:
+  - needName: Grass
+    isPreferred: 1
+  - needName: Stone
+    isPreferred: 0
+  - needName: Swamp
+    isPreferred: 0
+  foodNeeds:
+  - needName: Berries
+    isPreferred: 1
+  - needName: Space Maple
+    isPreferred: 0
+  - needName: Ants
+    isPreferred: 0
+  liquidNeeds:
+  - needName: 
+    tileNeedThreshold: 2
+    freshWaterMinThreshold: 0.95
+    freshWaterMaxThreshold: 1
+    saltMinThreshold: 0.005
+    saltMaxThreshold: 0.02
+    bacteriaMinThreshold: 0
+    bacteriaMaxThreshold: 0.02
+  preyNeeds:
+  - needName: Thalassius Succo
+  representation: {fileID: 0}

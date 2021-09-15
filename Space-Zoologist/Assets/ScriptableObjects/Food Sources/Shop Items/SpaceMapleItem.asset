@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb43224d6f3ee97448552e334a6e0c8f, type: 3}
+  m_Name: SpaceMapleItem
+  m_EditorClassIdentifier: 
+  id: Space Maple
+  type: 0
+  itemName: Space Maple
+  price: 20
+  description: 
+  icon: {fileID: 21300000, guid: 559391e3afd534d628fb52b7de153887, type: 3}
+  audio:
+  - {fileID: 8300000, guid: 666050dc180294bdda3d21f7c0d839de, type: 3}
+  - {fileID: 8300000, guid: f0ce8a4bb30564d0f939c385aacb0bc3, type: 3}
+  BuildTime: 2

@@ -21,12 +21,12 @@ public class MoveAwayFromWithEmoji : BehaviorPattern
             locationIndex = this.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
             end = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
             iter++;
-        } while (iter < 20 && Vector3.Distance(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end) < distance);
+        } while (iter < 20 && Vector3.Distance(base.GridSystem.WorldToCell(gameObject.transform.position), end) < distance);
         gameObject.transform.GetChild(0).GetComponent<Animator>().enabled = false;
         animalData.animal.Overlay.sprite = Emoji;
         // Debug.Log("Overlay ENABLED");
         //animalData.animal.Overlay.enabled = true;
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.Grid.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.WorldToCell(gameObject.transform.position), end, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {
