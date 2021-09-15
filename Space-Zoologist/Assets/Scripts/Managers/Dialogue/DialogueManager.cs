@@ -14,7 +14,6 @@ public class DialogueManager : MonoBehaviour
     private NPCConversation startingConversation = default;
     private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
-    [SerializeField] private GameObject DialogueButton = default;
     private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
 
     private bool ContinueSpeech = false;
