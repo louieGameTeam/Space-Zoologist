@@ -92,7 +92,7 @@ public class FoodSource : MonoBehaviour, Life
             output = species.BaseOutput * (1 + Mathf.Min(waterRating, 0)) * (1 + Mathf.Min(terrainRating, 0));
         }
 
-        return output;
+        return Mathf.Ceil(output);
     }
 
     public void CalculateTerrainNeed()
