@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &349478517224801907
+--- !u!1 &5038502252552975187
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,126 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 349478517224801906}
-  - component: {fileID: 349478517224801905}
-  m_Layer: 0
-  m_Name: Level1E1 Start
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &349478517224801906
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478517224801907}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 349478518614861523}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &349478517224801905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478517224801907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentIDCounter: 18
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":457,\"yPos\":144},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
-    won\u2019t just be working with the one enclosure?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":744,\"yPos\":145},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Bring
-    it on!\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":419,\"yPos\":638},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Why
-    add in unpredictable variables?\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":780,\"yPos\":653},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Okay.\",\"parentUIDs\":[8,6,6],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":405,\"yPos\":1154},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"I
-    have to pay to change my own enclosure??\",\"parentUIDs\":[11,11],\"SpeechUID\":13},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":721,\"yPos\":1146},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"But
-    what if I run out of credits?\",\"parentUIDs\":[13,11,11],\"SpeechUID\":15}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":609,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Alright
-    kid, now that you\u2019ve passed the easiest enclosure we run here, I\u2019ve
-    got another assignment for you.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":453,\"yPos\":225},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Nope!
-    Now that you\u2019ve finished one enclosure, it\u2019s basically set to be self-sustaining,
-    with regular check-ins.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":725,\"yPos\":232},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
-    the spirit! Now that you\u2019ve finished one enclosure, it\u2019s basically
-    set to be self-sustaining, with regular check-ins.\",\"parentUIDs\":[4,3,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609,\"yPos\":522},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"You\u2019ll
-    still be working with CapraX Zeigrun, but this next enclosure is a bit more tricky.
-    There are a wide array of types of food and terrain in this next one.\",\"parentUIDs\":[5,3,3,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[7,9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":418,\"yPos\":733},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Gosh,
-    you ask a lot of questions. That\u2019s a good trait for a scientist to have,
-    I guess.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609,\"yPos\":922},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"In
-    order to fully rehabilitate these endangered species, we\u2019re trying to figure
-    out how they interact with all types of terrain, flora, and fauna from their
-    home planet.\",\"parentUIDs\":[9,8,8,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609,\"yPos\":1022},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Your
-    goal here is to help us figure out what the Zeigs do and don\u2019t like, or
-    what they\u2019re willing to put up with. You\u2019ll have a 400 credit budget
-    to use in the shop, where you can buy terrain and food, or modify the enclosure,
-    at a price.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[12,14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":397,\"yPos\":1276},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"We
-    have limited resources, so the credits just represent how much we have allotted
-    to your assignment. If you need more, though, we\u2019ll spend the credits to
-    contract outside resources.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":721,\"yPos\":1289},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"400
-    is a lot, kid. Just be smart about it and plan things out first.\",\"parentUIDs\":[14,13,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609,\"yPos\":1522},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Eventually,
-    we\u2019ll need to use some enclosures for new endangered animals, so we need
-    to figure out how much cohabitation is truly possible. There\u2019s only so much
-    empty real estate on Natura Serva 22, after all!\",\"parentUIDs\":[15,13,13,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609,\"yPos\":1622},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Anyways,
-    I\u2019ve got to get back to the other enclosures. You\u2019ve got 30 days to
-    get the population up to 30. Remember to read the Encyclopedia and use your Notebook!\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
-  saveVersion: 103
-  DefaultName: 
-  DefaultSprite: {fileID: 0}
-  DefaultFont: {fileID: 0}
-  NodeSerializedDataList:
-  - {fileID: 349478518614861506}
-  - {fileID: 349478518614861507}
-  - {fileID: 349478518614861508}
-  - {fileID: 349478518614861509}
-  - {fileID: 349478518614861510}
-  - {fileID: 349478518614861511}
-  - {fileID: 349478518614861528}
-  - {fileID: 349478518614861529}
-  - {fileID: 349478518614861530}
-  - {fileID: 349478518614861531}
-  - {fileID: 349478518614861532}
-  - {fileID: 349478518614861533}
-  - {fileID: 349478518614861534}
-  - {fileID: 349478518614861535}
-  - {fileID: 349478518614861520}
-  - {fileID: 349478518614861521}
-  - {fileID: 349478518614861522}
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &349478518614861524
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 349478518614861523}
-  - component: {fileID: 349478518614861506}
-  - component: {fileID: 349478518614861507}
-  - component: {fileID: 349478518614861508}
-  - component: {fileID: 349478518614861509}
-  - component: {fileID: 349478518614861510}
-  - component: {fileID: 349478518614861511}
-  - component: {fileID: 349478518614861528}
-  - component: {fileID: 349478518614861529}
-  - component: {fileID: 349478518614861530}
-  - component: {fileID: 349478518614861531}
-  - component: {fileID: 349478518614861532}
-  - component: {fileID: 349478518614861533}
-  - component: {fileID: 349478518614861534}
-  - component: {fileID: 349478518614861535}
-  - component: {fileID: 349478518614861520}
-  - component: {fileID: 349478518614861521}
-  - component: {fileID: 349478518614861522}
+  - component: {fileID: 8189860999431135730}
+  - component: {fileID: 5330155011830319033}
+  - component: {fileID: 2137855674220570270}
+  - component: {fileID: 2815001610478610840}
+  - component: {fileID: 2222151310700176133}
+  - component: {fileID: 6299199297125647678}
+  - component: {fileID: 8159129072471421504}
+  - component: {fileID: 1503526442208221061}
+  - component: {fileID: 7155450352684978356}
+  - component: {fileID: 5139857488652963895}
+  - component: {fileID: 6210406495515053900}
+  - component: {fileID: 6290839684483216554}
+  - component: {fileID: 8418561780112507628}
+  - component: {fileID: 6689275039047095072}
+  - component: {fileID: 4189795749322968707}
+  - component: {fileID: 7158063660307206304}
+  - component: {fileID: 5449421259679454818}
+  - component: {fileID: 4161798895414821571}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -135,27 +33,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &349478518614861523
+--- !u!4 &8189860999431135730
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 349478517224801906}
+  m_Father: {fileID: 3369625806760736274}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &349478518614861506
+--- !u!114 &5330155011830319033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -168,13 +66,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861507
+--- !u!114 &2137855674220570270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -187,13 +85,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861508
+--- !u!114 &2815001610478610840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -206,13 +104,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 82d5126eed89849bda97e0110a6d732f, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861509
+--- !u!114 &2222151310700176133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -225,13 +123,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861510
+--- !u!114 &6299199297125647678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -244,13 +142,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861511
+--- !u!114 &8159129072471421504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -263,13 +161,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861528
+--- !u!114 &1503526442208221061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -282,13 +180,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861529
+--- !u!114 &7155450352684978356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -301,13 +199,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: f90457a2014c24bbdb093b2233c905d5, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861530
+--- !u!114 &5139857488652963895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -320,13 +218,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861531
+--- !u!114 &6210406495515053900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -339,13 +237,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861532
+--- !u!114 &6290839684483216554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -358,13 +256,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &349478518614861533
+--- !u!114 &8418561780112507628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -377,13 +275,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &349478518614861534
+--- !u!114 &6689275039047095072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -396,13 +294,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &349478518614861535
+--- !u!114 &4189795749322968707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -415,13 +313,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &349478518614861520
+--- !u!114 &7158063660307206304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -434,13 +332,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &349478518614861521
+--- !u!114 &5449421259679454818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -453,13 +351,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &349478518614861522
+--- !u!114 &4161798895414821571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349478518614861524}
+  m_GameObject: {fileID: 5038502252552975187}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -472,3 +370,105 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
+--- !u!1 &8795176877890313945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3369625806760736274}
+  - component: {fileID: 8827362031001520160}
+  m_Layer: 0
+  m_Name: Level1E1 Start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3369625806760736274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8795176877890313945}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8189860999431135730}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8827362031001520160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8795176877890313945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentIDCounter: 18
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":467,\"yPos\":-946},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
+    won\u2019t just be working with the one enclosure?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":754,\"yPos\":-945},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Bring
+    it on!\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":429,\"yPos\":-452},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Why
+    add in unpredictable variables?\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":790,\"yPos\":-437},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Okay.\",\"parentUIDs\":[8,6,6],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":415,\"yPos\":64},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"I
+    have to pay to change my own enclosure??\",\"parentUIDs\":[11,11],\"SpeechUID\":13},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":731,\"yPos\":56},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"But
+    what if I run out of credits?\",\"parentUIDs\":[13,11,11],\"SpeechUID\":15}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":619,\"yPos\":-1068},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Alright
+    kid, now that you\u2019ve passed the easiest enclosure we run here, I\u2019ve
+    got another assignment for you.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":463,\"yPos\":-865},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Nope!
+    Now that you\u2019ve finished one enclosure, it\u2019s basically set to be self-sustaining,
+    with regular check-ins.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":735,\"yPos\":-858},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
+    the spirit! Now that you\u2019ve finished one enclosure, it\u2019s basically
+    set to be self-sustaining, with regular check-ins.\",\"parentUIDs\":[4,3,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":619,\"yPos\":-568},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"You\u2019ll
+    still be working with CapraX Zeigrun, but this next enclosure is a bit more tricky.
+    There are a wide array of types of food and terrain in this next one.\",\"parentUIDs\":[5,3,3,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[7,9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":428,\"yPos\":-357},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Gosh,
+    you ask a lot of questions. That\u2019s a good trait for a scientist to have,
+    I guess.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":619,\"yPos\":-168},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"In
+    order to fully rehabilitate these endangered species, we\u2019re trying to figure
+    out how they interact with all types of terrain, flora, and fauna from their
+    home planet.\",\"parentUIDs\":[9,8,8,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":619,\"yPos\":-68},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Your
+    goal here is to help us figure out what the Zeigs do and don\u2019t like, or
+    what they\u2019re willing to put up with. You\u2019ll have a 400 credit budget
+    to use in the shop, where you can buy terrain and food, or modify the enclosure,
+    at a price.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[12,14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":407,\"yPos\":186},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"We
+    have limited resources, so the credits just represent how much we have allotted
+    to your assignment. If you need more, though, we\u2019ll spend the credits to
+    contract outside resources.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":731,\"yPos\":199},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"400
+    is a lot, kid. Just be smart about it and plan things out first.\",\"parentUIDs\":[14,13,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":619,\"yPos\":432},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Eventually,
+    we\u2019ll need to use some enclosures for new endangered animals, so we need
+    to figure out how much cohabitation is truly possible. There\u2019s only so much
+    empty real estate on Natura Serva 22, after all!\",\"parentUIDs\":[15,13,13,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":619,\"yPos\":532},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Anyways,
+    I\u2019ve got to get back to the other enclosures. You\u2019ve got 20 days to
+    get the population up to 30. Remember to read the Encyclopedia and use your Notebook!\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  saveVersion: 103
+  DefaultName: 
+  DefaultSprite: {fileID: 0}
+  DefaultFont: {fileID: 0}
+  NodeSerializedDataList:
+  - {fileID: 5330155011830319033}
+  - {fileID: 2137855674220570270}
+  - {fileID: 2815001610478610840}
+  - {fileID: 2222151310700176133}
+  - {fileID: 6299199297125647678}
+  - {fileID: 8159129072471421504}
+  - {fileID: 1503526442208221061}
+  - {fileID: 7155450352684978356}
+  - {fileID: 5139857488652963895}
+  - {fileID: 6210406495515053900}
+  - {fileID: 6290839684483216554}
+  - {fileID: 8418561780112507628}
+  - {fileID: 6689275039047095072}
+  - {fileID: 4189795749322968707}
+  - {fileID: 7158063660307206304}
+  - {fileID: 5449421259679454818}
+  - {fileID: 4161798895414821571}
+  Event:
+    m_PersistentCalls:
+      m_Calls: []

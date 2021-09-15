@@ -1931,6 +1931,43 @@ public class GridSystem : MonoBehaviour
         return typesOfTileWithinRadius;
     }
 
+    public int[] CountOfTilesUnderSpecies(Vector3Int cellPosition, FoodSourceSpecies species)
+    {
+        int[] typesOfTileWithinRadius = new int[(int)TileType.TypesOfTiles];
+        Vector3Int pos;
+        int xOffset = 0;
+        int yOffset = 0;
+
+        if (species.Size.x % 2 == 0)
+        {
+            cellPosition = new Vector3Int(cellPosition.x - 1, cellPosition.y, 0);
+            xOffset = 1;
+        }
+
+        if (species.Size.y % 2 == 0)
+        {
+            cellPosition = new Vector3Int(cellPosition.x, cellPosition.y - 1, 0);
+            yOffset = 1;
+        }
+
+        for (int x = (-1) * (species.Size.x - xOffset - 1); x < species.Size.x; x++)
+        {
+            for (int y = (-1) * (species.Size.y - yOffset - 1); y < species.Size.y; y++)
+            {
+                pos = cellPosition;
+                pos.x += x;
+                pos.y += y;
+                
+                GameTile tile = GetGameTileAt(pos);
+                if (tile)
+                {
+                    typesOfTileWithinRadius[(int)tile.type]++;
+                }
+            }
+        }
+        return typesOfTileWithinRadius;
+    }
+
     /// <summary>
     /// Scan from all the liquid tiles within a radius range and return all different liquid compositions
     /// </summary>

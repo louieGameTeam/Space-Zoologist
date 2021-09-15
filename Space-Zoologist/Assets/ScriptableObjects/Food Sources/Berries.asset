@@ -21,9 +21,9 @@ MonoBehaviour:
   sellBackPrice: 3
   terrainNeeds:
   - needName: Dirt
-    isPreferred: 1
-  - needName: Grass
     isPreferred: 0
+  - needName: Grass
+    isPreferred: 1
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 3
