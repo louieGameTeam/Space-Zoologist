@@ -72,9 +72,8 @@ public class AnalyticsManager : MonoBehaviour
         if (scene.buildIndex > 2)
         {
             SubscribeToEvents();
-            // Get references to the TimeSystem object and the PlayerBalance object.
-            int currentDay = GameObject.Find("TimeSystem").GetComponent<TimeSystem>().CurrentDay;
-            float playerBalance = GameObject.Find("PlayerBalance").GetComponent<PlayerBalance>().Balance;
+            int currentDay = GameManager.Instance.CurrentDay;
+            float playerBalance = GameManager.Instance.Balance;
             LevelDataReference levelData = GameObject.Find("LevelData").GetComponent<LevelDataReference>();
             // Set the current level trace.
             currentLevelTrace = GetLevelStartInformation(scene.buildIndex, currentPlayTrace.SessionElapsedTime);
@@ -177,12 +176,11 @@ public class AnalyticsManager : MonoBehaviour
     }
 
     // A function that modifies the current day trace, pushes it to the list of day traces for the level, and sets a new current day trace.
-    // Initiated by the OnNextDay event.
+    // Initiated by the NextDay event.
     private void NextDayTrace()
     {
-        // Get references to the TimeSystem object and the PlayerBalance object.
-        int currentDay = GameObject.Find("TimeSystem").GetComponent<TimeSystem>().CurrentDay;
-        float playerBalance = GameObject.Find("PlayerBalance").GetComponent<PlayerBalance>().Balance;
+        int currentDay = GameManager.Instance.CurrentDay;
+        float playerBalance = GameManager.Instance.Balance;
         float timestamp = this.currentPlayTrace.SessionElapsedTime;
         CloseDayTrace(timestamp, currentDayTrace, playerBalance);
         DayTrace newDayTrace = CreateDayTrace(timestamp, currentDay, playerBalance);
@@ -192,6 +190,7 @@ public class AnalyticsManager : MonoBehaviour
     // A function that creates a journal trace object and sets the current journal trace to this new object. Initiated by the OnJournalOpened event.
     private void CreateJournalTrace()
     {
+        Debug.Log("Creating journal trace...");
         JournalTrace journalTrace = new JournalTrace();
         float timestamp = this.currentPlayTrace.SessionElapsedTime;
         journalTrace.JournalStartTime = timestamp;
@@ -202,6 +201,7 @@ public class AnalyticsManager : MonoBehaviour
     // to null. Initiated by the OnJournalClosed event.
     private void CloseJournalTrace()
     {
+        Debug.Log("Closing journal trace...");
         JournalTrace journalTrace = this.currentJournalTrace;
         float timestamp = this.currentPlayTrace.SessionElapsedTime;
         journalTrace.JournalEndTime = timestamp;
@@ -226,7 +226,7 @@ public class AnalyticsManager : MonoBehaviour
     private void SubscribeToEvents()
     {
         // Listen to next day events being fired.   
-        EventManager.Instance.SubscribeToEvent(EventType.OnNextDay, NextDayTrace);
+        EventManager.Instance.SubscribeToEvent(EventType.NextDay, NextDayTrace);
         // Listen to journal events being fired.
         EventManager.Instance.SubscribeToEvent(EventType.OnJournalOpened, CreateJournalTrace);
         EventManager.Instance.SubscribeToEvent(EventType.OnJournalClosed, CloseJournalTrace);

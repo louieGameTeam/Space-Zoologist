@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     [Header("Time Variables")]
     [SerializeField] int maxDay = 20;
     private int currentDay = 1;
+    public int CurrentDay { get { return currentDay; } }
     [SerializeField] Text CurrentDayText = default;
     public bool IsPaused { get; private set; }
     public bool WasPaused { get; private set; }
@@ -650,6 +651,7 @@ public class GameManager : MonoBehaviour
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
         UpdateDayText(++currentDay);
+        EventManager.Instance.InvokeEvent(EventType.NextDay, null);
     }
     #endregion
 

@@ -13,7 +13,6 @@ public enum EventType {
     AtmosphereChange, // Pass the enclosed area
     LiquidChange, // Pass the cell posistion
     NPCDialogue,
-    OnNextDay, // Pass null
     OnJournalOpened, // Pass null
     OnJournalClosed, // Pass null
     NextDay,
