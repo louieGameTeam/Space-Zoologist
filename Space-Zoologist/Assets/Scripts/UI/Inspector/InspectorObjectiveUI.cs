@@ -27,7 +27,11 @@ public class InspectorObjectiveUI : MonoBehaviour
         inspector.Initialize();
 
         // Add listeners to the toggle events
-        objectiveToggle.onValueChanged.AddListener(objectivePanel.SetActive);
+        objectiveToggle.onValueChanged.AddListener(x =>
+        {
+            if(x) GameManager.Instance.TurnObjectivePanelOn();
+            else GameManager.Instance.TurnObjectivePanelOff();
+        });
         inspectorToggle.onValueChanged.AddListener(x =>
         {
             if (x) inspector.OpenInspector();
