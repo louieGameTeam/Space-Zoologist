@@ -193,7 +193,7 @@ public class Inspector : MonoBehaviour
         {
             for (int y = -(foodSize.x - 1) / 2; y <= foodSize.y / 2; y++)
             {
-                gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(x, y, 0), Color.blue, rootRadius);
+                GameManager.Instance.m_gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(x, y, 0), Color.blue, rootRadius);
             }
         }
 
