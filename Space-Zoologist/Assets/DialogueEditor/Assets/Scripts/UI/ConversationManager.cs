@@ -186,7 +186,7 @@ namespace DialogueEditor
                         {
                             if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
-                                if ((Input.GetMouseButtonDown(0) || skipping) && !isFrozen)
+                                if ((Input.GetMouseButtonDown(0) || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
                                     SetState(eState.TransitioningOptionsOff);
                                 }
@@ -598,7 +598,7 @@ namespace DialogueEditor
                 // Display "Continue" / "End" if we should.
                 //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
-                if (speech.Options.Count > 0 || autoWithOption)
+                if (autoWithOption)
                 {
                     // Else display "continue" button to go to following dialogue
                     if (speech.Dialogue != null)
