@@ -33,7 +33,11 @@ public class ResearchEncyclopediaArticle
 
     public void Setup()
     {
-        if(highlights.Count <= 0)
+        // Clear out the highlights
+        // what we must do later is actually load them from the player's data
+        highlights.Clear();
+
+        if (highlights.Count <= 0)
         {
             // Clear all highlights and reset the true text to the written text
             trueText = text;
@@ -73,7 +77,6 @@ public class ResearchEncyclopediaArticle
 
                     // Remove the curly brace
                     trueText = trueText.Remove(i, 1);
-                    i--;
 
                     // Add the highlight now that we found the closing brace
                     highlights.Add(new ResearchEncyclopediaArticleHighlight(start, i));
