@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3897354896414299012
+--- !u!1 &3253798053493352916
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,31 +8,140 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3897354896414299015}
-  - component: {fileID: 3897354896414299039}
-  - component: {fileID: 3897354896414299036}
-  - component: {fileID: 3897354896414299037}
-  - component: {fileID: 3897354896414299026}
-  - component: {fileID: 3897354896414299027}
-  - component: {fileID: 3897354896414299024}
-  - component: {fileID: 3897354896414299025}
-  - component: {fileID: 3897354896414299030}
-  - component: {fileID: 3897354896414299031}
-  - component: {fileID: 3897354896414299028}
-  - component: {fileID: 3897354896414299029}
-  - component: {fileID: 3897354896414299018}
-  - component: {fileID: 3897354896414299019}
-  - component: {fileID: 3897354896414299016}
-  - component: {fileID: 3897354896414299017}
-  - component: {fileID: 3897354896414299022}
-  - component: {fileID: 3897354896414299023}
-  - component: {fileID: 3897354896414299020}
-  - component: {fileID: 3897354896414299021}
-  - component: {fileID: 3897354896414299010}
-  - component: {fileID: 3897354896414299011}
-  - component: {fileID: 3897354896414299008}
-  - component: {fileID: 3897354896414299009}
-  - component: {fileID: 3897354896414299014}
+  - component: {fileID: 1660066326659181911}
+  - component: {fileID: 5453693311318094595}
+  m_Layer: 0
+  m_Name: Level0Pass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1660066326659181911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253798053493352916}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1771091159464892412}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5453693311318094595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253798053493352916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentIDCounter: 25
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":510,\"yPos\":-1025},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Thanks,
+    Star!\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":752,\"yPos\":-1020},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"It
+    was harder than it looked\u2026\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":963,\"yPos\":-1028},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"That
+    was a piece of cake.\",\"parentUIDs\":[5,1,1],\"SpeechUID\":7},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":460.5,\"yPos\":182},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"22\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":674.5,\"yPos\":184},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"23\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":882.5,\"yPos\":183},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"24\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":1121.5,\"yPos\":185},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"25\",\"parentUIDs\":[13,13,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":656,\"yPos\":-1135},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Wow,
+    you repopulated the enclosure! I knew you were the right engineer for the job.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":442,\"yPos\":-933},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"You
+    too, kid.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":664,\"yPos\":-933},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
+    to be expected on your first assignment. Science is all about learning from failure,
+    after all.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":907,\"yPos\":-919},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Well,
+    that\u2019s good to hear.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-435},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Being
+    able to engineer this enclosure to the specific terrain and food needs of this
+    species has been difficult for our other engineers.\",\"parentUIDs\":[7,5,3,3,5,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-335},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Although
+    researchers like myself have logged our observations and conclusions, like in
+    your handy dandy Encyclopedia, transforming notes into an achievable action plan
+    isn\u2019t as easy.\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-235},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    surpassed all expectations!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-135},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Usually,
+    we\u2019d have a report back once you\u2019ve repopulated an enclosure. We won\u2019t
+    this time, since everything worked out so smoothly.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-35},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"This
+    time, instead of a full report back, I\u2019ll only ask one question. And you
+    can use your notebook for reference, too.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":65},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Remind
+    me, how many dirt tiles did you end up adding? Just so I can mark it down. For
+    science!\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23,24],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":265},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Haha,
+    good one! For real, though?\",\"parentUIDs\":[22,23,21,21,22,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23,24],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":465},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Your
+    next task is focused on researching the differing food habits and preferences
+    of CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":18,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":565},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"As
+    you may have noticed, the Zeigs undoubtedly prefer space maple, especially its
+    golden variant. However, as you might have noticed, we are lacking in space maple
+    supply.\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":665},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Your
+    job in this next enclosure set is to pay close attention to food compatibility,
+    preferences, dislikes, and poisonous substances, while operating under a budget
+    when building.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":765},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Planet
+    X\u2019s flora and fauna are still very new to Natura Serva 22. The more data
+    we have, the more likely we are to prevent their extinction.\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  saveVersion: 103
+  DefaultName: 
+  DefaultSprite: {fileID: 0}
+  DefaultFont: {fileID: 0}
+  NodeSerializedDataList:
+  - {fileID: 4142493098806673121}
+  - {fileID: 4592849346113152665}
+  - {fileID: 2622588698229975837}
+  - {fileID: 8230503943086620170}
+  - {fileID: 2611600385024833647}
+  - {fileID: 3088942745040755504}
+  - {fileID: 6908914659760197652}
+  - {fileID: 8463207686814247432}
+  - {fileID: 5545267112694655221}
+  - {fileID: 8870613317121499601}
+  - {fileID: 6018406992515019328}
+  - {fileID: 8709807186157009758}
+  - {fileID: 4582722405111540670}
+  - {fileID: 5125796510477467125}
+  - {fileID: 3625837596413818298}
+  - {fileID: 1121649550765424576}
+  - {fileID: 7329201120012863807}
+  - {fileID: 3848847750806275249}
+  - {fileID: 8382720294849741557}
+  - {fileID: 3043701809871258705}
+  - {fileID: 2639263850763702198}
+  - {fileID: 7207445550633044183}
+  - {fileID: 545070935584154907}
+  - {fileID: 1099012040238575087}
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &3293976171355765780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1771091159464892412}
+  - component: {fileID: 4142493098806673121}
+  - component: {fileID: 4592849346113152665}
+  - component: {fileID: 2622588698229975837}
+  - component: {fileID: 8230503943086620170}
+  - component: {fileID: 2611600385024833647}
+  - component: {fileID: 3088942745040755504}
+  - component: {fileID: 6908914659760197652}
+  - component: {fileID: 8463207686814247432}
+  - component: {fileID: 5545267112694655221}
+  - component: {fileID: 8870613317121499601}
+  - component: {fileID: 6018406992515019328}
+  - component: {fileID: 8709807186157009758}
+  - component: {fileID: 4582722405111540670}
+  - component: {fileID: 5125796510477467125}
+  - component: {fileID: 3625837596413818298}
+  - component: {fileID: 1121649550765424576}
+  - component: {fileID: 7329201120012863807}
+  - component: {fileID: 3848847750806275249}
+  - component: {fileID: 8382720294849741557}
+  - component: {fileID: 3043701809871258705}
+  - component: {fileID: 2639263850763702198}
+  - component: {fileID: 7207445550633044183}
+  - component: {fileID: 545070935584154907}
+  - component: {fileID: 1099012040238575087}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -40,27 +149,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3897354896414299015
+--- !u!4 &1771091159464892412
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3897354896603145717}
+  m_Father: {fileID: 1660066326659181911}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3897354896414299039
+--- !u!114 &4142493098806673121
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -73,13 +182,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 82d5126eed89849bda97e0110a6d732f, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299036
+--- !u!114 &4592849346113152665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -92,13 +201,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: b31586d8437b6438fbc8d52e492b6172, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299037
+--- !u!114 &2622588698229975837
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -111,13 +220,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299026
+--- !u!114 &8230503943086620170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -130,13 +239,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299027
+--- !u!114 &2611600385024833647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -149,13 +258,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299024
+--- !u!114 &3088942745040755504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -168,13 +277,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299025
+--- !u!114 &6908914659760197652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -187,13 +296,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299030
+--- !u!114 &8463207686814247432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -206,13 +315,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299031
+--- !u!114 &5545267112694655221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -225,13 +334,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299028
+--- !u!114 &8870613317121499601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -244,13 +353,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: f90457a2014c24bbdb093b2233c905d5, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299029
+--- !u!114 &6018406992515019328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -263,13 +372,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299018
+--- !u!114 &8709807186157009758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -282,13 +391,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299019
+--- !u!114 &4582722405111540670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -301,13 +410,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299016
+--- !u!114 &5125796510477467125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -320,13 +429,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299017
+--- !u!114 &3625837596413818298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -350,13 +459,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299022
+--- !u!114 &1121649550765424576
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -369,13 +478,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299023
+--- !u!114 &7329201120012863807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -388,13 +497,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299020
+--- !u!114 &3848847750806275249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -407,13 +516,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299021
+--- !u!114 &8382720294849741557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -426,13 +535,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299010
+--- !u!114 &3043701809871258705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -445,13 +554,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299011
+--- !u!114 &2639263850763702198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -464,13 +573,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299008
+--- !u!114 &7207445550633044183
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -483,13 +592,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299009
+--- !u!114 &545070935584154907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -502,13 +611,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &3897354896414299014
+--- !u!114 &1099012040238575087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896414299012}
+  m_GameObject: {fileID: 3293976171355765780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -521,112 +630,3 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!1 &3897354896603145706
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3897354896603145717}
-  - component: {fileID: 3897354896603145716}
-  m_Layer: 0
-  m_Name: Level0Pass
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3897354896603145717
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896603145706}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 3897354896414299015}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3897354896603145716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897354896603145706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentIDCounter: 25
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-136,\"yPos\":-1526},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Thanks,
-    Star!\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":106,\"yPos\":-1521},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"It
-    was harder than it looked\u2026\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":317,\"yPos\":-1529},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"That
-    was a piece of cake.\",\"parentUIDs\":[5,1,1],\"SpeechUID\":7},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-185.5,\"yPos\":-319},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"22\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":28.5,\"yPos\":-317},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"23\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":236.5,\"yPos\":-318},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"24\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":273.5,\"yPos\":-221},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"25\",\"parentUIDs\":[13,13],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":10,\"yPos\":-1636},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Wow,
-    you repopulated the enclosure! I knew you were the right engineer for the job.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-204,\"yPos\":-1434},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"You
-    too, kid.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":18,\"yPos\":-1434},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
-    to be expected on your first assignment. Science is all about learning from failure,
-    after all.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":261,\"yPos\":-1420},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Well,
-    that\u2019s good to hear.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-936},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Being
-    able to engineer this enclosure to the specific terrain and food needs of this
-    species has been difficult for our other engineers.\",\"parentUIDs\":[7,5,3,3,5,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-836},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Although
-    researchers like myself have logged our observations and conclusions, like in
-    your handy dandy Encyclopedia, transforming notes into an achievable action plan
-    isn\u2019t as easy.\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-736},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
-    surpassed all expectations!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-636},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Usually,
-    we\u2019d have a report back once you\u2019ve repopulated an enclosure. We won\u2019t
-    this time, since everything worked out so smoothly.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-536},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"This
-    time, instead of a full report back, I\u2019ll only ask one question. And you
-    can use your notebook for reference, too.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-436},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Remind
-    me, how many dirt tiles did you end up adding? Just so I can mark it down. For
-    science!\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23,24],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-236},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Haha,
-    good one! For real, though?\",\"parentUIDs\":[22,23,21,21,22,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":-36},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Your
-    next task is focused on researching the differing food habits and preferences
-    of CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":18,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":64},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"As
-    you may have noticed, the Zeigs undoubtedly prefer space maple, especially its
-    golden variant. However, as you might have noticed, we are lacking in space maple
-    supply.\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":164},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Your
-    job in this next enclosure set is to pay close attention to food compatibility,
-    preferences, dislikes, and poisonous substances, while operating under a budget
-    when building.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10,\"yPos\":264},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Planet
-    X\u2019s flora and fauna are still very new to Natura Serva 22. The more data
-    we have, the more likely we are to prevent their extinction.\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
-  saveVersion: 103
-  DefaultName: 
-  DefaultSprite: {fileID: 0}
-  DefaultFont: {fileID: 0}
-  NodeSerializedDataList:
-  - {fileID: 3897354896414299039}
-  - {fileID: 3897354896414299036}
-  - {fileID: 3897354896414299037}
-  - {fileID: 3897354896414299026}
-  - {fileID: 3897354896414299027}
-  - {fileID: 3897354896414299024}
-  - {fileID: 3897354896414299025}
-  - {fileID: 3897354896414299030}
-  - {fileID: 3897354896414299031}
-  - {fileID: 3897354896414299028}
-  - {fileID: 3897354896414299029}
-  - {fileID: 3897354896414299018}
-  - {fileID: 3897354896414299019}
-  - {fileID: 3897354896414299016}
-  - {fileID: 3897354896414299017}
-  - {fileID: 3897354896414299022}
-  - {fileID: 3897354896414299023}
-  - {fileID: 3897354896414299020}
-  - {fileID: 3897354896414299021}
-  - {fileID: 3897354896414299010}
-  - {fileID: 3897354896414299011}
-  - {fileID: 3897354896414299008}
-  - {fileID: 3897354896414299009}
-  - {fileID: 3897354896414299014}
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
