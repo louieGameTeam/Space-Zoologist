@@ -189,6 +189,7 @@ namespace DialogueEditor
                                 if ((Input.GetMouseButtonDown(0) || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
                                     SetState(eState.TransitioningOptionsOff);
+                                    m_currentSpeech.Event?.Invoke();
                                 }
                             }
                         }
@@ -570,7 +571,7 @@ namespace DialogueEditor
 
 
             // Call the event
-            speech.Event?.Invoke();
+            //speech.Event?.Invoke();
 
             // Play the audio
             if (speech.Audio != null)
