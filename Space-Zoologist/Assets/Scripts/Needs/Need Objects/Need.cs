@@ -30,7 +30,7 @@ public class TerrainNeed : Need
             return animalSpecies.TerrainTilesRequired;
         
         if(foodSourceSpecies)
-            return Mathf.Pow(foodSourceSpecies.Size, 2);
+            return foodSourceSpecies.Size.sqrMagnitude;
         
         return needConstructData.GetSurvivableThreshold();
     }

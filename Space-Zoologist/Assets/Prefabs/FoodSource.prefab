@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1535e7f341ea435d8528917d39c0138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildTime: 1
+  terrainNeedMet: 0
+  waterNeedMet: 0
   species: {fileID: 0}
-  tileSystem: {fileID: 0}
+  isUnderConstruction: 0
 --- !u!212 &6335703468139120850
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -86,7 +87,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ce624e8f075c1402ebb5ef825db16fa7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

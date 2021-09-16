@@ -32,7 +32,7 @@ public class LiquidNeedSystem : NeedSystem
 
         foreach(Population population in Consumers.OfType<Population>())
         {
-            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("LiquidTiles"))
+            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("Liquid"))
                 liquidTilesPerPopulation.Add(population, 0);
         }
 
@@ -44,7 +44,7 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Dictionary<string, Need> popNeeds = population.GetNeedValues();
 
-                if(!popNeeds.ContainsKey("LiquidTiles"))
+                if(!popNeeds.ContainsKey("Liquid"))
                     continue;
 
                 if ((!popNeeds.ContainsKey("Water") || popNeeds["Water"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) && //If the population either doesn't need fresh water or the fresh water threshold is met
@@ -96,7 +96,7 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Population population = (Population)life;
                 
-                population.UpdateNeed("LiquidTiles", liquidTilesPerPopulation[population]);
+                population.UpdateNeed("Liquid", liquidTilesPerPopulation[population]);
                 //Debug.Log(population.name + " updates LiquidTiles with value: " + liquidTilesPerPopulation[population]);
 
                 // Check is there is found composition

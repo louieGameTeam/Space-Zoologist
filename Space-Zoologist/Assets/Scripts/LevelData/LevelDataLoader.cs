@@ -50,9 +50,12 @@ public class LevelDataLoader : MonoBehaviour
         currentLevel = levelToLoad;
         foreach (LevelData levelData in levelDatas)
         {
-            if (levelData.Level.SceneName.Equals(levelToLoad))
+            if (levelData)
             {
-                return levelData;
+                if (levelData.Level.SceneName.Equals(levelToLoad))
+                {
+                    return levelData;
+                }
             }
         }
         return null;

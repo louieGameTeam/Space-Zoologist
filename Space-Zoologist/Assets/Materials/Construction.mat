@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Construction
-  m_Shader: {fileID: -6465566751694194690, guid: d4c9937ff3ee31a46844fc3d4c1c7858,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: fb52233a15d1e6c44828f16878eee2a6, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,6 +19,38 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _1AnimationTex:
+        m_Texture: {fileID: 2800000, guid: 097869e49a317944d91f4c1c40f1e6eb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _1PlantAnimationTex:
+        m_Texture: {fileID: 2800000, guid: 0f5003036363bdd42af4e8f706fefd7b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _1TileAnimationTex:
+        m_Texture: {fileID: 2800000, guid: 097869e49a317944d91f4c1c40f1e6eb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _1TileTex:
+        m_Texture: {fileID: 2800000, guid: 01b06dd319ddba3428c30e294ff31688, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _2PlantAnimationTex:
+        m_Texture: {fileID: 2800000, guid: 4e3d46c7b4ff2ab44b7e2c6eae2928cb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _2PlantGradientTex:
+        m_Texture: {fileID: 2800000, guid: fabc744599e99a94cb23b705ec122a0c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _3PlantAnimationTex:
+        m_Texture: {fileID: 2800000, guid: 81c2d5dbd08d28a418296e78aaf018e9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _3PlantGradientTex:
+        m_Texture: {fileID: 2800000, guid: 651d30301d626a145a0e91f5af2ae8cb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -37,6 +68,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AnimationSpeed: 20
     - _EnableExternalAlpha: 0
     - _Progress: 1
     - _Target: 2
