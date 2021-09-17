@@ -195,6 +195,7 @@ public class FoodSource : MonoBehaviour, Life
         }
 
         Debug.Log(gameObject.name + " water Rating: " + waterRating + ", water source size: " + waterTilesUsed);
+        Debug.Log("here in place.");
     }
 
     /// <summary>
