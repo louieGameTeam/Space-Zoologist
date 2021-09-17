@@ -214,6 +214,7 @@ public class LogSystem : MonoBehaviour
 
     private void logLiquidChange(Vector3Int cellPos)
     {
+        enclosureSystem.UpdateEnclosedAreas();
         EnclosedArea enclosedArea = this.enclosureSystem.GetEnclosedAreaByCellPosition(cellPos);
 
         if (!this.enclosedAreaLogs.ContainsKey(enclosedArea))
