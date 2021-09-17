@@ -7,6 +7,7 @@ public enum ItemType {Food, Terrain, Machine, Pod}
 [CreateAssetMenu(menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
+    public ItemID ItemID => itemID;
     public string ID => id;
     public ItemType Type => type;
     public string ItemName => itemName;
@@ -16,6 +17,7 @@ public class Item : ScriptableObject
     public List<AudioClip> AudioClips => audio;
     public int buildTime => BuildTime;
 
+    [SerializeField] private ItemID itemID = default;
     [SerializeField] private string id = default;
     [SerializeField] private ItemType type = default;
     [SerializeField] private string itemName = default;
