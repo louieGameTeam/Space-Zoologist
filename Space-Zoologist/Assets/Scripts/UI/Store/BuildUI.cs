@@ -12,6 +12,7 @@ public class BuildUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Button that closes the build UI when clicked")]
     private Button closeButton;
+    public ItemID id;
     #endregion
 
     #region Private Fields
