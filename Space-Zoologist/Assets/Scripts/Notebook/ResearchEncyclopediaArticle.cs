@@ -94,7 +94,23 @@ public class ResearchEncyclopediaArticle
         highlights.Sort();
 
         // Clean the highlights
-        CleanHighlights();
+        int i = 0;
+
+        // Loop until we check up to (but not including) the last highlight
+        while (i < highlights.Count - 1)
+        {
+            // If this highlight overlaps the next one, we combine them and remove the next one
+            if (highlights[i].Overlap(highlights[i + 1]))
+            {
+                highlights[i] = highlights[i].Union(highlights[i + 1]);
+                highlights.RemoveAt(i + 1);
+
+                // We continue without incrementing because we need to check this same highlight again
+                // just in case it contained multiple highlights
+                continue;
+            }
+            else i++;
+        }
     }
 
     public void RequestHighlightRemove(int start, int end)
@@ -142,26 +158,5 @@ public class ResearchEncyclopediaArticle
         Debug.LogWarning("Found " + foundDescriptor + " where " + expectedDescriptor + " was expected\n" +
             "\tArticle: " + id.ToString() + "\n" +
             "\tPosition: " + reportString + "\n");
-    }
-
-    private void CleanHighlights()
-    {
-        int i = 0;
-
-        // Loop until we check up to (but not including) the last highlight
-        while(i < highlights.Count - 1)
-        {
-            // If this highlight overlaps the next one, we combine them and remove the next one
-            if (highlights[i].Overlap(highlights[i + 1]))
-            {
-                highlights[i] = highlights[i].Union(highlights[i + 1]);
-                highlights.RemoveAt(i + 1);
-                
-                // We continue without incrementing because we need to check this same highlight again
-                // just in case it contained multiple highlights
-                continue;
-            }
-            else i++;
-        }
     }
 }
