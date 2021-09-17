@@ -8,6 +8,7 @@ public struct ItemID
     #region Public Properties
     public ItemRegistry.Category Category => category;
     public int Index => index;
+    public ItemData Data => ItemRegistry.Get(this);
     #endregion
 
     #region Private Editor Fields
@@ -17,5 +18,23 @@ public struct ItemID
     [SerializeField]
     [Tooltip("Index of the item in the selected category")]
     private int index;
+    #endregion
+
+    #region Operators
+    public static bool operator ==(ItemID a, ItemID b) => a.category == b.category && a.index == b.index;
+    public static bool operator !=(ItemID a, ItemID b) => !(a == b);
+    #endregion
+
+    #region Overrides
+    public override bool Equals(object obj)
+    {
+        if (obj == null) return false;
+        else if (obj.GetType() == GetType()) return this == (ItemID)obj;
+        else return false;
+    }
+    public override int GetHashCode()
+    {
+        return category.GetHashCode() + index.GetHashCode();
+    }
     #endregion
 }

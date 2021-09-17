@@ -20,6 +20,12 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     #endregion
 
     #region Public Methods
+    public static ItemData Get(ItemID id)
+    {
+        ItemData[] datas = GetItemsWithCategory(id.Category);
+        if (id.Index > 0 && id.Index < datas.Length) return datas[id.Index];
+        else return null;
+    }
     public static ItemData[] GetItemsWithCategory(Category category) => Instance.itemDatas[(int)category].List;
     #endregion
 }
