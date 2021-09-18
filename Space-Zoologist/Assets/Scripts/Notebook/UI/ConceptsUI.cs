@@ -29,8 +29,6 @@ public class ConceptsUI : NotebookUIChild
     {
         base.Setup();
 
-        Debug.Log(GameManager.Instance.m_gridSystem.Tilemap.localBounds);
-
         // Add listener for enclosure id picked
         enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureIDPicked);
         OnEnclosureIDPicked(EnclosureID.FromCurrentSceneName());
