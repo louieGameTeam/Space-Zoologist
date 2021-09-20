@@ -3746,7 +3746,8 @@ MonoBehaviour:
   foldoutRect: {fileID: 2444569585847639324}
   foldoutToggle: {fileID: 4134237158982432781}
   foldoutTime: 0.1
-  drawingCanvas: {fileID: 0}
+  drawingCanvasParent: {fileID: 8016372688911635126}
+  drawingCanvas: {fileID: 4960625455489253474}
   modePicker: {fileID: 3101612977083879891}
   colorPicker: {fileID: 7175331180764138821}
   strokeWeightPicker: {fileID: 9145898528081181457}
@@ -8773,7 +8774,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5364565138031302984}
   m_HandleRect: {fileID: 2319067041779776993}
   m_Direction: 0
-  m_Value: 0.4999999
+  m_Value: 0.0000002062278
   m_Size: 0.7040401
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9337,10 +9338,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8908342847605226045}
   - component: {fileID: 578287827749189547}
-  - component: {fileID: 5708542984025876538}
+  - component: {fileID: 1323711153773428962}
   - component: {fileID: 4960625455489253474}
   m_Layer: 5
-  m_Name: Content
+  m_Name: DrawingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9362,7 +9363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 147.97992, y: 0}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &578287827749189547
@@ -9373,7 +9374,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7850393206137489192}
   m_CullTransparentMesh: 0
---- !u!114 &5708542984025876538
+--- !u!114 &1323711153773428962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9382,26 +9383,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7850393206137489192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: b0123c243caf09f47935f30acafb3ec4, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!114 &4960625455489253474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9415,8 +9413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 8908342847605226045}
-  image: {fileID: 5708542984025876538}
-  drawingMaterial: {fileID: 2100000, guid: b0123c243caf09f47935f30acafb3ec4, type: 2}
+  rawImage: {fileID: 1323711153773428962}
   backgroundColor: {r: 1, g: 1, b: 1, a: 0.2627451}
   currentMode: 0
   currentColor: {r: 1, g: 0, b: 0, a: 1}

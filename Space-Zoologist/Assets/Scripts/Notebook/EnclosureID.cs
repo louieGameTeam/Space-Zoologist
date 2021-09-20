@@ -83,12 +83,7 @@ public struct EnclosureID : System.IComparable<EnclosureID>
         {
             return FromSceneName(instance.LevelData.Level.SceneName);
         }
-        else
-        {
-            Debug.Log("EnclosureID: attempted to get the enclosure ID of the current scene name, " +
-                "but no GameManager instance was found.");
-            return new EnclosureID(-1, -1);
-        }
+        else return new EnclosureID(-1, -1);
     }
     #endregion
 

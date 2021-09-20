@@ -21,6 +21,9 @@ public class ConceptsCanvasUI : NotebookUIChild
     [Space]
 
     [SerializeField]
+    [Tooltip("Reference to the game object at the root of the drawing canvas to enable/disable on foldout")]
+    private GameObject drawingCanvasParent;
+    [SerializeField]
     [Tooltip("Reference to the script that handles drawing on the canvas")]
     private DrawingCanvas drawingCanvas;
     [SerializeField]
@@ -74,11 +77,11 @@ public class ConceptsCanvasUI : NotebookUIChild
         if (state)
         {
             foldoutRect.DOAnchorMax(new Vector2(1f, foldoutRect.anchorMax.y), foldoutTime)
-                .OnComplete(() => drawingCanvas.gameObject.SetActive(true));
+                .OnComplete(() => drawingCanvasParent.gameObject.SetActive(true));
         }
         else
         {
-            drawingCanvas.gameObject.SetActive(false);
+            drawingCanvasParent.gameObject.SetActive(false);
             foldoutRect.DOAnchorMax(new Vector2(0.5f, foldoutRect.anchorMax.y), foldoutTime);
         }
     }
