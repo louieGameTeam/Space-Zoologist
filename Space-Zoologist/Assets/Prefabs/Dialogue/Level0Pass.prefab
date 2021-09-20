@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1660066326659181911}
   - component: {fileID: 5453693311318094595}
+  - component: {fileID: 7883153375401737746}
   m_Layer: 0
   m_Name: Level0Pass
   m_TagString: Untagged
@@ -45,36 +46,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 25
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":510,\"yPos\":-1025},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Thanks,
-    Star!\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":752,\"yPos\":-1020},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"It
-    was harder than it looked\u2026\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":963,\"yPos\":-1028},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"That
-    was a piece of cake.\",\"parentUIDs\":[5,1,1],\"SpeechUID\":7},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":460.5,\"yPos\":182},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"22\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":674.5,\"yPos\":184},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"23\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":882.5,\"yPos\":183},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"24\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":1121.5,\"yPos\":185},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"25\",\"parentUIDs\":[13,13,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":656,\"yPos\":-1135},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Wow,
-    you repopulated the enclosure! I knew you were the right engineer for the job.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":442,\"yPos\":-933},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"You
-    too, kid.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":664,\"yPos\":-933},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":471,\"yPos\":-1384},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Thanks,
+    Star!\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":713,\"yPos\":-1379},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"It
+    was harder than it looked\u2026\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":924,\"yPos\":-1387},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"That
+    was a piece of cake.\",\"parentUIDs\":[5,1,1],\"SpeechUID\":7},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":421.5,\"yPos\":-177},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"22\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":635.5,\"yPos\":-175},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"23\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":843.5,\"yPos\":-176},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"24\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":1082.5,\"yPos\":-174},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"25\",\"parentUIDs\":[13,15,13,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":617,\"yPos\":-1494},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Wow,
+    you repopulated the enclosure! I knew you were the right engineer for the job.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":403,\"yPos\":-1292},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"You
+    too, kid.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":625,\"yPos\":-1292},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
     to be expected on your first assignment. Science is all about learning from failure,
-    after all.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":907,\"yPos\":-919},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Well,
-    that\u2019s good to hear.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-435},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Being
+    after all.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":868,\"yPos\":-1278},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Well,
+    that\u2019s good to hear.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":-794},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Being
     able to engineer this enclosure to the specific terrain and food needs of this
-    species has been difficult for our other engineers.\",\"parentUIDs\":[7,5,3,3,5,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-335},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Although
+    species has been difficult for our other engineers.\",\"parentUIDs\":[7,5,3,3,5,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":-694},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Although
     researchers like myself have logged our observations and conclusions, like in
     your handy dandy Encyclopedia, transforming notes into an achievable action plan
-    isn\u2019t as easy.\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-235},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
-    surpassed all expectations!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-135},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Usually,
+    isn\u2019t as easy.\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":-594},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    surpassed all expectations!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":-494},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Usually,
     we\u2019d have a report back once you\u2019ve repopulated an enclosure. We won\u2019t
-    this time, since everything worked out so smoothly.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":-35},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"This
+    this time, since everything worked out so smoothly.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":-394},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"This
     time, instead of a full report back, I\u2019ll only ask one question. And you
-    can use your notebook for reference, too.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":65},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Remind
+    can use your notebook for reference, too.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":-294},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Remind
     me, how many dirt tiles did you end up adding? Just so I can mark it down. For
-    science!\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23,24],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":265},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Haha,
-    good one! For real, though?\",\"parentUIDs\":[22,23,21,21,22,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23,24],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":465},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Your
+    science!\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23,24],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":-94},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Haha,
+    good one! For real, though?\",\"parentUIDs\":[22,23,21,21,22,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[21,22,23,24],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":106},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Your
     next task is focused on researching the differing food habits and preferences
-    of CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":18,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":565},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"As
+    of CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":18,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":206},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"As
     you may have noticed, the Zeigs undoubtedly prefer space maple, especially its
     golden variant. However, as you might have noticed, we are lacking in space maple
-    supply.\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":665},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Your
+    supply.\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":306},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Your
     job in this next enclosure set is to pay close attention to food compatibility,
     preferences, dislikes, and poisonous substances, while operating under a budget
-    when building.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":656,\"yPos\":765},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Planet
+    when building.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":617,\"yPos\":406},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Planet
     X\u2019s flora and fauna are still very new to Natura Serva 22. The more data
     we have, the more likely we are to prevent their extinction.\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
@@ -108,7 +109,31 @@ MonoBehaviour:
   - {fileID: 1099012040238575087}
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7883153375401737746}
+        m_MethodName: LoadNextLevel
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Level1E1
+          m_BoolArgument: 0
+        m_CallState: 1
+--- !u!114 &7883153375401737746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253798053493352916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0c668cbccaa4f1d8769650843d3123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizResponses: []
 --- !u!1 &3293976171355765780
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,8 +470,8 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
-        m_MethodName: LoadLevel
+      - m_Target: {fileID: 7883153375401737746}
+        m_MethodName: LoadNextLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -455,7 +480,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Level1E1
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
