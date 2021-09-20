@@ -21,7 +21,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         this.item = item;
         this.itemImage.sprite = item.Icon;
         this.onSelected += itemSelectedHandler;
-        this.ItemName.text = this.item.ItemName;
+        this.ItemName.text = this.item.ItemID.Data.Name.Get(global::ItemName.Type.Colloquial);
         this.Cost.text = ""+this.item.Price;
 
     }

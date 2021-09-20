@@ -186,9 +186,10 @@ namespace DialogueEditor
                         {
                             if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
-                                if ((Input.GetMouseButtonDown(0) || skipping) && !isFrozen)
+                                if ((Input.GetMouseButtonDown(0) || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
                                     SetState(eState.TransitioningOptionsOff);
+                                    m_currentSpeech.Event?.Invoke();
                                 }
                             }
                         }
@@ -570,7 +571,7 @@ namespace DialogueEditor
 
 
             // Call the event
-            speech.Event?.Invoke();
+            //speech.Event?.Invoke();
 
             // Play the audio
             if (speech.Audio != null)
@@ -598,7 +599,7 @@ namespace DialogueEditor
                 // Display "Continue" / "End" if we should.
                 //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
-                if (speech.Options.Count > 0 || autoWithOption)
+                if (autoWithOption)
                 {
                     // Else display "continue" button to go to following dialogue
                     if (speech.Dialogue != null)

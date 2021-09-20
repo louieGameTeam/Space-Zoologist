@@ -64,7 +64,7 @@ public class DialogueResponseManager : MonoBehaviour
 		GameObject ingameButton = GameObject.Find(button);
 		if (ingameButton)
         {
-			Debug.Log("Wait for one time");
+			Debug.Log("Wait for one time: " + ingameButton.name);
 			ConversationManager.Instance.AskForOneTimePing(ingameButton.GetComponent<Button>());
 		}
     }
