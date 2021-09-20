@@ -3747,11 +3747,17 @@ MonoBehaviour:
   foldoutToggle: {fileID: 4134237158982432781}
   foldoutTime: 0.1
   drawingCanvasParent: {fileID: 8016372688911635126}
+  drawingCanvasRect: {fileID: 8908342847605226045}
   drawingCanvas: {fileID: 4960625455489253474}
   modePicker: {fileID: 3101612977083879891}
   colorPicker: {fileID: 7175331180764138821}
   strokeWeightPicker: {fileID: 9145898528081181457}
   clearButton: {fileID: 2341254261315582341}
+  scroll: {fileID: 3319537208352248722}
+  orthographicSize: 25
+  smoothingTime: 1
+  yCenter: 13
+  xLeft: -3
 --- !u!1 &3420828805688613111
 GameObject:
   m_ObjectHideFlags: 0
@@ -8774,8 +8780,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5364565138031302984}
   m_HandleRect: {fileID: 2319067041779776993}
   m_Direction: 0
-  m_Value: 0.0000002062278
-  m_Size: 0.7040401
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9361,11 +9367,11 @@ RectTransform:
   m_Father: {fileID: 4297025572528948888}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 147.97992, y: 0}
-  m_SizeDelta: {x: 1000, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &578287827749189547
 CanvasRenderer:
   m_ObjectHideFlags: 0

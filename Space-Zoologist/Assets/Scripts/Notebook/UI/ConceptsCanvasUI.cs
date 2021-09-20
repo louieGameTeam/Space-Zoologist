@@ -24,6 +24,9 @@ public class ConceptsCanvasUI : NotebookUIChild
     [Tooltip("Reference to the game object at the root of the drawing canvas to enable/disable on foldout")]
     private GameObject drawingCanvasParent;
     [SerializeField]
+    [Tooltip("Rect transform attached to the drawing canvas")]
+    private RectTransform drawingCanvasRect;
+    [SerializeField]
     [Tooltip("Reference to the script that handles drawing on the canvas")]
     private DrawingCanvas drawingCanvas;
     [SerializeField]
@@ -38,12 +41,31 @@ public class ConceptsCanvasUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Button used to clear the canvas")]
     private Button clearButton;
+
+    [Space]
+
+    [SerializeField]
+    [Tooltip("Reference to the scroll rect that moves the drafting area side to side")]
+    private ScrollRect scroll;
+    [SerializeField]
+    [Tooltip("Orthographic size of the camera when viewing the concept canvas")]
+    private float orthographicSize = 20f;
+    [SerializeField]
+    [Tooltip("Time it takes for the camera to move into zoomed position")]
+    private float smoothingTime = 1f;
+    [SerializeField]
+    [Tooltip("Y-position that the camera moves to at the center of the drawing canvas")]
+    private float yCenter = 5f;
+    [SerializeField]
+    [Tooltip("X-position that the camera moves to when viewing the leftmost part of the enclosure")]
+    private float xLeft = -3f;
     #endregion
 
     #region Monobehaviour Messages
     public override void Setup()
     {
         base.Setup();
+
         // Apply foldout state when toggle state changes
         foldoutToggle.isOn = false;
         foldoutToggle.onValueChanged.AddListener(ApplyFoldoutState);
@@ -78,12 +100,31 @@ public class ConceptsCanvasUI : NotebookUIChild
         {
             foldoutRect.DOAnchorMax(new Vector2(1f, foldoutRect.anchorMax.y), foldoutTime)
                 .OnComplete(() => drawingCanvasParent.gameObject.SetActive(true));
+
+            // Try to get the game manager
+            GameManager instance = GameManager.Instance;
+
+            // If we get the game manager then set the camera position
+            if(instance)
+            {
+                scroll.normalizedPosition = Vector2.zero;
+                SetCameraPosition(scroll.normalizedPosition);
+            }
         }
         else
         {
             drawingCanvasParent.gameObject.SetActive(false);
             foldoutRect.DOAnchorMax(new Vector2(0.5f, foldoutRect.anchorMax.y), foldoutTime);
+
+            // Unlock the camera so it goes back to its previous position
+            GameManager instance = GameManager.Instance;
+            if (instance) instance.m_cameraController.Unlock();
         }
+    }
+    private void SetCameraPosition(Vector2 scrollPos)
+    {
+        Vector3 pos = new Vector3(xLeft, yCenter, GameManager.Instance.m_cameraController.transform.position.z);
+        GameManager.Instance.m_cameraController.Lock(new CameraPositionLock(pos, orthographicSize, smoothingTime));
     }
     #endregion
 }

@@ -121,13 +121,13 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
         // When the canvas is enabled, try to initialize the texture
         if (drawingTexture == null)
         {
-            StartCoroutine(WaitForValidRect());
+            StartCoroutine(InitializeTextureOnceRectIsValid());
         }
     }
     #endregion
 
     #region Private Methods
-    private IEnumerator WaitForValidRect()
+    private IEnumerator InitializeTextureOnceRectIsValid()
     {
         // Wait until the rect area is valid. This is necessary because the rect is invalid while
         // we are waiting for Unity's layouting system to update
@@ -146,9 +146,6 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
         // Get the position of the mouse inside the rect
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, mousePosition, null, out Vector2 localMousePoint);
         
-        // Move mouse point to correct point inside texture
-        localMousePoint += rectTransform.rect.size / 2f;
-
         // Return the final position
         return localMousePoint;
     }
