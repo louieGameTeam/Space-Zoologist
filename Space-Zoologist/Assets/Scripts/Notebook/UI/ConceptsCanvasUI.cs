@@ -62,6 +62,27 @@ public class ConceptsCanvasUI : NotebookUIChild
     #endregion
 
     #region Monobehaviour Messages
+    private void OnEnable()
+    {
+        GameManager instance = GameManager.Instance;
+
+        if(instance && foldoutToggle.isOn)
+        {
+            SetCameraPosition(scroll.normalizedPosition);
+        }
+    }
+    private void OnDisable()
+    {
+        GameManager instance = GameManager.Instance;
+
+        if(instance)
+        {
+            instance.m_cameraController.Unlock();
+        }
+    }
+    #endregion
+
+    #region Public Methods
     public override void Setup()
     {
         base.Setup();
