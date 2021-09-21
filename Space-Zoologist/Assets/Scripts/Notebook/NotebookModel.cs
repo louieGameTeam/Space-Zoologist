@@ -25,13 +25,9 @@ public class NotebookModel : ScriptableObject
     [Space]
     
     [SerializeField]
-    [Expandable]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
     private ResearchModel research;
-
-    [Space]
-
     [SerializeField]
     [Tooltip("Player observation notes")]
     private ObservationsModel observations;

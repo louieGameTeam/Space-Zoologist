@@ -20,6 +20,14 @@ public struct ItemID
     private int index;
     #endregion
 
+    #region Constructors
+    public ItemID(ItemRegistry.Category category, int index)
+    {
+        this.category = category;
+        this.index = index;
+    }
+    #endregion
+
     #region Operators
     public static bool operator ==(ItemID a, ItemID b) => a.category == b.category && a.index == b.index;
     public static bool operator !=(ItemID a, ItemID b) => !(a == b);

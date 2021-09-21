@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4985465186544508037}
   - component: {fileID: 7402859124686276361}
   m_Layer: 8
-  m_Name: ResearchCategoryPicker
+  m_Name: ItemPicker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,18 +47,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5892994195613623915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1efaf214f153304c8f2acdc2f1c5e74, type: 3}
+  m_Script: {fileID: 11500000, guid: 015387644d625f74ea05b22cca60267f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 1450551333511890535, guid: 954a44786185aa84494d046f05556d05,
+  dropdown: {fileID: -5040437111534914993, guid: 954a44786185aa84494d046f05556d05,
     type: 3}
   dropdownParent: {fileID: 5892994195613623914}
-  selectedSprite: {fileID: 21300000, guid: 41b5844cf105260418101f7bc1eda0bf, type: 3}
+  selectedSprite: {fileID: 21300000, guid: 46b1dc1c6dd0b4648adb2a68400e8916, type: 3}
   notSelectedSprite: {fileID: 21300000, guid: 15fa5d67fc407064e88243ed2d7f0433, type: 3}
   selectedScale: 0.2
   sizeChangeTime: 0.5
   bookmarkTarget: {fileID: 7402859124686276361}
-  onResearchCategoryChanged:
+  onItemPicked:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &4985465186544508037

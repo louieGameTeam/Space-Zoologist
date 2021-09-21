@@ -27,5 +27,40 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         else return null;
     }
     public static ItemData[] GetItemsWithCategory(Category category) => Instance.itemDatas[(int)category].List;
+    public static int CountItemsWithCategory(Category category) => GetItemsWithCategory(category).Length;
+    public static int CountAllItems()
+    {
+        int count = 0;
+        Category[] categories = (Category[])System.Enum.GetValues(typeof(Category));
+
+        // Add the lengths of each array to the total count
+        foreach(Category category in categories)
+        {
+            count += CountItemsWithCategory(category);
+        }
+
+        return count;
+    }
+    public static ItemID[] GetAllItemIDs()
+    {
+        // Create an array as big as all the items in the registry
+        ItemID[] ids = new ItemID[CountAllItems()];
+        int index = 0;
+
+        // Get a list of categories
+        Category[] categories = (Category[])System.Enum.GetValues(typeof(Category));
+
+        // Loop through all categories
+        foreach(Category category in categories)
+        {
+            // Add an id with each index for each item in this category
+            for(int i = 0; i < CountItemsWithCategory(category); i++, index++)
+            {
+                ids[index] = new ItemID(category, i);
+            }
+        }
+
+        return ids;
+    }
     #endregion
 }

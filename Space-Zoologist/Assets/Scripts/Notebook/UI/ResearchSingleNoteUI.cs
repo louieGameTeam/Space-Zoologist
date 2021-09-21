@@ -9,8 +9,10 @@ using TMPro;
 
 public class ResearchSingleNoteUI : NotebookUIChild
 {
+    #region Public Typedefs
     // So that it appears in the editor
     [System.Serializable] public class StringStringEvent : UnityEvent<string, string> { }
+    #endregion
 
     #region Private Editor Fields
     [SerializeField]
@@ -22,13 +24,13 @@ public class ResearchSingleNoteUI : NotebookUIChild
     #endregion
 
     #region Public Methods
-    public void Setup(ResearchCategory category, string label, ScrollRect scrollTarget)
+    public void Setup(ItemID id, string label, ScrollRect scrollTarget)
     {
         // Setup the UI child base
         base.Setup();
 
         // Read the initial note value
-        string initialNote = UIParent.Notebook.Research.GetEntry(category).Notes.ReadNote(label);
+        string initialNote = UIParent.Notebook.Research.GetEntry(id).Notes.ReadNote(label);
 
         // Setup the initial note and label
         labelText.text = label + ":";
@@ -37,7 +39,7 @@ public class ResearchSingleNoteUI : NotebookUIChild
         // When input finishes editing then write the note to the notebook model
         myInputField.onEndEdit.AddListener(s =>
         {
-            UIParent.Notebook.Research.GetEntry(category).Notes.WriteNote(label, s);
+            UIParent.Notebook.Research.GetEntry(id).Notes.WriteNote(label, s);
         });
 
         // Make the scroll event of the input field target the scroll rect

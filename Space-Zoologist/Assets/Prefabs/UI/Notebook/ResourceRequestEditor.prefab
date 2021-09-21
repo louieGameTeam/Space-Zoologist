@@ -635,7 +635,7 @@ MonoBehaviour:
   group: {fileID: 367507072220731492}
   statusUI: {fileID: 6393359553504419053}
   priorityInput: {fileID: 2919458350998504155}
-  categoryDropdown: {fileID: 7795337099045834644}
+  categoryDropdown: {fileID: 4594711315669235222}
   needDropdown: {fileID: 4082654020923041996}
   quantityInput: {fileID: 1076002889026388843}
   resourcePicker: {fileID: 2355837587003029386}
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: "0\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
   m_sharedMaterial: {fileID: -7226233978607132761, guid: 591644c9da9f33d4fbfdddd3935e91dc,
@@ -819,7 +819,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 6948030505078496824}
-    characterCount: 1
+    characterCount: 2
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -3922,16 +3922,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69257884578b94d4fb8db9bb7071334d, type: 3}
---- !u!114 &7795337099045834644 stripped
+--- !u!114 &4594711315669235222 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 831228025961487720, guid: 69257884578b94d4fb8db9bb7071334d,
+  m_CorrespondingSourceObject: {fileID: 6369274249192613098, guid: 69257884578b94d4fb8db9bb7071334d,
     type: 3}
   m_PrefabInstance: {fileID: 7469084424433668860}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6900972294ac601408e745796d41bca2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &3333535797943565376 stripped

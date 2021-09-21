@@ -8,9 +8,9 @@ using TMPro;
 
 public class ResearchEncyclopediaUI : NotebookUIChild
 {
-    public ResearchEncyclopedia CurrentEncyclopedia => UIParent.Notebook.Research.GetEntry(currentCategory).Encyclopedia;
+    #region Public Properties
+    public ResearchEncyclopedia CurrentEncyclopedia => UIParent.Notebook.Research.GetEntry(currentItem).Encyclopedia;
     public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia.GetArticle(currentArticleID);
-
     public ResearchEncyclopediaArticleID CurrentArticleID
     {
         get => currentArticleID;
@@ -31,10 +31,12 @@ public class ResearchEncyclopediaUI : NotebookUIChild
             }
         }
     }
+    #endregion
 
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the widget that selects the category for the encyclopedia")]
-    private ResearchCategoryPicker categoryPicker;
+    private ItemPicker itemPicker;
     [SerializeField]
     [Tooltip("Dropdown used to select available encyclopedia articles")]
     private TMP_Dropdown dropdown;
@@ -44,13 +46,16 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Script that is targetted by the bookmarking system")]
     private BookmarkTarget bookmarkTarget;
+    #endregion
 
+    #region Private Fields
     // Maps the research category to the index of the article previously selected
-    private Dictionary<ResearchCategory, int> previousSelected = new Dictionary<ResearchCategory, int>();
+    private Dictionary<ItemID, int> previousSelected = new Dictionary<ItemID, int>();
     // Current research category selected
-    private ResearchCategory currentCategory;
+    private ItemID currentItem;
     // Current research article selected
     private ResearchEncyclopediaArticleID currentArticleID;
+    #endregion
 
     public override void Setup()
     {
@@ -61,25 +66,25 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
 
         // If the category picker is already initialized, we need to update our UI
-        if(categoryPicker.HasBeenInitialized)
+        if(itemPicker.HasBeenInitialized)
         {
-            OnResearchCategoryChanged(categoryPicker.SelectedCategory);
+            OnItemIDChanged(itemPicker.SelectedItem);
         }
 
         // Add listener for changes in the research category selected
-        categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);
+        itemPicker.OnItemPicked.AddListener(OnItemIDChanged);
 
         // Setup the bookmark target to get/set the article id
         bookmarkTarget.Setup(() => CurrentArticleID, x => CurrentArticleID = (ResearchEncyclopediaArticleID)x);
     }
 
-    private void OnResearchCategoryChanged(ResearchCategory category)
+    private void OnItemIDChanged(ItemID id)
     {
         // If the current category exists, save the value previously selected in the dictionary
-        if(previousSelected.ContainsKey(currentCategory)) previousSelected[currentCategory] = dropdown.value;
+        if(previousSelected.ContainsKey(currentItem)) previousSelected[currentItem] = dropdown.value;
 
         // Set currently selected category
-        currentCategory = category;
+        currentItem = id;
         // Clear the options of the dropdown
         dropdown.ClearOptions();
 
@@ -89,10 +94,10 @@ public class ResearchEncyclopediaUI : NotebookUIChild
             dropdown.options.Add(new TMP_Dropdown.OptionData(ArticleIDToDropdownLabel(article.Key)));
         }
         // Select the first article in the list
-        if (previousSelected.ContainsKey(category)) dropdown.value = previousSelected[category];
+        if (previousSelected.ContainsKey(id)) dropdown.value = previousSelected[id];
         else
         {
-            previousSelected[category] = 0;
+            previousSelected[id] = 0;
             dropdown.value = 0;
         }
 

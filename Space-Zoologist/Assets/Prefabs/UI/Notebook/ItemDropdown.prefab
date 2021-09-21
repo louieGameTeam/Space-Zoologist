@@ -134,11 +134,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5324553916052729532}
   - component: {fileID: 9204609903704476831}
-  - component: {fileID: 831228025961487720}
   - component: {fileID: 2591338670793130850}
   - component: {fileID: 5923221914392734342}
+  - component: {fileID: 6369274249192613098}
   m_Layer: 5
-  m_Name: SimpleResearchCategoryDropdown
+  m_Name: ItemDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,24 +223,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &831228025961487720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487302055355196119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6900972294ac601408e745796d41bca2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropdown: {fileID: 9204609903704476831}
-  textAndImage: 1
-  onResearchCategorySelected:
-    m_PersistentCalls:
-      m_Calls: []
-  typeFilter: 0000000001000000
 --- !u!222 &2591338670793130850
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -278,6 +260,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6369274249192613098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487302055355196119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropdown: {fileID: 9204609903704476831}
+  itemDisplayName: 2
+  textAndImage: 0
+  onItemSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  categoryFilter: 
 --- !u!1 &1652182977054258597
 GameObject:
   m_ObjectHideFlags: 0

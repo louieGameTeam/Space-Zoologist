@@ -17,7 +17,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
                 // Create a new entry with the current information
                 entry = new TestAndMetricsEntry
                 {
-                    Category = researchCategoryDropdown.SelectedCategory,
+                    Item = researchCategoryDropdown.SelectedItem,
                     Need = needDropdown.SelectedNeed,
                     Improved = differenceDropdown.options[differenceDropdown.value].text == "Improved",
                     Notes = inputField.text
@@ -44,7 +44,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
     private CanvasGroup group;
     [SerializeField]
     [Tooltip("Reference to the dropdown to select the research category")]
-    private TypeFilteredResearchCategoryDropdown researchCategoryDropdown;
+    private CategoryFilteredItemDropdown researchCategoryDropdown;
     [SerializeField]
     [Tooltip("Reference to the dropdown that selects the needs analyzed in the metric")]
     private NeedTypeDropdown needDropdown;
@@ -76,7 +76,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         this.entry = entry;
 
         // Setup each dropdown
-        researchCategoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
+        researchCategoryDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         needDropdown.Setup(new NeedType[]{ NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
         // Reset the difference options
         differenceDropdown.ClearOptions();
@@ -86,7 +86,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         // Set the initial values of the elements
         if(entry != null)
         {
-            researchCategoryDropdown.SetResearchCategory(entry.Category);
+            researchCategoryDropdown.SetResearchCategory(entry.Item);
             needDropdown.SetNeedTypeValue(entry.Need);
             differenceDropdown.value = entry.Improved ? 1 : 0;
             inputField.text = entry.Notes;
@@ -106,7 +106,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         if (enclosureID == current)
         {
             // Add event listeners for everything
-            researchCategoryDropdown.OnResearchCategorySelected.AddListener(x => Entry.Category = x);
+            researchCategoryDropdown.OnItemSelected.AddListener(x => Entry.Item = x);
             needDropdown.OnNeedTypeSelected.AddListener(x => Entry.Need = x);
             differenceDropdown.onValueChanged.AddListener(x => Entry.Improved = x == 1);
             inputField.onValueChanged.AddListener(x => Entry.Notes = x);

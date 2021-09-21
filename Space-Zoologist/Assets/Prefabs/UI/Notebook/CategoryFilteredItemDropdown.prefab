@@ -244,9 +244,9 @@ GameObject:
   - component: {fileID: 280808446006572624}
   - component: {fileID: 280808446006572627}
   - component: {fileID: 280808446006572626}
-  - component: {fileID: 1450551333511890535}
+  - component: {fileID: -5040437111534914993}
   m_Layer: 5
-  m_Name: ResearchCategoryDropdown
+  m_Name: CategoryFilteredItemDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -370,7 +370,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1450551333511890535
+--- !u!114 &-5040437111534914993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -379,15 +379,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 280808446006572636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6900972294ac601408e745796d41bca2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dropdown: {fileID: 280808446006572626}
+  itemDisplayName: 0
   textAndImage: 0
-  onResearchCategorySelected:
+  onItemSelected:
     m_PersistentCalls:
       m_Calls: []
-  typeFilter: 
+  categoryFilter: 
 --- !u!1 &280808446106259057
 GameObject:
   m_ObjectHideFlags: 0

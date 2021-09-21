@@ -22,7 +22,7 @@ public class ResourceRequest
         get => priority;
         set => priority = value;
     }
-    public ResearchCategory Target
+    public ItemID Target
     {
         get => target;
         set => target = value;
@@ -58,7 +58,7 @@ public class ResourceRequest
     private int priority;
     [SerializeField]
     [Tooltip("Target of the resource request")]
-    private ResearchCategory target;
+    private ItemID target;
     [SerializeField]
     [Tooltip("Need of the target that this resource request is supposed to improve")]
     private NeedType improvedNeed;

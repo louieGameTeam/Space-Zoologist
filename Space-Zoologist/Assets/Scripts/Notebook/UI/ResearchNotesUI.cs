@@ -8,13 +8,13 @@ using TMPro;
 public class ResearchNotesUI : NotebookUIChild
 {
     #region Public Properties
-    public ResearchNotes CurrentNotes => UIParent.Notebook.Research.GetEntry(categoryPicker.SelectedCategory).Notes;
+    public ResearchNotes CurrentNotes => UIParent.Notebook.Research.GetEntry(itemPicker.SelectedItem).Notes;
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the picker object that selects the research category")]
-    private ResearchCategoryPicker categoryPicker;
+    private ItemPicker itemPicker;
     [SerializeField]
     [Tooltip("Text that displays the name of the current category taking notes on")]
     private TextMeshProUGUI titleText;
@@ -41,18 +41,19 @@ public class ResearchNotesUI : NotebookUIChild
 
         // If category picker already has a selected category,
         // then we know it initialized before us, so we need to update our UI
-        if (categoryPicker.HasBeenInitialized) OnResearchCategoryChanged(categoryPicker.SelectedCategory);
+        if (itemPicker.HasBeenInitialized) OnItemIDChanged(itemPicker.SelectedItem);
 
         // Add listener for the research category change
-        categoryPicker.OnResearchCategoryChanged.AddListener(OnResearchCategoryChanged);
+        itemPicker.OnItemPicked.AddListener(OnItemIDChanged);
     }
     #endregion
 
     #region Private Methods
-    private void OnResearchCategoryChanged(ResearchCategory newCategory)
+    private void OnItemIDChanged(ItemID id)
     {
         // Set the title text to the name of the category
-        titleText.text = categoryPicker.SelectedCategory.Name + ": Target Specifications";
+        ItemData data = ItemRegistry.Get(id);
+        titleText.text = data.Name.Get(ItemName.Type.Science) + ": Target Specifications";
 
         // Destroy all notes
         foreach(ResearchSingleNoteUI note in currentNotes)
@@ -65,7 +66,7 @@ public class ResearchNotesUI : NotebookUIChild
         foreach(string label in CurrentNotes.Labels.Labels)
         {
             ResearchSingleNoteUI clone = Instantiate(notePrefab, noteParent.transform);
-            clone.Setup(newCategory, label, scrollView);
+            clone.Setup(id, label, scrollView);
             currentNotes.Add(clone);
         }
     }

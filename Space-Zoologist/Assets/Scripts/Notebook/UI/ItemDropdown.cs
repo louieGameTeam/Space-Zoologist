@@ -5,31 +5,38 @@ using UnityEngine.Events;
 
 using TMPro;
 
-public class ResearchCategoryDropdown : NotebookUIChild
+public class ItemDropdown : NotebookUIChild
 {
     [System.Serializable]
-    public class ResearchCategoryEvent : UnityEvent<ResearchCategory> { }
+    public class ItemIDEvent : UnityEvent<ItemID> { }
 
     // Public accessors
+    #region Public Properties
     public TMP_Dropdown Dropdown => dropdown;
-    public ResearchCategoryEvent OnResearchCategorySelected => onResearchCategorySelected;
-    public ResearchCategory SelectedCategory => optionCategoryMap[dropdown.options[dropdown.value]];
+    public ItemIDEvent OnItemSelected => onItemSelected;
+    public ItemID SelectedItem => optionCategoryMap[dropdown.options[dropdown.value]];
+    #endregion
 
     // Private editor data
-
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the research category")]
     protected TMP_Dropdown dropdown;
+    [SerializeField]
+    [Tooltip("Name to display for the item in the dropdown")]
+    private ItemName.Type itemDisplayName;
     [SerializeField]
     [Tooltip("True if text and image should display simultaneously")]
     protected bool textAndImage = false;
     [SerializeField]
     [Tooltip("Event invoked when this dropdown selects a research category")]
-    protected ResearchCategoryEvent onResearchCategorySelected;
+    protected ItemIDEvent onItemSelected;
+    #endregion
 
     // Maps a selected item in the dropdown to a research category
     // NOTE: why don't we just change this to two conversion functions to change betweeen types?
-    protected Dictionary<TMP_Dropdown.OptionData, ResearchCategory> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ResearchCategory>();
+    // NOTE: CAN'T do that because cannot find an item on the registry from its name, you need the index
+    protected Dictionary<TMP_Dropdown.OptionData, ItemID> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ItemID>();
 
     public override void Setup()
     {
@@ -39,15 +46,15 @@ public class ResearchCategoryDropdown : NotebookUIChild
         dropdown.ClearOptions();
         optionCategoryMap.Clear();
 
-        ResearchCategory[] allCategories = GetResearchCategories();
-
-        foreach(ResearchCategory category in GetResearchCategories())
+        foreach(ItemID id in GetItemIDs())
         {
             // Get the current option
-            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(category.Name, category.Image);
+            ItemData data = ItemRegistry.Get(id);
+            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(data.Name.Get(itemDisplayName), data.Icon);
+            
             // Add the option to the dropdown and the dictionary
             dropdown.options.Add(option);
-            optionCategoryMap.Add(option, category);
+            optionCategoryMap.Add(option, id);
         }
 
         // Setup the value changed callback
@@ -60,13 +67,13 @@ public class ResearchCategoryDropdown : NotebookUIChild
     public void SetDropdownValue(int value) => SetDropdownValueHelper(value, true);
     public void SetDropdownValueWithoutNotify(int value) => SetDropdownValueHelper(value, false);
 
-    public bool SetResearchCategory(ResearchCategory category) => SetResearchCategoryHelper(category, v => SetDropdownValue(v));
-    public bool SetResearchCategoryWithoutNotify(ResearchCategory category) => SetResearchCategoryHelper(category, v => SetDropdownValueWithoutNotify(v));
+    public bool SetResearchCategory(ItemID id) => SetResearchCategoryHelper(id, v => SetDropdownValue(v));
+    public bool SetResearchCategoryWithoutNotify(ItemID id) => SetResearchCategoryHelper(id, v => SetDropdownValueWithoutNotify(v));
 
-    private bool SetResearchCategoryHelper(ResearchCategory category, UnityAction<int> valueSetter)
+    private bool SetResearchCategoryHelper(ItemID id, UnityAction<int> valueSetter)
     {
         // Find the first value in the list that matches
-        TMP_Dropdown.OptionData selection = optionCategoryMap.FirstOrDefault(kvp => kvp.Value == category).Key;
+        TMP_Dropdown.OptionData selection = optionCategoryMap.FirstOrDefault(kvp => kvp.Value == id).Key;
 
         if (selection != null)
         {
@@ -96,12 +103,10 @@ public class ResearchCategoryDropdown : NotebookUIChild
         dropdown.RefreshShownValue();
 
         // If we are notifying then raise the event
-        if (notify) onResearchCategorySelected.Invoke(optionCategoryMap[selection]);
+        if (notify) onItemSelected.Invoke(optionCategoryMap[selection]);
     }
-    protected virtual ResearchCategory[] GetResearchCategories()
+    protected virtual ItemID[] GetItemIDs()
     {
-        return UIParent.Notebook.Research.ResearchDictionary
-            .Select(kvp => kvp.Key)
-            .ToArray();
+        return ItemRegistry.GetAllItemIDs();
     }
 }

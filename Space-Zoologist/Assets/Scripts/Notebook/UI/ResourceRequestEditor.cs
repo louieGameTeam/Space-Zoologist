@@ -34,7 +34,7 @@ public class ResourceRequestEditor : NotebookUIChild
     private TMP_InputField priorityInput;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets a research category")]
-    private TypeFilteredResearchCategoryDropdown categoryDropdown;
+    private CategoryFilteredItemDropdown categoryDropdown;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets the need")]
     private NeedTypeDropdown needDropdown;
@@ -83,7 +83,7 @@ public class ResourceRequestEditor : NotebookUIChild
         onRequestDeleted.AddListener(requestDeletedCallback);
 
         // Setup each dropdown
-        categoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
+        categoryDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         needDropdown.Setup(new NeedType[] { NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
         resourcePicker.Setup();
 
@@ -118,7 +118,7 @@ public class ResourceRequestEditor : NotebookUIChild
                     onPriorityUpdated.Invoke();
                 }
             });
-            categoryDropdown.OnResearchCategorySelected.AddListener(x => GetOrCreateResourceRequest().Target = x);
+            categoryDropdown.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().Target = x);
             needDropdown.OnNeedTypeSelected.AddListener(x => GetOrCreateResourceRequest().ImprovedNeed = x);
             quantityInput.onEndEdit.AddListener(x =>
             {
@@ -167,7 +167,7 @@ public class ResourceRequestEditor : NotebookUIChild
             request = new ResourceRequest
             {
                 Priority = int.Parse(priorityInput.text),
-                Target = categoryDropdown.SelectedCategory,
+                Target = categoryDropdown.SelectedItem,
                 ImprovedNeed = needDropdown.SelectedNeed,
                 QuantityRequested = int.Parse(quantityInput.text),
                 ItemRequested = resourcePicker.ItemSelected

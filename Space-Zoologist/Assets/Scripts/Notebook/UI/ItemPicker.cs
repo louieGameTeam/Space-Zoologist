@@ -7,33 +7,35 @@ using UnityEngine.Events;
 
 using DG.Tweening;
 
-public class ResearchCategoryPicker : NotebookUIChild
+public class ItemPicker : NotebookUIChild
 {
     // So that the event appears in the editor
-    [System.Serializable] public class ResearchCategoryEvent : UnityEvent<ResearchCategory> { }
+    #region Public Typedefs
+    [System.Serializable] public class ItemIDEvent : UnityEvent<ItemID> { }
+    #endregion
 
     // Public accessors
     #region Public Properties
-    public ResearchCategory SelectedCategory
+    public ItemID SelectedItem
     {
-        get => selectedCategory;
+        get => selectedItem;
         set
         {
             // Set the research category on each dropdown (those that can't select this category ignore it)
-            foreach(ResearchCategoryDropdown dropdown in dropdowns)
+            foreach(ItemDropdown dropdown in dropdowns)
             {
                 dropdown.SetResearchCategory(value);
             }
         }
     }
-    public ResearchCategoryEvent OnResearchCategoryChanged => onResearchCategoryChanged;
-    public bool HasBeenInitialized => !string.IsNullOrEmpty(selectedCategory.Name);
+    public ItemIDEvent OnItemPicked => onItemPicked;
+    public bool HasBeenInitialized => selectedItem.Index < 0;
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the prefab used to select a research category")]
-    private TypeFilteredResearchCategoryDropdown dropdown;
+    private CategoryFilteredItemDropdown dropdown;
     [SerializeField]
     [Tooltip("Parent transform that the dropdowns are instantiated into")]
     private Transform dropdownParent;
@@ -54,14 +56,14 @@ public class ResearchCategoryPicker : NotebookUIChild
     private BookmarkTarget bookmarkTarget;
     [SerializeField]
     [Tooltip("Event invoked when the research category picker changes category picked")]
-    private ResearchCategoryEvent onResearchCategoryChanged;
+    private ItemIDEvent onItemPicked;
     #endregion
 
     #region Private Fields
     // List of the dropdowns used by the category picker
-    private List<ResearchCategoryDropdown> dropdowns = new List<ResearchCategoryDropdown>();
-    // The category currently selected
-    private ResearchCategory selectedCategory;
+    private List<ItemDropdown> dropdowns = new List<ItemDropdown>();
+    // The item currently selected
+    private ItemID selectedItem = new ItemID(ItemRegistry.Category.Species, -1);
     #endregion
 
     #region Public Methods
@@ -70,17 +72,17 @@ public class ResearchCategoryPicker : NotebookUIChild
         base.Setup();
 
         // Setup the bookmark target
-        bookmarkTarget.Setup(() => SelectedCategory, c => SelectedCategory = (ResearchCategory)c);
+        bookmarkTarget.Setup(() => SelectedItem, c => SelectedItem = (ItemID)c);
 
-        ResearchCategoryType[] types = (ResearchCategoryType[])System.Enum.GetValues(typeof(ResearchCategoryType));
+        ItemRegistry.Category[] categories = (ItemRegistry.Category[])System.Enum.GetValues(typeof(ItemRegistry.Category));
 
         // Instantiate a dropdown for each type and set it up
-        foreach(ResearchCategoryType type in types)
+        foreach(ItemRegistry.Category category in categories)
         {
-            TypeFilteredResearchCategoryDropdown clone = Instantiate(dropdown, dropdownParent);
+            CategoryFilteredItemDropdown clone = Instantiate(dropdown, dropdownParent);
             // Setup the clone's type and add a listener for the category change
-            clone.Setup(type);
-            clone.OnResearchCategorySelected.AddListener(ResearchCategoryChanged);
+            clone.Setup(category);
+            clone.OnItemSelected.AddListener(ItemIDChanged);
             // Add to the list of our dropdowns
             dropdowns.Add(clone);
         }
@@ -92,18 +94,17 @@ public class ResearchCategoryPicker : NotebookUIChild
     #endregion
 
     #region Private Methods
-    private void ResearchCategoryChanged(ResearchCategory category)
+    private void ItemIDChanged(ItemID id)
     {
-        selectedCategory = category;
+        selectedItem = id;
 
         // Set the sprites of the backgrounds of the dropdown images
-        foreach(TypeFilteredResearchCategoryDropdown dropdown in dropdowns)
+        foreach(CategoryFilteredItemDropdown dropdown in dropdowns)
         {
             // Get this dropdown rect transform. Make sure it finishes any scale animations
             RectTransform dropdownRect = dropdown.GetComponent<RectTransform>();
-            //dropdownRect.DOComplete(true);
 
-            if (dropdown.TypeFilter[0] == category.Type)
+            if (dropdown.CategoryFilter[0] == id.Category)
             {
                 // Make this dropdown a little bigger
                 dropdownRect.DOScale(1f + selectedScale, sizeChangeTime);
@@ -119,7 +120,7 @@ public class ResearchCategoryPicker : NotebookUIChild
             }
         }
 
-        onResearchCategoryChanged.Invoke(category);
+        onItemPicked.Invoke(id);
         UIParent.OnContentChanged.Invoke();
     }
     #endregion
