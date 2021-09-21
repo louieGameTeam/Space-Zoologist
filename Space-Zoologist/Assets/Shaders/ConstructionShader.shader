@@ -5,12 +5,12 @@
         _1TileAnimationTex("One Day Tile Animation Texture", 2D) = "white" {}
         _1TileTex("One Day Tile Texture", 2D) = "white" {}
 
-        _1PlantAnimationTex("One Day Plant Animation Texture", 2D) = "white" {}
-        _2PlantAnimationTex("Two Day Plant Animation Texture", 2D) = "white" {}
-        _3PlantAnimationTex("Three Day Plant Animation Texture", 2D) = "white" {}
+        _PlantAnimationTex("Plant Animation Texture", 2D) = "white" {}
         
         _2PlantGradientTex("Two Day Plant Gradient Texture", 2D) = "white" {}
         _3PlantGradientTex("Three Day Plant Gradient Texture", 2D) = "white" {}
+
+        _PlantBorderTex("Plant Border Texture", 2D) = "white" {}
 
         _AnimationSpeed("Animation Speed", float) = 20
     }
@@ -58,12 +58,10 @@
             sampler2D _1TileTex;
             float4 _1TileTex_ST;
 
-            sampler2D _1PlantAnimationTex;
-            float4 _1PlantAnimationTex_ST;
-            sampler2D _2PlantAnimationTex;
-            float4 _2PlantAnimationTex_ST;
-            sampler2D _3PlantAnimationTex;
-            float4 _3PlantAnimationTex_ST;
+            sampler2D _PlantAnimationTex;
+            float4 _PlantAnimationTex_ST;
+            sampler2D _PlantBorderTex;
+            float4 _PlantBorderTex_ST;
 
             sampler2D _2PlantGradientTex;
             float4 _2PlantGradientTex_ST;
@@ -105,22 +103,85 @@
                 }
 
                 float4 gradient = 0;
+                // if it is a food source
                 if (bufferType == BUFFER_TYPE_TREE || bufferType == BUFFER_TYPE_ONEFOOD) {
-                    float2 animationUV = float2(float(1) / PLANT_ANIMATION_FRAMES * (localUV.x + frame), localUV.y);
-                    if (total == 1) {
-                        col = tex2D(_1PlantAnimationTex, animationUV);
+                    // send it to the right place in the texture
+
+                    // first find the tile position based on the height and width
+                    float4 foodInfo = tex2D(_CenterTex, i.uv);
+                    int tileNumber = foodInfo.r * FLAG_MULTIPLIER - 1;
+                    int2 plantDim = int2(foodInfo.g * FLAG_MULTIPLIER, foodInfo.b * FLAG_MULTIPLIER);
+
+                    // bottom left corner of the animation
+                    int2 plantLocalTile = int2(tileNumber % plantDim.x, plantDim.y == 1 ? 0 : tileNumber / plantDim.y);
+                    float2 plantLocalUV = float2(0, 0);
+                    float2 plantTexPosUV = float2(0, 0);
+                    // position the animation properly at the center
+                    // if square
+                    if (plantDim.x == plantDim.y) {
+                        plantLocalUV = ((float2) plantLocalTile + localUV) / (float2) plantDim;
                     }
+                    // if width is greater than height
+                    if (plantDim.x > plantDim.y) {
+                        plantLocalUV = ((float2) plantLocalTile + localUV) / (float2) plantDim;
+                        plantLocalUV.x = (plantLocalUV.x - 0.5) * plantDim.x / plantDim.y + 0.5;
+                        if (plantLocalUV.x < 0 || plantLocalUV.x > 1)
+                            plantLocalUV.x = 0;
+                    }
+                    // if height is greater than width
+                    if (plantDim.y > plantDim.x) {
+                        plantLocalUV = ((float2) plantLocalTile + localUV) / (float2) plantDim;
+                        plantLocalUV.y = (plantLocalUV.y - 0.5) * plantDim.y / plantDim.x + 0.5;
+                        if (plantLocalUV.y < 0 || plantLocalUV.y > 1)
+                            plantLocalUV.y = 0;
+                    }
+
+                    // add it if there is a construction buffer there
+                    if (total >= 1) {
+                        plantTexPosUV = float2(float(1) / PLANT_ANIMATION_FRAMES * (plantLocalUV.x + frame), (plantLocalUV.y + total - 1) / 3);
+                        col = tex2D(_PlantAnimationTex, plantTexPosUV);
+
+                    }
+                    // find the right gradient for the food source amount of days
                     if (total == 2) {
-                        col = tex2D(_2PlantAnimationTex, animationUV);
-                        gradient = tex2D(_2PlantGradientTex, localUV);
+                        gradient = tex2D(_2PlantGradientTex, plantLocalUV);
                         if (total * gradient.r < progress && gradient.a > 0)
                             col += 1;
                     }
                     if (total == 3) {
-                        col = tex2D(_3PlantAnimationTex, animationUV);
-                        gradient = tex2D(_3PlantGradientTex, localUV);
+                        gradient = tex2D(_3PlantGradientTex, plantLocalUV);
                         if (total * gradient.r < progress && gradient.a > 0)
                             col += 1;
+                    }
+
+                    // add the corners at the end
+                    // bottom left corner
+                    if (tileNumber == 0) {
+                        if (localUV.x < 0.5 && localUV.y < 0.5) {
+                            float4 borderColor = tex2D(_PlantBorderTex, localUV);
+                            col = borderColor.a > 0 ? borderColor : col;
+                        }
+                    }
+                    // bottom right corner
+                    if (tileNumber == plantDim.x - 1 && plantDim.x >= 1) {
+                        if (localUV.x > 0.5 && localUV.y < 0.5) {
+                            float4 borderColor = tex2D(_PlantBorderTex, localUV);
+                            col = borderColor.a > 0 ? borderColor : col;
+                        }
+                    }
+                    // upper left corner
+                    if (tileNumber == plantDim.x * plantDim.y - plantDim.x) {
+                        if (localUV.x < 0.5 && localUV.y > 0.5) {
+                            float4 borderColor = tex2D(_PlantBorderTex, localUV);
+                            col = borderColor.a > 0 ? borderColor : col;
+                        }
+                    }
+                    // upper right corner
+                    if (tileNumber == plantDim.x * plantDim.y - 1 && plantDim.x >= 1) {
+                        if (localUV.x > 0.5 && localUV.y > 0.5) {
+                            float4 borderColor = tex2D(_PlantBorderTex, localUV);
+                            col = borderColor.a > 0 ? borderColor : col;
+                        }
                     }
                 }
 

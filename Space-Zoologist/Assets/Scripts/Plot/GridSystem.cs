@@ -648,11 +648,21 @@ public class GridSystem : MonoBehaviour
 
                     Color bufferColorInformation = new Color(
                         (float)((int)type) / FLAG_VALUE_MULTIPLIER,                 // which construction type it is
-                        0,                                                          // which tile it is in the set (currently not being used)
+                        0,                                                          // (currently not being used)
                         0,                                                          // the progress towards target
                         (float)time / FLAG_VALUE_MULTIPLIER                         // the total time
                     );
+
+
+                    Color bufferColorExtraInformation = new Color(
+                        (float)(i + j * size.x + 1) / FLAG_VALUE_MULTIPLIER,        // which number tile it is [1, size.x * size.y]
+                        (float) size.x / FLAG_VALUE_MULTIPLIER,                     // food width
+                        (float) size.y / FLAG_VALUE_MULTIPLIER,                     // food height
+                        0
+                    ); 
+
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, bufferColorInformation);
+                    BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, bufferColorExtraInformation);
                     bufferPositions.Add(bufferPosition);
                 }
             }
@@ -663,8 +673,10 @@ public class GridSystem : MonoBehaviour
         }
 
         BufferTexture.Apply();
+        BufferCenterTexture.Apply();
         Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
         bufferMaterial.SetTexture("_MainTex", BufferTexture);
+        bufferMaterial.SetTexture("_CenterTex", BufferCenterTexture);
     }
 
     public void RemoveBuffer(Vector2Int pos, int sizeX = 1, int sizeY = 1)
@@ -696,6 +708,10 @@ public class GridSystem : MonoBehaviour
                             clusterToRemove = cluster;
                     }
                 }
+
+                // specifically for large food sources
+                if (sizeX > 1 || sizeY > 1)
+                    BufferCenterTexture.SetPixel(removeBufferPosition.x, removeBufferPosition.y, new Color(0, 0, 0, 0));
 
                 if (clusterToRemove != null)
                 {
@@ -738,11 +754,11 @@ public class GridSystem : MonoBehaviour
             {
                 finishedClusters.Add(cluster);
                 // remove the information from textures
-                BufferCenterTexture.SetPixel(cluster.CenterPosition.x, cluster.CenterPosition.y, new Color(0, 0, 0, 0));
                 foreach (Vector2Int bufferPosition in cluster.ConstructionTilePositions)
                 {
                     changedTiles.Add((Vector3Int)bufferPosition);
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
+                    BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
                 }
 
