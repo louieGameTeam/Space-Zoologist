@@ -21,7 +21,7 @@ public class ResearchEntry
     public void Setup()
     {
         notes.Setup();
-        encyclopedia.Setup();
+        if (encyclopedia != null) encyclopedia.Setup();
     }
     #endregion
 }

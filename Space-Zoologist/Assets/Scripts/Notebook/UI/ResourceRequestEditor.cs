@@ -34,7 +34,7 @@ public class ResourceRequestEditor : NotebookUIChild
     private TMP_InputField priorityInput;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets a research category")]
-    private CategoryFilteredItemDropdown categoryDropdown;
+    private CategoryFilteredItemDropdown targetDropdown;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets the need")]
     private NeedTypeDropdown needDropdown;
@@ -43,7 +43,7 @@ public class ResourceRequestEditor : NotebookUIChild
     private TMP_InputField quantityInput;
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
-    private ResourcePicker resourcePicker;
+    private CategoryFilteredItemDropdown itemRequestedDropdown;
 
     [Space]
 
@@ -83,25 +83,25 @@ public class ResourceRequestEditor : NotebookUIChild
         onRequestDeleted.AddListener(requestDeletedCallback);
 
         // Setup each dropdown
-        categoryDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
+        targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         needDropdown.Setup(new NeedType[] { NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
-        resourcePicker.Setup();
+        itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
 
         if (request != null)
         {
             priorityInput.text = request.Priority.ToString();
-            categoryDropdown.SetResearchCategory(request.Target);
+            targetDropdown.SetSelectedItem(request.Target);
             needDropdown.SetNeedTypeValue(request.ImprovedNeed);
             quantityInput.text = request.QuantityRequested.ToString();
-            resourcePicker.ItemSelected = request.ItemRequested;
+            itemRequestedDropdown.SetSelectedItem(request.ItemRequested);
         }
         else
         {
             priorityInput.text = "0";
-            categoryDropdown.SetDropdownValue(0);
+            targetDropdown.SetDropdownValue(0);
             needDropdown.SetDropdownValue(0);
             quantityInput.text = "0";
-            resourcePicker.Dropdown.value = 0;
+            itemRequestedDropdown.Dropdown.value = 0;
         }
 
         // Cache current id
@@ -118,13 +118,13 @@ public class ResourceRequestEditor : NotebookUIChild
                     onPriorityUpdated.Invoke();
                 }
             });
-            categoryDropdown.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().Target = x);
+            targetDropdown.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().Target = x);
             needDropdown.OnNeedTypeSelected.AddListener(x => GetOrCreateResourceRequest().ImprovedNeed = x);
             quantityInput.onEndEdit.AddListener(x =>
             {
                 if (!string.IsNullOrWhiteSpace(x)) GetOrCreateResourceRequest().QuantityRequested = int.Parse(x);
             });
-            resourcePicker.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().ItemRequested = x);
+            itemRequestedDropdown.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().ItemRequested = x);
         }
 
         // Elements only interactable if editing for the current enclosure
@@ -167,10 +167,10 @@ public class ResourceRequestEditor : NotebookUIChild
             request = new ResourceRequest
             {
                 Priority = int.Parse(priorityInput.text),
-                Target = categoryDropdown.SelectedItem,
+                Target = targetDropdown.SelectedItem,
                 ImprovedNeed = needDropdown.SelectedNeed,
                 QuantityRequested = int.Parse(quantityInput.text),
-                ItemRequested = resourcePicker.ItemSelected
+                ItemRequested = itemRequestedDropdown.SelectedItem
             };
 
             // Get the list and add the new request

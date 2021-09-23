@@ -10,7 +10,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
 {
     #region Public Properties
     public ResearchEncyclopedia CurrentEncyclopedia => UIParent.Notebook.Research.GetEntry(currentItem).Encyclopedia;
-    public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia.GetArticle(currentArticleID);
+    public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia != null ? CurrentEncyclopedia.GetArticle(currentArticleID) : null;
     public ResearchEncyclopediaArticleID CurrentArticleID
     {
         get => currentArticleID;
@@ -52,7 +52,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     // Maps the research category to the index of the article previously selected
     private Dictionary<ItemID, int> previousSelected = new Dictionary<ItemID, int>();
     // Current research category selected
-    private ItemID currentItem;
+    private ItemID currentItem = new ItemID(ItemRegistry.Category.Species, -1);
     // Current research article selected
     private ResearchEncyclopediaArticleID currentArticleID;
     #endregion
@@ -80,24 +80,35 @@ public class ResearchEncyclopediaUI : NotebookUIChild
 
     private void OnItemIDChanged(ItemID id)
     {
-        // If the current category exists, save the value previously selected in the dictionary
-        if(previousSelected.ContainsKey(currentItem)) previousSelected[currentItem] = dropdown.value;
+        // If a current item is selected that save the dropdown value that was previously selected
+        if (currentItem.Index >= 0) previousSelected[currentItem] = dropdown.value;
 
         // Set currently selected category
         currentItem = id;
         // Clear the options of the dropdown
         dropdown.ClearOptions();
 
-        // Loop through all articles in the current encyclopedia and add their title-author pairs to the dropdown list
-        foreach(KeyValuePair<ResearchEncyclopediaArticleID, ResearchEncyclopediaArticle> article in CurrentEncyclopedia.Articles)
+        // Check if encyclopedia is null before trying to use it
+        if(CurrentEncyclopedia != null)
         {
-            dropdown.options.Add(new TMP_Dropdown.OptionData(ArticleIDToDropdownLabel(article.Key)));
+            // Loop through all articles in the current encyclopedia and add their title-author pairs to the dropdown list
+            foreach (KeyValuePair<ResearchEncyclopediaArticleID, ResearchEncyclopediaArticle> article in CurrentEncyclopedia.Articles)
+            {
+                dropdown.options.Add(new TMP_Dropdown.OptionData(ArticleIDToDropdownLabel(article.Key)));
+            }
+            // If this item has been selected before, open to the article that was selected previously
+            if (previousSelected.ContainsKey(id)) dropdown.value = previousSelected[id];
+            // If this item has not been selected before, then select the first article
+            else
+            {
+                previousSelected[id] = 0;
+                dropdown.value = 0;
+            }
         }
-        // Select the first article in the list
-        if (previousSelected.ContainsKey(id)) dropdown.value = previousSelected[id];
+        // If the current encyclopedia is null then there are no articles to pick
         else
         {
-            previousSelected[id] = 0;
+            dropdown.options.Add(new TMP_Dropdown.OptionData("<No articles>"));
             dropdown.value = 0;
         }
 
@@ -108,7 +119,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
 
     private void OnDropdownValueChanged(int value)
     {
-        if (dropdown.options.Count > 0)
+        if (CurrentEncyclopedia != null)
         {
             // Create the id object
             currentArticleID = DropdownLabelToArticleID(dropdown.options[value].text);

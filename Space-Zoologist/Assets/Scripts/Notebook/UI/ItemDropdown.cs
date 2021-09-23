@@ -7,17 +7,17 @@ using TMPro;
 
 public class ItemDropdown : NotebookUIChild
 {
+    #region Public Typedefs
     [System.Serializable]
     public class ItemIDEvent : UnityEvent<ItemID> { }
+    #endregion
 
-    // Public accessors
     #region Public Properties
     public TMP_Dropdown Dropdown => dropdown;
     public ItemIDEvent OnItemSelected => onItemSelected;
     public ItemID SelectedItem => optionCategoryMap[dropdown.options[dropdown.value]];
     #endregion
 
-    // Private editor data
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the research category")]
@@ -33,11 +33,14 @@ public class ItemDropdown : NotebookUIChild
     protected ItemIDEvent onItemSelected;
     #endregion
 
+    #region Private Fields
     // Maps a selected item in the dropdown to a research category
     // NOTE: why don't we just change this to two conversion functions to change betweeen types?
     // NOTE: CAN'T do that because cannot find an item on the registry from its name, you need the index
     protected Dictionary<TMP_Dropdown.OptionData, ItemID> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ItemID>();
+    #endregion
 
+    #region Public Methods
     public override void Setup()
     {
         base.Setup();
@@ -45,6 +48,8 @@ public class ItemDropdown : NotebookUIChild
         // Clear any existing data
         dropdown.ClearOptions();
         optionCategoryMap.Clear();
+
+        
 
         foreach(ItemID id in GetItemIDs())
         {
@@ -67,9 +72,11 @@ public class ItemDropdown : NotebookUIChild
     public void SetDropdownValue(int value) => SetDropdownValueHelper(value, true);
     public void SetDropdownValueWithoutNotify(int value) => SetDropdownValueHelper(value, false);
 
-    public bool SetResearchCategory(ItemID id) => SetResearchCategoryHelper(id, v => SetDropdownValue(v));
-    public bool SetResearchCategoryWithoutNotify(ItemID id) => SetResearchCategoryHelper(id, v => SetDropdownValueWithoutNotify(v));
+    public bool SetSelectedItem(ItemID id) => SetResearchCategoryHelper(id, v => SetDropdownValue(v));
+    public bool SetSelectedItemWithoutNotify(ItemID id) => SetResearchCategoryHelper(id, v => SetDropdownValueWithoutNotify(v));
+    #endregion
 
+    #region Private Methods
     private bool SetResearchCategoryHelper(ItemID id, UnityAction<int> valueSetter)
     {
         // Find the first value in the list that matches
@@ -105,8 +112,6 @@ public class ItemDropdown : NotebookUIChild
         // If we are notifying then raise the event
         if (notify) onItemSelected.Invoke(optionCategoryMap[selection]);
     }
-    protected virtual ItemID[] GetItemIDs()
-    {
-        return ItemRegistry.GetAllItemIDs();
-    }
+    protected virtual ItemID[] GetItemIDs() => ItemRegistry.GetAllItemIDs().Where(i => UIParent.Notebook.ItemIsUnlocked(i)).ToArray();
+    #endregion
 }

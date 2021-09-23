@@ -42,8 +42,7 @@ public class ResourceRequestStatusUI : NotebookUIChild
 
             // If the request was denied or only partially granted then we need to set up
             // hover events to display the status reason
-            if(request.CurrentStatus == ResourceRequest.Status.Denied || 
-                (request.CurrentStatus == ResourceRequest.Status.Granted && request.PartiallyGranted))
+            if(request.CurrentStatus == ResourceRequest.Status.Denied || request.PartiallyGranted)
             {
                 // Clear any existing triggers
                 statusTrigger.triggers.Clear();
@@ -76,12 +75,10 @@ public class ResourceRequestStatusUI : NotebookUIChild
     #region Private Methods
     private void OnStatusPointerEnter()
     {
-        Debug.Log("Pointer enter", statusReasonObject);
         statusReasonObject.SetActive(true);
     }
     private void OnStatusPointerExit()
     {
-        Debug.Log("Pointer exit", statusReasonObject);
         statusReasonObject.SetActive(false);
     }
     #endregion

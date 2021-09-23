@@ -48,6 +48,8 @@ public class NotebookModel : ScriptableObject
     #region Private Fields
     // Notes on each character in the acronym
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
+    // A set with all items that have been unlocked
+    private HashSet<ItemID> itemsUnlocked = new HashSet<ItemID>();
     #endregion
 
     #region Public Methods
@@ -90,5 +92,11 @@ public class NotebookModel : ScriptableObject
         concepts.TryAddEnclosureId(id);
         testAndMetrics.TryAddEnclosureID(id);
     }
+
+    public void UnlockItem(ItemID id)
+    {
+        if (!itemsUnlocked.Contains(id)) itemsUnlocked.Add(id);
+    }
+    public bool ItemIsUnlocked(ItemID id) => itemsUnlocked.Contains(id);
     #endregion
 }

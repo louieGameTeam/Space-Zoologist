@@ -6,16 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class NotebookUI : MonoBehaviour
 {
+    #region Public Typedefs
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
+    #endregion
 
-    // Public accessors
+    #region Public Properties
     public NotebookModel Notebook => notebook;
     public UnityEvent OnContentChanged => onContentChanged;
     public BoolEvent OnNotebookToggle => onNotebookToggle;
+    #endregion
 
+    #region Private Editor Fields
     [SerializeField]
-    [Expandable]
     [Tooltip("Reference to the serialized object that holds all info about the notebook")]
     private NotebookModel notebook;
     [SerializeField]
@@ -27,12 +30,16 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Event invoked each time the notebook is enabled/disabled")]
     private BoolEvent onNotebookToggle;
+    #endregion
 
+    #region Private Fields
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
     private bool isOpen = false;
+    #endregion
 
+    #region Monobehaviour Messages
     private void Start()
     {
         // Setup the notebook at the start
@@ -40,6 +47,18 @@ public class NotebookUI : MonoBehaviour
 
         // Update the enclosure IDs
         notebook.TryAddEnclosureID(EnclosureID.FromCurrentSceneName());
+
+        // Try to get an instance of the game manager
+        GameManager instance = GameManager.Instance;
+
+        // If the instance exists then unlock all item id's that exist in the list of items
+        if(instance)
+        {
+            foreach(LevelData.ItemData item in instance.LevelData.ItemQuantities)
+            {
+                notebook.UnlockItem(item.itemObject.ItemID);
+            }
+        }
 
         // Map all bookmark targets to their corresponding game object names
         BookmarkTarget[] allBookmarkTargets = GetComponentsInChildren<BookmarkTarget>(true);
@@ -56,6 +75,9 @@ public class NotebookUI : MonoBehaviour
         // while also making sure it is turned off at the start
         if (!isOpen) SetIsOpen(false);
     }
+    #endregion
+
+    #region Public Methods
     public void Toggle()
     {
         SetIsOpen(!isOpen);
@@ -70,4 +92,5 @@ public class NotebookUI : MonoBehaviour
     {
         bookmark.Navigate(nameTargetMap);
     }
+    #endregion
 }

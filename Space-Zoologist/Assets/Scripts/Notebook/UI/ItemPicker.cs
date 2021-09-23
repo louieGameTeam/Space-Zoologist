@@ -24,12 +24,12 @@ public class ItemPicker : NotebookUIChild
             // Set the research category on each dropdown (those that can't select this category ignore it)
             foreach(ItemDropdown dropdown in dropdowns)
             {
-                dropdown.SetResearchCategory(value);
+                dropdown.SetSelectedItem(value);
             }
         }
     }
     public ItemIDEvent OnItemPicked => onItemPicked;
-    public bool HasBeenInitialized => selectedItem.Index < 0;
+    public bool HasBeenInitialized => selectedItem.Index >= 0;
     #endregion
 
     #region Private Editor Fields
