@@ -14,7 +14,7 @@ public class CategoryFilteredItemDropdown : ItemDropdown
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Research category type that this dropdown represents")]
-    private List<ItemRegistry.Category> categoryFilter;
+    protected List<ItemRegistry.Category> categoryFilter;
     #endregion
 
     #region Public Methods

@@ -25,6 +25,7 @@ public class NotebookModel : ScriptableObject
     [Space]
     
     [SerializeField]
+    [WrappedProperty("researchEntryData")]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
     private ResearchModel research;

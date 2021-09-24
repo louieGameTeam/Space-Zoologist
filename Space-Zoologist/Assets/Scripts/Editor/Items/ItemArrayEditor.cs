@@ -12,14 +12,14 @@ public class ItemArrayEditor : ArrayOnEnumEditor<ItemRegistry.Category>
     #region Constructors
     public ItemArrayEditor(string innerArrayRelativePath)
     {
-        propertyField = (r, s, g, e) =>
+        arrayElementPropertyField = (r, s, g, e) =>
         {
             ItemData[] datas = ItemRegistry.GetItemsWithCategory(e);
             innerArrayEditor.OnGUI(r, s.FindPropertyRelative(innerArrayRelativePath), g, datas);
         };
-        propertyHeight = s => innerArrayEditor.GetPropertyHeight(s.FindPropertyRelative(innerArrayRelativePath));
+        arrayElementPropertyHeight = s => innerArrayEditor.GetPropertyHeight(s.FindPropertyRelative(innerArrayRelativePath));
 
-        innerArrayEditor.content = (s, e) => new GUIContent(e.Name.ToString());
+        innerArrayEditor.arrayElementLabel = (s, e) => new GUIContent(e.Name.ToString());
     }
     #endregion
 }

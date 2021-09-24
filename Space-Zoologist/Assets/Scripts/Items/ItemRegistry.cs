@@ -7,6 +7,14 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
 {
     #region Public Typedefs
     public enum Category { Species, Food, Tile }
+    // So that the attributes work correctly in the editor
+    [System.Serializable]
+    public class ItemRegistryData
+    {
+        [Tooltip("List of item data lists - parallel to the 'Category' enum")]
+        [WrappedProperty("items")]
+        public ItemDataList[] itemDataLists;
+    }
     #endregion
 
     #region Private Properties
@@ -16,7 +24,8 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of item data lists - parallel to the 'Category' enum")]
-    private ItemDataList[] itemDatas;
+    [EditArrayWrapperOnEnum("itemDataLists", typeof(Category))]
+    private ItemRegistryData itemData;
     #endregion
 
     #region Public Methods
@@ -26,7 +35,7 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         if (id.Index >= 0 && id.Index < datas.Length) return datas[id.Index];
         else return null;
     }
-    public static ItemData[] GetItemsWithCategory(Category category) => Instance.itemDatas[(int)category].List;
+    public static ItemData[] GetItemsWithCategory(Category category) => Instance.itemData.itemDataLists[(int)category].Items;
     public static int CountItemsWithCategory(Category category) => GetItemsWithCategory(category).Length;
     public static int CountAllItems()
     {
