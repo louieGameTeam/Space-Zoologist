@@ -17,16 +17,16 @@ public class TestAndMetricsModel
 
     #region Private Fields
     // Map the list ot the enclosure it applies to
-    private Dictionary<EnclosureID, TestAndMetricsEntryList> data = new Dictionary<EnclosureID, TestAndMetricsEntryList>();
+    private Dictionary<EnclosureID, TestAndMetricsEntryList> observationsEntries = new Dictionary<EnclosureID, TestAndMetricsEntryList>();
     #endregion
 
     #region Public Methods
-    public TestAndMetricsEntryList GetEntryList(EnclosureID id) => data[id];
+    public TestAndMetricsEntryList GetEntryList(EnclosureID id) => observationsEntries[id];
     public void TryAddEnclosureID(EnclosureID id)
     {
-        if(!data.ContainsKey(id))
+        if(!observationsEntries.ContainsKey(id))
         {
-            data.Add(id, new TestAndMetricsEntryList());
+            observationsEntries.Add(id, new TestAndMetricsEntryList());
         }
     }
     public string GetInitialEntryText(EnclosureID id) => initialTexts[enclosureScaffold.ScaffoldLevel(id)];

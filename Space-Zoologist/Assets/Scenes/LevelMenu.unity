@@ -304,7 +304,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: e3a5f518e83bb4ab3b3589786ac0102d, type: 3}
+      objectReference: {fileID: 8300000, guid: 6d609e41eb0f34b7188a50d9ddf352e6, type: 3}
     - target: {fileID: 5423665932188050013, guid: 6238c2724e7624d0580fcf5738f4fd83,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -769,6 +769,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505284627799177821, guid: 757d09d31762a4ed690a409b2cd5fb26,
+        type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4505284627871622220, guid: 757d09d31762a4ed690a409b2cd5fb26,
         type: 3}

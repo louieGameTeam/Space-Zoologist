@@ -26,6 +26,10 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
         Initialize(attachedSource);
     }
 
+    public void Reinitialize() {
+        Initialize(source);
+    }
+
     void Initialize(AudioSource refSource)
     {
         source = refSource;

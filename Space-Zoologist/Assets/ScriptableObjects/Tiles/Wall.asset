@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb43224d6f3ee97448552e334a6e0c8f, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
+  itemID:
+    category: 2
+    index: 5
   id: Wall
   type: 1
   itemName: Wall
   price: 0
   description: 
-  icon: {fileID: -1529223231116268178, guid: 0314811df211bb7418f88854e78f8bbb, type: 3}
+  icon: {fileID: -4525579849851792835, guid: 5a6d2da94b0e1b142b8c0e70b59d1906, type: 3}
   audio:
   - {fileID: 8300000, guid: e54504dfe43cd407da9ac0c5b24145f4, type: 3}
   - {fileID: 8300000, guid: 7267b17609a394fb9ac9a1791c2a7bb2, type: 3}

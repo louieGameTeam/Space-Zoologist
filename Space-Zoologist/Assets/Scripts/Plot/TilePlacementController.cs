@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class TilePlacementController : MonoBehaviour
 {
     private enum PlacementResult { Placed, Restricted, AlreadyExisted }
+    private GridSystem gridSystemReference;
     public bool isBlockMode { get; set; } = false;
     public bool PlacementPaused { get; private set; }
     public bool isPreviewing { get; set; } = false;
@@ -14,7 +15,6 @@ public class TilePlacementController : MonoBehaviour
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
     private Vector3Int currentMouseCellPosition = Vector3Int.zero;
-    private Grid grid;
     private Vector3Int lastPlacedTile;
     private List<GameTile> referencedTiles = new List<GameTile>();
     private bool isFirstTile;
@@ -27,10 +27,10 @@ public class TilePlacementController : MonoBehaviour
     private Dictionary<GameTile, List<Tilemap>> colorLinkedTiles = new Dictionary<GameTile, List<Tilemap>>();
     private int lastCornerX;
     private int lastCornerY;
-    private void Awake()
+    public void Initialize()
     {
+        gridSystemReference = GameManager.Instance.m_gridSystem;
          // Load tiles form resources
-        grid = GetComponent<Grid>();
         List<Vector3Int> colorInitializeTiles = new List<Vector3Int>();
         /*            if (tilemap.TryGetComponent(out TileColorManager tileColorManager))
                     {
@@ -52,7 +52,7 @@ public class TilePlacementController : MonoBehaviour
         if (isPreviewing) // Update for preview
         {
             Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            this.currentMouseCellPosition = grid.WorldToCell(mouseWorldPosition);
+            this.currentMouseCellPosition = gridSystemReference.WorldToCell(mouseWorldPosition);
             this.PlacementPaused = false;
             if (this.currentMouseCellPosition != this.lastMouseCellPosition || this.isFirstTile)
             {
@@ -86,7 +86,7 @@ public class TilePlacementController : MonoBehaviour
     public void StartPreview(string tileID, bool godMode = false, float[] liquidContents = null)
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        this.dragStartPosition = this.grid.WorldToCell(mouseWorldPosition);
+        this.dragStartPosition = gridSystemReference.WorldToCell(mouseWorldPosition);
         if (!Enum.IsDefined(typeof(TileType), tileID))
         {
             throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
@@ -109,6 +109,7 @@ public class TilePlacementController : MonoBehaviour
     {
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
+        //temporarily removed because of revert bug
         GameManager.Instance.m_gridSystem.ConfirmPlacement();
 
         // Set terrain modified flag
@@ -126,10 +127,10 @@ public class TilePlacementController : MonoBehaviour
     {
         foreach (GameTile tile in this.referencedTiles)
         {
-            GameTile currentTile = GameManager.Instance.m_gridSystem.GetGameTileAt(this.currentMouseCellPosition);
+            GameTile currentTile = gridSystemReference.GetGameTileAt(this.currentMouseCellPosition);
             if (currentTile != null)
             {
-                GameManager.Instance.m_gridSystem.RemoveTile(this.currentMouseCellPosition);
+                gridSystemReference.RemoveTile(this.currentMouseCellPosition);
             }
         }
     }
@@ -140,7 +141,7 @@ public class TilePlacementController : MonoBehaviour
 
     public void RevertChanges() // Go through each change and revert back to original
     {
-        GameManager.Instance.m_gridSystem.Revert();
+        gridSystemReference.Revert();
         // figure out what is going on here
         /*
         if (tilemap.TryGetComponent(out TileContentsManager tileAttributes))
@@ -274,15 +275,18 @@ public class TilePlacementController : MonoBehaviour
 
     private bool IsPlacable(Vector3Int cellPosition)
     {
+        if (godMode)
+            return true;
+
         if (currentMouseCellPosition == dragStartPosition)
         {
-            return true;
+            return gridSystemReference.GetTileData(cellPosition).isTilePlaceable;
         }
         foreach (Vector3Int location in GridSystem.FourNeighborTileLocations(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
-                return true;
+                return gridSystemReference.GetTileData(location).isTilePlaceable;
             }
         }
         return false;
@@ -302,7 +306,7 @@ public class TilePlacementController : MonoBehaviour
                     return PlacementResult.Restricted;
                 }
                 // If same tile
-                if (GameManager.Instance.m_gridSystem.GetGameTileAt(cellPosition) == tile)
+                if (gridSystemReference.GetGameTileAt(cellPosition) == tile)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;
@@ -310,7 +314,7 @@ public class TilePlacementController : MonoBehaviour
             }
             foreach (GameTile tile in referencedTiles)
             {
-                GameManager.Instance.m_gridSystem.AddTile(cellPosition, tile, godMode);
+                gridSystemReference.AddTile(cellPosition, tile, godMode);
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
@@ -336,16 +340,16 @@ public class TilePlacementController : MonoBehaviour
         {
             return true;
         }
-        if (!GameManager.Instance.m_gridSystem.IsWithinGridBounds(cellLocation))
+        if (!gridSystemReference.IsWithinGridBounds(cellLocation))
         {
             return false;
         }
-        GridSystem.TileData tileData = GameManager.Instance.m_gridSystem.GetTileData(cellLocation);
+        GridSystem.TileData tileData = gridSystemReference.GetTileData(cellLocation);
         if (tileData.Food)
         {
             return false;
         }
-        if (GameManager.Instance.m_buildBufferManager.IsConstructing(cellLocation.x, cellLocation.y))
+        if (gridSystemReference.IsConstructing(cellLocation.x, cellLocation.y))
         {
             return false;
         }

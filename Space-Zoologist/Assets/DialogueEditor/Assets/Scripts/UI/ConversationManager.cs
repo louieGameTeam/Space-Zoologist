@@ -76,6 +76,7 @@ namespace DialogueEditor
         private Conversation m_conversation;
         private List<UIConversationButton> m_uiOptions;
         private bool skipping;
+        private bool isFrozen = false;
 
         private SpeechNode m_pendingDialogue;
         private OptionNode m_selectedOption;
@@ -181,19 +182,17 @@ namespace DialogueEditor
                 case eState.Idle:
                     {
                         m_stateTime += Time.deltaTime;
-
-                        if (m_currentSpeech.AutomaticallyAdvance)
+                        if (m_currentSpeech.Dialogue != null || m_currentSpeech.Options == null || m_currentSpeech.Options.Count == 0)
                         {
-                            if (m_currentSpeech.Dialogue != null || m_currentSpeech.Options == null || m_currentSpeech.Options.Count == 0)
+                            if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
-                                if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
+                                if ((Input.GetMouseButtonDown(0) || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
-                                    UpdateNextSpeech();
                                     SetState(eState.TransitioningOptionsOff);
+                                    m_currentSpeech.Event?.Invoke();
                                 }
                             }
                         }
-                    
                     }
                     break;
 
@@ -264,15 +263,6 @@ namespace DialogueEditor
                     break;
                 case eState.freeze:
                     break;
-            }
-        }
-
-        public void UpdateNextSpeech()
-        {
-            if (m_currentSpeech.Options.Count == 0)
-            {
-                SetState(eState.TransitioningOptionsOff);
-                m_currentSpeech.Event?.Invoke();
             }
         }
 
@@ -433,12 +423,14 @@ namespace DialogueEditor
 
         public void FreezeConversation()
         {
+            isFrozen = true;
             SetState(eState.Idle);
         }
 
         public void UnfreezeConversation()
         {
             print("Unfroze");
+            isFrozen = false;
             SetState(eState.TransitioningOptionsOff);
         }
         //--------------------------------------
@@ -579,7 +571,7 @@ namespace DialogueEditor
 
 
             // Call the event
-            // speech.Event?.Invoke();
+            //speech.Event?.Invoke();
 
             // Play the audio
             if (speech.Audio != null)
@@ -607,7 +599,7 @@ namespace DialogueEditor
                 // Display "Continue" / "End" if we should.
                 //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
-                if (speech.Options.Count > 0 || autoWithOption)
+                if (autoWithOption)
                 {
                     // Else display "continue" button to go to following dialogue
                     if (speech.Dialogue != null)

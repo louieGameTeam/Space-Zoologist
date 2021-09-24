@@ -130,6 +130,9 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
 
     private void CreateImage(Sprite sprite)
     {
+        if (!sprite)
+            return;
+
         GameObject imageObject = new GameObject(sprite.name);
 
         // Add a rect transform and parent it under the desired parent

@@ -267,12 +267,7 @@ public class TerrainNeedSystem : NeedSystem
                 foreach(Population population in populationSet)
                 {
                     string needName = tile.ToString();
-                    if (needName.Equals("Liquid"))
-                    {
-                        population.UpdateNeed(needName, GameManager.Instance.m_reservePartitionManager.GetLiquidComposition(population).Count);
-                        Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + GameManager.Instance.m_reservePartitionManager.GetLiquidComposition(population).Count);
-                    }
-                    else if(tilesAllocated[population].ContainsKey(tile)) {
+                    if(tilesAllocated[population].ContainsKey(tile)) {
                         population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
                         //Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
                     }
@@ -283,22 +278,19 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesInArea(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius);
+            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesUnderSpecies(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 string needName = ((TileType)index).ToString();
+                if (needName.Equals("Liquid"))
+                {
+                    continue;
+                }
 
                 if (foodSource.GetNeedValues().ContainsKey(needName))
                 {
-                    if (needName.Equals("Liquid"))
-                    {
-                        int liquidCount = GameManager.Instance.m_gridSystem.CountOfTilesInRange(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species.RootRadius)[index];
-                        //Debug.Log(foodSource.name + " updated " + needName + " with value: " + liquidCount);
-                        foodSource.UpdateNeed(needName, liquidCount);
-                        continue;
-                    }
-                    //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
+                    Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
                     foodSource.UpdateNeed(needName, count);
                 }
             }

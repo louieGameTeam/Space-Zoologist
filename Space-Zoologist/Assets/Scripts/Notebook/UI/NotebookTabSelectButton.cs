@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using TMPro;
 using DG.Tweening;
 
-public class NotebookTabSelectButton : MonoBehaviour
+public class NotebookTabSelectButton : NotebookUIChild
 {
     [System.Serializable]
     public class NotebookTabEvent : UnityEvent<NotebookTab> { }
@@ -34,8 +34,12 @@ public class NotebookTabSelectButton : MonoBehaviour
     // Notebook tab that this button navigates to
     private NotebookTab tab;
 
-    public void Setup(NotebookTab tab, ToggleGroup parent, UnityAction<NotebookTab> callback, bool isOn)
+    public void Setup(NotebookTab tab, ToggleGroup parent, UnityAction<NotebookTab> callback)
     {
+        // Setup the notebook child base
+        base.Setup();
+
+        // Set the tab
         this.tab = tab;
 
         // Setup the toggle 
@@ -48,7 +52,11 @@ public class NotebookTabSelectButton : MonoBehaviour
         tabName.text = tab.ToString();
 
         // Set state of the toggle.  NOTE: this invokes OnToggleStateChanged immediately
-        myToggle.isOn = isOn;
+        myToggle.isOn = tab == 0;
+
+        // This toggle is only interactable if the tab scaffold says so
+        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        myToggle.interactable = UIParent.Notebook.TabScaffold.GetMask(current).Get(tab);
     }
 
     private void OnToggleStateChanged(bool state)
