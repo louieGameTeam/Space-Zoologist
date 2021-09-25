@@ -44,6 +44,8 @@ public class NotebookModel : ScriptableObject
     [SerializeField]
     [Tooltip("Controls which tabs are available in what levels")]
     private NotebookTabScaffold tabScaffold;
+
+    public QuizTemplate quiz;
     #endregion
 
     #region Private Fields

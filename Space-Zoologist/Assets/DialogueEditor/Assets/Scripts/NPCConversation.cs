@@ -232,8 +232,12 @@ namespace DialogueEditor
         }
 
         public void Clear() {
-            foreach (var node in NodeSerializedDataList) {
-                DeleteDataForNode(node.NodeID);
+            if(NodeSerializedDataList != null)
+            {
+                foreach (var node in NodeSerializedDataList)
+                {
+                    DeleteDataForNode(node.NodeID);
+                }
             }
             json = null;
             CurrentIDCounter = 1;

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Quiz
+public class EditorReadOnlyAttribute : PropertyAttribute
 {
     
 }
