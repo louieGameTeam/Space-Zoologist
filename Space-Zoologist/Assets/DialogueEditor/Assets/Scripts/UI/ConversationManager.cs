@@ -189,7 +189,6 @@ namespace DialogueEditor
                                 if ((Input.GetMouseButtonDown(0) || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
                                     SetState(eState.TransitioningOptionsOff);
-                                    m_currentSpeech.Event?.Invoke();
                                 }
                             }
                         }
@@ -204,6 +203,7 @@ namespace DialogueEditor
                         if (t > 1)
                         {
                             ClearOptions();
+                            m_currentSpeech.Event?.Invoke();
 
                             //if (m_currentSpeech.AutomaticallyAdvance)
                             //{

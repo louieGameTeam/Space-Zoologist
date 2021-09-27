@@ -18,7 +18,7 @@ namespace DialogueEditor
         /// <summary> Version 1.03 </summary>
         public const int CurrentVersion = 103;
 
-        private readonly string CHILD_NAME = "ConversationEventInfo";
+        public static readonly string CHILD_NAME = "ConversationEventInfo";
 
         // Serialized data
         [SerializeField] public int CurrentIDCounter = 1;

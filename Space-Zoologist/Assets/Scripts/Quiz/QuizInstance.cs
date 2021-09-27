@@ -7,7 +7,9 @@ using UnityEngine;
 public class QuizInstance
 {
     #region Public Properties
-    public bool Completed => answers.All(a => a >= 0);
+    public QuizTemplate Template => template;
+    public int QuestionsAnswered => answers.Count(i => i >= 0);
+    public bool Completed => QuestionsAnswered >= template.Questions.Length;
     public int Score
     {
         get
