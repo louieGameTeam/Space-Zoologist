@@ -5,6 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class ConceptsModel
 {
+    #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Quantity of an item that is requestable in each level")]
+    private ResourceRequestQuantityRegistry[] quantityRegistries;
+    #endregion
+
     #region Private Fields
     // Map the resource requests to the enclosure it applies to
     private Dictionary<EnclosureID, ResourceRequestList> resourceRequests = new Dictionary<EnclosureID, ResourceRequestList>();
@@ -17,12 +23,52 @@ public class ConceptsModel
     }
     public ResourceRequestList GetResourceRequestList(EnclosureID id) => resourceRequests[id];
     // Maximum number of requests that can be made by the player when playing this enclosure
-    public int MaxRequests(EnclosureID _) => 10;
+    public int MaxRequests(EnclosureID enclosureID)
+    {
+        if (enclosureID.LevelNumber >= 0 && enclosureID.LevelNumber < quantityRegistries.Length)
+        {
+            return quantityRegistries[enclosureID.LevelNumber].MaxRequests;
+        }
+        else return -1;
+    }
     // Maximum number of resources that can be requested by the player when playing this enclosure
-    public int MaxResources(EnclosureID _) => 100;
+    public int MaxRequestableResources(EnclosureID enclosureID)
+    {
+        if (enclosureID.LevelNumber >= 0 && enclosureID.LevelNumber < quantityRegistries.Length)
+        {
+            return quantityRegistries[enclosureID.LevelNumber].TotalRequestableResources;
+        }
+        else return -1;
+    }
+    public int MaxRequestableResourcesForItem(EnclosureID enclosureID, ItemID itemID)
+    {
+        if (enclosureID.LevelNumber >= 0 && enclosureID.LevelNumber < quantityRegistries.Length)
+        {
+            return quantityRegistries[enclosureID.LevelNumber].RequestableResourcesForItem(itemID);
+        }
+        else return -1;
+    }
     // Count the requests that the player has remaining
-    public int RemainingRequests(EnclosureID id) => MaxRequests(id) - resourceRequests[id].TotalRequestsGranted;
-    public int RemainingResources(EnclosureID id) => MaxResources(id) - resourceRequests[id].TotalResourcesGranted;
+    public int RemainingRequests(EnclosureID enclosureID)
+    {
+        GameManager instance = GameManager.Instance;
+
+        // If the game manager exists, check which day we are on in the simulation
+        if (instance)
+        {
+            if (instance.CurrentDay == 1) return MaxRequests(enclosureID) - resourceRequests[enclosureID].TotalRequestsGrantedInDayRange(0, 1);
+            else return MaxRequests(enclosureID) - resourceRequests[enclosureID].TotalRequestsGrantedInDayRange(2, int.MaxValue);
+        }
+        else return -1;
+    }
+    public int RemainingRequestableResources(EnclosureID enclosureID)
+    {
+        return MaxRequestableResources(enclosureID) - resourceRequests[enclosureID].TotalResourcesGranted;
+    }
+    public int RemainingRequestableResourcesForItem(EnclosureID enclosureID, ItemID itemID)
+    {
+        return MaxRequestableResourcesForItem(enclosureID, itemID) - resourceRequests[enclosureID].TotalItemsGranted(itemID);
+    }
     public void ReviewResourceRequests()
     {
         // Get the list of requests for the current enclosure id
@@ -35,20 +81,22 @@ public class ConceptsModel
         foreach(ResourceRequest request in toReview)
         {
             int remainingRequests = RemainingRequests(current);
-            int remainingResources = RemainingResources(current);
+            int remainingResources = RemainingRequestableResources(current);
+            int remainingResourcesForItem = RemainingRequestableResourcesForItem(current, request.ItemRequested);
 
             // If there are remaining resources, compute quantity to grant
-            if (remainingRequests > 0 && remainingResources > 0)
+            if (remainingRequests > 0 && remainingResources > 0 && remainingResourcesForItem > 0)
             {
-                int quantityGranted = Mathf.Min(request.QuantityRequested, remainingResources);
+                int quantityGranted = Mathf.Min(request.QuantityRequested, remainingResources, remainingResourcesForItem);
 
                 // If quantity granted is the same as quantity requested then we can fully grant the request
                 if (quantityGranted == request.QuantityRequested) request.Grant();
-                // If quantity granted is less than quantity requested then partially grant the request 
-                else request.GrantPartially("Insufficient resources to fully grant this request", quantityGranted, request.ItemRequested);
+                else if (quantityGranted == remainingResources) request.GrantPartially("Insufficient resources to fully grant this request", quantityGranted);
+                else request.GrantPartially("Ran out of items in stock to fully grant this request", quantityGranted);
             }
-            else if (remainingResources <= 0) request.Deny("Insufficient resources to grant this request");
-            else request.Deny("No more requests remaining");
+            else if (remainingRequests <= 0) request.Deny("Ran out of requests to grant");
+            else if (remainingResources <= 0) request.Deny("Ran out of resources to grant");
+            else request.Deny("No more items of this type in stock");
         }
     }
     #endregion

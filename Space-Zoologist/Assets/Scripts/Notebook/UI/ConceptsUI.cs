@@ -65,7 +65,7 @@ public class ConceptsUI : NotebookUIChild
     private void UpdateText(EnclosureID id)
     {
         int requestsLeft = UIParent.Notebook.Concepts.RemainingRequests(id);
-        int resourcesLeft = UIParent.Notebook.Concepts.RemainingResources(id);
+        int resourcesLeft = UIParent.Notebook.Concepts.RemainingRequestableResources(id);
 
         requestsText.text = requestsLeft.ToString();
         resourcesText.text = resourcesLeft.ToString();

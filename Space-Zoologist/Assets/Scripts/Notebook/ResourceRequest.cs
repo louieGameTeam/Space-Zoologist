@@ -45,10 +45,9 @@ public class ResourceRequest
     public Status CurrentStatus => currentStatus;
     public string StatusReason => statusReason;
     public int QuantityGranted => quantityGranted;
-    public ItemID ItemGranted => itemGranted;
+    public int DayReviewed => dayReviewed;
     public bool FullyGranted => currentStatus == Status.Granted &&
-        quantityRequested == quantityGranted &&
-        itemRequested == itemGranted;
+        quantityRequested == quantityGranted;
     public bool PartiallyGranted => currentStatus == Status.Granted && !FullyGranted;
     #endregion
 
@@ -68,62 +67,58 @@ public class ResourceRequest
     [SerializeField]
     [Tooltip("The item that is requested")]
     private ItemID itemRequested;
-    [SerializeField]
-    [Tooltip("Current status of the resource request")]
+    #endregion
+
+    #region Private Fields
     private Status currentStatus;
-    [SerializeField]
-    [Tooltip("Written reason why the request was given the status it currently has")]
     private string statusReason;
-    [SerializeField]
-    [Tooltip("Amount of items that was actually granted the request")]
     private int quantityGranted;
-    [SerializeField]
-    [Tooltip("Item actually granted based on the request")]
-    private ItemID itemGranted;
+    // Day during the simulation that the request was reviewed
+    private int dayReviewed;
     #endregion
 
     #region Public Methods
     public void Grant()
     {
-        Review(Status.Granted, "", quantityRequested, itemRequested);
+        Review(Status.Granted, "", quantityRequested);
     }
-    public void GrantPartially(string statusReason, int quantityGranted, ItemID itemGranted)
+    public void GrantPartially(string statusReason, int quantityGranted)
     {
-        Review(Status.Granted, statusReason, quantityGranted, itemGranted);
+        Review(Status.Granted, statusReason, quantityGranted);
     }
     public void Deny(string statusReason)
     {
-        Review(Status.Denied, statusReason, 0, ItemID.Invalid);
+        Review(Status.Denied, statusReason, 0);
     }
     #endregion
 
     #region Private Methods
-    private void Review(Status currentStatus, string statusReason, int quantityGranted, ItemID itemGranted)
+    private void Review(Status currentStatus, string statusReason, int quantityGranted)
     {
         this.currentStatus = currentStatus;
         this.statusReason = statusReason;
         this.quantityGranted = quantityGranted;
-        this.itemGranted = itemGranted;
 
-        // If the request was granted then we need to tell the resource manager
-        if(currentStatus == Status.Granted)
+        // Check if the game manager exists before using it
+        GameManager instance = GameManager.Instance;
+
+        if(instance)
         {
-            GameManager instance = GameManager.Instance;
-
-            // If the game manager exists then use it to get the resource manager and add the item requested
-            if(instance)
+            if(currentStatus == Status.Granted)
             {
-                LevelData.ItemData itemObjectGranted = instance.LevelData.ItemQuantities.Find(i => i.itemObject.ItemID == itemGranted);
+                // Try to find the object granted so that we can update the resource manager
+                LevelData.ItemData itemObjectGranted = instance.LevelData.ItemQuantities.Find(i => i.itemObject.ItemID == itemRequested);
 
                 if (itemObjectGranted != null)
                 {
                     instance.m_resourceManager.AddItem(itemObjectGranted.itemObject.ItemName, quantityGranted);
                 }
-                else Debug.Log("ResourceRequest: the item '" + itemGranted.Data.Name.ToString() +
+                else Debug.LogWarning("ResourceRequest: the item '" + itemRequested.Data.Name.ToString() +
                     "' could not be granted because no item object with the given ID was found");
             }
-            else Debug.Log("ResourceRequest: granted request will not go through to the resource manager " +
-                "because no instance of the GameManager could be found");
+
+            // Store the day that the request was reviewed
+            dayReviewed = instance.CurrentDay;
         }
     }
     #endregion

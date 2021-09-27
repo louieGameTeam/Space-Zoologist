@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     [Header("Time Variables")]
     [SerializeField] int maxDay = 20;
     private int currentDay = 1;
+    // Readonly accessor for the current day
+    public int CurrentDay => currentDay;
     [SerializeField] Text CurrentDayText = default;
     public bool IsPaused { get; private set; }
     public bool WasPaused { get; private set; }
