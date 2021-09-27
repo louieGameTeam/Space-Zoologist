@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -947,6 +947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 363993210}
   - component: {fileID: 363993209}
+  - component: {fileID: 363993211}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -997,6 +998,24 @@ Transform:
   m_Father: {fileID: 543495682}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &363993211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363993208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98038b5d402be48be91ec263425d2dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MenuManager: {fileID: 363993209}
+  liquidModificationHUD: {fileID: 2096932704}
+  Values:
+  - {fileID: 91648088}
+  - {fileID: 1712361520}
+  - {fileID: 1888547033}
 --- !u!1 &380907107
 GameObject:
   m_ObjectHideFlags: 0

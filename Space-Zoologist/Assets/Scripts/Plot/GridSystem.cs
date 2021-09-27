@@ -439,7 +439,9 @@ public class GridSystem : MonoBehaviour
         tile = tile == null ? GetGameTileAt(cellPosition) : tile;
         if (tile != null)
         {
-            return GetTileData(cellPosition).currentLiquidBody.contents;
+            LiquidBody liquid = GetTileData(cellPosition).currentLiquidBody;
+            if(liquid != null)
+                return liquid.contents;
         }
         return null;
     }
@@ -648,11 +650,21 @@ public class GridSystem : MonoBehaviour
 
                     Color bufferColorInformation = new Color(
                         (float)((int)type) / FLAG_VALUE_MULTIPLIER,                 // which construction type it is
-                        0,                                                          // which tile it is in the set (currently not being used)
+                        0,                                                          // (currently not being used)
                         0,                                                          // the progress towards target
                         (float)time / FLAG_VALUE_MULTIPLIER                         // the total time
                     );
+
+
+                    Color bufferColorExtraInformation = new Color(
+                        (float)(i + j * size.x + 1) / FLAG_VALUE_MULTIPLIER,        // which number tile it is [1, size.x * size.y]
+                        (float) size.x / FLAG_VALUE_MULTIPLIER,                     // food width
+                        (float) size.y / FLAG_VALUE_MULTIPLIER,                     // food height
+                        0
+                    ); 
+
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, bufferColorInformation);
+                    BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, bufferColorExtraInformation);
                     bufferPositions.Add(bufferPosition);
                 }
             }
@@ -663,8 +675,10 @@ public class GridSystem : MonoBehaviour
         }
 
         BufferTexture.Apply();
+        BufferCenterTexture.Apply();
         Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
         bufferMaterial.SetTexture("_MainTex", BufferTexture);
+        bufferMaterial.SetTexture("_CenterTex", BufferCenterTexture);
     }
 
     public void RemoveBuffer(Vector2Int pos, int sizeX = 1, int sizeY = 1)
@@ -696,6 +710,10 @@ public class GridSystem : MonoBehaviour
                             clusterToRemove = cluster;
                     }
                 }
+
+                // specifically for large food sources
+                if (sizeX > 1 || sizeY > 1)
+                    BufferCenterTexture.SetPixel(removeBufferPosition.x, removeBufferPosition.y, new Color(0, 0, 0, 0));
 
                 if (clusterToRemove != null)
                 {
@@ -738,11 +756,11 @@ public class GridSystem : MonoBehaviour
             {
                 finishedClusters.Add(cluster);
                 // remove the information from textures
-                BufferCenterTexture.SetPixel(cluster.CenterPosition.x, cluster.CenterPosition.y, new Color(0, 0, 0, 0));
                 foreach (Vector2Int bufferPosition in cluster.ConstructionTilePositions)
                 {
                     changedTiles.Add((Vector3Int)bufferPosition);
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
+                    BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
                 }
 
@@ -1417,7 +1435,7 @@ public class GridSystem : MonoBehaviour
         bool isValid = true;
         // Size is even, offset by 1
         // Check if the whole object is in bounds
-        print(Mathf.CeilToInt(-(float)species.Size.x / 2));
+        //print(Mathf.CeilToInt(-(float)species.Size.x / 2));
 
         for (int x = Mathf.CeilToInt(-(float)(species.Size.x - 1) / 2); x <= species.Size.x / 2; x++)
         {
@@ -1969,39 +1987,60 @@ public class GridSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Scan from all the liquid tiles within a radius range and return all different liquid compositions
+    /// Scan from all the liquid tiles within a given taxicab distance and return all different liquid compositions
     /// </summary>
-    /// <param name="centerCellLocation">The location of the center cell</param>
+    /// <param name="topRightCorner">The location of the top right corner of the foodSource</param> (cause for some reason that's how foodSources work)
     /// <param name="scanRange">The radius range to look for</param>
     /// <param name="scanRing">Scans the full circle when false. Scans only the outermost ring when true.</param>
     /// <returns>A list of the compositions, can have a length of 0</returns>
-    public List<float[]> GetLiquidCompositionWithinRange(Vector3Int centerCellLocation, int scanRange, bool scanRing = false)
+    public List<float[]> GetLiquidCompositionWithinRange(Vector3Int topRightCorner, Vector2Int foodSourceSize, int scanRange, bool scanRing = false)
     {
         List<float[]> liquidCompositions = new List<float[]>();
 
-        Vector3Int scanLocation = new Vector3Int(0, 0, centerCellLocation.z);
-        foreach (int x in Range(-scanRange, scanRange))
+        Vector3Int scanLocation = new Vector3Int(0, 0, topRightCorner.z);
+        foreach (int x in Range(-scanRange - (foodSourceSize.x - 1), scanRange))
         {
-            foreach (int y in Range(-scanRange, scanRange))
+            foreach (int y in Range(-scanRange - (foodSourceSize.y - 1), scanRange))
             {
-                float distance = Mathf.Sqrt(x * x + y * y);
-                if (distance > scanRange)
+                int xDistance;
+                if(x < 0)
+                {
+                    if(x < -(foodSourceSize.x - 1))
+                        xDistance = Mathf.Abs(x) - (foodSourceSize.x - 1);
+                    else
+                        xDistance = 0;
+                }
+                else
+                    xDistance = x;
+
+                int yDistance;
+                if(y < 0)
+                {
+                    if(y < -(foodSourceSize.y - 1))
+                        yDistance = Mathf.Abs(y) - (foodSourceSize.y - 1);
+                    else
+                        yDistance = 0;
+                }
+                else
+                    yDistance = y;
+
+                if (xDistance + yDistance > scanRange)
                 {
                     continue;
                 }
 
-                if(scanRing && distance <= scanRange - 1)
+                if(scanRing && (xDistance + yDistance) <= scanRange - 1)
                 {
                     continue;
                 }
 
-                scanLocation.x = x + centerCellLocation.x;
-                scanLocation.y = y + centerCellLocation.y;
-                LiquidBody liquid = this.GetTileData(scanLocation) != null ? this.GetTileData(scanLocation).currentLiquidBody : null;
+                scanLocation.x = x + topRightCorner.x;
+                scanLocation.y = y + topRightCorner.y;
+
+                float[] liquid = this.GetTileContentsAt(scanLocation);
                 if (liquid != null)
                 {
-                    liquidCompositions.Add(liquid.contents);
-
+                    liquidCompositions.Add(liquid);
                 }
             }
         }
