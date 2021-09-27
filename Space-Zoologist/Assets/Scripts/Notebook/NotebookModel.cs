@@ -44,8 +44,9 @@ public class NotebookModel : ScriptableObject
     [SerializeField]
     [Tooltip("Controls which tabs are available in what levels")]
     private NotebookTabScaffold tabScaffold;
-
-    public QuizTemplate quiz;
+    [SerializeField]
+    [Tooltip("List of items that should be unlocked at the beginning of the game")]
+    private List<ItemID> initiallyUnlockedItems;
     #endregion
 
     #region Private Fields
@@ -62,6 +63,11 @@ public class NotebookModel : ScriptableObject
         foreach(char c in acronym)
         {
             if (!acronymNotes.ContainsKey(c)) acronymNotes.Add(c, "");
+        }
+        // Foreach letter in the initially unlocked list, add it to the unlocked items
+        foreach(ItemID item in initiallyUnlockedItems)
+        {
+            if (!itemsUnlocked.Contains(item)) itemsUnlocked.Add(item);
         }
         research.Setup();
     }
