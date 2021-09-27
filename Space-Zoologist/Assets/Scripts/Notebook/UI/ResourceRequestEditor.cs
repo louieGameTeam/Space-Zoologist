@@ -152,6 +152,7 @@ public class ResourceRequestEditor : NotebookUIChild
     public void UpdateReviewUI()
     {
         statusUI.UpdateDisplay(request);
+        group.interactable = false;
     }
     #endregion
 

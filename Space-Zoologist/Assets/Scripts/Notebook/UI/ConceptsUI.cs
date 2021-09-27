@@ -35,6 +35,14 @@ public class ConceptsUI : NotebookUIChild
 
         // When request button clicked then review resource requests
         requestButton.onClick.AddListener(ReviewResourceRequests);
+
+        // Try to get an instance of the event manager
+        EventManager instance = EventManager.Instance;
+
+        if(instance)
+        {
+            instance.SubscribeToEvent(EventType.NextDay, () => UpdateText(enclosurePicker.CurrentEnclosureID));
+        }
     }
     #endregion
 

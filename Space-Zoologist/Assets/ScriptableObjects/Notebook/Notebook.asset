@@ -165,6 +165,46 @@ MonoBehaviour:
       totalRequestableResources: 0
       initialRequests: 0
       subsequentRequests: 0
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 050000000300000005000000000000000000000000000000
+        - array: 0a0000000a00000000000000000000000000000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 0a000000050000000a000000000000000000000000000000
+        - array: 0a0000000500000000000000000000000000000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 050000000500000005000000050000000500000005000000
+        - array: 000000000500000005000000050000000500000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 
+        - array: 
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 000000000000000000000000000000000000000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
   testAndMetrics:
     enclosureScaffold: {fileID: 11400000, guid: 4288bb66b31c80a4993552b1c8d9a539,
       type: 2}

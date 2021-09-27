@@ -644,6 +644,9 @@ public class GameManager : MonoBehaviour
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
         UpdateDayText(++currentDay);
+
+        // Invoke the next day event
+        EventManager.Instance.InvokeEvent(EventType.NextDay, currentDay);
     }
     #endregion
 
