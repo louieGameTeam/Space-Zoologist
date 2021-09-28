@@ -42,45 +42,45 @@ public class SummaryTrace
     // A boolean indicating completion of level 5.
     [SerializeField] private bool level5Complete;
 
-    // NOTEBOOK/RESEARCH METRICS
-    // The total time spent in the notebook for this player.
-    [SerializeField] private float totalNotebookTime;
-    // The total time spent in the notebook for this player in level 1.
-    [SerializeField] private float level1NotebookTime;
-    // The total time spent in the notebook for this player in level 2.
-    [SerializeField] private float leve2NotebookTime;
-    // The total time spent in the notebook for this player in level 3.
-    [SerializeField] private float level3NotebookTime;
-    // The total time spent in the notebook for this player in level 4.
-    [SerializeField] private float level4NotebookTime;
-    // The total time spent in the notebook for this player in level 5.
-    [SerializeField] private float level5NotebookTime;
-    // The total number of additions the player made to the notebook.
-    [SerializeField] private int totalNotebookAdditions;
-    // The number of additions the player made to the notebook in level 1.
-    [SerializeField] private int level1NotebookAdditions;
-    // The number of additions the player made to the notebook in level 2.
-    [SerializeField] private int level2NotebookAdditions;
-    // The number of additions the player made to the notebook in level 3.
-    [SerializeField] private int level3NotebookAdditions;
-    // The number of additions the player made to the notebook in level 4.
-    [SerializeField] private int level4NotebookAdditions;
-    // The number of additions the player made to the notebook in level 5.
-    [SerializeField] private int level5NotebookAdditions;
+    // RESEARCH METRICS
+    // An integer representing number of times the research tab was opened.
+    [SerializeField] private int numResearchTabOpen;
+    // A float representing elapsed time while having research tab open.
+    [SerializeField] private float timeResearchTabOpen;
+    // An integer representing number of articles read in research tab.
+    [SerializeField] private int numArticlesRead;
+    // An integer representing number of bookmarks created.
+    [SerializeField] private int numBookmarksCreated;
+    // A string representing a snapshot of all notes taken in research tab.
+    [SerializeField] private string notesResearchTab;
 
-    // PERFORMANCE METRICS -- this is where we need some thought.
-    // The total number of times the player ran out of resources.
-    [SerializeField] private int numResourcesLost;
-    // The total number of times the player requested more resources.
-    [SerializeField] private int numResourcesRequested;
-    // The total number of times any species went into decline.
-    [SerializeField] private int numSpeciesDeclined;
-    // The total number of times any species thrived.
-    [SerializeField] private int numSpeciesThrived;
+    // OBSERVATION METRICS
+    // An integer representing number of times the observation tool was used.
+    [SerializeField] private int numObservationToolOpen;
+    // A float representing elapsed time while having observation tool open.
+    [SerializeField] private float timeObservationToolOpen;
+    // A string representing a snapshot of all notes taken in observation mode.
+    [SerializeField] private string notesObservationTool;
 
-    // REPORT-BACK METRICS
-    // level 1 - answers given
-    // level 1 - questions correct/incorrect
-    // level 1 - time spent in assessment
-    // ...repeated for all levels
+    // CONCEPT METRICS
+    // An integer representing number of times player requested resources.
+    [SerializeField] private int numResourceRequests;
+    // An integer representing number of times resource requests were approved.
+    [SerializeField] private int numResourceRequestsApproved;
+    // An integer representing number of times resource requests were denied.
+    [SerializeField] private int numResourceRequestsDenied;
+    // An integer representing number of times player used the draw tool.
+    [SerializeField] private int numDrawToolUsed;
+
+    // TESTING METRICS -- see SetTrace.cs
+    // A list of SetTraces for level 1.
+    [SerializeField] private List<SetTrace> setTracesLevel1;
+    // A list of SetTraces for level 2.
+    [SerializeField] private List<SetTrace> setTracesLevel2;
+    // A list of SetTraces for level 3.
+    [SerializeField] private List<SetTrace> setTracesLevel3;
+    // A list of SetTraces for level 4.
+    [SerializeField] private List<SetTrace> setTracesLevel4;
+    // A list of SetTraces for level 5.
+    [SerializeField] private List<SetTrace> setTracesLevel5;
 }
