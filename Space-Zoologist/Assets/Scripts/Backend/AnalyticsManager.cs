@@ -17,6 +17,8 @@ public class AnalyticsManager : MonoBehaviour
     private JournalTrace currentJournalTrace = null;
     // Initialize an overall species trace.
     private OverallSpeciesTrace currentOverallSpeciesTrace = null;
+    // Initialize the singleton SummaryTrace object.
+    private SummaryTrace currentSummaryTrace = null;
 
     // On Awake, check the status of the instance. If the instance is null, replace it with the current AnalyticsManager.
     // Else, destroy the gameObject this script is attached to. There can only be one.
@@ -55,6 +57,20 @@ public class AnalyticsManager : MonoBehaviour
 
         // Initialize the list of level traces.
         currentPlayTrace.LevelTraces = new List<LevelTrace>();
+
+        // Check if current user has summary trace data in DB.
+        StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(GetPlayerID(), (value) => {
+            SummaryTraceResponse response = value;
+            // If the trace was found for the user, set its data field to be the current summary trace.
+            if (response.code == 0)
+            {
+                currentSummaryTrace = response.data;
+            // If no trace for the current user is found, create a new summary trace to work from.
+            } else if (response.code == 2)
+            {
+                currentSummaryTrace = new SummaryTrace();
+            }
+        }));
     }
 
     // Update is called once per frame
