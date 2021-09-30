@@ -83,4 +83,234 @@ public class SummaryTrace
     [SerializeField] private List<SetTrace> setTracesLevel4;
     // A list of SetTraces for level 5.
     [SerializeField] private List<SetTrace> setTracesLevel5;
+
+    // Default constructor.
+    public SummaryTrace()
+    {
+        playerID = "";
+        totalPlayTime = 0f;
+        tutorialTime = 0f;
+        level1Time = 0f;
+        level2Time = 0f;
+        level3Time = 0f;
+        level4Time = 0f;
+        level5Time = 0f;
+        totalCompletion = false;
+        tutorialComplete = false;
+        level1Complete = false;
+        level2Complete = false;
+        level3Complete = false;
+        level4Complete = false;
+        level5Complete = false;
+        numResearchTabOpen = 0;
+        timeResearchTabOpen = 0f;
+        numArticlesRead = 0;
+        numBookmarksCreated = 0;
+        notesResearchTab = "";
+        numObservationToolOpen = 0;
+        timeObservationToolOpen = 0f;
+        notesObservationTool = "";
+        numResourceRequests = 0;
+        numResourceRequestsApproved = 0;
+        numResourceRequestsDenied = 0;
+        numDrawToolUsed = 0;
+        setTracesLevel1 = new List<SetTrace>();
+        setTracesLevel2 = new List<SetTrace>();
+        setTracesLevel3 = new List<SetTrace>();
+        setTracesLevel4 = new List<SetTrace>();
+        setTracesLevel5 = new List<SetTrace>();
+    }
+
+    // PUBLIC GETTERS / SETTERS
+    public string PlayerID 
+    {
+        get { return playerID; }
+        set { playerID = value; }
+    }
+
+    public float TotalPlayTime
+    {
+        get { return totalPlayTime; }
+        set { totalPlayTime = value; }
+    }
+
+    public float TutorialTime
+    {
+        get { return tutorialTime; }
+        set { tutorialTime = value; }
+    }
+
+    public float Level1Time
+    {
+        get { return level1Time; }
+        set { level1Time = value; }
+    }
+
+    public float Level2Time
+    {
+        get { return level2Time; }
+        set { level2Time = value; }
+    }
+
+    public float Level3Time
+    {
+        get { return level3Time; }
+        set { level3Time = value; }
+    }
+
+    public float Level4Time
+    {
+        get { return level4Time; }
+        set { level4Time = value; }
+    }
+
+    public float Level5Time
+    {
+        get { return level5Time; }
+        set { level5Time = value; }
+    }
+
+    public bool TotalCompletion
+    {
+        get { return totalCompletion; }
+        set { totalCompletion = value; }
+    }
+
+    public bool TutorialComplete
+    {
+        get { return tutorialComplete; }
+        set { tutorialComplete = value; }
+    }
+
+    public bool Level1Complete
+    {
+        get { return level1Complete; }
+        set { level1Complete = value; }
+    }
+
+    public bool Level2Complete
+    {
+        get { return level2Complete; }
+        set { level2Complete = value; }
+    }
+
+    public bool Level3Complete
+    {
+        get { return level3Complete; }
+        set { level3Complete = value; }
+    }
+
+    public bool Level4Complete
+    {
+        get { return level4Complete; }
+        set { level4Complete = value; }
+    }
+
+    public bool Level5Complete
+    {
+        get { return level5Complete; }
+        set { level5Complete = value; }
+    }
+
+    public int NumResearchTabOpen
+    {
+        get { return numResearchTabOpen; }
+        set { numResearchTabOpen = value; }
+    }
+
+    public float TimeResearchTabOpen
+    {
+        get { return timeResearchTabOpen; }
+        set { timeResearchTabOpen = value; }
+    }
+
+    public int NumArticlesRead
+    {
+        get { return numArticlesRead; }
+        set { numArticlesRead = value; }
+    }
+
+    public int NumBookmarksCreated
+    {
+        get { return numBookmarksCreated; }
+        set { numBookmarksCreated = value; }
+    }
+
+    public string NotesResearchTab
+    {
+        get { return notesResearchTab; }
+        set { notesResearchTab = value; }
+    }
+
+    public int NumObservationToolOpen
+    {
+        get { return numObservationToolOpen; }
+        set { numObservationToolOpen = value; }
+    }
+
+    public float TimeObservationToolOpen
+    {
+        get { return timeObservationToolOpen; }
+        set { timeObservationToolOpen = value; }
+    }
+
+    public string NotesObservationTool
+    {
+        get { return notesObservationTool; }
+        set { notesObservationTool = value; }
+    }
+
+    public int NumResourceRequests
+    {
+        get { return numResourceRequests; }
+        set { numResourceRequests = value; }
+    }
+
+    public int NumResourceRequestsApproved
+    {
+        get { return numResourceRequestsApproved; }
+        set { numResourceRequestsApproved = value; }
+    }
+
+    public int NumResourceRequestsDenied
+    {
+        get { return numResourceRequestsDenied; }
+        set { numResourceRequestsDenied = value; }
+    }
+
+    public int NumDrawToolUsed
+    {
+        get { return numDrawToolUsed; }
+        set { numDrawToolUsed = value; }
+    }
+
+    public List<SetTrace> SetTracesLevel1
+    {
+        get { return setTracesLevel1; }
+        set { setTracesLevel1 = value; }
+    }
+
+    public List<SetTrace> SetTracesLevel2
+    {
+        get { return setTracesLevel2; }
+        set { setTracesLevel2 = value; }
+    }
+
+    public List<SetTrace> SetTracesLevel3
+    {
+        get { return setTracesLevel3; }
+        set { setTracesLevel3 = value; }
+    }
+
+    public List<SetTrace> SetTracesLevel4
+    {
+        get { return setTracesLevel4; }
+        set { setTracesLevel4 = value; }
+    }
+
+    public List<SetTrace> SetTracesLevel5
+    {
+        get { return setTracesLevel5; }
+        set { setTracesLevel5 = value; }
+    }
 }

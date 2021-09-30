@@ -16,7 +16,8 @@ public enum EventType {
     OnJournalOpened, // Pass null
     OnJournalClosed, // Pass null
     NextDay,
-    MainObjectivesCompleted, GameOver // Pass null is fine
+    MainObjectivesCompleted, GameOver, // Pass null is fine
+    OnTabChanged, // Pass null
 };
 
 /// <summary>

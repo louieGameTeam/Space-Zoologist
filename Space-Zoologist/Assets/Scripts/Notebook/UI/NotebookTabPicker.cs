@@ -56,10 +56,19 @@ public class NotebookTabPicker : NotebookUIChild
         pagesRoot.GetChild((int)currentTab).gameObject.SetActive(false);
         pagesRoot.GetChild((int)tab).gameObject.SetActive(true);
         currentTab = tab;
+
+        // For backend: Event invocation for tab switch.
+        EventManager.Instance.InvokeEvent(EventType.OnTabChanged, null);
     }
     // Select a specific notebook tab by selecting one of the buttons
     public void SelectTab(NotebookTab tab)
     {
         buttons[(int)tab].Select();
+    }
+
+    // For backend: Public accessor for current tab
+    public NotebookTab CurrentTab 
+    {
+        get { return currentTab; }
     }
 }

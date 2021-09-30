@@ -19,11 +19,6 @@ public class PlayTrace
     // LEVEL INFORMATION
     // A list of LevelTrace objects containing detailed information about the actions the player took in levels.
     [SerializeField] private List<LevelTrace> levelTraces;
-    
-    // IN-GAME ASSESSMENT INFORMATION
-    // recorded dialogue answers
-
-    // CLICK INFORMATION
 
     // PUBLIC GETTERS/SETTERS
     public string PlayerID

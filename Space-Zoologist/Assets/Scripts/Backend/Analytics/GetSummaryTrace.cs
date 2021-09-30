@@ -41,10 +41,10 @@ public class GetSummaryTrace : MonoBehaviour
             }
             yield return null;
             callback(response);
+        } else {
+            yield return null;
+            callback(null);  
         }
-
-        yield return null;
-        callback(null);
 
         Debug.Log("Status Code: " + request.responseCode);
     }

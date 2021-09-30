@@ -77,5 +77,5 @@ public class NotebookUI : MonoBehaviour
     public void NavigateToBookmark(Bookmark bookmark)
     {
         bookmark.Navigate(nameTargetMap);
-    }
+    } 
 }
