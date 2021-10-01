@@ -18,8 +18,8 @@ public class SetTrace
     [SerializeField] private Result result;
     // An integer representing number of days taken at time of pass/fail.
     [SerializeField] private int numDays;
-    // An integer representing currency at time of pass/fail.
-    [SerializeField] private int currency;
+    // An integer representing player currency at time of pass/fail.
+    [SerializeField] private float currency;
     // An enumeration representing reason for set failure, if applicable.
     [SerializeField] private Failure failure;
     // An integer representing the score received on the report back for food related questions.
@@ -58,7 +58,7 @@ public class SetTrace
         set { numDays = value; }
     }
 
-    public int Currency
+    public float Currency
     {
         get { return currency; }
         set { currency = value; }

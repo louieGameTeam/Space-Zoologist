@@ -73,16 +73,8 @@ public class SummaryTrace
     [SerializeField] private int numDrawToolUsed;
 
     // TESTING METRICS -- see SetTrace.cs
-    // A list of SetTraces for level 1.
-    [SerializeField] private List<SetTrace> setTracesLevel1;
-    // A list of SetTraces for level 2.
-    [SerializeField] private List<SetTrace> setTracesLevel2;
-    // A list of SetTraces for level 3.
-    [SerializeField] private List<SetTrace> setTracesLevel3;
-    // A list of SetTraces for level 4.
-    [SerializeField] private List<SetTrace> setTracesLevel4;
-    // A list of SetTraces for level 5.
-    [SerializeField] private List<SetTrace> setTracesLevel5;
+    // A list of SetTraces.
+    [SerializeField] private List<SetTrace> setTraces;
 
     // Default constructor.
     public SummaryTrace()
@@ -114,11 +106,7 @@ public class SummaryTrace
         numResourceRequestsApproved = 0;
         numResourceRequestsDenied = 0;
         numDrawToolUsed = 0;
-        setTracesLevel1 = new List<SetTrace>();
-        setTracesLevel2 = new List<SetTrace>();
-        setTracesLevel3 = new List<SetTrace>();
-        setTracesLevel4 = new List<SetTrace>();
-        setTracesLevel5 = new List<SetTrace>();
+        setTraces = new List<SetTrace>();
     }
 
     // PUBLIC GETTERS / SETTERS
@@ -284,33 +272,9 @@ public class SummaryTrace
         set { numDrawToolUsed = value; }
     }
 
-    public List<SetTrace> SetTracesLevel1
+    public List<SetTrace> SetTraces
     {
-        get { return setTracesLevel1; }
-        set { setTracesLevel1 = value; }
-    }
-
-    public List<SetTrace> SetTracesLevel2
-    {
-        get { return setTracesLevel2; }
-        set { setTracesLevel2 = value; }
-    }
-
-    public List<SetTrace> SetTracesLevel3
-    {
-        get { return setTracesLevel3; }
-        set { setTracesLevel3 = value; }
-    }
-
-    public List<SetTrace> SetTracesLevel4
-    {
-        get { return setTracesLevel4; }
-        set { setTracesLevel4 = value; }
-    }
-
-    public List<SetTrace> SetTracesLevel5
-    {
-        get { return setTracesLevel5; }
-        set { setTracesLevel5 = value; }
+        get { return setTraces; }
+        set { setTraces = value; }
     }
 }

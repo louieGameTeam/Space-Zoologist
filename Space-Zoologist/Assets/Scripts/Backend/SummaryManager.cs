@@ -10,9 +10,10 @@ public class SummaryManager : MonoBehaviour
     private static SummaryManager instance = null;
     // Initialize the current SummaryTrace object.
     private SummaryTrace currentSummaryTrace = null;
-    // Initialize current level and set.
+    // Initialize current level, set, and set trace.
     private int currentLevel;
     private int currentSet;
+    private SetTrace currentSetTrace = null;
     // Boolean values indicating status of notebook tabs.
     private bool researchOpen = false;
     private bool observationOpen = false;
@@ -40,11 +41,12 @@ public class SummaryManager : MonoBehaviour
             // If the trace was found for the user, set its data field to be the current summary trace.
             if (response.code == 0)
             {
-                currentSummaryTrace = response.data;
+                currentSummaryTrace = JsonUtility.FromJson<SummaryTrace>(response.data);
             // If no trace for the current user is found, create a new summary trace to work from.
             } else if (response.code == 2)
             {
                 currentSummaryTrace = new SummaryTrace();
+                currentSummaryTrace.PlayerID = GetPlayerID();
             }
         }));
     }
@@ -65,9 +67,7 @@ public class SummaryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Test submission of summary trace.
-        // string json = ConvertSummaryTraceToJSON(CreateSummaryTrace());
-        // StartCoroutine(SubmitSummaryTrace.TrySubmitSummaryTrace(json));
+
     }
 
     // Update is called once per frame
@@ -114,14 +114,21 @@ public class SummaryManager : MonoBehaviour
         // If the buildIndex of the scene is 3 (i.e., if we are in the MainLevel scene).
         if (scene.buildIndex == 3)
         {
-            // Get references to necessary objects.
-            levelData = GameObject.Find("LevelData").GetComponent<LevelDataReference>();
             // Subscribe to all relevant events.
             SubscribeToEvents();
+            // Get references to necessary objects.
+            levelData = GameObject.Find("LevelData").GetComponent<LevelDataReference>();
             // Check current level and set (enclosure).
             CheckLevelAndSet(levelData);
             // Check progression statistics.
             CheckAndModifyProgression(currentLevel, currentSummaryTrace);
+            // If current set trace is not null, add it to the list in the summary trace.
+            if (currentSetTrace != null)
+            {
+                currentSummaryTrace.SetTraces.Add(currentSetTrace);
+            }
+            // Create a new set trace, and set the current set trace to the one created.
+            currentSetTrace = CreateSetTrace(currentLevel, currentSet, currentSummaryTrace.PlayerID);
         }
     }
 
@@ -136,25 +143,17 @@ public class SummaryManager : MonoBehaviour
         return "test";
     }
 
-    // Creates a new summary trace using default constructor.
-    private SummaryTrace CreateSummaryTrace()
-    {
-        SummaryTrace summaryTrace = new SummaryTrace();
-        return summaryTrace;
-    }
-
-    // A function that serializes the current SummaryTrace object to JSON.
-    private string ConvertSummaryTraceToJSON(SummaryTrace summaryTrace)
-    {
-        string json = JsonUtility.ToJson(summaryTrace);
-        return json;
-    }
-
     // A function that uses the event management system to subscribe to events used in this manager.
     private void SubscribeToEvents()
     {
         // Listen to notebook events being fired.
         EventManager.Instance.SubscribeToEvent(EventType.OnJournalOpened, OnJournalOpened);
+        // Listen to progression events being fired.
+        EventManager.Instance.SubscribeToEvent(EventType.OnSetEnd, OnSetEnd);
+        EventManager.Instance.SubscribeToEvent(EventType.OnSetPass, OnSetPass);
+        EventManager.Instance.SubscribeToEvent(EventType.OnSetFail, OnSetFail);
+        // Listen to events that trigger saves.
+        EventManager.Instance.SubscribeToEvent(EventType.TriggerSave, SaveSummaryTrace);
     }
 
     // A function that sets the current level and set (enclosure) based on the levelData object.
@@ -240,6 +239,7 @@ public class SummaryManager : MonoBehaviour
     {
         picker = null;
         EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, null);
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, null);
     }
 
     // A function that processes notebook tab change events.
@@ -286,10 +286,66 @@ public class SummaryManager : MonoBehaviour
         currentSummaryTrace.NumBookmarksCreated += 1;
     }
 
-    // A function that updates the summary trace with current values and submits
-    // data to DB.
+    // A function that creates and returns a new set trace; initiated by OnSceneLoaded.
+    private SetTrace CreateSetTrace(int level, int set, string playerID)
+    {
+        SetTrace trace = new SetTrace();
+        trace.PlayerID = playerID;
+        trace.LevelID = level;
+        trace.SetID = set;
+        return trace;
+    }
+
+    // A function that executes at the end of a set (enclosure).
+    // NOTE: This event is currently not invoked by anything.
+    private void OnSetEnd()
+    {
+        Debug.Log("Set was ended.");
+        currentSetTrace.NumDays = GameManager.Instance.CurrentDay;
+        currentSetTrace.Currency = GameManager.Instance.Balance;
+    }
+
+    // A function that executes on successful completion of a set (enclosure).
+    // NOTE: This event is currently not invoked by anything.
+    private void OnSetPass()
+    {
+        Debug.Log("Set was completed successfully.");
+        currentSetTrace.ResultEnum = SetTrace.Result.PASS;
+    }
+
+    // A function that executes on failure of a set (enclosure).
+    // NOTE: This event is currently not invoked by anything.
+    private void OnSetFail()
+    {
+        Debug.Log("Set was failed.");
+        currentSetTrace.ResultEnum = SetTrace.Result.FAIL;
+        // TODO: Assign the reason for failure from the enum in SetTrace.cs, like below.
+        // currentSetTrace.FailureEnum = SetTrace.Failure.ENUM
+    }
+
+    // A function that executes on completion of the quiz/report-back, and records scores to the current set trace.
+    // NOTE: This event is currently not invoked by anything.
+    private void OnQuizEnd()
+    {
+        Debug.Log("Quiz ended.");
+        // TODO: Assign the scores, as below.
+        // currentSetTrace.TerrainScore = terrainScore;
+        // currentSetTrace.FoodScore = foodScore;
+    }
+
+    // A function that serializes the current SummaryTrace object to JSON.
+    private string ConvertSummaryTraceToJSON(SummaryTrace summaryTrace)
+    {
+        string json = JsonUtility.ToJson(summaryTrace);
+        return json;
+    }
+
+    // A function that submits data to DB.
     private void SaveSummaryTrace()
     {
         Debug.Log("Sending summary trace to DB.");
+        Debug.Log("Player ID POST: " + currentSummaryTrace.PlayerID);
+        string json = ConvertSummaryTraceToJSON(currentSummaryTrace);
+        StartCoroutine(SubmitSummaryTrace.TrySubmitSummaryTrace(json));
     }
 }

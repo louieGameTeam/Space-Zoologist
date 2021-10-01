@@ -7,5 +7,5 @@ public class SummaryTraceResponse
 {
     public int code;
     public string msg;
-    public SummaryTrace data;
+    public string data;
 }

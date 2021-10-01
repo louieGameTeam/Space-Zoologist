@@ -677,5 +677,10 @@ public class GameManager : MonoBehaviour
         FoodSourceManager foodSourceManager = FindObjectOfType<FoodSourceManager>();
         foodSourceManager.DestroyAll();
     }
+    // For backend: event invocations for triggering save/transmission to DB.
+    public void TriggerSave()
+    {
+        EventManager.Instance.InvokeEvent(EventType.TriggerSave, null);
+    }
     #endregion
 }
