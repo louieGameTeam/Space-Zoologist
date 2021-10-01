@@ -232,6 +232,7 @@ public class SummaryManager : MonoBehaviour
     {
         picker = GameObject.Find("Tabs").GetComponent<NotebookTabPicker>();
         EventManager.Instance.SubscribeToEvent(EventType.OnTabChanged, OnTabChanged);
+        EventManager.Instance.SubscribeToEvent(EventType.OnBookmarkAdded, OnBookmarkAdded);
     }
 
     // A function that executes upon closing the journal.
@@ -250,10 +251,12 @@ public class SummaryManager : MonoBehaviour
             Debug.Log("Research tab was opened.");
             researchOpen = true;
             currentSummaryTrace.NumResearchTabOpen += 1;
+            EventManager.Instance.SubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
         } else if (picker.CurrentTab != NotebookTab.Research)
         {
             Debug.Log("Research tab was closed.");
             researchOpen = false;
+            EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, null);
         }
 
         // Handle observation tab.
@@ -269,7 +272,21 @@ public class SummaryManager : MonoBehaviour
         }
     }
 
-    // A function that ceases all tracking, updates the summary trace with current values, and submits
+    // A function that processes article change events within research tab.
+    private void OnArticleChanged()
+    {
+        Debug.Log("An article was clicked.");
+        currentSummaryTrace.NumArticlesRead += 1;
+    }
+
+    // A function that processes additions of bookmarks to the notebook.
+    private void OnBookmarkAdded()
+    {
+        Debug.Log("Bookmark was added.");
+        currentSummaryTrace.NumBookmarksCreated += 1;
+    }
+
+    // A function that updates the summary trace with current values and submits
     // data to DB.
     private void SaveSummaryTrace()
     {

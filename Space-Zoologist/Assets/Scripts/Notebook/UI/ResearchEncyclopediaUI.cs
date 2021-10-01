@@ -109,6 +109,9 @@ public class ResearchEncyclopediaUI : NotebookUIChild
             currentArticleID = DropdownLabelToArticleID(dropdown.options[value].text);
             // Update the article on the script
             articleBody.UpdateArticle(CurrentArticle);
+
+            // For backend: event invocation for tracking number of articles read.
+            EventManager.Instance.InvokeEvent(EventType.OnArticleChanged, null);
         }
         else articleBody.UpdateArticle(null);
     }

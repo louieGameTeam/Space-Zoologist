@@ -18,6 +18,8 @@ public enum EventType {
     NextDay,
     MainObjectivesCompleted, GameOver, // Pass null is fine
     OnTabChanged, // Pass null
+    OnArticleChanged, // Pass null
+    OnBookmarkAdded, // Pass null
 };
 
 /// <summary>
