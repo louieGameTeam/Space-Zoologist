@@ -7,6 +7,9 @@ public class InspectorObjectiveUI : MonoBehaviour
 {
     #region Private Editor Fields
     [SerializeField]
+    [Tooltip("Root game object of the full inspector/object UI")]
+    private GameObject root;
+    [SerializeField]
     [Tooltip("Toggle that turns the objective panel on")]
     private Toggle objectiveToggle;
     [SerializeField]
@@ -38,10 +41,18 @@ public class InspectorObjectiveUI : MonoBehaviour
             else inspector.CloseInspector();
         });
 
-        // Enable the toggle and invoke the event
-        inspectorToggle.isOn = true;
-        inspectorToggle.onValueChanged.Invoke(true);
+        // Close inspector at the start
         inspector.CloseInspector();
+    }
+    #endregion
+
+    #region Public Methods
+    public void SetIsOpen(bool isOpen)
+    {
+        root.SetActive(isOpen);
+
+        //if (!isOpen) inspector.CloseInspector();
+        //else if (inspector.IsInInspectorMode) inspector.OpenInspector();
     }
     #endregion
 }

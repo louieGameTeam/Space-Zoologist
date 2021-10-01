@@ -22,7 +22,7 @@ public class SellingManager : MonoBehaviour
             //}
             if (MenuManager.IsInStore)
             {
-                MenuManager.CloseStore();
+                MenuManager.SetStoreIsOn(false);
             }
         }
         IsSelling = !IsSelling;

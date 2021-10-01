@@ -11,22 +11,14 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI inspectorWindowText = default;
     [SerializeField] private TextMeshProUGUI populationInfoText = default;
     [SerializeField] private GameObject DetailButton = default;
+    [SerializeField] private GameObject detailBackground = default;
+    [SerializeField] private Text detailText = default;
     [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
     public enum InspectorText { Population, Food, Area, Liquid }
 
     private List<GameObject> needSliders = new List<GameObject>();
-
-    GameObject detailBackground;
-    Text detailText;
-    float defaultHeight;
-
-    public void Initialize()
-    {
-        detailBackground = DetailButton.transform.GetChild(0).gameObject;
-        detailText = detailBackground.GetComponentInChildren<Text>(true);
-    }
 
     public void DisplayPopulationStatus(Population population)
     {

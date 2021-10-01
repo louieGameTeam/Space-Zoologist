@@ -78,6 +78,7 @@ public class NotebookUI : MonoBehaviour
     #endregion
 
     #region Public Methods
+    // Directly referenced by the button
     public void Toggle()
     {
         SetIsOpen(!isOpen);
