@@ -5,12 +5,14 @@ using DialogueEditor;
 
 public class QuizConversationDebugger : MonoBehaviour
 {
-    public QuizConversation quizConversation;
+    public GameObject quizConversationRoot;
+    public QuizConversationBuilder quizConversation;
     public ConversationManager manager;
+    public DialogueManager dialogueManager;
 
     private void Start()
     {
-        (NPCConversation conversation, QuizInstance _) = quizConversation.Create();
+        (NPCConversation conversation, QuizInstance _) = quizConversation.Create(quizConversationRoot, dialogueManager);
 
         // Start this conversation
         manager.Initialize();
@@ -19,6 +21,6 @@ public class QuizConversationDebugger : MonoBehaviour
 
     public void CreateConversation()
     {
-        quizConversation.Create();
+        quizConversation.Create(quizConversationRoot, dialogueManager);
     }
 }

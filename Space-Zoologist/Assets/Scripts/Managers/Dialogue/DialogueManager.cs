@@ -38,14 +38,23 @@ public class DialogueManager : MonoBehaviour
         if (ConversationManager.Instance != null)
         {
             StartNewConversation();
+            //ConversationManagerGameObject.SetActive(false);
         }
     }
 
     private void ConversationEnded()
     {
-        ContinueSpeech = false;
-        ConversationManagerGameObject.SetActive(false);
-        GameManager.Instance.m_menuManager.ToggleUI(true);
+        if(queuedConversations.Count > 0)
+        {
+            UpdateCurrentDialogue();
+            StartNewConversation();
+        }
+        else
+        {
+            ContinueSpeech = false;
+            ConversationManagerGameObject.SetActive(false);
+            GameManager.Instance.m_menuManager.ToggleUI(true);
+        }
     }
 
     public void SetNewDialogue(NPCConversation newDialogue)

@@ -10,7 +10,7 @@ public class QuizInstance
     public QuizTemplate Template => template;
     public int QuestionsAnswered => answers.Count(i => i >= 0);
     public bool Completed => QuestionsAnswered >= template.Questions.Length;
-    public int Score
+    public int TotalScore
     {
         get
         {
@@ -34,26 +34,48 @@ public class QuizInstance
             return score;
         }
     }
+    public QuizGradeType TotalGrade => template.GradingRubric.Grade(TotalScore, template.GetMaximumPossibleScore().TotalScore);
+    public QuizScore Score
+    {
+        get
+        {
+            QuizScore score = new QuizScore();
+
+            for (int i = 0; i < template.Questions.Length; i++)
+            {
+                // Get the current question and answer
+                QuizQuestion question = template.Questions[i];
+                int answer = answers[i];
+
+                // If the answer is within range of the options 
+                // then add the option's weight to the total score
+                if (answer >= 0 && answer < question.Options.Length)
+                {
+                    QuizOption option = question.Options[answer];
+                    score.Set(question.ScoreType, score.Get(question.ScoreType) + option.Weight);
+                }
+            }
+
+            return score;
+        }
+    }
     public QuizGrade Grade
     {
         get
         {
-            // Get the lower bounds for each grade level
-            QuizScore[] lowerBounds = template.GetScoreLowerBounds();
-            
-            // Loop through all but the last score
-            for(int i = 0; i < lowerBounds.Length - 1; i++)
+            QuizGrade grade = new QuizGrade();
+            QuizScore score = Score;
+            QuizScoreType[] types = (QuizScoreType[])System.Enum.GetValues(typeof(QuizScoreType));
+
+            foreach(QuizScoreType type in types)
             {
-                // If our score is within bounds of this score and the one after it, 
-                // then return this quiz grade
-                if(Score >= lowerBounds[i].TotalScore && Score < lowerBounds[i + 1].TotalScore)
-                {
-                    return (QuizGrade)i;
-                }
+                int myScore = score.Get(type);
+                int maxScore = template.GetMaximumPossibleScoreOfType(type);
+                QuizGradeType gradeType = template.GradingRubric.Grade(myScore, maxScore);
+                grade.Set(type, gradeType);
             }
 
-            // If we get here, we know we got the highest grade
-            return (QuizGrade)(lowerBounds.Length - 1);
+            return grade;
         }
     }
     #endregion

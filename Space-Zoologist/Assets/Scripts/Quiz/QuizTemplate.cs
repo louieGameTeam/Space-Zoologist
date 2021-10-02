@@ -18,6 +18,7 @@ public class QuizTemplate : ScriptableObject
 
     #region Public Properties
     public QuizQuestion[] Questions => questions;
+    public QuizGradingRubric GradingRubric => gradingRubric;
     #endregion
 
     #region Private Editor Fields
@@ -33,7 +34,7 @@ public class QuizTemplate : ScriptableObject
     [SerializeField]
     [Tooltip("Bound scores for each grade level. The score must be at least this much " +
         "to be in the grade level shown")]
-    [EditArrayWrapperOnEnum("scores", typeof(QuizGrade))]
+    [EditArrayWrapperOnEnum("scores", typeof(QuizGradeType))]
     private QuizScoreBoundary scoreBoundaries;
     #endregion
 
@@ -50,7 +51,7 @@ public class QuizTemplate : ScriptableObject
         if (!ArrayExtensions.IsNullOrEmpty(gradingRubric.Percentages))
         {
             // Get the array of possible grades
-            QuizGrade[] grades = (QuizGrade[])System.Enum.GetValues(typeof(QuizGrade));
+            QuizGradeType[] grades = (QuizGradeType[])System.Enum.GetValues(typeof(QuizGradeType));
             QuizScore[] boundaries = new QuizScore[grades.Length];
             QuizScore max = GetMaximumPossibleScore();
 

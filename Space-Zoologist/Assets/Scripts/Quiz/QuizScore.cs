@@ -33,7 +33,11 @@ public class QuizScore
     #region Constructors
     public QuizScore()
     {
-        scoreData = new ScoreData();
+        string[] quizScoreTypeNames = System.Enum.GetNames(typeof(QuizScoreType));
+        scoreData = new ScoreData()
+        {
+            scores = new int[quizScoreTypeNames.Length]
+        };
     }
     #endregion
 

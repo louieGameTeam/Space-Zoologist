@@ -50,9 +50,6 @@ public class InspectorObjectiveUI : MonoBehaviour
     public void SetIsOpen(bool isOpen)
     {
         root.SetActive(isOpen);
-
-        //if (!isOpen) inspector.CloseInspector();
-        //else if (inspector.IsInInspectorMode) inspector.OpenInspector();
     }
     #endregion
 }

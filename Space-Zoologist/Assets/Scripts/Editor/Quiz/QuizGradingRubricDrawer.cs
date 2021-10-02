@@ -35,7 +35,7 @@ public class QuizGradingRubricDrawer : PropertyDrawer
     #region Private Methods
     private string[] GetRubricLabels()
     {
-        string[] grades = System.Enum.GetNames(typeof(QuizGrade));
+        string[] grades = System.Enum.GetNames(typeof(QuizGradeType));
         string[] labels = new string[grades.Length - 1];
 
         // Setup each label to imply a grade switch

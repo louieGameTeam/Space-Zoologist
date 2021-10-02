@@ -542,7 +542,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            m_dialogueManager.SetNewDialogue(m_levelData.PassedConversation);
+            m_levelData.PassedConversation.Speak(m_dialogueManager);
         }
         m_dialogueManager.StartInteractiveConversation();
         this.IngameUI.SetActive(false);
