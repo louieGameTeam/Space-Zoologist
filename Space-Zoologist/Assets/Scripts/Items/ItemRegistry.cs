@@ -17,10 +17,6 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     }
     #endregion
 
-    #region Private Properties
-    private static ItemRegistry Instance => GetOrCreateInstance(nameof(ItemRegistry), nameof(ItemRegistry));
-    #endregion
-
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of item data lists - parallel to the 'Category' enum")]
