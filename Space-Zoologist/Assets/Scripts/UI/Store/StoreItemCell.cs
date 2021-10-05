@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -8,9 +9,9 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     [SerializeField] Image itemImage = default;
     [SerializeField] Image highlightImage = default;
-    [SerializeField] Text ItemName = default;
+    [SerializeField] TextMeshProUGUI ItemName = default;
     [SerializeField] Text RemainingAmountText = default;
-    [SerializeField] Text Cost = default;
+    [SerializeField] Button RequestButton = default;
     public int RemainingAmount = -1;
 
     public delegate void ItemSelectedHandler(Item item);
@@ -22,8 +23,6 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         this.itemImage.sprite = item.Icon;
         this.onSelected += itemSelectedHandler;
         this.ItemName.text = this.item.ItemID.Data.Name.Get(global::ItemName.Type.Colloquial);
-        this.Cost.text = ""+this.item.Price;
-
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -40,8 +39,17 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         this.RemainingAmountText.text = "" + this.RemainingAmount;
 
+        if(RemainingAmount <= 0)
+        {
+            RemainingAmountText.rectTransform.offsetMin = new Vector2(0f, 20f);
+            RequestButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            RemainingAmountText.rectTransform.offsetMin = Vector2.zero;
+            RequestButton.gameObject.SetActive(false);
+        }
     }
-
     public void OnPointerExit(PointerEventData eventData)
     {
         highlightImage.enabled = false;
