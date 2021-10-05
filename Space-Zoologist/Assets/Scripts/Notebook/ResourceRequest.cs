@@ -70,7 +70,7 @@ public class ResourceRequest
     #endregion
 
     #region Private Fields
-    private Status currentStatus;
+    private Status currentStatus = Status.NotReviewed;
     private string statusReason;
     private int quantityGranted;
     // Day during the simulation that the request was reviewed
@@ -95,30 +95,33 @@ public class ResourceRequest
     #region Private Methods
     private void Review(Status currentStatus, string statusReason, int quantityGranted)
     {
-        this.currentStatus = currentStatus;
-        this.statusReason = statusReason;
-        this.quantityGranted = quantityGranted;
-
-        // Check if the game manager exists before using it
-        GameManager instance = GameManager.Instance;
-
-        if(instance)
+        // Multiple reviews not allowed
+        if(this.currentStatus == Status.NotReviewed)
         {
-            if(currentStatus == Status.Granted)
+            this.currentStatus = currentStatus;
+            this.statusReason = statusReason;
+            this.quantityGranted = quantityGranted;
+
+            if (GameManager.Instance)
             {
-                // Try to find the object granted so that we can update the resource manager
-                LevelData.ItemData itemObjectGranted = instance.LevelData.ItemQuantities.Find(i => i.itemObject.ItemID == itemRequested);
-
-                if (itemObjectGranted != null)
+                if (currentStatus == Status.Granted)
                 {
-                    instance.m_resourceManager.AddItem(itemObjectGranted.itemObject.ItemName, quantityGranted);
-                }
-                else Debug.LogWarning("ResourceRequest: the item '" + itemRequested.Data.Name.ToString() +
-                    "' could not be granted because no item object with the given ID was found");
-            }
+                    // Try to find the object granted so that we can update the resource manager
+                    LevelData.ItemData itemGranted = GameManager.Instance.LevelData.GetItemWithID(itemRequested);
 
-            // Store the day that the request was reviewed
-            dayReviewed = instance.CurrentDay;
+                    // Check if item could be found in the list of items on the level data
+                    if (itemGranted != null)
+                    {
+                        GameManager.Instance.m_resourceManager.AddItem(itemGranted.itemObject.ItemName, quantityGranted);
+                        GameManager.Instance.SubtractFromBalance(itemGranted.itemObject.Price * quantityGranted);
+                    }
+                    else Debug.LogWarning("ResourceRequest: the item '" + itemRequested.Data.Name.ToString() +
+                        "' could not be granted because no item object with the given ID was found");
+                }
+
+                // Store the day that the request was reviewed
+                dayReviewed = GameManager.Instance.CurrentDay;
+            }
         }
     }
     #endregion

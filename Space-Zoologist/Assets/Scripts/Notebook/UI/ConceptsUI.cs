@@ -17,11 +17,8 @@ public class ConceptsUI : NotebookUIChild
     [Tooltip("Button used to request resources")]
     private Button requestButton;
     [SerializeField]
-    [Tooltip("Text that displays the requests remaining")]
-    private TextMeshProUGUI requestsText;
-    [SerializeField]
-    [Tooltip("Text that displays the resources remaining")]
-    private TextMeshProUGUI resourcesText;
+    [Tooltip("Text that displays the money remaining")]
+    private TextMeshProUGUI balanceText;
     #endregion
 
     #region Public Methods
@@ -36,13 +33,8 @@ public class ConceptsUI : NotebookUIChild
         // When request button clicked then review resource requests
         requestButton.onClick.AddListener(ReviewResourceRequests);
 
-        // Try to get an instance of the event manager
-        EventManager instance = EventManager.Instance;
-
-        if(instance)
-        {
-            instance.SubscribeToEvent(EventType.NextDay, () => UpdateText(enclosurePicker.CurrentLevelID));
-        }
+        // Update text once at the beginning
+        UpdateText();
     }
     #endregion
 
@@ -55,9 +47,6 @@ public class ConceptsUI : NotebookUIChild
         // Make request button interactable only if the id picked is the current id
         LevelID current = LevelID.FromCurrentSceneName();
         requestButton.interactable = id == current;
-
-        // Update the text displayed
-        UpdateText(id);
     }
     private void ReviewResourceRequests()
     {
@@ -68,15 +57,14 @@ public class ConceptsUI : NotebookUIChild
         listEditor.UpdateReviewUI();
 
         // Update the text displayed
-        UpdateText(LevelID.FromCurrentSceneName());
+        UpdateText();
     }
-    private void UpdateText(LevelID id)
+    private void UpdateText()
     {
-        int requestsLeft = UIParent.Notebook.Concepts.RemainingRequests(id);
-        int resourcesLeft = UIParent.Notebook.Concepts.RemainingRequestableResources(id);
-
-        requestsText.text = requestsLeft.ToString();
-        resourcesText.text = resourcesLeft.ToString();
+        if(GameManager.Instance)
+        {
+            balanceText.text = GameManager.Instance.Balance.ToString();
+        }
     }
     #endregion
 }
