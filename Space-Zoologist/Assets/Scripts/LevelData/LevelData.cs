@@ -48,4 +48,9 @@ public class LevelData : ScriptableObject
     [Header("After level completed")]
     [SerializeField] NormalOrQuizConversation passedConversation = default;
     [SerializeField] NPCConversation restertEnclosureConversation = default;
+
+    public ItemData GetItemWithID(ItemID itemID)
+    {
+        return itemQuantities.Find(i => i.itemObject.ItemID == itemID);
+    }
 }

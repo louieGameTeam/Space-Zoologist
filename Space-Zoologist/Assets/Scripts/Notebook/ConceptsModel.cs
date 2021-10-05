@@ -71,33 +71,45 @@ public class ConceptsModel
     }
     public void ReviewResourceRequests()
     {
-        // Get the list of requests for the current enclosure id
-        LevelID current = LevelID.FromCurrentSceneName();
-        List<ResourceRequest> toReview = resourceRequests[current].RequestsWithStatus(ResourceRequest.Status.NotReviewed);
-        // Sort the requests from highest to lowest priority
-        toReview.Sort((x, y) => y.Priority.CompareTo(x.Priority));
-
-        // Loop through all resources and review them
-        foreach(ResourceRequest request in toReview)
+        if(GameManager.Instance)
         {
-            int remainingRequests = RemainingRequests(current);
-            int remainingResources = RemainingRequestableResources(current);
-            int remainingResourcesForItem = RemainingRequestableResourcesForItem(current, request.ItemRequested);
+            // Get the list of requests for the current enclosure id
+            LevelID current = LevelID.FromCurrentSceneName();
+            List<ResourceRequest> toReview = resourceRequests[current].RequestsWithStatus(ResourceRequest.Status.NotReviewed);
+            // Sort the requests from highest to lowest priority
+            toReview.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
-            // If there are remaining resources, compute quantity to grant
-            if (remainingRequests > 0 && remainingResources > 0 && remainingResourcesForItem > 0)
+            // Loop through all resources and review them
+            foreach (ResourceRequest request in toReview)
             {
-                int quantityGranted = Mathf.Min(request.QuantityRequested, remainingResources, remainingResourcesForItem);
+                Item itemObject = GameManager.Instance.LevelData.GetItemWithID(request.ItemRequested).itemObject;
+                float totalPrice = itemObject.Price * request.QuantityRequested;
 
-                // If quantity granted is the same as quantity requested then we can fully grant the request
-                if (quantityGranted == request.QuantityRequested) request.Grant();
-                else if (quantityGranted == remainingResources) request.GrantPartially("Insufficient resources to fully grant this request", quantityGranted);
-                else request.GrantPartially("Ran out of items in stock to fully grant this request", quantityGranted);
+                if(GameManager.Instance.Balance <= totalPrice)
+                {
+
+                }
+
+                int remainingRequests = RemainingRequests(current);
+                int remainingResources = RemainingRequestableResources(current);
+                int remainingResourcesForItem = RemainingRequestableResourcesForItem(current, request.ItemRequested);
+
+                // If there are remaining resources, compute quantity to grant
+                if (remainingRequests > 0 && remainingResources > 0 && remainingResourcesForItem > 0)
+                {
+                    int quantityGranted = Mathf.Min(request.QuantityRequested, remainingResources, remainingResourcesForItem);
+
+                    // If quantity granted is the same as quantity requested then we can fully grant the request
+                    if (quantityGranted == request.QuantityRequested) request.Grant();
+                    else if (quantityGranted == remainingResources) request.GrantPartially("Insufficient resources to fully grant this request", quantityGranted);
+                    else request.GrantPartially("Ran out of items in stock to fully grant this request", quantityGranted);
+                }
+                else if (remainingRequests <= 0) request.Deny("Ran out of requests to grant");
+                else if (remainingResources <= 0) request.Deny("Ran out of resources to grant");
+                else request.Deny("No more items of this type in stock");
             }
-            else if (remainingRequests <= 0) request.Deny("Ran out of requests to grant");
-            else if (remainingResources <= 0) request.Deny("Ran out of resources to grant");
-            else request.Deny("No more items of this type in stock");
         }
+        
     }
     #endregion
 }
