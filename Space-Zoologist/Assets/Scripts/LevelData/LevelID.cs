@@ -13,6 +13,14 @@ public struct LevelID : System.IComparable<LevelID>
     #region Public Properties
     public int LevelNumber => levelNumber;
     public int EnclosureNumber => enclosureNumber;
+    public string LevelName
+    {
+        get
+        {
+            if (levelNumber > 0) return "Level" + levelNumber + "E" + enclosureNumber;
+            else return "Level" + levelNumber;
+        }
+    }
     #endregion
 
     #region Private Editor Data
