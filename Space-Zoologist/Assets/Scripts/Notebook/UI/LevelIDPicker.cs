@@ -7,10 +7,10 @@ using TMPro;
 /// <summary>
 /// UI element used to pick an enclosure ID
 /// </summary>
-public class EnclosureIDPicker : NotebookUIChild
+public class LevelIDPicker : NotebookUIChild
 {
     #region Typedefs
-    [System.Serializable] public class EnclosureIDEvent : UnityEvent<LevelID> { } 
+    [System.Serializable] public class LevelIDEvent : UnityEvent<LevelID> { } 
     #endregion
 
     #region Constants
@@ -19,8 +19,8 @@ public class EnclosureIDPicker : NotebookUIChild
     #endregion
 
     #region Public Properties
-    public EnclosureIDEvent OnEnclosureIDPicked => onEnclosureIDPicked;
-    public LevelID CurrentEnclosureID
+    public LevelIDEvent OnLevelIDPicked => onLevelIDPicked;
+    public LevelID CurrentLevelID
     {
         get
         {
@@ -64,7 +64,7 @@ public class EnclosureIDPicker : NotebookUIChild
     private BookmarkTarget bookmarkTarget;
     [SerializeField]
     [Tooltip("Event invoked when an enclosure ID is picked")]
-    private EnclosureIDEvent onEnclosureIDPicked;
+    private LevelIDEvent onLevelIDPicked;
     #endregion
 
     #region Public Methods
@@ -73,7 +73,7 @@ public class EnclosureIDPicker : NotebookUIChild
         base.Setup();
 
         // Setup the bookmark target to get-set the enclosure id
-        bookmarkTarget.Setup(() => CurrentEnclosureID, x => CurrentEnclosureID = (LevelID)x);
+        bookmarkTarget.Setup(() => CurrentLevelID, x => CurrentLevelID = (LevelID)x);
 
         // Clear out any existing options
         levelDropdown.ClearOptions();
@@ -91,8 +91,8 @@ public class EnclosureIDPicker : NotebookUIChild
         }
 
         // Update the level dropdown to reflect the current level
-        LevelID currentEnclosure = LevelID.FromCurrentSceneName();
-        levelDropdown.value = currentEnclosure.LevelNumber;
+        LevelID currentLevel = LevelID.FromCurrentSceneName();
+        levelDropdown.value = currentLevel.LevelNumber;
         levelDropdown.RefreshShownValue();
         OnLevelDropdownValueChanged(levelDropdown.value);
 
@@ -115,11 +115,11 @@ public class EnclosureIDPicker : NotebookUIChild
         }
 
         // Get the enclosure represented in the current scene
-        LevelID currentEnclosure = LevelID.FromCurrentSceneName();
+        LevelID currentLevel = LevelID.FromCurrentSceneName();
         // If we selected the current level, then select the current enclosure number
-        if (currentEnclosure.LevelNumber == selectedLevel)
+        if (currentLevel.LevelNumber == selectedLevel)
         {
-            enclosureDropdown.value = currentEnclosure.EnclosureNumber - 1;
+            enclosureDropdown.value = currentLevel.EnclosureNumber - 1;
         }
         else enclosureDropdown.value = 0;
 
@@ -131,8 +131,8 @@ public class EnclosureIDPicker : NotebookUIChild
     {
         TMP_Dropdown.OptionData levelOptionSelected = levelDropdown.options[levelDropdown.value];
         TMP_Dropdown.OptionData enclosureOptionSelected = enclosureDropdown.options[value];
-        LevelID enclosureSelected = new LevelID(OptionDataToLevelNumber(levelOptionSelected), OptionDataToEnclosureNumber(enclosureOptionSelected));
-        onEnclosureIDPicked.Invoke(enclosureSelected);
+        LevelID levelSelected = new LevelID(OptionDataToLevelNumber(levelOptionSelected), OptionDataToEnclosureNumber(enclosureOptionSelected));
+        onLevelIDPicked.Invoke(levelSelected);
         UIParent.OnContentChanged.Invoke();
     }
 

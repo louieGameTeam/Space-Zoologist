@@ -9,7 +9,7 @@ public class ConceptsUI : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Object used to pick the enclosure for this ui")]
-    private EnclosureIDPicker enclosurePicker;
+    private LevelIDPicker enclosurePicker;
     [SerializeField]
     [Tooltip("Object used to edit a list of resource requests")]
     private ResourceRequestListEditor listEditor; 
@@ -30,7 +30,7 @@ public class ConceptsUI : NotebookUIChild
         base.Setup();
 
         // Add listener for enclosure id picked
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureIDPicked);
+        enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureIDPicked);
         OnEnclosureIDPicked(LevelID.FromCurrentSceneName());
 
         // When request button clicked then review resource requests
@@ -41,7 +41,7 @@ public class ConceptsUI : NotebookUIChild
 
         if(instance)
         {
-            instance.SubscribeToEvent(EventType.NextDay, () => UpdateText(enclosurePicker.CurrentEnclosureID));
+            instance.SubscribeToEvent(EventType.NextDay, () => UpdateText(enclosurePicker.CurrentLevelID));
         }
     }
     #endregion

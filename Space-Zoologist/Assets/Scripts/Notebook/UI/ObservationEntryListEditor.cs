@@ -7,7 +7,7 @@ public class ObservationEntryListEditor : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Script used to pick the enclosure we are currently taking notes on")]
-    private EnclosureIDPicker enclosurePicker;
+    private LevelIDPicker enclosurePicker;
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single observation entry")]
     private ObservationEntryEditor editorPrefab;
@@ -25,7 +25,7 @@ public class ObservationEntryListEditor : NotebookUIChild
         base.Setup();
 
         // Add listnener to enclosure id picked event and select the enclosure for the current scene
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureSelected);
+        enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureSelected);
         OnEnclosureSelected(LevelID.FromCurrentSceneName());
     }
 

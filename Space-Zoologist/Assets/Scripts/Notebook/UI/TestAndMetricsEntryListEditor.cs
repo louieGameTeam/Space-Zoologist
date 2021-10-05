@@ -7,7 +7,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Script used to pick the enclosure we are currently taking notes on")]
-    private EnclosureIDPicker enclosurePicker;
+    private LevelIDPicker enclosurePicker;
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
     private TestAndMetricsEntryEditor editorPrefab;
@@ -25,7 +25,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
         base.Setup();
 
         // Add listener for the enclosure picked event
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureSelected);
+        enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureSelected);
         OnEnclosureSelected(LevelID.FromCurrentSceneName());
     }
 
