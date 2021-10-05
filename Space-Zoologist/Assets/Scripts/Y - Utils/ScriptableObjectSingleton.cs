@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScriptableObjectSingleton<BaseType> : ScriptableObject where BaseType : ScriptableObject
+public class ScriptableObjectSingleton<BaseType> : ScriptableObject where BaseType : ScriptableObjectSingleton<BaseType>
 {
+    #region Private Fields
+    private static BaseType instance;
+    #endregion
+
     #region Protected Properties
     protected static BaseType Instance
     {
