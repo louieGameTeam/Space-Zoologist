@@ -14,7 +14,7 @@ public class NotebookModel : ScriptableObject
     public NotebookTabScaffold TabScaffold => tabScaffold;
     public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
     // This should be the same for concepts and testAndMetrics also
-    public List<EnclosureID> EnclosureIDs => observations.EnclosureIDs;
+    public List<LevelID> EnclosureIDs => observations.EnclosureIDs;
     #endregion
 
     #region Private Editor Fields
@@ -95,7 +95,7 @@ public class NotebookModel : ScriptableObject
     {
         Bookmarks.Remove(bookmark);
     }
-    public void TryAddEnclosureID(EnclosureID id)
+    public void TryAddEnclosureID(LevelID id)
     {
         observations.TryAddEnclosureID(id);
         concepts.TryAddEnclosureId(id);

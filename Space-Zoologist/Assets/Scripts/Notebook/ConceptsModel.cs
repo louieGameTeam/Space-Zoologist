@@ -13,17 +13,17 @@ public class ConceptsModel
 
     #region Private Fields
     // Map the resource requests to the enclosure it applies to
-    private Dictionary<EnclosureID, ResourceRequestList> resourceRequests = new Dictionary<EnclosureID, ResourceRequestList>();
+    private Dictionary<LevelID, ResourceRequestList> resourceRequests = new Dictionary<LevelID, ResourceRequestList>();
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureId(EnclosureID id)
+    public void TryAddEnclosureId(LevelID id)
     {
         if (!resourceRequests.ContainsKey(id)) resourceRequests.Add(id, new ResourceRequestList());
     }
-    public ResourceRequestList GetResourceRequestList(EnclosureID id) => resourceRequests[id];
+    public ResourceRequestList GetResourceRequestList(LevelID id) => resourceRequests[id];
     // Maximum number of requests that can be made by the player when playing this enclosure
-    public int MaxRequests(EnclosureID enclosureID)
+    public int MaxRequests(LevelID enclosureID)
     {
         if (enclosureID.LevelNumber >= 0 && enclosureID.LevelNumber < quantityRegistries.Length)
         {
@@ -32,7 +32,7 @@ public class ConceptsModel
         else return -1;
     }
     // Maximum number of resources that can be requested by the player when playing this enclosure
-    public int MaxRequestableResources(EnclosureID enclosureID)
+    public int MaxRequestableResources(LevelID enclosureID)
     {
         if (enclosureID.LevelNumber >= 0 && enclosureID.LevelNumber < quantityRegistries.Length)
         {
@@ -40,7 +40,7 @@ public class ConceptsModel
         }
         else return -1;
     }
-    public int MaxRequestableResourcesForItem(EnclosureID enclosureID, ItemID itemID)
+    public int MaxRequestableResourcesForItem(LevelID enclosureID, ItemID itemID)
     {
         if (enclosureID.LevelNumber >= 0 && enclosureID.LevelNumber < quantityRegistries.Length)
         {
@@ -49,7 +49,7 @@ public class ConceptsModel
         else return -1;
     }
     // Count the requests that the player has remaining
-    public int RemainingRequests(EnclosureID enclosureID)
+    public int RemainingRequests(LevelID enclosureID)
     {
         GameManager instance = GameManager.Instance;
 
@@ -61,18 +61,18 @@ public class ConceptsModel
         }
         else return -1;
     }
-    public int RemainingRequestableResources(EnclosureID enclosureID)
+    public int RemainingRequestableResources(LevelID enclosureID)
     {
         return MaxRequestableResources(enclosureID) - resourceRequests[enclosureID].TotalResourcesGranted;
     }
-    public int RemainingRequestableResourcesForItem(EnclosureID enclosureID, ItemID itemID)
+    public int RemainingRequestableResourcesForItem(LevelID enclosureID, ItemID itemID)
     {
         return MaxRequestableResourcesForItem(enclosureID, itemID) - resourceRequests[enclosureID].TotalItemsGranted(itemID);
     }
     public void ReviewResourceRequests()
     {
         // Get the list of requests for the current enclosure id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         List<ResourceRequest> toReview = resourceRequests[current].RequestsWithStatus(ResourceRequest.Status.NotReviewed);
         // Sort the requests from highest to lowest priority
         toReview.Sort((x, y) => y.Priority.CompareTo(x.Priority));

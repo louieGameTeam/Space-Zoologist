@@ -61,13 +61,13 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
 
     #region Private Fields
     // Enclosure ID for the entry we are editing
-    private EnclosureID enclosureID;
+    private LevelID enclosureID;
     // The entry that is edited by this UI
     private TestAndMetricsEntry entry;
     #endregion
 
     #region Public Methods
-    public void Setup(EnclosureID enclosureID, TestAndMetricsEntry entry, ScrollRect scrollTarget)
+    public void Setup(LevelID enclosureID, TestAndMetricsEntry entry, ScrollRect scrollTarget)
     {
         base.Setup();
 
@@ -101,7 +101,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         }
 
         // Cache the current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         // Only add the listeners if this editor is in the current scene
         if (enclosureID == current)
         {

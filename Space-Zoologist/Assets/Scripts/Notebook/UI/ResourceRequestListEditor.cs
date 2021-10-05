@@ -22,7 +22,7 @@ public class ResourceRequestListEditor : NotebookUIChild
     #endregion
 
     #region Public Methods
-    public void UpdateListEdited(EnclosureID id, ResourceRequestList list)
+    public void UpdateListEdited(LevelID id, ResourceRequestList list)
     {
         // Destroy all existing editors
         foreach (ResourceRequestEditor editor in currentEditors)
@@ -46,7 +46,7 @@ public class ResourceRequestListEditor : NotebookUIChild
 
         // If the enclosure selected is the current enclosure, then add a new editor
         // that we can use to add more entries
-        if (id == EnclosureID.FromCurrentSceneName())
+        if (id == LevelID.FromCurrentSceneName())
         {
             CreateAddingEntry();
         }
@@ -70,7 +70,7 @@ public class ResourceRequestListEditor : NotebookUIChild
     private void CreateAddingEntry()
     {
         ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller, SortEditors, () => OnRequestDeleted(editor));
+        editor.Setup(LevelID.FromCurrentSceneName(), null, editorScroller, SortEditors, () => OnRequestDeleted(editor));
         editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
 

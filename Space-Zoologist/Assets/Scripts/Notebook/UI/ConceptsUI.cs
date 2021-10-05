@@ -31,7 +31,7 @@ public class ConceptsUI : NotebookUIChild
 
         // Add listener for enclosure id picked
         enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureIDPicked);
-        OnEnclosureIDPicked(EnclosureID.FromCurrentSceneName());
+        OnEnclosureIDPicked(LevelID.FromCurrentSceneName());
 
         // When request button clicked then review resource requests
         requestButton.onClick.AddListener(ReviewResourceRequests);
@@ -47,13 +47,13 @@ public class ConceptsUI : NotebookUIChild
     #endregion
 
     #region Private Methods
-    private void OnEnclosureIDPicked(EnclosureID id)
+    private void OnEnclosureIDPicked(LevelID id)
     {
         // Update list being edited by the list editor
         listEditor.UpdateListEdited(id, UIParent.Notebook.Concepts.GetResourceRequestList(id));
 
         // Make request button interactable only if the id picked is the current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         requestButton.interactable = id == current;
 
         // Update the text displayed
@@ -68,9 +68,9 @@ public class ConceptsUI : NotebookUIChild
         listEditor.UpdateReviewUI();
 
         // Update the text displayed
-        UpdateText(EnclosureID.FromCurrentSceneName());
+        UpdateText(LevelID.FromCurrentSceneName());
     }
-    private void UpdateText(EnclosureID id)
+    private void UpdateText(LevelID id)
     {
         int requestsLeft = UIParent.Notebook.Concepts.RemainingRequests(id);
         int resourcesLeft = UIParent.Notebook.Concepts.RemainingRequestableResources(id);

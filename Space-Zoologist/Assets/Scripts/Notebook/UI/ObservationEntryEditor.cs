@@ -18,7 +18,7 @@ public class ObservationEntryEditor : NotebookUIChild
     private TMP_InputField textInput;
 
     // Setup this editor with the entry that it will edit
-    public void Setup(ObservationsEntry entry, EnclosureID id, ScrollRect scrollTarget)
+    public void Setup(ObservationsEntry entry, LevelID id, ScrollRect scrollTarget)
     {
         base.Setup();
 
@@ -27,7 +27,7 @@ public class ObservationEntryEditor : NotebookUIChild
         textInput.text = entry.Text;
 
         // Cache the current enclosure
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         // If the id setting up is the same as the current then add the listeners
         if(id == current)
         {

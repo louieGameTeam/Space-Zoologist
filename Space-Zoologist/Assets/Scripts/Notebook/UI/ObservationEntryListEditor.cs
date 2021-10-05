@@ -26,10 +26,10 @@ public class ObservationEntryListEditor : NotebookUIChild
 
         // Add listnener to enclosure id picked event and select the enclosure for the current scene
         enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureSelected);
-        OnEnclosureSelected(EnclosureID.FromCurrentSceneName());
+        OnEnclosureSelected(LevelID.FromCurrentSceneName());
     }
 
-    private void OnEnclosureSelected(EnclosureID id)
+    private void OnEnclosureSelected(LevelID id)
     {
         // Destroy all existing editors
         foreach(ObservationEntryEditor editor in currentEditors)

@@ -46,7 +46,7 @@ public class NotebookUI : MonoBehaviour
         notebook.Setup();
 
         // Update the enclosure IDs
-        notebook.TryAddEnclosureID(EnclosureID.FromCurrentSceneName());
+        notebook.TryAddEnclosureID(LevelID.FromCurrentSceneName());
 
         // Try to get an instance of the game manager
         GameManager instance = GameManager.Instance;

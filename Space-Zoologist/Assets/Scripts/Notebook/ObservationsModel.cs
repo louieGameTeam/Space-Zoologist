@@ -6,13 +6,13 @@ using UnityEngine;
 public class ObservationsModel
 {
     #region Public Properties
-    public List<EnclosureID> EnclosureIDs => new List<EnclosureID>(observationsEntries.Keys);
+    public List<LevelID> EnclosureIDs => new List<LevelID>(observationsEntries.Keys);
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Scaffolding of the observation page based on the current enclosure level")]
-    private EnclosureScaffold enclosureScaffold;
+    private LevelScaffold enclosureScaffold;
     [SerializeField]
     [Tooltip("Set of initial entries corresponding to each scaffolding level")]
     private List<ObservationsEntryList> initialEntries;
@@ -20,12 +20,12 @@ public class ObservationsModel
 
     #region Private Fields
     // Map the list to the enclosure it applies to
-    private Dictionary<EnclosureID, ObservationsEntryList> observationsEntries = new Dictionary<EnclosureID, ObservationsEntryList>();
+    private Dictionary<LevelID, ObservationsEntryList> observationsEntries = new Dictionary<LevelID, ObservationsEntryList>();
     #endregion
 
     #region Public Methods
-    public ObservationsEntryList GetEntryList(EnclosureID id) => observationsEntries[id];
-    public void TryAddEnclosureID(EnclosureID id)
+    public ObservationsEntryList GetEntryList(LevelID id) => observationsEntries[id];
+    public void TryAddEnclosureID(LevelID id)
     {
         if (!observationsEntries.ContainsKey(id))
         {

@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 /// Holds the name of the scene it is in, as well as the id of the area
 /// </summary>
 [System.Serializable]
-public struct EnclosureID : System.IComparable<EnclosureID>
+public struct LevelID : System.IComparable<LevelID>
 {
     #region Public Properties
     public int LevelNumber => levelNumber;
@@ -25,7 +25,7 @@ public struct EnclosureID : System.IComparable<EnclosureID>
     #endregion
 
     #region Constructors
-    public EnclosureID(int levelNumber, int enclosureNumber)
+    public LevelID(int levelNumber, int enclosureNumber)
     {
         this.levelNumber = levelNumber;
         this.enclosureNumber = enclosureNumber;
@@ -33,7 +33,7 @@ public struct EnclosureID : System.IComparable<EnclosureID>
     #endregion
 
     #region Factory Methods
-    public static EnclosureID FromSceneName(string name)
+    public static LevelID FromSceneName(string name)
     {
         string levelPrefix = "Level";
         string enclosurePrefix = "E";
@@ -71,11 +71,11 @@ public struct EnclosureID : System.IComparable<EnclosureID>
         }
 
         // Return the enclosure ID
-        return new EnclosureID(levelNumber, enclosureNumber);
+        return new LevelID(levelNumber, enclosureNumber);
     }
 
     // Parse the scene name to get the enclosure ID
-    public static EnclosureID FromCurrentSceneName()
+    public static LevelID FromCurrentSceneName()
     {
         GameManager instance = GameManager.Instance;
 
@@ -83,24 +83,24 @@ public struct EnclosureID : System.IComparable<EnclosureID>
         {
             return FromSceneName(instance.LevelData.Level.SceneName);
         }
-        else return new EnclosureID(-1, -1);
+        else return new LevelID(-1, -1);
     }
     #endregion
 
     #region Operators
-    public static bool operator ==(EnclosureID a, EnclosureID b) => a.CompareTo(b) == 0;
-    public static bool operator !=(EnclosureID a, EnclosureID b) => !(a == b);
-    public static bool operator <(EnclosureID a, EnclosureID b) => a.CompareTo(b) < 0;
-    public static bool operator >=(EnclosureID a, EnclosureID b) => !(a < b);
-    public static bool operator >(EnclosureID a, EnclosureID b) => a.CompareTo(b) > 0;
-    public static bool operator <=(EnclosureID a, EnclosureID b) => !(a > b);
+    public static bool operator ==(LevelID a, LevelID b) => a.CompareTo(b) == 0;
+    public static bool operator !=(LevelID a, LevelID b) => !(a == b);
+    public static bool operator <(LevelID a, LevelID b) => a.CompareTo(b) < 0;
+    public static bool operator >=(LevelID a, LevelID b) => !(a < b);
+    public static bool operator >(LevelID a, LevelID b) => a.CompareTo(b) > 0;
+    public static bool operator <=(LevelID a, LevelID b) => !(a > b);
     #endregion
 
     #region Object Overrides
     public override bool Equals(object other)
     {
         if (other == null) return false;
-        else if (other.GetType() == typeof(EnclosureID)) return CompareTo((EnclosureID)other) == 0;
+        else if (other.GetType() == typeof(LevelID)) return CompareTo((LevelID)other) == 0;
         else return false;
     }
     public override int GetHashCode()
@@ -114,7 +114,7 @@ public struct EnclosureID : System.IComparable<EnclosureID>
     #endregion
 
     #region Interface Implementation
-    public int CompareTo(EnclosureID other)
+    public int CompareTo(LevelID other)
     {
         int levelCompare = levelNumber.CompareTo(other.levelNumber);
 

@@ -6,6 +6,10 @@ using DialogueEditor;
 [System.Serializable]
 public class NormalOrQuizConversation
 {
+    #region Public Properties
+    public QuizInstance CurrentQuiz => isQuiz ? quizConversation.CurrentQuiz : null;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("If true, this uses a quiz conversation, otherwise use a normal NPCConversation")]
@@ -23,8 +27,8 @@ public class NormalOrQuizConversation
     {
         if (isQuiz)
         {
-            QuizConversation quiz = Object.Instantiate(quizConversation);
-            quiz.Setup();
+            QuizConversation conversation = Object.Instantiate(quizConversation);
+            conversation.Setup();
         }
         else dialogueManager.SetNewDialogue(normalConversation);
     }

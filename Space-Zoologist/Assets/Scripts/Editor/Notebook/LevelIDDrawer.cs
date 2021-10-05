@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(EnclosureID))]
-public class EnclosureIDDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(LevelID))]
+public class LevelIDDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {

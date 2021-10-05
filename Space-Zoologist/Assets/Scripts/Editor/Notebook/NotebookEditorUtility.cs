@@ -19,7 +19,7 @@ public static class NotebookEditorUtility
         // edit the array based on total scaffold levels
         if (enclosureScaffold.objectReferenceValue)
         {
-            int totalLevels = (enclosureScaffold.objectReferenceValue as EnclosureScaffold).TotalLevels;
+            int totalLevels = (enclosureScaffold.objectReferenceValue as LevelScaffold).TotalLevels;
             ScaffoldedArrayField(position, array, totalLevels);
         }
         // If no object reference exists the array will be empty

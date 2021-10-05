@@ -48,5 +48,4 @@ public class LevelData : ScriptableObject
     [Header("After level completed")]
     [SerializeField] NormalOrQuizConversation passedConversation = default;
     [SerializeField] NPCConversation restertEnclosureConversation = default;
-
 }

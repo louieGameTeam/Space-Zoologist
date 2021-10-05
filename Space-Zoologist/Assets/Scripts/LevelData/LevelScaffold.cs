@@ -5,21 +5,21 @@ using UnityEngine;
 /// <summary>
 /// Determine the level/enclosure numbers where the scaffolding levels change
 /// </summary>
-[CreateAssetMenu(fileName = "Enclosure Scaffold", menuName = "Notebook/Enclosure Scaffold")]
-public class EnclosureScaffold : ScriptableObject
+[CreateAssetMenu]
+public class LevelScaffold : ScriptableObject
 {
     public int TotalLevels => scaffoldLevelSwitches.Count + 1;
 
     [SerializeField]
     [Tooltip("Scaffold level switches at each enclosure id in this list")]
-    private List<EnclosureID> scaffoldLevelSwitches;
+    private List<LevelID> scaffoldLevelSwitches;
 
     // Get the scaffold level of the given id
-    public int ScaffoldLevel(EnclosureID id)
+    public int ScaffoldLevel(LevelID id)
     {
         // Create a sorted list with the lowest possible id at the front
-        List<EnclosureID> levels = new List<EnclosureID>(scaffoldLevelSwitches);
-        levels.Insert(0, new EnclosureID(int.MinValue, int.MinValue));
+        List<LevelID> levels = new List<LevelID>(scaffoldLevelSwitches);
+        levels.Insert(0, new LevelID(int.MinValue, int.MinValue));
         levels.Sort();
 
         // Loop over all ids not including the last one

@@ -66,13 +66,13 @@ public class ResourceRequestEditor : NotebookUIChild
 
     #region Private Fields
     // ID of the request to edit
-    private EnclosureID enclosureID;
+    private LevelID enclosureID;
     // Resource request to edit
     private ResourceRequest request;
     #endregion
 
     #region Public Methods
-    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget, UnityAction priorityUpdatedCallback, UnityAction requestDeletedCallback)
+    public void Setup(LevelID enclosureID, ResourceRequest request, ScrollRect scrollTarget, UnityAction priorityUpdatedCallback, UnityAction requestDeletedCallback)
     {
         base.Setup();
 
@@ -105,7 +105,7 @@ public class ResourceRequestEditor : NotebookUIChild
         }
 
         // Cache current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         // Only add listeners if this editor is in the current scene
         if(enclosureID == current)
         {
