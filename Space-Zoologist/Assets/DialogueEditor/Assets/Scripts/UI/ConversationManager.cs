@@ -83,7 +83,7 @@ namespace DialogueEditor
         private SpeechNode m_currentSpeech;
 
         // Selection options
-        private int m_currentSelectedIndex = -1;
+        private int m_currentSelectedIndex;
 
         //public GameObject BacklogGameObject;
         //public Button BacklogButton;
@@ -506,7 +506,7 @@ namespace DialogueEditor
 
             // Clear current options
             ClearOptions();
-            m_currentSelectedIndex = -1;
+            m_currentSelectedIndex = 0;
 
             // Set sprite
             if (speech.Icon == null)
@@ -617,8 +617,7 @@ namespace DialogueEditor
                     }
                 }
             }
-            // Auto select first option
-            // SetSelectedOption(0);
+            SetSelectedOption(0);
 
             // Set the button sprite and alpha
             for (int i = 0; i < m_uiOptions.Count; i++)
