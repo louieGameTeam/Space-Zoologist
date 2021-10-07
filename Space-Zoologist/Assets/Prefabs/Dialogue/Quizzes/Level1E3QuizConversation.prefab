@@ -124,22 +124,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2397069553644409660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7377e87bb9b804446b0a1cd27ecac9c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ce03d40a13756b46b0099769113401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quizTemplate: {fileID: 11400000, guid: aab7bbf38adf3964d8fa9e20f5dba718, type: 2}
+  npcIcon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  npcName: Star
+  npcFont: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
   openingConversation: {fileID: 2397069553824602220}
-  quizBuilder:
-    quizTemplate: {fileID: 11400000, guid: aab7bbf38adf3964d8fa9e20f5dba718, type: 2}
-    npcIcon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
-    npcName: Star
-    npcFont: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
-    endOfQuizText: Alright, give me a minute to process your answers...
-    response:
-      responses:
-      - {fileID: 2397069554096548239}
-      - {fileID: 2397069555125307913}
-      - {fileID: 2397069554861599970}
-  quizObject: {fileID: 2397069554569671895}
+  endOfQuizText: Alright, give me a minute to process your answers...
+  response:
+    responses:
+    - {fileID: 2397069554096548239}
+    - {fileID: 2397069555125307913}
+    - {fileID: 2397069554861599970}
 --- !u!1 &2397069553824602222
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class ResourceRequestListEditor : NotebookUIChild
 {
+    #region Public Properties
+    public ResourceRequestEditor AddingEntry => currentEditors.Find(entry => entry.Request == null);
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
@@ -22,8 +26,11 @@ public class ResourceRequestListEditor : NotebookUIChild
     #endregion
 
     #region Public Methods
-    public void UpdateListEdited(LevelID id, ResourceRequestList list)
+    public void UpdateListEdited(LevelID id)
     {
+        // Make sure that the list is set up
+        if (!IsSetUp) Setup();
+
         // Destroy all existing editors
         foreach (ResourceRequestEditor editor in currentEditors)
         {
@@ -32,8 +39,8 @@ public class ResourceRequestListEditor : NotebookUIChild
         // Clear out the list
         currentEditors.Clear();
 
-        // Get the requests and sort them
-        List<ResourceRequest> sortedRequests = new List<ResourceRequest>(list.Requests);
+        // Copy the requests and sort the copy
+        List<ResourceRequest> sortedRequests = new List<ResourceRequest>(UIParent.Notebook.Concepts.GetResourceRequestList(id).Requests);
         sortedRequests.Sort();
 
         // Foreach entry in the selected list, add an editor
@@ -50,6 +57,7 @@ public class ResourceRequestListEditor : NotebookUIChild
         {
             CreateAddingEntry();
         }
+        else SortEditors();
     }
     public void UpdateReviewUI()
     {

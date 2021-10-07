@@ -10,7 +10,22 @@ public class ResourceRequestEditor : NotebookUIChild
 {
     #region Public Properties
     public RectTransform RectTransform => rectTransform;
-    public ResourceRequest Request => request;
+    public ResourceRequest Request
+    {
+        get => request;
+        set
+        {
+            // We just created a new request if it was previously null and this value is not null
+            bool newRequestCreated = request == null && value != null;
+
+            // Set the request and set the values on the ui elements
+            request = value;
+            SetUIValues();
+
+            // If a new request was created by the set, then invoke the event
+            if (newRequestCreated) HandleNewRequestCreated();
+        }
+    }
     public UnityEvent OnNewRequestCreated => onNewRequestCreated;
     public UnityEvent OnPriorityUpdate => onPriorityUpdated;
     public UnityEvent OnRequestDeleted => onRequestDeleted;
@@ -87,22 +102,9 @@ public class ResourceRequestEditor : NotebookUIChild
         needDropdown.Setup(new NeedType[] { NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
         itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
 
-        if (request != null)
-        {
-            priorityInput.text = request.Priority.ToString();
-            targetDropdown.SetSelectedItem(request.Target);
-            needDropdown.SetNeedTypeValue(request.ImprovedNeed);
-            quantityInput.text = request.QuantityRequested.ToString();
-            itemRequestedDropdown.SetSelectedItem(request.ItemRequested);
-        }
-        else
-        {
-            priorityInput.text = "0";
-            targetDropdown.SetDropdownValue(0);
-            needDropdown.SetDropdownValue(0);
-            quantityInput.text = "0";
-            itemRequestedDropdown.Dropdown.value = 0;
-        }
+        // Set the values on all UI elements to the values in the current request, 
+        // or default values if the current request is null 
+        SetUIValues();
 
         // Cache current id
         LevelID current = LevelID.FromCurrentSceneName();
@@ -157,6 +159,25 @@ public class ResourceRequestEditor : NotebookUIChild
     #endregion
 
     #region Private Methods
+    private void SetUIValues()
+    {
+        if (request != null)
+        {
+            priorityInput.text = request.Priority.ToString();
+            targetDropdown.SetSelectedItem(request.Target);
+            needDropdown.SetNeedTypeValue(request.ImprovedNeed);
+            quantityInput.text = request.QuantityRequested.ToString();
+            itemRequestedDropdown.SetSelectedItem(request.ItemRequested);
+        }
+        else
+        {
+            priorityInput.text = "0";
+            targetDropdown.SetDropdownValue(0);
+            needDropdown.SetDropdownValue(0);
+            quantityInput.text = "0";
+            itemRequestedDropdown.Dropdown.value = 0;
+        }
+    }
     private ResourceRequest GetOrCreateResourceRequest()
     {
         if (request == null)
@@ -174,17 +195,22 @@ public class ResourceRequestEditor : NotebookUIChild
                 ItemRequested = itemRequestedDropdown.SelectedItem
             };
 
-            // Get the list and add the new request
-            ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
-            list.Requests.Add(request);
-
-            // Put all elements at full alpha again
-            group.alpha = 1f;
-
-            // Invoke the event for creating a new request
-            onNewRequestCreated.Invoke();
+            // Handle the new request
+            HandleNewRequestCreated();
         }
         return request;
+    }
+    private void HandleNewRequestCreated()
+    {
+        // Get the list and add the new request
+        ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
+        list.Requests.Add(request);
+
+        // Put all elements at full alpha again
+        group.alpha = 1f;
+
+        // Invoke the event for creating a new request
+        onNewRequestCreated.Invoke();
     }
     private void DeleteRequest()
     {

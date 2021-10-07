@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     // they are off/on at the start of the level, so we can't guarantee that a raw
     // "FindObjectWithType" will find it
     [SerializeField] NotebookUI notebookUI = default;
+    public NotebookUI NotebookUI => notebookUI;
     [SerializeField] InspectorObjectiveUI inspectorObjectiveUI = default;
 
     [Header("Time Variables")]

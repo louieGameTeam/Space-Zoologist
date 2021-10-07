@@ -25,6 +25,9 @@ public class NotebookUI : MonoBehaviour
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
     private NotebookTabPicker tabPicker;
     [SerializeField]
+    [Tooltip("Reference to the script that edits resource requests")]
+    private ResourceRequestListEditor resourceRequestListEditor;
+    [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
     private UnityEvent onContentChanged;
     [SerializeField]
@@ -91,7 +94,17 @@ public class NotebookUI : MonoBehaviour
     }
     public void NavigateToBookmark(Bookmark bookmark)
     {
+        if (!isOpen) SetIsOpen(true);
         bookmark.Navigate(nameTargetMap);
+    }
+    /// <summary>
+    /// Fill in a resource request on the request list editor
+    /// </summary>
+    /// <param name="resourceRequest"></param>
+    public void FillResourceRequest(ResourceRequest resourceRequest)
+    {
+        // This one property set invokes a cascade of events automatically so that the ui updates correctly
+        resourceRequestListEditor.AddingEntry.Request = resourceRequest;
     }
     #endregion
 }

@@ -17,12 +17,35 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public delegate void ItemSelectedHandler(Item item);
     public event ItemSelectedHandler onSelected;
 
+    #region Public Methods
     public void Initialize(Item item, ItemSelectedHandler itemSelectedHandler)
     {
         this.item = item;
         this.itemImage.sprite = item.Icon;
         this.onSelected += itemSelectedHandler;
         this.ItemName.text = this.item.ItemID.Data.Name.Get(global::ItemName.Type.Colloquial);
+        RequestButton.onClick.AddListener(() =>
+        { 
+            if(GameManager.Instance)
+            {
+                // NOTE: a little unstable. 
+                // Just inspecting the names and hard-coding them is not a good idea
+                Bookmark bookmark = new Bookmark(string.Empty, 
+                    new BookmarkData("Tabs", NotebookTab.Concepts),
+                    new BookmarkData("ConceptEnclosureIDPicker", LevelID.FromCurrentSceneName()));
+                // Create a request to prefill in the notebook
+                ResourceRequest request = new ResourceRequest()
+                {
+                    Priority = 1,
+                    QuantityRequested = 1,
+                    ItemRequested = item.ItemID
+                };
+
+                NotebookUI notebookUI = GameManager.Instance.NotebookUI;
+                notebookUI.NavigateToBookmark(bookmark);
+                notebookUI.FillResourceRequest(request);
+            }
+        });
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -55,4 +78,5 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         highlightImage.enabled = false;
         RemainingAmountText.color = Color.white;
     }
+    #endregion
 }

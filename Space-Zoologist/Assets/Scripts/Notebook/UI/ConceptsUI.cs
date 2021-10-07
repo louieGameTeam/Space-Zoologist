@@ -42,7 +42,7 @@ public class ConceptsUI : NotebookUIChild
     private void OnEnclosureIDPicked(LevelID id)
     {
         // Update list being edited by the list editor
-        listEditor.UpdateListEdited(id, UIParent.Notebook.Concepts.GetResourceRequestList(id));
+        listEditor.UpdateListEdited(id);
 
         // Make request button interactable only if the id picked is the current id
         LevelID current = LevelID.FromCurrentSceneName();

@@ -806,19 +806,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1050677793554802785}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7377e87bb9b804446b0a1cd27ecac9c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ce03d40a13756b46b0099769113401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quizTemplate: {fileID: 11400000, guid: 71c384be76f80bd46bba7b8b091c1af6, type: 2}
+  npcIcon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  npcName: Star
+  npcFont: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
   openingConversation: {fileID: 1050677792165303709}
-  quizBuilder:
-    quizTemplate: {fileID: 11400000, guid: 71c384be76f80bd46bba7b8b091c1af6, type: 2}
-    npcIcon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
-    npcName: Star
-    npcFont: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
-    endOfQuizText: Alright, give me a minute to process your answers...
-    response:
-      responses:
-      - {fileID: 1050677791954598673}
-      - {fileID: 1050677792950817273}
-      - {fileID: 1050677792111588431}
-  quizObject: {fileID: 1050677792620477026}
+  endOfQuizText: Alright, give me a minute to process your answers...
+  response:
+    responses:
+    - {fileID: 1050677791954598673}
+    - {fileID: 1050677792950817273}
+    - {fileID: 1050677792111588431}
