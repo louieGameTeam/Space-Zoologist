@@ -19,9 +19,6 @@ public class ResourceRequestList
     #endregion
 
     #region Public Methods
-    public int TotalRequestsGrantedInDayRange(int min, int max) => requests
-        .Where(x => x.CurrentStatus == ResourceRequest.Status.Granted && x.DayReviewed >= min && x.DayReviewed <= max)
-        .Count();
     public int TotalItemsGranted(ItemID itemID) => requests
         .Where(x => x.CurrentStatus == ResourceRequest.Status.Granted && x.ItemRequested == itemID)
         .Sum(x => x.QuantityGranted);

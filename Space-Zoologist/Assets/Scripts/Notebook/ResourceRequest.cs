@@ -22,15 +22,22 @@ public class ResourceRequest
         get => priority;
         set => priority = value;
     }
-    public ItemID Target
+    public ItemID ItemAddressed
     {
-        get => target;
-        set => target = value;
+        get => itemAddressed;
+        set => itemAddressed = value;
     }
-    public NeedType ImprovedNeed
+    public NeedType NeedAddressed
     {
-        get => improvedNeed;
-        set => improvedNeed = value;
+        get
+        {
+            // If the item requested is food, the need type addressed is food
+            if (ItemRequested.Category == ItemRegistry.Category.Food) return NeedType.FoodSource;
+            // If it's not food we assume it is a tile. Check if it is a water tile
+            else if (ItemRequested.Data.Name.Get(ItemName.Type.English).Contains("Water")) return NeedType.Liquid;
+            // If it is not water it must be a tile to address terrain needs
+            else return NeedType.Terrain;
+        }
     }
     public int QuantityRequested
     {
@@ -45,7 +52,6 @@ public class ResourceRequest
     public Status CurrentStatus => currentStatus;
     public string StatusReason => statusReason;
     public int QuantityGranted => quantityGranted;
-    public int DayReviewed => dayReviewed;
     public bool FullyGranted => currentStatus == Status.Granted &&
         quantityRequested == quantityGranted;
     public bool PartiallyGranted => currentStatus == Status.Granted && !FullyGranted;
@@ -56,11 +62,8 @@ public class ResourceRequest
     [Tooltip("Priority of the request relative to other requests being made")]
     private int priority;
     [SerializeField]
-    [Tooltip("Target of the resource request")]
-    private ItemID target;
-    [SerializeField]
-    [Tooltip("Need of the target that this resource request is supposed to improve")]
-    private NeedType improvedNeed;
+    [Tooltip("Item that the player is trying to address by making the resource request")]
+    private ItemID itemAddressed;
     [SerializeField]
     [Tooltip("Quantity of the resource requested")]
     private int quantityRequested;
@@ -73,8 +76,6 @@ public class ResourceRequest
     private Status currentStatus = Status.NotReviewed;
     private string statusReason;
     private int quantityGranted;
-    // Day during the simulation that the request was reviewed
-    private int dayReviewed;
     #endregion
 
     #region Public Methods
@@ -118,9 +119,6 @@ public class ResourceRequest
                     else Debug.LogWarning("ResourceRequest: the item '" + itemRequested.Data.Name.ToString() +
                         "' could not be granted because no item object with the given ID was found");
                 }
-
-                // Store the day that the request was reviewed
-                dayReviewed = GameManager.Instance.CurrentDay;
             }
         }
     }

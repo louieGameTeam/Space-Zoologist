@@ -51,8 +51,8 @@ public class ResourceRequestEditor : NotebookUIChild
     [Tooltip("Reference to the dropdown that gets a research category")]
     private CategoryFilteredItemDropdown targetDropdown;
     [SerializeField]
-    [Tooltip("Reference to the dropdown that gets the need")]
-    private NeedTypeDropdown needDropdown;
+    [Tooltip("Reference to the text that displays the need")]
+    private TextMeshProUGUI needDisplay;
     [SerializeField]
     [Tooltip("Text input field that sets the quantity of resources to request")]
     private TMP_InputField quantityInput;
@@ -99,7 +99,6 @@ public class ResourceRequestEditor : NotebookUIChild
 
         // Setup each dropdown
         targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
-        needDropdown.Setup(new NeedType[] { NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
         itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
 
         // Set the values on all UI elements to the values in the current request, 
@@ -118,15 +117,24 @@ public class ResourceRequestEditor : NotebookUIChild
                 {
                     GetOrCreateResourceRequest().Priority = int.Parse(x);
                     onPriorityUpdated.Invoke();
+                    OnAnyRequestPropertyChanged(); 
                 }
             });
-            targetDropdown.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().Target = x);
-            needDropdown.OnNeedTypeSelected.AddListener(x => GetOrCreateResourceRequest().ImprovedNeed = x);
+            targetDropdown.OnItemSelected.AddListener(x => 
+            {
+                GetOrCreateResourceRequest().ItemAddressed = x;
+                OnAnyRequestPropertyChanged();
+            });
             quantityInput.onEndEdit.AddListener(x =>
             {
                 if (!string.IsNullOrWhiteSpace(x)) GetOrCreateResourceRequest().QuantityRequested = int.Parse(x);
+                OnAnyRequestPropertyChanged();
             });
-            itemRequestedDropdown.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().ItemRequested = x);
+            itemRequestedDropdown.OnItemSelected.AddListener(x => 
+            {
+                GetOrCreateResourceRequest().ItemRequested = x;
+                OnAnyRequestPropertyChanged();
+            });
         }
 
         // Elements only interactable if editing for the current enclosure
@@ -164,8 +172,8 @@ public class ResourceRequestEditor : NotebookUIChild
         if (request != null)
         {
             priorityInput.text = request.Priority.ToString();
-            targetDropdown.SetSelectedItem(request.Target);
-            needDropdown.SetNeedTypeValue(request.ImprovedNeed);
+            targetDropdown.SetSelectedItem(request.ItemAddressed);
+            needDisplay.text = request.NeedAddressed + " Need";
             quantityInput.text = request.QuantityRequested.ToString();
             itemRequestedDropdown.SetSelectedItem(request.ItemRequested);
         }
@@ -173,7 +181,7 @@ public class ResourceRequestEditor : NotebookUIChild
         {
             priorityInput.text = "0";
             targetDropdown.SetDropdownValue(0);
-            needDropdown.SetDropdownValue(0);
+            needDisplay.text = "<No Need Addressed>";
             quantityInput.text = "0";
             itemRequestedDropdown.Dropdown.value = 0;
         }
@@ -189,8 +197,7 @@ public class ResourceRequestEditor : NotebookUIChild
             request = new ResourceRequest
             {
                 Priority = int.Parse(priorityInput.text),
-                Target = targetDropdown.SelectedItem,
-                ImprovedNeed = needDropdown.SelectedNeed,
+                ItemAddressed = targetDropdown.SelectedItem,
                 QuantityRequested = int.Parse(quantityInput.text),
                 ItemRequested = itemRequestedDropdown.SelectedItem
             };
@@ -222,6 +229,14 @@ public class ResourceRequestEditor : NotebookUIChild
             // Destroy this editor
             Destroy(gameObject);
         }
+    }
+    private void OnAnyRequestPropertyChanged()
+    {
+        if (request != null)
+        {
+            needDisplay.text = request.NeedAddressed + " Need";
+        }
+        else needDisplay.text = "<No Need Addressed>";
     }
     #endregion
 }
