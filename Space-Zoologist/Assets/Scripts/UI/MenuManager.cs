@@ -122,21 +122,24 @@ public class MenuManager : MonoBehaviour
         AudioManager.instance.PlayOneShot(SFXType.TabSwitch);
     }
 
+    // Currently this function is only called by the dialogue system
     public void ToggleUI(bool isActive)
     {
         foreach(GameObject ui in UI)
         {
             ui.SetActive(isActive);
         }
-        if (!isActive)
-        {
-            GameManager.Instance.m_inspector.CloseInspector();
-            GameManager.Instance.TurnObjectivePanelOn();
-        }
-        else
-        {
-            GameManager.Instance.m_inspector.OpenInspector();
-            GameManager.Instance.TurnObjectivePanelOff();
-        }
+
+        // Commented out 10/07/2021 because dialogue system shouldn't close inspector
+        //if (!isActive)
+        //{
+        //    GameManager.Instance.m_inspector.CloseInspector();
+        //    GameManager.Instance.TurnObjectivePanelOn();
+        //}
+        //else
+        //{
+        //    GameManager.Instance.m_inspector.OpenInspector();
+        //    GameManager.Instance.TurnObjectivePanelOff();
+        //}
     }
 }

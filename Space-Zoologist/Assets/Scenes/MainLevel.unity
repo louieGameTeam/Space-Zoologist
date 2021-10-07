@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -851,12 +851,11 @@ MonoBehaviour:
   UIElements: []
   StoreCanvas: {fileID: 1957932609}
   UI:
-  - {fileID: 1761754413}
+  - {fileID: 6621437665015075475}
   - {fileID: 3862188242057203408}
   - {fileID: 3956046058778708287}
   - {fileID: 8404243451497626317}
   - {fileID: 8349968274091900280}
-  - {fileID: 6621437665015075475}
 --- !u!4 &363993210
 Transform:
   m_ObjectHideFlags: 0
@@ -5658,12 +5657,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EventResponseManager: {fileID: 208159620}
---- !u!1 &1761754413 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3043627652767562312, guid: b6fa91312476840f19ee43626e3f9dfb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1981156779}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1797214983
 GameObject:
   m_ObjectHideFlags: 0
