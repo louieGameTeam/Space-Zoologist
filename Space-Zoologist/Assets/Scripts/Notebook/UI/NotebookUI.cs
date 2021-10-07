@@ -13,6 +13,7 @@ public class NotebookUI : MonoBehaviour
 
     #region Public Properties
     public NotebookModel Notebook => notebook;
+    public NotebookTabPicker TabPicker => tabPicker;
     public UnityEvent OnContentChanged => onContentChanged;
     public BoolEvent OnNotebookToggle => onNotebookToggle;
     #endregion

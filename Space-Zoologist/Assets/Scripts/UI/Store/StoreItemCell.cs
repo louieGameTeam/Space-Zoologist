@@ -28,11 +28,17 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         { 
             if(GameManager.Instance)
             {
-                // NOTE: a little unstable. 
-                // Just inspecting the names and hard-coding them is not a good idea
+                // Reference the notebook ui
+                NotebookUI notebookUI = GameManager.Instance.NotebookUI;
+                // Tab picker reference
+                NotebookTabPicker tabPicker = notebookUI.TabPicker;
+                // Get the first level ID picker that appears in the game object that represents the concepts tab
+                LevelIDPicker conceptTabIDPicker = tabPicker.GetTabRoot(NotebookTab.Concepts).GetComponentInChildren<LevelIDPicker>(true);
+
+                // Create the bookmark to navigate to
                 Bookmark bookmark = new Bookmark(string.Empty, 
-                    new BookmarkData("Tabs", NotebookTab.Concepts),
-                    new BookmarkData("ConceptEnclosureIDPicker", LevelID.FromCurrentSceneName()));
+                    new BookmarkData(tabPicker.name, NotebookTab.Concepts),
+                    new BookmarkData(conceptTabIDPicker.name, LevelID.FromCurrentSceneName()));
                 // Create a request to prefill in the notebook
                 ResourceRequest request = new ResourceRequest()
                 {
@@ -41,7 +47,6 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                     ItemRequested = item.ItemID
                 };
 
-                NotebookUI notebookUI = GameManager.Instance.NotebookUI;
                 notebookUI.NavigateToBookmark(bookmark);
                 notebookUI.FillResourceRequest(request);
             }
