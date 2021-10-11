@@ -641,11 +641,11 @@ public class GameManager : MonoBehaviour
         m_gridSystem.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
-        UpdateAllNeedSystems();
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
         {
             m_populationManager.Populations[i].HandleGrowth();
         }
+        UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
     }
