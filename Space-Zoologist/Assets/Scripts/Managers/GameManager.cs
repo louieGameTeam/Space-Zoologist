@@ -513,7 +513,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleNPCEndConversation()
     {
-        if (!(currentDay < maxDay))
+        if (currentDay > maxDay)
         {
             m_dialogueManager.SetNewDialogue(m_levelData.RestartConversation);
         }
@@ -631,17 +631,23 @@ public class GameManager : MonoBehaviour
 
     public void nextDay()
     {
+        UpdateDayText(++currentDay);
+        if(currentDay > maxDay)
+        {
+            // GameOver.cs listens for the event and handles gameover
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+        }
+
         m_gridSystem.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
-        UpdateAllNeedSystems();
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
         {
             m_populationManager.Populations[i].HandleGrowth();
         }
+        UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
-        UpdateDayText(++currentDay);
     }
     #endregion
 
