@@ -126,6 +126,8 @@ namespace DialogueEditor
 
         private void Update()
         {
+            bool progressInput = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
+
             if (m_state != eState.Off) { 
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -186,7 +188,7 @@ namespace DialogueEditor
                         {
                             if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
-                                if ((Input.GetMouseButtonDown(0) || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
+                                if ((progressInput || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
                                     SetState(eState.TransitioningOptionsOff);
                                 }
@@ -268,13 +270,14 @@ namespace DialogueEditor
 
         private void UpdateScrollingText()
         {
+            bool progressInput = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
             const float charactersPerSecond = 1500;
             float timePerChar = (60.0f / charactersPerSecond);
             timePerChar *= ScrollSpeed;
 
             m_elapsedScrollTime += Time.deltaTime;
 
-            if (Input.GetMouseButtonDown(0) || skipping)
+            if (progressInput || skipping)
             {
                 m_elapsedScrollTime = 0f;
                 DialogueText.maxVisibleCharacters = m_targetScrollTextCount;

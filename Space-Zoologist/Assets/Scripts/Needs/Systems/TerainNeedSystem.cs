@@ -290,7 +290,7 @@ public class TerrainNeedSystem : NeedSystem
 
                 if (foodSource.GetNeedValues().ContainsKey(needName))
                 {
-                    Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
+                    //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
                     foodSource.UpdateNeed(needName, count);
                 }
             }
