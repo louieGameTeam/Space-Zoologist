@@ -1,9 +1,8 @@
 using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ScriptableObjectSingleton<BaseType> : ScriptableObject where BaseType : ScriptableObjectSingleton<BaseType>
+public class ScriptableObjectSingleton<BaseType> : ScriptableObject 
+    where BaseType : ScriptableObjectSingleton<BaseType>
 {
     #region Private Fields
     private static BaseType instance;
@@ -37,10 +36,16 @@ public class ScriptableObjectSingleton<BaseType> : ScriptableObject where BaseTy
                     }
                 }
                 // If no instances found then throw exception
-                else throw new MissingReferenceException(
-                    "ScriptableObjectSinglet: no scriptable object with the desired type " +
-                    "could be loaded from the resources folder. Make sure a scriptable object " +
-                    "of the desired type exists somewhere in a directory with a parent file named 'Resources'");
+                else
+                {
+                    string myTypename = typeof(ScriptableObjectSingleton<BaseType>).Name;
+                    string typename = typeof(BaseType).Name;
+                    throw new MissingReferenceException(
+                        myTypename + ": no scriptable object with the type '" + typename +
+                        "' could be loaded from the resources folder where one was expected. " +
+                        "Make sure a scriptable object with the type '" + typename + 
+                        "' exists somewhere in a directory with a parent file named 'Resources'");
+                }
             }
             // If instance is not null return it
             return instance;
