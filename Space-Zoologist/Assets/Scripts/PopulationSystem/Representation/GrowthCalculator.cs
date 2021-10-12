@@ -90,7 +90,7 @@ public class GrowthCalculator
 
     public void CalculateWaterNeed()
     {
-        Debug.Log(population.species.SpeciesName + " has liquid need " + population.Needs.ContainsKey("Liquid"));
+        //Debug.Log(population.species.SpeciesName + " has liquid need " + population.Needs.ContainsKey("Liquid"));
         if(!population.Needs.ContainsKey("Liquid"))
         {
             waterRating = 0;
@@ -118,7 +118,7 @@ public class GrowthCalculator
 
         if (waterTilesUsed >= totalNeedWaterTiles)
         {
-            Debug.Log("Water need met");
+            //Debug.Log("Water need met");
             IsNeedMet[NeedType.Liquid] = true;
             waterRating = 0;
 
@@ -127,7 +127,7 @@ public class GrowthCalculator
                 float percentPureWater = waterNeed.NeedValue;
                 float neededPureWaterThreshold = waterNeed.GetThreshold();
                 waterRating += (percentPureWater - neededPureWaterThreshold) / (maxFreshWaterTilePercent - neededPureWaterThreshold);
-                Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
+                //Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
             }
 
             if(saltNeed != null)
@@ -135,7 +135,7 @@ public class GrowthCalculator
                 float percentSalt = saltNeed.NeedValue;
                 float neededSaltThreshold = saltNeed.GetThreshold();
                 waterRating += (percentSalt - neededSaltThreshold) / (maxSaltTilePercent - neededSaltThreshold);
-                Debug.Log("Salt received: " + percentSalt + " out of " + neededSaltThreshold);
+                //Debug.Log("Salt received: " + percentSalt + " out of " + neededSaltThreshold);
             }
 
             if(bacteriaNeed != null)
@@ -143,7 +143,7 @@ public class GrowthCalculator
                 float percentBacteria = bacteriaNeed.NeedValue;
                 float neededBacteriaThreshold = bacteriaNeed.GetThreshold();
                 waterRating += (percentBacteria - neededBacteriaThreshold) / (maxBacteriaTilePercent - neededBacteriaThreshold);
-                Debug.Log("Bacteria received: " + percentBacteria + " out of " + neededBacteriaThreshold);
+                //Debug.Log("Bacteria received: " + percentBacteria + " out of " + neededBacteriaThreshold);
             }
         }
         else
@@ -152,7 +152,7 @@ public class GrowthCalculator
             waterRating = (waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles;
         }
 
-        Debug.Log(population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
+        //Debug.Log(population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
     }
 
     // Updates IsNeedMet and foodRating
@@ -174,7 +174,7 @@ public class GrowthCalculator
             foodRating = (totalFoodConsumed - totalMinFoodNeeded) / totalMinFoodNeeded;
         }
 
-        Debug.Log(population.gameObject.name + " food rating: " + foodRating + ", total food eaten: " + totalFoodConsumed + ", percent of food is preferred: " + (availablePreferredFood / totalFoodConsumed));
+        //Debug.Log(population.gameObject.name + " food rating: " + foodRating + ", total food eaten: " + totalFoodConsumed + ", percent of food is preferred: " + (availablePreferredFood / totalFoodConsumed));
     }
 
     public void CalculateTerrainNeed()
@@ -234,7 +234,7 @@ public class GrowthCalculator
             terrainRating = (totalTilesOccupied - totalNeededTiles) / totalNeededTiles;
         }
 
-        Debug.Log(population.gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + preferredTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
+        //Debug.Log(population.gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + preferredTilesOccupied + ", survivable tiles: " + survivableTilesOccupied);
     }
 
     public float calculatePredatorPreyNeed()
