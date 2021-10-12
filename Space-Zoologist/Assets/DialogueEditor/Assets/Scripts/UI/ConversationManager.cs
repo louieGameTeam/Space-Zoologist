@@ -83,7 +83,7 @@ namespace DialogueEditor
         private SpeechNode m_currentSpeech;
 
         // Selection options
-        private int m_currentSelectedIndex;
+        private int m_currentSelectedIndex = -1;
 
         //public GameObject BacklogGameObject;
         //public Button BacklogButton;
@@ -509,7 +509,7 @@ namespace DialogueEditor
 
             // Clear current options
             ClearOptions();
-            m_currentSelectedIndex = 0;
+            m_currentSelectedIndex = -1;
 
             // Set sprite
             if (speech.Icon == null)
@@ -588,6 +588,17 @@ namespace DialogueEditor
             if (speech.Options.Count > 0)
             {
                 //StartCoroutine(ShrinkDialogue());
+                
+                // Decrease spacing when many options are present to prevent options being too small
+                var layout = OptionsPanel.GetComponent<VerticalLayoutGroup>();
+                if (speech.Options.Count > 3)
+                {
+                    layout.spacing = 10;
+                }
+                else {
+                    layout.spacing = 20;
+                }
+
                 for (int i = 0; i < speech.Options.Count; i++)
                 {
                     UIConversationButton option = GameObject.Instantiate(ButtonPrefab, OptionsPanel);
@@ -620,7 +631,8 @@ namespace DialogueEditor
                     }
                 }
             }
-            SetSelectedOption(0);
+            // Auto select first option
+            // SetSelectedOption(0);
 
             // Set the button sprite and alpha
             for (int i = 0; i < m_uiOptions.Count; i++)
