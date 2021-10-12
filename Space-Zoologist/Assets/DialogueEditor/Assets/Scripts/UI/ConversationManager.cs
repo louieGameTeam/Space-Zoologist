@@ -585,6 +585,17 @@ namespace DialogueEditor
             if (speech.Options.Count > 0)
             {
                 //StartCoroutine(ShrinkDialogue());
+                
+                // Decrease spacing when many options are present to prevent options being too small
+                var layout = OptionsPanel.GetComponent<VerticalLayoutGroup>();
+                if (speech.Options.Count > 3)
+                {
+                    layout.spacing = 10;
+                }
+                else {
+                    layout.spacing = 20;
+                }
+
                 for (int i = 0; i < speech.Options.Count; i++)
                 {
                     UIConversationButton option = GameObject.Instantiate(ButtonPrefab, OptionsPanel);

@@ -33,7 +33,6 @@ public class MenuManager : MonoBehaviour
         }
         StoreMenus[curMenu]?.gameObject.SetActive(true);
         StoreCanvas.localScale = Vector3.zero;
-
     }
 
     public void OnToggleMenu(GameObject menu)
@@ -131,15 +130,16 @@ public class MenuManager : MonoBehaviour
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
-        //if (!isActive)
-        //{
-        //    GameManager.Instance.m_inspector.CloseInspector();
-        //    GameManager.Instance.TurnObjectivePanelOn();
-        //}
-        //else
-        //{
-        //    GameManager.Instance.m_inspector.OpenInspector();
-        //    GameManager.Instance.TurnObjectivePanelOff();
-        //}
+        if (!isActive)
+        {
+            GameManager.Instance.m_inspector.CloseInspector();
+            GameManager.Instance.TurnObjectivePanelOn();
+            GameManager.Instance.EnableInspectorToggle(false);
+
+        }
+        else
+        {
+            GameManager.Instance.EnableInspectorToggle(true);
+        }
     }
 }

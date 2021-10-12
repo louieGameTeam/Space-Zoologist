@@ -49,6 +49,7 @@ public class Inspector : MonoBehaviour
 
     }
 
+
     // Referenced by the details button
     public void ToggleDetails()
     {

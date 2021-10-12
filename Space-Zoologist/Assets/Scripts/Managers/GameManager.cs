@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] Button RestartButton = default;
     [SerializeField] Button NextLevelButton = default;
+    [SerializeField] Toggle ObjectiveToggle = default;
+    [SerializeField] Toggle InspectorToggle = default;
     [SerializeField] GameObject IngameUI = default;
     [SerializeField] GameObject GameOverHUD = default;
     [SerializeField] TextMeshProUGUI gameOverTitle = default;
@@ -642,6 +644,15 @@ public class GameManager : MonoBehaviour
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
         UpdateDayText(++currentDay);
+    }
+
+    public void EnableInspectorToggle(bool enabled)
+    {
+        InspectorToggle.interactable = enabled;
+        if (!enabled) {
+            InspectorToggle.isOn = false;
+            ObjectiveToggle.isOn = true;
+        }
     }
     #endregion
 
