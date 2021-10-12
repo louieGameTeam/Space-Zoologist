@@ -23,10 +23,10 @@ public class QuizConversation : MonoBehaviour
 
     #region Public Typedefs
     [System.Serializable]
-    public class QuizResponse
+    public class QuizConversationResponseArray
     {
-        public NPCConversation[] responses;
-        public NPCConversation Get(QuizGradeType grade) => responses[(int)grade];
+        public QuizConversationResponse[] responses;
+        public QuizConversationResponse Get(QuizGradeType grade) => responses[(int)grade];
     }
     #endregion
 
@@ -59,7 +59,7 @@ public class QuizConversation : MonoBehaviour
     [SerializeField]
     [Tooltip("List of NPCConversations to respond with based on the quizes' grade")]
     [EditArrayWrapperOnEnum("responses", typeof(QuizGradeType))]
-    private QuizResponse response;
+    private QuizConversationResponseArray response;
     #endregion
 
     #region Private Fields
@@ -81,20 +81,19 @@ public class QuizConversation : MonoBehaviour
             dialogueManager.SetNewDialogue(conversation);
         }
     }
-    // This needs to be directly referenced by the NPCConversation events on the last nodes of each conversation
-    public void LoadLevel(string levelName)
-    {
-        LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
-        if (levelLoader) levelLoader.LoadLevel(levelName);
-    }
     public NPCConversation Create(DialogueManager dialogueManager)
     {
         // Create the callback that is called after any option is answered
-        UnityAction OptionSelectedFunctor(QuizInstance quizInstance, int questionIndex, int optionIndex)
+        UnityAction OptionSelectedFunctor(int questionIndex, int optionIndex)
         {
-            return () => quizInstance.AnswerQuestion(questionIndex, optionIndex);
+            return () => CurrentQuiz.AnswerQuestion(questionIndex, optionIndex);
         }
-        
+        // Say the conversation that corresponds to the grade that the player got on the quiz
+        void SayResponse()
+        {
+            response.Get(CurrentQuiz.TotalGrade).Respond();
+        }
+
         // Try to get an npc conversation. If it exists, destroy it and add a new one
         NPCConversation conversation = gameObject.GetComponent<NPCConversation>();
         if (conversation)
@@ -146,7 +145,7 @@ public class QuizConversation : MonoBehaviour
                 nodes.Add(optionNode);
 
                 // Create a dummy node. It is used to invoke events
-                UnityAction optionCallback = OptionSelectedFunctor(currentQuiz, i, j);
+                UnityAction optionCallback = OptionSelectedFunctor(i, j);
                 EditableSpeechNode dummyNode = CreateSpeechNode(conversation, editableConversation, string.Empty, j * 220, (i * 300) + 200, false, optionCallback);
                 nodes.Add(dummyNode);
 
@@ -164,11 +163,7 @@ public class QuizConversation : MonoBehaviour
         }
 
         // Create the end of quiz node
-        UnityAction sayNextConversation = () =>
-        {
-            dialogueManager.SetNewDialogue(response.Get(currentQuiz.TotalGrade));
-        };
-        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, quizTemplate.Questions.Length * 300, false, sayNextConversation);
+        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, quizTemplate.Questions.Length * 300, false, SayResponse);
         nodes.Add(endOfQuiz);
 
         // If a previous speech node exists, 

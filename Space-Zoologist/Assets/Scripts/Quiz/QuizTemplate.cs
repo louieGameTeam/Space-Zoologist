@@ -48,7 +48,7 @@ public class QuizTemplate : ScriptableObject
     #region Public Methods
     public QuizScore[] GetScoreLowerBounds()
     {
-        if (!ArrayExtensions.IsNullOrEmpty(gradingRubric.Percentages))
+        if (!CollectionExtensions.IsNullOrEmpty(gradingRubric.Percentages))
         {
             // Get the array of possible grades
             QuizGradeType[] grades = (QuizGradeType[])System.Enum.GetValues(typeof(QuizGradeType));
@@ -93,7 +93,7 @@ public class QuizTemplate : ScriptableObject
     }
     public int GetMaximumPossibleScoreOfType(QuizScoreType type)
     {
-        if (!ArrayExtensions.IsNullOrEmpty(questions))
+        if (!CollectionExtensions.IsNullOrEmpty(questions))
         {
             // Get the questions with this type
             QuizQuestion[] questions = GetQuestionsWithType(type);
@@ -101,7 +101,7 @@ public class QuizTemplate : ScriptableObject
             int maxScore = 0;
 
             // Check if the array is not null or empty
-            if (!ArrayExtensions.IsNullOrEmpty(questions))
+            if (!CollectionExtensions.IsNullOrEmpty(questions))
             {
                 foreach (QuizQuestion q in questions)
                 {

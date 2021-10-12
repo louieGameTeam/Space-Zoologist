@@ -10,7 +10,7 @@ public class QuizQuestion
     public QuizScoreType ScoreType => scoreType;
     public string Question => question;
     public QuizOption[] Options => options;
-    public int MaxPossibleScore => ArrayExtensions.IsNullOrEmpty(options) ? 0 : options.Max(o => o.Weight);
+    public int MaxPossibleScore => CollectionExtensions.IsNullOrEmpty(options) ? 0 : options.Max(o => o.Weight);
     #endregion
 
     #region Private Editor Fields

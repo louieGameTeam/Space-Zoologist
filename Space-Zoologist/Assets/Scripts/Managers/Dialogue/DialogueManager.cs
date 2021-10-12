@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
+    public int CountQueuedConversations => queuedConversations.Count;
+
     private NPCConversation currentDialogue = default;
     [SerializeField] private bool HideNPC = default;
     private NPCConversation startingConversation = default;
@@ -26,7 +28,7 @@ public class DialogueManager : MonoBehaviour
     {
         startingConversation = GameManager.Instance.LevelData.StartingConversation;
         defaultConversation = GameManager.Instance.LevelData.DefaultConversation;
-        ConversationManager.OnConversationEnded = ConversationEnded;
+        ConversationManager.OnConversationEnded += ConversationEnded;
         if (this.startingConversation != null)
         {
             currentDialogue = this.startingConversation;
@@ -40,6 +42,10 @@ public class DialogueManager : MonoBehaviour
             StartNewConversation();
             //ConversationManagerGameObject.SetActive(false);
         }
+
+        // Use this to say the ending conversation when the level starts
+        //GameManager.Instance.LevelData.PassedConversation.Speak(this);
+        //StartInteractiveConversation();
     }
 
     private void ConversationEnded()

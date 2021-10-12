@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: ExampleQuizTemplate
   m_EditorClassIdentifier: 
   questions:
-  - scoreType: 0
-    question: 
+  - question: Here is an example question
+    scoreType: 0
     options:
-    - label: 
+    - label: This is not a good answer
       weight: 0
-    - label: 
+    - label: This is an okay answer
       weight: 2
-    - label: 
+    - label: This is a great answer!
       weight: 4
   gradingRubric:
     percentages:
