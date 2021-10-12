@@ -41,7 +41,9 @@ public class InspectorObjectiveUI : MonoBehaviour
             else inspector.CloseInspector();
         });
 
-        // Close inspector at the start
+        // Enable the toggle and invoke the event
+        objectiveToggle.isOn = true;
+        inspectorToggle.onValueChanged.Invoke(true);
         inspector.CloseInspector();
     }
     #endregion

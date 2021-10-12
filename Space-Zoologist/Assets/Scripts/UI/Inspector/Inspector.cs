@@ -44,6 +44,7 @@ public class Inspector : MonoBehaviour
         Debug.Log("Inspector closed");
     }
 
+
     // Referenced by the details button
     public void ToggleDetails()
     {

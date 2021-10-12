@@ -39,7 +39,6 @@ public class MenuManager : MonoBehaviour
         }
         StoreMenus[curMenu]?.gameObject.SetActive(true);
         StoreCanvas.localScale = Vector3.zero;
-
     }
 
     public void OnToggleMenu(GameObject menu)
@@ -137,21 +136,25 @@ public class MenuManager : MonoBehaviour
         AudioManager.instance.PlayOneShot(SFXType.TabSwitch);
     }
 
+    // Currently this function is only called by the dialogue system
     public void ToggleUI(bool isActive)
     {
         foreach(GameObject ui in UI)
         {
             ui.SetActive(isActive);
         }
+
+        // Commented out 10/07/2021 because dialogue system shouldn't close inspector
         if (!isActive)
         {
             GameManager.Instance.m_inspector.CloseInspector();
             GameManager.Instance.TurnObjectivePanelOn();
+            GameManager.Instance.EnableInspectorToggle(false);
+
         }
         else
         {
-            GameManager.Instance.m_inspector.OpenInspector();
-            GameManager.Instance.TurnObjectivePanelOff();
+            GameManager.Instance.EnableInspectorToggle(true);
         }
     }
 }
