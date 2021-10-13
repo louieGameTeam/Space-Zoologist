@@ -7,6 +7,7 @@ public class BookmarkData
 {
     #region Protected Fields
     // The name of the game object that has a bookmark target component
+    // NOTE: we can't just store the bookmark target itself, it is destroyed on scene load
     protected string targetGameObjectName;
     // Data to set on the target component
     protected object targetComponentData;

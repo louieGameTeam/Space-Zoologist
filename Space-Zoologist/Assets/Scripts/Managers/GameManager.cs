@@ -35,11 +35,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject GameOverHUD = default;
     [SerializeField] TextMeshProUGUI gameOverTitle = default;
     [SerializeField] TextMeshProUGUI gameOverText = default;
+
+    [Header("UI references")]
+    // I figured it was best to have these as serialized because we don't know whether
+    // they are off/on at the start of the level, so we can't guarantee that a raw
+    // "FindObjectWithType" will find it
     [SerializeField] NotebookUI notebookUI = default;
+    public NotebookUI NotebookUI => notebookUI;
+    [SerializeField] InspectorObjectiveUI inspectorObjectiveUI = default;
 
     [Header("Time Variables")]
     [SerializeField] int maxDay = 20;
     private int currentDay = 1;
+    // Readonly accessor for the current day
+    public int CurrentDay => currentDay;
     [SerializeField] Text CurrentDayText = default;
     public bool IsPaused { get; private set; }
     public bool WasPaused { get; private set; }
@@ -94,6 +103,7 @@ public class GameManager : MonoBehaviour
         LoadResources();
         SetNeedSystems();
         InitializeManagers();
+        InitializeUI();
         LoadLevelData();
         SetupObjectives();
         InitializeGameStateVariables();
@@ -244,9 +254,23 @@ public class GameManager : MonoBehaviour
         m_reservePartitionManager.Initialize();
         m_foodSourceManager.Initialize();
         m_resourceManager.Initialize();
-
-        notebookUI.OnNotebookToggle.AddListener(x => m_cameraController.ControlsEnabled = !x);
         m_tilePlacementController.Initialize();
+    }
+
+    private void InitializeUI()
+    {
+        // If notebook is opened, then close the build ui
+        notebookUI.OnNotebookToggle.AddListener(notebookIsOn =>
+        {
+            m_cameraController.ControlsEnabled = !notebookIsOn;
+            inspectorObjectiveUI.SetIsOpen(!notebookIsOn);
+            if (notebookIsOn) m_menuManager.SetStoreIsOn(false);
+        });
+        // If store is opened, then close the notebook
+        m_menuManager.OnStoreToggled.AddListener(storeIsOn =>
+        {
+            if (storeIsOn) notebookUI.SetIsOpen(false);
+        });
     }
 
     private void SetupObjectives()
@@ -521,7 +545,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            m_dialogueManager.SetNewDialogue(m_levelData.PassedConversation);
+            m_levelData.PassedConversation.Speak(m_dialogueManager);
         }
         m_dialogueManager.StartInteractiveConversation();
         this.IngameUI.SetActive(false);

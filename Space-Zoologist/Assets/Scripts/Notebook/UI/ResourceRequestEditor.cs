@@ -10,7 +10,22 @@ public class ResourceRequestEditor : NotebookUIChild
 {
     #region Public Properties
     public RectTransform RectTransform => rectTransform;
-    public ResourceRequest Request => request;
+    public ResourceRequest Request
+    {
+        get => request;
+        set
+        {
+            // We just created a new request if it was previously null and this value is not null
+            bool newRequestCreated = request == null && value != null;
+
+            // Set the request and set the values on the ui elements
+            request = value;
+            SetUIValues();
+
+            // If a new request was created by the set, then invoke the event
+            if (newRequestCreated) HandleNewRequestCreated();
+        }
+    }
     public UnityEvent OnNewRequestCreated => onNewRequestCreated;
     public UnityEvent OnPriorityUpdate => onPriorityUpdated;
     public UnityEvent OnRequestDeleted => onRequestDeleted;
@@ -34,16 +49,16 @@ public class ResourceRequestEditor : NotebookUIChild
     private TMP_InputField priorityInput;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets a research category")]
-    private TypeFilteredResearchCategoryDropdown categoryDropdown;
+    private CategoryFilteredItemDropdown targetDropdown;
     [SerializeField]
-    [Tooltip("Reference to the dropdown that gets the need")]
-    private NeedTypeDropdown needDropdown;
+    [Tooltip("Reference to the text that displays the need")]
+    private TextMeshProUGUI needDisplay;
     [SerializeField]
     [Tooltip("Text input field that sets the quantity of resources to request")]
     private TMP_InputField quantityInput;
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
-    private ResourcePicker resourcePicker;
+    private CategoryFilteredItemDropdown itemRequestedDropdown;
 
     [Space]
 
@@ -66,13 +81,13 @@ public class ResourceRequestEditor : NotebookUIChild
 
     #region Private Fields
     // ID of the request to edit
-    private EnclosureID enclosureID;
+    private LevelID enclosureID;
     // Resource request to edit
     private ResourceRequest request;
     #endregion
 
     #region Public Methods
-    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget, UnityAction priorityUpdatedCallback, UnityAction requestDeletedCallback)
+    public void Setup(LevelID enclosureID, ResourceRequest request, ScrollRect scrollTarget, UnityAction priorityUpdatedCallback, UnityAction requestDeletedCallback)
     {
         base.Setup();
 
@@ -83,29 +98,15 @@ public class ResourceRequestEditor : NotebookUIChild
         onRequestDeleted.AddListener(requestDeletedCallback);
 
         // Setup each dropdown
-        categoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
-        needDropdown.Setup(new NeedType[] { NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
-        resourcePicker.Setup();
+        targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
+        itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
 
-        if (request != null)
-        {
-            priorityInput.text = request.Priority.ToString();
-            categoryDropdown.SetResearchCategory(request.Target);
-            needDropdown.SetNeedTypeValue(request.ImprovedNeed);
-            quantityInput.text = request.QuantityRequested.ToString();
-            resourcePicker.ItemSelected = request.ItemRequested;
-        }
-        else
-        {
-            priorityInput.text = "0";
-            categoryDropdown.SetDropdownValue(0);
-            needDropdown.SetDropdownValue(0);
-            quantityInput.text = "0";
-            resourcePicker.Dropdown.value = 0;
-        }
+        // Set the values on all UI elements to the values in the current request, 
+        // or default values if the current request is null 
+        SetUIValues();
 
         // Cache current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         // Only add listeners if this editor is in the current scene
         if(enclosureID == current)
         {
@@ -116,15 +117,24 @@ public class ResourceRequestEditor : NotebookUIChild
                 {
                     GetOrCreateResourceRequest().Priority = int.Parse(x);
                     onPriorityUpdated.Invoke();
+                    OnAnyRequestPropertyChanged(); 
                 }
             });
-            categoryDropdown.OnResearchCategorySelected.AddListener(x => GetOrCreateResourceRequest().Target = x);
-            needDropdown.OnNeedTypeSelected.AddListener(x => GetOrCreateResourceRequest().ImprovedNeed = x);
+            targetDropdown.OnItemSelected.AddListener(x => 
+            {
+                GetOrCreateResourceRequest().ItemAddressed = x;
+                OnAnyRequestPropertyChanged();
+            });
             quantityInput.onEndEdit.AddListener(x =>
             {
                 if (!string.IsNullOrWhiteSpace(x)) GetOrCreateResourceRequest().QuantityRequested = int.Parse(x);
+                OnAnyRequestPropertyChanged();
             });
-            resourcePicker.OnItemSelected.AddListener(x => GetOrCreateResourceRequest().ItemRequested = x);
+            itemRequestedDropdown.OnItemSelected.AddListener(x => 
+            {
+                GetOrCreateResourceRequest().ItemRequested = x;
+                OnAnyRequestPropertyChanged();
+            });
         }
 
         // Elements only interactable if editing for the current enclosure
@@ -152,10 +162,30 @@ public class ResourceRequestEditor : NotebookUIChild
     public void UpdateReviewUI()
     {
         statusUI.UpdateDisplay(request);
+        group.interactable = request == null;
     }
     #endregion
 
     #region Private Methods
+    private void SetUIValues()
+    {
+        if (request != null)
+        {
+            priorityInput.text = request.Priority.ToString();
+            targetDropdown.SetSelectedItem(request.ItemAddressed);
+            needDisplay.text = request.NeedAddressed + " Need";
+            quantityInput.text = request.QuantityRequested.ToString();
+            itemRequestedDropdown.SetSelectedItem(request.ItemRequested);
+        }
+        else
+        {
+            priorityInput.text = "0";
+            targetDropdown.SetDropdownValue(0);
+            needDisplay.text = "<No Need Addressed>";
+            quantityInput.text = "0";
+            itemRequestedDropdown.Dropdown.value = 0;
+        }
+    }
     private ResourceRequest GetOrCreateResourceRequest()
     {
         if (request == null)
@@ -167,23 +197,27 @@ public class ResourceRequestEditor : NotebookUIChild
             request = new ResourceRequest
             {
                 Priority = int.Parse(priorityInput.text),
-                Target = categoryDropdown.SelectedCategory,
-                ImprovedNeed = needDropdown.SelectedNeed,
+                ItemAddressed = targetDropdown.SelectedItem,
                 QuantityRequested = int.Parse(quantityInput.text),
-                ItemRequested = resourcePicker.ItemSelected
+                ItemRequested = itemRequestedDropdown.SelectedItem
             };
 
-            // Get the list and add the new request
-            ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
-            list.Requests.Add(request);
-
-            // Put all elements at full alpha again
-            group.alpha = 1f;
-
-            // Invoke the event for creating a new request
-            onNewRequestCreated.Invoke();
+            // Handle the new request
+            HandleNewRequestCreated();
         }
         return request;
+    }
+    private void HandleNewRequestCreated()
+    {
+        // Get the list and add the new request
+        ResourceRequestList list = UIParent.Notebook.Concepts.GetResourceRequestList(enclosureID);
+        list.Requests.Add(request);
+
+        // Put all elements at full alpha again
+        group.alpha = 1f;
+
+        // Invoke the event for creating a new request
+        onNewRequestCreated.Invoke();
     }
     private void DeleteRequest()
     {
@@ -195,6 +229,14 @@ public class ResourceRequestEditor : NotebookUIChild
             // Destroy this editor
             Destroy(gameObject);
         }
+    }
+    private void OnAnyRequestPropertyChanged()
+    {
+        if (request != null)
+        {
+            needDisplay.text = request.NeedAddressed + " Need";
+        }
+        else needDisplay.text = "<No Need Addressed>";
     }
     #endregion
 }

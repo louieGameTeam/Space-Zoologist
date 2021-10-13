@@ -76,7 +76,8 @@ public class TileStoreSection : StoreSection
         }
         this.EnclosureSystem.UpdateEnclosedAreas();
         tilePlacementController.StopPreview();
-        GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+        // NOTE: placing tiles no longer costs money, only requesting them does
+        // GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, numTilesPlaced);
     }
 

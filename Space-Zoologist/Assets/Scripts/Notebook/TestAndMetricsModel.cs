@@ -8,7 +8,7 @@ public class TestAndMetricsModel
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Enclosure scaffolding information")]
-    private EnclosureScaffold enclosureScaffold;
+    private LevelScaffold enclosureScaffold;
     [SerializeField]
     [TextArea(3, 10)]
     [Tooltip("Initial text for each scaffold level")]
@@ -17,18 +17,18 @@ public class TestAndMetricsModel
 
     #region Private Fields
     // Map the list ot the enclosure it applies to
-    private Dictionary<EnclosureID, TestAndMetricsEntryList> observationsEntries = new Dictionary<EnclosureID, TestAndMetricsEntryList>();
+    private Dictionary<LevelID, TestAndMetricsEntryList> observationsEntries = new Dictionary<LevelID, TestAndMetricsEntryList>();
     #endregion
 
     #region Public Methods
-    public TestAndMetricsEntryList GetEntryList(EnclosureID id) => observationsEntries[id];
-    public void TryAddEnclosureID(EnclosureID id)
+    public TestAndMetricsEntryList GetEntryList(LevelID id) => observationsEntries[id];
+    public void TryAddEnclosureID(LevelID id)
     {
         if(!observationsEntries.ContainsKey(id))
         {
             observationsEntries.Add(id, new TestAndMetricsEntryList());
         }
     }
-    public string GetInitialEntryText(EnclosureID id) => initialTexts[enclosureScaffold.ScaffoldLevel(id)];
+    public string GetInitialEntryText(LevelID id) => initialTexts[enclosureScaffold.ScaffoldLevel(id)];
     #endregion
 }

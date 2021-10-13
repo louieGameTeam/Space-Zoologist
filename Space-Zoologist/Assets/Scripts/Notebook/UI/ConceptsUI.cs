@@ -9,7 +9,7 @@ public class ConceptsUI : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Object used to pick the enclosure for this ui")]
-    private EnclosureIDPicker enclosurePicker;
+    private LevelIDPicker enclosurePicker;
     [SerializeField]
     [Tooltip("Object used to edit a list of resource requests")]
     private ResourceRequestListEditor listEditor; 
@@ -17,11 +17,8 @@ public class ConceptsUI : NotebookUIChild
     [Tooltip("Button used to request resources")]
     private Button requestButton;
     [SerializeField]
-    [Tooltip("Text that displays the requests remaining")]
-    private TextMeshProUGUI requestsText;
-    [SerializeField]
-    [Tooltip("Text that displays the resources remaining")]
-    private TextMeshProUGUI resourcesText;
+    [Tooltip("Text that displays the money remaining")]
+    private TextMeshProUGUI balanceText;
     #endregion
 
     #region Public Methods
@@ -30,26 +27,26 @@ public class ConceptsUI : NotebookUIChild
         base.Setup();
 
         // Add listener for enclosure id picked
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureIDPicked);
-        OnEnclosureIDPicked(EnclosureID.FromCurrentSceneName());
+        enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureIDPicked);
+        OnEnclosureIDPicked(LevelID.FromCurrentSceneName());
 
         // When request button clicked then review resource requests
         requestButton.onClick.AddListener(ReviewResourceRequests);
+
+        // Update text once at the beginning
+        UpdateText();
     }
     #endregion
 
     #region Private Methods
-    private void OnEnclosureIDPicked(EnclosureID id)
+    private void OnEnclosureIDPicked(LevelID id)
     {
         // Update list being edited by the list editor
-        listEditor.UpdateListEdited(id, UIParent.Notebook.Concepts.GetResourceRequestList(id));
+        listEditor.UpdateListEdited(id);
 
         // Make request button interactable only if the id picked is the current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         requestButton.interactable = id == current;
-
-        // Update the text displayed
-        UpdateText(id);
     }
     private void ReviewResourceRequests()
     {
@@ -60,15 +57,14 @@ public class ConceptsUI : NotebookUIChild
         listEditor.UpdateReviewUI();
 
         // Update the text displayed
-        UpdateText(EnclosureID.FromCurrentSceneName());
+        UpdateText();
     }
-    private void UpdateText(EnclosureID id)
+    private void UpdateText()
     {
-        int requestsLeft = UIParent.Notebook.Concepts.RemainingRequests(id);
-        int resourcesLeft = UIParent.Notebook.Concepts.RemainingResources(id);
-
-        requestsText.text = requestsLeft.ToString();
-        resourcesText.text = resourcesLeft.ToString();
+        if(GameManager.Instance)
+        {
+            balanceText.text = GameManager.Instance.Balance.ToString();
+        }
     }
     #endregion
 }

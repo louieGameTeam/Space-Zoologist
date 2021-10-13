@@ -14,7 +14,7 @@ public class NotebookModel : ScriptableObject
     public NotebookTabScaffold TabScaffold => tabScaffold;
     public List<Bookmark> Bookmarks { get; private set; } = new List<Bookmark>();
     // This should be the same for concepts and testAndMetrics also
-    public List<EnclosureID> EnclosureIDs => observations.EnclosureIDs;
+    public List<LevelID> EnclosureIDs => observations.EnclosureIDs;
     #endregion
 
     #region Private Editor Fields
@@ -25,13 +25,10 @@ public class NotebookModel : ScriptableObject
     [Space]
     
     [SerializeField]
-    [Expandable]
+    [WrappedProperty("researchEntryData")]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
     private ResearchModel research;
-
-    [Space]
-
     [SerializeField]
     [Tooltip("Player observation notes")]
     private ObservationsModel observations;
@@ -47,11 +44,16 @@ public class NotebookModel : ScriptableObject
     [SerializeField]
     [Tooltip("Controls which tabs are available in what levels")]
     private NotebookTabScaffold tabScaffold;
+    [SerializeField]
+    [Tooltip("List of items that should be unlocked at the beginning of the game")]
+    private List<ItemID> initiallyUnlockedItems;
     #endregion
 
     #region Private Fields
     // Notes on each character in the acronym
     private Dictionary<char, string> acronymNotes = new Dictionary<char, string>();
+    // A set with all items that have been unlocked
+    private HashSet<ItemID> itemsUnlocked = new HashSet<ItemID>();
     #endregion
 
     #region Public Methods
@@ -61,6 +63,11 @@ public class NotebookModel : ScriptableObject
         foreach(char c in acronym)
         {
             if (!acronymNotes.ContainsKey(c)) acronymNotes.Add(c, "");
+        }
+        // Foreach letter in the initially unlocked list, add it to the unlocked items
+        foreach(ItemID item in initiallyUnlockedItems)
+        {
+            if (!itemsUnlocked.Contains(item)) itemsUnlocked.Add(item);
         }
         research.Setup();
     }
@@ -88,11 +95,17 @@ public class NotebookModel : ScriptableObject
     {
         Bookmarks.Remove(bookmark);
     }
-    public void TryAddEnclosureID(EnclosureID id)
+    public void TryAddEnclosureID(LevelID id)
     {
         observations.TryAddEnclosureID(id);
         concepts.TryAddEnclosureId(id);
         testAndMetrics.TryAddEnclosureID(id);
     }
+
+    public void UnlockItem(ItemID id)
+    {
+        if (!itemsUnlocked.Contains(id)) itemsUnlocked.Add(id);
+    }
+    public bool ItemIsUnlocked(ItemID id) => itemsUnlocked.Contains(id);
     #endregion
 }
