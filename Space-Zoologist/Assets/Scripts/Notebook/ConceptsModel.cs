@@ -7,50 +7,36 @@ public class ConceptsModel
 {
     #region Private Fields
     // Map the resource requests to the enclosure it applies to
-    private Dictionary<LevelID, ResourceRequestList> resourceRequests = new Dictionary<LevelID, ResourceRequestList>();
+    private Dictionary<LevelID, ReviewedResourceRequestList> resourceRequests = new Dictionary<LevelID, ReviewedResourceRequestList>();
     #endregion
 
     #region Public Methods
     public void TryAddEnclosureId(LevelID id)
     {
-        if (!resourceRequests.ContainsKey(id)) resourceRequests.Add(id, new ResourceRequestList());
+        if (!resourceRequests.ContainsKey(id)) resourceRequests.Add(id, new ReviewedResourceRequestList());
     }
-    public ResourceRequestList GetResourceRequestList(LevelID id) => resourceRequests[id];
-    public void ReviewResourceRequests()
+    public ReviewedResourceRequestList GetReviewedResourceRequestList(LevelID id) => resourceRequests[id];
+
+    /// <summary>
+    /// Subtract the cost of a review from the current balance 
+    /// and add the review to the list of reviews for this level
+    /// </summary>
+    /// <param name="levelID"></param>
+    /// <param name="review"></param>
+    public void ConfirmReviwedResourceRequest(LevelID levelID, ReviewedResourceRequest review)
     {
-        if(GameManager.Instance)
+        ReviewedResourceRequestList list = resourceRequests[levelID];
+
+        // Check if the game manager exists and the review was not denied
+        if(GameManager.Instance && review.CurrentStatus != ReviewedResourceRequest.Status.Denied)
         {
-            // Get the list of requests for the current enclosure id
-            LevelID current = LevelID.FromCurrentSceneName();
-            List<ResourceRequest> toReview = resourceRequests[current].RequestsWithStatus(ResourceRequest.Status.NotReviewed);
-            // Sort the requests from highest to lowest priority
-            toReview.Sort((x, y) => y.Priority.CompareTo(x.Priority));
-
-            // Loop through all resources and review them
-            foreach (ResourceRequest request in toReview)
-            {
-                // Get the item object with the given id
-                Item itemObject = GameManager.Instance.LevelData.GetItemWithID(request.ItemRequested).itemObject;
-                // Compute the total price
-                float totalPrice = itemObject.Price * request.QuantityRequested;
-
-                // If the balance exceeds the total price, grant the item
-                if (totalPrice <= GameManager.Instance.Balance)
-                {
-                    request.Grant();
-                }
-                // If the balance is less than the total price but more than the price for one object,
-                // grant only the amount you can actually buy
-                else if (itemObject.Price <= GameManager.Instance.Balance)
-                {
-                    int quantityGranted = (int)(GameManager.Instance.Balance / itemObject.Price);
-                    request.GrantPartially("Insufficent funds to buy all of the items requested", quantityGranted);
-                }
-                // If there is not enough money for any item, deny the request
-                else request.Deny("Insufficient funds to buy any of the items requested");
-            }
+            // Add the item to the resource manager and subtract the total cost
+            Item itemObjectGranted = GameManager.Instance.LevelData.GetItemWithID(review.Request.ItemRequested).itemObject;
+            GameManager.Instance.m_resourceManager.AddItem(itemObjectGranted.ItemName, review.QuantityGranted);
+            GameManager.Instance.SubtractFromBalance(review.TotalCost);
         }
-        
+
+        list.Reviews.Add(review);
     }
     #endregion
 }
