@@ -247,7 +247,8 @@ public class MoveObject : MonoBehaviour
         }
         else if (objectToMove.TryGetComponent<FoodSource>(out FoodSource foodSource))
         {
-            GameManager.Instance.SubtractFromBalance(-sellBackCost);
+            // NOTE: selling items no longer gives money, becuase money is not spent placing objects
+            // GameManager.Instance.SubtractFromBalance(-sellBackCost);
             removeOriginalFood(foodSource);
         }
         else if (objectToMove.CompareTag("tiletodelete"))
@@ -259,7 +260,8 @@ public class MoveObject : MonoBehaviour
                 tileData.Clear();
             //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
             gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
-            GameManager.Instance.SubtractFromBalance(-sellBackCost);
+            // NOTE: deleting tiles no longer increases money because placing them no longer costs money
+            // GameManager.Instance.SubtractFromBalance(-sellBackCost);
         }
         Reset();
     }
@@ -301,7 +303,8 @@ public class MoveObject : MonoBehaviour
         if (valid && !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
         {
             GameManager.Instance.m_populationManager.UpdatePopulation(species, worldPos);
-            GameManager.Instance.SubtractFromBalance(cost);
+            // NOTE: placing an animal no longer costs money
+            // GameManager.Instance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
         toMove.transform.position = worldPos; // always place animal back because animal movement will be handled by pop manager
@@ -327,7 +330,8 @@ public class MoveObject : MonoBehaviour
             //foodSourceManager.PlaceFood(pos, species, ttb);
             removeOriginalFood(foodSource);
             placeFood(pos, species);
-            GameManager.Instance.SubtractFromBalance(cost);
+            // NOTE: placing an animal no longer costs money
+            // GameManager.Instance.SubtractFromBalance(cost);
         }
         else
         {

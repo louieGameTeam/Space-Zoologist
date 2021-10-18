@@ -936,6 +936,8 @@ MonoBehaviour:
   inspectorWindowText: {fileID: 2454266187531293449}
   populationInfoText: {fileID: 1301564626824900752}
   DetailButton: {fileID: 7243082126261897956}
+  detailBackground: {fileID: 7243082125307740525}
+  detailText: {fileID: 7243082124352454686}
   NeedSliderPrefab: {fileID: 1975106059445481102, guid: 060cb7681e7544a42874877eb86b7e60,
     type: 3}
 --- !u!114 &3168205392388878789
@@ -1591,7 +1593,7 @@ GameObject:
   - component: {fileID: 7243082125307740526}
   - component: {fileID: 7243082125307740527}
   m_Layer: 5
-  m_Name: Growth Info
+  m_Name: DetailBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1927,6 +1929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d43938f4c30cc449cb08bfb9b8b00e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  root: {fileID: 7243082126267867201}
   objectiveToggle: {fileID: 5256070083433968182}
   objectivePanel: {fileID: 5848914588836196529}
   inspectorToggle: {fileID: 6781891701553658211}

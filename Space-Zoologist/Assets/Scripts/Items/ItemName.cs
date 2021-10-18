@@ -31,7 +31,7 @@ public class ItemName
     #region Overrides
     public override string ToString()
     {
-        if (names != null && names.Length == 3) return names[0] + " (" + names[2] + " or '" + names[1] + "')";
+        if (names != null) return string.Join(", ", names);
         else return "(no name)";
     }
     #endregion

@@ -60,4 +60,6 @@ public class LevelDataLoader : MonoBehaviour
         }
         return null;
     }
+
+    public LevelData GetLevelData(LevelID levelID) => GetLevelData(levelID.LevelName);
 }

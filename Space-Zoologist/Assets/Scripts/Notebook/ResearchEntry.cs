@@ -5,25 +5,23 @@ using UnityEngine;
 [System.Serializable]
 public class ResearchEntry
 {
-    // Public accessors to private data
-    public ResearchCategory Category => category;
+    #region Public Properties
     public ResearchNotes Notes => notes;
     public ResearchEncyclopedia Encyclopedia => encyclopedia;
+    #endregion
 
-    // Private data
-    [SerializeField]
-    [ResearchCategoryTypeEditable(false)]
-    private ResearchCategory category;
+    #region Private Editor Fields
     [SerializeField]
     private ResearchNotes notes;
     [SerializeField]
-    [Expandable] 
     private ResearchEncyclopedia encyclopedia;
+    #endregion
 
-    public void Setup(ResearchCategoryType type)
+    #region Public Methods
+    public void Setup()
     {
-        category.Setup(type);
         notes.Setup();
-        encyclopedia.Setup();
+        if (encyclopedia != null) encyclopedia.Setup();
     }
+    #endregion
 }

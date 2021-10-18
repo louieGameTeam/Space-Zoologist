@@ -149,7 +149,7 @@ public class LiquidNeedSystem : NeedSystem
                 }
 
                 foodSource.UpdateNeed("LiquidTiles", liquidCount);
-                Debug.Log(foodSource.name + " updated LiquidTiles with value: " + liquidCount);
+                //Debug.Log(foodSource.name + " updated LiquidTiles with value: " + liquidCount);
 
                 // Check is there is found composition
                 if (liquidCompositions.Count > 0)

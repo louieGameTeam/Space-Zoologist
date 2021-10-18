@@ -11,7 +11,6 @@ public class ResearchNotes
 
     #region Private Editor Fields
     [SerializeField]
-    [Expandable]
     [Tooltip("Lables attached to the notes in the research notes")]
     private ResearchNoteLabels labels;
     #endregion

@@ -22,22 +22,29 @@ public class ResourceRequest
         get => priority;
         set => priority = value;
     }
-    public ResearchCategory Target
+    public ItemID ItemAddressed
     {
-        get => target;
-        set => target = value;
+        get => itemAddressed;
+        set => itemAddressed = value;
     }
-    public NeedType ImprovedNeed
+    public NeedType NeedAddressed
     {
-        get => improvedNeed;
-        set => improvedNeed = value;
+        get
+        {
+            // If the item requested is food, the need type addressed is food
+            if (ItemRequested.Category == ItemRegistry.Category.Food) return NeedType.FoodSource;
+            // If it's not food we assume it is a tile. Check if it is a water tile
+            else if (ItemRequested.Data.Name.Get(ItemName.Type.English).Contains("Water")) return NeedType.Liquid;
+            // If it is not water it must be a tile to address terrain needs
+            else return NeedType.Terrain;
+        }
     }
     public int QuantityRequested
     {
         get => quantityRequested;
         set => quantityRequested = value;
     }
-    public Item ItemRequested
+    public ItemID ItemRequested
     {
         get => itemRequested;
         set => itemRequested = value;
@@ -45,10 +52,8 @@ public class ResourceRequest
     public Status CurrentStatus => currentStatus;
     public string StatusReason => statusReason;
     public int QuantityGranted => quantityGranted;
-    public Item ItemGranted => itemGranted;
     public bool FullyGranted => currentStatus == Status.Granted &&
-        quantityRequested == quantityGranted &&
-        itemRequested == itemGranted;
+        quantityRequested == quantityGranted;
     public bool PartiallyGranted => currentStatus == Status.Granted && !FullyGranted;
     #endregion
 
@@ -57,68 +62,63 @@ public class ResourceRequest
     [Tooltip("Priority of the request relative to other requests being made")]
     private int priority;
     [SerializeField]
-    [Tooltip("Target of the resource request")]
-    private ResearchCategory target;
-    [SerializeField]
-    [Tooltip("Need of the target that this resource request is supposed to improve")]
-    private NeedType improvedNeed;
+    [Tooltip("Item that the player is trying to address by making the resource request")]
+    private ItemID itemAddressed;
     [SerializeField]
     [Tooltip("Quantity of the resource requested")]
     private int quantityRequested;
     [SerializeField]
     [Tooltip("The item that is requested")]
-    private Item itemRequested;
-    [SerializeField]
-    [Tooltip("Current status of the resource request")]
-    private Status currentStatus;
-    [SerializeField]
-    [Tooltip("Written reason why the request was given the status it currently has")]
+    private ItemID itemRequested;
+    #endregion
+
+    #region Private Fields
+    private Status currentStatus = Status.NotReviewed;
     private string statusReason;
-    [SerializeField]
-    [Tooltip("Amount of items that was actually granted the request")]
     private int quantityGranted;
-    [SerializeField]
-    [Tooltip("Item actually granted based on the request")]
-    private Item itemGranted;
     #endregion
 
     #region Public Methods
     public void Grant()
     {
-        Review(Status.Granted, "", quantityRequested, itemRequested);
+        Review(Status.Granted, "", quantityRequested);
     }
-    public void GrantPartially(string statusReason, int quantityGranted, Item itemGranted)
+    public void GrantPartially(string statusReason, int quantityGranted)
     {
-        Review(Status.Granted, statusReason, quantityGranted, itemGranted);
+        Review(Status.Granted, statusReason, quantityGranted);
     }
     public void Deny(string statusReason)
     {
-        Review(Status.Denied, statusReason, 0, null);
+        Review(Status.Denied, statusReason, 0);
     }
     #endregion
 
     #region Private Methods
-    private void Review(Status currentStatus, string statusReason, int quantityGranted, Item itemGranted)
+    private void Review(Status currentStatus, string statusReason, int quantityGranted)
     {
-        this.currentStatus = currentStatus;
-        this.statusReason = statusReason;
-        this.quantityGranted = quantityGranted;
-        this.itemGranted = itemGranted;
-
-        // If the request was granted then we need to tell the resource manager
-        if(currentStatus == Status.Granted)
+        // Multiple reviews not allowed
+        if(this.currentStatus == Status.NotReviewed)
         {
-            GameManager instance = GameManager.Instance;
+            this.currentStatus = currentStatus;
+            this.statusReason = statusReason;
+            this.quantityGranted = quantityGranted;
 
-            // If the game manager exists then use it to get the resource manager and add the item requested
-            if(instance)
+            if (GameManager.Instance)
             {
-                instance.m_resourceManager.AddItem(itemGranted.ItemName, quantityGranted);
-            }
-            else
-            {
-                Debug.Log("ResourceRequest: granted request will not go through to the resource manager " +
-                    "because no instance of the GameManager could be found");
+                if (currentStatus == Status.Granted)
+                {
+                    // Try to find the object granted so that we can update the resource manager
+                    LevelData.ItemData itemGranted = GameManager.Instance.LevelData.GetItemWithID(itemRequested);
+
+                    // Check if item could be found in the list of items on the level data
+                    if (itemGranted != null)
+                    {
+                        GameManager.Instance.m_resourceManager.AddItem(itemGranted.itemObject.ItemName, quantityGranted);
+                        GameManager.Instance.SubtractFromBalance(itemGranted.itemObject.Price * quantityGranted);
+                    }
+                    else Debug.LogWarning("ResourceRequest: the item '" + itemRequested.Data.Name.ToString() +
+                        "' could not be granted because no item object with the given ID was found");
+                }
             }
         }
     }

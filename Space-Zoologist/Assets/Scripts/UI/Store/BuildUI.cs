@@ -42,11 +42,7 @@ public class BuildUI : MonoBehaviour
     public void Close()
     {
         // Toggle the store to off
-        menuManager.ToggleStore();
-
-        // Toggle drafting and grid overlay to off
-        GameManager.Instance.m_gridSystem.ToggleDrafting();
-        GameManager.Instance.m_gridSystem.ToggleGridOverlay();
+        menuManager.SetStoreIsOn(false);
     }
     #endregion
 }

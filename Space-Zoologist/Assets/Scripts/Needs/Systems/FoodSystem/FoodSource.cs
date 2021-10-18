@@ -160,7 +160,7 @@ public class FoodSource : MonoBehaviour, Life
 
         if (waterTilesUsed >= totalNeedWaterTiles)
         {
-            Debug.Log("Water need met");
+            //Debug.Log("Water need met");
             waterNeedMet = true;
             waterRating = 0;
 
@@ -169,7 +169,7 @@ public class FoodSource : MonoBehaviour, Life
                 float percentPureWater = waterNeed.NeedValue;
                 float neededPureWaterThreshold = waterNeed.GetThreshold();
                 waterRating += (percentPureWater - neededPureWaterThreshold) / (GrowthCalculator.maxFreshWaterTilePercent - neededPureWaterThreshold);
-                Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
+                //Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
             }
 
             if(saltNeed != null)
@@ -177,7 +177,7 @@ public class FoodSource : MonoBehaviour, Life
                 float percentSalt = saltNeed.NeedValue;
                 float neededSaltThreshold = saltNeed.GetThreshold();
                 waterRating += (percentSalt - neededSaltThreshold) / (GrowthCalculator.maxSaltTilePercent - neededSaltThreshold);
-                Debug.Log("Salt received: " + percentSalt + " out of " + neededSaltThreshold);
+                //Debug.Log("Salt received: " + percentSalt + " out of " + neededSaltThreshold);
             }
 
             if(bacteriaNeed != null)
@@ -185,7 +185,7 @@ public class FoodSource : MonoBehaviour, Life
                 float percentBacteria = bacteriaNeed.NeedValue;
                 float neededBacteriaThreshold = bacteriaNeed.GetThreshold();
                 waterRating += (percentBacteria - neededBacteriaThreshold) / (GrowthCalculator.maxBacteriaTilePercent - neededBacteriaThreshold);
-                Debug.Log("Bacteria received: " + percentBacteria + " out of " + neededBacteriaThreshold);
+                //Debug.Log("Bacteria received: " + percentBacteria + " out of " + neededBacteriaThreshold);
             }
         }
         else
@@ -194,8 +194,8 @@ public class FoodSource : MonoBehaviour, Life
             waterRating = (waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles;
         }
 
-        if (gameObject)
-            Debug.Log(gameObject.name + " water Rating: " + waterRating + ", water source size: " + waterTilesUsed);
+        //if (gameObject)
+            //Debug.Log(gameObject.name + " water Rating: " + waterRating + ", water source size: " + waterTilesUsed);
     }
 
     /// <summary>

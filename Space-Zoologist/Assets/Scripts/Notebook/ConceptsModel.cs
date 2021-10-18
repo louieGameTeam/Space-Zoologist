@@ -7,49 +7,50 @@ public class ConceptsModel
 {
     #region Private Fields
     // Map the resource requests to the enclosure it applies to
-    private Dictionary<EnclosureID, ResourceRequestList> resourceRequests = new Dictionary<EnclosureID, ResourceRequestList>();
+    private Dictionary<LevelID, ResourceRequestList> resourceRequests = new Dictionary<LevelID, ResourceRequestList>();
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureId(EnclosureID id)
+    public void TryAddEnclosureId(LevelID id)
     {
         if (!resourceRequests.ContainsKey(id)) resourceRequests.Add(id, new ResourceRequestList());
     }
-    public ResourceRequestList GetResourceRequestList(EnclosureID id) => resourceRequests[id];
-    // Maximum number of requests that can be made by the player when playing this enclosure
-    public int MaxRequests(EnclosureID _) => 10;
-    // Maximum number of resources that can be requested by the player when playing this enclosure
-    public int MaxResources(EnclosureID _) => 100;
-    // Count the requests that the player has remaining
-    public int RemainingRequests(EnclosureID id) => MaxRequests(id) - resourceRequests[id].TotalRequestsGranted;
-    public int RemainingResources(EnclosureID id) => MaxResources(id) - resourceRequests[id].TotalResourcesGranted;
+    public ResourceRequestList GetResourceRequestList(LevelID id) => resourceRequests[id];
     public void ReviewResourceRequests()
     {
-        // Get the list of requests for the current enclosure id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
-        List<ResourceRequest> toReview = resourceRequests[current].RequestsWithStatus(ResourceRequest.Status.NotReviewed);
-        // Sort the requests from highest to lowest priority
-        toReview.Sort((x, y) => y.Priority.CompareTo(x.Priority));
-
-        // Loop through all resources and review them
-        foreach(ResourceRequest request in toReview)
+        if(GameManager.Instance)
         {
-            int remainingRequests = RemainingRequests(current);
-            int remainingResources = RemainingResources(current);
+            // Get the list of requests for the current enclosure id
+            LevelID current = LevelID.FromCurrentSceneName();
+            List<ResourceRequest> toReview = resourceRequests[current].RequestsWithStatus(ResourceRequest.Status.NotReviewed);
+            // Sort the requests from highest to lowest priority
+            toReview.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
-            // If there are remaining resources, compute quantity to grant
-            if (remainingRequests > 0 && remainingResources > 0)
+            // Loop through all resources and review them
+            foreach (ResourceRequest request in toReview)
             {
-                int quantityGranted = Mathf.Min(request.QuantityRequested, remainingResources);
+                // Get the item object with the given id
+                Item itemObject = GameManager.Instance.LevelData.GetItemWithID(request.ItemRequested).itemObject;
+                // Compute the total price
+                float totalPrice = itemObject.Price * request.QuantityRequested;
 
-                // If quantity granted is the same as quantity requested then we can fully grant the request
-                if (quantityGranted == request.QuantityRequested) request.Grant();
-                // If quantity granted is less than quantity requested then partially grant the request 
-                else request.GrantPartially("Insufficient resources to fully grant this request", quantityGranted, request.ItemRequested);
+                // If the balance exceeds the total price, grant the item
+                if (totalPrice <= GameManager.Instance.Balance)
+                {
+                    request.Grant();
+                }
+                // If the balance is less than the total price but more than the price for one object,
+                // grant only the amount you can actually buy
+                else if (itemObject.Price <= GameManager.Instance.Balance)
+                {
+                    int quantityGranted = (int)(GameManager.Instance.Balance / itemObject.Price);
+                    request.GrantPartially("Insufficent funds to buy all of the items requested", quantityGranted);
+                }
+                // If there is not enough money for any item, deny the request
+                else request.Deny("Insufficient funds to buy any of the items requested");
             }
-            else if (remainingResources <= 0) request.Deny("Insufficient resources to grant this request");
-            else request.Deny("No more requests remaining");
         }
+        
     }
     #endregion
 }

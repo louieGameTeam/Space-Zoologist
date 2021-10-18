@@ -45,7 +45,7 @@ public class GridSystem : MonoBehaviour
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
-    private List<Vector3Int> HighlightedTiles;
+    private List<Vector3Int> HighlightedTiles = new List<Vector3Int>();
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
@@ -504,13 +504,13 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private void StartDrafting()
+    public void StartDrafting()
     {
         GameManager.Instance.TryToPause();
         UpdateUI(false);
     }
 
-    private void FinishDrafting()
+    public void FinishDrafting()
     {
         GameManager.Instance.Unpause();
         UpdateUI(true);
@@ -1351,8 +1351,14 @@ public class GridSystem : MonoBehaviour
     {
         // toggle using shader here
         float currentToggleValue = Tilemap.GetComponent<TilemapRenderer>().material.GetFloat("_GridOverlayToggle");
-        // set up methods for updating all or only some tilemaps
-        Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", currentToggleValue == 0 ? 1 : 0);
+        SetGridOverlay(Mathf.RoundToInt(currentToggleValue) == 0);
+    }
+    public void SetGridOverlay(bool overlay)
+    {
+        Material tilemapMaterial = Tilemap.GetComponent<TilemapRenderer>().sharedMaterial;
+        // Set the float on the shared material based on the bool passed in
+        if (overlay) tilemapMaterial.SetFloat("_GridOverlayToggle", 1);
+        else tilemapMaterial.SetFloat("_GridOverlayToggle", 0);
     }
 
     public void ClearHighlights()

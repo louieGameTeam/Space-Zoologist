@@ -9,6 +9,7 @@ public struct ItemID
     public ItemRegistry.Category Category => category;
     public int Index => index;
     public ItemData Data => ItemRegistry.Get(this);
+    public static ItemID Invalid => new ItemID(0, -1);
     #endregion
 
     #region Private Editor Fields
@@ -18,6 +19,14 @@ public struct ItemID
     [SerializeField]
     [Tooltip("Index of the item in the selected category")]
     private int index;
+    #endregion
+
+    #region Constructors
+    public ItemID(ItemRegistry.Category category, int index)
+    {
+        this.category = category;
+        this.index = index;
+    }
     #endregion
 
     #region Operators
