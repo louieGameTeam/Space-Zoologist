@@ -23,6 +23,9 @@ public class QuizTemplate : ScriptableObject
 
     #region Private Editor Fields
     [SerializeField]
+    [Tooltip("List of categories that are considered important for this quiz")]
+    private QuizCategory[] importantCategories;
+    [SerializeField]
     [Tooltip("List of questions to ask in the quiz")]
     private QuizQuestion[] questions;
     [SerializeField]

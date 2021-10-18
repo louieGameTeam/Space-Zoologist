@@ -27,7 +27,7 @@ public class NotebookUI : MonoBehaviour
     private NotebookTabPicker tabPicker;
     [SerializeField]
     [Tooltip("Reference to the script that edits resource requests")]
-    private ResourceRequestListEditor resourceRequestListEditor;
+    private ResourceRequestEditor resourceRequestEditor;
     [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
     private UnityEvent onContentChanged;
@@ -105,7 +105,7 @@ public class NotebookUI : MonoBehaviour
     public void FillResourceRequest(ResourceRequest resourceRequest)
     {
         // This one property set invokes a cascade of events automatically so that the ui updates correctly
-        resourceRequestListEditor.AddingEntry.Request = resourceRequest;
+        resourceRequestEditor.Request = resourceRequest;
     }
     #endregion
 }

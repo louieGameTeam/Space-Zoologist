@@ -41,9 +41,13 @@ public class Inspector : MonoBehaviour
         this.UnHighlightAll();
         EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
         this.IsInInspectorMode = false;
-        Debug.Log("Inspector closed");
     }
 
+    public void ResetSelection()
+    {
+        this.inspectorWindowDisplayScript.ClearInspectorWindow();
+        this.UnHighlightAll();
+    }
 
     // Referenced by the details button
     public void ToggleDetails()

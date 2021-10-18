@@ -8,11 +8,11 @@ public class ConceptsUI : NotebookUIChild
 {
     #region Private Editor Fields
     [SerializeField]
-    [Tooltip("Object used to pick the enclosure for this ui")]
-    private LevelIDPicker enclosurePicker;
+    [Tooltip("Object used to edit the current resource request")]
+    private ResourceRequestEditor requestEditor;
     [SerializeField]
-    [Tooltip("Object used to edit a list of resource requests")]
-    private ResourceRequestListEditor listEditor; 
+    [Tooltip("Object that displays when the player attempts to request the resource")]
+    private ReviewedResourceRequestDisplay reviewDisplay;
     [SerializeField]
     [Tooltip("Button used to request resources")]
     private Button requestButton;
@@ -26,12 +26,14 @@ public class ConceptsUI : NotebookUIChild
     {
         base.Setup();
 
-        // Add listener for enclosure id picked
-        enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureIDPicked);
-        OnEnclosureIDPicked(LevelID.FromCurrentSceneName());
-
-        // When request button clicked then review resource requests
-        requestButton.onClick.AddListener(ReviewResourceRequests);
+        // When request button clicked then review the current request
+        requestButton.onClick.AddListener(() => reviewDisplay.DisplayReview(requestEditor.Request));
+        // Update the text whenever the review is confirmed
+        reviewDisplay.OnReviewConfirmed.AddListener(() =>
+        {
+            UpdateText();
+            requestEditor.ResetRequest();
+        });
 
         // Update text once at the beginning
         UpdateText();
@@ -39,31 +41,11 @@ public class ConceptsUI : NotebookUIChild
     #endregion
 
     #region Private Methods
-    private void OnEnclosureIDPicked(LevelID id)
-    {
-        // Update list being edited by the list editor
-        listEditor.UpdateListEdited(id);
-
-        // Make request button interactable only if the id picked is the current id
-        LevelID current = LevelID.FromCurrentSceneName();
-        requestButton.interactable = id == current;
-    }
-    private void ReviewResourceRequests()
-    {
-        // Make the concept model review the requests
-        UIParent.Notebook.Concepts.ReviewResourceRequests();
-
-        // Update review ui for all editors
-        listEditor.UpdateReviewUI();
-
-        // Update the text displayed
-        UpdateText();
-    }
     private void UpdateText()
     {
         if(GameManager.Instance)
         {
-            balanceText.text = GameManager.Instance.Balance.ToString();
+            balanceText.text = "$" + GameManager.Instance.Balance;
         }
     }
     #endregion
