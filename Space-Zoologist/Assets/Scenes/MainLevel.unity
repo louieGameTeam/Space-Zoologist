@@ -856,6 +856,9 @@ MonoBehaviour:
   - {fileID: 3956046058778708287}
   - {fileID: 8404243451497626317}
   - {fileID: 8349968274091900280}
+  onStoreToggled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &363993210
 Transform:
   m_ObjectHideFlags: 0
@@ -2096,6 +2099,18 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &768986478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6037491244839071911, guid: b6fa91312476840f19ee43626e3f9dfb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981156779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d43938f4c30cc449cb08bfb9b8b00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &787602915 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5256070083433968182, guid: b6fa91312476840f19ee43626e3f9dfb,
@@ -7566,6 +7581,7 @@ MonoBehaviour:
   gameOverTitle: {fileID: 1043611555}
   gameOverText: {fileID: 740143009}
   notebookUI: {fileID: 9730707}
+  inspectorObjectiveUI: {fileID: 768986478}
   maxDay: 20
   CurrentDayText: {fileID: 3294377205541531365}
   objectivePane: {fileID: 2092096914}

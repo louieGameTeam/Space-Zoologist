@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Obsolete("It is no longer possible to edit a list of resource requests.  " +
+    "Please edit only one resource request at a time")]
 public class ResourceRequestListEditor : NotebookUIChild
 {
     #region Public Properties
@@ -40,16 +42,16 @@ public class ResourceRequestListEditor : NotebookUIChild
         currentEditors.Clear();
 
         // Copy the requests and sort the copy
-        List<ResourceRequest> sortedRequests = new List<ResourceRequest>(UIParent.Notebook.Concepts.GetResourceRequestList(id).Requests);
-        sortedRequests.Sort();
+        //List<ResourceRequest> sortedRequests = new List<ResourceRequest>(UIParent.Notebook.Concepts.GetReviewedResourceRequestList(id).Requests);
+        //sortedRequests.Sort();
 
-        // Foreach entry in the selected list, add an editor
-        foreach (ResourceRequest request in sortedRequests)
-        {
-            ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-            editor.Setup(id, request, editorScroller, SortEditors, () => OnRequestDeleted(editor));
-            currentEditors.Add(editor);
-        }
+        //// Foreach entry in the selected list, add an editor
+        //foreach (ResourceRequest request in sortedRequests)
+        //{
+        //    ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
+        //    editor.Setup(id, request, editorScroller, SortEditors, () => OnRequestDeleted(editor));
+        //    currentEditors.Add(editor);
+        //}
 
         // If the enclosure selected is the current enclosure, then add a new editor
         // that we can use to add more entries
@@ -63,7 +65,7 @@ public class ResourceRequestListEditor : NotebookUIChild
     {
         foreach(ResourceRequestEditor editor in currentEditors)
         {
-            editor.UpdateReviewUI();
+            //editor.UpdateReviewUI();
         }
         // Reorder them visually
         SortEditors();
@@ -78,8 +80,8 @@ public class ResourceRequestListEditor : NotebookUIChild
     private void CreateAddingEntry()
     {
         ResourceRequestEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(LevelID.FromCurrentSceneName(), null, editorScroller, SortEditors, () => OnRequestDeleted(editor));
-        editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
+        //editor.Setup(LevelID.FromCurrentSceneName(), null, editorScroller, SortEditors, () => OnRequestDeleted(editor));
+        //editor.OnNewRequestCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
 
         // Sort the editors now that the new one is added
@@ -101,35 +103,37 @@ public class ResourceRequestListEditor : NotebookUIChild
     }
     private int ResourceRequestVisualComparer(ResourceRequest x, ResourceRequest y)
     {
+        return 0;
+
         // If x is null check if y is null
-        if (x == null)
-        {
-            // If y is not null
-            if (y != null)
-            {
-                // null goes below not reviewed requests and above reviewed requests
-                if (y.CurrentStatus == ResourceRequest.Status.NotReviewed) return 1;
-                else return -1;
-            }
-            // Nulls are equal
-            else return 0;
-        }
-        // If x is not null and y is null
-        else if (y == null)
-        {
-            // not reviewed requests go above null
-            if (x.CurrentStatus == ResourceRequest.Status.NotReviewed) return -1;
-            // reviewed requests go below null
-            else return 1;
-        }
-        // If x and y are not null
-        else
-        {
-            // Sort by higher priority for equal statuses
-            if (x.CurrentStatus == y.CurrentStatus) return y.Priority.CompareTo(x.Priority);
-            // Unequal status compare by status
-            else return x.CurrentStatus.CompareTo(y.CurrentStatus);
-        }
+        //if (x == null)
+        //{
+        //    // If y is not null
+        //    if (y != null)
+        //    {
+        //        // null goes below not reviewed requests and above reviewed requests
+        //        if (y.CurrentStatus == ResourceRequest.Status.NotReviewed) return 1;
+        //        else return -1;
+        //    }
+        //    // Nulls are equal
+        //    else return 0;
+        //}
+        //// If x is not null and y is null
+        //else if (y == null)
+        //{
+        //    // not reviewed requests go above null
+        //    if (x.CurrentStatus == ResourceRequest.Status.NotReviewed) return -1;
+        //    // reviewed requests go below null
+        //    else return 1;
+        //}
+        //// If x and y are not null
+        //else
+        //{
+        //    // Sort by higher priority for equal statuses
+        //    if (x.CurrentStatus == y.CurrentStatus) return y.Priority.CompareTo(x.Priority);
+        //    // Unequal status compare by status
+        //    else return x.CurrentStatus.CompareTo(y.CurrentStatus);
+        //}
     }
     #endregion
 }
