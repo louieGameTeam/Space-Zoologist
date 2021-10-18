@@ -7,7 +7,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Script used to pick the enclosure we are currently taking notes on")]
-    private EnclosureIDPicker enclosurePicker;
+    private LevelIDPicker enclosurePicker;
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
     private TestAndMetricsEntryEditor editorPrefab;
@@ -25,11 +25,11 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
         base.Setup();
 
         // Add listener for the enclosure picked event
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureSelected);
-        OnEnclosureSelected(EnclosureID.FromCurrentSceneName());
+        enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureSelected);
+        OnEnclosureSelected(LevelID.FromCurrentSceneName());
     }
 
-    private void OnEnclosureSelected(EnclosureID id)
+    private void OnEnclosureSelected(LevelID id)
     {
         // Destroy all existing editors
         foreach(TestAndMetricsEntryEditor editor in currentEditors)
@@ -49,7 +49,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 
         // If the enclosure selected is the current enclosure, then add a new editor
         // that we can use to add more entries
-        if(id == EnclosureID.FromCurrentSceneName())
+        if(id == LevelID.FromCurrentSceneName())
         {
             CreateAddingEntry();
         }
@@ -63,7 +63,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     private void CreateAddingEntry()
     {
         TestAndMetricsEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(EnclosureID.FromCurrentSceneName(), null, editorScroller);
+        editor.Setup(LevelID.FromCurrentSceneName(), null, editorScroller);
         editor.OnNewEntryCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
     }

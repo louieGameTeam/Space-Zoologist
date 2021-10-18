@@ -32,7 +32,7 @@ public class LiquidNeedSystem : NeedSystem
 
         foreach(Population population in Consumers.OfType<Population>())
         {
-            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("LiquidTiles"))
+            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("Liquid"))
                 liquidTilesPerPopulation.Add(population, 0);
         }
 
@@ -44,7 +44,7 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Dictionary<string, Need> popNeeds = population.GetNeedValues();
 
-                if(!popNeeds.ContainsKey("LiquidTiles"))
+                if(!popNeeds.ContainsKey("Liquid"))
                     continue;
 
                 if ((!popNeeds.ContainsKey("Water") || popNeeds["Water"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) && //If the population either doesn't need fresh water or the fresh water threshold is met
@@ -96,7 +96,7 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Population population = (Population)life;
                 
-                population.UpdateNeed("LiquidTiles", liquidTilesPerPopulation[population]);
+                population.UpdateNeed("Liquid", liquidTilesPerPopulation[population]);
                 //Debug.Log(population.name + " updates LiquidTiles with value: " + liquidTilesPerPopulation[population]);
 
                 // Check is there is found composition
@@ -135,19 +135,16 @@ public class LiquidNeedSystem : NeedSystem
 
                 float liquidCount = 0;
                 List<float[]> liquidCompositions = new List<float[]>();
+                List<float[]> potentialCompositions = m_gridsystemReference.GetLiquidCompositionWithinRange(m_gridsystemReference.WorldToCell(foodSource.GetPosition()), foodSource.Species.Size, foodSource.Species.RootRadius);
 
-                for(int i = 1; i <= foodSource.Species.RootRadius; ++i)
+                foreach(float[] composition in potentialCompositions)
                 {
-                    List<float[]> compositions = m_gridsystemReference.GetLiquidCompositionWithinRange(m_gridsystemReference.WorldToCell(life.GetPosition()), i, true);
-                    foreach(float[] composition in compositions)
+                    if ((!foodNeeds.ContainsKey("Water") || foodNeeds["Water"].IsThresholdMet(composition[(int)LiquidComposition.Water])) && //If the food source either doesn't need fresh water or the fresh water threshold is met
+                        (!foodNeeds.ContainsKey("Salt") || foodNeeds["Salt"].IsThresholdMet(composition[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
+                        (!foodNeeds.ContainsKey("Bacteria") || foodNeeds["Bacteria"].IsThresholdMet(composition[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
                     {
-                        if ((!foodNeeds.ContainsKey("Water") || foodNeeds["Water"].IsThresholdMet(composition[(int)LiquidComposition.Water])) && //If the food source either doesn't need fresh water or the fresh water threshold is met
-                            (!foodNeeds.ContainsKey("Salt") || foodNeeds["Salt"].IsThresholdMet(composition[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
-                            (!foodNeeds.ContainsKey("Bacteria") || foodNeeds["Bacteria"].IsThresholdMet(composition[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
-                        {
-                            ++liquidCount;
-                            liquidCompositions.Add(composition);
-                        }
+                        ++liquidCount;
+                        liquidCompositions.Add(composition);
                     }
                 }
 

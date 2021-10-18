@@ -57,6 +57,17 @@ public class DialogueResponseManager : MonoBehaviour
 		Debug.Log("wscore: " + tScore);
 	}
 	#endregion
+
+	public void WaitForOneTimePing(string button)
+    {
+		GameManager.Instance.m_menuManager.ToggleUI(true);
+		GameObject ingameButton = GameObject.Find(button);
+		if (ingameButton)
+        {
+			Debug.Log("Wait for one time: " + ingameButton.name);
+			ConversationManager.Instance.AskForOneTimePing(ingameButton.GetComponent<Button>());
+		}
+    }
 }
 
 [System.Serializable]

@@ -33,11 +33,15 @@ MonoBehaviour:
   levelMusic: {fileID: 8300000, guid: e4af200c658c1474a9c50c71d549d812, type: 3}
   startingPositions:
   - {x: 1, y: 1, z: 0}
-  startingConversation: {fileID: 2862583905648361958, guid: 94cacda425a1f4f2e9474db9bd386117,
+  startingConversation: {fileID: 6606155079356351368, guid: 94cacda425a1f4f2e9474db9bd386117,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  passedConversation: {fileID: 3897354896603145716, guid: eb6f90f9020e14ec3803e0d34a89f111,
-    type: 3}
+  passedConversation:
+    isQuiz: 0
+    normalConversation: {fileID: 5453693311318094595, guid: eb6f90f9020e14ec3803e0d34a89f111,
+      type: 3}
+    quizConversation: {fileID: 1050677793554802787, guid: f6cf09b327d9283489e62435dc54420c,
+      type: 3}
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}

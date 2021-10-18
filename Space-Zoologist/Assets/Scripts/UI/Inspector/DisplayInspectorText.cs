@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DisplayInspectorText : MonoBehaviour
 {
-    [SerializeField] private Text inspectorWindowTitle = default;
-    [SerializeField] private Image inspectorWindowImage = default;
+    [SerializeField] private TextMeshProUGUI inspectorWindowTitle = default;
     [SerializeField] private RectTransform layoutGroupRect = default;
-    [SerializeField] private Text inspectorWindowText = default;
+    [SerializeField] private TextMeshProUGUI inspectorWindowText = default;
+    [SerializeField] private TextMeshProUGUI populationInfoText = default;
     [SerializeField] private GameObject DetailButton = default;
+    [SerializeField] private GameObject detailBackground = default;
+    [SerializeField] private Text detailText = default;
     [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
@@ -17,31 +20,12 @@ public class DisplayInspectorText : MonoBehaviour
 
     private List<GameObject> needSliders = new List<GameObject>();
 
-    [Header("Temporary sprites")]
-    [SerializeField] Sprite enclosedAreaSprite = default;
-    [SerializeField] Sprite liquidSprite = default;
-    [SerializeField] Sprite defaultSprite = default;
-
-
-    GameObject detailBackground;
-    Text detailText;
-    float defaultHeight;
-    public void Initialize()
-    {
-        defaultHeight = inspectorWindowImage.rectTransform.sizeDelta.y;
-
-        detailBackground = DetailButton.transform.GetChild(0).gameObject;
-        detailText = detailBackground.GetComponentInChildren<Text>(true);
-    }
-
     public void DisplayPopulationStatus(Population population)
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Population;
-        inspectorWindowImage.sprite = population.species.Icon;
-
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0,inspectorWindowImage.sprite.rect.size.x,defaultHeight/inspectorWindowImage.sprite.rect.size.y), defaultHeight);
         inspectorWindowTitle.text = population.species.SpeciesName;
+        populationInfoText.text = "Population: " + population.Count;
 
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
@@ -81,41 +65,36 @@ public class DisplayInspectorText : MonoBehaviour
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Food;
-        inspectorWindowImage.sprite = foodSource.Species?.FoodSourceItem.Icon;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
         inspectorWindowTitle.text = foodSource.Species.SpeciesName;
 
-        string displayText = $"\n";
+        string displayText;
 
         if (foodSource.isUnderConstruction)
         {
-            displayText += $"Under Construction \n";
+            displayText = $"Under Construction \n";
 
         }
         else
         {
-            displayText += $"Output: {foodSource.FoodOutput}\n";
+            displayText = $"Output: {foodSource.FoodOutput}\n";
 
             GenerateSliders(foodSource);
         }
         this.inspectorWindowText.text = displayText;
     }
 
-    public void DislplayEnclosedArea(EnclosedArea enclosedArea)
+    public void DisplayEnclosedArea(EnclosedArea enclosedArea)
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Area;
 
         inspectorWindowTitle.text = $"Enclosure {enclosedArea.id + 1}";
-        inspectorWindowImage.sprite = enclosedAreaSprite;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
-
 
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
         float[] terrainComposition = enclosedArea.terrainComposition;
 
-        string displayText = $"\n";
+        string displayText = "";
 
         // Atmospheric info
         //displayText += "Atmospheric composition: \n";
@@ -147,9 +126,6 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Liquid;
 
         inspectorWindowTitle.text = "Body of Water";
-        inspectorWindowImage.sprite = liquidSprite;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
-
 
         string displayText = "";
         if (compositions == null)
@@ -172,10 +148,10 @@ public class DisplayInspectorText : MonoBehaviour
         DetailButton.SetActive(false);
         detailBackground.SetActive(false);
         detailText.text = "";
-        inspectorWindowImage.sprite = defaultSprite;
-        inspectorWindowImage.rectTransform.sizeDelta = new Vector2(Mathf.LerpUnclamped(0, inspectorWindowImage.sprite.rect.size.x, defaultHeight / inspectorWindowImage.sprite.rect.size.y), defaultHeight);
 
         inspectorWindowTitle.text = "Title";
+        inspectorWindowText.text = "Click on an item to inspect it";
+        populationInfoText.text = "";
         foreach (GameObject obj in needSliders) {
             Destroy(obj);
         }
@@ -190,20 +166,19 @@ public class DisplayInspectorText : MonoBehaviour
         }
         if (life is Population)
         {
-            setupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating, -5, 5);
-            setupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating, -5, 5);
-            setupSlider("Food", ((Population)life).GrowthCalculator.FoodRating, -5, 5);
+            setupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating);
+            setupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating);
+            setupSlider("Food", ((Population)life).GrowthCalculator.FoodRating);
         }
     }
 
-    private void setupSlider(string name, float value, int min = 0, int max = 10)
+    private void setupSlider(string name, float value, int min = -1, int max = 1)
     {
         GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
         needSliders.Add(sliderObj);
         NeedSlider slider = sliderObj.GetComponent<NeedSlider>();
-        slider.max = max;
-        slider.min = min;
         slider.SetName(name);
+        slider.SetMinMax(min, max);
         slider.SetValue(value);
     }
 }

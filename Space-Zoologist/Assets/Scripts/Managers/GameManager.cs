@@ -29,23 +29,33 @@ public class GameManager : MonoBehaviour
     [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] Button RestartButton = default;
     [SerializeField] Button NextLevelButton = default;
+    [SerializeField] Toggle ObjectiveToggle = default;
+    [SerializeField] Toggle InspectorToggle = default;
     [SerializeField] GameObject IngameUI = default;
     [SerializeField] GameObject GameOverHUD = default;
     [SerializeField] TextMeshProUGUI gameOverTitle = default;
     [SerializeField] TextMeshProUGUI gameOverText = default;
 
+    [Header("UI references")]
+    // I figured it was best to have these as serialized because we don't know whether
+    // they are off/on at the start of the level, so we can't guarantee that a raw
+    // "FindObjectWithType" will find it
+    [SerializeField] NotebookUI notebookUI = default;
+    public NotebookUI NotebookUI => notebookUI;
+    [SerializeField] InspectorObjectiveUI inspectorObjectiveUI = default;
+
     [Header("Time Variables")]
     [SerializeField] int maxDay = 20;
     private int currentDay = 1;
+<<<<<<< HEAD
     public int CurrentDay { get { return currentDay; } }
+=======
+    // Readonly accessor for the current day
+    public int CurrentDay => currentDay;
+>>>>>>> 3a3da8b5762d9377d704d572a3e3a29d05b15f27
     [SerializeField] Text CurrentDayText = default;
     public bool IsPaused { get; private set; }
     public bool WasPaused { get; private set; }
-    [SerializeField] public GameObject PauseButton = default;
-    private Image PauseButtonSprite = default;
-    private Button PauseButtonButton = default;
-    [SerializeField] private Sprite PauseSprite = default;
-    [SerializeField] private Sprite ResumeSprite = default;
 
     public bool IsGameOver { get { return m_isGameOver; } }
     private bool m_isGameOver = false;
@@ -54,11 +64,11 @@ public class GameManager : MonoBehaviour
     public bool isMainObjectivesCompleted { get; private set; }
     public int numSecondaryObjectivesCompleted { get; private set; }
 
-    private bool isObjectivePanelOpen;
+    public bool isObjectivePanelOpen { get; private set; }
     
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
-    [SerializeField] private Text objectivePanelText = default;
+    [SerializeField] private TextMeshProUGUI objectivePanelText = default;
     #endregion
 
     #region Need System Variables
@@ -73,7 +83,6 @@ public class GameManager : MonoBehaviour
     public FoodSourceManager m_foodSourceManager { get; private set; }
     public PopulationManager m_populationManager { get; private set; }
     public ResourceManager m_resourceManager { get; private set; }
-    public BuildBufferManager m_buildBufferManager { get; private set; }
     public BehaviorPatternUpdater m_behaviorPatternUpdater { get; private set; }
     public TilePlacementController m_tilePlacementController { get; private set; }
     public PlotIO m_plotIO { get; private set; }
@@ -81,6 +90,8 @@ public class GameManager : MonoBehaviour
     public EnclosureSystem m_enclosureSystem { get; private set; }
     public Inspector m_inspector { get; private set; }
     public PlayerController m_playerController { get; private set; }
+    public CameraController m_cameraController { get; private set; }
+    public  MenuManager m_menuManager { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -96,6 +107,7 @@ public class GameManager : MonoBehaviour
         LoadResources();
         SetNeedSystems();
         InitializeManagers();
+        InitializeUI();
         LoadLevelData();
         SetupObjectives();
         InitializeGameStateVariables();
@@ -134,7 +146,7 @@ public class GameManager : MonoBehaviour
     {
         name = name ?? LevelOnPlay;
         name = name + ".json";
-        string fullPath = preset ? this.directory + name : Path.Combine(Application.persistentDataPath, name);
+        string fullPath = preset ? "Assets/Resources/" + this.directory + name : Path.Combine(Application.persistentDataPath, name);
 
         Debug.Log("Saving Grid to " + fullPath);
         if (File.Exists(fullPath))
@@ -222,7 +234,6 @@ public class GameManager : MonoBehaviour
         m_foodSourceManager = FindObjectOfType<FoodSourceManager>();
         m_populationManager = FindObjectOfType<PopulationManager>();
         m_resourceManager = FindObjectOfType<ResourceManager>();
-        m_buildBufferManager = FindObjectOfType<BuildBufferManager>();
         m_behaviorPatternUpdater = FindObjectOfType<BehaviorPatternUpdater>();
         m_tilePlacementController = FindObjectOfType<TilePlacementController>();
         m_plotIO = FindObjectOfType<PlotIO>();
@@ -230,6 +241,8 @@ public class GameManager : MonoBehaviour
         m_enclosureSystem = FindObjectOfType<EnclosureSystem>();
         m_inspector = FindObjectOfType<Inspector>();
         m_playerController = FindObjectOfType<PlayerController>();
+        m_cameraController = FindObjectOfType<CameraController>();
+        m_menuManager = FindObjectOfType<MenuManager>();
     }
 
     private void LoadResources()
@@ -244,8 +257,24 @@ public class GameManager : MonoBehaviour
         m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
         m_foodSourceManager.Initialize();
-        m_buildBufferManager.Initialize();
         m_resourceManager.Initialize();
+        m_tilePlacementController.Initialize();
+    }
+
+    private void InitializeUI()
+    {
+        // If notebook is opened, then close the build ui
+        notebookUI.OnNotebookToggle.AddListener(notebookIsOn =>
+        {
+            m_cameraController.ControlsEnabled = !notebookIsOn;
+            inspectorObjectiveUI.SetIsOpen(!notebookIsOn);
+            if (notebookIsOn) m_menuManager.SetStoreIsOn(false);
+        });
+        // If store is opened, then close the notebook
+        m_menuManager.OnStoreToggled.AddListener(storeIsOn =>
+        {
+            if (storeIsOn) notebookUI.SetIsOpen(false);
+        });
     }
 
     private void SetupObjectives()
@@ -304,8 +333,6 @@ public class GameManager : MonoBehaviour
         UpdateDayText(currentDay);
         this.IsPaused = false;
         this.WasPaused = false;
-        this.PauseButtonSprite = this.PauseButton.GetComponent<Image>();
-        this.PauseButtonButton = this.PauseButton.GetComponent<Button>();
     }
     #endregion
 
@@ -490,9 +517,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         this.IsPaused = true;
-        this.PauseButtonSprite.sprite = this.ResumeSprite;
-        this.PauseButtonButton.onClick.RemoveListener(this.Pause);
-        this.PauseButtonButton.onClick.AddListener(this.Unpause);
         foreach (Population population in m_populationManager.Populations)
             population.PauseAnimalsMovementController();
         m_gridSystem.UpdateAnimalCellGrid();
@@ -502,9 +526,6 @@ public class GameManager : MonoBehaviour
     public void Unpause()
     {
         this.IsPaused = false;
-        this.PauseButtonSprite.sprite = this.PauseSprite;
-        this.PauseButtonButton.onClick.RemoveListener(this.Unpause);
-        this.PauseButtonButton.onClick.AddListener(this.Pause);
         foreach (Population population in m_populationManager.Populations)
             population.UnpauseAnimalsMovementController();
         AudioManager.instance?.PlayOneShot(SFXType.Unpause);
@@ -522,13 +543,13 @@ public class GameManager : MonoBehaviour
 
     public void HandleNPCEndConversation()
     {
-        if (!(currentDay < maxDay))
+        if (currentDay > maxDay)
         {
             m_dialogueManager.SetNewDialogue(m_levelData.RestartConversation);
         }
         else
         {
-            m_dialogueManager.SetNewDialogue(m_levelData.PassedConversation);
+            m_levelData.PassedConversation.Speak(m_dialogueManager);
         }
         m_dialogueManager.StartInteractiveConversation();
         this.IngameUI.SetActive(false);
@@ -559,10 +580,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ToggleObjectivePanel()
+    public void TurnObjectivePanelOn()
     {
-        this.isObjectivePanelOpen = !this.isObjectivePanelOpen;
-        this.objectivePane.SetActive(this.isObjectivePanelOpen);
+        this.isObjectivePanelOpen = true;
+        this.objectivePane.SetActive(true);
         UpdateObjectives();
         this.UpdateObjectivePanel();
     }
@@ -604,7 +625,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateObjectivePanel()
     {
-        string displayText = "\n";
+        string displayText = "";
 
         foreach (Objective objective in m_mainObjectives)
         {
@@ -640,18 +661,34 @@ public class GameManager : MonoBehaviour
 
     public void nextDay()
     {
-        m_buildBufferManager.CountDown();
+        UpdateDayText(++currentDay);
+        if(currentDay > maxDay)
+        {
+            // GameOver.cs listens for the event and handles gameover
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+        }
+
+        m_gridSystem.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
-        UpdateAllNeedSystems();
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
         {
             m_populationManager.Populations[i].HandleGrowth();
         }
+        UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
         UpdateDayText(++currentDay);
         EventManager.Instance.InvokeEvent(EventType.NextDay, null);
+    }
+
+    public void EnableInspectorToggle(bool enabled)
+    {
+        InspectorToggle.interactable = enabled;
+        if (!enabled) {
+            InspectorToggle.isOn = false;
+            ObjectiveToggle.isOn = true;
+        }
     }
     #endregion
 

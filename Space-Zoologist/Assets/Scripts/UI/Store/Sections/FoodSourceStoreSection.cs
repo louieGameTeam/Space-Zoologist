@@ -8,12 +8,8 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class FoodSourceStoreSection : StoreSection
 {
-    [SerializeField] FoodSourceManager FoodSourceManager = default;
-    private PopulationManager populationManager = default;
-
     public override void Initialize()
     {
-        populationManager = FindObjectOfType<PopulationManager>();
         base.itemType = ItemType.Food;
         base.Initialize();
     }
@@ -60,11 +56,24 @@ public class FoodSourceStoreSection : StoreSection
             Debug.Log("Cannot place item that location");
             return;
         }
-        GameManager.Instance.SubtractFromBalance(selectedItem.Price);
+        // NOTE: placing objects no longer costs money, only requesting them does
+        // GameManager.Instance.SubtractFromBalance(selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, 1);
         base.HandleAudio();
         Vector3Int mouseGridPosition = base.GridSystem.WorldToCell(mousePosition);
-        
-        FoodSourceManager.placeFood(mouseGridPosition, GameManager.Instance.FoodSources[selectedItem.ID], this.selectedItem.buildTime);
+
+        // Try to get the game manager instance
+        GameManager instance = GameManager.Instance;
+
+        // If instance exists use it to access the food source manager
+        if(instance)
+        {
+            instance.m_foodSourceManager.placeFood(mouseGridPosition, GameManager.Instance.FoodSources[selectedItem.ID], this.selectedItem.buildTime);
+        }
+        else
+        {
+            Debug.Log(GetType().ToString() + ": cannot place food because no game manager instance was found");
+        }
+
     }
 }

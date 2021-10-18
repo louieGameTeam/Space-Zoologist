@@ -177,50 +177,68 @@ public class EnclosureSystem : MonoBehaviour
     /// <param name="unaccessible">Unaccessible cells</param>
     /// <param name="walls">wall cells</param>
     /// <param name="atmosphereCount">index of the enclosed area</param>
-    private void FloodFill(Vector3Int cur, HashSet<Vector3Int> accessed, HashSet<Vector3Int> unaccessible, Stack<Vector3Int> walls, byte atmosphereCount, EnclosedArea enclosedArea, bool isUpdate)
+    private void FloodFill(Vector3Int start, HashSet<Vector3Int> accessed, HashSet<Vector3Int> unaccessible, Stack<Vector3Int> walls, byte atmosphereCount, EnclosedArea enclosedArea, bool isUpdate)
     {
-        if (accessed.Contains(cur) || unaccessible.Contains(cur))
+        if (accessed.Contains(start) || unaccessible.Contains(start))
         {
             // checked before, move on
             return;
         }
 
-        // check if tilemap has tile
-        GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(cur);
-        if (tile != null)
-        {
-            if (tile.type != TileType.Wall)
-            {
-                // Mark the cell
-                accessed.Add(cur);
+        // Using iterative approach due to stack overflow with large maps
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+        stack.Push(start);
 
-                // Updating enclosed area
-                if (isUpdate && this.positionToEnclosedArea.ContainsKey(cur) && this.GetEnclosedAreaById(this.positionToEnclosedArea[cur]) != null)
+        Vector3Int cur;
+
+        while (stack.Count > 0) {
+
+            cur = stack.Pop();
+            
+
+            if (accessed.Contains(cur) || unaccessible.Contains(cur))
+            {
+                // checked before, move on
+                continue;
+            }
+
+            // check if tilemap has tile
+            GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(cur);
+            if (tile != null)
+            {
+                if (tile.type != TileType.Wall)
                 {
-                    // Add the tile and tell the enclosed area what the previous area is
-                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.GetEnclosedAreaById(this.positionToEnclosedArea[cur]));
+                    // Mark the cell
+                    accessed.Add(cur);
+
+                    // Updating enclosed area
+                    if (isUpdate && this.positionToEnclosedArea.ContainsKey(cur) && this.GetEnclosedAreaById(this.positionToEnclosedArea[cur]) != null)
+                    {
+                        // Add the tile and tell the enclosed area what the previous area is
+                        enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, this.GetEnclosedAreaById(this.positionToEnclosedArea[cur]));
+                    }
+                    // Initial round
+                    else
+                    {
+                        enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, null);
+                    }
+
+                    this.positionToEnclosedArea[cur] = atmosphereCount;
+                    stack.Push(cur + Vector3Int.left);
+                    stack.Push(cur + Vector3Int.up);
+                    stack.Push(cur + Vector3Int.right);
+                    stack.Push(cur + Vector3Int.down);
                 }
-                // Initial round
                 else
                 {
-                    enclosedArea.AddCoordinate(new EnclosedArea.Coordinate(cur.x, cur.y), (int)tile.type, null);
+                    walls.Push(cur);
+                    unaccessible.Add(cur);
                 }
-
-                this.positionToEnclosedArea[cur] = atmosphereCount;
-                FloodFill(cur + Vector3Int.left, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
-                FloodFill(cur + Vector3Int.up, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
-                FloodFill(cur + Vector3Int.right, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
-                FloodFill(cur + Vector3Int.down, accessed, unaccessible, walls, atmosphereCount, enclosedArea, isUpdate);
             }
             else
             {
-                walls.Push(cur);
                 unaccessible.Add(cur);
             }
-        }
-        else
-        {
-            unaccessible.Add(cur);
         }
     }
 
@@ -233,7 +251,6 @@ public class EnclosureSystem : MonoBehaviour
     /// </remarks>
     public void UpdateEnclosedAreas(bool isUpdate = true)
     {
-
         // non-wall tiles
         HashSet<Vector3Int> accessed = new HashSet<Vector3Int>();
         // wall or null tiles

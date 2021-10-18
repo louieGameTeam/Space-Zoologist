@@ -8,10 +8,10 @@ using UnityEngine;
 [System.Serializable]
 public class TestAndMetricsEntry
 {
-    public ResearchCategory Category
+    public ItemID Item
     {
-        get => category;
-        set => category = value;
+        get => item;
+        set => item = value;
     }
     public NeedType Need
     {
@@ -30,8 +30,8 @@ public class TestAndMetricsEntry
     }
 
     [SerializeField]
-    [Tooltip("The research category on this entry")]
-    private ResearchCategory category;
+    [Tooltip("The item addressed in this entry")]
+    private ItemID item;
     [SerializeField]
     [Tooltip("The need analyzed in this entry")]
     private NeedType need;

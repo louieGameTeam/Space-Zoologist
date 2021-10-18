@@ -9,12 +9,13 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
+    public int CountQueuedConversations => queuedConversations.Count;
+
     private NPCConversation currentDialogue = default;
     [SerializeField] private bool HideNPC = default;
     private NPCConversation startingConversation = default;
     private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
-    [SerializeField] private GameObject DialogueButton = default;
     private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
 
     private bool ContinueSpeech = false;
@@ -27,7 +28,7 @@ public class DialogueManager : MonoBehaviour
     {
         startingConversation = GameManager.Instance.LevelData.StartingConversation;
         defaultConversation = GameManager.Instance.LevelData.DefaultConversation;
-        ConversationManager.OnConversationEnded = ConversationEnded;
+        ConversationManager.OnConversationEnded += ConversationEnded;
         if (this.startingConversation != null)
         {
             currentDialogue = this.startingConversation;
@@ -38,15 +39,28 @@ public class DialogueManager : MonoBehaviour
         }
         if (ConversationManager.Instance != null)
         {
-            ConversationManager.Instance.StartConversation(currentDialogue);
-            ContinueSpeech = true;
+            StartNewConversation();
+            //ConversationManagerGameObject.SetActive(false);
         }
+
+        // Use this to say the ending conversation when the level starts
+        //GameManager.Instance.LevelData.PassedConversation.Speak(this);
+        //StartInteractiveConversation();
     }
 
     private void ConversationEnded()
     {
-        ContinueSpeech = false;
-        ConversationManagerGameObject.SetActive(false);
+        if(queuedConversations.Count > 0)
+        {
+            UpdateCurrentDialogue();
+            StartNewConversation();
+        }
+        else
+        {
+            ContinueSpeech = false;
+            ConversationManagerGameObject.SetActive(false);
+            GameManager.Instance.m_menuManager.ToggleUI(true);
+        }
     }
 
     public void SetNewDialogue(NPCConversation newDialogue)
@@ -83,6 +97,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (!ConversationManagerGameObject.activeSelf)
             {
+                UpdateCurrentDialogue();
                 StartNewConversation();
             }
             else
@@ -94,8 +109,8 @@ public class DialogueManager : MonoBehaviour
 
     private void StartNewConversation()
     {
+        GameManager.Instance.m_menuManager.ToggleUI(false);
         ConversationManagerGameObject.SetActive(true);
-        UpdateCurrentDialogue();
         ConversationManager.Instance.StartConversation(currentDialogue);
         ContinueSpeech = true;
     }

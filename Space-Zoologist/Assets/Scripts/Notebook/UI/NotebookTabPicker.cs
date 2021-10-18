@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class NotebookTabPicker : NotebookUIChild
 {
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root object where all of the pages will be found")]
     private Transform pagesRoot;
@@ -18,12 +19,16 @@ public class NotebookTabPicker : NotebookUIChild
     [SerializeField]
     [Tooltip("Reference to the bookmark target to use")]
     private BookmarkTarget bookmarkTarget;
+    #endregion
 
+    #region Private Fields
     // Current tab of the picker
     private NotebookTab currentTab;
     // List of the buttons used to select a tab
     private List<NotebookTabSelectButton> buttons = new List<NotebookTabSelectButton>();
+    #endregion
 
+    #region Public Methods
     public override void Setup()
     {
         base.Setup();
@@ -44,22 +49,40 @@ public class NotebookTabPicker : NotebookUIChild
         {
             NotebookTabSelectButton button = Instantiate(buttonPrefab, parent.transform);
             // Only the first selector will be on. NOTE: this invokes "OnTabSelected" immediately
-            button.Setup(tabs[i], parent, OnTagSelected, i == 0);
+            button.Setup(tabs[i], parent, OnTagSelected);
             // Add this button to the list
             buttons.Add(button);
         }
     }
+    // Select a specific notebook tab by selecting one of the buttons
+    public void SelectTab(NotebookTab tab)
+    {
+        buttons[(int)tab].Select();
+    }
+    /// <summary>
+    /// Get the root transform for the given notebook tab
+    /// </summary>
+    /// <param name="tab"></param>
+    /// <returns></returns>
+    public Transform GetTabRoot(NotebookTab tab)
+    {
+        return pagesRoot.GetChild((int)tab);
+    }
+    #endregion
 
+    #region Private Methods
     private void OnTagSelected(NotebookTab tab)
     {
         // Disable the current page and enable the new page
-        pagesRoot.GetChild((int)currentTab).gameObject.SetActive(false);
-        pagesRoot.GetChild((int)tab).gameObject.SetActive(true);
+        GetTabRoot(currentTab).gameObject.SetActive(false);
+        GetTabRoot(tab).gameObject.SetActive(true);
         currentTab = tab;
 
         // For backend: Event invocation for tab switch.
         EventManager.Instance.InvokeEvent(EventType.OnTabChanged, null);
     }
+    #endregion
+    
     // Select a specific notebook tab by selecting one of the buttons
     public void SelectTab(NotebookTab tab)
     {

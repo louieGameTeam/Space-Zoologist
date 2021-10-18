@@ -555,7 +555,7 @@ MonoBehaviour:
   m_HideSoftKeyboard: 0
   m_CharacterValidation: 0
   m_RegexValue: 
-  m_GlobalPointSize: 20
+  m_GlobalPointSize: 25
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 3bb7845b5958df04aa431782781df82c, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
   m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -816,6 +816,7 @@ GameObject:
   - component: {fileID: 169569767507076209}
   - component: {fileID: 1265731591943683985}
   - component: {fileID: 4568447998653275226}
+  - component: {fileID: 291669096375991072}
   m_Layer: 5
   m_Name: TestAndMetricEntryEditor
   m_TagString: Untagged
@@ -893,7 +894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f1c5e3f4108e048a41eed685046eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  researchCategoryDropdown: {fileID: 5568112994967482379}
+  group: {fileID: 291669096375991072}
+  itemDropdown: {fileID: 2209227925187086729}
   needDropdown: {fileID: 294207407042786445}
   differenceDropdown: {fileID: 4841366615052725366}
   inputField: {fileID: 841976352820958818}
@@ -933,6 +935,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232a2b82eeb663843ba3e2f4dd72a13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &291669096375991072
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699916864411835190}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5825418843702952588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,8 +1049,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3bb7845b5958df04aa431782781df82c, type: 2}
-  m_sharedMaterial: {fileID: 6169321002312981343, guid: 3bb7845b5958df04aa431782781df82c,
+  m_fontAsset: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
+  m_sharedMaterial: {fileID: -7226233978607132761, guid: 591644c9da9f33d4fbfdddd3935e91dc,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1062,8 +1076,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1435,8 +1449,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3bb7845b5958df04aa431782781df82c, type: 2}
-  m_sharedMaterial: {fileID: 6169321002312981343, guid: 3bb7845b5958df04aa431782781df82c,
+  m_fontAsset: {fileID: 11400000, guid: 591644c9da9f33d4fbfdddd3935e91dc, type: 2}
+  m_sharedMaterial: {fileID: -7226233978607132761, guid: 591644c9da9f33d4fbfdddd3935e91dc,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1462,8 +1476,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2093,15 +2107,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5101721002489769315}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5568112994967482379 stripped
+--- !u!114 &2209227925187086729 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 831228025961487720, guid: 69257884578b94d4fb8db9bb7071334d,
+  m_CorrespondingSourceObject: {fileID: 6369274249192613098, guid: 69257884578b94d4fb8db9bb7071334d,
     type: 3}
   m_PrefabInstance: {fileID: 5101721002489769315}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6900972294ac601408e745796d41bca2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

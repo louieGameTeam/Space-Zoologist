@@ -15,13 +15,14 @@ public class SellingManager : MonoBehaviour
         if (!IsSelling)
         {
             GameManager.Instance.TryToPause();
-            if (Inspector.IsInInspectorMode)
-            {
-                Inspector.CloseInspector();
-            }
+            // No one else should be allowed to close the inspector except the InspectorObjectiveUI script
+            //if (Inspector.IsInInspectorMode)
+            //{
+            //    Inspector.CloseInspector();
+            //}
             if (MenuManager.IsInStore)
             {
-                MenuManager.CloseStore();
+                MenuManager.SetStoreIsOn(false);
             }
         }
         IsSelling = !IsSelling;
@@ -99,7 +100,8 @@ public class SellingManager : MonoBehaviour
             Item item = data.itemObject;
             if (item.ID.Equals(id))
             {
-                GameManager.Instance.SubtractFromBalance(-1 * item.Price);
+                // NOTE: selling should no longer give the player money - money is spent requesting items, not placing them
+                // GameManager.Instance.SubtractFromBalance(-1 * item.Price);
                 break;
             }
         }

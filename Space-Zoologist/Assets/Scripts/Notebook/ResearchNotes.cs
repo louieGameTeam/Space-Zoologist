@@ -5,37 +5,34 @@ using UnityEngine;
 [System.Serializable]
 public class ResearchNotes
 {
-    // Public accessors
-
+    #region Public Properties
     public ResearchNoteLabels Labels => labels;
-    public string Notes { get; set; } = string.Empty;
+    #endregion
 
-    // Private editor data
-
+    #region Private Editor Fields
     [SerializeField]
-    [Expandable]
     [Tooltip("Lables attached to the notes in the research notes")]
     private ResearchNoteLabels labels;
+    #endregion
 
+    #region Private Fields
+    // Maps the label to the note's text
+    private Dictionary<string, string> notes = new Dictionary<string, string>();
+    #endregion
+
+    #region Public Methods
     public void Setup()
     {
-        // Later, we need to load the existing data
-        Notes = string.Empty;
+        // Later we will have to actually load the save data
+        notes.Clear();
 
-        if(Notes == string.Empty)
+        // Add an empty note for each label
+        foreach (string label in labels.Labels)
         {
-            // Tags used to decorate the labels in the notes
-            List<RichTextTag> labelTags = new List<RichTextTag>()
-            {
-                new RichTextTag("color", "white"),
-                new RichTextTag("font", "\"times new roman SDF\"")
-            };
-            // Add the labels to the notes if they are not empty
-            foreach (string label in labels.Labels)
-            {
-                string richLabel = RichTextTag.ApplyMultiple(labelTags, label + ":");
-                Notes += richLabel + " \n\n";
-            }
+            notes.Add(label, "");
         }
     }
+    public string ReadNote(string label) => notes[label];
+    public string WriteNote(string label, string note) => notes[label] = note;
+    #endregion
 }

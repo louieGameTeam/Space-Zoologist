@@ -7,6 +7,7 @@ using TMPro;
 
 public class TestAndMetricsEntryEditor : NotebookUIChild
 {
+    #region Public Properties
     public TestAndMetricsEntry Entry
     {
         get
@@ -16,7 +17,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
                 // Create a new entry with the current information
                 entry = new TestAndMetricsEntry
                 {
-                    Category = researchCategoryDropdown.SelectedCategory,
+                    Item = itemDropdown.SelectedItem,
                     Need = needDropdown.SelectedNeed,
                     Improved = differenceDropdown.options[differenceDropdown.value].text == "Improved",
                     Notes = inputField.text
@@ -24,6 +25,10 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
                 // Add the new entry to the list on the notebook object
                 TestAndMetricsEntryList list = UIParent.Notebook.TestAndMetrics.GetEntryList(enclosureID);
                 list.Entries.Add(entry);
+
+                // Editor is no longer faded
+                group.alpha = 1f;
+
                 // Invoke the new entry created event
                 onNewEntryCreated.Invoke();
             }
@@ -31,10 +36,15 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         }
     }
     public UnityEvent OnNewEntryCreated => onNewEntryCreated;
+    #endregion
 
+    #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Reference to the canvas group that handles all child elements")]
+    private CanvasGroup group;
     [SerializeField]
     [Tooltip("Reference to the dropdown to select the research category")]
-    private TypeFilteredResearchCategoryDropdown researchCategoryDropdown;
+    private CategoryFilteredItemDropdown itemDropdown;
     [SerializeField]
     [Tooltip("Reference to the dropdown that selects the needs analyzed in the metric")]
     private NeedTypeDropdown needDropdown;
@@ -47,13 +57,17 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
     [SerializeField]
     [Tooltip("Event invoked when this editor creates a new entry")]
     private UnityEvent onNewEntryCreated;
+    #endregion
 
+    #region Private Fields
     // Enclosure ID for the entry we are editing
-    private EnclosureID enclosureID;
+    private LevelID enclosureID;
     // The entry that is edited by this UI
     private TestAndMetricsEntry entry;
+    #endregion
 
-    public void Setup(EnclosureID enclosureID, TestAndMetricsEntry entry, ScrollRect scrollTarget)
+    #region Public Methods
+    public void Setup(LevelID enclosureID, TestAndMetricsEntry entry, ScrollRect scrollTarget)
     {
         base.Setup();
 
@@ -62,7 +76,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         this.entry = entry;
 
         // Setup each dropdown
-        researchCategoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
+        itemDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         needDropdown.Setup(new NeedType[]{ NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
         // Reset the difference options
         differenceDropdown.ClearOptions();
@@ -72,7 +86,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         // Set the initial values of the elements
         if(entry != null)
         {
-            researchCategoryDropdown.SetResearchCategory(entry.Category);
+            itemDropdown.SetSelectedItem(entry.Item);
             needDropdown.SetNeedTypeValue(entry.Need);
             differenceDropdown.value = entry.Improved ? 1 : 0;
             inputField.text = entry.Notes;
@@ -80,32 +94,34 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         // If the entry is null, set the values to the first in the dropdown lists
         else
         {
-            researchCategoryDropdown.SetDropdownValueWithoutNotify(0);
+            itemDropdown.SetDropdownValueWithoutNotify(0);
             needDropdown.SetDropdownValue(0);
             differenceDropdown.value = 0;
             inputField.text = UIParent.Notebook.TestAndMetrics.GetInitialEntryText(enclosureID);
         }
 
         // Cache the current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
+        LevelID current = LevelID.FromCurrentSceneName();
         // Only add the listeners if this editor is in the current scene
         if (enclosureID == current)
         {
             // Add event listeners for everything
-            researchCategoryDropdown.OnResearchCategorySelected.AddListener(x => Entry.Category = x);
+            itemDropdown.OnItemSelected.AddListener(x => Entry.Item = x);
             needDropdown.OnNeedTypeSelected.AddListener(x => Entry.Need = x);
             differenceDropdown.onValueChanged.AddListener(x => Entry.Improved = x == 1);
             inputField.onValueChanged.AddListener(x => Entry.Notes = x);
         }
 
         // Elements are only interactable if id is the same as the current scene
-        researchCategoryDropdown.Dropdown.interactable = enclosureID == current;
-        needDropdown.Dropdown.interactable = enclosureID == current;
-        differenceDropdown.interactable = enclosureID == current;
-        inputField.readOnly = enclosureID != current;
+        group.interactable = enclosureID == current;
+
+        // Make elements faded if the entry is null - meaning editing this will add a new entry
+        if (entry != null) group.alpha = 1f;
+        else group.alpha = 0.5f;
 
         // Make sure the scroll event is taken away from the input field
         OnScrollEventInterceptor interceptor = inputField.gameObject.AddComponent<OnScrollEventInterceptor>();
         interceptor.InterceptTarget = scrollTarget;
     }
+    #endregion
 }

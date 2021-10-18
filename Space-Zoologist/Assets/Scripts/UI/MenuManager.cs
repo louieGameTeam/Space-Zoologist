@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using DG.Tweening;
 
 // This enum now exists in ResearchCategoryType
 // public enum MenuType { Food, Tiles, Animals };
 public class MenuManager : MonoBehaviour
 {
+    [System.Serializable] public class BoolEvent : UnityEvent<bool> { }
+
     readonly string[] menuNames = { "Food", "Tiles", "Animals" };
     GameObject currentMenu = null;
     [SerializeField] GameObject PlayerBalanceHUD = default;
@@ -18,8 +21,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
-    [SerializeField] RectTransform MenuSelectPanel = default;
-    [SerializeField] Text CurrentMenuText = default;
+    [SerializeField] List<GameObject> UI = default;
+    [Header("Events")]
+    [SerializeField] BoolEvent onStoreToggled = default;
+    public BoolEvent OnStoreToggled => onStoreToggled;
     public bool IsInStore { get; private set; }
     private int curMenu = 0;
 
@@ -34,7 +39,6 @@ public class MenuManager : MonoBehaviour
         }
         StoreMenus[curMenu]?.gameObject.SetActive(true);
         StoreCanvas.localScale = Vector3.zero;
-
     }
 
     public void OnToggleMenu(GameObject menu)
@@ -46,28 +50,31 @@ public class MenuManager : MonoBehaviour
                 GameManager.Instance.TryToPause();
                 EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
             }
-            this.StoreToggledOn(menu);
+            this.StoreMenuToggledOn(menu);
         }
         else
         {
-            this.StoreToggledOff(menu);
+            this.StoreMenuToggledOff(menu);
         }
     }
 
     public void ToggleStore()
     {
-        if (!this.IsInStore)
+        SetStoreIsOn(!IsInStore);
+    }
+
+    public void SetStoreIsOn(bool isOn)
+    {
+        if (isOn)
         {
             OpenStore();
         }
-        else
-        {
-            CloseStore();
-        }
+        else CloseStore();
+
+        onStoreToggled.Invoke(isOn);
     }
 
-
-    public void OpenStore()
+    private void OpenStore()
     {
         if (!this.IsInStore)
         {
@@ -76,17 +83,23 @@ public class MenuManager : MonoBehaviour
         }
         StoreCanvas.DOScale(0.8f, 0.5f);
         this.IsInStore = true;
+
+        GameManager.Instance.m_gridSystem.StartDrafting();
+        GameManager.Instance.m_gridSystem.SetGridOverlay(true);
     }
 
-    public void CloseStore()
+    private void CloseStore()
     {
         StoreCanvas.DOScale(0, 0.5f);
         this.IsInStore = false;
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
+
+        GameManager.Instance.m_gridSystem.FinishDrafting();
+        GameManager.Instance.m_gridSystem.SetGridOverlay(false);
     }
 
 
-    private void StoreToggledOn(GameObject menu)
+    private void StoreMenuToggledOn(GameObject menu)
     {
         if (this.currentMenu)
         {
@@ -98,7 +111,7 @@ public class MenuManager : MonoBehaviour
         this.IsInStore = true;
     }
 
-    private void StoreToggledOff(GameObject menu)
+    private void StoreMenuToggledOff(GameObject menu)
     {
         if (menu != null)
         {
@@ -120,12 +133,28 @@ public class MenuManager : MonoBehaviour
 
         StoreMenus[curMenu]?.gameObject.SetActive(true);
 
-        MenuSelectPanel.gameObject.SetActive(false);
-        CurrentMenuText.text = menuNames[curMenu];
         AudioManager.instance.PlayOneShot(SFXType.TabSwitch);
     }
 
-    public void ToggleMenuSelectPanel() {
-        MenuSelectPanel.gameObject.SetActive(!MenuSelectPanel.gameObject.activeSelf);
+    // Currently this function is only called by the dialogue system
+    public void ToggleUI(bool isActive)
+    {
+        foreach(GameObject ui in UI)
+        {
+            ui.SetActive(isActive);
+        }
+
+        // Commented out 10/07/2021 because dialogue system shouldn't close inspector
+        if (!isActive)
+        {
+            GameManager.Instance.m_inspector.CloseInspector();
+            GameManager.Instance.TurnObjectivePanelOn();
+            GameManager.Instance.EnableInspectorToggle(false);
+
+        }
+        else
+        {
+            GameManager.Instance.EnableInspectorToggle(true);
+        }
     }
 }

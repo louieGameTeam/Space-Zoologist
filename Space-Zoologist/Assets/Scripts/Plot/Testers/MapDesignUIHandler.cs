@@ -6,8 +6,13 @@ enum SelectionType {Tile, Animal, FoodSource, None }
 public class MapDesignUIHandler : MonoBehaviour
 {
     [SerializeField] private InputField fileNameInputField;
-    [SerializeField] private TilePlacementController tilePlacementController;
+    private TilePlacementController tilePlacementController;
     private string fileName;
+
+    private void Start()
+    {
+        tilePlacementController = GameManager.Instance.m_tilePlacementController;
+    }
 
     public void OnButtonSetFileName() { fileName = fileNameInputField.text; }
     public void OnButtonSaveLevel() { GameManager.Instance.SaveMap(fileName); }

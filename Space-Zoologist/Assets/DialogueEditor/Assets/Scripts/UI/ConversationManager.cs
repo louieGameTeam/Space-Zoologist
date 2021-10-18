@@ -76,13 +76,14 @@ namespace DialogueEditor
         private Conversation m_conversation;
         private List<UIConversationButton> m_uiOptions;
         private bool skipping;
+        private bool isFrozen = false;
 
         private SpeechNode m_pendingDialogue;
         private OptionNode m_selectedOption;
         private SpeechNode m_currentSpeech;
 
         // Selection options
-        private int m_currentSelectedIndex;
+        private int m_currentSelectedIndex = -1;
 
         //public GameObject BacklogGameObject;
         //public Button BacklogButton;
@@ -125,6 +126,8 @@ namespace DialogueEditor
 
         private void Update()
         {
+            bool progressInput = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
+
             if (m_state != eState.Off) { 
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -181,19 +184,16 @@ namespace DialogueEditor
                 case eState.Idle:
                     {
                         m_stateTime += Time.deltaTime;
-
-                        if (m_currentSpeech.AutomaticallyAdvance)
+                        if (m_currentSpeech.Dialogue != null || m_currentSpeech.Options == null || m_currentSpeech.Options.Count == 0)
                         {
-                            if (m_currentSpeech.Dialogue != null || m_currentSpeech.Options == null || m_currentSpeech.Options.Count == 0)
+                            if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
-                                if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
+                                if ((progressInput || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
-                                    UpdateNextSpeech();
                                     SetState(eState.TransitioningOptionsOff);
                                 }
                             }
                         }
-                    
                     }
                     break;
 
@@ -205,6 +205,7 @@ namespace DialogueEditor
                         if (t > 1)
                         {
                             ClearOptions();
+                            m_currentSpeech.Event?.Invoke();
 
                             //if (m_currentSpeech.AutomaticallyAdvance)
                             //{
@@ -267,24 +268,16 @@ namespace DialogueEditor
             }
         }
 
-        public void UpdateNextSpeech()
-        {
-            if (m_currentSpeech.Options.Count == 0)
-            {
-                SetState(eState.TransitioningOptionsOff);
-                m_currentSpeech.Event?.Invoke();
-            }
-        }
-
         private void UpdateScrollingText()
         {
+            bool progressInput = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
             const float charactersPerSecond = 1500;
             float timePerChar = (60.0f / charactersPerSecond);
             timePerChar *= ScrollSpeed;
 
             m_elapsedScrollTime += Time.deltaTime;
 
-            if (Input.GetMouseButtonDown(0) || skipping)
+            if (progressInput || skipping)
             {
                 m_elapsedScrollTime = 0f;
                 DialogueText.maxVisibleCharacters = m_targetScrollTextCount;
@@ -433,12 +426,14 @@ namespace DialogueEditor
 
         public void FreezeConversation()
         {
+            isFrozen = true;
             SetState(eState.Idle);
         }
 
         public void UnfreezeConversation()
         {
             print("Unfroze");
+            isFrozen = false;
             SetState(eState.TransitioningOptionsOff);
         }
         //--------------------------------------
@@ -514,7 +509,7 @@ namespace DialogueEditor
 
             // Clear current options
             ClearOptions();
-            m_currentSelectedIndex = 0;
+            m_currentSelectedIndex = -1;
 
             // Set sprite
             if (speech.Icon == null)
@@ -579,7 +574,7 @@ namespace DialogueEditor
 
 
             // Call the event
-            // speech.Event?.Invoke();
+            //speech.Event?.Invoke();
 
             // Play the audio
             if (speech.Audio != null)
@@ -593,6 +588,17 @@ namespace DialogueEditor
             if (speech.Options.Count > 0)
             {
                 //StartCoroutine(ShrinkDialogue());
+                
+                // Decrease spacing when many options are present to prevent options being too small
+                var layout = OptionsPanel.GetComponent<VerticalLayoutGroup>();
+                if (speech.Options.Count > 3)
+                {
+                    layout.spacing = 10;
+                }
+                else {
+                    layout.spacing = 20;
+                }
+
                 for (int i = 0; i < speech.Options.Count; i++)
                 {
                     UIConversationButton option = GameObject.Instantiate(ButtonPrefab, OptionsPanel);
@@ -607,7 +613,7 @@ namespace DialogueEditor
                 // Display "Continue" / "End" if we should.
                 //bool notAutoAdvance = !speech.AutomaticallyAdvance;
                 bool autoWithOption = (speech.AutomaticallyAdvance && speech.AutoAdvanceShouldDisplayOption);
-                if (speech.Options.Count > 0 || autoWithOption)
+                if (autoWithOption)
                 {
                     // Else display "continue" button to go to following dialogue
                     if (speech.Dialogue != null)
@@ -625,7 +631,8 @@ namespace DialogueEditor
                     }
                 }
             }
-            SetSelectedOption(0);
+            // Auto select first option
+            // SetSelectedOption(0);
 
             // Set the button sprite and alpha
             for (int i = 0; i < m_uiOptions.Count; i++)

@@ -19,9 +19,8 @@ MonoBehaviour:
   LevelObjectiveData: {fileID: 11400000, guid: e39f7b2122c9a4760be98e31f69160c4, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
-  - {fileID: 11400000, guid: df43116331ac049f6a18327890673ac5, type: 2}
-  - {fileID: 11400000, guid: 09079a79eb6ae41a887cdcfd15c7b359, type: 2}
   - {fileID: 11400000, guid: b65662df451a6444ebdb1ef6d79cddb1, type: 2}
+  - {fileID: 11400000, guid: 09079a79eb6ae41a887cdcfd15c7b359, type: 2}
   animalSpecies:
   - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
   itemQuantities:
@@ -50,7 +49,11 @@ MonoBehaviour:
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  passedConversation: {fileID: 6635029123290305080, guid: 06e1457ce5da543d5974a587d40bfe7b,
-    type: 3}
+  passedConversation:
+    isQuiz: 1
+    normalConversation: {fileID: 6635029123290305080, guid: 06e1457ce5da543d5974a587d40bfe7b,
+      type: 3}
+    quizConversation: {fileID: 2397069553644409658, guid: 7059e061676c2584e9f0141c324e0bb0,
+      type: 3}
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}

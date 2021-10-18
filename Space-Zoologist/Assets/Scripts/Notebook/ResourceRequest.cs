@@ -9,56 +9,45 @@ using UnityEngine;
 [System.Serializable]
 public class ResourceRequest
 {
-    public enum Status
+    #region Public Properties
+    public ItemID ItemAddressed
     {
-        NotReviewed, Granted, PartiallyGranted, Denied
+        get => itemAddressed;
+        set => itemAddressed = value;
     }
+    public NeedType NeedAddressed
+    {
+        get
+        {
+            // If the item requested is food, the need type addressed is food
+            if (ItemRequested.Category == ItemRegistry.Category.Food) return NeedType.FoodSource;
+            // If it's not food we assume it is a tile. Check if it is a water tile
+            else if (ItemRequested.Data.Name.Get(ItemName.Type.English).Contains("Water")) return NeedType.Liquid;
+            // If it is not water it must be a tile to address terrain needs
+            else return NeedType.Terrain;
+        }
+    }
+    public int QuantityRequested
+    {
+        get => quantityRequested;
+        set => quantityRequested = value;
+    }
+    public ItemID ItemRequested
+    {
+        get => itemRequested;
+        set => itemRequested = value;
+    }
+    #endregion
 
-    public int Priority
-    {
-        get => priority;
-        set => priority = value;
-    }
-    public ResearchCategory Target
-    {
-        get => target;
-        set => target = value;
-    }
-    public NeedType ImprovedNeed
-    {
-        get => improvedNeed;
-        set => improvedNeed = value;
-    }
-    public int Quantity
-    {
-        get => quantity;
-        set => quantity = value;
-    }
-    public Item Item
-    {
-        get => item;
-        set => item = value;
-    }
-
+    #region Private Editor Fields
     [SerializeField]
-    [Tooltip("Priority of the request relative to other requests being made")]
-    private int priority;
-    [SerializeField]
-    [Tooltip("Target of the resource request")]
-    private ResearchCategory target;
-    [SerializeField]
-    [Tooltip("Need of the target that this resource request is supposed to improve")]
-    private NeedType improvedNeed;
+    [Tooltip("Item that the player is trying to address by making the resource request")]
+    private ItemID itemAddressed;
     [SerializeField]
     [Tooltip("Quantity of the resource requested")]
-    private int quantity;
+    private int quantityRequested;
     [SerializeField]
     [Tooltip("The item that is requested")]
-    private Item item;
-    [SerializeField]
-    [Tooltip("Current status of the resource request")]
-    private Status status;
-    [SerializeField]
-    [Tooltip("Written reason why the request was given the status it currently has")]
-    private string statusReason;
+    private ItemID itemRequested;
+    #endregion
 }

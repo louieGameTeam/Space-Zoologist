@@ -8,121 +8,105 @@ using TMPro;
 
 public class ResourceRequestEditor : NotebookUIChild
 {
+    #region Public Properties
+    public RectTransform RectTransform => rectTransform;
     public ResourceRequest Request
     {
-        get
+        get => request;
+        set
         {
-            if(request == null)
+            if (value != null)
             {
-                if (string.IsNullOrWhiteSpace(priorityInput.text)) priorityInput.text = "0";
-                if (string.IsNullOrWhiteSpace(quantityInput.text)) quantityInput.text = "0";
-
-                // Create a new request
-                request = new ResourceRequest
-                {
-                    Priority = int.Parse(priorityInput.text),
-                    Target = categoryDropdown.SelectedCategory,
-                    ImprovedNeed = needDropdown.SelectedNeed,
-                    Quantity = int.Parse(quantityInput.text),
-                    Item = resourcePicker.ItemSelected
-                };
-
-                // Get the list and add the new request
-                ResourceRequestList list = UIParent.Notebook.GetResourceRequestList(enclosureID);
-                list.Requests.Add(request);
-                // Invoke the event for creating a new request
-                onNewRequestCreated.Invoke();
+                request = value;
+                SetUIValues();
             }
-            return request;
+            else throw new System.NullReferenceException($"{nameof(ResourceRequestEditor)}: cannot set request to 'null'");
         }
     }
-    public UnityEvent OnNewRequestCreated => onNewRequestCreated;
+    #endregion
 
+    #region Private Editor Fields
     [SerializeField]
-    [Tooltip("Text input field that sets the priority of the request editor")]
-    private TMP_InputField priorityInput;
+    [Tooltip("Reference to the rect transform of this editor")]
+    private RectTransform rectTransform;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets a research category")]
-    private TypeFilteredResearchCategoryDropdown categoryDropdown;
+    private CategoryFilteredItemDropdown targetDropdown;
     [SerializeField]
-    [Tooltip("Reference to the dropdown that gets the need")]
-    private NeedTypeDropdown needDropdown;
+    [Tooltip("Reference to the text that displays the need")]
+    private TextMeshProUGUI needDisplay;
     [SerializeField]
     [Tooltip("Text input field that sets the quantity of resources to request")]
     private TMP_InputField quantityInput;
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
-    private ResourcePicker resourcePicker;
+    private CategoryFilteredItemDropdown itemRequestedDropdown;
     [SerializeField]
-    [Tooltip("Event invoked when the editor creates a new request")]
-    private UnityEvent onNewRequestCreated;
+    [Tooltip("Button that deletes this request when clicked")]
+    private Button clearButton;
+    #endregion
 
-    // ID of the request to edit
-    private EnclosureID enclosureID;
+    #region Private Fields
     // Resource request to edit
-    private ResourceRequest request;
+    private ResourceRequest request = new ResourceRequest();
+    #endregion
 
-    public void Setup(EnclosureID enclosureID, ResourceRequest request, ScrollRect scrollTarget)
+    #region Public Methods
+    public override void Setup()
     {
         base.Setup();
 
-        // Set private data
-        this.enclosureID = enclosureID;
-        this.request = request;
-
         // Setup each dropdown
-        categoryDropdown.Setup(ResearchCategoryType.Food, ResearchCategoryType.Species);
-        needDropdown.Setup(new NeedType[] { NeedType.FoodSource, NeedType.Terrain, NeedType.Liquid });
-        resourcePicker.Setup();
+        targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
+        itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
 
+        // Set private data
+        ResetRequest();
+
+        // Add listeners
+        targetDropdown.OnItemSelected.AddListener(x => 
+        {
+            request.ItemAddressed = x;
+            OnAnyRequestPropertyChanged();
+        });
+        quantityInput.onEndEdit.AddListener(x =>
+        {
+            if (!string.IsNullOrWhiteSpace(x)) request.QuantityRequested = int.Parse(x);
+            OnAnyRequestPropertyChanged();
+        });
+        itemRequestedDropdown.OnItemSelected.AddListener(x => 
+        {
+            request.ItemRequested = x;
+            OnAnyRequestPropertyChanged();
+        });
+
+        // Delete the request when the button is clicked
+        clearButton.onClick.AddListener(ResetRequest);
+    }
+    public void ResetRequest()
+    {
+        request.ItemAddressed = new ItemID(ItemRegistry.Category.Species, 0);
+        request.ItemRequested = new ItemID(ItemRegistry.Category.Food, 0);
+        request.QuantityRequested = 1;
+        SetUIValues();
+    }
+    #endregion
+
+    #region Private Methods
+    private void SetUIValues()
+    {
+        targetDropdown.SetSelectedItem(request.ItemAddressed);
+        needDisplay.text = request.NeedAddressed + " Need";
+        quantityInput.text = request.QuantityRequested.ToString();
+        itemRequestedDropdown.SetSelectedItem(request.ItemRequested);
+    }
+    private void OnAnyRequestPropertyChanged()
+    {
         if (request != null)
         {
-            priorityInput.text = request.Priority.ToString();
-            categoryDropdown.SetResearchCategory(request.Target);
-            needDropdown.SetNeedTypeValue(request.ImprovedNeed);
-            quantityInput.text = request.Quantity.ToString();
-            resourcePicker.ItemSelected = request.Item;
+            needDisplay.text = request.NeedAddressed + " Need";
         }
-        else
-        {
-            priorityInput.text = "0";
-            categoryDropdown.SetDropdownValue(0);
-            needDropdown.SetDropdownValue(0);
-            quantityInput.text = "0";
-            resourcePicker.Dropdown.value = 0;
-        }
-
-        // Cache current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
-        // Only add listeners if this editor is in the current scene
-        if(enclosureID == current)
-        {
-            // Add listeners
-            quantityInput.onEndEdit.AddListener(x =>
-            {
-                if (!string.IsNullOrWhiteSpace(x)) Request.Priority = int.Parse(x);
-            });
-            categoryDropdown.OnResearchCategorySelected.AddListener(x => Request.Target = x);
-            needDropdown.OnNeedTypeSelected.AddListener(x => Request.ImprovedNeed = x);
-            quantityInput.onEndEdit.AddListener(x =>
-            {
-                if (!string.IsNullOrWhiteSpace(x)) Request.Quantity = int.Parse(x);
-            });
-            resourcePicker.OnItemSelected.AddListener(x => Request.Item = x);
-        }
-
-        // Elements only interactable if editing for the current enclosure
-        priorityInput.readOnly = current != enclosureID;
-        categoryDropdown.Dropdown.interactable = current == enclosureID;
-        needDropdown.Dropdown.interactable = current == enclosureID;
-        quantityInput.readOnly = current != enclosureID;
-        resourcePicker.Dropdown.interactable = current == enclosureID;
-
-        // Add scroll intercecptors to the input fields so that the scroll event goes to the 
-        // containing scroll rect instead of the input fields
-        OnScrollEventInterceptor interceptor = priorityInput.gameObject.AddComponent<OnScrollEventInterceptor>();
-        interceptor.InterceptTarget = scrollTarget;
-        interceptor = quantityInput.gameObject.AddComponent<OnScrollEventInterceptor>();
-        interceptor.InterceptTarget = scrollTarget;
+        else needDisplay.text = "<No Need Addressed>";
     }
+    #endregion
 }

@@ -16,30 +16,44 @@ MonoBehaviour:
   - id:
       title: Ecological Summary - Boletus Anceps
       author: 
-    text: Boletus Anceps is a spore-bearing fruiting body of a fungus. The most common
-      variant of Boletus Anceps is a gilled fungi with stems. Observed to be a rapidly
-      growing species, the developing primordium from which Boletus Anceps develops
-      is unusually large, at around 4 millimeters in diameter. Similarly, production
-      rates for nearby predators appear to be 5-8 edible caps and extensions.
-    image: {fileID: 0}
+    text: Boletus Anceps, commonly dubbed Glowcaps, is a spore-bearing fruiting body
+      of a fungus. The most common variant of Glowcaps is a gilled fungi with stems.
+      Observed to be a rapidly growing species, the developing primordium from which
+      Boletus Anceps develops is unusually large, at around 4 millimeters in diameter.
+      {Similarly, production rates for nearby predators appear to be 5-8 edible caps
+      and extensions.}
+    sprites: []
   - id:
       title: Transport Log
       author: Barry Wachmann
     text: "Soft and squishy like a fishy! Boletus Anceps appears to absorb water
       very well, particularly allowing for more salt and bacteria than other flora
       I\u2019ve transported. Bacteria is usually akin to poison for most flora and
-      fauna from Planet X, but this species seems comfortable with a diverse composition."
-    image: {fileID: 0}
+      fauna from Planet X, but this species seems comfortable with a diverse composition.
+      Similarly, their pure water need only appears to be around 94%. Strange, for
+      a species not found in salt water."
+    sprites:
+    - {fileID: 21300000, guid: f3fdb637779035445ac4017042cb09f8, type: 3}
   - id:
       title: Observation Log
       author: Barry Wachmann
-    text: "April 2, 3020, 4:00 pm\r\nThe transplantation of Boletus Anceps from the
-      Pastillion Mountain Range into other notable biomes is complete. I hope they
-      grow!\r\n\r\nApril 9, 3020, 4:00 pm\r\nA week later, the hyphae networks, or
-      mycelium, have rapidly grown in swamp, dirt, and grass biomes. They must have
-      a preference for terrain with soil and relative ease of access to water. No
-      indication of hyphae strands are present in deserts thus far.\r"
-    image: {fileID: 0}
+    text: 'April 2, 3020, 4:00 pm
+
+      (I get to observe, yay!) The transplantation
+      of Boletus Anceps from the Pastillion Mountain Range into other notable biomes
+      is complete. I hope they grow!
+
+
+
+      April 9, 3020, 4:00 pm
+
+      {A week
+      later, the hyphae networks, or mycelium, have rapidly grown in swamp, dirt,
+      and grass biomes.} They must have a preference for terrain with soil and relative
+      ease of access to water. No indication of hyphae strands are present in deserts
+      thus far.'
+    sprites:
+    - {fileID: 21300000, guid: a2d367d73d417084aa876f5570dfdd85, type: 3}
   - id:
       title: Research Abstract
       author: Dr. Aurora Star
@@ -51,5 +65,6 @@ MonoBehaviour:
       almost opposite, sitting at around 1 and 97% respectively. While both species
       rely on water for survival, Boletus Anceps only finding thriving terrain in
       swamps and Coruscent Laminar only present in water pools, the degree of variance
-      requires further investigation. \r"
-    image: {fileID: 0}
+      requires further investigation."
+    sprites:
+    - {fileID: 21300000, guid: a438131f9df2f7942885b034d8977a4a, type: 3}
