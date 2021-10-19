@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4194631304442463872}
   - component: {fileID: 3286043820829629120}
   - component: {fileID: 9018466970532040970}
+  - component: {fileID: -957305788757267569}
   m_Layer: 5
   m_Name: ItemCategoryPicker
   m_TagString: Untagged
@@ -99,7 +100,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 3286043820829629120}
-  objectPicked: 0
+  onObjectPickedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  valuePicked: 0
+--- !u!114 &-957305788757267569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155248320865106739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb2102265c9c46488dff6a364e13470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  togglePicker: {fileID: 9018466970532040970}
+  text: {fileID: 5843391813209919170}
 --- !u!1 &1595560228333603394
 GameObject:
   m_ObjectHideFlags: 0

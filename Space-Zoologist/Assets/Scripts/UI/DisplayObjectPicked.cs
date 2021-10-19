@@ -15,6 +15,17 @@ public class DisplayObjectPicked : MonoBehaviour
     #endregion
 
     #region Monobehaviour Messages
+    private void Start()
+    {
+        SetText(togglePicker.GetObjectPicked());
+        togglePicker.OnObjectPickedChanged.AddListener(SetText);
+    }
+    #endregion
 
+    #region Private Methods
+    private void SetText(object obj)
+    {
+        text.text = obj.ToString();
+    }
     #endregion
 }

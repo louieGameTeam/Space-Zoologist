@@ -53,7 +53,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        onSelected.Invoke(item);
+        onSelected?.Invoke(item);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

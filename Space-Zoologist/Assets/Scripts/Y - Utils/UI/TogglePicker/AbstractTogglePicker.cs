@@ -13,6 +13,7 @@ public abstract class AbstractTogglePicker : MonoBehaviour
 
     #region Public Properties
     public Toggle Toggle => toggle;
+    public ObjectEvent OnObjectPickedChanged => onObjectPickedChanged;
     #endregion
 
     #region Private Editor Fields
