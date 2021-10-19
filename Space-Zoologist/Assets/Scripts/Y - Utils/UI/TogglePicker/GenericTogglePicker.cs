@@ -10,12 +10,20 @@ public class GenericTogglePicker<PickType> : AbstractTogglePicker
         get => valuePicked;
         set => valuePicked = value;
     }
-    public override object ObjectPicked { get => ValuePicked; set => ValuePicked = (PickType)value; }
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Object that this toggle will pick")]
     private PickType valuePicked;
+    #endregion
+
+    #region Public Methods
+    public override object GetObjectPicked() => valuePicked;
+    public override void SetObjectPicked(object obj)
+    {
+        valuePicked = (PickType)obj;
+        base.SetObjectPicked(obj);
+    }
     #endregion
 }

@@ -42,7 +42,7 @@ public class EnumTabSetup<TEnum> : MonoBehaviour
         {
             // Create a toggle and cast it to a generic toggle
             AbstractTogglePicker toggle = Instantiate(togglePickerPrefab, toggleParent);
-            toggle.ObjectPicked = e;
+            toggle.SetObjectPicked(e);
             toggle.Toggle.group = toggleGroup;
             toggles.Add(toggle);
         }
