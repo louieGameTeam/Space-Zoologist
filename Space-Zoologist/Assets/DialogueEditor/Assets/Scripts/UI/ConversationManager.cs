@@ -690,6 +690,7 @@ namespace DialogueEditor
             OptionsPanel.gameObject.SetActive(false);
             NpcIcon.gameObject.SetActive(false);
             SetState(eState.Off);
+            gameObject.SetActive(false);
 #if UNITY_EDITOR
             // Debug.Log("[ConversationManager]: Conversation UI off.");
 #endif
