@@ -12,6 +12,9 @@ public class MoveObject : MonoBehaviour
     [SerializeField] GameObject MoveButtonPrefab = default;
     [SerializeField] GameObject DeleteButtonPrefab = default;
     [SerializeField] FoodSourceStoreSection FoodSourceStoreSection = default;
+    [SerializeField] TileStoreSection TileStoreSection = default;
+
+
     Item tempItem;
 
     GameObject objectToMove = null;
@@ -247,12 +250,21 @@ public class MoveObject : MonoBehaviour
         }
         else if (objectToMove.TryGetComponent<FoodSource>(out FoodSource foodSource))
         {
-            GameManager.Instance.SubtractFromBalance(-sellBackCost);
             removeOriginalFood(foodSource);
+            GameManager.Instance.SubtractFromBalance(-sellBackCost);
+            Item foodItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Equals(foodSource.Species.SpeciesName)).itemObject;
+
+            if (!foodItem)
+                return;
+
+            FoodSourceStoreSection.AddItemQuantity(foodItem);
         }
         else if (objectToMove.CompareTag("tiletodelete"))
         {
             GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
+            // temporary, should be solved with codey's changes
+            Item tileItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(tileData.currentTile.TileName.ToLower())).itemObject;
+
             tileData.Revert();
             gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
             if (tileData.currentTile == null)
@@ -260,6 +272,12 @@ public class MoveObject : MonoBehaviour
             //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
             gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
             GameManager.Instance.SubtractFromBalance(-sellBackCost);
+
+            if (!tileItem)
+                return;
+
+            TileStoreSection.AddItemQuantity(tileItem);
+
         }
         Reset();
     }
@@ -314,6 +332,7 @@ public class MoveObject : MonoBehaviour
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
 
         float cost = moveCost; // FixedCost + species.Size * CostPerUnitSizeFood;
+        removeOriginalFood(foodSource);
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
 
         if (valid)
@@ -325,12 +344,12 @@ public class MoveObject : MonoBehaviour
                             ttb = cc.target;
                         }*/
             //foodSourceManager.PlaceFood(pos, species, ttb);
-            removeOriginalFood(foodSource);
             placeFood(pos, species);
             GameManager.Instance.SubtractFromBalance(cost);
         }
         else
         {
+            placeFood(gridSystem.WorldToCell(initialPos - (Vector3Int)species.Size / 2), species);
             toMove.transform.position = initialPos;
         }
     }

@@ -104,6 +104,18 @@ public class StoreSection : MonoBehaviour
         }
     }
 
+    public void AddItemQuantity(Item item, int count = 1)
+    {
+        if (!storeItems.ContainsKey(item))
+        {
+            AddItem(item);
+        }
+        else
+        {
+            storeItems[item].RemainingAmount += count;
+        }
+    }
+
     /// <summary>
     /// Triggered by items in the section.
     /// </summary>
