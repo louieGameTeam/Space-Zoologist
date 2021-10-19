@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class AbstractTogglePicker : MonoBehaviour
+public abstract class AbstractTogglePicker : MonoBehaviour
 {
     #region Public Properties
     public Toggle Toggle => toggle;
+    public abstract object ObjectPicked { get; set; }
     #endregion
 
     #region Private Editor Fields

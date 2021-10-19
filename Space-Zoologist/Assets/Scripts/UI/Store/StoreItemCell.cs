@@ -22,8 +22,10 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         this.item = item;
         this.itemImage.sprite = item.Icon;
-        this.onSelected += itemSelectedHandler;
         this.ItemName.text = this.item.ItemID.Data.Name.Get(global::ItemName.Type.Colloquial);
+
+        // Check if the selected handler is null. If not then add it to the event
+        if(itemSelectedHandler != null) this.onSelected += itemSelectedHandler;
 
         RequestButton.onClick.AddListener(() =>
         { 
