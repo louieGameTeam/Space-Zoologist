@@ -13,7 +13,94 @@ MonoBehaviour:
   m_Name: Notebook
   m_EditorClassIdentifier: 
   acronym: ROCTM
-  research: {fileID: 11400000, guid: c5f58637365d268459e99748ffe0a624, type: 2}
+  research:
+    researchEntryData:
+      entryLists:
+      - entries:
+        - notes:
+            labels: {fileID: 11400000, guid: 7db18264fea8d8f4aa7e56fb145ee95d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 6ea7699167cb3774e9cd2e4aaed8464d,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: ac04ecac4d60fff4f8a19f25597cf2f1, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 1d641b0cd66e8b643b75f5129c67d892,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: ac04ecac4d60fff4f8a19f25597cf2f1, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 60afdeea6cf6d7f4880d035b0c16c3bb,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: ac04ecac4d60fff4f8a19f25597cf2f1, type: 2}
+          encyclopedia: {fileID: 11400000, guid: b483e55789e2a644aaac054a6412f963,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 61aafb8d4cbe38049a7507065c6e13ab,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 0}
+      - entries:
+        - notes:
+            labels: {fileID: 11400000, guid: f5cd230013c53804996c231d4b6b56ad, type: 2}
+          encyclopedia: {fileID: 11400000, guid: b45c0f43aa966de4aaa43fe1743f3ae9,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: f5cd230013c53804996c231d4b6b56ad, type: 2}
+          encyclopedia: {fileID: 11400000, guid: b45c0f43aa966de4aaa43fe1743f3ae9,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 2da04ddc0de25f146ada5ae4685907c7, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 7460f5e3ad1c68b4cb7350b4ea9cfdc9,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 2da04ddc0de25f146ada5ae4685907c7, type: 2}
+          encyclopedia: {fileID: 11400000, guid: a979501dfd997ee438b65ef7d30b9a4d,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 6b06ac5e4220d21449ee85a2b077533b,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 3777a019c27b3294aba3c49dc28e681f,
+            type: 2}
+      - entries:
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 2d160b157b3822a4a93018109714f8dd,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 8d63b090b0eb1d54c96b102d2cdf3c70,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: 5cb814dd05832d3489275591d7cfacc8,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: e2caa6927edaf984bb6e2b6d7dda1d7d,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: d22ff8b355d4f7f49a05e87dfcc36cc7,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 0}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: e154b0a03176d0e43b338db7906588d5,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: e154b0a03176d0e43b338db7906588d5,
+            type: 2}
+        - notes:
+            labels: {fileID: 11400000, guid: 9e91a573defb05743b4a54da23cc5e4d, type: 2}
+          encyclopedia: {fileID: 11400000, guid: e154b0a03176d0e43b338db7906588d5,
+            type: 2}
   observations:
     enclosureScaffold: {fileID: 11400000, guid: 4288bb66b31c80a4993552b1c8d9a539,
       type: 2}
@@ -68,6 +155,56 @@ MonoBehaviour:
         text: 
       - title: Other
         text: 
+  concepts:
+    quantityRegistries:
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 
+        - array: 
+      totalRequestableResources: 0
+      initialRequests: 0
+      subsequentRequests: 0
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 050000000300000005000000000000000000000000000000
+        - array: 0a0000000a00000000000000000000000000000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 0a000000050000000a000000000000000000000000000000
+        - array: 0a0000000500000000000000000000000000000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 050000000500000005000000050000000500000005000000
+        - array: 000000000500000005000000050000000500000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 
+        - array: 
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
+    - quantities:
+        intArrays:
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 000000000000000000000000000000000000000000000000
+        - array: 000000000000000000000000000000000000000000000000000000000000000000000000
+      totalRequestableResources: 20
+      initialRequests: 3
+      subsequentRequests: 2
   testAndMetrics:
     enclosureScaffold: {fileID: 11400000, guid: 4288bb66b31c80a4993552b1c8d9a539,
       type: 2}
@@ -86,3 +223,6 @@ MonoBehaviour:
     masks:
     - mask: 010100000000
     - mask: 010101010100
+  initiallyUnlockedItems:
+  - category: 0
+    index: 4

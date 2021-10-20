@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
+    public int CountQueuedConversations => queuedConversations.Count;
+
     private NPCConversation currentDialogue = default;
     [SerializeField] private bool HideNPC = default;
     private NPCConversation startingConversation = default;
@@ -26,7 +28,7 @@ public class DialogueManager : MonoBehaviour
     {
         startingConversation = GameManager.Instance.LevelData.StartingConversation;
         defaultConversation = GameManager.Instance.LevelData.DefaultConversation;
-        ConversationManager.OnConversationEnded = ConversationEnded;
+        ConversationManager.OnConversationEnded += ConversationEnded;
         if (this.startingConversation != null)
         {
             currentDialogue = this.startingConversation;
@@ -38,14 +40,29 @@ public class DialogueManager : MonoBehaviour
         if (ConversationManager.Instance != null)
         {
             StartNewConversation();
+            //ConversationManagerGameObject.SetActive(false);
         }
+
+        // Use this to say the ending conversation when the level starts
+        //GameManager.Instance.LevelData.PassedConversation.Speak(this);
+        //StartInteractiveConversation();
     }
 
     private void ConversationEnded()
     {
-        ContinueSpeech = false;
-        ConversationManagerGameObject.SetActive(false);
-        GameManager.Instance.m_menuManager.ToggleUI(true);
+        if(queuedConversations.Count > 0)
+        {
+            UpdateCurrentDialogue();
+            StartNewConversation();
+        }
+        else
+        {
+            ContinueSpeech = false;
+            // inconsistent access to the gameObject causes missing ref exception
+            // after scene transitions. Moved to ConversationManager.TurnOffUI()
+            //ConversationManagerGameObject.SetActive(false);
+            GameManager.Instance.m_menuManager.ToggleUI(true);
+        }
     }
 
     public void SetNewDialogue(NPCConversation newDialogue)

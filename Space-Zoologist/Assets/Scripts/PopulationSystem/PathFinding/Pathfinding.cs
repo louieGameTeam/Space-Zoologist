@@ -40,7 +40,9 @@ namespace AnimalPathfinding
 
         public void StartPathFind(Node start, Node targetPos, Grid grid)
         {
-            StartCoroutine(FindPath(start, targetPos, grid));
+            // Coroutine causes problems when it is called on the same frame
+            // StartCoroutine(FindPath(start, targetPos, grid));
+            FindPathDirect(start, targetPos, grid);
         }
 
         /// <summary>
@@ -111,6 +113,70 @@ namespace AnimalPathfinding
             PathRequestManager.instance.FinishedProcessPath(path, pathSuccessfullyFound);
         }
 
+        /// <summary>
+        /// Non-coroutine version of the FindPath() method
+        /// </summary>
+        /// <param name="grid">Grid to search.</param>
+        /// <param name="startPos">Starting position.</param>
+        /// <param name="targetPos">Ending position.</param>
+        /// <param name="distance">The type of distance, Euclidean or Manhattan.</param>
+        /// <returns>(Return through callback) List of grid nodes that represent the path to walk.</returns>
+        void FindPathDirect(Node startPos, Node targetPos, Grid grid)
+        {
+            if (startPos == null || targetPos == null || grid == null)
+            {
+                Debug.Log("Issue with pathfinding a");
+                PathRequestManager.instance.FinishedProcessPath(null, false);
+            }
+            Node startNode = startPos;
+            Node targetNode = targetPos;
+            List<Vector3> path = new List<Vector3>();
+            if ((!startNode.walkable && targetNode.walkable) || startNode.Equals(targetNode))
+            {
+                path.Add(new Vector3(targetNode.gridX, targetNode.gridY, 0));
+                PathRequestManager.instance.FinishedProcessPath(path, true);
+            }
+
+            Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);
+            HashSet<Node> closedSet = new HashSet<Node>();
+            openSet.Add(startNode);
+            while (openSet.currentItemCount > 0)
+            {
+                Node currentNode = openSet.RemoveFirst();
+                if (currentNode == targetNode)
+                {
+                    path = SetupPathFound(currentNode, startPos);
+                    break;
+                }
+                closedSet.Add(currentNode);
+
+                foreach (Node neighbour in grid.GetNeighbours(currentNode, DistanceType.Manhattan))
+                {
+                    if (!neighbour.walkable || closedSet.Contains(neighbour))
+                    {
+                        continue;
+                    }
+
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour) * (ignoreWeights ? 1 : (int)(10.0f * neighbour.price));
+                    if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                    {
+                        neighbour.gCost = newMovementCostToNeighbour;
+                        neighbour.hCost = GetDistance(neighbour, targetNode);
+                        neighbour.parent = currentNode;
+
+                        if (!openSet.Contains(neighbour))
+                            openSet.Add(neighbour);
+                    }
+                }
+            }
+
+            bool pathSuccessfullyFound = (path.Count > 0) ? true : false;
+            if (!pathSuccessfullyFound)
+            {
+                //Debug.Log("Issue with pathfinding b");
+            }
+            PathRequestManager.instance.FinishedProcessPath(path, pathSuccessfullyFound);
+        }
         private List<Vector3> SetupPathFound(Node nodePath, Node start)
         {
             List<Vector3> path = new List<Vector3>();

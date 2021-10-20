@@ -8,20 +8,17 @@ public class ConceptsUI : NotebookUIChild
 {
     #region Private Editor Fields
     [SerializeField]
-    [Tooltip("Object used to pick the enclosure for this ui")]
-    private EnclosureIDPicker enclosurePicker;
+    [Tooltip("Object used to edit the current resource request")]
+    private ResourceRequestEditor requestEditor;
     [SerializeField]
-    [Tooltip("Object used to edit a list of resource requests")]
-    private ResourceRequestListEditor listEditor; 
+    [Tooltip("Object that displays when the player attempts to request the resource")]
+    private ReviewedResourceRequestDisplay reviewDisplay;
     [SerializeField]
     [Tooltip("Button used to request resources")]
     private Button requestButton;
     [SerializeField]
-    [Tooltip("Text that displays the requests remaining")]
-    private TextMeshProUGUI requestsText;
-    [SerializeField]
-    [Tooltip("Text that displays the resources remaining")]
-    private TextMeshProUGUI resourcesText;
+    [Tooltip("Text that displays the money remaining")]
+    private TextMeshProUGUI balanceText;
     #endregion
 
     #region Public Methods
@@ -29,46 +26,27 @@ public class ConceptsUI : NotebookUIChild
     {
         base.Setup();
 
-        // Add listener for enclosure id picked
-        enclosurePicker.OnEnclosureIDPicked.AddListener(OnEnclosureIDPicked);
-        OnEnclosureIDPicked(EnclosureID.FromCurrentSceneName());
+        // When request button clicked then review the current request
+        requestButton.onClick.AddListener(() => reviewDisplay.DisplayReview(requestEditor.Request));
+        // Update the text whenever the review is confirmed
+        reviewDisplay.OnReviewConfirmed.AddListener(() =>
+        {
+            UpdateText();
+            requestEditor.ResetRequest();
+        });
 
-        // When request button clicked then review resource requests
-        requestButton.onClick.AddListener(ReviewResourceRequests);
+        // Update text once at the beginning
+        UpdateText();
     }
     #endregion
 
     #region Private Methods
-    private void OnEnclosureIDPicked(EnclosureID id)
+    private void UpdateText()
     {
-        // Update list being edited by the list editor
-        listEditor.UpdateListEdited(id, UIParent.Notebook.Concepts.GetResourceRequestList(id));
-
-        // Make request button interactable only if the id picked is the current id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
-        requestButton.interactable = id == current;
-
-        // Update the text displayed
-        UpdateText(id);
-    }
-    private void ReviewResourceRequests()
-    {
-        // Make the concept model review the requests
-        UIParent.Notebook.Concepts.ReviewResourceRequests();
-
-        // Update review ui for all editors
-        listEditor.UpdateReviewUI();
-
-        // Update the text displayed
-        UpdateText(EnclosureID.FromCurrentSceneName());
-    }
-    private void UpdateText(EnclosureID id)
-    {
-        int requestsLeft = UIParent.Notebook.Concepts.RemainingRequests(id);
-        int resourcesLeft = UIParent.Notebook.Concepts.RemainingResources(id);
-
-        requestsText.text = requestsLeft.ToString();
-        resourcesText.text = resourcesLeft.ToString();
+        if(GameManager.Instance)
+        {
+            balanceText.text = "$" + GameManager.Instance.Balance;
+        }
     }
     #endregion
 }

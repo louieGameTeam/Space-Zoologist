@@ -250,8 +250,9 @@ public class MoveObject : MonoBehaviour
         }
         else if (objectToMove.TryGetComponent<FoodSource>(out FoodSource foodSource))
         {
+            // NOTE: selling items no longer gives money, becuase money is not spent placing objects
+            // GameManager.Instance.SubtractFromBalance(-sellBackCost);
             removeOriginalFood(foodSource);
-            GameManager.Instance.SubtractFromBalance(-sellBackCost);
             Item foodItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Equals(foodSource.Species.SpeciesName)).itemObject;
 
             if (!foodItem)
@@ -262,16 +263,13 @@ public class MoveObject : MonoBehaviour
         else if (objectToMove.CompareTag("tiletodelete"))
         {
             GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
-            // temporary, should be solved with codey's changes
-            Item tileItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(tileData.currentTile.TileName.ToLower())).itemObject;
-
             tileData.Revert();
             gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
             if (tileData.currentTile == null)
                 tileData.Clear();
             //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
             gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
-            GameManager.Instance.SubtractFromBalance(-sellBackCost);
+            //GameManager.Instance.SubtractFromBalance(-sellBackCost);
 
             if (!tileItem)
                 return;
@@ -319,7 +317,8 @@ public class MoveObject : MonoBehaviour
         if (valid && !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
         {
             GameManager.Instance.m_populationManager.UpdatePopulation(species, worldPos);
-            GameManager.Instance.SubtractFromBalance(cost);
+            // NOTE: placing an animal no longer costs money
+            // GameManager.Instance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
         toMove.transform.position = worldPos; // always place animal back because animal movement will be handled by pop manager
@@ -344,8 +343,10 @@ public class MoveObject : MonoBehaviour
                             ttb = cc.target;
                         }*/
             //foodSourceManager.PlaceFood(pos, species, ttb);
+            removeOriginalFood(foodSource);
             placeFood(pos, species);
-            GameManager.Instance.SubtractFromBalance(cost);
+            // NOTE: placing an animal no longer costs money
+            // GameManager.Instance.SubtractFromBalance(cost);
         }
         else
         {

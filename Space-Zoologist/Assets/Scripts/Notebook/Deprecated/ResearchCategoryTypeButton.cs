@@ -11,7 +11,7 @@ public class ResearchCategoryTypeButton : MonoBehaviour
 {
     // Typedef so it will appear in the editor
     [System.Serializable]
-    public class ResearchCategoryTypeEvent : UnityEvent<ResearchCategoryType> { }
+    public class ItemCategoryEvent : UnityEvent<ItemRegistry.Category> { }
 
     // Public accessors
     public Toggle MyToggle => myToggle;
@@ -24,12 +24,12 @@ public class ResearchCategoryTypeButton : MonoBehaviour
     private TextMeshProUGUI text;
     [SerializeField]
     [Tooltip("Event invoked when this button is selected")]
-    private ResearchCategoryTypeEvent onSelected;
+    private ItemCategoryEvent onSelected;
 
     [Tooltip("This button's type")]
-    private ResearchCategoryType type;
+    private ItemRegistry.Category type;
 
-    public void Setup(ToggleGroup group, ResearchCategoryType type, UnityAction<ResearchCategoryType> callback, bool isOn)
+    public void Setup(ToggleGroup group, ItemRegistry.Category type, UnityAction<ItemRegistry.Category> callback, bool isOn)
     {
         // Set the toggle group for this toggle
         myToggle.group = group;

@@ -56,7 +56,8 @@ public class FoodSourceStoreSection : StoreSection
             Debug.Log("Cannot place item that location");
             return;
         }
-        GameManager.Instance.SubtractFromBalance(selectedItem.Price);
+        // NOTE: placing objects no longer costs money, only requesting them does
+        // GameManager.Instance.SubtractFromBalance(selectedItem.Price);
         base.ResourceManager.Placed(selectedItem, 1);
         base.HandleAudio();
         Vector3Int mouseGridPosition = base.GridSystem.WorldToCell(mousePosition);

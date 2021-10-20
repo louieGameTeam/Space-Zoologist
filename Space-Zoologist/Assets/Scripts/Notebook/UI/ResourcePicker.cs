@@ -66,9 +66,6 @@ public class ResourcePicker : NotebookUIChild
         }
         else
         {
-            Debug.Log("ResourcePicker: the resource picker could not be set up " +
-                "because no instance of the GameManager could be found");
-
             // Add some placeholder options
             dropdown.AddOptions(new List<string>()
             {

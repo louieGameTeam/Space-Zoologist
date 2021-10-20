@@ -11,22 +11,14 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI inspectorWindowText = default;
     [SerializeField] private TextMeshProUGUI populationInfoText = default;
     [SerializeField] private GameObject DetailButton = default;
+    [SerializeField] private GameObject detailBackground = default;
+    [SerializeField] private Text detailText = default;
     [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
     public enum InspectorText { Population, Food, Area, Liquid }
 
     private List<GameObject> needSliders = new List<GameObject>();
-
-    GameObject detailBackground;
-    Text detailText;
-    float defaultHeight;
-
-    public void Initialize()
-    {
-        detailBackground = DetailButton.transform.GetChild(0).gameObject;
-        detailText = detailBackground.GetComponentInChildren<Text>(true);
-    }
 
     public void DisplayPopulationStatus(Population population)
     {
@@ -74,7 +66,6 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
         currentDisplay = InspectorText.Food;
         inspectorWindowTitle.text = foodSource.Species.SpeciesName;
-        populationInfoText.text = "";
 
         string displayText;
 
@@ -98,7 +89,6 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Area;
 
         inspectorWindowTitle.text = $"Enclosure {enclosedArea.id + 1}";
-        populationInfoText.text = "";
 
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
         float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
@@ -136,7 +126,6 @@ public class DisplayInspectorText : MonoBehaviour
         currentDisplay = InspectorText.Liquid;
 
         inspectorWindowTitle.text = "Body of Water";
-        populationInfoText.text = "";
 
         string displayText = "";
         if (compositions == null)
@@ -161,6 +150,8 @@ public class DisplayInspectorText : MonoBehaviour
         detailText.text = "";
 
         inspectorWindowTitle.text = "Title";
+        inspectorWindowText.text = "Click on an item to inspect it";
+        populationInfoText.text = "";
         foreach (GameObject obj in needSliders) {
             Destroy(obj);
         }

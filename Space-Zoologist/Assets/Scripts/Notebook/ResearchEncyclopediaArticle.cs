@@ -33,7 +33,11 @@ public class ResearchEncyclopediaArticle
 
     public void Setup()
     {
-        if(highlights.Count <= 0)
+        // Clear out the highlights
+        // what we must do later is actually load them from the player's data
+        highlights.Clear();
+
+        if (highlights.Count <= 0)
         {
             // Clear all highlights and reset the true text to the written text
             trueText = text;
@@ -73,7 +77,6 @@ public class ResearchEncyclopediaArticle
 
                     // Remove the curly brace
                     trueText = trueText.Remove(i, 1);
-                    i--;
 
                     // Add the highlight now that we found the closing brace
                     highlights.Add(new ResearchEncyclopediaArticleHighlight(start, i));
@@ -91,7 +94,23 @@ public class ResearchEncyclopediaArticle
         highlights.Sort();
 
         // Clean the highlights
-        CleanHighlights();
+        int i = 0;
+
+        // Loop until we check up to (but not including) the last highlight
+        while (i < highlights.Count - 1)
+        {
+            // If this highlight overlaps the next one, we combine them and remove the next one
+            if (highlights[i].Overlap(highlights[i + 1]))
+            {
+                highlights[i] = highlights[i].Union(highlights[i + 1]);
+                highlights.RemoveAt(i + 1);
+
+                // We continue without incrementing because we need to check this same highlight again
+                // just in case it contained multiple highlights
+                continue;
+            }
+            else i++;
+        }
     }
 
     public void RequestHighlightRemove(int start, int end)
@@ -139,26 +158,5 @@ public class ResearchEncyclopediaArticle
         Debug.LogWarning("Found " + foundDescriptor + " where " + expectedDescriptor + " was expected\n" +
             "\tArticle: " + id.ToString() + "\n" +
             "\tPosition: " + reportString + "\n");
-    }
-
-    private void CleanHighlights()
-    {
-        int i = 0;
-
-        // Loop until we check up to (but not including) the last highlight
-        while(i < highlights.Count - 1)
-        {
-            // If this highlight overlaps the next one, we combine them and remove the next one
-            if (highlights[i].Overlap(highlights[i + 1]))
-            {
-                highlights[i] = highlights[i].Union(highlights[i + 1]);
-                highlights.RemoveAt(i + 1);
-                
-                // We continue without incrementing because we need to check this same highlight again
-                // just in case it contained multiple highlights
-                continue;
-            }
-            else i++;
-        }
     }
 }

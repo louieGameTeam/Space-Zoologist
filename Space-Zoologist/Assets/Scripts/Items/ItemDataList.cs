@@ -6,12 +6,12 @@ using UnityEngine;
 public class ItemDataList
 {
     #region Public Properties
-    public ItemData[] List => list;
+    public ItemData[] Items => items;
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of item datas")]
-    private ItemData[] list;
+    private ItemData[] items;
     #endregion
 }

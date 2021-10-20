@@ -851,12 +851,14 @@ MonoBehaviour:
   UIElements: []
   StoreCanvas: {fileID: 1957932609}
   UI:
-  - {fileID: 1761754413}
+  - {fileID: 6621437665015075475}
   - {fileID: 3862188242057203408}
   - {fileID: 3956046058778708287}
   - {fileID: 8404243451497626317}
   - {fileID: 8349968274091900280}
-  - {fileID: 6621437665015075475}
+  onStoreToggled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &363993210
 Transform:
   m_ObjectHideFlags: 0
@@ -2097,6 +2099,30 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &768986478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6037491244839071911, guid: b6fa91312476840f19ee43626e3f9dfb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981156779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d43938f4c30cc449cb08bfb9b8b00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &787602915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5256070083433968182, guid: b6fa91312476840f19ee43626e3f9dfb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981156779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &792812421 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8946323213000099165, guid: c617b7d1f8241406caf4b82976917ae9,
@@ -5659,12 +5685,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EventResponseManager: {fileID: 208159620}
---- !u!1 &1761754413 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3043627652767562312, guid: b6fa91312476840f19ee43626e3f9dfb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1981156779}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1797214983
 GameObject:
   m_ObjectHideFlags: 0
@@ -6594,6 +6614,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6fa91312476840f19ee43626e3f9dfb, type: 3}
+--- !u!114 &1981156780 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6781891701553658211, guid: b6fa91312476840f19ee43626e3f9dfb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981156779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1981156781 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4844423585355975515, guid: b6fa91312476840f19ee43626e3f9dfb,
@@ -7543,11 +7575,14 @@ MonoBehaviour:
   SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
   RestartButton: {fileID: 1410644951}
   NextLevelButton: {fileID: 1246903123}
+  ObjectiveToggle: {fileID: 787602915}
+  InspectorToggle: {fileID: 1981156780}
   IngameUI: {fileID: 543495681}
   GameOverHUD: {fileID: 602359351}
   gameOverTitle: {fileID: 1043611555}
   gameOverText: {fileID: 740143009}
   notebookUI: {fileID: 9730707}
+  inspectorObjectiveUI: {fileID: 768986478}
   maxDay: 20
   CurrentDayText: {fileID: 3294377205541531365}
   objectivePane: {fileID: 2092096914}

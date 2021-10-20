@@ -22,7 +22,7 @@ public class SellingManager : MonoBehaviour
             //}
             if (MenuManager.IsInStore)
             {
-                MenuManager.CloseStore();
+                MenuManager.SetStoreIsOn(false);
             }
         }
         IsSelling = !IsSelling;
@@ -100,7 +100,8 @@ public class SellingManager : MonoBehaviour
             Item item = data.itemObject;
             if (item.ID.Equals(id))
             {
-                GameManager.Instance.SubtractFromBalance(-1 * item.Price);
+                // NOTE: selling should no longer give the player money - money is spent requesting items, not placing them
+                // GameManager.Instance.SubtractFromBalance(-1 * item.Price);
                 break;
             }
         }

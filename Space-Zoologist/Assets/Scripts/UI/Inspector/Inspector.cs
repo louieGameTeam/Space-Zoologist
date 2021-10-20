@@ -31,22 +31,22 @@ public class Inspector : MonoBehaviour
     public void Initialize()
     {
         this.IsInInspectorMode = false;
-        this.inspectorWindowDisplayScript.Initialize();
     }
 
     public void CloseInspector()
     {
-        if (this.IsInInspectorMode)
-        {
-            this.inspectorWindowDisplayScript.ClearInspectorWindow();
-            this.inspectorWindow.SetActive(false);
-            //this.HUD.SetActive(true);
-            this.UnHighlightAll();
-            EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
-            this.IsInInspectorMode = false;
-            Debug.Log("Inspector closed");
-        }
+        this.inspectorWindowDisplayScript.ClearInspectorWindow();
+        this.inspectorWindow.SetActive(false);
+        //this.HUD.SetActive(true);
+        this.UnHighlightAll();
+        EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
+        this.IsInInspectorMode = false;
+    }
 
+    public void ResetSelection()
+    {
+        this.inspectorWindowDisplayScript.ClearInspectorWindow();
+        this.UnHighlightAll();
     }
 
     // Referenced by the details button

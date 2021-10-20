@@ -3,42 +3,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Notebook/ResearchModel")]
-public class ResearchModel : ScriptableObject
+[System.Serializable]
+public class ResearchModel
 {
-    // Public accessor for the dictionary
-    // Uses lazy loading to load the dictionary the first time it is requested
-    public Dictionary<ResearchCategory, ResearchEntry> ResearchDictionary
+    #region Public Typedefs
+    [System.Serializable]
+    public class ResearchEntryData
     {
-        get; private set;
-    } = new Dictionary<ResearchCategory, ResearchEntry>();
+        public ResearchEntryList[] entryLists;
+    }
+    #endregion
 
-    // Edit each research entry category seperately
+    #region Private Editor Fields
     [SerializeField]
-    [Tooltip("List of research data for all species")]
-    private List<ResearchEntry> speciesResearch;
-    [SerializeField]
-    [Tooltip("List of research data for all foods")]
-    private List<ResearchEntry> foodResearch;
-    [SerializeField]
-    [Tooltip("List of research data for all tiles")]
-    private List<ResearchEntry> tileResearch;
+    [Tooltip("List of research entry lists - used to make the entries parallel to the item registry")]
+    [ParallelItemRegistry("entryLists", "entries")]
+    private ResearchEntryData researchEntryData;
+    #endregion
 
+    #region Public Methods
     public void Setup()
     {
-        InitResearchEntries(speciesResearch, ResearchCategoryType.Species);
-        InitResearchEntries(foodResearch, ResearchCategoryType.Food);
-        InitResearchEntries(tileResearch, ResearchCategoryType.Tile);
-    }
+        // Get a list of all categories
+        ItemRegistry.Category[] categories = (ItemRegistry.Category[])System.Enum.GetValues(typeof(ItemRegistry.Category));
 
-    private void InitResearchEntries(List<ResearchEntry> entries, ResearchCategoryType type)
-    {
-        foreach (ResearchEntry entry in entries)
+        // Loop over all categories
+        foreach(ItemRegistry.Category category in categories)
         {
-            entry.Setup(type);
-            if (!ResearchDictionary.ContainsKey(entry.Category)) ResearchDictionary.Add(entry.Category, entry);
+            ResearchEntry[] entries = researchEntryData.entryLists[(int)category].Entries;
+
+            // Loop through all research entries 
+            for(int i = 0; i < entries.Length; i++)
+            {
+                entries[i].Setup();
+            }
         }
     }
-
-    public ResearchEntry GetEntry(ResearchCategory category) => ResearchDictionary[category];
+    public ResearchEntry GetEntry(ItemID id)
+    {
+        ResearchEntry[] entries = researchEntryData.entryLists[(int)id.Category].Entries;
+        if (id.Index >= 0 && id.Index < entries.Length) return entries[id.Index];
+        else return null;
+    }
+    #endregion
 }

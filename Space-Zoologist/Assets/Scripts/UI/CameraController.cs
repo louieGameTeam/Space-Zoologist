@@ -31,6 +31,9 @@ public class CameraController : MonoBehaviour
     // True when the camera is being dragged using the center mouse button
     private bool hasMouseDrag = false;
 
+    private CameraPositionLock positionLock = null;
+
+    #region Monobehaviour Messages
     void Start()
     {
         cam = this.GetComponent<Camera>();
@@ -42,20 +45,35 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        this.HandleKeyboard();
-        this.HandleMouse();
-        this.HandleZoom();
-        if (this.EdgeMovement) this.HandleEdgeScreen();
+        if(positionLock == null)
+        {
+            this.HandleKeyboard();
+            this.HandleMouse();
+            this.HandleZoom();
+            if (this.EdgeMovement) this.HandleEdgeScreen();
+        }
     }
+    #endregion
 
+    #region Public Methods
+    public void Lock(CameraPositionLock positionLock)
+    {
+        this.positionLock = positionLock;
+        positionLock.Lock(cam);
+    }
+    public void Unlock()
+    {
+        if(positionLock != null)
+        {
+            positionLock.Unlock(cam);
+            positionLock = null;
+        }
+    }
+    #endregion
+
+    #region Private Methods
     private void HandleZoom()
     {
-        //if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
-        //{
-        //    //Debug.Log("Not zooming");
-        //    return;
-        //}
-
         // Only receive input if controls are enabled
         float scrollData = 0;
         if (ControlsEnabled) scrollData = Input.GetAxis("Mouse ScrollWheel");
@@ -195,4 +213,5 @@ public class CameraController : MonoBehaviour
         float y = Mathf.Clamp(toClamp.y, 0, MapHeight);
         return new Vector3(x, y, toClamp.z);
     }
+    #endregion
 }

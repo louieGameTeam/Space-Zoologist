@@ -16,9 +16,6 @@ public class NotebookBookmarkNavigationUI : NotebookUIChild
         base.Setup();
 
         // Create a bookmark for each bookmark currently in the notebook
-        // NOTE: doesn't work because the bookmarks can't be serialized - they lose their base type
-        // Probably wouldn't work on the client't end anyways, there must be some way to associate
-        // it with the player's account or something
         for (int i = 0; i < UIParent.Notebook.Bookmarks.Count; i++)
         {
             CreateBookmarkButton(UIParent.Notebook.Bookmarks[i]);

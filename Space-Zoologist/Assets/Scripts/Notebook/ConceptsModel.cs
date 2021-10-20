@@ -7,49 +7,36 @@ public class ConceptsModel
 {
     #region Private Fields
     // Map the resource requests to the enclosure it applies to
-    private Dictionary<EnclosureID, ResourceRequestList> resourceRequests = new Dictionary<EnclosureID, ResourceRequestList>();
+    private Dictionary<LevelID, ReviewedResourceRequestList> resourceRequests = new Dictionary<LevelID, ReviewedResourceRequestList>();
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureId(EnclosureID id)
+    public void TryAddEnclosureId(LevelID id)
     {
-        if (!resourceRequests.ContainsKey(id)) resourceRequests.Add(id, new ResourceRequestList());
+        if (!resourceRequests.ContainsKey(id)) resourceRequests.Add(id, new ReviewedResourceRequestList());
     }
-    public ResourceRequestList GetResourceRequestList(EnclosureID id) => resourceRequests[id];
-    // Maximum number of requests that can be made by the player when playing this enclosure
-    public int MaxRequests(EnclosureID _) => 10;
-    // Maximum number of resources that can be requested by the player when playing this enclosure
-    public int MaxResources(EnclosureID _) => 100;
-    // Count the requests that the player has remaining
-    public int RemainingRequests(EnclosureID id) => MaxRequests(id) - resourceRequests[id].TotalRequestsGranted;
-    public int RemainingResources(EnclosureID id) => MaxResources(id) - resourceRequests[id].TotalResourcesGranted;
-    public void ReviewResourceRequests()
+    public ReviewedResourceRequestList GetReviewedResourceRequestList(LevelID id) => resourceRequests[id];
+
+    /// <summary>
+    /// Subtract the cost of a review from the current balance 
+    /// and add the review to the list of reviews for this level
+    /// </summary>
+    /// <param name="levelID"></param>
+    /// <param name="review"></param>
+    public void ConfirmReviwedResourceRequest(LevelID levelID, ReviewedResourceRequest review)
     {
-        // Get the list of requests for the current enclosure id
-        EnclosureID current = EnclosureID.FromCurrentSceneName();
-        List<ResourceRequest> toReview = resourceRequests[current].RequestsWithStatus(ResourceRequest.Status.NotReviewed);
-        // Sort the requests from highest to lowest priority
-        toReview.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        ReviewedResourceRequestList list = resourceRequests[levelID];
 
-        // Loop through all resources and review them
-        foreach(ResourceRequest request in toReview)
+        // Check if the game manager exists and the review was not denied
+        if(GameManager.Instance && review.CurrentStatus != ReviewedResourceRequest.Status.Denied)
         {
-            int remainingRequests = RemainingRequests(current);
-            int remainingResources = RemainingResources(current);
-
-            // If there are remaining resources, compute quantity to grant
-            if (remainingRequests > 0 && remainingResources > 0)
-            {
-                int quantityGranted = Mathf.Min(request.QuantityRequested, remainingResources);
-
-                // If quantity granted is the same as quantity requested then we can fully grant the request
-                if (quantityGranted == request.QuantityRequested) request.Grant();
-                // If quantity granted is less than quantity requested then partially grant the request 
-                else request.GrantPartially("Insufficient resources to fully grant this request", quantityGranted, request.ItemRequested);
-            }
-            else if (remainingResources <= 0) request.Deny("Insufficient resources to grant this request");
-            else request.Deny("No more requests remaining");
+            // Add the item to the resource manager and subtract the total cost
+            Item itemObjectGranted = GameManager.Instance.LevelData.GetItemWithID(review.Request.ItemRequested).itemObject;
+            GameManager.Instance.m_resourceManager.AddItem(itemObjectGranted.ItemName, review.QuantityGranted);
+            GameManager.Instance.SubtractFromBalance(review.TotalCost);
         }
+
+        list.Reviews.Add(review);
     }
     #endregion
 }
