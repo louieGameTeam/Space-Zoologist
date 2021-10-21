@@ -507,6 +507,7 @@ public class GridSystem : MonoBehaviour
     public void StartDrafting()
     {
         GameManager.Instance.TryToPause();
+        GameManager.Instance.m_inspector.ResetSelection();
         UpdateUI(false);
     }
 
@@ -1350,8 +1351,8 @@ public class GridSystem : MonoBehaviour
     public void ToggleGridOverlay()
     {
         // toggle using shader here
-        float currentToggleValue = Tilemap.GetComponent<TilemapRenderer>().material.GetFloat("_GridOverlayToggle");
-        SetGridOverlay(Mathf.RoundToInt(currentToggleValue) == 0);
+        float currentToggleValue = Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.GetFloat("_GridOverlayToggle");
+        SetGridOverlay(!(Mathf.RoundToInt(currentToggleValue) == 0));
     }
     public void SetGridOverlay(bool overlay)
     {

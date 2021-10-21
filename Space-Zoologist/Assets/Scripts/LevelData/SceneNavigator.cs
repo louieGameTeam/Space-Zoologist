@@ -15,8 +15,9 @@ public class SceneNavigator : ScriptableObject
         SceneManager.LoadScene(levelName, LoadSceneMode.Single);
     }
 
-    public void RestartLevel() {
-        LoadLevel(RecentlyLoadedLevel);
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene("MainLevel");
     }
 
     public void LoadNextLevel() {
