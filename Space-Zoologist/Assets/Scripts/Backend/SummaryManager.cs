@@ -111,6 +111,15 @@ public class SummaryManager : MonoBehaviour
     // Use scene change functions to determine level being loaded/unloaded.
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // If current set trace is not null, we know we are leaving a level.
+        if (currentSetTrace != null)
+        {
+            // Check progression statistics.
+            CheckAndModifyProgression(currentLevel, currentSummaryTrace);
+            // Add the current set trace to the list in the summary trace.
+            currentSummaryTrace.SetTraces.Add(currentSetTrace);
+        }
+
         // If the buildIndex of the scene is 3 (i.e., if we are in the MainLevel scene).
         if (scene.buildIndex == 3)
         {
@@ -120,13 +129,6 @@ public class SummaryManager : MonoBehaviour
             levelData = GameObject.Find("LevelData").GetComponent<LevelDataReference>();
             // Check current level and set (enclosure).
             CheckLevelAndSet(levelData);
-            // Check progression statistics.
-            CheckAndModifyProgression(currentLevel, currentSummaryTrace);
-            // If current set trace is not null, add it to the list in the summary trace.
-            if (currentSetTrace != null)
-            {
-                currentSummaryTrace.SetTraces.Add(currentSetTrace);
-            }
             // Create a new set trace, and set the current set trace to the one created.
             currentSetTrace = CreateSetTrace(currentLevel, currentSet, currentSummaryTrace.PlayerID);
         }
@@ -138,16 +140,18 @@ public class SummaryManager : MonoBehaviour
         return "test";
     }
 
-    private string GetSessionID()
-    {
-        return "test";
-    }
+    // Probably no longer necessary
+    // private string GetSessionID()
+    // {
+    //     return "test";
+    // }
 
     // A function that uses the event management system to subscribe to events used in this manager.
     private void SubscribeToEvents()
     {
         // Listen to notebook events being fired.
         EventManager.Instance.SubscribeToEvent(EventType.OnJournalOpened, OnJournalOpened);
+        EventManager.Instance.SubscribeToEvent(EventType.OnJournalClosed, OnJournalClosed);
         // Listen to progression events being fired.
         EventManager.Instance.SubscribeToEvent(EventType.OnSetEnd, OnSetEnd);
         EventManager.Instance.SubscribeToEvent(EventType.OnSetPass, OnSetPass);
@@ -162,7 +166,10 @@ public class SummaryManager : MonoBehaviour
         string levelName = levelData.LevelData.Level.SceneName;
 
         // Parse level name for level information.
-        if (levelName.Contains("Level1"))
+        if (levelName.Contains("Level0"))
+        {
+            currentLevel = 0;
+        } else if (levelName.Contains("Level1"))
         {
             currentLevel = 1;
         } else if (levelName.Contains("Level2"))
@@ -178,6 +185,10 @@ public class SummaryManager : MonoBehaviour
         {
             currentLevel = 5;
         }
+        else
+        {
+            currentLevel = 0;
+        }
 
         //Parse level name for set information.
         if (levelName.Contains("E1"))
@@ -192,6 +203,9 @@ public class SummaryManager : MonoBehaviour
         } else if (levelName.Contains("E4")) 
         {
             currentSet = 4;
+        } else
+        {
+            currentSet = 1;
         }
     }
 
@@ -202,28 +216,30 @@ public class SummaryManager : MonoBehaviour
     // leaves level 5 out of completion.
     private void CheckAndModifyProgression(int currentLevel, SummaryTrace trace)
     {
-        if (currentLevel == 1)
+        if (currentLevel == 0)
         {
             trace.TutorialComplete = true;
         }
-        if (currentLevel == 2)
+        if (currentLevel == 1)
         {
             trace.Level1Complete = true;
         }
-        if (currentLevel == 3)
+        if (currentLevel == 2)
         {
             trace.Level2Complete = true;
         }
-        if (currentLevel == 4)
+        if (currentLevel == 3)
         {
             trace.Level3Complete = true;
         }
-        if (currentLevel == 5)
+        if (currentLevel == 4)
         {
             trace.Level4Complete = true;
         }
-
-        // TODO: Figure out what happens with level 5/total completion of game.
+        if (currentLevel == 5)
+        {
+            trace.Level5Complete = true;
+        }
     }
 
     // A function that executes upon opening the journal.
