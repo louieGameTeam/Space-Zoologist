@@ -23,13 +23,13 @@ public class GenericToggleGroupPicker<PickType> : AbstractToggleGroupPicker
     #endregion
 
     #region Public Methods
-    public void SetValuesPicked(List<PickType> objects)
+    public void SetValuesPicked(List<PickType> values)
     {
         foreach(GenericTogglePicker<PickType> picker in pickers)
         {
-            picker.Toggle.isOn = objects.Contains(picker.ValuePicked);
+            picker.Toggle.isOn = values.Contains(picker.ValuePicked);
         }
     }
-    public void SetValuePicked(PickType obj) => SetValuesPicked(new List<PickType>() { obj });
+    public void SetValuePicked(PickType value) => SetValuesPicked(new List<PickType>() { value });
     #endregion
 }

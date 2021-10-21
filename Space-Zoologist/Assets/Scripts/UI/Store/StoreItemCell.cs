@@ -12,17 +12,23 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [SerializeField] TextMeshProUGUI ItemName = default;
     [SerializeField] Text RemainingAmountText = default;
     [SerializeField] Button RequestButton = default;
+    [SerializeField] GameObject PriceRoot = default;
+    [SerializeField] TextMeshProUGUI PriceText = default;
     public int RemainingAmount = -1;
 
     public delegate void ItemSelectedHandler(Item item);
     public event ItemSelectedHandler onSelected;
 
     #region Public Methods
-    public void Initialize(Item item, ItemSelectedHandler itemSelectedHandler)
+    public void Initialize(Item item, bool displayPrice, ItemSelectedHandler itemSelectedHandler)
     {
         this.item = item;
         this.itemImage.sprite = item.Icon;
         this.ItemName.text = this.item.ItemID.Data.Name.Get(global::ItemName.Type.Colloquial);
+
+        // Display the price
+        PriceRoot.SetActive(displayPrice);
+        if (displayPrice) PriceText.text = item.Price.ToString();
 
         // Check if the selected handler is null. If not then add it to the event
         if(itemSelectedHandler != null) this.onSelected += itemSelectedHandler;
@@ -59,27 +65,22 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void OnPointerEnter(PointerEventData eventData)
     {
         highlightImage.enabled = true;
-        RemainingAmountText.color = Color.green;
     }
     public void Update()
     {
         this.RemainingAmountText.text = "" + this.RemainingAmount;
+        RequestButton.gameObject.SetActive(RemainingAmount <= 0 && !PriceRoot.activeInHierarchy);
 
-        if(RemainingAmount <= 0)
+        if (RemainingAmount > 0)
         {
-            RemainingAmountText.rectTransform.offsetMin = new Vector2(0f, 20f);
-            RequestButton.gameObject.SetActive(true);
+            if (highlightImage.enabled) RemainingAmountText.color = Color.green;
+            else RemainingAmountText.color = Color.white;
         }
-        else
-        {
-            RemainingAmountText.rectTransform.offsetMin = Vector2.zero;
-            RequestButton.gameObject.SetActive(false);
-        }
+        else RemainingAmountText.color = Color.red;
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         highlightImage.enabled = false;
-        RemainingAmountText.color = Color.white;
     }
     #endregion
 }

@@ -28,6 +28,10 @@ public class DisplayItemCellsByCategory : MonoBehaviour
         SetupCells();
         groupPicker.OnToggleStateChanged.AddListener(SetupCells);
     }
+    private void OnEnable()
+    {
+        SetupCells();
+    }
     #endregion
 
     #region Public Methods
@@ -49,7 +53,7 @@ public class DisplayItemCellsByCategory : MonoBehaviour
         {
             StoreItemCell cell = Instantiate(itemCellPrefab, cellParent);
             // Initialize the cell instance
-            cell.Initialize(itemData.itemObject, null);
+            cell.Initialize(itemData.itemObject, true, null);
             cell.RemainingAmount = GameManager.Instance.m_resourceManager.CheckRemainingResource(itemData.itemObject);
             existingCells.Add(cell);
         }

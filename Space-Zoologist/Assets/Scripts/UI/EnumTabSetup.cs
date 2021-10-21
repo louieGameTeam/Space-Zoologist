@@ -21,20 +21,18 @@ public class EnumTabSetup<TEnum> : MonoBehaviour
     [Tooltip("Transform that all of the toggle are instantiated under")]
     private Transform toggleParent;
     [SerializeField]
-    [Tooltip("List of tabs to enable/disable for each enum")]
-    private GameObject[] enumTabs;
+    [Tooltip("If true, the enum list marks enums to INCLUDE, if false, it marks enums to EXCLUDE")]
+    private bool filterMarksInclusions = false;
     [SerializeField]
-    [Tooltip("List of enums to exclude from the tab setup")]
-    private List<TEnum> exclusions;
+    [Tooltip("List of enums to exclude/include from the tab setup")]
+    private List<TEnum> filter;
     #endregion
 
     #region Monobehaviour Messages
     private void Start()
     {
         // Get enums with the applied filter
-        IEnumerable<TEnum> enums = System.Enum.GetValues(typeof(TEnum))
-            .Cast<TEnum>()
-            .Where(Filter);
+        IEnumerable<TEnum> enums = GetFilteredEnums();
         // A list of all the toggles we created
         List<AbstractTogglePicker> toggles = new List<AbstractTogglePicker>();
 
@@ -49,47 +47,17 @@ public class EnumTabSetup<TEnum> : MonoBehaviour
 
         // Set the toggle pickers on the toggle group
         toggleGroupPicker.SetTogglePickers(toggles);
-        // When the toggle state of any toggle changes then update the tabs displayed
-        toggleGroupPicker.OnToggleStateChanged.AddListener(UpdateTabs);
-    }
-    private void OnValidate()
-    {
-        // Get a list of the enum names
-        string[] enumNames = System.Enum.GetNames(typeof(TEnum));
-
-        if(enumNames.Length != enumTabs.Length)
-        {
-            // Create a new set of tabs with the correct length
-            GameObject[] newTabs = new GameObject[enumNames.Length];
-            // Set the smaller length
-            int smallerLength = Mathf.Min(newTabs.Length, enumTabs.Length);
-            // Copy current tabs to new tabs
-            System.Array.Copy(enumTabs, newTabs, smallerLength);
-            // Set current tabs to new tabs
-            enumTabs = newTabs;
-        }
+        // Set object picked to the first enum in the filtered list
+        toggleGroupPicker.SetObjectPicked(enums.First());
     }
     #endregion
 
     #region Protected Methods
-    // Include enums that are not excluded
-    protected virtual bool Filter(TEnum enumValue) => !exclusions.Contains(enumValue);
-    protected virtual void UpdateTabs()
-    {
-        // Cache the objects that have been picked
-        List<object> pickedEnums = toggleGroupPicker.ObjectsPicked;
-        // List all enum names
-        TEnum[] enums = (TEnum[])System.Enum.GetValues(typeof(TEnum));
-
-        // Set the tabs on or off depending on if their enum index is picked
-        for(int i = 0; i < enums.Length; i++)
-        {
-            if(enumTabs[i])
-            {
-                bool isPicked = pickedEnums.Contains(enums[i]);
-                enumTabs[i].SetActive(isPicked);
-            }
-        }
-    }
+    // If filter marks inclusions, choose this value if the filter contains it
+    // If the filter marks exclusions, choose this value if the filter doesn't contain it
+    protected virtual bool Filter(TEnum enumValue) => filterMarksInclusions && filter.Contains(enumValue) || !filterMarksInclusions && !filter.Contains(enumValue);
+    protected IEnumerable<TEnum> GetFilteredEnums() => System.Enum.GetValues(typeof(TEnum))
+            .Cast<TEnum>()
+            .Where(Filter);
     #endregion
 }

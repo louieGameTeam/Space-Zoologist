@@ -50,6 +50,14 @@ public abstract class AbstractToggleGroupPicker : MonoBehaviour
             pickers[i].Toggle.isOn = i == toggle;
         }
     }
+    public void SetObjectsPicked(List<object> objects)
+    {
+        foreach (AbstractTogglePicker picker in pickers)
+        {
+            picker.Toggle.isOn = objects.Contains(picker.GetObjectPicked());
+        }
+    }
+    public void SetObjectPicked(object obj) => SetObjectsPicked(new List<object>() { obj });
     #endregion
 
     #region Private Methods
