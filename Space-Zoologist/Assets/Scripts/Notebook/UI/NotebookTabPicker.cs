@@ -82,12 +82,6 @@ public class NotebookTabPicker : NotebookUIChild
         EventManager.Instance.InvokeEvent(EventType.OnTabChanged, null);
     }
     #endregion
-    
-    // Select a specific notebook tab by selecting one of the buttons
-    public void SelectTab(NotebookTab tab)
-    {
-        buttons[(int)tab].Select();
-    }
 
     // For backend: Public accessor for current tab
     public NotebookTab CurrentTab 
