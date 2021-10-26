@@ -90,9 +90,13 @@ public class NotebookUI : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (ConversationManager.Instance.IsConversationActive)
+        if (ConversationManager.Instance)
         {
-            root.SetOffsets(dialogueSize);
+            if (ConversationManager.Instance.IsConversationActive)
+            {
+                root.SetOffsets(dialogueSize);
+            }
+            else root.SetOffsets(defaultSize);
         }
         else root.SetOffsets(defaultSize);
     }
