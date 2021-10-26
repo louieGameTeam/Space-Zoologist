@@ -50,6 +50,10 @@ public class NotebookUI : MonoBehaviour
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
     private bool isOpen = false;
+    // True if a callback is set up on the conversation manager yet
+    // This has to be used because we don't know for sure if conversation manager instance is null or not
+    // at the beginning of the scene
+    private bool conversationCallbackSet = false;
     #endregion
 
     #region Monobehaviour Messages
@@ -92,18 +96,26 @@ public class NotebookUI : MonoBehaviour
     {
         if (ConversationManager.Instance)
         {
-            if (ConversationManager.Instance.IsConversationActive)
+            // If the callbacks have not been set yet then set them now
+            if(!conversationCallbackSet)
             {
-                root.SetOffsets(dialogueSize);
+                ConversationManager.OnConversationStarted += SetDialogueOffsets;
+                ConversationManager.OnConversationEnded += SetDefaultOffsets;
+                conversationCallbackSet = true;
             }
-            else root.SetOffsets(defaultSize);
+            SetRectTransformOffsets(ConversationManager.Instance.IsConversationActive);
         }
-        else root.SetOffsets(defaultSize);
+    }
+    // Unset the callbacks when this object is destroyed
+    private void OnDestroy()
+    {
+        ConversationManager.OnConversationStarted -= SetDialogueOffsets;
+        ConversationManager.OnConversationEnded -= SetDefaultOffsets;
     }
     #endregion
 
     #region Public Methods
-    // Directly referenced by the button
+    // Directly referenced by the button in the scene
     public void Toggle()
     {
         SetIsOpen(!isOpen);
@@ -136,5 +148,15 @@ public class NotebookUI : MonoBehaviour
         // This one property set invokes a cascade of events automatically so that the ui updates correctly
         resourceRequestEditor.Request = resourceRequest;
     }
+    #endregion
+
+    #region Private Methods
+    private void SetRectTransformOffsets(bool dialogueActive)
+    {
+        if (dialogueActive) SetDialogueOffsets();
+        else SetDefaultOffsets();
+    }
+    private void SetDefaultOffsets() => root.SetOffsets(defaultSize);
+    private void SetDialogueOffsets() => root.SetOffsets(dialogueSize);
     #endregion
 }
