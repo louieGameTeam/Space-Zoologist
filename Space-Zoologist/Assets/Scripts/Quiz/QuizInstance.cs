@@ -10,36 +10,36 @@ public class QuizInstance
     public QuizTemplate Template => template;
     public int QuestionsAnswered => answers.Count(i => i >= 0);
     public bool Completed => QuestionsAnswered >= template.Questions.Length;
-    public int TotalScore
+    public QuizGrade Grade
     {
         get
         {
-            int score = 0;
+            // Determine if you pass or fail important categories
+            bool passImportant = template.GradingRubric.GradeImportantScore(
+                ScoreInImportantCategories, 
+                template.GetMaximumPossibleScoreInImportantCategories());
 
-            for(int i = 0; i < template.Questions.Length; i++)
+            // If you pass important, go on to check if you pass unimportant too
+            if (passImportant)
             {
-                // Get the current question and answer
-                QuizQuestion question = template.Questions[i];
-                int answer = answers[i];
+                bool passUnimportant = template.GradingRubric.GradeUnimportantScore(
+                    ScoreInUnimportantCategories, 
+                    template.GetMaximumPossibleScoreInUnimportantCategories());
 
-                // If the answer is within range of the options 
-                // then add the option's weight to the total score
-                if(answer >= 0 && answer < question.Options.Length)
-                {
-                    QuizOption option = question.Options[answer];
-                    score += option.Weight;
-                }
+                // If you pass both, your score is excellent
+                if (passUnimportant) return QuizGrade.Excellent;
+                // If you pass only important categories your score is acceptable
+                else return QuizGrade.Acceptable;
             }
-
-            return score;
+            // If you fail important categories your grade is poor
+            else return QuizGrade.Poor;
         }
     }
-    public QuizGradeType TotalGrade => template.GradingRubric.Grade(TotalScore, template.GetMaximumPossibleScore().TotalScore);
-    public QuizScore Score
+    public ItemizedQuizScore ItemizedScore
     {
         get
         {
-            QuizScore score = new QuizScore();
+            ItemizedQuizScore itemizedScore = new ItemizedQuizScore();
 
             for (int i = 0; i < template.Questions.Length; i++)
             {
@@ -52,32 +52,30 @@ public class QuizInstance
                 if (answer >= 0 && answer < question.Options.Length)
                 {
                     QuizOption option = question.Options[answer];
-                    score.Set(question.ScoreType, score.Get(question.ScoreType) + option.Weight);
+                    itemizedScore.Set(question.Category, itemizedScore.Get(question.Category) + option.Weight);
                 }
             }
 
-            return score;
+            return itemizedScore;
         }
     }
-    public QuizGrade Grade
+    public int ScoreInImportantCategories
     {
         get
         {
-            QuizGrade grade = new QuizGrade();
-            QuizScore score = Score;
-            QuizScoreType[] types = (QuizScoreType[])System.Enum.GetValues(typeof(QuizScoreType));
+            // Get the score itemized by category
+            ItemizedQuizScore itemizedScore = ItemizedScore;
+            int score = 0;
 
-            foreach(QuizScoreType type in types)
+            // Add up the scores in the important categories
+            foreach(QuizCategory category in template.ImportantCategories)
             {
-                int myScore = score.Get(type);
-                int maxScore = template.GetMaximumPossibleScoreOfType(type);
-                QuizGradeType gradeType = template.GradingRubric.Grade(myScore, maxScore);
-                grade.Set(type, gradeType);
+                score += itemizedScore.Get(category);
             }
-
-            return grade;
+            return score;
         }
     }
+    public int ScoreInUnimportantCategories => ItemizedScore.TotalScore - ScoreInImportantCategories;
     #endregion
 
     #region Private Editor Fields

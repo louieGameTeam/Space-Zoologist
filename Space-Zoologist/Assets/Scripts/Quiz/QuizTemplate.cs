@@ -6,17 +6,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class QuizTemplate : ScriptableObject
 {
-    #region Public Typedefs
-    // So that the examples show up in the editor
-    [System.Serializable]
-    public class QuizScoreBoundary
-    {
-        [WrappedProperty("scoreData")]
-        public QuizScore[] scores;
-    }
-    #endregion
-
     #region Public Properties
+    public QuizCategory[] ImportantCategories => importantCategories;
     public QuizQuestion[] Questions => questions;
     public QuizGradingRubric GradingRubric => gradingRubric;
     #endregion
@@ -31,91 +22,54 @@ public class QuizTemplate : ScriptableObject
     [SerializeField]
     [Tooltip("Percentage to get correct to be considered a 'partial pass'")]
     private QuizGradingRubric gradingRubric;
-
-    [Space]
-
-    [SerializeField]
-    [Tooltip("Bound scores for each grade level. The score must be at least this much " +
-        "to be in the grade level shown")]
-    [EditArrayWrapperOnEnum("scores", typeof(QuizGradeType))]
-    private QuizScoreBoundary scoreBoundaries;
-    #endregion
-
-    #region Object Messages
-    private void OnValidate()
-    {
-        scoreBoundaries.scores = GetScoreLowerBounds();
-    }
     #endregion
 
     #region Public Methods
-    public QuizScore[] GetScoreLowerBounds()
+    public int GetMaximumPossibleScoreInUnimportantCategories() => GetMaximumPossibleScoreInEveryCategory().TotalScore - GetMaximumPossibleScoreInImportantCategories();
+    public int GetMaximumPossibleScoreInImportantCategories()
     {
-        if (!CollectionExtensions.IsNullOrEmpty(gradingRubric.Percentages))
+        int maxScore = 0;
+        // Add the max score for each important category
+        foreach (QuizCategory category in importantCategories)
         {
-            // Get the array of possible grades
-            QuizGradeType[] grades = (QuizGradeType[])System.Enum.GetValues(typeof(QuizGradeType));
-            QuizScore[] boundaries = new QuizScore[grades.Length];
-            QuizScore max = GetMaximumPossibleScore();
-
-            // Loop through each grade level
-            for (int i = 0; i < grades.Length; i++)
-            {
-                // Create the lower bound for this score level
-                QuizScore gradeScore = new QuizScore();
-                // Get a list of all score types
-                QuizScoreType[] scoreTypes = (QuizScoreType[])System.Enum.GetValues(typeof(QuizScoreType));
-
-                // Set the score for each score type
-                foreach (QuizScoreType type in scoreTypes)
-                {
-                    int score = (int)(max.Get(type) * gradingRubric.GetLowerBound(grades[i]));
-                    gradeScore.Set(type, score);
-                }
-
-                boundaries[i] = gradeScore;
-            }
-
-            return boundaries;
+            maxScore += GetMaximumPossibleScoreInCategory(category);
         }
-        else return null;
-    }
-    public QuizScore GetMaximumPossibleScore()
-    {
-        // Create the score to return
-        QuizScore maxScore = new QuizScore();
-        int numScores = System.Enum.GetNames(typeof(QuizScoreType)).Length;
-
-        // Set each score to the max score
-        for (int i = 0; i < numScores; i++)
-        {
-            maxScore.Set((QuizScoreType)i, GetMaximumPossibleScoreOfType((QuizScoreType)i));
-        }
-
         return maxScore;
     }
-    public int GetMaximumPossibleScoreOfType(QuizScoreType type)
+    public ItemizedQuizScore GetMaximumPossibleScoreInEveryCategory()
+    {
+        // Create the score to return
+        ItemizedQuizScore maxScore = new ItemizedQuizScore();
+        // Get a list of all categories
+        IEnumerable<QuizCategory> categories = GetTestedCategories();
+
+        // Set the max score for each category
+        foreach(QuizCategory category in categories)
+        {
+            maxScore.Set(category, GetMaximumPossibleScoreInCategory(category));
+        }
+        return maxScore;
+    }
+    public IEnumerable<QuizCategory> GetTestedCategories() => questions.Select(q => q.Category).Distinct();
+    public int GetMaximumPossibleScoreInCategory(QuizCategory category)
     {
         if (!CollectionExtensions.IsNullOrEmpty(questions))
         {
             // Get the questions with this type
-            QuizQuestion[] questions = GetQuestionsWithType(type);
+            IEnumerable<QuizQuestion> questions = GetQuestionsWithCategory(category);
             // Initialize the max score
             int maxScore = 0;
 
             // Check if the array is not null or empty
-            if (!CollectionExtensions.IsNullOrEmpty(questions))
+            foreach (QuizQuestion q in questions)
             {
-                foreach (QuizQuestion q in questions)
-                {
-                    maxScore += q.MaxPossibleScore;
-                }
+                maxScore += q.MaxPossibleScore;
             }
 
             return maxScore;
         }
         else return 0;
     }
-    public QuizQuestion[] GetQuestionsWithType(QuizScoreType type) => questions.Where(q => q.ScoreType == type).ToArray();
+    public IEnumerable<QuizQuestion> GetQuestionsWithCategory(QuizCategory category) => questions.Where(q => q.Category == category);
     #endregion
 }

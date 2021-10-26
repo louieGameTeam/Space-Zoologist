@@ -2,39 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class QuizGradingRubric
+[CreateAssetMenu]
+public class QuizGradingRubric : ScriptableObject
 {
-    #region Public Properties
-    public float[] Percentages => percentages;
-    #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Range(0f, 1f)]
-    [Tooltip("List of grade percentages for each grade level")]
-    private float[] percentages;
+    [Tooltip("Percentage correct you must get to pass the important categories")]
+    private float percentToPassImportantQuestions;
+    [SerializeField]
+    [Range(0f, 1f)]
+    [Tooltip("Percentage correct you must get to pass the unimportant categories")]
+    private float percentToPassUnimportantQuestions;
     #endregion
 
     #region Public Methods
-    public float GetLowerBound(QuizGradeType grade)
-    {
-        int shiftedIndex = ((int)grade) - 1;
+    public bool GradeImportantScore(int score, int totalScore) => Grade(score, totalScore, percentToPassImportantQuestions);
+    public bool GradeUnimportantScore(int score, int totalScore) => Grade(score, totalScore, percentToPassUnimportantQuestions);
+    #endregion
 
-        if (shiftedIndex >= 0) return percentages[shiftedIndex];
-        else return 0;
-    }
-    public QuizGradeType Grade(int score, int totalScore)
-    {
-        float percent = (float)score / totalScore;
-
-        for(int i = 0; i < percentages.Length; i++)
-        {
-            if (percent < percentages[i]) return (QuizGradeType)i;
-        }
-
-        // If we get to this point we know we got the highest grade
-        return (QuizGradeType)percentages.Length;
-    }
+    #region Private Methods
+    private bool Grade(int score, int totalScore, float percent) => ((float)score / totalScore) > percent;
     #endregion
 }
