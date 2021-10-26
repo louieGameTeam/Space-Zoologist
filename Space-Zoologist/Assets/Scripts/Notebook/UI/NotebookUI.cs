@@ -110,6 +110,14 @@ public class NotebookUI : MonoBehaviour
     }
     public void SetIsOpen(bool isOpen)
     {
+        if (isOpen != this.isOpen)
+        {
+            if (isOpen)
+                AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
+            else
+                AudioManager.instance.PlayOneShot(SFXType.MenuClose);
+        }
+
         this.isOpen = isOpen;
         gameObject.SetActive(isOpen);
         onNotebookToggle.Invoke(isOpen);

@@ -43,13 +43,14 @@ public class AudioManager : MonoBehaviour
                 musicManager.transform.SetParent(transform);
             }
         }
+
+        LoadSFX();
     }
 
     private void Start()
     {
         //TODO Load Volume Settings from player preferences
 
-        LoadSFX();
         UpdateVolume();
     }
 
@@ -103,12 +104,12 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShot(SFXType type)
     {
         if (type == SFXType.None) return;
-        // temporary
-        //var audio = SFXDict[type];
-        //PlayOneShot(audio.clips[audio.index]);
 
-        //audio.index++;
-        //if (audio.index == audio.clips.Length) audio.index = 0;
+        var audio = SFXDict[type];
+        PlayOneShot(audio.clips[audio.index]);
+
+        audio.index++;
+        if (audio.index == audio.clips.Length) audio.index = 0;
     }
 
     /// <summary>
