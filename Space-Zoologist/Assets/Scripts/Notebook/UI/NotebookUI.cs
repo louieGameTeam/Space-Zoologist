@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+using DialogueEditor;
 
 public class NotebookUI : MonoBehaviour
 {
@@ -20,6 +20,9 @@ public class NotebookUI : MonoBehaviour
 
     #region Private Editor Fields
     [SerializeField]
+    [Tooltip("Rect transform at the root of the notebook UI")]
+    private RectTransform root;
+    [SerializeField]
     [Tooltip("Reference to the serialized object that holds all info about the notebook")]
     private NotebookModel notebook;
     [SerializeField]
@@ -28,6 +31,12 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Reference to the script that edits resource requests")]
     private ResourceRequestEditor resourceRequestEditor;
+    [SerializeField]
+    [Tooltip("Offsets from the sceen edges for the notebook")]
+    private RectOffset defaultSize;
+    [SerializeField]
+    [Tooltip("Size of the notebook while dialogue is present")]
+    private RectOffset dialogueSize;
     [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
     private UnityEvent onContentChanged;
@@ -78,6 +87,14 @@ public class NotebookUI : MonoBehaviour
         // This line of code prevents the notebook from turning off the first time that it is turned on,
         // while also making sure it is turned off at the start
         if (!isOpen) SetIsOpen(false);
+    }
+    private void OnEnable()
+    {
+        if (ConversationManager.Instance.IsConversationActive)
+        {
+            root.SetOffsets(dialogueSize);
+        }
+        else root.SetOffsets(defaultSize);
     }
     #endregion
 
