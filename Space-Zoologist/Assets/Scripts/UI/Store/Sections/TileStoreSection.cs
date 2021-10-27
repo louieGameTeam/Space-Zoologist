@@ -55,7 +55,8 @@ public class TileStoreSection : StoreSection
     {
         isPlacing = false;
         tilePlacementController.RevertChanges();
-        GameManager.Instance.SetBalance(startingBalance);
+        // Placing tiles no longer adjusts the balance
+        // GameManager.Instance.SetBalance(startingBalance);
     }
 
     /// <summary>
@@ -141,8 +142,9 @@ public class TileStoreSection : StoreSection
                     base.HandleAudio();
                     prevTilesPlaced = numTilesPlaced;
                 }
-                GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
-                if (GameManager.Instance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
+                // NOTE: placing tiles no longer costs money
+                // GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+                if (/* GameManager.Instance.Balance < selectedItem.Price ||*/ initialAmt - numTilesPlaced == 0)
                 {
                     FinishPlacing();
                     base.OnItemSelectionCanceled();
