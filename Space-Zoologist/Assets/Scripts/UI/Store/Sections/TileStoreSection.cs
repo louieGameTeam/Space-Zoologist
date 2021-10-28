@@ -141,7 +141,7 @@ public class TileStoreSection : StoreSection
                     base.HandleAudio();
                     prevTilesPlaced = numTilesPlaced;
                 }
-                GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+                //GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
                 if (GameManager.Instance.Balance < selectedItem.Price || initialAmt - numTilesPlaced == 0)
                 {
                     FinishPlacing();
