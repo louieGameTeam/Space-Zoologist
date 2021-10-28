@@ -58,7 +58,9 @@ public class DialogueManager : MonoBehaviour
         else
         {
             ContinueSpeech = false;
-            ConversationManagerGameObject.SetActive(false);
+            // inconsistent access to the gameObject causes missing ref exception
+            // after scene transitions. Moved to ConversationManager.TurnOffUI()
+            //ConversationManagerGameObject.SetActive(false);
             GameManager.Instance.m_menuManager.ToggleUI(true);
         }
     }
