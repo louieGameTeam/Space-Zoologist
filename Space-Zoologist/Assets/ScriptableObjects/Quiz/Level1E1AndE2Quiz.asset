@@ -12,14 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
   m_Name: Level1E1AndE2Quiz
   m_EditorClassIdentifier: 
-  importantCategories: []
+  importantCategories:
+  - item:
+      category: 0
+      index: 0
+    need: 0
+  - item:
+      category: 0
+      index: 0
+    need: 3
   questions:
   - question: What food do CapraX Zeigrun prefer?
     category:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 3
     options:
     - label: Space Maple
       weight: 1
@@ -34,7 +42,7 @@ MonoBehaviour:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 3
     options:
     - label: Space Maple
       weight: -1
@@ -49,7 +57,7 @@ MonoBehaviour:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 3
     options:
     - label: 3
       weight: -1
@@ -64,7 +72,7 @@ MonoBehaviour:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 3
     options:
     - label: 4
       weight: -1

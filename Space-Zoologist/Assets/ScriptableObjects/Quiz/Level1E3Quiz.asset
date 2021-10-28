@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
   m_Name: Level1E3Quiz
   m_EditorClassIdentifier: 
-  importantCategories: []
+  importantCategories:
+  - item:
+      category: 0
+      index: 0
+    need: 0
+  - item:
+      category: 0
+      index: 0
+    need: 3
   questions:
   - question: What type of terrain is ideal for CapraX Zeigrun?
     category:
@@ -68,7 +76,7 @@ MonoBehaviour:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 4
     options:
     - label: 2.5%
       weight: -1
@@ -84,7 +92,7 @@ MonoBehaviour:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 4
     options:
     - label: 97%
       weight: -1

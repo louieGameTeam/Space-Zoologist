@@ -25,7 +25,7 @@ public class QuizTemplate : ScriptableObject
     #endregion
 
     #region Public Methods
-    public int GetMaximumPossibleScoreInUnimportantCategories() => GetMaximumPossibleScoreInEveryCategory().TotalScore - GetMaximumPossibleScoreInImportantCategories();
+    public int GetMaximumPossibleScoreInUnimportantCategories() => GetMaximumPossibleScorePerCategory().TotalScore - GetMaximumPossibleScoreInImportantCategories();
     public int GetMaximumPossibleScoreInImportantCategories()
     {
         int maxScore = 0;
@@ -36,7 +36,7 @@ public class QuizTemplate : ScriptableObject
         }
         return maxScore;
     }
-    public ItemizedQuizScore GetMaximumPossibleScoreInEveryCategory()
+    public ItemizedQuizScore GetMaximumPossibleScorePerCategory()
     {
         // Create the score to return
         ItemizedQuizScore maxScore = new ItemizedQuizScore();

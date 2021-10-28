@@ -18,6 +18,11 @@ public class ItemizedQuizScore
     #endregion
 
     #region Public Methods
+    public int GetOrElse(QuizCategory category, int ifNotPresent)
+    {
+        if (scores.ContainsKey(category)) return scores[category];
+        else return ifNotPresent;
+    }
     public int Get(QuizCategory category) => scores[category];
     public void Set(QuizCategory category, int score) => scores[category] = score;
     #endregion

@@ -18,18 +18,15 @@ public class ParallelItemRegistryDrawer : EditArrayWrapperOnEnumDrawer
     {
         editor.arrayElementPropertyField = (r, s, g, e) =>
         {
-            // Parse the category out of the string
-            ItemRegistry.Category category = (ItemRegistry.Category)System.Enum.Parse(typeof(ItemRegistry.Category), e);
-            // Get all item data of the category
-            ItemData[] datas = ItemRegistry.GetItemsWithCategory(category);
             // Get the array inside of the current array element
             SerializedProperty innerArray = InnerWrappedArray(s);
-            innerArrayEditor.OnGUI(r, innerArray, g, datas);
+            innerArrayEditor.OnGUI(r, innerArray, g, ItemRegistry.GetItemsWithCategoryName(e));
         };
-        editor.arrayElementPropertyHeight = s =>
+        editor.arrayElementPropertyHeight = (s, e) =>
         {
+            // Get the array inside of the current array element
             SerializedProperty innerArray = InnerWrappedArray(s);
-            return innerArrayEditor.GetPropertyHeight(innerArray);
+            return innerArrayEditor.GetPropertyHeight(innerArray, ItemRegistry.GetItemsWithCategoryName(e));
         };
 
         base.OnGUI(position, property, label);
@@ -37,7 +34,7 @@ public class ParallelItemRegistryDrawer : EditArrayWrapperOnEnumDrawer
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         SerializedProperty wrappedArray = WrappedArray(property);
-        return editor.GetPropertyHeight(wrappedArray);
+        return editor.GetPropertyHeight(wrappedArray, System.Enum.GetNames(typeof(ItemRegistry.Category)));
     }
     public SerializedProperty InnerWrappedArray(SerializedProperty wrappedProperty)
     {
