@@ -95,7 +95,7 @@ public class StoreSection : MonoBehaviour
     {
         GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid);
         StoreItemCell itemCell = newItemCellGO.GetComponent<StoreItemCell>();
-        itemCell.Initialize(item, OnItemSelected);
+        itemCell.Initialize(item, false, OnItemSelected);
         if (this.ResourceManager.hasLimitedSupply(item.ItemName))
         {
             this.ResourceManager.setupItemSupplyTracker(itemCell);

@@ -93,17 +93,17 @@ public class ConceptsCanvasUI : NotebookUIChild
         ApplyFoldoutState(false);
 
         // Set the object picked on each picker to whatever the canvas's current setting is
-        modePicker.SetObjectPicked(drawingCanvas.CurrentMode);
-        strokeWeightPicker.SetObjectPicked(drawingCanvas.CurrentWeight);
+        modePicker.SetValuePicked(drawingCanvas.CurrentMode);
+        strokeWeightPicker.SetValuePicked(drawingCanvas.CurrentWeight);
 
         // Set the color to the first in the list
         colorPicker.SetTogglePicked(0);
-        drawingCanvas.CurrentColor = colorPicker.FirstObjectPicked;
+        drawingCanvas.CurrentColor = colorPicker.FirstValuePicked;
 
         // Add listeners for groups that change the canvas parameters
-        modePicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentMode = modePicker.FirstObjectPicked);
-        colorPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentColor = colorPicker.FirstObjectPicked);
-        strokeWeightPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentWeight = strokeWeightPicker.FirstObjectPicked);
+        modePicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentMode = modePicker.FirstValuePicked);
+        colorPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentColor = colorPicker.FirstValuePicked);
+        strokeWeightPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentWeight = strokeWeightPicker.FirstValuePicked);
 
         // Clear canvas when clear button clicked
         clearButton.onClick.AddListener(drawingCanvas.Clear);

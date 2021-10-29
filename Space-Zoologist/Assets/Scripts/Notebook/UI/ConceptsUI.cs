@@ -17,8 +17,14 @@ public class ConceptsUI : NotebookUIChild
     [Tooltip("Button used to request resources")]
     private Button requestButton;
     [SerializeField]
+    [Tooltip("Button that opens the build ui when clicked")]
+    private Button buildButton;
+    [SerializeField]
     [Tooltip("Text that displays the money remaining")]
     private TextMeshProUGUI balanceText;
+    [SerializeField]
+    [Tooltip("Object used to display the store item cells")]
+    private DisplayItemCellsByCategory itemCellDisplay;
     #endregion
 
     #region Public Methods
@@ -28,12 +34,10 @@ public class ConceptsUI : NotebookUIChild
 
         // When request button clicked then review the current request
         requestButton.onClick.AddListener(() => reviewDisplay.DisplayReview(requestEditor.Request));
+        // When build button is clicked then open up the store
+        buildButton.onClick.AddListener(() => GameManager.Instance.m_menuManager.SetStoreIsOn(true));
         // Update the text whenever the review is confirmed
-        reviewDisplay.OnReviewConfirmed.AddListener(() =>
-        {
-            UpdateText();
-            requestEditor.ResetRequest();
-        });
+        reviewDisplay.OnReviewConfirmed.AddListener(OnReviewConfirmed);
 
         // Update text once at the beginning
         UpdateText();
@@ -47,6 +51,12 @@ public class ConceptsUI : NotebookUIChild
         {
             balanceText.text = "$" + GameManager.Instance.Balance;
         }
+    }
+    private void OnReviewConfirmed()
+    {
+        UpdateText();
+        itemCellDisplay.SetupCells();
+        requestEditor.ResetRequest();
     }
     #endregion
 }

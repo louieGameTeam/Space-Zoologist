@@ -30,7 +30,7 @@ public class BuildUI : MonoBehaviour
         // Open the menu on the menu manager
         indexPicker.OnToggleStateChanged.AddListener(() =>
         {
-            menuManager.OpenMenu(indexPicker.FirstObjectPicked);
+            menuManager.OpenMenu(indexPicker.FirstValuePicked);
         });
 
         // Call the close function when the close button is clicked
