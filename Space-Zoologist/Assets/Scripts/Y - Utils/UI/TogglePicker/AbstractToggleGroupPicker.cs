@@ -8,6 +8,16 @@ using UnityEngine.Events;
 public abstract class AbstractToggleGroupPicker : MonoBehaviour
 {
     #region Public Properties
+    public abstract List<object> ObjectsPicked { get; }
+    public object FirstObjectPicked
+    {
+        get
+        {
+            List<object> picked = ObjectsPicked;
+            if (picked.Count > 0) return picked[0];
+            else return default;
+        }
+    }
     public UnityEvent OnToggleStateChanged => onToggleStateChanged;
     #endregion
 
@@ -23,26 +33,42 @@ public abstract class AbstractToggleGroupPicker : MonoBehaviour
     #region Monobehaviour Messages
     private void Start()
     {
-        Setup();
+        SetupListeners();
     }
     #endregion
 
     #region Public Methods
-    public void Setup()
+    public void SetTogglePickers(List<AbstractTogglePicker> pickers)
     {
-        foreach(AbstractTogglePicker picker in pickers)
-        {
-            UnityAction<bool> listener = _ => onToggleStateChanged.Invoke();
-            // Remove then re-add the listener so it is not added twice
-            picker.Toggle.onValueChanged.RemoveListener(listener);
-            picker.Toggle.onValueChanged.AddListener(listener);
-        }
+        this.pickers = pickers;
+        SetupListeners();
     }
     public void SetTogglePicked(int toggle)
     {
         for(int i = 0; i < pickers.Count; i++)
         {
             pickers[i].Toggle.isOn = i == toggle;
+        }
+    }
+    public void SetObjectsPicked(List<object> objects)
+    {
+        foreach (AbstractTogglePicker picker in pickers)
+        {
+            picker.Toggle.isOn = objects.Contains(picker.GetObjectPicked());
+        }
+    }
+    public void SetObjectPicked(object obj) => SetObjectsPicked(new List<object>() { obj });
+    #endregion
+
+    #region Private Methods
+    private void SetupListeners()
+    {
+        foreach (AbstractTogglePicker picker in pickers)
+        {
+            UnityAction<bool> listener = _ => onToggleStateChanged.Invoke();
+            // Remove then re-add the listener so it is not added twice
+            picker.Toggle.onValueChanged.RemoveListener(listener);
+            picker.Toggle.onValueChanged.AddListener(listener);
         }
     }
     #endregion

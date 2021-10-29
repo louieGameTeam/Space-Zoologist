@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+using DialogueEditor;
 
 public class NotebookUI : MonoBehaviour
 {
@@ -20,6 +20,9 @@ public class NotebookUI : MonoBehaviour
 
     #region Private Editor Fields
     [SerializeField]
+    [Tooltip("Rect transform at the root of the notebook UI")]
+    private RectTransform root;
+    [SerializeField]
     [Tooltip("Reference to the serialized object that holds all info about the notebook")]
     private NotebookModel notebook;
     [SerializeField]
@@ -28,6 +31,12 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Reference to the script that edits resource requests")]
     private ResourceRequestEditor resourceRequestEditor;
+    [SerializeField]
+    [Tooltip("Offsets from the sceen edges for the notebook")]
+    private RectOffset defaultSize;
+    [SerializeField]
+    [Tooltip("Size of the notebook while dialogue is present")]
+    private RectOffset dialogueSize;
     [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
     private UnityEvent onContentChanged;
@@ -41,6 +50,10 @@ public class NotebookUI : MonoBehaviour
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
     private bool isOpen = false;
+    // True if a callback is set up on the conversation manager yet
+    // This has to be used because we don't know for sure if conversation manager instance is null or not
+    // at the beginning of the scene
+    private bool conversationCallbackSet = false;
     #endregion
 
     #region Monobehaviour Messages
@@ -79,16 +92,44 @@ public class NotebookUI : MonoBehaviour
         // while also making sure it is turned off at the start
         if (!isOpen) SetIsOpen(false);
     }
+    private void OnEnable()
+    {
+        if (ConversationManager.Instance)
+        {
+            // If the callbacks have not been set yet then set them now
+            if(!conversationCallbackSet)
+            {
+                ConversationManager.OnConversationStarted += SetDialogueOffsets;
+                ConversationManager.OnConversationEnded += SetDefaultOffsets;
+                conversationCallbackSet = true;
+            }
+            SetRectTransformOffsets(ConversationManager.Instance.IsConversationActive);
+        }
+    }
+    // Unset the callbacks when this object is destroyed
+    private void OnDestroy()
+    {
+        ConversationManager.OnConversationStarted -= SetDialogueOffsets;
+        ConversationManager.OnConversationEnded -= SetDefaultOffsets;
+    }
     #endregion
 
     #region Public Methods
-    // Directly referenced by the button
+    // Directly referenced by the button in the scene
     public void Toggle()
     {
         SetIsOpen(!isOpen);
     }
     public void SetIsOpen(bool isOpen)
     {
+        if (isOpen != this.isOpen)
+        {
+            if (isOpen)
+                AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
+            else
+                AudioManager.instance.PlayOneShot(SFXType.MenuClose);
+        }
+
         this.isOpen = isOpen;
         gameObject.SetActive(isOpen);
         onNotebookToggle.Invoke(isOpen);
@@ -107,5 +148,15 @@ public class NotebookUI : MonoBehaviour
         // This one property set invokes a cascade of events automatically so that the ui updates correctly
         resourceRequestEditor.Request = resourceRequest;
     }
+    #endregion
+
+    #region Private Methods
+    private void SetRectTransformOffsets(bool dialogueActive)
+    {
+        if (dialogueActive) SetDialogueOffsets();
+        else SetDefaultOffsets();
+    }
+    private void SetDefaultOffsets() => root.SetOffsets(defaultSize);
+    private void SetDialogueOffsets() => root.SetOffsets(dialogueSize);
     #endregion
 }

@@ -324,6 +324,7 @@ MonoBehaviour:
   OptionImage: {fileID: 21300000, guid: bf566e80557acbc45b9a695fcaa25327, type: 3}
   OptionImageSliced: 1
   AllowMouseInteraction: 1
+  Background: {fileID: 0}
   DialoguePanel: {fileID: 873655663}
   OptionsPanel: {fileID: 537683}
   DialogueBackground: {fileID: 873655661}
@@ -335,9 +336,6 @@ MonoBehaviour:
     type: 3}
   BlankSprite: {fileID: 21300000, guid: 70e433de46068504fa56fcf7f49b32b1, type: 3}
   m_targetScrollTextCount: 0
-  BacklogGameObject: {fileID: 0}
-  BacklogButton: {fileID: 0}
-  Backlog: {fileID: 0}
 --- !u!224 &28320873
 RectTransform:
   m_ObjectHideFlags: 0
@@ -659,10 +657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HideNPC: 0
-  startingConversation: {fileID: 0}
-  defaultConversation: {fileID: 0}
   ConversationManagerGameObject: {fileID: 28320870}
-  DialogueButton: {fileID: 0}
 --- !u!4 &162905091
 Transform:
   m_ObjectHideFlags: 0
@@ -3138,6 +3133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 908308194}
   - component: {fileID: 908308195}
+  - component: {fileID: 908308196}
   m_Layer: 0
   m_Name: Intro
   m_TagString: Untagged
@@ -3173,36 +3169,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 35
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":447.5,\"yPos\":143},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Who?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":766.5,\"yPos\":140},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi!\",\"parentUIDs\":[4,1,1],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":440.5,\"yPos\":840},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Well,
-    some of those food resources are species.\",\"parentUIDs\":[8,8],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":736.5,\"yPos\":841},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
-    up to the challenge!\",\"parentUIDs\":[10,8,8],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":607.5,\"yPos\":1332},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Player
-    opens the encyclopedia\",\"parentUIDs\":[13,17,13,17],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":94.5,\"yPos\":1587},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Candentis
-    Acernis\",\"parentUIDs\":[15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":348.5,\"yPos\":1594},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
-    Spatium Bacca\",\"parentUIDs\":[17,15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":876.5,\"yPos\":1604},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Formica
-    Collis\",\"parentUIDs\":[15,15],\"SpeechUID\":25},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":594.5,\"yPos\":1600},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Humidum
-    Limax\",\"parentUIDs\":[25,15,15],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":609.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, I\u2019m Juno.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":442.5,\"yPos\":226},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"...Dr.
-    Star said she would mention me to you\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":445.5,\"yPos\":340},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Anyways.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609.5,\"yPos\":522},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"My
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":573,\"yPos\":143},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Who?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":892,\"yPos\":140},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi!\",\"parentUIDs\":[4,1,1],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":566,\"yPos\":840},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Well,
+    some of those food resources are species.\",\"parentUIDs\":[8,8],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":862,\"yPos\":841},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+    up to the challenge!\",\"parentUIDs\":[10,8,8],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":733,\"yPos\":1332},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Player
+    opens the encyclopedia\",\"parentUIDs\":[13,17,13,17],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":220,\"yPos\":1587},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Candentis
+    Acernis\",\"parentUIDs\":[15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":474,\"yPos\":1594},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
+    Spatium Bacca\",\"parentUIDs\":[17,15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":1002,\"yPos\":1604},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Formica
+    Collis\",\"parentUIDs\":[15,15],\"SpeechUID\":25},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":720,\"yPos\":1600},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Humidum
+    Limax\",\"parentUIDs\":[25,15,15],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":735,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
+    there, I\u2019m Juno.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":568,\"yPos\":226},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"...Dr.
+    Star said she would mention me to you\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":571,\"yPos\":340},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Anyways.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":735,\"yPos\":522},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"My
     job here is a lot like yours, but I focus on the special variant of Candentis
-    Acernis.\",\"parentUIDs\":[5,4,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609.5,\"yPos\":622},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
+    Acernis.\",\"parentUIDs\":[5,4,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":735,\"yPos\":622},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
     leaves are actual gold, you know. If you haven\u2019t snuck down to the enclosure...it\u2019s
-    worth it.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609.5,\"yPos\":722},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Dr.
+    worth it.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":735,\"yPos\":722},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Dr.
     Star indicated that you haven\u2019t managed an enclosure with more than one
-    species yet.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":435.5,\"yPos\":935},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"When
+    species yet.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":561,\"yPos\":935},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"When
     we use them as food, though, we don\u2019t need to focus on other needs typical
-    of a species, like safety concerns.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609.5,\"yPos\":1122},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"It\u2019ll
-    be a fun challenge, probably. I\u2019ll show you the ropes.\",\"parentUIDs\":[11,10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609.5,\"yPos\":1222},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"First,
+    of a species, like safety concerns.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":735,\"yPos\":1122},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"It\u2019ll
+    be a fun challenge, probably. I\u2019ll show you the ropes.\",\"parentUIDs\":[11,10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":735,\"yPos\":1222},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"First,
     open up the new Eligans Impar encyclopedia entry. Take a bit to read through
-    it.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":596.5,\"yPos\":1424},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Based
-    on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[16,20,24,26],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308.5,\"yPos\":1428},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"G-go
-    read your encyclopedia again.\",\"parentUIDs\":[16,20,26,16,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":873.5,\"yPos\":1693},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Yep.
-    Same as CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":608.5,\"yPos\":1835},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"As
-    you might have guessed, the two species have basically the same food preferences.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":604.5,\"yPos\":1965},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"The
+    it.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":722,\"yPos\":1424},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Based
+    on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[16,20,24,26],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":434,\"yPos\":1428},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"G-go
+    read your encyclopedia again.\",\"parentUIDs\":[16,20,26,16,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":999,\"yPos\":1693},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Yep.
+    Same as CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":734,\"yPos\":1835},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"As
+    you might have guessed, the two species have basically the same food preferences.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":730,\"yPos\":1965},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"The
     challenging part is figuring out how to feed both species at once, off the same
-    resources.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":605.5,\"yPos\":2062},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Your
-    goal is to get both populations up to 20.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":605.5,\"yPos\":2173},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Be
+    resources.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":731,\"yPos\":2062},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Your
+    goal is to get both populations up to 20.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":731,\"yPos\":2173},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Be
     meticulous with your enclosure modifications. I hope to be impressed by your
-    engineering skills when it\u2019s time for the report-back.\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":606.5,\"yPos\":2300},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    engineering skills when it\u2019s time for the report-back.\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":732,\"yPos\":2300},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Oh,
     and I\u2019m not an easy grader, unlike Dr. Star.\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
@@ -3244,6 +3240,19 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &908308196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908308193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0c668cbccaa4f1d8769650843d3123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizResponses: []
 --- !u!1 &935449380
 GameObject:
   m_ObjectHideFlags: 0
@@ -6863,6 +6872,7 @@ GameObject:
   - component: {fileID: 1388959987}
   - component: {fileID: 1388959986}
   - component: {fileID: 1388959985}
+  - component: {fileID: 1388960005}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -7264,6 +7274,19 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
+--- !u!114 &1388960005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388959983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0c668cbccaa4f1d8769650843d3123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizResponses: []
 --- !u!114 &1388960006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7431,7 +7454,18 @@ MonoBehaviour:
   NodeID: 6
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1388960005}
+        m_MethodName: WaitForOneTimePing
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
@@ -12718,6 +12752,75 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
+--- !u!1001 &2543703449580099183
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7774590431507538030}
+    m_Modifications:
+    - target: {fileID: 4904935980196406522, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_Name
+      value: Level0IntroRewrite2 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -601.50885
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -301.20956
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 656.46436
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec, type: 3}
 --- !u!1001 &7774590431507538029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12833,33 +12936,243 @@ PrefabInstance:
     - target: {fileID: 8992944314454785584, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
       propertyPath: m_Text
-      value: ":juno_talk_neutral: Hey there, I\u2019m Juno.\r\nWho?\r\n:juno_confused:
-        ...Dr. Star said she would mention me to you\u2026 \r\n:juno_talk_neutral:
-        Anyways.\r\nHi! \r\n:juno_talk_neutral: My job here is a lot like yours,
-        but I focus on the special variant of Candentis Acernis. \r\n:juno_talk_happy:
-        The leaves are actual gold, you know. If you haven\u2019t snuck down to the
-        enclosure...it\u2019s worth it.\r\n:juno_talk_neutral: Dr. Star indicated
-        that you haven\u2019t managed an enclosure with more than one species yet.\r\nWell,
-        some of those food resources are species.\r\n:juno_sweat: When we use them
-        as food, though, we don\u2019t need to focus on other needs typical of a
-        species, like safety concerns.\r\nI\u2019m up to the challenge!\r\n:juno_smirk:
-        It\u2019ll be a fun challenge, probably. I\u2019ll show you the ropes.\r\n:juno_talk_neutral:
-        First, open up the new Eligans Impar encyclopedia entry. Take a bit to read
-        through it.\r\nPlayer opens the encyclopedia\r\n:juno_talk_neutral: Based
-        on what you read, what food source does Eligans Impar dislike?\r\nCandentis
-        Acernis\r\n:juno_sweat: G-go read your encyclopedia again.\r\nPlayer opens
-        the encyclopedia\r\nLoop to 7\r\nVaccinum Spatium Bacca\r\n:juno_sweat: G-go
-        read your encyclopedia again.\r\nPlayer opens the encyclopedia\r\nLoop to
-        7\r\nFormica Collis\r\n:juno_impressed: Yep. Same as CapraX Zeigrun.\r\nHumidum
-        Limax\r\n:juno_sweat: G-go read your encyclopedia again.\r\nPlayer opens
-        the encyclopedia\r\nLoop to 7\r\n:juno_talk_neutral: As you might have guessed,
-        the two species have basically the same food preferences.\r\n:juno_talk_neutral:
-        The challenging part is figuring out how to feed both species at once, off
-        the same resources. \r\n:juno_talk_neutral: Your goal is to get both populations
-        up to 20.\r\n:juno_talk_happy: Be meticulous with your enclosure modifications.
-        I hope to be impressed by your engineering skills when it\u2019s time for
-        the report-back.\r\n:juno_enthuasiastic: Oh, and I\u2019m not an easy grader,
-        unlike Dr. Star.\r"
+      value: ":aurora_impressed: Gooood morning! You must be that promising new Xenobiology
+        student everyone\u2019s been talking about, right?\r\nYeah, and you are...who,
+        again?\r\n:aurora_sweat: Oh, right. Sorry, I suppose some introductions are
+        in order.\r\nXenobiology? No, I\u2019m an engineer!\r\n:aurora_enthusiastic:
+        Details, details. Don\u2019t worry about it, no one\u2019s perfect, kid.
+        You\u2019ll do fine.\r\n:aurora_talk_happy: I\u2019m Dr. Aurora Star, and
+        I\u2019m in charge of zoology here at Natura Serva 22. At least, I think?\r\nYou...think?\r\n:aurora_sweat:
+        Turnover\u2019s kind of a problem around here, so it\u2019s hard to keep
+        track. But that\u2019s why you\u2019re here!\r\nNice to meet you. I\u2019ve
+        heard so much about your work.\r\n:aurora_enthusiastic: Oh, please. Stop...No
+        need to go into any of that\u2026 Unless you really want to? No? Ok...\r\n:aurora_talk_happy:
+        Anyways, you can just call me Dr. Star, \u2018cause I\u2019m the star of
+        the show!\r\n\u2026\r\n:aurora_sweat: Hey, come on, it was a joke. Really.
+        I\u2019m not that conceited. Usually.\r\nGot it, Dr. Star!\r\n:aurora_enthusiastic:
+        There we go! That\u2019s the spirit!\r\n:aurora_talk_neutral: Now that we
+        know each other, let\u2019s get you up to speed! There\u2019s a ton of work
+        to be done around here, and we\u2019ll need your help.\r\n:aurora_talk_neutral:
+        First, let\u2019s get you comfortable with the Command Center!\r\nWhat\u2019s
+        the Command Center?\r\n:aurora_talk_neutral: It\u2019s your workspace, communicator,
+        and research notebook all wrapped into one! It\u2019s what we\u2019re using
+        to talk right now!\r\n:aurora_talk_neutral: The main view usually will show
+        the enclosure you\u2019re working on -- but don\u2019t worry about that for
+        now. We\u2019ll get back to it.\r\n:aurora_talk_neutral: For now, just take
+        a look at the icons on the bottom of the screen. This is where you\u2019ll
+        navigate to most of the Command Center\u2019s functions.\r\n:aurora_talk_neutral:
+        For now, try pushing the notebook button, which will open your research notebook!\r\n<Player
+        is cued to open the notebook>\r\n:aurora_talk_happy: Great! Now, I know this
+        thing can be pretty imposing at first, so we\u2019ll start slow. Just stick
+        to the home screen for now.\r\nR...ROCTM? What are all these letters for?\r\n:aurora_enthusiastic:
+        I thought you\u2019d never ask! Those letters stand for each of our core
+        engineering principles. \r\n:aurora_sweat: ROCTM isn\u2019t a great acronym,
+        though, so most of the new hires just remember them as \u201CROCeT Man.\u201D
+        Way easier to remember!\r\n:aurora_talk_neutral: Now let\u2019s get to it!
+        I provided a handy blank space next to each letter that you should use to
+        write these down. They\u2019ll be on the test!\r\nT-Test?!\r\n:aurora_talk_neutral:
+        Oh? Don\u2019t worry, it\u2019s not like the tests in school. We call it
+        a \u201Creport back\u201D, and it\u2019s just a casual way to check how you\u2019re
+        coming along.\r\nGot it.\r\n:aurora_talk_neutral: Good, but just so you know,
+        it\u2019s not like a normal test. We call it a \u201Creport back\u201D, and
+        it\u2019s just a casual way to check how you\u2019re coming along.\r\n:aurora_talk_happy:
+        R stands for \u201CResearch what is already known.\u201D\r\n:aurora_talk_happy:
+        O stands for \u201CObserve the current situation.\u201D\r\n:aurora_talk_happy:
+        C stands for \u201CPropose Concepts to modify the environment.\u201D\r\n:aurora_talk_happy:
+        T stands for \u201CTest the effect of the changes.\u201D\r\n:aurora_talk_happy:
+        And finally, M stands for \u201CRecord key Metrics.\u201D\r\n:aurora_enthusiastic:
+        Put it all together and you get R-O-C-T-M, or ROCeT Man!\r\n:aurora_neutral:
+        Did you get all that? Make sure to write it down, or you\u2019ll wish you
+        had later!\r\nYeah, got it all down!\r\n:aurora_impressed: Great! I knew
+        there was a reason we hired you!\r\nUhh...Can you run that all by me one
+        more time?\r\n:aurora_sweat: Really? But I put so much heart into it...Ok,
+        but make sure you write everything down this time, please.\r\nLoop back to
+        15\r\n:aurora_talk_neutral: Next, let\u2019s dive a bit deeper into the notebook.
+        Could you flip to the research tab, please?\r\n<wait for player to open research
+        tab and highlight>\r\n:aurora_talk_happy: Great! In this section you\u2019ll
+        find all the research we\u2019ve gathered about the various species endemic
+        to Planet X.\r\n:aurora_talk_happy: We\u2019ve got transport logs, observation
+        notes, you name it! Your notebook is a veritable cornucopia of zoological
+        examinations!\r\nA...venerable kernel of what?\r\n:aurora_sweat: Oh. Sorry,
+        my undergrad was in literature, so sometimes I get...caught up in the moment.\r\nBut
+        is it a vast repository of behavioral observations?\r\n:aurora_enthusiastic:
+        Oh, you. I like you. you get it. Keep that up and I\u2019m sure you\u2019ll
+        go far!\r\n:aurora_sweat: Unfortunately, we haven\u2019t really been able
+        to organize or collate anything, so figuring out what is and isn\u2019t important
+        is going to mostly be up to you!\r\n:aurora_talk_neutral: Our research intern,
+        Barry -- you\u2019ll love him, I\u2019m sure -- has gone in and highlighted
+        some important sections, but\u2026You\u2019ll have to do most of it yourself.\r\n:aurora_sweat:
+        You see, Juno\u2019s had Barry so busy running the enclosure resurfacer lately,
+        that he hasn\u2019t really gotten to all of the species\u2019 entries.\r\n:aurora_sweat:
+        There\u2019s also some highlighted sections that aren\u2019t all that important,
+        either, so you might want to undo Barry\u2019s work, just to keep everything
+        straight.\r\n:aurora_talk_happy: Let\u2019s try it out now! Go ahead and
+        find the sentence describing the Zeig\u2019s terrain preferences, and highlight
+        it!\r\n<wait for player to highlight terrain preference sentence>\r\n:aurora_impressed:
+        Great! Now let\u2019s also practice unhighlighting passages. The first sentence
+        in this article isn\u2019t all that important, so go ahead and unhighlight
+        it.\r\n<wait for player to unhighlight first section>\r\n:aurora_talk_happy:
+        Now, this section over here is for you to take notes in. I\u2019ve provided
+        some helpful starting points, but feel free to fill in whatever you want.\r\n<highlight
+        freeform part of the research tab>\r\n:aurora_talk_happy: This is just the
+        entry for one of the animals you\u2019ll be working with, though. Let\u2019s
+        try looking at another one.\r\n:aurora_talk_happy: If you click up here,
+        you\u2019ll be able to toggle between sections covering all of the animals
+        we work with here!\r\n:aurora_talk_happy: For now, try switching over to
+        the section devoted to my absolute favorites, the Humidum Limax, or Flan.\r\n<Wait
+        for player to toggle to Humidum Limax page>\r\n:aurora_enthusiastic: Ah!
+        There they are! Aren\u2019t they cute?\r\nThey look... adorable!\r\n:aurora_enthusiastic:
+        Right? I\u2019m glad someone around here agrees! Everyone else refuses to
+        even look at them\u2026\r\nThey look... delicious!\r\n:aurora_sweat: Now
+        hang on, there! We\u2019re here to save these animals, not eat them! But\u2026
+        Now that you mention it...\r\n:aurora_talk_neutral: Anyways, enough about
+        that! One of the most important things you\u2019re going to be looking for
+        in these articles is what kind of food each species prefers.\r\n:aurora_talk_neutral:
+        Remember, your job is to produce artificial habitats for these animals to
+        reproduce in. They aren\u2019t going to do that while starving!\r\n:aurora_talk_neutral:
+        How about you give it a test run? Take a good, long look at this page, and
+        try to figure out what Flan like to eat.\r\n:aurora_talk_neutral: Got it?
+        Alright, what\u2019s the Flan\u2019s favorite food?\r\nThe Star Cow, Eligans
+        Impar.\r\n:aurora_sweat: Err...No, not quite. How about you go take another
+        look?\r\nLoop to 36.\r\nFlanweed, or Coruscent Laminar. \r\n:aurora_impressed:
+        You got it! We\u2019ll make a xenobiologist out of you yet!\r\n:aurora_talk_neutral:
+        Now, that\u2019s just about it on the notebook for now. We\u2019ll cover
+        the other tabs later. Before we totally shut it down\u2026\r\n:aurora_talk_neutral:
+        ...take a look at this button up here.\r\nHighlight the bookmark button\r\n:aurora_talk_neutral:
+        You can use this button to bookmark articles or note pages.\r\n:aurora_talk_neutral:
+        Anything you bookmark will be visible on the home page, so you can easily
+        get back to it!\r\n:aurora_talk_happy: And that\u2019s all we\u2019ll be
+        needing the notebook for today! What did you think?\r\nIt\u2019s awesome!\r\n:aurora_talk_happy:
+        Haha, glad you think so! We all worked pretty hard on it, after all.\r\nDo
+        I get to build stuff yet?\r\n:aurora_impressed: Well, and here I thought
+        you\u2019d never ask! Yes, it\u2019s time for us to get building!\r\n:aurora_talk_happy:
+        For now, let\u2019s close the notebook and open up the Command Center\u2019s
+        build mode instead. It\u2019s that little hammer icon down there.\r\n:aurora_talk_happy:
+        From here, you can build all kinds of stuff into your enclosure! Plants,
+        animals, new types of terrain, you name it!\r\nWait\u2026 Are those... costs?
+        Am I paying for all of this?\r\n:aurora_sweat: No, no. We just have a limited
+        budget and only so many specimens to work with, so we have to budget construction
+        resources.\r\n:aurora_talk_happy: The guys in construction might be wizards,
+        but they only have so much to work with. These \u201Ccredits,\u201D as we
+        call them, are to keep us from changing everything willy-nilly. \r\n:aurora_talk_happy:
+        You\u2019ll be allocated some resources at the beginning of each assignment
+        which you can place free of charge, but everything after that will be deducted
+        from your credit balance.\r\n:aurora_sweat: If you run out, well\u2026 you
+        better hope your design works, because construction won\u2019t help you if
+        it doesn\u2019t.\r\n:aurora_talk_happy: Don\u2019t worry too much about that,
+        though! You can always restart a task entirely if you find yourself out of
+        funds.\r\n:aurora_talk_happy: Now, let\u2019s get you building! Hover over
+        the \u201Canimals\u201D tab of the build menu and select the CapraX Zeigrun,
+        or Zeigs, as we call them around here.\r\n:aurora_talk_happy: Next, you can
+        click anywhere inside the enclosure to add a Zeig there! Please add three
+        Zeigs to the enclosures now.\r\n<player adds three zeigs to the enclosure
+        to advance>\r\n:aurora_enthusiastic: Great! Now you can right click in order
+        to stop placing Zeigs, then you\u2019ll be able to see the new Zeigs wandering
+        around your little enclosure!\r\n:aurora_sweat: Keep in mind that not everything
+        gets added to the enclosure instantly like animals do. Great work takes time,
+        after all.\r\n:aurora_talk_neutral: The construction guys have a lot to do
+        around here, it\u2019ll take them anywhere from one to three days to get
+        to your request, depending on what you\u2019re trying to build.\r\nWait,
+        so am I just supposed to wait around here, then?\r\n:aurora_enthusiastic:
+        Oh no, of course not, but we\u2019ll get to that! First, let\u2019s take
+        a look at the Inspector! \r\n:aurora_talk_happy: See this window in the top
+        right corner up here?\r\nHighlight objective window/inspector. \r\n:aurora_talk_happy:
+        Most of the time, this window will show your your current objective, but
+        if you hit the tab, it\u2019ll turn into the inspector! \r\n:aurora_talk_happy:
+        You can use the inspector to see detailed information about anything in your
+        enclosure.\r\n:aurora_enthusiastic: Go ahead and give it a shot now! Click
+        on your new zeigs to see how they\u2019re feeling!\r\n<wait for player to
+        inspect the zeigs>\r\n:aurora_talk_happy: Great! When you inspect animals
+        in the enclosure, you\u2019ll see valuable information about their current
+        needs.\r\n:aurora_talk_happy: As long as all of an animal's needs are green,
+        they\u2019ll usually reproduce easily enough. There\u2019s some corner cases,
+        but don\u2019t worry about them for now.\r\n:aurora_sweat: On the other hand,
+        if any of an animal\u2019s needs are red, their population will likely decrease
+        in the coming days, so make sure to stay on top of each animal\u2019s needs!\r\nOf
+        course I will!\r\n:aurora_enthusiastic: Then all of Planet X\u2019s wildlife
+        has nothing to fear!\r\nWait...So if I mess up the animals die?\r\n:aurora_sweat:
+        Well...Yes. That\u2019s why it\u2019s so important you give each of your
+        designs a good amount of thought before implementing them!\r\n:aurora_talk_happy:
+        Now, each animal's needs will only update in the inspector at the start of
+        a new day, so you won\u2019t immediately know if any changes you\u2019ve
+        made have a positive or negative impact, which brings us to\u2026\r\n:aurora_enthusiastic:
+        The time accelerator! This little button -- through means completely unknown
+        to all of us -- skips us all forward 24 hours when you push it, so you never
+        need to wait around.\r\n:aurora_sweat: In fact...For some reason, time kind
+        of just stopped moving naturally around here after we made it, so it\u2019s
+        kind of the only way to move time forward.\r\nSo we\u2019re time travelers
+        too? Awesome!\r\n:aurora_enthusiastic: That\u2019s the spirit! It\u2019s
+        like my mom always said: \u201CKeep your eyes on the silver linings!\u201D\r\nWait,
+        you guys broke time? How did you do that?\r\n:aurora_sweat: Well, that is
+        one way to look at it\u2026 Maybe ask Juno about it some time. I\u2019m sure
+        she\u2019ll be able to explain it better!\r\n:aurora_talk_happy: Anyways,
+        go ahead and hit the time accelerator button a couple times, so we can get
+        better information about how the Zeigs are doing in this enclosure.\r\n<advance
+        after the player hits the day accelerator twice>\r\n:aurora_enthusiastic:
+        Ah, look at all the adorable baby Zeigs! Quick, click on one so we can see
+        how they\u2019re all doing!\r\n:aurora_sweat: Uh oh, it looks like food\u2019s
+        starting to be an issue for the Zeigs. \r\n:aurora_talk_neutral: Don\u2019t
+        worry, though, that\u2019s normal.\r\n:aurora_talk_neutral: As the population
+        grows, they\u2019ll outstrip their natural food supply pretty quickly, and
+        you\u2019ll have to add more to keep them going.\r\n:aurora_talk_happy: This
+        is a great chance for you to practice all that you\u2019ve learned so far!
+        \r\n:aurora_talk_happy:\t Try to alter this enclosure so that it will support
+        six Zeigs! You can change up the terrain if you want, but you won\u2019t
+        need to -- just add more food and they\u2019ll be happy!\r\nWait...You\u2019re
+        just going to leave me?!\r\n:aurora_sweat: Well, you are going to have to
+        work alone sometime, right? But...\r\nAlright, I\u2019ll give it a shot!\r\n:aurora_impressed:
+        That\u2019s the spirit! You got it!\r\n:aurora_talk_neutral: If you need
+        anything, you can just hit that question mark down there at the bottom of
+        the command center. We call it the \u201CFUBAR button.\u201D\r\n:aurora_talk_neutral:
+        When you push it, it\u2019ll immediately connect you to your supervisor.
+        In this case, that\u2019s me!\r\n:aurora_talk_happy: If you have any questions,
+        please use it.\r\n:aurora_sweat: It\u2019s way easier to answer questions
+        than it is to resurface a ruined enclosure, so please don\u2019t be shy.
+        An ounce of prevention is worth a pound of cure, after all!\r\n:aurora_enthusiastic:
+        Now get out there and help save the Zeigs! \r\n:aurora_talk_happy: Don\u2019t
+        forget to use ROCeT Man to help guide your design process! It\u2019ll spare
+        you a ton of headaches.\r\n:aurora_enthusiastic: I\u2019ll see you again
+        once there\u2019s six Zeigs in the enclosure!\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[0].id
+      value: aurora_confused
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[1].id
+      value: aurora_enthusiastic
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[2].id
+      value: aurora_smirk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[3].id
+      value: aurora_sweat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[4].id
+      value: aurora_talk_happy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[5].id
+      value: aurora_talk_neutral
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[6].id
+      value: aurora_flipped
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: iconIDInput.Array.data[7].id
+      value: aurora_impressed
       objectReference: {fileID: 0}
     - target: {fileID: 8992944314454785589, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
