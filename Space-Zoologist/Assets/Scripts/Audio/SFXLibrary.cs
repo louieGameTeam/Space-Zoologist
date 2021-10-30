@@ -5,11 +5,12 @@ using UnityEngine;
 public enum SFXType
 {
     None,
-    Unpause, Pause, FastForward,
+    Unpause, Pause, NextDay,
     MenuOpen, MenuClose, Notification, TabSwitch,
     Cancel, Observation,
     Valid, Locked, Unavailable,
-    BuildModeOpen,
+    BuildModeOpen, BuildModeClose,
+    NotebookOpen, NotebookClose, NotebookDropdown,
     NumTypes
 }
 

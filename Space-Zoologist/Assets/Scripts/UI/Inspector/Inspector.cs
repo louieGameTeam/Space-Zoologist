@@ -133,7 +133,7 @@ public class Inspector : MonoBehaviour
         }
         if (somethingSelected)
         {
-            AudioManager.instance.PlayOneShot(SFXType.Notification);
+            AudioManager.instance.PlayOneShot(SFXType.Observation);
         }
     }
 

@@ -99,6 +99,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (!ConversationManagerGameObject.activeSelf)
             {
+                AudioManager.instance?.PlayOneShot(SFXType.Notification);
                 UpdateCurrentDialogue();
                 StartNewConversation();
             }

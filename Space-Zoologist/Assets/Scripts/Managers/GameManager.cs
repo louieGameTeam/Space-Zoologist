@@ -675,6 +675,7 @@ public class GameManager : MonoBehaviour
         UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
+        AudioManager.instance?.PlayOneShot(SFXType.NextDay);
     }
 
     public void EnableInspectorToggle(bool enabled)
