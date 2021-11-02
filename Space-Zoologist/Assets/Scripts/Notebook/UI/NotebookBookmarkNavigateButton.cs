@@ -69,16 +69,18 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
 
     private void OnDeleteToggleChanged(bool isOn)
     {
-        navigateButton.interactable = isOn;
+        if (!isOn) RemoveBookmark();
     }
 
     private void OnDisable()
     {
-        if (!deleteToggle.isOn)
-        {
-            UIParent.Notebook.RemoveBookmark(bookmark);
-            Destroy(gameObject);
-        }
+        if (!deleteToggle.isOn) RemoveBookmark();
+    }
+
+    private void RemoveBookmark()
+    {
+        UIParent.Notebook.RemoveBookmark(bookmark);
+        Destroy(gameObject);
     }
     #endregion
 }
