@@ -8,6 +8,7 @@ using TMPro;
 
 public class BookmarkAddButton : NotebookUIChild
 {
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Suggested title of the bookmark")]
     private string suggestedTitle = "New Bookmark";
@@ -29,7 +30,16 @@ public class BookmarkAddButton : NotebookUIChild
     [SerializeField]
     [Tooltip("List of components to target when navigating to the newly added bookmark")]
     protected BookmarkTarget[] bookmarkTargets;
+    #endregion
 
+    #region Monobehaviour Messages
+    private void OnEnable()
+    {
+        if (IsSetUp) UpdateInteractable();
+    }
+    #endregion
+
+    #region Public Methods
     public override void Setup()
     {
         base.Setup();
@@ -40,7 +50,15 @@ public class BookmarkAddButton : NotebookUIChild
 
         UIParent.OnContentChanged.AddListener(UpdateInteractable);
     }
+    public void UpdateInteractable()
+    {
+        Bookmark bookmark = new Bookmark(suggestedTitle, bookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
+        dropdown.Interactable = !UIParent.Notebook.HasBookmark(bookmark);
+        hasBookmarkGraphic.SetActive(!dropdown.Interactable);
+    }
+    #endregion
 
+    #region Private / Protected Methods
     private void OnDropdownActivated()
     {
         // When the dropdown is activated then set the suggested bookmark title
@@ -60,17 +78,13 @@ public class BookmarkAddButton : NotebookUIChild
             // Update interactable state of the button
             UpdateInteractable();
         }
-    }
 
-    private void OnEnable()
-    {
-        if (IsSetUp) UpdateInteractable();
+        Debug.Log($"Tried to add a bookmark:" +
+            $"\n\tGameObject: {name}" +
+            $"\n\tDropdown interactable: {dropdown.Interactable}" +
+            $"\n\tHas bookmark graphic active: {hasBookmarkGraphic.activeInHierarchy}" +
+            $"\n\tThis bookmark: {bookmark.Label}" +
+            $"\n\tExisting bookmarks: \n\t\t{string.Join("\n\t\t", UIParent.Notebook.Bookmarks.Select(b => b.Label))}");
     }
-
-    public void UpdateInteractable()
-    {
-        Bookmark bookmark = new Bookmark(suggestedTitle, bookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
-        dropdown.Interactable = !UIParent.Notebook.HasBookmark(bookmark);
-        hasBookmarkGraphic.SetActive(!dropdown.Interactable);
-    }
+    #endregion
 }

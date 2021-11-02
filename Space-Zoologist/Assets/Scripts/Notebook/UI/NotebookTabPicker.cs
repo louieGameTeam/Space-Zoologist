@@ -49,7 +49,7 @@ public class NotebookTabPicker : NotebookUIChild
         {
             NotebookTabSelectButton button = Instantiate(buttonPrefab, parent.transform);
             // Only the first selector will be on. NOTE: this invokes "OnTabSelected" immediately
-            button.Setup(tabs[i], parent, OnTagSelected);
+            button.Setup(tabs[i], parent, OnTabSelected);
             // Add this button to the list
             buttons.Add(button);
         }
@@ -71,12 +71,18 @@ public class NotebookTabPicker : NotebookUIChild
     #endregion
 
     #region Private Methods
-    private void OnTagSelected(NotebookTab tab)
+    private void OnTabSelected(NotebookTab tab)
     {
-        // Disable the current page and enable the new page
-        GetTabRoot(currentTab).gameObject.SetActive(false);
-        GetTabRoot(tab).gameObject.SetActive(true);
+        // Set the current tab to this tab
+        // This order is critical!  The current tab has to be set before
+        // the game objects activate because some of them read the current tab
+        // when they are enabled
+        NotebookTab previousTab = currentTab;
         currentTab = tab;
+
+        // Disable the current page and enable the new page
+        GetTabRoot(previousTab).gameObject.SetActive(false);
+        GetTabRoot(currentTab).gameObject.SetActive(true);
     }
     #endregion
 }
