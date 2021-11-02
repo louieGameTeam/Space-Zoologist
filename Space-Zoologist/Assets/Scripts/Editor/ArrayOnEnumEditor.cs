@@ -17,6 +17,11 @@ public class ArrayOnEnumEditor<TEnum> : ParallelArrayEditor<TEnum> where TEnum :
         TEnum[] enums = (TEnum[])System.Enum.GetValues(typeof(TEnum));
         base.OnGUI(position, list, enums);
     }
+    public virtual float GetPropertyHeight(SerializedProperty array)
+    {
+        TEnum[] enums = (TEnum[])System.Enum.GetValues(typeof(TEnum));
+        return base.GetPropertyHeight(array, enums);
+    }
     #endregion
 
     #region Custom Editor Helpers
