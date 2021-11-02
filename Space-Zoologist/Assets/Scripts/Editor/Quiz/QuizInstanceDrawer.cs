@@ -96,19 +96,7 @@ public class QuizInstanceDrawer : PropertyDrawer
 
                 // Get a list of all the answers as integers
                 int[] answersArray = Answers(property);
-
-                // If quiz is finished then layout a foldout to see the results
-                if (QuizInstance.ComputeCompleted(quizTemplate, answersArray))
-                {
-                    resultsFoldout = EditorGUI.Foldout(position, resultsFoldout, new GUIContent("Quiz Results"));
-                }
-                // If quiz is not finished then layout a label
-                else
-                {
-                    GUI.enabled = false;
-                    EditorGUI.LabelField(position, "No Results - Quiz not Finished");
-                    GUI.enabled = true;
-                }
+                resultsFoldout = EditorGUI.Foldout(position, resultsFoldout, new GUIContent("Quiz Results"));
 
                 // Advance position down to next control
                 position.y += position.height;
@@ -118,7 +106,6 @@ public class QuizInstanceDrawer : PropertyDrawer
                     // Indent the next part and disable it
                     EditorGUI.indentLevel++;
                     GUI.enabled = false;
-
 
                     // Compute if the important questions passed, what the score is, and what the max score was
                     bool passed = QuizInstance.PassedImportantQuestions(quizTemplate, answersArray);
@@ -142,7 +129,7 @@ public class QuizInstanceDrawer : PropertyDrawer
                     EditorGUI.LabelField(prefixPos, scoreString);
                     position.y += position.height;
 
-                    // Show an enum popup for the grade
+                    // Show the final position
                     prefixPos = EditorGUI.PrefixLabel(position, new GUIContent("Final Grade"));
                     EditorGUI.LabelField(prefixPos, QuizInstance.ComputeGrade(quizTemplate, answersArray).ToString());
 
