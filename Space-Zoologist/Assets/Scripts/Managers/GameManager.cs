@@ -364,6 +364,7 @@ public class GameManager : MonoBehaviour
 
     private void InitialNeedSystemUpdate()
     {
+        m_foodSourceManager.LoadInitialFoods();
         this.UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         TogglePause();
@@ -674,6 +675,7 @@ public class GameManager : MonoBehaviour
         UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
+        AudioManager.instance?.PlayOneShot(SFXType.NextDay);
     }
 
     public void EnableInspectorToggle(bool enabled)
