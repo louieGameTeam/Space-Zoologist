@@ -86,6 +86,8 @@ public class MenuManager : MonoBehaviour
 
         GameManager.Instance.m_gridSystem.StartDrafting();
         GameManager.Instance.m_gridSystem.SetGridOverlay(true);
+
+        AudioManager.instance?.PlayOneShot(SFXType.BuildModeOpen);
     }
 
     private void CloseStore()
@@ -96,6 +98,8 @@ public class MenuManager : MonoBehaviour
 
         GameManager.Instance.m_gridSystem.FinishDrafting();
         GameManager.Instance.m_gridSystem.SetGridOverlay(false);
+
+        AudioManager.instance?.PlayOneShot(SFXType.BuildModeClose);
     }
 
 

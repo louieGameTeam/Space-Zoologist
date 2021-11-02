@@ -22,7 +22,7 @@ public class FoodSourceManager : GridObjectManager
     }
 
     // this used to be part of initialization, but it seems to not be necessary?
-    private void TemporaryFunction()
+    public void LoadInitialFoods()
     {
         // Get all FoodSource at start of level
         // TODO make use of saved tile
@@ -53,7 +53,6 @@ public class FoodSourceManager : GridObjectManager
             EventManager.Instance.InvokeEvent(EventType.NewFoodSource, foodSource);
         }
         //FoodPlacer.PlaceFood();
-        this.Parse();
     }
 
     // TODO: combine two version into one

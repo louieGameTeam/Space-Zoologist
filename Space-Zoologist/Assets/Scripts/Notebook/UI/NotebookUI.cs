@@ -125,9 +125,9 @@ public class NotebookUI : MonoBehaviour
         if (isOpen != this.isOpen)
         {
             if (isOpen)
-                AudioManager.instance.PlayOneShot(SFXType.MenuOpen);
+                AudioManager.instance.PlayOneShot(SFXType.NotebookOpen);
             else
-                AudioManager.instance.PlayOneShot(SFXType.MenuClose);
+                AudioManager.instance.PlayOneShot(SFXType.NotebookClose);
         }
 
         this.isOpen = isOpen;

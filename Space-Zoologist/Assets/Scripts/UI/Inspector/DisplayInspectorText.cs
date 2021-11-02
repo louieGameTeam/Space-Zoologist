@@ -130,14 +130,14 @@ public class DisplayInspectorText : MonoBehaviour
         string displayText = "";
         if (compositions == null)
         {
-            displayText = "Water : 0.00\n Salt : 0.00 \n Bacteria : 0.00\n";
+            displayText = "Water : 0.000\n Salt : 0.000\n Bacteria : 0.000";
         }
         else
         {
             string[] liquidName = new string[] { "Water", "Salt", "Bacteria" };
             for (int i = 0; i < 3; i++)
             {
-                displayText += $"{liquidName[i]} : {compositions[i] * 100}%\n";
+                displayText += $"{liquidName[i]} : {System.Math.Round(compositions[i] * 100, 3)}%\n";
             }
 
         }
