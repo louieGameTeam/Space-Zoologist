@@ -8,86 +8,20 @@ public class QuizInstance
 {
     #region Public Properties
     public QuizTemplate Template => template;
-    public int QuestionsAnswered => answers.Count(i => i >= 0);
-    public bool Completed => QuestionsAnswered >= template.Questions.Length;
-    public int TotalScore
-    {
-        get
-        {
-            int score = 0;
-
-            for(int i = 0; i < template.Questions.Length; i++)
-            {
-                // Get the current question and answer
-                QuizQuestion question = template.Questions[i];
-                int answer = answers[i];
-
-                // If the answer is within range of the options 
-                // then add the option's weight to the total score
-                if(answer >= 0 && answer < question.Options.Length)
-                {
-                    QuizOption option = question.Options[answer];
-                    score += option.Weight;
-                }
-            }
-
-            return score;
-        }
-    }
-    public QuizGradeType TotalGrade => template.GradingRubric.Grade(TotalScore, template.GetMaximumPossibleScore().TotalScore);
-    public QuizScore Score
-    {
-        get
-        {
-            QuizScore score = new QuizScore();
-
-            for (int i = 0; i < template.Questions.Length; i++)
-            {
-                // Get the current question and answer
-                QuizQuestion question = template.Questions[i];
-                int answer = answers[i];
-
-                // If the answer is within range of the options 
-                // then add the option's weight to the total score
-                if (answer >= 0 && answer < question.Options.Length)
-                {
-                    QuizOption option = question.Options[answer];
-                    score.Set(question.ScoreType, score.Get(question.ScoreType) + option.Weight);
-                }
-            }
-
-            return score;
-        }
-    }
-    public QuizGrade Grade
-    {
-        get
-        {
-            QuizGrade grade = new QuizGrade();
-            QuizScore score = Score;
-            QuizScoreType[] types = (QuizScoreType[])System.Enum.GetValues(typeof(QuizScoreType));
-
-            foreach(QuizScoreType type in types)
-            {
-                int myScore = score.Get(type);
-                int maxScore = template.GetMaximumPossibleScoreOfType(type);
-                QuizGradeType gradeType = template.GradingRubric.Grade(myScore, maxScore);
-                grade.Set(type, gradeType);
-            }
-
-            return grade;
-        }
-    }
+    public int QuestionsAnswered => ComputeQuestionsAnswered(template, answers);
+    public bool Completed => ComputeCompleted(template, answers);
+    public QuizGrade Grade => ComputeGrade(template, answers);
+    public ItemizedQuizScore ItemizedScore => ComputeItemizedScore(template, answers);
+    public int ScoreInImportantCategories => ComputeScoreInImportantCategories(template, answers);
+    public int ScoreInUnimportantCategories => ComputeScoreInUnimportantCategories(template, answers);
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the template that this instance refers to")]
     private QuizTemplate template;
-    #endregion
-
-    #region Private Fields
-    // Indices of the options that were chosen for each answer
+    [SerializeField]
+    [Tooltip("Indices of the options that were chosen for each answer")]
     private int[] answers;
     #endregion
 
@@ -119,6 +53,75 @@ public class QuizInstance
         }
         else throw new System.IndexOutOfRangeException("QuizInstance: the quiz template '" + template.name +
             "' does not have a question at index '" + questionIndex + "'");
+    }
+    #endregion
+
+    #region Public Static Methods
+    public static int ComputeQuestionsAnswered(QuizTemplate template, int[] answers) => answers.Count(i => i >= 0 && i < template.Questions.Length);
+    public static bool ComputeCompleted(QuizTemplate template, int[] answers) => ComputeQuestionsAnswered(template, answers) >= template.Questions.Length;
+    // Made these methods public static so that the property drawer can get the info to display in the inspector window
+    public static QuizGrade ComputeGrade(QuizTemplate template, int[] answers)
+    {
+        // Determine if you pass or fail important categories
+        bool passImportant = PassedImportantQuestions(template, answers);
+
+        // If you pass important, go on to check if you pass unimportant too
+        if (passImportant)
+        {
+            bool passUnimportant = PassedUnimportantQuestions(template, answers);
+
+            // If you pass both, your score is excellent
+            if (passUnimportant) return QuizGrade.Excellent;
+            // If you pass only important categories your score is acceptable
+            else return QuizGrade.Acceptable;
+        }
+        // If you fail important categories your grade is poor
+        else return QuizGrade.Poor;
+    }
+    public static int ComputeScoreInImportantCategories(QuizTemplate template, int[] answers)
+    {
+        // Get the score itemized by category
+        ItemizedQuizScore itemizedScore = ComputeItemizedScore(template, answers);
+        int score = 0;
+
+        // Add up the scores in the important categories
+        foreach (QuizCategory category in template.ImportantCategories)
+        {
+            score += itemizedScore.GetOrElse(category, 0);
+        }
+        return score;
+    }
+    public static bool PassedImportantQuestions(QuizTemplate template, int[] answers) => template.GradingRubric.PassedImportantQuestions(
+        ComputeScoreInImportantCategories(template, answers),
+        template.GetMaximumPossibleScoreInImportantCategories());
+    public static int ComputeScoreInUnimportantCategories(QuizTemplate template, int[] answers)
+    {
+        return ComputeItemizedScore(template, answers).TotalScore - ComputeScoreInImportantCategories(template, answers);
+    }
+    public static bool PassedUnimportantQuestions(QuizTemplate template, int[] answers) => template.GradingRubric.PassedUnimportantQuestions(
+        ComputeScoreInUnimportantCategories(template, answers),
+        template.GetMaximumPossibleScoreInUnimportantCategories());
+    public static ItemizedQuizScore ComputeItemizedScore(QuizTemplate template, int[] answers)
+    {
+        ItemizedQuizScore itemizedScore = new ItemizedQuizScore();
+
+        for (int i = 0; i < template.Questions.Length; i++)
+        {
+            // Get the current question and answer
+            QuizQuestion question = template.Questions[i];
+            int answer = answers[i];
+
+            // If the answer is within range of the options 
+            // then add the option's weight to the total score
+            if (answer >= 0 && answer < question.Options.Length)
+            {
+                QuizOption option = question.Options[answer];
+                int currentScore = itemizedScore.GetOrElse(question.Category, 0);
+                itemizedScore.Set(question.Category, currentScore + option.Weight);
+            }
+        }
+
+        return itemizedScore;
     }
     #endregion
 }

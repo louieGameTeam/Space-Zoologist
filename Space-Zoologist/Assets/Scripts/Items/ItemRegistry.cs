@@ -32,6 +32,15 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         else return null;
     }
     public static ItemData[] GetItemsWithCategory(Category category) => Instance.itemData.itemDataLists[(int)category].Items;
+    public static ItemData[] GetItemsWithCategoryName(string categoryName)
+    {
+        if (System.Enum.TryParse(categoryName, true, out Category category))
+        {
+            return GetItemsWithCategory(category);
+        }
+        else throw new System.ArgumentException($"{nameof(ItemRegistry)}: attempted to get items with category '{categoryName}', " +
+            $"but no such category exists");
+    }
     public static int CountItemsWithCategory(Category category) => GetItemsWithCategory(category).Length;
     public static int CountAllItems()
     {

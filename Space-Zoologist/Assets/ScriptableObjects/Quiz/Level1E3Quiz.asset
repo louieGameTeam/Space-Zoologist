@@ -12,9 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
   m_Name: Level1E3Quiz
   m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 0
+    need: 0
+  - item:
+      category: 0
+      index: 0
+    need: 3
   questions:
   - question: What type of terrain is ideal for CapraX Zeigrun?
-    scoreType: 0
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 0
     options:
     - label: Dirt
       weight: 2
@@ -27,7 +40,11 @@ MonoBehaviour:
     - label: Sand
       weight: -1
   - question: What is one type of impassable terrain for CapraX Zeigrun?
-    scoreType: 0
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 0
     options:
     - label: Dirt
       weight: -1
@@ -40,7 +57,11 @@ MonoBehaviour:
     - label: Sand
       weight: 1
   - question: Approximately how much terrain does one CapraX Zeigrun need?
-    scoreType: 0
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 0
     options:
     - label: 5
       weight: 1
@@ -51,7 +72,11 @@ MonoBehaviour:
     - label: 2
       weight: -1
   - question: At what threshold does salt content become poisonous for CapraX Zeigrun?
-    scoreType: 2
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 4
     options:
     - label: 2.5%
       weight: -1
@@ -63,7 +88,11 @@ MonoBehaviour:
       weight: -1
   - question: "What is the minimum pure water percentage needed for CapraX Zeigrun\u2019s
       survival?"
-    scoreType: 2
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 4
     options:
     - label: 97%
       weight: -1
@@ -73,15 +102,4 @@ MonoBehaviour:
       weight: -1
     - label: 95%
       weight: -1
-  gradingRubric:
-    percentages:
-    - 0.5
-    - 0.9
-  scoreBoundaries:
-    scores:
-    - scoreData:
-        scores: 000000000000000000000000
-    - scoreData:
-        scores: 020000000000000001000000
-    - scoreData:
-        scores: 030000000000000001000000
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
