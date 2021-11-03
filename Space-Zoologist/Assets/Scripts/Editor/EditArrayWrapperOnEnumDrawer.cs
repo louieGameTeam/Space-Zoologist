@@ -6,6 +6,20 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(EditArrayWrapperOnEnumAttribute))]
 public class EditArrayWrapperOnEnumDrawer : WrappedPropertyDrawer
 {
+    #region Protected Properties
+    protected string[] EnumNames
+    {
+        get
+        {
+            // Get the underlying attribute
+            EditArrayWrapperOnEnumAttribute att = attribute as EditArrayWrapperOnEnumAttribute;
+            // Get a list of the enum names
+            string[] enumNames = System.Enum.GetNames(att.EnumType);
+            return enumNames;
+        }
+    }
+    #endregion
+
     #region Protected Fields
     protected ParallelArrayEditor<string> editor = new ParallelArrayEditor<string>();
     #endregion
@@ -13,16 +27,11 @@ public class EditArrayWrapperOnEnumDrawer : WrappedPropertyDrawer
     #region Public Methods
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        // Get the underlying attribute
-        EditArrayWrapperOnEnumAttribute att = attribute as EditArrayWrapperOnEnumAttribute;
-        // Get a list of the enum names
-        string[] enumNames = System.Enum.GetNames(att.EnumType);
-        // Edit the wrapped array
-        editor.OnGUI(position, WrappedArray(property), label, enumNames);
+        editor.OnGUI(position, WrappedArray(property), label, EnumNames);
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        return editor.GetPropertyHeight(WrappedArray(property));
+        return editor.GetPropertyHeight(WrappedArray(property), EnumNames);
     }
     public SerializedProperty WrappedArray(SerializedProperty property)
     {

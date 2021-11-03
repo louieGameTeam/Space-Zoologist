@@ -10,7 +10,7 @@ public class ParallelArrayEditor<TElement>
     public Func<SerializedProperty, TElement, GUIContent> arrayElementLabel = (s, e) => new GUIContent(e.ToString());
     public Action<Rect, SerializedProperty, GUIContent, TElement> arrayElementPropertyField = (r, s, g, e) => EditorGUI.PropertyField(r, s, g, true);
     public Action<SerializedProperty, GUIContent, TElement> arrayElementPropertyFieldLayout = (s, g, e) => EditorGUILayout.PropertyField(s, g, true);
-    public Func<SerializedProperty, float> arrayElementPropertyHeight = s => EditorGUI.GetPropertyHeight(s, true);
+    public Func<SerializedProperty, TElement, float> arrayElementPropertyHeight = (s, e) => EditorGUI.GetPropertyHeight(s, true);
     #endregion
 
     #region Custom Property Drawer
@@ -41,7 +41,7 @@ public class ParallelArrayEditor<TElement>
 
                     // Edit the element and advance the position down
                     arrayElementPropertyField.Invoke(position, element, elementLabel, parallelArray[i]);
-                    position.y += arrayElementPropertyHeight(element);
+                    position.y += arrayElementPropertyHeight(element, parallelArray[i]);
                 }
 
                 EditorGUI.indentLevel--;
@@ -59,7 +59,7 @@ public class ParallelArrayEditor<TElement>
     {
         OnGUI(position, array, new GUIContent(array.displayName), parallelArray);
     }
-    public virtual float GetPropertyHeight(SerializedProperty array)
+    public virtual float GetPropertyHeight(SerializedProperty array, TElement[] parallelArray)
     {
         if(array.isArray)
         {
@@ -71,7 +71,7 @@ public class ParallelArrayEditor<TElement>
                 for (int i = 0; i < array.arraySize; i++)
                 {
                     SerializedProperty element = array.GetArrayElementAtIndex(i);
-                    height += arrayElementPropertyHeight(element);
+                    height += arrayElementPropertyHeight(element, parallelArray[i]);
                 }
             }
 
