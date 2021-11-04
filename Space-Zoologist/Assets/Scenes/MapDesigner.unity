@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -984,6 +984,9 @@ MonoBehaviour:
   - {fileID: 8404243451497626317}
   - {fileID: 8349968274091900280}
   - {fileID: 6621437665015075475}
+  onStoreToggled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &363993210
 Transform:
   m_ObjectHideFlags: 0
@@ -1701,6 +1704,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &580702291 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5256070083433968182, guid: b6fa91312476840f19ee43626e3f9dfb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981156779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &584959830
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2424,7 @@ MonoBehaviour:
   DeleteButtonPrefab: {fileID: 4319639836530594827, guid: 5d6f628a32ac249fe945c3e9408f293e,
     type: 3}
   FoodSourceStoreSection: {fileID: 1272296471}
+  TileStoreSection: {fileID: 0}
 --- !u!1 &918041966
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,6 +2960,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972990251}
   m_CullTransparentMesh: 0
+--- !u!114 &992305454 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6037491244839071911, guid: b6fa91312476840f19ee43626e3f9dfb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981156779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d43938f4c30cc449cb08bfb9b8b00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1043611553
 GameObject:
   m_ObjectHideFlags: 0
@@ -5827,6 +5855,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1981156779}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1761754414 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6781891701553658211, guid: b6fa91312476840f19ee43626e3f9dfb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981156779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761754413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1797214983
 GameObject:
   m_ObjectHideFlags: 0
@@ -7705,11 +7745,14 @@ MonoBehaviour:
   SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
   RestartButton: {fileID: 1410644951}
   NextLevelButton: {fileID: 1246903123}
+  ObjectiveToggle: {fileID: 580702291}
+  InspectorToggle: {fileID: 1761754414}
   IngameUI: {fileID: 543495681}
   GameOverHUD: {fileID: 602359351}
   gameOverTitle: {fileID: 1043611555}
   gameOverText: {fileID: 740143009}
   notebookUI: {fileID: 9730707}
+  inspectorObjectiveUI: {fileID: 992305454}
   maxDay: 20
   CurrentDayText: {fileID: 3294377205541531365}
   objectivePane: {fileID: 2092096914}
