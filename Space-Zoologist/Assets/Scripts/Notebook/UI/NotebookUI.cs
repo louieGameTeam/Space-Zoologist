@@ -29,9 +29,6 @@ public class NotebookUI : MonoBehaviour
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
     private NotebookTabPicker tabPicker;
     [SerializeField]
-    [Tooltip("Reference to the script that edits resource requests")]
-    private ResourceRequestEditor resourceRequestEditor;
-    [SerializeField]
     [Tooltip("Offsets from the sceen edges for the notebook")]
     private RectOffset defaultSize;
     [SerializeField]
@@ -46,6 +43,8 @@ public class NotebookUI : MonoBehaviour
     #endregion
 
     #region Private Fields
+    // Reference to the resource request editor
+    private ResourceRequestEditor resourceRequestEditor;
     // Maps the names of the category pickers to the components for fast lookup
     // Used for navigating to a bookmark in the notebook
     private Dictionary<string, BookmarkTarget> nameTargetMap = new Dictionary<string, BookmarkTarget>();
@@ -77,16 +76,22 @@ public class NotebookUI : MonoBehaviour
             }
         }
 
+        // Setup the tab picker first of all children
+        tabPicker.Setup();
+
+        // Get the resource request editor manually
+        resourceRequestEditor = GetComponentInChildren<ResourceRequestEditor>(true);
+
+        // Setup all children, ensuring correct initialization order
+        NotebookUIChild[] children = GetComponentsInChildren<NotebookUIChild>(true);
+        foreach (NotebookUIChild child in children) child.Setup();
+
         // Map all bookmark targets to their corresponding game object names
         BookmarkTarget[] allBookmarkTargets = GetComponentsInChildren<BookmarkTarget>(true);
         foreach (BookmarkTarget bookmarkTarget in allBookmarkTargets)
         {
             nameTargetMap.Add(bookmarkTarget.name, bookmarkTarget);
         }
-
-        // Setup all children, ensuring correct initialization order
-        NotebookUIChild[] children = GetComponentsInChildren<NotebookUIChild>(true);
-        foreach (NotebookUIChild child in children) child.Setup();
 
         // This line of code prevents the notebook from turning off the first time that it is turned on,
         // while also making sure it is turned off at the start
