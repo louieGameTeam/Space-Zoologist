@@ -57,6 +57,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     private ResearchEncyclopediaArticleID currentArticleID;
     #endregion
 
+    #region Public Methods
     public override void Setup()
     {
         base.Setup();
@@ -77,7 +78,35 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         // Setup the bookmark target to get/set the article id
         bookmarkTarget.Setup(() => CurrentArticleID, x => CurrentArticleID = (ResearchEncyclopediaArticleID)x);
     }
+    // Get a list of the research article IDs currently in the dropdown
+    public List<ResearchEncyclopediaArticleID> GetDropdownIDs()
+    {
+        return dropdown.options
+            .Select(o => DropdownLabelToArticleID(o.text))
+            .ToList();
+    }
+    public static string ArticleIDToDropdownLabel(ResearchEncyclopediaArticleID id)
+    {
+        string label = id.Title;
+        // Only include the author if it has an author
+        if (id.Author != "") label += "\n" + id.Author;
+        return label;
+    }
+    public static ResearchEncyclopediaArticleID DropdownLabelToArticleID(string label)
+    {
+        string[] titleAndAuthor = Regex.Split(label, "\n");
 
+        // If there are two items in the split string, use them both
+        if (titleAndAuthor.Length > 1)
+        {
+            return new ResearchEncyclopediaArticleID(titleAndAuthor[0], titleAndAuthor[1]);
+        }
+        // If there was only one item, we know that there was not author
+        else return new ResearchEncyclopediaArticleID(titleAndAuthor[0], "");
+    }
+    #endregion
+
+    #region Private Methods
     private void OnItemIDChanged(ItemID id)
     {
         // If a current item is selected that save the dropdown value that was previously selected
@@ -128,31 +157,5 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         }
         else articleBody.UpdateArticle(null);
     }
-
-    // Get a list of the research article IDs currently in the dropdown
-    public List<ResearchEncyclopediaArticleID> GetDropdownIDs()
-    {
-        return dropdown.options
-            .Select(o => DropdownLabelToArticleID(o.text))
-            .ToList();
-    }
-    public static string ArticleIDToDropdownLabel(ResearchEncyclopediaArticleID id)
-    {
-        string label = id.Title;
-        // Only include the author if it has an author
-        if (id.Author != "") label += "\n" + id.Author;
-        return label;
-    }
-    public static ResearchEncyclopediaArticleID DropdownLabelToArticleID(string label)
-    {
-        string[] titleAndAuthor = Regex.Split(label, "\n");
-
-        // If there are two items in the split string, use them both
-        if(titleAndAuthor.Length > 1)
-        {
-            return new ResearchEncyclopediaArticleID(titleAndAuthor[0], titleAndAuthor[1]);
-        }
-        // If there was only one item, we know that there was not author
-        else return new ResearchEncyclopediaArticleID(titleAndAuthor[0], "");
-    }
+    #endregion
 }
