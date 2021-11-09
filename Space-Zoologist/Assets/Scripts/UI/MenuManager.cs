@@ -145,7 +145,7 @@ public class MenuManager : MonoBehaviour
     {
         foreach(GameObject ui in UI)
         {
-            ui.SetActive(isActive);
+            ui.GetComponent<Button>().interactable = isActive;
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
