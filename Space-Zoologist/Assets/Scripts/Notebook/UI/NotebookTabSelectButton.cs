@@ -51,9 +51,6 @@ public class NotebookTabSelectButton : NotebookUIChild
         // Set the text on the GUI element
         tabName.text = tab.ToString();
 
-        // Set state of the toggle.  NOTE: this invokes OnToggleStateChanged immediately
-        myToggle.isOn = tab == 0;
-
         if (GameManager.Instance)
         {
             // This toggle is only interactable if the tab scaffold says so

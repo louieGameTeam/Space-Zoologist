@@ -6,11 +6,15 @@ using UnityEngine;
 
 public class Bookmark
 {
+    #region Public Properties
     // Public accessors
     public string Label => label;
+    #endregion
 
+    #region Protected Fields
     protected string label;
     protected BookmarkData[] datas = new BookmarkData[0];
+    #endregion
 
     #region Constructors
     public Bookmark(string label, params BookmarkData[] datas)
@@ -41,13 +45,7 @@ public class Bookmark
     #endregion
 
     #region Operators
-    public static bool operator ==(Bookmark a, Bookmark b)
-    {
-        return a.datas.SequenceEqual(b.datas);
-    }
-    public static bool operator !=(Bookmark a, Bookmark b)
-    {
-        return !(a == b);
-    }
+    public static bool operator ==(Bookmark a, Bookmark b) => a.datas.SequenceEqual(b.datas);
+    public static bool operator !=(Bookmark a, Bookmark b) => !(a == b);
     #endregion
 }

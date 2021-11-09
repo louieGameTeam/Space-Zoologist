@@ -3,11 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 using TMPro;
 
 public class BookmarkAddButton : NotebookUIChild
 {
+    #region Private Properties
+    private BookmarkTarget[] BookmarkTargets
+    {
+        get
+        {
+            BookmarkTarget[] targets = new BookmarkTarget[additionalBookmarkTargets.Length + 1];
+            targets[0] = UIParent.TabPicker.GetComponent<BookmarkTarget>();
+            System.Array.Copy(additionalBookmarkTargets, 0, targets, 1, additionalBookmarkTargets.Length);
+            return targets;
+        }
+    }
+    #endregion
+
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Suggested title of the bookmark")]
     private string suggestedTitle = "New Bookmark";
@@ -24,15 +39,30 @@ public class BookmarkAddButton : NotebookUIChild
     [Tooltip("Reference to the button that adds the bookmark when clicked")]
     private Button confirmButton;
     [SerializeField]
-    [Tooltip("Reference to the script that manages the UI for the bookmarks")]
-    private NotebookBookmarkNavigationUI bookmarkUI;
-    [SerializeField]
+    [FormerlySerializedAs("bookmarkTargets")]
     [Tooltip("List of components to target when navigating to the newly added bookmark")]
-    protected BookmarkTarget[] bookmarkTargets;
+    protected BookmarkTarget[] additionalBookmarkTargets;
+    #endregion
 
+    #region Private Fields
+    // Reference to the UI used to navigate to bookmarks
+    private NotebookBookmarkNavigationUI bookmarkUI;
+    #endregion
+
+    #region Monobehaviour Messages
+    private void OnEnable()
+    {
+        if (IsSetUp) UpdateInteractable();
+    }
+    #endregion
+
+    #region Public Methods
     public override void Setup()
     {
         base.Setup();
+
+        // Get the bookmark navigation ui manually
+        bookmarkUI = UIParent.gameObject.GetComponentInChildren<NotebookBookmarkNavigationUI>(true);
 
         dropdown.OnDropdownEnabled.AddListener(OnDropdownActivated);
         confirmButton.onClick.AddListener(TryAddBookmark);
@@ -40,7 +70,15 @@ public class BookmarkAddButton : NotebookUIChild
 
         UIParent.OnContentChanged.AddListener(UpdateInteractable);
     }
+    public void UpdateInteractable()
+    {
+        Bookmark bookmark = new Bookmark(suggestedTitle, BookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
+        dropdown.Interactable = !UIParent.Notebook.HasBookmark(bookmark);
+        hasBookmarkGraphic.SetActive(!dropdown.Interactable);
+    }
+    #endregion
 
+    #region Private / Protected Methods
     private void OnDropdownActivated()
     {
         // When the dropdown is activated then set the suggested bookmark title
@@ -51,7 +89,7 @@ public class BookmarkAddButton : NotebookUIChild
     // If adding the bookmark succeeds, then make the bookmark UI create a new bookmark
     protected virtual void TryAddBookmark()
     {
-        Bookmark bookmark = new Bookmark(bookmarkTitle.text, bookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
+        Bookmark bookmark = new Bookmark(bookmarkTitle.text, BookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
         if (UIParent.Notebook.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
@@ -61,16 +99,5 @@ public class BookmarkAddButton : NotebookUIChild
             UpdateInteractable();
         }
     }
-
-    private void OnEnable()
-    {
-        if (IsSetUp) UpdateInteractable();
-    }
-
-    public void UpdateInteractable()
-    {
-        Bookmark bookmark = new Bookmark(suggestedTitle, bookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
-        dropdown.Interactable = !UIParent.Notebook.HasBookmark(bookmark);
-        hasBookmarkGraphic.SetActive(!dropdown.Interactable);
-    }
+    #endregion
 }

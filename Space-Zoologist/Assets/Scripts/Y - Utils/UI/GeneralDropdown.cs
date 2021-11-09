@@ -95,6 +95,10 @@ public class GeneralDropdown : UIBehaviour
 
         if(parent && !blocker)
         {
+            // Get the root canvas
+            parent = parent.rootCanvas;
+
+            // Create the blocking object
             blocker = new GameObject("Blocker");
             RectTransform blockerTransform = blocker.AddComponent<RectTransform>();
 
