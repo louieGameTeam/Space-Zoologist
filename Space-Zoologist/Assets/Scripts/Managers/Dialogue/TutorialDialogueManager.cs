@@ -64,6 +64,29 @@ public class TutorialDialogueManager : MonoBehaviour
     {
         FreezeUntilItemPicked(NotebookTab.Research, new ItemID(ItemRegistry.Category.Species, 4), pickerNameFilter);
     }
+    public void FreezeUntilBuildUIOpen()
+    {
+        CoroutineScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            return GameManager.Instance.m_menuManager.IsInStore;
+        });
+    }
+    public void FreezeUntilZeigPickedForPlacement()
+    {
+        MenuManager menuManager = GameManager.Instance.m_menuManager;
+        BuildUI buildUI = GameManager.Instance.BuildUI;
+        PodSection podSection = buildUI.GetComponentInChildren<PodSection>();
+        ItemID zeigID = new ItemID(ItemRegistry.Category.Species, 0);
+
+        CoroutineScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            if (podSection.SelectedItem != null)
+            {
+                return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == 2 && podSection.SelectedItem.ItemID == zeigID;
+            }
+            else return false;
+        });
+    }
     #endregion
 
     #region Private Methods

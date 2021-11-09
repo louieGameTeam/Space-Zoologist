@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     // "FindObjectWithType" will find it
     [SerializeField] NotebookUI notebookUI = default;
     public NotebookUI NotebookUI => notebookUI;
+    [SerializeField] BuildUI buildUI = default;
+    public BuildUI BuildUI => buildUI;
     [SerializeField] InspectorObjectiveUI inspectorObjectiveUI = default;
 
     [Header("Time Variables")]
