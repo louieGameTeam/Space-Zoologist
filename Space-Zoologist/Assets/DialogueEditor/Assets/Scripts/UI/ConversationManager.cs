@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 namespace DialogueEditor
 {
@@ -39,6 +42,8 @@ namespace DialogueEditor
         public Sprite OptionImage;
         public bool OptionImageSliced;
         public bool AllowMouseInteraction;
+        public Button AdvanceButton;
+        public string AdvanceInput = "Submit";
         public RectTransform Background;
         // Non-User facing 
         // Not exposed via custom inspector
@@ -117,16 +122,14 @@ namespace DialogueEditor
             Instance = null;
         }
 
-
-
-
         //--------------------------------------
         // Update
         //--------------------------------------
 
         private void Update()
         {
-            bool progressInput = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
+            // Use method to compute if we should progress or not
+            bool progressInput = Progress();
 
             if (m_state != eState.Off) { 
                 if (Input.GetMouseButtonDown(1))
@@ -270,7 +273,7 @@ namespace DialogueEditor
 
         private void UpdateScrollingText()
         {
-            bool progressInput = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
+            bool progressInput = Progress();
             const float charactersPerSecond = 1500;
             float timePerChar = (60.0f / charactersPerSecond);
             timePerChar *= ScrollSpeed;
@@ -750,6 +753,34 @@ namespace DialogueEditor
         public void OneTimeUnpause() {
             UnfreezeConversation();
             pingTarget.onClick.RemoveListener(OneTimeUnpause);
+        }
+
+        /*
+         * CUSTOM METHODS
+         */ 
+        private bool Progress()
+        {
+            // Cache the current selected game object
+            GameObject currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
+            // Advance button was clicked if it exists, the mouse button was clicked, and it is the currently selected game object
+            bool advanceButtonClicked = AdvanceButton && Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject == AdvanceButton.gameObject;
+
+            // True if a typing UI object is currently selected
+            bool typingUIObjectSelected = false;
+
+            // If a game object is selected, then check to see if it has text selected on it
+            if (currentSelectedGameObject)
+            {
+                InputField selectedInput = currentSelectedGameObject.GetComponent<InputField>();
+                TMP_InputField selectedInputTMP = currentSelectedGameObject.GetComponent<TMP_InputField>();
+                typingUIObjectSelected = selectedInput || selectedInputTMP;
+            }
+
+            // Only use the advance input if some typing UI object is not currently selected
+            bool advanceInput = !typingUIObjectSelected && Input.GetButtonDown(AdvanceInput);
+
+            // Progress if the advance button was clicked or the button in the input axes was just pressed
+            return advanceButtonClicked || advanceInput;
         }
     }
 }

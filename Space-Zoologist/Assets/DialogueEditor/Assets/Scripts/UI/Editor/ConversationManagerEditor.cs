@@ -22,6 +22,8 @@ namespace DialogueEditor
         SerializedProperty ScrollTextProperty;
         SerializedProperty ScrollTextSpeedProperty;
         SerializedProperty AllowMouseInteractionProperty;
+        SerializedProperty AdvanceButtonProperty;
+        SerializedProperty AdvanceInputProperty;
         SerializedProperty BacklogProperty;
         SerializedProperty ButtonPrefabProperty;
 
@@ -34,6 +36,8 @@ namespace DialogueEditor
             ScrollTextProperty = serializedObject.FindProperty("ScrollText");
             ScrollTextSpeedProperty = serializedObject.FindProperty("ScrollSpeed");
             AllowMouseInteractionProperty = serializedObject.FindProperty("AllowMouseInteraction");
+            AdvanceButtonProperty = serializedObject.FindProperty("AdvanceButton");
+            AdvanceInputProperty = serializedObject.FindProperty("AdvanceInput");
             BacklogProperty = serializedObject.FindProperty("BacklogGameObject");
             ButtonPrefabProperty = serializedObject.FindProperty("ButtonPrefab");
         }
@@ -73,6 +77,8 @@ namespace DialogueEditor
             // Interaction options
             GUILayout.Label("Interaction options", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(AllowMouseInteractionProperty);
+            EditorGUILayout.PropertyField(AdvanceButtonProperty);
+            EditorGUILayout.PropertyField(AdvanceInputProperty);
             EditorGUILayout.Space();
 
             // Backlog
