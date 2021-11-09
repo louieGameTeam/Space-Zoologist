@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1815,6 +1815,7 @@ GameObject:
   - component: {fileID: 1336693820}
   - component: {fileID: 1336693822}
   - component: {fileID: 1336693821}
+  - component: {fileID: 1336693823}
   m_Layer: 5
   m_Name: OptionItems
   m_TagString: Untagged
@@ -1907,6 +1908,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336693818}
   m_CullTransparentMesh: 0
+--- !u!114 &1336693823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336693818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64d5cb51cc3b1f42a0bb567f8863338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vol: {fileID: 1204529354}
+  musicVol: {fileID: 251937398}
+  sfxVol: {fileID: 468232002}
 --- !u!1 &1423902984
 GameObject:
   m_ObjectHideFlags: 0
