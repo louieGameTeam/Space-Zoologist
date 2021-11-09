@@ -236,4 +236,8 @@ public class PopulationManager : MonoBehaviour
 
         return populations;
     }
+    public List<Population> GetPopulationsBySpeciesType(SpeciesType speciesType)
+    {
+        return ExistingPopulations.FindAll(pop => pop.species.Species == speciesType);
+    }
 }

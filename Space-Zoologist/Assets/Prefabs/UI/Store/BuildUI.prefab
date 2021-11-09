@@ -272,6 +272,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 1030907817609380458}
+  onObjectPickedChanged:
+    m_PersistentCalls:
+      m_Calls: []
   valuePicked: 1
 --- !u!1 &2358389585390575162
 GameObject:
@@ -372,6 +375,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 9137029594816761772}
+  onObjectPickedChanged:
+    m_PersistentCalls:
+      m_Calls: []
   valuePicked: 2
 --- !u!1 &3501103939069315505
 GameObject:
@@ -925,7 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87b3172ad8f5c047a11ea1940f1ced6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexPicker: {fileID: 4186129911515123553}
+  storeSectionIndexPicker: {fileID: 4186129911515123553}
   closeButton: {fileID: 7011737153262935702}
 --- !u!1 &7011737153262935700
 GameObject:
@@ -2345,6 +2351,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 5974181163209554446}
+  onObjectPickedChanged:
+    m_PersistentCalls:
+      m_Calls: []
   valuePicked: 0
 --- !u!1 &8826812294361755938
 GameObject:

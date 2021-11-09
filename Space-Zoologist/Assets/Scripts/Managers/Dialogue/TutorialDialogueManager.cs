@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +39,9 @@ public class TutorialDialogueManager : MonoBehaviour
     {
         GameManager.Instance.m_menuManager.ToggleUI(active);
     }
+    #endregion
+
+    #region Dialogue Callbacks
     public void FreezeUntilNotebookOpen()
     {
         CoroutineScheduler.FreezeUntilConditionIsMet(() => GameManager.Instance.NotebookUI.IsOpen);
@@ -73,19 +77,22 @@ public class TutorialDialogueManager : MonoBehaviour
     }
     public void FreezeUntilZeigPickedForPlacement()
     {
-        MenuManager menuManager = GameManager.Instance.m_menuManager;
-        BuildUI buildUI = GameManager.Instance.BuildUI;
-        PodSection podSection = buildUI.GetComponentInChildren<PodSection>();
-        ItemID zeigID = new ItemID(ItemRegistry.Category.Species, 0);
-
+        FreezeUntilBuildItemPicked<PodSection>(new ItemID(ItemRegistry.Category.Species, 0), 2);
+    }
+    public void FreezeUntilZeigsExist(int numZeigs)
+    {
+        FreezeUntilPopulationExists(SpeciesType.Goat, numZeigs);
+    }
+    public void FreezeUntilInspectorOpened()
+    {
         CoroutineScheduler.FreezeUntilConditionIsMet(() =>
         {
-            if (podSection.SelectedItem != null)
-            {
-                return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == 2 && podSection.SelectedItem.ItemID == zeigID;
-            }
-            else return false;
+            return GameManager.Instance.m_inspector.IsInInspectorMode;
         });
+    }
+    public void FreezeUntilGoatIsInspected()
+    {
+        FreezeUntilPopulationIsInspected(SpeciesType.Goat);
     }
     #endregion
 
@@ -143,6 +150,56 @@ public class TutorialDialogueManager : MonoBehaviour
         CoroutineScheduler.FreezeUntilConditionIsMet(() =>
         {
             return picker.SelectedItem == targetItem && notebook.IsOpen && notebook.TabPicker.CurrentTab == targetTab;
+        });
+    }
+    private void FreezeUntilBuildItemPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex) 
+        where StoreSectionType : StoreSection
+    {
+        MenuManager menuManager = GameManager.Instance.m_menuManager;
+        BuildUI buildUI = GameManager.Instance.BuildUI;
+        // Get the store section that manages the placement of the target item
+        StoreSectionType storeSection = buildUI.GetComponentInChildren<StoreSectionType>(true);
+
+        CoroutineScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            if (storeSection.SelectedItem != null)
+            {
+                return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == storeSectionIndex && storeSection.SelectedItem.ItemID == targetItem;
+            }
+            else return false;
+        });
+    }
+    private void FreezeUntilPopulationExists(SpeciesType targetSpecies, int amount)
+    {
+        PopulationManager populationManager = GameManager.Instance.m_populationManager;
+
+        CoroutineScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            List<Population> goatPopulations = populationManager.GetPopulationsBySpeciesType(targetSpecies);
+            int currentGoats = goatPopulations.Sum(pop => pop.Count);
+            return currentGoats >= amount;
+        });
+    }
+    private void FreezeUntilPopulationIsInspected(SpeciesType targetSpecies)
+    {
+        Inspector inspector = GameManager.Instance.m_inspector;
+
+        CoroutineScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            // Get the population highlighted
+            if(inspector.PopulationHighlighted)
+            {
+                // Get the population script on the object highlighted
+                Population population = inspector.PopulationHighlighted.GetComponent<Population>();
+
+                // If you got the script then check the species type highlighted
+                if(population)
+                {
+                    return population.Species.Species == targetSpecies;
+                }
+                return false;
+            }
+            return false;
         });
     }
     #endregion
