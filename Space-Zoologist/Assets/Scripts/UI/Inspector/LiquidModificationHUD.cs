@@ -72,8 +72,8 @@ public class LiquidModificationHUD : MonoBehaviour
         }
         else if (!MenuManager.IsInStore && liquidModificationHUD.activeSelf)
         {
-            ParseValues();
             liquidModificationHUD.SetActive(false);
+            ParseValues();
         }
     }
 }
