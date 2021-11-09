@@ -983,7 +983,13 @@ public class GridSystem : MonoBehaviour
             {
                 if (neighborTileData.currentTile == tile)
                 {
-                    neighborLiquidBodies.Add(neighborTileData.currentLiquidBody);
+                    // iffy functionality, needs rework
+                    if (neighborTileData.isLiquidBodyChanged)
+                    {
+                        neighborLiquidBodies.Add(neighborTileData.previewLiquidBody);
+                    }
+                    else
+                        neighborLiquidBodies.Add(neighborTileData.currentLiquidBody);
                 }
             }
         }
@@ -2344,7 +2350,7 @@ public class GridSystem : MonoBehaviour
         public Color currentColor { get; private set; }
         public Color previousColor { get; private set; }
         public LiquidBody currentLiquidBody { get; set; }
-        public LiquidBody previousLiquidBody { get; private set; }
+        public LiquidBody previewLiquidBody { get; private set; }
         public bool isTileChanged { get; private set; } = false;
         public bool isLiquidBodyChanged { get; private set; } = false;
         public bool isColorChanged { get; private set; } = false;
@@ -2369,7 +2375,7 @@ public class GridSystem : MonoBehaviour
             this.currentTile = null;
             this.previousTile = null;
             this.currentLiquidBody = null;
-            this.previousLiquidBody = null;
+            this.previewLiquidBody = null;
         }
         public void PreviewReplacement(GameTile tile)
         {
@@ -2398,15 +2404,14 @@ public class GridSystem : MonoBehaviour
         {
             if (isLiquidBodyChanged)
             {
-                if (newLiquidBody == this.currentLiquidBody)
+                if (newLiquidBody == this.previewLiquidBody)
                 {
                     return;
                 }
-                this.currentLiquidBody = newLiquidBody;
+                this.previewLiquidBody = newLiquidBody;
                 return;
             }
-            this.previousLiquidBody = this.currentLiquidBody;
-            this.currentLiquidBody = newLiquidBody;
+            this.previewLiquidBody = newLiquidBody;
             this.isLiquidBodyChanged = true;
         }
         public void ConfirmReplacement()
@@ -2420,17 +2425,17 @@ public class GridSystem : MonoBehaviour
                 }
                 return;
             }
-            //ClearHistory();
+            else
+            {
+                currentLiquidBody = previewLiquidBody;
+            }
+            ClearHistory();
         }
         public void Revert()
         {
             if (isTileChanged)
             {
                 this.currentTile = this.previousTile;
-            }
-            if (isLiquidBodyChanged)
-            {
-                this.currentLiquidBody = this.previousLiquidBody;
             }
             if (isColorChanged)
             {
@@ -2441,7 +2446,7 @@ public class GridSystem : MonoBehaviour
         private void ClearHistory()
         {
             this.previousColor = Color.white;
-            this.previousLiquidBody = null;
+            this.previewLiquidBody = null;
             this.previousTile = null;
             this.isTileChanged = false;
             this.isColorChanged = false;
