@@ -8258,7 +8258,6 @@ MonoBehaviour:
   OptionImage: {fileID: 21300000, guid: a069a2db45fc5a44f93fc83e8b23b16a, type: 3}
   OptionImageSliced: 1
   AllowMouseInteraction: 1
-  AdvanceButton: {fileID: 7190060616964756080}
   AdvanceInput: Submit
   Background: {fileID: 0}
   DialoguePanel: {fileID: 5819920347372218464}
@@ -8559,6 +8558,7 @@ GameObject:
   m_Component:
   - component: {fileID: 942281010902694400}
   - component: {fileID: 2944105216233646323}
+  - component: {fileID: 1458723726580743892}
   m_Layer: 5
   m_Name: BottomSection
   m_TagString: Untagged
@@ -8566,6 +8566,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1458723726580743892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458723726580743891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673033dac7bebd14cadaf7e8d4c60326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1768430249479054789
 RectTransform:
   m_ObjectHideFlags: 0

@@ -168,6 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8731580173207704174}
   - component: {fileID: 2028698093}
+  - component: {fileID: 5253216065445287766}
   m_Layer: 5
   m_Name: Notebook
   m_TagString: Notebook
@@ -211,7 +212,6 @@ MonoBehaviour:
   root: {fileID: 8731580173207704174}
   notebook: {fileID: 11400000, guid: 80149ca5b923b1b468d6d4ec23b05e18, type: 2}
   tabPicker: {fileID: 8737488178317972168}
-  resourceRequestEditor: {fileID: 0}
   defaultSize:
     m_Left: 0
     m_Right: 0
@@ -228,3 +228,15 @@ MonoBehaviour:
   onNotebookToggle:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5253216065445287766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731580173207704173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673033dac7bebd14cadaf7e8d4c60326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

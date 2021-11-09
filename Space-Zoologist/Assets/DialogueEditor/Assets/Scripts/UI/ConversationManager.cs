@@ -42,7 +42,6 @@ namespace DialogueEditor
         public Sprite OptionImage;
         public bool OptionImageSliced;
         public bool AllowMouseInteraction;
-        public Button AdvanceButton;
         public string AdvanceInput = "Submit";
         public RectTransform Background;
         // Non-User facing 
@@ -760,11 +759,32 @@ namespace DialogueEditor
          */ 
         private bool Progress()
         {
-            // Cache the current selected game object
-            GameObject currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
-            // Advance button was clicked if it exists, the mouse button was clicked, and it is the currently selected game object
-            bool advanceButtonClicked = AdvanceButton && Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject == AdvanceButton.gameObject;
+            bool advanceClick = false;
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Setup a new pointer event
+                PointerEventData pointerEvent = new PointerEventData(EventSystem.current)
+                {
+                    position = Input.mousePosition
+                };
+
+                // Get all raycast results
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerEvent, results);
+
+                // Get any tags in any of the results
+                List<ConversationBlockerTag> tags = results
+                    .Select(result => result.gameObject.GetComponentInParent<ConversationBlockerTag>())
+                    .Where(tag => tag != null)
+                    .ToList();
+
+                // Advance by click only if the raycast didn't hit anything with a blocker tag
+                advanceClick = tags.Count <= 0;
+            }
+
+            // Store the current selected game object
+            GameObject currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
             // True if a typing UI object is currently selected
             bool typingUIObjectSelected = false;
 
@@ -780,7 +800,7 @@ namespace DialogueEditor
             bool advanceInput = !typingUIObjectSelected && Input.GetButtonDown(AdvanceInput);
 
             // Progress if the advance button was clicked or the button in the input axes was just pressed
-            return advanceButtonClicked || advanceInput;
+            return advanceClick || advanceInput;
         }
     }
 }
