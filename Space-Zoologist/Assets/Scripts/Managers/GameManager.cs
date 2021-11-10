@@ -577,6 +577,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DebugWin() {
+        isMainObjectivesCompleted = true;
+
+        DebugGameOver();
+    }
+    
+    public void DebugGameOver() {
+        this.m_isGameOver = true;
+
+        // TODO figure out what should happen when the main objectives are complete
+        EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
+
+        // GameOver.cs listens for the event and handles gameover
+        EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+
+        Debug.Log($"Level Completed!");
+    }
+
     public void TurnObjectivePanelOn()
     {
         this.isObjectivePanelOpen = true;
@@ -658,16 +676,11 @@ public class GameManager : MonoBehaviour
 
     public void nextDay()
     {
-        UpdateDayText(++currentDay);
-        if(currentDay > maxDay)
-        {
-            // GameOver.cs listens for the event and handles gameover
-            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
-        }
-
         m_gridSystem.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
+        UpdateAllNeedSystems();
+        m_populationManager.UpdateAllGrowthConditions();
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
         {
             m_populationManager.Populations[i].HandleGrowth();
@@ -675,6 +688,14 @@ public class GameManager : MonoBehaviour
         UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
+        AudioManager.instance?.PlayOneShot(SFXType.NextDay);
+
+        UpdateDayText(++currentDay);
+        if (currentDay > maxDay)
+        {
+            // GameOver.cs listens for the event and handles gameover
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+        }
     }
 
     public void EnableInspectorToggle(bool enabled)

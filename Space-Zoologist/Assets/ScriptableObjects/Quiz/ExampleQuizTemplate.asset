@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
   m_Name: ExampleQuizTemplate
   m_EditorClassIdentifier: 
+  importantCategories: []
   questions:
   - question: Here is an example question
-    scoreType: 0
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 0
     options:
     - label: This is not a good answer
       weight: 0
@@ -22,15 +27,4 @@ MonoBehaviour:
       weight: 2
     - label: This is a great answer!
       weight: 4
-  gradingRubric:
-    percentages:
-    - 0.5
-    - 1
-  scoreBoundaries:
-    scores:
-    - scoreData:
-        scores: 000000000000000000000000
-    - scoreData:
-        scores: 020000000000000000000000
-    - scoreData:
-        scores: 040000000000000000000000
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}

@@ -9,13 +9,18 @@ using TMPro;
 
 public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    #region Public Typedefs
     // So that the event appears in the editor
     [System.Serializable]
     public class IntIntEvent : UnityEvent<int, int> { }
+    #endregion
 
+    #region Public Properties
     // Public accessors of private data
     public IntIntEvent OnHighlightConfirm => onHighlightConfirm;
+    #endregion
 
+    #region Private Editor Fields
     // Private editor data
     [SerializeField]
     [Tooltip("Text field used to display the encyclopedia article")]
@@ -23,6 +28,9 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     [SerializeField]
     [Tooltip("Parent of the image objects for this article")]
     private RectTransform imageParent;
+    [SerializeField]
+    [Tooltip("Prefab instantiated to display the encyclopedia images")]
+    private ImagePreviewManager imagePrefab;
     [SerializeField]
     [Tooltip("Toggle used to determine if highlights are being added or removed")]
     private Toggle highlightToggle;
@@ -38,11 +46,15 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     [SerializeField]
     [Tooltip("Event invoked when the user finishes dragging")]
     private IntIntEvent onHighlightConfirm;
+    #endregion
 
+    #region Private Fields
     // Reference to the encyclopedia article that is currently being rendered,
     // if "null" no article is rendered
     private ResearchEncyclopediaArticle currentArticle;
+    #endregion
 
+    #region UI Events
     public void OnEndDrag(PointerEventData data)
     {
         if(currentArticle != null)
@@ -84,12 +96,14 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
+    #endregion
+
+    #region Public Methods
     public void UpdateArticle(ResearchEncyclopediaArticle article)
     {
         currentArticle = article;
         UpdateArticleDisplay();
     }
-
     public void UpdateArticleDisplay()
     {
         // If an article was given, set the text with the highlights
@@ -100,12 +114,15 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             // Destroy all images
             foreach (Transform child in imageParent) Destroy(child.gameObject);
             // Create an image object for each sprite
-            foreach (Sprite sprite in currentArticle.Sprites) CreateImage(sprite);
+            foreach (Sprite sprite in currentArticle.Sprites)
+            {
+                ImagePreviewManager preview = Instantiate(imagePrefab, imageParent);
+                preview.BaseImage.sprite = sprite;
+            }
         }
         // No article given implies this encyclopedia has no entries
         else textField.text = "<color=#aaa>This encyclopedia has no entries</color>";
     }
-
     public static string RichEncyclopediaArticleText(ResearchEncyclopediaArticle article, List<RichTextTag> tags)
     {
         string richText = article.Text;
@@ -127,25 +144,5 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
 
         return richText;
     }
-
-    private void CreateImage(Sprite sprite)
-    {
-        if (!sprite)
-            return;
-
-        GameObject imageObject = new GameObject(sprite.name);
-
-        // Add a rect transform and parent it under the desired parent
-        RectTransform imageTransform = imageObject.AddComponent<RectTransform>();
-        imageTransform.SetParent(imageParent);
-        imageTransform.localScale = Vector3.one;
-
-        // Add the image component that renders the sprite
-        imageObject.AddComponent<CanvasRenderer>();
-        Image image = imageObject.AddComponent<Image>();
-        image.sprite = sprite;
-        image.maskable = true;
-        image.type = Image.Type.Simple;
-        image.preserveAspect = true;
-    }
+    #endregion
 }

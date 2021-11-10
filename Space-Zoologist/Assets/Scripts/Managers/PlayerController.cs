@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Dictionary<KeyCode, GameObject> StoreBindings = new Dictionary<KeyCode, GameObject>();
     public bool CanUseIngameControls = true;
     private bool GameOver = false;
+    public GameObject DebugMenu;
 
     private void Awake()
     {
@@ -56,6 +57,10 @@ public class PlayerController : MonoBehaviour
         if (this.GameOver)
         {
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.BackQuote)) {
+            DebugMenu?.SetActive(!DebugMenu.activeSelf);
         }
         // this.CanUseIngameControls = !this.OptionsMenu.gameObject.activeSelf;
         //if (Input.GetKeyDown(KeyCode.E))
