@@ -59,7 +59,10 @@ namespace DialogueEditor
         private UINode m_currentConnectingNode = null;
         private EditableConversationNode m_connectionDeleteParent, m_connectionDeleteChild;
 
+        // CUSTOM
 
+        // Integer id of the node to focus on in the editor window
+        private int focusNodeID = 0;
 
 
         //--------------------------------------
@@ -411,6 +414,11 @@ namespace DialogueEditor
             {
                 ResetPanelSize();
             }
+            if(GUILayout.Button("Focus Node with ID", EditorStyles.toolbarButton))
+            {
+                FocusNode(focusNodeID);
+            }
+            focusNodeID = EditorGUILayout.IntField(focusNodeID, EditorStyles.toolbarTextField);
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Manual Save", EditorStyles.toolbarButton))
             {
@@ -861,8 +869,6 @@ namespace DialogueEditor
         }
 
 
-
-
         //--------------------------------------
         // Event listeners
         //--------------------------------------
@@ -1136,6 +1142,41 @@ namespace DialogueEditor
                     UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
                 }
 #endif
+            }
+        }
+
+        /*
+         * CUSTOM CODE
+         */ 
+
+        private void FocusNode(int nodeID)
+        {
+            // Get the node with the given id
+            UINode target = uiNodes.Find(node => node.Info.ID == nodeID);
+
+            // If a node was found then focus it
+            if(target != null)
+            {
+                // Select the focused node
+                SelectNode(target, true);
+
+                // Get the difference between the center of the editor and this node's position
+                Vector2 windowCenter = (position.size / 2f) - (new Vector2(panelWidth, TOOLBAR_HEIGHT) / 2f);
+                Vector2 nodeCenter = target.rect.position + (target.rect.size / 2f);
+                Vector2 delta = windowCenter - nodeCenter;
+
+                // Add the difference to the positions of all nodes
+                foreach(UINode node in uiNodes)
+                {
+                    node.Drag(delta);
+                }
+
+                // Set gui to changed
+                GUI.changed = true;
+            }
+            else
+            {
+                Debug.Log($"{nameof(DialogueEditorWindow)}: no node with id {nodeID} was found, so node focus will be ignored");
             }
         }
     }

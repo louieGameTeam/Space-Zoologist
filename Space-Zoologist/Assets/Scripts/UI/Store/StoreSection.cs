@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class StoreSection : MonoBehaviour
 {
     public ItemType ItemType => itemType;
+    public Item SelectedItem => selectedItem;
 
     // Can't display in editor anymore because it is in a prefab
     /*[SerializeField] */private GraphicRaycaster raycaster;

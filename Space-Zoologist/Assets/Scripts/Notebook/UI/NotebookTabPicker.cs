@@ -24,6 +24,10 @@ public class NotebookTabPicker : NotebookUIChild
     }
     #endregion
 
+    #region Public Properties
+    public NotebookTab CurrentTab => currentTab;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root object where all of the pages will be found")]
