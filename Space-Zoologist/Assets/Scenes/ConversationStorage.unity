@@ -3154,7 +3154,7 @@ Transform:
   m_Children:
   - {fileID: 1388959984}
   m_Father: {fileID: 7774590431507538030}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &908308195
 MonoBehaviour:
@@ -12821,6 +12821,144 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec, type: 3}
+--- !u!1001 &3900841957297802554
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7774590431507538030}
+    m_Modifications:
+    - target: {fileID: 3306462169847580040, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_Name
+      value: Level1Intro
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -601.50885
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -301.20956
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 656.46436
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ebe7b97ce3be34a468a66394c392678f, type: 3}
+--- !u!1001 &4794402214788241136
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7774590431507538030}
+    m_Modifications:
+    - target: {fileID: 505211734377329052, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_Name
+      value: Level0IntroRewrite3
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -601.50885
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -301.20956
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 656.46436
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5f56635df6d400342a50e1ec106cd0c8, type: 3}
 --- !u!1001 &7774590431507538029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12936,203 +13074,125 @@ PrefabInstance:
     - target: {fileID: 8992944314454785584, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
       propertyPath: m_Text
-      value: ":aurora_impressed: Gooood morning! You must be that promising new Xenobiology
-        student everyone\u2019s been talking about, right?\r\nYeah, and you are...who,
-        again?\r\n:aurora_sweat: Oh, right. Sorry, I suppose some introductions are
-        in order.\r\nXenobiology? No, I\u2019m an engineer!\r\n:aurora_enthusiastic:
-        Details, details. Don\u2019t worry about it, no one\u2019s perfect, kid.
-        You\u2019ll do fine.\r\n:aurora_talk_happy: I\u2019m Dr. Aurora Star, and
-        I\u2019m in charge of zoology here at Natura Serva 22. At least, I think?\r\nYou...think?\r\n:aurora_sweat:
-        Turnover\u2019s kind of a problem around here, so it\u2019s hard to keep
-        track. But that\u2019s why you\u2019re here!\r\nNice to meet you. I\u2019ve
-        heard so much about your work.\r\n:aurora_enthusiastic: Oh, please. Stop...No
-        need to go into any of that\u2026 Unless you really want to? No? Ok...\r\n:aurora_talk_happy:
-        Anyways, you can just call me Dr. Star, \u2018cause I\u2019m the star of
-        the show!\r\n\u2026\r\n:aurora_sweat: Hey, come on, it was a joke. Really.
-        I\u2019m not that conceited. Usually.\r\nGot it, Dr. Star!\r\n:aurora_enthusiastic:
-        There we go! That\u2019s the spirit!\r\n:aurora_talk_neutral: Now that we
-        know each other, let\u2019s get you up to speed! There\u2019s a ton of work
-        to be done around here, and we\u2019ll need your help.\r\n:aurora_talk_neutral:
-        First, let\u2019s get you comfortable with the Command Center!\r\nWhat\u2019s
-        the Command Center?\r\n:aurora_talk_neutral: It\u2019s your workspace, communicator,
-        and research notebook all wrapped into one! It\u2019s what we\u2019re using
-        to talk right now!\r\n:aurora_talk_neutral: The main view usually will show
-        the enclosure you\u2019re working on -- but don\u2019t worry about that for
-        now. We\u2019ll get back to it.\r\n:aurora_talk_neutral: For now, just take
-        a look at the icons on the bottom of the screen. This is where you\u2019ll
-        navigate to most of the Command Center\u2019s functions.\r\n:aurora_talk_neutral:
-        For now, try pushing the notebook button, which will open your research notebook!\r\n<Player
-        is cued to open the notebook>\r\n:aurora_talk_happy: Great! Now, I know this
-        thing can be pretty imposing at first, so we\u2019ll start slow. Just stick
-        to the home screen for now.\r\nR...ROCTM? What are all these letters for?\r\n:aurora_enthusiastic:
-        I thought you\u2019d never ask! Those letters stand for each of our core
-        engineering principles. \r\n:aurora_sweat: ROCTM isn\u2019t a great acronym,
-        though, so most of the new hires just remember them as \u201CROCeT Man.\u201D
-        Way easier to remember!\r\n:aurora_talk_neutral: Now let\u2019s get to it!
-        I provided a handy blank space next to each letter that you should use to
-        write these down. They\u2019ll be on the test!\r\nT-Test?!\r\n:aurora_talk_neutral:
-        Oh? Don\u2019t worry, it\u2019s not like the tests in school. We call it
-        a \u201Creport back\u201D, and it\u2019s just a casual way to check how you\u2019re
-        coming along.\r\nGot it.\r\n:aurora_talk_neutral: Good, but just so you know,
-        it\u2019s not like a normal test. We call it a \u201Creport back\u201D, and
-        it\u2019s just a casual way to check how you\u2019re coming along.\r\n:aurora_talk_happy:
-        R stands for \u201CResearch what is already known.\u201D\r\n:aurora_talk_happy:
-        O stands for \u201CObserve the current situation.\u201D\r\n:aurora_talk_happy:
-        C stands for \u201CPropose Concepts to modify the environment.\u201D\r\n:aurora_talk_happy:
-        T stands for \u201CTest the effect of the changes.\u201D\r\n:aurora_talk_happy:
-        And finally, M stands for \u201CRecord key Metrics.\u201D\r\n:aurora_enthusiastic:
-        Put it all together and you get R-O-C-T-M, or ROCeT Man!\r\n:aurora_neutral:
-        Did you get all that? Make sure to write it down, or you\u2019ll wish you
-        had later!\r\nYeah, got it all down!\r\n:aurora_impressed: Great! I knew
-        there was a reason we hired you!\r\nUhh...Can you run that all by me one
-        more time?\r\n:aurora_sweat: Really? But I put so much heart into it...Ok,
-        but make sure you write everything down this time, please.\r\nLoop back to
-        15\r\n:aurora_talk_neutral: Next, let\u2019s dive a bit deeper into the notebook.
-        Could you flip to the research tab, please?\r\n<wait for player to open research
-        tab and highlight>\r\n:aurora_talk_happy: Great! In this section you\u2019ll
-        find all the research we\u2019ve gathered about the various species endemic
-        to Planet X.\r\n:aurora_talk_happy: We\u2019ve got transport logs, observation
-        notes, you name it! Your notebook is a veritable cornucopia of zoological
-        examinations!\r\nA...venerable kernel of what?\r\n:aurora_sweat: Oh. Sorry,
-        my undergrad was in literature, so sometimes I get...caught up in the moment.\r\nBut
-        is it a vast repository of behavioral observations?\r\n:aurora_enthusiastic:
-        Oh, you. I like you. you get it. Keep that up and I\u2019m sure you\u2019ll
-        go far!\r\n:aurora_sweat: Unfortunately, we haven\u2019t really been able
-        to organize or collate anything, so figuring out what is and isn\u2019t important
-        is going to mostly be up to you!\r\n:aurora_talk_neutral: Our research intern,
-        Barry -- you\u2019ll love him, I\u2019m sure -- has gone in and highlighted
-        some important sections, but\u2026You\u2019ll have to do most of it yourself.\r\n:aurora_sweat:
-        You see, Juno\u2019s had Barry so busy running the enclosure resurfacer lately,
-        that he hasn\u2019t really gotten to all of the species\u2019 entries.\r\n:aurora_sweat:
-        There\u2019s also some highlighted sections that aren\u2019t all that important,
-        either, so you might want to undo Barry\u2019s work, just to keep everything
-        straight.\r\n:aurora_talk_happy: Let\u2019s try it out now! Go ahead and
-        find the sentence describing the Zeig\u2019s terrain preferences, and highlight
-        it!\r\n<wait for player to highlight terrain preference sentence>\r\n:aurora_impressed:
-        Great! Now let\u2019s also practice unhighlighting passages. The first sentence
-        in this article isn\u2019t all that important, so go ahead and unhighlight
-        it.\r\n<wait for player to unhighlight first section>\r\n:aurora_talk_happy:
-        Now, this section over here is for you to take notes in. I\u2019ve provided
-        some helpful starting points, but feel free to fill in whatever you want.\r\n<highlight
-        freeform part of the research tab>\r\n:aurora_talk_happy: This is just the
-        entry for one of the animals you\u2019ll be working with, though. Let\u2019s
-        try looking at another one.\r\n:aurora_talk_happy: If you click up here,
-        you\u2019ll be able to toggle between sections covering all of the animals
-        we work with here!\r\n:aurora_talk_happy: For now, try switching over to
-        the section devoted to my absolute favorites, the Humidum Limax, or Flan.\r\n<Wait
-        for player to toggle to Humidum Limax page>\r\n:aurora_enthusiastic: Ah!
-        There they are! Aren\u2019t they cute?\r\nThey look... adorable!\r\n:aurora_enthusiastic:
-        Right? I\u2019m glad someone around here agrees! Everyone else refuses to
-        even look at them\u2026\r\nThey look... delicious!\r\n:aurora_sweat: Now
-        hang on, there! We\u2019re here to save these animals, not eat them! But\u2026
-        Now that you mention it...\r\n:aurora_talk_neutral: Anyways, enough about
-        that! One of the most important things you\u2019re going to be looking for
-        in these articles is what kind of food each species prefers.\r\n:aurora_talk_neutral:
-        Remember, your job is to produce artificial habitats for these animals to
-        reproduce in. They aren\u2019t going to do that while starving!\r\n:aurora_talk_neutral:
-        How about you give it a test run? Take a good, long look at this page, and
-        try to figure out what Flan like to eat.\r\n:aurora_talk_neutral: Got it?
-        Alright, what\u2019s the Flan\u2019s favorite food?\r\nThe Star Cow, Eligans
-        Impar.\r\n:aurora_sweat: Err...No, not quite. How about you go take another
-        look?\r\nLoop to 36.\r\nFlanweed, or Coruscent Laminar. \r\n:aurora_impressed:
-        You got it! We\u2019ll make a xenobiologist out of you yet!\r\n:aurora_talk_neutral:
-        Now, that\u2019s just about it on the notebook for now. We\u2019ll cover
-        the other tabs later. Before we totally shut it down\u2026\r\n:aurora_talk_neutral:
-        ...take a look at this button up here.\r\nHighlight the bookmark button\r\n:aurora_talk_neutral:
-        You can use this button to bookmark articles or note pages.\r\n:aurora_talk_neutral:
-        Anything you bookmark will be visible on the home page, so you can easily
-        get back to it!\r\n:aurora_talk_happy: And that\u2019s all we\u2019ll be
-        needing the notebook for today! What did you think?\r\nIt\u2019s awesome!\r\n:aurora_talk_happy:
-        Haha, glad you think so! We all worked pretty hard on it, after all.\r\nDo
-        I get to build stuff yet?\r\n:aurora_impressed: Well, and here I thought
-        you\u2019d never ask! Yes, it\u2019s time for us to get building!\r\n:aurora_talk_happy:
-        For now, let\u2019s close the notebook and open up the Command Center\u2019s
-        build mode instead. It\u2019s that little hammer icon down there.\r\n:aurora_talk_happy:
-        From here, you can build all kinds of stuff into your enclosure! Plants,
-        animals, new types of terrain, you name it!\r\nWait\u2026 Are those... costs?
-        Am I paying for all of this?\r\n:aurora_sweat: No, no. We just have a limited
-        budget and only so many specimens to work with, so we have to budget construction
-        resources.\r\n:aurora_talk_happy: The guys in construction might be wizards,
-        but they only have so much to work with. These \u201Ccredits,\u201D as we
-        call them, are to keep us from changing everything willy-nilly. \r\n:aurora_talk_happy:
-        You\u2019ll be allocated some resources at the beginning of each assignment
-        which you can place free of charge, but everything after that will be deducted
-        from your credit balance.\r\n:aurora_sweat: If you run out, well\u2026 you
-        better hope your design works, because construction won\u2019t help you if
-        it doesn\u2019t.\r\n:aurora_talk_happy: Don\u2019t worry too much about that,
-        though! You can always restart a task entirely if you find yourself out of
-        funds.\r\n:aurora_talk_happy: Now, let\u2019s get you building! Hover over
-        the \u201Canimals\u201D tab of the build menu and select the CapraX Zeigrun,
-        or Zeigs, as we call them around here.\r\n:aurora_talk_happy: Next, you can
-        click anywhere inside the enclosure to add a Zeig there! Please add three
-        Zeigs to the enclosures now.\r\n<player adds three zeigs to the enclosure
-        to advance>\r\n:aurora_enthusiastic: Great! Now you can right click in order
-        to stop placing Zeigs, then you\u2019ll be able to see the new Zeigs wandering
-        around your little enclosure!\r\n:aurora_sweat: Keep in mind that not everything
-        gets added to the enclosure instantly like animals do. Great work takes time,
-        after all.\r\n:aurora_talk_neutral: The construction guys have a lot to do
-        around here, it\u2019ll take them anywhere from one to three days to get
-        to your request, depending on what you\u2019re trying to build.\r\nWait,
-        so am I just supposed to wait around here, then?\r\n:aurora_enthusiastic:
-        Oh no, of course not, but we\u2019ll get to that! First, let\u2019s take
-        a look at the Inspector! \r\n:aurora_talk_happy: See this window in the top
-        right corner up here?\r\nHighlight objective window/inspector. \r\n:aurora_talk_happy:
-        Most of the time, this window will show your your current objective, but
-        if you hit the tab, it\u2019ll turn into the inspector! \r\n:aurora_talk_happy:
-        You can use the inspector to see detailed information about anything in your
-        enclosure.\r\n:aurora_enthusiastic: Go ahead and give it a shot now! Click
-        on your new zeigs to see how they\u2019re feeling!\r\n<wait for player to
-        inspect the zeigs>\r\n:aurora_talk_happy: Great! When you inspect animals
-        in the enclosure, you\u2019ll see valuable information about their current
-        needs.\r\n:aurora_talk_happy: As long as all of an animal's needs are green,
-        they\u2019ll usually reproduce easily enough. There\u2019s some corner cases,
-        but don\u2019t worry about them for now.\r\n:aurora_sweat: On the other hand,
-        if any of an animal\u2019s needs are red, their population will likely decrease
-        in the coming days, so make sure to stay on top of each animal\u2019s needs!\r\nOf
-        course I will!\r\n:aurora_enthusiastic: Then all of Planet X\u2019s wildlife
-        has nothing to fear!\r\nWait...So if I mess up the animals die?\r\n:aurora_sweat:
-        Well...Yes. That\u2019s why it\u2019s so important you give each of your
-        designs a good amount of thought before implementing them!\r\n:aurora_talk_happy:
-        Now, each animal's needs will only update in the inspector at the start of
-        a new day, so you won\u2019t immediately know if any changes you\u2019ve
-        made have a positive or negative impact, which brings us to\u2026\r\n:aurora_enthusiastic:
-        The time accelerator! This little button -- through means completely unknown
-        to all of us -- skips us all forward 24 hours when you push it, so you never
-        need to wait around.\r\n:aurora_sweat: In fact...For some reason, time kind
-        of just stopped moving naturally around here after we made it, so it\u2019s
-        kind of the only way to move time forward.\r\nSo we\u2019re time travelers
-        too? Awesome!\r\n:aurora_enthusiastic: That\u2019s the spirit! It\u2019s
-        like my mom always said: \u201CKeep your eyes on the silver linings!\u201D\r\nWait,
-        you guys broke time? How did you do that?\r\n:aurora_sweat: Well, that is
-        one way to look at it\u2026 Maybe ask Juno about it some time. I\u2019m sure
-        she\u2019ll be able to explain it better!\r\n:aurora_talk_happy: Anyways,
-        go ahead and hit the time accelerator button a couple times, so we can get
-        better information about how the Zeigs are doing in this enclosure.\r\n<advance
-        after the player hits the day accelerator twice>\r\n:aurora_enthusiastic:
-        Ah, look at all the adorable baby Zeigs! Quick, click on one so we can see
-        how they\u2019re all doing!\r\n:aurora_sweat: Uh oh, it looks like food\u2019s
-        starting to be an issue for the Zeigs. \r\n:aurora_talk_neutral: Don\u2019t
-        worry, though, that\u2019s normal.\r\n:aurora_talk_neutral: As the population
-        grows, they\u2019ll outstrip their natural food supply pretty quickly, and
-        you\u2019ll have to add more to keep them going.\r\n:aurora_talk_happy: This
-        is a great chance for you to practice all that you\u2019ve learned so far!
-        \r\n:aurora_talk_happy:\t Try to alter this enclosure so that it will support
-        six Zeigs! You can change up the terrain if you want, but you won\u2019t
-        need to -- just add more food and they\u2019ll be happy!\r\nWait...You\u2019re
-        just going to leave me?!\r\n:aurora_sweat: Well, you are going to have to
-        work alone sometime, right? But...\r\nAlright, I\u2019ll give it a shot!\r\n:aurora_impressed:
-        That\u2019s the spirit! You got it!\r\n:aurora_talk_neutral: If you need
-        anything, you can just hit that question mark down there at the bottom of
-        the command center. We call it the \u201CFUBAR button.\u201D\r\n:aurora_talk_neutral:
-        When you push it, it\u2019ll immediately connect you to your supervisor.
-        In this case, that\u2019s me!\r\n:aurora_talk_happy: If you have any questions,
-        please use it.\r\n:aurora_sweat: It\u2019s way easier to answer questions
-        than it is to resurface a ruined enclosure, so please don\u2019t be shy.
-        An ounce of prevention is worth a pound of cure, after all!\r\n:aurora_enthusiastic:
-        Now get out there and help save the Zeigs! \r\n:aurora_talk_happy: Don\u2019t
-        forget to use ROCeT Man to help guide your design process! It\u2019ll spare
-        you a ton of headaches.\r\n:aurora_enthusiastic: I\u2019ll see you again
-        once there\u2019s six Zeigs in the enclosure!\r"
+      value: ":aurora_talk_happy: I gotta hand it to you, kid,  you did a real bang
+        up job with that enclosure! Are you sure you\u2019re really a first timer?\r\nYes!
+        I keep trying to tell you, I\u2019m an engineer, not a xenobiologist\u2026\r\n:aurora_talk_neutral:
+        Right, right, but still. Sure seemed like you\u2019d done this all before!\r\nYup.\r\n:aurora_impressed:
+        Then I guess you just have the knack for it! Keep it up and Juno is going
+        to drag you into her work, I can feel it!\r\n:aurora_talk_happy: But setting
+        all of that aside for a moment, I\u2019ve got another assignment for you.\r\n:aurora_talk_neutral:
+        You\u2019ll still be working with the Zeigs, but this next enclosure is a
+        bit more tricky. It\u2019s filled with a wide array of food and terrain,
+        and it\u2019s going to be on you to figure out what the Zeigs will and won\u2019t
+        put up with.\r\nWait, why are we adding in so many unpredictable variables?\r\n:aurora_impressed:
+        Oh! That\u2019s a scientific question if I ever heard one! Asking a lot of
+        questions is a great trait for a scientist to have!\r\nOkay.\r\n:aurora_talk_neutral:
+        You see, in order to fully rehabilitate these endangered species, we have
+        to figure out exactly how they interact with all types of terrain, flora,
+        and fauna endemic to their home planet.\r\n:aurora_talk_happy: And that\u2019s
+        why we\u2019re assigning our ace new xenobiologist to figure out just what
+        the Zeigs do and don\u2019t like! You!\r\nAre you kidding? An engineer is
+        your \u201Cace xenobiologist\u201D?\r\n:aurora_sweat: Well, like I said,
+        it\u2019s hard to recruit people to work up here, and even harder to get
+        them to stay.\r\n:aurora_sweat: At least you haven\u2019t fallen in an enclosure
+        yet, right?! That\u2019s what made the last hire quit. I told him that licking
+        is a sign of affection among the Flan, but she just wouldn\u2019t listen\u2026\r\nYou
+        got it, boss!\r\n:aurora_impressed: So you\u2019re up for it? Great!\r\n:aurora_sweat:
+        But, please, just call me Doctor Star, please. \u201CBoss\u201D makes me
+        feel so old, you know what I mean? It hasn\u2019t been that long since I
+        was an undergrad too!\r\n:aurora_confused: Has it\u2026?\r\n:aurora_talk_neutral:
+        But we\u2019ll have plenty of time to talk about all that later! For now,
+        let me walk you through a couple more things before I let you hop to it.\r\n:aurora_talk_neutral:
+        Would you mind opening up your notebook again? It\u2019s about time we go
+        over its other functions.\r\n:aurora_talk_happy: Great! Now, we\u2019ve already
+        talked about the home tab and the research tab. You don\u2019t need a refresher
+        on them, right?\r\nRight.\r\n:aurora_talk_neutral: Good! Let\u2019s move
+        on, then.\r\nActually\u2026\r\n:aurora_sweat: I see. Well, nothing to do
+        but run through it again. Make sure you take whatever notes you need!\r\n:aurora_talk_neutral:
+        The first tab in the notebook is the home tab. There\u2019s not much to do
+        here except view your bookmarks and write in what each letter of ROCeT Man
+        stands for. \r\n:aurora_talk_neutral: The second tab is the research tab.
+        Here you can view all the ecological data we\u2019ve collected on Planet
+        X\u2019s endemic flora and fauna.\r\n:aurora_talk_neutral: If you need a
+        more detailed breakdown, I recommend you return to the tutorial. You think
+        you\u2019ve got the general idea now, though?\r\nYeah!\r\nTo good!\r\nWell\u2026\r\nTo
+        \u201CI see\u201D\r\n:aurora_talk_happy: The next tab we\u2019re going to
+        take a look at is the \u201CObserve\u201D tab. Flip your notebook to it now,
+        if you don\u2019t mind.\r\n:aurora_talk_neutral: This tab is a dedicated
+        place for you to take notes about how the animals you\u2019re working with
+        are reacting to the current environment around them. \r\n:aurora_talk_happy:
+        I\u2019ve started you off with a few key questions I think you\u2019ll find
+        helpful, but feel free to enter whatever you want in here. Don\u2019t let
+        me get in the way!\r\n:aurora_talk_happy: Keep in mind that anything you
+        write in the notebook will stay with you the entire time you\u2019re working
+        with us here, so you can always refer back to notes you wrote while working
+        on earlier enclosures.\r\n:aurora_sweat: In fact, you probably should do
+        that as much as you can. No use repeating past mistakes, right?\r\n:aurora_talk_happy:
+        For now, though, take a second to examine this current enclosure. Take note
+        of how many trees there are, how much of each kind of food they're producing,
+        and how much liquid is in the enclosure.\r\n:aurora_talk_happy: It might
+        not seem like much, but it\u2019s the little stuff like this that can make
+        or break an enclosure! Think about how happy your future self will be if
+        you take your notes now, rather than later!\r\n:aurora_confused: You get
+        all that, kid?\r\nSure did!\r\n:aurora_impressed: Great! Then let\u2019s
+        move on!\r\nNot quite\u2026\r\n:aurora_talk_neutral: No problem! Let me go
+        over it one more time.\r\nLoop to \u201Cthis tab\u201D\r\n:aurora_talk_happy:
+        Beneath the \u201CObserve\u201D tab is the \u201CConcept\u201D tab, where
+        you can sketch out new designs and request additional resources.\r\n:aurora_talk_happy:
+        Go ahead and open it up now.\r\n:aurora_talk_happy: So first off, let\u2019s
+        talk about how you can request additional resources. You\u2019ve done a great
+        job up until now, kid, but at some point you\u2019re going to find enclosures
+        where you\u2019ll not have enough starting resources to get the job done.\r\n:aurora_talk_happy:
+        That\u2019s what this tab is for! If you ever find yourself needing something
+        more to finish off your design, try requesting it here. We\u2019ll approve
+        any request you make, provided it\u2019s within your budget.\r\n:aurora_talk_happy:
+        Let\u2019s try making a request now! Click on the \u201CSpace Maple\u201D
+        button and change it to \u201CDirt\u201D. Finally, enter \u201C10\u201D where
+        the \u201C0\u201D is now, and then push \u201CRequest Resources\u201D.\r\n:aurora_impressed:
+        And just like that, you have 10 more dirt tiles to work with! It\u2019s that
+        easy! Whenever you get stuck, make sure you come back to this tab. It can
+        get you out of all kinds of pinches!\r\n:aurora_sweat: Keep in mind that
+        you are working on a budget, so you won\u2019t be able to rely on requests
+        to solve all your problems. You still need to be careful, and make sure your
+        designs are sound.\r\n:aurora_talk_happy: Now for the fun part. Go ahead
+        and hit the black triangle in the top-right corner of the notebook for me,
+        why don\u2019t you?\r\n:aurora_impressed: And voila! The concept sketchbook!
+        You can draw all kinds of enclosure designs in here, without using up any
+        resources. It\u2019s a lifesaver for brainstorming new designs\u2026\r\n:aurora_sweat:
+        At least...That\u2019s the idea. Everyone seems to just draw whatever they
+        want in here. Juno\u2019s notebook is filled with animal sketches, and Barry\u2019s
+        is an endless sea of numbers that I can only assume is some kind of math
+        homework.\r\n:aurora_talk_happy: Or maybe he thinks in code. Who knows? Point
+        is, it's your space! Use it in whatever way is helpful!\r\n:aurora_talk_neutral:
+        You get all of that, or do you want me to explain the \u201CConcepts\u201D
+        tab again?\r\nStill with you. We can move on.\r\n:aurora_impressed: Really?
+        Alright, let\u2019s keep going, then!\r\nI didn\u2019t quite catch that,
+        sorry\u2026\r\n:aurora_talk_happy: No problem! Better to say something now,
+        then have to worry about it forever, right?\r\nLoop to \u201Cso first off\u201D\r\n:aurora_talk_happy:
+        Alright, finally, let\u2019s talk about the last tab: \u201CTest and Metrics\u201D.
+        Guess what it\u2019s for!\r\nErr...For testing?\r\n:aurora_sweat: Yeah, I
+        guess that was a bit of a softball question, wasn\u2019t it? \r\n:aurora_talk_happy:
+        So, as you so rightly guess, this tab is all about writing down the results
+        of your various test changes to the enclosure. It might seem a bit trivial,
+        but this data is what we\u2019re here to get!\r\n:aurora_talk_happy: With
+        enough data, recreating habitats for these animals will be such a cinch that
+        anyone will be able to do it!\r\n:aurora_talk_neutral: Let\u2019s give it
+        a shot, shall we? Try adding some zeigs to the enclosure, and then plant
+        some space maples next to them. Once you\u2019re done, skip forward a couple
+        of days, open the inspector, then check how the changes affected them.\r\n:aurora_talk_happy:
+        Great! It looks like their food needs have improved a bit! Let\u2019s record
+        the results of this test. Open your notebook back up to the test tab. \r\n:aurora_talk_happy:
+        Once you\u2019ve done that, fill in the rest of the report with a description
+        of what you did -- in this case, adding two space maples to the enclosure--
+        in the \u201Cwhen\u201D section, and what happened -- the Zeigs\u2019 food
+        needs improved -- in the rest of the section.\r\n:aurora_talk_happy: And
+        that\u2019s it! That\u2019s the whole notebook. I know it can seem like a
+        lot, but remember that our job here is to collect research on these animals.\r\n:aurora_talk_neutral:
+        It\u2019s important that you fill in any information you come across into
+        your notebook! Otherwise, how will anyone else know what you\u2019ve learned?
+        \r\n:aurora_sweat: But look at me, rambling on and keeping you from your
+        work. This time your goal is to get the zeig population up to thirty. Good
+        luck, and don\u2019t forget to shout if you have any questions!\r"
       objectReference: {fileID: 0}
     - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
