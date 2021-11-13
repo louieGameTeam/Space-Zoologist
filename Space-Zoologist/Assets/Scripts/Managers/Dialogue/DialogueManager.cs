@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     private NPCConversation defaultConversation = default;
     [SerializeField] GameObject ConversationManagerGameObject = default;
     private Queue<NPCConversation> queuedConversations = new Queue<NPCConversation>();
+    private Queue<bool> needForDeserialization = new Queue<bool>();
 
     private bool ContinueSpeech = false;
 
@@ -53,7 +54,11 @@ public class DialogueManager : MonoBehaviour
         if(queuedConversations.Count > 0)
         {
             UpdateCurrentDialogue();
-            StartNewConversation();
+            bool need = needForDeserialization.Dequeue();
+            if (need)
+                StartNewConversation();
+            else
+                StartNewConversationWithoutDeserialization();
         }
         else
         {
@@ -72,6 +77,16 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         queuedConversations.Enqueue(newDialogue);
+        needForDeserialization.Enqueue(true);
+    }
+    public void SetNewQuiz(NPCConversation newDialogue)
+    {
+        if (queuedConversations.Contains(newDialogue))
+        {
+            return;
+        }
+        queuedConversations.Enqueue(newDialogue);
+        needForDeserialization.Enqueue(false);
     }
 
     public void UpdateCurrentDialogue()
@@ -101,7 +116,11 @@ public class DialogueManager : MonoBehaviour
             {
                 AudioManager.instance?.PlayOneShot(SFXType.Notification);
                 UpdateCurrentDialogue();
-                StartNewConversation();
+                bool need = needForDeserialization.Dequeue();
+                if (need)
+                    StartNewConversation();
+                else
+                    StartNewConversationWithoutDeserialization();
             }
             else
             {
@@ -115,6 +134,13 @@ public class DialogueManager : MonoBehaviour
         GameManager.Instance.m_menuManager.ToggleUI(false);
         ConversationManagerGameObject.SetActive(true);
         ConversationManager.Instance.StartConversation(currentDialogue);
+        ContinueSpeech = true;
+    }
+    private void StartNewConversationWithoutDeserialization()
+    {
+        GameManager.Instance.m_menuManager.ToggleUI(false);
+        ConversationManagerGameObject.SetActive(true);
+        ConversationManager.Instance.StartConversationWithoutDeserialization(currentDialogue);
         ContinueSpeech = true;
     }
 }

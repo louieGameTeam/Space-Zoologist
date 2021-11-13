@@ -29,7 +29,7 @@ namespace DialogueEditor
         [SerializeField] public TMPro.TMP_FontAsset DefaultFont;
         [FormerlySerializedAs("Events")]
         [SerializeField] private List<NodeEventHolder> NodeSerializedDataList;
-
+        EditableConversation RuntimeEC; // EC object used for runtime EC generation
         // Runtime vars
         public UnityEngine.Events.UnityEvent Event;
 
@@ -93,6 +93,94 @@ namespace DialogueEditor
         // Serialize and Deserialize
         //--------------------------------------
 
+        /// <summary>
+        /// Save a editable conversation to an NPCConversation during runtime.
+        /// </summary>
+        /// <param name="conversation">The conversation to save.</param>
+        public void RuntimeSave(EditableConversation conversation) {
+            this.RuntimeEC = conversation;
+        }
+
+        /// <summary>
+        /// Load a Conversation during Runtime based on saved EditableConversation.
+        /// </summary>
+        /// <returns>A conversation object parsed from the saved EditableConversation</returns>
+        public Conversation RuntimeLoad() {
+            // Deserialize an editor-version (containing all info) that 
+            // we will use to construct the user-facing Conversation data structure. 
+            EditableConversation ec = this.RuntimeEC;
+
+            // Create a conversation. 
+            Conversation conversation = new Conversation();
+            // Create a dictionary to store our created nodes by UID
+            Dictionary<int, SpeechNode> dialogues = new Dictionary<int, SpeechNode>();
+            Dictionary<int, OptionNode> options = new Dictionary<int, OptionNode>();
+
+            // Create a Dialogue and Option node for each in the conversation
+            // Put them in the dictionary
+            for (int i = 0; i < ec.SpeechNodes.Count; i++)
+            {
+                SpeechNode node = new SpeechNode();
+                node.Name = ec.SpeechNodes[i].Name;
+                node.Text = ec.SpeechNodes[i].Text;
+                node.AutomaticallyAdvance = ec.SpeechNodes[i].AdvanceDialogueAutomatically;
+                node.AutoAdvanceShouldDisplayOption = ec.SpeechNodes[i].AutoAdvanceShouldDisplayOption;
+                node.TimeUntilAdvance = ec.SpeechNodes[i].TimeUntilAdvance;
+                node.TMPFont = ec.SpeechNodes[i].TMPFont;
+                node.Icon = ec.SpeechNodes[i].Icon;
+                node.Audio = ec.SpeechNodes[i].Audio;
+                node.Volume = ec.SpeechNodes[i].Volume;
+                node.Options = new List<OptionNode>();
+                if (this.GetNodeData(ec.SpeechNodes[i].ID) != null)
+                {
+                    node.Event = this.GetNodeData(ec.SpeechNodes[i].ID).Event;
+                }
+
+                dialogues.Add(ec.SpeechNodes[i].ID, node);
+            }
+            for (int i = 0; i < ec.Options.Count; i++)
+            {
+                OptionNode node = new OptionNode();
+                node.Text = ec.Options[i].Text;
+                node.TMPFont = ec.Options[i].TMPFont;
+
+                options.Add(ec.Options[i].ID, node);
+            }
+
+            // Now that we have every node in the dictionary, reconstruct the tree 
+            // And also look for the root
+            for (int i = 0; i < ec.SpeechNodes.Count; i++)
+            {
+                // Connect dialogue to options
+                for (int j = 0; j < ec.SpeechNodes[i].OptionUIDs.Count; j++)
+                {
+                    dialogues[ec.SpeechNodes[i].ID].Options.Add(options[ec.SpeechNodes[i].OptionUIDs[j]]);
+                }
+
+                // Connect dialogue to following dialogue
+                if (ec.SpeechNodes[i].SpeechUID != EditableConversation.INVALID_UID)
+                {
+                    dialogues[ec.SpeechNodes[i].ID].Dialogue = dialogues[ec.SpeechNodes[i].SpeechUID];
+                }
+
+                // Check if root
+                if (ec.SpeechNodes[i].EditorInfo.isRoot)
+                {
+                    conversation.Root = dialogues[ec.SpeechNodes[i].ID];
+                }
+            }
+
+            for (int i = 0; i < ec.Options.Count; i++)
+            {
+                // Connect option to following dialogue
+                if (dialogues.ContainsKey(ec.Options[i].SpeechUID))
+                {
+                    options[ec.Options[i].ID].Dialogue = dialogues[ec.Options[i].SpeechUID];
+                }
+            }
+
+            return conversation;
+        }
         public void Serialize(EditableConversation conversation)
         {
             json = Jsonify(conversation);

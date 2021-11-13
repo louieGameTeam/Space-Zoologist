@@ -395,6 +395,18 @@ namespace DialogueEditor
             SetState(eState.TransitioningDialogueBoxOn);
         }
 
+        public void StartConversationWithoutDeserialization(NPCConversation conversation) {
+
+            m_conversation = conversation.RuntimeLoad();
+            if (OnConversationStarted != null)
+                OnConversationStarted.Invoke();
+
+            TurnOnUI();
+            ClearOptions();
+            m_pendingDialogue = m_conversation.Root;
+            SetState(eState.TransitioningDialogueBoxOn);
+        }
+
         public void EndConversation()
         {
             SetState(eState.TransitioningDialogueOff);
