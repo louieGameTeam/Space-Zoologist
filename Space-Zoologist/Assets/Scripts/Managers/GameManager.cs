@@ -366,7 +366,6 @@ public class GameManager : MonoBehaviour
 
     private void InitialNeedSystemUpdate()
     {
-        m_foodSourceManager.LoadInitialFoods();
         this.UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         TogglePause();
