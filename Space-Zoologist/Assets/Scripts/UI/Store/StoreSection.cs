@@ -128,6 +128,7 @@ public class StoreSection : MonoBehaviour
             OnItemSelectionCanceled();
             return;
         }
+        AudioManager.instance.PlayOneShot(SFXType.Valid);
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         selectedItem = item;
     }
@@ -154,10 +155,8 @@ public class StoreSection : MonoBehaviour
 
     public bool CanBuy(Item item)
     {
-        if (storeItems.ContainsKey(item) && GameManager.Instance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
+        if (storeItems.ContainsKey(item) && ResourceManager.CheckRemainingResource(item) == 0)
         {
-            Debug.Log("You can't buy this!");
-            //OnItemSelectionCanceled();
             return false;
         }
         return true;
