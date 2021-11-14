@@ -109,6 +109,7 @@ public class NotebookTabPicker : NotebookUIChild
         // when they are enabled
         currentTab = tab;
 
+        AudioManager.instance.PlayOneShot(SFXType.NotebookTabSwitch);
         // Enable / Disable the correct objects
         NotebookTab[] tabs = (NotebookTab[])System.Enum.GetValues(typeof(NotebookTab));
         foreach(NotebookTab t in tabs)
