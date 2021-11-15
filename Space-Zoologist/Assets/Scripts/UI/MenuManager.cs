@@ -150,6 +150,7 @@ public class MenuManager : MonoBehaviour
         foreach(GameObject ui in UI)
         {
             ui.GetComponent<Button>().interactable = isActive;
+            ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
@@ -163,6 +164,19 @@ public class MenuManager : MonoBehaviour
         else
         {
             GameManager.Instance.EnableInspectorToggle(true);
+        }
+    }
+
+    public void ToggleUISingleButton(string buttonName, bool isActive)
+    {
+        foreach(GameObject ui in UI)
+        {
+            if(ui.name == buttonName)
+            {
+                ui.GetComponent<Button>().interactable = isActive;
+                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+                break;
+            }
         }
     }
 }
