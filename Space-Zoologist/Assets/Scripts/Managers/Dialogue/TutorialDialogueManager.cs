@@ -39,6 +39,11 @@ public class TutorialDialogueManager : MonoBehaviour
     {
         GameManager.Instance.m_menuManager.ToggleUI(active);
     }
+
+    public void ToggleUISingleButton(string buttonName)
+    {
+        GameManager.Instance.m_menuManager.ToggleUISingleButton(buttonName);
+    }
     #endregion
 
     #region Dialogue Callbacks
@@ -82,6 +87,14 @@ public class TutorialDialogueManager : MonoBehaviour
     public void FreezeUntilZeigsExist(int numZeigs)
     {
         FreezeUntilPopulationExists(SpeciesType.Goat, numZeigs);
+    }
+    public void FreezeUntilZeigPopulationIncrease()
+    {
+        PopulationManager populationManager = GameManager.Instance.m_populationManager;
+        List<Population> goatPopulations = populationManager.GetPopulationsBySpeciesType(SpeciesType.Goat);
+        int currentGoats = goatPopulations.Sum(pop => pop.Count);
+
+        FreezeUntilPopulationExists(SpeciesType.Goat, currentGoats + 1);
     }
     public void FreezeUntilInspectorOpened()
     {

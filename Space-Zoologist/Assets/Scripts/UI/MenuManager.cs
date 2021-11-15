@@ -154,25 +154,26 @@ public class MenuManager : MonoBehaviour
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
-        if (!isActive)
-        {
-            GameManager.Instance.m_inspector.CloseInspector();
-            GameManager.Instance.TurnObjectivePanelOn();
-            GameManager.Instance.EnableInspectorToggle(false);
+        // if (!isActive)
+        // {
+        //     GameManager.Instance.m_inspector.CloseInspector();
+        //     GameManager.Instance.TurnObjectivePanelOn();
+        //     GameManager.Instance.EnableInspectorToggle(false);
 
-        }
-        else
-        {
-            GameManager.Instance.EnableInspectorToggle(true);
-        }
+        // }
+        // else
+        // {
+        //     GameManager.Instance.EnableInspectorToggle(true);
+        // }
     }
 
-    public void ToggleUISingleButton(string buttonName, bool isActive)
+    public void ToggleUISingleButton(string buttonName)
     {
         foreach(GameObject ui in UI)
         {
             if(ui.name == buttonName)
             {
+                bool isActive = !ui.GetComponent<Button>().interactable;
                 ui.GetComponent<Button>().interactable = isActive;
                 ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
                 break;

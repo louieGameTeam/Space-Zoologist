@@ -60,7 +60,7 @@ public class DialogueResponseManager : MonoBehaviour
 
     public void WaitForOneTimePing(string button)
     {
-		GameManager.Instance.m_menuManager.ToggleUI(true);
+		GameManager.Instance.m_menuManager.ToggleUISingleButton(button);
 		GameObject ingameButton = GameObject.Find(button);
 		if (ingameButton)
         {
