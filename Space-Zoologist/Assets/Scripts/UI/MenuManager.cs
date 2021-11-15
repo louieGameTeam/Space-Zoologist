@@ -65,11 +65,15 @@ public class MenuManager : MonoBehaviour
 
     public void SetStoreIsOn(bool isOn)
     {
-        if (isOn)
+        if (isOn == this.IsInStore)
         {
-            OpenStore();
+            return;
         }
-        else CloseStore();
+
+        if (isOn) 
+            OpenStore();
+        else 
+            CloseStore();
 
         onStoreToggled.Invoke(isOn);
     }

@@ -101,6 +101,9 @@ public class MoveObject : MonoBehaviour
                         SetMoveUI();
                     }
                 }
+                else {
+                    UpdateMoveUIPosition();
+                }
             }
 
             if (objectToMove != null && moving)
@@ -162,8 +165,8 @@ public class MoveObject : MonoBehaviour
         DeleteButton.SetActive(false);
         moveCost = 0;
         sellBackCost = 0;
+        gridSystem.ClearHighlights();
     }
-
     // Set up UI for move and delete
     private void SetMoveUI()
     {
@@ -192,6 +195,13 @@ public class MoveObject : MonoBehaviour
         }
         MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
         DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
+    }
+
+    private void UpdateMoveUIPosition()
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(objectToMove.transform.position);
+        MoveButton.transform.position = screenPos + new Vector3(-50, 100, 0);
+        DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
     }
 
     // Find what the mouse clicked on
@@ -332,7 +342,6 @@ public class MoveObject : MonoBehaviour
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
 
         float cost = moveCost; // FixedCost + species.Size * CostPerUnitSizeFood;
-        removeOriginalFood(foodSource);
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
 
         if (valid)
@@ -351,7 +360,6 @@ public class MoveObject : MonoBehaviour
         }
         else
         {
-            placeFood(gridSystem.WorldToCell(initialPos - (Vector3Int)species.Size / 2), species);
             toMove.transform.position = initialPos;
         }
     }

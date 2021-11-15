@@ -20,41 +20,7 @@ public class FoodSourceManager : GridObjectManager
     {
         m_gridSystemReference = GameManager.Instance.m_gridSystem;
     }
-
-    // this used to be part of initialization, but it seems to not be necessary?
-    public void LoadInitialFoods()
-    {
-        // Get all FoodSource at start of level
-        // TODO make use of saved tile
-        GameObject[] foods = GameObject.FindGameObjectsWithTag("FoodSource");
-        foreach (GameObject food in foods)
-        {
-            foodSources.Add(food.GetComponent<FoodSource>());
-            Vector3Int GridPosition = m_gridSystemReference.WorldToCell(food.transform.position);
-
-            m_gridSystemReference.GetTileData(GridPosition).Food = food;
-        }
-
-        // Register Foodsource with NeedSystem via NeedSystemManager
-        foreach (FoodSource foodSource in foodSources)
-        {
-            if (!foodSourcesBySpecies.ContainsKey(foodSource.Species))
-            {
-                foodSourcesBySpecies.Add(foodSource.Species, new List<FoodSource>());
-                foodSourcesBySpecies[foodSource.Species].Add(foodSource);
-            }
-            else
-            {
-                foodSourcesBySpecies[foodSource.Species].Add(foodSource);
-            }
-
-            ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).AddFoodSource(foodSource);
-            GameManager.Instance.RegisterWithNeedSystems(foodSource);
-            EventManager.Instance.InvokeEvent(EventType.NewFoodSource, foodSource);
-        }
-        //FoodPlacer.PlaceFood();
-    }
-
+    
     // TODO: combine two version into one
     public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position, int ttb = -1)
     {

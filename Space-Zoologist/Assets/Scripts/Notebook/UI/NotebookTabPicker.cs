@@ -24,6 +24,10 @@ public class NotebookTabPicker : NotebookUIChild
     }
     #endregion
 
+    #region Public Properties
+    public NotebookTab CurrentTab => currentTab;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root object where all of the pages will be found")]
@@ -105,6 +109,7 @@ public class NotebookTabPicker : NotebookUIChild
         // when they are enabled
         currentTab = tab;
 
+        AudioManager.instance.PlayOneShot(SFXType.NotebookTabSwitch);
         // Enable / Disable the correct objects
         NotebookTab[] tabs = (NotebookTab[])System.Enum.GetValues(typeof(NotebookTab));
         foreach(NotebookTab t in tabs)

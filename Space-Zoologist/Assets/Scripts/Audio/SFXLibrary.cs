@@ -9,8 +9,8 @@ public enum SFXType
     MenuOpen, MenuClose, Notification, TabSwitch,
     Cancel, Observation,
     Valid, Locked, Unavailable,
-    BuildModeOpen, BuildModeClose,
-    NotebookOpen, NotebookClose, NotebookDropdown,
+    BuildModeOpen, BuildModeClose, BuildModeTabSwitch,
+    NotebookOpen, NotebookClose, NotebookDropdown, NotebookTabSwitch,
     NumTypes
 }
 
