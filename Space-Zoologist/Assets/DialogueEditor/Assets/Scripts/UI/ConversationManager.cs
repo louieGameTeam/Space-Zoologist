@@ -131,7 +131,7 @@ namespace DialogueEditor
             bool progressInput = Progress();
 
             if (m_state != eState.Off) { 
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetKeyDown(KeyCode.LeftControl))
                 {
                     skipping = !skipping;
                 }
