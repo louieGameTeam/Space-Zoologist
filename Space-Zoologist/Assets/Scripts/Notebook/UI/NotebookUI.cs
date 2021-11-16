@@ -16,6 +16,7 @@ public class NotebookUI : MonoBehaviour
     public NotebookTabPicker TabPicker => tabPicker;
     public UnityEvent OnContentChanged => onContentChanged;
     public BoolEvent OnNotebookToggle => onNotebookToggle;
+    public bool IsOpen => isOpen;
     #endregion
 
     #region Private Editor Fields

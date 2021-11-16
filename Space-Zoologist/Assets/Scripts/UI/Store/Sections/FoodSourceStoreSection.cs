@@ -25,7 +25,6 @@ public class FoodSourceStoreSection : StoreSection
     /// </summary>
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
-        Debug.Log("Attempting to place food");
         base.OnCursorPointerUp(eventData);
         if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Right ||
             GameManager.Instance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)

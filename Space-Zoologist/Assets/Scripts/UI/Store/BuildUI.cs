@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 public class BuildUI : MonoBehaviour
 {
+    #region Public Properties
+    public IntToggleGroupPicker StoreSectionIndexPicker => storeSectionIndexPicker;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Toggle group that picks the store menu to show")]
-    private IntToggleGroupPicker indexPicker;
+    [FormerlySerializedAs("indexPicker")]
+    private IntToggleGroupPicker storeSectionIndexPicker;
     [SerializeField]
     [Tooltip("Button that closes the build UI when clicked")]
     private Button closeButton;
@@ -25,12 +31,12 @@ public class BuildUI : MonoBehaviour
         // Get the menu manager
         menuManager = FindObjectOfType<MenuManager>();
         // Set toggle picked to the first one
-        indexPicker.SetTogglePicked(0);
+        storeSectionIndexPicker.SetTogglePicked(0);
 
         // Open the menu on the menu manager
-        indexPicker.OnToggleStateChanged.AddListener(() =>
+        storeSectionIndexPicker.OnToggleStateChanged.AddListener(() =>
         {
-            menuManager.OpenMenu(indexPicker.FirstValuePicked);
+            menuManager.OpenMenu(storeSectionIndexPicker.FirstValuePicked);
         });
 
         // Call the close function when the close button is clicked
@@ -41,7 +47,7 @@ public class BuildUI : MonoBehaviour
     #region Public Methods
     public void Close()
     {
-        // Toggle the store to off
+        // Set the store to off
         menuManager.SetStoreIsOn(false);
     }
     #endregion
