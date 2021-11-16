@@ -9,6 +9,22 @@ public class CameraController : MonoBehaviour
 {
     private const float deadzone = 0.01f;
 
+    public Camera Cam
+    {
+        get
+        {
+            if(!cam)
+            {
+                // Try to get the main camera
+                cam = Camera.main;
+
+                // If the camera still was not found, then through a missing reference exception
+                if (!cam) throw new MissingComponentException($"{nameof(CameraController)}: " +
+                    $"no camera found with the 'MainCamera' tag"); 
+            }
+            return cam;
+        }
+    }
     public bool ControlsEnabled { get; set; } = true;
 
     [SerializeField] float WASDSpeed = 0.5f;
@@ -36,8 +52,7 @@ public class CameraController : MonoBehaviour
     #region Monobehaviour Messages
     void Start()
     {
-        cam = this.GetComponent<Camera>();
-        targetZoom = cam.orthographicSize;
+        targetZoom = Cam.orthographicSize;
 
         transform.position = new Vector3(GameManager.Instance.LevelData.MapWidth / 2, GameManager.Instance.LevelData.MapHeight / 2, transform.position.z);
         originalPosition = transform.position;
@@ -59,13 +74,13 @@ public class CameraController : MonoBehaviour
     public void Lock(CameraPositionLock positionLock)
     {
         this.positionLock = positionLock;
-        positionLock.Lock(cam);
+        positionLock.Lock(Cam);
     }
     public void Unlock()
     {
         if(positionLock != null)
         {
-            positionLock.Unlock(cam);
+            positionLock.Unlock(Cam);
             positionLock = null;
         }
     }
@@ -80,7 +95,7 @@ public class CameraController : MonoBehaviour
 
         targetZoom -= scrollData * zoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
+        Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
     }
 
     private void HandleKeyboard()
