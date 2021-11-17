@@ -113,7 +113,8 @@ public class StoreSection : MonoBehaviour
         }
         else
         {
-            storeItems[item].RemainingAmount += count;
+            this.ResourceManager.AddItem(item.ItemName, count);
+            //storeItems[item].RemainingAmount += count;
         }
     }
 

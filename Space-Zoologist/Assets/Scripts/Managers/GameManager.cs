@@ -267,17 +267,25 @@ public class GameManager : MonoBehaviour
             m_cameraController.ControlsEnabled = !notebookIsOn;
             inspectorObjectiveUI.SetIsOpen(!notebookIsOn);
             if (notebookIsOn) m_menuManager.SetStoreIsOn(false);
+
+            // Set npc active only if both notebook and build ui are not open
+            m_dialogueManager.SetNPCActive(!notebookUI.IsOpen && !m_menuManager.IsInStore);
         });
         // If store is opened, then close the notebook
         m_menuManager.OnStoreToggled.AddListener(storeIsOn =>
         {
             if (storeIsOn) notebookUI.SetIsOpen(false);
+
+            // Set npc active only if both notebook and build ui are not open
+            m_dialogueManager.SetNPCActive(!notebookUI.IsOpen && !m_menuManager.IsInStore);
         });
     }
 
     private void SetupObjectives()
     {
         isObjectivePanelOpen = true;
+
+        maxDay = LevelData.LevelObjectiveData.numberOfDays;
 
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in LevelData.LevelObjectiveData.survivalObjectiveDatas)
