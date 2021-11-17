@@ -285,6 +285,8 @@ public class GameManager : MonoBehaviour
     {
         isObjectivePanelOpen = true;
 
+        maxDay = LevelData.LevelObjectiveData.numberOfDays;
+
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in LevelData.LevelObjectiveData.survivalObjectiveDatas)
         {
