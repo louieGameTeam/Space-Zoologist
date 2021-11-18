@@ -7,6 +7,22 @@ using DG.Tweening;
 
 public class ConceptsCanvasUI : NotebookUIChild
 {
+    #region Public Typedefs
+    [System.Serializable]
+    public class FoldoutAnchor
+    {
+        public Vector2 anchor;
+        public Vector2 sizeDelta;
+
+        public Tween Apply(RectTransform rectTransform, float time)
+        {
+            rectTransform.DOKill();
+            rectTransform.DOAnchorMax(anchor, time);
+            return rectTransform.DOSizeDelta(sizeDelta, time);
+        }
+    }
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform that expands and contracts when the canvas folds in/out")]
@@ -17,6 +33,12 @@ public class ConceptsCanvasUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Time it takes for the canvas to expand/collapse")]
     private float foldoutTime = 0.3f;
+    [SerializeField]
+    [Tooltip("Anchors of the rect transform when the canvas is folded out")]
+    private FoldoutAnchor foldoutAnchors;
+    [SerializeField]
+    [Tooltip("Anchors of the rect transform when the canvas is folded in")]
+    private FoldoutAnchor foldinAnchors;
 
     [Space]
 
@@ -113,14 +135,10 @@ public class ConceptsCanvasUI : NotebookUIChild
     #region Private Methods
     private void ApplyFoldoutState(bool state)
     {
-        // Complete any tweening animations
-        foldoutRect.DOKill();
-
         // Change the anchor to either the far right of the parent or the middle of the parent
         if (state)
         {
-            foldoutRect.DOAnchorMax(new Vector2(1f, foldoutRect.anchorMax.y), foldoutTime)
-                .OnComplete(() => drawingCanvasParent.gameObject.SetActive(true));
+            foldoutAnchors.Apply(foldoutRect, foldoutTime).OnComplete(() => drawingCanvasParent.gameObject.SetActive(true));
 
             // Try to get the game manager
             GameManager instance = GameManager.Instance;
@@ -135,7 +153,7 @@ public class ConceptsCanvasUI : NotebookUIChild
         else
         {
             drawingCanvasParent.gameObject.SetActive(false);
-            foldoutRect.DOAnchorMax(new Vector2(0.5f, foldoutRect.anchorMax.y), foldoutTime);
+            foldinAnchors.Apply(foldoutRect, foldoutTime);
 
             // Unlock the camera so it goes back to its previous position
             GameManager instance = GameManager.Instance;
