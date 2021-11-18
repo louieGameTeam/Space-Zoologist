@@ -116,11 +116,12 @@ public class DialogueManager : MonoBehaviour
             {
                 AudioManager.instance?.PlayOneShot(SFXType.Notification);
                 UpdateCurrentDialogue();
-                bool need = needForDeserialization.Dequeue();
-                if (need)
-                    StartNewConversation();
-                else
+                // if there is a queued conversation and it forbid deserialization, do runtime load
+                if (needForDeserialization.Count >= 1 && needForDeserialization.Dequeue() == false) {
                     StartNewConversationWithoutDeserialization();
+                }
+                else
+                    StartNewConversation();
             }
             else
             {
