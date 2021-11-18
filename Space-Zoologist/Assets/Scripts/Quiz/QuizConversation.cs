@@ -78,7 +78,7 @@ public class QuizConversation : MonoBehaviour
 
             // Then, say the quiz part of the conversation
             NPCConversation conversation = Create(dialogueManager);
-            dialogueManager.SetNewDialogue(conversation);
+            dialogueManager.SetNewQuiz(conversation);
         }
     }
     public NPCConversation Create(DialogueManager dialogueManager)
@@ -183,7 +183,7 @@ public class QuizConversation : MonoBehaviour
         }
 
         // Serialize the editable conversation back into the NPCConversation and return the result
-        conversation.Serialize(editableConversation);
+        conversation.RuntimeSave(editableConversation);
         return conversation;
     }
     #endregion

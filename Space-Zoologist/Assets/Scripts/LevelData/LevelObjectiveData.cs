@@ -25,6 +25,7 @@ public class ResourceObjectiveData
 [CreateAssetMenu]
 public class LevelObjectiveData : ScriptableObject
 {
+    public int numberOfDays;
     public List<SurvivalObjectiveData> survivalObjectiveDatas = default;
     public List<ResourceObjectiveData> resourceObjectiveDatas = default;
 }

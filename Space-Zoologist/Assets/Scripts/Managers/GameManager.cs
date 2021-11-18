@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     // "FindObjectWithType" will find it
     [SerializeField] NotebookUI notebookUI = default;
     public NotebookUI NotebookUI => notebookUI;
+    [SerializeField] BuildUI buildUI = default;
+    public BuildUI BuildUI => buildUI;
     [SerializeField] InspectorObjectiveUI inspectorObjectiveUI = default;
 
     [Header("Time Variables")]
@@ -265,17 +267,25 @@ public class GameManager : MonoBehaviour
             m_cameraController.ControlsEnabled = !notebookIsOn;
             inspectorObjectiveUI.SetIsOpen(!notebookIsOn);
             if (notebookIsOn) m_menuManager.SetStoreIsOn(false);
+
+            // Set npc active only if both notebook and build ui are not open
+            m_dialogueManager.SetNPCActive(!notebookUI.IsOpen && !m_menuManager.IsInStore);
         });
         // If store is opened, then close the notebook
         m_menuManager.OnStoreToggled.AddListener(storeIsOn =>
         {
             if (storeIsOn) notebookUI.SetIsOpen(false);
+
+            // Set npc active only if both notebook and build ui are not open
+            m_dialogueManager.SetNPCActive(!notebookUI.IsOpen && !m_menuManager.IsInStore);
         });
     }
 
     private void SetupObjectives()
     {
         isObjectivePanelOpen = true;
+
+        maxDay = LevelData.LevelObjectiveData.numberOfDays;
 
         // Create the survival objectives
         foreach (SurvivalObjectiveData objectiveData in LevelData.LevelObjectiveData.survivalObjectiveDatas)
@@ -364,7 +374,6 @@ public class GameManager : MonoBehaviour
 
     private void InitialNeedSystemUpdate()
     {
-        m_foodSourceManager.LoadInitialFoods();
         this.UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
         TogglePause();
@@ -577,6 +586,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DebugWin() {
+        isMainObjectivesCompleted = true;
+
+        DebugGameOver();
+    }
+    
+    public void DebugGameOver() {
+        this.m_isGameOver = true;
+
+        // TODO figure out what should happen when the main objectives are complete
+        EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
+
+        // GameOver.cs listens for the event and handles gameover
+        EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+
+        Debug.Log($"Level Completed!");
+    }
+
     public void TurnObjectivePanelOn()
     {
         this.isObjectivePanelOpen = true;
@@ -658,16 +685,11 @@ public class GameManager : MonoBehaviour
 
     public void nextDay()
     {
-        UpdateDayText(++currentDay);
-        if(currentDay > maxDay)
-        {
-            // GameOver.cs listens for the event and handles gameover
-            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
-        }
-
         m_gridSystem.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
+        UpdateAllNeedSystems();
+        m_populationManager.UpdateAllGrowthConditions();
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
         {
             m_populationManager.Populations[i].HandleGrowth();
@@ -676,6 +698,13 @@ public class GameManager : MonoBehaviour
         m_populationManager.UpdateAllGrowthConditions();
         m_inspector.UpdateCurrentDisplay();
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
+
+        UpdateDayText(++currentDay);
+        if (currentDay > maxDay)
+        {
+            // GameOver.cs listens for the event and handles gameover
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+        }
     }
 
     public void EnableInspectorToggle(bool enabled)

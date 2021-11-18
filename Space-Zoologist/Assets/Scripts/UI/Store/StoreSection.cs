@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class StoreSection : MonoBehaviour
 {
     public ItemType ItemType => itemType;
+    public Item SelectedItem => selectedItem;
 
     // Can't display in editor anymore because it is in a prefab
     /*[SerializeField] */private GraphicRaycaster raycaster;
@@ -112,7 +113,8 @@ public class StoreSection : MonoBehaviour
         }
         else
         {
-            storeItems[item].RemainingAmount += count;
+            this.ResourceManager.AddItem(item.ItemName, count);
+            //storeItems[item].RemainingAmount += count;
         }
     }
 
@@ -127,6 +129,7 @@ public class StoreSection : MonoBehaviour
             OnItemSelectionCanceled();
             return;
         }
+        AudioManager.instance.PlayOneShot(SFXType.Valid);
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         selectedItem = item;
     }
@@ -153,10 +156,8 @@ public class StoreSection : MonoBehaviour
 
     public bool CanBuy(Item item)
     {
-        if (storeItems.ContainsKey(item) && GameManager.Instance.Balance < storeItems[item].item.Price && ResourceManager.CheckRemainingResource(item) == 0)
+        if (storeItems.ContainsKey(item) && ResourceManager.CheckRemainingResource(item) == 0)
         {
-            Debug.Log("You can't buy this!");
-            //OnItemSelectionCanceled();
             return false;
         }
         return true;

@@ -6,16 +6,26 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance = null;
+
+    #region Public Fields
     public MusicManager MusicManager => musicManager;
     public AudioSource SFX => sfx;
+    public float MasterVolume => masterVolume;
+    public float MusicVolume => musicVolume;
+    public float SfxVolume => sfxVolume;
+    #endregion
+
+    #region Private Fields
     [SerializeField] MusicManager musicManager;
     [SerializeField] AudioSource sfx;
+
     float masterVolume = 1;
     float musicVolume = 1;
     float sfxVolume = 1;
 
     [SerializeField] SFXLibrary SFXLibrary;
     Dictionary<SFXType, SFXLibrary.AudioObject> SFXDict;
+    #endregion
 
 
     private void Awake()

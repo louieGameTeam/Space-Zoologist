@@ -22,7 +22,7 @@ public class Inspector : MonoBehaviour
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
-    private GameObject PopulationHighlighted = null;
+    public GameObject PopulationHighlighted { get; private set; } = null;
     private Vector3Int selectedPosition;
 
     //TODO This does not feels right to be here
@@ -263,5 +263,15 @@ public class Inspector : MonoBehaviour
     public GameObject GetAnimalSelected()
     {
         return lastPopulationSelected;
+    }
+
+    public void GetGameTileAndTileData(out GameTile gameTile, out GridSystem.TileData tileData)
+    {
+        // Update animal location reference
+        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int pos = GameManager.Instance.m_gridSystem.WorldToCell(worldPos);
+        gameTile = GameManager.Instance.m_gridSystem.GetGameTileAt(pos);
+        tileData = GameManager.Instance.m_gridSystem.GetTileData(pos);
     }
 }

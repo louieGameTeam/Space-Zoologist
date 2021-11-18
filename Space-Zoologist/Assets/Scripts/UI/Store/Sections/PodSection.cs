@@ -43,6 +43,7 @@ public class PodSection : StoreSection
                 base.OnItemSelectionCanceled();
                 return;
             }
+            base.HandleAudio();
             populationManager.UpdatePopulation(selectedSpecies, position);
             base.ResourceManager.Placed(selectedSpecies, 1);
         }

@@ -65,11 +65,15 @@ public class MenuManager : MonoBehaviour
 
     public void SetStoreIsOn(bool isOn)
     {
-        if (isOn)
+        if (isOn == this.IsInStore)
         {
-            OpenStore();
+            return;
         }
-        else CloseStore();
+
+        if (isOn) 
+            OpenStore();
+        else 
+            CloseStore();
 
         onStoreToggled.Invoke(isOn);
     }
@@ -145,20 +149,35 @@ public class MenuManager : MonoBehaviour
     {
         foreach(GameObject ui in UI)
         {
-            ui.SetActive(isActive);
+            ui.GetComponent<Button>().interactable = isActive;
+            ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
-        if (!isActive)
-        {
-            GameManager.Instance.m_inspector.CloseInspector();
-            GameManager.Instance.TurnObjectivePanelOn();
-            GameManager.Instance.EnableInspectorToggle(false);
+        // if (!isActive)
+        // {
+        //     GameManager.Instance.m_inspector.CloseInspector();
+        //     GameManager.Instance.TurnObjectivePanelOn();
+        //     GameManager.Instance.EnableInspectorToggle(false);
 
-        }
-        else
+        // }
+        // else
+        // {
+        //     GameManager.Instance.EnableInspectorToggle(true);
+        // }
+    }
+
+    public void ToggleUISingleButton(string buttonName)
+    {
+        foreach(GameObject ui in UI)
         {
-            GameManager.Instance.EnableInspectorToggle(true);
+            if(ui.name == buttonName)
+            {
+                bool isActive = !ui.GetComponent<Button>().interactable;
+                ui.GetComponent<Button>().interactable = isActive;
+                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+                break;
+            }
         }
     }
 }
