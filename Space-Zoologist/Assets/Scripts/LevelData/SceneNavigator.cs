@@ -11,24 +11,14 @@ public class SceneNavigator : ScriptableObject
 
     public void LoadLevel(string levelName)
     {
+        GameManager.Instance?.HandleExitLevel();
         this.UpdateRecentlyLoadedLevel(levelName);
         SceneManager.LoadScene(levelName, LoadSceneMode.Single);
     }
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene("MainLevel");
-    }
-
-    public void LoadNextLevel() {
-        for (int i = 0; i < Levels.Count; i++) {
-            if (Levels[i].SceneName == RecentlyLoadedLevel) {
-                // found current level, load the next one
-                LoadLevel(Levels[i + 1].SceneName);
-                return;
-            }
-        }
-        Debug.LogError("Scene Navigator: Did not find current level. Check if level name matches scene name.");
+        LoadLevel("MainLevel");
     }
 
     public void LoadMainMenu()

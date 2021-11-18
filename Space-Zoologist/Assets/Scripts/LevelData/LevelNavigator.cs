@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelNavigator : MonoBehaviour
 {
-
+    [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] LevelDataLoader LevelLoader = default;
     [SerializeField] GameObject LevelUIPrefab = default;
     [SerializeField] GameObject LevelContent = default;
@@ -28,7 +28,7 @@ public class LevelNavigator : MonoBehaviour
             newLevel.GetComponent<LevelUI>().InitializeLevelUI(level.Level);
             newLevel.GetComponent<Button>().onClick.AddListener(() => {
                 currentLevel.levelName = level.Level.SceneName;
-                SceneManager.LoadScene("MainLevel");
+                SceneNavigator.LoadLevel("MainLevel");
             });
             this.DisplayedLevels.Add(newLevel);
         }
