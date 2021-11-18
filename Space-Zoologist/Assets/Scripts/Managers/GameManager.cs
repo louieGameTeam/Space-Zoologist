@@ -561,6 +561,13 @@ public class GameManager : MonoBehaviour
         this.IngameUI.SetActive(false);
     }
 
+    public void HandleExitLevel() {
+        // Is not currently in level
+        if (SceneNavigator.RecentlyLoadedLevel != "MainLevel") return;
+
+        m_gridSystem.SetGridOverlay(false);
+    }
+
     public void HandleGameOver()
     {
         Pause();
