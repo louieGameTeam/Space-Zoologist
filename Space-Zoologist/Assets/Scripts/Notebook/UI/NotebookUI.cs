@@ -30,6 +30,9 @@ public class NotebookUI : MonoBehaviour
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
     private NotebookTabPicker tabPicker;
     [SerializeField]
+    [Tooltip("Reference to the audio manager for the notebook")]
+    private NotebookSoundManager soundManager;
+    [SerializeField]
     [Tooltip("Offsets from the sceen edges for the notebook")]
     private RectOffset defaultSize;
     [SerializeField]
@@ -93,6 +96,9 @@ public class NotebookUI : MonoBehaviour
         {
             nameTargetMap.Add(bookmarkTarget.name, bookmarkTarget);
         }
+
+        // Setup sound events after all children are set up
+        soundManager.SetupSoundEvents();
 
         // This line of code prevents the notebook from turning off the first time that it is turned on,
         // while also making sure it is turned off at the start
