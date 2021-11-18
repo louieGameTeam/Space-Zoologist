@@ -193,8 +193,8 @@ public class MoveObject : MonoBehaviour
             LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
             sellBackCost = tileItemData.itemObject.Price;
         }
-        MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
-        DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
+        MoveButton.GetComponentInChildren<Text>().text = "$0"; //$"${moveCost}"; These are set to 0 until we figure out the design for moveing and selling stuff
+        DeleteButton.GetComponentInChildren<Text>().text = "$0"; //$"${sellBackCost}";
     }
 
     private void UpdateMoveUIPosition()

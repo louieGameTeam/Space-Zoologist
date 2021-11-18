@@ -9,8 +9,33 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
-    public int CountQueuedConversations => queuedConversations.Count;
+    #region Public Typedefs
+    [System.Serializable]
+    public struct ConversationUIData
+    {
+        public Sprite dialogueBackground;
+        public float dialoguePanelHeight;
+        public float nameTextYPos;
+        public RectOffset speechTextRectOffsets;
 
+        // Set the conversation UI to the data in this structure
+        public void SetConversationUI(ConversationManager manager)
+        {
+            manager.BackgroundImage = dialogueBackground;
+            manager.DialogueBackground.sprite = dialogueBackground;
+            manager.DialoguePanel.sizeDelta = new Vector2(manager.DialoguePanel.sizeDelta.x, dialoguePanelHeight);
+
+            manager.NameText.rectTransform.anchoredPosition = new Vector2(manager.NameText.rectTransform.anchoredPosition.x, nameTextYPos);
+            manager.DialogueText.rectTransform.SetOffsets(speechTextRectOffsets);
+        }
+    }
+    #endregion
+
+    #region Public Properties
+    public int CountQueuedConversations => queuedConversations.Count;
+    #endregion
+
+    #region Private Fields
     private NPCConversation currentDialogue = default;
     [SerializeField] private bool HideNPC = default;
     private NPCConversation startingConversation = default;
@@ -21,7 +46,28 @@ public class DialogueManager : MonoBehaviour
 
     private bool ContinueSpeech = false;
 
+    [SerializeField]
+    [Tooltip("How to display the conversation while NPC is active")]
+    private ConversationUIData npcActive;
+    [SerializeField]
+    [Tooltip("How to display the conversation while the NPC is inactive")]
+    private ConversationUIData npcInactive;
+    #endregion
 
+    #region Monobehaviour Messages
+    public void OnValidate()
+    {
+        ConversationManager manager = FindObjectOfType<ConversationManager>();
+
+        if(manager)
+        {
+            if (manager.NpcIcon.enabled) npcActive.SetConversationUI(manager);
+            else npcInactive.SetConversationUI(manager);
+        }
+    }
+    #endregion
+
+    #region Public Methods
     /// <summary>
     /// Initialize stuffs here
     /// </summary>
@@ -48,28 +94,6 @@ public class DialogueManager : MonoBehaviour
         //GameManager.Instance.LevelData.PassedConversation.Speak(this);
         //StartInteractiveConversation();
     }
-
-    private void ConversationEnded()
-    {
-        if(queuedConversations.Count > 0)
-        {
-            UpdateCurrentDialogue();
-            bool need = needForDeserialization.Dequeue();
-            if (need)
-                StartNewConversation();
-            else
-                StartNewConversationWithoutDeserialization();
-        }
-        else
-        {
-            ContinueSpeech = false;
-            // inconsistent access to the gameObject causes missing ref exception
-            // after scene transitions. Moved to ConversationManager.TurnOffUI()
-            //ConversationManagerGameObject.SetActive(false);
-            GameManager.Instance.m_menuManager.ToggleUI(true);
-        }
-    }
-
     public void SetNewDialogue(NPCConversation newDialogue)
     {
         if (queuedConversations.Contains(newDialogue))
@@ -130,6 +154,37 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public void SetNPCActive(bool active)
+    {
+        ConversationManager manager = ConversationManager.Instance;
+        manager.NpcIcon.enabled = active;
+
+        if (active) npcActive.SetConversationUI(manager);
+        else npcInactive.SetConversationUI(manager);
+    }
+    #endregion
+
+    #region Private Methods
+    private void ConversationEnded()
+    {
+        if(queuedConversations.Count > 0)
+        {
+            UpdateCurrentDialogue();
+            bool need = needForDeserialization.Dequeue();
+            if (need)
+                StartNewConversation();
+            else
+                StartNewConversationWithoutDeserialization();
+        }
+        else
+        {
+            ContinueSpeech = false;
+            // inconsistent access to the gameObject causes missing ref exception
+            // after scene transitions. Moved to ConversationManager.TurnOffUI()
+            //ConversationManagerGameObject.SetActive(false);
+            GameManager.Instance.m_menuManager.ToggleUI(true);
+        }
+    }
     private void StartNewConversation()
     {
         GameManager.Instance.m_menuManager.ToggleUI(false);
@@ -144,4 +199,5 @@ public class DialogueManager : MonoBehaviour
         ConversationManager.Instance.StartConversationWithoutDeserialization(currentDialogue);
         ContinueSpeech = true;
     }
+    #endregion
 }
