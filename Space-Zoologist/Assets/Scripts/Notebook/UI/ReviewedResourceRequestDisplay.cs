@@ -7,6 +7,17 @@ using TMPro;
 
 public class ReviewedResourceRequestDisplay : NotebookUIChild
 {
+    #region Public Typedefs
+    [System.Serializable]
+    public class ColorArray
+    {
+        public Color[] colors = new Color[3] 
+        {
+            Color.green, Color.yellow, Color.red
+        };
+    }
+    #endregion
+
     #region Public Properties
     public UnityEvent OnReviewConfirmed => onReviewConfirmed;
     #endregion
@@ -15,6 +26,13 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
     [SerializeField]
     [Tooltip("Game object at the root of the display object")]
     private GameObject displayRoot;
+    [SerializeField]
+    [Tooltip("Reference to the image that displays the border")]
+    private Image border;
+    [SerializeField]
+    [Tooltip("List of colors displayed depending on the status of the review")]
+    [EditArrayWrapperOnEnum("colors", typeof(ReviewedResourceRequest.Status))]
+    private ColorArray statusColors = new ColorArray();
     [SerializeField]
     [Tooltip("Reference to the text to display the status")]
     private TextMeshProUGUI statusText;
@@ -75,6 +93,9 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
     {
         // Create the review
         review = ReviewedResourceRequest.Review(request);
+
+        // Set the border color based on the review status
+        border.color = statusColors.colors[(int)review.CurrentStatus];
 
         // Set the status and reason text
         statusText.text = review.CurrentStatus.ToString();
