@@ -32,8 +32,8 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     [Tooltip("Prefab instantiated to display the encyclopedia images")]
     private ImagePreviewManager imagePrefab;
     [SerializeField]
-    [Tooltip("Toggle used to determine if highlights are being added or removed")]
-    private Toggle highlightToggle;
+    [Tooltip("Group of toggles used to determine whether we are highlighting or not")]
+    private BoolToggleGroupPicker highlightPicker;
     [SerializeField]
     [Tooltip("Texture of the cursor while highlighting")]
     private CursorTexture highlightAddTexture;
@@ -75,7 +75,7 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             }
 
             // Add/remove highlight depending on the state of the toggle
-            if (highlightToggle.isOn) currentArticle.RequestHighlightAdd(start, end);
+            if (highlightPicker.FirstValuePicked) currentArticle.RequestHighlightAdd(start, end);
             else currentArticle.RequestHighlightRemove(start, end);
 
             // Udpate the text for this article
@@ -88,7 +88,7 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     // On pointer enter, set the correct cursor
     public void OnPointerEnter(PointerEventData data)
     {
-        if (highlightToggle.isOn) highlightAddTexture.SetCursor();
+        if (highlightPicker.FirstValuePicked) highlightAddTexture.SetCursor();
         else highlightRemoveTexture.SetCursor();
     }
     // On pointer exit, restore the default cursor
