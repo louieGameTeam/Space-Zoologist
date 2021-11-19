@@ -12,9 +12,11 @@ public class LevelNavigator : MonoBehaviour
     [SerializeField] GameObject LevelContent = default;
     public List<GameObject> DisplayedLevels = default;
     private LevelMenuSelector currentLevel = default;
+    List<string> passedLevels = new List<string>();
 
     public void Start()
     {
+        passedLevels = GameManager.LoadGame();
         this.DisplayedLevels = new List<GameObject>();
         this.InitializeLevelDisplay();
         currentLevel = FindObjectOfType<LevelMenuSelector>();
@@ -30,6 +32,9 @@ public class LevelNavigator : MonoBehaviour
                 currentLevel.levelName = level.Level.SceneName;
                 SceneNavigator.LoadLevel("MainLevel");
             });
+            if (!passedLevels.Contains(level.Level.SceneName)) {
+                newLevel.GetComponent<Button>().interactable = false;
+            }
             this.DisplayedLevels.Add(newLevel);
         }
     }

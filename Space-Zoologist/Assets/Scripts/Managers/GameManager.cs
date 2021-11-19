@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
     public int numSecondaryObjectivesCompleted { get; private set; }
 
     public bool isObjectivePanelOpen { get; private set; }
-    
+
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
     [SerializeField] private TextMeshProUGUI objectivePanelText = default;
@@ -139,7 +140,64 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    [Serializable]
+    class SerializableList<T> {
+        public T[] _list;
+        public SerializableList(List<T> l)
+            {
+            _list = new T[l.Count];
+            for(int i = 0; i < l.Count; i++){
+                _list[i] = l[i];
+            }
+        }
+    }
     #region Loading Functions
+    public static void SaveGame(string curLevel)
+    {
+        string name = "sz.save";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        
+        Debug.Log("Saving Grid to " + fullPath);
+        if (File.Exists(fullPath))
+            Debug.Log("Overwriting file at " + fullPath);
+
+        List<string> passedLevel = LoadGame();
+
+        if (passedLevel.Contains(curLevel)) return;
+
+        passedLevel.Add(curLevel);
+        SerializableList<string> unlockedLevel = new SerializableList<string>(passedLevel);
+        try
+        {
+            string json = JsonUtility.ToJson(unlockedLevel);
+            File.WriteAllText(Path.Combine(Application.persistentDataPath, "sz.save"), json);
+        }
+        catch
+        {
+            Debug.LogError("Serialization error, NOT saved to protect existing saves");
+            return;
+        }
+        Debug.Log("Game Saved to: " + fullPath);
+    }
+
+    public static List<string> LoadGame()
+    {
+        string name = "sz.save";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        Debug.Log("Loading " + fullPath);
+        try
+        {
+            string json = File.ReadAllText(fullPath);
+            SerializableList<string> unlockedLevel = JsonUtility.FromJson<SerializableList<String>>(json);
+            List<string> passedLevel = new List<string>(unlockedLevel._list);
+            return passedLevel;
+        }
+        catch (Exception e)
+        {
+            print("Error reading from or no save file");
+            return new List<string>() { "Level0", "Level1E1" };
+        }
+    }
     public void SaveMap(string name = null, bool preset = true)
     {
         name = name ?? LevelOnPlay;
@@ -194,6 +252,7 @@ public class GameManager : MonoBehaviour
         Reload();
     }
 
+
     public void Reload()
     {
         m_plotIO.Initialize();
@@ -203,6 +262,8 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevelData()
     {
+        SaveGame(m_levelData.Level.SceneName);
+
         // set balance
         Balance = LevelData.StartingBalance;
 
@@ -561,7 +622,8 @@ public class GameManager : MonoBehaviour
         this.IngameUI.SetActive(false);
     }
 
-    public void HandleExitLevel() {
+    public void HandleExitLevel()
+    {
         // Is not currently in level
         if (SceneNavigator.RecentlyLoadedLevel != "MainLevel") return;
 
@@ -593,13 +655,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DebugWin() {
+    public void DebugWin()
+    {
         isMainObjectivesCompleted = true;
 
         DebugGameOver();
     }
-    
-    public void DebugGameOver() {
+
+    public void DebugGameOver()
+    {
         this.m_isGameOver = true;
 
         // TODO figure out what should happen when the main objectives are complete
@@ -717,7 +781,8 @@ public class GameManager : MonoBehaviour
     public void EnableInspectorToggle(bool enabled)
     {
         InspectorToggle.interactable = enabled;
-        if (!enabled) {
+        if (!enabled)
+        {
             InspectorToggle.isOn = false;
             ObjectiveToggle.isOn = true;
         }
