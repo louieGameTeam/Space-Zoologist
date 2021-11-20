@@ -188,6 +188,10 @@ public class TilePlacementController : MonoBehaviour
 
     private void UpdatePreviewPen()
     {
+        if (gridSystemReference.GetGameTileAt(this.currentMouseCellPosition)?.type == TileType.Wall) {
+            return;
+        }
+
         if (isFirstTile)
         {
             PlaceTile(currentMouseCellPosition);
