@@ -110,7 +110,7 @@ public class TilePlacementController : MonoBehaviour
         isPreviewing = false;
         lastMouseCellPosition = Vector3Int.zero;
         //temporarily removed because of revert bug
-        GameManager.Instance.m_gridSystem.ConfirmPlacement();
+        //GameManager.Instance.m_gridSystem.ConfirmPlacement();
 
         // Set terrain modified flag
         GameManager.Instance.m_gridSystem.HasTerrainChanged = true;
