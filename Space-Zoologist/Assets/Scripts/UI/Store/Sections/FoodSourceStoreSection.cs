@@ -27,7 +27,7 @@ public class FoodSourceStoreSection : StoreSection
     {
         base.OnCursorPointerUp(eventData);
         if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Right ||
-            GameManager.Instance.Balance < selectedItem.Price || base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
+            base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
             Debug.Log("Cannot place item that location");
             base.OnItemSelectionCanceled();
