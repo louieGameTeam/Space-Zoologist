@@ -73,7 +73,7 @@ public class BookmarkAddButton : NotebookUIChild
     public void UpdateInteractable()
     {
         Bookmark bookmark = new Bookmark(suggestedTitle, BookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
-        dropdown.Interactable = !UIParent.Notebook.HasBookmark(bookmark);
+        dropdown.Interactable = !UIParent.Data.HasBookmark(bookmark);
         hasBookmarkGraphic.SetActive(!dropdown.Interactable);
     }
     #endregion
@@ -90,7 +90,7 @@ public class BookmarkAddButton : NotebookUIChild
     protected virtual void TryAddBookmark()
     {
         Bookmark bookmark = new Bookmark(bookmarkTitle.text, BookmarkTargets.Select(x => BookmarkData.Create(x)).ToArray());
-        if (UIParent.Notebook.TryAddBookmark(bookmark))
+        if (UIParent.Data.TryAddBookmark(bookmark))
         {
             bookmarkUI.CreateBookmarkButton(bookmark);
             dropdown.DisableDropdown();

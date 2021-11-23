@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(TestAndMetricsModel))]
+[CustomPropertyDrawer(typeof(TestAndMetricsConfig))]
 public class TestAndMetricsModelDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        SerializedProperty enclosureScaffold = property.FindPropertyRelative(nameof(enclosureScaffold));
+        SerializedProperty scaffold = property.FindPropertyRelative(nameof(scaffold));
         SerializedProperty initialTexts = property.FindPropertyRelative(nameof(initialTexts));
 
         // Set height for only control
@@ -21,14 +21,14 @@ public class TestAndMetricsModelDrawer : PropertyDrawer
         if (property.isExpanded)
         {
             EditorGUI.indentLevel++;
-            NotebookEditorUtility.EnclosureScaffoldAndArrayField(position, enclosureScaffold, initialTexts);
+            NotebookEditorUtility.EnclosureScaffoldAndArrayField(position, scaffold, initialTexts);
             EditorGUI.indentLevel--;
         }
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        SerializedProperty enclosureScaffold = property.FindPropertyRelative(nameof(enclosureScaffold));
+        SerializedProperty scaffold = property.FindPropertyRelative(nameof(scaffold));
         SerializedProperty initialTexts = property.FindPropertyRelative(nameof(initialTexts));
 
         // Set height for one control
@@ -37,7 +37,7 @@ public class TestAndMetricsModelDrawer : PropertyDrawer
         if (property.isExpanded)
         {
             // Add in height for the scaffold and the foldout of the initial texts
-            height += EditorGUI.GetPropertyHeight(enclosureScaffold);
+            height += EditorGUI.GetPropertyHeight(scaffold);
             height += NotebookEditorUtility.GetSizeControlledArrayHeight(initialTexts);
         }
 

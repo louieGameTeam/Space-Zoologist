@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ObservationsEntry
+public class ObservationsEntryData
 {
+    #region Public Properties
     public string Title
     {
         get => title;
@@ -15,7 +16,9 @@ public class ObservationsEntry
         get => text;
         set => text = value;
     }
+    #endregion
 
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("The title applied to this entry")]
     private string title;
@@ -23,4 +26,5 @@ public class ObservationsEntry
     [TextArea(3, 20)]
     [Tooltip("Text in the entry")]
     private string text;
+    #endregion
 }

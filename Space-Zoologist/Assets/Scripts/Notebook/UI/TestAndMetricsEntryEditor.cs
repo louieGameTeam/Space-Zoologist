@@ -8,14 +8,14 @@ using TMPro;
 public class TestAndMetricsEntryEditor : NotebookUIChild
 {
     #region Public Properties
-    public TestAndMetricsEntry Entry
+    public TestAndMetricsEntryData Entry
     {
         get
         {
             if (entry == null)
             {
                 // Create a new entry with the current information
-                entry = new TestAndMetricsEntry
+                entry = new TestAndMetricsEntryData
                 {
                     Item = itemDropdown.SelectedItem,
                     Need = needDropdown.SelectedNeed,
@@ -23,7 +23,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
                     Notes = inputField.text
                 };
                 // Add the new entry to the list on the notebook object
-                TestAndMetricsEntryList list = UIParent.Notebook.TestAndMetrics.GetEntryList(enclosureID);
+                TestAndMetricsEntryListData list = UIParent.Data.TestAndMetrics.GetEntryList(enclosureID);
                 list.Entries.Add(entry);
 
                 // Editor is no longer faded
@@ -63,11 +63,11 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
     // Enclosure ID for the entry we are editing
     private LevelID enclosureID;
     // The entry that is edited by this UI
-    private TestAndMetricsEntry entry;
+    private TestAndMetricsEntryData entry;
     #endregion
 
     #region Public Methods
-    public void Setup(LevelID enclosureID, TestAndMetricsEntry entry, ScrollRect scrollTarget)
+    public void Setup(LevelID enclosureID, TestAndMetricsEntryData entry, ScrollRect scrollTarget)
     {
         base.Setup();
 
@@ -97,7 +97,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
             itemDropdown.SetDropdownValueWithoutNotify(0);
             needDropdown.SetDropdownValue(0);
             differenceDropdown.value = 0;
-            inputField.text = UIParent.Notebook.TestAndMetrics.GetInitialEntryText(enclosureID);
+            inputField.text = UIParent.Config.TestAndMetrics.GetInitialText(enclosureID);
         }
 
         // Cache the current id

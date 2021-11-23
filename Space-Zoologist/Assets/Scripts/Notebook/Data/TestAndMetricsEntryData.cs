@@ -6,8 +6,9 @@ using UnityEngine;
 /// Player observations on key metrics in play for one single aspect of the enclosure
 /// </summary>
 [System.Serializable]
-public class TestAndMetricsEntry
+public class TestAndMetricsEntryData
 {
+    #region Public Properties
     public ItemID Item
     {
         get => item;
@@ -28,7 +29,9 @@ public class TestAndMetricsEntry
         get => notes;
         set => notes = value;
     }
+    #endregion
 
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("The item addressed in this entry")]
     private ItemID item;
@@ -41,4 +44,5 @@ public class TestAndMetricsEntry
     [SerializeField]
     [Tooltip("Main text in the entry")]
     private string notes;
+    #endregion
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct ResearchEncyclopediaArticleHighlight : System.IComparable<ResearchEncyclopediaArticleHighlight>
+public struct TextHighlight : System.IComparable<TextHighlight>
 {
     // Public accessors for private data
     public int Start => start;
@@ -18,7 +18,7 @@ public struct ResearchEncyclopediaArticleHighlight : System.IComparable<Research
     [Tooltip("End position of the highlight in the article")]
     private int end;
 
-    public ResearchEncyclopediaArticleHighlight(int start, int end)
+    public TextHighlight(int start, int end)
     {
         this.start = start;
         this.end = end;
@@ -28,43 +28,43 @@ public struct ResearchEncyclopediaArticleHighlight : System.IComparable<Research
     {
         return i >= start && i <= end;
     }
-    public bool Overlap(ResearchEncyclopediaArticleHighlight other)
+    public bool Overlap(TextHighlight other)
     {
         return InRange(other.start) || InRange(other.end) || other.InRange(start) || other.InRange(end);
     }
     // True if the other highlight is fully contained in this highlight
-    public bool Contains(ResearchEncyclopediaArticleHighlight other)
+    public bool Contains(TextHighlight other)
     {
         return other.start >= start && other.end <= end;
     }
     // Combine two research highlights by bridging the gap between them
-    public ResearchEncyclopediaArticleHighlight Union(ResearchEncyclopediaArticleHighlight other)
+    public TextHighlight Union(TextHighlight other)
     {
         int newStart = Mathf.Min(start, other.start);
         int newEnd = Mathf.Max(end, other.end);
-        return new ResearchEncyclopediaArticleHighlight(newStart, newEnd);
+        return new TextHighlight(newStart, newEnd);
     }
     // Intersect two highlights by return the highlight that they both highlight over
     // NOTE: the resulting highlight is invalid (start >= end) if there is no overlap
-    public ResearchEncyclopediaArticleHighlight Intersect(ResearchEncyclopediaArticleHighlight other)
+    public TextHighlight Intersect(TextHighlight other)
     {
         int newStart = Mathf.Max(start, other.start);
         int newEnd = Mathf.Min(end, other.end);
-        return new ResearchEncyclopediaArticleHighlight(newStart, newEnd);
+        return new TextHighlight(newStart, newEnd);
     }
     // Return a list with at most two highlights representing the highlight on one side of the negation
     // followed by the highlight on the other side of the negation
-    public List<ResearchEncyclopediaArticleHighlight> Negate(ResearchEncyclopediaArticleHighlight other)
+    public List<TextHighlight> Negate(TextHighlight other)
     {
         if(Overlap(other))
         {
-            List<ResearchEncyclopediaArticleHighlight> highlights = new List<ResearchEncyclopediaArticleHighlight>();
+            List<TextHighlight> highlights = new List<TextHighlight>();
 
-            ResearchEncyclopediaArticleHighlight intersect = Intersect(other);
+            TextHighlight intersect = Intersect(other);
             // The highlight to the left of the intersection
-            ResearchEncyclopediaArticleHighlight left = new ResearchEncyclopediaArticleHighlight(start, intersect.start);
+            TextHighlight left = new TextHighlight(start, intersect.start);
             // The highlight to the right of the intersection
-            ResearchEncyclopediaArticleHighlight right = new ResearchEncyclopediaArticleHighlight(intersect.end, end);
+            TextHighlight right = new TextHighlight(intersect.end, end);
 
             // Check the highlights that are valid before adding them to the list
             if (left.Valid) highlights.Add(left);
@@ -74,11 +74,11 @@ public struct ResearchEncyclopediaArticleHighlight : System.IComparable<Research
         }
         else
         {
-            return new List<ResearchEncyclopediaArticleHighlight> { this };
+            return new List<TextHighlight> { this };
         }
     }
 
-    public int CompareTo(ResearchEncyclopediaArticleHighlight other)
+    public int CompareTo(TextHighlight other)
     {
         return start.CompareTo(other.start);
     }

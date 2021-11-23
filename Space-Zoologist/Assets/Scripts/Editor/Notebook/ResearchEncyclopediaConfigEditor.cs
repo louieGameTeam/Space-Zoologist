@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ResearchEncyclopedia))]
-public class ResearchEncyclopediaEditor : Editor
+[CustomEditor(typeof(ResearchEncyclopediaConfig))]
+public class ResearchEncyclopediaConfigEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        SerializedProperty articles = serializedObject.FindProperty("articlesList");
+        SerializedProperty articles = serializedObject.FindProperty(nameof(articles));
 
         // Set out the size property
         EditorGUILayout.PropertyField(articles.FindPropertyRelative("Array.size"));

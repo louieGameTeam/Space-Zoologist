@@ -31,7 +31,7 @@ public class CategoryFilteredItemDropdown : ItemDropdown
     protected override ItemID[] GetItemIDs()
     {
         return ItemRegistry.GetAllItemIDs()
-            .Where(id => categoryFilter.Contains(id.Category) && UIParent.Notebook.ItemIsUnlocked(id))
+            .Where(id => categoryFilter.Contains(id.Category) && UIParent.Data.ItemIsUnlocked(id))
             .ToArray();
     }
     #endregion

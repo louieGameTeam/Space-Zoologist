@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ResearchEntryList
+public class ResearchEntryListConfig
 {
     #region Public Properties
-    public ResearchEntry[] Entries => entries;
+    public ResearchEntryConfig[] Entries => entries;
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of research entries")]
-    private ResearchEntry[] entries;
+    private ResearchEntryConfig[] entries;
     #endregion
 }
