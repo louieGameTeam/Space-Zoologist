@@ -5,10 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class ResearchEntryData : NotebookDataModule
 {
-    #region Public Properties
-    public List<ResearchEncyclopediaArticleData> Articles => articles;
-    #endregion
-
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of notes that the player has taken in this research entry")]
@@ -82,6 +78,27 @@ public class ResearchEntryData : NotebookDataModule
         else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
             $"no label '{label}' was found in the list of research entry note labels" +
             $"\n\tLabels: [ {string.Join(", ", entryConfig.NoteLabels.Labels)} ]");
+    }
+    public ResearchEncyclopediaArticleData GetArticleData(ResearchEncyclopediaArticleID id)
+    {
+        ResearchEncyclopediaArticleConfig articleConfig = entryConfig.Encyclopedia.Articles.Find(article => article.ID == id);
+
+        if (articleConfig != null)
+        {
+            int index = entryConfig.Encyclopedia.Articles.IndexOf(articleConfig);
+            return GetArticleData(index);
+        }
+        else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
+            $"no article found with id '{id}'");
+    }
+    public ResearchEncyclopediaArticleData GetArticleData(int index)
+    {
+        if (index >= 0 && index < articles.Count)
+        {
+            return articles[index];
+        }
+        else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
+            $"no article data exists for index '{index}'");
     }
     #endregion
 }

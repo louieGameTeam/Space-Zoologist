@@ -11,6 +11,7 @@ public class NotebookConfig : ScriptableObject
     public ObservationsConfig Observations => observations;
     public TestAndMetricsConfig TestAndMetrics => testAndMetrics;
     public NotebookTabScaffold TabScaffold => tabScaffold;
+    public List<ItemID> InitiallyUnlockedItems => initiallyUnlockedItems;
     #endregion
 
     #region Private Editor Fields

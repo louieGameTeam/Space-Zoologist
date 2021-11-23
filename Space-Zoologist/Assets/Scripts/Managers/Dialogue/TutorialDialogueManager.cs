@@ -124,7 +124,8 @@ public class TutorialDialogueManager : MonoBehaviour
 
         // Get the list of all highlights in this encyclopedia article
         List<TextHighlight> highlights = notebook
-            .Data.Research.GetEntry(item).Articles[articleIndex].Highlights;
+            .Data.Research.GetEntry(item)
+            .GetArticleData(articleIndex).Highlights;
 
         CoroutineScheduler.FreezeUntilConditionIsMet(() =>
         {
@@ -140,7 +141,8 @@ public class TutorialDialogueManager : MonoBehaviour
 
         // Get the list of all highlights in this encyclopedia article
         List<TextHighlight> highlights = notebook
-            .Data.Research.GetEntry(item).Articles[articleIndex].Highlights;
+            .Data.Research.GetEntry(item)
+            .GetArticleData(articleIndex).Highlights;
 
         CoroutineScheduler.FreezeUntilConditionIsMet(() =>
         {

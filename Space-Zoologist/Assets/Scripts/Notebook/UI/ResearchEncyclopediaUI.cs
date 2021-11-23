@@ -11,14 +11,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     #region Public Properties
     public ResearchEncyclopediaConfig EncyclopediaConfig => UIParent.Config.Research.GetEntry(currentItem).Encyclopedia;
     public ResearchEncyclopediaArticleConfig ArticleConfig => EncyclopediaConfig != null ? EncyclopediaConfig.GetArticle(currentArticleID) : null;
-    public ResearchEncyclopediaArticleData ArticleData
-    {
-        get
-        {
-            int index = EncyclopediaConfig.Articles.IndexOf(ArticleConfig);
-            return UIParent.Data.Research.GetEntry(currentItem).Articles[index];
-        }
-    }
+    public ResearchEncyclopediaArticleData ArticleData => UIParent.Data.Research.GetEntry(currentItem).GetArticleData(currentArticleID);
     public ResearchEncyclopediaArticleID ArticleID
     {
         get => currentArticleID;

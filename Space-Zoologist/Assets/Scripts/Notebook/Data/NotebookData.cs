@@ -50,6 +50,11 @@ public class NotebookData : NotebookDataModule
         {
             acronymNotes.Add("");
         }
+        // Unlock each initial item
+        foreach (ItemID item in config.InitiallyUnlockedItems)
+        {
+            UnlockItem(item);
+        }
         research = new ResearchData(config);
         observations = new ObservationsData(config);
         concepts = new ConceptsData(config);
@@ -72,6 +77,11 @@ public class NotebookData : NotebookDataModule
             {
                 acronymNotes.Add("");
             }
+        }
+        // Unlock each initial item
+        foreach(ItemID item in config.InitiallyUnlockedItems)
+        {
+            UnlockItem(item);
         }
 
         // Set config for each sub-module
