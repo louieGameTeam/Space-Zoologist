@@ -348,11 +348,15 @@ public class TilePlacementController : MonoBehaviour
         {
             return false;
         }
-        GridSystem.TileData tileData = gridSystemReference.GetTileData(cellLocation);
-        if (tileData.Food)
-        {
-            return false;
-        }
+        // This code prevents the player from being able to place tiles under food.
+        // That was once part of the design but is no longer. If we ever decide to go back,
+        // this will do that.
+        //
+        // GridSystem.TileData tileData = gridSystemReference.GetTileData(cellLocation);
+        // if (tileData.Food)
+        // {
+        //     return false;
+        // }
         if (gridSystemReference.IsConstructing(cellLocation.x, cellLocation.y))
         {
             return false;
