@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using DialogueEditor;
 
 public class NotebookUI : MonoBehaviour
@@ -12,7 +13,8 @@ public class NotebookUI : MonoBehaviour
     #endregion
 
     #region Public Properties
-    public NotebookModel Notebook => notebook;
+    public NotebookConfig Config => config;
+    public NotebookData Data => data;
     public NotebookTabPicker TabPicker => tabPicker;
     public UnityEvent OnContentChanged => onContentChanged;
     public BoolEvent OnNotebookToggle => onNotebookToggle;
@@ -24,11 +26,15 @@ public class NotebookUI : MonoBehaviour
     [Tooltip("Rect transform at the root of the notebook UI")]
     private RectTransform root;
     [SerializeField]
+    [FormerlySerializedAs("notebook")]
     [Tooltip("Reference to the serialized object that holds all info about the notebook")]
-    private NotebookModel notebook;
+    private NotebookConfig config;
     [SerializeField]
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
     private NotebookTabPicker tabPicker;
+    [SerializeField]
+    [Tooltip("Reference to the audio manager for the notebook")]
+    private NotebookSoundManager soundManager;
     [SerializeField]
     [Tooltip("Offsets from the sceen edges for the notebook")]
     private RectOffset defaultSize;
@@ -44,6 +50,8 @@ public class NotebookUI : MonoBehaviour
     #endregion
 
     #region Private Fields
+    // Data that the player edits as they play with the notebook
+    private NotebookData data;
     // Reference to the resource request editor
     private ResourceRequestEditor resourceRequestEditor;
     // Maps the names of the category pickers to the components for fast lookup
@@ -59,11 +67,12 @@ public class NotebookUI : MonoBehaviour
     #region Monobehaviour Messages
     private void Start()
     {
-        // Setup the notebook at the start
-        notebook.Setup();
-
-        // Update the enclosure IDs
-        notebook.TryAddEnclosureID(LevelID.FromCurrentSceneName());
+        // In the future, instead of constructing a new object, we have to get it from a file
+        data = new NotebookData(config);
+        // Set the configuration of the notebook data
+        data.SetConfig(config);
+        // Add the current level
+        data.TryAddLevelID(LevelID.FromCurrentSceneName());
 
         // Try to get an instance of the game manager
         GameManager instance = GameManager.Instance;
@@ -73,7 +82,7 @@ public class NotebookUI : MonoBehaviour
         {
             foreach(LevelData.ItemData item in instance.LevelData.ItemQuantities)
             {
-                notebook.UnlockItem(item.itemObject.ItemID);
+                data.UnlockItem(item.itemObject.ItemID);
             }
         }
 
@@ -93,6 +102,9 @@ public class NotebookUI : MonoBehaviour
         {
             nameTargetMap.Add(bookmarkTarget.name, bookmarkTarget);
         }
+
+        // Setup sound events after all children are set up
+        soundManager.SetupSoundEvents();
 
         // This line of code prevents the notebook from turning off the first time that it is turned on,
         // while also making sure it is turned off at the start

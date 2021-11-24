@@ -9,9 +9,10 @@ using TMPro;
 public class ResearchEncyclopediaUI : NotebookUIChild
 {
     #region Public Properties
-    public ResearchEncyclopedia CurrentEncyclopedia => UIParent.Notebook.Research.GetEntry(currentItem).Encyclopedia;
-    public ResearchEncyclopediaArticle CurrentArticle => CurrentEncyclopedia != null ? CurrentEncyclopedia.GetArticle(currentArticleID) : null;
-    public ResearchEncyclopediaArticleID CurrentArticleID
+    public ResearchEncyclopediaConfig EncyclopediaConfig => UIParent.Config.Research.GetEntry(currentItem).Encyclopedia;
+    public ResearchEncyclopediaArticleConfig ArticleConfig => EncyclopediaConfig != null ? EncyclopediaConfig.GetArticle(currentArticleID) : null;
+    public ResearchEncyclopediaArticleData ArticleData => UIParent.Data.Research.GetEntry(currentItem).GetArticleData(currentArticleID);
+    public ResearchEncyclopediaArticleID ArticleID
     {
         get => currentArticleID;
         set
@@ -76,7 +77,7 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         itemPicker.OnItemPicked.AddListener(OnItemIDChanged);
 
         // Setup the bookmark target to get/set the article id
-        bookmarkTarget.Setup(() => CurrentArticleID, x => CurrentArticleID = (ResearchEncyclopediaArticleID)x);
+        bookmarkTarget.Setup(() => ArticleID, x => ArticleID = (ResearchEncyclopediaArticleID)x);
     }
     // Get a list of the research article IDs currently in the dropdown
     public List<ResearchEncyclopediaArticleID> GetDropdownIDs()
@@ -118,12 +119,12 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         dropdown.ClearOptions();
 
         // Check if encyclopedia is null before trying to use it
-        if(CurrentEncyclopedia != null)
+        if(EncyclopediaConfig != null)
         {
             // Loop through all articles in the current encyclopedia and add their title-author pairs to the dropdown list
-            foreach (KeyValuePair<ResearchEncyclopediaArticleID, ResearchEncyclopediaArticle> article in CurrentEncyclopedia.Articles)
+            foreach (ResearchEncyclopediaArticleConfig article in EncyclopediaConfig.Articles)
             {
-                dropdown.options.Add(new TMP_Dropdown.OptionData(ArticleIDToDropdownLabel(article.Key)));
+                dropdown.options.Add(new TMP_Dropdown.OptionData(ArticleIDToDropdownLabel(article.ID)));
             }
             // If this item has been selected before, open to the article that was selected previously
             if (previousSelected.ContainsKey(id)) dropdown.value = previousSelected[id];
@@ -148,14 +149,14 @@ public class ResearchEncyclopediaUI : NotebookUIChild
 
     private void OnDropdownValueChanged(int value)
     {
-        if (CurrentEncyclopedia != null)
+        if (EncyclopediaConfig != null)
         {
             // Create the id object
             currentArticleID = DropdownLabelToArticleID(dropdown.options[value].text);
             // Update the article on the script
-            articleBody.UpdateArticle(CurrentArticle);
+            articleBody.UpdateArticle(ArticleConfig, ArticleData);
         }
-        else articleBody.UpdateArticle(null);
+        else articleBody.UpdateArticle(null, null);
     }
     #endregion
 }

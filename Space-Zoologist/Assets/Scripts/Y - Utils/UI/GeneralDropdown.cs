@@ -39,7 +39,6 @@ public class GeneralDropdown : UIBehaviour
     [SerializeField]
     [Tooltip("Event invoked when the dropdown is deactivated")]
     private UnityEvent onDropdownDisabled;
-
     #endregion
 
     #region Private Data

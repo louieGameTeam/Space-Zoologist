@@ -73,7 +73,7 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
         confirmButton.onClick.AddListener(() =>
         {
             displayRoot.SetActive(false);
-            UIParent.Notebook.Concepts.ConfirmReviwedResourceRequest(LevelID.FromCurrentSceneName(), review);
+            UIParent.Data.Concepts.ConfirmReviwedResourceRequest(LevelID.FromCurrentSceneName(), review);
             onReviewConfirmed.Invoke();
         });
         // Cancel button disables the display

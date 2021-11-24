@@ -20,6 +20,10 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     public IntIntEvent OnHighlightConfirm => onHighlightConfirm;
     #endregion
 
+    #region Private Properties
+    private bool ArticleExists => articleConfig != null && articleData != null;
+    #endregion
+
     #region Private Editor Fields
     // Private editor data
     [SerializeField]
@@ -51,13 +55,14 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     #region Private Fields
     // Reference to the encyclopedia article that is currently being rendered,
     // if "null" no article is rendered
-    private ResearchEncyclopediaArticle currentArticle;
+    private ResearchEncyclopediaArticleConfig articleConfig;
+    private ResearchEncyclopediaArticleData articleData;
     #endregion
 
     #region UI Events
     public void OnEndDrag(PointerEventData data)
     {
-        if(currentArticle != null)
+        if(articleConfig != null)
         {
             // Use selection position on the input field to determine position of highlights
             int start = textField.selectionAnchorPosition;
@@ -75,8 +80,8 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             }
 
             // Add/remove highlight depending on the state of the toggle
-            if (highlightPicker.FirstValuePicked) currentArticle.RequestHighlightAdd(start, end);
-            else currentArticle.RequestHighlightRemove(start, end);
+            if (highlightPicker.FirstValuePicked) articleData.RequestHighlightAdd(start, end);
+            else articleData.RequestHighlightRemove(start, end);
 
             // Udpate the text for this article
             UpdateArticleDisplay();
@@ -99,22 +104,23 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     #endregion
 
     #region Public Methods
-    public void UpdateArticle(ResearchEncyclopediaArticle article)
+    public void UpdateArticle(ResearchEncyclopediaArticleConfig config, ResearchEncyclopediaArticleData data)
     {
-        currentArticle = article;
+        articleConfig = config;
+        articleData = data;
         UpdateArticleDisplay();
     }
     public void UpdateArticleDisplay()
     {
         // If an article was given, set the text with the highlights
-        if (currentArticle != null) 
+        if (articleConfig != null) 
         { 
-            textField.text = RichEncyclopediaArticleText(currentArticle, highlightTags);
+            textField.text = RichEncyclopediaArticleText();
 
             // Destroy all images
             foreach (Transform child in imageParent) Destroy(child.gameObject);
             // Create an image object for each sprite
-            foreach (Sprite sprite in currentArticle.Sprites)
+            foreach (Sprite sprite in articleConfig.Sprites)
             {
                 ImagePreviewManager preview = Instantiate(imagePrefab, imageParent);
                 preview.BaseImage.sprite = sprite;
@@ -123,21 +129,21 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
         // No article given implies this encyclopedia has no entries
         else textField.text = "<color=#aaa>This encyclopedia has no entries</color>";
     }
-    public static string RichEncyclopediaArticleText(ResearchEncyclopediaArticle article, List<RichTextTag> tags)
+    public string RichEncyclopediaArticleText()
     {
-        string richText = article.Text;
+        string richText = articleConfig.Text;
         int indexAdjuster = 0;    // Adjust the index for each highlight
         int indexIncrementer = 0; // Length of all the tags used in each highlight
 
         // Compute the index incrementer by incrementing tag lengths
-        foreach (RichTextTag tag in tags)
+        foreach (RichTextTag tag in highlightTags)
         {
             indexIncrementer += tag.Length;
         }
         // Go through all highlights
-        foreach (ResearchEncyclopediaArticleHighlight highlight in article.Highlights)
+        foreach (TextHighlight highlight in articleData.Highlights)
         {
-            richText = RichTextTag.ApplyMultiple(tags, richText, highlight.Start + indexAdjuster, highlight.Length);
+            richText = RichTextTag.ApplyMultiple(highlightTags, richText, highlight.Start + indexAdjuster, highlight.Length);
             // Increase the global index adjuster
             indexAdjuster += indexIncrementer;
         }

@@ -18,7 +18,7 @@ public class ObservationEntryEditor : NotebookUIChild
     private TMP_InputField textInput;
 
     // Setup this editor with the entry that it will edit
-    public void Setup(ObservationsEntry entry, LevelID id, ScrollRect scrollTarget)
+    public void Setup(ObservationsEntryData entry, LevelID id, ScrollRect scrollTarget)
     {
         base.Setup();
 

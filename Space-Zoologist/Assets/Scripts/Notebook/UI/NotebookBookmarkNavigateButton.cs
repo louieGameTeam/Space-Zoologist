@@ -79,7 +79,7 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
 
     private void RemoveBookmark()
     {
-        UIParent.Notebook.RemoveBookmark(bookmark);
+        UIParent.Data.RemoveBookmark(bookmark);
         Destroy(gameObject);
     }
     #endregion

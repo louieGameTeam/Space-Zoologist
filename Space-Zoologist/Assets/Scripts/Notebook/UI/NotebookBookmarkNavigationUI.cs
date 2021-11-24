@@ -16,9 +16,9 @@ public class NotebookBookmarkNavigationUI : NotebookUIChild
         base.Setup();
 
         // Create a bookmark for each bookmark currently in the notebook
-        for (int i = 0; i < UIParent.Notebook.Bookmarks.Count; i++)
+        for (int i = 0; i < UIParent.Data.Bookmarks.Count; i++)
         {
-            CreateBookmarkButton(UIParent.Notebook.Bookmarks[i]);
+            CreateBookmarkButton(UIParent.Data.Bookmarks[i]);
         }
     }
 
