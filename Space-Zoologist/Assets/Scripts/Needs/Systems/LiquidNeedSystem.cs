@@ -44,8 +44,13 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Dictionary<string, Need> popNeeds = population.GetNeedValues();
 
-                if(!popNeeds.ContainsKey("Liquid"))
+                if(!popNeeds.ContainsKey("Liquid") || //If the food source doesn't need liquid
+                  (popNeeds.ContainsKey("WaterPoison") && popNeeds["WaterPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) || //or it has a fresh water poison threshold and that threshold is surpassed
+                  (popNeeds.ContainsKey("SaltPoison") && popNeeds["SaltPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) ||  //or it has a salt poison threshold and that threshold is surpassed
+                  (popNeeds.ContainsKey("BacteriaPoison") && popNeeds["BacteriaPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //or it has a bacteria poison threshold and that threshold is surpassed
+                {
                     continue;
+                }
 
                 if ((!popNeeds.ContainsKey("Water") || popNeeds["Water"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) && //If the population either doesn't need fresh water or the fresh water threshold is met
                     (!popNeeds.ContainsKey("Salt") || popNeeds["Salt"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
@@ -70,17 +75,7 @@ public class LiquidNeedSystem : NeedSystem
             float waterSplit = liquidBody.tiles.Count / (float)accessiblePopulations.Count;
             foreach(Population population in accessiblePopulations)
             {
-                Dictionary<string, Need> popNeeds = population.GetNeedValues();
-                if((popNeeds.ContainsKey("WaterPoison") && popNeeds["WaterPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) || //If the food source has a fresh water poison threshold and that threshold is surpassed
-                   (popNeeds.ContainsKey("SaltPoison") && popNeeds["SaltPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) ||  //or it has a salt poison threshold and that threshold is surpassed
-                   (popNeeds.ContainsKey("BacteriaPoison") && popNeeds["BacteriaPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //or it has a bacteria poison threshold and that threshold is surpassed
-                {
-                    liquidTilesPerPopulation[population] -= waterSplit;
-                }
-                else
-                {
-                    liquidTilesPerPopulation[population] += waterSplit;
-                }
+                liquidTilesPerPopulation[population] += waterSplit;
 
                 if(!liquidBodiesPerPopulation.ContainsKey(population))
                     liquidBodiesPerPopulation.Add(population, new HashSet<LiquidBody>());
