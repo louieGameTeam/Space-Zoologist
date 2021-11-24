@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7044248723361295602
+--- !u!1 &3156976780546295444
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7044248723361295603}
-  - component: {fileID: 7044248723361295571}
-  - component: {fileID: 7044248723361295570}
-  - component: {fileID: 7044248723361295565}
-  - component: {fileID: 7044248723361295564}
-  - component: {fileID: 7044248723361295567}
-  - component: {fileID: 7044248723361295566}
-  - component: {fileID: 7044248723361295561}
-  - component: {fileID: 7044248723361295560}
-  - component: {fileID: 7044248723361295563}
-  - component: {fileID: 7044248723361295562}
-  - component: {fileID: 7044248723361295557}
-  - component: {fileID: 7044248723361295556}
-  - component: {fileID: 7044248723361295559}
-  - component: {fileID: 7044248723361295558}
-  - component: {fileID: 7044248723361295553}
-  - component: {fileID: 7044248723361295552}
-  - component: {fileID: 7044248723361295555}
-  - component: {fileID: 7044248723361295554}
-  - component: {fileID: 7044248723361295613}
-  - component: {fileID: 7044248723361295612}
-  - component: {fileID: 7044248723361295615}
-  - component: {fileID: 7044248723361295614}
-  - component: {fileID: 7044248723361295609}
-  - component: {fileID: 7044248723361295608}
-  - component: {fileID: 7044248723361295611}
-  - component: {fileID: 7044248723361295610}
-  - component: {fileID: 7044248723361295605}
-  - component: {fileID: 7044248723361295604}
-  - component: {fileID: 7044248723361295607}
-  - component: {fileID: 7044248723361295606}
-  - component: {fileID: 7044248723361295601}
-  - component: {fileID: 7044248723361295600}
+  - component: {fileID: 7077825236099008674}
+  - component: {fileID: 3948965929270231356}
+  - component: {fileID: 4409316698801158705}
+  - component: {fileID: 6122108585288695505}
+  - component: {fileID: 6617319810413536311}
+  - component: {fileID: 6629869260193238352}
+  - component: {fileID: 4735206514789198369}
+  - component: {fileID: 6942779226774296250}
+  - component: {fileID: 7692147106037080413}
+  - component: {fileID: 7687806781773441635}
+  - component: {fileID: 6675201007192909939}
+  - component: {fileID: 7517316897016513144}
+  - component: {fileID: 7660236861173550684}
+  - component: {fileID: 1425734301306215432}
+  - component: {fileID: 1307457177466847702}
+  - component: {fileID: 8624150031959761443}
+  - component: {fileID: 5951142223739724583}
+  - component: {fileID: 7161327510207864984}
+  - component: {fileID: 8754754869185964984}
+  - component: {fileID: 5424700885091461543}
+  - component: {fileID: 3817260709930414568}
+  - component: {fileID: 2193506216916526768}
+  - component: {fileID: 3348642564105128701}
+  - component: {fileID: 641406928508044734}
+  - component: {fileID: 7676250116911944128}
+  - component: {fileID: 3219045527998162756}
+  - component: {fileID: 7661957720818313512}
+  - component: {fileID: 561562744029039661}
+  - component: {fileID: 7711664932451112068}
+  - component: {fileID: 185558852910520336}
+  - component: {fileID: 7592740347057020229}
+  - component: {fileID: 104162961542348303}
+  - component: {fileID: 9084359798276685225}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -48,27 +48,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7044248723361295603
+--- !u!4 &7077825236099008674
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7044248723629898144}
+  m_Father: {fileID: 4547379644064622995}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7044248723361295571
+--- !u!114 &3948965929270231356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -81,13 +81,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295570
+--- !u!114 &4409316698801158705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -100,13 +100,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295565
+--- !u!114 &6122108585288695505
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -119,13 +119,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295564
+--- !u!114 &6617319810413536311
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -138,13 +138,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295567
+--- !u!114 &6629869260193238352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -157,13 +157,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295566
+--- !u!114 &4735206514789198369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -176,13 +176,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295561
+--- !u!114 &6942779226774296250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -195,13 +195,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295560
+--- !u!114 &7692147106037080413
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -210,17 +210,39 @@ MonoBehaviour:
   NodeID: 12
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6087966469458766546}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: NotebookButton
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6087966469458766546}
+        m_MethodName: FreezeUntilNotebookOpen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295563
+--- !u!114 &7687806781773441635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -233,13 +255,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295562
+--- !u!114 &6675201007192909939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -252,13 +274,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295557
+--- !u!114 &7517316897016513144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -271,13 +293,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295556
+--- !u!114 &7660236861173550684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -290,13 +312,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295559
+--- !u!114 &1425734301306215432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -309,13 +331,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295558
+--- !u!114 &1307457177466847702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -328,13 +350,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295553
+--- !u!114 &8624150031959761443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -347,13 +369,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295552
+--- !u!114 &5951142223739724583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -366,13 +388,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295555
+--- !u!114 &7161327510207864984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -385,13 +407,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295554
+--- !u!114 &8754754869185964984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -404,13 +426,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295613
+--- !u!114 &5424700885091461543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -423,13 +445,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295612
+--- !u!114 &3817260709930414568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -442,13 +464,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295615
+--- !u!114 &2193506216916526768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -461,13 +483,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295614
+--- !u!114 &3348642564105128701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -480,13 +502,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295609
+--- !u!114 &641406928508044734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -499,13 +521,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295608
+--- !u!114 &7676250116911944128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -518,13 +540,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295611
+--- !u!114 &3219045527998162756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -537,13 +559,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295610
+--- !u!114 &7661957720818313512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -556,13 +578,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295605
+--- !u!114 &561562744029039661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -575,13 +597,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295604
+--- !u!114 &7711664932451112068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -594,13 +616,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295607
+--- !u!114 &185558852910520336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -613,13 +635,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295606
+--- !u!114 &7592740347057020229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -632,13 +654,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295601
+--- !u!114 &104162961542348303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -651,13 +673,13 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!114 &7044248723361295600
+--- !u!114 &9084359798276685225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723361295602}
+  m_GameObject: {fileID: 3156976780546295444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -670,7 +692,7 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
---- !u!1 &7044248723629898147
+--- !u!1 &3662275773114520942
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -678,8 +700,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7044248723629898144}
-  - component: {fileID: 7044248723629898145}
+  - component: {fileID: 4547379644064622995}
+  - component: {fileID: 6704412186561318006}
+  - component: {fileID: 6087966469458766546}
   m_Layer: 0
   m_Name: Level2E1Intro
   m_TagString: Untagged
@@ -687,102 +710,135 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7044248723629898144
+--- !u!4 &4547379644064622995
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723629898147}
+  m_GameObject: {fileID: 3662275773114520942}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7044248723361295603}
+  - {fileID: 7077825236099008674}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7044248723629898145
+--- !u!114 &6704412186561318006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044248723629898147}
+  m_GameObject: {fileID: 3662275773114520942}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 35
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-270.5,\"yPos\":143},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Who?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":48.5,\"yPos\":140},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi!\",\"parentUIDs\":[4,1,1],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-277.5,\"yPos\":840},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Well,
-    some of those food resources are species.\",\"parentUIDs\":[8,8],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":18.5,\"yPos\":841},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
-    up to the challenge!\",\"parentUIDs\":[10,8,8],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-110.5,\"yPos\":1332},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Player
-    opens the encyclopedia\",\"parentUIDs\":[13,17,13,17],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-623.5,\"yPos\":1587},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Candentis
-    Acernis\",\"parentUIDs\":[15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-369.5,\"yPos\":1594},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
-    Spatium Bacca\",\"parentUIDs\":[17,15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":150.5,\"yPos\":1595},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Formica
-    Collis\",\"parentUIDs\":[15,15],\"SpeechUID\":25},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-123.5,\"yPos\":1600},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Humidum
-    Limax\",\"parentUIDs\":[25,15,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-108.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, I\u2019m Juno.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-275.5,\"yPos\":226},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"...Dr.
-    Star said she would mention me to you\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-272.5,\"yPos\":340},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Anyways.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-108.5,\"yPos\":522},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"My
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":189.5,\"yPos\":-778},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Who?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":508.5,\"yPos\":-781},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi!\",\"parentUIDs\":[4,1,1],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":182.5,\"yPos\":-81},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Well,
+    some of those food resources are species.\",\"parentUIDs\":[8,8],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":478.5,\"yPos\":-80},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+    up to the challenge!\",\"parentUIDs\":[10,8,8],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-163.5,\"yPos\":666},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Candentis
+    Acernis\",\"parentUIDs\":[15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":90.5,\"yPos\":673},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
+    Spatium Bacca\",\"parentUIDs\":[17,15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":610.5,\"yPos\":674},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Formica
+    Collis\",\"parentUIDs\":[15,15],\"SpeechUID\":25},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":336.5,\"yPos\":679},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Humidum
+    Limax\",\"parentUIDs\":[25,15,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":351.5,\"yPos\":-899},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
+    there, I\u2019m Juno.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":184.5,\"yPos\":-695},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"...Dr.
+    Star said she would mention me to you\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":187.5,\"yPos\":-581},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Anyways.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":-399},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"My
     job here is a lot like yours, but I focus on the special variant of Candentis
-    Acernis.\",\"parentUIDs\":[5,4,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-108.5,\"yPos\":622},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
+    Acernis.\",\"parentUIDs\":[5,4,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":-299},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
     leaves are actual gold, you know. If you haven\u2019t snuck down to the enclosure...it\u2019s
-    worth it.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-108.5,\"yPos\":721},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Dr.
+    worth it.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":-200},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Dr.
     Star indicated that you haven\u2019t managed an enclosure with more than one
-    species yet.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-282.5,\"yPos\":935},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"When
+    species yet.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":177.5,\"yPos\":14},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"When
     we use them as food, though, we don\u2019t need to focus on other needs typical
-    of a species, like safety concerns.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-108.5,\"yPos\":1122},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"It\u2019ll
-    be a fun challenge, probably. I\u2019ll show you the ropes.\",\"parentUIDs\":[11,10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-108.5,\"yPos\":1222},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"First,
+    of a species, like safety concerns.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":201},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"It\u2019ll
+    be a fun challenge, probably. I\u2019ll show you the ropes.\",\"parentUIDs\":[11,10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":344.5,\"yPos\":334},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"First,
     open up the new Eligans Impar encyclopedia entry. Take a bit to read through
-    it.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-121.5,\"yPos\":1424},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Based
-    on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[16,20,24,26],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-409.5,\"yPos\":1428},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"G-go
-    read your encyclopedia again.\",\"parentUIDs\":[16,20,26,16,20,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-110.5,\"yPos\":1711},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Yep.
-    Same as CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-109.5,\"yPos\":1835},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"As
-    you might have guessed, the two species have basically the same food preferences.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-113.5,\"yPos\":1965},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"The
+    it.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":338.5,\"yPos\":503},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Based
+    on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[17,13,13,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[16,20,24,26],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":50.5,\"yPos\":507},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"G-go
+    read your encyclopedia again.\",\"parentUIDs\":[16,20,26,16,20,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":349.5,\"yPos\":790},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Yep.
+    Same as CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":350.5,\"yPos\":914},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"As
+    you might have guessed, the two species have basically the same food preferences.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":346.5,\"yPos\":1044},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"The
     challenging part is figuring out how to feed both species at once, off the same
-    resources.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-112.5,\"yPos\":2062},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Your
-    goal is to get both populations up to 20.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-112.5,\"yPos\":2173},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Be
+    resources.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":347.5,\"yPos\":1141},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Your
+    goal is to get both populations up to 20.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":347.5,\"yPos\":1252},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Be
     meticulous with your enclosure modifications. I hope to be impressed by your
-    engineering skills when it\u2019s time for the report-back.\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-111.5,\"yPos\":2300},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    engineering skills when it\u2019s time for the report-back.\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":348.5,\"yPos\":1379},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Oh,
     and I\u2019m not an easy grader, unlike Dr. Star.\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
-  - {fileID: 7044248723361295571}
-  - {fileID: 7044248723361295570}
-  - {fileID: 7044248723361295565}
-  - {fileID: 7044248723361295564}
-  - {fileID: 7044248723361295567}
-  - {fileID: 7044248723361295566}
-  - {fileID: 7044248723361295561}
-  - {fileID: 7044248723361295560}
-  - {fileID: 7044248723361295563}
-  - {fileID: 7044248723361295562}
-  - {fileID: 7044248723361295557}
-  - {fileID: 7044248723361295556}
-  - {fileID: 7044248723361295559}
-  - {fileID: 7044248723361295558}
-  - {fileID: 7044248723361295553}
-  - {fileID: 7044248723361295552}
-  - {fileID: 7044248723361295555}
-  - {fileID: 7044248723361295554}
-  - {fileID: 7044248723361295613}
-  - {fileID: 7044248723361295612}
-  - {fileID: 7044248723361295615}
-  - {fileID: 7044248723361295614}
-  - {fileID: 7044248723361295609}
-  - {fileID: 7044248723361295608}
-  - {fileID: 7044248723361295611}
-  - {fileID: 7044248723361295610}
-  - {fileID: 7044248723361295605}
-  - {fileID: 7044248723361295604}
-  - {fileID: 7044248723361295607}
-  - {fileID: 7044248723361295606}
-  - {fileID: 7044248723361295601}
-  - {fileID: 7044248723361295600}
+  - {fileID: 3948965929270231356}
+  - {fileID: 4409316698801158705}
+  - {fileID: 6122108585288695505}
+  - {fileID: 6617319810413536311}
+  - {fileID: 6629869260193238352}
+  - {fileID: 4735206514789198369}
+  - {fileID: 6942779226774296250}
+  - {fileID: 7692147106037080413}
+  - {fileID: 7687806781773441635}
+  - {fileID: 6675201007192909939}
+  - {fileID: 7517316897016513144}
+  - {fileID: 7660236861173550684}
+  - {fileID: 1425734301306215432}
+  - {fileID: 1307457177466847702}
+  - {fileID: 8624150031959761443}
+  - {fileID: 5951142223739724583}
+  - {fileID: 7161327510207864984}
+  - {fileID: 8754754869185964984}
+  - {fileID: 5424700885091461543}
+  - {fileID: 3817260709930414568}
+  - {fileID: 2193506216916526768}
+  - {fileID: 3348642564105128701}
+  - {fileID: 641406928508044734}
+  - {fileID: 7676250116911944128}
+  - {fileID: 3219045527998162756}
+  - {fileID: 7661957720818313512}
+  - {fileID: 561562744029039661}
+  - {fileID: 7711664932451112068}
+  - {fileID: 185558852910520336}
+  - {fileID: 7592740347057020229}
+  - {fileID: 104162961542348303}
+  - {fileID: 9084359798276685225}
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6087966469458766546}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: NotebookButton
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6087966469458766546}
+        m_MethodName: FreezeUntilNotebookOpen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6087966469458766546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662275773114520942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77ebfae569d54841bfdaf8ac61d81ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
