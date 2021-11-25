@@ -12,9 +12,14 @@ public class LevelNavigator : MonoBehaviour
     [SerializeField] GameObject LevelContent = default;
     public List<GameObject> DisplayedLevels = default;
     private LevelMenuSelector currentLevel = default;
+    int lastLvl;
+    int lastEnc;
 
     public void Start()
     {
+        string LastLevel = GameManager.LoadGame();
+        lastLvl = GameManager.ExtractLevelInfo(LastLevel)[0];
+        lastEnc = GameManager.ExtractLevelInfo(LastLevel)[1];
         this.DisplayedLevels = new List<GameObject>();
         this.InitializeLevelDisplay();
         currentLevel = FindObjectOfType<LevelMenuSelector>();
@@ -30,6 +35,14 @@ public class LevelNavigator : MonoBehaviour
                 currentLevel.levelName = level.Level.SceneName;
                 SceneNavigator.LoadLevel("MainLevel");
             });
+
+            int[] levelInfo = GameManager.ExtractLevelInfo(level.Level.SceneName);
+            if (lastLvl < levelInfo[0] || lastLvl == levelInfo[0] && levelInfo[1] != lastEnc)
+            {
+                // temporarily commented out so that this does not interfere with playtesting
+                // newLevel.GetComponent<Button>().interactable = false;
+            }
+
             this.DisplayedLevels.Add(newLevel);
         }
     }
