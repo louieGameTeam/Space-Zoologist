@@ -140,37 +140,30 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    [Serializable]
-    class SerializableList<T> {
-        public T[] _list;
-        public SerializableList(List<T> l)
-            {
-            _list = new T[l.Count];
-            for(int i = 0; i < l.Count; i++){
-                _list[i] = l[i];
-            }
-        }
-    }
     #region Loading Functions
+    public static int[] ExtractLevelInfo(string levelName) {
+        levelName = levelName.Trim();
+        levelName = levelName.Replace("Level", "");
+        string[] temp = levelName.Split('E');
+        int[] info = new int[temp.Length];
+        for (int i = 0; i < info.Length; i++) {
+            info[i] = Int32.Parse(temp[i]);
+        }
+        return info;
+    }
     public static void SaveGame(string curLevel)
     {
         string name = "sz.save";
         string fullPath = Path.Combine(Application.persistentDataPath, name);
         
-        Debug.Log("Saving Grid to " + fullPath);
-        if (File.Exists(fullPath))
-            Debug.Log("Overwriting file at " + fullPath);
+        string prevLevel = LoadGame();
+        int prev = ExtractLevelInfo(prevLevel)[0];
+        int cur = ExtractLevelInfo(curLevel)[0];
+        if (cur < prev) return;
 
-        List<string> passedLevel = LoadGame();
-
-        if (passedLevel.Contains(curLevel)) return;
-
-        passedLevel.Add(curLevel);
-        SerializableList<string> unlockedLevel = new SerializableList<string>(passedLevel);
         try
         {
-            string json = JsonUtility.ToJson(unlockedLevel);
-            File.WriteAllText(Path.Combine(Application.persistentDataPath, "sz.save"), json);
+            File.WriteAllText(Path.Combine(Application.persistentDataPath, "sz.save"), curLevel);
         }
         catch
         {
@@ -180,22 +173,21 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Saved to: " + fullPath);
     }
 
-    public static List<string> LoadGame()
+    public static string LoadGame()
     {
         string name = "sz.save";
         string fullPath = Path.Combine(Application.persistentDataPath, name);
-        Debug.Log("Loading " + fullPath);
         try
         {
             string json = File.ReadAllText(fullPath);
-            SerializableList<string> unlockedLevel = JsonUtility.FromJson<SerializableList<String>>(json);
-            List<string> passedLevel = new List<string>(unlockedLevel._list);
-            return passedLevel;
+            print(json);
+            if (json.Length > 15 || json.Length < 7) throw new FormatException("Level longer than expected.");
+            return json;
         }
         catch (Exception e)
         {
             print("Error reading from or no save file");
-            return new List<string>() { "Level0", "Level1E1" };
+            return "Level1E1";
         }
     }
     public void SaveMap(string name = null, bool preset = true)
