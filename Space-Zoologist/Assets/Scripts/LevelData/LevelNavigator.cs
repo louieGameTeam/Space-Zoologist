@@ -29,21 +29,39 @@ public class LevelNavigator : MonoBehaviour
     {
         foreach (LevelData level in this.LevelLoader.levelDatas)
         {
-            GameObject newLevel = Instantiate(LevelUIPrefab, LevelContent.transform);
-            newLevel.GetComponent<LevelUI>().InitializeLevelUI(level.Level);
-            newLevel.GetComponent<Button>().onClick.AddListener(() => {
-                currentLevel.levelName = level.Level.SceneName;
-                SceneNavigator.LoadLevel("MainLevel");
-            });
-
             int[] levelInfo = GameManager.ExtractLevelInfo(level.Level.SceneName);
-            if (lastLvl < levelInfo[0] || lastLvl == levelInfo[0] && levelInfo[1] != lastEnc)
-            {
-                // temporarily commented out so that this does not interfere with playtesting
-                // newLevel.GetComponent<Button>().interactable = false;
-            }
 
-            this.DisplayedLevels.Add(newLevel);
+            // Hidden levels
+            if(lastLvl == levelInfo[0] && levelInfo[1] != lastEnc || lastLvl < levelInfo[0] && levelInfo[1] != 1)
+            {
+                continue;
+            }
+            else {
+                GameObject newLevel = InstantiateLevel(level);
+
+                // Locked or autoselect level
+                if (lastLvl < levelInfo[0] && levelInfo[1] == 1)
+                {
+                    newLevel.GetComponent<LevelUI>().SetName($"Level {levelInfo[0]}");
+                    newLevel.GetComponent<Button>().interactable = false;
+                }
+                else if (lastLvl == levelInfo[0] && levelInfo[1] == lastEnc)
+                {
+                    newLevel.GetComponent<LevelUI>().SetName($"Level {levelInfo[0]}");
+                }
+
+                this.DisplayedLevels.Add(newLevel);
+            }
         }
+    }
+    private GameObject InstantiateLevel(LevelData level)
+    {
+        GameObject newLevel = Instantiate(LevelUIPrefab, LevelContent.transform);
+        newLevel.GetComponent<LevelUI>().InitializeLevelUI(level.Level);
+        newLevel.GetComponent<Button>().onClick.AddListener(() => {
+            currentLevel.levelName = level.Level.SceneName;
+            SceneNavigator.LoadLevel("MainLevel");
+        });
+        return newLevel;
     }
 }

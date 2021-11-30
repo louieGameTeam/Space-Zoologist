@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         if (cur < prev) return;
         try
         {
-            File.WriteAllText(Path.Combine(Application.persistentDataPath, "sz.save"), curLevel);
+            File.WriteAllText(fullPath, curLevel);
         }
         catch
         {
@@ -173,6 +173,22 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Saved to: " + fullPath);
     }
 
+    public void ClearSave()
+    {
+        string name = "sz.save";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        try
+        {
+            File.WriteAllText(fullPath, "Level1E1");
+        }
+        catch
+        {
+            Debug.LogError("Serialization error.");
+            return;
+        }
+        Debug.Log("Game Data Reset.");
+    }
+
     public static string LoadGame()
     {
         string name = "sz.save";
@@ -180,7 +196,6 @@ public class GameManager : MonoBehaviour
         try
         {
             string json = File.ReadAllText(fullPath);
-            print(json);
             if (json.Length > 15 || json.Length < 7) throw new System.FormatException("Level longer than expected.");
             return json;
         }
