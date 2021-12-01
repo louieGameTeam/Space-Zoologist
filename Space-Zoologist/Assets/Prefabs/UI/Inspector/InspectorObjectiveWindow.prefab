@@ -2077,6 +2077,7 @@ GameObject:
   - component: {fileID: 7243082126267867213}
   - component: {fileID: 7243082126267867202}
   - component: {fileID: 6037491244839071911}
+  - component: {fileID: 6808062258899779883}
   m_Layer: 5
   m_Name: InspectorObjectiveWindow
   m_TagString: Untagged
@@ -2159,6 +2160,20 @@ MonoBehaviour:
   objectivePanel: {fileID: 5848914588836196529}
   inspectorToggle: {fileID: 6781891701553658211}
   inspector: {fileID: 3168205392388878789}
+--- !u!114 &6808062258899779883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243082126267867201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b53a8f6d51e6714d9919b63672a730b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  operationsBlocked:
+  - CameraControl
 --- !u!1 &7536904850095213284
 GameObject:
   m_ObjectHideFlags: 0
