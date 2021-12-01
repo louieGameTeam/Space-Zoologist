@@ -55,6 +55,14 @@ public class TutorialDialogueManager : MonoBehaviour
     {
         FreezeUntilNotebookTabOpen(NotebookTab.Research);
     }
+    public void FreezeUntilObserveTabOpen()
+    {
+        FreezeUntilNotebookTabOpen(NotebookTab.Observe);
+    }
+    public void FreezeUntilConceptTabOpen()
+    {
+        FreezeUntilNotebookTabOpen(NotebookTab.Concepts);
+    }
     public void FreezeUntilGoatTerrainHighlightPresent()
     {
         FreezeUntilHighlightPresent(
