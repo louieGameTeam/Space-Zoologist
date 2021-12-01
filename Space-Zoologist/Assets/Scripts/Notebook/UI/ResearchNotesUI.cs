@@ -8,7 +8,7 @@ using TMPro;
 public class ResearchNotesUI : NotebookUIChild
 {
     #region Public Properties
-    public ResearchNotes CurrentNotes => UIParent.Notebook.Research.GetEntry(itemPicker.SelectedItem).Notes;
+    public ResearchNoteLabels CurrentNoteLabels => UIParent.Config.Research.GetEntry(itemPicker.SelectedItem).NoteLabels;
     #endregion
 
     #region Private Editor Fields
@@ -63,7 +63,7 @@ public class ResearchNotesUI : NotebookUIChild
         currentNotes.Clear();
 
         // Create a new note for every label
-        foreach(string label in CurrentNotes.Labels.Labels)
+        foreach(string label in CurrentNoteLabels.Labels)
         {
             ResearchSingleNoteUI clone = Instantiate(notePrefab, noteParent.transform);
             clone.Setup(id, label, scrollView);

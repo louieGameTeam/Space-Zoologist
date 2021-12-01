@@ -30,7 +30,7 @@ public class ResearchSingleNoteUI : NotebookUIChild
         base.Setup();
 
         // Read the initial note value
-        string initialNote = UIParent.Notebook.Research.GetEntry(id).Notes.ReadNote(label);
+        string initialNote = UIParent.Data.Research.GetEntry(id).ReadNote(label);
 
         // Setup the initial note and label
         labelText.text = label + ":";
@@ -39,7 +39,7 @@ public class ResearchSingleNoteUI : NotebookUIChild
         // When input finishes editing then write the note to the notebook model
         myInputField.onEndEdit.AddListener(s =>
         {
-            UIParent.Notebook.Research.GetEntry(id).Notes.WriteNote(label, s);
+            UIParent.Data.Research.GetEntry(id).WriteNote(label, s);
         });
 
         // Make the scroll event of the input field target the scroll rect

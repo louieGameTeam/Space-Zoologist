@@ -112,6 +112,6 @@ public class ItemDropdown : NotebookUIChild
         // If we are notifying then raise the event
         if (notify) onItemSelected.Invoke(optionCategoryMap[selection]);
     }
-    protected virtual ItemID[] GetItemIDs() => ItemRegistry.GetAllItemIDs().Where(i => UIParent.Notebook.ItemIsUnlocked(i)).ToArray();
+    protected virtual ItemID[] GetItemIDs() => ItemRegistry.GetAllItemIDs().Where(i => UIParent.Data.ItemIsUnlocked(i)).ToArray();
     #endregion
 }

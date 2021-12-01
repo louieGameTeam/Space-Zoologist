@@ -60,14 +60,14 @@ public class TutorialDialogueManager : MonoBehaviour
         FreezeUntilHighlightPresent(
             new ItemID(ItemRegistry.Category.Species, 0), 
             0,
-            new ResearchEncyclopediaArticleHighlight(195, 336));
+            new TextHighlight(195, 336));
     }
     public void FreezeUntilGoatFirstHighlightAbsent()
     {
         FreezeUntilHighlightAbsent(
             new ItemID(ItemRegistry.Category.Species, 0), 
             0,
-            new ResearchEncyclopediaArticleHighlight(0, 127));
+            new TextHighlight(0, 127));
     }
     public void FreezeUntilSlugPicked(string pickerNameFilter)
     {
@@ -118,14 +118,14 @@ public class TutorialDialogueManager : MonoBehaviour
             return notebook.IsOpen && notebook.TabPicker.CurrentTab == tab;
         });
     }
-    private void FreezeUntilHighlightPresent(ItemID item, int articleIndex, ResearchEncyclopediaArticleHighlight targetHighlight)
+    private void FreezeUntilHighlightPresent(ItemID item, int articleIndex, TextHighlight targetHighlight)
     {
         NotebookUI notebook = GameManager.Instance.NotebookUI;
 
         // Get the list of all highlights in this encyclopedia article
-        List<ResearchEncyclopediaArticleHighlight> highlights = notebook
-            .Notebook.Research.GetEntry(item)
-            .Encyclopedia.GetArticle(articleIndex).Highlights;
+        List<TextHighlight> highlights = notebook
+            .Data.Research.GetEntry(item)
+            .GetArticleData(articleIndex).Highlights;
 
         CoroutineScheduler.FreezeUntilConditionIsMet(() =>
         {
@@ -135,14 +135,14 @@ public class TutorialDialogueManager : MonoBehaviour
             return indexOfMatch >= 0 && notebook.IsOpen && notebook.TabPicker.CurrentTab == NotebookTab.Research;
         });
     }
-    private void FreezeUntilHighlightAbsent(ItemID item, int articleIndex, ResearchEncyclopediaArticleHighlight targetHighlight)
+    private void FreezeUntilHighlightAbsent(ItemID item, int articleIndex, TextHighlight targetHighlight)
     {
         NotebookUI notebook = GameManager.Instance.NotebookUI;
 
         // Get the list of all highlights in this encyclopedia article
-        List<ResearchEncyclopediaArticleHighlight> highlights = notebook
-            .Notebook.Research.GetEntry(item)
-            .Encyclopedia.GetArticle(articleIndex).Highlights;
+        List<TextHighlight> highlights = notebook
+            .Data.Research.GetEntry(item)
+            .GetArticleData(articleIndex).Highlights;
 
         CoroutineScheduler.FreezeUntilConditionIsMet(() =>
         {

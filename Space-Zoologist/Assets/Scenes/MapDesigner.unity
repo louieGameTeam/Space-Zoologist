@@ -807,12 +807,10 @@ MonoBehaviour:
   UIElements: []
   StoreCanvas: {fileID: 1957932609}
   UI:
-  - {fileID: 1761754413}
   - {fileID: 3862188242057203408}
   - {fileID: 3956046058778708287}
   - {fileID: 8404243451497626317}
   - {fileID: 8349968274091900280}
-  - {fileID: 6621437665015075475}
   onStoreToggled:
     m_PersistentCalls:
       m_Calls: []
@@ -3711,6 +3709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HUD: {fileID: 170123770}
   CanUseIngameControls: 1
+  DebugMenu: {fileID: 0}
 --- !u!4 &1290313822
 Transform:
   m_ObjectHideFlags: 0
@@ -4629,19 +4628,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EventResponseManager: {fileID: 208159620}
---- !u!1 &1761754413 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3043627652767562312, guid: b6fa91312476840f19ee43626e3f9dfb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1981156779}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1761754414 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6781891701553658211, guid: b6fa91312476840f19ee43626e3f9dfb,
     type: 3}
   m_PrefabInstance: {fileID: 1981156779}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761754413}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
@@ -5352,11 +5345,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScrollText: 1
   ScrollSpeed: 0
-  BackgroundImage: {fileID: 21300000, guid: 87d205f8fbaf6884aa6e01a144366d9a, type: 3}
+  BackgroundImage: {fileID: 0}
   BackgroundImageSliced: 1
   OptionImage: {fileID: 21300000, guid: a069a2db45fc5a44f93fc83e8b23b16a, type: 3}
   OptionImageSliced: 1
   AllowMouseInteraction: 1
+  AdvanceInput: Submit
   Background: {fileID: 0}
   DialoguePanel: {fileID: 5819920347372218464}
   OptionsPanel: {fileID: 1938865356853006762}
@@ -5701,7 +5695,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 87d205f8fbaf6884aa6e01a144366d9a, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6113,8 +6107,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 68.5, y: -48.45}
-  m_SizeDelta: {x: -218.91748, y: -114.299995}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3162495226808526272
 CanvasRenderer:
@@ -6207,6 +6201,7 @@ MonoBehaviour:
   gameOverTitle: {fileID: 1043611555}
   gameOverText: {fileID: 740143009}
   notebookUI: {fileID: 9730707}
+  buildUI: {fileID: 0}
   inspectorObjectiveUI: {fileID: 992305454}
   maxDay: 20
   CurrentDayText: {fileID: 3294377205541531365}
@@ -6259,6 +6254,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HideNPC: 0
   ConversationManagerGameObject: {fileID: 120515477173918234}
+  npcActive:
+    dialogueBackground: {fileID: 0}
+    dialoguePanelHeight: 0
+    nameTextYPos: 0
+    speechTextRectOffsets:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  npcInactive:
+    dialogueBackground: {fileID: 0}
+    dialoguePanelHeight: 0
+    nameTextYPos: 0
+    speechTextRectOffsets:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
 --- !u!4 &3395325107312024776
 Transform:
   m_ObjectHideFlags: 0
@@ -6324,7 +6337,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 525.5, y: 72.2}
+  m_AnchoredPosition: {x: 525.5, y: 0}
   m_SizeDelta: {x: 966.7048, y: 46.172012}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3579607859477499988
@@ -6746,7 +6759,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -156, y: 77}
-  m_SizeDelta: {x: 1102, y: 333}
+  m_SizeDelta: {x: 1102, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &5839509403556141088
 MonoBehaviour:
@@ -7223,10 +7236,10 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 3
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
-  m_isTextTruncated: 1
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -7247,13 +7260,13 @@ MonoBehaviour:
   m_margin: {x: -135.29655, y: 23.994825, z: 0, w: 19.55099}
   m_textInfo:
     textComponent: {fileID: 7391843969009108002}
-    characterCount: 241
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 36
-    wordCount: 38
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 4
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
