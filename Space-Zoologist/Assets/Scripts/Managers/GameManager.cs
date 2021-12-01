@@ -368,7 +368,6 @@ public class GameManager : MonoBehaviour
         // If notebook is opened, then close the build ui
         notebookUI.OnNotebookToggle.AddListener(notebookIsOn =>
         {
-            m_cameraController.ControlsEnabled = !notebookIsOn;
             inspectorObjectiveUI.SetIsOpen(!notebookIsOn);
             if (notebookIsOn) m_menuManager.SetStoreIsOn(false);
 

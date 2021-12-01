@@ -771,29 +771,8 @@ namespace DialogueEditor
          */ 
         private bool Progress()
         {
-            bool advanceClick = false;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                // Setup a new pointer event
-                PointerEventData pointerEvent = new PointerEventData(EventSystem.current)
-                {
-                    position = Input.mousePosition
-                };
-
-                // Get all raycast results
-                List<RaycastResult> results = new List<RaycastResult>();
-                EventSystem.current.RaycastAll(pointerEvent, results);
-
-                // Get any tags in any of the results
-                List<ConversationBlockerTag> tags = results
-                    .Select(result => result.gameObject.GetComponentInParent<ConversationBlockerTag>())
-                    .Where(tag => tag != null)
-                    .ToList();
-
-                // Advance by click only if the raycast didn't hit anything with a blocker tag
-                advanceClick = tags.Count <= 0;
-            }
+            // Advance by click only if the mouse button was pressed down and the ui is not blocking the dialogue
+            bool advanceClick = Input.GetMouseButtonDown(0) && UIBlockerSettings.OperationIsAvailable("Dialogue");
 
             // Store the current selected game object
             GameObject currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
