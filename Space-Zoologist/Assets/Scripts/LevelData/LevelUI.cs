@@ -15,4 +15,8 @@ public class LevelUI : MonoBehaviour
         this.Name.text = level.Name;
         this.Description.text = level.Description;
     }
+
+    public void SetName(string text) {
+        this.Name.text = text;
+    }
 }
