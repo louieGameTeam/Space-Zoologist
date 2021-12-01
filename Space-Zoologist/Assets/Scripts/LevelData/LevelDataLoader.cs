@@ -35,12 +35,14 @@ public class LevelDataLoader : MonoBehaviour
 
     public void LoadLevel(string levelToLoad)
     {
+        GameManager.Instance?.HandleExitLevel();
         LevelDataReference.instance.LevelData = GetLevelData(levelToLoad);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 
     public void ReloadLevel()
     {
+        GameManager.Instance?.HandleExitLevel();
         LevelDataReference.instance.LevelData = GetLevelData(currentLevel);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

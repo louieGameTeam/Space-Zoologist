@@ -67,10 +67,12 @@ public class NotebookUI : MonoBehaviour
     #region Monobehaviour Messages
     private void Start()
     {
-        // In the future, instead of constructing a new object, we have to get it from a file
-        data = new NotebookData(config);
+        // Load the notebook from save, or create a new one if save data doesn't exist
+        data = GameManager.Instance.LoadNotebook() ?? new NotebookData(config);
+
         // Set the configuration of the notebook data
         data.SetConfig(config);
+        
         // Add the current level
         data.TryAddLevelID(LevelID.FromCurrentSceneName());
 
