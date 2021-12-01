@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -479,12 +479,13 @@ RectTransform:
   - {fileID: 9046726}
   - {fileID: 146704334}
   - {fileID: 1957932609}
+  - {fileID: 908399896}
   - {fileID: 309841249}
   - {fileID: 1119681285}
   - {fileID: 942281010902694400}
   - {fileID: 2096932705}
   m_Father: {fileID: 543495682}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1021,7 +1022,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543495682}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1633,7 +1634,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 363993210}
-  - {fileID: 908399896}
   - {fileID: 1296419644}
   - {fileID: 170123771}
   - {fileID: 380907108}
@@ -2702,8 +2702,8 @@ Transform:
   m_LocalPosition: {x: -469.18948, y: -279.58356, z: -9416.397}
   m_LocalScale: {x: 0.9677419, y: 0.9677419, z: 0.9677419}
   m_Children: []
-  m_Father: {fileID: 543495682}
-  m_RootOrder: 1
+  m_Father: {fileID: 170123771}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &908399897
 MonoBehaviour:
@@ -3583,7 +3583,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 170123771}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4297,7 +4297,7 @@ Transform:
   m_LocalScale: {x: 2.5174825, y: 2.5174825, z: 2.5174825}
   m_Children: []
   m_Father: {fileID: 543495682}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1296419645
 MonoBehaviour:
@@ -5098,7 +5098,7 @@ PrefabInstance:
     - target: {fileID: 8731580173207704174, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8731580173207704174, guid: 3ff5c09709a541c448287c4d1ad116a5,
         type: 3}
@@ -7215,7 +7215,7 @@ RectTransform:
   - {fileID: 1503175287}
   - {fileID: 972990252}
   m_Father: {fileID: 170123771}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7474,7 +7474,7 @@ RectTransform:
   - {fileID: 9108813756023708783}
   - {fileID: 6814819679475775390}
   m_Father: {fileID: 170123771}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
