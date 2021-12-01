@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Notebook/ResearchNoteLabels")]
+[System.Serializable]
 public class ResearchNoteLabels : ScriptableObject
 {
     // Public accessors
