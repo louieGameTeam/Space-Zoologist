@@ -25,8 +25,11 @@ public class CameraController : MonoBehaviour
             return cam;
         }
     }
-    public bool ControlsEnabled { get; set; } = true;
+    public bool ControlsEnabled => UIBlockerSettings.OperationIsAvailable(blockableOperation);
 
+    [SerializeField]
+    [UIBlockableOperation]
+    string blockableOperation = "CameraControl";
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] float WASDAcceleration = 0.75f;
     [SerializeField] private float zoomLerpSpeed = 5f;

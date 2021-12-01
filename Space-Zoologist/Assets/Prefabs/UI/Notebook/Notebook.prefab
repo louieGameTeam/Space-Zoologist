@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 8731580173207704174}
   - component: {fileID: 2028698093}
   - component: {fileID: 4094907799507573782}
-  - component: {fileID: 5253216065445287766}
+  - component: {fileID: 5324753248463572222}
   m_Layer: 5
   m_Name: Notebook
   m_TagString: Notebook
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 8731580173207704174}
-  notebook: {fileID: 11400000, guid: 80149ca5b923b1b468d6d4ec23b05e18, type: 2}
+  config: {fileID: 11400000, guid: 80149ca5b923b1b468d6d4ec23b05e18, type: 2}
   tabPicker: {fileID: 8737488178317972168}
   soundManager: {fileID: 4094907799507573782}
   defaultSize:
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f809d759522fed49a7380a82122dda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5253216065445287766
+--- !u!114 &5324753248463572222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,6 +251,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8731580173207704173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 673033dac7bebd14cadaf7e8d4c60326, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b53a8f6d51e6714d9919b63672a730b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  operationsBlocked:
+  - Dialogue
+  - CameraControl
