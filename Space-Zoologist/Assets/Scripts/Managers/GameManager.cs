@@ -446,6 +446,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Balance Functions
+    public void AddToBalance(float value)
+    {
+        this.Balance += value;
+    }
+    
     public void SubtractFromBalance(float value)
     {
         if (this.Balance - value >= 0)
