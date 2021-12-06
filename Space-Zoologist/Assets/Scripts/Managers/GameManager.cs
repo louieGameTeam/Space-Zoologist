@@ -114,28 +114,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        isMainObjectivesCompleted = true;
-        numSecondaryObjectivesCompleted = 0;
-        UpdateObjectives();
-
-        if (isObjectivePanelOpen)
-        {
-            this.UpdateObjectivePanel();
-        }
-
-        // All objectives had reach end state
-        if (isMainObjectivesCompleted && !this.m_isGameOver)
-        {
-            this.m_isGameOver = true;
-
-            // TODO figure out what should happen when the main objectives are complete
-            EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
-
-            // GameOver.cs listens for the event and handles gameover
-            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
-
-            Debug.Log($"Level Completed!");
-        }
     }
     #endregion
 
@@ -731,6 +709,32 @@ public class GameManager : MonoBehaviour
         this.UpdateObjectivePanel();
     }
 
+    private void CheckWinConditions() 
+    {
+        isMainObjectivesCompleted = true;
+        numSecondaryObjectivesCompleted = 0;
+        UpdateObjectives();
+
+        if (isObjectivePanelOpen)
+        {
+            this.UpdateObjectivePanel();
+        }
+
+        // All objectives had reach end state
+        if (isMainObjectivesCompleted && !this.m_isGameOver)
+        {
+            this.m_isGameOver = true;
+
+            // TODO figure out what should happen when the main objectives are complete
+            EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
+
+            // GameOver.cs listens for the event and handles gameover
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+
+            Debug.Log($"Level Completed!");
+        }
+    }
+
     private void UpdateObjectives()
     {
         // Level is completed when all mian objectives are done, failed when one has failed
@@ -816,6 +820,7 @@ public class GameManager : MonoBehaviour
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }
+        CheckWinConditions();
     }
 
     public void EnableInspectorToggle(bool enabled)
