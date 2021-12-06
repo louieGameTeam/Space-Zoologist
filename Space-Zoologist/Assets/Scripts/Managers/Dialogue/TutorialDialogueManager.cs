@@ -88,6 +88,13 @@ public class TutorialDialogueManager : MonoBehaviour
             return GameManager.Instance.m_menuManager.IsInStore;
         });
     }
+    public void FreezeUntilBuildUIClosed()
+    {
+        CoroutineScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            return !GameManager.Instance.m_menuManager.IsInStore;
+        });
+    }
     public void FreezeUntilZeigPickedForPlacement()
     {
         FreezeUntilBuildItemPicked<PodSection>(new ItemID(ItemRegistry.Category.Species, 0), 2);
