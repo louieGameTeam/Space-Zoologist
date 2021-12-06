@@ -68,7 +68,7 @@ public class TutorialDialogueManager : MonoBehaviour
         FreezeUntilHighlightPresent(
             new ItemID(ItemRegistry.Category.Species, 0), 
             0,
-            new TextHighlight(195, 336));
+            new TextHighlight(195, 295));
     }
     public void FreezeUntilGoatFirstHighlightAbsent()
     {
