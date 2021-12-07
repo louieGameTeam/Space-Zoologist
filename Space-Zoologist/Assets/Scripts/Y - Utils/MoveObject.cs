@@ -350,40 +350,67 @@ public class MoveObject : MonoBehaviour
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
+        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.x / 2, 0);
 
+        //If the player clicks on the food source's original position, don't bother with the mess below
+        if(pos == initialGridPos)
+        {
+            toMove.transform.position = initialPos;
+            return;
+        }
+
+        //Check if the food source is under construction and if so, grab its build progress
+        GridSystem.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
+        int buildProgress = this.GetStoreItem(species).buildTime;
+        if(cluster != null)
+            buildProgress = cluster.currentDays;
+
+        //Remove the food so it doesn't interfere with its own placement
+        removeOriginalFood(foodSource);
         float cost = moveCost;
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
-
-        if (valid)
+        
+        if (valid) //If valid, place the food at the mouse destination
         {
-            /*            ConstructionCountdown cc = GetBufferCountDown(foodSource);
-                        int ttb = 0;
-                        if (cc != null)
-                        {
-                            ttb = cc.target;
-                        }*/
-            //foodSourceManager.PlaceFood(pos, species, ttb);
-            removeOriginalFood(foodSource);
             placeFood(pos, species);
             GameManager.Instance.SubtractFromBalance(cost);
         }
-        else
+        else //Otherwise, place it back at the original position with the correct build progress
         {
+            placeFood(initialGridPos, species, buildProgress);
             toMove.transform.position = initialPos;
         }
     }
 
     // placing food is more complicated due to grid
-    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
+    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species, int buildProgress = 0)
     {
         Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
         FoodLocation += new Vector3((float)species.Size.x / 2, (float)species.Size.y / 2, 0);
 
         GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
+        FoodSource foodSource = Food.GetComponent<FoodSource>();
 
         gridSystem.AddFood(mouseGridPosition, species.Size, Food);
-        gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-        species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
+        
+        if(buildProgress < this.GetStoreItem(species).buildTime) //If the food source has yet to fully construct, add a build buffer
+        {
+            foodSource.isUnderConstruction = true;
+            GameManager.Instance.m_gridSystem.ConstructionFinishedCallback(() =>
+            {
+                foodSource.isUnderConstruction = false;
+            });
+            gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
+                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
+        }
+        else //Otherwise, make sure its needs are up to date
+        {
+            GameManager.Instance.UpdateAllNeedSystems();
+            foodSource.CalculateTerrainNeed();
+            foodSource.CalculateWaterNeed();
+            GameManager.Instance.m_inspector.UpdateCurrentDisplay();
+        }
+
     }
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
     {
