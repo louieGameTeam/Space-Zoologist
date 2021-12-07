@@ -634,7 +634,7 @@ public class GridSystem : MonoBehaviour
     {
         constructionFinishedCallback += action;
     }
-    public void CreateRectangleBuffer(Vector2Int pos, int time, Vector2Int size, ConstructionCluster.ConstructionType type)
+    public void CreateRectangleBuffer(Vector2Int pos, int time, Vector2Int size, ConstructionCluster.ConstructionType type, int buildProgress = 0)
     {
         // only considering non food sources right now
         if (type != ConstructionCluster.ConstructionType.TILE)
@@ -652,7 +652,7 @@ public class GridSystem : MonoBehaviour
                     Color bufferColorInformation = new Color(
                         (float)((int)type) / FLAG_VALUE_MULTIPLIER,                 // which construction type it is
                         0,                                                          // (currently not being used)
-                        0,                                                          // the progress towards target
+                        (float)buildProgress / FLAG_VALUE_MULTIPLIER,               // the progress towards target
                         (float)time / FLAG_VALUE_MULTIPLIER                         // the total time
                     );
 
@@ -671,7 +671,7 @@ public class GridSystem : MonoBehaviour
             }
 
             // then actually create the buffer, regardless of where it actually is
-            ConstructionCluster newCluster = new ConstructionCluster(bufferPositions, time, type);
+            ConstructionCluster newCluster = new ConstructionCluster(bufferPositions, time, type, buildProgress);
             ConstructionClusters.Add(newCluster);
         }
 
@@ -2194,6 +2194,22 @@ public class GridSystem : MonoBehaviour
     {
         return Grid.CellToWorld(worldPosition);
     }
+
+    public ConstructionCluster GetConstructionClusterAtPosition(Vector3Int position)
+    {
+        TileData tile = GetTileData(position);
+        if(!tile.isConstructing)
+            return null;
+
+        Vector2Int gridPosition = new Vector2Int(position.x, position.y);
+        foreach(ConstructionCluster cluster in ConstructionClusters)
+        {
+            if(cluster.ConstructionTilePositions.Contains(gridPosition))
+                return cluster;
+        }
+
+        return null;
+    }
     
 
     public static Vector3Int SignsVector3(Vector3 vector)
@@ -2469,27 +2485,27 @@ public class GridSystem : MonoBehaviour
         public enum ConstructionType { TREE, ONEFOOD, TILE }
         public List<Vector2Int> ConstructionTilePositions { get; private set; }
         public Vector2Int CenterPosition { get; private set; }
-        private ConstructionType type;
-        private int targetDays;
-        private int currentDays;
+        public ConstructionType type { get; private set; }
+        public int targetDays { get; private set; }
+        public int currentDays { get; private set; }
 
-        public ConstructionCluster(Vector2Int tilePosition, int targetDays, ConstructionType type)
+        public ConstructionCluster(Vector2Int tilePosition, int targetDays, ConstructionType type, int buildProgress = 0)
         {
             ConstructionTilePositions = new List<Vector2Int>();
             ConstructionTilePositions.Add(tilePosition);
             CenterPosition = tilePosition;
             this.targetDays = targetDays;
             this.type = type;
-            currentDays = 0;
+            currentDays = buildProgress;
         }
 
-        public ConstructionCluster(List<Vector2Int> tilePositions, int targetDays, ConstructionType type)
+        public ConstructionCluster(List<Vector2Int> tilePositions, int targetDays, ConstructionType type, int buildProgress = 0)
         {
             ConstructionTilePositions = tilePositions; 
             CenterPosition = FindCenter();
             this.targetDays = targetDays;
             this.type = type;
-            currentDays = 0;
+            currentDays = buildProgress;
         }
 
         public void MergeCluster(ConstructionCluster cluster)
