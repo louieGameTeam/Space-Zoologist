@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public abstract class AbstractToggleGroupPicker : MonoBehaviour
 {
     #region Public Properties
+    public IReadOnlyList<AbstractTogglePicker> AbstractPickers => pickers;
     public abstract List<object> ObjectsPicked { get; }
     public object FirstObjectPicked
     {
@@ -58,6 +59,11 @@ public abstract class AbstractToggleGroupPicker : MonoBehaviour
         }
     }
     public void SetObjectPicked(object obj) => SetObjectsPicked(new List<object>() { obj });
+    // Get the toggle picker that picks the given object
+    public AbstractTogglePicker GetTogglePicker(object objectPicked)
+    {
+        return pickers.Find(picker => picker.GetObjectPicked().Equals(objectPicked));
+    }
     #endregion
 
     #region Private Methods

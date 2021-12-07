@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class InspectorObjectiveUI : MonoBehaviour
 {
+    #region Public Properties
+    public Toggle InspectorToggle => inspectorToggle;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root game object of the full inspector/object UI")]

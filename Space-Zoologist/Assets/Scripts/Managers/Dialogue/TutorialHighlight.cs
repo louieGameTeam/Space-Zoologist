@@ -8,7 +8,38 @@ using DG.Tweening;
 public class TutorialHighlight : MonoBehaviour
 {
     #region Public Properties
+    public RectTransform Root => root;
     public bool IsAnimating => animationRoutine != null;
+    /// <summary>
+    /// Return the corner that the pointer should be in
+    /// x = -1 for left side, x = +1 for right side,
+    /// y = -1 for bottom side, y = +1 for top side
+    /// </summary>
+    public Vector2 PointerCorner
+    {
+        get
+        {
+            // Default corner is upper left
+            Vector2 corner = new Vector2(-1f, 1f);
+
+            // Get world corners of the root rect
+            Vector3[] worldCorners = new Vector3[4];
+            root.GetWorldCorners(worldCorners);
+
+            // Compute the space that the pointer needs to comfortably fit horizontally or vertically on screen
+            float requiredHorizontalSpace = pointerMoveDistance + pointer.rectTransform.rect.width;
+            float requiredVerticalSpace = pointerMoveDistance + pointer.rectTransform.rect.height;
+
+            // If bottom left corner is too far off to the left,
+            // then the pointer needs to point to the right side of the highlight
+            if (worldCorners[0].x < requiredHorizontalSpace) corner.x = 1f;
+            // If the top right corner is too far up,
+            // then the pointer needs to point to the bottom side of the highlight
+            if (worldCorners[2].y > Screen.height - requiredVerticalSpace) corner.y = -1f;
+
+            return corner;
+        }
+    }
     #endregion
 
     #region Private Editor Fields
@@ -36,12 +67,6 @@ public class TutorialHighlight : MonoBehaviour
     [SerializeField]
     [Tooltip("Time that the effect pauses in the focus position before resuming")]
     private float pauseTime = 1f;
-
-    [Space]
-
-    [SerializeField]
-    [Tooltip("If true, the animation plays as soon as it starts")]
-    private bool playOnAwake = false;
     #endregion
 
     #region Private Fields
@@ -50,24 +75,37 @@ public class TutorialHighlight : MonoBehaviour
     #endregion
 
     #region Monobehaviour Messages
-    private void Start()
+    private void OnEnable()
     {
-        if (playOnAwake) StartAnimating();
+        StartAnimating();
+    }
+    private void OnDisable()
+    {
+        StopAnimating();
     }
     #endregion
 
     #region Public Methods
-    public void Highlight(RectTransform target)
+    public void Target(RectTransform target)
     {
         // Set the root as a child of the target
         root.SetParent(target);
         root.SetAsLastSibling();
+        root.localScale = Vector3.one;
 
         // Stretch across the whole parent
         root.anchorMax = Vector2.one;
         root.anchorMin = root.offsetMin = root.offsetMax = Vector2.zero;
 
-        // Start animating the highlight
+        // Set the anchor of the pointer to the correct part of the parent
+        float anchorX = PointerCorner.x < 0f ? 0.1f : 0.9f;
+        float anchorY = PointerCorner.y < 0f ? 0.1f : 0.9f;
+        pointer.rectTransform.anchorMin = pointer.rectTransform.anchorMax = new Vector2(anchorX, anchorY);
+
+        // Set the scale so the pointer flips based on what corner it is pointing to
+        pointer.rectTransform.localScale = new Vector3(-PointerCorner.x, PointerCorner.y, 1f);
+
+        // Start animating on the target
         StartAnimating();
     }
     public void StartAnimating()
@@ -76,7 +114,7 @@ public class TutorialHighlight : MonoBehaviour
         if (IsAnimating) StopAnimating();
 
         // Set the positions of the rect transforms
-        pointer.rectTransform.anchoredPosition = new Vector2(-1, 1) * pointerMoveDistance;
+        pointer.rectTransform.anchoredPosition = PointerCorner * pointerMoveDistance;
         highlightPanel.rectTransform.localScale = Vector3.one * highlightGrowScale;
 
         // Set them to invisible before starting the animation
@@ -86,6 +124,7 @@ public class TutorialHighlight : MonoBehaviour
         highlightPanel.color = highlightPanel.color.SetAlpha(0f);
 
         // Start the highlight animation
+        root.gameObject.SetActive(true);
         animationRoutine = StartCoroutine(HighlightAnimation());
     }
     public void StopAnimating()
@@ -115,7 +154,7 @@ public class TutorialHighlight : MonoBehaviour
             yield return new WaitForSeconds(pauseTime);
 
             // Animate pointer position and color
-            pointer.rectTransform.DOAnchorPos(new Vector2(-1, 1f) * pointerMoveDistance, focusTime);
+            pointer.rectTransform.DOAnchorPos(PointerCorner * pointerMoveDistance, focusTime);
             pointer.DOColor(pointer.color.SetAlpha(0f), focusTime);
 
             // Animate highlight panel scale and color

@@ -49,8 +49,6 @@ public class ItemDropdown : NotebookUIChild
         dropdown.ClearOptions();
         optionCategoryMap.Clear();
 
-        
-
         foreach(ItemID id in GetItemIDs())
         {
             // Get the current option
@@ -67,6 +65,13 @@ public class ItemDropdown : NotebookUIChild
         // Setup the value to the first one
         if (dropdown.options.Count > 0) SetDropdownValueWithoutNotify(0);
     }
+
+    /// <summary>
+    /// Given the item id, get its index in the dropdown list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex(option => option.text == id.Data.Name.Get(itemDisplayName));
 
     // Set the value of the dropdown
     public void SetDropdownValue(int value) => SetDropdownValueHelper(value, true);
