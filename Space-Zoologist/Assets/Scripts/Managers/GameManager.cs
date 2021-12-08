@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] BuildUI buildUI = default;
     public BuildUI BuildUI => buildUI;
     [SerializeField] InspectorObjectiveUI inspectorObjectiveUI = default;
+    public InspectorObjectiveUI InspectorObjectUI => inspectorObjectiveUI;
 
     [Header("Time Variables")]
     [SerializeField] int maxDay = 20;
