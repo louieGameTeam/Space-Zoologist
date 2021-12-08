@@ -71,12 +71,7 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilNotebookOpen()
     {
         bool NotebookIsOpen() => GameManager.Instance.NotebookUI.IsOpen;
-        HighlightingScheduler.SetHighlights(new ConditionalHighlight()
-        {
-            predicate = NotebookIsOpen,
-            invert = true,
-            target = () => FindRectTransform("NotebookButton")
-        });
+        HighlightingScheduler.SetHighlights(HighlightNotebookButton());
         FreezingScheduler.FreezeUntilConditionIsMet(NotebookIsOpen);
     }
     public void FreezeUntilResearchTabOpen()
@@ -115,7 +110,15 @@ public class TutorialPrompter : MonoBehaviour
         {
             return GameManager.Instance.m_menuManager.IsInStore;
         });
-        HighlightingScheduler.SetHighlights(HighlightBuildButton());
+        HighlightingScheduler.SetHighlights(HighlightBuildButton(true));
+    }
+    public void FreezeUntilBuildUIClosed()
+    {
+        FreezingScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            return !GameManager.Instance.m_menuManager.IsInStore;
+        });
+        HighlightingScheduler.SetHighlights(HighlightBuildButton(false));
     }
     public void FreezeUntilZeigPickedForPlacement()
     {
@@ -242,7 +245,7 @@ public class TutorialPrompter : MonoBehaviour
         });
 
         // Set the highlights for the build button, the section picker, and the item in that section
-        HighlightingScheduler.SetHighlights(HighlightBuildButton(),
+        HighlightingScheduler.SetHighlights(HighlightBuildButton(true),
             HighlightBuildSectionPicker(storeSectionIndex),
             HighlightBuildItem<StoreSectionType>(targetItem));
     }
@@ -304,14 +307,15 @@ public class TutorialPrompter : MonoBehaviour
             target = () => target
         };
     }
-    private ConditionalHighlight HighlightBuildButton()
+    private ConditionalHighlight HighlightBuildButton(bool targetOpenState)
     {
         RectTransform buildButton = FindRectTransform("DraftButton");
 
         // Target the build button while not in the store
         return new ConditionalHighlight()
         {
-            predicate = () => !GameManager.Instance.m_menuManager.IsInStore,
+            predicate = () => GameManager.Instance.m_menuManager.IsInStore,
+            invert = targetOpenState,
             target = () => buildButton
         };
     }
