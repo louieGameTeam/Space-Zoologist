@@ -73,6 +73,9 @@ public class CameraController : MonoBehaviour
     #region Public Methods
     public void Lock(CameraPositionLock positionLock)
     {
+        // Unlock any current position lock
+        if (this.positionLock != null) Unlock();
+
         this.positionLock = positionLock;
         positionLock.Lock(Cam);
     }

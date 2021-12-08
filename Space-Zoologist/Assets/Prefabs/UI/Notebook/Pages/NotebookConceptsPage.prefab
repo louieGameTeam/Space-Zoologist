@@ -3924,10 +3924,15 @@ MonoBehaviour:
   strokeWeightPicker: {fileID: 8384463904869444276}
   clearButton: {fileID: 3083441160766466080}
   scroll: {fileID: 2640805646313652791}
-  orthographicSize: 21
   smoothingTime: 1
-  yCenter: 13
-  xLeft: 0
+  dialogueInactiveZoom:
+    orthographicSize: 21
+    yCenter: 13
+    xLeft: 0
+  dialogueActiveZoom:
+    orthographicSize: 30
+    yCenter: 1
+    xLeft: -10
 --- !u!1 &2779908375302258167
 GameObject:
   m_ObjectHideFlags: 0
