@@ -102,8 +102,11 @@ public class ConceptsCanvasUI : NotebookUIChild
     private void Start()
     {
         // Modify camera position when conversation is started or ended
-        ConversationManager.OnConversationStarted += SetCameraPosition;
-        ConversationManager.OnConversationEnded += SetCameraPosition;
+        // We need to pass the true-false value because apparently the "IsConversationActive"
+        // bool on the conversation manager is not set until AFTER these events are invoked
+        // (We really should fix that...)
+        ConversationManager.OnConversationStarted += () => SetCameraPosition(true);
+        ConversationManager.OnConversationEnded += () => SetCameraPosition(false);
     }
     private void OnEnable()
     {
@@ -183,9 +186,18 @@ public class ConceptsCanvasUI : NotebookUIChild
     }
     private void SetCameraPosition()
     {
+        ConversationManager conversation = ConversationManager.Instance;
+
+        // If conversation was found then use its state to set the camera position
+        if (conversation) SetCameraPosition(conversation.IsConversationActive);
+        // If no conversation was found set camera for no dialogue present
+        else SetCameraPosition(false);
+    }
+    private void SetCameraPosition(bool conversationActive)
+    {
         if(foldoutToggle.isOn)
         {
-            if (ConversationManager.Instance.IsConversationActive)
+            if (conversationActive)
             {
                 dialogueActiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
             }
