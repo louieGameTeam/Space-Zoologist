@@ -84,6 +84,11 @@ public class ConceptsCanvasUI : NotebookUIChild
     #endregion
 
     #region Monobehaviour Messages
+    private void Start()
+    {
+        // Apply foldout state to the anchors when we start
+        ApplyFoldoutState(foldoutToggle.isOn);
+    }
     private void OnEnable()
     {
         GameManager instance = GameManager.Instance;
