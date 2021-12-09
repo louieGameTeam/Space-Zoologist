@@ -223,14 +223,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6087966469458766546}
-        m_MethodName: FreezeUntilNotebookOpen
-        m_Mode: 1
+        m_MethodName: FreezeUntilCowPicked
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Encyclopedia
           m_BoolArgument: 0
         m_CallState: 2
   TMPFont: {fileID: 0}
@@ -738,35 +738,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 35
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":189.5,\"yPos\":-778},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Who?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":508.5,\"yPos\":-781},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi!\",\"parentUIDs\":[4,1,1],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":182.5,\"yPos\":-81},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Well,
-    some of those food resources are species.\",\"parentUIDs\":[8,8],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":478.5,\"yPos\":-80},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
-    up to the challenge!\",\"parentUIDs\":[10,8,8],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-163.5,\"yPos\":666},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Candentis
-    Acernis\",\"parentUIDs\":[15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":90.5,\"yPos\":673},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
-    Spatium Bacca\",\"parentUIDs\":[17,15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":610.5,\"yPos\":674},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Formica
-    Collis\",\"parentUIDs\":[15,15],\"SpeechUID\":25},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":336.5,\"yPos\":679},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Humidum
-    Limax\",\"parentUIDs\":[25,15,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":351.5,\"yPos\":-899},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
-    there, I\u2019m Juno.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":184.5,\"yPos\":-695},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"...Dr.
-    Star said she would mention me to you\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":187.5,\"yPos\":-581},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Anyways.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":-399},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"My
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":216,\"yPos\":-658},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Who?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":535,\"yPos\":-661},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Hi!\",\"parentUIDs\":[4,1,1],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":209,\"yPos\":39},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Well,
+    some of those food resources are species.\",\"parentUIDs\":[8,8],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":532,\"yPos\":44},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+    up to the challenge!\",\"parentUIDs\":[10,8,8],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-137,\"yPos\":786},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Candentis
+    Acernis\",\"parentUIDs\":[15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":117,\"yPos\":793},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
+    Spatium Bacca\",\"parentUIDs\":[17,15,15],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":637,\"yPos\":794},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Formica
+    Collis\",\"parentUIDs\":[15,15],\"SpeechUID\":25},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":363,\"yPos\":799},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Humidum
+    Limax\",\"parentUIDs\":[25,15,15],\"SpeechUID\":17}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":378,\"yPos\":-779},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
+    there, I\u2019m Juno.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":211,\"yPos\":-575},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"...Dr.
+    Star said she would mention me to you\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":214,\"yPos\":-461},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Anyways.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":378,\"yPos\":-279},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"My
     job here is a lot like yours, but I focus on the special variant of Candentis
-    Acernis.\",\"parentUIDs\":[5,4,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":-299},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
+    Acernis.\",\"parentUIDs\":[5,4,4,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":378,\"yPos\":-179},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
     leaves are actual gold, you know. If you haven\u2019t snuck down to the enclosure...it\u2019s
-    worth it.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":-200},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Dr.
+    worth it.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":378,\"yPos\":-80},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Dr.
     Star indicated that you haven\u2019t managed an enclosure with more than one
-    species yet.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":177.5,\"yPos\":14},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"When
+    species yet.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-6,\"yPos\":-15},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"When
     we use them as food, though, we don\u2019t need to focus on other needs typical
-    of a species, like safety concerns.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":201},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"It\u2019ll
-    be a fun challenge, probably. I\u2019ll show you the ropes.\",\"parentUIDs\":[11,10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":344.5,\"yPos\":334},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"First,
+    of a species, like safety concerns.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":378,\"yPos\":321},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"It\u2019ll
+    be a fun challenge, probably. I\u2019ll show you the ropes.\",\"parentUIDs\":[11,10,10,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":371,\"yPos\":454},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"First,
     open up the new Eligans Impar encyclopedia entry. Take a bit to read through
-    it.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":338.5,\"yPos\":503},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Based
-    on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[17,13,13,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[16,20,24,26],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":50.5,\"yPos\":507},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"G-go
-    read your encyclopedia again.\",\"parentUIDs\":[16,20,26,16,20,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":349.5,\"yPos\":790},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Yep.
-    Same as CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":350.5,\"yPos\":914},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"As
-    you might have guessed, the two species have basically the same food preferences.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":346.5,\"yPos\":1044},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"The
+    it.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":365,\"yPos\":623},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Based
+    on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[17,13,13,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[16,20,24,26],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":77,\"yPos\":627},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"G-go
+    read your encyclopedia again.\",\"parentUIDs\":[16,20,26,16,20,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":376,\"yPos\":910},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Yep.
+    Same as CapraX Zeigrun.\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":377,\"yPos\":1034},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"As
+    you might have guessed, the two species have basically the same food preferences.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":373,\"yPos\":1164},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"The
     challenging part is figuring out how to feed both species at once, off the same
-    resources.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":347.5,\"yPos\":1141},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Your
-    goal is to get both populations up to 20.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":347.5,\"yPos\":1252},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Be
+    resources.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":374,\"yPos\":1261},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Your
+    goal is to get both populations up to 20.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":374,\"yPos\":1372},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Be
     meticulous with your enclosure modifications. I hope to be impressed by your
-    engineering skills when it\u2019s time for the report-back.\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":348.5,\"yPos\":1379},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    engineering skills when it\u2019s time for the report-back.\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":375,\"yPos\":1499},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Oh,
     and I\u2019m not an easy grader, unlike Dr. Star.\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
@@ -820,14 +820,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6087966469458766546}
-        m_MethodName: FreezeUntilNotebookOpen
-        m_Mode: 1
+        m_MethodName: FreezeUntilCowPicked
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Encyclopedia
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &6087966469458766546
@@ -842,3 +842,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77ebfae569d54841bfdaf8ac61d81ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 9002464118305383576, guid: 2340450c815aa5544889653d370627be,
+    type: 3}
