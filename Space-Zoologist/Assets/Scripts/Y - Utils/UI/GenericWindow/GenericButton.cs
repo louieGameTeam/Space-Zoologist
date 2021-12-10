@@ -25,6 +25,7 @@ public class GenericButton
     #region Public Methods
     public void Setup(GenericButtonData data)
     {
+        button.onClick.RemoveAllListeners();
         button.onClick.AddListener(data.ButtonAction.Invoke);
         buttonText.text = data.ButtonText;
     }

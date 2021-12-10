@@ -415,7 +415,8 @@ public class GameManager : MonoBehaviour
     private void InitializeGameStateVariables()
     {
         // set up the game state
-        EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
+        // Game Manger no longer hanldes npc end conversation, that's the GameOverController's job
+        // EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
         this.RestartButton.onClick.AddListener(() => { this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel); });
         this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
         UpdateDayText(currentDay);
@@ -823,6 +824,7 @@ public class GameManager : MonoBehaviour
         UpdateDayText(++currentDay);
         if (currentDay > maxDay)
         {
+            Debug.Log("Time is up!");
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }

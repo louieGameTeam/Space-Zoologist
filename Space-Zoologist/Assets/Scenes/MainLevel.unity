@@ -1573,7 +1573,7 @@ PrefabInstance:
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
       propertyPath: LevelOnPlay
-      value: Level0
+      value: Level1E2
       objectReference: {fileID: 0}
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
@@ -6489,6 +6489,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0a3d654fe9c40ce9e75475703ac346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1968132019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1968132020}
+  - component: {fileID: 1968132021}
+  m_Layer: 0
+  m_Name: GameOverController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1968132020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968132019}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 26666793554278037}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1968132021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968132019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1db86d936be2b4c9120b7c7230af3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveFinishedWindow:
+    background: {fileID: 21300000, guid: 349db0bc5ef54ee45b8e3a6e7010ed70, type: 3}
+    message: Objective Complete
+    primaryButtonData:
+      buttonText: Next Enclosure
+      buttonAction:
+        m_PersistentCalls:
+          m_Calls: []
+    hasSecondaryButton: 0
+    secondaryButtonData:
+      buttonText: 
+      buttonAction:
+        m_PersistentCalls:
+          m_Calls: []
+  successWindow:
+    background: {fileID: 21300000, guid: c5eacc0e4bf517e499d71b9f9532d431, type: 3}
+    message: Enclosure Success!
+    primaryButtonData:
+      buttonText: NextLevel
+      buttonAction:
+        m_PersistentCalls:
+          m_Calls: []
+    hasSecondaryButton: 1
+    secondaryButtonData:
+      buttonText: Return to Enclosure Select
+      buttonAction:
+        m_PersistentCalls:
+          m_Calls: []
+  failWindow:
+    background: {fileID: 21300000, guid: de027ad1fc7411e44ba225ab7e4352a0, type: 3}
+    message: Enclosure Fail
+    primaryButtonData:
+      buttonText: Restart
+      buttonAction:
+        m_PersistentCalls:
+          m_Calls: []
+    hasSecondaryButton: 1
+    secondaryButtonData:
+      buttonText: Return to Enclosure Select
+      buttonAction:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!1 &1970318660
 GameObject:
   m_ObjectHideFlags: 0
@@ -7271,6 +7356,7 @@ Transform:
   - {fileID: 1738013070}
   - {fileID: 497773653}
   - {fileID: 1290313822}
+  - {fileID: 1968132020}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

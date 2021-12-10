@@ -10,6 +10,7 @@ public class GenericWindow : MonoBehaviour
 {
     #region Public Properties
     public RectTransform Window => window;
+    public UnityEvent AnyButtonPressedEvent => anyButtonPressedEvent;
     #endregion
 
     #region Private Editor Fields
@@ -20,6 +21,9 @@ public class GenericWindow : MonoBehaviour
     [Space]
 
     [SerializeField]
+    [Tooltip("Image used to display the background")]
+    private Image backgroundImage;
+    [SerializeField]
     [Tooltip("Used to display the text in the window")]
     private TextMeshProUGUI messageText;
     [SerializeField]
@@ -28,6 +32,9 @@ public class GenericWindow : MonoBehaviour
     [SerializeField]
     [Tooltip("Secondary button in the window")]
     private GenericButton secondaryButton;
+    [SerializeField]
+    [Tooltip("Event invoked when any button is pressed")]
+    private UnityEvent anyButtonPressedEvent;
     #endregion
 
     #region Private Fields
@@ -38,7 +45,8 @@ public class GenericWindow : MonoBehaviour
     #region Public Methods
     public void Setup(GenericWindowData data)
     {
-        messageText.tag = data.Message;
+        backgroundImage.sprite = data.Background;
+        messageText.text = data.Message;
         primaryButton.Setup(data.PrimaryButtonData);
 
         // Enable-Disable secondary button based on if it has a secondary button
@@ -46,6 +54,9 @@ public class GenericWindow : MonoBehaviour
 
         // Setup the secondary button if needed
         if (data.HasSecondaryButton) secondaryButton.Setup(data.SecondaryButtonData);
+
+        primaryButton.Button.onClick.AddListener(anyButtonPressedEvent.Invoke);
+        secondaryButton.Button.onClick.AddListener(anyButtonPressedEvent.Invoke);
     }
     public static GenericWindow InstantiateFromResource(Transform parent, string prefabPath = null)
     {

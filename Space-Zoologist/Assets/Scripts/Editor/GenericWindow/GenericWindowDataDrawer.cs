@@ -10,6 +10,7 @@ public class GenericWindowDataDrawer : PropertyDrawer
     #region Override Methods
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
+        SerializedProperty background = property.FindPropertyRelative(nameof(background));
         SerializedProperty message = property.FindPropertyRelative(nameof(message));
         SerializedProperty primaryButtonData = property.FindPropertyRelative(nameof(primaryButtonData));
         SerializedProperty hasSecondaryButton = property.FindPropertyRelative(nameof(hasSecondaryButton));
@@ -26,6 +27,10 @@ public class GenericWindowDataDrawer : PropertyDrawer
         {
             // Increase indent
             EditorGUI.indentLevel++;
+
+            // Edit the background
+            EditorGUI.PropertyField(position, background);
+            position.y += position.height;
 
             // Edit the message
             EditorGUI.PropertyField(position, message);
@@ -64,6 +69,8 @@ public class GenericWindowDataDrawer : PropertyDrawer
 
         if (property.isExpanded)
         {
+            // Add height for background
+            height += EditorExtensions.StandardControlHeight;
             // Add height for message
             height += EditorExtensions.StandardControlHeight;
             // Add height for primary button data

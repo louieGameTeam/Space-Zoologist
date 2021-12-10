@@ -6,6 +6,7 @@ using UnityEngine;
 public class GenericWindowData
 {
     #region Public Properties
+    public Sprite Background => background;
     public string Message => message;
     public GenericButtonData PrimaryButtonData => primaryButtonData;
     public bool HasSecondaryButton => hasSecondaryButton;
@@ -13,6 +14,9 @@ public class GenericWindowData
     #endregion
 
     #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Image used for the background of the generic window")]
+    private Sprite background;
     [SerializeField]
     [Tooltip("Text to display in the window")]
     private string message;
@@ -28,12 +32,16 @@ public class GenericWindowData
     #endregion
 
     #region Constructors
-    public GenericWindowData(string message, GenericButtonData buttonData) : this(message, buttonData, null) { }
+    public GenericWindowData(string message, GenericButtonData buttonData) : this(message, buttonData, null) 
+    {
+        hasSecondaryButton = false;
+    }
     public GenericWindowData(string message, GenericButtonData primaryButtonData, GenericButtonData secondaryButtonData)
     {
         this.message = message;
         this.primaryButtonData = primaryButtonData;
         this.secondaryButtonData = secondaryButtonData;
+        hasSecondaryButton = true;
     }
     #endregion
 }
