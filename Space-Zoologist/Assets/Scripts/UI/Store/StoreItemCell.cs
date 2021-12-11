@@ -69,7 +69,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void Update()
     {
         this.RemainingAmountText.text = "" + this.RemainingAmount;
-        RequestButton.gameObject.SetActive(RemainingAmount <= 0 && !PriceRoot.activeInHierarchy);
+        RequestButton.gameObject.SetActive(RemainingAmount <= 0 && !PriceRoot.activeInHierarchy && item.ItemID.Category != ItemRegistry.Category.Species);
 
         if (RemainingAmount > 0)
         {

@@ -18,7 +18,7 @@ public class ResourceRequestEditor : NotebookUIChild
             if (value != null)
             {
                 request = value;
-                SetUIValues();
+                UpdateUI();
             }
             else throw new System.NullReferenceException($"{nameof(ResourceRequestEditor)}: cannot set request to 'null'");
         }
@@ -88,18 +88,18 @@ public class ResourceRequestEditor : NotebookUIChild
         request.ItemAddressed = new ItemID(ItemRegistry.Category.Species, 0);
         request.ItemRequested = new ItemID(ItemRegistry.Category.Food, 0);
         request.QuantityRequested = 1;
-        SetUIValues();
+        UpdateUI();
     }
-    #endregion
-
-    #region Private Methods
-    private void SetUIValues()
+    public void UpdateUI()
     {
         targetDropdown.SetSelectedItem(request.ItemAddressed);
         needDisplay.text = request.NeedAddressed + " Need";
         quantityInput.text = request.QuantityRequested.ToString();
         itemRequestedDropdown.SetSelectedItem(request.ItemRequested);
     }
+    #endregion
+
+    #region Private Methods
     private void OnAnyRequestPropertyChanged()
     {
         if (request != null)

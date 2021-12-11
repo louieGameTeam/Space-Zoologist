@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] BuildUI buildUI = default;
     public BuildUI BuildUI => buildUI;
     [SerializeField] InspectorObjectiveUI inspectorObjectiveUI = default;
+    public InspectorObjectiveUI InspectorObjectUI => inspectorObjectiveUI;
 
     [Header("Time Variables")]
     [SerializeField] int maxDay = 20;
@@ -114,32 +115,76 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        isMainObjectivesCompleted = true;
-        numSecondaryObjectivesCompleted = 0;
-        UpdateObjectives();
-
-        if (isObjectivePanelOpen)
-        {
-            this.UpdateObjectivePanel();
-        }
-
-        // All objectives had reach end state
-        if (isMainObjectivesCompleted && !this.m_isGameOver)
-        {
-            this.m_isGameOver = true;
-
-            // TODO figure out what should happen when the main objectives are complete
-            EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
-
-            // GameOver.cs listens for the event and handles gameover
-            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
-
-            Debug.Log($"Level Completed!");
-        }
     }
     #endregion
 
     #region Loading Functions
+    public static int[] ExtractLevelInfo(string levelName)
+    {
+        levelName = levelName.Trim();
+        levelName = levelName.Replace("Level", "");
+        string[] temp = levelName.Split('E');
+        int[] info = new int[temp.Length];
+        for (int i = 0; i < info.Length; i++)
+        {
+            info[i] = int.Parse(temp[i]);
+        }
+        return info;
+    }
+
+    public void SaveGame(string curLevel)
+    {
+        string name = "sz.save";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        string prevLevel = LoadGame();
+        int prev = ExtractLevelInfo(prevLevel)[0];
+        int cur = ExtractLevelInfo(curLevel)[0];
+        if (cur < prev) return;
+        try
+        {
+            File.WriteAllText(fullPath, curLevel);
+        }
+        catch
+        {
+            Debug.LogError("Serialization error, NOT saved to protect existing saves");
+            return;
+        }
+        Debug.Log("Game Saved to: " + fullPath);
+    }
+
+    public void ClearSave()
+    {
+        string name = "sz.save";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        try
+        {
+            File.WriteAllText(fullPath, "Level1E1");
+        }
+        catch
+        {
+            Debug.LogError("Serialization error.");
+            return;
+        }
+        Debug.Log("Game Data Reset.");
+    }
+
+    public static string LoadGame()
+    {
+        string name = "sz.save";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        try
+        {
+            string json = File.ReadAllText(fullPath);
+            if (json.Length > 15 || json.Length < 7) throw new System.FormatException("Level longer than expected.");
+            return json;
+        }
+        catch (System.Exception e)
+        {
+            print("Error reading from or no save file");
+            return "Level1E1";
+        }
+    }
+
     public void SaveMap(string name = null, bool preset = true)
     {
         name = name ?? LevelOnPlay;
@@ -194,6 +239,42 @@ public class GameManager : MonoBehaviour
         Reload();
     }
 
+    public void SaveNotebook(NotebookData data)
+    {
+        string name = "sz.notebook";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+
+
+        try
+        {
+            string json = JsonUtility.ToJson(data);
+            File.WriteAllText(Path.Combine(Application.persistentDataPath, name), json);
+        }
+        catch
+        {
+            Debug.LogError("Serialization error, NOT saved to protect existing saves");
+            return;
+        }
+    }
+
+    public NotebookData LoadNotebook()
+    {
+        string name = "sz.notebook";
+        string fullPath = Path.Combine(Application.persistentDataPath, name);
+        try
+        {
+            string json = File.ReadAllText(fullPath);
+            NotebookData data = new NotebookData(NotebookUI.Config);
+            JsonUtility.FromJsonOverwrite(json, data);
+            return data;
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log("No save data or error loading notebook data, creating new data...");
+            return null;
+        }
+    }
+
     public void Reload()
     {
         m_plotIO.Initialize();
@@ -203,6 +284,8 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevelData()
     {
+        SaveGame(m_levelData.Level.SceneName);
+
         // set balance
         Balance = LevelData.StartingBalance;
 
@@ -264,7 +347,6 @@ public class GameManager : MonoBehaviour
         // If notebook is opened, then close the build ui
         notebookUI.OnNotebookToggle.AddListener(notebookIsOn =>
         {
-            m_cameraController.ControlsEnabled = !notebookIsOn;
             inspectorObjectiveUI.SetIsOpen(!notebookIsOn);
             if (notebookIsOn) m_menuManager.SetStoreIsOn(false);
 
@@ -343,6 +425,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Balance Functions
+    public void AddToBalance(float value)
+    {
+        this.Balance += value;
+    }
+    
     public void SubtractFromBalance(float value)
     {
         if (this.Balance - value >= 0)
@@ -566,6 +653,7 @@ public class GameManager : MonoBehaviour
         if (SceneNavigator.RecentlyLoadedLevel != "MainLevel") return;
 
         m_gridSystem.SetGridOverlay(false);
+        SaveNotebook(NotebookUI.Data);
     }
 
     public void HandleGameOver()
@@ -625,6 +713,32 @@ public class GameManager : MonoBehaviour
         this.objectivePane.SetActive(this.isObjectivePanelOpen);
         UpdateObjectives();
         this.UpdateObjectivePanel();
+    }
+
+    private void CheckWinConditions() 
+    {
+        isMainObjectivesCompleted = true;
+        numSecondaryObjectivesCompleted = 0;
+        UpdateObjectives();
+
+        if (isObjectivePanelOpen)
+        {
+            this.UpdateObjectivePanel();
+        }
+
+        // All objectives had reach end state
+        if (isMainObjectivesCompleted && !this.m_isGameOver)
+        {
+            this.m_isGameOver = true;
+
+            // TODO figure out what should happen when the main objectives are complete
+            EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
+
+            // GameOver.cs listens for the event and handles gameover
+            EventManager.Instance.InvokeEvent(EventType.GameOver, null);
+
+            Debug.Log($"Level Completed!");
+        }
     }
 
     private void UpdateObjectives()
@@ -712,6 +826,7 @@ public class GameManager : MonoBehaviour
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }
+        CheckWinConditions();
     }
 
     public void EnableInspectorToggle(bool enabled)

@@ -87,7 +87,7 @@ public class NotebookTabPicker : NotebookUIChild
     // Select a specific notebook tab by selecting one of the buttons
     public void SelectTab(NotebookTab tab)
     {
-        buttons[(int)tab].Select();
+        GetTabSelectButton(tab).Select();
     }
     /// <summary>
     /// Get the root transform for the given notebook tab
@@ -97,6 +97,14 @@ public class NotebookTabPicker : NotebookUIChild
     public Transform GetTabRoot(NotebookTab tab)
     {
         return pagesRoot.GetChild((int)tab);
+    }
+    public NotebookTabSelectButton GetTabSelectButton(NotebookTab tab)
+    {
+        int index = (int)tab;
+
+        if (index >= 0 && index < buttons.Count) return buttons[index];
+        else throw new System.IndexOutOfRangeException($"{nameof(NotebookTabPicker)}: " +
+            $"No notebook tab button defined for tab '{tab}'. Total buttons: {buttons.Count}");
     }
     #endregion
 
