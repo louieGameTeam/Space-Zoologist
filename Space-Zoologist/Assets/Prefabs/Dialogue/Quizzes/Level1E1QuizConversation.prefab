@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7733090166749892093}
-  - component: {fileID: 7381372536696310973}
-  - component: {fileID: 2634136919183288987}
-  - component: {fileID: 4964761533184799242}
-  - component: {fileID: 753260972694524090}
+  - component: {fileID: 6032765105817047707}
+  - component: {fileID: 1581376887191387366}
+  - component: {fileID: 1720221945436070100}
+  - component: {fileID: 5482562167084156246}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 7787167510558642841}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7381372536696310973
+--- !u!114 &6032765105817047707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,7 +53,7 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 82d5126eed89849bda97e0110a6d732f, type: 3}
   Audio: {fileID: 0}
---- !u!114 &2634136919183288987
+--- !u!114 &1581376887191387366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &4964761533184799242
+--- !u!114 &1720221945436070100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &753260972694524090
+--- !u!114 &5482562167084156246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,21 +154,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 2
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":609.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Your
-    responses indicate that your knowledge of both food and terrain needs for CapraX
-    Zeigrun deviates significantly from our anticipated observed results from other
-    engineers.\\r\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":611.5,\"yPos\":148},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Based
-    on these results, I\u2019d like to set you up with another group of CapraX Zeigrun,
-    where I\u2019ll ask you to focus on collecting data again, to confirm or deny
-    your deviation from our expectations.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  CurrentIDCounter: 3
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":215.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Oh...It
+    looks like you might need to review your basics a bit more. Make sure you pay
+    close attention to the Zeig\u2019s preferences next time.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":217.5,\"yPos\":148},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Still,
+    you did an amazing job completing the enclosure! Head on down to the next one
+    when you\u2019re ready, and I\u2019ll see you there!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
-  - {fileID: 8621958118791342401}
-  - {fileID: 5395020010195423266}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 3576076516922196485}
+  - {fileID: 580252566540471490}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -222,7 +222,8 @@ MonoBehaviour:
   npcName: Star
   npcFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   openingConversation: {fileID: 5437691235473108205}
-  endOfQuizText: Alright, give me a minute to process your answers...
+  endOfQuizText: "And...We\u2019re all done! Gimme a sec to process your answers,
+    and we\u2019ll see how you did\u2026"
   response:
     responses:
     - conversation: {fileID: 4419113645731789405}
@@ -276,20 +277,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 2
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":609.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Your
-    responses indicate that your knowledge of both food and terrain needs for CapraX
-    Zeigrun \\rdeviates slightly from our anticipated observed results from other
-    engineers.\\r\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":615.5,\"yPos\":145},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Based
-    on these results, I\u2019d like to set you up with another group of CapraX Zeigrun,
-    where I\u2019ll ask you to focus on collecting data again, to confirm or deny
-    your deviation from our expectations.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":215.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Well\u2026
+    Looks like you got the most important bits right, but you still have a bit more
+    to learn. Pay close attention to the terrain preferences of the Zeigs next time!
+    \",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":221.5,\"yPos\":145},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    get down about it, though! Live and learn, I always say. Now let\u2019s get on
+    to the next enclosure!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
-  - {fileID: 4920273289864732338}
-  - {fileID: 2598417920534499227}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 8873393166182272522}
+  - {fileID: 3350852784317388517}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -337,21 +339,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 4
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":497.5,\"yPos\":196},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Ha-ha,
-    sports.\",\"parentUIDs\":[0,0],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":757.5,\"yPos\":191},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Thanks!\",\"parentUIDs\":[0,0],\"SpeechUID\":3}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":609.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Well
-    congrats, newbie, you keep on knocking our expectations out of the park!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[1,2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":622.5,\"yPos\":347},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+  CurrentIDCounter: 7
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":32,\"yPos\":173},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Ha-ha,
+    sportsball. I love sportsball!\",\"parentUIDs\":[0,0],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":282,\"yPos\":166},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You
+    bet. Keep putting me in, and I\u2019ll knock your expectations out of the park!\\r\",\"parentUIDs\":[0,0],\"SpeechUID\":5}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":144,\"yPos\":-1},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Whoa,
+    you actually pulled it off! Not many new recruits can pull off a job this tough.
+    Looks like you\u2019re our new pinch hitter, kid!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[1,2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":158,\"yPos\":288},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
     time for your report-back, like I mentioned when you first got here. I\u2019ll
-    be asking a series of questions to gauge your learning.\",\"parentUIDs\":[1,2,1,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+    be asking a series of questions to gauge your learning.\",\"parentUIDs\":[1,2,1,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":152,\"yPos\":413},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    worry. There\u2019s no trick questions here. Just remember the work you did,
+    and you\u2019ll be fine. If you can handle the enclosure, you can handle the
+    report-back.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
   - {fileID: 1296025708438473577}
-  - {fileID: 8447998180945082316}
   - {fileID: 8983131990527284876}
   - {fileID: 9114664153119247381}
+  - {fileID: 7523581276535530095}
+  - {fileID: 404372283249336134}
+  - {fileID: 6725346294827304525}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -398,9 +407,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3460103763569886883}
   - component: {fileID: 1296025708438473577}
-  - component: {fileID: 8447998180945082316}
   - component: {fileID: 8983131990527284876}
   - component: {fileID: 9114664153119247381}
+  - component: {fileID: 7523581276535530095}
+  - component: {fileID: 404372283249336134}
+  - component: {fileID: 6725346294827304525}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -441,25 +452,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 82d5126eed89849bda97e0110a6d732f, type: 3}
   Audio: {fileID: 0}
---- !u!114 &8447998180945082316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7400194496622209237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 3
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
-  Audio: {fileID: 0}
 --- !u!114 &8983131990527284876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,6 +490,63 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
+--- !u!114 &7523581276535530095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400194496622209237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 4
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &404372283249336134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400194496622209237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 5
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &6725346294827304525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400194496622209237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 6
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
 --- !u!1 &7871486016406910577
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,8 +556,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1571959161842353714}
-  - component: {fileID: 8621958118791342401}
-  - component: {fileID: 5395020010195423266}
+  - component: {fileID: 3576076516922196485}
+  - component: {fileID: 580252566540471490}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -530,7 +579,7 @@ Transform:
   m_Father: {fileID: 4793403699993187545}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8621958118791342401
+--- !u!114 &3576076516922196485
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -549,7 +598,7 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
   Audio: {fileID: 0}
---- !u!114 &5395020010195423266
+--- !u!114 &580252566540471490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -566,7 +615,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &7902325524372598651
 GameObject:
@@ -613,23 +662,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 4
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":609.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Wow!
-    Your responses fall into the expected ranges based on observations by other engineers.
-    This data will really help confirm CapraX Zeigrun\u2019s needs.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":607.5,\"yPos\":157},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Because
-    your research aligned almost perfectly with other observations, the team has
-    put together a stamp for your collection.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":612.5,\"yPos\":283},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You
-    can put your stamps on the back of your clipboard!\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":616.5,\"yPos\":400},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Additionally,
-    based on these results, I\u2019d like to set you up with another group of CapraX
-    Zeigrun, where I\u2019ll ask you to focus on their water needs!\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":215.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Holy
+    Moly! You did way better than any of the other recruits ever did! \",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":213.5,\"yPos\":157},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+    telling you, kid, you\u2019re something special. Here, take this as a little
+    reward for your work so far. You\u2019re killing it!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":218.5,\"yPos\":283},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    a little stamp for the back of your clipboard! Isn\u2019t it cute?\\r\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":222.5,\"yPos\":400},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
+    enough about that! We have more Zeigs to save! Head on down to the next enclosure,
+    if you\u2019re up for it. I\u2019ll see you there!\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
-  - {fileID: 7381372536696310973}
-  - {fileID: 2634136919183288987}
-  - {fileID: 4964761533184799242}
-  - {fileID: 753260972694524090}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 6032765105817047707}
+  - {fileID: 1581376887191387366}
+  - {fileID: 1720221945436070100}
+  - {fileID: 5482562167084156246}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -642,8 +694,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1717958090586450893}
-  - component: {fileID: 4920273289864732338}
-  - component: {fileID: 2598417920534499227}
+  - component: {fileID: 8873393166182272522}
+  - component: {fileID: 3350852784317388517}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -665,7 +717,7 @@ Transform:
   m_Father: {fileID: 485236932960529182}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4920273289864732338
+--- !u!114 &8873393166182272522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -684,7 +736,7 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &2598417920534499227
+--- !u!114 &3350852784317388517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
