@@ -12886,18 +12886,11 @@ PrefabInstance:
     - target: {fileID: 8992944314454785584, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
       propertyPath: m_Text
-      value: ":aurora_enthusiastic: Alright, here it is! The last Zeig enclosure.
-        Wrap this one up, and we\u2019ll be all ready to move you on to the next
-        species!\r\n:aurora_talk_happy: This time around, you should build on what
-        you\u2019ve learned about their food preferences, and make sure you investigate
-        their terrain and water composition preferences.\r\n:aurora_talk_neutral:
-        All the other work we\u2019ve done to recreate the Zeig\u2019s natural habitat
-        will be for nothing if we don\u2019t nail the water, so make sure you pay
-        close attention to it.\r\n:aurora_enthusiastic: But you know all that by
-        now, don\u2019t you? I\u2019m sure you\u2019ll nail it this time around,
-        too. \r\n:aurora_talk_happy: I\u2019ll be back in 25 days to check on the
-        enclosure and test what you\u2019ve learned! This is the last stretch, so
-        make sure you give it your all!"
+      value: ':juno_talk_happy: Good. It seems you have taken this opportunity to
+        redouble your observational efforts. That is precisely what was intended.
+
+        :juno_talk_neutral:
+        Come along. There is much more work to do.'
       objectReference: {fileID: 0}
     - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
@@ -12938,6 +12931,11 @@ PrefabInstance:
         type: 3}
       propertyPath: iconIDInput.Array.data[7].id
       value: aurora_impressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: defaultName
+      value: Juno
       objectReference: {fileID: 0}
     - target: {fileID: 8992944314454785589, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
