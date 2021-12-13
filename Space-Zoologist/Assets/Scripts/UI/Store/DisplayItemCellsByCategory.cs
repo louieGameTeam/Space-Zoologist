@@ -1,10 +1,21 @@
 ﻿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DisplayItemCellsByCategory : MonoBehaviour
 {
+    #region Public Typedefs
+    [System.Serializable]
+    public class ItemEvent : UnityEvent<Item> { }
+    #endregion
+
+    #region Public Properties
+    public UnityEvent<Item> ItemClickedEvent => itemClickedEvent;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the toggle group used to select an item category")]
@@ -15,6 +26,10 @@ public class DisplayItemCellsByCategory : MonoBehaviour
     [SerializeField]
     [Tooltip("Reference to the prefab to instantiate for each cell")]
     private StoreItemCell itemCellPrefab;
+
+    [SerializeField]
+    [Tooltip("Item invoked when an item cell is clicked on")]
+    private ItemEvent itemClickedEvent;
     #endregion
 
     #region Private Fields
@@ -56,7 +71,7 @@ public class DisplayItemCellsByCategory : MonoBehaviour
             {
                 StoreItemCell cell = Instantiate(itemCellPrefab, cellParent);
                 // Initialize the cell instance
-                cell.Initialize(itemData.itemObject, true, null);
+                cell.Initialize(itemData.itemObject, true, itemClickedEvent.Invoke);
                 cell.RemainingAmount = GameManager.Instance.m_resourceManager.CheckRemainingResource(itemData.itemObject);
                 existingCells.Add(cell);
             }

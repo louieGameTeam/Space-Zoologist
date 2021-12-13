@@ -66,9 +66,9 @@ public class FoodSourceManager : GridObjectManager
         return newFoodSourceGameObject;
     }
 
-    public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position)
+    public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position, int ttb = -1)
     {
-        return CreateFoodSource(GameManager.Instance.FoodSources[foodsourceSpeciesID], position);
+        return CreateFoodSource(GameManager.Instance.FoodSources[foodsourceSpeciesID], position, ttb);
     }
 
     public void DestroyFoodSource(FoodSource foodSource) {

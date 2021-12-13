@@ -9,7 +9,7 @@ using DialogueEditor;
 /// Simple object used by the tutorial manager to schedule coroutines,
 /// because the tutorial manager stays stuck on a prefab
 /// </summary>
-public class TutorialCoroutineScheduler : MonoBehaviour
+public class ConversationFreezingScheduler : MonoBehaviour
 {
     #region Private Fields
     private Coroutine freezeConversationRoutine;

@@ -16,6 +16,7 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     #endregion
 
     #region Public Properties
+    public bool IsHighlighting => highlightPicker.FirstValuePicked;
     // Public accessors of private data
     public IntIntEvent OnHighlightConfirm => onHighlightConfirm;
     #endregion

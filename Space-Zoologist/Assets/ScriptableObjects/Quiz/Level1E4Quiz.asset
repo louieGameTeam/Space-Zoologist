@@ -22,159 +22,57 @@ MonoBehaviour:
       index: 0
     need: 3
   questions:
-  - question: What food do CapraX Zeigrun prefer?
+  - question: "First question: From the perspective of the Zeigs, what\u2019s the
+      difference between Space Maples and Golden Space Maples?"
     category:
       item:
         category: 0
         index: 0
       need: 3
     options:
-    - label: Space Maple
-      weight: 1
-    - label: Gold Space Maple
+    - label: They prefer to eat Golden Space Maples fruit over the normal Space Maples
+        fruit
       weight: 2
-    - label: Berries
+    - label: "They\u2019ll eat the fruit of the Golden Space Maples, but only after
+        eating all of the available Space Maple fruit."
+      weight: 0
+    - label: Nothing. They eat the fruits of both trees.
       weight: 1
-    - label: Ants
-      weight: -1
-  - question: What food, if any, is poisonous to CapraX Zeigrun?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 3
-    options:
-    - label: Space Maple
-      weight: -1
-    - label: Gold Space Maple
-      weight: -1
-    - label: Berries
-      weight: -1
-    - label: Ants
-      weight: 1
-  - question: What is the minimum amount of fruit a healthy space maple produces?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 3
-    options:
-    - label: 3
-      weight: -1
-    - label: 4
-      weight: -1
-    - label: 5
-      weight: 1
-    - label: 6
-      weight: -1
-  - question: What is the minimum amount of fruit a healthy space berry bush produces?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 3
-    options:
-    - label: 4
-      weight: -1
-    - label: 5
-      weight: -1
-    - label: 6
-      weight: -1
-    - label: 7
-      weight: 1
-  - question: What type of terrain is ideal for CapraX Zeigrun?
+    - label: The Zeigs prefer to eat berries over the fruit of normal Space Maples,
+        but not over the fruit of the Golden Space Maples.
+      weight: 0
+  - question: 'Alright, alright. How about this: How do the Zeigs respond to sandy
+      terrain?'
     category:
       item:
         category: 0
         index: 0
       need: 0
     options:
-    - label: Dirt
+    - label: "They\u2019ll avoid it whenever possible."
+      weight: 1
+    - label: "It\u2019s untraversable for them."
       weight: 2
-    - label: Grass
-      weight: 1
-    - label: Rock
+    - label: "They\u2019ll only enter it in order to get to water sources."
       weight: 0
-    - label: Swamp
-      weight: -1
-    - label: Sand
-      weight: -1
-  - question: What is one type of impassable terrain for CapraX Zeigrun?
+    - label: "They\u2019ll enter and move around in it normally. "
+      weight: 0
+  - question: Finally, how many tiles does each Zeig need to have to itself in order
+      to thrive?
     category:
       item:
         category: 0
         index: 0
       need: 0
     options:
-    - label: Dirt
-      weight: -1
-    - label: Grass
-      weight: -1
-    - label: Rocky
-      weight: -1
-    - label: Swamp
-      weight: 1
-    - label: Sand
-      weight: 1
-  - question: Approximately how much terrain does one CapraX Zeigrun need?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 0
-    options:
-    - label: 5
-      weight: 1
-    - label: 4
-      weight: 1
-    - label: 3
-      weight: -1
-    - label: 2
-      weight: -1
-  - question: At what threshold does salt content become poisonous for CapraX Zeigrun?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 4
-    options:
-    - label: 2.5%
-      weight: -1
-    - label: 2%
-      weight: 1
-    - label: 1.5%
-      weight: -1
-    - label: 1%
-      weight: -1
-  - question: "What is the pure water percentage for CapraX Zeigrun\u2019s survival?"
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 4
-    options:
-    - label: 97%
-      weight: -1
-    - label: 96%
-      weight: 1
-    - label: 95.5%
-      weight: -1
-    - label: 95%
-      weight: -1
-  - question: Approximately what is the minimum required amount of water needed for
-      one CapraX Zeigrun?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 4
-    options:
-    - label: 4
-      weight: 0
     - label: 3
       weight: 0
     - label: 2
-      weight: 1
+      weight: 0
     - label: 1
+      weight: 0
+    - label: 4
+      weight: 1
+    - label: 0
       weight: 0
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
