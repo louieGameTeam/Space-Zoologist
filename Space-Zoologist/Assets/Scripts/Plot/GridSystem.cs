@@ -446,7 +446,7 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
-    public void AddFood(Vector3Int gridPosition, Vector2Int size, GameObject foodSource)
+    public void AddFoodReferenceToTile(Vector3Int gridPosition, Vector2Int size, GameObject foodSource)
     {
         Vector3Int pos;
         // Check if the whole object is in bounds
@@ -1577,7 +1577,7 @@ public class GridSystem : MonoBehaviour
         else
         {
             // TODO figure out how to determine if tile is placable
-            // gridOverlay.HighlightTile(gridPosition, Color.green);
+            HighlightTile(gridPosition, Color.green);
         }
     }
 
@@ -2393,17 +2393,6 @@ public class GridSystem : MonoBehaviour
             this.currentTile = tile;
             this.isTileChanged = true;
         }
-        public void PreviewColorChange(Color color)
-        {
-            if (isColorChanged)
-            {
-                this.currentColor = color;
-                return;
-            }
-            this.previousColor = this.currentColor;
-            this.currentColor = color;
-            this.isColorChanged = true;
-        }
         public void PreviewLiquidBody(LiquidBody newLiquidBody)
         {
             if (isLiquidBodyChanged)
@@ -2461,6 +2450,17 @@ public class GridSystem : MonoBehaviour
             this.isTileChanged = false;
             this.isColorChanged = false;
             this.isLiquidBodyChanged = false;
+        }
+        public string ToString()
+        {
+            string positionString = "Tile Position: " + tilePosition.ToString() + "\n";
+            string foodString = "Food: " + (Food != null ? Food.name : "none") + "\n";
+            string currentTileString = "Current Tile: " + (currentTile != null ? currentTile.TileName : "none") + "\n";
+            string previousTileString = "Previous Tile: " + (previousTile != null ? previousTile.TileName : "none") + "\n";
+            string currentLiquidbodyString = "Current Liquidbody ID: " + (currentLiquidBody != null ? "" + currentLiquidBody.bodyID : "none") + "\n";
+            string previewingLiquidbodyString = "Previewing Liquidbody ID: " + (previewLiquidBody != null ? "" + previewLiquidBody.bodyID : "none") + "\n";
+
+            return positionString + foodString + currentTileString + previousTileString + currentLiquidbodyString + previewingLiquidbodyString;
         }
     }
 
