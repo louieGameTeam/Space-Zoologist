@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -847,6 +847,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4505284628624801601, guid: 757d09d31762a4ed690a409b2cd5fb26,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505284628624801601, guid: 757d09d31762a4ed690a409b2cd5fb26,
+        type: 3}
       propertyPath: m_Colors.m_NormalColor.r
       value: 0.5754717
       objectReference: {fileID: 0}
@@ -859,6 +864,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.5754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505284628624801601, guid: 757d09d31762a4ed690a409b2cd5fb26,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505284628624801601, guid: 757d09d31762a4ed690a409b2cd5fb26,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505284628624801601, guid: 757d09d31762a4ed690a409b2cd5fb26,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11400000, guid: 647dac234a1564032b39aded20369bc2,
+        type: 2}
+    - target: {fileID: 4505284628624801601, guid: 757d09d31762a4ed690a409b2cd5fb26,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayGeneral
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505284628624801601, guid: 757d09d31762a4ed690a409b2cd5fb26,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4505284628624801614, guid: 757d09d31762a4ed690a409b2cd5fb26,
         type: 3}
