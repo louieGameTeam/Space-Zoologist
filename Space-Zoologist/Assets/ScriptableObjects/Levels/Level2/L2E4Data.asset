@@ -65,9 +65,20 @@ MonoBehaviour:
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  passedConversation:
-    isQuiz: 0
+  ending:
+    isQuiz: 1
     normalConversation: {fileID: 0}
+    nextLevelID:
+      levelNumber: 0
+      enclosureNumber: 0
     quizConversation: {fileID: 0}
+    nextLevelIDs:
+      levelIDs:
+      - levelNumber: 2
+        enclosureNumber: 1
+      - levelNumber: 3
+        enclosureNumber: 1
+      - levelNumber: 3
+        enclosureNumber: 1
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}
