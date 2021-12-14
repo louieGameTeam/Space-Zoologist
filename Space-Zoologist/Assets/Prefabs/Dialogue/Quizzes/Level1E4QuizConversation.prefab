@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9099797510605934877}
   - component: {fileID: 9099797510605934876}
   m_Layer: 0
-  m_Name: Pass
+  m_Name: Excellent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 3
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":98,\"yPos\":-17},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"You\u2019re
-    the first engineer to get all of those report-back questions right in one go!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":100,\"yPos\":127},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Well,
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":154,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"You\u2019re
+    the first engineer to get all of those report-back questions right in one go!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":156,\"yPos\":166},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Well,
     it looks like you\u2019ve confirmed all we need to keep CapraX Zeigrun happy
-    and thriving.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":101,\"yPos\":244},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    and thriving.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":157,\"yPos\":283},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
     time for us to move onto the next endangered species!\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
@@ -60,18 +60,7 @@ MonoBehaviour:
   - {fileID: 9099797512207024037}
   Event:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9099797512057417412}
-        m_MethodName: LoadLevel
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Level2E1
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &9099797511024431364
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +223,7 @@ GameObject:
   - component: {fileID: 9099797511415969780}
   - component: {fileID: 9099797511415969783}
   m_Layer: 0
-  m_Name: PartialPass
+  m_Name: Acceptable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,12 +257,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 4
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":95,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Your
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":154,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Your
     responses indicate that your knowledge of CapraX Zeigrun\u2019s terrain and water
     composition needs deviate slightly from our anticipated observed results from
-    other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":97,\"yPos\":133},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Well,
+    other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":156,\"yPos\":133},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Well,
     it looks like you\u2019ve confirmed all we need to keep CapraX Zeigrun happy
-    and thriving! Congrats, kid.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":105,\"yPos\":263},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    and thriving! Congrats, kid.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":164,\"yPos\":263},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
     time for us to move onto the next endangered species!\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: Star
@@ -285,18 +274,7 @@ MonoBehaviour:
   - {fileID: 9099797511945341278}
   Event:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9099797512057417412}
-        m_MethodName: LoadLevel
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Level2E1
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &9099797511842162064
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,12 +488,9 @@ MonoBehaviour:
   endOfQuizText: Alright, give me a minute to process your answers...
   response:
     responses:
-    - conversation: {fileID: 9099797512643892337}
-      nextLevelName: Level1E1
-    - conversation: {fileID: 9099797511415969783}
-      nextLevelName: Level2E1
-    - conversation: {fileID: 9099797510605934876}
-      nextLevelName: Level2E1
+    - {fileID: 9099797512643892337}
+    - {fileID: 9099797511415969783}
+    - {fileID: 9099797510605934876}
 --- !u!1 &9099797512207024032
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +636,7 @@ GameObject:
   - component: {fileID: 9099797512643892302}
   - component: {fileID: 9099797512643892337}
   m_Layer: 0
-  m_Name: Fail
+  m_Name: Poor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,10 +670,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 2
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":95,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Your
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":154,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Your
     responses indicate that your knowledge of both terrain and water composition
     needs for CapraX Zeigrun deviates significantly from our anticipated observed
-    results from other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":92,\"yPos\":153},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Either
+    results from other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":151,\"yPos\":153},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Either
     way, based on these results, I\u2019d like to set you up with another group of
     CapraX Zeigrun, where I\u2019ll ask you to focus on collecting data again, to
     confirm or deny your deviation from our expectations.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
@@ -711,15 +686,4 @@ MonoBehaviour:
   - {fileID: 9099797511024431366}
   Event:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9099797512057417412}
-        m_MethodName: LoadLevel
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Level1E1
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []

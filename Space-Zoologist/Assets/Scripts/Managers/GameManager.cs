@@ -643,7 +643,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            m_levelData.PassedConversation.Speak(m_dialogueManager);
+            m_levelData.Ending.SayEndingConversation();
         }
         m_dialogueManager.StartInteractiveConversation();
         this.IngameUI.SetActive(false);

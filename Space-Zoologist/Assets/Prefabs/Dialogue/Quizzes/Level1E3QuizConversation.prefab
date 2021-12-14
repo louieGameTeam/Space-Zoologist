@@ -123,12 +123,9 @@ MonoBehaviour:
   endOfQuizText: Alright, give me a minute to process your answers...
   response:
     responses:
-    - conversation: {fileID: 2397069554096548239}
-      nextLevelName: Level1E2
-    - conversation: {fileID: 2397069555125307913}
-      nextLevelName: Level1E4
-    - conversation: {fileID: 2397069554861599970}
-      nextLevelName: Level2E1
+    - {fileID: 2397069554096548239}
+    - {fileID: 2397069555125307913}
+    - {fileID: 2397069554861599970}
 --- !u!1 &2397069553824602222
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +196,7 @@ GameObject:
   - component: {fileID: 2397069554096548272}
   - component: {fileID: 2397069554096548239}
   m_Layer: 0
-  m_Name: Fail
+  m_Name: Poor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,7 +451,7 @@ GameObject:
   - component: {fileID: 2397069554861599971}
   - component: {fileID: 2397069554861599970}
   m_Layer: 0
-  m_Name: Pass
+  m_Name: Excellent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +512,7 @@ GameObject:
   - component: {fileID: 2397069555125307914}
   - component: {fileID: 2397069555125307913}
   m_Layer: 0
-  m_Name: PartialPass
+  m_Name: Acceptable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

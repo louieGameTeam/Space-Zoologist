@@ -33,11 +33,26 @@ public class LevelDataLoader : MonoBehaviour
         }
     }
 
+    public void LoadLevel(LevelID levelToLoad) => LoadLevel(levelToLoad.LevelName);
     public void LoadLevel(string levelToLoad)
     {
         GameManager.Instance?.HandleExitLevel();
         LevelDataReference.instance.LevelData = GetLevelData(levelToLoad);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+    }
+
+    public void LoadNextLevel()
+    {
+        LevelID nextLevel = GameManager.Instance.LevelData.Ending.GetNextLevelID();
+
+        // If we got the next level then load it
+        if (nextLevel != LevelID.Invalid)
+        {
+            LoadLevel(nextLevel);
+        }
+        else Debug.Log($"Next level name could not be identified. " +
+            $"Make sure that the player has finished taking the end of level quiz " +
+            $"before trying to load the next level");
     }
 
     public void ReloadLevel()

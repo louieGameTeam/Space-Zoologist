@@ -15,7 +15,6 @@ public class GameOverController : MonoBehaviour
         {
             if(!window)
             {
-                Debug.Log("Here you go i guess");
                 // Get the root canvas
                 Canvas parent = FindObjectOfType<Canvas>();
 
@@ -47,13 +46,13 @@ public class GameOverController : MonoBehaviour
     private GenericWindow window;
     // True when the main objectives are completed
     private bool mainObjectivesCompleted = false;
-    // True if the fail window should be displayed the next time a conversation ends
-    private bool failWindowReady = false;
     #endregion
 
     #region Monobehaviour Messages
     private void Start()
     {
+        //GameManager.Instance.LevelData.PassedConversation.
+
         // Subscribe to events on the event manager
         // NOTE: we're depending on "MainObjectivesCompleted" firing before the "GameOver" event,
         // if the order switches we'll think we lost!
@@ -63,18 +62,17 @@ public class GameOverController : MonoBehaviour
         // Say the level passed conversation when level is passed
         objectiveFinishedWindow.PrimaryButtonData.ButtonAction.AddListener(LevelPassedConversation);
 
-        // NOTE: can't really set up the success window right now 
-        // because the passed conversation will automatically load the next level
-        // without letting us pull up the success window first
+        // Setup the success window to load the next level or go back to level select
         LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
-        // successWindow.PrimaryButtonData.ButtonAction.AddListener();
+        successWindow.PrimaryButtonData.ButtonAction.AddListener(() => levelLoader.LoadNextLevel());
+        successWindow.SecondaryButtonData.ButtonAction.AddListener(() => SceneManager.LoadScene("LevelMenu"));
 
         // Reload level or load the level select in the fail window
         failWindow.PrimaryButtonData.ButtonAction.AddListener(() => levelLoader.ReloadLevel());
         failWindow.SecondaryButtonData.ButtonAction.AddListener(() => SceneManager.LoadScene("LevelMenu"));
 
-        // Subscribe to conversation ended event
-        ConversationManager.OnConversationEnded += OnConversationEnded;
+        // Subscribe to event raised when any conversation is started
+        ConversationManager.OnConversationStarted += OnAnyConversationStarted;
     }
     #endregion
 
@@ -91,30 +89,41 @@ public class GameOverController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Game over!");
+            // Instantiate a copy of the restart conversation and say it
             GameManager gameManager = GameManager.Instance;
-            gameManager.m_dialogueManager.SetNewDialogue(gameManager.LevelData.RestartConversation);
+            NPCConversation restartConversation = gameManager.LevelData.RestartConversation.InstantiateAndSay();
             gameManager.m_dialogueManager.StartInteractiveConversation();
 
-            // Ready the fail window
-            failWindowReady = true;
+            // When the conversation ends then show the fail window
+            restartConversation.OnConversationEnded(() => Window.Setup(failWindow));
         }
     }
     private void LevelPassedConversation()
     {
         GameManager gameManager = GameManager.Instance;
-        gameManager.LevelData.PassedConversation.Speak(gameManager.m_dialogueManager);
+        gameManager.LevelData.Ending.SayEndingConversation();
         gameManager.m_dialogueManager.StartInteractiveConversation();
     }
-    private void OnConversationEnded()
+    private void OnAnyConversationStarted()
     {
-        // If fail window was readied then setup the window with the fail window data
-        if (failWindowReady)
+        QuizConversation quiz = GameManager.Instance.LevelData.Ending.ActiveQuizConversation;
+
+        if (quiz)
         {
-            Debug.Log("Setup fail window");
-            Window.Setup(failWindow);
+            NPCConversation quizResponse = quiz.CurrentResponse;
+
+            // If a quiz response is active, make the success window setup
+            // once the response is over
+            if (quizResponse)
+            {
+                Debug.Log("Got a quiz response");
+                quizResponse.OnConversationEnded(() =>
+                {
+                    Window.Setup(successWindow);
+                    Window.gameObject.SetActive(true);
+                });
+            }
         }
-        failWindowReady = false;
     }
     #endregion
 }
