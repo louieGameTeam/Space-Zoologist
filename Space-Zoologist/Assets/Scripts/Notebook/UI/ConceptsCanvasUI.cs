@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using DG.Tweening;
+using DialogueEditor;
 
 public class ConceptsCanvasUI : NotebookUIChild
 {
@@ -19,6 +20,23 @@ public class ConceptsCanvasUI : NotebookUIChild
             rectTransform.DOKill();
             rectTransform.DOAnchorMax(anchor, time);
             return rectTransform.DOSizeDelta(sizeDelta, time);
+        }
+    }
+    [System.Serializable]
+    public class CameraZoom
+    {
+        [Tooltip("Orthographic size of the camera when viewing the concept canvas")]
+        public float orthographicSize = 21f;
+        [Tooltip("Y-position that the camera moves to at the center of the drawing canvas")]
+        public float yCenter = 13f;
+        [Tooltip("X-position that the camera moves to when viewing the leftmost part of the enclosure")]
+        public float xLeft = 0f;
+
+        // Apply this camera zoom to the main camera
+        public void Apply(Vector2 scrollPos, float smoothingTime)
+        {
+            Vector3 pos = new Vector3(xLeft, yCenter, GameManager.Instance.m_cameraController.transform.position.z);
+            GameManager.Instance.m_cameraController.Lock(new CameraPositionLock(pos, orthographicSize, smoothingTime));
         }
     }
     #endregion
@@ -39,7 +57,7 @@ public class ConceptsCanvasUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Anchors of the rect transform when the canvas is folded in")]
     private FoldoutAnchor foldinAnchors;
-
+    
     [Space]
 
     [SerializeField]
@@ -70,22 +88,26 @@ public class ConceptsCanvasUI : NotebookUIChild
     [Tooltip("Reference to the scroll rect that moves the drafting area side to side")]
     private ScrollRect scroll;
     [SerializeField]
-    [Tooltip("Orthographic size of the camera when viewing the concept canvas")]
-    private float orthographicSize = 20f;
-    [SerializeField]
     [Tooltip("Time it takes for the camera to move into zoomed position")]
     private float smoothingTime = 1f;
     [SerializeField]
-    [Tooltip("Y-position that the camera moves to at the center of the drawing canvas")]
-    private float yCenter = 5f;
+    [Tooltip("Zoom applied to the camera while folded out and dialogue is not active")]
+    private CameraZoom dialogueInactiveZoom;
     [SerializeField]
-    [Tooltip("X-position that the camera moves to when viewing the leftmost part of the enclosure")]
-    private float xLeft = -3f;
+    [Tooltip("Zoom applied to the camera while folded out and dialogue is active")]
+    private CameraZoom dialogueActiveZoom;
     #endregion
 
     #region Monobehaviour Messages
     private void Start()
     {
+        // Modify camera position when conversation is started or ended
+        // We need to pass the true-false value because apparently the "IsConversationActive"
+        // bool on the conversation manager is not set until AFTER these events are invoked
+        // (We really should fix that...)
+        ConversationManager.OnConversationStarted += () => SetCameraPosition(true);
+        ConversationManager.OnConversationEnded += () => SetCameraPosition(false);
+        
         // Apply foldout state to the anchors when we start
         ApplyFoldoutState(foldoutToggle.isOn);
     }
@@ -95,7 +117,7 @@ public class ConceptsCanvasUI : NotebookUIChild
 
         if(instance && foldoutToggle.isOn)
         {
-            SetCameraPosition(scroll.normalizedPosition);
+            SetCameraPosition();
         }
     }
     private void OnDisable()
@@ -152,7 +174,7 @@ public class ConceptsCanvasUI : NotebookUIChild
             if(instance)
             {
                 scroll.normalizedPosition = Vector2.zero;
-                SetCameraPosition(scroll.normalizedPosition);
+                SetCameraPosition();
             }
         }
         else
@@ -165,10 +187,25 @@ public class ConceptsCanvasUI : NotebookUIChild
             if (instance) instance.m_cameraController.Unlock();
         }
     }
-    private void SetCameraPosition(Vector2 scrollPos)
+    private void SetCameraPosition()
     {
-        Vector3 pos = new Vector3(xLeft, yCenter, GameManager.Instance.m_cameraController.transform.position.z);
-        GameManager.Instance.m_cameraController.Lock(new CameraPositionLock(pos, orthographicSize, smoothingTime));
+        ConversationManager conversation = ConversationManager.Instance;
+
+        // If conversation was found then use its state to set the camera position
+        if (conversation) SetCameraPosition(conversation.IsConversationActive);
+        // If no conversation was found set camera for no dialogue present
+        else SetCameraPosition(false);
+    }
+    private void SetCameraPosition(bool conversationActive)
+    {
+        if(foldoutToggle.isOn)
+        {
+            if (conversationActive)
+            {
+                dialogueActiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
+            }
+            else dialogueInactiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
+        }
     }
     #endregion
 }
