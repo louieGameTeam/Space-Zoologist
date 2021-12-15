@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
-  m_Name: Level1E3Quiz
+  m_Name: Level1E1Quiz
   m_EditorClassIdentifier: 
   importantCategories:
   - item:
@@ -20,53 +20,52 @@ MonoBehaviour:
   - item:
       category: 0
       index: 0
-    need: 4
+    need: 3
   questions:
-  - question: 'What kind of terrain will the zeigs never enter? '
+  - question: "We\u2019ll start off with an easy one. What food do Zeigs prefer? "
     category:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 3
+    options:
+    - label: Space Maple
+      weight: 1
+    - label: Gold Space Maple
+      weight: 2
+    - label: Berries
+      weight: 1
+    - label: Ants
+      weight: 0
+  - question: Alright. Now, what food do zeigs absolutely, positively refuse to eat?
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 3
+    options:
+    - label: Berries
+      weight: 0
+    - label: Space Maples
+      weight: 0
+    - label: Flan
+      weight: 0
+    - label: Mushrooms
+      weight: 1
+  - question: "Last question. Let\u2019s change it up a bit and talk about terrain.
+      What kind of terrain will the zeigs never enter? "
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 3
     options:
     - label: Dirt
       weight: 0
     - label: Grass
       weight: 0
-    - label: Rocky
+    - label: Rocks
       weight: 1
     - label: Swamp
-      weight: 1
-  - question: How many tiles of water does each Zeig need in order to thrive?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 4
-    options:
-    - label: 0
-      weight: 0
-    - label: 4
-      weight: 0
-    - label: 3
-      weight: 0
-    - label: 1
-      weight: 2
-    - label: 2
-      weight: 1
-  - question: "How salinated do Zeig\u2019s prefer their drinking water to be?"
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 4
-    options:
-    - label: 0.5%
-      weight: 2
-    - label: 2.5%
-      weight: 0
-    - label: .25%
-      weight: 0
-    - label: 1%
       weight: 1
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
