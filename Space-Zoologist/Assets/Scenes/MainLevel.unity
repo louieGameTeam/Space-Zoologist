@@ -1613,7 +1613,7 @@ PrefabInstance:
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
       propertyPath: LevelOnPlay
-      value: Level1E2
+      value: Level0
       objectReference: {fileID: 0}
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
@@ -6572,48 +6572,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df1db86d936be2b4c9120b7c7230af3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveFinishedWindow:
-    background: {fileID: 21300000, guid: 349db0bc5ef54ee45b8e3a6e7010ed70, type: 3}
-    message: Objective Complete
-    primaryButtonData:
-      buttonText: Continue
-      buttonAction:
-        m_PersistentCalls:
-          m_Calls: []
-    hasSecondaryButton: 0
-    secondaryButtonData:
-      buttonText: 
-      buttonAction:
-        m_PersistentCalls:
-          m_Calls: []
-  successWindow:
-    background: {fileID: 21300000, guid: c5eacc0e4bf517e499d71b9f9532d431, type: 3}
-    message: Enclosure Success!
-    primaryButtonData:
-      buttonText: NextLevel
-      buttonAction:
-        m_PersistentCalls:
-          m_Calls: []
-    hasSecondaryButton: 1
-    secondaryButtonData:
-      buttonText: Return to Enclosure Select
-      buttonAction:
-        m_PersistentCalls:
-          m_Calls: []
-  failWindow:
-    background: {fileID: 21300000, guid: de027ad1fc7411e44ba225ab7e4352a0, type: 3}
-    message: Enclosure Fail
-    primaryButtonData:
-      buttonText: Restart
-      buttonAction:
-        m_PersistentCalls:
-          m_Calls: []
-    hasSecondaryButton: 1
-    secondaryButtonData:
-      buttonText: Return to Enclosure Select
-      buttonAction:
-        m_PersistentCalls:
-          m_Calls: []
+  objectiveFinishedWindow: {fileID: 7871093539818898041, guid: a3028d7e64532ba428aff313d3d5e2c3,
+    type: 3}
+  successWindow: {fileID: 3816146339421848215, guid: 975f7899fb5d5bb4fa07a99f8befe29f,
+    type: 3}
+  failWindow: {fileID: 5323336896914112067, guid: bbaa8b8785f946d4aaa2f3f5a1f468c4,
+    type: 3}
 --- !u!1 &1970318660
 GameObject:
   m_ObjectHideFlags: 0

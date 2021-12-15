@@ -12,6 +12,9 @@ public class GenericWindowDataDrawer : PropertyDrawer
     {
         SerializedProperty background = property.FindPropertyRelative(nameof(background));
         SerializedProperty message = property.FindPropertyRelative(nameof(message));
+        SerializedProperty startingAnchorPosition = property.FindPropertyRelative(nameof(startingAnchorPosition));
+        SerializedProperty startingAnimationEase = property.FindPropertyRelative(nameof(startingAnimationEase));
+        SerializedProperty endingAnimationEase = property.FindPropertyRelative(nameof(endingAnimationEase));
         SerializedProperty primaryButtonData = property.FindPropertyRelative(nameof(primaryButtonData));
         SerializedProperty hasSecondaryButton = property.FindPropertyRelative(nameof(hasSecondaryButton));
         SerializedProperty secondaryButtonData = property.FindPropertyRelative(nameof(secondaryButtonData));
@@ -34,6 +37,18 @@ public class GenericWindowDataDrawer : PropertyDrawer
 
             // Edit the message
             EditorGUI.PropertyField(position, message);
+            position.y += position.height;
+
+            // Edit starting anchor position
+            EditorGUI.PropertyField(position, startingAnchorPosition);
+            position.y += EditorGUI.GetPropertyHeight(startingAnchorPosition);
+
+            // Edit the starting animation ease
+            EditorGUI.PropertyField(position, startingAnimationEase);
+            position.y += position.height;
+
+            // Edit the ending animation ease
+            EditorGUI.PropertyField(position, endingAnimationEase);
             position.y += position.height;
 
             // Edit the primary button data
@@ -60,6 +75,7 @@ public class GenericWindowDataDrawer : PropertyDrawer
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         // Get properties
+        SerializedProperty startingAnchorPosition = property.FindPropertyRelative(nameof(startingAnchorPosition));
         SerializedProperty primaryButtonData = property.FindPropertyRelative(nameof(primaryButtonData));
         SerializedProperty hasSecondaryButton = property.FindPropertyRelative(nameof(hasSecondaryButton));
         SerializedProperty secondaryButtonData = property.FindPropertyRelative(nameof(secondaryButtonData));
@@ -72,6 +88,12 @@ public class GenericWindowDataDrawer : PropertyDrawer
             // Add height for background
             height += EditorExtensions.StandardControlHeight;
             // Add height for message
+            height += EditorExtensions.StandardControlHeight;
+            // Add height for starting anchor position
+            height += EditorGUI.GetPropertyHeight(startingAnchorPosition);
+            // Add height for starting animation ease
+            height += EditorExtensions.StandardControlHeight;
+            // Add height for ending animation ease
             height += EditorExtensions.StandardControlHeight;
             // Add height for primary button data
             height += EditorGUI.GetPropertyHeight(primaryButtonData);

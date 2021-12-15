@@ -2,44 +2,23 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 using DialogueEditor;
 
 public class GameOverController : MonoBehaviour
 {
-    #region Private Properties
-    private GenericWindow Window
-    {
-        get
-        {
-            if(!window)
-            {
-                // Get the root canvas
-                Canvas parent = FindObjectOfType<Canvas>();
-
-                // Instantiate window under root canvas
-                window = GenericWindow.InstantiateFromResource(parent.transform);
-                window.transform.SetAsLastSibling();
-
-                // Disable the window when any button is pressed
-                window.AnyButtonPressedEvent.AddListener(() => window.gameObject.SetActive(false));
-            }
-            return window;
-        }
-    }
-    #endregion
-
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Data for the window displayed when all objectives finish, before final NPC dialogue")]
-    private GenericWindowData objectiveFinishedWindow;
+    private GenericWindow objectiveFinishedWindow;
     [SerializeField]
     [Tooltip("Data for the window displayed when the enclosure is finished")]
-    private GenericWindowData successWindow;
+    private GenericWindow successWindow;
     [SerializeField]
     [Tooltip("Data for the window displayed when the level fails")]
-    private GenericWindowData failWindow;
+    private GenericWindow failWindow;
     #endregion
 
     #region Private Fields
@@ -51,25 +30,11 @@ public class GameOverController : MonoBehaviour
     #region Monobehaviour Messages
     private void Start()
     {
-        //GameManager.Instance.LevelData.PassedConversation.
-
         // Subscribe to events on the event manager
         // NOTE: we're depending on "MainObjectivesCompleted" firing before the "GameOver" event,
         // if the order switches we'll think we lost!
         EventManager.Instance.SubscribeToEvent(EventType.MainObjectivesCompleted, OnMainObjectivesCompleted);
         EventManager.Instance.SubscribeToEvent(EventType.GameOver, OnGameOver);
-
-        // Say the level passed conversation when level is passed
-        objectiveFinishedWindow.PrimaryButtonData.ButtonAction.AddListener(LevelPassedConversation);
-
-        // Setup the success window to load the next level or go back to level select
-        LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
-        successWindow.PrimaryButtonData.ButtonAction.AddListener(() => levelLoader.LoadNextLevel());
-        successWindow.SecondaryButtonData.ButtonAction.AddListener(() => SceneManager.LoadScene("LevelMenu"));
-
-        // Reload level or load the level select in the fail window
-        failWindow.PrimaryButtonData.ButtonAction.AddListener(() => levelLoader.ReloadLevel());
-        failWindow.SecondaryButtonData.ButtonAction.AddListener(() => SceneManager.LoadScene("LevelMenu"));
 
         // Subscribe to event raised when any conversation is started
         ConversationManager.OnConversationStarted += OnAnyConversationStarted;
@@ -85,7 +50,7 @@ public class GameOverController : MonoBehaviour
     {
         if (mainObjectivesCompleted)
         {
-            Window.Setup(objectiveFinishedWindow);
+            OpenWindow(objectiveFinishedWindow, LevelPassedConversation);
         }
         else
         {
@@ -95,14 +60,34 @@ public class GameOverController : MonoBehaviour
             gameManager.m_dialogueManager.StartInteractiveConversation();
 
             // When the conversation ends then show the fail window
-            restartConversation.OnConversationEnded(() => Window.Setup(failWindow));
+            restartConversation.OnConversationEnded(() =>
+            {
+                LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
+                OpenWindow(failWindow, () => levelLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
+            });
         }
     }
     private void LevelPassedConversation()
     {
         GameManager gameManager = GameManager.Instance;
-        gameManager.LevelData.Ending.SayEndingConversation();
+        LevelEndingData ending = gameManager.LevelData.Ending;
+
+        ending.SayEndingConversation();
         gameManager.m_dialogueManager.StartInteractiveConversation();
+
+        // If the ending is not a quiz then add a conversation ended event
+        // to the active conversation
+        if (!ending.IsQuiz)
+        {
+            ending.ActiveConversation.OnConversationEnded(OnSuccessConversationEnded);
+        }
+    }
+    private void OnSuccessConversationEnded()
+    {
+        // Get the level data loader
+        LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
+        // Open the success window
+        OpenWindow(successWindow, () => levelLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));
     }
     private void OnAnyConversationStarted()
     {
@@ -114,16 +99,19 @@ public class GameOverController : MonoBehaviour
 
             // If a quiz response is active, make the success window setup
             // once the response is over
-            if (quizResponse)
-            {
-                Debug.Log("Got a quiz response");
-                quizResponse.OnConversationEnded(() =>
-                {
-                    Window.Setup(successWindow);
-                    Window.gameObject.SetActive(true);
-                });
-            }
+            if (quizResponse) quizResponse.OnConversationEnded(OnSuccessConversationEnded);
         }
+    }
+    private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
+    {
+        // Get the first canvas you can find
+        Canvas canvas = FindObjectOfType<Canvas>();
+        canvas = canvas.rootCanvas;
+
+        // Instantiate the window under the root canvas
+        window = Instantiate(window, canvas.transform);
+        // Open the window
+        window.Open(primaryAction, secondaryAction);
     }
     #endregion
 }

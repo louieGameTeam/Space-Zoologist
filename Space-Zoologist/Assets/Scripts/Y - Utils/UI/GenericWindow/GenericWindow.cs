@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
 using TMPro;
 using DG.Tweening;
 
@@ -10,7 +11,10 @@ public class GenericWindow : MonoBehaviour
 {
     #region Public Properties
     public RectTransform Window => window;
-    public UnityEvent AnyButtonPressedEvent => anyButtonPressedEvent;
+    public Button PrimaryButton => primaryButton;
+    public bool HasSecondaryButton => hasSecondaryButton;
+    public Button SecondaryButton => secondaryButton;
+    public UnityEvent WindowClosedEvent => windowClosedEvent;
     #endregion
 
     #region Private Editor Fields
@@ -21,20 +25,41 @@ public class GenericWindow : MonoBehaviour
     [Space]
 
     [SerializeField]
-    [Tooltip("Image used to display the background")]
-    private Image backgroundImage;
+    [Tooltip("Image used to create the overlay over all other UI elements")]
+    private Image overlay;
     [SerializeField]
-    [Tooltip("Used to display the text in the window")]
-    private TextMeshProUGUI messageText;
+    [Tooltip("Time it takes for the overlay to fade in")]
+    private float fadeTime = 0.3f;
+    [SerializeField]
+    [Tooltip("Time it takes for the window to animate")]
+    private float windowAnimateTime = 1f;
+    [SerializeField]
+    [Tooltip("Anchor position that the window starts at when opened")]
+    private Vector2 openingPosition;
+    [SerializeField]
+    [Tooltip("Anchor position that the window rests at after it is opened")]
+    private Vector2 restingPosition;
+    [SerializeField]
+    [Tooltip("Easing style used when opening the window")]
+    private Ease openingEase;
+    [SerializeField]
+    [Tooltip("Easing style used when closing the window")]
+    private Ease closingEase;
+
+    [Space]
+
     [SerializeField]
     [Tooltip("Primary button in the window")]
-    private GenericButton primaryButton;
+    private Button primaryButton;
+    [SerializeField]
+    [Tooltip("Determines if this generic window has another button")]
+    private bool hasSecondaryButton;
     [SerializeField]
     [Tooltip("Secondary button in the window")]
-    private GenericButton secondaryButton;
+    private Button secondaryButton;
     [SerializeField]
-    [Tooltip("Event invoked when any button is pressed")]
-    private UnityEvent anyButtonPressedEvent;
+    [Tooltip("Event invoked after the window has finished the closing animation")]
+    private UnityEvent windowClosedEvent;
     #endregion
 
     #region Private Fields
@@ -43,25 +68,53 @@ public class GenericWindow : MonoBehaviour
     #endregion
 
     #region Public Methods
-    public void Setup(GenericWindowData data)
+    public void Open(UnityAction primaryAction, UnityAction secondaryAction = null)
     {
-        backgroundImage.sprite = data.Background;
-        messageText.text = data.Message;
-        primaryButton.Setup(data.PrimaryButtonData);
+        // Once set up, set the game object to true
+        gameObject.SetActive(true);
+        window.gameObject.SetActive(false);
 
-        // Enable-Disable secondary button based on if it has a secondary button
-        secondaryButton.Button.gameObject.SetActive(data.HasSecondaryButton);
+        // Make the primary button close the window and finish with the primary action
+        primaryButton.onClick.AddListener(() => Close(primaryAction));
 
-        // Setup the secondary button if needed
-        if (data.HasSecondaryButton) secondaryButton.Setup(data.SecondaryButtonData);
+        // If a secondary action was specified and we have a secondary button then
+        // make the secondary button close with the secondary action
+        if (secondaryAction != null && hasSecondaryButton)
+        {
+            secondaryButton.onClick.AddListener(() => Close(secondaryAction));
+        }
 
-        primaryButton.Button.onClick.AddListener(anyButtonPressedEvent.Invoke);
-        secondaryButton.Button.onClick.AddListener(anyButtonPressedEvent.Invoke);
+        // Start overlay color as clear
+        overlay.color = Color.clear;
+        overlay.DOColor(Color.black.SetAlpha(0.5f), fadeTime)
+            // When the overlay color animation finishes, then do the window motion animation
+            .OnComplete(() =>
+            {
+                window.gameObject.SetActive(true);
+                window.anchoredPosition = openingPosition;
+                window.DOAnchorPos(Vector2.zero, windowAnimateTime).SetEase(openingEase);
+            });
     }
-    public static GenericWindow InstantiateFromResource(Transform parent, string prefabPath = null)
+    public void Close(UnityAction closeAction = null)
     {
-        if (string.IsNullOrWhiteSpace(prefabPath)) prefabPath = defaultPrefabPath;
-        return ResourcesExtensions.InstantiateFromResources<GenericWindow>(prefabPath, parent);
+        // Animate the window back to the starting anchor
+        window.DOAnchorPos(openingPosition, windowAnimateTime)
+            // Set the ease for the ending animation
+            .SetEase(closingEase)
+            // When the animation finishes, then animate the overlay
+            .OnComplete(() =>
+            {
+                // Disable the window and animate the overlay color
+                window.gameObject.SetActive(false);
+                overlay.DOColor(Color.clear, fadeTime)
+                    // When the overlay color finishes, then disable the whole object
+                    // and invoke the window closed event
+                    .OnComplete(() => {
+                        gameObject.SetActive(false);
+                        if (closeAction != null) closeAction.Invoke();
+                        windowClosedEvent.Invoke();
+                    });
+            });
     }
     #endregion
 }
