@@ -30,6 +30,8 @@ public class QuizTemplate : ScriptableObject
     private QuizInstance exampleQuiz;
     #endregion
 
+    
+
     #region Public Methods
     public int GetMaximumPossibleScoreInUnimportantCategories() => GetMaximumPossibleScorePerCategory().TotalScore - GetMaximumPossibleScoreInImportantCategories();
     public int GetMaximumPossibleScoreInImportantCategories()
