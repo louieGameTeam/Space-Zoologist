@@ -158,7 +158,7 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void ClearHighlights()
     {
-        HighlightingScheduler.ClearHighlights();
+        HighlightingScheduler.ClearHighlights();'[;re '
     }
     #endregion
 
