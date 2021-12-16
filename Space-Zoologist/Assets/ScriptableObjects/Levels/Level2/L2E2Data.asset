@@ -61,24 +61,14 @@ MonoBehaviour:
   levelMusic: {fileID: 8300000, guid: 52df1fae1ea2840ef968ac5dcd11476e, type: 3}
   startingPositions:
   - {x: 1, y: 1, z: 0}
-  startingConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
+  startingConversation: {fileID: 5126947051499627629, guid: cd3a1d8a4a2ed9f4d8b7aaba9343049c,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  ending:
+  passedConversation:
     isQuiz: 1
     normalConversation: {fileID: 0}
-    nextLevelID:
-      levelNumber: 0
-      enclosureNumber: 0
-    quizConversation: {fileID: 0}
-    nextLevelIDs:
-      levelIDs:
-      - levelNumber: 2
-        enclosureNumber: 1
-      - levelNumber: 2
-        enclosureNumber: 3
-      - levelNumber: 2
-        enclosureNumber: 4
-  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+    quizConversation: {fileID: 3706545390196553166, guid: d4a4d758bdce1884a8fd40a07480e178,
+      type: 3}
+  restertEnclosureConversation: {fileID: 3017042779891598659, guid: cd9cefc4f23194f4a923d1d3e896324d,
     type: 3}

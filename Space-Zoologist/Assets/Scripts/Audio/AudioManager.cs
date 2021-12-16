@@ -113,8 +113,6 @@ public class AudioManager : MonoBehaviour
     /// <param name="type"></param>
     public void PlayOneShot(SFXType type)
     {
-        if (type == SFXType.None) return;
-
         var audio = SFXDict[type];
         PlayOneShot(audio.clips[audio.index]);
 
@@ -128,7 +126,6 @@ public class AudioManager : MonoBehaviour
     /// <param name="type"></param>
     public void PlayOneShotRandom(SFXType type)
     {
-        if (type == SFXType.None) return;
         var audio = SFXDict[type];
 
         int index = Random.Range(0, audio.clips.Length);
