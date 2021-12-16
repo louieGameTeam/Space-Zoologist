@@ -22,6 +22,12 @@ public class QuizTemplate : ScriptableObject
     [SerializeField]
     [Tooltip("Percentage to get correct to be considered a 'partial pass'")]
     private QuizGradingRubric gradingRubric;
+
+    [Space]
+
+    [SerializeField]
+    [Tooltip("Example quiz instance. Use this to test the parameters of this template")]
+    private QuizInstance exampleQuiz;
     #endregion
 
     #region Public Methods
@@ -59,8 +65,6 @@ public class QuizTemplate : ScriptableObject
             IEnumerable<QuizQuestion> questions = GetQuestionsWithCategory(category);
             // Initialize the max score
             int maxScore = 0;
-
-            // Check if the array is not null or empty
             foreach (QuizQuestion q in questions)
             {
                 maxScore += q.MaxPossibleScore;

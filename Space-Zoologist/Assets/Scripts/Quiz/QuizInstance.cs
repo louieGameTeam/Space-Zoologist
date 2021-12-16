@@ -91,16 +91,14 @@ public class QuizInstance
         }
         return score;
     }
-    public static bool PassedImportantQuestions(QuizTemplate template, int[] answers) => template.GradingRubric.PassedImportantQuestions(
-        ComputeScoreInImportantCategories(template, answers),
-        template.GetMaximumPossibleScoreInImportantCategories());
+    public static bool PassedImportantQuestions(QuizTemplate template, int[] answers) => template.GradingRubric
+        .PassedImportantQuestions(ComputeScoreInImportantCategories(template, answers));
     public static int ComputeScoreInUnimportantCategories(QuizTemplate template, int[] answers)
     {
         return ComputeItemizedScore(template, answers).TotalScore - ComputeScoreInImportantCategories(template, answers);
     }
-    public static bool PassedUnimportantQuestions(QuizTemplate template, int[] answers) => template.GradingRubric.PassedUnimportantQuestions(
-        ComputeScoreInUnimportantCategories(template, answers),
-        template.GetMaximumPossibleScoreInUnimportantCategories());
+    public static bool PassedUnimportantQuestions(QuizTemplate template, int[] answers) => template.GradingRubric
+        .PassedUnimportantQuestions(ComputeScoreInUnimportantCategories(template, answers));
     public static ItemizedQuizScore ComputeItemizedScore(QuizTemplate template, int[] answers)
     {
         ItemizedQuizScore itemizedScore = new ItemizedQuizScore();
