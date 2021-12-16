@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum SFXType
 {
-    None,
+    General,
     Unpause, Pause, NextDay,
     MenuOpen, MenuClose, Notification, TabSwitch,
     Cancel, Observation,
@@ -52,5 +52,9 @@ public class SFXLibrary : ScriptableObject
             }
         }
         soundEffects = temp;
+    }
+
+    public void PlayGeneral() {
+        AudioManager.instance.PlayOneShot(SFXType.General);
     }
 }
