@@ -107,6 +107,9 @@ public class ConceptsCanvasUI : NotebookUIChild
         // (We really should fix that...)
         ConversationManager.OnConversationStarted += () => SetCameraPosition(true);
         ConversationManager.OnConversationEnded += () => SetCameraPosition(false);
+        
+        // Apply foldout state to the anchors when we start
+        ApplyFoldoutState(foldoutToggle.isOn);
     }
     private void OnEnable()
     {
