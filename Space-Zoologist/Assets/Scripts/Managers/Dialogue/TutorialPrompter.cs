@@ -134,15 +134,31 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilZeigsExist(int numZeigs)
     {
-        FreezeUntilPopulationExists(SpeciesType.Goat, numZeigs);
+        PopulationManager populationManager = GameManager.Instance.m_populationManager;
+        FreezingScheduler.FreezeUntilConditionIsMet(() => populationManager.TotalPopulationSize(SpeciesType.Goat) >= numZeigs);
     }
     public void FreezeUntilZeigPopulationIncrease()
     {
-        PopulationManager populationManager = GameManager.Instance.m_populationManager;
-        List<Population> goatPopulations = populationManager.GetPopulationsBySpeciesType(SpeciesType.Goat);
-        int currentGoats = goatPopulations.Sum(pop => pop.Count);
+        // Find the next day button
+        RectTransform nextDay = FindRectTransform("NextDay");
 
-        FreezeUntilPopulationExists(SpeciesType.Goat, currentGoats + 1);
+        // Get the current population
+        PopulationManager populationManager = GameManager.Instance.m_populationManager;
+        int currentGoats = populationManager.TotalPopulationSize(SpeciesType.Goat);
+
+        // Population increased if current population exceeds population computed just now
+        bool PopulationIncrease()
+        {
+            return populationManager.TotalPopulationSize(SpeciesType.Goat) > currentGoats;
+        }
+
+        FreezingScheduler.FreezeUntilConditionIsMet(PopulationIncrease);
+        HighlightingScheduler.SetHighlights(new ConditionalHighlight()
+        {
+            predicate = PopulationIncrease,
+            invert = true,
+            target = () => nextDay
+        });
     }
     public void FreezeUntilInspectorOpened()
     {
@@ -260,27 +276,6 @@ public class TutorialPrompter : MonoBehaviour
         HighlightingScheduler.SetHighlights(HighlightBuildButton(true),
             HighlightBuildSectionPicker(storeSectionIndex),
             HighlightBuildItem<StoreSectionType>(targetItem));
-    }
-    private void FreezeUntilPopulationExists(SpeciesType targetSpecies, int amount)
-    {
-        PopulationManager populationManager = GameManager.Instance.m_populationManager;
-        RectTransform nextDayButton = FindRectTransform("NextDay");
-
-        // Local function returns true when population is present
-        bool PopulationPresent()
-        {
-            List<Population> goatPopulations = populationManager.GetPopulationsBySpeciesType(targetSpecies);
-            int currentGoats = goatPopulations.Sum(pop => pop.Count);
-            return currentGoats >= amount;
-        }
-
-        FreezingScheduler.FreezeUntilConditionIsMet(PopulationPresent);
-        HighlightingScheduler.SetHighlights(new ConditionalHighlight()
-        {
-            predicate = PopulationPresent,
-            invert = true,
-            target = () => nextDayButton
-        });
     }
     private void FreezeUntilPopulationIsInspected(SpeciesType targetSpecies)
     {
