@@ -86,6 +86,10 @@ public class TutorialPrompter : MonoBehaviour
     {
         FreezeUntilNotebookTabOpen(NotebookTab.Concepts);
     }
+    public void FreezeUntilTestAndMetricsTabOpen()
+    {
+        FreezeUntilNotebookTabOpen(NotebookTab.TestAndMetrics);
+    }
     public void FreezeUntilGoatTerrainHighlightAdd()
     {
         FreezeUntilHighlightPresent(
@@ -147,6 +151,10 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilGoatIsInspected()
     {
         FreezeUntilPopulationIsInspected(SpeciesType.Goat);
+    }
+    public void ClearHighlights()
+    {
+        HighlightingScheduler.ClearHighlights();
     }
     #endregion
 
