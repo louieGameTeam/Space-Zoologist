@@ -126,7 +126,7 @@ public class StoreSection : MonoBehaviour
     {
         if (!this.CanBuy(item))
         {
-            OnItemSelectionCanceled();
+            OnItemUnavailable();
             return;
         }
         AudioManager.instance.PlayOneShot(SFXType.Valid);
@@ -139,6 +139,11 @@ public class StoreSection : MonoBehaviour
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         AudioManager.instance?.PlayOneShot(SFXType.Cancel);
         GridSystem.ClearHighlights();
+    }
+
+    public virtual void OnItemUnavailable()
+    {
+        AudioManager.instance.PlayOneShot(SFXType.Unavailable);
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)

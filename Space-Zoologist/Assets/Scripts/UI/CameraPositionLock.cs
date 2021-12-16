@@ -41,9 +41,9 @@ public class CameraPositionLock
     #region Public Methods
     public void Lock(Camera cam)
     {
-        // Make sure the tweens complete
-        cam.transform.DOComplete();
-        cam.DOComplete();
+        // Kill any active tweens
+        cam.transform.DOKill();
+        cam.DOKill();
 
         // Set the unlock position and size before moving them
         unlockPosition = cam.transform.position;
@@ -55,9 +55,9 @@ public class CameraPositionLock
     }
     public void Unlock(Camera cam)
     {
-        // Make sure the tweens complete
-        cam.transform.DOComplete();
-        cam.DOComplete();
+        // Kill any active tweens
+        cam.transform.DOKill();
+        cam.DOKill();
 
         // Start new tweens to target sizes
         cam.transform.DOMove(unlockPosition, smoothingTime).SetEase(Ease.OutQuint);

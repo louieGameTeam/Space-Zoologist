@@ -50,4 +50,15 @@ public class ResourceRequest
     [Tooltip("The item that is requested")]
     private ItemID itemRequested;
     #endregion
+
+    #region Constructors
+    public ResourceRequest() : this(new ItemID(ItemRegistry.Category.Species, 0), 1, new ItemID(ItemRegistry.Category.Food, 0)) { }
+    public ResourceRequest(ResourceRequest other) : this(other.itemAddressed, other.quantityRequested, other.itemRequested) { }
+    public ResourceRequest(ItemID itemAddressed, int quantityRequested, ItemID itemRequested)
+    {
+        this.itemAddressed = itemAddressed;
+        this.quantityRequested = quantityRequested;
+        this.itemRequested = itemRequested;
+    }
+    #endregion
 }

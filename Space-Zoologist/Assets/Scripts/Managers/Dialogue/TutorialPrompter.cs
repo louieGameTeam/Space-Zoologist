@@ -104,6 +104,10 @@ public class TutorialPrompter : MonoBehaviour
             0,
             new TextHighlight(0, 127));
     }
+    public void FreezeUntilCowPicked(string pickerNameFilter)
+    {
+        FreezeUntilNotebookItemPicked(NotebookTab.Research, new ItemID(ItemRegistry.Category.Species, 1), pickerNameFilter);
+    }
     public void FreezeUntilSlugPicked(string pickerNameFilter)
     {
         FreezeUntilNotebookItemPicked(NotebookTab.Research, new ItemID(ItemRegistry.Category.Species, 4), pickerNameFilter);

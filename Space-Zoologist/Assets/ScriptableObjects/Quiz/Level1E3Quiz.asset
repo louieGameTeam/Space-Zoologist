@@ -20,9 +20,9 @@ MonoBehaviour:
   - item:
       category: 0
       index: 0
-    need: 3
+    need: 4
   questions:
-  - question: What type of terrain is ideal for CapraX Zeigrun?
+  - question: 'What kind of terrain will the zeigs never enter? '
     category:
       item:
         category: 0
@@ -30,76 +30,43 @@ MonoBehaviour:
       need: 0
     options:
     - label: Dirt
-      weight: 2
-    - label: Grass
-      weight: 1
-    - label: Rocky
       weight: 0
-    - label: Swamp
-      weight: -1
-    - label: Sand
-      weight: -1
-  - question: What is one type of impassable terrain for CapraX Zeigrun?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 0
-    options:
-    - label: Dirt
-      weight: -1
     - label: Grass
-      weight: -1
+      weight: 0
     - label: Rocky
-      weight: -1
+      weight: 1
     - label: Swamp
       weight: 1
-    - label: Sand
-      weight: 1
-  - question: Approximately how much terrain does one CapraX Zeigrun need?
+  - question: How many tiles of water does each Zeig need in order to thrive?
     category:
       item:
         category: 0
         index: 0
-      need: 0
+      need: 4
     options:
-    - label: 5
-      weight: 1
+    - label: 0
+      weight: 0
     - label: 4
-      weight: 1
+      weight: 0
     - label: 3
-      weight: -1
+      weight: 0
+    - label: 1
+      weight: 2
     - label: 2
-      weight: -1
-  - question: At what threshold does salt content become poisonous for CapraX Zeigrun?
+      weight: 1
+  - question: "How salinated do Zeig\u2019s prefer their drinking water to be?"
     category:
       item:
         category: 0
         index: 0
       need: 4
     options:
+    - label: 0.5%
+      weight: 2
     - label: 2.5%
-      weight: -1
-    - label: 2%
-      weight: 1
-    - label: 1.5%
-      weight: -1
+      weight: 0
+    - label: .25%
+      weight: 0
     - label: 1%
-      weight: -1
-  - question: "What is the minimum pure water percentage needed for CapraX Zeigrun\u2019s
-      survival?"
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 4
-    options:
-    - label: 97%
-      weight: -1
-    - label: 96%
       weight: 1
-    - label: 95.5%
-      weight: -1
-    - label: 95%
-      weight: -1
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}

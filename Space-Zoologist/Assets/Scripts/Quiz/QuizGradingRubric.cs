@@ -2,30 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class QuizGradingRubric : ScriptableObject
+[System.Serializable]
+public class QuizGradingRubric
 {
     #region Private Editor Fields
     [SerializeField]
-    [Range(0f, 1f)]
-    [Tooltip("Percentage correct you must get to pass the important categories")]
-    private float percentToPassImportantQuestions;
+    [Tooltip("Points correct you must get to pass the important categories")]
+    private int scoreToPassImportantQuestions;
     [SerializeField]
-    [Range(0f, 1f)]
-    [Tooltip("Percentage correct you must get to pass the unimportant categories")]
-    private float percentToPassUnimportantQuestions;
+    [Tooltip("Points correct you must get to pass the unimportant categories")]
+    private int scoreToPassUnimportantQuestions;
     #endregion
 
     #region Public Methods
-    public bool PassedImportantQuestions(int score, int totalScore) => Grade(score, totalScore, percentToPassImportantQuestions);
-    public bool PassedUnimportantQuestions(int score, int totalScore) => Grade(score, totalScore, percentToPassUnimportantQuestions);
+    public bool PassedImportantQuestions(int score) => Grade(score, scoreToPassImportantQuestions);
+    public bool PassedUnimportantQuestions(int score) => Grade(score, scoreToPassUnimportantQuestions);
     #endregion
 
     #region Private Methods
-    private bool Grade(int score, int totalScore, float percent)
-    {
-        if (totalScore > 0) return ((float)score / totalScore) >= percent;
-        else return true;
-    }
+    private bool Grade(int score, int scoreToPass) => score >= scoreToPass;
     #endregion
 }
