@@ -10,6 +10,8 @@ public class ResourceRequestEditor : NotebookUIChild
 {
     #region Public Properties
     public RectTransform RectTransform => rectTransform;
+    public TMP_InputField QuantityInput => quantityInput;
+    public ItemDropdown ItemRequestedDropdown => itemRequestedDropdown;
     public ResourceRequest Request
     {
         get => request;

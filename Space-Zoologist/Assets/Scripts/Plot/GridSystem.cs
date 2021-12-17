@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 // Setup function to give back home locations of given population
@@ -31,7 +32,7 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region UI
-    [SerializeField] GameObject NextDayButton = default;
+    [SerializeField] Button NextDayButton = default;
     #endregion
 
     [Header("Used to define 2d array")]
@@ -520,7 +521,7 @@ public class GridSystem : MonoBehaviour
     private void UpdateUI(bool onOff)
     {
         GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
-        NextDayButton.SetActive(onOff);
+        NextDayButton.interactable = onOff;
     }
     #endregion
 

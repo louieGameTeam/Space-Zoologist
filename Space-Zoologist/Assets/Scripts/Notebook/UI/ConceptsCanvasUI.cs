@@ -41,6 +41,11 @@ public class ConceptsCanvasUI : NotebookUIChild
     }
     #endregion
 
+    #region Public Properties
+    public Toggle FoldoutToggle => foldoutToggle;
+    public bool IsExpanded => foldoutToggle.isOn;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform that expands and contracts when the canvas folds in/out")]

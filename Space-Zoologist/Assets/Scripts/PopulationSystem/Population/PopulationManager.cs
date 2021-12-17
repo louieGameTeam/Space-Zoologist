@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -239,5 +239,10 @@ public class PopulationManager : MonoBehaviour
     public List<Population> GetPopulationsBySpeciesType(SpeciesType speciesType)
     {
         return ExistingPopulations.FindAll(pop => pop.species.Species == speciesType);
+    }
+    public int TotalPopulationSize(SpeciesType speciesType)
+    {
+        List<Population> populations = GetPopulationsBySpeciesType(speciesType);
+        return populations.Sum(pop => pop.Count);
     }
 }
