@@ -77,6 +77,9 @@ public class MoveObject : MonoBehaviour
         moving = true;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
+
+        if (movingItemType == ItemType.TILE)
+            tileToDelete.SetActive(true);
     }
 
     // Update is called once per frame
@@ -207,25 +210,25 @@ public class MoveObject : MonoBehaviour
         MoveButton.transform.position = screenPos + new Vector3(-50, 100, 0);
         DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
 
-        if (movingAnimal)
+        switch (movingItemType)
         {
-            int price = itemByID[objectToMove.GetComponent<Animal>().PopulationInfo.species.SpeciesName].Price;
-            moveCost = Mathf.RoundToInt(MoveCost * price);
-            sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
-        }
-        else if (objectToMove.TryGetComponent<FoodSource>(out FoodSource foodSource))
-        {
-            FoodSourceSpecies species = foodSource.Species;
-            int price = itemByID[species.SpeciesName].Price;
-            moveCost = Mathf.RoundToInt(MoveCost * price);
-            sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
-        }
-        else if (objectToMove.CompareTag("tiletodelete"))
-        {
-            MoveButton.SetActive(false);
-
-            LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
-            sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
+            case ItemType.ANIMAL:
+                int price = itemByID[objectToMove.GetComponent<Animal>().PopulationInfo.species.SpeciesName].Price;
+                moveCost = Mathf.RoundToInt(MoveCost * price);
+                sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
+                break;
+            case ItemType.FOOD:
+                FoodSourceSpecies species = objectToMove.GetComponent<FoodSource>().Species;
+                price = itemByID[species.SpeciesName].Price;
+                moveCost = Mathf.RoundToInt(MoveCost * price);
+                sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
+                break;
+            case ItemType.TILE:
+                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
+                sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
+                break;
+            default:
+                break;
         }
         MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
         DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
@@ -271,8 +274,6 @@ public class MoveObject : MonoBehaviour
         {
             if (gridSystem.IsConstructing(pos.x, pos.y))
             {
-                tileToDelete.SetActive(true);
-                
                 tileToDelete.name = gridSystem.GetGameTileAt(pos).TileName;
 
                 if (tileToDelete.name.Equals("liquid"))
@@ -311,26 +312,28 @@ public class MoveObject : MonoBehaviour
                 break;
             case ItemType.FOOD:
                 GameManager.Instance.AddToBalance(sellBackCost);
-	        removeOriginalFood(foodSource);
+                FoodSource foodSource = objectToMove.GetComponent<FoodSource>();
+                removeOriginalFood(foodSource);
 
-	        // Selling items no longer return them to inventory
-	        //Item foodItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Equals(foodSource.Species.SpeciesName)).itemObject;
+	            // Selling items no longer return them to inventory
+	            //Item foodItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Equals(foodSource.Species.SpeciesName)).itemObject;
 
-	        //if (!foodItem)
-	        //    return;
+	            //if (!foodItem)
+	            //    return;
 
-	        //FoodSourceStoreSection.AddItemQuantity(foodItem);
+	            //FoodSourceStoreSection.AddItemQuantity(foodItem);
                 break;
             case ItemType.TILE:
                 GameManager.Instance.AddToBalance(sellBackCost);
                 GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
-                gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
+                gridSystem.ApplyChangesToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
                 if (tileData.currentTile == null)
                     tileData.Clear();
                 //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
                 gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
 
+                tileToDelete.SetActive(false);
                 // Selling items no longer return them to inventory
                 //LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
 
@@ -454,7 +457,7 @@ public class MoveObject : MonoBehaviour
         GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
         FoodSource foodSource = Food.GetComponent<FoodSource>();
 
-        gridSystem.AddFood(mouseGridPosition, species.Size, Food);
+        gridSystem.AddFoodReferenceToTile(mouseGridPosition, species.Size, Food);
         
         if(buildProgress < this.GetStoreItem(species).buildTime) //If the food source has yet to fully construct, add a build buffer
         {

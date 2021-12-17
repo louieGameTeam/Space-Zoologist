@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1531,6 +1531,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelData
       objectReference: {fileID: 0}
+    - target: {fileID: 8915049440928984897, guid: cb013aaea76714c69b04e49a6b98f035,
+        type: 3}
+      propertyPath: LevelData
+      value: 
+      objectReference: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4,
+        type: 2}
     - target: {fileID: 8915049440928984898, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1594,7 +1600,7 @@ PrefabInstance:
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
       propertyPath: LevelOnPlay
-      value: Level0
+      value: L1E4
       objectReference: {fileID: 0}
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
@@ -2734,6 +2740,7 @@ MonoBehaviour:
     type: 3}
   FoodSourceStoreSection: {fileID: 1070594117}
   TileStoreSection: {fileID: 1491879216}
+  LiquidSprite: {fileID: 0}
 --- !u!1 &918041966
 GameObject:
   m_ObjectHideFlags: 0
@@ -8124,6 +8131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e878e43196dddf549b41633c1adc7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   LevelOnPlay: Level1E1
   directory: Levels/
   m_levelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}
