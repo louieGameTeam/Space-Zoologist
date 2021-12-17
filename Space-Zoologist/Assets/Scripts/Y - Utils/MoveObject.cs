@@ -35,6 +35,7 @@ public class MoveObject : MonoBehaviour
 
     private GameObject tileToDelete;
     private Vector3Int initialTilePosition;
+    private GameTile initialTile;
 
     private void Start()
     {
@@ -270,6 +271,7 @@ public class MoveObject : MonoBehaviour
                 tempItem.SetupData(ID, "Tile", ID, 0);
 
                 initialTilePosition = pos;
+                initialTile = gridSystem.GetTileData(pos).currentTile;
             }
         }
 
@@ -300,7 +302,7 @@ public class MoveObject : MonoBehaviour
             case ItemType.TILE:
                 GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
-                gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
+                gridSystem.ApplyChangesToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
                 if (tileData.currentTile == null)
                     tileData.Clear();
                 //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
@@ -397,9 +399,20 @@ public class MoveObject : MonoBehaviour
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
 
-        tileToDelete.SetActive(false);
-        
-        // needs finishing
+        if (gridSystem.GetTileData(tilePos).currentTile.type != initialTile.type)
+        {
+            // undo current progress on existing tile
+            gridSystem.GetTileData(initialTilePosition).Revert();
+            gridSystem.RemoveBuffer((Vector2Int)initialTilePosition);
+            gridSystem.ApplyChangesToTilemapTexture(initialTilePosition);
+            
+            tileToDelete.SetActive(false);
+
+            // add the new tile
+            gridSystem.AddTile(tilePos, initialTile);
+            gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, GridSystem.ConstructionCluster.ConstructionType.TILE);
+            gridSystem.ApplyChangesToTilemapTexture(tilePos);
+        }
     }
 
     // placing food is more complicated due to grid

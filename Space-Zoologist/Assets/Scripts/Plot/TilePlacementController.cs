@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class TilePlacementController : MonoBehaviour
 {
-    private enum PlacementResult { Placed, Restricted, AlreadyExisted }
+    public enum PlacementResult { Placed, Restricted, AlreadyExisted }
     private GridSystem gridSystemReference;
     public bool isBlockMode { get; set; } = false;
     public bool PlacementPaused { get; private set; }
@@ -272,7 +272,7 @@ public class TilePlacementController : MonoBehaviour
     }
 
 
-    private PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
+    public PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {
         if (IsPlacable(cellPosition) || !checkPlacable)
         {

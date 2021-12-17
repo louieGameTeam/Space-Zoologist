@@ -265,7 +265,7 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < ReserveHeight; ++j)
             {
-                ApplyChangesToTilemap(new Vector3Int(i, j, 0));
+                ApplyChangesToTilemapTexture(new Vector3Int(i, j, 0));
             }
         }
     }
@@ -311,7 +311,7 @@ public class GridSystem : MonoBehaviour
                     TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemap(tilePosition);
+                ApplyChangesToTilemapTexture(tilePosition);
             }
             else if ((tilePosition.x >= ReserveWidth && tilePosition.y > 0) ||
                 (tilePosition.x > 0 && tilePosition.y >= ReserveHeight))
@@ -369,7 +369,7 @@ public class GridSystem : MonoBehaviour
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemap(tilePosition);
+                ApplyChangesToTilemapTexture(tilePosition);
             }
         }
         else
@@ -380,7 +380,7 @@ public class GridSystem : MonoBehaviour
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemap(tilePosition);
+                ApplyChangesToTilemapTexture(tilePosition);
             }
         }
         // TODO update color of liquidbody
@@ -400,7 +400,7 @@ public class GridSystem : MonoBehaviour
                 DivideLiquidBody(tilePosition);
             tileData.PreviewReplacement(null);
             ChangedTiles.Add(tilePosition);
-            ApplyChangesToTilemap(tilePosition);
+            ApplyChangesToTilemapTexture(tilePosition);
         }
     }
 
@@ -838,7 +838,7 @@ public class GridSystem : MonoBehaviour
             TileData tileData = GetTileData(changedTilePosition);
 
             tileData.Revert();
-            this.ApplyChangesToTilemap(changedTilePosition);
+            this.ApplyChangesToTilemapTexture(changedTilePosition);
             if (tileData.currentTile == null)
                 tileData.Clear();
         }
@@ -851,7 +851,7 @@ public class GridSystem : MonoBehaviour
         this.ChangedTiles = new HashSet<Vector3Int>();
         this.previewBodies = new List<LiquidBody>();
     }
-    public void ApplyChangesToTilemap(Vector3Int tilePosition)
+    public void ApplyChangesToTilemapTexture(Vector3Int tilePosition)
     {
         TileData data = GetTileData(tilePosition);
 
@@ -2395,15 +2395,6 @@ public class GridSystem : MonoBehaviour
         }
         public void PreviewLiquidBody(LiquidBody newLiquidBody)
         {
-            if (isLiquidBodyChanged)
-            {
-                if (newLiquidBody == this.currentLiquidBody)
-                {
-                    return;
-                }
-                //this.currentLiquidBody = newLiquidBody;
-                return;
-            }
             this.previewLiquidBody = newLiquidBody;
             this.isLiquidBodyChanged = true;
         }
@@ -2428,28 +2419,15 @@ public class GridSystem : MonoBehaviour
         }
         public void Revert()
         {
-            if (isTileChanged)
+            if (this.previousTile)
             {
                 this.currentTile = this.previousTile;
+                this.previousTile = null;
             }
-            if (isLiquidBodyChanged)
+            if (this.previewLiquidBody != null)
             {
-                //this.currentLiquidBody = this.previewLiquidBody;
+                // oh god panic do something here
             }
-            if (isColorChanged)
-            {
-                this.currentColor = this.previousColor;
-            }
-            ClearHistory();
-        }
-        private void ClearHistory()
-        {
-            this.previousColor = Color.white;
-            this.previewLiquidBody = null;
-            this.previousTile = null;
-            this.isTileChanged = false;
-            this.isColorChanged = false;
-            this.isLiquidBodyChanged = false;
         }
         public string ToString()
         {
