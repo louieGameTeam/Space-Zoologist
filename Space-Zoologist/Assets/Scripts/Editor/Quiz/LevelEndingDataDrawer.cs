@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(NormalOrQuizConversation))]
-public class NormalOrQuizConversationDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(LevelEndingData))]
+public class LevelEndingDataDrawer : PropertyDrawer
 {
     #region Public Methods
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -31,8 +31,17 @@ public class NormalOrQuizConversationDrawer : PropertyDrawer
             if (isQuiz.boolValue)
             {
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("quizConversation"));
+                position.y += position.height;
+
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("nextLevelIDs"));
             }
-            else EditorGUI.PropertyField(position, property.FindPropertyRelative("normalConversation"));
+            else
+            {
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("normalConversation"));
+                position.y += position.height;
+
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("nextLevelID"));
+            }
 
             // Restore old indent
             EditorGUI.indentLevel--;
@@ -40,10 +49,20 @@ public class NormalOrQuizConversationDrawer : PropertyDrawer
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
+        // Get the is quiz property
+        SerializedProperty isQuiz = property.FindPropertyRelative(nameof(isQuiz));
+
         float height = EditorExtensions.StandardControlHeight;
         if(property.isExpanded)
         {
             height *= 3f;
+
+            // If this is a quiz then add height for the list of level names
+            if (isQuiz.boolValue)
+            {
+                height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("nextLevelIDs"));
+            }
+            else height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("nextLevelID"));
         }
         return height;
     }

@@ -52,11 +52,22 @@ MonoBehaviour:
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  passedConversation:
+  ending:
     isQuiz: 1
     normalConversation: {fileID: 37979361775321873, guid: 150e836e8621c4ac79df01c7dafa057f,
       type: 3}
+    nextLevelID:
+      levelNumber: 0
+      enclosureNumber: 0
     quizConversation: {fileID: 8938176367728474889, guid: f6cf09b327d9283489e62435dc54420c,
       type: 3}
+    nextLevelIDs:
+      levelIDs:
+      - levelNumber: 1
+        enclosureNumber: 2
+      - levelNumber: 1
+        enclosureNumber: 3
+      - levelNumber: 1
+        enclosureNumber: 4
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}

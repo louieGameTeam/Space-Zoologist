@@ -35,11 +35,16 @@ MonoBehaviour:
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  passedConversation:
+  ending:
     isQuiz: 0
     normalConversation: {fileID: 5453693311318094595, guid: eb6f90f9020e14ec3803e0d34a89f111,
       type: 3}
+    nextLevelID:
+      levelNumber: 1
+      enclosureNumber: 1
     quizConversation: {fileID: 1050677793554802787, guid: f6cf09b327d9283489e62435dc54420c,
       type: 3}
+    nextLevelIDs:
+      levelIDs: []
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}
