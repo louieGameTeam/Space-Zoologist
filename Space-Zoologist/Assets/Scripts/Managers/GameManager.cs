@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance = null;
     public static GameManager Instance { get { return _instance; } }
 
+    [SerializeField] private bool debug = false;
+    public bool IsDebug { get { return debug; } set { return; } }
+
     #region Level Data Variables
     [Header("Used when playing level scene directly")]
     [SerializeField] string LevelOnPlay = "Level1E1";
