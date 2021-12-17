@@ -19,14 +19,15 @@ public class QuizConversation : MonoBehaviour
             return currentQuiz;
         }
     }
+    public NPCConversation CurrentResponse => currentResponse;
     #endregion
 
     #region Public Typedefs
     [System.Serializable]
-    public class QuizConversationResponseArray
+    public class NPCConversationArray
     {
-        public QuizConversationResponse[] responses;
-        public QuizConversationResponse Get(QuizGrade grade) => responses[(int)grade];
+        public NPCConversation[] responses;
+        public NPCConversation Get(QuizGrade grade) => responses[(int)grade];
     }
     #endregion
 
@@ -59,11 +60,13 @@ public class QuizConversation : MonoBehaviour
     [SerializeField]
     [Tooltip("List of NPCConversations to respond with based on the quizes' grade")]
     [EditArrayWrapperOnEnum("responses", typeof(QuizGrade))]
-    private QuizConversationResponseArray response;
+    private NPCConversationArray response;
     #endregion
 
     #region Private Fields
-    private QuizInstance currentQuiz = null;
+    private QuizInstance currentQuiz;
+    // Current response to the quiz being spoken
+    private NPCConversation currentResponse;
     #endregion
 
     #region Public Methods
@@ -89,10 +92,7 @@ public class QuizConversation : MonoBehaviour
             return () => CurrentQuiz.AnswerQuestion(questionIndex, optionIndex);
         }
         // Say the conversation that corresponds to the grade that the player got on the quiz
-        void SayResponse()
-        {
-            response.Get(CurrentQuiz.Grade).Respond();
-        }
+        void SayResponse() => currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
 
         // Try to get an npc conversation. If it exists, destroy it and add a new one
         NPCConversation conversation = gameObject.GetComponent<NPCConversation>();

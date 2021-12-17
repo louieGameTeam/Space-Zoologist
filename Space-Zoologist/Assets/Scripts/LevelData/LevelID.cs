@@ -17,10 +17,11 @@ public struct LevelID : System.IComparable<LevelID>
     {
         get
         {
-            if (levelNumber > 0) return "Level" + levelNumber + "E" + enclosureNumber;
-            else return "Level" + levelNumber;
+            if (levelNumber > 0) return $"Level{levelNumber}E{enclosureNumber}";
+            else return $"Level{levelNumber}";
         }
     }
+    public static LevelID Invalid => new LevelID(-1, -1);
     #endregion
 
     #region Private Editor Data
@@ -91,7 +92,7 @@ public struct LevelID : System.IComparable<LevelID>
         {
             return FromSceneName(instance.LevelData.Level.SceneName);
         }
-        else return new LevelID(-1, -1);
+        else return Invalid;
     }
     #endregion
 

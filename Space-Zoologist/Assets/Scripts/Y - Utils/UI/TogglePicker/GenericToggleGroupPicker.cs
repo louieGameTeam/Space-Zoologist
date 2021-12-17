@@ -6,6 +6,7 @@ using UnityEngine;
 public class GenericToggleGroupPicker<PickType> : AbstractToggleGroupPicker
 {
     #region Public Properties
+    public IEnumerable<GenericTogglePicker<PickType>> Pickers => pickers.Select(picker => picker as GenericTogglePicker<PickType>);
     public override List<object> ObjectsPicked => ValuesPicked.Select(element => (object)element).ToList();
     public List<PickType> ValuesPicked => pickers
         .Where(x => x.Toggle.isOn)
@@ -31,5 +32,11 @@ public class GenericToggleGroupPicker<PickType> : AbstractToggleGroupPicker
         }
     }
     public void SetValuePicked(PickType value) => SetValuesPicked(new List<PickType>() { value });
+    public GenericTogglePicker<PickType> GetTogglePicker(PickType valuePicked)
+    {
+        AbstractTogglePicker picker = base.GetTogglePicker(valuePicked);
+        if (picker) return picker as GenericTogglePicker<PickType>;
+        else return null;
+    }
     #endregion
 }

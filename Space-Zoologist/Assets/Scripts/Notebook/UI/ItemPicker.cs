@@ -9,12 +9,10 @@ using DG.Tweening;
 
 public class ItemPicker : NotebookUIChild
 {
-    // So that the event appears in the editor
     #region Public Typedefs
     [System.Serializable] public class ItemIDEvent : UnityEvent<ItemID> { }
     #endregion
 
-    // Public accessors
     #region Public Properties
     public ItemID SelectedItem
     {
@@ -90,6 +88,15 @@ public class ItemPicker : NotebookUIChild
         // Set the first value of the first dropdown
         // NOTE: this should invoke ResearchCategoryChanged immediately
         dropdowns[0].SetDropdownValue(0);
+    }
+    public ItemDropdown GetDropdown(ItemRegistry.Category category)
+    {
+        int index = (int)category;
+
+        if (index >= 0 && index < dropdowns.Count) return dropdowns[index];
+        else throw new System.IndexOutOfRangeException($"{nameof(ItemPicker)}: " +
+            $"No item dropdown associated with category '{category}'. " +
+            $"Total dropdowns: {dropdowns.Count}");
     }
     #endregion
 

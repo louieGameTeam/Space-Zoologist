@@ -319,11 +319,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScrollText: 1
   ScrollSpeed: 0
-  BackgroundImage: {fileID: 21300000, guid: bf566e80557acbc45b9a695fcaa25327, type: 3}
+  BackgroundImage: {fileID: 0}
   BackgroundImageSliced: 1
   OptionImage: {fileID: 21300000, guid: bf566e80557acbc45b9a695fcaa25327, type: 3}
   OptionImageSliced: 1
   AllowMouseInteraction: 1
+  AdvanceInput: Submit
   Background: {fileID: 0}
   DialoguePanel: {fileID: 873655663}
   OptionsPanel: {fileID: 537683}
@@ -658,6 +659,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HideNPC: 0
   ConversationManagerGameObject: {fileID: 28320870}
+  npcActive:
+    dialogueBackground: {fileID: 0}
+    dialoguePanelHeight: 0
+    nameTextYPos: 0
+    speechTextRectOffsets:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  npcInactive:
+    dialogueBackground: {fileID: 0}
+    dialoguePanelHeight: 0
+    nameTextYPos: 0
+    speechTextRectOffsets:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
 --- !u!4 &162905091
 Transform:
   m_ObjectHideFlags: 0
@@ -2248,7 +2267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 148.57, y: 182.84}
+  m_AnchoredPosition: {x: 148.57, y: 0}
   m_SizeDelta: {x: 237.7687, y: 50.4749}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &616972337
@@ -3082,7 +3101,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bf566e80557acbc45b9a695fcaa25327, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3121,7 +3140,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -105, y: 17}
-  m_SizeDelta: {x: 1100, y: 289.37128}
+  m_SizeDelta: {x: 1100, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &908308193
 GameObject:
@@ -3154,7 +3173,7 @@ Transform:
   m_Children:
   - {fileID: 1388959984}
   m_Father: {fileID: 7774590431507538030}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &908308195
 MonoBehaviour:
@@ -3339,10 +3358,10 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 3
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
-  m_isTextTruncated: 1
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -3363,13 +3382,13 @@ MonoBehaviour:
   m_margin: {x: -135.29655, y: 23.994825, z: 0, w: 19.55099}
   m_textInfo:
     textComponent: {fileID: 935449381}
-    characterCount: 241
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 36
-    wordCount: 38
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 4
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -3410,8 +3429,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 68.5, y: 0}
-  m_SizeDelta: {x: -218.91748, y: -35.065918}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &940254241
 GameObject:
@@ -12752,213 +12771,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!1001 &2543703449580099183
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 7774590431507538030}
-    m_Modifications:
-    - target: {fileID: 4904935980196406522, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_Name
-      value: Level0IntroRewrite2 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -601.50885
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -301.20956
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 656.46436
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904935980196406523, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6fa8863e74c7d8e40b4fbdac89dc91ec, type: 3}
---- !u!1001 &3900841957297802554
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 7774590431507538030}
-    m_Modifications:
-    - target: {fileID: 3306462169847580040, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_Name
-      value: Level1Intro
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -601.50885
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -301.20956
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 656.46436
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657415583426959979, guid: ebe7b97ce3be34a468a66394c392678f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ebe7b97ce3be34a468a66394c392678f, type: 3}
---- !u!1001 &4794402214788241136
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 7774590431507538030}
-    m_Modifications:
-    - target: {fileID: 505211734377329052, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_Name
-      value: Level0IntroRewrite3
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -601.50885
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -301.20956
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 656.46436
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 505211734377329053, guid: 5f56635df6d400342a50e1ec106cd0c8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5f56635df6d400342a50e1ec106cd0c8, type: 3}
 --- !u!1001 &7774590431507538029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13074,125 +12886,26 @@ PrefabInstance:
     - target: {fileID: 8992944314454785584, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
       propertyPath: m_Text
-      value: ":aurora_talk_happy: I gotta hand it to you, kid,  you did a real bang
-        up job with that enclosure! Are you sure you\u2019re really a first timer?\r\nYes!
-        I keep trying to tell you, I\u2019m an engineer, not a xenobiologist\u2026\r\n:aurora_talk_neutral:
-        Right, right, but still. Sure seemed like you\u2019d done this all before!\r\nYup.\r\n:aurora_impressed:
-        Then I guess you just have the knack for it! Keep it up and Juno is going
-        to drag you into her work, I can feel it!\r\n:aurora_talk_happy: But setting
-        all of that aside for a moment, I\u2019ve got another assignment for you.\r\n:aurora_talk_neutral:
-        You\u2019ll still be working with the Zeigs, but this next enclosure is a
-        bit more tricky. It\u2019s filled with a wide array of food and terrain,
-        and it\u2019s going to be on you to figure out what the Zeigs will and won\u2019t
-        put up with.\r\nWait, why are we adding in so many unpredictable variables?\r\n:aurora_impressed:
-        Oh! That\u2019s a scientific question if I ever heard one! Asking a lot of
-        questions is a great trait for a scientist to have!\r\nOkay.\r\n:aurora_talk_neutral:
-        You see, in order to fully rehabilitate these endangered species, we have
-        to figure out exactly how they interact with all types of terrain, flora,
-        and fauna endemic to their home planet.\r\n:aurora_talk_happy: And that\u2019s
-        why we\u2019re assigning our ace new xenobiologist to figure out just what
-        the Zeigs do and don\u2019t like! You!\r\nAre you kidding? An engineer is
-        your \u201Cace xenobiologist\u201D?\r\n:aurora_sweat: Well, like I said,
-        it\u2019s hard to recruit people to work up here, and even harder to get
-        them to stay.\r\n:aurora_sweat: At least you haven\u2019t fallen in an enclosure
-        yet, right?! That\u2019s what made the last hire quit. I told him that licking
-        is a sign of affection among the Flan, but she just wouldn\u2019t listen\u2026\r\nYou
-        got it, boss!\r\n:aurora_impressed: So you\u2019re up for it? Great!\r\n:aurora_sweat:
-        But, please, just call me Doctor Star, please. \u201CBoss\u201D makes me
-        feel so old, you know what I mean? It hasn\u2019t been that long since I
-        was an undergrad too!\r\n:aurora_confused: Has it\u2026?\r\n:aurora_talk_neutral:
-        But we\u2019ll have plenty of time to talk about all that later! For now,
-        let me walk you through a couple more things before I let you hop to it.\r\n:aurora_talk_neutral:
-        Would you mind opening up your notebook again? It\u2019s about time we go
-        over its other functions.\r\n:aurora_talk_happy: Great! Now, we\u2019ve already
-        talked about the home tab and the research tab. You don\u2019t need a refresher
-        on them, right?\r\nRight.\r\n:aurora_talk_neutral: Good! Let\u2019s move
-        on, then.\r\nActually\u2026\r\n:aurora_sweat: I see. Well, nothing to do
-        but run through it again. Make sure you take whatever notes you need!\r\n:aurora_talk_neutral:
-        The first tab in the notebook is the home tab. There\u2019s not much to do
-        here except view your bookmarks and write in what each letter of ROCeT Man
-        stands for. \r\n:aurora_talk_neutral: The second tab is the research tab.
-        Here you can view all the ecological data we\u2019ve collected on Planet
-        X\u2019s endemic flora and fauna.\r\n:aurora_talk_neutral: If you need a
-        more detailed breakdown, I recommend you return to the tutorial. You think
-        you\u2019ve got the general idea now, though?\r\nYeah!\r\nTo good!\r\nWell\u2026\r\nTo
-        \u201CI see\u201D\r\n:aurora_talk_happy: The next tab we\u2019re going to
-        take a look at is the \u201CObserve\u201D tab. Flip your notebook to it now,
-        if you don\u2019t mind.\r\n:aurora_talk_neutral: This tab is a dedicated
-        place for you to take notes about how the animals you\u2019re working with
-        are reacting to the current environment around them. \r\n:aurora_talk_happy:
-        I\u2019ve started you off with a few key questions I think you\u2019ll find
-        helpful, but feel free to enter whatever you want in here. Don\u2019t let
-        me get in the way!\r\n:aurora_talk_happy: Keep in mind that anything you
-        write in the notebook will stay with you the entire time you\u2019re working
-        with us here, so you can always refer back to notes you wrote while working
-        on earlier enclosures.\r\n:aurora_sweat: In fact, you probably should do
-        that as much as you can. No use repeating past mistakes, right?\r\n:aurora_talk_happy:
-        For now, though, take a second to examine this current enclosure. Take note
-        of how many trees there are, how much of each kind of food they're producing,
-        and how much liquid is in the enclosure.\r\n:aurora_talk_happy: It might
-        not seem like much, but it\u2019s the little stuff like this that can make
-        or break an enclosure! Think about how happy your future self will be if
-        you take your notes now, rather than later!\r\n:aurora_confused: You get
-        all that, kid?\r\nSure did!\r\n:aurora_impressed: Great! Then let\u2019s
-        move on!\r\nNot quite\u2026\r\n:aurora_talk_neutral: No problem! Let me go
-        over it one more time.\r\nLoop to \u201Cthis tab\u201D\r\n:aurora_talk_happy:
-        Beneath the \u201CObserve\u201D tab is the \u201CConcept\u201D tab, where
-        you can sketch out new designs and request additional resources.\r\n:aurora_talk_happy:
-        Go ahead and open it up now.\r\n:aurora_talk_happy: So first off, let\u2019s
-        talk about how you can request additional resources. You\u2019ve done a great
-        job up until now, kid, but at some point you\u2019re going to find enclosures
-        where you\u2019ll not have enough starting resources to get the job done.\r\n:aurora_talk_happy:
-        That\u2019s what this tab is for! If you ever find yourself needing something
-        more to finish off your design, try requesting it here. We\u2019ll approve
-        any request you make, provided it\u2019s within your budget.\r\n:aurora_talk_happy:
-        Let\u2019s try making a request now! Click on the \u201CSpace Maple\u201D
-        button and change it to \u201CDirt\u201D. Finally, enter \u201C10\u201D where
-        the \u201C0\u201D is now, and then push \u201CRequest Resources\u201D.\r\n:aurora_impressed:
-        And just like that, you have 10 more dirt tiles to work with! It\u2019s that
-        easy! Whenever you get stuck, make sure you come back to this tab. It can
-        get you out of all kinds of pinches!\r\n:aurora_sweat: Keep in mind that
-        you are working on a budget, so you won\u2019t be able to rely on requests
-        to solve all your problems. You still need to be careful, and make sure your
-        designs are sound.\r\n:aurora_talk_happy: Now for the fun part. Go ahead
-        and hit the black triangle in the top-right corner of the notebook for me,
-        why don\u2019t you?\r\n:aurora_impressed: And voila! The concept sketchbook!
-        You can draw all kinds of enclosure designs in here, without using up any
-        resources. It\u2019s a lifesaver for brainstorming new designs\u2026\r\n:aurora_sweat:
-        At least...That\u2019s the idea. Everyone seems to just draw whatever they
-        want in here. Juno\u2019s notebook is filled with animal sketches, and Barry\u2019s
-        is an endless sea of numbers that I can only assume is some kind of math
-        homework.\r\n:aurora_talk_happy: Or maybe he thinks in code. Who knows? Point
-        is, it's your space! Use it in whatever way is helpful!\r\n:aurora_talk_neutral:
-        You get all of that, or do you want me to explain the \u201CConcepts\u201D
-        tab again?\r\nStill with you. We can move on.\r\n:aurora_impressed: Really?
-        Alright, let\u2019s keep going, then!\r\nI didn\u2019t quite catch that,
-        sorry\u2026\r\n:aurora_talk_happy: No problem! Better to say something now,
-        then have to worry about it forever, right?\r\nLoop to \u201Cso first off\u201D\r\n:aurora_talk_happy:
-        Alright, finally, let\u2019s talk about the last tab: \u201CTest and Metrics\u201D.
-        Guess what it\u2019s for!\r\nErr...For testing?\r\n:aurora_sweat: Yeah, I
-        guess that was a bit of a softball question, wasn\u2019t it? \r\n:aurora_talk_happy:
-        So, as you so rightly guess, this tab is all about writing down the results
-        of your various test changes to the enclosure. It might seem a bit trivial,
-        but this data is what we\u2019re here to get!\r\n:aurora_talk_happy: With
-        enough data, recreating habitats for these animals will be such a cinch that
-        anyone will be able to do it!\r\n:aurora_talk_neutral: Let\u2019s give it
-        a shot, shall we? Try adding some zeigs to the enclosure, and then plant
-        some space maples next to them. Once you\u2019re done, skip forward a couple
-        of days, open the inspector, then check how the changes affected them.\r\n:aurora_talk_happy:
-        Great! It looks like their food needs have improved a bit! Let\u2019s record
-        the results of this test. Open your notebook back up to the test tab. \r\n:aurora_talk_happy:
-        Once you\u2019ve done that, fill in the rest of the report with a description
-        of what you did -- in this case, adding two space maples to the enclosure--
-        in the \u201Cwhen\u201D section, and what happened -- the Zeigs\u2019 food
-        needs improved -- in the rest of the section.\r\n:aurora_talk_happy: And
-        that\u2019s it! That\u2019s the whole notebook. I know it can seem like a
-        lot, but remember that our job here is to collect research on these animals.\r\n:aurora_talk_neutral:
-        It\u2019s important that you fill in any information you come across into
-        your notebook! Otherwise, how will anyone else know what you\u2019ve learned?
-        \r\n:aurora_sweat: But look at me, rambling on and keeping you from your
-        work. This time your goal is to get the zeig population up to thirty. Good
-        luck, and don\u2019t forget to shout if you have any questions!\r"
+      value: ":juno_talk_happy: I must admit, newbie. When Dr. Star said she had
+        another \u201Cace\u201D new recruit, I was skeptical. Star\u2019s approval
+        is usually a mark of death around here. Disaster seems to always follow her
+        unlucky little scions.\r\nUnlucky? Disaster? Death?!\r\n:juno_talk_neutral:
+        Figurative death. Now, if only I could say the same about the disaster\u2026\r\nWhat
+        happened around here?\r\n:juno_sweat: A full recounting would do little to
+        improve your work, I\u2019m afraid, so I won\u2019t bother. Let us just say
+        there is a reason we have a xenobiologist on staff who\u2019s only allowed
+        to do resurfacing and transport work. \r\n:juno_talk_neutral: Now, setting
+        aside such unpleasant talk\u2026 This is it, the last enclosure in this wing.
+        It has proven rather\u2026troublesome for our existing staff.\r\n:juno_talk_neutral:
+        Troublesome terrain, disagreeable specimens, limited viable terrain\u2026this
+        enclosure really has all of the makings of a truly challenging test.\r\n:juno_smirk:
+        Yours, specifically. \r\n:juno_talk_neutral: No lecture this time, newbie.
+        You should already know everything you need in order to properly design this
+        enclosure. Remember what you\u2019ve learned, and you shouldn\u2019t struggle
+        with it.\r\n:juno_smirk: And try not to think about how even Dr. Star gave
+        up working on it.\r\n:juno_talk_neutral: I\u2019ll be back in 30 days to
+        perform your report back, as per our usual. I expect that there will be 20
+        Eligans Impar and Caprax Zeigrun here to greet me when I return."
       objectReference: {fileID: 0}
     - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}
@@ -13233,6 +12946,11 @@ PrefabInstance:
         type: 3}
       propertyPath: iconIDInput.Array.data[7].id
       value: aurora_impressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992944314454785587, guid: 4139437f4ca7e4dcc95527ea777e9354,
+        type: 3}
+      propertyPath: defaultName
+      value: Juno
       objectReference: {fileID: 0}
     - target: {fileID: 8992944314454785589, guid: 4139437f4ca7e4dcc95527ea777e9354,
         type: 3}

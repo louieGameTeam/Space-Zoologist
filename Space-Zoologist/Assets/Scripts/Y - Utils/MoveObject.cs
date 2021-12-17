@@ -16,7 +16,7 @@ public class MoveObject : MonoBehaviour
     // do this better
     [SerializeField] Sprite LiquidSprite = default;
 
-
+    Dictionary<string, Item> itemByID = new Dictionary<string, Item>();
     Item tempItem;
     private enum ItemType { NONE, FOOD, ANIMAL, TILE }
 
@@ -31,6 +31,8 @@ public class MoveObject : MonoBehaviour
     int moveCost = 0;
     int sellBackCost = 0;
 
+    const float MoveCost = 0.5f;
+    const float SellBackRefund = 0.25f;
     const float FixedCost = 0;
     const float CostPerUnitSizeAnimal = 10;
     const float CostPerUnitSizeFood = 10;
@@ -44,6 +46,11 @@ public class MoveObject : MonoBehaviour
     {
         gridSystem = GameManager.Instance.m_gridSystem;
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
+        foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
+            // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
+            if(!itemByID.ContainsKey(itemData.itemObject.ID))
+                itemByID.Add(itemData.itemObject.ID, itemData.itemObject);
+        }
 
         tempItem = (Item)ScriptableObject.CreateInstance("Item");
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
@@ -200,26 +207,28 @@ public class MoveObject : MonoBehaviour
         MoveButton.transform.position = screenPos + new Vector3(-50, 100, 0);
         DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
 
-        if (movingItemType == ItemType.ANIMAL) {
-            moveCost = objectToMove.GetComponent<Animal>().PopulationInfo.species.MoveCost;
-            sellBackCost = 0;
+        if (movingAnimal)
+        {
+            int price = itemByID[objectToMove.GetComponent<Animal>().PopulationInfo.species.SpeciesName].Price;
+            moveCost = Mathf.RoundToInt(MoveCost * price);
+            sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
         }
         else if (objectToMove.TryGetComponent<FoodSource>(out FoodSource foodSource))
         {
             FoodSourceSpecies species = foodSource.Species;
-            moveCost = species.MoveCost;
-            sellBackCost = species.SellBackPrice;
+            int price = itemByID[species.SpeciesName].Price;
+            moveCost = Mathf.RoundToInt(MoveCost * price);
+            sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
         }
         else if (objectToMove.CompareTag("tiletodelete"))
         {
-            //MoveButton.SetActive(false);
+            MoveButton.SetActive(false);
 
             LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
-            sellBackCost = tileItemData.itemObject.Price;
-            moveCost = tileItemData.itemObject.Price;
+            sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
         }
-        MoveButton.GetComponentInChildren<Text>().text = "$0"; //$"${moveCost}"; These are set to 0 until we figure out the design for moveing and selling stuff
-        DeleteButton.GetComponentInChildren<Text>().text = "$0"; //$"${sellBackCost}";
+        MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
+        DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
     }
 
     private void UpdateMoveUIPosition()
@@ -297,41 +306,42 @@ public class MoveObject : MonoBehaviour
         switch (movingItemType)
         {
             case ItemType.ANIMAL:
+                GameManager.Instance.AddToBalance(sellBackCost);
                 objectToMove.GetComponent<Animal>().PopulationInfo.RemoveAnimal(objectToMove);
                 break;
             case ItemType.FOOD:
-                FoodSource foodSource = objectToMove.GetComponent<FoodSource>();
+                GameManager.Instance.AddToBalance(sellBackCost);
+	        removeOriginalFood(foodSource);
 
-                // NOTE: selling items no longer gives money, becuase money is not spent placing objects
-                // GameManager.Instance.SubtractFromBalance(-sellBackCost);
-                removeOriginalFood(foodSource);
-                Item foodItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Equals(foodSource.Species.SpeciesName)).itemObject;
+	        // Selling items no longer return them to inventory
+	        //Item foodItem = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Equals(foodSource.Species.SpeciesName)).itemObject;
 
-                if (!foodItem)
-                    return;
+	        //if (!foodItem)
+	        //    return;
 
-                FoodSourceStoreSection.AddItemQuantity(foodItem);
+	        //FoodSourceStoreSection.AddItemQuantity(foodItem);
                 break;
             case ItemType.TILE:
+                GameManager.Instance.AddToBalance(sellBackCost);
                 GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
-                gridSystem.ApplyChangesToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
+                gridSystem.ApplyChangesToTilemap(gridSystem.WorldToCell(objectToMove.transform.position));
                 if (tileData.currentTile == null)
                     tileData.Clear();
                 //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
                 gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
-                //GameManager.Instance.SubtractFromBalance(-sellBackCost);
-                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
 
-                if (tileItemData == null)
-                    return;
+                // Selling items no longer return them to inventory
+                //LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
 
-                TileStoreSection.AddItemQuantity(tileItemData.itemObject);
+                //if (tileItemData == null)
+                //    return;
+
+                //TileStoreSection.AddItemQuantity(tileItemData.itemObject);
                 break;
             default:
                 break;
         }
-
         Reset();
     }
 
@@ -365,15 +375,14 @@ public class MoveObject : MonoBehaviour
         Population population = toMove.GetComponent<Animal>().PopulationInfo;
         AnimalSpecies species = population.Species;
 
-        float cost = moveCost; //FixedCost + species.Size * CostPerUnitSizeAnimal;
+        float cost = moveCost;
         bool valid = gridSystem.IsPodPlacementValid(worldPos, species) && GameManager.Instance.Balance >= cost;
 
         // placement is valid and population did not already reach here
         if (valid && !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
         {
             GameManager.Instance.m_populationManager.UpdatePopulation(species, worldPos);
-            // NOTE: placing an animal no longer costs money
-            // GameManager.Instance.SubtractFromBalance(cost);
+            GameManager.Instance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
         toMove.transform.position = worldPos; // always place animal back because animal movement will be handled by pop manager
@@ -384,26 +393,34 @@ public class MoveObject : MonoBehaviour
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
+        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.x / 2, 0);
 
-        float cost = moveCost; // FixedCost + species.Size * CostPerUnitSizeFood;
-        bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
-
-        if (valid)
+        //If the player clicks on the food source's original position, don't bother with the mess below
+        if(pos == initialGridPos)
         {
-            /*            ConstructionCountdown cc = GetBufferCountDown(foodSource);
-                        int ttb = 0;
-                        if (cc != null)
-                        {
-                            ttb = cc.target;
-                        }*/
-            //foodSourceManager.PlaceFood(pos, species, ttb);
-            removeOriginalFood(foodSource);
-            placeFood(pos, species);
-            // NOTE: placing an animal no longer costs money
-            // GameManager.Instance.SubtractFromBalance(cost);
+            toMove.transform.position = initialPos;
+            return;
         }
-        else
+
+        //Check if the food source is under construction and if so, grab its build progress
+        GridSystem.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
+        int buildProgress = this.GetStoreItem(species).buildTime;
+        if(cluster != null)
+            buildProgress = cluster.currentDays;
+
+        //Remove the food so it doesn't interfere with its own placement
+        removeOriginalFood(foodSource);
+        float cost = moveCost;
+        bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
+        
+        if (valid) //If valid, place the food at the mouse destination
         {
+            placeFood(pos, species);
+            GameManager.Instance.SubtractFromBalance(cost);
+        }
+        else //Otherwise, place it back at the original position with the correct build progress
+        {
+            placeFood(initialGridPos, species, buildProgress);
             toMove.transform.position = initialPos;
         }
     }
@@ -429,16 +446,34 @@ public class MoveObject : MonoBehaviour
     }
 
     // placing food is more complicated due to grid
-    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species)
+    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species, int buildProgress = 0)
     {
         Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
         FoodLocation += new Vector3((float)species.Size.x / 2, (float)species.Size.y / 2, 0);
 
         GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
+        FoodSource foodSource = Food.GetComponent<FoodSource>();
 
-        gridSystem.AddFoodReferenceToTile(mouseGridPosition, species.Size, Food);
-        gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-        species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
+        gridSystem.AddFood(mouseGridPosition, species.Size, Food);
+        
+        if(buildProgress < this.GetStoreItem(species).buildTime) //If the food source has yet to fully construct, add a build buffer
+        {
+            foodSource.isUnderConstruction = true;
+            GameManager.Instance.m_gridSystem.ConstructionFinishedCallback(() =>
+            {
+                foodSource.isUnderConstruction = false;
+            });
+            gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
+                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
+        }
+        else //Otherwise, make sure its needs are up to date
+        {
+            GameManager.Instance.UpdateAllNeedSystems();
+            foodSource.CalculateTerrainNeed();
+            foodSource.CalculateWaterNeed();
+            GameManager.Instance.m_inspector.UpdateCurrentDisplay();
+        }
+
     }
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
     {

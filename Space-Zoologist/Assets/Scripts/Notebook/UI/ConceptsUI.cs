@@ -6,6 +6,10 @@ using TMPro;
 
 public class ConceptsUI : NotebookUIChild
 {
+    #region Public Properties
+    public Button RequestButton => requestButton;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Object used to edit the current resource request")]
@@ -38,6 +42,8 @@ public class ConceptsUI : NotebookUIChild
         buildButton.onClick.AddListener(() => GameManager.Instance.m_menuManager.SetStoreIsOn(true));
         // Update the text whenever the review is confirmed
         reviewDisplay.OnReviewConfirmed.AddListener(OnReviewConfirmed);
+        // Set the requested item when the item cell display has an item clicked on it
+        itemCellDisplay.ItemClickedEvent.AddListener(SetRequestedItem);
 
         // Update text once at the beginning
         UpdateText();
@@ -57,6 +63,11 @@ public class ConceptsUI : NotebookUIChild
         UpdateText();
         itemCellDisplay.SetupCells();
         requestEditor.ResetRequest();
+    }
+    private void SetRequestedItem(Item item)
+    {
+        requestEditor.Request.ItemRequested = item.ItemID;
+        requestEditor.UpdateUI();
     }
     #endregion
 }

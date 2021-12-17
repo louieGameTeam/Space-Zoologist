@@ -29,19 +29,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b19757b4d113c9047afc67b8ca20f94e, type: 2}
   itemQuantities:
   - itemObject: {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
-    initialAmount: 0
+    initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
-    initialAmount: 0
+    initialAmount: 10
   - itemObject: {fileID: 11400000, guid: aed977f8bd1866647ae7b98411756bc2, type: 2}
     initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
-    initialAmount: 10
+    initialAmount: 25
   - itemObject: {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
-    initialAmount: 10
+    initialAmount: 25
   - itemObject: {fileID: 11400000, guid: 6f7adeb8e5b3d4885a77f418109a7422, type: 2}
-    initialAmount: 10
+    initialAmount: 25
   - itemObject: {fileID: 11400000, guid: d3eae864c0aa24b1591464e1e01489b6, type: 2}
-    initialAmount: 10
+    initialAmount: 25
   - itemObject: {fileID: 11400000, guid: 611d10484ac544bc9812f39f3b1630ce, type: 2}
     initialAmount: 10
   - itemObject: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
@@ -61,13 +61,25 @@ MonoBehaviour:
   levelMusic: {fileID: 8300000, guid: 52df1fae1ea2840ef968ac5dcd11476e, type: 3}
   startingPositions:
   - {x: 1, y: 1, z: 0}
-  startingConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
+  startingConversation: {fileID: 3227133667785996670, guid: a2501a84eb6a8754b9b82e9b0003a73d,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  passedConversation:
-    isQuiz: 0
+  ending:
+    isQuiz: 1
     normalConversation: {fileID: 0}
-    quizConversation: {fileID: 0}
-  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+    nextLevelID:
+      levelNumber: 0
+      enclosureNumber: 0
+    quizConversation: {fileID: 4423182397250522881, guid: 680aa04e0b829bd42b0fee37b088f4ef,
+      type: 3}
+    nextLevelIDs:
+      levelIDs:
+      - levelNumber: 2
+        enclosureNumber: 2
+      - levelNumber: 2
+        enclosureNumber: 4
+      - levelNumber: 3
+        enclosureNumber: 1
+  restertEnclosureConversation: {fileID: 3017042779891598659, guid: cd9cefc4f23194f4a923d1d3e896324d,
     type: 3}

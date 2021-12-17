@@ -25,7 +25,9 @@ public class CameraController : MonoBehaviour
             return cam;
         }
     }
-    public bool ControlsEnabled { get; set; } = true;
+    private bool MoveEnabled => UIBlockerSettings.OperationIsAvailable("CameraMove");
+    private bool ZoomEnabled => UIBlockerSettings.OperationIsAvailable("CameraZoom");
+    private bool DragEnabled => UIBlockerSettings.OperationIsAvailable("CameraDrag");
 
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] float WASDAcceleration = 0.75f;
@@ -73,6 +75,9 @@ public class CameraController : MonoBehaviour
     #region Public Methods
     public void Lock(CameraPositionLock positionLock)
     {
+        // Unlock any current position lock
+        if (this.positionLock != null) Unlock();
+
         this.positionLock = positionLock;
         positionLock.Lock(Cam);
     }
@@ -91,7 +96,7 @@ public class CameraController : MonoBehaviour
     {
         // Only receive input if controls are enabled
         float scrollData = 0;
-        if (ControlsEnabled) scrollData = Input.GetAxis("Mouse ScrollWheel");
+        if (ZoomEnabled) scrollData = Input.GetAxis("Mouse ScrollWheel");
 
         targetZoom -= scrollData * zoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
@@ -107,12 +112,15 @@ public class CameraController : MonoBehaviour
         float accleration = WASDAcceleration * zoomScalar * Time.deltaTime;
         float maxSpeed = WASDSpeed * zoomScalar;
 
-        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && ControlsEnabled) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
+        // Compute once in the frame instead of multiple times
+        bool moveEnabled = MoveEnabled;
+
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && moveEnabled) //If pressing left and not yet reached maximum negative horizontal speed, decrease by acceleration
         {
             if(xValue > -maxSpeed)
                 xValue -= accleration;
         }
-        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && ControlsEnabled) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
+        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && moveEnabled) //If pressing right and not yet reached maximum horizontal speed, increase by acceleration
         {
             if(xValue < maxSpeed)
                 xValue += accleration;
@@ -126,12 +134,12 @@ public class CameraController : MonoBehaviour
             xValue -= accleration * Mathf.Sign(xValue);
         }
 
-        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && ControlsEnabled) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
+        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && moveEnabled) //If pressing down and not yet reached maximum negative vertical speed, decrease by acceleration
         {
             if(yValue > -maxSpeed)
                 yValue -= accleration;
         }
-        else if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && ControlsEnabled) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
+        else if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && moveEnabled) //If pressing up and not yet reached maximum vertical speed, increase by acceleration
         {
             if(yValue < maxSpeed)
                 yValue += accleration;
@@ -168,7 +176,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouse()
     {
-        if (Input.GetMouseButtonDown(2) && ControlsEnabled)
+        if (Input.GetMouseButtonDown(2) && DragEnabled)
         {
             dragOrigin = Input.mousePosition;
             oldPos = this.transform.position;

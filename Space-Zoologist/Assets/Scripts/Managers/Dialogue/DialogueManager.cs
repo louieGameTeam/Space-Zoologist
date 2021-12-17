@@ -87,12 +87,7 @@ public class DialogueManager : MonoBehaviour
         if (ConversationManager.Instance != null)
         {
             StartNewConversation();
-            //ConversationManagerGameObject.SetActive(false);
         }
-
-        // Use this to say the ending conversation when the level starts
-        //GameManager.Instance.LevelData.PassedConversation.Speak(this);
-        //StartInteractiveConversation();
     }
     public void SetNewDialogue(NPCConversation newDialogue)
     {
