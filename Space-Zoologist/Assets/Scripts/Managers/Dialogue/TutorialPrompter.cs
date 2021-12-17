@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.UI;
 
 using DialogueEditor;
 
@@ -172,6 +174,24 @@ public class TutorialPrompter : MonoBehaviour
     {
         FreezeUntilPopulationIsInspected(SpeciesType.Goat);
     }
+    public void FreezeUntilDirtRequested(int quantity)
+    {
+        FreezeUntilResourceRequestSubmitted(new ItemID(ItemRegistry.Category.Tile, 0), quantity);
+    }
+    public void FreezeUntilConceptCanvasExpanded(bool expanded)
+    {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsCanvasUI canvas = notebook.GetComponentInChildren<ConceptsCanvasUI>(true);
+
+        FreezingScheduler.FreezeUntilConditionIsMet(() => NotebookTabIsOpen(NotebookTab.Concepts) && canvas.IsExpanded == expanded);
+        HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
+            HighlightNotebookTabButton(NotebookTab.Concepts),
+            new ConditionalHighlight()
+            {
+                predicate = () => canvas.IsExpanded != expanded,
+                target = () => canvas.FoldoutToggle.transform as RectTransform
+            });
+    }
     public void ClearHighlights()
     {
         HighlightingScheduler.ClearHighlights();
@@ -183,11 +203,8 @@ public class TutorialPrompter : MonoBehaviour
     {
         NotebookUI notebook = GameManager.Instance.NotebookUI;
 
-        // Local method returns true if notebook is open
-        Func<bool> NotebookTabIsOpen(NotebookTab theTab) => () => notebook.IsOpen && notebook.TabPicker.CurrentTab == theTab;
-
         // Freeze until notebook tab is open
-        FreezingScheduler.FreezeUntilConditionIsMet(NotebookTabIsOpen(tab));
+        FreezingScheduler.FreezeUntilConditionIsMet(() => NotebookTabIsOpen(tab));
 
         // Highlight notebook button if not open, then highlight correct tab
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(), HighlightNotebookTabButton(tab));
@@ -299,6 +316,50 @@ public class TutorialPrompter : MonoBehaviour
             return false;
         });
     }
+    private void FreezeUntilResourceRequestSubmitted(ItemID requestedItem, int requestQuantity)
+    {
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
+        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true); 
+        TMP_InputField quantityInput = requestEditor.QuantityInput;
+        ItemDropdown itemRequestedDropdown = requestEditor.ItemRequestedDropdown;
+
+        // Set local review confirmed bool based on data in the reviewed request
+        bool ReviewConfirmed()
+        {
+            ReviewedResourceRequest review = reviewDisplay.LastReviewConfirmed;
+
+            // If there is a review that was just confirmed then check if it was the correct request
+            if (review != null)
+            {
+                Debug.Log("Last review confirmed is not null");
+                ResourceRequest request = review.Request;
+                return request.ItemRequested == requestedItem && request.QuantityRequested == requestQuantity;
+            }
+            else return false;
+        }
+
+        // Freeze conversation until correct review was confirmed
+        FreezingScheduler.FreezeUntilConditionIsMet(ReviewConfirmed, HighlightingScheduler.ClearHighlights);
+        HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
+            HighlightNotebookTabButton(NotebookTab.Concepts),
+            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[0],
+            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[1],
+            HighlightInputField(quantityInput, requestQuantity.ToString()),
+            new ConditionalHighlight()
+            {
+                predicate = () => !reviewDisplay.gameObject.activeInHierarchy,
+                target = () => concepts.RequestButton.transform as RectTransform
+            });
+    }
+    private bool NotebookTabIsOpen(NotebookTab tab)
+    {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        NotebookTabPicker picker = notebook.TabPicker;
+        return notebook.IsOpen && picker.CurrentTab == tab;
+    }
     #endregion
 
     #region Highlighting Helpers
@@ -365,19 +426,42 @@ public class TutorialPrompter : MonoBehaviour
         ItemPicker[] pickers = notebook.TabPicker.GetTabRoot(targetTab).GetComponentsInChildren<ItemPicker>(true);
         // Find a picker whose name contains the filter
         ItemPicker picker = Array.Find(pickers, p => p.name.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+        return HighlightItemPicker(picker, targetItem);
+    }
+    private ConditionalHighlight[] HighlightItemPicker(ItemPicker itemPicker, ItemID targetItem)
+    {
         // Get the item dropdown for this category
-        ItemDropdown categoryDropdown = picker.GetDropdown(targetItem.Category);
-        // Get the dropdown targetted by this item
-        TMP_Dropdown categoryDropdownTMP = picker.GetDropdown(targetItem.Category).Dropdown;
+        ItemDropdown categoryDropdown = itemPicker.GetDropdown(targetItem.Category);
+        return HighlightItemDropdownUtility(categoryDropdown, targetItem, () => itemPicker.SelectedItem);
+    }
+    private ConditionalHighlight[] HighlightItemDropdown(ItemDropdown itemDropdown, ItemID targetItem)
+    {
+        return HighlightItemDropdownUtility(itemDropdown, targetItem, () => itemDropdown.SelectedItem);
+    }
+    private ConditionalHighlight[] HighlightItemDropdownUtility(ItemDropdown itemDropdown, ItemID targetItem, Func<ItemID> selectedItem)
+    {
         // Get the dropdown of the target category
-        RectTransform categoryDropdownTransform = categoryDropdownTMP.GetComponent<RectTransform>();
+        RectTransform itemDropdownTransform = itemDropdown.GetComponent<RectTransform>();
+        int itemIndex = itemDropdown.DropdownIndex(targetItem);
 
         // Local function used to get the rect transform of the particular item in the dropdown
         RectTransform DropdownItemGetter()
         {
-            Transform child = categoryDropdownTransform.Find("Dropdown List");
-            child = child.GetChild(categoryDropdown.DropdownIndex(targetItem) + 1);
-            return child as RectTransform;
+            Transform dropdownList = itemDropdownTransform.Find("Dropdown List");
+            Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
+
+            // Search all the template item's children for the item with the same index in the name
+            Transform itemParent = templateItem.transform.parent;
+            for(int i = 0; i < itemParent.childCount; i++)
+            {
+                Transform currentChild = itemParent.GetChild(i);
+                if (currentChild.name.Contains($"Item {itemIndex}: "))
+                {
+                    return currentChild as RectTransform;
+                }
+            }
+
+            return null;
         }
 
         return new ConditionalHighlight[]
@@ -385,13 +469,13 @@ public class TutorialPrompter : MonoBehaviour
             // Highlight the dropdown in the picker
             new ConditionalHighlight()
             {
-                predicate = () => !categoryDropdownTMP.IsExpanded && picker.SelectedItem != targetItem,
-                target = () => categoryDropdownTransform
+                predicate = () => !itemDropdown.Dropdown.IsExpanded && selectedItem.Invoke() != targetItem,
+                target = () => itemDropdownTransform
             },
             // Highlight the single option button in the dropdown list
             new ConditionalHighlight()
             {
-                predicate = () => picker.SelectedItem != targetItem,
+                predicate = () => selectedItem.Invoke() != targetItem,
                 target = DropdownItemGetter
             }
         };
@@ -444,6 +528,15 @@ public class TutorialPrompter : MonoBehaviour
         {
             predicate = () => !notebook.IsOpen,
             target = () => notebookButton
+        };
+    }
+    private ConditionalHighlight HighlightInputField(TMP_InputField inputField, string targetInput)
+    {
+        RectTransform rectTransform = inputField.transform as RectTransform;
+        return new ConditionalHighlight()
+        {
+            predicate = () => inputField.text != targetInput,
+            target = () => rectTransform
         };
     }
     // Find rect transform in children of the parent with the given name
