@@ -13,6 +13,8 @@ public class MoveObject : MonoBehaviour
     [SerializeField] GameObject DeleteButtonPrefab = default;
     [SerializeField] FoodSourceStoreSection FoodSourceStoreSection = default;
     [SerializeField] TileStoreSection TileStoreSection = default;
+    // do this better
+    [SerializeField] Sprite LiquidSprite = default;
 
 
     Item tempItem;
@@ -36,6 +38,7 @@ public class MoveObject : MonoBehaviour
     private GameObject tileToDelete;
     private Vector3Int initialTilePosition;
     private GameTile initialTile;
+    private float[] initialTileContents;
 
     private void Start()
     {
@@ -262,7 +265,16 @@ public class MoveObject : MonoBehaviour
                 tileToDelete.SetActive(true);
                 
                 tileToDelete.name = gridSystem.GetGameTileAt(pos).TileName;
-                tileToDelete.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ItemName.ToLower().Equals(tileToDelete.name.ToLower())).itemObject.Icon;
+
+                if (tileToDelete.name.Equals("liquid"))
+                {
+                    tileToDelete.GetComponent<SpriteRenderer>().sprite = LiquidSprite;
+                    initialTileContents = gridSystem.GetTileData(pos).contents;
+                }
+                else
+                {
+                    tileToDelete.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ItemName.ToLower().Equals(tileToDelete.name.ToLower())).itemObject.Icon;
+                }
 
                 movingItemType = ItemType.TILE;
                 tileToDelete.transform.position = (Vector3)pos + new Vector3(0.5f, 0.5f, 0);
@@ -272,6 +284,7 @@ public class MoveObject : MonoBehaviour
 
                 initialTilePosition = pos;
                 initialTile = gridSystem.GetTileData(pos).currentTile;
+                initialTile.defaultContents = initialTileContents;
             }
         }
 
