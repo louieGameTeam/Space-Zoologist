@@ -165,11 +165,16 @@ public class DialogueManager : MonoBehaviour
         if(queuedConversations.Count > 0)
         {
             UpdateCurrentDialogue();
-            bool need = needForDeserialization.Dequeue();
+            bool need = needForDeserialization.Dequeue(); //True if dialogue, false if quiz
             if (need)
+            {
                 StartNewConversation();
+            }
             else
+            {
                 StartNewConversationWithoutDeserialization();
+                GameManager.Instance.m_menuManager.ToggleUISingleButton("NotebookButton");
+            }
         }
         else
         {
