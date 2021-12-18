@@ -8,7 +8,7 @@ public class ReviewedResourceRequest
     #region Public Typedefs
     public enum Status
     {
-        Granted, PartiallyGranted, Denied
+        Granted, PartiallyGranted, Denied, Invalid
     }
     #endregion
 
@@ -38,6 +38,7 @@ public class ReviewedResourceRequest
                 case Status.Granted: return "Funds sufficient to grant request";
                 case Status.PartiallyGranted: return "Insufficient funds to grant all items requested";
                 case Status.Denied: return "Insufficient funds to grant request";
+                case Status.Invalid: return "Invalid Request";
                 default: return $"Unexpected status: {CurrentStatus}";
             }
         }
@@ -47,7 +48,8 @@ public class ReviewedResourceRequest
     {
         get
         {
-            if (QuantityGranted >= Request.QuantityRequested) return Status.Granted;
+            if(QuantityGranted <= 0) return Status.Invalid;
+            else if (QuantityGranted >= Request.QuantityRequested) return Status.Granted;
             else if (QuantityGranted > 0) return Status.PartiallyGranted;
             else return Status.Denied;
         }
@@ -65,6 +67,9 @@ public class ReviewedResourceRequest
 
         if(GameManager.Instance)
         {
+            if(request.QuantityRequested <= 0)
+                return review;
+
             // Get the item object with the given id
             Item itemObject = GameManager.Instance.LevelData.GetItemWithID(request.ItemRequested).itemObject;
             // Compute the total price

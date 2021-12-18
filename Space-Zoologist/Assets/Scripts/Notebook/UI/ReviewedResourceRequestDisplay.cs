@@ -100,14 +100,17 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
         review = ReviewedResourceRequest.Review(new ResourceRequest(request));
 
         // Set the border color based on the review status
-        border.color = statusColors.colors[(int)review.CurrentStatus];
+        if(review.CurrentStatus == ReviewedResourceRequest.Status.Invalid)
+            border.color = statusColors.colors[(int)ReviewedResourceRequest.Status.Denied];
+        else
+            border.color = statusColors.colors[(int)review.CurrentStatus];
 
         // Set the status and reason text
         statusText.text = review.CurrentStatus.ToString();
         statusReasonText.text = review.StatusReason;
 
         // Change the text displayed based on whether the request was granted or denied
-        if(review.CurrentStatus != ReviewedResourceRequest.Status.Denied)
+        if((int)review.CurrentStatus < 2)
         {
             itemText.text = review.QuantityGranted + " " + request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial);
             costText.text = "$" + review.TotalCost;
