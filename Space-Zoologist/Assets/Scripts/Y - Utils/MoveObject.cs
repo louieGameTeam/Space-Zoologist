@@ -493,6 +493,7 @@ public class MoveObject : MonoBehaviour
     public void removeOriginalFood(FoodSource foodSource)
     {
         Vector3Int FoodLocation = gridSystem.WorldToCell(initialPos);
+        GridSystem.TileData data = gridSystem.GetTileData(FoodLocation);
         gridSystem.RemoveFood(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource); // Finds the lower left cell the food occupies
         Vector2Int shiftedPos = new Vector2Int(FoodLocation.x, FoodLocation.y) - foodSource.Species.Size / 2;

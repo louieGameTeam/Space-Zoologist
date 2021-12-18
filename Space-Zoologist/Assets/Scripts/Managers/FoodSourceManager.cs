@@ -76,7 +76,7 @@ public class FoodSourceManager : GridObjectManager
         ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).RemoveFoodSource(foodSource);
         foodSourcesBySpecies[foodSource.Species].Remove(foodSource);
         GameManager.Instance.UnregisterWithNeedSystems(foodSource);
-        m_gridSystemReference.RemoveFood(m_gridSystemReference.WorldToCell(foodSource.gameObject.transform.position));
+        m_gridSystemReference.RemoveFood(m_gridSystemReference.WorldToCell(foodSource.Position));
         Destroy(foodSource.gameObject);
     }
 
