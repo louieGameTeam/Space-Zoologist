@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52e53c4d2142814a94f3088eec699e5, type: 3}
   m_Name: GoatEncyclopedia
   m_EditorClassIdentifier: 
-  articlesList:
+  articles:
   - id:
       title: Ecological Summary
       author: CapraX Zeigrun
@@ -21,59 +21,93 @@ MonoBehaviour:
       lower regions of the Pastillion Mountain Range. The terrain in the rescue area
       was noted to be a combination of dirt and grass, with occasional rock, similar
       to the terran chaparral biome. The middle and lower parts of the Pastillion
-      Mountain Range supported few plant species, {the most common being the astral
-      maple, Candentis Acernis.} \r\n\r\nIsometric drawing (below) for {the Zeig
-      enclosure requires 2,500 sq. ft. of space. 500 sq. ft. of said enclosure must
-      be reserved for mimicking a freshwater lake} much like the one seen in the
-      Pastillion Mountain Range."
+      Mountain Range supported few plant species \u2013 {the most common of which
+      was the ubiquitous astral maple, Candentis Acernis \u2013  and isolated the
+      Caprax Zeigrun from most other species.} \r\n\r\nIsometric drawing (below)
+      for {the Zeig enclosure requires 2,500 sq. ft. of space. 500 sq. ft. of said
+      enclosure must be reserved for mimicking a macrophage-free freshwater lake}
+      much like the one seen in the Pastillion Mountain Range. The Caprax Zeigrun
+      seem to have lost the ability to process water that differs greatly from this
+      lake, and thus have very limited water tolerances. They will avoid all water
+      sources with less than .5% salinity and more than 2% salinity, as well as any
+      with significant bacterial populations.\r\n\r\nEarly analysis indicates that
+      Caprax Zeigrun, much like the terran goats they are often mistaken for, have
+      a very limited set of terrain preferences which they will not deviate from.
+      Attempts to relocate individuals onto sandy terrain or into marshland have
+      all resulted in agitation, illness, and even death of the relocated specimens.\r"
     sprites:
     - {fileID: 21300000, guid: 7f00a25188dab9948bdc724143465f14, type: 3}
   - id:
       title: Transport Log
       author: Barry Wachmann
-    text: "These goats are the cutest thing I have ever seen! I mean, come on, they\u2019re
+    text: "These zeigs are the cutest thing I have ever seen! I mean, come on, they\u2019re
       freaking blue! I can\u2019t help but wonder what makes a goat blue, though...
       I wish I could have seen Planet X when it was still around. Wonder what else
-      was on there\u2026 \r\n\r\nAnyways, yeah, transport log notes! \r\n\r\nAt 11:23:60,
-      we ran out of Acernis fruit. The rest is under strict cryofreeze or something.
-      Way above my pay grade, or so Juno says. So, instead, they gave us {some berries
-      they found on-planet. The goats seem to like them alright, but they don\u2019t
-      gobble them up anywhere near as quick as the Gilded Astral Maple fruit!}\r\n\r\n{I
-      tried to give them a mushroom, but the face it made was unhappy,} to say the
-      least, and it just about bit my hand off in anger. Similarly, they\u2019re
-      a little picky about the water, which {needs to be about 96% pure water. They
-      seem to want a little salt, but not more than 2%.}\r\n\r\nWeirdest thing is,
-      though, that these things barely eat! {Most only eat, at most, one fruit every
-      four hours.} Man, my partner would be thrilled if Homeosapiens didn\u2019t
-      have to eat so much and spend so much money on food\u2026 could their metabolism
-      be a possible solution to food waste?"
+      was on there\u2026 Maybe they got blue by rolling around in blue grass! Wouldn\u2019t
+      that be a sight to see\u2026\r\n\r\nAnyways, yeah, transport log notes! \r\n\r\nAt
+      11:23:60, we ran out of Acernis fruit. The rest is under strict cryofreeze
+      or something. Juno says the details are strictly on a need to know basis, and
+      habitat wreckers don\u2019t need to know. Could have been a bit nicer about
+      it\u2026\r\n\r\nSo, anyways, they gave us {some berries they found on-planet
+      instead. The goats seem to like them alright, but they don\u2019t gobble them
+      up anywhere near as quick as Acernis Aurum fruit!} \r\n\r\n{I tried to give
+      one of them a glowcap, but it just snarled at me and almost bit my arm off!}
+      Same thing happened to Hutchins when she tried to give another one some of
+      the Formicas that the Strots like. They\u2019re also super picky about water.
+      Don\u2019t try to feed one water that\u2019s not about 96% pure. They\u2019ll
+      just spit it right back in your face. Bleh. \r\n\r\n{That said, they seem to
+      want a little salt, but not more than 2%, and they\u2019ll spit up water that\u2019s
+      too pure too, so watch out!.}\r\n\r\nWeirdest thing is, though, that these
+      things barely eat and don\u2019t need as much space to themselves as you\u2019d
+      think! They may look like goats, but they don\u2019t have the appetite, and
+      they\u2019re definitely much less ornery! {Space-wise they all seem to need
+      only about four standard terrain tiles to themselves apiece, so our transport
+      vessel was way bigger than needed, at least for these guys. Most only eat,
+      at most, six fruits every day, and sometimes not even that!} \r\n\r\nMan, Larry
+      would be thrilled if he only had to eat a few acernis fruits every day\u2026Would
+      fix our budget right up!\r"
     sprites:
     - {fileID: 21300000, guid: c4313bd97580f5040942bf51e79a7699, type: 3}
     - {fileID: 21300000, guid: dfaa0e74b8fa2684885c02e07eac0353, type: 3}
   - id:
-      title: Observation Log Session #46
-      author: Dr. Aurora Star
-    text: "June 6th, 3020, 6:00 am\r\nLocated at the bottom of the eastern edge of
-      the Pastillion Mountain Range, in observation site A. Observation session #46
-      goals: 1) account for the various population sizes migrating and 2) update
-      the liquid requirements database. Observation schedule is set to every 30 minutes,
-      and will reduce to every 10 minutes when a population has been spotted. \r\n\r\nJune
-      6th, 3020, 6:30 am\r\nNo signs of goat migration, but the planet\u2019s sunrise
-      created flashes of color on the filled basin as it rose behind me.\r\n\r\nJune
-      6th, 3020, 7:05 am\r\nI observed the first goat population emerge from the
-      now vibrant maple. Total of 12 goats were sighted. Observation session #46
-      aligns with previous log data. {10-14 goats appear to be standard population
-      size. 4-10 astral maple per herd.\r}\n\r\nJune 6th, 3020, 7:15 am\r\nA total
-      of 3 different populations are currently spread around the perimeter of the
-      lake. \r\n\r\nOn the far left is the most recent population observed, {with
-      6 goats total.} The herd moved at a comparatively sluggish pace. They originated
-      from the south eastern edge of the Pastillion Basin, {noted for its distinct
-      lack of dirt.} \n\r\nTowards the middle of the Basin is a population featuring
-      {12 goats consuming the lake\u2019s liquid and maple fruit. They appear not
-      only the largest herd, but perhaps the most well-fed.\r}\n\r\nThe population
-      furthest from me features {8 goats, still below the estimated average population.}
-      There are {very few local maples in their grazing area,} but they appear to
-      instead be eating some sort of berries."
+      title: Observation Log
+      author: Juno
+    text: "June 6th, 3020, 6:00 am\r\nLocation: Pastillion Mountain Range. Foothills.
+      Eastern End.\r\nTerrain Composition: Barren crags, interspersed with patches
+      of soil where the angle permits. This soil is broken up by infrequent but large
+      patches of a crabgrass analog. Ideal terrain for the Caprax Zeigrun.\r\nObservational
+      goals: See how specimens react to the arrival of foreign, invasive species
+      in their habitat. To this end I have transported a number of Planet X\u2019s
+      other fauna to the nearby lake, to view how the local Caprax Zeigrun population
+      reacts to each. This research is considered vital in order to establish any
+      possible predator-prey relationships which may develop amongst specimens sharing
+      enclosures in the future.\r\n\r\nJune 6th, 3020, 6:30 am\r\nNo signs of the
+      local Caprax Zeigrun population yet. The sun has just risen, tainted purple
+      as it is by Planet X\u2019s unusual atmosphere and the presence of the local
+      rogue singularity. The splashes of alien color across the still lake provided
+      a sight which I shall not soon forget. I shall miss this place, once it\u2019s
+      gone.\r\n\r\nJune 6th, 3020, 7:05 am\r\nThe local Caprax Zeigrun population
+      has just entered the lake valley and encountered the first invasive species
+      \u2013 a small herd of Eligans Impar that I planted near the local Candentis
+      Acernis grove. After a brief period of confusion, it became clear that {neither
+      species was going to prey on the other}. However, the Eligans Impars superior
+      size ensured that they were able to feed first, while the Caprax Zeigrun were
+      forced to merely watch and dine on the low-hanging fruits that remained once
+      the Impars had their fill.\r\n\r\nJune 6th, 3020, 7:45 am\r\nOnce the Caprax
+      Zeigrun herd finished eating, they continued further into the basin, towards
+      the lakeside. There they encountered the small group of Thalassius Succo that
+      I planted near the lakeshore. While the Caprax Zeigrun demonstrated some initial
+      concerns about the presence of an alien species, the two quickly began ignoring
+      each other, unless they were competing for food or water. When the two came
+      into conflict over resources, it was always the Caprax Zeigrun who triumphed.\r\n\r\nJune
+      6th, 3020, 12:00 pm\r\nOver the course of the day, the Caprax Zeigrun have
+      now interacted with each other Planet X species we\u2019ve earmarked for resettlement.
+      In all cases the behavior was no different than the ones highlighted above,
+      hence a lack of more detailed notes.{There were no predator-prey relationships
+      observed, and the Caprax Zeigrun continued to dominate the species smaller
+      than them \u2013 such as the Humidum Limax and Thalassius Succo \u2013 while
+      yielding too species who were larger or more aggressive than them \u2013 such
+      as the Ligurio Vermis and Eligans Impar.}\r"
     sprites:
     - {fileID: 21300000, guid: 5a2b774bca4dc8e4a95a94f7116fd791, type: 3}
   - id:
@@ -93,6 +127,6 @@ MonoBehaviour:
       maple\u201D trees, were within easy feeding range at any particular time.}
       Current conservation measures are attempting to approximate and reconstruct
       a habitat enclosure similar to the Pastillion Mountain Range using flora and
-      fauna from species samples rescued from Planet X before its destruction."
+      fauna from species samples rescued from Planet X before its destruction. "
     sprites:
     - {fileID: 21300000, guid: 7dcc943663e214c4099945169c927925, type: 3}
