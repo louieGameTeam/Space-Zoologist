@@ -118,9 +118,7 @@ public class ConceptsCanvasUI : NotebookUIChild
     }
     private void OnEnable()
     {
-        GameManager instance = GameManager.Instance;
-
-        if(instance && foldoutToggle.isOn)
+        if(foldoutToggle.isOn)
         {
             SetCameraPosition();
         }
@@ -203,13 +201,18 @@ public class ConceptsCanvasUI : NotebookUIChild
     }
     private void SetCameraPosition(bool conversationActive)
     {
-        if(foldoutToggle.isOn)
+        // Only set the camera position
+        // if the game object is active in the heirarchy
+        if (gameObject.activeInHierarchy)
         {
-            if (conversationActive)
+            if (foldoutToggle.isOn)
             {
-                dialogueActiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
+                if (conversationActive)
+                {
+                    dialogueActiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
+                }
+                else dialogueInactiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
             }
-            else dialogueInactiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
         }
     }
     #endregion
