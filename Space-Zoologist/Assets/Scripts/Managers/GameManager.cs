@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
         }
         catch
         {
-            Debug.LogWarning("No map save found for this scene, create a map using map designer or check your spelling");
+            Debug.LogWarning($"No map save found for name '{name}', create a map using map designer or check your spelling");
             Debug.Log("Creating Empty level");
             serializedLevel = new SerializedLevel();
             serializedLevel.SetPlot(new SerializedPlot(new SerializedMapObjects(),
