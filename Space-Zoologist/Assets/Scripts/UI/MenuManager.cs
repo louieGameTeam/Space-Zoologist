@@ -150,7 +150,13 @@ public class MenuManager : MonoBehaviour
         foreach(GameObject ui in UI)
         {
             ui.GetComponent<Button>().interactable = isActive;
-            ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+
+            // If this ui element has children,
+            // try to get the image in the first child and set it's color to disabled
+            if (ui.transform.childCount > 0)
+            {
+                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+            }
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
