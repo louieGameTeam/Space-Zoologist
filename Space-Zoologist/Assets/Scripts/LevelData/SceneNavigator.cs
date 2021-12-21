@@ -11,7 +11,13 @@ public class SceneNavigator : ScriptableObject
 
     public void LoadLevel(string levelName)
     {
-        GameManager.Instance?.HandleExitLevel();
+        if (GameManager.Instance)
+        {
+            Debug.Log("Got a game manager");
+            GameManager.Instance.HandleExitLevel();
+        }
+        else Debug.Log("Did not get a game manager");
+
         this.UpdateRecentlyLoadedLevel(levelName);
         SceneManager.LoadScene(levelName, LoadSceneMode.Single);
     }
