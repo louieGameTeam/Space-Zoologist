@@ -34,6 +34,7 @@ public class GameOverController : MonoBehaviour
         // if the order switches we'll think we lost!
         EventManager.Instance.SubscribeToEvent(EventType.MainObjectivesCompleted, OnMainObjectivesCompleted);
         EventManager.Instance.SubscribeToEvent(EventType.GameOver, OnGameOver);
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, OnPopulationExtinct);
 
         // Subscribe to event raised when any conversation is started
         ConversationManager.OnConversationStarted += OnAnyConversationStarted;
@@ -65,6 +66,15 @@ public class GameOverController : MonoBehaviour
                 OpenWindow(failWindow, () => levelLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
             });
         }
+    }
+    private void OnPopulationExtinct()
+    {
+        Population population = EventManager.Instance.EventData as Population;
+        int animalsRemaining = GameManager.Instance.m_resourceManager.CheckRemainingResource(population.species);
+
+        // If you cannot add any more animals to the population that just went extinct,
+        // then you know that you just failed the level
+        if (animalsRemaining <= 0) OnGameOver();
     }
     private void LevelPassedConversation()
     {
