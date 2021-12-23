@@ -334,7 +334,6 @@ public class TutorialPrompter : MonoBehaviour
             // If there is a review that was just confirmed then check if it was the correct request
             if (review != null)
             {
-                Debug.Log("Last review confirmed is not null");
                 ResourceRequest request = review.Request;
                 return request.ItemRequested == requestedItem && request.QuantityRequested == requestQuantity;
             }

@@ -22,7 +22,6 @@ public class GameOverController : MonoBehaviour
     #endregion
 
     #region Private Fields
-    private GenericWindow window;
     // True when the main objectives are completed
     private bool mainObjectivesCompleted = false;
     #endregion

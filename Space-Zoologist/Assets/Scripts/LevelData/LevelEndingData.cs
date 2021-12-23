@@ -60,7 +60,7 @@ public class LevelEndingData
         }
         else
         {
-            // This is used so that the game over controller can dynamically end
+            // This is used so that the game over controller can dynamically add
             // game over events to a non-prefab instance of the NPCConversation
             activeConversation = normalConversation.InstantiateAndSay();
         }

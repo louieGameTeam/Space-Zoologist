@@ -227,9 +227,10 @@ public class GameManager : MonoBehaviour
             var jsonTextFile = Resources.Load<TextAsset>(fullPath).ToString();
             serializedLevel = JsonUtility.FromJson<SerializedLevel>(jsonTextFile);
         }
-        catch
+        catch(System.Exception e)
         {
-            Debug.LogWarning("No map save found for this scene, create a map using map designer or check your spelling");
+            Debug.LogWarning($"An error occurred when trying to load map '{name}':" +
+                $"\n\t{e}");
             Debug.Log("Creating Empty level");
             serializedLevel = new SerializedLevel();
             serializedLevel.SetPlot(new SerializedPlot(new SerializedMapObjects(),
