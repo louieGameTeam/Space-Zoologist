@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool debug = false;
     public bool IsDebug { get { return debug; } set { return; } }
+    [SerializeField] private bool autoWin = false;
 
     #region Level Data Variables
     [Header("Used when playing level scene directly")]
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
     public int numSecondaryObjectivesCompleted { get; private set; }
 
     public bool isObjectivePanelOpen { get; private set; }
-    
+
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
     [SerializeField] private TextMeshProUGUI objectivePanelText = default;
@@ -118,6 +119,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (autoWin)
+        {
+            DebugWin();
+            autoWin = false;
+        }
     }
     #endregion
 
