@@ -111,10 +111,9 @@ public class ConceptsCanvasUI : NotebookUIChild
         // bool on the conversation manager is not set until AFTER these events are invoked
         // (We really should fix that...)
 
-
         // ugly fix for linking issue
-        //ConversationManager.OnConversationStarted += () => SetCameraPosition(true);
-        //ConversationManager.OnConversationEnded += () => SetCameraPosition(false);
+        ConversationManager.OnConversationStarted += SetCameraPositionWithDialogue;
+        ConversationManager.OnConversationEnded += SetCameraPositionWithoutDialogue;
         
         // Apply foldout state to the anchors when we start
         ApplyFoldoutState(foldoutToggle.isOn);
@@ -139,8 +138,8 @@ public class ConceptsCanvasUI : NotebookUIChild
     private void OnDestroy()
     {
         // causing issues in instantiation
-        //ConversationManager.OnConversationStarted -= () => SetCameraPosition(true);
-        //ConversationManager.OnConversationEnded -= () => SetCameraPosition(false);
+        ConversationManager.OnConversationStarted -= SetCameraPositionWithDialogue;
+        ConversationManager.OnConversationEnded -= SetCameraPositionWithoutDialogue;
     }
     #endregion
 
@@ -200,6 +199,8 @@ public class ConceptsCanvasUI : NotebookUIChild
             if (instance) instance.m_cameraController.Unlock();
         }
     }
+    private void SetCameraPositionWithDialogue() => SetCameraPosition(true);
+    private void SetCameraPositionWithoutDialogue() => SetCameraPosition(false);
     private void SetCameraPosition()
     {
         ConversationManager conversation = ConversationManager.Instance;
