@@ -1509,7 +1509,7 @@ PrefabInstance:
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
       propertyPath: LevelOnPlay
-      value: Level0
+      value: Level1E1
       objectReference: {fileID: 0}
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
@@ -8042,6 +8042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   autoWin: 0
+  skipConversation: 0
   LevelOnPlay: Level1E1
   directory: Levels/
   m_levelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}

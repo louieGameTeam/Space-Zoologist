@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool debug = false;
     public bool IsDebug { get { return debug; } set { return; } }
     [SerializeField] private bool autoWin = false;
+    [SerializeField] private bool skipConversation = false;
 
     #region Level Data Variables
     [Header("Used when playing level scene directly")]
@@ -123,6 +124,11 @@ public class GameManager : MonoBehaviour
         {
             DebugWin();
             autoWin = false;
+        }
+        if (skipConversation)
+        {
+            m_conversationManager.EndConversation();
+            skipConversation = false;
         }
     }
     #endregion
