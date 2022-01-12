@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 // Setup function to give back home locations of given population
@@ -31,7 +32,7 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region UI
-    [SerializeField] GameObject NextDayButton = default;
+    [SerializeField] Button NextDayButton = default;
     #endregion
 
     [Header("Used to define 2d array")]
@@ -200,7 +201,10 @@ public class GridSystem : MonoBehaviour
 
             // add the liquidbody reference to the tile data
             foreach (Vector3Int liquidTilePosition in liquidbodyIDToTiles[serializedLiquidBody.BodyID])
+            {
                 TileDataGrid[liquidTilePosition.y, liquidTilePosition.x].currentLiquidBody = liquidBody;
+                TileDataGrid[liquidTilePosition.y, liquidTilePosition.x].contents = liquidBody.contents;
+            }
 
             // add it to the list
             this.liquidBodies.Add(liquidBody);
@@ -265,7 +269,7 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < ReserveHeight; ++j)
             {
-                ApplyChangesToTilemap(new Vector3Int(i, j, 0));
+                ApplyChangesToTilemapTexture(new Vector3Int(i, j, 0));
             }
         }
     }
@@ -311,7 +315,7 @@ public class GridSystem : MonoBehaviour
                     TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemap(tilePosition);
+                ApplyChangesToTilemapTexture(tilePosition);
             }
             else if ((tilePosition.x >= ReserveWidth && tilePosition.y > 0) ||
                 (tilePosition.x > 0 && tilePosition.y >= ReserveHeight))
@@ -369,7 +373,7 @@ public class GridSystem : MonoBehaviour
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemap(tilePosition);
+                ApplyChangesToTilemapTexture(tilePosition);
             }
         }
         else
@@ -377,10 +381,13 @@ public class GridSystem : MonoBehaviour
             if (tileData != null && tileData.isTilePlaceable)
             {
                 if (tile.type == TileType.Liquid)
+                {
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                    tileData.contents = tile.defaultContents;
+                }
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemap(tilePosition);
+                ApplyChangesToTilemapTexture(tilePosition);
             }
         }
         // TODO update color of liquidbody
@@ -400,7 +407,7 @@ public class GridSystem : MonoBehaviour
                 DivideLiquidBody(tilePosition);
             tileData.PreviewReplacement(null);
             ChangedTiles.Add(tilePosition);
-            ApplyChangesToTilemap(tilePosition);
+            ApplyChangesToTilemapTexture(tilePosition);
         }
     }
 
@@ -446,7 +453,7 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
-    public void AddFood(Vector3Int gridPosition, Vector2Int size, GameObject foodSource)
+    public void AddFoodReferenceToTile(Vector3Int gridPosition, Vector2Int size, GameObject foodSource)
     {
         Vector3Int pos;
         // Check if the whole object is in bounds
@@ -520,7 +527,7 @@ public class GridSystem : MonoBehaviour
     private void UpdateUI(bool onOff)
     {
         GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
-        NextDayButton.SetActive(onOff);
+        NextDayButton.interactable = onOff;
     }
     #endregion
 
@@ -838,7 +845,7 @@ public class GridSystem : MonoBehaviour
             TileData tileData = GetTileData(changedTilePosition);
 
             tileData.Revert();
-            this.ApplyChangesToTilemap(changedTilePosition);
+            this.ApplyChangesToTilemapTexture(changedTilePosition);
             if (tileData.currentTile == null)
                 tileData.Clear();
         }
@@ -851,7 +858,7 @@ public class GridSystem : MonoBehaviour
         this.ChangedTiles = new HashSet<Vector3Int>();
         this.previewBodies = new List<LiquidBody>();
     }
-    public void ApplyChangesToTilemap(Vector3Int tilePosition)
+    public void ApplyChangesToTilemapTexture(Vector3Int tilePosition)
     {
         TileData data = GetTileData(tilePosition);
 
@@ -1577,7 +1584,7 @@ public class GridSystem : MonoBehaviour
         else
         {
             // TODO figure out how to determine if tile is placable
-            // gridOverlay.HighlightTile(gridPosition, Color.green);
+            HighlightTile(gridPosition, Color.green);
         }
     }
 
@@ -2371,9 +2378,8 @@ public class GridSystem : MonoBehaviour
         public Color previousColor { get; private set; }
         public LiquidBody currentLiquidBody { get; set; }
         public LiquidBody previewLiquidBody { get; private set; }
+        public float[] contents { get; set; }
         public bool isTileChanged { get; private set; } = false;
-        public bool isLiquidBodyChanged { get; private set; } = false;
-        public bool isColorChanged { get; private set; } = false;
         public bool isTilePlaceable { get; set; } = false;
         public bool isConstructing { get; set; } = false;
         public TileData(Vector3Int tilePosition, GameTile tile = null)
@@ -2385,10 +2391,10 @@ public class GridSystem : MonoBehaviour
 
             this.tilePosition = tilePosition;
             this.currentTile = tile;
+            this.contents = tile == null ? null : tile.defaultContents;
             this.currentColor = Color.white;
             this.currentLiquidBody = null;
             this.isTileChanged = false;
-            this.isColorChanged = false;
         }
         public void Clear()
         {
@@ -2409,30 +2415,9 @@ public class GridSystem : MonoBehaviour
             this.currentTile = tile;
             this.isTileChanged = true;
         }
-        public void PreviewColorChange(Color color)
-        {
-            if (isColorChanged)
-            {
-                this.currentColor = color;
-                return;
-            }
-            this.previousColor = this.currentColor;
-            this.currentColor = color;
-            this.isColorChanged = true;
-        }
         public void PreviewLiquidBody(LiquidBody newLiquidBody)
         {
-            if (isLiquidBodyChanged)
-            {
-                if (newLiquidBody == this.currentLiquidBody)
-                {
-                    return;
-                }
-                //this.currentLiquidBody = newLiquidBody;
-                return;
-            }
             this.previewLiquidBody = newLiquidBody;
-            this.isLiquidBodyChanged = true;
         }
         public void ConfirmReplacement()
         {
@@ -2449,34 +2434,35 @@ public class GridSystem : MonoBehaviour
             if (previewLiquidBody != null)
             {
                 currentLiquidBody = previewLiquidBody;
+                contents = currentLiquidBody.contents;
                 previewLiquidBody = null;
             }
-            //ClearHistory();
         }
         public void Revert()
         {
-            if (isTileChanged)
+            if (this.previousTile)
             {
                 this.currentTile = this.previousTile;
+                this.previousTile = null;
             }
-            if (isLiquidBodyChanged)
+            if (this.previewLiquidBody != null)
             {
-                //this.currentLiquidBody = this.previewLiquidBody;
+                // oh god panic do something here
+                contents = new float[] { };
+                previewLiquidBody.RemoveTile(tilePosition);
+                previewLiquidBody = null;
             }
-            if (isColorChanged)
-            {
-                this.currentColor = this.previousColor;
-            }
-            ClearHistory();
         }
-        private void ClearHistory()
+        public override string ToString()
         {
-            this.previousColor = Color.white;
-            this.previewLiquidBody = null;
-            this.previousTile = null;
-            this.isTileChanged = false;
-            this.isColorChanged = false;
-            this.isLiquidBodyChanged = false;
+            string positionString = "Tile Position: " + tilePosition.ToString() + "\n";
+            string foodString = "Food: " + (Food != null ? Food.name : "none") + "\n";
+            string currentTileString = "Current Tile: " + (currentTile != null ? currentTile.TileName : "none") + "\n";
+            string previousTileString = "Previous Tile: " + (previousTile != null ? previousTile.TileName : "none") + "\n";
+            string currentLiquidbodyString = "Current Liquidbody ID: " + (currentLiquidBody != null ? "" + currentLiquidBody.bodyID : "none") + "\n";
+            string previewingLiquidbodyString = "Previewing Liquidbody ID: " + (previewLiquidBody != null ? "" + previewLiquidBody.bodyID : "none") + "\n";
+
+            return positionString + foodString + currentTileString + previousTileString + currentLiquidbodyString + previewingLiquidbodyString;
         }
     }
 

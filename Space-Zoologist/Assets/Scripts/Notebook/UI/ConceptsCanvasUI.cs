@@ -41,6 +41,11 @@ public class ConceptsCanvasUI : NotebookUIChild
     }
     #endregion
 
+    #region Public Properties
+    public Toggle FoldoutToggle => foldoutToggle;
+    public bool IsExpanded => foldoutToggle.isOn;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform that expands and contracts when the canvas folds in/out")]
@@ -105,17 +110,18 @@ public class ConceptsCanvasUI : NotebookUIChild
         // We need to pass the true-false value because apparently the "IsConversationActive"
         // bool on the conversation manager is not set until AFTER these events are invoked
         // (We really should fix that...)
-        ConversationManager.OnConversationStarted += () => SetCameraPosition(true);
-        ConversationManager.OnConversationEnded += () => SetCameraPosition(false);
+
+
+        // ugly fix for linking issue
+        //ConversationManager.OnConversationStarted += () => SetCameraPosition(true);
+        //ConversationManager.OnConversationEnded += () => SetCameraPosition(false);
         
         // Apply foldout state to the anchors when we start
         ApplyFoldoutState(foldoutToggle.isOn);
     }
     private void OnEnable()
     {
-        GameManager instance = GameManager.Instance;
-
-        if(instance && foldoutToggle.isOn)
+        if(foldoutToggle.isOn)
         {
             SetCameraPosition();
         }
@@ -128,6 +134,13 @@ public class ConceptsCanvasUI : NotebookUIChild
         {
             instance.m_cameraController.Unlock();
         }
+    }
+
+    private void OnDestroy()
+    {
+        // causing issues in instantiation
+        //ConversationManager.OnConversationStarted -= () => SetCameraPosition(true);
+        //ConversationManager.OnConversationEnded -= () => SetCameraPosition(false);
     }
     #endregion
 
@@ -198,13 +211,18 @@ public class ConceptsCanvasUI : NotebookUIChild
     }
     private void SetCameraPosition(bool conversationActive)
     {
-        if(foldoutToggle.isOn)
+        // Only set the camera position
+        // if the game object is active in the heirarchy
+        if (gameObject.activeInHierarchy)
         {
-            if (conversationActive)
+            if (foldoutToggle.isOn)
             {
-                dialogueActiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
+                if (conversationActive)
+                {
+                    dialogueActiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
+                }
+                else dialogueInactiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
             }
-            else dialogueInactiveZoom.Apply(scroll.normalizedPosition, smoothingTime);
         }
     }
     #endregion

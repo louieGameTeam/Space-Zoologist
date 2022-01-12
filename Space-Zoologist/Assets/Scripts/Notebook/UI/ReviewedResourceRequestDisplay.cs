@@ -19,6 +19,8 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
     #endregion
 
     #region Public Properties
+    public ReviewedResourceRequest Review => review;
+    public ReviewedResourceRequest LastReviewConfirmed => lastReviewConfirmed;
     public UnityEvent OnReviewConfirmed => onReviewConfirmed;
     #endregion
 
@@ -62,6 +64,8 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
     #region Private Fields
     // Review to display to the player
     private ReviewedResourceRequest review;
+    // Last review confirmed by the display
+    private ReviewedResourceRequest lastReviewConfirmed;
     #endregion
 
     #region Public Methods
@@ -73,6 +77,7 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
         confirmButton.onClick.AddListener(() =>
         {
             displayRoot.SetActive(false);
+            lastReviewConfirmed = review;
             UIParent.Data.Concepts.ConfirmReviwedResourceRequest(LevelID.FromCurrentSceneName(), review);
             onReviewConfirmed.Invoke();
         });
@@ -92,17 +97,20 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
     public void DisplayReview(ResourceRequest request)
     {
         // Create the review
-        review = ReviewedResourceRequest.Review(request);
+        review = ReviewedResourceRequest.Review(new ResourceRequest(request));
 
         // Set the border color based on the review status
-        border.color = statusColors.colors[(int)review.CurrentStatus];
+        if(review.CurrentStatus == ReviewedResourceRequest.Status.Invalid)
+            border.color = statusColors.colors[(int)ReviewedResourceRequest.Status.Denied];
+        else
+            border.color = statusColors.colors[(int)review.CurrentStatus];
 
         // Set the status and reason text
         statusText.text = review.CurrentStatus.ToString();
         statusReasonText.text = review.StatusReason;
 
         // Change the text displayed based on whether the request was granted or denied
-        if(review.CurrentStatus != ReviewedResourceRequest.Status.Denied)
+        if((int)review.CurrentStatus < 2)
         {
             itemText.text = review.QuantityGranted + " " + request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial);
             costText.text = "$" + review.TotalCost;

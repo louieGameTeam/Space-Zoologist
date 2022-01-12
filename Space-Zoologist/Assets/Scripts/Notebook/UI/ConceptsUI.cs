@@ -6,6 +6,10 @@ using TMPro;
 
 public class ConceptsUI : NotebookUIChild
 {
+    #region Public Properties
+    public Button RequestButton => requestButton;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Object used to edit the current resource request")]

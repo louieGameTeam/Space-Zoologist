@@ -32,6 +32,8 @@ public class LevelNavigator : MonoBehaviour
             int[] levelInfo = GameManager.ExtractLevelInfo(level.Level.SceneName);
 
             // Hidden levels
+            // This makes Level2 always hidden. Shouldn't this use a save file to determine what levels the player has completed,
+            // and determine the unlock state of each level in the level data that way?
             if(lastLvl == levelInfo[0] && levelInfo[1] != lastEnc || lastLvl < levelInfo[0] && levelInfo[1] != 1)
             {
                 continue;

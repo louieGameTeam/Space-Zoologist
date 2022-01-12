@@ -33,7 +33,7 @@ public class FoodSourceManager : GridObjectManager
         pos.x -= species.Size.x / 2;
         pos.y -= species.Size.y / 2;
 
-        m_gridSystemReference.AddFood(m_gridSystemReference.WorldToCell(pos), species.Size, newFoodSourceGameObject);
+        m_gridSystemReference.AddFoodReferenceToTile(m_gridSystemReference.WorldToCell(pos), species.Size, newFoodSourceGameObject);
         if (ttb > 0)
         {
             m_gridSystemReference.CreateRectangleBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
@@ -76,7 +76,7 @@ public class FoodSourceManager : GridObjectManager
         ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).RemoveFoodSource(foodSource);
         foodSourcesBySpecies[foodSource.Species].Remove(foodSource);
         GameManager.Instance.UnregisterWithNeedSystems(foodSource);
-        m_gridSystemReference.RemoveFood(m_gridSystemReference.WorldToCell(foodSource.gameObject.transform.position));
+        m_gridSystemReference.RemoveFood(m_gridSystemReference.WorldToCell(foodSource.Position));
         Destroy(foodSource.gameObject);
     }
 

@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance = null;
     public static GameManager Instance { get { return _instance; } }
 
+    [SerializeField] private bool debug = false;
+    public bool IsDebug { get { return debug; } set { return; } }
+    [SerializeField] private bool autoWin = false;
+    [SerializeField] private bool skipConversation = false;
+
     #region Level Data Variables
     [Header("Used when playing level scene directly")]
     [SerializeField] string LevelOnPlay = "Level1E1";
@@ -64,7 +69,7 @@ public class GameManager : MonoBehaviour
     public int numSecondaryObjectivesCompleted { get; private set; }
 
     public bool isObjectivePanelOpen { get; private set; }
-    
+
     [Header("Objective Variables")]
     [SerializeField] private GameObject objectivePane = default;
     [SerializeField] private TextMeshProUGUI objectivePanelText = default;
@@ -115,6 +120,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (autoWin)
+        {
+            DebugWin();
+            autoWin = false;
+        }
+        if (skipConversation)
+        {
+            m_conversationManager.EndConversation();
+            skipConversation = false;
+        }
     }
     #endregion
 
@@ -224,9 +239,10 @@ public class GameManager : MonoBehaviour
             var jsonTextFile = Resources.Load<TextAsset>(fullPath).ToString();
             serializedLevel = JsonUtility.FromJson<SerializedLevel>(jsonTextFile);
         }
-        catch
+        catch(System.Exception e)
         {
-            Debug.LogWarning("No map save found for this scene, create a map using map designer or check your spelling");
+            Debug.LogWarning($"An error occurred when trying to load map '{name}':" +
+                $"\n\t{e}");
             Debug.Log("Creating Empty level");
             serializedLevel = new SerializedLevel();
             serializedLevel.SetPlot(new SerializedPlot(new SerializedMapObjects(),
@@ -415,7 +431,8 @@ public class GameManager : MonoBehaviour
     private void InitializeGameStateVariables()
     {
         // set up the game state
-        EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
+        // Game Manger no longer hanldes npc end conversation, that's the GameOverController's job
+        // EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
         this.RestartButton.onClick.AddListener(() => { this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel); });
         this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
         UpdateDayText(currentDay);
@@ -642,7 +659,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            m_levelData.PassedConversation.Speak(m_dialogueManager);
+            m_levelData.Ending.SayEndingConversation();
         }
         m_dialogueManager.StartInteractiveConversation();
         this.IngameUI.SetActive(false);
@@ -823,6 +840,7 @@ public class GameManager : MonoBehaviour
         UpdateDayText(++currentDay);
         if (currentDay > maxDay)
         {
+            Debug.Log("Time is up!");
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }

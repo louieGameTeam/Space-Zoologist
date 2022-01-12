@@ -210,16 +210,8 @@ public class Inspector : MonoBehaviour
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
         GridSystem.TileData td = GameManager.Instance.m_gridSystem.GetTileData(cellPos);
-        if (td.previewLiquidBody != null)
-        {
-            float[] compositions = td.previewLiquidBody.contents;
-            this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
-        }
-        if (td.currentLiquidBody != null)
-        {
-            float[] compositions = td.currentLiquidBody.contents;
-            this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
-        }
+        float[] compositions = td.contents;
+        this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 
 

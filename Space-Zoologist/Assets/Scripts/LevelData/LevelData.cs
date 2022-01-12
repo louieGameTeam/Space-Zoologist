@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using DialogueEditor;
 
 /// <summary>
@@ -28,7 +29,7 @@ public class LevelData : ScriptableObject
     public List<ItemData> ItemQuantities => itemQuantities;
     public NPCConversation StartingConversation => startingConversation;
     public NPCConversation DefaultConversation => defaultConversation;
-    public NormalOrQuizConversation PassedConversation => passedConversation;
+    public LevelEndingData Ending => ending;
     public NPCConversation RestartConversation => restertEnclosureConversation;
     public List<Vector3Int> StartinPositions => startingPositions;
     public AudioClip LevelMusic => levelMusic;
@@ -46,7 +47,9 @@ public class LevelData : ScriptableObject
     [SerializeField] private NPCConversation startingConversation = default;
     [SerializeField] private NPCConversation defaultConversation = default;
     [Header("After level completed")]
-    [SerializeField] NormalOrQuizConversation passedConversation = default;
+    [SerializeField]
+    [FormerlySerializedAs("passedConversation")]
+    LevelEndingData ending = default;
     [SerializeField] NPCConversation restertEnclosureConversation = default;
 
     public ItemData GetItemWithID(ItemID itemID)

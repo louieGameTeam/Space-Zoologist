@@ -65,9 +65,13 @@ public class QuizInstance
     #endregion
 
     #region Public Static Methods
-    public static int ComputeQuestionsAnswered(QuizRuntimeTemplate runtimeTemplate, int[] answers) => answers.Count(i => i >= 0 && i < runtimeTemplate.Questions.Length);
-    public static bool ComputeCompleted(QuizRuntimeTemplate runtimeTemplate, int[] answers) => ComputeQuestionsAnswered(runtimeTemplate, answers) >= runtimeTemplate.Questions.Length;
     // Made these methods public static so that the property drawer can get the info to display in the inspector window
+    public static int ComputeQuestionsAnswered(QuizRuntimeTemplate runtimeTemplate, int[] answers) => answers
+        // Include the index in the enumeration
+        .WithIndex()
+        // Count every answer greater than zero and less than the number of options for the question with the same index
+        .Count(answer => answer.item >= 0 && answer.item < runtimeTemplate.Questions[answer.index].Options.Length);
+    public static bool ComputeCompleted(QuizRuntimeTemplate runtimeTemplate, int[] answers) => ComputeQuestionsAnswered(runtimeTemplate, answers) >= runtimeTemplate.Questions.Length;
     public static QuizGrade ComputeGrade(QuizRuntimeTemplate runtimeTemplate, int[] answers)
     {
         // Determine if you pass or fail important categories

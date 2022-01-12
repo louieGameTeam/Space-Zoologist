@@ -87,12 +87,7 @@ public class DialogueManager : MonoBehaviour
         if (ConversationManager.Instance != null)
         {
             StartNewConversation();
-            //ConversationManagerGameObject.SetActive(false);
         }
-
-        // Use this to say the ending conversation when the level starts
-        //GameManager.Instance.LevelData.PassedConversation.Speak(this);
-        //StartInteractiveConversation();
     }
     public void SetNewDialogue(NPCConversation newDialogue)
     {
@@ -170,11 +165,16 @@ public class DialogueManager : MonoBehaviour
         if(queuedConversations.Count > 0)
         {
             UpdateCurrentDialogue();
-            bool need = needForDeserialization.Dequeue();
+            bool need = needForDeserialization.Dequeue(); //True if dialogue, false if quiz
             if (need)
+            {
                 StartNewConversation();
+            }
             else
+            {
                 StartNewConversationWithoutDeserialization();
+                GameManager.Instance.m_menuManager.ToggleUISingleButton("NotebookButton");
+            }
         }
         else
         {

@@ -38,6 +38,17 @@ public class Publisher
             Handlers -= handler;
         }
     }
+
+    public string PrintInvocationList()
+    {
+        string str = "Invocation list:";
+        foreach (Action handler in Handlers.GetInvocationList())
+        {
+            str += $"\n\tTarget: {handler.Target}, Method: {handler.Method.Name}";
+        }
+        str += "\n";
+        return str;
+    }
 }
 
 /// <summary>

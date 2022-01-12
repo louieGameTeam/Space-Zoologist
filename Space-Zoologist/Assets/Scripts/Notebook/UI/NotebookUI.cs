@@ -19,6 +19,7 @@ public class NotebookUI : MonoBehaviour
     public UnityEvent OnContentChanged => onContentChanged;
     public BoolEvent OnNotebookToggle => onNotebookToggle;
     public bool IsOpen => isOpen;
+    public ResourceRequestEditor ResourceRequestEditor => resourceRequestEditor;
     #endregion
 
     #region Private Editor Fields
