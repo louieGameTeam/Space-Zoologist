@@ -13,150 +13,35 @@ MonoBehaviour:
   m_Name: TutorialQuiz
   m_EditorClassIdentifier: 
   importantCategories: []
-  questionData:
-  - isPool: 1
-    question:
-      question: 
-      category:
-        item:
-          category: 0
-          index: 0
-        need: 0
-      options: []
-    pool:
-      questionsToPick: 2
-      questionPool:
-      - question: What does the R in ROCTM stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Research what is known
-          weight: 1
-        - label: Rare earth metals are helpful for space maples
-          weight: 0
-      - question: What does the O in ROCTM stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Over feed all of the animals
-          weight: 0
-        - label: Observe the current situation
-          weight: 1
-      - question: What does the C in ROCTM stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Propose Concepts to modify the environment
-          weight: 1
-        - label: Caddy answers to questions are always scientific
-          weight: 0
-      - question: What does the "T" in roct man stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Test proposed concept
-          weight: 1
-        - label: Test your internal "hunch"
-          weight: 0
-      - question: What does the "M" in roct man stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Meters measure important quantities
-          weight: 0
-        - label: Record key Metrics
-          weight: 1
-  - isPool: 0
-    question:
-      question: Here is a static question
+  questions: []
+  randomQuestionPool:
+    questionsToPick: 1
+    questionPool:
+    - question: Question one
       category:
         item:
           category: 0
           index: 0
         need: 0
       options:
-      - label: Sup
+      - label: Good
         weight: 1
-      - label: How you doin
+      - label: Bad
         weight: 0
-      - label: Amazing
-        weight: 2
-    pool:
-      questionsToPick: 2
-      questionPool:
-      - question: What does the R in ROCTM stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Research what is known
-          weight: 1
-        - label: Rare earth metals are helpful for space maples
-          weight: 0
-      - question: What does the O in ROCTM stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Over feed all of the animals
-          weight: 0
-        - label: Observe the current situation
-          weight: 1
-      - question: What does the C in ROCTM stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Propose Concepts to modify the environment
-          weight: 1
-        - label: Caddy answers to questions are always scientific
-          weight: 0
-      - question: What does the "T" in roct man stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Test proposed concept
-          weight: 1
-        - label: Test your internal "hunch"
-          weight: 0
-      - question: What does the "M" in roct man stand for?
-        category:
-          item:
-            category: 0
-            index: 0
-          need: 0
-        options:
-        - label: Meters measure important quantities
-          weight: 0
-        - label: Record key Metrics
-          weight: 1
+    - question: Question TWO
+      category:
+        item:
+          category: 0
+          index: 0
+        need: 0
+      options:
+      - label: Bad
+        weight: 0
+      - label: Good
+        weight: 1
   gradingRubric:
     scoreToPassImportantQuestions: 0
-    scoreToPassUnimportantQuestions: 2
+    scoreToPassUnimportantQuestions: 1
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 0000000001000000
+    answers: 00000000

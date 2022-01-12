@@ -68,9 +68,9 @@ MonoBehaviour:
       weight: 1
     - label: Swamp
       weight: 1
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
   gradingRubric:
     scoreToPassImportantQuestions: 0
     scoreToPassUnimportantQuestions: 0
-  exampleQuiz:
-    template: {fileID: 11400000}
-    answers: 000000000000000000000000

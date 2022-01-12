@@ -18,7 +18,7 @@ public class QuizQuestionPool
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Number of questions to randomly pick from this question pool")]
-    private int questionsToPick = 1;
+    private int questionsToPick = 0;
     [SerializeField]
     [Tooltip("Pool of questions to pick from")]
     private QuizQuestion[] questionPool;
@@ -27,21 +27,25 @@ public class QuizQuestionPool
     #region Public Methods
     public QuizQuestion[] PickQuestions()
     {
-        // Create an array of picked indices
-        QuizQuestion[] questionPicks = new QuizQuestion[questionsToPick];
-        // Skip any questions in the question pool that already exist 
-        // in the list of picked questions
-        List<QuizQuestion> questionPool = new List<QuizQuestion>(this.questionPool);
-
-        // Randomly pick a question for each of the number of questions to pick
-        for (int i = 0; i < questionsToPick; i++)
+        if (questionPool != null && questionPool.Length > 0)
         {
-            int pick = UnityEngine.Random.Range(0, questionPool.Count);
-            questionPicks[i] = questionPool[pick];
-            questionPool.RemoveAt(pick);
-        }
+            // Create an array of picked indices
+            QuizQuestion[] questionPicks = new QuizQuestion[questionsToPick];
+            // Skip any questions in the question pool that already exist 
+            // in the list of picked questions
+            List<QuizQuestion> remainingPool = new List<QuizQuestion>(questionPool);
 
-        return questionPicks;
+            // Randomly pick a question for each of the number of questions to pick
+            for (int i = 0; i < questionsToPick; i++)
+            {
+                int pick = UnityEngine.Random.Range(0, remainingPool.Count);
+                questionPicks[i] = remainingPool[pick];
+                remainingPool.RemoveAt(pick);
+            }
+
+            return questionPicks;
+        }
+        else return new QuizQuestion[0];
     }
     #endregion
 }

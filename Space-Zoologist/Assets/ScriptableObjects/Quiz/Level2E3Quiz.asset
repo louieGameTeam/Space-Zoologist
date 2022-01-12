@@ -78,4 +78,12 @@ MonoBehaviour:
       weight: 0
     - label: 'Eligans Impar '
       weight: 1
-  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric:
+    scoreToPassImportantQuestions: 0
+    scoreToPassUnimportantQuestions: 0
+  exampleQuiz:
+    template: {fileID: 0}
+    answers: 

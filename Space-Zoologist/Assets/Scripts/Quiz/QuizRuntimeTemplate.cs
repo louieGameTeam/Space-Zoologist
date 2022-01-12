@@ -22,19 +22,7 @@ public class QuizRuntimeTemplate
         this.template = template;
 
         // Initialize the questions
-        questions = new QuizQuestion[template.QuestionCount];
-        int currentIndex = 0;
-
-        // Go through each question set in the template
-        foreach(QuizQuestionOrPool data in template.QuestionData)
-        {
-            // Go through each question in this question set
-            foreach(QuizQuestion question in data.GetQuestions())
-            {
-                questions[currentIndex] = question;
-                currentIndex++;
-            }
-        }
+        questions = template.GenerateQuestions();
     }
     #endregion
 

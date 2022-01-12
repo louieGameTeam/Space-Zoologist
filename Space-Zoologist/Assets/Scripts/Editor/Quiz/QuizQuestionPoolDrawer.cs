@@ -29,7 +29,8 @@ public class QuizQuestionPoolDrawer : PropertyDrawer
             // If there are no questions to pick then do not display an int slider
             else
             {
-                EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent(questionsToPick.displayName), "(No questions to pick yet)");
+                questionsToPick.intValue = 0;
+                EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent(questionsToPick.displayName), "(No questions to pick)");
             }
             // Layout the question pool
             EditorGUIAuto.PropertyField(ref position, questionPool, true);

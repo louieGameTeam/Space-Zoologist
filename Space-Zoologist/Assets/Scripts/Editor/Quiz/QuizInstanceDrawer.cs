@@ -95,10 +95,7 @@ public class QuizInstanceDrawer : PropertyDrawer
 
                 // Get a list of all the answers as integers
                 int[] answersArray = Answers(property);
-                resultsFoldout = EditorGUI.Foldout(position, resultsFoldout, new GUIContent("Quiz Results"));
-
-                // Advance position down to next control
-                position.y += position.height;
+                resultsFoldout = EditorGUIAuto.Foldout(ref position, resultsFoldout, "Quiz Results");
 
                 if (resultsFoldout)
                 {
