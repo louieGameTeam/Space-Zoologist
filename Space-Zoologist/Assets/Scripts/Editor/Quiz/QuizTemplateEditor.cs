@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[CustomEditor(typeof(QuizTemplate))]
 public class QuizTemplateEditor : Editor
 {
     #region Editor Overrides
