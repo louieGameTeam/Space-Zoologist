@@ -8,17 +8,7 @@ using TMPro;
 public class QuizConversation : MonoBehaviour
 {
     #region Public Properties
-    public QuizInstance CurrentQuiz
-    {
-        get
-        {
-            if(currentQuiz == null)
-            {
-                currentQuiz = new QuizInstance(quizTemplate);
-            }
-            return currentQuiz;
-        }
-    }
+    public QuizInstance CurrentQuiz => currentQuiz;
     #endregion
 
     #region Public Typedefs
@@ -83,15 +73,18 @@ public class QuizConversation : MonoBehaviour
     }
     public NPCConversation Create(DialogueManager dialogueManager)
     {
+        // Build a new quiz. This will result in regenerating new questions from any randomized pools
+        currentQuiz = new QuizInstance(quizTemplate);
+
         // Create the callback that is called after any option is answered
         UnityAction OptionSelectedFunctor(int questionIndex, int optionIndex)
         {
-            return () => CurrentQuiz.AnswerQuestion(questionIndex, optionIndex);
+            return () => currentQuiz.AnswerQuestion(questionIndex, optionIndex);
         }
         // Say the conversation that corresponds to the grade that the player got on the quiz
         void SayResponse()
         {
-            response.Get(CurrentQuiz.Grade).Respond();
+            response.Get(currentQuiz.Grade).Respond();
         }
 
         // Try to get an npc conversation. If it exists, destroy it and add a new one
@@ -114,10 +107,10 @@ public class QuizConversation : MonoBehaviour
         List<EditableConversationNode> nodes = new List<EditableConversationNode>();
 
         // Loop over every question and add speech and option nodes for each
-        for (int i = 0; i < quizTemplate.Questions.Length; i++)
+        for (int i = 0; i < currentQuiz.RuntimeTemplate.Questions.Length; i++)
         {
             // Cache the current question
-            QuizQuestion question = quizTemplate.Questions[i];
+            QuizQuestion question = currentQuiz.RuntimeTemplate.Questions[i];
 
             // Create a new speech node
             EditableSpeechNode currentSpeechNode = CreateSpeechNode(conversation, editableConversation, question.Question, 0, i * 300, i == 0, null);
@@ -163,7 +156,7 @@ public class QuizConversation : MonoBehaviour
         }
 
         // Create the end of quiz node
-        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, quizTemplate.Questions.Length * 300, false, SayResponse);
+        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, currentQuiz.RuntimeTemplate.Questions.Length * 300, false, SayResponse);
         nodes.Add(endOfQuiz);
 
         // If a previous speech node exists, 

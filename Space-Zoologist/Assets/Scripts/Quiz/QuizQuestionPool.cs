@@ -8,6 +8,11 @@ public class QuizQuestionPool
 {
     #region Public Properties
     public int QuestionsToPick => questionsToPick;
+    // The question pool is static if each random selection 
+    // always yeilds the same questions (though there is no guarantee
+    // that they will always be in the same order)
+    public bool Static => questionsToPick == questionPool.Length;
+    public bool Dynamic => !Static;
     #endregion
 
     #region Private Editor Fields
@@ -26,14 +31,14 @@ public class QuizQuestionPool
         QuizQuestion[] questionPicks = new QuizQuestion[questionsToPick];
         // Skip any questions in the question pool that already exist 
         // in the list of picked questions
-        IEnumerable<QuizQuestion> questionPool = this.questionPool
-            .SkipWhile(pool => Array.FindIndex(questionPicks, pick => pick == pool) < 0);
+        List<QuizQuestion> questionPool = new List<QuizQuestion>(this.questionPool);
 
         // Randomly pick a question for each of the number of questions to pick
         for (int i = 0; i < questionsToPick; i++)
         {
-            int pick = UnityEngine.Random.Range(0, questionPool.Count());
-            questionPicks[i] = questionPool.ElementAt(pick);
+            int pick = UnityEngine.Random.Range(0, questionPool.Count);
+            questionPicks[i] = questionPool[pick];
+            questionPool.RemoveAt(pick);
         }
 
         return questionPicks;

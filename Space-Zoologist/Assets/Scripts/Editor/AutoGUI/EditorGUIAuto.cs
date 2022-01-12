@@ -81,7 +81,10 @@ public class EditorGUIAuto
     #region Property Field
     public static bool PropertyField(ref Rect position, SerializedProperty property, bool includeChildren = false)
     {
-        return PropertyField(ref position, property, new GUIContent(property.displayName), includeChildren);
+        position.height = EditorGUI.GetPropertyHeight(property, true);
+        bool result = EditorGUI.PropertyField(position, property, includeChildren);
+        position.y += position.height;
+        return result;
     }
     public static bool PropertyField(ref Rect position, SerializedProperty property, GUIContent label, bool includeChildren = false)
     {

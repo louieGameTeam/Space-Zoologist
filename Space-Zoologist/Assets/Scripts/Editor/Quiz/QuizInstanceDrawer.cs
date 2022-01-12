@@ -7,17 +7,14 @@ using UnityEditor;
 public class QuizInstanceDrawer : PropertyDrawer
 {
     #region Private Fields
+    private QuizRuntimeTemplate runtimeTemplate;
     private ParallelArrayEditor<QuizQuestion> quizAnswersEditor = new ParallelArrayEditor<QuizQuestion>()
     {
         arrayElementLabel = (s, e) => new GUIContent(e.Question),
         arrayElementPropertyField = (r, s, g, e) =>
         {
-            // Set height for just one control
-            r.height = EditorExtensions.StandardControlHeight;
-
             // Create a foldout for this element
-            s.isExpanded = EditorGUI.Foldout(r, s.isExpanded, g);
-            r.y += r.height;
+            s.isExpanded = EditorGUIAuto.Foldout(ref r, s.isExpanded, g);
 
             // Layout each answer if this is expanded
             if(s.isExpanded)
@@ -29,11 +26,8 @@ public class QuizInstanceDrawer : PropertyDrawer
                 {
                     // Store current option
                     QuizOption option = e.Options[i];
-                    // Get the label of this option
-                    string optionLabel = $"{option.Label} ({(option.Weight > 0 ? "+" : "")}{option.Weight})";
-
                     // Set out a toggle for this option
-                    bool toggled = EditorGUI.ToggleLeft(r, optionLabel, i == s.intValue);
+                    bool toggled = EditorGUI.ToggleLeft(r, option.DisplayName, i == s.intValue);
 
                     // If this toggled is toggled to on then set the int value of the property
                     if (toggled) s.intValue = i;
@@ -70,12 +64,8 @@ public class QuizInstanceDrawer : PropertyDrawer
         SerializedProperty template = property.FindPropertyRelative(nameof(template));
         SerializedProperty answers = property.FindPropertyRelative(nameof(answers));
 
-        // Set the height for just one control
-        position.height = EditorExtensions.StandardControlHeight;
-
         // Set out the foldout
-        property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, label);
-        position.y += position.height;
+        property.isExpanded = EditorGUIAuto.Foldout(ref position, property.isExpanded, label);
 
         if (property.isExpanded)
         {
@@ -83,16 +73,25 @@ public class QuizInstanceDrawer : PropertyDrawer
             EditorGUI.indentLevel++;
 
             // Layout the template
-            EditorGUI.PropertyField(position, template);
-            position.y += position.height;
+            EditorGUIAuto.PropertyField(ref position, template);
 
             // If an object reference exists then layout the answers
             if(template.objectReferenceValue)
             {
-                // Edit all of the quiz answers using the parallel array editor that we set up
+                // Get the quiz template
                 QuizTemplate quizTemplate = template.objectReferenceValue as QuizTemplate;
-                quizAnswersEditor.OnGUI(position, answers, quizTemplate.Questions);
-                position.y += quizAnswersEditor.GetPropertyHeight(answers, quizTemplate.Questions);
+                CheckRuntimeTemplate(quizTemplate);
+
+                // Use a button to regenerate quiz questions from the template
+                GUI.enabled = quizTemplate.Dynamic;
+                if (GUIAuto.Button(ref position, "Generate new questions"))
+                {
+                    runtimeTemplate = new QuizRuntimeTemplate(quizTemplate);
+                }
+                GUI.enabled = true;
+
+                quizAnswersEditor.OnGUI(position, answers, runtimeTemplate.Questions);
+                position.y += quizAnswersEditor.GetPropertyHeight(answers, runtimeTemplate.Questions);
 
                 // Get a list of all the answers as integers
                 int[] answersArray = Answers(property);
@@ -108,30 +107,26 @@ public class QuizInstanceDrawer : PropertyDrawer
                     GUI.enabled = false;
 
                     // Compute if the important questions passed, what the score is, and what the max score was
-                    bool passed = QuizInstance.PassedImportantQuestions(quizTemplate, answersArray);
-                    int score = QuizInstance.ComputeScoreInImportantCategories(quizTemplate, answersArray);
-                    int maxScore = quizTemplate.GetMaximumPossibleScoreInImportantCategories();
+                    bool passed = QuizInstance.PassedImportantQuestions(runtimeTemplate, answersArray);
+                    int score = QuizInstance.ComputeScoreInImportantCategories(runtimeTemplate, answersArray);
+                    int maxScore = runtimeTemplate.GetMaximumPossibleScoreInImportantCategories();
                     string scoreString = $"{score} / {maxScore} - {(passed ? "Pass" : "Fail")}";
 
                     // Show the score on important questions
-                    Rect prefixPos = EditorGUI.PrefixLabel(position, new GUIContent("Score on Important Questions"));
-                    EditorGUI.LabelField(prefixPos, scoreString);
-                    position.y += position.height;
+                    EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Score on Important Questions"), scoreString);
 
                     // Compute if the unimportant questions passed, what the score is, and what the max score was
-                    passed = QuizInstance.PassedUnimportantQuestions(quizTemplate, answersArray);
-                    score = QuizInstance.ComputeScoreInUnimportantCategories(quizTemplate, answersArray);
-                    maxScore = quizTemplate.GetMaximumPossibleScoreInUnimportantCategories();
+                    passed = QuizInstance.PassedUnimportantQuestions(runtimeTemplate, answersArray);
+                    score = QuizInstance.ComputeScoreInUnimportantCategories(runtimeTemplate, answersArray);
+                    maxScore = runtimeTemplate.GetMaximumPossibleScoreInUnimportantCategories();
                     scoreString = $"{score} / {maxScore} - {(passed ? "Pass" : "Fail")}";
 
                     // Show the score on unimportant questions
-                    prefixPos = EditorGUI.PrefixLabel(position, new GUIContent("Score on Unimportant Questions"));
-                    EditorGUI.LabelField(prefixPos, scoreString);
-                    position.y += position.height;
+                    EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Score on Unimportant Questions"), scoreString);
 
-                    // Show the final position
-                    prefixPos = EditorGUI.PrefixLabel(position, new GUIContent("Final Grade"));
-                    EditorGUI.LabelField(prefixPos, QuizInstance.ComputeGrade(quizTemplate, answersArray).ToString());
+                    // Show the final grade
+                    EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Final Grade"), 
+                        QuizInstance.ComputeGrade(runtimeTemplate, answersArray).ToString());
 
                     // Change the values back to before
                     EditorGUI.indentLevel--;
@@ -160,8 +155,12 @@ public class QuizInstanceDrawer : PropertyDrawer
             // If an object reference exists then add room for the answers
             if(template.objectReferenceValue)
             {
+                // Add height for the regenerate button
+                height += EditorExtensions.StandardControlHeight;
+
                 QuizTemplate quizTemplate = template.objectReferenceValue as QuizTemplate;
-                height += quizAnswersEditor.GetPropertyHeight(answers, quizTemplate.Questions);
+                CheckRuntimeTemplate(quizTemplate);
+                height += quizAnswersEditor.GetPropertyHeight(answers, runtimeTemplate.Questions);
 
                 // Add height for the results foldout
                 height += EditorExtensions.StandardControlHeight;
@@ -189,6 +188,13 @@ public class QuizInstanceDrawer : PropertyDrawer
         }
 
         return answers;
+    }
+    private void CheckRuntimeTemplate(QuizTemplate template)
+    {
+        if (runtimeTemplate == null || runtimeTemplate.Template != template)
+        {
+            runtimeTemplate = new QuizRuntimeTemplate(template);
+        }
     }
     #endregion
 }

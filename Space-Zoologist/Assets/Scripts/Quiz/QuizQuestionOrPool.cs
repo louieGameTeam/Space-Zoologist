@@ -5,6 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class QuizQuestionOrPool
 {
+    #region Public Properties
+    public bool IsPool => isPool;
+    public int QuestionCount => isPool ? pool.QuestionsToPick : 1;
+    public bool Static => isPool ? pool.Static : true;
+    public bool Dynamic => !Static;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("If true, this represents a pool of questions to randomly pick from. " +
