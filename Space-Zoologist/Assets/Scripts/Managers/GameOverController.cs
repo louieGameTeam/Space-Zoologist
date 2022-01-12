@@ -35,9 +35,6 @@ public class GameOverController : MonoBehaviour
         EventManager.Instance.SubscribeToEvent(EventType.MainObjectivesCompleted, OnMainObjectivesCompleted);
         EventManager.Instance.SubscribeToEvent(EventType.GameOver, OnGameOver);
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, OnPopulationExtinct);
-
-        // Subscribe to event raised when any conversation is started
-        ConversationManager.OnConversationStarted += OnAnyConversationStarted;
     }
     #endregion
 
@@ -84,12 +81,13 @@ public class GameOverController : MonoBehaviour
         ending.SayEndingConversation();
         gameManager.m_dialogueManager.StartInteractiveConversation();
 
-        // If the ending is not a quiz then add a conversation ended event
-        // to the active conversation
-        if (!ending.IsQuiz)
+        // If the ending is a quiz then subscribe to its conversation ended event
+        if (ending.IsQuiz)
         {
-            ending.ActiveConversation.OnConversationEnded(OnSuccessConversationEnded);
+            ending.ActiveQuizConversation.OnConversationEnded.AddListener(OnSuccessConversationEnded);
         }
+        // If the ending is not a quiz then subscribe to the ending event for the non-quiz conversation
+        else ending.ActiveConversation.OnConversationEnded(OnSuccessConversationEnded);
     }
     private void OnSuccessConversationEnded()
     {
@@ -97,19 +95,6 @@ public class GameOverController : MonoBehaviour
         LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
         // Open the success window
         OpenWindow(successWindow, () => levelLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));
-    }
-    private void OnAnyConversationStarted()
-    {
-        QuizConversation quiz = GameManager.Instance.LevelData.Ending.ActiveQuizConversation;
-
-        if (quiz)
-        {
-            NPCConversation quizResponse = quiz.CurrentResponse;
-
-            // If a quiz response is active, make the success window setup
-            // once the response is over
-            if (quizResponse) quizResponse.OnConversationEnded(OnSuccessConversationEnded);
-        }
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {

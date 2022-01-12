@@ -9,7 +9,7 @@ public class QuizConversation : MonoBehaviour
 {
     #region Public Properties
     public QuizInstance CurrentQuiz => currentQuiz;
-    public NPCConversation CurrentResponse => currentResponse;
+    public UnityEvent OnConversationEnded => onConversationEnded;
     #endregion
 
     #region Public Typedefs
@@ -51,12 +51,19 @@ public class QuizConversation : MonoBehaviour
     [Tooltip("List of NPCConversations to respond with based on the quizes' grade")]
     [EditArrayWrapperOnEnum("responses", typeof(QuizGrade))]
     private NPCConversationArray response;
+    [SerializeField]
+    [Tooltip("If true, the quiz conversation will be re-spoken if the player fails the quiz")]
+    private bool requizOnFail = false;
+
+    [Space]
+
+    [SerializeField]
+    [Tooltip("Event invoked when the quiz conversation is finished")]
+    private UnityEvent onConversationEnded;
     #endregion
 
     #region Private Fields
     private QuizInstance currentQuiz;
-    // Current response to the quiz being spoken
-    private NPCConversation currentResponse;
     // Conversation that the NPC speaks to say all of the questions
     private NPCConversation currentQuizConversation;
     #endregion
@@ -86,7 +93,18 @@ public class QuizConversation : MonoBehaviour
             return () => currentQuiz.AnswerQuestion(questionIndex, optionIndex);
         }
         // Say the conversation that corresponds to the grade that the player got on the quiz
-        void SayResponse() => currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
+        void SayResponse()
+        {
+            NPCConversation currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
+
+            // If we should requiz when we fail, then we must say the quiz after the response
+            if (requizOnFail && CurrentQuiz.Grade != QuizGrade.Excellent)
+            {
+                SayQuizConversationNext();
+            }
+            // If we will not requiz, then invoke my conversation ended event when this conversation is done
+            else currentResponse.OnConversationEnded(onConversationEnded.Invoke);
+        }
 
         // Try to get an npc conversation. If it exists, destroy it and add a new one
         NPCConversation conversation = gameObject.GetComponent<NPCConversation>();

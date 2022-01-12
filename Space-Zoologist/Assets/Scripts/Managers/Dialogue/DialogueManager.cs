@@ -37,6 +37,7 @@ public class DialogueManager : MonoBehaviour
 
     #region Private Fields
     private NPCConversation currentDialogue = default;
+    [SerializeField] private bool skipOpeningConversation = false;
     [SerializeField] private bool HideNPC = default;
     private NPCConversation startingConversation = default;
     private NPCConversation defaultConversation = default;
@@ -84,7 +85,7 @@ public class DialogueManager : MonoBehaviour
         {
             UpdateCurrentDialogue();
         }
-        if (ConversationManager.Instance != null)
+        if (ConversationManager.Instance != null && !skipOpeningConversation)
         {
             StartNewConversation();
         }
