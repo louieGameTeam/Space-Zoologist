@@ -13,6 +13,7 @@ public class TextEffects : MonoBehaviour
     [SerializeField] List<Sprite> PrologueIllustrations = default;
     [SerializeField] Image BackgroundImage = default;
     [SerializeField] Image PreviousBackgroundImage = default;
+    [SerializeField] Image TextBoxImage = default;
     [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] MusicManager musicManager = default;
     private int Index = 0;
@@ -28,13 +29,9 @@ public class TextEffects : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Index < IntroductionTexts.Count)
+        if (Input.GetMouseButtonDown(0) && Index <= IntroductionTexts.Count)
         {
             SetupNextScene();
-            if (Index == IntroductionTexts.Count)
-            {
-                Introduction.alignment = TMPro.TextAlignmentOptions.Center;
-            }
         }
         FadeNextSceneIn(Introduction);
     }
@@ -56,29 +53,43 @@ public class TextEffects : MonoBehaviour
             color.a += Time.deltaTime * speed;
             PreviousBackgroundImage.color = color;
         }
-        else if (Index == IntroductionTexts.Count)
+        else if (Index == IntroductionTexts.Count + 1)
         {
             SceneNavigator.LoadMainMenu();
+        }
+
+        if (Index == IntroductionTexts.Count + 1) {
+            var color = TextBoxImage.color;
+            color.a -= Time.deltaTime * speed;
+            TextBoxImage.color = color;
+            color = Introduction.color;
+            color.a -= Time.deltaTime * speed;
+            Introduction.color = color;
         }
     }
 
     private void SetupNextScene()
     {
-        if (Index >= IntroductionTexts.Count) return;
+        if (Index > IntroductionTexts.Count) return;
 
         var color = Introduction.color;
         color.a = 0;
         Introduction.color = color;
         PreviousBackgroundImage.sprite = BackgroundImage.sprite;
 
-        if (Index == IntroductionTexts.Count - 1)
+        // Set next image - reuse a black copy of the previous image as the transition fader
+        // TODO: 
+        if (Index == IntroductionTexts.Count)
         {
             // HACK hardcoded coordination
             float delay = musicManager.StartTransition(true);
-            int numIntroBars = 3;
-            speed = 1 / (delay + MusicManager.SECONDS_PER_BAR * numIntroBars);
-            color = Color.black;
+            //int numIntroBars = 3;
+            //speed = 1 / (delay + MusicManager.SECONDS_PER_BAR * numIntroBars);
+            // TODO: Replace line below with commented lines above, but fix the timing
             speed = 0.55f;
+            color = Color.black;
+
+            Introduction.alignment = TMPro.TextAlignmentOptions.Center;
         }
         else
         {
