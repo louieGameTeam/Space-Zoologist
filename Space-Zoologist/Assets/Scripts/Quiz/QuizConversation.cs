@@ -54,6 +54,8 @@ public class QuizConversation : MonoBehaviour
 
     #region Private Fields
     private QuizInstance currentQuiz = null;
+    // Conversation that the NPC speaks to say all of the questions
+    private NPCConversation currentQuizConversation;
     #endregion
 
     #region Public Methods
@@ -67,8 +69,7 @@ public class QuizConversation : MonoBehaviour
             dialogueManager.SetNewDialogue(openingConversation);
 
             // Then, say the quiz part of the conversation
-            NPCConversation conversation = Create(dialogueManager);
-            dialogueManager.SetNewQuiz(conversation);
+            SayQuizConversationNext();
         }
     }
     public NPCConversation Create(DialogueManager dialogueManager)
@@ -182,6 +183,17 @@ public class QuizConversation : MonoBehaviour
     #endregion
 
     #region Private Methods
+    private void SayQuizConversationNext()
+    {
+        DialogueManager dialogue = GameManager.Instance.m_dialogueManager;
+
+        // If there is a current quiz conversation, then destroy it
+        if (currentQuizConversation) Destroy(currentQuizConversation);
+        // Set the current quiz conversation
+        currentQuizConversation = Create(dialogue);
+        // Tell the dialogue manager to say the quiz conversation after the currently running conversation
+        dialogue.SetNewQuiz(currentQuizConversation);
+    }
     private EditableSpeechNode CreateSpeechNode(NPCConversation conversation, EditableConversation editableConversation, string text, float xPos, float yPos, bool isRoot, UnityAction callback)
     {
         // Create a new speech node
