@@ -414,11 +414,23 @@ namespace DialogueEditor
             {
                 ResetPanelSize();
             }
+
+            // BEGIN ADDED CODE
             if(GUILayout.Button("Focus Node with ID", EditorStyles.toolbarButton))
             {
                 FocusNode(focusNodeID);
             }
+            GUI.SetNextControlName("FocusNodeID");
             focusNodeID = EditorGUILayout.IntField(focusNodeID, EditorStyles.toolbarTextField);
+
+            // Focus node when enter key is pressed
+            if (GUI.GetNameOfFocusedControl() == "FocusNodeID" && Event.current.isKey && 
+                (Event.current.keyCode == KeyCode.Return || Event.current.keyCode == KeyCode.KeypadEnter))
+            {
+                FocusNode(focusNodeID);
+            }
+            // END ADDED CODE
+
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Manual Save", EditorStyles.toolbarButton))
             {

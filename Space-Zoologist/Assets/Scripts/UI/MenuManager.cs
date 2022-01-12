@@ -181,7 +181,12 @@ public class MenuManager : MonoBehaviour
             {
                 bool isActive = !ui.GetComponent<Button>().interactable;
                 ui.GetComponent<Button>().interactable = isActive;
-                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+
+                // Make sure the UI element has a child with an image to change color for
+                if (ui.transform.childCount >= 1)
+                {
+                    ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+                }
                 break;
             }
         }
