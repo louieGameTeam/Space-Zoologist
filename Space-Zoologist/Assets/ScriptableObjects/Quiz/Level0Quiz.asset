@@ -40,9 +40,12 @@ MonoBehaviour:
       weight: 0
     - label: Observe
       weight: 1
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
   gradingRubric:
     scoreToPassImportantQuestions: 0
     scoreToPassUnimportantQuestions: 2
   exampleQuiz:
-    template: {fileID: 0}
-    answers: 
+    template: {fileID: 11400000}
+    answers: 0000000000000000
