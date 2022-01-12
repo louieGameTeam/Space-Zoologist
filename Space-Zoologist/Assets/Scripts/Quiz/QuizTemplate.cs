@@ -55,7 +55,6 @@ public class QuizTemplate : ScriptableObject
 
         // Randomly generate some questions
         QuizQuestion[] randomlyGeneratedQuestions = randomQuestionPool.PickQuestions();
-        Debug.Log($"Randomly generated questions: {randomlyGeneratedQuestions.Length}");
 
         // Add each randomly generated question to the list
         if (randomlyGeneratedQuestions.Length > 0)

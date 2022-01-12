@@ -64,6 +64,7 @@ public class QuizConversation : MonoBehaviour
 
     #region Private Fields
     private QuizInstance currentQuiz;
+    private NPCConversation currentResponse;
     // Conversation that the NPC speaks to say all of the questions
     private NPCConversation currentQuizConversation;
     #endregion
@@ -95,7 +96,10 @@ public class QuizConversation : MonoBehaviour
         // Say the conversation that corresponds to the grade that the player got on the quiz
         void SayResponse()
         {
-            NPCConversation currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
+            // Destroy any previous response
+            if (currentResponse) Destroy(currentResponse);
+            // Instantiate a new response
+            currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
 
             // If we should requiz when we fail, then we must say the quiz after the response
             if (requizOnFail && CurrentQuiz.Grade != QuizGrade.Excellent)
