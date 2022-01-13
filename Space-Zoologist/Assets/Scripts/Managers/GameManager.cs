@@ -59,7 +59,8 @@ public class GameManager : MonoBehaviour
     public int CurrentDay => currentDay;
     [SerializeField] Text CurrentDayText = default;
     public bool IsPaused { get; private set; }
-    public bool WasPaused { get; private set; }
+
+    private HashSet<string> m_pauseStack = new HashSet<string>();
 
     public bool IsGameOver { get { return m_isGameOver; } }
     private bool m_isGameOver = false;
@@ -437,7 +438,6 @@ public class GameManager : MonoBehaviour
         this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
         UpdateDayText(currentDay);
         this.IsPaused = false;
-        this.WasPaused = false;
     }
     #endregion
 
@@ -594,14 +594,11 @@ public class GameManager : MonoBehaviour
 
     #region Game State Functions
 
-    private HashSet<string> m_pauseStack = new HashSet<string>();
-
     public void TryToPause(string pauseID)
     {
         // prevents accidentally unpausing when should not (two different accessors)
         if(m_pauseStack.Add(pauseID))
         {
-            print(pauseID + " count " + m_pauseStack.Count);
             if (m_pauseStack.Count == 1)
                 this.Pause();
         }
@@ -612,7 +609,6 @@ public class GameManager : MonoBehaviour
         // prevents accidentally pausing when should not (two different accessors)
         if (m_pauseStack.Remove(pauseID))
         {
-            print(pauseID + " count " + m_pauseStack.Count);
             if (m_pauseStack.Count == 0)
                 this.Unpause();
         }
@@ -632,7 +628,6 @@ public class GameManager : MonoBehaviour
 
     private void Pause()
     {
-        print("Pause");
         Time.timeScale = 1;
         this.IsPaused = true;
         foreach (Population population in m_populationManager.Populations)
@@ -643,7 +638,6 @@ public class GameManager : MonoBehaviour
 
     private void Unpause()
     {
-        print("UnPause");
         this.IsPaused = false;
         foreach (Population population in m_populationManager.Populations)
             population.UnpauseAnimalsMovementController();

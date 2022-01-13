@@ -146,9 +146,16 @@ public class NotebookUI : MonoBehaviour
         if (isOpen != this.isOpen)
         {
             if (isOpen)
+            {
+                GameManager.Instance.TryToPause("Notebook");
                 AudioManager.instance.PlayOneShot(SFXType.NotebookOpen);
+            }               
             else
+            {
+                GameManager.Instance.TryToUnpause("Notebook");
                 AudioManager.instance.PlayOneShot(SFXType.NotebookClose);
+            }
+                
         }
 
         this.isOpen = isOpen;

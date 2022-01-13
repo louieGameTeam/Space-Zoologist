@@ -14,7 +14,7 @@ public class SellingManager : MonoBehaviour
     {
         if (!IsSelling)
         {
-            GameManager.Instance.TryToPause("ToggleSell");
+            //GameManager.Instance.TryToPause("ToggleSell");
             // No one else should be allowed to close the inspector except the InspectorObjectiveUI script
             //if (Inspector.IsInInspectorMode)
             //{
