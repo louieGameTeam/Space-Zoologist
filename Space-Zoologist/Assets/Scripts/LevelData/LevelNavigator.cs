@@ -45,7 +45,9 @@ public class LevelNavigator : MonoBehaviour
                 if (lastLvl < levelInfo[0] && levelInfo[1] == 1)
                 {
                     newLevel.GetComponent<LevelUI>().SetName($"Level {levelInfo[0]}");
-                    newLevel.GetComponent<Button>().interactable = false;
+                    // commented out to remove hidden level 2
+                    // must be made more intuitive
+                    //newLevel.GetComponent<Button>().interactable = false;
                 }
                 else if (lastLvl == levelInfo[0] && levelInfo[1] == lastEnc)
                 {
