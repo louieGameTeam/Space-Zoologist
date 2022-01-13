@@ -17,6 +17,8 @@
         _GridOverlayRulerTiles("Grid Overlay Ruler Tiles", Range(0, 32)) = 0
         _GridOverlayRulerColor("Grid Overlay Ruler Color", COLOR) = (1, 1, 1, 1)
         _GridOverlayRulerLineWidth("Grid Overlay Ruler Line Width", Range(0, 32)) = 0
+        
+        _CameraDefaultOrthoHeight("Camera Default Zoom Ortho Height(For grid scaling reference)", float) = 9.4
 
         _LiquidColor("Liquid Color", COLOR) = (1, 1, 1, 1)
         _LiquidSubColor("Liquid Sub Color", COLOR) = (1, 1, 1, 1)
@@ -102,10 +104,17 @@
             float4 _GridOverlayRulerColor;
             int _GridOverlayRulerLineWidth;
 
+            float _CameraDefaultOrthoHeight;
+
             float4 AddGrid(float4 col, float2 localPixel, int2 tilePos, float4 tileInformation) {
+                //Line scaling to avoid problems when zoomed out - should probably do scale calculations outside of shader?
+                //Clamped above one to avoid thin lines when zoomed in - should probably find a less static solution for scale
+                float line_scale = max(1,unity_OrthoParams.y / _CameraDefaultOrthoHeight);
+
+                float _GridOverlayLineWidth_final = _GridOverlayLineWidth * line_scale;
                 // add the outlines
-                if ((localPixel.x < _GridOverlayLineWidth || localPixel.x >= PIXELS_PER_TILE - _GridOverlayLineWidth)
-                    || (localPixel.y < _GridOverlayLineWidth || localPixel.y >= PIXELS_PER_TILE - _GridOverlayLineWidth))
+                if ((localPixel.x < _GridOverlayLineWidth_final || localPixel.x >= PIXELS_PER_TILE - _GridOverlayLineWidth_final )
+                    || (localPixel.y < _GridOverlayLineWidth_final || localPixel.y >= PIXELS_PER_TILE - _GridOverlayLineWidth_final ))
                     col = 1;
 
                 // if not selected, make saturated
@@ -114,11 +123,12 @@
                     col.rgb = lerp(col.rgb, grayScale.xxx, _GridOverlayDesaturation);
                 }
 
+                float _GridOverlayRulerLineWidth_final = _GridOverlayRulerLineWidth * line_scale;
                 // different outlines for measurement
-                if ((tilePos.x % _GridOverlayRulerTiles == 0 && localPixel.x < _GridOverlayRulerLineWidth) ||
-                    ((tilePos.x + 1) % _GridOverlayRulerTiles == 0 && localPixel.x >= PIXELS_PER_TILE - _GridOverlayRulerLineWidth) ||
-                    (tilePos.y % _GridOverlayRulerTiles == 0 && localPixel.y < _GridOverlayRulerLineWidth) ||
-                    ((tilePos.y + 1) % _GridOverlayRulerTiles == 0 && localPixel.y >= PIXELS_PER_TILE - _GridOverlayRulerLineWidth))
+                if ((tilePos.x % _GridOverlayRulerTiles == 0 && localPixel.x < _GridOverlayRulerLineWidth_final) ||
+                    ((tilePos.x + 1) % _GridOverlayRulerTiles == 0 && localPixel.x >= PIXELS_PER_TILE - _GridOverlayRulerLineWidth_final) ||
+                    (tilePos.y % _GridOverlayRulerTiles == 0 && localPixel.y < _GridOverlayRulerLineWidth_final) ||
+                    ((tilePos.y + 1) % _GridOverlayRulerTiles == 0 && localPixel.y >= PIXELS_PER_TILE - _GridOverlayRulerLineWidth_final))
                     col = _GridOverlayRulerColor;
 
                 return col;
@@ -384,7 +394,7 @@
 
                 // create grid
                 if (_GridOverlayToggle > 0)
-                    col = AddGrid(col, localPixel, tilePos, tileInformation);
+                    col = AddGrid(col, localUV * PIXELS_PER_TILE, tilePos, tileInformation);
 
                 return col;
             }
