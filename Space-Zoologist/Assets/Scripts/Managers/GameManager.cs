@@ -239,7 +239,7 @@ public class GameManager : MonoBehaviour
             var jsonTextFile = Resources.Load<TextAsset>(fullPath).ToString();
             serializedLevel = JsonUtility.FromJson<SerializedLevel>(jsonTextFile);
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             Debug.LogWarning($"An error occurred when trying to load map '{name}':" +
                 $"\n\t{e}");
@@ -446,7 +446,7 @@ public class GameManager : MonoBehaviour
     {
         this.Balance += value;
     }
-    
+
     public void SubtractFromBalance(float value)
     {
         if (this.Balance - value >= 0)
@@ -480,7 +480,7 @@ public class GameManager : MonoBehaviour
     {
         this.UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
-        TogglePause();
+        //TogglePause("InitialNeedSystemUpdate");
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
         {
             this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
@@ -593,38 +593,46 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game State Functions
-    public void TryToPause()
+
+    private HashSet<string> m_pauseStack = new HashSet<string>();
+
+    public void TryToPause(string pauseID)
     {
         // prevents accidentally unpausing when should not (two different accessors)
-        if (this.IsPaused)
-            this.WasPaused = true;
-        else
-            this.Pause();
+        if(m_pauseStack.Add(pauseID))
+        {
+            print(pauseID + " count " + m_pauseStack.Count);
+            if (m_pauseStack.Count == 1)
+                this.Pause();
+        }
     }
 
-    public void TryToUnpause()
+    public void TryToUnpause(string pauseID)
     {
         // prevents accidentally pausing when should not (two different accessors)
-        if (this.WasPaused)
-            this.WasPaused = false;
-        else
-            this.Unpause();
+        if (m_pauseStack.Remove(pauseID))
+        {
+            print(pauseID + " count " + m_pauseStack.Count);
+            if (m_pauseStack.Count == 0)
+                this.Unpause();
+        }
     }
 
-    public void TogglePause()
+    public void TogglePause(string pauseID)
     {
         if (this.IsPaused)
         {
-            this.Unpause();
+            this.TryToUnpause(pauseID);
         }
         else
         {
-            this.Pause();
+            this.TryToPause(pauseID);
         }
     }
 
-    public void Pause()
+    private void Pause()
     {
+        print("Pause");
         Time.timeScale = 1;
         this.IsPaused = true;
         foreach (Population population in m_populationManager.Populations)
@@ -633,8 +641,9 @@ public class GameManager : MonoBehaviour
         AudioManager.instance?.PlayOneShot(SFXType.Pause);
     }
 
-    public void Unpause()
+    private void Unpause()
     {
+        print("UnPause");
         this.IsPaused = false;
         foreach (Population population in m_populationManager.Populations)
             population.UnpauseAnimalsMovementController();
@@ -665,7 +674,8 @@ public class GameManager : MonoBehaviour
         this.IngameUI.SetActive(false);
     }
 
-    public void HandleExitLevel() {
+    public void HandleExitLevel()
+    {
         // Is not currently in level
         if (SceneNavigator.RecentlyLoadedLevel != "MainLevel") return;
 
@@ -698,13 +708,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DebugWin() {
+    public void DebugWin()
+    {
         isMainObjectivesCompleted = true;
 
         DebugGameOver();
     }
-    
-    public void DebugGameOver() {
+
+    public void DebugGameOver()
+    {
         this.m_isGameOver = true;
 
         // TODO figure out what should happen when the main objectives are complete
@@ -732,7 +744,7 @@ public class GameManager : MonoBehaviour
         this.UpdateObjectivePanel();
     }
 
-    private void CheckWinConditions() 
+    private void CheckWinConditions()
     {
         isMainObjectivesCompleted = true;
         numSecondaryObjectivesCompleted = 0;
@@ -850,7 +862,8 @@ public class GameManager : MonoBehaviour
     public void EnableInspectorToggle(bool enabled)
     {
         InspectorToggle.interactable = enabled;
-        if (!enabled) {
+        if (!enabled)
+        {
             InspectorToggle.isOn = false;
             ObjectiveToggle.isOn = true;
         }
