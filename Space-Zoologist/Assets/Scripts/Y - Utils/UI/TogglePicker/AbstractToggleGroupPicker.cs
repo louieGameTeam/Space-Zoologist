@@ -71,7 +71,12 @@ public abstract class AbstractToggleGroupPicker : MonoBehaviour
     {
         foreach (AbstractTogglePicker picker in pickers)
         {
-            UnityAction<bool> listener = _ => onToggleStateChanged.Invoke();
+            //state check in order to prevent double invoke, one for previous toggle being deactivated and one for new toggle being activated
+            UnityAction<bool> listener = (bool val) =>
+            {
+                if (val)
+                    onToggleStateChanged.Invoke();
+            };
             // Remove then re-add the listener so it is not added twice
             picker.Toggle.onValueChanged.RemoveListener(listener);
             picker.Toggle.onValueChanged.AddListener(listener);
