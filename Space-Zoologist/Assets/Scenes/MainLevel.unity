@@ -624,7 +624,7 @@ PrefabInstance:
     - target: {fileID: 6423215287888283054, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -8.333313
+      value: -8.333374
       objectReference: {fileID: 0}
     - target: {fileID: 8946323213000099164, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
@@ -1509,7 +1509,7 @@ PrefabInstance:
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
       propertyPath: LevelOnPlay
-      value: Level1E1
+      value: Level2E2
       objectReference: {fileID: 0}
     - target: {fileID: 8915049440928984899, guid: cb013aaea76714c69b04e49a6b98f035,
         type: 3}
@@ -2395,6 +2395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   godMode: 0
   isErasing: 0
+  wallPlaceable: 1
 --- !u!156049354 &765609363
 Grid:
   m_ObjectHideFlags: 0
@@ -8107,6 +8108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3f7cc3157724a0d9487ef32f2dd87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skipOpeningConversation: 0
   HideNPC: 0
   ConversationManagerGameObject: {fileID: 120515477173918234}
   npcActive:

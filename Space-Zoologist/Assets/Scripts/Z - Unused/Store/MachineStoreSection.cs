@@ -55,7 +55,7 @@ public class MachineStoreSection : StoreSection
         newMachineGameObject.GetComponent<SpriteRenderer>().sprite = base.selectedItem.Icon;
 
         Vector3Int position = base.GridSystem.WorldToCell(mousePosition);
-        base.GridSystem.GetTileData(position).Machine = newMachineGameObject;
+        //base.GridSystem.GetTileData(position).Machine = newMachineGameObject;
         if (!this.namesToMachines.ContainsKey(base.selectedItem.ID)) { Debug.LogError("Machine named" + base.selectedItem.ID + "not found"); return; }
         newMachineGameObject.AddComponent(namesToMachines[base.selectedItem.ID].GetType());
         newMachineGameObject.GetComponent<Machine>().SetPosition(position);

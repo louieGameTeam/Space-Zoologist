@@ -301,7 +301,7 @@ public class GridSystem : MonoBehaviour
         return null;
     }
 
-    public void AddTile(Vector3Int tilePosition, GameTile tile, bool godmode = false)
+    public void SetTile(Vector3Int tilePosition, GameTile tile, bool godmode = false)
     {
         TileData tileData = GetTileData(tilePosition);
 
@@ -390,7 +390,6 @@ public class GridSystem : MonoBehaviour
                 ApplyChangesToTilemapTexture(tilePosition);
             }
         }
-        // TODO update color of liquidbody
     }
     public void RemoveTile(Vector3Int tilePosition)
     {
@@ -880,7 +879,6 @@ public class GridSystem : MonoBehaviour
 
             Tilemap.SetTile(tilePosition, data.currentTile);
             Tilemap.SetTileFlags(tilePosition, TileFlags.None);
-            Tilemap.SetColor(tilePosition, data.currentColor);
         }
     }
 
@@ -1551,7 +1549,6 @@ public class GridSystem : MonoBehaviour
                 if (this.TileDataGrid[i, j] != null)
                 {
                     this.TileDataGrid[i, j].Animal = null;
-                    this.TileDataGrid[i, j].HomeLocation = false;
                 }
             }
         }
@@ -2367,15 +2364,11 @@ public class GridSystem : MonoBehaviour
     public class TileData
     {
         public Vector3Int tilePosition { get; private set; }
-        public GameObject Machine { get; set; }
         public GameObject Food { get; set; }
         public GameObject Animal { get; set; }
-        public bool HomeLocation { get; set; }
 
         public GameTile currentTile { get; private set; }
         public GameTile previousTile { get; private set; }
-        public Color currentColor { get; private set; }
-        public Color previousColor { get; private set; }
         public LiquidBody currentLiquidBody { get; set; }
         public LiquidBody previewLiquidBody { get; private set; }
         public float[] contents { get; set; }
@@ -2386,13 +2379,10 @@ public class GridSystem : MonoBehaviour
         {
             this.Food = null;
             this.Animal = null;
-            this.Machine = null;
-            this.HomeLocation = false;
 
             this.tilePosition = tilePosition;
             this.currentTile = tile;
             this.contents = tile == null ? null : tile.defaultContents;
-            this.currentColor = Color.white;
             this.currentLiquidBody = null;
             this.isTileChanged = false;
         }
@@ -2411,7 +2401,6 @@ public class GridSystem : MonoBehaviour
                 return;
             }
             this.previousTile = this.currentTile;
-            //Debug.Log("previous:" + this.previousTile ?? this.previousTile.TileName + "current:" + this.currentTile ?? this.currentTile.TileName);
             this.currentTile = tile;
             this.isTileChanged = true;
         }
@@ -2423,7 +2412,6 @@ public class GridSystem : MonoBehaviour
         {
             if (currentTile == null)
             {
-                this.currentColor = Color.white;
                 if (this.currentLiquidBody != null && currentLiquidBody.bodyID != 0)
                 {
                     this.currentLiquidBody.RemoveTile(tilePosition); // Remove Tile from liquid body
@@ -2461,6 +2449,7 @@ public class GridSystem : MonoBehaviour
             string previousTileString = "Previous Tile: " + (previousTile != null ? previousTile.TileName : "none") + "\n";
             string currentLiquidbodyString = "Current Liquidbody ID: " + (currentLiquidBody != null ? "" + currentLiquidBody.bodyID : "none") + "\n";
             string previewingLiquidbodyString = "Previewing Liquidbody ID: " + (previewLiquidBody != null ? "" + previewLiquidBody.bodyID : "none") + "\n";
+            string placeableString = "Placeable: " + (isTilePlaceable ? "True" : "False") + "\n";
 
             return positionString + foodString + currentTileString + previousTileString + currentLiquidbodyString + previewingLiquidbodyString;
         }

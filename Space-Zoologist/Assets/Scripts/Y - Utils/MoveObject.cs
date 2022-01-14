@@ -442,7 +442,7 @@ public class MoveObject : MonoBehaviour
             tileToDelete.SetActive(false);
 
             // add the new tile
-            gridSystem.AddTile(tilePos, initialTile);
+            gridSystem.SetTile(tilePos, initialTile);
             gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, GridSystem.ConstructionCluster.ConstructionType.TILE);
             gridSystem.ApplyChangesToTilemapTexture(tilePos);
         }
