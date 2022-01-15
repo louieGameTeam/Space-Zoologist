@@ -12,10 +12,13 @@ using UnityEngine;
 public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<CustomMusicLoopController>
 {
     bool hasCustomLoopData;         // whether this audio clip has special looping behavior
-    int loopLength;                 // the length, in samples, of the portion of the track which is looped
-    int loopEndSample;              // the sample which indicates that we should loop back to the start of the loop
+    bool usingBackupSource;           // whether source2 is currently playing instead of source
+    float loopStartTime;            // the length, in samples, of the portion of the track which is looped
+    float loopEndTime;              // the sample which indicates that we should loop back to the start of the loop
+    float timer = 0;
 
     AudioSource source;             // the audio source which contains the track to be looped
+    AudioSource source2;            // the audio source used to allow custom looped tracks to loop seamlessly
 
     public AudioSource Source => source;
     public bool isPlaying => source.isPlaying;
@@ -69,10 +72,18 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
             int totalBarCount = int.Parse(tokens[2]);
 
             // the sample of the "loop end" is (loopEndBar / totalBarCount) of the way through the track
-            loopEndSample = source.clip.samples * loopEndBar / totalBarCount;
+            loopEndTime = source.clip.length * loopEndBar / totalBarCount;
+            //print (loopEndTime + ", " + source.clip.length);
 
             // the length of the loop is (loopEnd - "loop start")
-            loopLength = loopEndSample - (source.clip.samples * loopStartBar / totalBarCount);
+            loopStartTime = source.clip.length * loopStartBar / totalBarCount;
+
+            // Duplicates this source to be used for looping, removing this script
+            if (!transform.parent.GetComponent<CustomMusicLoopController> ()) 
+            {
+                source2 = Instantiate (source.gameObject, transform).GetComponent<AudioSource> ();
+                Destroy (source2.gameObject.GetComponent<CustomMusicLoopController> ());
+            }
         }
         else
         {
@@ -82,19 +93,52 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
 
     void Update()
     {
-        if (!source.isPlaying || !hasCustomLoopData) return;
+        if ((!source.isPlaying && !source2.isPlaying) || !hasCustomLoopData) return;
 
-        // once we have passed the end of the loop, go back to the start of the loop (automatically offset correctly)
-        if (source.timeSamples > loopEndSample)
+        if (timer <= 0)
         {
-            source.timeSamples -= loopLength;
+            LoopTrack ();
         }
+        timer -= Time.deltaTime;
+        //print (source.time);
+        //print (source2.time);
+    }
+
+    void LoopTrack() 
+    {
+        if (usingBackupSource) 
+        {
+            // Schedules the current source to end at the end of the loop
+            source.SetScheduledEndTime (AudioSettings.dspTime + loopEndTime - source.time);
+            // Schedules the next source to be played at the end of the loop
+            source2.PlayScheduled (AudioSettings.dspTime + loopEndTime - source.time - loopStartTime);
+            // Skips the next source ahead to the start of the loop
+            source2.time = loopStartTime;
+
+            //print ("Looped at " + AudioSettings.dspTime + ", will loop again at " + (AudioSettings.dspTime + loopEndTime - source.time));
+
+            timer = loopEndTime - source.time;
+        } else 
+        {
+            // Schedules the current source to end at the end of the loop
+            source2.SetScheduledEndTime (AudioSettings.dspTime + loopEndTime - source2.time);
+            // Schedules the next source to be played at the end of the loop
+            source.PlayScheduled (AudioSettings.dspTime + loopEndTime - source2.time - loopStartTime);
+            // Skips the next source ahead to the start of the loop
+            source.time = loopStartTime;
+
+            //print ("Looped at " + AudioSettings.dspTime + ", will loop again at " + (AudioSettings.dspTime + loopEndTime - source2.time));
+
+            timer = loopEndTime - source2.time;
+        }
+
+        usingBackupSource = !usingBackupSource;
     }
 
     // start playing the track
     public void StartTrack()
     {
-        if (source.isPlaying)
+        if (source.isPlaying || source2.isPlaying)
         {
             Debug.LogWarning("Trying to start a track that is already playing!");
             return;
@@ -102,44 +146,61 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
 
         source.Play();
         gameObject.name = "Now Playing: " + source.clip.name;
+
+        // Schedules the current source to end at the end of the loop
+        source.SetScheduledEndTime (AudioSettings.dspTime + loopEndTime);
+        // Schedules the next source to be played at the end of the loop
+        source2.PlayScheduled (AudioSettings.dspTime + loopEndTime);
+        // Skips the next source ahead to the start of the loop
+        source2.time = loopStartTime;
+        timer = loopEndTime * 1.5f - source.time;
+        //print ("Started at " + AudioSettings.dspTime + ", will loop at " + (AudioSettings.dspTime + loopEndTime));
     }
 
     // stop playing the track
     public void StopTrack()
     {
-        if (!source.isPlaying)
+        if (!source.isPlaying && !source2.isPlaying)
         {
             Debug.LogWarning("Trying to stop a track that isn't playing!");
             return;
         }
 
         source.Stop();
+        source2.Stop();
         gameObject.name = source.clip.name;
     }
 
     // pause the track
     public void PauseTrack()
     {
-        if (!source.isPlaying)
+        if (!source.isPlaying && !source2.isPlaying)
         {
             Debug.LogWarning("Trying to pause a track that isn't playing!");
             return;
         }
 
         source.Pause();
+        source2.Pause();
         gameObject.name = "Paused: " + source.clip.name;
     }
 
     // unpause the track
     public void UnpauseTrack()
     {
-        if (source.isPlaying)
+        if (source.isPlaying || source2.isPlaying)
         {
             Debug.LogWarning("Trying to unpause a track that is already playing!");
             return;
         }
 
-        source.UnPause();
+        if (usingBackupSource)
+        {
+            source2.UnPause ();
+        } else
+        {
+            source.UnPause ();
+        }
         gameObject.name = "Now Playing: " + source.clip.name;
     }
 
