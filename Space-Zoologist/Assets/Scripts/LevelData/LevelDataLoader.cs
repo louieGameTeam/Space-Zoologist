@@ -5,41 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class LevelDataLoader : MonoBehaviour
 {
+    #region Public Properties
+    public static string CurrentLevel => currentLevel;
+    #endregion
+
+    #region Editor Fields
     [Expandable] public List<LevelData> levelDatas = new List<LevelData>();
     [Header("Used when playing level scene directly")]
     [SerializeField] string LevelOnPlay = "Level1E1";
-    string currentLevel = "Level1E1";
+    #endregion
 
+    #region Private Fields
+    private static string currentLevel = "";
+    #endregion
+
+    #region Monobehaviour Messages
     private void Awake()
     {
-        int LevelDataLoader = FindObjectsOfType<LevelDataLoader>().Length;
-        if (LevelDataLoader != 1)
+        // If the current level is empty then use the level on play
+        if (currentLevel == "")
         {
-            Destroy(this.gameObject);
+            currentLevel = LevelOnPlay;
         }
-        else
-        {
-            LevelMenuSelector selectedLevel = FindObjectOfType<LevelMenuSelector>();
-            if (selectedLevel != null)
-            {
-                LevelDataReference.instance.LevelData = GetLevelData(selectedLevel.levelName);
-                Destroy(selectedLevel.gameObject);
-            }
-            else
-            {
-                LevelDataReference.instance.LevelData = GetLevelData(LevelOnPlay);
-            }
-            DontDestroyOnLoad(this);
-        }
+        LevelDataReference.instance.LevelData = GetLevelData(LevelOnPlay);
     }
+    #endregion
 
-    public void LoadLevel(LevelID levelToLoad) => LoadLevel(levelToLoad.LevelName);
-    public void LoadLevel(string levelToLoad)
+    #region Public Methods
+    public static void LoadLevel(LevelID levelToLoad) => LoadLevel(levelToLoad.LevelName);
+    public static void LoadLevel(string levelToLoad)
     {
-        GameManager.Instance?.HandleExitLevel();
-        LevelDataReference.instance.LevelData = GetLevelData(levelToLoad);
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.HandleExitLevel();
+        }
+        // Set the current level to the level we are about to load
+        currentLevel = levelToLoad;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
+    public static void ReloadLevel() => LoadLevel(currentLevel);
 
     public void LoadNextLevel()
     {
@@ -54,14 +58,10 @@ public class LevelDataLoader : MonoBehaviour
             $"Make sure that the player has finished taking the end of level quiz " +
             $"before trying to load the next level");
     }
+    public LevelData GetLevelData(LevelID levelID) => GetLevelData(levelID.LevelName);
+    #endregion
 
-    public void ReloadLevel()
-    {
-        GameManager.Instance?.HandleExitLevel();
-        LevelDataReference.instance.LevelData = GetLevelData(currentLevel);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
+    #region Private Methods
     private LevelData GetLevelData(string levelToLoad)
     {
         currentLevel = levelToLoad;
@@ -77,6 +77,5 @@ public class LevelDataLoader : MonoBehaviour
         }
         return null;
     }
-
-    public LevelData GetLevelData(LevelID levelID) => GetLevelData(levelID.LevelName);
+    #endregion
 }

@@ -59,8 +59,7 @@ public class GameOverController : MonoBehaviour
             // When the conversation ends then show the fail window
             restartConversation.OnConversationEnded(() =>
             {
-                LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
-                OpenWindow(failWindow, () => levelLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
+                OpenWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
             });
         }
     }
