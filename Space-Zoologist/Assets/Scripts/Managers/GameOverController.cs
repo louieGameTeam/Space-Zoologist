@@ -90,10 +90,8 @@ public class GameOverController : MonoBehaviour
     }
     private void OnSuccessConversationEnded()
     {
-        // Get the level data loader
-        LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
         // Open the success window
-        OpenWindow(successWindow, () => levelLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));
+        OpenWindow(successWindow, () => LevelDataLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {

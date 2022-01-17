@@ -10,7 +10,6 @@ public class LevelDataLoader : MonoBehaviour
     #endregion
 
     #region Editor Fields
-    [Expandable] public List<LevelData> levelDatas = new List<LevelData>();
     [Header("Used when playing level scene directly")]
     [SerializeField] string LevelOnPlay = "Level1E1";
     #endregion
@@ -44,8 +43,7 @@ public class LevelDataLoader : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
     public static void ReloadLevel() => LoadLevel(currentLevel);
-
-    public void LoadNextLevel()
+    public static void LoadNextLevel()
     {
         LevelID nextLevel = GameManager.Instance.LevelData.Ending.GetNextLevelID();
 
@@ -58,24 +56,23 @@ public class LevelDataLoader : MonoBehaviour
             $"Make sure that the player has finished taking the end of level quiz " +
             $"before trying to load the next level");
     }
-    public LevelData GetLevelData(LevelID levelID) => GetLevelData(levelID.LevelName);
-    #endregion
-
-    #region Private Methods
-    private LevelData GetLevelData(string levelToLoad)
+    public static LevelData GetLevelData(LevelID levelID)
     {
-        currentLevel = levelToLoad;
-        foreach (LevelData levelData in levelDatas)
-        {
-            if (levelData)
-            {
-                if (levelData.Level.SceneName.Equals(levelToLoad))
-                {
-                    return levelData;
-                }
-            }
-        }
-        return null;
+        // Setup the path to use the enclosure number only if it is not level 0
+        string path = $"LevelData/Level{levelID.LevelNumber}/L{levelID.LevelNumber}";
+        if (levelID.LevelNumber != 0) path += $"E{levelID.EnclosureNumber}";
+        path += "Data";
+
+        // Load the data at the computed path
+        LevelData data = Resources.Load<LevelData>(path);
+
+        // If you got level data then return it
+        if (data) return data;
+        // If you did not get level data then throw an exception
+        else throw new MissingReferenceException($"{nameof(LevelDataLoader)}: " +
+            $"Failed to load level {levelID.LevelName} from resource path {path}");
     }
+    public static LevelData GetLevelData(string levelToLoad) => GetLevelData(LevelID.FromSceneName(levelToLoad));
+    public static LevelData[] GetAllLevelData() => Resources.LoadAll<LevelData>("Levels/");
     #endregion
 }
