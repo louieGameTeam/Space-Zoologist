@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,6 +32,7 @@ public class LevelDataLoader : MonoBehaviour
     #endregion
 
     #region Public Methods
+    public static void LoadLevel(LevelData level) => LoadLevel(level.Level.SceneName);
     public static void LoadLevel(LevelID levelToLoad) => LoadLevel(levelToLoad.LevelName);
     public static void LoadLevel(string levelToLoad)
     {
@@ -40,7 +42,7 @@ public class LevelDataLoader : MonoBehaviour
         }
         // Set the current level to the level we are about to load
         currentLevel = levelToLoad;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        SceneManager.LoadScene("MainLevel"); 
     }
     public static void ReloadLevel() => LoadLevel(currentLevel);
     public static void LoadNextLevel()
@@ -73,6 +75,18 @@ public class LevelDataLoader : MonoBehaviour
             $"Failed to load level {levelID.LevelName} from resource path {path}");
     }
     public static LevelData GetLevelData(string levelToLoad) => GetLevelData(LevelID.FromSceneName(levelToLoad));
-    public static LevelData[] GetAllLevelData() => Resources.LoadAll<LevelData>("Levels/");
+    public static LevelData[] GetAllLevelEnclosures(int levelNumber)
+    {
+        string path = $"LevelData/Level{levelNumber}/";
+        return Resources.LoadAll<LevelData>(path);
+    }
+    public static LevelData[] GetAllLevelData() => Resources.LoadAll<LevelData>("");
+    public static int MaxLevel()
+    {
+        LevelData[] levels = GetAllLevelData();
+        return levels
+            .Select(level => LevelID.FromSceneName(level.Level.SceneName).LevelNumber)
+            .Max();
+    }
     #endregion
 }
