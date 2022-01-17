@@ -27,7 +27,7 @@ public class LevelDataLoader : MonoBehaviour
         {
             currentLevel = LevelOnPlay;
         }
-        LevelDataReference.instance.LevelData = GetLevelData(LevelOnPlay);
+        LevelDataReference.instance.LevelData = GetLevelData(currentLevel);
     }
     #endregion
 
