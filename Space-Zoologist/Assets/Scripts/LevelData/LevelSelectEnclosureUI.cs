@@ -2,10 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class LevelSelectEnclosureUI : MonoBehaviour
+public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    #region Public Properties
+    public bool Interactable => LatestLevelQualified.LevelNumber > enclosure.Level.ID.LevelNumber;
+    #endregion
+
+    #region Private Properties
+    private LevelID LatestLevelQualified
+    {
+        get
+        {
+            if (overrideLatestLevelQualified)
+            {
+                return levelOverride;
+            }
+            else return SaveData.LatestLevelQualified;
+        }
+    }
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Component used to display the name of the level")]
@@ -14,12 +33,14 @@ public class LevelSelectEnclosureUI : MonoBehaviour
     [Tooltip("Component used to display the image of the level")]
     private Image image;
     [SerializeField]
-    [Tooltip("Button used to take the player to this level enclosure")]
-    private Button button;
+    [Tooltip("Outline object that appears when the button is hovered over")]
+    private GameObject outline;
     #endregion
 
     #region Private Fields
     private LevelData enclosure;
+    private bool overrideLatestLevelQualified = false;
+    private LevelID levelOverride = LevelID.Invalid;
     #endregion
 
     #region Public Methods
@@ -32,10 +53,45 @@ public class LevelSelectEnclosureUI : MonoBehaviour
         title.text = enclosure.Level.Name;
         image.sprite = enclosure.Level.Sprite;
 
-        // Load the level when the button is clicked
-        // TODO: disable the button if this level is not all the way finished
-        button.onClick.AddListener(LoadLevel);
+        // Disable the outline
+        outline.SetActive(false);
     }
     public void LoadLevel() => LevelDataLoader.LoadLevel(enclosure);
+    public void OverrideLatestLevelQualified(LevelID levelOverride)
+    {
+        overrideLatestLevelQualified = true;
+        this.levelOverride = levelOverride;
+
+        // Disable outline in case this makes the ui not interactable anymore
+        outline.SetActive(false);
+    }
+    public void ClearOverrideLatestLevelQualified()
+    {
+        overrideLatestLevelQualified = false;
+    }
+    #endregion
+
+    #region Pointer Interface Implementations
+    public void OnPointerEnter(PointerEventData data)
+    {
+        if (Interactable)
+        {
+            outline.SetActive(true);
+        }
+    }
+    public void OnPointerExit(PointerEventData data)
+    {
+        if (Interactable)
+        {
+            outline.SetActive(false);
+        }
+    }
+    public void OnPointerClick(PointerEventData data)
+    {
+        if (Interactable)
+        {
+            LoadLevel();
+        }
+    }
     #endregion
 }

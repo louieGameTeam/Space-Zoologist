@@ -15,18 +15,20 @@ public class LevelNavigator : MonoBehaviour
     private LayoutGroup levelUIGroup;
     #endregion
 
+    #region Private Fields
+    private LevelSelectUI[] uis;
+    #endregion
+
     public void Start()
     {
-        //string LastLevel = GameManager.LoadGame();
-        //int lastLvl = GameManager.ExtractLevelInfo(LastLevel)[0];
-        //int lastEnc = GameManager.ExtractLevelInfo(LastLevel)[1];
-
         // Create a level select UI for every level
         int maxLevel = LevelDataLoader.MaxLevel();
+        uis = new LevelSelectUI[maxLevel + 1];
+
         for(int level = 0; level <= maxLevel; level++)
         {
-            LevelSelectUI ui = Instantiate(levelUIPrefab, levelUIGroup.transform);
-            ui.Setup(level);
+            uis[level] = Instantiate(levelUIPrefab, levelUIGroup.transform);
+            uis[level].Setup(level);
         }
      }
 }

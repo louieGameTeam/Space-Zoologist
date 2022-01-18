@@ -1,14 +1,12 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class SaveData
 {
     #region Public Properties
-    public static LevelID LatestLevelCompleted => Instance.latestLevelCompleted;
+    public static LevelID LatestLevelQualified => Instance.latestLevelQualified;
     #endregion
 
     #region Private Properties
@@ -27,8 +25,8 @@ public class SaveData
 
     #region Private Editor Fields
     [SerializeField]
-    [Tooltip("Name of the latest level completed by the player")]
-    private LevelID latestLevelCompleted = new LevelID(0, 1);
+    [Tooltip("ID of the latest level that the player is qualified to attempt")]
+    private LevelID latestLevelQualified = new LevelID(1, 1);
     #endregion
 
     #region Public Fields
@@ -42,6 +40,17 @@ public class SaveData
     #endregion
 
     #region Public Methods
+    public static void QualifyForLevel(LevelID level)
+    {
+        if (level > Instance.latestLevelQualified)
+        {
+            Instance.latestLevelQualified = level;
+            Save();
+        }
+    }
+    #endregion
+
+    #region File Manipulation Methods
     public static SaveData Load()
     {
         // If save file exists then load the contents

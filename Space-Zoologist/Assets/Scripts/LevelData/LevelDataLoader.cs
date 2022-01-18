@@ -32,6 +32,7 @@ public class LevelDataLoader : MonoBehaviour
     #endregion
 
     #region Public Methods
+    public static void LoadLatestQualifiedLevel() => LoadLevel(SaveData.LatestLevelQualified);
     public static void LoadLevel(LevelData level) => LoadLevel(level.Level.SceneName);
     public static void LoadLevel(LevelID levelToLoad) => LoadLevel(levelToLoad.LevelName);
     public static void LoadLevel(string levelToLoad)

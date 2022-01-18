@@ -134,72 +134,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Loading Functions
-    public static int[] ExtractLevelInfo(string levelName)
-    {
-        levelName = levelName.Trim();
-        levelName = levelName.Replace("Level", "");
-        string[] temp = levelName.Split('E');
-        int[] info = new int[temp.Length];
-        for (int i = 0; i < info.Length; i++)
-        {
-            info[i] = int.Parse(temp[i]);
-        }
-        return info;
-    }
-
-    public void SaveGame(string curLevel)
-    {
-        string name = "sz.save";
-        string fullPath = Path.Combine(Application.persistentDataPath, name);
-        string prevLevel = LoadGame();
-        int prev = ExtractLevelInfo(prevLevel)[0];
-        int cur = ExtractLevelInfo(curLevel)[0];
-        if (cur < prev) return;
-        try
-        {
-            File.WriteAllText(fullPath, curLevel);
-        }
-        catch
-        {
-            Debug.LogError("Serialization error, NOT saved to protect existing saves");
-            return;
-        }
-        Debug.Log("Game Saved to: " + fullPath);
-    }
-
-    public void ClearSave()
-    {
-        string name = "sz.save";
-        string fullPath = Path.Combine(Application.persistentDataPath, name);
-        try
-        {
-            File.WriteAllText(fullPath, "Level1E1");
-        }
-        catch
-        {
-            Debug.LogError("Serialization error.");
-            return;
-        }
-        Debug.Log("Game Data Reset.");
-    }
-
-    public static string LoadGame()
-    {
-        string name = "sz.save";
-        string fullPath = Path.Combine(Application.persistentDataPath, name);
-        try
-        {
-            string json = File.ReadAllText(fullPath);
-            if (json.Length > 15 || json.Length < 7) throw new System.FormatException("Level longer than expected.");
-            return json;
-        }
-        catch (System.Exception e)
-        {
-            print("Error reading from or no save file");
-            return "Level1E1";
-        }
-    }
-
     public void SaveMap(string name = null, bool preset = true)
     {
         name = name ?? LevelOnPlay;
@@ -300,8 +234,6 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevelData()
     {
-        SaveGame(m_levelData.Level.SceneName);
-
         // set balance
         Balance = LevelData.StartingBalance;
 
