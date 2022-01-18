@@ -26,11 +26,11 @@ public class SaveData
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("ID of the latest level that the player is qualified to attempt")]
-    private LevelID latestLevelQualified = new LevelID(1, 1);
+    private LevelID latestLevelQualified = new LevelID(2, 4);
     #endregion
 
     #region Public Fields
-    public static readonly string fileName = "sz.save";
+    public static readonly string fileName = "spacez.save";
     public static readonly string filePath = Path.Combine(Application.persistentDataPath, fileName);
     #endregion
 
