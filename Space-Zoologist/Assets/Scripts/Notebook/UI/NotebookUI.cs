@@ -63,6 +63,9 @@ public class NotebookUI : MonoBehaviour
     // This has to be used because we don't know for sure if conversation manager instance is null or not
     // at the beginning of the scene
     private bool conversationCallbackSet = false;
+
+    //Band-aid fix for dialogue offset being bugged due to event listener ordering
+    private bool frameDialogueOffsetLock = false;
     #endregion
 
     #region Monobehaviour Messages
@@ -73,7 +76,7 @@ public class NotebookUI : MonoBehaviour
 
         // Set the configuration of the notebook data
         data.SetConfig(config);
-        
+
         // Add the current level
         data.TryAddLevelID(LevelID.FromCurrentSceneName());
 
@@ -81,9 +84,9 @@ public class NotebookUI : MonoBehaviour
         GameManager instance = GameManager.Instance;
 
         // If the instance exists then unlock all item id's that exist in the list of items
-        if(instance)
+        if (instance)
         {
-            foreach(LevelData.ItemData item in instance.LevelData.ItemQuantities)
+            foreach (LevelData.ItemData item in instance.LevelData.ItemQuantities)
             {
                 data.UnlockItem(item.itemObject.ItemID);
             }
@@ -118,7 +121,7 @@ public class NotebookUI : MonoBehaviour
         if (ConversationManager.Instance)
         {
             // If the callbacks have not been set yet then set them now
-            if(!conversationCallbackSet)
+            if (!conversationCallbackSet)
             {
                 ConversationManager.OnConversationStarted += SetDialogueOffsets;
                 ConversationManager.OnConversationEnded += SetDefaultOffsets;
@@ -184,7 +187,23 @@ public class NotebookUI : MonoBehaviour
         if (dialogueActive) SetDialogueOffsets();
         else SetDefaultOffsets();
     }
-    private void SetDefaultOffsets() => root.SetOffsets(defaultSize);
-    private void SetDialogueOffsets() => root.SetOffsets(dialogueSize);
+
+    private void SetDefaultOffsets()
+    {
+        if (!frameDialogueOffsetLock)
+            root.SetOffsets(defaultSize);
+    }
+    private void SetDialogueOffsets()
+    {
+        root.SetOffsets(dialogueSize);
+        frameDialogueOffsetLock = true;
+        StartCoroutine(Corout_FrameDialogueOffsetUnlocking());
+    }
+    private IEnumerator Corout_FrameDialogueOffsetUnlocking()
+    {
+        yield return new WaitForEndOfFrame();
+        frameDialogueOffsetLock = false;
+    }
+
     #endregion
 }
