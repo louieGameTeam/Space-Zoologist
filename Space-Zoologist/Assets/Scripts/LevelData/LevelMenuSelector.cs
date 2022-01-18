@@ -10,6 +10,7 @@ public class LevelMenuSelector : MonoBehaviour
 
     private void Awake()
     {
+        // Why on earth are you destroying the level data loader?!
         LevelDataLoader levelDataLoader = FindObjectOfType<LevelDataLoader>();
         if (levelDataLoader != null)
         {

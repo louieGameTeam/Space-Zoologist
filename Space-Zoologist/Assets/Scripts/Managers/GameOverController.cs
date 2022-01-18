@@ -59,8 +59,7 @@ public class GameOverController : MonoBehaviour
             // When the conversation ends then show the fail window
             restartConversation.OnConversationEnded(() =>
             {
-                LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
-                OpenWindow(failWindow, () => levelLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
+                OpenWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
             });
         }
     }
@@ -91,10 +90,12 @@ public class GameOverController : MonoBehaviour
     }
     private void OnSuccessConversationEnded()
     {
-        // Get the level data loader
-        LevelDataLoader levelLoader = FindObjectOfType<LevelDataLoader>();
+        // Update the save data with the id of the level we are qualified to go to
+        LevelEndingData ending = GameManager.Instance.LevelData.Ending;
+        SaveData.QualifyForLevel(ending.GetNextLevelID());
+
         // Open the success window
-        OpenWindow(successWindow, () => levelLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));
+        OpenWindow(successWindow, () => LevelDataLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {
