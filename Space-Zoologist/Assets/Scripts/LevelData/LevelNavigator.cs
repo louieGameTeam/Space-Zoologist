@@ -19,6 +19,7 @@ public class LevelNavigator : MonoBehaviour
     private LevelSelectUI[] uis;
     #endregion
 
+    #region Monobehaviour Messages
     public void Start()
     {
         // Create a level select UI for every level
@@ -30,5 +31,31 @@ public class LevelNavigator : MonoBehaviour
             uis[level] = Instantiate(levelUIPrefab, levelUIGroup.transform);
             uis[level].Setup(level);
         }
-     }
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            if (uis[0].Overridden)
+            {
+                foreach (LevelSelectUI ui in uis)
+                {
+                    ui.ClearOverride();
+                }
+            }
+            else
+            {
+                // Get the level just after the max level
+                int maxLevel = LevelDataLoader.MaxLevel() + 1;
+                LevelID maxID = new LevelID(maxLevel, 1);
+
+                // Override all ui's to the max level
+                foreach(LevelSelectUI ui in uis)
+                {
+                    ui.SetOverride(maxID);
+                }
+            }
+        }
+    }
+    #endregion
 }

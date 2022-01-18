@@ -26,7 +26,7 @@ public class SaveData
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("ID of the latest level that the player is qualified to attempt")]
-    private LevelID latestLevelQualified = new LevelID(2, 4);
+    private LevelID latestLevelQualified = new LevelID(1, 1);
     #endregion
 
     #region Public Fields
