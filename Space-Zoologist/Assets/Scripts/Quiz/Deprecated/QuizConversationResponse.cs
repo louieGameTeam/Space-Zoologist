@@ -45,14 +45,7 @@ public class QuizConversationResponse
     #region Private Methods
     private void OnConversationEnded()
     {
-        // Try to get the level data loader
-        LevelDataLoader loader = Object.FindObjectOfType<LevelDataLoader>();
-
-        // If a loader was found then use it to load the given level
-        if (loader)
-        {
-            loader.LoadLevel(nextLevelName);
-        }
+        LevelDataLoader.LoadLevel(nextLevelName);
     }
     #endregion
 }

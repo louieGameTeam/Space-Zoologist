@@ -11,7 +11,7 @@ public class OptionsMenu : MonoBehaviour
     public void CloseOptionsMenu()
     {
         this.gameObject.SetActive(false);
-        GameManager.Instance.TryToUnpause();
+        GameManager.Instance.TryToUnpause("OptionsMenu");
         //this.PauseManager.PauseButton.SetActive(true);
         this.IngameUI.SetActive(true);
     }
@@ -20,7 +20,7 @@ public class OptionsMenu : MonoBehaviour
     {
         this.gameObject.SetActive(true);
         this.IngameUI.SetActive(false);
-        GameManager.Instance.TryToPause();
+        GameManager.Instance.TryToPause("OptionsMenu");
         //this.PauseManager.PauseButton.SetActive(true);
     }
 
