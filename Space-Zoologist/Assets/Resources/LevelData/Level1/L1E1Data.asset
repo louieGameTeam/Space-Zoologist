@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
+  m_Name: L1E1Data
+  m_EditorClassIdentifier: 
+  Level: {fileID: 11400000, guid: 07f3acd3171dd473b8414ffc249451a1, type: 2}
+  startingBalance: 375
+  MapWidth: 29
+  MapHeight: 29
+  LevelObjectiveData: {fileID: 11400000, guid: e39f7b2122c9a4760be98e31f69160c4, type: 2}
+  foodSources:
+  - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
+  - {fileID: 11400000, guid: 7acff68d8eb9046449b02b2743067688, type: 2}
+  - {fileID: 11400000, guid: 09079a79eb6ae41a887cdcfd15c7b359, type: 2}
+  - {fileID: 11400000, guid: b65662df451a6444ebdb1ef6d79cddb1, type: 2}
+  animalSpecies:
+  - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
+  itemQuantities:
+  - itemObject: {fileID: 11400000, guid: aed977f8bd1866647ae7b98411756bc2, type: 2}
+    initialAmount: 10
+  - itemObject: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
+    initialAmount: 10
+  - itemObject: {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
+    initialAmount: 10
+  - itemObject: {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
+    initialAmount: 20
+  - itemObject: {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
+    initialAmount: 30
+  - itemObject: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+    initialAmount: 2
+  - itemObject: {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}
+    initialAmount: 3
+  - itemObject: {fileID: 11400000, guid: 011aebdeac608401ea2bece03b01dd8c, type: 2}
+    initialAmount: 2
+  - itemObject: {fileID: 11400000, guid: 38cda74f699f241129cf6815fa33a73c, type: 2}
+    initialAmount: 3
+  - itemObject: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
+    initialAmount: 5
+  levelMusic: {fileID: 8300000, guid: 65ae9ed7819c7476da454ff3d1839b9d, type: 3}
+  startingPositions:
+  - {x: 10, y: 1, z: 0}
+  startingConversation: {fileID: 658464635055896724, guid: fd3de6ee798c0454abc38aae8747f99b,
+    type: 3}
+  defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
+    type: 3}
+  ending:
+    isQuiz: 1
+    normalConversation: {fileID: 37979361775321873, guid: 150e836e8621c4ac79df01c7dafa057f,
+      type: 3}
+    nextLevelID:
+      levelNumber: 0
+      enclosureNumber: 0
+    quizConversation: {fileID: 8938176367728474889, guid: f6cf09b327d9283489e62435dc54420c,
+      type: 3}
+    nextLevelIDs:
+      levelIDs:
+      - levelNumber: 1
+        enclosureNumber: 2
+      - levelNumber: 1
+        enclosureNumber: 3
+      - levelNumber: 1
+        enclosureNumber: 4
+  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+    type: 3}

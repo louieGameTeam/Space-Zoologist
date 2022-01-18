@@ -16,7 +16,7 @@ public class ConversationFreezingScheduler : MonoBehaviour
     #endregion
 
     #region Public Methods
-    public void FreezeUntilConditionIsMet(Func<bool> predicate)
+    public void FreezeUntilConditionIsMet(Func<bool> predicate, Action onFreezeFinished = null)
     {
         if(freezeConversationRoutine != null)
         {
@@ -25,12 +25,12 @@ public class ConversationFreezingScheduler : MonoBehaviour
         }
 
         // Start the coroutine
-        freezeConversationRoutine = StartCoroutine(FreezeConversationUntilConditionIsMetRoutine(predicate));
+        freezeConversationRoutine = StartCoroutine(FreezeConversationUntilConditionIsMetRoutine(predicate, onFreezeFinished));
     }
     #endregion
 
     #region Private Methods
-    private IEnumerator FreezeConversationUntilConditionIsMetRoutine(Func<bool> predicate)
+    private IEnumerator FreezeConversationUntilConditionIsMetRoutine(Func<bool> predicate, Action onFreezeFinished)
     {
         if (ConversationManager.Instance)
         {
@@ -39,6 +39,9 @@ public class ConversationFreezingScheduler : MonoBehaviour
             ConversationManager.Instance.UnfreezeConversation();
         }
         else yield return null;
+
+        // Invoke freeze finished event, if it exists
+        onFreezeFinished?.Invoke();
     }
     #endregion
 }

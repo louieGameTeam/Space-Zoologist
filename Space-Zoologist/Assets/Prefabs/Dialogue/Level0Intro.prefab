@@ -46,215 +46,208 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 151
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":521,\"yPos\":-10581},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"No,
-    I'm the new engineer, and you are...who, again?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":810,\"yPos\":-10578},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Xenobiology?
-    No, I\u2019m an engineer!\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":415,\"yPos\":-10239},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"You...think?\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":830,\"yPos\":-10243},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Nice
-    to meet you. I\u2019ve heard so much about your work.\",\"parentUIDs\":[8,6,6],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":418,\"yPos\":-9874},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"\u2026\",\"parentUIDs\":[11,11],\"SpeechUID\":13},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":738,\"yPos\":-9893},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Got
-    it, Dr. Star!\",\"parentUIDs\":[13,11,11],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":582,\"yPos\":-9437},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"What\u2019s
-    the Command Center?\",\"parentUIDs\":[17,17],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":589,\"yPos\":-8806},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"R...ROCTM?
-    What are all these letters for?\",\"parentUIDs\":[24,24],\"SpeechUID\":26},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":440,\"yPos\":-8441},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"T-Test?!\",\"parentUIDs\":[28,28],\"SpeechUID\":30},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":719,\"yPos\":-8441},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"Got
-    it.\",\"parentUIDs\":[30,28,28],\"SpeechUID\":32},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":440,\"yPos\":-7472},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"Yeah,
-    got it all down!\",\"parentUIDs\":[39,39],\"SpeechUID\":41},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":704,\"yPos\":-7477},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"Uhh...Can
-    you run that all by me one more time?\",\"parentUIDs\":[41,39,39],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":481,\"yPos\":-6911},\"ID\":49,\"TMPFontGUID\":null,\"Text\":\"A...venerable
-    kernel of what?\",\"parentUIDs\":[48,48],\"SpeechUID\":50},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":724,\"yPos\":-6912},\"ID\":51,\"TMPFontGUID\":null,\"Text\":\"But
-    is it a vast repository of behavioral observations?\",\"parentUIDs\":[50,48,48],\"SpeechUID\":52},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":543,\"yPos\":-4060},\"ID\":68,\"TMPFontGUID\":null,\"Text\":\"They
-    look... adorable!\",\"parentUIDs\":[67,67],\"SpeechUID\":69},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":815,\"yPos\":-4074},\"ID\":70,\"TMPFontGUID\":null,\"Text\":\"They
-    look... delicious!\",\"parentUIDs\":[69,67,67],\"SpeechUID\":71},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":853,\"yPos\":-3428},\"ID\":76,\"TMPFontGUID\":null,\"Text\":\"The
-    Star Cow, Eligans Impar.\",\"parentUIDs\":[75,75],\"SpeechUID\":149},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":493,\"yPos\":-3427},\"ID\":79,\"TMPFontGUID\":null,\"Text\":\"Flanweed,
-    or Coruscent Laminar.\",\"parentUIDs\":[75,75],\"SpeechUID\":80},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":524,\"yPos\":-2589},\"ID\":87,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
-    awesome!\",\"parentUIDs\":[86,86],\"SpeechUID\":88},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":781,\"yPos\":-2585},\"ID\":89,\"TMPFontGUID\":null,\"Text\":\"Do
-    I get to build stuff yet?\",\"parentUIDs\":[88,86,86],\"SpeechUID\":90},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":663,\"yPos\":-1913},\"ID\":93,\"TMPFontGUID\":null,\"Text\":\"Wait\u2026
-    Are those... costs? Am I paying for all of this?\",\"parentUIDs\":[92,92],\"SpeechUID\":94},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-282},\"ID\":105,\"TMPFontGUID\":null,\"Text\":\"Wait,
-    so am I just supposed to wait around here, then?\",\"parentUIDs\":[104,104],\"SpeechUID\":106},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":562,\"yPos\":741},\"ID\":116,\"TMPFontGUID\":null,\"Text\":\"Of
-    course I will!\",\"parentUIDs\":[115,115],\"SpeechUID\":117},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":848,\"yPos\":732},\"ID\":118,\"TMPFontGUID\":null,\"Text\":\"Wait...So
-    if I mess up the animals die?\",\"parentUIDs\":[117,115,115],\"SpeechUID\":119},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":604,\"yPos\":1308},\"ID\":123,\"TMPFontGUID\":null,\"Text\":\"Wait,
-    so we\u2019re time travelers too? Awesome!\",\"parentUIDs\":[122,122],\"SpeechUID\":124},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":827,\"yPos\":1309},\"ID\":125,\"TMPFontGUID\":null,\"Text\":\"Wait,
-    you guys broke time? How did you do that?\",\"parentUIDs\":[124,122,122],\"SpeechUID\":126},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":591,\"yPos\":2432},\"ID\":135,\"TMPFontGUID\":null,\"Text\":\"Wait...You\u2019re
-    just going to leave me?!\",\"parentUIDs\":[134,134],\"SpeechUID\":136},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":865,\"yPos\":2426},\"ID\":137,\"TMPFontGUID\":null,\"Text\":\"Alright,
-    I\u2019ll give it a shot!\",\"parentUIDs\":[136,134,134],\"SpeechUID\":138}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":707,\"yPos\":-10682},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Gooood
+  CurrentIDCounter: 152
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":143.5,\"yPos\":-7885.5},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"No,
+    I'm the new engineer, and you are...who, again?\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":432.5,\"yPos\":-7882.5},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Xenobiology?
+    No, I\u2019m an engineer!\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":37.5,\"yPos\":-7543.5},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"You...think?\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":452.5,\"yPos\":-7547.5},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Nice
+    to meet you. I\u2019ve heard so much about your work.\",\"parentUIDs\":[8,6,6],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":40.5,\"yPos\":-7178.5},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"\u2026\",\"parentUIDs\":[11,11],\"SpeechUID\":13},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":360.5,\"yPos\":-7197.5},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Got
+    it, Dr. Star!\",\"parentUIDs\":[13,11,11],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":204.5,\"yPos\":-6741.5},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"What\u2019s
+    the Command Center?\",\"parentUIDs\":[17,17],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":211.5,\"yPos\":-6110.5},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"R...ROCTM?
+    What are all these letters for?\",\"parentUIDs\":[24,24],\"SpeechUID\":26},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":62.5,\"yPos\":-5745.5},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"T-Test?!\",\"parentUIDs\":[28,28],\"SpeechUID\":30},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":341.5,\"yPos\":-5745.5},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"Got
+    it.\",\"parentUIDs\":[30,28,28],\"SpeechUID\":32},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":62.5,\"yPos\":-4776.5},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"Yeah,
+    got it all down!\",\"parentUIDs\":[39,39],\"SpeechUID\":41},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":326.5,\"yPos\":-4781.5},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"Uhh...Can
+    you run that all by me one more time?\",\"parentUIDs\":[41,39,39],\"SpeechUID\":43},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":103.5,\"yPos\":-4215.5},\"ID\":49,\"TMPFontGUID\":null,\"Text\":\"A...venerable
+    kernel of what?\",\"parentUIDs\":[48,48],\"SpeechUID\":50},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":346.5,\"yPos\":-4216.5},\"ID\":51,\"TMPFontGUID\":null,\"Text\":\"But
+    is it a vast repository of behavioral observations?\",\"parentUIDs\":[50,48,48],\"SpeechUID\":52},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":165.5,\"yPos\":-1364.5},\"ID\":68,\"TMPFontGUID\":null,\"Text\":\"They
+    look... adorable!\",\"parentUIDs\":[67,67],\"SpeechUID\":69},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":437.5,\"yPos\":-1378.5},\"ID\":70,\"TMPFontGUID\":null,\"Text\":\"They
+    look... delicious!\",\"parentUIDs\":[69,67,67],\"SpeechUID\":71},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":475.5,\"yPos\":-732.5},\"ID\":76,\"TMPFontGUID\":null,\"Text\":\"The
+    Star Cow, Eligans Impar.\",\"parentUIDs\":[75,75],\"SpeechUID\":149},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":115.5,\"yPos\":-731.5},\"ID\":79,\"TMPFontGUID\":null,\"Text\":\"Flanweed,
+    or Coruscent Laminar.\",\"parentUIDs\":[75,75],\"SpeechUID\":80},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":146.5,\"yPos\":106.5},\"ID\":87,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    awesome!\",\"parentUIDs\":[86,86],\"SpeechUID\":88},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":403.5,\"yPos\":110.5},\"ID\":89,\"TMPFontGUID\":null,\"Text\":\"Do
+    I get to build stuff yet?\",\"parentUIDs\":[88,86,86],\"SpeechUID\":90},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":2385.5},\"ID\":105,\"TMPFontGUID\":null,\"Text\":\"Wait,
+    so am I just supposed to wait around here, then?\",\"parentUIDs\":[104,104],\"SpeechUID\":151},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":184.5,\"yPos\":3436.5},\"ID\":116,\"TMPFontGUID\":null,\"Text\":\"Of
+    course I will!\",\"parentUIDs\":[115,115],\"SpeechUID\":117},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":470.5,\"yPos\":3427.5},\"ID\":118,\"TMPFontGUID\":null,\"Text\":\"Wait...So
+    if I mess up the animals die?\",\"parentUIDs\":[117,115,115],\"SpeechUID\":119},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":226.5,\"yPos\":4003.5},\"ID\":123,\"TMPFontGUID\":null,\"Text\":\"Wait,
+    so we\u2019re time travelers too? Awesome!\",\"parentUIDs\":[122,122],\"SpeechUID\":124},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":449.5,\"yPos\":4004.5},\"ID\":125,\"TMPFontGUID\":null,\"Text\":\"Wait,
+    you guys broke time? How did you do that?\",\"parentUIDs\":[124,122,122],\"SpeechUID\":126},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":213.5,\"yPos\":5127.5},\"ID\":135,\"TMPFontGUID\":null,\"Text\":\"Wait...You\u2019re
+    just going to leave me?!\",\"parentUIDs\":[134,134],\"SpeechUID\":136},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":487.5,\"yPos\":5121.5},\"ID\":137,\"TMPFontGUID\":null,\"Text\":\"Alright,
+    I\u2019ll give it a shot!\",\"parentUIDs\":[136,134,134],\"SpeechUID\":138}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":329.5,\"yPos\":-7986.5},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Gooood
     morning! You must be that promising new Xenobiology student everyone\u2019s been
-    talking about, right?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":499,\"yPos\":-10492},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Oh,
-    right. Sorry, I suppose some introductions are in order.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":797,\"yPos\":-10493},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Details,
+    talking about, right?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":121.5,\"yPos\":-7796.5},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    right. Sorry, I suppose some introductions are in order.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":419.5,\"yPos\":-7797.5},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Details,
     details. Don\u2019t worry about it, no one\u2019s perfect, kid. You\u2019ll do
-    fine.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":657,\"yPos\":-10360},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+    fine.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":279.5,\"yPos\":-7664.5},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
     Dr. Aurora Star, and I\u2019m in charge of zoology here at Natura Serva 22. At
-    least, I think?\",\"parentUIDs\":[5,3,3,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[7,9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":412,\"yPos\":-10139},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Turnover\u2019s
+    least, I think?\",\"parentUIDs\":[5,3,3,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[7,9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":34.5,\"yPos\":-7443.5},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Turnover\u2019s
     kind of a problem around here, so it\u2019s hard to keep track. But that\u2019s
-    why you\u2019re here!\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":844,\"yPos\":-10137},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    why you\u2019re here!\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":466.5,\"yPos\":-7441.5},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Oh,
     please. Stop...No need to go into any of that\u2026 Unless you really want to?
-    No? Ok...\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":597,\"yPos\":-9999},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Anyways,
-    you can just call me Dr. Star, \u2018cause I\u2019m the star of the show!\",\"parentUIDs\":[10,8,8,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[12,14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":404,\"yPos\":-9807},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Hey,
-    come on, it was a joke. Really. I\u2019m not that conceited. Usually.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":732,\"yPos\":-9813},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"There
-    we go! That\u2019s the spirit!\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":592,\"yPos\":-9653},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Now
+    No? Ok...\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":219.5,\"yPos\":-7303.5},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Anyways,
+    you can just call me Dr. Star, \u2018cause I\u2019m the star of the show!\",\"parentUIDs\":[10,8,8,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[12,14],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":26.5,\"yPos\":-7111.5},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"Hey,
+    come on, it was a joke. Really. I\u2019m not that conceited. Usually.\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":354.5,\"yPos\":-7117.5},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"There
+    we go! That\u2019s the spirit!\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":214.5,\"yPos\":-6957.5},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Now
     that we know each other, let\u2019s get you up to speed! There\u2019s a ton of
-    work to be done around here, and we\u2019ll need your help.\",\"parentUIDs\":[15,13,13,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":590,\"yPos\":-9538},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"First,
-    let\u2019s get you comfortable with the Command Center!\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[18],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":589,\"yPos\":-9359},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    work to be done around here, and we\u2019ll need your help.\",\"parentUIDs\":[15,13,13,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":212.5,\"yPos\":-6842.5},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"First,
+    let\u2019s get you comfortable with the Command Center!\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[18],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":211.5,\"yPos\":-6663.5},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
     your workspace, communicator, and research notebook all wrapped into one! It\u2019s
-    what we\u2019re using to talk right now!\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":586,\"yPos\":-9259},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"The
+    what we\u2019re using to talk right now!\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":20,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":208.5,\"yPos\":-6563.5},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"The
     main view usually will show the enclosure you\u2019re working on -- but don\u2019t
-    worry about that for now. We\u2019ll get back to it.\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":21,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":596,\"yPos\":-9142},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"For
+    worry about that for now. We\u2019ll get back to it.\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":21,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":218.5,\"yPos\":-6446.5},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"For
     now, just take a look at the icons on the bottom of the screen. This is where
-    you\u2019ll navigate to most of the Command Center\u2019s functions.\",\"parentUIDs\":[20,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":22,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":596,\"yPos\":-9038},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"For
-    now, try pushing the notebook button, which will open your research notebook!\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":584,\"yPos\":-8910},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Great!
+    you\u2019ll navigate to most of the Command Center\u2019s functions.\",\"parentUIDs\":[20,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":22,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":218.5,\"yPos\":-6342.5},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"For
+    now, try pushing the notebook button, which will open your research notebook!\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":206.5,\"yPos\":-6214.5},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Great!
     Now, I know this thing can be pretty imposing at first, so we\u2019ll start slow.
-    Just stick to the home screen for now.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[25],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":575,\"yPos\":-8738},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"I
+    Just stick to the home screen for now.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[25],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":197.5,\"yPos\":-6042.5},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"I
     thought you\u2019d never ask! Those letters stand for each of our core engineering
-    principles.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":569,\"yPos\":-8642},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"ROCTM
+    principles.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":191.5,\"yPos\":-5946.5},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"ROCTM
     isn\u2019t a great acronym, though, so most of the new hires just remember them
-    as \u201CROCeT Man.\u201D Way easier to remember!\",\"parentUIDs\":[26,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":28,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":558,\"yPos\":-8546},\"ID\":28,\"TMPFontGUID\":null,\"Text\":\"Now
+    as \u201CROCeT Man.\u201D Way easier to remember!\",\"parentUIDs\":[26,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":28,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":180.5,\"yPos\":-5850.5},\"ID\":28,\"TMPFontGUID\":null,\"Text\":\"Now
     let\u2019s get to it! I provided a handy blank space next to each letter that
-    you should use to write these down. They\u2019ll be on the test!\",\"parentUIDs\":[27,27],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[29,31],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":434,\"yPos\":-8376},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"Oh?
+    you should use to write these down. They\u2019ll be on the test!\",\"parentUIDs\":[27,27],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[29,31],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":56.5,\"yPos\":-5680.5},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"Oh?
     Don\u2019t worry, it\u2019s not like the tests in school. We call it a \u201Creport
-    back\u201D, and it\u2019s just a casual way to check how you\u2019re coming along.\",\"parentUIDs\":[29,29],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":700,\"yPos\":-8363},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Good,
+    back\u201D, and it\u2019s just a casual way to check how you\u2019re coming along.\",\"parentUIDs\":[29,29],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":322.5,\"yPos\":-5667.5},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Good,
     but just so you know, it\u2019s not like a normal test. We call it a \u201Creport
-    back\u201D, and it\u2019s just a casual way to check how you\u2019re coming along.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":536,\"yPos\":-8202},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"R
-    stands for \u201CResearch what is already known.\u201D\",\"parentUIDs\":[32,30,43,30,32,43],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":576,\"yPos\":-8100},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"O
-    stands for \u201CObserve the current situation.\u201D\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":35,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":561,\"yPos\":-8011},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"C
-    stands for \u201CPropose Concepts to modify the environment.\u201D\",\"parentUIDs\":[34,34],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":36,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":567,\"yPos\":-7903},\"ID\":36,\"TMPFontGUID\":null,\"Text\":\"T
-    stands for \u201CTest the effect of the changes.\u201D\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":37,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":583,\"yPos\":-7798},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"And
-    finally, M stands for \u201CRecord key Metrics.\u201D\",\"parentUIDs\":[36,36],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":38,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":578,\"yPos\":-7686},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"Put
-    it all together and you get R-O-C-T-M, or ROCeT Man!\",\"parentUIDs\":[37,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":577,\"yPos\":-7580},\"ID\":39,\"TMPFontGUID\":null,\"Text\":\"Did
-    you get all that? Make sure to write it down, or you\u2019ll wish you had later!\",\"parentUIDs\":[38,38],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[40,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":444,\"yPos\":-7408},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Great!
-    I knew there was a reason we hired you!\",\"parentUIDs\":[40,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":1009,\"yPos\":-7583},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Really?
+    back\u201D, and it\u2019s just a casual way to check how you\u2019re coming along.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":158.5,\"yPos\":-5506.5},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"R
+    stands for \u201CResearch what is already known.\u201D\",\"parentUIDs\":[32,30,43,30,32,43],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":198.5,\"yPos\":-5404.5},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"O
+    stands for \u201CObserve the current situation.\u201D\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":35,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":183.5,\"yPos\":-5315.5},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"C
+    stands for \u201CPropose Concepts to modify the environment.\u201D\",\"parentUIDs\":[34,34],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":36,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":189.5,\"yPos\":-5207.5},\"ID\":36,\"TMPFontGUID\":null,\"Text\":\"T
+    stands for \u201CTest the effect of the changes.\u201D\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":37,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":205.5,\"yPos\":-5102.5},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"And
+    finally, M stands for \u201CRecord key Metrics.\u201D\",\"parentUIDs\":[36,36],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":38,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":200.5,\"yPos\":-4990.5},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"Put
+    it all together and you get R-O-C-T-M, or ROCeT Man!\",\"parentUIDs\":[37,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":199.5,\"yPos\":-4884.5},\"ID\":39,\"TMPFontGUID\":null,\"Text\":\"Did
+    you get all that? Make sure to write it down, or you\u2019ll wish you had later!\",\"parentUIDs\":[38,38],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[40,42],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":66.5,\"yPos\":-4712.5},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Great!
+    I knew there was a reason we hired you!\",\"parentUIDs\":[40,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":631.5,\"yPos\":-4887.5},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Really?
     But I put so much heart into it...Ok, but make sure you write everything down
-    this time, please.\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":579,\"yPos\":-7267},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"Next,
+    this time, please.\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":201.5,\"yPos\":-4571.5},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"Next,
     let\u2019s dive a bit deeper into the notebook. Could you flip to the research
-    tab, please?\",\"parentUIDs\":[41,41],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":47,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":601,\"yPos\":-7146},\"ID\":47,\"TMPFontGUID\":null,\"Text\":\"Great!
+    tab, please?\",\"parentUIDs\":[41,41],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":47,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":223.5,\"yPos\":-4450.5},\"ID\":47,\"TMPFontGUID\":null,\"Text\":\"Great!
     In this section you\u2019ll find all the research we\u2019ve gathered about the
-    various species endemic to Planet X.\",\"parentUIDs\":[45,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":48,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":607,\"yPos\":-7023},\"ID\":48,\"TMPFontGUID\":null,\"Text\":\"We\u2019ve
+    various species endemic to Planet X.\",\"parentUIDs\":[45,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":48,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":229.5,\"yPos\":-4327.5},\"ID\":48,\"TMPFontGUID\":null,\"Text\":\"We\u2019ve
     got transport logs, observation notes, you name it! Your notebook is a veritable
-    cornucopia of zoological examinations!\",\"parentUIDs\":[47,47],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[49,51],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":478,\"yPos\":-6810},\"ID\":50,\"TMPFontGUID\":null,\"Text\":\"Oh.
+    cornucopia of zoological examinations!\",\"parentUIDs\":[47,47],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[49,51],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":100.5,\"yPos\":-4114.5},\"ID\":50,\"TMPFontGUID\":null,\"Text\":\"Oh.
     Sorry, my undergrad was in literature, so sometimes I get...caught up in the
-    moment.\",\"parentUIDs\":[49,49],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":698,\"yPos\":-6827},\"ID\":52,\"TMPFontGUID\":null,\"Text\":\"Oh,
-    you. I like you. you get it. Keep that up and I\u2019m sure you\u2019ll go far!\",\"parentUIDs\":[51,51],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":564,\"yPos\":-6643},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"Unfortunately,
+    moment.\",\"parentUIDs\":[49,49],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":320.5,\"yPos\":-4131.5},\"ID\":52,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    you. I like you. you get it. Keep that up and I\u2019m sure you\u2019ll go far!\",\"parentUIDs\":[51,51],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":186.5,\"yPos\":-3947.5},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"Unfortunately,
     we haven\u2019t really been able to organize or collate anything, so figuring
-    out what is and isn\u2019t important is going to mostly be up to you!\",\"parentUIDs\":[52,50,50,52],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":54,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":696,\"yPos\":-5397},\"ID\":54,\"TMPFontGUID\":null,\"Text\":\"Our
+    out what is and isn\u2019t important is going to mostly be up to you!\",\"parentUIDs\":[52,50,50,52],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":54,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":318.5,\"yPos\":-2701.5},\"ID\":54,\"TMPFontGUID\":null,\"Text\":\"Our
     research intern, Barry -- you\u2019ll love him, I\u2019m sure -- has gone in
     and highlighted some important sections, but\u2026You\u2019ll have to do most
-    of it yourself.\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":55,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-5282},\"ID\":55,\"TMPFontGUID\":null,\"Text\":\"You
+    of it yourself.\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":55,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-2586.5},\"ID\":55,\"TMPFontGUID\":null,\"Text\":\"You
     see, Juno\u2019s had Barry so busy running the enclosure resurfacer lately, that
-    he hasn\u2019t really gotten to all of the species\u2019 entries.\",\"parentUIDs\":[54,54],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":56,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-5182},\"ID\":56,\"TMPFontGUID\":null,\"Text\":\"There\u2019s
+    he hasn\u2019t really gotten to all of the species\u2019 entries.\",\"parentUIDs\":[54,54],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":56,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-2486.5},\"ID\":56,\"TMPFontGUID\":null,\"Text\":\"There\u2019s
     also some highlighted sections that aren\u2019t all that important, either, so
-    you might want to undo Barry\u2019s work, just to keep everything straight.\",\"parentUIDs\":[55,55],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":57,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-5082},\"ID\":57,\"TMPFontGUID\":null,\"Text\":\"Let\u2019s
+    you might want to undo Barry\u2019s work, just to keep everything straight.\",\"parentUIDs\":[55,55],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":57,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-2386.5},\"ID\":57,\"TMPFontGUID\":null,\"Text\":\"Let\u2019s
     try it out now! Go ahead and find the sentence describing the Zeig\u2019s terrain
-    preferences, and highlight it!\",\"parentUIDs\":[56,56],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":59,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-4882},\"ID\":59,\"TMPFontGUID\":null,\"Text\":\"Great!
+    preferences, and highlight it!\",\"parentUIDs\":[56,56],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":59,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-2186.5},\"ID\":59,\"TMPFontGUID\":null,\"Text\":\"Great!
     Now let\u2019s also practice unhighlighting passages. The first sentence in this
-    article isn\u2019t all that important, so go ahead and unhighlight it.\",\"parentUIDs\":[57,57],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":61,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-4682},\"ID\":61,\"TMPFontGUID\":null,\"Text\":\"Now,
+    article isn\u2019t all that important, so go ahead and unhighlight it.\",\"parentUIDs\":[57,57],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":61,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-1986.5},\"ID\":61,\"TMPFontGUID\":null,\"Text\":\"Now,
     this section over here is for you to take notes in. I\u2019ve provided some helpful
-    starting points, but feel free to fill in whatever you want.\",\"parentUIDs\":[59,59],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":63,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-4483},\"ID\":63,\"TMPFontGUID\":null,\"Text\":\"This
+    starting points, but feel free to fill in whatever you want.\",\"parentUIDs\":[59,59],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":63,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-1787.5},\"ID\":63,\"TMPFontGUID\":null,\"Text\":\"This
     is just the entry for one of the animals you\u2019ll be working with, though.
-    Let\u2019s try looking at another one.\",\"parentUIDs\":[61,61],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":64,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-4382},\"ID\":64,\"TMPFontGUID\":null,\"Text\":\"If
+    Let\u2019s try looking at another one.\",\"parentUIDs\":[61,61],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":64,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-1686.5},\"ID\":64,\"TMPFontGUID\":null,\"Text\":\"If
     you click up here, you\u2019ll be able to toggle between sections covering all
-    of the animals we work with here!\",\"parentUIDs\":[63,63],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":65,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-4282},\"ID\":65,\"TMPFontGUID\":null,\"Text\":\"For
+    of the animals we work with here!\",\"parentUIDs\":[63,63],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":65,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":-1586.5},\"ID\":65,\"TMPFontGUID\":null,\"Text\":\"For
     now, try switching over to the section devoted to my absolute favorites, the
-    Humidum Limax, or Flan.\",\"parentUIDs\":[64,64],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":67,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":698,\"yPos\":-4160},\"ID\":67,\"TMPFontGUID\":null,\"Text\":\"Ah!
-    There they are! Aren\u2019t they cute?\",\"parentUIDs\":[65,65],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[68,70],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":531,\"yPos\":-3990},\"ID\":69,\"TMPFontGUID\":null,\"Text\":\"Right?
+    Humidum Limax, or Flan.\",\"parentUIDs\":[64,64],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":67,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":320.5,\"yPos\":-1464.5},\"ID\":67,\"TMPFontGUID\":null,\"Text\":\"Ah!
+    There they are! Aren\u2019t they cute?\",\"parentUIDs\":[65,65],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[68,70],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":153.5,\"yPos\":-1294.5},\"ID\":69,\"TMPFontGUID\":null,\"Text\":\"Right?
     I\u2019m glad someone around here agrees! Everyone else refuses to even look
-    at them\u2026\",\"parentUIDs\":[68,68],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":816,\"yPos\":-4014},\"ID\":71,\"TMPFontGUID\":null,\"Text\":\"Now
+    at them\u2026\",\"parentUIDs\":[68,68],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":438.5,\"yPos\":-1318.5},\"ID\":71,\"TMPFontGUID\":null,\"Text\":\"Now
     hang on, there! We\u2019re here to save these animals, not eat them! But\u2026
-    Now that you mention it...\",\"parentUIDs\":[70,70],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":657,\"yPos\":-3884},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"Anyways,
+    Now that you mention it...\",\"parentUIDs\":[70,70],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":72,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":279.5,\"yPos\":-1188.5},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"Anyways,
     enough about that! One of the most important things you\u2019re going to be looking
-    for in these articles is what kind of food each species prefers.\",\"parentUIDs\":[71,69,69,71],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":671,\"yPos\":-3740},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"Remember,
+    for in these articles is what kind of food each species prefers.\",\"parentUIDs\":[71,69,69,71],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":293.5,\"yPos\":-1044.5},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"Remember,
     your job is to produce artificial habitats for these animals to reproduce in.
-    They aren\u2019t going to do that while starving!\",\"parentUIDs\":[72,72],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":671,\"yPos\":-3639},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"How
+    They aren\u2019t going to do that while starving!\",\"parentUIDs\":[72,72],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":293.5,\"yPos\":-943.5},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"How
     about you give it a test run? Try and figure out what Flan like to eat. You might
-    have to change tabs in order to find it!\",\"parentUIDs\":[73,73],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":75,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":658,\"yPos\":-3533},\"ID\":75,\"TMPFontGUID\":null,\"Text\":\"Got
-    it? Alright, what\u2019s the Flan\u2019s favorite food?\",\"parentUIDs\":[74,149,74,149],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[76,79],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":549,\"yPos\":-3352},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"You
-    got it! We\u2019ll make a xenobiologist out of you yet!\",\"parentUIDs\":[79,79],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":717,\"yPos\":-3179},\"ID\":81,\"TMPFontGUID\":null,\"Text\":\"Now,
+    have to change tabs in order to find it!\",\"parentUIDs\":[73,73],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":75,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":280.5,\"yPos\":-837.5},\"ID\":75,\"TMPFontGUID\":null,\"Text\":\"Got
+    it? Alright, what\u2019s the Flan\u2019s favorite food?\",\"parentUIDs\":[74,149,74,149],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[76,79],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":171.5,\"yPos\":-656.5},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"You
+    got it! We\u2019ll make a xenobiologist out of you yet!\",\"parentUIDs\":[79,79],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":339.5,\"yPos\":-483.5},\"ID\":81,\"TMPFontGUID\":null,\"Text\":\"Now,
     that\u2019s just about it on the notebook for now. We\u2019ll cover the other
-    tabs later. Before we totally shut it down\u2026\",\"parentUIDs\":[80,80],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":82,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":699,\"yPos\":-3019},\"ID\":82,\"TMPFontGUID\":null,\"Text\":\"...take
-    a look at that bookmark button up there.\",\"parentUIDs\":[81,81],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":84,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":710,\"yPos\":-2911},\"ID\":84,\"TMPFontGUID\":null,\"Text\":\"You
-    can use this button to bookmark articles or note pages.\",\"parentUIDs\":[82,82],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":85,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":719,\"yPos\":-2811},\"ID\":85,\"TMPFontGUID\":null,\"Text\":\"Anything
+    tabs later. Before we totally shut it down\u2026\",\"parentUIDs\":[80,80],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":82,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":321.5,\"yPos\":-323.5},\"ID\":82,\"TMPFontGUID\":null,\"Text\":\"...take
+    a look at that bookmark button up there.\",\"parentUIDs\":[81,81],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":84,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":332.5,\"yPos\":-215.5},\"ID\":84,\"TMPFontGUID\":null,\"Text\":\"You
+    can use this button to bookmark articles or note pages.\",\"parentUIDs\":[82,82],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":85,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":341.5,\"yPos\":-115.5},\"ID\":85,\"TMPFontGUID\":null,\"Text\":\"Anything
     you bookmark will be visible on the home page, so you can easily get back to
-    it!\",\"parentUIDs\":[84,84],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":86,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":718,\"yPos\":-2710},\"ID\":86,\"TMPFontGUID\":null,\"Text\":\"And
-    that\u2019s all we\u2019ll be needing the notebook for today! What did you think?\",\"parentUIDs\":[85,85],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[87,89],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":497,\"yPos\":-2484},\"ID\":88,\"TMPFontGUID\":null,\"Text\":\"Haha,
-    glad you think so! We all worked pretty hard on it, after all.\",\"parentUIDs\":[87,87],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":91,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":769,\"yPos\":-2495},\"ID\":90,\"TMPFontGUID\":null,\"Text\":\"Well,
-    and here I thought you\u2019d never ask! Yes, it\u2019s time for us to get building!\",\"parentUIDs\":[89,89],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":91,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":621,\"yPos\":-2288},\"ID\":91,\"TMPFontGUID\":null,\"Text\":\"For
+    it!\",\"parentUIDs\":[84,84],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":86,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":340.5,\"yPos\":-14.5},\"ID\":86,\"TMPFontGUID\":null,\"Text\":\"And
+    that\u2019s all we\u2019ll be needing the notebook for today! What did you think?\",\"parentUIDs\":[85,85],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[87,89],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":119.5,\"yPos\":211.5},\"ID\":88,\"TMPFontGUID\":null,\"Text\":\"Haha,
+    glad you think so! We all worked pretty hard on it, after all.\",\"parentUIDs\":[87,87],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":91,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":391.5,\"yPos\":201.5},\"ID\":90,\"TMPFontGUID\":null,\"Text\":\"Well,
+    and here I thought you\u2019d never ask! Yes, it\u2019s time for us to get building!\",\"parentUIDs\":[89,89],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":91,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":407.5},\"ID\":91,\"TMPFontGUID\":null,\"Text\":\"For
     now, let\u2019s close the notebook and open up the Command Center\u2019s build
-    mode instead. It\u2019s that little hammer icon down there.\",\"parentUIDs\":[90,88,88,90],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":615,\"yPos\":-2162},\"ID\":92,\"TMPFontGUID\":null,\"Text\":\"From
+    mode instead. It\u2019s that little hammer icon down there.\",\"parentUIDs\":[90,88,88,90],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":92,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":237.5,\"yPos\":533.5},\"ID\":92,\"TMPFontGUID\":null,\"Text\":\"From
     here, you can build all kinds of stuff into your enclosure! Plants, animals,
-    new types of terrain, you name it!\",\"parentUIDs\":[91,91],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[93],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":690,\"yPos\":-1683},\"ID\":94,\"TMPFontGUID\":null,\"Text\":\"No,
-    no. We just have a limited budget and only so many specimens to work with, so
-    we have to budget construction resources.\",\"parentUIDs\":[93,93],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":95,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-1282},\"ID\":95,\"TMPFontGUID\":null,\"Text\":\"The
-    guys in construction might be wizards, but they only have so much to work with.
-    These \u201Ccredits,\u201D as we call them, are to keep us from changing everything
-    willy-nilly.\",\"parentUIDs\":[94,94],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":96,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-1182},\"ID\":96,\"TMPFontGUID\":null,\"Text\":\"You\u2019ll
-    be allocated some resources at the beginning of each assignment which you can
-    place free of charge, but everything after that will be deducted from your credit
-    balance.\",\"parentUIDs\":[95,95],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":97,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-1082},\"ID\":97,\"TMPFontGUID\":null,\"Text\":\"If
+    new types of terrain, you name it!\",\"parentUIDs\":[91,91],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":95,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":1080.5},\"ID\":95,\"TMPFontGUID\":null,\"Text\":\"Be
+    careful, though. The guys in construction might be wizards, but they only have
+    so much to work with\u2026Which means you only have so much to work with.\",\"parentUIDs\":[92,92],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":97,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":325.5,\"yPos\":1380.5},\"ID\":97,\"TMPFontGUID\":null,\"Text\":\"If
     you run out, well\u2026 you better hope your design works, because construction
-    won\u2019t help you if it doesn\u2019t.\",\"parentUIDs\":[96,96],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":98,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":706,\"yPos\":-983},\"ID\":98,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    won\u2019t help you if it doesn\u2019t.\",\"parentUIDs\":[95,95],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":98,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333.5,\"yPos\":1544.5},\"ID\":98,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
     worry too much about that, though! You can always restart a task entirely if
-    you find yourself out of funds.\",\"parentUIDs\":[97,97],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":99,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-882},\"ID\":99,\"TMPFontGUID\":null,\"Text\":\"Now,
+    you find yourself out of things to place.\",\"parentUIDs\":[97,97],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":99,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":336.5,\"yPos\":1710.5},\"ID\":99,\"TMPFontGUID\":null,\"Text\":\"Now,
     let\u2019s get you building! Hover over the \u201Cspecies\u201D tab of the build
-    menu and select the CapraX Zeigrun, or Zeigs, as we call them around here.\",\"parentUIDs\":[98,98],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":100,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":706,\"yPos\":-782},\"ID\":100,\"TMPFontGUID\":null,\"Text\":\"Next,
+    menu and select the CapraX Zeigrun, or Zeigs, as we call them around here.\",\"parentUIDs\":[98,98],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":100,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":328.5,\"yPos\":1913.5},\"ID\":100,\"TMPFontGUID\":null,\"Text\":\"Next,
     you can click anywhere inside the enclosure to add a Zeig there! Please add three
-    Zeigs to the enclosures now.\",\"parentUIDs\":[99,99],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":102,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":712,\"yPos\":-676},\"ID\":102,\"TMPFontGUID\":null,\"Text\":\"Great!
+    Zeigs to the enclosures now.\",\"parentUIDs\":[99,99],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":102,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":334.5,\"yPos\":2019.5},\"ID\":102,\"TMPFontGUID\":null,\"Text\":\"Great!
     Now you can right click in order to stop placing Zeigs, then you\u2019ll be able
-    to see the new Zeigs wandering around your little enclosure!\",\"parentUIDs\":[100,100],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":103,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":698,\"yPos\":-541},\"ID\":103,\"TMPFontGUID\":null,\"Text\":\"Keep
+    to see the new Zeigs wandering around your little enclosure!\",\"parentUIDs\":[100,100],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":103,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":320.5,\"yPos\":2154.5},\"ID\":103,\"TMPFontGUID\":null,\"Text\":\"Keep
     in mind that not everything gets added to the enclosure instantly like animals
-    do. Great work takes time, after all.\",\"parentUIDs\":[102,102],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":104,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":706,\"yPos\":-416},\"ID\":104,\"TMPFontGUID\":null,\"Text\":\"The
+    do. Great work takes time, after all.\",\"parentUIDs\":[102,102],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":104,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":328.5,\"yPos\":2279.5},\"ID\":104,\"TMPFontGUID\":null,\"Text\":\"The
     construction guys have a lot to do around here, it\u2019ll take them anywhere
     from one to three days to get to your request, depending on what you\u2019re
-    trying to build.\",\"parentUIDs\":[103,103],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[105],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-180},\"ID\":106,\"TMPFontGUID\":null,\"Text\":\"Oh
+    trying to build.\",\"parentUIDs\":[103,103],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[105],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":331.5,\"yPos\":2573.5},\"ID\":106,\"TMPFontGUID\":null,\"Text\":\"Oh
     no, of course not, but we\u2019ll get to that! First, let\u2019s take a look
-    at the Inspector! Why don't you close build mode for now?\",\"parentUIDs\":[105,105],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":107,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":-81},\"ID\":107,\"TMPFontGUID\":null,\"Text\":\"See
-    that window in the top right corner up there?\",\"parentUIDs\":[106,106],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":109,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":706,\"yPos\":118},\"ID\":109,\"TMPFontGUID\":null,\"Text\":\"Most
+    at the Inspector! Why don't you close build mode for now?\",\"parentUIDs\":[105,151,151],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":107,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":328.5,\"yPos\":2684.5},\"ID\":107,\"TMPFontGUID\":null,\"Text\":\"See
+    that window in the top right corner up there?\",\"parentUIDs\":[106,106],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":109,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":328.5,\"yPos\":2813.5},\"ID\":109,\"TMPFontGUID\":null,\"Text\":\"Most
     of the time, this window will show your your current objective, but if you switch
-    tabs, it\u2019ll turn into the inspector!\",\"parentUIDs\":[107,107],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":110,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":218},\"ID\":110,\"TMPFontGUID\":null,\"Text\":\"You
-    can use the inspector to see detailed information about anything in your enclosure.\",\"parentUIDs\":[109,109],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":111,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":707,\"yPos\":319},\"ID\":111,\"TMPFontGUID\":null,\"Text\":\"Go
+    tabs, it\u2019ll turn into the inspector!\",\"parentUIDs\":[107,107],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":110,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":2913.5},\"ID\":110,\"TMPFontGUID\":null,\"Text\":\"You
+    can use the inspector to see detailed information about anything in your enclosure.\",\"parentUIDs\":[109,109],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":111,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329.5,\"yPos\":3014.5},\"ID\":111,\"TMPFontGUID\":null,\"Text\":\"Go
     ahead and give it a shot now! Click on your new zeigs to see how they\u2019re
-    feeling!\",\"parentUIDs\":[110,110],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":113,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":698,\"yPos\":405},\"ID\":113,\"TMPFontGUID\":null,\"Text\":\"Great!
+    feeling!\",\"parentUIDs\":[110,110],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":113,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":320.5,\"yPos\":3100.5},\"ID\":113,\"TMPFontGUID\":null,\"Text\":\"Great!
     When you inspect animals in the enclosure, you\u2019ll see valuable information
-    about their current needs.\",\"parentUIDs\":[111,111],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":114,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":711,\"yPos\":539},\"ID\":114,\"TMPFontGUID\":null,\"Text\":\"As
+    about their current needs.\",\"parentUIDs\":[111,111],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":114,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333.5,\"yPos\":3234.5},\"ID\":114,\"TMPFontGUID\":null,\"Text\":\"As
     long as all of an animal's needs are above the line, they\u2019ll usually reproduce
     easily enough. There\u2019s some corner cases, but don\u2019t worry about them
-    for now.\",\"parentUIDs\":[113,113],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":115,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":702,\"yPos\":641},\"ID\":115,\"TMPFontGUID\":null,\"Text\":\"On
+    for now.\",\"parentUIDs\":[113,113],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":115,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":324.5,\"yPos\":3336.5},\"ID\":115,\"TMPFontGUID\":null,\"Text\":\"On
     the other hand, if they're beneath the line, their population will likely decrease
-    in the coming days, so make sure to stay on top of each animal\u2019s needs!\",\"parentUIDs\":[114,114],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[116,118],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":559,\"yPos\":824},\"ID\":117,\"TMPFontGUID\":null,\"Text\":\"Then
-    all of Planet X\u2019s wildlife has nothing to fear!\",\"parentUIDs\":[116,116],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":120,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":860,\"yPos\":811},\"ID\":119,\"TMPFontGUID\":null,\"Text\":\"Well...Yes.
+    in the coming days, so make sure to stay on top of each animal\u2019s needs!\",\"parentUIDs\":[114,114],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[116,118],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":181.5,\"yPos\":3519.5},\"ID\":117,\"TMPFontGUID\":null,\"Text\":\"Then
+    all of Planet X\u2019s wildlife has nothing to fear!\",\"parentUIDs\":[116,116],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":120,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":482.5,\"yPos\":3506.5},\"ID\":119,\"TMPFontGUID\":null,\"Text\":\"Well...Yes.
     That\u2019s why it\u2019s so important you give each of your designs a good amount
-    of thought before implementing them!\",\"parentUIDs\":[118,118],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":120,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":671,\"yPos\":951},\"ID\":120,\"TMPFontGUID\":null,\"Text\":\"Now,
+    of thought before implementing them!\",\"parentUIDs\":[118,118],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":120,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":293.5,\"yPos\":3646.5},\"ID\":120,\"TMPFontGUID\":null,\"Text\":\"Now,
     each animal's needs will only update in the inspector at the start of a new day,
     so you won\u2019t immediately know if any changes you\u2019ve made have a positive
-    or negative impact, which brings us to\u2026\",\"parentUIDs\":[119,117,117,119],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":121,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":674,\"yPos\":1071},\"ID\":121,\"TMPFontGUID\":null,\"Text\":\"The
+    or negative impact, which brings us to\u2026\",\"parentUIDs\":[119,117,117,119],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":121,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":296.5,\"yPos\":3766.5},\"ID\":121,\"TMPFontGUID\":null,\"Text\":\"The
     time accelerator! This little button -- through means completely unknown to all
     of us -- skips us all forward 24 hours when you push it, so you never need to
-    wait around.\",\"parentUIDs\":[120,120],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":122,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":680,\"yPos\":1187},\"ID\":122,\"TMPFontGUID\":null,\"Text\":\"In
+    wait around.\",\"parentUIDs\":[120,120],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":122,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":302.5,\"yPos\":3882.5},\"ID\":122,\"TMPFontGUID\":null,\"Text\":\"In
     fact...For some reason, time kind of just stopped moving naturally around here
-    after we made it, so it\u2019s kind of the only way to move time forward.\",\"parentUIDs\":[121,121],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[123,125],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":597,\"yPos\":1378},\"ID\":124,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
+    after we made it, so it\u2019s kind of the only way to move time forward.\",\"parentUIDs\":[121,121],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[123,125],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":219.5,\"yPos\":4073.5},\"ID\":124,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
     the spirit! It\u2019s like my mom always said: \u201CKeep your eyes on the silver
-    linings!\u201D\",\"parentUIDs\":[123,123],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":127,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":830,\"yPos\":1374},\"ID\":126,\"TMPFontGUID\":null,\"Text\":\"Well,
+    linings!\u201D\",\"parentUIDs\":[123,123],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":127,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":452.5,\"yPos\":4069.5},\"ID\":126,\"TMPFontGUID\":null,\"Text\":\"Well,
     that is one way to look at it\u2026 Maybe ask Juno about it some time. I\u2019m
-    sure she\u2019ll be able to explain it better!\",\"parentUIDs\":[125,125],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":127,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":730,\"yPos\":1518},\"ID\":127,\"TMPFontGUID\":null,\"Text\":\"Anyways,
+    sure she\u2019ll be able to explain it better!\",\"parentUIDs\":[125,125],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":127,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":352.5,\"yPos\":4213.5},\"ID\":127,\"TMPFontGUID\":null,\"Text\":\"Anyways,
     go ahead and hit the time accelerator button a couple times, so we can get better
-    information about how the Zeigs are doing in this enclosure.\",\"parentUIDs\":[126,124,124,126],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":129,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":741,\"yPos\":1666},\"ID\":129,\"TMPFontGUID\":null,\"Text\":\"Ah,
+    information about how the Zeigs are doing in this enclosure.\",\"parentUIDs\":[126,124,124,126],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":129,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":363.5,\"yPos\":4361.5},\"ID\":129,\"TMPFontGUID\":null,\"Text\":\"Ah,
     look at all the adorable baby Zeigs! Quick, click on one so we can see how they\u2019re
-    all doing!\",\"parentUIDs\":[127,127],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":130,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":729,\"yPos\":1805},\"ID\":130,\"TMPFontGUID\":null,\"Text\":\"Uh
-    oh, it looks like food\u2019s starting to be an issue for the Zeigs.\",\"parentUIDs\":[129,129],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":131,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":740,\"yPos\":1898},\"ID\":131,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
-    worry, though, that\u2019s normal.\",\"parentUIDs\":[130,130],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":132,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":730,\"yPos\":2060},\"ID\":132,\"TMPFontGUID\":null,\"Text\":\"As
+    all doing!\",\"parentUIDs\":[127,127],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":130,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":4500.5},\"ID\":130,\"TMPFontGUID\":null,\"Text\":\"Uh
+    oh, it looks like food\u2019s starting to be an issue for the Zeigs.\",\"parentUIDs\":[129,129],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":131,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":362.5,\"yPos\":4593.5},\"ID\":131,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    worry, though, that\u2019s normal.\",\"parentUIDs\":[130,130],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":132,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":352.5,\"yPos\":4755.5},\"ID\":132,\"TMPFontGUID\":null,\"Text\":\"As
     the population grows, they\u2019ll outstrip their natural food supply pretty
-    quickly, and you\u2019ll have to add more to keep them going.\",\"parentUIDs\":[131,131],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":133,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":729,\"yPos\":2202},\"ID\":133,\"TMPFontGUID\":null,\"Text\":\"This
-    is a great chance for you to practice all that you\u2019ve learned so far!\",\"parentUIDs\":[132,132],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":134,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":719,\"yPos\":2318},\"ID\":134,\"TMPFontGUID\":null,\"Text\":\"Try
+    quickly, and you\u2019ll have to add more to keep them going.\",\"parentUIDs\":[131,131],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":133,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351.5,\"yPos\":4897.5},\"ID\":133,\"TMPFontGUID\":null,\"Text\":\"This
+    is a great chance for you to practice all that you\u2019ve learned so far!\",\"parentUIDs\":[132,132],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":134,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":341.5,\"yPos\":5013.5},\"ID\":134,\"TMPFontGUID\":null,\"Text\":\"Try
     to alter this enclosure so that it will support ten Zeigs! You can change up
     the terrain if you want, but you won\u2019t need to -- just add more food and
-    they\u2019ll be happy!\",\"parentUIDs\":[133,133],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[135,137],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":577,\"yPos\":2519},\"ID\":136,\"TMPFontGUID\":null,\"Text\":\"Well,
-    you are going to have to work alone sometime, right? But...\",\"parentUIDs\":[135,135],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":139,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":882,\"yPos\":2508},\"ID\":138,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
-    the spirit! You got it!\",\"parentUIDs\":[137,137],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":139,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":688,\"yPos\":2725},\"ID\":139,\"TMPFontGUID\":null,\"Text\":\"If
+    they\u2019ll be happy!\",\"parentUIDs\":[133,133],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[135,137],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":199.5,\"yPos\":5214.5},\"ID\":136,\"TMPFontGUID\":null,\"Text\":\"Well,
+    you are going to have to work alone sometime, right? But...\",\"parentUIDs\":[135,135],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":139,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":504.5,\"yPos\":5203.5},\"ID\":138,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
+    the spirit! You got it!\",\"parentUIDs\":[137,137],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":139,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":310.5,\"yPos\":5420.5},\"ID\":139,\"TMPFontGUID\":null,\"Text\":\"If
     you need anything, you can just hit that question mark down there at the bottom
-    of the command center. We call it the \u201CFUBAR button.\u201D\",\"parentUIDs\":[138,136,136,138],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":140,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":688,\"yPos\":2888},\"ID\":140,\"TMPFontGUID\":null,\"Text\":\"When
+    of the command center. We call it the \u201CFUBAR button.\u201D\",\"parentUIDs\":[138,136,136,138],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":140,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":310.5,\"yPos\":5583.5},\"ID\":140,\"TMPFontGUID\":null,\"Text\":\"When
     you push it, it\u2019ll immediately connect you to your supervisor. In this case,
-    that\u2019s me!\",\"parentUIDs\":[139,139],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":141,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":687,\"yPos\":2999},\"ID\":141,\"TMPFontGUID\":null,\"Text\":\"If
-    you have any questions, please use it.\",\"parentUIDs\":[140,140],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":142,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":682,\"yPos\":3115},\"ID\":142,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    that\u2019s me!\",\"parentUIDs\":[139,139],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":141,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":309.5,\"yPos\":5694.5},\"ID\":141,\"TMPFontGUID\":null,\"Text\":\"If
+    you have any questions, please use it.\",\"parentUIDs\":[140,140],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":142,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":304.5,\"yPos\":5810.5},\"ID\":142,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
     way easier to answer questions than it is to resurface a ruined enclosure, so
     please don\u2019t be shy. An ounce of prevention is worth a pound of cure, after
-    all!\",\"parentUIDs\":[141,141],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":143,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":688,\"yPos\":3202},\"ID\":143,\"TMPFontGUID\":null,\"Text\":\"Now
-    get out there and help save the Zeigs!\",\"parentUIDs\":[142,142],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":144,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":695,\"yPos\":3333},\"ID\":144,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    all!\",\"parentUIDs\":[141,141],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":143,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":310.5,\"yPos\":5897.5},\"ID\":143,\"TMPFontGUID\":null,\"Text\":\"Now
+    get out there and help save the Zeigs!\",\"parentUIDs\":[142,142],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":144,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":317.5,\"yPos\":6028.5},\"ID\":144,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
     forget to use ROCeT Man to help guide your design process! It\u2019ll spare you
-    a ton of headaches.\",\"parentUIDs\":[143,143],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":145,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":709,\"yPos\":3443},\"ID\":145,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
-    see you again once there\u2019s ten Zeigs in the enclosure!\",\"parentUIDs\":[144,144],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":1279,\"yPos\":-3454},\"ID\":149,\"TMPFontGUID\":null,\"Text\":\"Err...No,
-    not quite. How about you go take another look?\",\"parentUIDs\":[76,76],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":75,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+    a ton of headaches.\",\"parentUIDs\":[143,143],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":145,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":331.5,\"yPos\":6138.5},\"ID\":145,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
+    see you again once there\u2019s ten Zeigs in the enclosure!\",\"parentUIDs\":[144,144],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":901.5,\"yPos\":-758.5},\"ID\":149,\"TMPFontGUID\":null,\"Text\":\"Err...No,
+    not quite. How about you go take another look?\",\"parentUIDs\":[76,76],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":75,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":334,\"yPos\":2464},\"ID\":151,\"TMPFontGUID\":null,\"Text\":null,\"parentUIDs\":[105,105],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"\",\"OptionUIDs\":[],\"SpeechUID\":106,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -321,9 +314,7 @@ MonoBehaviour:
   - {fileID: 7623907519568545881}
   - {fileID: 7360429219311412146}
   - {fileID: 1366458100743059563}
-  - {fileID: 8511244920116172896}
   - {fileID: 625499368708107785}
-  - {fileID: 4438737461599668596}
   - {fileID: 7852207857506301834}
   - {fileID: 4930195926776376713}
   - {fileID: 8456795266205826160}
@@ -405,9 +396,43 @@ MonoBehaviour:
   - {fileID: 6923043665149652126}
   - {fileID: 1577978768255855076}
   - {fileID: 1197893862065976772}
+  - {fileID: 7366129383507459823}
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: FreezeUntilBuildUIClosed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: DraftButton
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: CloseStore
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1194552508086931968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,6 +458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77ebfae569d54841bfdaf8ac61d81ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 9002464118305383576, guid: dd7b74c981e3e954eb06eb926cfab813,
+    type: 3}
 --- !u!1 &8826767295655794988
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,9 +530,7 @@ GameObject:
   - component: {fileID: 7623907519568545881}
   - component: {fileID: 7360429219311412146}
   - component: {fileID: 1366458100743059563}
-  - component: {fileID: 8511244920116172896}
   - component: {fileID: 625499368708107785}
-  - component: {fileID: 4438737461599668596}
   - component: {fileID: 7852207857506301834}
   - component: {fileID: 4930195926776376713}
   - component: {fileID: 8456795266205826160}
@@ -587,6 +612,7 @@ GameObject:
   - component: {fileID: 6923043665149652126}
   - component: {fileID: 1577978768255855076}
   - component: {fileID: 1197893862065976772}
+  - component: {fileID: 7366129383507459823}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -1218,18 +1244,7 @@ MonoBehaviour:
   NodeID: 45
   Event:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DraftButton
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
@@ -1910,25 +1925,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   Audio: {fileID: 0}
---- !u!114 &8511244920116172896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826767295655794988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 94
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
-  Audio: {fileID: 0}
 --- !u!114 &625499368708107785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1942,25 +1938,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 95
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &4438737461599668596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826767295655794988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 96
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -2440,6 +2417,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: DraftButton
+          m_BoolArgument: 0
+        m_CallState: 2
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
   Audio: {fileID: 0}
@@ -2479,6 +2467,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: DraftButton
           m_BoolArgument: 0
         m_CallState: 2
   TMPFont: {fileID: 0}
@@ -3626,4 +3625,56 @@ MonoBehaviour:
       m_Calls: []
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7366129383507459823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826767295655794988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 151
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: FreezeUntilBuildUIClosed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: DraftButton
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5297858148418323490}
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: CloseStore
+          m_BoolArgument: 0
+        m_CallState: 2
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
   Audio: {fileID: 0}

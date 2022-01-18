@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 3
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":28.5,\"yPos\":26},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Your
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":260.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Your
     responses indicate that your knowledge of both food and terrain needs for CapraX
-    Zeigrun deviates heavily from our anticipated observed results from other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":28.5,\"yPos\":125},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Based
+    Zeigrun deviates heavily from our anticipated observed results from other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":260.5,\"yPos\":121},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Based
     on these results, I\u2019d like to set you up with another group of CapraX Zeigrun,
     where I\u2019ll ask you to focus on collecting data again, to confirm or deny
     your deviation from our expectations.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
@@ -61,18 +61,7 @@ MonoBehaviour:
   - {fileID: 6499480477233048529}
   Event:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 652633543101036833}
-        m_MethodName: LoadNextLevel
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Level1E2
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &652633543101036833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,18 +141,7 @@ MonoBehaviour:
   NodeID: 2
   Event:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 652633543101036833}
-        m_MethodName: LoadNextLevel
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Level1E2
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}

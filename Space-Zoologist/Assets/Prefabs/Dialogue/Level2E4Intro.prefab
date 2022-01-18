@@ -1,0 +1,337 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &231079303479917903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481684556321413420}
+  - component: {fileID: 6053714866163234130}
+  m_Layer: 0
+  m_Name: L2E4Intro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481684556321413420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231079303479917903}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -601.50885, y: -301.20956, z: 656.46436}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2580494621373948065}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6053714866163234130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231079303479917903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentIDCounter: 12
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":-179},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Unlucky?
+    Disaster? Death?!\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":21},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"What
+    happened around here?\",\"parentUIDs\":[3,3],\"SpeechUID\":5}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":538,\"yPos\":-279},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I
+    must admit, newbie. When Dr. Star said she had another \u201Cace\u201D new recruit,
+    I was skeptical. Star\u2019s approval is usually a mark of death around here.
+    Disaster seems to always follow her unlucky little scions.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":-79},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Figurative
+    death. Now, if only I could say the same about the disaster\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":121},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
+    full recounting would do little to improve your work, I\u2019m afraid, so I won\u2019t
+    bother. Let us just say there is a reason we have a xenobiologist on staff who\u2019s
+    only allowed to do resurfacing and transport work.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":221},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Now,
+    setting aside such unpleasant talk\u2026 This is it, the last enclosure in this
+    wing. It has proven rather\u2026troublesome for our existing staff.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":321},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Troublesome
+    terrain, disagreeable specimens, limited viable terrain\u2026this enclosure really
+    has all of the makings of a truly challenging test.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":421},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Yours,
+    specifically.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":521},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"No
+    lecture this time, newbie. You should already know everything you need in order
+    to properly design this enclosure. Remember what you\u2019ve learned, and you
+    shouldn\u2019t struggle with it.\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":621},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"And
+    try not to think about how even Dr. Star gave up working on it.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":538,\"yPos\":721},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
+    be back in 30 days to perform your report back, as per our usual. I expect that
+    there will be 20 Eligans Impar and Caprax Zeigrun here to greet me when I return.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  saveVersion: 103
+  DefaultName: 
+  DefaultSprite: {fileID: 0}
+  DefaultFont: {fileID: 0}
+  NodeSerializedDataList:
+  - {fileID: 230436650012539213}
+  - {fileID: 6249039972745361185}
+  - {fileID: 321871561606788520}
+  - {fileID: 4764041463944408101}
+  - {fileID: 5318577709525904539}
+  - {fileID: 5088093094540478212}
+  - {fileID: 2222603552136187795}
+  - {fileID: 282234943515039857}
+  - {fileID: 6007554260346152682}
+  - {fileID: 7995183552713338283}
+  - {fileID: 2199063837352867748}
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &6750823513909423511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2580494621373948065}
+  - component: {fileID: 230436650012539213}
+  - component: {fileID: 6249039972745361185}
+  - component: {fileID: 321871561606788520}
+  - component: {fileID: 4764041463944408101}
+  - component: {fileID: 5318577709525904539}
+  - component: {fileID: 5088093094540478212}
+  - component: {fileID: 2222603552136187795}
+  - component: {fileID: 282234943515039857}
+  - component: {fileID: 6007554260346152682}
+  - component: {fileID: 7995183552713338283}
+  - component: {fileID: 2199063837352867748}
+  m_Layer: 0
+  m_Name: ConversationEventInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2580494621373948065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1481684556321413420}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230436650012539213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 1
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &6249039972745361185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 3
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &321871561606788520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 5
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &4764041463944408101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 6
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &5318577709525904539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 7
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &5088093094540478212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 8
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &2222603552136187795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 9
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &282234943515039857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 10
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &6007554260346152682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 11
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &7995183552713338283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 2
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &2199063837352867748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 4
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}

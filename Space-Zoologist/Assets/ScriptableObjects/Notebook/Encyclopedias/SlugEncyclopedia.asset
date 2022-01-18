@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52e53c4d2142814a94f3088eec699e5, type: 3}
   m_Name: SlugEncyclopedia
   m_EditorClassIdentifier: 
-  articlesList:
+  articles:
   - id:
       title: Ecological Summary
       author: Humidum Limax
@@ -21,9 +21,11 @@ MonoBehaviour:
       with terran environmental expectations, but their current eating patterns are
       varied. Humidum Limax are also nocturnal and sensitive to ambient temperature.
       Birds do not appear to be the slug\u2019s predator, so its current predation
-      relationships are undetermined. Flan have a low consumption rate of 2-3 per
-      day, thus allowing for seclusive tendencies and self-preservation from potentially
-      dangerous predators."
+      relationships are undetermined. \r\n\r\nFlan have a low consumption rate of
+      2-3 per day, thus allowing for seclusive tendencies and self-preservation from
+      potentially dangerous predators. They tend to mostly consume the kelp-like
+      Coruscent Laminar, though they have also been observed consuming Boletus Anceps,
+      when given the opportunity."
     sprites:
     - {fileID: 21300000, guid: 97fa1d3b97076944f9245f2e27fed37d, type: 3}
   - id:

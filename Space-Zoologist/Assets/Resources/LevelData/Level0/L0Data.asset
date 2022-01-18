@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
+  m_Name: L0Data
+  m_EditorClassIdentifier: 
+  Level: {fileID: 11400000, guid: fe4d49745a36f4941805b30a60e788fd, type: 2}
+  startingBalance: 0
+  MapWidth: 12
+  MapHeight: 12
+  LevelObjectiveData: {fileID: 11400000, guid: 0fda617c7827b4782a70ae364eb134a5, type: 2}
+  foodSources:
+  - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
+  animalSpecies:
+  - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
+  itemQuantities:
+  - itemObject: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
+    initialAmount: 2
+  - itemObject: {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
+    initialAmount: 20
+  - itemObject: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
+    initialAmount: 3
+  levelMusic: {fileID: 8300000, guid: 8769962011210fb4f89948a6f059cc94, type: 3}
+  startingPositions:
+  - {x: 1, y: 1, z: 0}
+  startingConversation: {fileID: 8236875934751840470, guid: 94cacda425a1f4f2e9474db9bd386117,
+    type: 3}
+  defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
+    type: 3}
+  ending:
+    isQuiz: 1
+    normalConversation: {fileID: 5453693311318094595, guid: eb6f90f9020e14ec3803e0d34a89f111,
+      type: 3}
+    nextLevelID:
+      levelNumber: 1
+      enclosureNumber: 1
+    quizConversation: {fileID: 8938176367728474889, guid: 32d08c68c96de0a4b9609ce6fb117c7d,
+      type: 3}
+    nextLevelIDs:
+      levelIDs:
+      - levelNumber: 1
+        enclosureNumber: 1
+      - levelNumber: 1
+        enclosureNumber: 1
+      - levelNumber: 1
+        enclosureNumber: 1
+  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+    type: 3}

@@ -8,25 +8,16 @@ using TMPro;
 public class QuizConversation : MonoBehaviour
 {
     #region Public Properties
-    public QuizInstance CurrentQuiz
-    {
-        get
-        {
-            if(currentQuiz == null)
-            {
-                currentQuiz = new QuizInstance(quizTemplate);
-            }
-            return currentQuiz;
-        }
-    }
+    public QuizInstance CurrentQuiz => currentQuiz;
+    public UnityEvent OnConversationEnded => onConversationEnded;
     #endregion
 
     #region Public Typedefs
     [System.Serializable]
-    public class QuizConversationResponseArray
+    public class NPCConversationArray
     {
-        public QuizConversationResponse[] responses;
-        public QuizConversationResponse Get(QuizGrade grade) => responses[(int)grade];
+        public NPCConversation[] responses;
+        public NPCConversation Get(QuizGrade grade) => responses[(int)grade];
     }
     #endregion
 
@@ -59,11 +50,23 @@ public class QuizConversation : MonoBehaviour
     [SerializeField]
     [Tooltip("List of NPCConversations to respond with based on the quizes' grade")]
     [EditArrayWrapperOnEnum("responses", typeof(QuizGrade))]
-    private QuizConversationResponseArray response;
+    private NPCConversationArray response;
+    [SerializeField]
+    [Tooltip("If true, the quiz conversation will be re-spoken if the player fails the quiz")]
+    private bool requizOnFail = false;
+
+    [Space]
+
+    [SerializeField]
+    [Tooltip("Event invoked when the quiz conversation is finished")]
+    private UnityEvent onConversationEnded;
     #endregion
 
     #region Private Fields
-    private QuizInstance currentQuiz = null;
+    private QuizInstance currentQuiz;
+    private NPCConversation currentResponse;
+    // Conversation that the NPC speaks to say all of the questions
+    private NPCConversation currentQuizConversation;
     #endregion
 
     #region Public Methods
@@ -77,21 +80,34 @@ public class QuizConversation : MonoBehaviour
             dialogueManager.SetNewDialogue(openingConversation);
 
             // Then, say the quiz part of the conversation
-            NPCConversation conversation = Create(dialogueManager);
-            dialogueManager.SetNewQuiz(conversation);
+            SayQuizConversationNext();
         }
     }
     public NPCConversation Create(DialogueManager dialogueManager)
     {
+        // Build a new quiz. This will result in regenerating new questions from any randomized pools
+        currentQuiz = new QuizInstance(quizTemplate);
+
         // Create the callback that is called after any option is answered
         UnityAction OptionSelectedFunctor(int questionIndex, int optionIndex)
         {
-            return () => CurrentQuiz.AnswerQuestion(questionIndex, optionIndex);
+            return () => currentQuiz.AnswerQuestion(questionIndex, optionIndex);
         }
         // Say the conversation that corresponds to the grade that the player got on the quiz
         void SayResponse()
         {
-            response.Get(CurrentQuiz.Grade).Respond();
+            // Destroy any previous response
+            if (currentResponse) Destroy(currentResponse);
+            // Instantiate a new response
+            currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
+
+            // If we should requiz when we fail, then we must say the quiz after the response
+            if (requizOnFail && CurrentQuiz.Grade != QuizGrade.Excellent)
+            {
+                SayQuizConversationNext();
+            }
+            // If we will not requiz, then invoke my conversation ended event when this conversation is done
+            else currentResponse.OnConversationEnded(onConversationEnded.Invoke);
         }
 
         // Try to get an npc conversation. If it exists, destroy it and add a new one
@@ -114,10 +130,10 @@ public class QuizConversation : MonoBehaviour
         List<EditableConversationNode> nodes = new List<EditableConversationNode>();
 
         // Loop over every question and add speech and option nodes for each
-        for (int i = 0; i < quizTemplate.Questions.Length; i++)
+        for (int i = 0; i < currentQuiz.RuntimeTemplate.Questions.Length; i++)
         {
             // Cache the current question
-            QuizQuestion question = quizTemplate.Questions[i];
+            QuizQuestion question = currentQuiz.RuntimeTemplate.Questions[i];
 
             // Create a new speech node
             EditableSpeechNode currentSpeechNode = CreateSpeechNode(conversation, editableConversation, question.Question, 0, i * 300, i == 0, null);
@@ -163,7 +179,7 @@ public class QuizConversation : MonoBehaviour
         }
 
         // Create the end of quiz node
-        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, quizTemplate.Questions.Length * 300, false, SayResponse);
+        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, currentQuiz.RuntimeTemplate.Questions.Length * 300, false, SayResponse);
         nodes.Add(endOfQuiz);
 
         // If a previous speech node exists, 
@@ -189,6 +205,17 @@ public class QuizConversation : MonoBehaviour
     #endregion
 
     #region Private Methods
+    private void SayQuizConversationNext()
+    {
+        DialogueManager dialogue = GameManager.Instance.m_dialogueManager;
+
+        // If there is a current quiz conversation, then destroy it
+        if (currentQuizConversation) Destroy(currentQuizConversation);
+        // Set the current quiz conversation
+        currentQuizConversation = Create(dialogue);
+        // Tell the dialogue manager to say the quiz conversation after the currently running conversation
+        dialogue.SetNewQuiz(currentQuizConversation);
+    }
     private EditableSpeechNode CreateSpeechNode(NPCConversation conversation, EditableConversation editableConversation, string text, float xPos, float yPos, bool isRoot, UnityAction callback)
     {
         // Create a new speech node

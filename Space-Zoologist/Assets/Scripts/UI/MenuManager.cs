@@ -47,7 +47,6 @@ public class MenuManager : MonoBehaviour
         {
             if (!this.IsInStore)
             {
-                GameManager.Instance.TryToPause();
                 EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
             }
             this.StoreMenuToggledOn(menu);
@@ -82,7 +81,7 @@ public class MenuManager : MonoBehaviour
     {
         if (!this.IsInStore)
         {
-            GameManager.Instance.TryToPause();
+            GameManager.Instance.TryToPause("StoreMenu");
             EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
         }
         StoreCanvas.DOScale(0.8f, 0.5f);
@@ -102,7 +101,7 @@ public class MenuManager : MonoBehaviour
 
         GameManager.Instance.m_gridSystem.FinishDrafting();
         GameManager.Instance.m_gridSystem.SetGridOverlay(false);
-
+        GameManager.Instance.TryToUnpause("StoreMenu");
         AudioManager.instance?.PlayOneShot(SFXType.BuildModeClose);
     }
 
@@ -127,7 +126,6 @@ public class MenuManager : MonoBehaviour
             this.currentMenu = null;
             ///this.PlayerBalanceHUD.SetActive(false);
             this.IsInStore = false;
-            GameManager.Instance.TryToUnpause();
         }
 
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
@@ -150,7 +148,13 @@ public class MenuManager : MonoBehaviour
         foreach(GameObject ui in UI)
         {
             ui.GetComponent<Button>().interactable = isActive;
-            ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+
+            // If this ui element has children,
+            // try to get the image in the first child and set it's color to disabled
+            if (ui.transform.childCount > 0)
+            {
+                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+            }
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
@@ -175,7 +179,12 @@ public class MenuManager : MonoBehaviour
             {
                 bool isActive = !ui.GetComponent<Button>().interactable;
                 ui.GetComponent<Button>().interactable = isActive;
-                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+
+                // Make sure the UI element has a child with an image to change color for
+                if (ui.transform.childCount >= 1)
+                {
+                    ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+                }
                 break;
             }
         }

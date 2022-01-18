@@ -68,4 +68,9 @@ MonoBehaviour:
       weight: 1
     - label: Swamp
       weight: 1
-  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  gradingRubric:
+    scoreToPassImportantQuestions: 3
+    scoreToPassUnimportantQuestions: 0
+  exampleQuiz:
+    template: {fileID: 0}
+    answers: 

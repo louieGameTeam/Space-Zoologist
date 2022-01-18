@@ -1,67 +1,93 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelDataLoader : MonoBehaviour
 {
-    [Expandable] public List<LevelData> levelDatas = new List<LevelData>();
+    #region Public Properties
+    public static string CurrentLevel => currentLevel;
+    #endregion
+
+    #region Editor Fields
     [Header("Used when playing level scene directly")]
     [SerializeField] string LevelOnPlay = "Level1E1";
-    string currentLevel = "Level1E1";
+    #endregion
 
+    #region Private Fields
+    private static string currentLevel = "";
+    #endregion
+
+    #region Monobehaviour Messages
     private void Awake()
     {
-        int LevelDataLoader = FindObjectsOfType<LevelDataLoader>().Length;
-        if (LevelDataLoader != 1)
+        // If the current level is empty then use the level on play
+        if (currentLevel == "")
         {
-            Destroy(this.gameObject);
+            currentLevel = LevelOnPlay;
         }
-        else
-        {
-            LevelMenuSelector selectedLevel = FindObjectOfType<LevelMenuSelector>();
-            if (selectedLevel != null)
-            {
-                LevelDataReference.instance.LevelData = GetLevelData(selectedLevel.levelName);
-                Destroy(selectedLevel.gameObject);
-            }
-            else
-            {
-                LevelDataReference.instance.LevelData = GetLevelData(LevelOnPlay);
-            }
-            DontDestroyOnLoad(this);
-        }
-    }
-
-    public void LoadLevel(string levelToLoad)
-    {
-        GameManager.Instance?.HandleExitLevel();
-        LevelDataReference.instance.LevelData = GetLevelData(levelToLoad);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
-    }
-
-    public void ReloadLevel()
-    {
-        GameManager.Instance?.HandleExitLevel();
         LevelDataReference.instance.LevelData = GetLevelData(currentLevel);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    #endregion
 
-    private LevelData GetLevelData(string levelToLoad)
+    #region Public Methods
+    public static void LoadLatestQualifiedLevel() => LoadLevel(SaveData.LatestLevelQualified);
+    public static void LoadLevel(LevelData level) => LoadLevel(level.Level.SceneName);
+    public static void LoadLevel(LevelID levelToLoad) => LoadLevel(levelToLoad.LevelName);
+    public static void LoadLevel(string levelToLoad)
     {
-        currentLevel = levelToLoad;
-        foreach (LevelData levelData in levelDatas)
+        if (GameManager.Instance)
         {
-            if (levelData)
-            {
-                if (levelData.Level.SceneName.Equals(levelToLoad))
-                {
-                    return levelData;
-                }
-            }
+            GameManager.Instance.HandleExitLevel();
         }
-        return null;
+        // Set the current level to the level we are about to load
+        currentLevel = levelToLoad;
+        SceneManager.LoadScene("MainLevel"); 
     }
+    public static void ReloadLevel() => LoadLevel(currentLevel);
+    public static void LoadNextLevel()
+    {
+        LevelID nextLevel = GameManager.Instance.LevelData.Ending.GetNextLevelID();
 
-    public LevelData GetLevelData(LevelID levelID) => GetLevelData(levelID.LevelName);
+        // If we got the next level then load it
+        if (nextLevel != LevelID.Invalid)
+        {
+            LoadLevel(nextLevel);
+        }
+        else Debug.Log($"Next level name could not be identified. " +
+            $"Make sure that the player has finished taking the end of level quiz " +
+            $"before trying to load the next level");
+    }
+    public static LevelData GetLevelData(LevelID levelID)
+    {
+        // Setup the path to use the enclosure number only if it is not level 0
+        string path = $"LevelData/Level{levelID.LevelNumber}/L{levelID.LevelNumber}";
+        if (levelID.LevelNumber != 0) path += $"E{levelID.EnclosureNumber}";
+        path += "Data";
+
+        // Load the data at the computed path
+        LevelData data = Resources.Load<LevelData>(path);
+
+        // If you got level data then return it
+        if (data) return data;
+        // If you did not get level data then throw an exception
+        else throw new MissingReferenceException($"{nameof(LevelDataLoader)}: " +
+            $"Failed to load level {levelID.LevelName} from resource path {path}");
+    }
+    public static LevelData GetLevelData(string levelToLoad) => GetLevelData(LevelID.FromSceneName(levelToLoad));
+    public static LevelData[] GetAllLevelEnclosures(int levelNumber)
+    {
+        string path = $"LevelData/Level{levelNumber}/";
+        return Resources.LoadAll<LevelData>(path);
+    }
+    public static LevelData[] GetAllLevelData() => Resources.LoadAll<LevelData>("");
+    public static int MaxLevel()
+    {
+        LevelData[] levels = GetAllLevelData();
+        return levels
+            .Select(level => LevelID.FromSceneName(level.Level.SceneName).LevelNumber)
+            .Max();
+    }
+    #endregion
 }

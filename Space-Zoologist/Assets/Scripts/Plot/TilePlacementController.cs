@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class TilePlacementController : MonoBehaviour
 {
-    private enum PlacementResult { Placed, Restricted, AlreadyExisted }
+    public enum PlacementResult { Placed, Restricted, AlreadyExisted }
     private GridSystem gridSystemReference;
     public bool isBlockMode { get; set; } = false;
     public bool PlacementPaused { get; private set; }
@@ -161,31 +161,6 @@ public class TilePlacementController : MonoBehaviour
         StopPreview();
     }
 
-    /*
-    public void RenderColorOfColorLinkedTiles(List<Vector3Int> changedTiles) // Update color for linked tiles.
-    {
-        foreach (GameTile tile in referencedTiles)
-        {
-            if (colorLinkedTiles.Keys.Contains(tile))
-            {
-                foreach (Tilemap tilemap in colorLinkedTiles[tile])
-                {
-                    TileColorManager tileColorManager = tilemap.GetComponent<TileColorManager>();
-                    foreach (Vector3Int addedTileLocation in changedTiles)
-                    {
-                        foreach (GameTile managedTile in tileColorManager.managedTiles)
-                        {
-                            foreach (Vector3Int affectedTileLocation in this.TileSystem.AllCellLocationsOfTileInRange(addedTileLocation, tileColorManager.coloringMethod.affectedRange, managedTile))
-                            {
-                                tileColorManager.SetTileColor(affectedTileLocation, managedTile);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }*/
-
     private void UpdatePreviewPen()
     {
         if (gridSystemReference.GetGameTileAt(this.currentMouseCellPosition)?.type == TileType.Wall) {
@@ -297,7 +272,7 @@ public class TilePlacementController : MonoBehaviour
     }
 
 
-    private PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
+    public PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {
         if (IsPlacable(cellPosition) || !checkPlacable)
         {

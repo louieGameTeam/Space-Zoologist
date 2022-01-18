@@ -31,6 +31,7 @@ public class LevelIDDrawer : PropertyDrawer
             // Get the indented version of the rect
             EditorGUI.indentLevel++;
             position = EditorGUI.IndentedRect(position);
+            EditorGUI.indentLevel--;
         }
 
         // Erase indent so that controls in the same line are not indented

@@ -29,14 +29,12 @@ public class DialogueResponseManager : MonoBehaviour
 
 	public void LoadNextLevel(string level)
     {
-		LevelDataLoader levelDataLoader = FindObjectOfType<LevelDataLoader>();
-		levelDataLoader.LoadLevel(level);
+		LevelDataLoader.LoadLevel(level);
     }
 
 	public void ReloadLevel()
     {
-		LevelDataLoader levelDataLoader = FindObjectOfType<LevelDataLoader>();
-		levelDataLoader.ReloadLevel();
+		LevelDataLoader.ReloadLevel();
 	}
 
 	public void increaseFScore(int score)
