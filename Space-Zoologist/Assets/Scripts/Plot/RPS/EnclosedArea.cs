@@ -64,7 +64,7 @@ public class EnclosedArea
     {
         if (GameManager.Instance.m_gridSystem.IsCellinGrid(coordinate.x, coordinate.y))
         {
-            GridSystem.TileData tileData = GameManager.Instance.m_gridSystem.GetTileData(new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0));
+            TileData tileData = GameManager.Instance.m_gridSystem.GetTileData(new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0));
 
             this.coordinates.Add(coordinate);
 
@@ -110,7 +110,7 @@ public class EnclosedArea
         foreach (Coordinate coordinate in this.coordinates)
         {
             UnityEngine.Vector3Int coordinateVector = new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0);
-            GridSystem.TileData coordinateTileData = GameManager.Instance.m_gridSystem.GetTileData(coordinateVector);
+            TileData coordinateTileData = GameManager.Instance.m_gridSystem.GetTileData(coordinateVector);
 
             if (coordinateTileData.Animal)
             {

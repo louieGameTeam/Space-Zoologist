@@ -22,7 +22,7 @@ public class DebugTextUIHandler : MonoBehaviour
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = gridSystem.WorldToCell(worldPos);
-        GridSystem.TileData tileData = gridSystem.GetTileData(pos);
+        TileData tileData = gridSystem.GetTileData(pos);
 
         if (tileData != null)
             DebugText.text = tileData.ToString();

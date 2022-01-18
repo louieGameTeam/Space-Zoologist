@@ -269,7 +269,7 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < ReserveHeight; ++j)
             {
-                ApplyChangesToTilemapTexture(new Vector3Int(i, j, 0));
+                ApplyChangeToTilemapTexture(new Vector3Int(i, j, 0));
             }
         }
     }
@@ -315,7 +315,7 @@ public class GridSystem : MonoBehaviour
                     TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemapTexture(tilePosition);
+                ApplyChangeToTilemapTexture(tilePosition);
             }
             else if ((tilePosition.x >= ReserveWidth && tilePosition.y > 0) ||
                 (tilePosition.x > 0 && tilePosition.y >= ReserveHeight))
@@ -373,7 +373,7 @@ public class GridSystem : MonoBehaviour
                     tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemapTexture(tilePosition);
+                ApplyChangeToTilemapTexture(tilePosition);
             }
         }
         else
@@ -387,7 +387,7 @@ public class GridSystem : MonoBehaviour
                 }
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
-                ApplyChangesToTilemapTexture(tilePosition);
+                ApplyChangeToTilemapTexture(tilePosition);
             }
         }
     }
@@ -406,7 +406,7 @@ public class GridSystem : MonoBehaviour
                 DivideLiquidBody(tilePosition);
             tileData.PreviewReplacement(null);
             ChangedTiles.Add(tilePosition);
-            ApplyChangesToTilemapTexture(tilePosition);
+            ApplyChangeToTilemapTexture(tilePosition);
         }
     }
 
@@ -471,7 +471,7 @@ public class GridSystem : MonoBehaviour
     }
 
     // Remove the food source on this tile, a little inefficient
-    public void RemoveFood(Vector3Int gridPosition)
+    public void RemoveFoodReference(Vector3Int gridPosition)
     {
         Vector3Int pos = gridPosition;
         TileData tileData = GetTileData(pos);
@@ -531,10 +531,11 @@ public class GridSystem : MonoBehaviour
     #endregion
 
     #region Building Functions
-    public void CreateUnitBuffer(Vector2Int pos, int time, ConstructionCluster.ConstructionType constructionType, int progress = -1)
+    public void CreateUnitBuffer(Vector2Int pos, int timeToComplete, ConstructionCluster.ConstructionType constructionType, int progress = -1)
     {
-        if (time == 0 || time == -1)
+        if (timeToComplete <= 0)
         {
+            Debug.LogError("Time to complete cannot be a negative value!");
             return;
         }
 
@@ -550,13 +551,13 @@ public class GridSystem : MonoBehaviour
         {
             case 0:
                 // nothing adjacent, make a new cluster
-                ConstructionCluster newCluster = new ConstructionCluster(pos, time, constructionType);
+                ConstructionCluster newCluster = new ConstructionCluster(pos, timeToComplete, constructionType);
                 ConstructionClusters.Add(newCluster);
                 BufferCenterTexture.SetPixel(newCluster.CenterPosition.x, newCluster.CenterPosition.y, new Color(0, 0, 0, 1));
                 break;
             case 1:
                 // check if the timing and type is the same (tile), and if so add it
-                if (adjacentClusters[0].IsMatching(time, constructionType) && constructionType == ConstructionCluster.ConstructionType.TILE)
+                if (adjacentClusters[0].IsMatching(timeToComplete, constructionType) && constructionType == ConstructionCluster.ConstructionType.TILE)
                 {
                     // remove the original center
                     Vector2Int clusterCenter = adjacentClusters[0].CenterPosition;
@@ -571,7 +572,7 @@ public class GridSystem : MonoBehaviour
                 }
                 else
                 {
-                    newCluster = new ConstructionCluster(pos, time, constructionType);
+                    newCluster = new ConstructionCluster(pos, timeToComplete, constructionType);
                     ConstructionClusters.Add(newCluster);
                     BufferCenterTexture.SetPixel(newCluster.CenterPosition.x, newCluster.CenterPosition.y, new Color(0, 0, 0, 1));
                 }
@@ -581,7 +582,7 @@ public class GridSystem : MonoBehaviour
                 List<ConstructionCluster> matchingClusters = new List<ConstructionCluster>();
                 foreach (ConstructionCluster cluster in adjacentClusters)
                 {
-                    if (cluster.IsMatching(time, constructionType) && constructionType == ConstructionCluster.ConstructionType.TILE)
+                    if (cluster.IsMatching(timeToComplete, constructionType) && constructionType == ConstructionCluster.ConstructionType.TILE)
                         matchingClusters.Add(cluster);
                 }
 
@@ -613,7 +614,7 @@ public class GridSystem : MonoBehaviour
                 }
                 else
                 {
-                    newCluster = new ConstructionCluster(pos, time, constructionType);
+                    newCluster = new ConstructionCluster(pos, timeToComplete, constructionType);
                     ConstructionClusters.Add(newCluster);
                     BufferCenterTexture.SetPixel(newCluster.CenterPosition.x, newCluster.CenterPosition.y, new Color(0, 0, 0, 1));
                 }
@@ -625,7 +626,7 @@ public class GridSystem : MonoBehaviour
                 (float)((int)constructionType) / FLAG_VALUE_MULTIPLIER,       // which construction type it is
                 0,
                 0,                                                          // the progress towards target
-                (float)time / FLAG_VALUE_MULTIPLIER                         // the total time
+                (float)timeToComplete / FLAG_VALUE_MULTIPLIER                         // the total time
             );
         BufferTexture.SetPixel(pos.x, pos.y, bufferColorInformation);
         BufferTexture.Apply();
@@ -844,7 +845,7 @@ public class GridSystem : MonoBehaviour
             TileData tileData = GetTileData(changedTilePosition);
 
             tileData.Revert();
-            this.ApplyChangesToTilemapTexture(changedTilePosition);
+            this.ApplyChangeToTilemapTexture(changedTilePosition);
             if (tileData.currentTile == null)
                 tileData.Clear();
         }
@@ -857,7 +858,7 @@ public class GridSystem : MonoBehaviour
         this.ChangedTiles = new HashSet<Vector3Int>();
         this.previewBodies = new List<LiquidBody>();
     }
-    public void ApplyChangesToTilemapTexture(Vector3Int tilePosition)
+    public void ApplyChangeToTilemapTexture(Vector3Int tilePosition)
     {
         TileData data = GetTileData(tilePosition);
 
@@ -1424,7 +1425,7 @@ public class GridSystem : MonoBehaviour
             species = GameManager.Instance.FoodSources[selectedItem.ID];
 
         Vector3Int gridPosition = WorldToCell(mousePosition);
-        return CheckSurroudingTiles(gridPosition, species);
+        return CheckSurroundingTiles(gridPosition, species);
     }
 
     private bool CheckSurroundingTerrain(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
@@ -1451,7 +1452,7 @@ public class GridSystem : MonoBehaviour
         return selectedSpecies.AccessibleTerrain.Contains(tile.type);
     }
 
-    private bool CheckSurroudingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
+    private bool CheckSurroundingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
     {
         Vector3Int pos;
         bool isValid = true;
@@ -1571,7 +1572,7 @@ public class GridSystem : MonoBehaviour
         if (GameManager.Instance.FoodSources.ContainsKey(selectedItem.ID))
         {
             FoodSourceSpecies species = GameManager.Instance.FoodSources[selectedItem.ID];
-            CheckSurroudingTiles(gridPosition, species);
+            CheckSurroundingTiles(gridPosition, species);
         }
         else if (GameManager.Instance.AnimalSpecies.ContainsKey(selectedItem.ID))
         {
@@ -2361,99 +2362,7 @@ public class GridSystem : MonoBehaviour
     }
     #endregion
 
-    public class TileData
-    {
-        public Vector3Int tilePosition { get; private set; }
-        public GameObject Food { get; set; }
-        public GameObject Animal { get; set; }
-
-        public GameTile currentTile { get; private set; }
-        public GameTile previousTile { get; private set; }
-        public LiquidBody currentLiquidBody { get; set; }
-        public LiquidBody previewLiquidBody { get; private set; }
-        public float[] contents { get; set; }
-        public bool isTileChanged { get; private set; } = false;
-        public bool isTilePlaceable { get; set; } = false;
-        public bool isConstructing { get; set; } = false;
-        public TileData(Vector3Int tilePosition, GameTile tile = null)
-        {
-            this.Food = null;
-            this.Animal = null;
-
-            this.tilePosition = tilePosition;
-            this.currentTile = tile;
-            this.contents = tile == null ? null : tile.defaultContents;
-            this.currentLiquidBody = null;
-            this.isTileChanged = false;
-        }
-        public void Clear()
-        {
-            this.currentTile = null;
-            this.previousTile = null;
-            this.currentLiquidBody = null;
-            this.previewLiquidBody = null;
-        }
-        public void PreviewReplacement(GameTile tile)
-        {
-            if (isTileChanged)
-            {
-                this.currentTile = tile;
-                return;
-            }
-            this.previousTile = this.currentTile;
-            this.currentTile = tile;
-            this.isTileChanged = true;
-        }
-        public void PreviewLiquidBody(LiquidBody newLiquidBody)
-        {
-            this.previewLiquidBody = newLiquidBody;
-        }
-        public void ConfirmReplacement()
-        {
-            if (currentTile == null)
-            {
-                if (this.currentLiquidBody != null && currentLiquidBody.bodyID != 0)
-                {
-                    this.currentLiquidBody.RemoveTile(tilePosition); // Remove Tile from liquid body
-                }
-                return;
-            }
-
-            if (previewLiquidBody != null)
-            {
-                currentLiquidBody = previewLiquidBody;
-                contents = currentLiquidBody.contents;
-                previewLiquidBody = null;
-            }
-        }
-        public void Revert()
-        {
-            if (this.previousTile)
-            {
-                this.currentTile = this.previousTile;
-                this.previousTile = null;
-            }
-            if (this.previewLiquidBody != null)
-            {
-                // oh god panic do something here
-                contents = new float[] { };
-                previewLiquidBody.RemoveTile(tilePosition);
-                previewLiquidBody = null;
-            }
-        }
-        public override string ToString()
-        {
-            string positionString = "Tile Position: " + tilePosition.ToString() + "\n";
-            string foodString = "Food: " + (Food != null ? Food.name : "none") + "\n";
-            string currentTileString = "Current Tile: " + (currentTile != null ? currentTile.TileName : "none") + "\n";
-            string previousTileString = "Previous Tile: " + (previousTile != null ? previousTile.TileName : "none") + "\n";
-            string currentLiquidbodyString = "Current Liquidbody ID: " + (currentLiquidBody != null ? "" + currentLiquidBody.bodyID : "none") + "\n";
-            string previewingLiquidbodyString = "Previewing Liquidbody ID: " + (previewLiquidBody != null ? "" + previewLiquidBody.bodyID : "none") + "\n";
-            string placeableString = "Placeable: " + (isTilePlaceable ? "True" : "False") + "\n";
-
-            return positionString + foodString + currentTileString + previousTileString + currentLiquidbodyString + previewingLiquidbodyString;
-        }
-    }
+   
 
     public class ConstructionCluster
     {

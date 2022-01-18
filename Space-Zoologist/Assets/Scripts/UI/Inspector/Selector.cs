@@ -47,7 +47,7 @@ public class Selector : MonoBehaviour
 
             //Debug.Log($"Mouse click at {cellPos}");
 
-            GridSystem.TileData cellData = gridSystem.GetTileData(cellPos);
+            TileData cellData = gridSystem.GetTileData(cellPos);
 
             if (cellData == null)
                 return;

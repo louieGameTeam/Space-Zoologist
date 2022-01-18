@@ -248,7 +248,7 @@ public class MoveObject : MonoBehaviour
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        GridSystem.TileData tileData = gridSystem.GetTileData(pos);
+        TileData tileData = gridSystem.GetTileData(pos);
         GameObject toMove = null;
 
         if (tileData == null)
@@ -325,9 +325,9 @@ public class MoveObject : MonoBehaviour
                 break;
             case ItemType.TILE:
                 GameManager.Instance.AddToBalance(sellBackCost);
-                GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
+                TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
-                gridSystem.ApplyChangesToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
+                gridSystem.ApplyChangeToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
                 if (tileData.currentTile == null)
                     tileData.Clear();
                 //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
@@ -437,14 +437,14 @@ public class MoveObject : MonoBehaviour
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
             gridSystem.RemoveBuffer((Vector2Int)initialTilePosition);
-            gridSystem.ApplyChangesToTilemapTexture(initialTilePosition);
+            gridSystem.ApplyChangeToTilemapTexture(initialTilePosition);
             
             tileToDelete.SetActive(false);
 
             // add the new tile
             gridSystem.SetTile(tilePos, initialTile);
             gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, GridSystem.ConstructionCluster.ConstructionType.TILE);
-            gridSystem.ApplyChangesToTilemapTexture(tilePos);
+            gridSystem.ApplyChangeToTilemapTexture(tilePos);
         }
     }
 
@@ -493,8 +493,8 @@ public class MoveObject : MonoBehaviour
     public void removeOriginalFood(FoodSource foodSource)
     {
         Vector3Int FoodLocation = gridSystem.WorldToCell(initialPos);
-        GridSystem.TileData data = gridSystem.GetTileData(FoodLocation);
-        gridSystem.RemoveFood(FoodLocation);
+        TileData data = gridSystem.GetTileData(FoodLocation);
+        gridSystem.RemoveFoodReference(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource); // Finds the lower left cell the food occupies
         Vector2Int shiftedPos = new Vector2Int(FoodLocation.x, FoodLocation.y) - foodSource.Species.Size / 2;
         gridSystem.RemoveBuffer(shiftedPos, foodSource.Species.Size.x, foodSource.Species.Size.y);

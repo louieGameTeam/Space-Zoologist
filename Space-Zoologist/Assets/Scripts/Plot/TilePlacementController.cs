@@ -287,7 +287,7 @@ public class TilePlacementController : MonoBehaviour
             return false;
         }
 
-        GridSystem.TileData tileData = gridSystemReference.GetTileData(cellLocation);
+        TileData tileData = gridSystemReference.GetTileData(cellLocation);
         if (tileData.Food)
         {
             foreach(GameTile tile in referencedTiles)

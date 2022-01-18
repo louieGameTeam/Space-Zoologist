@@ -8,7 +8,7 @@ public class SerializedTilemap
     public string TilemapName;
     public SerializedTileData[] SerializedTileDatas;
     public SerializedLiquidBody[] SerializedLiquidBodies;
-    public SerializedTilemap (string tilemapName, GridSystem.TileData[,] tiles, int width, int height, HashSet<LiquidBody> liquidBodies)
+    public SerializedTilemap (string tilemapName, TileData[,] tiles, int width, int height, HashSet<LiquidBody> liquidBodies)
     {
         this.TilemapName = tilemapName;
 
@@ -16,7 +16,7 @@ public class SerializedTilemap
         List<SerializedTileData> serializedTileDataList = new List<SerializedTileData>();
 
         // read first tile for reference
-        GridSystem.TileData tileData = tiles[0, 0];
+        TileData tileData = tiles[0, 0];
         GameTile gameTile = tileData.currentTile;
         LiquidBody body = tileData.currentLiquidBody;
         bool placeable = tileData.isTilePlaceable;
