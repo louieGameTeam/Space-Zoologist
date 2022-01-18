@@ -79,9 +79,12 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
             loopStartTime = source.clip.length * loopStartBar / totalBarCount;
 
             // Duplicates this source to be used for looping, removing this script
-            if (!transform.parent.GetComponent<CustomMusicLoopController> ()) 
+            if (!transform.parent || !transform.parent.GetComponent<CustomMusicLoopController> ()) 
             {
                 source2 = Instantiate (source.gameObject, transform).GetComponent<AudioSource> ();
+                if (source2.gameObject.GetComponent<MusicQueuer> ()) {
+                    Destroy (source2.gameObject.GetComponent<MusicQueuer> ());
+                }
                 Destroy (source2.gameObject.GetComponent<CustomMusicLoopController> ());
             }
         }

@@ -69,6 +69,7 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         outline.transform.SetAsLastSibling();
 
         // Set the disable overlay if we are not yet qualified to try this level
+
         overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber);
         overlay.transform.SetAsLastSibling();
     }
