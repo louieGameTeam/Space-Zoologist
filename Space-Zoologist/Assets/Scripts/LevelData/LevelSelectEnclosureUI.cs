@@ -16,10 +16,7 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         get
         {
-            if (overrideLatestLevelQualified)
-            {
-                return levelOverride;
-            }
+            if (overridden) return levelOverride;
             else return SaveData.LatestLevelQualified;
         }
     }
@@ -39,7 +36,7 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
 
     #region Private Fields
     private LevelData enclosure;
-    private bool overrideLatestLevelQualified = false;
+    private bool overridden = false;
     private LevelID levelOverride = LevelID.Invalid;
     #endregion
 
@@ -57,17 +54,20 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         outline.SetActive(false);
     }
     public void LoadLevel() => LevelDataLoader.LoadLevel(enclosure);
-    public void OverrideLatestLevelQualified(LevelID levelOverride)
+    public void SetOverride(LevelID levelOverride)
     {
-        overrideLatestLevelQualified = true;
+        overridden = true;
         this.levelOverride = levelOverride;
 
         // Disable outline in case this makes the ui not interactable anymore
         outline.SetActive(false);
     }
-    public void ClearOverrideLatestLevelQualified()
+    public void ClearOverride()
     {
-        overrideLatestLevelQualified = false;
+        overridden = false;
+
+        // Disable outline in case this makes the ui not interactable anymore
+        outline.SetActive(false);
     }
     #endregion
 

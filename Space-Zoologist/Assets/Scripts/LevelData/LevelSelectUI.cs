@@ -9,6 +9,7 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     #region Public Properties
     public bool Interactable => LatestLevelQualified.LevelNumber == levelNumber;
+    public bool Overridden => overridden;
     #endregion
 
     #region Private Properties
@@ -16,7 +17,7 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         get
         {
-            if (overrideLatestLevelQualified)
+            if (overridden)
             {
                 return levelOverride;
             }
@@ -43,7 +44,7 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     #region Private Fields
     private int levelNumber;
     private LevelSelectEnclosureUI[] enclosureUIs;
-    private bool overrideLatestLevelQualified = false;
+    private bool overridden = false;
     private LevelID levelOverride = LevelID.Invalid;
     #endregion
 
@@ -69,21 +70,38 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         outline.transform.SetAsLastSibling();
 
         // Set the disable overlay if we are not yet qualified to try this level
-
         overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber);
         overlay.transform.SetAsLastSibling();
     }
-    public void OverrideLatestLevelQualified(LevelID levelOverride)
+    public void SetOverride(LevelID levelOverride)
     {
-        overrideLatestLevelQualified = true;
+        overridden = true;
         this.levelOverride = levelOverride;
 
         // Disable outline in case this makes the ui not interactable anymore
         outline.SetActive(false);
+
+        // Update overlay based on if we are qualified to access this level
+        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber);
+
+        // Override the latest level qualified for all enclosure uis
+        foreach(LevelSelectEnclosureUI ui in enclosureUIs)
+        {
+            ui.SetOverride(levelOverride);
+        }
     }
-    public void ClearOverrideLatestLevelQualified()
+    public void ClearOverride()
     {
-        overrideLatestLevelQualified = false;
+        overridden = false;
+
+        // Update overlay based on if we are qualified to access this level
+        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber);
+
+        // Clear the overrides for all the uis
+        foreach(LevelSelectEnclosureUI ui in enclosureUIs)
+        {
+            ui.ClearOverride();
+        }
     }
     #endregion
 
