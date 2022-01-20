@@ -39,7 +39,11 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
         source = refSource;
         if (source.clip == null)
         {
-            Debug.LogWarning("Abort: initializing an empty audio source!");
+            if (GetComponent<MusicQueuer> ()) {
+                Debug.Log ("Waiting for music to be queued");
+            } else {
+                Debug.LogWarning ("Abort: initializing an empty audio source!");
+            }
             return;
         }
         string clipName = source.clip.name;
@@ -81,15 +85,11 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
 
             loopPrepTime = loopStartTime + (loopEndTime - loopStartTime) / 2;
 
-            // Duplicates this source to be used for looping, removing this script
-            if (!transform.parent || !transform.parent.GetComponent<CustomMusicLoopController> ()) 
-            {
-                source2 = Instantiate (source.gameObject, transform).GetComponent<AudioSource> ();
-                if (source2.gameObject.GetComponent<MusicQueuer> ()) {
-                    Destroy (source2.gameObject.GetComponent<MusicQueuer> ());
-                }
-                Destroy (source2.gameObject.GetComponent<CustomMusicLoopController> ());
+            if (!transform.GetChild(0) || !transform.GetChild (0).GetComponent<AudioSource> ()) {
+                Debug.LogError ("This object should have a child object with an audio source!");
+                return;
             }
+            source2 = transform.GetChild (0).GetComponent<AudioSource> ();
         }
         else
         {
