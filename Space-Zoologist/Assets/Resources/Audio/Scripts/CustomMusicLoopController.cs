@@ -12,7 +12,7 @@ using UnityEngine;
 public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<CustomMusicLoopController>
 {
     bool hasCustomLoopData;         // whether this audio clip has special looping behavior
-    bool usingBackupSource;         // whether source2 is currently playing instead of source
+    bool usingPrimarySource = true; // whether source is currently playing instead of source2
     bool nextSourcePrepared;        // whether the next audio source has been reset
     float loopStartTime;            // the length, in samples, of the portion of the track which is looped
     float loopEndTime;              // the sample which indicates that we should loop back to the start of the loop
@@ -106,11 +106,13 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
         if (nextSourcePrepared && (source.time == 0 || source2.time == 0)) {
             nextSourcePrepared = false;
         }
+
+        //print (source.time + ", " + source2.time);
     }
 
     void PrepNextTrack() 
     {
-        if (usingBackupSource) 
+        if (usingPrimarySource) 
         {
             // Schedules the current source to end at the end of the loop
             source.SetScheduledEndTime (AudioSettings.dspTime + loopEndTime - source.time);
@@ -132,7 +134,7 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
             //print ("Prepped, will loop at " + (AudioSettings.dspTime + loopEndTime - source2.time));
         }
 
-        usingBackupSource = !usingBackupSource;
+        usingPrimarySource = !usingPrimarySource;
     }
 
     // start playing the track
@@ -144,18 +146,10 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
             return;
         }
 
-        // Prevents audio from looping immediately
-        source.time = 0.0001f;
-        source.PlayScheduled (AudioSettings.dspTime);
+        source.time = 0;
+        source.Play ();
         gameObject.name = "Now Playing: " + source.clip.name;
 
-        // Schedules the current source to end at the end of the loop
-        source.SetScheduledEndTime (AudioSettings.dspTime + loopEndTime);
-        // Schedules the next source to be played at the end of the loop
-        source2.PlayScheduled (AudioSettings.dspTime + loopEndTime);
-        // Skips the next source ahead to the start of the loop
-        source2.time = loopStartTime;
-        nextSourcePrepared = true;
         //print ("Started at " + AudioSettings.dspTime + ", will loop at " + (AudioSettings.dspTime + loopEndTime));
     }
 
@@ -196,7 +190,7 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
             return;
         }
 
-        if (usingBackupSource)
+        if (usingPrimarySource)
         {
             source2.UnPause ();
         } else
@@ -209,7 +203,7 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
     // returns the realtime position of the track
     public float GetCurrentTime()
     {
-        if (usingBackupSource) {
+        if (usingPrimarySource) {
             return source2.time;
         } else {
             return source.time;
