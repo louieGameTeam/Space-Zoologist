@@ -15,7 +15,8 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
     bool usingPrimarySource = true; // whether source is currently playing instead of source2
     bool nextSourcePrepared;        // whether the next audio source has been reset
     float loopStartTime;            // the length, in samples, of the portion of the track which is looped
-    float loopEndTime;              // the sample which indicates that we should loop back to the start of the loop
+    float loopEndTime;              // the time which indicates that we should loop back to the start of the loop
+    float loopPrepTime;             // the time which indicates that we should prep the next track to be looped
 
     AudioSource source;             // the audio source which contains the track to be looped
     AudioSource source2;            // the audio source used to allow custom looped tracks to loop seamlessly
@@ -78,6 +79,8 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
             // the length of the loop is (loopEnd - "loop start")
             loopStartTime = source.clip.length * loopStartBar / totalBarCount;
 
+            loopPrepTime = loopStartTime + (loopEndTime - loopStartTime) / 2;
+
             // Duplicates this source to be used for looping, removing this script
             if (!transform.parent || !transform.parent.GetComponent<CustomMusicLoopController> ()) 
             {
@@ -98,7 +101,7 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
     {
         if ((!source.isPlaying && !source2.isPlaying) || !hasCustomLoopData) return;
 
-        if (!nextSourcePrepared && (source.time > loopEndTime / 2 || source2.time > loopEndTime / 2)) {
+        if (!nextSourcePrepared && (source.time > loopPrepTime || source2.time > loopPrepTime)) {
             PrepNextTrack ();
             nextSourcePrepared = true;
         }
@@ -116,20 +119,20 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
         {
             // Schedules the current source to end at the end of the loop
             source.SetScheduledEndTime (AudioSettings.dspTime + loopEndTime - source.time);
-            // Schedules the next source to be played at the end of the loop
-            source2.PlayScheduled (AudioSettings.dspTime + loopEndTime - source.time);
             // Skips the next source ahead to the start of the loop
             source2.time = loopStartTime;
+            // Schedules the next source to be played at the end of the loop
+            source2.PlayScheduled (AudioSettings.dspTime + loopEndTime - source.time);
 
             //print ("Prepped, will loop at " + (AudioSettings.dspTime + loopEndTime - source.time));
         } else 
         {
             // Schedules the current source to end at the end of the loop
             source2.SetScheduledEndTime (AudioSettings.dspTime + loopEndTime - source2.time);
-            // Schedules the next source to be played at the end of the loop
-            source.PlayScheduled (AudioSettings.dspTime + loopEndTime - source2.time);
             // Skips the next source ahead to the start of the loop
             source.time = loopStartTime;
+            // Schedules the next source to be played at the end of the loop
+            source.PlayScheduled (AudioSettings.dspTime + loopEndTime - source2.time);
 
             //print ("Prepped, will loop at " + (AudioSettings.dspTime + loopEndTime - source2.time));
         }
