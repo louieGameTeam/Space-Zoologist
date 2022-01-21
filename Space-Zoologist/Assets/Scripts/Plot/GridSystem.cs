@@ -511,7 +511,7 @@ public class GridSystem : MonoBehaviour
     public void StartDrafting()
     {
         IsDrafting = true;
-        GameManager.Instance.TryToPause();
+        GameManager.Instance.TryToPause("GridSystemDrafting");
         GameManager.Instance.m_inspector.ResetSelection();
         UpdateUI(false);
     }
@@ -519,7 +519,7 @@ public class GridSystem : MonoBehaviour
     public void FinishDrafting()
     {
         IsDrafting = false;
-        GameManager.Instance.Unpause();
+        GameManager.Instance.TryToUnpause("GridSystemDrafting");
         UpdateUI(true);
     }
 
