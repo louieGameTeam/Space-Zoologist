@@ -16,10 +16,6 @@ MonoBehaviour:
   - item:
       category: 0
       index: 0
-    need: 0
-  - item:
-      category: 0
-      index: 0
     need: 3
   questions:
   - question: "We\u2019ll start off with an easy one. What food do Zeigs prefer? "
@@ -35,7 +31,7 @@ MonoBehaviour:
       weight: 2
     - label: Berries
       weight: 1
-    - label: Ants
+    - label: Mushrooms
       weight: 0
   - question: Alright. Now, what food do zeigs absolutely, positively refuse to eat?
     category:
@@ -58,7 +54,7 @@ MonoBehaviour:
       item:
         category: 0
         index: 0
-      need: 3
+      need: 0
     options:
     - label: Dirt
       weight: 0
@@ -68,9 +64,12 @@ MonoBehaviour:
       weight: 1
     - label: Swamp
       weight: 1
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
   gradingRubric:
-    scoreToPassImportantQuestions: 3
-    scoreToPassUnimportantQuestions: 0
+    scoreToPassImportantQuestions: 2
+    scoreToPassUnimportantQuestions: 1
   exampleQuiz:
-    template: {fileID: 0}
-    answers: 
+    template: {fileID: 11400000}
+    answers: 010000000300000002000000

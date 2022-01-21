@@ -17,10 +17,6 @@ MonoBehaviour:
       category: 0
       index: 0
     need: 0
-  - item:
-      category: 0
-      index: 0
-    need: 4
   questions:
   - question: 'What kind of terrain will the zeigs never enter? '
     category:
@@ -36,7 +32,7 @@ MonoBehaviour:
     - label: Rocky
       weight: 1
     - label: Swamp
-      weight: 1
+      weight: 2
   - question: How many tiles of water does each Zeig need in order to thrive?
     category:
       item:
@@ -51,7 +47,7 @@ MonoBehaviour:
     - label: 3
       weight: 0
     - label: 1
-      weight: 2
+      weight: 0
     - label: 2
       weight: 1
   - question: "How salinated do Zeig\u2019s prefer their drinking water to be?"
@@ -73,8 +69,8 @@ MonoBehaviour:
     questionsToPick: 0
     questionPool: []
   gradingRubric:
-    scoreToPassImportantQuestions: 0
-    scoreToPassUnimportantQuestions: 0
+    scoreToPassImportantQuestions: 2
+    scoreToPassUnimportantQuestions: 1
   exampleQuiz:
     template: {fileID: 11400000}
     answers: 000000000000000000000000
