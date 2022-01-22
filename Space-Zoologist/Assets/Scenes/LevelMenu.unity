@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -332,6 +332,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 775033069974327857, guid: 6238c2724e7624d0580fcf5738f4fd83,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6d609e41eb0f34b7188a50d9ddf352e6, type: 3}
     - target: {fileID: 1725342232761515678, guid: 6238c2724e7624d0580fcf5738f4fd83,
         type: 3}
       propertyPath: m_audioClip
@@ -564,7 +569,7 @@ PrefabInstance:
     - target: {fileID: 4505284627303098773, guid: 757d09d31762a4ed690a409b2cd5fb26,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -9.000015
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 4505284627436175191, guid: 757d09d31762a4ed690a409b2cd5fb26,
         type: 3}
