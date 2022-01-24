@@ -23,7 +23,7 @@ public class Inspector : MonoBehaviour
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
     public GameObject PopulationHighlighted { get; private set; } = null;
-    private Vector3Int selectedPosition;
+    public Vector3Int selectedPosition { get; private set; }
 
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
