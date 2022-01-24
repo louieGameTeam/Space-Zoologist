@@ -78,8 +78,13 @@ public class FoodSourceNeedSystem : NeedSystem
             foodSourceCalculator.ResetCalculator();
         }
 
+        // Create a new list that is sorted by the food dominance of the populations
+        // This way, dominant species get the food first
+        List<Population> populations = new List<Population>(GameManager.Instance.m_reservePartitionManager.Populations);
+        populations.Sort(new DominanceComparer());
+
         // 2. Iterate through populations based on most dominant
-        foreach (Population population in new SortedSet<Population>(GameManager.Instance.m_reservePartitionManager.Populations, new DominanceComparer()))
+        foreach (Population population in populations)
         {
             float preferredAmount = 0;
             float compatibleAmount = 0;

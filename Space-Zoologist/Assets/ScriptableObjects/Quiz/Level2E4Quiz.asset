@@ -55,7 +55,7 @@ MonoBehaviour:
       item:
         category: 0
         index: 1
-      need: 0
+      need: 7
     options:
     - label: Caprax Zeigrun
       weight: 0
@@ -65,8 +65,8 @@ MonoBehaviour:
     questionsToPick: 0
     questionPool: []
   gradingRubric:
-    scoreToPassImportantQuestions: 0
-    scoreToPassUnimportantQuestions: 0
+    scoreToPassImportantQuestions: 1
+    scoreToPassUnimportantQuestions: 2
   exampleQuiz:
-    template: {fileID: 0}
+    template: {fileID: 11400000}
     answers: 

@@ -379,16 +379,25 @@ public class MoveObject : MonoBehaviour
         AnimalSpecies species = population.Species;
 
         float cost = moveCost;
-        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) && GameManager.Instance.Balance >= cost;
+        // Move is valid if the pod placement is valid...
+        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) &&
+            // ...the player has money to move the animal...
+            GameManager.Instance.Balance >= cost; /*&&
+            // ...and the animal can't already access the terrian here (is this condition necessary?)
+            !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos);*/
 
         // placement is valid and population did not already reach here
-        if (valid && !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
+        if (valid)
         {
+            toMove.transform.position = worldPos;
             GameManager.Instance.m_populationManager.UpdatePopulation(species, worldPos);
             GameManager.Instance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
-        toMove.transform.position = worldPos; // always place animal back because animal movement will be handled by pop manager
+        else
+        {
+            toMove.transform.position = initialPos;
+        }
     }
 
     private void TryPlaceFood(Vector3 worldPos, GameObject toMove)
