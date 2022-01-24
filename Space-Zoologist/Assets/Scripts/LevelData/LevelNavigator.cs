@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelNavigator : MonoBehaviour
 {
+    #region Public Properties
+    // Assume the level navigator is overridden if just one level is overridden
+    public bool Overridden => uis[0].Overridden;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the level select UI used to select a level")]
@@ -32,30 +37,27 @@ public class LevelNavigator : MonoBehaviour
             uis[level].Setup(level);
         }
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            if (uis[0].Overridden)
-            {
-                foreach (LevelSelectUI ui in uis)
-                {
-                    ui.ClearOverride();
-                }
-            }
-            else
-            {
-                // Get the level just after the max level
-                int maxLevel = LevelDataLoader.MaxLevel() + 1;
-                LevelID maxID = new LevelID(maxLevel, 1);
+    #endregion
 
-                // Override all ui's to the max level
-                foreach(LevelSelectUI ui in uis)
-                {
-                    ui.SetOverride(maxID);
-                }
-            }
+    #region Public Methods
+    public void SetOverride(LevelID overrideID)
+    {
+        foreach (LevelSelectUI ui in uis)
+        {
+            ui.SetOverride(overrideID);
         }
+    }
+    public void ClearOverride()
+    {
+        foreach (LevelSelectUI ui in uis)
+        {
+            ui.ClearOverride();
+        }
+    }
+    public void ToggleOverride(LevelID overrideID)
+    {
+        if (Overridden) ClearOverride();
+        else SetOverride(overrideID);
     }
     #endregion
 }
