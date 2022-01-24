@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -624,7 +624,7 @@ PrefabInstance:
     - target: {fileID: 6423215287888283054, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -8.333313
+      value: -8.333252
       objectReference: {fileID: 0}
     - target: {fileID: 8946323213000099164, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
@@ -5772,12 +5772,12 @@ PrefabInstance:
     - target: {fileID: 7011737153253799787, guid: f2d8077c97fcfd2478849204b1c4a546,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 275
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7011737153253799787, guid: f2d8077c97fcfd2478849204b1c4a546,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 148
+      value: -382
       objectReference: {fileID: 0}
     - target: {fileID: 7011737153253799787, guid: f2d8077c97fcfd2478849204b1c4a546,
         type: 3}
@@ -5797,7 +5797,7 @@ PrefabInstance:
     - target: {fileID: 7011737153253799787, guid: f2d8077c97fcfd2478849204b1c4a546,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7011737153253799787, guid: f2d8077c97fcfd2478849204b1c4a546,
         type: 3}
@@ -5807,7 +5807,7 @@ PrefabInstance:
     - target: {fileID: 7011737153253799787, guid: f2d8077c97fcfd2478849204b1c4a546,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7011737153253799787, guid: f2d8077c97fcfd2478849204b1c4a546,
         type: 3}
@@ -8107,6 +8107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3f7cc3157724a0d9487ef32f2dd87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skipOpeningConversation: 0
   HideNPC: 0
   ConversationManagerGameObject: {fileID: 120515477173918234}
   npcActive:
