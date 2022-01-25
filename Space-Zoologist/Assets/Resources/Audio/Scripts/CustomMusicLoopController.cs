@@ -206,18 +206,13 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
     // returns the realtime position of the track
     public float GetCurrentTime()
     {
-        if (usingBackupSource) {
-            return source2.time;
-        } else {
-            return source.time;
-        }
+        return source.time;
     }
 
     // changes the volume of this track
     public void SetVolume(float volume)
     {
         source.volume = volume;
-        source2.volume = volume;
     }
 
     // get the volume of this track
