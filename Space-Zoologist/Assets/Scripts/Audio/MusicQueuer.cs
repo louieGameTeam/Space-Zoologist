@@ -19,7 +19,7 @@ public class MusicQueuer : MonoBehaviour
         if (GameManager.Instance != null) {
             gameObject.GetComponent<AudioSource>().clip = GameManager.Instance.LevelData.LevelMusic;
         }
-        //transform.GetChild (0).GetComponent<AudioSource> ().clip = gameObject.GetComponent<AudioSource> ().clip;
+        transform.GetChild (0).GetComponent<AudioSource> ().clip = gameObject.GetComponent<AudioSource> ().clip;
         nextTrack.Reinitialize ();
         QueueAndTrigger ();
         Destroy(this);
