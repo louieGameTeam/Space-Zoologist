@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -13,11 +14,13 @@ using TMPro;
 public class Inspector : MonoBehaviour
 {
     public bool IsInInspectorMode { get; private set; }
+    public UnityEvent SelectionChangedEvent => selectionChangedEvent;
 
     // The inspector window
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript;
     [SerializeField] private GameObject GrowthInfo = default;
+    [SerializeField] private UnityEvent selectionChangedEvent;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -134,6 +137,7 @@ public class Inspector : MonoBehaviour
         if (somethingSelected)
         {
             AudioManager.instance.PlayOneShot(SFXType.Observation);
+            selectionChangedEvent.Invoke();
         }
     }
 

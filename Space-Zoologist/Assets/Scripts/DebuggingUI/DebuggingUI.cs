@@ -19,6 +19,12 @@ public class DebuggingUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Button that unlocks all levels when clicked")]
     private Button toggleLevelOverrideButton;
+    [SerializeField]
+    [Tooltip("Button that toggles the verbose inspector")]
+    private Button toggleVerboseInspectorButton;
+    [SerializeField]
+    [Tooltip("Reference to a verbose inspector")]
+    private VerboseInspector verboseInspector;
     #endregion
 
     #region Private Fields
@@ -32,6 +38,7 @@ public class DebuggingUI : MonoBehaviour
         mainPanel.SetActive(false);
         winButton.onClick.AddListener(Win);
         toggleLevelOverrideButton.onClick.AddListener(ToggleLevelSelectOverride);
+        toggleVerboseInspectorButton.onClick.AddListener(ToggleVerboseInspector);
     }
     private void Update()
     {
@@ -52,28 +59,44 @@ public class DebuggingUI : MonoBehaviour
             DontDestroyOnLoad(instance.gameObject);
 
             // Update the ui each time that a new scene is loaded
-            SceneManager.sceneLoaded += UpdateUI;
+            SceneManager.sceneLoaded += instance.UpdateUI;
         }
     }
     #endregion
 
     #region Event Listeners
-    private static void UpdateUI(Scene arg0, LoadSceneMode arg1)
+    private void UpdateUI(Scene arg0, LoadSceneMode arg1)
     {
-        instance.winButton.interactable = GameManager.Instance;
+        // Store the instance of the game manager
+        GameManager gameManager = GameManager.Instance;
+
+        // Win button only interactable if a game manager exists in this scene
+        winButton.interactable = gameManager;
 
         // Can only override levels if you found a level navigator
         LevelNavigator navigator = FindObjectOfType<LevelNavigator>();
-        instance.toggleLevelOverrideButton.interactable = navigator;
+        toggleLevelOverrideButton.interactable = navigator;
+
+        // Verbose inspector only interactable if there is a game manager
+        toggleVerboseInspectorButton.interactable = gameManager;
+
+        // If a game manager exists then connect the verbose inspector
+        // to the in game inspector
+        if (gameManager)
+        {
+            verboseInspector.ConnectInspector(gameManager.m_inspector);
+        }
+        // Otherwise disable the verbose inspector
+        else SetVerboseInspectorActive(false);
     }
-    private static void Win()
+    private void Win()
     {
         if (GameManager.Instance)
         {
             GameManager.Instance.DebugWin();
         }
     }
-    private static void ToggleLevelSelectOverride()
+    private void ToggleLevelSelectOverride()
     {
         LevelNavigator navigator = FindObjectOfType<LevelNavigator>();
 
@@ -83,6 +106,17 @@ public class DebuggingUI : MonoBehaviour
             LevelID maxID = new LevelID(LevelDataLoader.MaxLevel() + 1, 1);
             navigator.ToggleOverride(maxID);
         }
+    }
+    private void ToggleVerboseInspector()
+    {
+        SetVerboseInspectorActive(!verboseInspector.gameObject.activeInHierarchy);
+    }
+    #endregion
+
+    #region Private Fields
+    private void SetVerboseInspectorActive(bool active)
+    {
+        verboseInspector.gameObject.SetActive(active);
     }
     #endregion
 }
