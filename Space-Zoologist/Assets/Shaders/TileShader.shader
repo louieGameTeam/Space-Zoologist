@@ -168,6 +168,11 @@
             float _BlendBorderNoiseThreshold;
             float _RoundingDist;
 
+            int GetGridInfo(float2 tilePos)
+            {
+                return (tilePos >= 0 && tilePos < _GridTexDim) * tex2D(_GridInfoTex, tilePos / _GridTexDim).r * 256;
+            }
+
             float4 frag(v2f i) : SV_Target
             {
                 float4 col = 1;
@@ -186,19 +191,26 @@
                     0, 0, 0,
                     0, 0, 0
                 };
+                //ttm indexes in tilemap grid orientation
+                /*
+                    0 1 2
+                2
+                1
+                0
+                */
 
                 // set matrix values
-                ttm[0][0] = tex2D(_GridInfoTex, float2(tilePos + int2(-1, -1)) / _GridTexDim).r * 256;
-                ttm[0][1] = tex2D(_GridInfoTex, float2(tilePos + int2(0, -1)) / _GridTexDim).r * 256;
-                ttm[0][2] = tex2D(_GridInfoTex, float2(tilePos + int2(1, -1)) / _GridTexDim).r * 256;
+                ttm[0][0] = GetGridInfo(float2(tilePos + int2(-1, -1)));
+                ttm[0][1] = GetGridInfo(float2(tilePos + int2(0, -1)));
+                ttm[0][2] = GetGridInfo(float2(tilePos + int2(1, -1)));
 
-                ttm[1][0] = tex2D(_GridInfoTex, float2(tilePos + int2(-1, 0)) / _GridTexDim).r * 256;
-                ttm[1][1] = tex2D(_GridInfoTex, float2(tilePos + int2(0, 0)) / _GridTexDim).r * 256;
-                ttm[1][2] = tex2D(_GridInfoTex, float2(tilePos + int2(1, 0)) / _GridTexDim).r * 256;
+                ttm[1][0] = GetGridInfo(float2(tilePos + int2(-1, 0)));
+                ttm[1][1] = GetGridInfo(float2(tilePos + int2(0,0)));
+                ttm[1][2] = GetGridInfo(float2(tilePos + int2(1,0)));
 
-                ttm[2][0] = tex2D(_GridInfoTex, float2(tilePos + int2(-1, 1)) / _GridTexDim).r * 256;
-                ttm[2][1] = tex2D(_GridInfoTex, float2(tilePos + int2(0, 1)) / _GridTexDim).r * 256;
-                ttm[2][2] = tex2D(_GridInfoTex, float2(tilePos + int2(1, 1)) / _GridTexDim).r * 256;
+                ttm[2][0] = GetGridInfo(float2(tilePos + int2(-1, 1)));
+                ttm[2][1] = GetGridInfo(float2(tilePos + int2(0, 1)));
+                ttm[2][2] = GetGridInfo(float2(tilePos + int2(1, 1)));
 
                 float2 tileUVUnit = float2(float(1) / TILES_X, float(1) / TILES_Y);
                 float2 firstTileUV = GetFirstTileUV(ttm[1][1], localUV);
@@ -250,6 +262,7 @@
                 // corner rounding
                 // bottom left
                 if (ttm[1][0] == ttm[0][1] && ttm[1][0] != ttm[1][1] &&
+                    ttm[1][1] != ttm[0][0] &&
                     ttm[1][1] != TILE_TYPE_WALL && ttm[0][2] != TILE_TYPE_WALL &&
                     ttm[1][0] != TILE_TYPE_LIQUID) {
                     float4 bottomLeftCorner = tex2D(_TileAtlas, GetFirstTileUV(ttm[1][0], localUV));
@@ -257,6 +270,7 @@
                 }
                 // bottom right
                 if (ttm[1][2] == ttm[0][1] && ttm[1][2] != ttm[1][1] &&
+                    //ttm[1][1] != ttm[0][2] &&
                     ttm[1][1] != TILE_TYPE_WALL && ttm[1][2] != TILE_TYPE_WALL &&
                     ttm[1][2] != TILE_TYPE_LIQUID) {
                     float4 bottomRightCorner = tex2D(_TileAtlas, GetFirstTileUV(ttm[1][2], localUV));
@@ -264,6 +278,7 @@
                 }
                 // top left
                 if (ttm[1][0] == ttm[2][1] && ttm[1][0] != ttm[1][1] &&
+                    //ttm[1][1] != ttm[2][0] &&
                     ttm[1][1] != TILE_TYPE_WALL && ttm[1][0] != TILE_TYPE_WALL &&
                     ttm[1][0] != TILE_TYPE_LIQUID) {
                     float4 topLeftCorner = tex2D(_TileAtlas, GetFirstTileUV(ttm[2][1], localUV));
@@ -271,6 +286,7 @@
                 }
                 // top right
                 if (ttm[1][2] == ttm[2][1] && ttm[1][2] != ttm[1][1] &&
+                    ttm[1][1] != ttm[2][2] &&
                     ttm[1][1] != TILE_TYPE_WALL && ttm[1][2] != TILE_TYPE_WALL &&
                     ttm[1][2] != TILE_TYPE_LIQUID) {
                     float4 topRightCorner = tex2D(_TileAtlas, GetFirstTileUV(ttm[1][2], localUV));
@@ -385,7 +401,7 @@
                 }
 
                 // add liquid and other animated tiles first
-                if (ttm[1][1] == 7)
+                if (ttm[1][1] == TILE_TYPE_LIQUID)
                     col = AddLiquid(col, localPixel, i.worldPos.xy);
                 
                 // then add color modifier
@@ -395,7 +411,6 @@
                 // create grid
                 if (_GridOverlayToggle > 0)
                     col = AddGrid(col, localUV * PIXELS_PER_TILE, tilePos, tileInformation);
-
                 return col;
             }
             ENDCG
