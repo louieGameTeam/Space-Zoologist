@@ -2385,7 +2385,7 @@ public class GridSystem : MonoBehaviour
 
         #region Serializeable Fields
         // Some of these fields are public so that other classes can set the data,
-        // whereas others are private so they cannot be set
+        // whereas others are private so they cannot be set outside the class
         public GameObject Machine;
         public GameObject Food;
         public GameObject Animal;

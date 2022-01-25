@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 public enum SearchDirection { Up, Down, Left, Right }
+[Serializable]
 public class LiquidBody
 {
     public int bodyID;
