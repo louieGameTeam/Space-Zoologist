@@ -293,7 +293,7 @@ public class MoveObject : MonoBehaviour
                 tempItem.SetupData(ID, "Tile", ID, 0);
 
                 initialTilePosition = pos;
-                initialTile = gridSystem.GetTileData(pos).currentTile;
+                initialTile = gridSystem.GetTileData(pos).CurrentTile;
                 initialTile.defaultContents = initialTileContents;
             }
         }
@@ -328,7 +328,7 @@ public class MoveObject : MonoBehaviour
                 GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
                 gridSystem.ApplyChangesToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
-                if (tileData.currentTile == null)
+                if (tileData.CurrentTile == null)
                     tileData.Clear();
                 //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
                 gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
@@ -441,7 +441,7 @@ public class MoveObject : MonoBehaviour
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
 
-        if (gridSystem.GetTileData(tilePos).currentTile.type != initialTile.type)
+        if (gridSystem.GetTileData(tilePos).CurrentTile.type != initialTile.type)
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();

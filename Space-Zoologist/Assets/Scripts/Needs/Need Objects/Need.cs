@@ -127,6 +127,7 @@ public abstract class Need
     public NeedType NeedType => GetNeedType();
     public Sprite Sprite => sprite;
     public float NeedValue => this.needValue;
+    public float Severity => severity;
     public bool IsPreferred => needConstructData.IsPreferred;
 
     [SerializeField] private float needValue = default;

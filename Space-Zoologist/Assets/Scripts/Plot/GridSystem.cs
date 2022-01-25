@@ -403,7 +403,7 @@ public class GridSystem : MonoBehaviour
             // resize the array if row/column is empty and is in outer ranges (may work on later)
 
             tileData.isTilePlaceable = false;
-            if (tileData.currentTile.type == TileType.Liquid)
+            if (tileData.CurrentTile.type == TileType.Liquid)
                 DivideLiquidBody(tilePosition);
             tileData.PreviewReplacement(null);
             ChangedTiles.Add(tilePosition);
@@ -420,7 +420,7 @@ public class GridSystem : MonoBehaviour
     public GameTile GetGameTileAt(Vector3Int cellLocation)
     {
         if (IsWithinGridBounds(cellLocation))
-            return TileDataGrid[cellLocation.y, cellLocation.x].currentTile;//Tilemap.GetTile<GameTile>(cellLocation); removed because tilemaps cannot handle that many tiles
+            return TileDataGrid[cellLocation.y, cellLocation.x].CurrentTile;//Tilemap.GetTile<GameTile>(cellLocation); removed because tilemaps cannot handle that many tiles
 
         return null;
     }
@@ -772,7 +772,7 @@ public class GridSystem : MonoBehaviour
                     TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
                 }
 
-                if (TileDataGrid[cluster.ConstructionTilePositions[0].y, cluster.ConstructionTilePositions[0].x].previewLiquidBody != null)
+                if (TileDataGrid[cluster.ConstructionTilePositions[0].y, cluster.ConstructionTilePositions[0].x].PreviewedLiquidBody != null)
                     ConfirmPlacement();
 
                 if (constructionFinishedCallback != null)
@@ -846,7 +846,7 @@ public class GridSystem : MonoBehaviour
 
             tileData.Revert();
             this.ApplyChangesToTilemapTexture(changedTilePosition);
-            if (tileData.currentTile == null)
+            if (tileData.CurrentTile == null)
                 tileData.Clear();
         }
         this.ClearAll();
@@ -862,7 +862,7 @@ public class GridSystem : MonoBehaviour
     {
         TileData data = GetTileData(tilePosition);
 
-        if (data == null || data.currentTile == null)
+        if (data == null || data.CurrentTile == null)
         {
             Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
             tilePixel.r = 0;
@@ -874,13 +874,13 @@ public class GridSystem : MonoBehaviour
         else
         {
             Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
-            tilePixel.r = ((int)data.currentTile.type + 1) / FLAG_VALUE_MULTIPLIER;
+            tilePixel.r = ((int)data.CurrentTile.type + 1) / FLAG_VALUE_MULTIPLIER;
             TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
             TilemapTexture.Apply();
 
-            Tilemap.SetTile(tilePosition, data.currentTile);
+            Tilemap.SetTile(tilePosition, data.CurrentTile);
             Tilemap.SetTileFlags(tilePosition, TileFlags.None);
-            Tilemap.SetColor(tilePosition, data.currentColor);
+            Tilemap.SetColor(tilePosition, data.CurrentColor);
         }
     }
 
@@ -904,7 +904,7 @@ public class GridSystem : MonoBehaviour
         TileData tileData = GetTileData(tilePosition);
 
         // check if it is even liquid
-        if (tileData.currentTile.type != TileType.Liquid)
+        if (tileData.CurrentTile.type != TileType.Liquid)
         {
             Debug.LogError(tilePosition + "Not a liquid tile.");
             return;
@@ -991,11 +991,11 @@ public class GridSystem : MonoBehaviour
 
             if (neighborTileData != null)
             {
-                if (neighborTileData.currentTile == tile)
+                if (neighborTileData.CurrentTile == tile)
                 {
-                    if (neighborTileData.previewLiquidBody != null)
+                    if (neighborTileData.PreviewedLiquidBody != null)
                     {
-                        neighborLiquidBodies.Add(neighborTileData.previewLiquidBody);
+                        neighborLiquidBodies.Add(neighborTileData.PreviewedLiquidBody);
                     }
                     else
                     {
@@ -2364,24 +2364,46 @@ public class GridSystem : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// Data for a single tile in the game
+    /// It has been marked as serializable so that
+    /// the verbose inspector can display all the data
+    /// as a JSON
+    /// </summary>
+    [Serializable]
     public class TileData
     {
-        public Vector3Int tilePosition { get; private set; }
-        public GameObject Machine { get; set; }
-        public GameObject Food { get; set; }
-        public GameObject Animal { get; set; }
-        public bool HomeLocation { get; set; }
+        #region Public Properties
+        public Vector3Int TilePosition => tilePosition;
+        public GameTile CurrentTile => currentTile;
+        public GameTile PreviousTile => previousTile;
+        public Color CurrentColor => currentColor;
+        public Color PreviousColor => previousColor;
+        public LiquidBody PreviewedLiquidBody => previewedLiquidBody;
+        public bool IsTileChanged => isTileChanged;
+        #endregion
 
-        public GameTile currentTile { get; private set; }
-        public GameTile previousTile { get; private set; }
-        public Color currentColor { get; private set; }
-        public Color previousColor { get; private set; }
-        public LiquidBody currentLiquidBody { get; set; }
-        public LiquidBody previewLiquidBody { get; private set; }
-        public float[] contents { get; set; }
-        public bool isTileChanged { get; private set; } = false;
-        public bool isTilePlaceable { get; set; } = false;
-        public bool isConstructing { get; set; } = false;
+        #region Serializeable Fields
+        // Some of these fields are public so that other classes can set the data,
+        // whereas others are private so they cannot be set outside the class
+        public GameObject Machine;
+        public GameObject Food;
+        public GameObject Animal;
+        public bool HomeLocation;
+
+        [SerializeField] private Vector3Int tilePosition;
+        [SerializeField] private GameTile currentTile;
+        [SerializeField] private GameTile previousTile;
+        [SerializeField] private Color currentColor;
+        [SerializeField] private Color previousColor;
+        public LiquidBody currentLiquidBody;
+        [SerializeField] private LiquidBody previewedLiquidBody;
+        public float[] contents;
+        [SerializeField] private bool isTileChanged;
+        public bool isTilePlaceable = false;
+        public bool isConstructing = false;
+        #endregion
+
         public TileData(Vector3Int tilePosition, GameTile tile = null)
         {
             this.Food = null;
@@ -2401,66 +2423,66 @@ public class GridSystem : MonoBehaviour
             this.currentTile = null;
             this.previousTile = null;
             this.currentLiquidBody = null;
-            this.previewLiquidBody = null;
+            this.previewedLiquidBody = null;
         }
         public void PreviewReplacement(GameTile tile)
         {
-            if (isTileChanged)
+            if (IsTileChanged)
             {
                 this.currentTile = tile;
                 return;
             }
-            this.previousTile = this.currentTile;
+            this.previousTile = this.CurrentTile;
             //Debug.Log("previous:" + this.previousTile ?? this.previousTile.TileName + "current:" + this.currentTile ?? this.currentTile.TileName);
             this.currentTile = tile;
             this.isTileChanged = true;
         }
         public void PreviewLiquidBody(LiquidBody newLiquidBody)
         {
-            this.previewLiquidBody = newLiquidBody;
+            this.previewedLiquidBody = newLiquidBody;
         }
         public void ConfirmReplacement()
         {
-            if (currentTile == null)
+            if (CurrentTile == null)
             {
                 this.currentColor = Color.white;
                 if (this.currentLiquidBody != null && currentLiquidBody.bodyID != 0)
                 {
-                    this.currentLiquidBody.RemoveTile(tilePosition); // Remove Tile from liquid body
+                    this.currentLiquidBody.RemoveTile(TilePosition); // Remove Tile from liquid body
                 }
                 return;
             }
 
-            if (previewLiquidBody != null)
+            if (previewedLiquidBody != null)
             {
-                currentLiquidBody = previewLiquidBody;
+                currentLiquidBody = previewedLiquidBody;
                 contents = currentLiquidBody.contents;
-                previewLiquidBody = null;
+                previewedLiquidBody = null;
             }
         }
         public void Revert()
         {
-            if (this.previousTile)
+            if (this.PreviousTile)
             {
-                this.currentTile = this.previousTile;
+                this.currentTile = this.PreviousTile;
                 this.previousTile = null;
             }
-            if (this.previewLiquidBody != null)
+            if (this.previewedLiquidBody != null)
             {
                 // oh god panic do something here
                 contents = new float[] { };
-                previewLiquidBody.RemoveTile(tilePosition);
-                previewLiquidBody = null;
+                previewedLiquidBody.RemoveTile(TilePosition);
+                previewedLiquidBody = null;
             }
         }
         public override string ToString()
         {
-            string positionString = "Tile Position: " + tilePosition.ToString() + "\n";
+            string positionString = "Tile Position: " + TilePosition.ToString() + "\n";
             string foodString = "Food: " + (Food != null ? Food.name : "none") + "\n";
-            string currentTileString = "Current Tile: " + (currentTile != null ? currentTile.TileName : "none") + "\n";
-            string previousTileString = "Previous Tile: " + (previousTile != null ? previousTile.TileName : "none") + "\n";
+            string currentTileString = "Current Tile: " + (CurrentTile != null ? CurrentTile.TileName : "none") + "\n";
+            string previousTileString = "Previous Tile: " + (PreviousTile != null ? PreviousTile.TileName : "none") + "\n";
             string currentLiquidbodyString = "Current Liquidbody ID: " + (currentLiquidBody != null ? "" + currentLiquidBody.bodyID : "none") + "\n";
-            string previewingLiquidbodyString = "Previewing Liquidbody ID: " + (previewLiquidBody != null ? "" + previewLiquidBody.bodyID : "none") + "\n";
+            string previewingLiquidbodyString = "Previewing Liquidbody ID: " + (previewedLiquidBody != null ? "" + previewedLiquidBody.bodyID : "none") + "\n";
 
             return positionString + foodString + currentTileString + previousTileString + currentLiquidbodyString + previewingLiquidbodyString;
         }

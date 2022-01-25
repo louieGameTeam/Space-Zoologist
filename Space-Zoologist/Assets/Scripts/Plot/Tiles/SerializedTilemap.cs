@@ -17,7 +17,7 @@ public class SerializedTilemap
 
         // read first tile for reference
         GridSystem.TileData tileData = tiles[0, 0];
-        GameTile gameTile = tileData.currentTile;
+        GameTile gameTile = tileData.CurrentTile;
         LiquidBody body = tileData.currentLiquidBody;
         bool placeable = tileData.isTilePlaceable;
         int repetitions = 1;
@@ -33,14 +33,14 @@ public class SerializedTilemap
                     tileData = tiles[i, j];
 
                     // if tile does not match current
-                    if (gameTile != tileData.currentTile || placeable != tileData.isTilePlaceable)
+                    if (gameTile != tileData.CurrentTile || placeable != tileData.isTilePlaceable)
                     {
                         // create and add a new serialized tile data
                         SerializedTileData serializedTileData = new SerializedTileData(gameTile, body, placeable, repetitions);
                         serializedTileDataList.Add(serializedTileData);
 
                         // update other values for future matching
-                        gameTile = tileData.currentTile;
+                        gameTile = tileData.CurrentTile;
                         body = tileData.currentLiquidBody;
                         placeable = tileData.isTilePlaceable;
                         repetitions = 1;
