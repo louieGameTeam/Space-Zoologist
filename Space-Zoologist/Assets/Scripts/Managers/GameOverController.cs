@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -66,11 +67,17 @@ public class GameOverController : MonoBehaviour
     private void OnPopulationExtinct()
     {
         Population population = EventManager.Instance.EventData as Population;
-        int animalsRemaining = GameManager.Instance.m_resourceManager.CheckRemainingResource(population.species);
+        // Count the number of animals that can still be placed in the enclosure
+        int animalsRemainingToPlace = GameManager.Instance.m_resourceManager
+            .CheckRemainingResource(population.species);
+        // Count the number of animals remaining in the enclosure 
+        int animalsRemainingInEnclosure = GameManager.Instance.m_populationManager.Populations
+            .Where(pop => pop.species == population.species)
+            .Sum(pop => pop.Count);
 
         // If you cannot add any more animals to the population that just went extinct,
         // then you know that you just failed the level
-        if (animalsRemaining <= 0) OnGameOver();
+        if (animalsRemainingToPlace <= 0 && animalsRemainingInEnclosure <= 0) OnGameOver();
     }
     private void LevelPassedConversation()
     {
