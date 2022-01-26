@@ -31,12 +31,12 @@ public class QuizInstance
     #endregion
 
     #region Constructors
-    public QuizInstance(QuizTemplate template)
+    public QuizInstance(QuizTemplate template, params QuizQuestion[] additionalQuestions)
     {
         // Assign the template
         this.template = template;
         // Create a new runtime template
-        runtimeTemplate = new QuizRuntimeTemplate(template);
+        runtimeTemplate = new QuizRuntimeTemplate(template, additionalQuestions);
 
         // Create an answer for each question
         answers = Enumerable.Repeat(-1, runtimeTemplate.Questions.Length).ToArray();

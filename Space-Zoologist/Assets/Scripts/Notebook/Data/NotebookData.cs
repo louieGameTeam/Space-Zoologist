@@ -151,11 +151,11 @@ public class NotebookData : NotebookDataModule
     }
 
     // Level IDs
-    public void TryAddLevelID(LevelID id)
+    public void OnLevelEncountered(LevelID id)
     {
-        observations.TryAddEnclosureID(id);
-        concepts.TryAddEnclosureId(id);
-        testAndMetrics.TryAddEnclosureID(id);
+        observations.OnLevelEncountered(id);
+        concepts.OnLevelEncountered(id);
+        testAndMetrics.OnLevelEncountered(id);
     }
 
     // Unlocked items

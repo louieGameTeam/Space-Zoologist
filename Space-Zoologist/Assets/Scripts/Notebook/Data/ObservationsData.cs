@@ -30,7 +30,7 @@ public class ObservationsData : NotebookDataModule
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureID(LevelID level)
+    public void OnLevelEncountered(LevelID level)
     {
         int index = entries.FindIndex(entry => entry.level == level);
 

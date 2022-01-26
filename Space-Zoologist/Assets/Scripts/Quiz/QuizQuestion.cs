@@ -25,4 +25,13 @@ public class QuizQuestion
     [Tooltip("List of options to choose to answer the question")]
     private QuizOption[] options;
     #endregion
+
+    #region Constructors
+    public QuizQuestion(string question, QuizCategory category, params QuizOption[] options)
+    {
+        this.question = question;
+        this.category = category;
+        this.options = options;
+    }
+    #endregion
 }

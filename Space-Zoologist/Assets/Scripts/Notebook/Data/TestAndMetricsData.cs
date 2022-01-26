@@ -15,11 +15,6 @@ public class TestAndMetricsData : NotebookDataModule
     }
     #endregion
 
-    #region Public Properties
-    public List<LevelID> Levels => levels;
-    public List<TestAndMetricsEntryListData> ListDatas => listDatas;
-    #endregion
-
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of levels that the player has test and metric data for")]
@@ -43,7 +38,7 @@ public class TestAndMetricsData : NotebookDataModule
             $"level id '{level}' not found in the list of ids" +
             $"\n\tIDs present: [ {string.Join(", ", entries.Select(entry => entry.level))} ]");
     }
-    public void TryAddEnclosureID(LevelID level)
+    public void OnLevelEncountered(LevelID level)
     {
         int index = entries.FindIndex(entry => entry.level == level);
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ public class ConceptsData : NotebookDataModule
     public class Entry
     {
         public LevelID level;
-        public ReviewedResourceRequestList requests;
+        public int attempt;
+        public ReviewedResourceRequestList reviews;
     }
     #endregion
 
@@ -25,30 +27,31 @@ public class ConceptsData : NotebookDataModule
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureId(LevelID level)
+    public void OnLevelEncountered(LevelID level)
     {
-        int index = entries.FindIndex(entry => entry.level == level);
+        // Get all entries with the given level
+        Entry latestEntry = GetEntryWithLatestAttempt(level);
 
-        if(index < 0)
+        if (latestEntry != null)
         {
-            entries.Add(new Entry 
-            { 
-                level = level, 
-                requests = new ReviewedResourceRequestList() 
+            // Add an entry for the next attempt to the list of entries
+            entries.Add(new Entry
+            {
+                level = level,
+                attempt = latestEntry.attempt + 1,
+                reviews = new ReviewedResourceRequestList()
             });
         }
-    }
-    public ReviewedResourceRequestList GetReviewedResourceRequestList(LevelID level)
-    {
-        int index = entries.FindIndex(entry => entry.level == level);
-
-        // Check to make sure the id exists in the list
-        if (index >= 0)
+        // If no entries were found with this level, then we add the first one
+        else
         {
-            return entries[index].requests;
+            entries.Add(new Entry
+            {
+                level = level,
+                attempt = 1,
+                reviews = new ReviewedResourceRequestList()
+            });
         }
-        else throw new System.IndexOutOfRangeException($"{nameof(ConceptsData)}: " +
-            $"level with id {level} has not been encountered yet");
     }
 
     /// <summary>
@@ -59,7 +62,7 @@ public class ConceptsData : NotebookDataModule
     /// <param name="review"></param>
     public void ConfirmReviwedResourceRequest(LevelID levelID, ReviewedResourceRequest review)
     {
-        ReviewedResourceRequestList list = GetReviewedResourceRequestList(levelID);
+        ReviewedResourceRequestList list = GetEntryWithLatestAttempt(levelID).reviews;
 
         // Check if the game manager exists and the review was not denied
         if(GameManager.Instance && review.CurrentStatus != ReviewedResourceRequest.Status.Denied)
@@ -71,6 +74,37 @@ public class ConceptsData : NotebookDataModule
         }
 
         list.Reviews.Add(review);
+    }
+    public IEnumerable<Entry> GetEntriesWithLevel(LevelID level) => entries
+        .Where(entry => entry.level == level);
+    public Entry GetEntryWithLatestAttempt(LevelID level)
+    {
+        IEnumerable<Entry> entries = GetEntriesWithLevel(level);
+
+        // If some entries exist then search for the latest one
+        if (entries.Count() > 0)
+        {
+            Entry maxEntry = null;
+
+            foreach (Entry entry in entries)
+            {
+                // If max entry is not yet set then make it this entry
+                if (maxEntry == null)
+                {
+                    maxEntry = entry;
+                }
+                // If this entry was attempted later than the max entry,
+                // make the max entry this entry
+                else if (entry.attempt > maxEntry.attempt)
+                {
+                    maxEntry = entry;
+                }
+            }
+
+            return maxEntry;
+        }
+        // If no entries exist then return null
+        else return null;
     }
     #endregion
 }

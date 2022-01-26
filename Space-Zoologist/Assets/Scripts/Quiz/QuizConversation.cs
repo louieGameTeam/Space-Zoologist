@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -86,7 +87,7 @@ public class QuizConversation : MonoBehaviour
     public NPCConversation Create(DialogueManager dialogueManager)
     {
         // Build a new quiz. This will result in regenerating new questions from any randomized pools
-        currentQuiz = new QuizInstance(quizTemplate);
+        GenerateQuizInstance();
 
         // Create the callback that is called after any option is answered
         UnityAction OptionSelectedFunctor(int questionIndex, int optionIndex)
@@ -274,6 +275,64 @@ public class QuizConversation : MonoBehaviour
 
         // Return the new node
         return optionNode;
+    }
+    private void GenerateQuizInstance()
+    {
+        // Get the list of reviews for the current attempt of this level
+        ReviewedResourceRequestList reviewsList = GameManager
+            .Instance
+            .NotebookUI
+            .Data
+            .Concepts
+            .GetEntryWithLatestAttempt(LevelID.FromCurrentSceneName())
+            .reviews;
+
+        // If there are reviewed requests then create a quiz with additional questions
+        if (reviewsList.Reviews.Count > 0)
+        {
+            // Filter only reviews that were granted,
+            // and combine reviews that addressed and requested the same item
+            ReviewedResourceRequest[] filteredReviews = reviewsList
+                .Reviews
+                .Where(review => review.CurrentStatus != ReviewedResourceRequest.Status.Denied && review.CurrentStatus != ReviewedResourceRequest.Status.Invalid)
+                .Distinct(new ReviewedResourceRequest.ItemComparer())
+                .ToArray();
+
+            // Check to make sure there are some reviews to quiz on
+            if (filteredReviews.Length > 0)
+            {
+                // Create an array with all the quiz questions
+                QuizQuestion[] requestQuestions = new QuizQuestion[filteredReviews.Length];
+                // Create the quiz options to use for each question
+                QuizOption[] options = new QuizOption[]
+                {
+                    new QuizOption("Very useful", 0),
+                    new QuizOption("Somewhat useful", 0),
+                    new QuizOption("Not useful", 0)
+                };
+
+                // Fill in the info for each question
+                for (int i = 0; i < requestQuestions.Length; i++)
+                {
+                    ResourceRequest request = filteredReviews[i].Request;
+                    // Setup the format for the question
+                    string question = $"Was the requested {request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                        $"useful for improving the {request.ItemAddressed.Data.Name.Get(ItemName.Type.Colloquial)}" +
+                        $" {request.NeedAddressed} need?";
+                    // Set the category to the item addressed by the request
+                    QuizCategory category = new QuizCategory(request.ItemAddressed, request.NeedAddressed);
+                    // Create the question
+                    requestQuestions[i] = new QuizQuestion(question, category, options);
+                }
+
+                // Set the current quiz with additional request questions
+                currentQuiz = new QuizInstance(quizTemplate, requestQuestions);
+            }
+            else currentQuiz = new QuizInstance(quizTemplate);
+        }
+        // If there are no reviwed requests
+        // then create a quiz without additional questions
+        else currentQuiz = new QuizInstance(quizTemplate);
     }
     #endregion
 }
