@@ -11,10 +11,11 @@ public class GenericWindow : MonoBehaviour
 {
     #region Public Properties
     public RectTransform Window => window;
-    public Button PrimaryButton => primaryButton;
+    public TextMeshProUGUI TitleText => titleText;
+    public TextMeshProUGUI MessageText => messageText;
+    public GenericButton PrimaryButton => primaryButton;
     public bool HasSecondaryButton => hasSecondaryButton;
-    public Button SecondaryButton => secondaryButton;
-    public UnityEvent WindowClosedEvent => windowClosedEvent;
+    public GenericButton SecondaryButton => secondaryButton;
     #endregion
 
     #region Private Editor Fields
@@ -27,6 +28,12 @@ public class GenericWindow : MonoBehaviour
     [SerializeField]
     [Tooltip("Image used to create the overlay over all other UI elements")]
     private Image overlay;
+    [SerializeField]
+    [Tooltip("Text used to display the title of the window")]
+    private TextMeshProUGUI titleText;
+    [SerializeField]
+    [Tooltip("Text used to display the message of the window")]
+    private TextMeshProUGUI messageText;
     [SerializeField]
     [Tooltip("Time it takes for the overlay to fade in")]
     private float fadeTime = 0.3f;
@@ -50,39 +57,40 @@ public class GenericWindow : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Primary button in the window")]
-    private Button primaryButton;
+    private GenericButton primaryButton;
     [SerializeField]
     [Tooltip("Determines if this generic window has another button")]
     private bool hasSecondaryButton;
     [SerializeField]
     [Tooltip("Secondary button in the window")]
-    private Button secondaryButton;
-    [SerializeField]
-    [Tooltip("Event invoked after the window has finished the closing animation")]
-    private UnityEvent windowClosedEvent;
+    private GenericButton secondaryButton;
     #endregion
 
-    #region Private Fields
-    private static string defaultPrefabName => nameof(GenericWindow);
-    private static string defaultPrefabPath => defaultPrefabName;
+    #region Monobehaviour Messages
+    private void Start()
+    {
+        primaryButton.Button.onClick.AddListener(() => Close(primaryButton.ButtonAction.Invoke));
+        if (hasSecondaryButton)
+        {
+            secondaryButton.Button.onClick.AddListener(() => Close(secondaryButton.ButtonAction.Invoke));
+        }
+    }
     #endregion
 
     #region Public Methods
-    public void Open(UnityAction primaryAction, UnityAction secondaryAction = null)
+    public void AddPrimaryAction(UnityAction action)
+    {
+        primaryButton.ButtonAction.AddListener(action);
+    }
+    public void AddSecondaryAction(UnityAction action)
+    {
+        secondaryButton.ButtonAction.AddListener(action);
+    }
+    public void Open()
     {
         // Once set up, set the game object to true
         gameObject.SetActive(true);
         window.gameObject.SetActive(false);
-
-        // Make the primary button close the window and finish with the primary action
-        primaryButton.onClick.AddListener(() => Close(primaryAction));
-
-        // If a secondary action was specified and we have a secondary button then
-        // make the secondary button close with the secondary action
-        if (secondaryAction != null && hasSecondaryButton)
-        {
-            secondaryButton.onClick.AddListener(() => Close(secondaryAction));
-        }
 
         // Start overlay color as clear
         overlay.color = Color.clear;
@@ -91,11 +99,13 @@ public class GenericWindow : MonoBehaviour
             .OnComplete(() =>
             {
                 window.gameObject.SetActive(true);
+
+                // Animate the position of the window
                 window.anchoredPosition = openingPosition;
                 window.DOAnchorPos(Vector2.zero, windowAnimateTime).SetEase(openingEase);
             });
     }
-    public void Close(UnityAction closeAction = null)
+    public void Close(UnityAction action = null)
     {
         // Animate the window back to the starting anchor
         window.DOAnchorPos(openingPosition, windowAnimateTime)
@@ -111,8 +121,8 @@ public class GenericWindow : MonoBehaviour
                     // and invoke the window closed event
                     .OnComplete(() => {
                         gameObject.SetActive(false);
-                        if (closeAction != null) closeAction.Invoke();
-                        windowClosedEvent.Invoke();
+                        // If a closing action was supplied then invoke it
+                        if (action != null) action.Invoke();
                     });
             });
     }

@@ -99,14 +99,19 @@ public class GameOverController : MonoBehaviour
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {
-        // Get the first canvas you can find
-        Canvas canvas = FindObjectOfType<Canvas>();
-        canvas = canvas.rootCanvas;
+        // Instantiate the window under the main canvas
+        Transform canvas = GameObject.FindWithTag("MainCanvas").transform;
+        window = Instantiate(window, canvas);
 
-        // Instantiate the window under the root canvas
-        window = Instantiate(window, canvas.transform);
+        // Setup the primary and secondary action of the window
+        window.AddPrimaryAction(primaryAction);
+        if (secondaryAction != null)
+        {
+            window.AddSecondaryAction(secondaryAction);
+        }
+
         // Open the window
-        window.Open(primaryAction, secondaryAction);
+        window.Open();
     }
     #endregion
 }

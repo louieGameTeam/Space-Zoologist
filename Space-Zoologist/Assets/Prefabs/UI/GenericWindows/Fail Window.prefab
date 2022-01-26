@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 5323336896615700285}
   - component: {fileID: 5323336896615700284}
   - component: {fileID: 5323336896615700283}
+  - component: {fileID: 8409889881227997651}
   m_Layer: 5
   m_Name: SecondaryButton
   m_TagString: Untagged
@@ -276,6 +277,24 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8409889881227997651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323336896615700281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b2cdb634c82ef4ea9d16e9c46a945c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 5323336896615700283}
+  buttonText: {fileID: 5323336896581190622}
+  buttonImage: {fileID: 5323336896615700284}
+  buttonAction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5323336896914112095
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,18 +385,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   window: {fileID: 5323336897604432209}
   overlay: {fileID: 5323336896914112065}
+  titleText: {fileID: 5323336898418497311}
+  messageText: {fileID: 0}
   fadeTime: 0.3
   windowAnimateTime: 1
   openingPosition: {x: 0, y: 1000}
   restingPosition: {x: 0, y: 0}
   openingEase: 30
   closingEase: 18
-  primaryButton: {fileID: 5323336897755278689}
+  primaryButton: {fileID: 1888673391369337093}
   hasSecondaryButton: 1
-  secondaryButton: {fileID: 5323336896615700283}
-  windowClosedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  secondaryButton: {fileID: 8409889881227997651}
 --- !u!1 &5323336897453572963
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +642,7 @@ GameObject:
   - component: {fileID: 5323336897755278691}
   - component: {fileID: 5323336897755278690}
   - component: {fileID: 5323336897755278689}
+  - component: {fileID: 1888673391369337093}
   m_Layer: 5
   m_Name: PrimaryButton
   m_TagString: Untagged
@@ -729,6 +748,24 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 5323336897755278690}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1888673391369337093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323336897755278719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b2cdb634c82ef4ea9d16e9c46a945c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 5323336897755278689}
+  buttonText: {fileID: 5323336897453572965}
+  buttonImage: {fileID: 5323336897755278690}
+  buttonAction:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5323336898418497309

@@ -12,6 +12,8 @@ public class GenericWindowEditor : Editor
         // Get all of the serialized property on the object
         SerializedProperty window = serializedObject.FindProperty(nameof(window));
         SerializedProperty overlay = serializedObject.FindProperty(nameof(overlay));
+        SerializedProperty titleText = serializedObject.FindProperty(nameof(titleText));
+        SerializedProperty messageText = serializedObject.FindProperty(nameof(messageText));
         SerializedProperty fadeTime = serializedObject.FindProperty(nameof(fadeTime));
         SerializedProperty windowAnimateTime = serializedObject.FindProperty(nameof(windowAnimateTime));
         SerializedProperty openingPosition = serializedObject.FindProperty(nameof(openingPosition));
@@ -21,7 +23,6 @@ public class GenericWindowEditor : Editor
         SerializedProperty primaryButton = serializedObject.FindProperty(nameof(primaryButton));
         SerializedProperty hasSecondaryButton = serializedObject.FindProperty(nameof(hasSecondaryButton));
         SerializedProperty secondaryButton = serializedObject.FindProperty(nameof(secondaryButton));
-        SerializedProperty windowClosedEvent = serializedObject.FindProperty(nameof(windowClosedEvent));
 
         // Update the object
         serializedObject.Update();
@@ -29,6 +30,8 @@ public class GenericWindowEditor : Editor
         // Edit all the properties
         EditorGUILayout.PropertyField(window);
         EditorGUILayout.PropertyField(overlay);
+        EditorGUILayout.PropertyField(titleText);
+        EditorGUILayout.PropertyField(messageText);
         EditorGUILayout.PropertyField(fadeTime);
         EditorGUILayout.PropertyField(windowAnimateTime);
         EditorGUILayout.PropertyField(openingPosition);
@@ -45,9 +48,6 @@ public class GenericWindowEditor : Editor
             EditorGUILayout.PropertyField(secondaryButton);
             EditorGUI.indentLevel--;
         }
-
-        // Edit the window closed event
-        EditorGUILayout.PropertyField(windowClosedEvent);
 
         // Apply modified properties
         serializedObject.ApplyModifiedProperties();
