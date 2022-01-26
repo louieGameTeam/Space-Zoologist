@@ -5,13 +5,19 @@ using UnityEngine;
 [System.Serializable]
 public class ConceptsData : NotebookDataModule
 {
+    #region Public Typedefs
+    [System.Serializable]
+    public class Entry
+    {
+        public LevelID level;
+        public ReviewedResourceRequestList requests;
+    }
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of the level ids that are unlocked")]
-    private List<LevelID> levels = new List<LevelID>();
-    [SerializeField]
-    [Tooltip("List of reviewed resource requests, parallel to the list of levels")]
-    private List<ReviewedResourceRequestList> resourceRequests = new List<ReviewedResourceRequestList>();
+    private List<Entry> entries = new List<Entry>();
     #endregion
 
     #region Constructors
@@ -19,31 +25,30 @@ public class ConceptsData : NotebookDataModule
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureId(LevelID id)
+    public void TryAddEnclosureId(LevelID level)
     {
-        if(!levels.Contains(id))
+        int index = entries.FindIndex(entry => entry.level == level);
+
+        if(index < 0)
         {
-            levels.Add(id);
-            resourceRequests.Add(new ReviewedResourceRequestList());
+            entries.Add(new Entry 
+            { 
+                level = level, 
+                requests = new ReviewedResourceRequestList() 
+            });
         }
     }
-    public ReviewedResourceRequestList GetReviewedResourceRequestList(LevelID id)
+    public ReviewedResourceRequestList GetReviewedResourceRequestList(LevelID level)
     {
-        int index = levels.IndexOf(id);
+        int index = entries.FindIndex(entry => entry.level == level);
 
         // Check to make sure the id exists in the list
         if (index >= 0)
         {
-            // Check to make sure the index is within range of the requests
-            if (index < resourceRequests.Count)
-            {
-                return resourceRequests[index];
-            }
-            else throw new System.IndexOutOfRangeException($"{nameof(ConceptsData)}: " +
-                $"no resource request list corresponds to level {id}");
+            return entries[index].requests;
         }
         else throw new System.IndexOutOfRangeException($"{nameof(ConceptsData)}: " +
-            $"level with id {id} has not been encountered yet");
+            $"level with id {level} has not been encountered yet");
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ public class NotebookData : NotebookDataModule
     public ConceptsData Concepts => concepts;
     public TestAndMetricsData TestAndMetrics => testAndMetrics;
     public List<Bookmark> Bookmarks => bookmarks;
-    public List<LevelID> Levels => observations.LevelsIDs;
+    public IEnumerable<LevelID> Levels => observations.LevelsIDs;
     #endregion
 
     #region Private Editor Fields

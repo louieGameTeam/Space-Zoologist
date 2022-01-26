@@ -1,10 +1,20 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class TestAndMetricsData : NotebookDataModule
 {
+    #region Public Typedefs
+    [System.Serializable]
+    public class Entry
+    {
+        public LevelID level;
+        public TestAndMetricsEntryListData entries;
+    }
+    #endregion
+
     #region Public Properties
     public List<LevelID> Levels => levels;
     public List<TestAndMetricsEntryListData> ListDatas => listDatas;
@@ -13,10 +23,7 @@ public class TestAndMetricsData : NotebookDataModule
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of levels that the player has test and metric data for")]
-    private List<LevelID> levels = new List<LevelID>();
-    [SerializeField]
-    [Tooltip("List of entry lists, parallel to the levels list")]
-    private List<TestAndMetricsEntryListData> listDatas = new List<TestAndMetricsEntryListData>();
+    private List<Entry> entries = new List<Entry>();
     #endregion
 
     #region Constructors
@@ -24,31 +31,29 @@ public class TestAndMetricsData : NotebookDataModule
     #endregion
 
     #region Public Methods
-    public TestAndMetricsEntryListData GetEntryList(LevelID id)
+    public TestAndMetricsEntryListData GetEntryList(LevelID level)
     {
-        int index = levels.IndexOf(id);
+        int index = entries.FindIndex(entry => entry.level == level);
 
         if (index >= 0)
         {
-            if (index < listDatas.Count)
-            {
-                return listDatas[index];
-            }
-            else throw new System.IndexOutOfRangeException($"{nameof(TestAndMetricsData)}: " +
-                $"no data list corresponding to the level id '{id}'" +
-                $"\n\tID index: {index}" +
-                $"\n\tData list count: {listDatas.Count}");
+            return entries[index].entries;
         }
         else throw new System.IndexOutOfRangeException($"{nameof(TestAndMetricsData)}: " +
-            $"level id '{id}' not found in the list of ids" +
-            $"\n\tIDs present: [ {string.Join(", ", levels)} ]");
+            $"level id '{level}' not found in the list of ids" +
+            $"\n\tIDs present: [ {string.Join(", ", entries.Select(entry => entry.level))} ]");
     }
-    public void TryAddEnclosureID(LevelID id)
+    public void TryAddEnclosureID(LevelID level)
     {
-        if (!levels.Contains(id))
+        int index = entries.FindIndex(entry => entry.level == level);
+
+        if (index < 0)
         {
-            levels.Add(id);
-            listDatas.Add(new TestAndMetricsEntryListData());
+            entries.Add(new Entry
+            {
+                level = level,
+                entries = new TestAndMetricsEntryListData()
+            });
         }
     }
     #endregion
