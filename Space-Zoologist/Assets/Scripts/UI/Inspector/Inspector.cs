@@ -73,8 +73,14 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        if (this.IsInInspectorMode && Input.GetMouseButtonDown(0))
+        if (this.IsInInspectorMode && Input.GetMouseButtonDown(0) && FindObjectOfType<StoreSection>().SelectedItem == null)
         {
+            //Deselect if over UI
+            if(EventSystem.current.IsPointerOverGameObject())
+            {
+                UnHighlightAll();
+                return;
+            }
             if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
             {
                 return;
