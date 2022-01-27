@@ -773,13 +773,17 @@ public class GameManager : MonoBehaviour
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 
         UpdateDayText(++currentDay);
+        CheckWinConditions();
+
+        // Invoke next day event
+        EventManager.Instance.InvokeEvent(EventType.NextDay, null);
+
         if (currentDay > maxDay)
         {
             Debug.Log("Time is up!");
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }
-        CheckWinConditions();
     }
 
     public void EnableInspectorToggle(bool enabled)
