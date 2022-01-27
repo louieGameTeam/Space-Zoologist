@@ -118,7 +118,7 @@ public struct LevelID : System.IComparable<LevelID>
     }
     public override string ToString()
     {
-        return "Enclosure ID: { " + levelNumber + ", " + enclosureNumber + " }";
+        return "Level ID: { " + levelNumber + ", " + enclosureNumber + " }";
     }
     #endregion
 

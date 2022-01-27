@@ -11,18 +11,37 @@ public class QuizRuntimeTemplate
     public QuizTemplate Template => template;
     #endregion
 
-    #region Private Fields
-    private QuizQuestion[] questions;
+    #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Template to use to generate quistions for this runtime template")]
     private QuizTemplate template;
     #endregion
 
+    #region Private Fields
+    [SerializeField]
+    [HideInInspector]
+    private QuizQuestion[] questions;
+    #endregion
+
     #region Constructors
-    public QuizRuntimeTemplate(QuizTemplate template)
+    public QuizRuntimeTemplate(QuizTemplate template, params QuizQuestion[] additionalQuestions)
     {
         this.template = template;
 
-        // Initialize the questions
-        questions = template.GenerateQuestions();
+        // Check if additional quiz questions were provided
+        if (additionalQuestions != null && additionalQuestions.Length > 0)
+        {
+            // Create space for the template questions and additional questions
+            QuizQuestion[] templateQuestions = template.GenerateQuestions();
+            questions = new QuizQuestion[templateQuestions.Length + additionalQuestions.Length];
+
+            // Copy the template questions into these questions
+            System.Array.Copy(templateQuestions, questions, templateQuestions.Length);
+            // Copy the additional questions into these questions
+            System.Array.Copy(additionalQuestions, 0, questions, templateQuestions.Length, additionalQuestions.Length);
+        }
+        // If no additional questions were provided 
+        else questions = template.GenerateQuestions();
     }
     #endregion
 

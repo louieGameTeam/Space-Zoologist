@@ -10,6 +10,31 @@ public class ReviewedResourceRequest
     {
         Granted, PartiallyGranted, Denied, Invalid
     }
+    public class ItemComparer : IEqualityComparer<ReviewedResourceRequest>
+    {
+        public bool Equals(ReviewedResourceRequest a, ReviewedResourceRequest b)
+        {
+            // Neither is null so compare by items
+            if (a != null && b != null)
+            {
+                return a.Request.ItemAddressed == b.Request.ItemAddressed &&
+                    a.Request.ItemRequested == b.Request.ItemRequested;
+            }
+            // One is null and the other isn't, so return false
+            else if (a != b) return false;
+            // Both are null, so return true
+            else return true;
+        }
+
+        public int GetHashCode(ReviewedResourceRequest review)
+        {
+            if (review != null)
+            {
+                return review.Request.ItemAddressed.GetHashCode() + review.Request.ItemRequested.GetHashCode();
+            }
+            else return 0;
+        }
+    }
     #endregion
 
     #region Public Properties

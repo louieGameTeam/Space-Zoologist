@@ -12,8 +12,9 @@ public class NotebookData : NotebookDataModule
     public ObservationsData Observations => observations;
     public ConceptsData Concepts => concepts;
     public TestAndMetricsData TestAndMetrics => testAndMetrics;
+    public ReportsData Reports => reports;
     public List<Bookmark> Bookmarks => bookmarks;
-    public List<LevelID> Levels => observations.LevelsIDs;
+    public IEnumerable<LevelID> Levels => observations.LevelsIDs;
     #endregion
 
     #region Private Editor Fields
@@ -36,6 +37,9 @@ public class NotebookData : NotebookDataModule
     [SerializeField]
     [Tooltip("Test and metric data that the player has measured")]
     private TestAndMetricsData testAndMetrics;
+    [SerializeField]
+    [Tooltip("Data for the reports tab of the notebook")]
+    private ReportsData reports;
 
     [SerializeField]
     [Tooltip("List of bookmarks in the notebook")]
@@ -59,6 +63,7 @@ public class NotebookData : NotebookDataModule
         observations = new ObservationsData(config);
         concepts = new ConceptsData(config);
         testAndMetrics = new TestAndMetricsData(config);
+        reports = new ReportsData(config);
     }
     #endregion
 
@@ -89,6 +94,7 @@ public class NotebookData : NotebookDataModule
         observations.SetConfig(config);
         concepts.SetConfig(config);
         testAndMetrics.SetConfig(config);
+        reports.SetConfig(config);
     }
     public string ReadAcronymNote(char c)
     {
@@ -151,11 +157,11 @@ public class NotebookData : NotebookDataModule
     }
 
     // Level IDs
-    public void TryAddLevelID(LevelID id)
+    public void OnLevelEncountered(LevelID id)
     {
-        observations.TryAddEnclosureID(id);
-        concepts.TryAddEnclosureId(id);
-        testAndMetrics.TryAddEnclosureID(id);
+        observations.OnLevelEncountered(id);
+        concepts.OnLevelEncountered(id);
+        testAndMetrics.OnLevelEncountered(id);
     }
 
     // Unlocked items
