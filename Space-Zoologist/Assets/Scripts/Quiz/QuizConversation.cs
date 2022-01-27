@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Events;
 using DialogueEditor;
 using TMPro;
@@ -9,6 +10,7 @@ using TMPro;
 public class QuizConversation : MonoBehaviour
 {
     #region Public Properties
+    public QuizTemplate Template => template;
     public QuizInstance CurrentQuiz => currentQuiz;
     public UnityEvent OnConversationEnded => onConversationEnded;
     #endregion
@@ -25,7 +27,8 @@ public class QuizConversation : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the quiz template to run the quiz for")]
-    private QuizTemplate quizTemplate;
+    [FormerlySerializedAs("quizTemplate")]
+    private QuizTemplate template;
 
     [Space]
 
@@ -108,7 +111,14 @@ public class QuizConversation : MonoBehaviour
                 SayQuizConversationNext();
             }
             // If we will not requiz, then invoke my conversation ended event when this conversation is done
-            else currentResponse.OnConversationEnded(onConversationEnded.Invoke);
+            else
+            {
+                // Set the quiz on the reports data to the quiz that we just finished
+                GameManager.Instance.NotebookUI.Data.Reports.SetQuiz(LevelID.FromCurrentSceneName(), currentQuiz);
+
+                // Invoke the quiz conversation ended event when the response is over
+                currentResponse.OnConversationEnded(onConversationEnded.Invoke);
+            }
         }
 
         // Try to get an npc conversation. If it exists, destroy it and add a new one
@@ -326,13 +336,13 @@ public class QuizConversation : MonoBehaviour
                 }
 
                 // Set the current quiz with additional request questions
-                currentQuiz = new QuizInstance(quizTemplate, requestQuestions);
+                currentQuiz = new QuizInstance(template, requestQuestions);
             }
-            else currentQuiz = new QuizInstance(quizTemplate);
+            else currentQuiz = new QuizInstance(template);
         }
         // If there are no reviwed requests
         // then create a quiz without additional questions
-        else currentQuiz = new QuizInstance(quizTemplate);
+        else currentQuiz = new QuizInstance(template);
     }
     #endregion
 }

@@ -93,6 +93,7 @@ public class GameOverController : MonoBehaviour
         // Update the save data with the id of the level we are qualified to go to
         LevelEndingData ending = GameManager.Instance.LevelData.Ending;
         SaveData.QualifyForLevel(ending.GetNextLevelID());
+        GameManager.Instance.HandleExitLevel();
 
         // Open the success window
         OpenWindow(successWindow, () => LevelDataLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));

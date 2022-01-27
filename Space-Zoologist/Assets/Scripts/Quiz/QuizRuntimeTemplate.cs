@@ -11,9 +11,16 @@ public class QuizRuntimeTemplate
     public QuizTemplate Template => template;
     #endregion
 
-    #region Private Fields
-    private QuizQuestion[] questions;
+    #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Template to use to generate quistions for this runtime template")]
     private QuizTemplate template;
+    #endregion
+
+    #region Private Fields
+    [SerializeField]
+    [HideInInspector]
+    private QuizQuestion[] questions;
     #endregion
 
     #region Constructors
