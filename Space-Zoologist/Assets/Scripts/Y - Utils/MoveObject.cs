@@ -107,7 +107,8 @@ public class MoveObject : MonoBehaviour
 
                     // Select the food or animal at mouse position
                     GameObject SelectedObject = SelectGameObjectAtMousePosition();
-                    if (SelectedObject != null)
+                    //Cannot select through UI
+                    if (SelectedObject != null && !EventSystem.current.IsPointerOverGameObject())
                         objectToMove = SelectedObject;
                 }
             }
