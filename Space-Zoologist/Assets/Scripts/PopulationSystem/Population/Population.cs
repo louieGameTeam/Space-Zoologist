@@ -9,7 +9,7 @@ using UnityEngine;
 public class Population : MonoBehaviour, Life
 {
     public AnimalSpecies Species { get => species; }
-    public int Count { get => this.AnimalPopulation.Count; }
+    public int Count { get => this.enclosedPopulationCount; }
     public float FoodDominance => FoodSourceNeedSystem.foodDominanceRatios[species.Species]; //* Count;
     public int PrePopulationCount => this.prePopulationCount;
     public Vector3 Origin => this.origin;
@@ -43,6 +43,7 @@ public class Population : MonoBehaviour, Life
     private int prePopulationCount = default;
     private PopulationBehaviorManager PopulationBehaviorManager = default;
     private bool isPaused = false;
+    private int enclosedPopulationCount = default;
 
     private void Start()
     {
@@ -85,13 +86,23 @@ public class Population : MonoBehaviour, Life
     }
 
     /// <summary>
-    /// Grabs the updated accessible area and then resets the behavior for all of the animals.
+    /// Grabs the updated accessible area, then resets the behavior for all of the animals and counts animals in the enclosure.
     /// </summary>
     /// Could improve by checking what shape the accessible area is in
     public void UpdateAccessibleArea(List<Vector3Int> accessibleLocations, AnimalPathfinding.Grid grid)
     {
         this.AccessibleLocations = accessibleLocations;
         this.Grid = grid;
+
+        print ("Updated accessible area - recounting enclosed population");
+        enclosedPopulationCount = AnimalPopulation.Count;
+        foreach (GameObject animal in AnimalPopulation) 
+        {
+            if (!accessibleLocations.Contains(GameManager.Instance.m_gridSystem.WorldToCell (animal.transform.position))) {
+                enclosedPopulationCount--;
+            }
+        }
+        print ("Count: " + enclosedPopulationCount);
     }
 
     // Only pauses movements
@@ -263,6 +274,7 @@ public class Population : MonoBehaviour, Life
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
+        enclosedPopulationCount++;
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }
@@ -292,6 +304,9 @@ public class Population : MonoBehaviour, Life
             {
                 // Invoke a population decline event
                 EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
+            }
+            if (AccessibleLocations.Contains (GameManager.Instance.m_gridSystem.WorldToCell (animal.transform.position))) {
+                enclosedPopulationCount++;
             }
         }
     }
