@@ -250,6 +250,26 @@ public class GrowthCalculator
         return predatorValue;
     }
 
+    /// <summary>
+    /// Compute the new population size when the population grows/shrinks
+    /// </summary>
+    /// <returns></returns>
+    public int CalculateNextPopulationSize()
+    {
+        float delta = population.Count * populationIncreaseRate;
+
+        // If population is growing then move up to next int
+        if (GrowthStatus == GrowthStatus.growing)
+        {
+            delta = Mathf.Ceil(delta);
+        }
+        // If population is declining then move down to lower int
+        else delta = Mathf.Floor(delta);
+
+        // Return count plus the change
+        return population.Count + (int)delta;
+    }
+
     public bool ReadyForDecay()
     {
         this.DecayCountdown--;

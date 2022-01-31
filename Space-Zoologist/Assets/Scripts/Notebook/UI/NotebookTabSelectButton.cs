@@ -54,7 +54,7 @@ public class NotebookTabSelectButton : NotebookUIChild
         if (GameManager.Instance)
         {
             // This toggle is only interactable if the tab scaffold says so
-            LevelID current = LevelID.FromCurrentSceneName();
+            LevelID current = LevelID.Current();
             myToggle.interactable = UIParent.Config.TabScaffold.GetMask(current).Get(tab);
         }
         else myToggle.interactable = true;
