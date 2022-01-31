@@ -62,14 +62,22 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         title.text = enclosure.Level.Name;
         image.sprite = enclosure.Level.Sprite;
 
-        // Setup the rating text and rating objects
-        ratingText.text = LevelRatingSystem.GetRatingText(Rating);
-
-        // Create a rating object for each rating level
-        for (int i = 0; i <= Rating; i++)
+        if (CurrentID < SaveData.LatestLevelQualified)
         {
-            Instantiate(ratingObjectPrefab, ratingObjectParent);
+            // Setup the rating text and rating objects
+            ratingText.text = LevelRatingSystem.GetRatingText(Rating);
+
+            // Create a rating object for each rating level
+            for (int i = 0; i <= Rating; i++)
+            {
+                Instantiate(ratingObjectPrefab, ratingObjectParent);
+            }
+
+            // Make the parent enabled
+            ratingObjectParent.gameObject.SetActive(true);
         }
+        // Make the rating object disabled if we do not qualify for this level
+        else ratingObjectParent.gameObject.SetActive(false);
 
         // Disable the outline
         outline.SetActive(false);
