@@ -21,6 +21,7 @@ public static class LevelRatingSystem
     #endregion
 
     #region Public Fields
+    public static readonly string noRatingText = "No rating - enclosure not yet designed";
     public static readonly string[] ratingText = new string[]
     {
         "Needs redesign. Species’ populations are unstable",
@@ -36,9 +37,7 @@ public static class LevelRatingSystem
         {
             return ratingText[rating];
         }
-        else throw new System.IndexOutOfRangeException($"{nameof(LevelRatingSystem)}: " +
-            $"no rating text corresponds with rating level {rating}. " +
-            $"Total rating texts: {ratingText.Length}");
+        else return noRatingText;
     }
     public static int RateCurrentLevel()
     {

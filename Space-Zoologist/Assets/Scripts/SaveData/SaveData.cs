@@ -51,7 +51,17 @@ public class SaveData
             Instance.latestLevelQualified = level;
         }
     }
-    public static void UpdateLevelRating(LevelID level, int rating)
+    public static int GetLevelRating(LevelID level)
+    {
+        // Find a rating for the given level
+        int index = Instance.levelRatings.FindIndex(x => x.ID == level);
+
+        // If the level was found then return the rating
+        if (index >= 0) return Instance.levelRatings[index].Rating;
+        // If the level was not found then return an invalid rating
+        else return -1;
+    }
+    public static void SetLevelRating(LevelID level, int rating)
     {
         // Search for a rating with the given id
         int index = Instance.levelRatings.FindIndex(x => x.ID == level);

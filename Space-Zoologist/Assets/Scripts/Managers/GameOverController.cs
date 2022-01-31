@@ -103,7 +103,7 @@ public class GameOverController : MonoBehaviour
 
         // Compute the rating for this level
         int rating = LevelRatingSystem.RateCurrentLevel();
-        SaveData.UpdateLevelRating(LevelID.Current(), rating);
+        SaveData.SetLevelRating(LevelID.Current(), rating);
 
         // Save changes to the save data
         SaveData.Save();
