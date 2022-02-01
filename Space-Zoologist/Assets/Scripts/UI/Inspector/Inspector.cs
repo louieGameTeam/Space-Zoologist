@@ -104,7 +104,7 @@ public class Inspector : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = GameManager.Instance.m_gridSystem.WorldToCell(worldPos);
         GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(pos);
-        GridSystem.TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(pos);
+        TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(pos);
 
         if (cellData == null) { 
             return;
@@ -149,7 +149,7 @@ public class Inspector : MonoBehaviour
 
     public void UpdateCurrentDisplay()
     {
-        GridSystem.TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(selectedPosition);
+        TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(selectedPosition);
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
@@ -177,7 +177,7 @@ public class Inspector : MonoBehaviour
         }
     }
 
-    private void DisplayPopulationText(GridSystem.TileData tileData)
+    private void DisplayPopulationText(TileData tileData)
     {
         this.HighlightPopulation(tileData.Animal.transform.parent.gameObject);
 
@@ -185,7 +185,7 @@ public class Inspector : MonoBehaviour
         this.inspectorWindowDisplayScript.DisplayPopulationStatus(tileData.Animal.GetComponent<Animal>().PopulationInfo);
     }
 
-    private void DisplayFoodText(GridSystem.TileData cellData)
+    private void DisplayFoodText(TileData cellData)
     {
         GameObject FoodObject = cellData.Food;
 
@@ -219,7 +219,7 @@ public class Inspector : MonoBehaviour
     private void DisplayLiquidText(Vector3Int cellPos)
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        GridSystem.TileData td = GameManager.Instance.m_gridSystem.GetTileData(cellPos);
+        TileData td = GameManager.Instance.m_gridSystem.GetTileData(cellPos);
         float[] compositions = td.contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
@@ -276,7 +276,7 @@ public class Inspector : MonoBehaviour
         return lastPopulationSelected;
     }
 
-    public void GetGameTileAndTileData(out GameTile gameTile, out GridSystem.TileData tileData)
+    public void GetGameTileAndTileData(out GameTile gameTile, out TileData tileData)
     {
         // Update animal location reference
         GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();

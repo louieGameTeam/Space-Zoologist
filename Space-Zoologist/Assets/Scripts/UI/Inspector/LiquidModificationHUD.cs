@@ -8,7 +8,7 @@ public class LiquidModificationHUD : MonoBehaviour
     [SerializeField] MenuManager MenuManager = default;
     [SerializeField] GameObject liquidModificationHUD = default;
     [SerializeField] List<TMPro.TMP_InputField> Values = default;
-    private GridSystem GridSystem;
+    private TileDataController GridSystem;
     private bool isOpened = false;
     private Vector3 worldPos;
     private LiquidBody liquidBody;
