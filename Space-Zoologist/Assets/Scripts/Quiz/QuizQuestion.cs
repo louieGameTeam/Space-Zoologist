@@ -11,6 +11,8 @@ public class QuizQuestion
     public string Question => question;
     public QuizOption[] Options => options;
     public int MaxPossibleScore => CollectionExtensions.IsNullOrEmpty(options) ? 0 : options.Max(o => o.Weight);
+    public int MinPossibleScore => CollectionExtensions.IsNullOrEmpty(options) ? 0 : options.Min(o => o.Weight);
+    public int ScoreSpread => MaxPossibleScore - MinPossibleScore;
     #endregion
 
     #region Private Editor Fields
@@ -24,5 +26,27 @@ public class QuizQuestion
     [SerializeField]
     [Tooltip("List of options to choose to answer the question")]
     private QuizOption[] options;
+    #endregion
+
+    #region Constructors
+    public QuizQuestion(string question, QuizCategory category, params QuizOption[] options)
+    {
+        this.question = question;
+        this.category = category;
+        this.options = options;
+    }
+    #endregion
+
+    #region Public Methods
+    public float RelativeGrade(int optionIndex)
+    {
+        if (optionIndex >= 0 && optionIndex < options.Length)
+        {
+            return (float)options[optionIndex].Weight / ScoreSpread;
+        }
+        else throw new System.IndexOutOfRangeException($"{nameof(QuizQuestion)}: " +
+            $"cannot get a relative grade for index '{optionIndex}'. " +
+            $"Total options: {options.Length}");
+    }
     #endregion
 }

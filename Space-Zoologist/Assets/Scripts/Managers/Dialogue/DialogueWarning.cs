@@ -23,6 +23,7 @@ public class DialogueWarning : MonoBehaviour
 
     private void CheckPopulationSizes()
     {
+        Debug.Log("Did this occur?");
         foreach(Population population in populationManager.Populations)
         {
             if (previousPopulationSize.ContainsKey(population))

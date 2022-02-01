@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -13,17 +14,19 @@ using TMPro;
 public class Inspector : MonoBehaviour
 {
     public bool IsInInspectorMode { get; private set; }
+    public UnityEvent SelectionChangedEvent => selectionChangedEvent;
 
     // The inspector window
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript;
     [SerializeField] private GameObject GrowthInfo = default;
+    [SerializeField] private UnityEvent selectionChangedEvent;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
     private List<Vector3Int> lastTilesSelected = new List<Vector3Int>();
     public GameObject PopulationHighlighted { get; private set; } = null;
-    private Vector3Int selectedPosition;
+    public Vector3Int selectedPosition { get; private set; }
 
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
@@ -70,8 +73,14 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        if (this.IsInInspectorMode && Input.GetMouseButtonDown(0))
+        if (this.IsInInspectorMode && Input.GetMouseButtonDown(0) && FindObjectOfType<StoreSection>().SelectedItem == null)
         {
+            //Deselect if over UI
+            if(EventSystem.current.IsPointerOverGameObject())
+            {
+                UnHighlightAll();
+                return;
+            }
             if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
             {
                 return;
@@ -134,6 +143,7 @@ public class Inspector : MonoBehaviour
         if (somethingSelected)
         {
             AudioManager.instance.PlayOneShot(SFXType.Observation);
+            selectionChangedEvent.Invoke();
         }
     }
 

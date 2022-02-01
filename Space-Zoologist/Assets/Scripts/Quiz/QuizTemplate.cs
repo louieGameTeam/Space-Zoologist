@@ -9,14 +9,28 @@ public class QuizTemplate : ScriptableObject
 {
     #region Public Properties
     public QuizCategory[] ImportantCategories => importantCategories;
-    public QuizQuestion[] Questions => questions;
+    public QuizQuestion[] FixedQuestions => fixedQuestions;
     public QuizQuestionPool RandomQuestionPool => randomQuestionPool;
     public QuizGradingRubric GradingRubric => gradingRubric;
-    // Quiz template is "static" if non of the question datas
+    // Quiz template is "static" if none of the question datas
     // is a pool of randomly selected questions
     public bool Static => randomQuestionPool.Static;
     public bool Dynamic => !Static;
-    public int QuestionCount => questions.Length + randomQuestionPool.QuestionsToPick;
+    public int QuestionCount => fixedQuestions.Length + randomQuestionPool.QuestionsToPick;
+    public QuizQuestion[] AllQuestions
+    {
+        get
+        {
+            QuizQuestion[] questions = new QuizQuestion[fixedQuestions.Length + randomQuestionPool.QuestionPool.Length];
+
+            // Copy fixed questions into the array
+            System.Array.Copy(fixedQuestions, questions, fixedQuestions.Length);
+            // Copy all random questions into the array
+            System.Array.Copy(randomQuestionPool.QuestionPool, 0, questions, fixedQuestions.Length, randomQuestionPool.QuestionPool.Length);
+
+            return questions;
+        }
+    }
     #endregion
 
     #region Private Editor Fields
@@ -25,7 +39,8 @@ public class QuizTemplate : ScriptableObject
     private QuizCategory[] importantCategories;
     [SerializeField]
     [Tooltip("List of questions to ask in the quiz")]
-    private QuizQuestion[] questions;
+    [FormerlySerializedAs("questions")]
+    private QuizQuestion[] fixedQuestions;
     [SerializeField]
     [Tooltip("A pool of random questions that will be asked last in the quiz")]
     private QuizQuestionPool randomQuestionPool;
@@ -44,13 +59,13 @@ public class QuizTemplate : ScriptableObject
     public QuizQuestion[] GenerateQuestions()
     {
         // Create the array to hold all generated questions
-        QuizQuestion[] generatedQuestions = new QuizQuestion[questions.Length + randomQuestionPool.QuestionsToPick];
+        QuizQuestion[] generatedQuestions = new QuizQuestion[fixedQuestions.Length + randomQuestionPool.QuestionsToPick];
         int currentIndex;
 
         // Add each question in the static list to the list to return
-        for(currentIndex = 0; currentIndex < questions.Length; currentIndex++)
+        for(currentIndex = 0; currentIndex < fixedQuestions.Length; currentIndex++)
         {
-            generatedQuestions[currentIndex] = questions[currentIndex];
+            generatedQuestions[currentIndex] = fixedQuestions[currentIndex];
         }
 
         // Randomly generate some questions

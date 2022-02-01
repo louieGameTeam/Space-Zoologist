@@ -2362,7 +2362,6 @@ public class GridSystem : MonoBehaviour
     }
     #endregion
 
-   
 
     public class ConstructionCluster
     {

@@ -22,6 +22,14 @@ public struct QuizCategory
     private NeedType need;
     #endregion
 
+    #region Constructors
+    public QuizCategory(ItemID item, NeedType need)
+    {
+        this.item = item;
+        this.need = need;
+    }
+    #endregion
+
     #region Operators
     public static bool operator ==(QuizCategory a, QuizCategory b) => a.item == b.item && a.need == b.need;
     public static bool operator !=(QuizCategory a, QuizCategory b) => !(a == b);

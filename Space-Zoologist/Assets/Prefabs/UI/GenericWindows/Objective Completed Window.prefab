@@ -247,18 +247,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   window: {fileID: 7871093541315644779}
   overlay: {fileID: 7871093539818898043}
+  titleText: {fileID: 7871093540501744421}
+  messageText: {fileID: 0}
   fadeTime: 0.3
+  growTime: 0.2
   windowAnimateTime: 1
   openingPosition: {x: 0, y: -1000}
   restingPosition: {x: 0, y: 0}
   openingEase: 27
   closingEase: 18
-  primaryButton: {fileID: 7871093541129310555}
+  primaryButton: {fileID: 2052043265657254359}
   hasSecondaryButton: 0
   secondaryButton: {fileID: 0}
-  windowClosedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7871093540501744423
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 7871093541129310553}
   - component: {fileID: 7871093541129310552}
   - component: {fileID: 7871093541129310555}
+  - component: {fileID: 2052043265657254359}
   m_Layer: 5
   m_Name: PrimaryButton
   m_TagString: Untagged
@@ -533,6 +534,24 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7871093541129310552}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2052043265657254359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7871093541129310533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b2cdb634c82ef4ea9d16e9c46a945c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 7871093541129310555}
+  buttonText: {fileID: 7871093539285761887}
+  buttonImage: {fileID: 7871093541129310552}
+  buttonAction:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7871093541315644778

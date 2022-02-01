@@ -8,6 +8,7 @@ public class QuizInstance
 {
     #region Public Properties
     public QuizTemplate Template => template;
+    public int[] Answers => answers;
     public QuizRuntimeTemplate RuntimeTemplate => runtimeTemplate;
     public int QuestionsAnswered => ComputeQuestionsAnswered(runtimeTemplate, answers);
     public bool Completed => ComputeCompleted(runtimeTemplate, answers);
@@ -27,16 +28,18 @@ public class QuizInstance
     #endregion
 
     #region Private Fields
+    [SerializeField]
+    [HideInInspector]
     private QuizRuntimeTemplate runtimeTemplate;
     #endregion
 
     #region Constructors
-    public QuizInstance(QuizTemplate template)
+    public QuizInstance(QuizTemplate template, params QuizQuestion[] additionalQuestions)
     {
         // Assign the template
         this.template = template;
         // Create a new runtime template
-        runtimeTemplate = new QuizRuntimeTemplate(template);
+        runtimeTemplate = new QuizRuntimeTemplate(template, additionalQuestions);
 
         // Create an answer for each question
         answers = Enumerable.Repeat(-1, runtimeTemplate.Questions.Length).ToArray();
@@ -61,6 +64,28 @@ public class QuizInstance
         }
         else throw new System.IndexOutOfRangeException("QuizInstance: the quiz template '" + runtimeTemplate.Template.name +
             "' does not have a question at index '" + questionIndex + "'");
+    }
+    public QuizOption GetAnswer(int questionIndex)
+    {
+        // Check to make sure question index is within range of the runtime template list
+        if (questionIndex >= 0 && questionIndex < runtimeTemplate.Questions.Length)
+        {
+            // Get the question that was answered
+            QuizQuestion question = runtimeTemplate.Questions[questionIndex];
+            int answer = answers[questionIndex];
+
+            // Change to make sure that this question has been answered
+            if (answer >= 0 && answer < question.Options.Length)
+            {
+                return question.Options[answer];
+            }
+            else throw new System.IndexOutOfRangeException($"{nameof(QuizInstance)}: " +
+                $"answer number '{answer}' not valid for question '{question.Question}'. " +
+                $"Number of options: {question.Options.Length}");
+        }
+        else throw new System.IndexOutOfRangeException($"{nameof(QuizInstance)}: " +
+            $"the quiz template '{runtimeTemplate.Template.name}' " +
+            $"has no question at index '{questionIndex}'");
     }
     #endregion
 

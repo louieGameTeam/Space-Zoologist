@@ -23,7 +23,6 @@ public class EnclosedArea
         }
     }
 
-    public AtmosphericComposition atmosphericComposition;
     public float[] terrainComposition;
     public List<Animal> animals;
     public List<Population> populations;
@@ -38,9 +37,8 @@ public class EnclosedArea
     /// <remarks>Using hash set for O(1)look up</remarks>
     public HashSet<Coordinate> coordinates;
 
-    public EnclosedArea(AtmosphericComposition atmosphericComposition, byte id)
+    public EnclosedArea(byte id)
     {
-        this.atmosphericComposition = atmosphericComposition;
         this.terrainComposition = new float[(int)TileType.TypesOfTiles];
         this.animals = new List<Animal>();
         this.coordinates = new HashSet<Coordinate>();
@@ -48,11 +46,6 @@ public class EnclosedArea
         this.foodSources = new List<FoodSource>();
         this.previousArea = new Dictionary<byte, float>();
         this.id = id;
-    }
-
-    public void UpdateAtmosphericComposition(AtmosphericComposition atmosphericComposition)
-    {
-        this.atmosphericComposition = atmosphericComposition;
     }
 
     public bool IsInEnclosedArea(Coordinate coordinate)

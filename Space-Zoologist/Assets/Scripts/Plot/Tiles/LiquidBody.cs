@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 public enum SearchDirection { Up, Down, Left, Right }
+[Serializable]
 public class LiquidBody
 {
     public int bodyID;
@@ -72,11 +73,12 @@ public class LiquidBody
             int tileCount = 0;
             foreach (LiquidBody liquidBody in this.referencedBodies)
             {
-                if (liquidBody.bodyID != 0) // Not preview body
-                {
+                //This if statement causes a NaN bug when merging preview bodies.
+                //if (liquidBody.bodyID != 0) // Not preview body
+                //{
                     tileCount += liquidBody.tiles.Count;
                     this.contents[i] += liquidBody.contents[i] * liquidBody.tiles.Count;
-                }
+                //}
             }
             Debug.Log("Merged tile count" + tileCount.ToString());
             this.contents[i] /= tileCount;
@@ -141,7 +143,7 @@ public class LiquidBody
 
         // update the contents with the values
         for (int i = 0; i < contents.Length; ++i)
-            contents[i] = (contents[i] * tiles.Count + tileContents[i]) / (tiles.Count + 1);
+            contents[i] = (contents[i] * (tiles.Count-1) + tileContents[i]) / (tiles.Count);
     }
     public void RemoveTile(Vector3Int tileToRemove)
     {

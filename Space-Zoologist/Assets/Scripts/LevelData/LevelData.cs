@@ -33,6 +33,14 @@ public class LevelData : ScriptableObject
     public NPCConversation RestartConversation => restertEnclosureConversation;
     public List<Vector3Int> StartinPositions => startingPositions;
     public AudioClip LevelMusic => levelMusic;
+    public QuizTemplate Quiz
+    {
+        get
+        {
+            if (ending.IsQuiz) return ending.QuizConversation.Template;
+            else return null;
+        }
+    }
 
     [SerializeField] public float startingBalance = default;
     [SerializeField] public int MapWidth = default;

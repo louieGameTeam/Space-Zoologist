@@ -20,6 +20,14 @@ public class QuizOption
     private int weight;
     #endregion
 
+    #region Constructors
+    public QuizOption(string label, int weight)
+    {
+        this.label = label;
+        this.weight = weight;
+    }
+    #endregion
+
     #region Public Methods
     public static string ComputeDisplayName(string label, int weight) => $"{label} ({(weight > 0 ? "+" : "")}{weight})";
     #endregion

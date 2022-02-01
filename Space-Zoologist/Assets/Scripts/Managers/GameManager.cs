@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.Log("No save data or error loading notebook data, creating new data...");
+            Debug.Log("No save data or error loading notebook data, creating new data");
             return null;
         }
     }
@@ -602,9 +602,6 @@ public class GameManager : MonoBehaviour
 
     public void HandleExitLevel()
     {
-        // Is not currently in level
-        if (SceneNavigator.RecentlyLoadedLevel != "MainLevel") return;
-
         m_gridSystem.SetGridOverlay(false);
         SaveNotebook(NotebookUI.Data);
     }
@@ -776,13 +773,17 @@ public class GameManager : MonoBehaviour
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 
         UpdateDayText(++currentDay);
+        CheckWinConditions();
+
+        // Invoke next day event
+        EventManager.Instance.InvokeEvent(EventType.NextDay, null);
+
         if (currentDay > maxDay)
         {
             Debug.Log("Time is up!");
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }
-        CheckWinConditions();
     }
 
     public void EnableInspectorToggle(bool enabled)
