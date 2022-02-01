@@ -16,10 +16,6 @@ MonoBehaviour:
   - item:
       category: 0
       index: 0
-    need: 0
-  - item:
-      category: 0
-      index: 0
     need: 3
   questions:
   - question: "First question: From the perspective of the Zeigs, what\u2019s the
@@ -79,8 +75,8 @@ MonoBehaviour:
     questionsToPick: 0
     questionPool: []
   gradingRubric:
-    scoreToPassImportantQuestions: 0
-    scoreToPassUnimportantQuestions: 0
+    scoreToPassImportantQuestions: 1
+    scoreToPassUnimportantQuestions: 2
   exampleQuiz:
-    template: {fileID: 0}
-    answers: 
+    template: {fileID: 11400000}
+    answers: 000000000000000000000000

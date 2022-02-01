@@ -123,12 +123,13 @@ MonoBehaviour:
   endOfQuizText: "And that\u2019s it. Give me a moment to look over your answers."
   response:
     responses:
-    - conversation: {fileID: 3996636215479942174}
-      nextLevelName: Level2E3
-    - conversation: {fileID: 6396383128232452046}
-      nextLevelName: Level3E1
-    - conversation: {fileID: 6396383128232452046}
-      nextLevelName: Level3E1
+    - {fileID: 3996636215479942174}
+    - {fileID: 6396383128232452046}
+    - {fileID: 6396383128232452046}
+  requizOnFail: 0
+  onConversationEnded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3523162195335678079
 GameObject:
   m_ObjectHideFlags: 0
