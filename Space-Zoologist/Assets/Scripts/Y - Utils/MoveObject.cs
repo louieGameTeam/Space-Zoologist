@@ -194,6 +194,7 @@ public class MoveObject : MonoBehaviour
         {
             Destroy(objectToMove);
         }
+        tileToDelete?.SetActive(false);
         objectToMove = null;
         moving = false;
         MoveButton.SetActive(false);
