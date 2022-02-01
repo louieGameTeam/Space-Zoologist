@@ -9,6 +9,8 @@ public class NeedSlider : MonoBehaviour
     [SerializeField] Text Name;
     [SerializeField] Slider lowSlider;
     [SerializeField] Slider highSlider;
+    [SerializeField] Color lowNeedColor = Color.red;
+    [SerializeField] Color highNeedColor = Color.blue;
     #endregion
 
     #region Monobehaviour Messages
@@ -36,6 +38,22 @@ public class NeedSlider : MonoBehaviour
     public void SetValue(float value) {
         lowSlider.value = value;
         highSlider.value = value;
+
+        // Try to get the fill image of the low slider
+        Image fill = lowSlider.fillRect.GetComponent<Image>();
+
+        // Check if the low slider has an image
+        if (fill)
+        {
+            // If value is lower than the low slider max,
+            // then set the low need color
+            if (value < lowSlider.maxValue)
+            {
+                fill.color = lowNeedColor;
+            }
+            // Otherwise set the high need color
+            else fill.color = highNeedColor;
+        }
     }
     #endregion
 
