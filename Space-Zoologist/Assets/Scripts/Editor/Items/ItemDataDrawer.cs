@@ -15,21 +15,38 @@ public class ItemDataDrawer : PropertyDrawer
         if (array.arraySize > 0)
         {
             // Create a temporary item name and set it up with the values in the serialized property
-            ItemName name = new ItemName();
+            ItemName itemName = new ItemName();
             ItemName.Type[] nameTypes = (ItemName.Type[])System.Enum.GetValues(typeof(ItemName.Type));
 
             // Set each name in the temporary item name object
             for(int i = 0; i < array.arraySize; i++)
             {
-                name.Set(nameTypes[i], array.GetArrayElementAtIndex(i).stringValue);
+                itemName.Set(nameTypes[i], array.GetArrayElementAtIndex(i).stringValue);
             }
 
             // Get the string version of the name
-            label = new GUIContent(name.ToString());
+            label = new GUIContent(itemName.ToString());
         }
 
-        // Layout the property with the possibly modified label
-        EditorGUI.PropertyField(position, property, label, true);
+        // Put in the foldout field
+        property.isExpanded = EditorGUIAuto.Foldout(ref position, property.isExpanded, label);
+
+        // If the property is expanded then layout the others
+        if (property.isExpanded)
+        {
+            // Get other important properties
+            SerializedProperty name = property.FindPropertyRelative(nameof(name));
+            SerializedProperty icon = property.FindPropertyRelative(nameof(icon));
+            SerializedProperty shopItem = property.FindPropertyRelative(nameof(shopItem));
+            SerializedProperty species = property.FindPropertyRelative(nameof(species));
+            //SerializedProperty
+
+            EditorGUIAuto.PropertyField(ref position, name, true);
+            EditorGUIAuto.PropertyField(ref position, icon, true);
+            EditorGUIAuto.PropertyField(ref position, shopItem, true);
+
+            //if ()
+        }
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {

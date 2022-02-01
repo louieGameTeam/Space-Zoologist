@@ -15,6 +15,11 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         [WrappedProperty("items")]
         public ItemDataList[] itemDataLists;
     }
+    [System.Serializable]
+    public class StringArray
+    {
+        public string[] strings;
+    }
     #endregion
 
     #region Private Editor Fields
@@ -38,7 +43,8 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         {
             return GetItemsWithCategory(category);
         }
-        else throw new System.ArgumentException($"{nameof(ItemRegistry)}: attempted to get items with category '{categoryName}', " +
+        else throw new System.ArgumentException($"{nameof(ItemRegistry)}: " +
+            $"attempted to get items with category '{categoryName}', " +
             $"but no such category exists");
     }
     public static int CountItemsWithCategory(Category category) => GetItemsWithCategory(category).Length;

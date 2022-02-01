@@ -304,7 +304,7 @@ public class QuizConversation : MonoBehaviour
             // and combine reviews that addressed and requested the same item
             ReviewedResourceRequest[] filteredReviews = reviewsList
                 .Reviews
-                .Where(review => review.CurrentStatus != ReviewedResourceRequest.Status.Denied && review.CurrentStatus != ReviewedResourceRequest.Status.Invalid)
+                .Where(ResourceRequestGeneratesQuestion)
                 .Distinct(new ReviewedResourceRequest.ItemComparer())
                 .ToArray();
 
@@ -313,24 +313,23 @@ public class QuizConversation : MonoBehaviour
             {
                 // Create an array with all the quiz questions
                 QuizQuestion[] requestQuestions = new QuizQuestion[filteredReviews.Length];
-                // Create the quiz options to use for each question
-                QuizOption[] options = new QuizOption[]
-                {
-                    new QuizOption("Very useful", 0),
-                    new QuizOption("Somewhat useful", 0),
-                    new QuizOption("Not useful", 0)
-                };
 
                 // Fill in the info for each question
                 for (int i = 0; i < requestQuestions.Length; i++)
                 {
                     ResourceRequest request = filteredReviews[i].Request;
+
+                    // Set the category to the item addressed by the request
+                    QuizCategory category = new QuizCategory(request.ItemAddressed, request.NeedAddressed);
+
+                    // Generate the quiz options
+                    QuizOption[] options = GenerateQuizOptions(category);
+
                     // Setup the format for the question
                     string question = $"Was the requested {request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial)} " +
                         $"useful for improving the {request.ItemAddressed.Data.Name.Get(ItemName.Type.Colloquial)}" +
                         $" {request.NeedAddressed} need?";
-                    // Set the category to the item addressed by the request
-                    QuizCategory category = new QuizCategory(request.ItemAddressed, request.NeedAddressed);
+
                     // Create the question
                     requestQuestions[i] = new QuizQuestion(question, category, options);
                 }
@@ -343,6 +342,27 @@ public class QuizConversation : MonoBehaviour
         // If there are no reviwed requests
         // then create a quiz without additional questions
         else currentQuiz = new QuizInstance(template);
+    }
+    private QuizOption[] GenerateQuizOptions(QuizCategory category)
+    {
+
+
+        throw new System.NotImplementedException("Method not implemented");
+    }
+    private bool ResourceRequestGeneratesQuestion(ReviewedResourceRequest review)
+    {
+        // Get the categories of all fixed quesitons
+        IEnumerable<QuizCategory> testedCategories = template.AllQuestions
+            .Select(q => q.Category);
+        // Create the category this request represents
+        QuizCategory myCategory = new QuizCategory(review.Request.ItemAddressed, review.Request.NeedAddressed);
+
+        // Resource request will generate a question
+        // if the status is not denied or invalid,
+        // and the category of the review is somewhere in the quiz
+        return review.CurrentStatus != ReviewedResourceRequest.Status.Denied &&
+            review.CurrentStatus != ReviewedResourceRequest.Status.Invalid && 
+            testedCategories.Contains(myCategory);
     }
     #endregion
 }
