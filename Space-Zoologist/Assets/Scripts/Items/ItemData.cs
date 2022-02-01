@@ -30,5 +30,8 @@ public class ItemData
     [SerializeField]
     [HideInInspector]
     private bool hasSpecies = false;
+    [SerializeField]
+    [HideInInspector]
+    private ItemRegistry.Category categoryFilter;
     #endregion
 }

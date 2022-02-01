@@ -14,26 +14,32 @@ public class ItemRegistryEditor : Editor
 
         // Get the item data
         SerializedProperty itemData = serializedObject.FindProperty(nameof(itemData));
-        int numCategories = System.Enum.GetNames(typeof(ItemRegistry.Category)).Length;
+        ItemRegistry.Category[] categories = (ItemRegistry.Category[])System.Enum.GetValues(typeof(ItemRegistry.Category));
 
         // Loop over all categories
-        for (int i = 0; i < numCategories; i++)
+        for (int i = 0; i < categories.Length; i++)
         {
             // Get the array of items for this category
             SerializedProperty items = itemData
                 .FindPropertyRelative("itemDataLists")
                 .GetArrayElementAtIndex(i)
-                .FindPropertyRelative("items");
+                .FindPropertyRelative(nameof(items));
 
             // Go through each item data in the array
             for (int j = 0; j < items.arraySize; j++)
             {
                 SerializedProperty hasSpecies = items
                     .GetArrayElementAtIndex(j)
-                    .FindPropertyRelative("hasSpecies");
+                    .FindPropertyRelative(nameof(hasSpecies));
+                SerializedProperty categoryFilter = items
+                    .GetArrayElementAtIndex(j)
+                    .FindPropertyRelative(nameof(categoryFilter));
 
                 // This has species if the category is not tile
                 hasSpecies.boolValue = i < 2;
+
+                // Set the category filter
+                categoryFilter.enumValueIndex = i;
             }
         }
 

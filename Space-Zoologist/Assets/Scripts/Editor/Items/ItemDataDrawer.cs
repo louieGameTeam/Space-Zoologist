@@ -42,6 +42,7 @@ public class ItemDataDrawer : PropertyDrawer
             SerializedProperty shopItem = property.FindPropertyRelative(nameof(shopItem));
             SerializedProperty species = property.FindPropertyRelative(nameof(species));
             SerializedProperty hasSpecies = property.FindPropertyRelative(nameof(hasSpecies));
+            SerializedProperty categoryFilter = property.FindPropertyRelative(nameof(categoryFilter));
 
             EditorGUIAuto.PropertyField(ref position, name, true);
             EditorGUIAuto.PropertyField(ref position, shopItem, true);
@@ -49,7 +50,20 @@ public class ItemDataDrawer : PropertyDrawer
             // If this item data has species then layout the field for it
             if (hasSpecies.boolValue)
             {
-                EditorGUIAuto.PropertyField(ref position, species);
+                System.Type typeFilter = typeof(ScriptableObject);
+
+                // Filter specific species based on the category filter
+                if (categoryFilter.enumValueIndex == 0)
+                {
+                    typeFilter = typeof(AnimalSpecies);
+                }
+                else if (categoryFilter.enumValueIndex == 1)
+                {
+                    typeFilter = typeof(FoodSourceSpecies);
+                }
+
+                // Layout the object field
+                EditorGUIAuto.ObjectField(ref position, species, typeFilter);
             }
 
             // Restore old indent
