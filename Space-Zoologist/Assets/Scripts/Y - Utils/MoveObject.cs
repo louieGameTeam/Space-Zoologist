@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MoveObject : MonoBehaviour
 {
-    private GridSystem gridSystem = default;
+    private TileDataController gridSystem = default;
     private FoodSourceManager foodSourceManager = default;
     [SerializeField] CursorItem cursorItem = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
@@ -416,7 +416,7 @@ public class MoveObject : MonoBehaviour
         }
 
         //Check if the food source is under construction and if so, grab its build progress
-        GridSystem.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
+        TileDataController.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
         int buildProgress = this.GetStoreItem(species).buildTime;
         if(cluster != null)
             buildProgress = cluster.currentDays;
@@ -453,7 +453,7 @@ public class MoveObject : MonoBehaviour
 
             // add the new tile
             gridSystem.SetTile(tilePos, initialTile);
-            gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, GridSystem.ConstructionCluster.ConstructionType.TILE);
+            gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, TileDataController.ConstructionCluster.ConstructionType.TILE);
             gridSystem.ApplyChangeToTilemapTexture(tilePos);
         }
     }
@@ -477,7 +477,7 @@ public class MoveObject : MonoBehaviour
                 foodSource.isUnderConstruction = false;
             });
             gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
+                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
         }
         else //Otherwise, make sure its needs are up to date
         {

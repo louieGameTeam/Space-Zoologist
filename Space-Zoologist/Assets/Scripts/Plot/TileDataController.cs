@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 /// Translates the tilemap into a 2d array for keeping track of object locations.
 /// </summary>
 /// PlaceableArea transparency can be increased or decreased when adding it
-public class GridSystem : MonoBehaviour
+public class TileDataController : MonoBehaviour
 {
     #region Enumerations
     private enum Direction2D { X, Y }
@@ -378,7 +378,7 @@ public class GridSystem : MonoBehaviour
         }
         else
         {
-            if (tileData != null && tileData.isTilePlaceable)
+            if (tileData != null && (tileData.isTilePlaceable || GameManager.Instance.LevelData.WallBreakable))
             {
                 if (tile.type == TileType.Liquid)
                 {

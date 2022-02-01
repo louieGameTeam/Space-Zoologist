@@ -72,7 +72,7 @@ public class TileStoreSection : StoreSection
                 GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
             else
             {
-                GridSystem.CreateUnitBuffer(new Vector2Int(pos.x, pos.y), this.selectedItem.buildTime, GridSystem.ConstructionCluster.ConstructionType.TILE);
+                GridSystem.CreateUnitBuffer(new Vector2Int(pos.x, pos.y), this.selectedItem.buildTime, TileDataController.ConstructionCluster.ConstructionType.TILE);
             }
         }
         this.EnclosureSystem.UpdateEnclosedAreas();

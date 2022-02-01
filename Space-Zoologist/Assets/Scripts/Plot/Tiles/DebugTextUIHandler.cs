@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DebugTextUIHandler : MonoBehaviour
 {
     private Text DebugText;
-    private GridSystem gridSystem;
+    private TileDataController gridSystem;
 
     private void Start()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BehaviorPattern : MonoBehaviour
 {
     public Dictionary<GameObject, AnimalData> AnimalsToAnimalData; // The dictionary that holds all animal gameObjects to their data. If you want custom data to be stored, add another dictionary like this one
-    protected GridSystem GridSystem;
+    protected TileDataController GridSystem;
     private List<GameObject> compeletedAnimals; //Lists to remove animals from updating before updating to avoid modifying while iterating
     private List<GameObject> alternativeCompletedAnimals;
     private List<GameObject> forceRemoveAnimals;

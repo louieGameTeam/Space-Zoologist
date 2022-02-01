@@ -7,13 +7,13 @@ using System.Linq;
 public class PlotIO : MonoBehaviour
 {
     private TilePlacementController tilePlacementController;
-    private GridSystem GridSystem;
+    private TileDataController GridSystem;
     private List<GridObjectManager> gridObjectManagers = new List<GridObjectManager>();
     private SerializedPlot SerializedPlot;
     // Start is called before the first frame update
     public void Initialize()
     {
-        this.GridSystem = FindObjectOfType<GridSystem>().GetComponent<GridSystem>();
+        this.GridSystem = FindObjectOfType<TileDataController>().GetComponent<TileDataController>();
         this.tilePlacementController = this.gameObject.GetComponent<TilePlacementController>();
         this.ParseSerializedObjects();
     }

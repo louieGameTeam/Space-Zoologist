@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SellingManager : MonoBehaviour
 {
-    private GridSystem gridSystem = default;
+    private TileDataController gridSystem = default;
     private Inspector Inspector = default;
     [SerializeField] MenuManager MenuManager = default;
     public bool IsSelling { get; private set; }

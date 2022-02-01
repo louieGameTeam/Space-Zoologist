@@ -18,7 +18,7 @@ public class Selector : MonoBehaviour
     public List<Vector3Int> SelectedTiles { get; private set; }
     public EnclosedArea SelectedEnclosedArea { get; private set; }
 
-    [SerializeField] private GridSystem gridSystem = default;
+    [SerializeField] private TileDataController gridSystem = default;
 
     [SerializeField] private Tilemap highLight = default;
     [SerializeField] private TerrainTile highLightTile = default;
