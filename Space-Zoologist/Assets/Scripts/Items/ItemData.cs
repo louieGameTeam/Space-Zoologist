@@ -7,7 +7,6 @@ public class ItemData
 {
     #region Public Properties
     public ItemName Name => name;
-    public Sprite Icon => icon;
     public Item ShopItem => shopItem;
     public ScriptableObject Species => species;
     #endregion
@@ -17,9 +16,6 @@ public class ItemData
     [Tooltip("Name used to identify the item")]
     [EditArrayWrapperOnEnum("names", typeof(ItemName.Type))]
     private ItemName name;
-    [SerializeField]
-    [Tooltip("Icon for this item")]
-    private Sprite icon;
     [SerializeField]
     [Tooltip("Reference to the scriptable object used to buy this item in the shop")]
     private Item shopItem;
@@ -33,6 +29,6 @@ public class ItemData
     // the species object for items that do not have a species object
     [SerializeField]
     [HideInInspector]
-    private bool hasSpecies = true;
+    private bool hasSpecies = false;
     #endregion
 }

@@ -15,11 +15,6 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         [WrappedProperty("items")]
         public ItemDataList[] itemDataLists;
     }
-    [System.Serializable]
-    public class StringArray
-    {
-        public string[] strings;
-    }
     #endregion
 
     #region Private Editor Fields

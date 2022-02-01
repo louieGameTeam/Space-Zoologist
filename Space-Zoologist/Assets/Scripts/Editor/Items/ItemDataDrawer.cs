@@ -34,22 +34,52 @@ public class ItemDataDrawer : PropertyDrawer
         // If the property is expanded then layout the others
         if (property.isExpanded)
         {
+            // Increase indent
+            EditorGUI.indentLevel++;
+
             // Get other important properties
             SerializedProperty name = property.FindPropertyRelative(nameof(name));
-            SerializedProperty icon = property.FindPropertyRelative(nameof(icon));
             SerializedProperty shopItem = property.FindPropertyRelative(nameof(shopItem));
             SerializedProperty species = property.FindPropertyRelative(nameof(species));
-            //SerializedProperty
+            SerializedProperty hasSpecies = property.FindPropertyRelative(nameof(hasSpecies));
 
             EditorGUIAuto.PropertyField(ref position, name, true);
-            EditorGUIAuto.PropertyField(ref position, icon, true);
             EditorGUIAuto.PropertyField(ref position, shopItem, true);
 
-            //if ()
+            // If this item data has species then layout the field for it
+            if (hasSpecies.boolValue)
+            {
+                EditorGUIAuto.PropertyField(ref position, species);
+            }
+
+            // Restore old indent
+            EditorGUI.indentLevel--;
         }
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        return EditorGUI.GetPropertyHeight(property, label);
+        // Put in the foldout field
+        float height = EditorGUIAuto.SingleControlHeight;
+
+        // If the property is expanded then layout the others
+        if (property.isExpanded)
+        {
+            // Get other important properties
+            SerializedProperty name = property.FindPropertyRelative(nameof(name));
+            SerializedProperty shopItem = property.FindPropertyRelative(nameof(shopItem));
+            SerializedProperty species = property.FindPropertyRelative(nameof(species));
+            SerializedProperty hasSpecies = property.FindPropertyRelative(nameof(hasSpecies));
+
+            height += EditorGUI.GetPropertyHeight(name, true);
+            height += EditorGUI.GetPropertyHeight(shopItem, true);
+
+            // If this item data has species then layout the field for it
+            if (hasSpecies.boolValue)
+            {
+                height += EditorGUI.GetPropertyHeight(species, true);
+            }
+        }
+
+        return height;
     }
 }
