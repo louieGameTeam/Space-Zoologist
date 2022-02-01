@@ -88,7 +88,13 @@ public class DialogueManager : MonoBehaviour
         if (ConversationManager.Instance != null && !skipOpeningConversation)
         {
             StartNewConversation();
+            //Allow for conversation skipping if level restart
+            if(LevelDataLoader.LevelIsARestart)
+            {
+                ConversationManager.Instance.SetSkipConversationButton(true);
+            }
         }
+
     }
     public void SetNewDialogue(NPCConversation newDialogue)
     {
