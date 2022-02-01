@@ -114,7 +114,7 @@ public class QuizConversation : MonoBehaviour
             else
             {
                 // Set the quiz on the reports data to the quiz that we just finished
-                GameManager.Instance.NotebookUI.Data.Reports.SetQuiz(LevelID.FromCurrentSceneName(), currentQuiz);
+                GameManager.Instance.NotebookUI.Data.Reports.SetQuiz(LevelID.Current(), currentQuiz);
 
                 // Invoke the quiz conversation ended event when the response is over
                 currentResponse.OnConversationEnded(onConversationEnded.Invoke);
@@ -294,7 +294,7 @@ public class QuizConversation : MonoBehaviour
             .NotebookUI
             .Data
             .Concepts
-            .GetEntryWithLatestAttempt(LevelID.FromCurrentSceneName())
+            .GetEntryWithLatestAttempt(LevelID.Current())
             .reviews;
 
         // If there are reviewed requests then create a quiz with additional questions

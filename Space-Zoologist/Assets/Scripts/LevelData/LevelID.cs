@@ -84,7 +84,7 @@ public struct LevelID : System.IComparable<LevelID>
     }
 
     // Parse the scene name to get the enclosure ID
-    public static LevelID FromCurrentSceneName()
+    public static LevelID Current()
     {
         GameManager instance = GameManager.Instance;
 
