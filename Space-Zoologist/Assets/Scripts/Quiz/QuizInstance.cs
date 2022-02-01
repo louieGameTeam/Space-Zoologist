@@ -129,13 +129,17 @@ public class QuizInstance
         return score;
     }
     public static bool PassedImportantQuestions(QuizRuntimeTemplate runtimeTemplate, int[] answers) => runtimeTemplate.Template.GradingRubric
-        .PassedImportantQuestions(ComputeScoreInImportantCategories(runtimeTemplate, answers));
+        .PassedImportantQuestions(
+            ComputeScoreInImportantCategories(runtimeTemplate, answers), 
+            runtimeTemplate.GetMaximumPossibleScoreInImportantCategories());
     public static int ComputeScoreInUnimportantCategories(QuizRuntimeTemplate runtimeTemplate, int[] answers)
     {
         return ComputeItemizedScore(runtimeTemplate, answers).TotalScore - ComputeScoreInImportantCategories(runtimeTemplate, answers);
     }
     public static bool PassedUnimportantQuestions(QuizRuntimeTemplate runtimeTemplate, int[] answers) => runtimeTemplate.Template.GradingRubric
-        .PassedUnimportantQuestions(ComputeScoreInUnimportantCategories(runtimeTemplate, answers));
+        .PassedUnimportantQuestions(
+            ComputeScoreInUnimportantCategories(runtimeTemplate, answers),
+            runtimeTemplate.GetMaximumPossibleScoreInUnimportantCategories());
     public static ItemizedQuizScore ComputeItemizedScore(QuizRuntimeTemplate runtimeTemplate, int[] answers)
     {
         ItemizedQuizScore itemizedScore = new ItemizedQuizScore();
