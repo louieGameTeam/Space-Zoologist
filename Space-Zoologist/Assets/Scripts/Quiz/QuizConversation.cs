@@ -71,6 +71,12 @@ public class QuizConversation : MonoBehaviour
     private NPCConversation currentResponse;
     // Conversation that the NPC speaks to say all of the questions
     private NPCConversation currentQuizConversation;
+    private readonly string[] optionLabels = new string[]
+    {
+        "Not at all useful",
+        "Somewhat useful",
+        "Very useful"
+    };
     #endregion
 
     #region Public Methods
@@ -323,7 +329,7 @@ public class QuizConversation : MonoBehaviour
                     QuizCategory category = new QuizCategory(request.ItemAddressed, request.NeedAddressed);
 
                     // Generate the quiz options
-                    QuizOption[] options = GenerateQuizOptions(category);
+                    QuizOption[] options = GenerateQuizOptions(request, category);
 
                     // Setup the format for the question
                     string question = $"Was the requested {request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial)} " +
@@ -343,11 +349,33 @@ public class QuizConversation : MonoBehaviour
         // then create a quiz without additional questions
         else currentQuiz = new QuizInstance(template);
     }
-    private QuizOption[] GenerateQuizOptions(QuizCategory category)
+    private QuizOption[] GenerateQuizOptions(ResourceRequest request, QuizCategory category)
     {
+        // Create the options
+        QuizOption[] options = new QuizOption[3];
 
+        // Get the usefulness of the request
+        int usefulness = request.Usefulness;
 
-        throw new System.NotImplementedException("Method not implemented");
+        // The option at the usefulness level has full score
+        options[usefulness] = new QuizOption(optionLabels[usefulness], 2);
+
+        if (usefulness != 1)
+        {
+            // Middle option has score of 1
+            options[1] = new QuizOption(optionLabels[1], 1);
+
+            // The other usefulness option has score of 0
+            usefulness = (usefulness + 2) % 4;
+            options[usefulness] = new QuizOption(optionLabels[usefulness], 0);
+        }
+        else
+        {
+            options[2] = new QuizOption(optionLabels[2], 1);
+            options[0] = new QuizOption(optionLabels[0], 0);
+        }
+
+        return options;
     }
     private bool ResourceRequestGeneratesQuestion(ReviewedResourceRequest review)
     {

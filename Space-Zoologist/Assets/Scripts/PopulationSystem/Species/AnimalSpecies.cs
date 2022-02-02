@@ -24,6 +24,10 @@ public class AnimalSpecies : ScriptableObject
     // TODO setup tile weights for species
     public Dictionary<TileType, byte> TilePreference = default;
     public RuntimeAnimatorController AnimatorController => animatorController;
+    public List<TerrainNeedConstructData> TerrainNeeds => terrainNeeds;
+    public List<FoodNeedConstructData> FoodNeeds => foodNeeds;
+    public List<LiquidNeedConstructData> LiquidNeeds => liquidNeeds;
+    public List<PreyNeedConstructData> PreyNeeds => preyNeeds;
 
     // Values
     [SerializeField] private RuntimeAnimatorController animatorController = default;
