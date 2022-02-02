@@ -68,7 +68,7 @@ public class ParallelArrayEditor<TElement>
             // If array is expanded, add heights for all 
             if (array.isExpanded)
             {
-                for (int i = 0; i < array.arraySize; i++)
+                for (int i = 0; i < parallelArray.Length; i++)
                 {
                     SerializedProperty element = array.GetArrayElementAtIndex(i);
                     height += arrayElementPropertyHeight(element, parallelArray[i]);
