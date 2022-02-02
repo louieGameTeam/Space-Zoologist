@@ -87,11 +87,6 @@ public class ResourceRequest
                     // it is not useful at all
                     else return 0;
                 }
-                else if (NeedAddressed == NeedType.Liquid)
-                {
-                    // Something dreadfully complicated...
-                    return 0;
-                }
                 else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
                     $"Usefulness cannot be computed for need {NeedAddressed}");
             }
@@ -114,11 +109,6 @@ public class ResourceRequest
                     // If no terrain need was found then this terrain is not traversible,
                     // it is not useful at all
                     else return 0;
-                }
-                else if (NeedAddressed == NeedType.Liquid)
-                {
-                    // Something dreadfully complicated...
-                    return 0;
                 }
                 else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
                     $"Usefulness cannot be computed for need {NeedAddressed}");
