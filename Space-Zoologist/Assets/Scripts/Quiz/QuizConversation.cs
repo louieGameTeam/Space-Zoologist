@@ -389,7 +389,9 @@ public class QuizConversation : MonoBehaviour
         // if the status is not denied or invalid,
         // and the category of the review is somewhere in the quiz
         return review.CurrentStatus != ReviewedResourceRequest.Status.Denied &&
-            review.CurrentStatus != ReviewedResourceRequest.Status.Invalid && 
+            review.CurrentStatus != ReviewedResourceRequest.Status.Invalid &&
+            (review.Request.NeedAddressed == NeedType.Terrain || 
+            review.Request.NeedAddressed == NeedType.FoodSource) &&
             testedCategories.Contains(myCategory);
     }
     #endregion

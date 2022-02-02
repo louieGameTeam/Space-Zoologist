@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,73 +46,62 @@ public class ResourceRequest
     {
         get
         {
+            List<NeedConstructData> ConvertNeeds<T>(List<T> needs)
+            {
+                return needs.Cast<NeedConstructData>().ToList();
+            }
+
             // Try to get the animal and food species
             ItemData itemData = ItemAddressed.Data;
             AnimalSpecies animalSpecies = itemData.Species as AnimalSpecies;
             FoodSourceSpecies foodSpecies = itemData.Species as FoodSourceSpecies;
 
-            // Check if the addressed item is an animal
-            if (animalSpecies != null)
+            // Check if the addressed item is an animal or food species
+            if (animalSpecies != null || foodSpecies != null)
             {
-                if (NeedAddressed == NeedType.Terrain)
-                {
-                    // Find a terrain need with the same name as the item addressed
-                    TerrainNeedConstructData terrainNeed = animalSpecies
-                        .TerrainNeeds
-                        .Find(need => need.NeedName == itemData.Name.Get(ItemName.Type.English));
+                List<NeedConstructData> needData;
 
-                    if (terrainNeed != null)
-                    {
-                        // Preferred terrain is more useful than non preferred
-                        if (terrainNeed.IsPreferred) return 2;
-                        else return 1;
-                    }
-                    // If no terrain need was found then this terrain is not traversible,
-                    // it is not useful at all
-                    else return 0;
-                }
-                else if (NeedAddressed == NeedType.FoodSource)
+                // If the item addressed is an animal species,
+                // convert their needs
+                if (animalSpecies)
                 {
-                    // Find a terrain need with the same name as the item addressed
-                    FoodNeedConstructData foodNeed = animalSpecies
-                        .FoodNeeds
-                        .Find(need => need.NeedName == itemData.Name.Get(ItemName.Type.English));
-
-                    if (foodNeed != null)
+                    if (NeedAddressed == NeedType.Terrain)
                     {
-                        // Preferred terrain is more useful than non preferred
-                        if (foodNeed.IsPreferred) return 2;
-                        else return 1;
+                        needData = ConvertNeeds(animalSpecies.TerrainNeeds);
                     }
-                    // If no terrain need was found then this terrain is not traversible,
-                    // it is not useful at all
-                    else return 0;
+                    else if (NeedAddressed == NeedType.FoodSource)
+                    {
+                        needData = ConvertNeeds(animalSpecies.FoodNeeds);
+                    }
+                    else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
+                        $"Usefulness cannot be computed for need {NeedAddressed}");
                 }
-                else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
-                    $"Usefulness cannot be computed for need {NeedAddressed}");
-            }
-            // Check if the addressed item is a food source
-            else if (foodSpecies != null)
-            {
-                if (NeedAddressed == NeedType.Terrain)
+                // If the item addressed is a food species,
+                // convert their needs
+                else
                 {
-                    // Find a terrain need with the same name as the item addressed
-                    TerrainNeedConstructData terrainNeed = foodSpecies
-                        .TerrainNeeds
-                        .Find(need => need.NeedName == itemData.Name.Get(ItemName.Type.English));
-
-                    if (terrainNeed != null)
+                    if (NeedAddressed == NeedType.Terrain)
                     {
-                        // Preferred terrain is more useful than non preferred
-                        if (terrainNeed.IsPreferred) return 2;
-                        else return 1;
+                        needData = ConvertNeeds(foodSpecies.TerrainNeeds);
                     }
-                    // If no terrain need was found then this terrain is not traversible,
-                    // it is not useful at all
-                    else return 0;
+                    else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
+                        $"Usefulness cannot be computed for need {NeedAddressed}");
                 }
-                else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
-                    $"Usefulness cannot be computed for need {NeedAddressed}");
+
+                // Find a terrain need with the same name as the item addressed
+                // NOTE: this does not work because some need names do not match the item ID english name
+                NeedConstructData need = needData
+                    .Find(need => need.NeedName == itemData.Name.Get(ItemName.Type.English));
+
+                if (need != null)
+                {
+                    // Preferred terrain is more useful than non preferred
+                    if (need.IsPreferred) return 2;
+                    else return 1;
+                }
+                // If no terrain need was found then this terrain is not traversible,
+                // it is not useful at all
+                else return 0;
             }
             else throw new System.ArgumentException($"{nameof(QuizConversation)}: " +
                 $"Item addressed '{itemData.Name}' has no valid species associated with it, " +
