@@ -91,7 +91,7 @@ public class ResourceRequest
                 // Find a terrain need with the same name as the item addressed
                 // NOTE: this does not work because some need names do not match the item ID english name
                 NeedConstructData need = needData
-                    .Find(need => need.NeedName == itemData.Name.Get(ItemName.Type.English));
+                    .Find(n => n.NeedName == itemData.Name.Get(ItemName.Type.English));
 
                 if (need != null)
                 {

@@ -32,7 +32,7 @@ MonoBehaviour:
   - needName: Sand
     isPreferred: 0
   foodNeeds:
-  - needName: Ants
+  - needName: Ant Colony
     isPreferred: 0
   - needName: Mushroom
     isPreferred: 1
@@ -45,4 +45,5 @@ MonoBehaviour:
     saltMaxThreshold: 0.015
     bacteriaMinThreshold: 0
     bacteriaMaxThreshold: 1
+  preyNeeds: []
   representation: {fileID: 0}
