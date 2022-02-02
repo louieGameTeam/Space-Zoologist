@@ -101,7 +101,7 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
         }
 
         // Cache the current id
-        LevelID current = LevelID.FromCurrentSceneName();
+        LevelID current = LevelID.Current();
         // Only add the listeners if this editor is in the current scene
         if (enclosureID == current)
         {

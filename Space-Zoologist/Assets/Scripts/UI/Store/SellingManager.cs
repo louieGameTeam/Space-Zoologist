@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SellingManager : MonoBehaviour
 {
-    private GridSystem gridSystem = default;
+    private TileDataController gridSystem = default;
     private Inspector Inspector = default;
     [SerializeField] MenuManager MenuManager = default;
     public bool IsSelling { get; private set; }
@@ -62,7 +62,7 @@ public class SellingManager : MonoBehaviour
 
             // What is on the tile?
             GameTile tile = gridSystem.GetGameTileAt(cellPos);
-            GridSystem.TileData tileData;
+            TileData tileData;
 
             // Find out what is on the tile if it is in bounds
             if (gridSystem.IsCellinGrid(cellPos.x, cellPos.y))
@@ -91,7 +91,7 @@ public class SellingManager : MonoBehaviour
         }
     }
 
-    private void SellFoodOnTile(GridSystem.TileData tileData, Vector3Int cellPos)
+    private void SellFoodOnTile(TileData tileData, Vector3Int cellPos)
     {
         GameObject food = tileData.Food;
         string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);

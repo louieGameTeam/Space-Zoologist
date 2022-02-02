@@ -45,7 +45,7 @@ public class ReservePartitionManager : MonoBehaviour
     private Dictionary<Population, List<Vector3Int>> populationAccessibleLiquidLocations;
 
     public GameTile Liquid;
-    private GridSystem gridSystem = default;
+    private TileDataController gridSystem = default;
     public void Initialize()
     {
         // Variable initializations
@@ -162,7 +162,7 @@ public class ReservePartitionManager : MonoBehaviour
 
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
-        GridSystem gridSystemReference = GameManager.Instance.m_gridSystem;
+        TileDataController gridSystemReference = GameManager.Instance.m_gridSystem;
 
         // starting location
         Vector3Int location = gridSystemReference.WorldToCell(population.transform.position);

@@ -23,7 +23,7 @@ public class StoreSection : MonoBehaviour
     protected CanvasObjectStrobe PlayerBalanceDisplay = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
-    protected GridSystem GridSystem = default;
+    protected TileDataController GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
     protected Item selectedItem = null;

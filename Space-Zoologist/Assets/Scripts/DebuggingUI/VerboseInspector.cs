@@ -95,7 +95,7 @@ public class VerboseInspector : MonoBehaviour
         if(gameManager && inspector)
         {
             // Get the tile data at the inspector's position and display all the data as a JSON
-            GridSystem.TileData tileData = gameManager.m_gridSystem.GetTileData(inspector.selectedPosition);
+            TileData tileData = gameManager.m_gridSystem.GetTileData(inspector.selectedPosition);
             CreateInspectorItem(tileData);
 
             if (tileData.Food)

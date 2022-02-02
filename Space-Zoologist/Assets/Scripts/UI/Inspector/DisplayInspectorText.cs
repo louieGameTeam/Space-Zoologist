@@ -91,7 +91,6 @@ public class DisplayInspectorText : MonoBehaviour
         inspectorWindowTitle.text = $"Enclosure {enclosedArea.id + 1}";
 
         // THe composition is a list of float value in the order of the AtmoshpereComponent Enum
-        float[] atmosphericComposition = enclosedArea.atmosphericComposition.GetComposition();
         float[] terrainComposition = enclosedArea.terrainComposition;
 
         string displayText = "";
