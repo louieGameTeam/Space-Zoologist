@@ -407,15 +407,14 @@ public class MoveObject : MonoBehaviour
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.x / 2, 0);
-
+        Vector3Int sizeOffset = new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.y / 2, 0);
+        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - sizeOffset;
         //If the player clicks on the food source's original position, don't bother with the mess below
-        if(pos == initialGridPos)
+        if (pos == initialGridPos)
         {
             toMove.transform.position = initialPos;
             return;
         }
-
         //Check if the food source is under construction and if so, grab its build progress
         TileDataController.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
         int buildProgress = this.GetStoreItem(species).buildTime;
@@ -426,7 +425,6 @@ public class MoveObject : MonoBehaviour
         removeOriginalFood(foodSource);
         float cost = moveCost;
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
-        
         if (valid) //If valid, place the food at the mouse destination
         {
             placeFood(pos, species);
