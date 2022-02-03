@@ -8,7 +8,6 @@ using UnityEngine;
 public class EnclosureSystem : MonoBehaviour
 {
     public Dictionary<Vector3Int, byte> positionToEnclosedArea { get; private set; }
-    public List<AtmosphericComposition> Atmospheres { get; private set; }
 
     public List<EnclosedArea> EnclosedAreas;
     private List<EnclosedArea> internalEnclosedAreas;
@@ -17,7 +16,6 @@ public class EnclosureSystem : MonoBehaviour
     [SerializeField] private List<Vector3Int> startingPositions = default;
 
     // The global atmosphere
-    private AtmosphericComposition GlobalAtmosphere;
     private Vector3Int startPos = default;
     private byte enclosedAreaCount = 0;
 
@@ -31,10 +29,8 @@ public class EnclosureSystem : MonoBehaviour
     {
         startingPositions = GameManager.Instance.LevelData.StartinPositions;
         positionToEnclosedArea = new Dictionary<Vector3Int, byte>();
-        Atmospheres = new List<AtmosphericComposition>();
         this.internalEnclosedAreas = new List<EnclosedArea>();
         this.EnclosedAreas = new List<EnclosedArea>();
-        this.GlobalAtmosphere = new AtmosphericComposition(0, 0, 0, 0);
     }
 
     private void Start()
@@ -47,24 +43,6 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         this.UpdateEnclosedAreas(false);
-    }
-
-    /// <summary>
-    /// Gets the atmospheric composition at a given position.
-    /// </summary>
-    /// <param name="position">The position at which to get the atmopheric conditions</param>
-    /// <returns></returns>
-    public AtmosphericComposition GetAtmosphericComposition(Vector3 worldPosition)
-    {
-        Vector3Int position = GameManager.Instance.m_gridSystem.WorldToCell(worldPosition);
-        if (positionToEnclosedArea.ContainsKey(position) && this.GetEnclosedAreaById(positionToEnclosedArea[position]) != null)
-        {
-            return this.GetEnclosedAreaById(positionToEnclosedArea[position]).atmosphericComposition;
-        }
-        else
-        {
-            throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
-        }
     }
 
     /// <summary>
@@ -119,25 +97,6 @@ public class EnclosureSystem : MonoBehaviour
         }
 
         return null;
-    }
-
-    public void UpdateAtmosphereComposition(Vector3 worldPosition, AtmosphericComposition atmosphericComposition)
-    {
-        Vector3Int position = GameManager.Instance.m_gridSystem.WorldToCell(worldPosition);
-        if (positionToEnclosedArea.ContainsKey(position))
-        {
-            this.GetEnclosedAreaById(positionToEnclosedArea[position]).UpdateAtmosphericComposition(atmosphericComposition);
-
-            // Mark Atmosphere NS dirty
-            GameManager.Instance.NeedSystems[NeedType.Atmosphere].MarkAsDirty();
-
-            // Invoke event
-            EventManager.Instance.InvokeEvent(EventType.AtmosphereChange, this.GetEnclosedAreaById(positionToEnclosedArea[position]));
-        }
-        else
-        {
-            throw new System.Exception("Unable to find atmosphere at position (" + position.x + " , " + position.y + ")");
-        }
     }
 
     /// <summary>
@@ -262,7 +221,7 @@ public class EnclosureSystem : MonoBehaviour
 
         // Initial flood fill
         this.enclosedAreaCount = 0;
-        EnclosedArea area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.enclosedAreaCount);
+        EnclosedArea area = new EnclosedArea(this.enclosedAreaCount);
         newEnclosedAreas.Add(area);
 
         // If startingPositions is empty on start, startingPositions will contain gridSystem.startTile by default.
@@ -271,7 +230,7 @@ public class EnclosureSystem : MonoBehaviour
             if (area.coordinates.Count > 0)
             {
                 this.enclosedAreaCount++;
-                area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.enclosedAreaCount);
+                area = new EnclosedArea(this.enclosedAreaCount);
                 newEnclosedAreas.Add(area);
             }
             this.FloodFill(startingPos, accessed, unaccessible, walls, enclosedAreaCount, area, isUpdate);
@@ -282,7 +241,7 @@ public class EnclosureSystem : MonoBehaviour
                 if (area.coordinates.Count != 0)
                 {
                     this.enclosedAreaCount++;
-                    area = new EnclosedArea(new AtmosphericComposition(this.GlobalAtmosphere), this.enclosedAreaCount);
+                    area = new EnclosedArea(this.enclosedAreaCount);
                     newEnclosedAreas.Add(area);
                 }
 
@@ -298,15 +257,6 @@ public class EnclosureSystem : MonoBehaviour
         // Not initializing: update the areas based on the previous ones
         if (isUpdate)
         {
-            foreach (EnclosedArea newArea in newEnclosedAreas)
-            {
-                Dictionary<AtmosphericComposition, float> composition = new Dictionary<AtmosphericComposition, float>();
-                foreach (var pair in newArea.previousArea)
-                {
-                    composition.Add(GetEnclosedAreaById(pair.Key).atmosphericComposition, pair.Value);
-                }
-                newArea.atmosphericComposition = AtmosphericComposition.Merge(composition);
-            }
         }
 
         this.internalEnclosedAreas = newEnclosedAreas;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MoveObject : MonoBehaviour
 {
-    private GridSystem gridSystem = default;
+    private TileDataController gridSystem = default;
     private FoodSourceManager foodSourceManager = default;
     [SerializeField] CursorItem cursorItem = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
@@ -194,6 +194,7 @@ public class MoveObject : MonoBehaviour
         {
             Destroy(objectToMove);
         }
+        tileToDelete?.SetActive(false);
         objectToMove = null;
         moving = false;
         MoveButton.SetActive(false);
@@ -249,7 +250,7 @@ public class MoveObject : MonoBehaviour
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        GridSystem.TileData tileData = gridSystem.GetTileData(pos);
+        TileData tileData = gridSystem.GetTileData(pos);
         GameObject toMove = null;
 
         if (tileData == null)
@@ -294,7 +295,7 @@ public class MoveObject : MonoBehaviour
                 tempItem.SetupData(ID, "Tile", ID, 0);
 
                 initialTilePosition = pos;
-                initialTile = gridSystem.GetTileData(pos).CurrentTile;
+                initialTile = gridSystem.GetTileData(pos).currentTile;
                 initialTile.defaultContents = initialTileContents;
             }
         }
@@ -326,10 +327,10 @@ public class MoveObject : MonoBehaviour
                 break;
             case ItemType.TILE:
                 GameManager.Instance.AddToBalance(sellBackCost);
-                GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
+                TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
-                gridSystem.ApplyChangesToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
-                if (tileData.CurrentTile == null)
+                gridSystem.ApplyChangeToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
+                if (tileData.currentTile == null)
                     tileData.Clear();
                 //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
                 gridSystem.RemoveBuffer((Vector2Int)gridSystem.WorldToCell(objectToMove.transform.position));
@@ -416,7 +417,7 @@ public class MoveObject : MonoBehaviour
         }
 
         //Check if the food source is under construction and if so, grab its build progress
-        GridSystem.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
+        TileDataController.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
         int buildProgress = this.GetStoreItem(species).buildTime;
         if(cluster != null)
             buildProgress = cluster.currentDays;
@@ -442,19 +443,19 @@ public class MoveObject : MonoBehaviour
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
 
-        if (gridSystem.GetTileData(tilePos).CurrentTile.type != initialTile.type)
+        if (gridSystem.GetTileData(tilePos).currentTile.type != initialTile.type)
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
             gridSystem.RemoveBuffer((Vector2Int)initialTilePosition);
-            gridSystem.ApplyChangesToTilemapTexture(initialTilePosition);
+            gridSystem.ApplyChangeToTilemapTexture(initialTilePosition);
             
             tileToDelete.SetActive(false);
 
             // add the new tile
-            gridSystem.AddTile(tilePos, initialTile);
-            gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, GridSystem.ConstructionCluster.ConstructionType.TILE);
-            gridSystem.ApplyChangesToTilemapTexture(tilePos);
+            gridSystem.SetTile(tilePos, initialTile);
+            gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, TileDataController.ConstructionCluster.ConstructionType.TILE);
+            gridSystem.ApplyChangeToTilemapTexture(tilePos);
         }
     }
 
@@ -477,7 +478,7 @@ public class MoveObject : MonoBehaviour
                 foodSource.isUnderConstruction = false;
             });
             gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
+                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
         }
         else //Otherwise, make sure its needs are up to date
         {
@@ -503,8 +504,8 @@ public class MoveObject : MonoBehaviour
     public void removeOriginalFood(FoodSource foodSource)
     {
         Vector3Int FoodLocation = gridSystem.WorldToCell(initialPos);
-        GridSystem.TileData data = gridSystem.GetTileData(FoodLocation);
-        gridSystem.RemoveFood(FoodLocation);
+        TileData data = gridSystem.GetTileData(FoodLocation);
+        gridSystem.RemoveFoodReference(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource); // Finds the lower left cell the food occupies
         Vector2Int shiftedPos = new Vector2Int(FoodLocation.x, FoodLocation.y) - foodSource.Species.Size / 2;
         gridSystem.RemoveBuffer(shiftedPos, foodSource.Species.Size.x, foodSource.Species.Size.y);

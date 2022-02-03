@@ -100,6 +100,15 @@ public class GameOverController : MonoBehaviour
         // Update the save data with the id of the level we are qualified to go to
         LevelEndingData ending = GameManager.Instance.LevelData.Ending;
         SaveData.QualifyForLevel(ending.GetNextLevelID());
+
+        // Compute the rating for this level
+        int rating = LevelRatingSystem.RateCurrentLevel();
+        SaveData.SetLevelRating(LevelID.Current(), rating);
+
+        // Save changes to the save data
+        SaveData.Save();
+
+        // Let the game manager handle level exiting
         GameManager.Instance.HandleExitLevel();
 
         // Open the success window

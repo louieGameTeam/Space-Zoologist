@@ -120,7 +120,7 @@ public class LiquidBody
     /// <param name="sourceDirectionHistory"></param>
     private void CheckNeighbors(HashSet<Vector3Int> existingTile, Vector3Int cellPosition)
     {
-        foreach (Vector3Int position in GridSystem.FourNeighborTileLocations(cellPosition))
+        foreach (Vector3Int position in TileDataController.FourNeighborTileLocations(cellPosition))
         {
             if (existingTile.Remove(position))
             {

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -27,6 +28,9 @@ public class SaveData
     [SerializeField]
     [Tooltip("ID of the latest level that the player is qualified to attempt")]
     private LevelID latestLevelQualified = new LevelID(1, 1);
+    [SerializeField]
+    [Tooltip("List of completed levels with their ratings")]
+    private List<LevelRating> levelRatings = new List<LevelRating>();
     #endregion
 
     #region Public Fields
@@ -45,8 +49,37 @@ public class SaveData
         if (level > Instance.latestLevelQualified)
         {
             Instance.latestLevelQualified = level;
-            Save();
         }
+    }
+    public static int GetLevelRating(LevelID level)
+    {
+        // Find a rating for the given level
+        int index = Instance.levelRatings.FindIndex(x => x.ID == level);
+
+        // If the level was found then return the rating
+        if (index >= 0) return Instance.levelRatings[index].Rating;
+        // If the level was not found then return an invalid rating
+        else return -1;
+    }
+    public static void SetLevelRating(LevelID level, int rating)
+    {
+        // Search for a rating with the given id
+        int index = Instance.levelRatings.FindIndex(x => x.ID == level);
+
+        // Check if a rating with the id was found
+        if (index >= 0)
+        {
+            // Get the rating
+            LevelRating levelRating = Instance.levelRatings[index];
+
+            // If the current rating is less than the new one, then update the current rating
+            if (levelRating.Rating < rating)
+            {
+                Instance.levelRatings[index] = new LevelRating(level, rating);
+            }
+        }
+        // If no rating exists for the current id then add a new rating
+        else Instance.levelRatings.Add(new LevelRating(level, rating));
     }
     #endregion
 

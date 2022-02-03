@@ -157,7 +157,7 @@ public class TerrainNeedSystem : NeedSystem
 
                 foreach(Vector3Int position in GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population))
                 {
-                    TileType type = GameManager.Instance.m_gridSystem.GetTileData(position).CurrentTile.type;
+                    TileType type = GameManager.Instance.m_gridSystem.GetTileData(position).currentTile.type;
 
                     if(!accessibleTilesByTileType.ContainsKey(type))
                         accessibleTilesByTileType.Add(type, new HashSet<Vector3Int>());

@@ -14,7 +14,7 @@ public class FoodSourceManager : GridObjectManager
 
     // FoodSourceSpecies to string name
     [SerializeField] private GameObject foodSourcePrefab = default;
-    private GridSystem m_gridSystemReference;
+    private TileDataController m_gridSystemReference;
 
     public void Initialize()
     {
@@ -37,7 +37,7 @@ public class FoodSourceManager : GridObjectManager
         if (ttb > 0)
         {
             m_gridSystemReference.CreateRectangleBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD);
+                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD);
             foodSource.isUnderConstruction = true;
             m_gridSystemReference.ConstructionFinishedCallback(() =>
             {
@@ -76,7 +76,7 @@ public class FoodSourceManager : GridObjectManager
         ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).RemoveFoodSource(foodSource);
         foodSourcesBySpecies[foodSource.Species].Remove(foodSource);
         GameManager.Instance.UnregisterWithNeedSystems(foodSource);
-        m_gridSystemReference.RemoveFood(m_gridSystemReference.WorldToCell(foodSource.Position));
+        m_gridSystemReference.RemoveFoodReference(m_gridSystemReference.WorldToCell(foodSource.Position));
         Destroy(foodSource.gameObject);
     }
 

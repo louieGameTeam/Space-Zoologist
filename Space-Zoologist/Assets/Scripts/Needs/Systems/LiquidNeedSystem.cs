@@ -11,7 +11,7 @@ public enum LiquidComposition { Water, Salt, Bacteria };
 public class LiquidNeedSystem : NeedSystem
 {
     // TODO: Find the right helper system
-    private GridSystem m_gridsystemReference;
+    private TileDataController m_gridsystemReference;
 
 
     public LiquidNeedSystem(NeedType needType = NeedType.Liquid) : base(needType)

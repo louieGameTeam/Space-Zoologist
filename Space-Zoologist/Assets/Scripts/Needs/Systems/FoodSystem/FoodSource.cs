@@ -48,18 +48,7 @@ public class FoodSource : MonoBehaviour, Life
     // Subscribe to events here
     private void Start()
     {
-        // If the food has atmospheric need then subscribe to atmosphere changed event
-        foreach (AtmosphereComponent atmosphereComponent in Enum.GetValues(typeof(AtmosphereComponent)))
-        {
-            if (this.needs.ContainsKey(atmosphereComponent.ToString()))
-            {
-                EventManager.Instance.SubscribeToEvent(EventType.AtmosphereChange, () =>
-                {
-                    this.hasAccessibilityChecked = true;
-                    this.hasAccessibilityChanged = true;
-                });
-            }
-        }
+        
     }
 
     public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position)
