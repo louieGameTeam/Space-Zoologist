@@ -58,6 +58,10 @@ public class SaveData
     public static int GetLevelRating(LevelID level)
     {
         // Find a rating for the given level
+        if(Instance.levelRatings == null)
+        {
+            Instance.levelRatings = new List<LevelRating>();
+        }
         int index = Instance.levelRatings.FindIndex(x => x.ID == level);
 
         // If the level was found then return the rating
