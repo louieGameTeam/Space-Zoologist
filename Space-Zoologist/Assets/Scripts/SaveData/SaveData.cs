@@ -88,6 +88,7 @@ public class SaveData
 
     public static void TrySetLatestLevelIntro(LevelID id)
     {
+        //If the latest level Intro finished is less, than update
         if (Instance.latestLevelIntroFinished < id)
         {
             Instance.latestLevelIntroFinished = id;

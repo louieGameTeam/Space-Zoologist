@@ -88,18 +88,21 @@ public class DialogueManager : MonoBehaviour
         if (ConversationManager.Instance != null && !skipOpeningConversation)
         {
             StartNewConversation();
-            currentDialogue.OnConversationEnded(() =>
-            {
-                SaveData.TrySetLatestLevelIntro(LevelID.Current());
-            });
+            currentDialogue.OnConversationEnded(IntroFinished);
             //Allow for conversation skipping if intro has already been finished
-            if(SaveData.LatestLevelIntroFinished <= LevelID.Current())
+            if(SaveData.LatestLevelIntroFinished >= LevelID.Current())
             {
                 ConversationManager.Instance.SetSkipConversationButton(true);
             }
         }
-
     }
+
+    private void IntroFinished()
+    {
+        SaveData.TrySetLatestLevelIntro(LevelID.Current());
+        SaveData.Save();
+    }
+
     public void SetNewDialogue(NPCConversation newDialogue)
     {
         if (queuedConversations.Contains(newDialogue))
