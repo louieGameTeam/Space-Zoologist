@@ -8,7 +8,6 @@ public class LevelDataLoader : MonoBehaviour
 {
     #region Public Properties
     public static string CurrentLevel => currentLevel;
-    public static bool LevelIsARestart => levelIsARestart;
     #endregion
 
     #region Editor Fields
@@ -18,7 +17,6 @@ public class LevelDataLoader : MonoBehaviour
 
     #region Private Fields
     private static string currentLevel = "";
-    private static bool levelIsARestart = false;
     #endregion
 
     #region Monobehaviour Messages
@@ -44,7 +42,6 @@ public class LevelDataLoader : MonoBehaviour
             GameManager.Instance.HandleExitLevel();
         }
         // Set the current level to the level we are about to load
-        levelIsARestart = (currentLevel == levelToLoad);
         currentLevel = levelToLoad;
         SceneManager.LoadScene("MainLevel"); 
     }

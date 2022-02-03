@@ -88,8 +88,12 @@ public class DialogueManager : MonoBehaviour
         if (ConversationManager.Instance != null && !skipOpeningConversation)
         {
             StartNewConversation();
-            //Allow for conversation skipping if level restart
-            if(LevelDataLoader.LevelIsARestart)
+            currentDialogue.OnConversationEnded(() =>
+            {
+                SaveData.TrySetLatestLevelIntro(LevelID.Current());
+            });
+            //Allow for conversation skipping if intro has already been finished
+            if(SaveData.LatestLevelIntroFinished <= LevelID.Current())
             {
                 ConversationManager.Instance.SetSkipConversationButton(true);
             }
