@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8246632628767254005}
   - component: {fileID: 8246632628767254000}
   - component: {fileID: 8246632628767254003}
+  - component: {fileID: 8661366636558412323}
+  - component: {fileID: 2110190116374853718}
   m_Layer: 5
   m_Name: EncyclopediaImage
   m_TagString: Untagged
@@ -135,3 +137,38 @@ MonoBehaviour:
   previewButton: {fileID: 8246632628767254000}
   previewPrefab: {fileID: 9079924073482992917, guid: bb7efaadf502341498679b0ac9671f5e,
     type: 3}
+--- !u!114 &8661366636558412323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8246632628767254007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &2110190116374853718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8246632628767254007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce9d265cbe9ea44cbd5a4393c11578f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 8246632628767254005}
+  layoutElement: {fileID: 8661366636558412323}
+  rectTransformRef: {fileID: 8246632628767254004}
