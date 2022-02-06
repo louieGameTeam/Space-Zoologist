@@ -8,6 +8,7 @@ public class SaveData
 {
     #region Public Properties
     public static LevelID LatestLevelQualified => Instance.latestLevelQualified;
+    public static LevelID LatestLevelIntroFinished => Instance.latestLevelIntroFinished;
     #endregion
 
     #region Private Properties
@@ -28,6 +29,9 @@ public class SaveData
     [SerializeField]
     [Tooltip("ID of the latest level that the player is qualified to attempt")]
     private LevelID latestLevelQualified = new LevelID(1, 1);
+    [SerializeField]
+    [Tooltip("ID of the latest level that the player has finished the intro for")]
+    private LevelID latestLevelIntroFinished = new LevelID(0, 0);
     [SerializeField]
     [Tooltip("List of completed levels with their ratings")]
     private List<LevelRating> levelRatings = new List<LevelRating>();
@@ -54,6 +58,10 @@ public class SaveData
     public static int GetLevelRating(LevelID level)
     {
         // Find a rating for the given level
+        if(Instance.levelRatings == null)
+        {
+            Instance.levelRatings = new List<LevelRating>();
+        }
         int index = Instance.levelRatings.FindIndex(x => x.ID == level);
 
         // If the level was found then return the rating
@@ -80,6 +88,15 @@ public class SaveData
         }
         // If no rating exists for the current id then add a new rating
         else Instance.levelRatings.Add(new LevelRating(level, rating));
+    }
+
+    public static void TrySetLatestLevelIntro(LevelID id)
+    {
+        //If the latest level Intro finished is less, than update
+        if (Instance.latestLevelIntroFinished < id)
+        {
+            Instance.latestLevelIntroFinished = id;
+        }
     }
     #endregion
 
