@@ -25,6 +25,7 @@ namespace DialogueEditor
         SerializedProperty AdvanceInputProperty;
         SerializedProperty BacklogProperty;
         SerializedProperty ButtonPrefabProperty;
+        SerializedProperty SkipConversationButtonProperty;
 
         private void OnEnable()
         {
@@ -38,6 +39,7 @@ namespace DialogueEditor
             AdvanceInputProperty = serializedObject.FindProperty("AdvanceInput");
             BacklogProperty = serializedObject.FindProperty("BacklogGameObject");
             ButtonPrefabProperty = serializedObject.FindProperty("ButtonPrefab");
+            SkipConversationButtonProperty = serializedObject.FindProperty("SkipConversationButton");
         }
 
         public override void OnInspectorGUI()
@@ -86,6 +88,11 @@ namespace DialogueEditor
             //Button Prefab
             GUILayout.Label("Button Prefab", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(ButtonPrefabProperty);
+
+            //Skip button gameobject
+            EditorGUILayout.Space();
+            GUILayout.Label("Skip Convo Button", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(SkipConversationButtonProperty);
 
             // Apply changes to the serializedProperty - always do this in the end of OnInspectorGUI.
             serializedObject.ApplyModifiedProperties();

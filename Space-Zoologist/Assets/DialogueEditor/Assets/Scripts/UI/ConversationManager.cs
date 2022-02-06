@@ -44,6 +44,7 @@ namespace DialogueEditor
         public bool AllowMouseInteraction;
         public string AdvanceInput = "Submit";
         public RectTransform Background;
+        public GameObject SkipConversationButton;
         // Non-User facing 
         // Not exposed via custom inspector
         //
@@ -410,7 +411,7 @@ namespace DialogueEditor
         public void EndConversation()
         {
             SetState(eState.TransitioningDialogueOff);
-
+            SetSkipConversationButton(false);
             if (OnConversationEnded != null)
                 OnConversationEnded.Invoke();
         }
@@ -766,9 +767,15 @@ namespace DialogueEditor
             pingTarget.onClick.RemoveListener(OneTimeUnpause);
         }
 
+        public void SetSkipConversationButton(bool val)
+        {
+            if(SkipConversationButton.activeSelf != val)
+                SkipConversationButton.SetActive(val);
+        }
+
         /*
          * CUSTOM METHODS
-         */ 
+         */
         private bool Progress()
         {
             // Advance by click only if the mouse button was pressed down and the ui is not blocking the dialogue
