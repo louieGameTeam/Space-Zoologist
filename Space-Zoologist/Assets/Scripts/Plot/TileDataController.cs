@@ -1532,6 +1532,10 @@ public class TileDataController : MonoBehaviour
         return x >= 0 && y >= 0 && x < ReserveWidth && y < ReserveHeight;
     }
 
+    public bool IsCellOnGridEdge (int x, int y) {
+        return x == 0 || y == 0 || x == ReserveWidth || y == ReserveHeight;
+    }
+
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         Vector3Int loc = new Vector3Int((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.z);//Grid.WorldToCell(mousePosition); old implementation that causes stack overflow

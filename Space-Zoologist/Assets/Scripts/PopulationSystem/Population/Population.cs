@@ -86,23 +86,27 @@ public class Population : MonoBehaviour, Life
     }
 
     /// <summary>
-    /// Grabs the updated accessible area, then resets the behavior for all of the animals and counts animals in the enclosure.
+    /// Grabs the updated accessible area, then resets the behavior for all of the animals
     /// </summary>
     /// Could improve by checking what shape the accessible area is in
     public void UpdateAccessibleArea(List<Vector3Int> accessibleLocations, AnimalPathfinding.Grid grid)
     {
         this.AccessibleLocations = accessibleLocations;
         this.Grid = grid;
+    }
 
-        print ("Updated accessible area - recounting enclosed population");
+    public void RecountAnimals () {
         enclosedPopulationCount = AnimalPopulation.Count;
-        foreach (GameObject animal in AnimalPopulation) 
-        {
-            if (!accessibleLocations.Contains(GameManager.Instance.m_gridSystem.WorldToCell (animal.transform.position))) {
+        // Only counts animals that are in an enclosure that is completely enclosed
+        foreach (GameObject animal in AnimalPopulation) {
+            //GameManager.Instance.m_enclosureSystem.UpdateEnclosedAreas (true);
+            //print (GameManager.Instance.m_enclosureSystem.GetEnclosedAreaByCellPosition (new Vector3Int ((int) animal.transform.position.x, (int) animal.transform.position.y, (int) animal.transform.position.z)));
+            if (!GameManager.Instance.m_enclosureSystem.GetEnclosedAreaByCellPosition (new Vector3Int ((int) animal.transform.position.x, (int) animal.transform.position.y, (int) animal.transform.position.z)).isEnclosed) 
+            {
                 enclosedPopulationCount--;
             }
         }
-        print ("Count: " + enclosedPopulationCount);
+        //Debug.Log ("Population Count: " + enclosedPopulationCount);
     }
 
     // Only pauses movements
@@ -152,7 +156,7 @@ public class Population : MonoBehaviour, Life
                 animal.GetComponent<Animal>().Initialize(this, data);
             }
         }
-        this.prePopulationCount = this.AnimalPopulation.Count;
+        this.prePopulationCount = this.Count;
         this.PopulationBehaviorManager.Initialize();
     }
 
@@ -233,7 +237,7 @@ public class Population : MonoBehaviour, Life
                 if (readyForGrowth)
                 {
                     //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
-                    float populationIncreaseAmount = AnimalPopulation.Count * this.GrowthCalculator.populationIncreaseRate;
+                    float populationIncreaseAmount = this.Count * this.GrowthCalculator.populationIncreaseRate;
                     for (int i = 0; i < populationIncreaseAmount; ++i)
                     {
                         this.AddAnimal(this.gameObject.transform.position);
@@ -245,7 +249,7 @@ public class Population : MonoBehaviour, Life
                 if (readyForGrowth)
                 {
                     //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
-                    float populationDecreaseAmount = AnimalPopulation.Count * this.GrowthCalculator.populationIncreaseRate * -1;
+                    float populationDecreaseAmount = this.Count * this.GrowthCalculator.populationIncreaseRate * -1;
                     for (int i = 0; i < populationDecreaseAmount; ++i)
                     {
                         this.RemoveAnimal(this.AnimalPopulation[i]);
@@ -255,6 +259,7 @@ public class Population : MonoBehaviour, Life
             default:
                 break;
         }
+        RecountAnimals ();
         return readyForGrowth;
     }
 
@@ -274,7 +279,7 @@ public class Population : MonoBehaviour, Life
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
-        enclosedPopulationCount++;
+        RecountAnimals ();
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
     }
@@ -282,12 +287,12 @@ public class Population : MonoBehaviour, Life
     // removes last animal in list and last behavior
     public void RemoveAnimal(GameObject animal)
     {
-        if (this.AnimalPopulation.Count == 0)
+        if (this.Count == 0)
         {
             Debug.Log(this.gameObject.name + " population already exitinct");
             return;
         }
-        if (this.AnimalPopulation.Count > 0)
+        if (this.Count > 0)
         {
             Debug.Log("Animal removed");
             this.AnimalsMovementData.Remove(animal.GetComponent<Animal>());
@@ -296,7 +301,8 @@ public class Population : MonoBehaviour, Life
 
             this.PoolingSystem.ReturnObjectToPool(animal);
             this.AnimalPopulation.Remove(animal);
-            if (this.AnimalPopulation.Count == 0)
+            RecountAnimals ();
+            if (this.Count == 0)
             {
                 EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
             }
@@ -308,6 +314,7 @@ public class Population : MonoBehaviour, Life
             if (AccessibleLocations.Contains (GameManager.Instance.m_gridSystem.WorldToCell (animal.transform.position))) {
                 enclosedPopulationCount++;
             }
+            //Debug.Log ("Animal removed; new population count: " + Count);
         }
     }
 
@@ -316,10 +323,11 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     public void RemoveAll()
     {
-        for (int i=this.AnimalPopulation.Count - 1; i>=0; i--)
+        for (int i=this.Count - 1; i>=0; i--)
         {
             this.RemoveAnimal(this.AnimalPopulation[i]);
         }
+        RecountAnimals ();
     }
 
     // Ensure there are enough behavior data scripts mapped to the population size
