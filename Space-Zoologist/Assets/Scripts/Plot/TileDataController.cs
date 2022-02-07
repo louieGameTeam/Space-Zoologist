@@ -199,13 +199,6 @@ public class TileDataController : MonoBehaviour
             // create the liquidbody based on previously parsed tiles
             LiquidBody liquidBody = new LiquidBody(liquidbodyIDToTiles[serializedLiquidBody.BodyID], serializedLiquidBody.Contents, serializedLiquidBody.BodyID);
 
-            // add the liquidbody reference to the tile data
-            foreach (Vector3Int liquidTilePosition in liquidbodyIDToTiles[serializedLiquidBody.BodyID])
-            {
-                TileDataGrid[liquidTilePosition.y, liquidTilePosition.x].currentLiquidBody = liquidBody;
-                TileDataGrid[liquidTilePosition.y, liquidTilePosition.x].contents = liquidBody.contents;
-            }
-
             // add it to the list
             this.liquidBodies.Add(liquidBody);
         }
@@ -765,8 +758,7 @@ public class TileDataController : MonoBehaviour
                     TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
                 }
 
-                if (TileDataGrid[cluster.ConstructionTilePositions[0].y, cluster.ConstructionTilePositions[0].x].previewLiquidBody != null)
-                    ConfirmPlacement();
+                LiquidbodyController.Instance.MergeConstructingTiles();
 
                 if (constructionFinishedCallback != null)
                     constructionFinishedCallback();
@@ -800,48 +792,6 @@ public class TileDataController : MonoBehaviour
     }
     #endregion
 
-    // no idea what this function actually does (naming wrong?)
-    public void ConfirmPlacement()
-    {
-        foreach (Vector3Int tilePosition in this.ChangedTiles)
-        {
-            if (GetTileData(tilePosition) != null)
-                GetTileData(tilePosition).ConfirmReplacement();
-        }
-        foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
-        {
-            foreach (Vector3Int tilePosition in previewLiquidBody.tiles)
-            {
-                GetTileData(tilePosition).ConfirmReplacement();
-            }
-            this.GenerateNewLiquidBodyID(previewLiquidBody);
-            this.liquidBodies.Add(previewLiquidBody);
-        }
-        foreach (Vector3Int tilePosition in this.RemovedTiles)
-        {
-            this.GetTileData(tilePosition).ConfirmReplacement();
-        }
-        this.ClearAll();
-    }
-    // no idea either
-    public void Revert()
-    {
-        foreach (LiquidBody previewLiquidBody in this.previewBodies) // If there is liquid body
-        {
-            this.ChangedTiles.UnionWith(previewLiquidBody.tiles);
-            previewLiquidBody.Clear();
-        }
-        foreach (Vector3Int changedTilePosition in this.ChangedTiles)
-        {
-            TileData tileData = GetTileData(changedTilePosition);
-
-            tileData.Revert();
-            this.ApplyChangeToTilemapTexture(changedTilePosition);
-            if (tileData.currentTile == null)
-                tileData.Clear();
-        }
-        this.ClearAll();
-    }
     // no idea either
     private void ClearAll()
     {
@@ -873,100 +823,6 @@ public class TileDataController : MonoBehaviour
             Tilemap.SetTileFlags(tilePosition, TileFlags.None);
         }
     }
-
-    #region Liquidbody Methods
-    private void UpdatePreviewLiquidBody(LiquidBody liquidBody)
-    {
-        foreach (Vector3Int tileCellPosition in liquidBody.tiles)
-        {
-            GetTileData(tileCellPosition).PreviewLiquidBody(liquidBody);
-        }
-    }
-
-    /// <summary>
-    /// Changes composition of liquidbody at the specified position.
-    /// Note: This only applies to liquid so far
-    /// </summary>
-    /// <param name="tilePosition">Vector of tile position.</param>
-    /// <param name="contents">Contents to be added.</param>
-    public void SetLiquidComposition(Vector3Int tilePosition, float[] contents)
-    {
-        TileData tileData = GetTileData(tilePosition);
-
-        // check if it is even liquid
-        if (tileData.currentTile.type != TileType.Liquid)
-        {
-            Debug.LogError(tilePosition + "Not a liquid tile.");
-            return;
-        }
-
-        if (tileData != null)
-        {
-            contents.CopyTo(tileData.currentLiquidBody.contents, 0);
-
-            EventManager.Instance.InvokeEvent(EventType.LiquidChange, tilePosition);
-            return;
-        }
-
-        Debug.LogError(tilePosition + "Does not have tile present");
-    }
-    /// <summary>
-    /// Returns all liquid tiles belong to the same liquid body at the given location
-    /// </summary>
-    /// <param name="location">Cell location of any liquid tile within the body to change</param>
-    /// <returns></returns>
-    public List<Vector3Int> GetLiquidBodyPositions(Vector3Int location)
-    {
-        List<Vector3Int> liquidBodyTiles = new List<Vector3Int>();
-        GameTile terrainTile = GetGameTileAt(location);
-        liquidBodyTiles.Add(location);
-        GetNeighborLiquidLocations(location, terrainTile, liquidBodyTiles);
-        return liquidBodyTiles;
-    }
-
-    private void GetNeighborLiquidLocations(Vector3Int location, GameTile tile, List<Vector3Int> liquidBodyTiles)
-    {
-        foreach (Vector3Int tileToCheck in FourNeighborTileLocations(location))
-        {
-            if (
-                Tilemap.GetTile(tileToCheck) == tile &&
-                GetTileContentsAt(tileToCheck, tile) != null &&
-                !liquidBodyTiles.Contains(tileToCheck))
-            {
-                liquidBodyTiles.Add(tileToCheck);
-                GetNeighborLiquidLocations(tileToCheck, tile, liquidBodyTiles);
-            }
-            GameTile thisTile = (GameTile)Tilemap.GetTile(tileToCheck);
-            float[] contents = GetTileContentsAt(tileToCheck, tile);
-        }
-    }
-
-    // i don't even know where to begin
-    private void GenerateNewLiquidBodyID(LiquidBody previewLiquidBody)
-    {
-        int newID = 1;
-        while (true)
-        {
-            bool isSame = false;
-            foreach (LiquidBody liquidBody in this.liquidBodies)
-            {
-                if (liquidBody.bodyID == newID)
-                {
-                    isSame = true;
-                }
-            }
-            if (!isSame)
-            {
-                previewLiquidBody.bodyID = newID;
-                break;
-            }
-            newID++;
-        }
-    }
-    #endregion
-
-
-
 
     #region Traversal Methods
     // TODO not performing as expected drawing left to right, also does not repathfind when stuck. 
@@ -1569,7 +1425,10 @@ public class TileDataController : MonoBehaviour
             {
                 if (GetGameTileAt(centerCellLocation) == tile)
                 {
-                    compositionDistancePairs.Add(GetTileContentsAt(centerCellLocation, tile), distance);
+                    if (LiquidbodyController.Instance.GetLiquidContentsAt(centerCellLocation, out float[] liquidContents, out bool constructing))
+                    {
+                        compositionDistancePairs.Add(liquidContents, distance);
+                    }
                 }
                 i++;
                 posX = i;
@@ -1581,10 +1440,12 @@ public class TileDataController : MonoBehaviour
                 {
                     foreach (Vector3Int cellLocation in TileCellLocationsInFour(posX, posY, centerCellLocation, tile))
                     {
-                        float[] contents = GetTileContentsAt(cellLocation, tile);
-                        if (!compositionDistancePairs.Keys.Contains(contents))
+                        if (LiquidbodyController.Instance.GetLiquidContentsAt(centerCellLocation, out float[] liquidContents, out bool constructing))
                         {
-                            compositionDistancePairs.Add(GetTileContentsAt(cellLocation, tile), distance);
+                            if (!compositionDistancePairs.Keys.Contains(liquidContents))
+                            {
+                                compositionDistancePairs.Add(liquidContents, distance);
+                            }
                         }
                     }
                 }
@@ -1598,10 +1459,12 @@ public class TileDataController : MonoBehaviour
                 {
                     foreach (Vector3Int cellLocation in TileCellLocationsInEight(posX, posY, centerCellLocation, tile))
                     {
-                        float[] contents = GetTileContentsAt(cellLocation, tile);
-                        if (!compositionDistancePairs.Keys.Contains(contents))
+                        if (LiquidbodyController.Instance.GetLiquidContentsAt(centerCellLocation, out float[] liquidContents, out bool constructing))
                         {
-                            compositionDistancePairs.Add(GetTileContentsAt(cellLocation, tile), distance);
+                            if (!compositionDistancePairs.Keys.Contains(liquidContents))
+                            {
+                                compositionDistancePairs.Add(liquidContents, distance);
+                            }
                         }
                     }
                 }
@@ -1882,10 +1745,9 @@ public class TileDataController : MonoBehaviour
                 scanLocation.x = x + topRightCorner.x;
                 scanLocation.y = y + topRightCorner.y;
 
-                float[] liquid = this.GetTileContentsAt(scanLocation);
-                if (liquid != null)
+                if (LiquidbodyController.Instance.GetLiquidContentsAt(scanLocation, out float[] liquidContents, out bool constructing))
                 {
-                    liquidCompositions.Add(liquid);
+                    liquidCompositions.Add(liquidContents);
                 }
             }
         }

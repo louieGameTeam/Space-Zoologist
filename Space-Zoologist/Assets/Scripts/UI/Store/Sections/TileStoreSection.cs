@@ -49,17 +49,6 @@ public class TileStoreSection : StoreSection
     }
 
     /// <summary>
-    /// Stop tile placement preview and remove any changes.
-    /// </summary>
-    private void CancelPlacing()
-    {
-        isPlacing = false;
-        tilePlacementController.RevertChanges();
-        // Placing tiles no longer adjusts the balance
-        // GameManager.Instance.SetBalance(startingBalance);
-    }
-
-    /// <summary>
     /// Stop tile placement preview and finalize changes to the grid.
     /// </summary>
     private void FinishPlacing()

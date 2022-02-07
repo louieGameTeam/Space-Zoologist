@@ -20,7 +20,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
             for (int j = -1; j < 2; j++)
             {
                 Vector3Int loopedCell = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);
-                if (TileDataController.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && LiquidbodyController.Instance.getLiquidbodyAt(loopedCell) != null)
+                if (TileDataController.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && LiquidbodyController.Instance.GetLiquidContentsAt(loopedCell, out float[] contents, out bool constructing))
                 {
                     this.AnimatorTriggerName = GetTriggerName(i, j);
                     base.EnterPattern(animal, animalData);

@@ -281,7 +281,8 @@ public class MoveObject : MonoBehaviour
                 if (tileToDelete.name.Equals("liquid"))
                 {
                     tileToDelete.GetComponent<SpriteRenderer>().sprite = LiquidSprite;
-                    initialTileContents = gridSystem.GetTileData(pos).contents;
+                    initialTileContents = new float[] { 0, 0, 0 };
+                    LiquidbodyController.Instance.GetLiquidContentsAt(pos, out initialTileContents, out bool constructing);
                 }
                 else
                 {

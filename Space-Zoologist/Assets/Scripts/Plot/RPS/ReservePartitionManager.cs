@@ -194,7 +194,8 @@ public class ReservePartitionManager : MonoBehaviour
             // Get liquid tile info
             if (tile != null && tile.type == TileType.Liquid)
             {
-                float[] composition = gridSystemReference.GetTileContentsAt(cur, tile);
+                float[] composition = new float[] { 0, 0, 0 };
+                LiquidbodyController.Instance.GetLiquidContentsAt(cur, out composition, out bool constructing);
 
                 if (!this.populationAccessibleLiquidCompositions.ContainsKey(population))
                 {

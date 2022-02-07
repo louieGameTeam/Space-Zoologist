@@ -12,6 +12,7 @@ public class LiquidBody
     public int bodyID;
     public float[] contents;
     private HashSet<Vector3Int> tiles;
+    public int TileCount { get { return tiles.Count; } }
 
     /// <summary>
     /// Creates a new body with a single tile
@@ -85,9 +86,103 @@ public class LiquidBody
             this.contents[i] = (this.contents[i] * (tiles.Count-1) + contents[i]) / (tiles.Count);
     }
 
-    public void RemoveTile(Vector3Int pos)
+    public bool RemoveTile(Vector3Int pos, out List<HashSet<Vector3Int>> dividedBodiesTiles)
     {
+        // check if the tile exists in the liquidbody
+        if (!tiles.Contains(pos))
+        {
+            Debug.LogError("Tile does not exist!");
+            dividedBodiesTiles = null;
+            return false;
+        }
+
+        // remove the tile
         tiles.Remove(pos);
+
+        // check for continuity
+        // find the neighboring liquid tiles
+        // TODO: what if the last tile is removed?
+        List<Vector3Int> neighborTiles = FourNeighborTileLocations(pos);
+
+        switch (neighborTiles.Count)
+        {
+            // no tiles
+            case 0:
+                Debug.Log("No tiles left.");
+                dividedBodiesTiles = null;
+                return false;
+            // end tile
+            case 1:
+                dividedBodiesTiles = null;
+                return false;
+            // more than one connection
+            default:
+                // ewwwwww
+                List<HashSet<Vector3Int>> continuousBodies = new List<HashSet<Vector3Int>>();
+
+                for (int i = 0; i < neighborTiles.Count; ++i)
+                {
+                    // if the neighbor actually is in the liquidbody
+                    if (ContainsTile(neighborTiles[i]))
+                    {
+                        // total list of tiles that is going to be added to
+                        HashSet<Vector3Int> neighborbodyTiles = new HashSet<Vector3Int>();
+                        // queue to explore
+                        Queue<Vector3Int> exploreQueue = new Queue<Vector3Int>();
+                        // add the first tile
+                        neighborbodyTiles.Add(neighborTiles[i]);
+                        exploreQueue.Enqueue(neighborTiles[i]);
+
+                        // should be O(4n), but could be optimized
+                        while (exploreQueue.Count > 0)
+                        {
+                            // find the next neighbors of the queue
+                            List<Vector3Int> fourNeighbors = FourNeighborTileLocations(exploreQueue.Dequeue());
+
+                            // loop through neighbors
+                            for (int neighborIndex = 0; neighborIndex < fourNeighbors.Count; ++neighborIndex)
+                            {
+                                // if the neighbor is in the liquidbody and not already in the tile list
+                                if (ContainsTile(fourNeighbors[neighborIndex]) && !neighborbodyTiles.Contains(fourNeighbors[neighborIndex]))
+                                {
+                                    // add the neighbor
+                                    neighborbodyTiles.Add(fourNeighbors[neighborIndex]);
+                                    exploreQueue.Enqueue(fourNeighbors[neighborIndex]);
+                                }
+                            }
+                        }
+
+                        continuousBodies.Add(neighborbodyTiles);
+                    }
+                }
+
+                // check if the continuous bodies are the same, if so, then they are connected (remove them)
+                for (int i = 0; i < continuousBodies.Count; ++i)
+                {
+                    for (int j = i + 1; j < continuousBodies.Count; ++j)
+                    {
+                        if (continuousBodies[i].SetEquals(continuousBodies[j]))
+                        {
+                            continuousBodies.Remove(continuousBodies[j]);
+                            j--;
+                        }
+                    }
+                }
+
+                // the whole thing is still continuous
+                if (continuousBodies.Count <= 1)
+                {
+                    Debug.Log("Liquid removal from liquidbody successful.");
+                    dividedBodiesTiles = null;
+                    return false;
+                }
+                // split between two or more bodies
+                else
+                {
+                    dividedBodiesTiles = continuousBodies;
+                    return true;
+                }
+        }
     }
 
     public bool ContainsTile(Vector3Int pos)
@@ -112,6 +207,7 @@ public class LiquidBody
     public void Clear()
     {
         tiles.Clear();
+        contents = new float[] { 0, 0, 0 };
     }
 
     public SerializedLiquidBody Serialize()

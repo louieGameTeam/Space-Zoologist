@@ -35,7 +35,7 @@ public class LiquidNeedSystem : NeedSystem
         }
 
         //Go through each body of water in the level and divide it between all populations that can access it
-        foreach(LiquidBody liquidBody in m_gridsystemReference.liquidBodies)
+        foreach(LiquidBody liquidBody in LiquidbodyController.Instance.liquidBodies)
         {
             HashSet<Population> accessiblePopulations = new HashSet<Population>();
             foreach(Population population in Consumers.OfType<Population>())
@@ -57,7 +57,7 @@ public class LiquidNeedSystem : NeedSystem
                     bool populationCanAccess = false;
                     foreach(Vector3Int location in GameManager.Instance.m_reservePartitionManager.GetLiquidLocations(population)) //check if any of the liquidbody's tiles are accessible to this population
                     {
-                        if(liquidBody.tiles.Contains(location))
+                        if(liquidBody.ContainsTile(location))
                         {
                             populationCanAccess = true;
                             break;
@@ -70,7 +70,7 @@ public class LiquidNeedSystem : NeedSystem
             }
 
             //split this water source equally between all populations that have access to it, regardless of that population's size
-            float waterSplit = liquidBody.tiles.Count / (float)accessiblePopulations.Count;
+            float waterSplit = liquidBody.TileCount / (float)accessiblePopulations.Count;
             foreach(Population population in accessiblePopulations)
             {
                 liquidTilesPerPopulation[population] += waterSplit;
@@ -103,11 +103,11 @@ public class LiquidNeedSystem : NeedSystem
                     foreach (LiquidBody liquidBody in liquidBodiesPerPopulation[population])
                     {
                         //Weight each composition based on the number of tiles in the liquidbody
-                        liquidCompositionToUpdate[0] += liquidBody.contents[0] * liquidBody.tiles.Count;
-                        liquidCompositionToUpdate[1] += liquidBody.contents[1] * liquidBody.tiles.Count;
-                        liquidCompositionToUpdate[2] += liquidBody.contents[2] * liquidBody.tiles.Count;
+                        liquidCompositionToUpdate[0] += liquidBody.contents[0] * liquidBody.TileCount;
+                        liquidCompositionToUpdate[1] += liquidBody.contents[1] * liquidBody.TileCount;
+                        liquidCompositionToUpdate[2] += liquidBody.contents[2] * liquidBody.TileCount;
 
-                        totalTiles += liquidBody.tiles.Count;
+                        totalTiles += liquidBody.TileCount;
                     }
 
                     for(int i = 0; i <= 2; ++i)

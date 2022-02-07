@@ -11,7 +11,6 @@ public class LiquidModificationHUD : MonoBehaviour
     private TileDataController GridSystem;
     private bool isOpened = false;
     private Vector3 worldPos;
-    private LiquidBody liquidBody;
     void Start()
     {
         this.GridSystem = GameManager.Instance.m_tileDataController;
@@ -21,27 +20,21 @@ public class LiquidModificationHUD : MonoBehaviour
     {
         if (this.isOpened)
         {
+            float[] newContents = new float[] { 0, 0, 0 };
+
             for (int i = 0; i < Values.Count; i++)
             {
-                Debug.Log("start of text: " + Values[i].text[0]);
                 if (Values[i].text[0].Equals("."))
                 {
-                    Debug.Log("Inserted 0");
                     Values[i].text.Insert(0, "0");
                 }
-                Debug.Log("Attempting to parse: " + Values[i].text);
                 float output = 0;
                 float.TryParse(Values[i].text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture.NumberFormat, out output);
                 Debug.Log("Parsed: " + output);
-                liquidBody.contents[i] = output;
-                
+                newContents[i] = output;
             }
 
-        }
-        if (liquidBody != null)
-        {
-            Debug.Log("Updated values");
-            this.GridSystem.SetLiquidComposition(this.GridSystem.WorldToCell(this.worldPos), liquidBody.contents);
+            LiquidbodyController.Instance.SetLiquidContentsAt(GridSystem.WorldToCell(worldPos), newContents);
         }
     }
     void Update()
@@ -51,17 +44,13 @@ public class LiquidModificationHUD : MonoBehaviour
             liquidModificationHUD.SetActive(true);
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPosition = this.GridSystem.WorldToCell(mousePos);
-            LiquidBody liquid = this.GridSystem.GetTileData(cellPosition) != null ? this.GridSystem.GetTileData(cellPosition).currentLiquidBody : null;
-            if (liquid != null)
+            if (LiquidbodyController.Instance.GetLiquidContentsAt(cellPosition, out float[] contents, out bool constructing))
             {
                 this.worldPos = new Vector3(mousePos.x, mousePos.y, mousePos.z);
                 this.isOpened = true;
-                this.liquidBody = liquid;
                 for (int i = 0; i < Values.Count; i++)
                 {
-                    Values[i].text = "";
-                    Values[i].text = liquidBody.contents[i].ToString();
-                    
+                    Values[i].text = contents.ToString();
                 }
             }
             else //If not clicked on a liquid tile, close HUD

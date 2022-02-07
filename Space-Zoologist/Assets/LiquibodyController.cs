@@ -17,7 +17,7 @@ public class LiquidbodyController : MonoBehaviour
     }
     #endregion
 
-    private List<LiquidBody> liquidBodies;
+    public List<LiquidBody> liquidBodies { get; private set; }
     private Dictionary<Vector3Int, float[]> constructingTileContentDict;
 
     void Awake()
@@ -32,7 +32,7 @@ public class LiquidbodyController : MonoBehaviour
         // if tile already exists in the system
         // functionality may need to change in the near future
         // TODO: check with Ana for this functionality
-        if (CheckTileAlreadyExists(pos))
+        if (CheckLiquidTileAlreadyExistsAt(pos))
         {
             Debug.LogError("Tile already exists!");
             return false;
@@ -84,6 +84,15 @@ public class LiquidbodyController : MonoBehaviour
         return false;
     }
 
+    public void SetLiquidContentsAt(Vector3Int pos, float[] contents)
+    {
+        foreach (LiquidBody l in liquidBodies)
+        {
+            if (l.ContainsTile(pos))
+                l.contents = contents;
+        }
+    }
+
     // TODO: hook this up to the next day
     public void MergeConstructingTiles()
     {
@@ -92,6 +101,63 @@ public class LiquidbodyController : MonoBehaviour
         {
             MergeTile(entry.Key, entry.Value);
         }
+    }
+
+    public bool RemoveLiquidContentsAt(Vector3Int pos)
+    {
+        // check if the liquid actually exists
+        if (!CheckLiquidTileAlreadyExistsAt(pos))
+        {
+            Debug.LogError("Liquid does not exist at " + pos);
+            return false;
+        }
+
+        // set up liquidbodies just in case
+        // this works because there should be no tile in two different liquidbodies
+        List<HashSet<Vector3Int>> dividedBodiesTiles = new List<HashSet<Vector3Int>>();
+        bool hasDivisions = false;
+        LiquidBody originalLiquidbody = new LiquidBody(null);
+
+        // find the liquidbody with the tile and remove the tile
+        foreach (LiquidBody l in liquidBodies)
+        {
+            if (l.ContainsTile(pos))
+            {
+                originalLiquidbody = l;
+                hasDivisions = l.RemoveTile(pos, out dividedBodiesTiles);
+            }
+        }
+
+        // if there are divisions when removing the tile
+        if (hasDivisions)
+        {
+            // create and add each new liquidbody resulting from the divide
+            for (int i = 0; i < dividedBodiesTiles.Count; ++i)
+            {
+                LiquidBody newLiquidBody = new LiquidBody(dividedBodiesTiles[i], originalLiquidbody.contents, GenerateBodyID());
+                liquidBodies.Add(newLiquidBody);
+            }
+
+            liquidBodies.Remove(originalLiquidbody);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Gets the liquidbody id, returns -1 if there is none found
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public int GetBodyID(Vector3Int pos)
+    {
+        foreach (LiquidBody l in liquidBodies)
+        {
+            if (l.ContainsTile(pos))
+                return l.bodyID;
+        }
+
+        return -1;
     }
 
 
@@ -153,7 +219,7 @@ public class LiquidbodyController : MonoBehaviour
         return true;
     }
 
-    private bool CheckTileAlreadyExists(Vector3Int pos)
+    private bool CheckLiquidTileAlreadyExistsAt(Vector3Int pos)
     {
         // check within liquidbodies
         foreach (LiquidBody l in liquidBodies)
@@ -171,7 +237,7 @@ public class LiquidbodyController : MonoBehaviour
 
     private int GenerateBodyID()
     {
-        int newID = 0;
+        int newID = 1;
         bool idExists = false;
 
         while (!idExists)
@@ -196,5 +262,7 @@ public class LiquidbodyController : MonoBehaviour
 
         return newID;
     }
+
+    
     #endregion
 }

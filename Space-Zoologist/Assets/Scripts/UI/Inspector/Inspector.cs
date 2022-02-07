@@ -219,8 +219,8 @@ public class Inspector : MonoBehaviour
     private void DisplayLiquidText(Vector3Int cellPos)
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        TileData td = GameManager.Instance.m_tileDataController.GetTileData(cellPos);
-        float[] compositions = td.contents;
+        float[] compositions = new float[] { 0, 0, 0 };
+        LiquidbodyController.Instance.GetLiquidContentsAt(cellPos, out compositions, out bool constructing);
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
 
