@@ -81,7 +81,7 @@ public class EnclosedArea
 
             // TODO: If an enclosure is not contained entirely within walls (IE if any tile touches an empty space), then set this.isEnclosed to false
             // NOTE: This code works, but will fail if the level is not entirely surrounded by walls and is not square-shaped
-            if (tileType != (int)TileType.Wall && GameManager.Instance.m_gridSystem.IsCellOnGridEdge (coordinate.x, coordinate.y)) 
+            if (tileType != (int)TileType.Wall && GameManager.Instance.m_tileDataController.IsCellOnGridEdge (coordinate.x, coordinate.y)) 
             {
                 isEnclosed = false;
             }

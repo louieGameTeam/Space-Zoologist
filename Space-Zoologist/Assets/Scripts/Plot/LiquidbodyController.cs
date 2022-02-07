@@ -150,6 +150,11 @@ public class LiquidbodyController : MonoBehaviour
         return true;
     }
 
+    public void RemoveConstructingLiquidContent(Vector3Int pos)
+    {
+        constructingTileContentDict.Remove(pos);
+    }
+
     /// <summary>
     /// Gets the liquidbody id, returns -1 if there is none found
     /// </summary>

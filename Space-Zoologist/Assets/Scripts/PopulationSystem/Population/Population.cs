@@ -311,7 +311,7 @@ public class Population : MonoBehaviour, Life
                 // Invoke a population decline event
                 EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
             }
-            if (AccessibleLocations.Contains (GameManager.Instance.m_gridSystem.WorldToCell (animal.transform.position))) {
+            if (AccessibleLocations.Contains (GameManager.Instance.m_tileDataController.WorldToCell (animal.transform.position))) {
                 enclosedPopulationCount++;
             }
             //Debug.Log ("Animal removed; new population count: " + Count);

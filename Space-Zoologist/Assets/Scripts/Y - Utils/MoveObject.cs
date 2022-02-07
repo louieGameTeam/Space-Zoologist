@@ -329,11 +329,7 @@ public class MoveObject : MonoBehaviour
             case ItemType.TILE:
                 if (initialTile.type == TileType.Liquid)
                 {
-                    // do something here
-                    
-                    // check if it splits
-                    // if it splits, create the two other liquidbodies
-                    // set the 
+                    LiquidbodyController.Instance.RemoveConstructingLiquidContent(gridSystem.WorldToCell(objectToMove.transform.position));
                 }
 
 

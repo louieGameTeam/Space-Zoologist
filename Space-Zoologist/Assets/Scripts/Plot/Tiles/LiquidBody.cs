@@ -52,6 +52,7 @@ public class LiquidBody
     public LiquidBody(List<LiquidBody> liquidbodies, int bodyID = 0)
     {
         this.bodyID = bodyID;
+        tiles = new HashSet<Vector3Int>();
 
         // use union to join all of the liquidbodies together
         foreach (LiquidBody l in liquidbodies)
