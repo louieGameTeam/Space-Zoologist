@@ -61,7 +61,7 @@ public class Inspector : MonoBehaviour
     public void OpenInspector()
     {
         this.inspectorWindow.SetActive(true);
-        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
+        GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
         this.IsInInspectorMode = true;
@@ -100,11 +100,11 @@ public class Inspector : MonoBehaviour
     public void UpdateInspectorValues()
     {
         // Update animal location reference
-        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
+        GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = GameManager.Instance.m_gridSystem.WorldToCell(worldPos);
-        GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(pos);
-        TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(pos);
+        Vector3Int pos = GameManager.Instance.m_tileDataController.WorldToCell(worldPos);
+        GameTile tile = GameManager.Instance.m_tileDataController.GetGameTileAt(pos);
+        TileData cellData = GameManager.Instance.m_tileDataController.GetTileData(pos);
 
         if (cellData == null) { 
             return;
@@ -149,7 +149,7 @@ public class Inspector : MonoBehaviour
 
     public void UpdateCurrentDisplay()
     {
-        TileData cellData = GameManager.Instance.m_gridSystem.GetTileData(selectedPosition);
+        TileData cellData = GameManager.Instance.m_tileDataController.GetTileData(selectedPosition);
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
@@ -203,7 +203,7 @@ public class Inspector : MonoBehaviour
         {
             for (int y = -(foodSize.x - 1) / 2; y <= foodSize.y / 2; y++)
             {
-                GameManager.Instance.m_gridSystem.HighlightRadius(foodPositionInt + new Vector3Int(x, y, 0), Color.blue, rootRadius);
+                GameManager.Instance.m_tileDataController.HighlightRadius(foodPositionInt + new Vector3Int(x, y, 0), Color.blue, rootRadius);
             }
         }
 
@@ -219,7 +219,7 @@ public class Inspector : MonoBehaviour
     private void DisplayLiquidText(Vector3Int cellPos)
     {
         //Debug.Log($"Selected liquid tile @ {cellPos}");
-        TileData td = GameManager.Instance.m_gridSystem.GetTileData(cellPos);
+        TileData td = GameManager.Instance.m_tileDataController.GetTileData(cellPos);
         float[] compositions = td.contents;
         this.inspectorWindowDisplayScript.DisplayLiquidCompisition(compositions);
     }
@@ -242,7 +242,7 @@ public class Inspector : MonoBehaviour
             this.lastPopulationSelected = null;
         }
 
-        GameManager.Instance.m_gridSystem.ClearHighlights();
+        GameManager.Instance.m_tileDataController.ClearHighlights();
     }
 
     private void HighlightPopulation(GameObject population)
@@ -258,7 +258,7 @@ public class Inspector : MonoBehaviour
         List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.AccessibleArea[populationScript];
 
         foreach (Vector3Int tilePosition in accessibleTiles)
-            GameManager.Instance.m_gridSystem.HighlightTile(tilePosition, Color.green);
+            GameManager.Instance.m_tileDataController.HighlightTile(tilePosition, Color.green);
 
         this.lastPopulationSelected = population;
     }
@@ -279,10 +279,10 @@ public class Inspector : MonoBehaviour
     public void GetGameTileAndTileData(out GameTile gameTile, out TileData tileData)
     {
         // Update animal location reference
-        GameManager.Instance.m_gridSystem.UpdateAnimalCellGrid();
+        GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = GameManager.Instance.m_gridSystem.WorldToCell(worldPos);
-        gameTile = GameManager.Instance.m_gridSystem.GetGameTileAt(pos);
-        tileData = GameManager.Instance.m_gridSystem.GetTileData(pos);
+        Vector3Int pos = GameManager.Instance.m_tileDataController.WorldToCell(worldPos);
+        gameTile = GameManager.Instance.m_tileDataController.GetGameTileAt(pos);
+        tileData = GameManager.Instance.m_tileDataController.GetTileData(pos);
     }
 }

@@ -44,7 +44,7 @@ public class MoveObject : MonoBehaviour
 
     private void Start()
     {
-        gridSystem = GameManager.Instance.m_gridSystem;
+        gridSystem = GameManager.Instance.m_tileDataController;
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
         foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
             // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
@@ -326,6 +326,16 @@ public class MoveObject : MonoBehaviour
 	            //FoodSourceStoreSection.AddItemQuantity(foodItem);
                 break;
             case ItemType.TILE:
+                if (initialTile.type == TileType.Liquid)
+                {
+                    // do something here
+                    
+                    // check if it splits
+                    // if it splits, create the two other liquidbodies
+                    // set the 
+                }
+
+
                 GameManager.Instance.AddToBalance(sellBackCost);
                 TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
@@ -471,7 +481,7 @@ public class MoveObject : MonoBehaviour
         if(buildProgress < this.GetStoreItem(species).buildTime) //If the food source has yet to fully construct, add a build buffer
         {
             foodSource.isUnderConstruction = true;
-            GameManager.Instance.m_gridSystem.ConstructionFinishedCallback(() =>
+            GameManager.Instance.m_tileDataController.ConstructionFinishedCallback(() =>
             {
                 foodSource.isUnderConstruction = false;
             });

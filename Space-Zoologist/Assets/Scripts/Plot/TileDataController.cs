@@ -310,7 +310,10 @@ public class TileDataController : MonoBehaviour
             if (IsWithinGridBounds(tilePosition))
             {
                 if (tile.type == TileType.Liquid)
-                    tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                {
+                    // TODO: liquid implementation
+                    //tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                }
                 if (tile.type != TileType.Wall)
                     TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
                 tileData.PreviewReplacement(tile);
@@ -369,8 +372,10 @@ public class TileDataController : MonoBehaviour
                 renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
                 Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTexDim", new Vector2(ReserveWidth, ReserveHeight));
 
+                // TODO: Liquid update
                 if (tile.type == TileType.Liquid)
-                    tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                    // tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                    LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents, false);
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
                 ApplyChangeToTilemapTexture(tilePosition);
@@ -382,8 +387,10 @@ public class TileDataController : MonoBehaviour
             {
                 if (tile.type == TileType.Liquid)
                 {
-                    tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
-                    tileData.contents = tile.defaultContents;
+                    // TODO: Liquid Update
+                    // tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                    // tileData.contents = tile.defaultContents;
+                    LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents);
                 }
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
@@ -403,7 +410,10 @@ public class TileDataController : MonoBehaviour
 
             tileData.isTilePlaceable = false;
             if (tileData.currentTile.type == TileType.Liquid)
-                DivideLiquidBody(tilePosition);
+            {
+                // TODO: LIquid update
+                //DivideLiquidBody(tilePosition);
+            }
             tileData.PreviewReplacement(null);
             ChangedTiles.Add(tilePosition);
             ApplyChangeToTilemapTexture(tilePosition);
@@ -433,23 +443,6 @@ public class TileDataController : MonoBehaviour
     public bool TileExistsAtLocation(Vector3Int cellLocation, GameTile tile)
     {
         return Tilemap.GetTile(cellLocation) == tile;
-    }
-
-    /// <summary>
-    /// Returns contents within a tile, e.g. Liquid Composition. If tile has no content, returns null.
-    /// </summary>
-    /// <param name="cellPosition"> Position of the cell. </param>
-    /// <returns></returns>
-    public float[] GetTileContentsAt(Vector3Int cellPosition, GameTile tile = null)
-    {
-        tile = tile == null ? GetGameTileAt(cellPosition) : tile;
-        if (tile != null)
-        {
-            LiquidBody liquid = GetTileData(cellPosition).currentLiquidBody;
-            if(liquid != null)
-                return liquid.contents;
-        }
-        return null;
     }
 
     public void AddFoodReferenceToTile(Vector3Int gridPosition, Vector2Int size, GameObject foodSource)
@@ -821,8 +814,6 @@ public class TileDataController : MonoBehaviour
             {
                 GetTileData(tilePosition).ConfirmReplacement();
             }
-            this.liquidBodies.ExceptWith(previewLiquidBody.referencedBodies);
-            previewLiquidBody.ClearReferencedBodies();
             this.GenerateNewLiquidBodyID(previewLiquidBody);
             this.liquidBodies.Add(previewLiquidBody);
         }
@@ -914,7 +905,6 @@ public class TileDataController : MonoBehaviour
             contents.CopyTo(tileData.currentLiquidBody.contents, 0);
 
             EventManager.Instance.InvokeEvent(EventType.LiquidChange, tilePosition);
-            // TODO Update color
             return;
         }
 
@@ -973,177 +963,10 @@ public class TileDataController : MonoBehaviour
             newID++;
         }
     }
-
-    /// <summary>
-    /// Merge Current Tile to existing liquid bodies
-    /// </summary>
-    /// <param name="tilePosition">Vector position of tile.</param>
-    /// <param name="tile">Tile to be checked.</param>
-    /// <returns>New liquid body created.</returns>
-    private LiquidBody MergeLiquidBodies(Vector3Int tilePosition, GameTile tile)
-    {
-        HashSet<LiquidBody> neighborLiquidBodies = new HashSet<LiquidBody>();
-        // look through neighbor tiles and count their liquid bodies
-        foreach (Vector3Int neighborPosition in FourNeighborTileLocations(tilePosition))
-        {
-            TileData neighborTileData = GetTileData(neighborPosition);
-
-            if (neighborTileData != null)
-            {
-                if (neighborTileData.currentTile == tile)
-                {
-                    if (neighborTileData.previewLiquidBody != null)
-                    {
-                        neighborLiquidBodies.Add(neighborTileData.previewLiquidBody);
-                    }
-                    else
-                    {
-                        neighborLiquidBodies.Add(neighborTileData.currentLiquidBody);
-                    }
-                }
-            }
-        }
-        switch (neighborLiquidBodies.Count)
-        {
-            case 0: // Create new body
-                HashSet<Vector3Int> newBodyTiles = new HashSet<Vector3Int>();
-                newBodyTiles.Add(tilePosition);
-                LiquidBody newBody = new LiquidBody(newBodyTiles, tile.defaultContents);
-                this.previewBodies.Add(newBody);
-                return newBody;
-
-            case 1: // Extend the new one drawn, or extend existing body
-                List<LiquidBody> liquidBodyL = neighborLiquidBodies.ToList();
-                if (liquidBodyL[0].bodyID == 0) // Preview Liquid Body, newly placed tile
-                {
-                    liquidBodyL[0].AddTile(tilePosition, tile.defaultContents);
-                    return liquidBodyL[0];
-                }
-                LiquidBody extendedBody = new LiquidBody(liquidBodyL[0], tilePosition, tile.defaultContents);
-                foreach (Vector3Int position in extendedBody.tiles)
-                {
-                    this.GetTileData(position).PreviewLiquidBody(extendedBody);
-                }
-                this.previewBodies.Add(extendedBody);
-                return extendedBody;
-
-            default: // Merge Multiple bodies, including new bodies generated by the placement
-                LiquidBody mergedBody = new LiquidBody(neighborLiquidBodies);
-                mergedBody.AddTile(tilePosition, tile.defaultContents);
-                this.previewBodies.Add(mergedBody);
-                foreach (LiquidBody liquidBody in mergedBody.referencedBodies)
-                {
-                    if (liquidBody.bodyID == 0)
-                    {
-                        previewBodies.Remove(liquidBody);
-                    }
-                }
-                UpdatePreviewLiquidBody(mergedBody);
-                return mergedBody;
-        }
-    }
-
-    /// <summary>
-    /// Divide existing liquid bodies
-    /// </summary>
-    /// <param name="tilePosition">Vector position of tile.</param>
-    private void DivideLiquidBody(Vector3Int tilePosition)
-    {
-        HashSet<Vector3Int> remainingTiles = new HashSet<Vector3Int>();
-        remainingTiles.UnionWith(GetTileData(tilePosition).currentLiquidBody.tiles);
-        remainingTiles.ExceptWith(RemovedTiles);
-        List<Vector3Int> neighborTiles = new List<Vector3Int>();
-        foreach (Vector3Int neighborTile in FourNeighborTileLocations(tilePosition)) //Filter available liquid tiles
-        {
-            if (remainingTiles.Contains(neighborTile))
-            {
-                neighborTiles.Add(neighborTile);
-            }
-        }
-        if (neighborTiles.Count <= 1) // No tile or only one tile. don't try anything
-        {
-            return;
-        }
-        bool isContinueous = true;
-        CellStatus[,] historyArray = InitializeHistoryArray(tilePosition, remainingTiles); //Create a matrix as large as meaningful iterations can go, centered at the given position. 
-        historyArray[quickCheckIterations / 2, quickCheckIterations / 2] = CellStatus.Other; //Make sure the origin is other. 
-        List<Vector3Int> startingTiles = new List<Vector3Int>(neighborTiles); //Copy the list to use later
-        while (neighborTiles.Count > 1)
-        {
-            if (QuickContinuityTest(tilePosition, neighborTiles[0], neighborTiles[1], historyArray))
-            {
-                neighborTiles.RemoveAt(0);
-                ResetHistoryArray(historyArray);
-                continue;
-            }
-            isContinueous = false;
-            break;
-        }
-        Debug.Log("Quick continuity check result: " + isContinueous);
-        if (!isContinueous) //perform complicated check and generate new bodies if necessary
-        {
-            List<LiquidBody> newBodies = GenerateDividedBodies(GetTileData(tilePosition).currentLiquidBody, tilePosition, startingTiles, remainingTiles);
-            if (newBodies != null)
-            {
-                previewBodies.AddRange(newBodies);
-                foreach (LiquidBody liquidBody in newBodies) // Remove Referenced Preview Body
-                {
-                    liquidBody.RemoveNestedReference();
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Creates list of divided liquid bodies.
-    /// </summary>
-    /// <param name="dividedBody">Liquid body to be divided.</param>
-    /// <param name="dividePoint">Point of initial division.</param>
-    /// <param name="startingTiles">Tiles of the initial liquid body.</param>
-    /// <param name="remainingTiles">Leftover tiles after division.</param>
-    /// <returns></returns>
-    private List<LiquidBody> GenerateDividedBodies(LiquidBody dividedBody, Vector3Int dividePoint, List<Vector3Int> startingTiles, HashSet<Vector3Int> remainingTiles)
-    {
-        List<LiquidBody> newBodies = new List<LiquidBody>();
-        foreach (Vector3Int tile in startingTiles)
-        {
-            bool skip = false;
-            foreach (LiquidBody liquidBody in newBodies) //If a prior body generation included this tile, then skip generation using this tile
-            {
-                if (liquidBody.tiles.Contains(tile))
-                {
-                    skip = true;
-                    Debug.Log(tile.ToString() + "skipped");
-                    break;
-                }
-            }
-            if (!skip)
-            {
-                newBodies.Add(new LiquidBody(dividedBody, remainingTiles, dividePoint, tile));
-
-                Debug.Log("Generated divided body at" + tile.ToString() + "divide point: " + dividePoint.ToString());
-            }
-            if (remainingTiles.Count == 0)
-            {
-                Debug.Log("Tile depleted");
-                break;
-            }
-        }
-        if (newBodies.Count == 1) //They still belong to the same body, do not add new body
-        {
-            Debug.Log("Still same body");
-            return null;
-        }
-        foreach (LiquidBody body in newBodies)
-        {
-            foreach (Vector3Int tilePosition in body.tiles)
-            {
-                this.GetTileData(tilePosition).PreviewLiquidBody(body);
-            }
-        }
-        return newBodies;
-    }
     #endregion
+
+
+
 
     #region Traversal Methods
     // TODO not performing as expected drawing left to right, also does not repathfind when stuck. 
@@ -2161,21 +1984,6 @@ public class TileDataController : MonoBehaviour
         }
         results.AddRange(TileCellLocationsInFour(distanceX, distanceY, subjectCellLocation, tile));
         return results;
-    }
-
-    /// <summary>
-    /// Returns four cell locations next to the given cell location
-    /// </summary>
-    /// <param name="cellLocation"></param>
-    /// <returns></returns>
-    public static List<Vector3Int> FourNeighborTileLocations(Vector3Int cellLocation)
-    {
-        List<Vector3Int> fourNeighborTiles = new List<Vector3Int>();
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x - 1, cellLocation.y, cellLocation.z));
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x + 1, cellLocation.y, cellLocation.z));
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y - 1, cellLocation.z));
-        fourNeighborTiles.Add(new Vector3Int(cellLocation.x, cellLocation.y + 1, cellLocation.z));
-        return fourNeighborTiles;
     }
     #endregion
 

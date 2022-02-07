@@ -36,7 +36,7 @@ public class SellingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gridSystem = GameManager.Instance.m_gridSystem;
+        gridSystem = GameManager.Instance.m_tileDataController;
         Inspector = GameManager.Instance.m_inspector;
 
         IsSelling = false;

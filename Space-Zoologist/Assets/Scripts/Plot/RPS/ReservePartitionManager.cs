@@ -49,7 +49,7 @@ public class ReservePartitionManager : MonoBehaviour
     public void Initialize()
     {
         // Variable initializations
-        gridSystem = GameManager.Instance.m_gridSystem;
+        gridSystem = GameManager.Instance.m_tileDataController;
 
         // long mask is limited to 64 bits
 
@@ -162,7 +162,7 @@ public class ReservePartitionManager : MonoBehaviour
 
         // Number of shared tiles
         long[] SharedTiles = new long[maxPopulation];
-        TileDataController gridSystemReference = GameManager.Instance.m_gridSystem;
+        TileDataController gridSystemReference = GameManager.Instance.m_tileDataController;
 
         // starting location
         Vector3Int location = gridSystemReference.WorldToCell(population.transform.position);
@@ -343,13 +343,12 @@ public class ReservePartitionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TODO Considering to remove this function and use RPM with cell position only
     /// Check if a population can access toWorldPos.
     /// </summary>
     public bool CanAccess(Population population, Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int mapPos = GameManager.Instance.m_gridSystem.WorldToCell(toWorldPos);
+        Vector3Int mapPos = GameManager.Instance.m_tileDataController.WorldToCell(toWorldPos);
         return CanAccess(population, mapPos);
     }
 
@@ -424,7 +423,7 @@ public class ReservePartitionManager : MonoBehaviour
     public List<Population> GetPopulationsWithAccessTo(Vector3 toWorldPos)
     {
         // convert to map position
-        Vector3Int cellPos = GameManager.Instance.m_gridSystem.WorldToCell(toWorldPos);
+        Vector3Int cellPos = GameManager.Instance.m_tileDataController.WorldToCell(toWorldPos);
 
         List<Population> accessible = new List<Population>();
         foreach (Population population in Populations)

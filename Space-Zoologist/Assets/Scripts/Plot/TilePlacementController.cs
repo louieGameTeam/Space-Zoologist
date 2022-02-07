@@ -25,7 +25,7 @@ public class TilePlacementController : MonoBehaviour
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     public void Initialize()
     {
-        gridSystemReference = GameManager.Instance.m_gridSystem;
+        gridSystemReference = GameManager.Instance.m_tileDataController;
     }
 
     private void Update()
@@ -86,8 +86,8 @@ public class TilePlacementController : MonoBehaviour
         //GameManager.Instance.m_gridSystem.ConfirmPlacement();
 
         // Set terrain modified flag
-        GameManager.Instance.m_gridSystem.HasTerrainChanged = true;
-        GameManager.Instance.m_gridSystem.ChangedTiles.UnionWith(addedTiles);
+        GameManager.Instance.m_tileDataController.HasTerrainChanged = true;
+        GameManager.Instance.m_tileDataController.ChangedTiles.UnionWith(addedTiles);
 
         // Clear all dics
         this.referencedTiles.Clear();

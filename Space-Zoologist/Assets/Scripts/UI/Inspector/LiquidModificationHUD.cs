@@ -14,7 +14,7 @@ public class LiquidModificationHUD : MonoBehaviour
     private LiquidBody liquidBody;
     void Start()
     {
-        this.GridSystem = GameManager.Instance.m_gridSystem;
+        this.GridSystem = GameManager.Instance.m_tileDataController;
         liquidModificationHUD.SetActive(false);
     }
     public void ParseValues()
