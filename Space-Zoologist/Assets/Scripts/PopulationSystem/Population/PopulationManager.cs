@@ -128,7 +128,7 @@ public class PopulationManager : MonoBehaviour
     {
         GameManager.Instance.m_reservePartitionManager.AddPopulation(population);
         population.UpdateAccessibleArea(GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population),
-        GameManager.Instance.m_gridSystem.GetGridWithAccess(population));
+        GameManager.Instance.m_tileDataController.GetGridWithAccess(population));
         GameManager.Instance.RegisterWithNeedSystems(population);
         this.BehaviorPatternUpdater.RegisterPopulation(population);
     }
@@ -193,7 +193,7 @@ public class PopulationManager : MonoBehaviour
         for (int i = population.AnimalPopulation.Count - 1; i >= 0; i--)
         {
             GameObject animal = population.AnimalPopulation[i];
-            Vector3Int animalLocation = GameManager.Instance.m_gridSystem.WorldToCell(animal.transform.position);
+            Vector3Int animalLocation = GameManager.Instance.m_tileDataController.WorldToCell(animal.transform.position);
             if (!accessibleLocations.Contains(animalLocation))
             {
                 Debug.Log("Creating new population");
@@ -207,7 +207,7 @@ public class PopulationManager : MonoBehaviour
         }
         else
         {
-            AnimalPathfinding.Grid grid = GameManager.Instance.m_gridSystem.GetGridWithAccess(population);
+            AnimalPathfinding.Grid grid = GameManager.Instance.m_tileDataController.GetGridWithAccess(population);
             population.UpdateAccessibleArea(accessibleLocations, grid);
         }
     }

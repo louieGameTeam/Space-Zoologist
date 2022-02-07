@@ -35,7 +35,7 @@ public class EnclosureSystem : MonoBehaviour
 
     private void Start()
     {
-        startPos = GameManager.Instance.m_gridSystem.startTile;
+        startPos = GameManager.Instance.m_tileDataController.startTile;
 
         if (startingPositions.Count == 0)
         {
@@ -81,7 +81,7 @@ public class EnclosureSystem : MonoBehaviour
 
     public EnclosedArea GetEnclosedAreaByCellPosition(Vector3Int cellPos)
     {
-        Vector3Int position = GameManager.Instance.m_gridSystem.WorldToCell(cellPos);
+        Vector3Int position = GameManager.Instance.m_tileDataController.WorldToCell(cellPos);
 
         return this.GetEnclosedAreaById(positionToEnclosedArea[position]);
     }
@@ -162,7 +162,7 @@ public class EnclosureSystem : MonoBehaviour
             }
 
             // check if tilemap has tile
-            GameTile tile = GameManager.Instance.m_gridSystem.GetGameTileAt(cur);
+            GameTile tile = GameManager.Instance.m_tileDataController.GetGameTileAt(cur);
             if (tile != null)
             {
                 if (tile.type != TileType.Wall)

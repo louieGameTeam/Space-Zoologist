@@ -44,7 +44,7 @@ public class MoveObject : MonoBehaviour
 
     private void Start()
     {
-        gridSystem = GameManager.Instance.m_gridSystem;
+        gridSystem = GameManager.Instance.m_tileDataController;
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
         foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
             // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
@@ -281,7 +281,8 @@ public class MoveObject : MonoBehaviour
                 if (tileToDelete.name.Equals("liquid"))
                 {
                     tileToDelete.GetComponent<SpriteRenderer>().sprite = LiquidSprite;
-                    initialTileContents = gridSystem.GetTileData(pos).contents;
+                    initialTileContents = new float[] { 0, 0, 0 };
+                    LiquidbodyController.Instance.GetLiquidContentsAt(pos, out initialTileContents, out bool constructing);
                 }
                 else
                 {
@@ -326,6 +327,12 @@ public class MoveObject : MonoBehaviour
 	            //FoodSourceStoreSection.AddItemQuantity(foodItem);
                 break;
             case ItemType.TILE:
+                if (initialTile.type == TileType.Liquid)
+                {
+                    LiquidbodyController.Instance.RemoveConstructingLiquidContent(gridSystem.WorldToCell(objectToMove.transform.position));
+                }
+
+
                 GameManager.Instance.AddToBalance(sellBackCost);
                 TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
@@ -407,15 +414,14 @@ public class MoveObject : MonoBehaviour
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.x / 2, 0);
-
+        Vector3Int sizeOffset = new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.y / 2, 0);
+        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - sizeOffset;
         //If the player clicks on the food source's original position, don't bother with the mess below
-        if(pos == initialGridPos)
+        if (pos == initialGridPos)
         {
             toMove.transform.position = initialPos;
             return;
         }
-
         //Check if the food source is under construction and if so, grab its build progress
         TileDataController.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
         int buildProgress = this.GetStoreItem(species).buildTime;
@@ -426,7 +432,6 @@ public class MoveObject : MonoBehaviour
         removeOriginalFood(foodSource);
         float cost = moveCost;
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
-        
         if (valid) //If valid, place the food at the mouse destination
         {
             placeFood(pos, species);
@@ -443,7 +448,7 @@ public class MoveObject : MonoBehaviour
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
 
-        if (gridSystem.GetTileData(tilePos).currentTile.type != initialTile.type)
+        if (gridSystem.IsTilePlacementValid (tilePos, gridSystem.GetTileData(tilePos).currentTile.type, initialTile.type))
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
@@ -473,7 +478,7 @@ public class MoveObject : MonoBehaviour
         if(buildProgress < this.GetStoreItem(species).buildTime) //If the food source has yet to fully construct, add a build buffer
         {
             foodSource.isUnderConstruction = true;
-            GameManager.Instance.m_gridSystem.ConstructionFinishedCallback(() =>
+            GameManager.Instance.m_tileDataController.ConstructionFinishedCallback(() =>
             {
                 foodSource.isUnderConstruction = false;
             });

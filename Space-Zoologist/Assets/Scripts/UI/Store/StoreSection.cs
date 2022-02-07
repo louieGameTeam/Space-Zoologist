@@ -34,7 +34,7 @@ public class StoreSection : MonoBehaviour
     {
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
-        this.GridSystem = GameManager.Instance.m_gridSystem;
+        this.GridSystem = GameManager.Instance.m_tileDataController;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
     }

@@ -15,7 +15,7 @@ public class EatingPattern : UniversalAnimatorPattern
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
-        Vector3Int currentCell = base.GridSystem.WorldToCell(animal.transform.position);
+        Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
@@ -26,9 +26,9 @@ public class EatingPattern : UniversalAnimatorPattern
                 }
                 Vector3Int loopedTile = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);
 
-                if (GridSystem.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && GridSystem.GetTileData(loopedTile).Food)
+                if (TileDataController.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && TileDataController.GetTileData(loopedTile).Food)
                 {
-                    if (GridSystem.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
+                    if (TileDataController.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
                     {
                         this.AnimatorTriggerName = GetTriggerName(i, j);
                         base.EnterPattern(animal, animalData);

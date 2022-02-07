@@ -95,7 +95,7 @@ public class VerboseInspector : MonoBehaviour
         if(gameManager && inspector)
         {
             // Get the tile data at the inspector's position and display all the data as a JSON
-            TileData tileData = gameManager.m_gridSystem.GetTileData(inspector.selectedPosition);
+            TileData tileData = gameManager.m_tileDataController.GetTileData(inspector.selectedPosition);
             CreateInspectorItem(tileData);
 
             if (tileData.Food)
@@ -114,12 +114,6 @@ public class VerboseInspector : MonoBehaviour
 
                 CreateInspectorItem(animal.PopulationInfo.Species);
                 CreateInspectorItem(population, "Population");
-            }
-            if (tileData.currentLiquidBody != null)
-            {
-                // Inspect the referenced liquid bodies
-                LiquidbodyListWrapper referencedBodies = new LiquidbodyListWrapper(tileData.currentLiquidBody.referencedBodies);
-                CreateInspectorItem(referencedBodies, "Referenced Liquid Bodies");
             }
         }
     }
