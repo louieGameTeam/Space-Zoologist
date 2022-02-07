@@ -441,7 +441,7 @@ public class MoveObject : MonoBehaviour
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
 
-        if (gridSystem.GetTileData(tilePos).currentTile.type != initialTile.type)
+        if (gridSystem.IsTilePlacementValid (tilePos, gridSystem.GetTileData(tilePos).currentTile.type, initialTile.type))
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
