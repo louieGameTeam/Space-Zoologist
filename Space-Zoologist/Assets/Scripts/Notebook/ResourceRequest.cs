@@ -52,26 +52,27 @@ public class ResourceRequest
             }
 
             // Try to get the animal and food species
-            ItemData itemData = ItemAddressed.Data;
-            AnimalSpecies animalSpecies = itemData.Species as AnimalSpecies;
-            FoodSourceSpecies foodSpecies = itemData.Species as FoodSourceSpecies;
+            ItemData itemAddressedData = ItemAddressed.Data;
+            ItemData itemRequestedData = ItemRequested.Data;
+            AnimalSpecies animalSpeciesAddressed = itemAddressedData.Species as AnimalSpecies;
+            FoodSourceSpecies foodSpeciesAddressed = itemAddressedData.Species as FoodSourceSpecies;
 
             // Check if the addressed item is an animal or food species
-            if (animalSpecies != null || foodSpecies != null)
+            if (animalSpeciesAddressed != null || foodSpeciesAddressed != null)
             {
-                List<NeedConstructData> needData;
+                List<NeedConstructData> speciesNeeds;
 
                 // If the item addressed is an animal species,
                 // convert their needs
-                if (animalSpecies)
+                if (animalSpeciesAddressed)
                 {
                     if (NeedAddressed == NeedType.Terrain)
                     {
-                        needData = ConvertNeeds(animalSpecies.TerrainNeeds);
+                        speciesNeeds = ConvertNeeds(animalSpeciesAddressed.TerrainNeeds);
                     }
                     else if (NeedAddressed == NeedType.FoodSource)
                     {
-                        needData = ConvertNeeds(animalSpecies.FoodNeeds);
+                        speciesNeeds = ConvertNeeds(animalSpeciesAddressed.FoodNeeds);
                     }
                     else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
                         $"Usefulness cannot be computed for need {NeedAddressed}");
@@ -82,29 +83,29 @@ public class ResourceRequest
                 {
                     if (NeedAddressed == NeedType.Terrain)
                     {
-                        needData = ConvertNeeds(foodSpecies.TerrainNeeds);
+                        speciesNeeds = ConvertNeeds(foodSpeciesAddressed.TerrainNeeds);
                     }
                     else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
                         $"Usefulness cannot be computed for need {NeedAddressed}");
                 }
 
-                // Find a terrain need with the same name as the item addressed
+                // Find a need with the same name as the item addressed
                 // NOTE: this does not work because some need names do not match the item ID english name
-                NeedConstructData need = needData
-                    .Find(n => n.NeedName == itemData.Name.Get(ItemName.Type.English));
+                NeedConstructData need = speciesNeeds
+                    .Find(n => n.NeedName == itemRequestedData.Name.Get(ItemName.Type.English));
 
                 if (need != null)
                 {
-                    // Preferred terrain is more useful than non preferred
+                    // Preferred need is more useful than non preferred
                     if (need.IsPreferred) return 2;
                     else return 1;
                 }
-                // If no terrain need was found then this terrain is not traversible,
+                // If no need was found then this item is not edible/traversible,
                 // it is not useful at all
                 else return 0;
             }
             else throw new System.ArgumentException($"{nameof(QuizConversation)}: " +
-                $"Item addressed '{itemData.Name}' has no valid species associated with it, " +
+                $"Item addressed '{itemAddressedData.Name}' has no valid species associated with it, " +
                 $"so we cannot compute the usefulness of a requested item for it");
         }
     }
