@@ -12,6 +12,8 @@ public class FoodSourceSpecies : ScriptableObject
     public Item FoodSourceItem => FoodSource;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Vector2Int Size => size;
+    public List<TerrainNeedConstructData> TerrainNeeds => terrainNeeds;
+    public List<LiquidNeedConstructData> LiquidNeeds => liquidNeeds;
 
     [SerializeField] private Vector2Int size = new Vector2Int(1, 1); // default to 1 tile big
     [SerializeField] private List<TileType> accessibleTerrain = default;

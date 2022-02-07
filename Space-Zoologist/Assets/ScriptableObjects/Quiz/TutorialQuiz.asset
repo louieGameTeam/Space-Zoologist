@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TutorialQuiz
   m_EditorClassIdentifier: 
   importantCategories: []
-  questions: []
+  fixedQuestions: []
   randomQuestionPool:
     questionsToPick: 2
     questionPool:
@@ -72,9 +72,10 @@ MonoBehaviour:
         weight: 0
       - label: Record key Metrics
         weight: 1
-  gradingRubric:
-    scoreToPassImportantQuestions: 0
-    scoreToPassUnimportantQuestions: 2
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 0000000000000000
+    answers: 0000000001000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

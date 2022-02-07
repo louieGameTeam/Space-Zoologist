@@ -23,7 +23,6 @@ public class ItemArrayEditor : ArrayOnEnumEditor<ItemRegistry.Category>
             return innerArrayEditor.GetPropertyHeight(s.FindPropertyRelative(innerArrayRelativePath), datas);
         };
 
-
         innerArrayEditor.arrayElementLabel = (s, e) => new GUIContent(e.Name.ToString());
     }
     #endregion

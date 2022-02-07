@@ -38,7 +38,8 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         {
             return GetItemsWithCategory(category);
         }
-        else throw new System.ArgumentException($"{nameof(ItemRegistry)}: attempted to get items with category '{categoryName}', " +
+        else throw new System.ArgumentException($"{nameof(ItemRegistry)}: " +
+            $"attempted to get items with category '{categoryName}', " +
             $"but no such category exists");
     }
     public static int CountItemsWithCategory(Category category) => GetItemsWithCategory(category).Length;
