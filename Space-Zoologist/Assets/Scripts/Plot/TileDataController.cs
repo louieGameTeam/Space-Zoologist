@@ -1116,7 +1116,7 @@ public class TileDataController : MonoBehaviour
         // If the new tile is a wall or liquid, make sure there aren't any animals standing on the tile and make sure there isn't food on the tile
         if (newTile == TileType.Wall || newTile == TileType.Liquid) {
             foreach (Population pop in GameManager.Instance.m_reservePartitionManager.GetPopulationsWithAccessTo (tilePos)) {
-                if (GameManager.Instance.m_gridSystem.GetTileData (tilePos).Food) 
+                if (GetTileData (tilePos).Food) 
                     return false;
                 
                 foreach (GameObject animal in pop.AnimalPopulation) {

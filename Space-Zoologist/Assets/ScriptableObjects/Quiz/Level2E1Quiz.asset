@@ -17,7 +17,7 @@ MonoBehaviour:
       category: 0
       index: 1
     need: 3
-  questions:
+  fixedQuestions:
   - question: First, how many tiles of water does each Eligans Impar require in order
       to meet its liquid requirements?
     category:
@@ -87,9 +87,10 @@ MonoBehaviour:
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
-  gradingRubric:
-    scoreToPassImportantQuestions: 2
-    scoreToPassUnimportantQuestions: 2
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 
+    answers: 00000000000000000000000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

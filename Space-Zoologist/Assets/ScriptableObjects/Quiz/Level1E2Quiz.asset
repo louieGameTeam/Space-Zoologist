@@ -17,7 +17,7 @@ MonoBehaviour:
       category: 0
       index: 0
     need: 3
-  questions:
+  fixedQuestions:
   - question: "Alright, let\u2019s get this party started! First off, from the perspective
       of the Zeigs, what\u2019s the difference between Space Maples and Golden Space
       Maples?\r\n"
@@ -56,9 +56,10 @@ MonoBehaviour:
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
-  gradingRubric:
-    scoreToPassImportantQuestions: 1
-    scoreToPassUnimportantQuestions: 1
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 0100000003000000
+    answers: 0100000002000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

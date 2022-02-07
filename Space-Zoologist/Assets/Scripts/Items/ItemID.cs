@@ -9,6 +9,7 @@ public struct ItemID
     public ItemRegistry.Category Category => category;
     public int Index => index;
     public ItemData Data => ItemRegistry.Get(this);
+    public bool Valid => ItemRegistry.ValidID(this);
     public static ItemID Invalid => new ItemID(0, -1);
     #endregion
 

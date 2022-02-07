@@ -30,11 +30,11 @@ MonoBehaviour:
   - needName: Grass
     isPreferred: 0
   foodNeeds:
-  - needName: Space Maple
+  - needName: Maple Tree
     isPreferred: 0
-  - needName: Berries
+  - needName: Berry Bush
     isPreferred: 0
-  - needName: Gold Space Maple
+  - needName: Golden Maple Tree
     isPreferred: 1
   liquidNeeds:
   - needName: 
@@ -45,4 +45,5 @@ MonoBehaviour:
     saltMaxThreshold: 0.02
     bacteriaMinThreshold: 0
     bacteriaMaxThreshold: 1
+  preyNeeds: []
   representation: {fileID: 0}
