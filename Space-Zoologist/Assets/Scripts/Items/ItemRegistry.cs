@@ -25,11 +25,18 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     #endregion
 
     #region Public Methods
+    public static bool ValidID(ItemID id)
+    {
+        ItemData[] datas = GetItemsWithCategory(id.Category);
+        return id.Index >= 0 && id.Index < datas.Length;
+    }
     public static ItemData Get(ItemID id)
     {
         ItemData[] datas = GetItemsWithCategory(id.Category);
-        if (id.Index >= 0 && id.Index < datas.Length) return datas[id.Index];
-        else return null;
+        if (ValidID(id)) return datas[id.Index];
+        else throw new System.IndexOutOfRangeException($"{nameof(ItemRegistry)}: " +
+            $"No item exists at index {id.Index} for category {id.Category}. " +
+            $"Total items in category: {datas.Length}");
     }
     public static ItemData[] GetItemsWithCategory(Category category) => Instance.itemData.itemDataLists[(int)category].Items;
     public static ItemData[] GetItemsWithCategoryName(string categoryName)
