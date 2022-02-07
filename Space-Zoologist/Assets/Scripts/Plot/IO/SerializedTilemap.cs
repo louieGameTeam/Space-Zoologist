@@ -8,7 +8,7 @@ public class SerializedTilemap
     public string TilemapName;
     public SerializedTileData[] SerializedTileDatas;
     public SerializedLiquidBody[] SerializedLiquidBodies;
-    public SerializedTilemap (string tilemapName, TileData[,] tiles, int width, int height, HashSet<LiquidBody> liquidBodies)
+    public SerializedTilemap (string tilemapName, TileData[,] tiles, int width, int height, List<LiquidBody> liquidBodies)
     {
         this.TilemapName = tilemapName;
 

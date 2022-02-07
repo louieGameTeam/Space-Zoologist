@@ -114,7 +114,6 @@ public class SellingManager : MonoBehaviour
 
     private void SellWallOnTile(Vector3Int cellPos)
     {
-        //TODO work with TileSystem to delete the wall
 
     }
 }

@@ -12,7 +12,9 @@ public class LiquidBody
     public int bodyID;
     public float[] contents;
     private HashSet<Vector3Int> tiles;
-    public int TileCount { get { return tiles.Count; } }
+    public int TileCount { 
+        get { return tiles == null ? 0 : tiles.Count; } 
+    }
 
     /// <summary>
     /// Creates a new body with a single tile
@@ -55,10 +57,11 @@ public class LiquidBody
         foreach (LiquidBody l in liquidbodies)
             this.tiles.UnionWith(l.tiles);
 
+        contents = new float[] { 0, 0, 0 };
+
         // get the average per content
         for (int i = 0; i < this.contents.Length; ++i)
         {
-            contents[i] = 0;
             int totalTileCount = 0;
 
             // find the total contents and overall tile count
@@ -101,7 +104,6 @@ public class LiquidBody
 
         // check for continuity
         // find the neighboring liquid tiles
-        // TODO: what if the last tile is removed?
         List<Vector3Int> neighborTiles = FourNeighborTileLocations(pos);
 
         switch (neighborTiles.Count)

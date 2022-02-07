@@ -42,7 +42,6 @@ public class TileDataController : MonoBehaviour
     private TileData[,] TileDataGrid = default;
     private List<ConstructionCluster> ConstructionClusters;
     public Vector3Int startTile = default;
-    public HashSet<LiquidBody> liquidBodies { get; private set; } = new HashSet<LiquidBody>();
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
@@ -99,7 +98,6 @@ public class TileDataController : MonoBehaviour
     #region I/O
     public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
     {
-        this.liquidBodies = new HashSet<LiquidBody>();
         this.previewBodies = new List<LiquidBody>();
         this.RemovedTiles = new HashSet<Vector3Int>();
         this.Tilemap.ClearAllTiles();
@@ -194,13 +192,16 @@ public class TileDataController : MonoBehaviour
             }
         }
 
+        // TODO: put this somewhere else
+        LiquidbodyController.Instance.Initialize();
+
         foreach (SerializedLiquidBody serializedLiquidBody in serializedGrid.serializedTilemap.SerializedLiquidBodies)
         {
             // create the liquidbody based on previously parsed tiles
             LiquidBody liquidBody = new LiquidBody(liquidbodyIDToTiles[serializedLiquidBody.BodyID], serializedLiquidBody.Contents, serializedLiquidBody.BodyID);
 
             // add it to the list
-            this.liquidBodies.Add(liquidBody);
+            LiquidbodyController.Instance.AddLiquidBody(liquidBody);
         }
 
         // generate buffer plane
@@ -271,7 +272,7 @@ public class TileDataController : MonoBehaviour
     {
         // Debug.Log("Serialize " + this.tilemap.name);
         // temporarily make new list until full implementation
-        return new SerializedTilemap("Tilemap", TileDataGrid, ReserveWidth, ReserveHeight, this.liquidBodies);
+        return new SerializedTilemap("Tilemap", TileDataGrid, ReserveWidth, ReserveHeight, LiquidbodyController.Instance.liquidBodies);
     }
     #endregion
 
@@ -306,6 +307,7 @@ public class TileDataController : MonoBehaviour
                 {
                     // TODO: liquid implementation
                     //tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
+                    LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents);
                 }
                 if (tile.type != TileType.Wall)
                     TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
@@ -365,10 +367,11 @@ public class TileDataController : MonoBehaviour
                 renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
                 Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTexDim", new Vector2(ReserveWidth, ReserveHeight));
 
-                // TODO: Liquid update
                 if (tile.type == TileType.Liquid)
                     // tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
                     LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents, false);
+                else
+                    LiquidbodyController.Instance.RemoveLiquidContentsFromLiquidbodyAt(tilePosition);
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
                 ApplyChangeToTilemapTexture(tilePosition);
@@ -380,7 +383,6 @@ public class TileDataController : MonoBehaviour
             {
                 if (tile.type == TileType.Liquid)
                 {
-                    // TODO: Liquid Update
                     // tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
                     // tileData.contents = tile.defaultContents;
                     LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents);
@@ -404,8 +406,8 @@ public class TileDataController : MonoBehaviour
             tileData.isTilePlaceable = false;
             if (tileData.currentTile.type == TileType.Liquid)
             {
-                // TODO: LIquid update
                 //DivideLiquidBody(tilePosition);
+                LiquidbodyController.Instance.RemoveLiquidContentsFromLiquidbodyAt(tilePosition);
             }
             tileData.PreviewReplacement(null);
             ChangedTiles.Add(tilePosition);
@@ -756,6 +758,8 @@ public class TileDataController : MonoBehaviour
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
+
+                    LiquidbodyController.Instance.RemoveLiquidContentsFromLiquidbodyAt((Vector3Int)bufferPosition);
                 }
 
                 LiquidbodyController.Instance.MergeConstructingTiles();
