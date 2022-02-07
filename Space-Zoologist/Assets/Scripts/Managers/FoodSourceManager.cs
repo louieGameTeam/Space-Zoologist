@@ -18,10 +18,9 @@ public class FoodSourceManager : GridObjectManager
 
     public void Initialize()
     {
-        m_gridSystemReference = GameManager.Instance.m_gridSystem;
+        m_gridSystemReference = GameManager.Instance.m_tileDataController;
     }
     
-    // TODO: combine two version into one
     public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position, int ttb = -1)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);

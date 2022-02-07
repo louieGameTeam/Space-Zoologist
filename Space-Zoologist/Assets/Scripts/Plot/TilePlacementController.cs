@@ -4,6 +4,9 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
+using static TilemapStatics;
+
 public class TilePlacementController : MonoBehaviour
 {
     public enum PlacementResult { Placed, Restricted, AlreadyExisted }
@@ -25,7 +28,7 @@ public class TilePlacementController : MonoBehaviour
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
     public void Initialize()
     {
-        gridSystemReference = GameManager.Instance.m_gridSystem;
+        gridSystemReference = GameManager.Instance.m_tileDataController;
     }
 
     private void Update()
@@ -86,8 +89,8 @@ public class TilePlacementController : MonoBehaviour
         //GameManager.Instance.m_gridSystem.ConfirmPlacement();
 
         // Set terrain modified flag
-        GameManager.Instance.m_gridSystem.HasTerrainChanged = true;
-        GameManager.Instance.m_gridSystem.ChangedTiles.UnionWith(addedTiles);
+        GameManager.Instance.m_tileDataController.HasTerrainChanged = true;
+        GameManager.Instance.m_tileDataController.ChangedTiles.UnionWith(addedTiles);
 
         // Clear all dics
         this.referencedTiles.Clear();
@@ -111,14 +114,6 @@ public class TilePlacementController : MonoBehaviour
         return addedTiles.Count();
     }
 
-    public void RevertChanges() // Go through each change and revert back to original
-    {
-        gridSystemReference.Revert();
-        addedTiles.Clear();
-        triedToPlaceTiles.Clear();
-        StopPreview();
-    }
-
     private void UpdatePreviewPen()
     {
         if (gridSystemReference.GetGameTileAt(this.currentMouseCellPosition)?.type == TileType.Wall && !GameManager.Instance.LevelData.WallBreakable) {
@@ -130,7 +125,7 @@ public class TilePlacementController : MonoBehaviour
             PlaceTile(currentMouseCellPosition);
             return;
         }
-        if (!TileDataController.FourNeighborTileLocations(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
+        if (!FourNeighborTileLocations(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
         {
             if (currentMouseCellPosition.x == lastPlacedTile.x)// Handles divide by zero exception
             {
@@ -221,7 +216,7 @@ public class TilePlacementController : MonoBehaviour
         {
             return GameManager.Instance.LevelData.WallBreakable || gridSystemReference.GetTileData(cellPosition).isTilePlaceable;
         }
-        foreach (Vector3Int location in TileDataController.FourNeighborTileLocations(cellPosition))
+        foreach (Vector3Int location in FourNeighborTileLocations(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
@@ -266,7 +261,7 @@ public class TilePlacementController : MonoBehaviour
     private HashSet<Vector3Int> neighborTiles = new HashSet<Vector3Int>();
     private void GetNeighborCellLocations(Vector3Int cellLocation, GameTile tile, Tilemap targetTilemap)
     {
-        foreach (Vector3Int tileToCheck in TileDataController.FourNeighborTileLocations(cellLocation))
+        foreach (Vector3Int tileToCheck in FourNeighborTileLocations(cellLocation))
         {
             if (!neighborTiles.Contains(tileToCheck) && targetTilemap.GetTile(tileToCheck) == tile)
             {
