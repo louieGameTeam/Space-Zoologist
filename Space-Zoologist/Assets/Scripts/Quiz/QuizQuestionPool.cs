@@ -7,6 +7,7 @@ using UnityEngine;
 public class QuizQuestionPool
 {
     #region Public Properties
+    public QuizQuestion[] QuestionPool => questionPool;
     public int QuestionsToPick => questionsToPick;
     // The question pool is static if each random selection 
     // always yeilds the same questions (though there is no guarantee

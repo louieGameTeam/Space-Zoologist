@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level1E2Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 0
+    need: 3
+  questions:
+  - question: "Alright, let\u2019s get this party started! First off, from the perspective
+      of the Zeigs, what\u2019s the difference between Space Maples and Golden Space
+      Maples?\r\n"
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 3
+    options:
+    - label: Nothing. They eat the fruits of both trees.
+      weight: 1
+    - label: They prefer to eat Golden Space Maples fruit over the normal Space Maples
+        fruit
+      weight: 2
+    - label: The Zeigs prefer to eat berries over the fruit of normal Space Maples,
+        but not over the fruit of the Golden Space Maples.
+      weight: 0
+    - label: "They\u2019ll eat the fruit of the Golden Space Maples, but only after
+        eating all of the available Space Maple fruit."
+      weight: 0
+  - question: Alright. Now, on what type of terrain do Zeigs feel most comfortable?
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 0
+    options:
+    - label: Dirt
+      weight: 2
+    - label: Sand
+      weight: 0
+    - label: Grass
+      weight: 1
+    - label: Rocks
+      weight: 0
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric:
+    scoreToPassImportantQuestions: 1
+    scoreToPassUnimportantQuestions: 1
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 0100000003000000

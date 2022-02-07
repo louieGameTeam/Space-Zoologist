@@ -91,7 +91,7 @@ public class LevelIDPicker : NotebookUIChild
         }
 
         // Update the level dropdown to reflect the current level
-        LevelID currentLevel = LevelID.FromCurrentSceneName();
+        LevelID currentLevel = LevelID.Current();
         levelDropdown.value = currentLevel.LevelNumber;
         levelDropdown.RefreshShownValue();
         OnLevelDropdownValueChanged(levelDropdown.value);
@@ -115,7 +115,7 @@ public class LevelIDPicker : NotebookUIChild
         }
 
         // Get the enclosure represented in the current scene
-        LevelID currentLevel = LevelID.FromCurrentSceneName();
+        LevelID currentLevel = LevelID.Current();
         // If we selected the current level, then select the current enclosure number
         if (currentLevel.LevelNumber == selectedLevel)
         {

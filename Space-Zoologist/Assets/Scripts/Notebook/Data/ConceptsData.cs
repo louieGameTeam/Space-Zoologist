@@ -1,17 +1,25 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class ConceptsData : NotebookDataModule
 {
+    #region Public Typedefs
+    [System.Serializable]
+    public class Entry
+    {
+        public LevelID level;
+        public int attempt;
+        public ReviewedResourceRequestList reviews;
+    }
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of the level ids that are unlocked")]
-    private List<LevelID> levels = new List<LevelID>();
-    [SerializeField]
-    [Tooltip("List of reviewed resource requests, parallel to the list of levels")]
-    private List<ReviewedResourceRequestList> resourceRequests = new List<ReviewedResourceRequestList>();
+    private List<Entry> entries = new List<Entry>();
     #endregion
 
     #region Constructors
@@ -19,31 +27,31 @@ public class ConceptsData : NotebookDataModule
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureId(LevelID id)
+    public void OnLevelEncountered(LevelID level)
     {
-        if(!levels.Contains(id))
-        {
-            levels.Add(id);
-            resourceRequests.Add(new ReviewedResourceRequestList());
-        }
-    }
-    public ReviewedResourceRequestList GetReviewedResourceRequestList(LevelID id)
-    {
-        int index = levels.IndexOf(id);
+        // Get all entries with the given level
+        Entry latestEntry = GetEntryWithLatestAttempt(level);
 
-        // Check to make sure the id exists in the list
-        if (index >= 0)
+        if (latestEntry != null)
         {
-            // Check to make sure the index is within range of the requests
-            if (index < resourceRequests.Count)
+            // Add an entry for the next attempt to the list of entries
+            entries.Add(new Entry
             {
-                return resourceRequests[index];
-            }
-            else throw new System.IndexOutOfRangeException($"{nameof(ConceptsData)}: " +
-                $"no resource request list corresponds to level {id}");
+                level = level,
+                attempt = latestEntry.attempt + 1,
+                reviews = new ReviewedResourceRequestList()
+            });
         }
-        else throw new System.IndexOutOfRangeException($"{nameof(ConceptsData)}: " +
-            $"level with id {id} has not been encountered yet");
+        // If no entries were found with this level, then we add the first one
+        else
+        {
+            entries.Add(new Entry
+            {
+                level = level,
+                attempt = 1,
+                reviews = new ReviewedResourceRequestList()
+            });
+        }
     }
 
     /// <summary>
@@ -54,7 +62,7 @@ public class ConceptsData : NotebookDataModule
     /// <param name="review"></param>
     public void ConfirmReviwedResourceRequest(LevelID levelID, ReviewedResourceRequest review)
     {
-        ReviewedResourceRequestList list = GetReviewedResourceRequestList(levelID);
+        ReviewedResourceRequestList list = GetEntryWithLatestAttempt(levelID).reviews;
 
         // Check if the game manager exists and the review was not denied
         if(GameManager.Instance && review.CurrentStatus != ReviewedResourceRequest.Status.Denied)
@@ -66,6 +74,37 @@ public class ConceptsData : NotebookDataModule
         }
 
         list.Reviews.Add(review);
+    }
+    public IEnumerable<Entry> GetEntriesWithLevel(LevelID level) => entries
+        .Where(entry => entry.level == level);
+    public Entry GetEntryWithLatestAttempt(LevelID level)
+    {
+        IEnumerable<Entry> entries = GetEntriesWithLevel(level);
+
+        // If some entries exist then search for the latest one
+        if (entries.Count() > 0)
+        {
+            Entry maxEntry = null;
+
+            foreach (Entry entry in entries)
+            {
+                // If max entry is not yet set then make it this entry
+                if (maxEntry == null)
+                {
+                    maxEntry = entry;
+                }
+                // If this entry was attempted later than the max entry,
+                // make the max entry this entry
+                else if (entry.attempt > maxEntry.attempt)
+                {
+                    maxEntry = entry;
+                }
+            }
+
+            return maxEntry;
+        }
+        // If no entries exist then return null
+        else return null;
     }
     #endregion
 }

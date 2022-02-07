@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     public BehaviorPatternUpdater m_behaviorPatternUpdater { get; private set; }
     public TilePlacementController m_tilePlacementController { get; private set; }
     public PlotIO m_plotIO { get; private set; }
-    public GridSystem m_gridSystem { get; private set; }
+    public TileDataController m_tileDataController { get; private set; }
     public EnclosureSystem m_enclosureSystem { get; private set; }
     public Inspector m_inspector { get; private set; }
     public PlayerController m_playerController { get; private set; }
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.Log("No save data or error loading notebook data, creating new data...");
+            Debug.Log("No save data or error loading notebook data, creating new data");
             return null;
         }
     }
@@ -267,7 +267,7 @@ public class GameManager : MonoBehaviour
         m_behaviorPatternUpdater = FindObjectOfType<BehaviorPatternUpdater>();
         m_tilePlacementController = FindObjectOfType<TilePlacementController>();
         m_plotIO = FindObjectOfType<PlotIO>();
-        m_gridSystem = FindObjectOfType<GridSystem>();
+        m_tileDataController = FindObjectOfType<TileDataController>();
         m_enclosureSystem = FindObjectOfType<EnclosureSystem>();
         m_inspector = FindObjectOfType<Inspector>();
         m_playerController = FindObjectOfType<PlayerController>();
@@ -477,7 +477,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateAccessMap()
     {
-        m_reservePartitionManager.UpdateAccessMapChangedAt(m_gridSystem.ChangedTiles.ToList<Vector3Int>());
+        m_reservePartitionManager.UpdateAccessMapChangedAt(m_tileDataController.ChangedTiles.ToList<Vector3Int>());
     }
 
     /// <summary>
@@ -492,10 +492,10 @@ public class GameManager : MonoBehaviour
     public void UpdateDirtyNeedSystems()
     {
         // Update populations' accessible map when terrain was modified
-        if (m_gridSystem.HasTerrainChanged)
+        if (m_tileDataController.HasTerrainChanged)
         {
             // TODO: Update population's accessible map only for changed terrain
-            m_reservePartitionManager.UpdateAccessMapChangedAt(m_gridSystem.ChangedTiles.ToList<Vector3Int>());
+            m_reservePartitionManager.UpdateAccessMapChangedAt(m_tileDataController.ChangedTiles.ToList<Vector3Int>());
         }
 
         foreach (KeyValuePair<NeedType, NeedSystem> entry in m_needSystems)
@@ -520,7 +520,7 @@ public class GameManager : MonoBehaviour
         m_foodSourceManager.UpdateAccessibleTerrainInfoForAll();
 
         // Reset terrain modified flag
-        m_gridSystem.HasTerrainChanged = false;
+        m_tileDataController.HasTerrainChanged = false;
     }
     #endregion
 
@@ -564,7 +564,7 @@ public class GameManager : MonoBehaviour
         this.IsPaused = true;
         foreach (Population population in m_populationManager.Populations)
             population.PauseAnimalsMovementController();
-        m_gridSystem.UpdateAnimalCellGrid();
+        m_tileDataController.UpdateAnimalCellGrid();
         AudioManager.instance?.PlayOneShot(SFXType.Pause);
     }
 
@@ -602,10 +602,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleExitLevel()
     {
-        // Is not currently in level
-        if (SceneNavigator.RecentlyLoadedLevel != "MainLevel") return;
-
-        m_gridSystem.SetGridOverlay(false);
+        m_tileDataController.SetGridOverlay(false);
         SaveNotebook(NotebookUI.Data);
     }
 
@@ -645,7 +642,6 @@ public class GameManager : MonoBehaviour
     {
         this.m_isGameOver = true;
 
-        // TODO figure out what should happen when the main objectives are complete
         EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
 
         // GameOver.cs listens for the event and handles gameover
@@ -686,7 +682,6 @@ public class GameManager : MonoBehaviour
         {
             this.m_isGameOver = true;
 
-            // TODO figure out what should happen when the main objectives are complete
             EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
 
             // GameOver.cs listens for the event and handles gameover
@@ -761,7 +756,7 @@ public class GameManager : MonoBehaviour
 
     public void nextDay()
     {
-        m_gridSystem.CountDown();
+        m_tileDataController.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
         UpdateAllNeedSystems();
@@ -776,13 +771,17 @@ public class GameManager : MonoBehaviour
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 
         UpdateDayText(++currentDay);
+        CheckWinConditions();
+
+        // Invoke next day event
+        EventManager.Instance.InvokeEvent(EventType.NextDay, null);
+
         if (currentDay > maxDay)
         {
             Debug.Log("Time is up!");
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }
-        CheckWinConditions();
     }
 
     public void EnableInspectorToggle(bool enabled)

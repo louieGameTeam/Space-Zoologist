@@ -49,17 +49,6 @@ public class TileStoreSection : StoreSection
     }
 
     /// <summary>
-    /// Stop tile placement preview and remove any changes.
-    /// </summary>
-    private void CancelPlacing()
-    {
-        isPlacing = false;
-        tilePlacementController.RevertChanges();
-        // Placing tiles no longer adjusts the balance
-        // GameManager.Instance.SetBalance(startingBalance);
-    }
-
-    /// <summary>
     /// Stop tile placement preview and finalize changes to the grid.
     /// </summary>
     private void FinishPlacing()
@@ -72,7 +61,7 @@ public class TileStoreSection : StoreSection
                 GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(tilePlacementController.addedTiles.ToList<Vector3Int>());
             else
             {
-                GridSystem.CreateUnitBuffer(new Vector2Int(pos.x, pos.y), this.selectedItem.buildTime, GridSystem.ConstructionCluster.ConstructionType.TILE);
+                GridSystem.CreateUnitBuffer(new Vector2Int(pos.x, pos.y), this.selectedItem.buildTime, TileDataController.ConstructionCluster.ConstructionType.TILE);
             }
         }
         this.EnclosureSystem.UpdateEnclosedAreas();
@@ -130,25 +119,18 @@ public class TileStoreSection : StoreSection
         base.Update();
         if (isPlacing)
         {
-            if (this.tilePlacementController.PlacementPaused)
+            numTilesPlaced = tilePlacementController.PlacedTileCount();
+            if (prevTilesPlaced != numTilesPlaced)
             {
-                return;
+                base.HandleAudio();
+                prevTilesPlaced = numTilesPlaced;
             }
-            else
+            // NOTE: placing tiles no longer costs money
+            // GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
+            if (/* GameManager.Instance.Balance < selectedItem.Price ||*/ initialAmt - numTilesPlaced == 0)
             {
-                numTilesPlaced = tilePlacementController.PlacedTileCount();
-                if (prevTilesPlaced != numTilesPlaced)
-                {
-                    base.HandleAudio();
-                    prevTilesPlaced = numTilesPlaced;
-                }
-                // NOTE: placing tiles no longer costs money
-                // GameManager.Instance.SetBalance(startingBalance - numTilesPlaced * selectedItem.Price);
-                if (/* GameManager.Instance.Balance < selectedItem.Price ||*/ initialAmt - numTilesPlaced == 0)
-                {
-                    FinishPlacing();
-                    base.OnItemSelectionCanceled();
-                }
+                FinishPlacing();
+                base.OnItemSelectionCanceled();
             }
         }
     }

@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelNavigator : MonoBehaviour
 {
+    #region Public Properties
+    // Assume the level navigator is overridden if just one level is overridden
+    public bool Overridden => uis[0].Overridden;
+    #endregion
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the level select UI used to select a level")]
@@ -19,6 +24,7 @@ public class LevelNavigator : MonoBehaviour
     private LevelSelectUI[] uis;
     #endregion
 
+    #region Monobehaviour Messages
     public void Start()
     {
         // Create a level select UI for every level
@@ -30,5 +36,28 @@ public class LevelNavigator : MonoBehaviour
             uis[level] = Instantiate(levelUIPrefab, levelUIGroup.transform);
             uis[level].Setup(level);
         }
-     }
+    }
+    #endregion
+
+    #region Public Methods
+    public void SetOverride(LevelID overrideID)
+    {
+        foreach (LevelSelectUI ui in uis)
+        {
+            ui.SetOverride(overrideID);
+        }
+    }
+    public void ClearOverride()
+    {
+        foreach (LevelSelectUI ui in uis)
+        {
+            ui.ClearOverride();
+        }
+    }
+    public void ToggleOverride(LevelID overrideID)
+    {
+        if (Overridden) ClearOverride();
+        else SetOverride(overrideID);
+    }
+    #endregion
 }

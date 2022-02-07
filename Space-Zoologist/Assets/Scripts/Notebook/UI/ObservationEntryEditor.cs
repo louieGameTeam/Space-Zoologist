@@ -27,7 +27,7 @@ public class ObservationEntryEditor : NotebookUIChild
         textInput.text = entry.Text;
 
         // Cache the current enclosure
-        LevelID current = LevelID.FromCurrentSceneName();
+        LevelID current = LevelID.Current();
         // If the id setting up is the same as the current then add the listeners
         if(id == current)
         {

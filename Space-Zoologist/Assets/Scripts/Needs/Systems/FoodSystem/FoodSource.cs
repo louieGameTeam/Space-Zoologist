@@ -48,18 +48,7 @@ public class FoodSource : MonoBehaviour, Life
     // Subscribe to events here
     private void Start()
     {
-        // If the food has atmospheric need then subscribe to atmosphere changed event
-        foreach (AtmosphereComponent atmosphereComponent in Enum.GetValues(typeof(AtmosphereComponent)))
-        {
-            if (this.needs.ContainsKey(atmosphereComponent.ToString()))
-            {
-                EventManager.Instance.SubscribeToEvent(EventType.AtmosphereChange, () =>
-                {
-                    this.hasAccessibilityChecked = true;
-                    this.hasAccessibilityChanged = true;
-                });
-            }
-        }
+        
     }
 
     public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position)
@@ -68,7 +57,7 @@ public class FoodSource : MonoBehaviour, Life
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
         this.InitializeNeedValues();
-        this.accessibleTerrian = GameManager.Instance.m_gridSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        this.accessibleTerrian = GameManager.Instance.m_tileDataController.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
     }
 
     private void InitializeNeedValues()
@@ -231,7 +220,7 @@ public class FoodSource : MonoBehaviour, Life
     public bool GetAccessibilityStatus()
     {
         // No need to check if terrain was not modified
-        if (!GameManager.Instance.m_gridSystem.HasTerrainChanged)
+        if (!GameManager.Instance.m_tileDataController.HasTerrainChanged)
         {
             return false;
         }
@@ -243,7 +232,7 @@ public class FoodSource : MonoBehaviour, Life
         }
 
         var preTerrain = this.accessibleTerrian;
-        var curTerrain = GameManager.Instance.m_gridSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+        var curTerrain = GameManager.Instance.m_tileDataController.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
 
         // Accessible terrain had changed
         this.hasAccessibilityChecked = true;
@@ -262,7 +251,7 @@ public class FoodSource : MonoBehaviour, Life
     {
         if (this.hasAccessibilityChanged)
         {
-            this.accessibleTerrian = GameManager.Instance.m_gridSystem.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
+            this.accessibleTerrian = GameManager.Instance.m_tileDataController.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
         }
 
         // Reset flags

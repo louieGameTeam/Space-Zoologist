@@ -78,7 +78,7 @@ public class NotebookUI : MonoBehaviour
         data.SetConfig(config);
 
         // Add the current level
-        data.TryAddLevelID(LevelID.FromCurrentSceneName());
+        data.OnLevelEncountered(LevelID.Current());
 
         // Try to get an instance of the game manager
         GameManager instance = GameManager.Instance;

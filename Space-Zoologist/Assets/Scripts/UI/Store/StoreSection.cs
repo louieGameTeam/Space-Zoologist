@@ -23,7 +23,7 @@ public class StoreSection : MonoBehaviour
     protected CanvasObjectStrobe PlayerBalanceDisplay = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
-    protected GridSystem GridSystem = default;
+    protected TileDataController GridSystem = default;
     protected ResourceManager ResourceManager = default;
     private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
     protected Item selectedItem = null;
@@ -34,7 +34,7 @@ public class StoreSection : MonoBehaviour
     {
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
-        this.GridSystem = GameManager.Instance.m_gridSystem;
+        this.GridSystem = GameManager.Instance.m_tileDataController;
         this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
     }
@@ -73,7 +73,6 @@ public class StoreSection : MonoBehaviour
     {
         // Try to get the raycaster in the parent
         raycaster = GetComponentInParent<GraphicRaycaster>();
-
         // Add the items to the store section
         LevelData levelData = GameManager.Instance.LevelData;
         foreach (LevelData.ItemData data in levelData.ItemQuantities)
@@ -132,11 +131,14 @@ public class StoreSection : MonoBehaviour
         AudioManager.instance.PlayOneShot(SFXType.Valid);
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         selectedItem = item;
+        //Reset inspector selection
+        GameManager.Instance.m_inspector.ResetSelection();
     }
 
     public virtual void OnItemSelectionCanceled()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        selectedItem = null;
         AudioManager.instance?.PlayOneShot(SFXType.Cancel);
         GridSystem.ClearHighlights();
     }

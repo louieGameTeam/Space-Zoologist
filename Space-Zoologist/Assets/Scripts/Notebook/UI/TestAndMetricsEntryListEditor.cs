@@ -26,7 +26,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 
         // Add listener for the enclosure picked event
         enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureSelected);
-        OnEnclosureSelected(LevelID.FromCurrentSceneName());
+        OnEnclosureSelected(LevelID.Current());
     }
 
     private void OnEnclosureSelected(LevelID id)
@@ -49,7 +49,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 
         // If the enclosure selected is the current enclosure, then add a new editor
         // that we can use to add more entries
-        if(id == LevelID.FromCurrentSceneName())
+        if(id == LevelID.Current())
         {
             CreateAddingEntry();
         }
@@ -63,7 +63,7 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
     private void CreateAddingEntry()
     {
         TestAndMetricsEntryEditor editor = Instantiate(editorPrefab, editorParent.transform);
-        editor.Setup(LevelID.FromCurrentSceneName(), null, editorScroller);
+        editor.Setup(LevelID.Current(), null, editorScroller);
         editor.OnNewEntryCreated.AddListener(OnNewEntryCreated);
         currentEditors.Add(editor);
     }

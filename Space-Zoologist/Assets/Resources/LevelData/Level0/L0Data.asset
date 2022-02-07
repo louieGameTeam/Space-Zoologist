@@ -16,6 +16,7 @@ MonoBehaviour:
   startingBalance: 0
   MapWidth: 12
   MapHeight: 12
+  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: 0fda617c7827b4782a70ae364eb134a5, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -31,7 +32,7 @@ MonoBehaviour:
   levelMusic: {fileID: 8300000, guid: 8769962011210fb4f89948a6f059cc94, type: 3}
   startingPositions:
   - {x: 1, y: 1, z: 0}
-  startingConversation: {fileID: 8236875934751840470, guid: 94cacda425a1f4f2e9474db9bd386117,
+  startingConversation: {fileID: 2752224524706699894, guid: 94cacda425a1f4f2e9474db9bd386117,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}

@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 3816146338110820791}
   - component: {fileID: 3816146338110820790}
   - component: {fileID: 3816146338110820789}
+  - component: {fileID: 2793448845708056867}
   m_Layer: 5
   m_Name: PrimaryButton
   m_TagString: Untagged
@@ -351,6 +352,24 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 3816146338110820790}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2793448845708056867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816146338110820779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b2cdb634c82ef4ea9d16e9c46a945c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 3816146338110820789}
+  buttonText: {fileID: 3816146338884452273}
+  buttonImage: {fileID: 3816146338110820790}
+  buttonAction:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3816146338884452279
@@ -679,6 +698,7 @@ GameObject:
   - component: {fileID: 3816146338998676457}
   - component: {fileID: 3816146338998676456}
   - component: {fileID: 3816146338998676463}
+  - component: {fileID: 3622615668323848060}
   m_Layer: 5
   m_Name: SecondaryButton
   m_TagString: Untagged
@@ -786,6 +806,24 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3622615668323848060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816146338998676461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b2cdb634c82ef4ea9d16e9c46a945c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 3816146338998676463}
+  buttonText: {fileID: 3816146338951593738}
+  buttonImage: {fileID: 3816146338998676456}
+  buttonAction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3816146339421848203
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,15 +914,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   window: {fileID: 3816146337961807237}
   overlay: {fileID: 3816146339421848213}
+  titleText: {fileID: 3816146337701358539}
+  messageText: {fileID: 0}
   fadeTime: 0.3
+  growTime: 0.2
   windowAnimateTime: 1
   openingPosition: {x: 0, y: -1000}
   restingPosition: {x: 0, y: 0}
   openingEase: 27
   closingEase: 18
-  primaryButton: {fileID: 3816146338110820789}
+  primaryButton: {fileID: 2793448845708056867}
   hasSecondaryButton: 1
-  secondaryButton: {fileID: 3816146338998676463}
-  windowClosedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  secondaryButton: {fileID: 3622615668323848060}

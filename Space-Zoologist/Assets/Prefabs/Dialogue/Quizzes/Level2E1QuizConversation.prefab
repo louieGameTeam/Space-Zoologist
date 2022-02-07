@@ -53,9 +53,13 @@ MonoBehaviour:
   endOfQuizText: "And that\u2019s it. Give me a moment to look over your answers."
   response:
     responses:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 6766782708905769475}
+    - {fileID: 3199122565178260120}
+    - {fileID: 7306603929769084122}
+  requizOnFail: 0
+  onConversationEnded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &292620978910629391
 GameObject:
   m_ObjectHideFlags: 0

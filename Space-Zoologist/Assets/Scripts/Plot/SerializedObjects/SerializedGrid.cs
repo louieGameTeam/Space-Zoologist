@@ -4,9 +4,8 @@ public class SerializedGrid
     public SerializedTilemap serializedTilemap;
     public int width;
     public int height;
-    // TODO Add other floating objects
 
-    public SerializedGrid(GridSystem gridSystem)
+    public SerializedGrid(TileDataController gridSystem)
     {
         serializedTilemap = gridSystem.SerializedTilemap();
 

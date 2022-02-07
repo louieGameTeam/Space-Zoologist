@@ -78,7 +78,7 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
         {
             displayRoot.SetActive(false);
             lastReviewConfirmed = review;
-            UIParent.Data.Concepts.ConfirmReviwedResourceRequest(LevelID.FromCurrentSceneName(), review);
+            UIParent.Data.Concepts.ConfirmReviwedResourceRequest(LevelID.Current(), review);
             onReviewConfirmed.Invoke();
         });
         // Cancel button disables the display

@@ -57,7 +57,7 @@ public class TerrainNeedSystem : NeedSystem
         {
             if (closed.Contains(position)) continue;
 
-            TileType type = GameManager.Instance.m_gridSystem.GetGameTileAt(position).type;
+            TileType type = GameManager.Instance.m_tileDataController.GetGameTileAt(position).type;
             if (!ConnectedTilesByType.ContainsKey(type))
             {
                 ConnectedTilesByType.Add(type, new List<int>());
@@ -97,7 +97,7 @@ public class TerrainNeedSystem : NeedSystem
             Vector3Int next = position;
             next += new Vector3Int(colNbr[i], rowNbr[i], 0);
             if (closed.Contains(next)) continue;
-            if (GameManager.Instance.m_reservePartitionManager.CanAccess(population, position) && GameManager.Instance.m_gridSystem.GetGameTileAt(next) != null && GameManager.Instance.m_gridSystem.GetGameTileAt(next).type == type)
+            if (GameManager.Instance.m_reservePartitionManager.CanAccess(population, position) && GameManager.Instance.m_tileDataController.GetGameTileAt(next) != null && GameManager.Instance.m_tileDataController.GetGameTileAt(next).type == type)
             {
                 total += DFS(population, next, ref closed, type);
             }
@@ -157,7 +157,7 @@ public class TerrainNeedSystem : NeedSystem
 
                 foreach(Vector3Int position in GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population))
                 {
-                    TileType type = GameManager.Instance.m_gridSystem.GetTileData(position).currentTile.type;
+                    TileType type = GameManager.Instance.m_tileDataController.GetTileData(position).currentTile.type;
 
                     if(!accessibleTilesByTileType.ContainsKey(type))
                         accessibleTilesByTileType.Add(type, new HashSet<Vector3Int>());
@@ -278,7 +278,7 @@ public class TerrainNeedSystem : NeedSystem
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
-            terrainCountsByType = GameManager.Instance.m_gridSystem.CountOfTilesUnderSpecies(GameManager.Instance.m_gridSystem.WorldToCell(foodSource.GetPosition()), foodSource.Species);
+            terrainCountsByType = GameManager.Instance.m_tileDataController.CountOfTilesUnderSpecies(GameManager.Instance.m_tileDataController.WorldToCell(foodSource.GetPosition()), foodSource.Species);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {

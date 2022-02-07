@@ -17,6 +17,7 @@ public class LevelEndingData
 
     #region Public Properties
     public bool IsQuiz => isQuiz;
+    public QuizConversation QuizConversation => quizConversation;
     public QuizConversation ActiveQuizConversation => activeQuizConversation;
     public NPCConversation ActiveConversation => activeConversation;
     #endregion

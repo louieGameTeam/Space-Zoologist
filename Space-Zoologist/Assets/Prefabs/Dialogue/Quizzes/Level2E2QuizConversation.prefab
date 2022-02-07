@@ -86,12 +86,13 @@ MonoBehaviour:
   endOfQuizText: "And that\u2019s it. Give me a moment to look over your answers."
   response:
     responses:
-    - conversation: {fileID: 6281416792096004552}
-      nextLevelName: Level2E1
-    - conversation: {fileID: 5504918477696139214}
-      nextLevelName: Level2E3
-    - conversation: {fileID: 1882551549476987228}
-      nextLevelName: Level2E4
+    - {fileID: 6281416792096004552}
+    - {fileID: 5504918477696139214}
+    - {fileID: 1882551549476987228}
+  requizOnFail: 0
+  onConversationEnded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1783513633149088883
 PrefabInstance:
   m_ObjectHideFlags: 0

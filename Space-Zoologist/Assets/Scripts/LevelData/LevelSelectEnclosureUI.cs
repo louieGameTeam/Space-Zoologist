@@ -16,13 +16,12 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         get
         {
-            if (overrideLatestLevelQualified)
-            {
-                return levelOverride;
-            }
+            if (overridden) return levelOverride;
             else return SaveData.LatestLevelQualified;
         }
     }
+    private LevelID CurrentID => LevelID.FromSceneName(enclosure.Level.SceneName);
+    private int Rating => SaveData.GetLevelRating(CurrentID);
     #endregion
 
     #region Private Editor Fields
@@ -35,11 +34,21 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField]
     [Tooltip("Outline object that appears when the button is hovered over")]
     private GameObject outline;
+
+    [SerializeField]
+    [Tooltip("Flavor text describing the rating of this level")]
+    private TextMeshProUGUI ratingText;
+    [SerializeField]
+    [Tooltip("Game object prefab to instantiate for each rating level")]
+    private GameObject ratingObjectPrefab;
+    [SerializeField]
+    [Tooltip("Parent to instantiate the rating objects into")]
+    private Transform ratingObjectParent;
     #endregion
 
     #region Private Fields
     private LevelData enclosure;
-    private bool overrideLatestLevelQualified = false;
+    private bool overridden = false;
     private LevelID levelOverride = LevelID.Invalid;
     #endregion
 
@@ -49,25 +58,45 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         // Set this enclosure to the one given
         this.enclosure = enclosure;
 
-        // Set the title and image
+        // Set the title, rating text, and image
         title.text = enclosure.Level.Name;
         image.sprite = enclosure.Level.Sprite;
+
+        if (CurrentID < SaveData.LatestLevelQualified)
+        {
+            // Setup the rating text and rating objects
+            ratingText.text = LevelRatingSystem.GetRatingText(Rating);
+
+            // Create a rating object for each rating level
+            for (int i = 0; i <= Rating; i++)
+            {
+                Instantiate(ratingObjectPrefab, ratingObjectParent);
+            }
+
+            // Make the parent enabled
+            ratingObjectParent.gameObject.SetActive(true);
+        }
+        // Make the rating object disabled if we do not qualify for this level
+        else ratingObjectParent.gameObject.SetActive(false);
 
         // Disable the outline
         outline.SetActive(false);
     }
     public void LoadLevel() => LevelDataLoader.LoadLevel(enclosure);
-    public void OverrideLatestLevelQualified(LevelID levelOverride)
+    public void SetOverride(LevelID levelOverride)
     {
-        overrideLatestLevelQualified = true;
+        overridden = true;
         this.levelOverride = levelOverride;
 
         // Disable outline in case this makes the ui not interactable anymore
         outline.SetActive(false);
     }
-    public void ClearOverrideLatestLevelQualified()
+    public void ClearOverride()
     {
-        overrideLatestLevelQualified = false;
+        overridden = false;
+
+        // Disable outline in case this makes the ui not interactable anymore
+        outline.SetActive(false);
     }
     #endregion
 
