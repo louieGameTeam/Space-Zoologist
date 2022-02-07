@@ -23,13 +23,13 @@ public class EnclosedArea
         }
     }
 
-    public AtmosphericComposition atmosphericComposition;
     public float[] terrainComposition;
     public List<Animal> animals;
     public List<Population> populations;
     public List<FoodSource> foodSources;
     public byte id;
     public Dictionary<byte, float> previousArea = new Dictionary<byte, float>();
+    public bool isEnclosed;
 
     /// <summary>
     /// This represents the all the (x,y) coordinates inside this enclosed area.
@@ -38,21 +38,16 @@ public class EnclosedArea
     /// <remarks>Using hash set for O(1)look up</remarks>
     public HashSet<Coordinate> coordinates;
 
-    public EnclosedArea(AtmosphericComposition atmosphericComposition, byte id)
+    public EnclosedArea(byte id)
     {
-        this.atmosphericComposition = atmosphericComposition;
         this.terrainComposition = new float[(int)TileType.TypesOfTiles];
         this.animals = new List<Animal>();
         this.coordinates = new HashSet<Coordinate>();
         this.populations = new List<Population>();
         this.foodSources = new List<FoodSource>();
         this.previousArea = new Dictionary<byte, float>();
+        this.isEnclosed = true;
         this.id = id;
-    }
-
-    public void UpdateAtmosphericComposition(AtmosphericComposition atmosphericComposition)
-    {
-        this.atmosphericComposition = atmosphericComposition;
     }
 
     public bool IsInEnclosedArea(Coordinate coordinate)
@@ -62,9 +57,9 @@ public class EnclosedArea
 
     public void AddCoordinate(Coordinate coordinate, int tileType, EnclosedArea prevArea = null)
     {
-        if (GameManager.Instance.m_gridSystem.IsCellinGrid(coordinate.x, coordinate.y))
+        if (GameManager.Instance.m_tileDataController.IsCellinGrid(coordinate.x, coordinate.y))
         {
-            GridSystem.TileData tileData = GameManager.Instance.m_gridSystem.GetTileData(new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0));
+            TileData tileData = GameManager.Instance.m_tileDataController.GetTileData(new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0));
 
             this.coordinates.Add(coordinate);
 
@@ -84,6 +79,12 @@ public class EnclosedArea
                 this.foodSources.Add(tileData.Food.GetComponent<FoodSource>());
             }
 
+            // TODO: If an enclosure is not contained entirely within walls (IE if any tile touches an empty space), then set this.isEnclosed to false
+            // NOTE: This code works, but will fail if the level is not entirely surrounded by walls and is not square-shaped
+            if (tileType != (int)TileType.Wall && GameManager.Instance.m_tileDataController.IsCellOnGridEdge (coordinate.x, coordinate.y)) 
+            {
+                isEnclosed = false;
+            }
         }
 
         this.terrainComposition[tileType]++;
@@ -110,7 +111,7 @@ public class EnclosedArea
         foreach (Coordinate coordinate in this.coordinates)
         {
             UnityEngine.Vector3Int coordinateVector = new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0);
-            GridSystem.TileData coordinateTileData = GameManager.Instance.m_gridSystem.GetTileData(coordinateVector);
+            TileData coordinateTileData = GameManager.Instance.m_tileDataController.GetTileData(coordinateVector);
 
             if (coordinateTileData.Animal)
             {

@@ -2,14 +2,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class QuizTemplate : ScriptableObject
 {
     #region Public Properties
     public QuizCategory[] ImportantCategories => importantCategories;
-    public QuizQuestion[] Questions => questions;
+    public QuizQuestion[] FixedQuestions => fixedQuestions;
+    public QuizQuestionPool RandomQuestionPool => randomQuestionPool;
     public QuizGradingRubric GradingRubric => gradingRubric;
+    // Quiz template is "static" if none of the question datas
+    // is a pool of randomly selected questions
+    public bool Static => randomQuestionPool.Static;
+    public bool Dynamic => !Static;
+    public int QuestionCount => fixedQuestions.Length + randomQuestionPool.QuestionsToPick;
+    public QuizQuestion[] AllQuestions
+    {
+        get
+        {
+            QuizQuestion[] questions = new QuizQuestion[fixedQuestions.Length + randomQuestionPool.QuestionPool.Length];
+
+            // Copy fixed questions into the array
+            System.Array.Copy(fixedQuestions, questions, fixedQuestions.Length);
+            // Copy all random questions into the array
+            System.Array.Copy(randomQuestionPool.QuestionPool, 0, questions, fixedQuestions.Length, randomQuestionPool.QuestionPool.Length);
+
+            return questions;
+        }
+    }
     #endregion
 
     #region Private Editor Fields
@@ -18,7 +39,11 @@ public class QuizTemplate : ScriptableObject
     private QuizCategory[] importantCategories;
     [SerializeField]
     [Tooltip("List of questions to ask in the quiz")]
-    private QuizQuestion[] questions;
+    [FormerlySerializedAs("questions")]
+    private QuizQuestion[] fixedQuestions;
+    [SerializeField]
+    [Tooltip("A pool of random questions that will be asked last in the quiz")]
+    private QuizQuestionPool randomQuestionPool;
     [SerializeField]
     [Tooltip("Percentage to get correct to be considered a 'partial pass'")]
     private QuizGradingRubric gradingRubric;
@@ -31,49 +56,32 @@ public class QuizTemplate : ScriptableObject
     #endregion
 
     #region Public Methods
-    public int GetMaximumPossibleScoreInUnimportantCategories() => GetMaximumPossibleScorePerCategory().TotalScore - GetMaximumPossibleScoreInImportantCategories();
-    public int GetMaximumPossibleScoreInImportantCategories()
+    public QuizQuestion[] GenerateQuestions()
     {
-        int maxScore = 0;
-        // Add the max score for each important category
-        foreach (QuizCategory category in importantCategories)
-        {
-            maxScore += GetMaximumPossibleScoreInCategory(category);
-        }
-        return maxScore;
-    }
-    public ItemizedQuizScore GetMaximumPossibleScorePerCategory()
-    {
-        // Create the score to return
-        ItemizedQuizScore maxScore = new ItemizedQuizScore();
-        // Get a list of all categories
-        IEnumerable<QuizCategory> categories = GetTestedCategories();
+        // Create the array to hold all generated questions
+        QuizQuestion[] generatedQuestions = new QuizQuestion[fixedQuestions.Length + randomQuestionPool.QuestionsToPick];
+        int currentIndex;
 
-        // Set the max score for each category
-        foreach(QuizCategory category in categories)
+        // Add each question in the static list to the list to return
+        for(currentIndex = 0; currentIndex < fixedQuestions.Length; currentIndex++)
         {
-            maxScore.Set(category, GetMaximumPossibleScoreInCategory(category));
+            generatedQuestions[currentIndex] = fixedQuestions[currentIndex];
         }
-        return maxScore;
-    }
-    public IEnumerable<QuizCategory> GetTestedCategories() => questions.Select(q => q.Category).Distinct();
-    public int GetMaximumPossibleScoreInCategory(QuizCategory category)
-    {
-        if (!CollectionExtensions.IsNullOrEmpty(questions))
+
+        // Randomly generate some questions
+        QuizQuestion[] randomlyGeneratedQuestions = randomQuestionPool.PickQuestions();
+
+        // Add each randomly generated question to the list
+        if (randomlyGeneratedQuestions.Length > 0)
         {
-            // Get the questions with this type
-            IEnumerable<QuizQuestion> questions = GetQuestionsWithCategory(category);
-            // Initialize the max score
-            int maxScore = 0;
-            foreach (QuizQuestion q in questions)
+            foreach (QuizQuestion question in randomlyGeneratedQuestions)
             {
-                maxScore += q.MaxPossibleScore;
+                generatedQuestions[currentIndex] = question;
+                currentIndex++;
             }
-
-            return maxScore;
         }
-        else return 0;
+
+        return generatedQuestions;
     }
-    public IEnumerable<QuizQuestion> GetQuestionsWithCategory(QuizCategory category) => questions.Where(q => q.Category == category);
     #endregion
 }

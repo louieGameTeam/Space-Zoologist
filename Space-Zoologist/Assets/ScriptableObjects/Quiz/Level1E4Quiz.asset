@@ -16,12 +16,8 @@ MonoBehaviour:
   - item:
       category: 0
       index: 0
-    need: 0
-  - item:
-      category: 0
-      index: 0
     need: 3
-  questions:
+  fixedQuestions:
   - question: "First question: From the perspective of the Zeigs, what\u2019s the
       difference between Space Maples and Golden Space Maples?"
     category:
@@ -75,4 +71,13 @@ MonoBehaviour:
       weight: 1
     - label: 0
       weight: 0
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 000000000000000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

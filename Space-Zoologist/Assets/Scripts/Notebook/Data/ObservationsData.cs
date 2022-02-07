@@ -1,21 +1,28 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class ObservationsData : NotebookDataModule
 {
+    #region Public Typedefs
+    [System.Serializable]
+    public class Entry
+    {
+        public LevelID level;
+        public ObservationsEntryListData observations;
+    }
+    #endregion
+
     #region Public Properties
-    public List<LevelID> LevelsIDs => levelIDs;
+    public IEnumerable<LevelID> LevelsIDs => entries.Select(entry => entry.level);
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of levels that the player has observed so far")]
-    private List<LevelID> levelIDs = new List<LevelID>();
-    [SerializeField]
-    [Tooltip("List of observation entry lists by level id")]
-    private List<ObservationsEntryListData> entryLists = new List<ObservationsEntryListData>();
+    private List<Entry> entries = new List<Entry>();
     #endregion
 
     #region Constructors
@@ -23,31 +30,29 @@ public class ObservationsData : NotebookDataModule
     #endregion
 
     #region Public Methods
-    public void TryAddEnclosureID(LevelID id)
+    public void OnLevelEncountered(LevelID level)
     {
-        if (!levelIDs.Contains(id))
+        int index = entries.FindIndex(entry => entry.level == level);
+
+        if (index < 0)
         {
-            levelIDs.Add(id);
-            entryLists.Add(new ObservationsEntryListData(Config, id));
+            entries.Add(new Entry
+            {
+                level = level,
+                observations = new ObservationsEntryListData(Config, level)
+            });
         }
     }
-    public ObservationsEntryListData GetEntryList(LevelID id)
+    public ObservationsEntryListData GetEntryList(LevelID level)
     {
-        int index = levelIDs.IndexOf(id);
+        int index = entries.FindIndex(entry => entry.level == level);
 
         if (index >= 0)
         {
-            if (index < entryLists.Count)
-            {
-                return entryLists[index];
-            }
-            else throw new System.IndexOutOfRangeException($"{nameof(ObservationsData)}: " +
-                $"no list of observations corresponds to the level id '{id}'" +
-                $"\n\tLevel ID index: {index}" +
-                $"\n\tCount observation lists: {entryLists.Count}");
+            return entries[index].observations;
         }
         else throw new System.IndexOutOfRangeException($"{nameof(ObservationsData)}: " +
-            $"no level id '{id}' exists in the observations data");
+            $"no level id '{level}' exists in the observations data");
     }
     #endregion
 }

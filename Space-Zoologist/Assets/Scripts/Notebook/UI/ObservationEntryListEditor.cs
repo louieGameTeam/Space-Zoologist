@@ -26,7 +26,7 @@ public class ObservationEntryListEditor : NotebookUIChild
 
         // Add listnener to enclosure id picked event and select the enclosure for the current scene
         enclosurePicker.OnLevelIDPicked.AddListener(OnEnclosureSelected);
-        OnEnclosureSelected(LevelID.FromCurrentSceneName());
+        OnEnclosureSelected(LevelID.Current());
     }
 
     private void OnEnclosureSelected(LevelID id)

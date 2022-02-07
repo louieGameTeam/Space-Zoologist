@@ -55,7 +55,7 @@ public class ResourceRequestListEditor : NotebookUIChild
 
         // If the enclosure selected is the current enclosure, then add a new editor
         // that we can use to add more entries
-        if (id == LevelID.FromCurrentSceneName())
+        if (id == LevelID.Current())
         {
             CreateAddingEntry();
         }

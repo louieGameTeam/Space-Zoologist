@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MoveObject : MonoBehaviour
 {
-    private GridSystem gridSystem = default;
+    private TileDataController gridSystem = default;
     private FoodSourceManager foodSourceManager = default;
     [SerializeField] CursorItem cursorItem = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
@@ -44,7 +44,7 @@ public class MoveObject : MonoBehaviour
 
     private void Start()
     {
-        gridSystem = GameManager.Instance.m_gridSystem;
+        gridSystem = GameManager.Instance.m_tileDataController;
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
         foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
             // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
@@ -107,7 +107,8 @@ public class MoveObject : MonoBehaviour
 
                     // Select the food or animal at mouse position
                     GameObject SelectedObject = SelectGameObjectAtMousePosition();
-                    if (SelectedObject != null)
+                    //Cannot select through UI
+                    if (SelectedObject != null && !EventSystem.current.IsPointerOverGameObject())
                         objectToMove = SelectedObject;
                 }
             }
@@ -193,6 +194,7 @@ public class MoveObject : MonoBehaviour
         {
             Destroy(objectToMove);
         }
+        tileToDelete?.SetActive(false);
         objectToMove = null;
         moving = false;
         MoveButton.SetActive(false);
@@ -248,7 +250,7 @@ public class MoveObject : MonoBehaviour
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        GridSystem.TileData tileData = gridSystem.GetTileData(pos);
+        TileData tileData = gridSystem.GetTileData(pos);
         GameObject toMove = null;
 
         if (tileData == null)
@@ -279,7 +281,8 @@ public class MoveObject : MonoBehaviour
                 if (tileToDelete.name.Equals("liquid"))
                 {
                     tileToDelete.GetComponent<SpriteRenderer>().sprite = LiquidSprite;
-                    initialTileContents = gridSystem.GetTileData(pos).contents;
+                    initialTileContents = new float[] { 0, 0, 0 };
+                    LiquidbodyController.Instance.GetLiquidContentsAt(pos, out initialTileContents, out bool constructing);
                 }
                 else
                 {
@@ -324,10 +327,16 @@ public class MoveObject : MonoBehaviour
 	            //FoodSourceStoreSection.AddItemQuantity(foodItem);
                 break;
             case ItemType.TILE:
+                if (initialTile.type == TileType.Liquid)
+                {
+                    LiquidbodyController.Instance.RemoveConstructingLiquidContent(gridSystem.WorldToCell(objectToMove.transform.position));
+                }
+
+
                 GameManager.Instance.AddToBalance(sellBackCost);
-                GridSystem.TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
+                TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
-                gridSystem.ApplyChangesToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
+                gridSystem.ApplyChangeToTilemapTexture(gridSystem.WorldToCell(objectToMove.transform.position));
                 if (tileData.currentTile == null)
                     tileData.Clear();
                 //gridSystem.RemoveTile(gridSystem.WorldToCell(objectToMove.transform.position));
@@ -379,16 +388,25 @@ public class MoveObject : MonoBehaviour
         AnimalSpecies species = population.Species;
 
         float cost = moveCost;
-        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) && GameManager.Instance.Balance >= cost;
+        // Move is valid if the pod placement is valid...
+        bool valid = gridSystem.IsPodPlacementValid(worldPos, species) &&
+            // ...the player has money to move the animal...
+            GameManager.Instance.Balance >= cost; /*&&
+            // ...and the animal can't already access the terrian here (is this condition necessary?)
+            !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos);*/
 
         // placement is valid and population did not already reach here
-        if (valid && !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos) && gridSystem.IsPodPlacementValid(worldPos, species))
+        if (valid)
         {
+            toMove.transform.position = worldPos;
             GameManager.Instance.m_populationManager.UpdatePopulation(species, worldPos);
             GameManager.Instance.SubtractFromBalance(cost);
             population.RemoveAnimal(toMove);
         }
-        toMove.transform.position = worldPos; // always place animal back because animal movement will be handled by pop manager
+        else
+        {
+            toMove.transform.position = initialPos;
+        }
     }
 
     private void TryPlaceFood(Vector3 worldPos, GameObject toMove)
@@ -396,17 +414,16 @@ public class MoveObject : MonoBehaviour
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.x / 2, 0);
-
+        Vector3Int sizeOffset = new Vector3Int(foodSource.Species.Size.x / 2, foodSource.Species.Size.y / 2, 0);
+        Vector3Int initialGridPos = gridSystem.WorldToCell(initialPos) - sizeOffset;
         //If the player clicks on the food source's original position, don't bother with the mess below
-        if(pos == initialGridPos)
+        if (pos == initialGridPos)
         {
             toMove.transform.position = initialPos;
             return;
         }
-
         //Check if the food source is under construction and if so, grab its build progress
-        GridSystem.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
+        TileDataController.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
         int buildProgress = this.GetStoreItem(species).buildTime;
         if(cluster != null)
             buildProgress = cluster.currentDays;
@@ -415,7 +432,6 @@ public class MoveObject : MonoBehaviour
         removeOriginalFood(foodSource);
         float cost = moveCost;
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
-        
         if (valid) //If valid, place the food at the mouse destination
         {
             placeFood(pos, species);
@@ -432,19 +448,19 @@ public class MoveObject : MonoBehaviour
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
 
-        if (gridSystem.GetTileData(tilePos).currentTile.type != initialTile.type)
+        if (gridSystem.IsTilePlacementValid (tilePos, gridSystem.GetTileData(tilePos).currentTile.type, initialTile.type))
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
             gridSystem.RemoveBuffer((Vector2Int)initialTilePosition);
-            gridSystem.ApplyChangesToTilemapTexture(initialTilePosition);
+            gridSystem.ApplyChangeToTilemapTexture(initialTilePosition);
             
             tileToDelete.SetActive(false);
 
             // add the new tile
-            gridSystem.AddTile(tilePos, initialTile);
-            gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, GridSystem.ConstructionCluster.ConstructionType.TILE);
-            gridSystem.ApplyChangesToTilemapTexture(tilePos);
+            gridSystem.SetTile(tilePos, initialTile);
+            gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, TileDataController.ConstructionCluster.ConstructionType.TILE);
+            gridSystem.ApplyChangeToTilemapTexture(tilePos);
         }
     }
 
@@ -462,12 +478,12 @@ public class MoveObject : MonoBehaviour
         if(buildProgress < this.GetStoreItem(species).buildTime) //If the food source has yet to fully construct, add a build buffer
         {
             foodSource.isUnderConstruction = true;
-            GameManager.Instance.m_gridSystem.ConstructionFinishedCallback(() =>
+            GameManager.Instance.m_tileDataController.ConstructionFinishedCallback(() =>
             {
                 foodSource.isUnderConstruction = false;
             });
             gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? GridSystem.ConstructionCluster.ConstructionType.TREE : GridSystem.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
+                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
         }
         else //Otherwise, make sure its needs are up to date
         {
@@ -493,8 +509,8 @@ public class MoveObject : MonoBehaviour
     public void removeOriginalFood(FoodSource foodSource)
     {
         Vector3Int FoodLocation = gridSystem.WorldToCell(initialPos);
-        GridSystem.TileData data = gridSystem.GetTileData(FoodLocation);
-        gridSystem.RemoveFood(FoodLocation);
+        TileData data = gridSystem.GetTileData(FoodLocation);
+        gridSystem.RemoveFoodReference(FoodLocation);
         foodSourceManager.DestroyFoodSource(foodSource); // Finds the lower left cell the food occupies
         Vector2Int shiftedPos = new Vector2Int(FoodLocation.x, FoodLocation.y) - foodSource.Species.Size / 2;
         gridSystem.RemoveBuffer(shiftedPos, foodSource.Species.Size.x, foodSource.Species.Size.y);

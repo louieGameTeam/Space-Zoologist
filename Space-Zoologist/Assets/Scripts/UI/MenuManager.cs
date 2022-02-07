@@ -47,7 +47,6 @@ public class MenuManager : MonoBehaviour
         {
             if (!this.IsInStore)
             {
-                GameManager.Instance.TryToPause();
                 EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
             }
             this.StoreMenuToggledOn(menu);
@@ -82,14 +81,14 @@ public class MenuManager : MonoBehaviour
     {
         if (!this.IsInStore)
         {
-            GameManager.Instance.TryToPause();
+            GameManager.Instance.TryToPause("StoreMenu");
             EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
         }
         StoreCanvas.DOScale(0.8f, 0.5f);
         this.IsInStore = true;
 
-        GameManager.Instance.m_gridSystem.StartDrafting();
-        GameManager.Instance.m_gridSystem.SetGridOverlay(true);
+        GameManager.Instance.m_tileDataController.StartDrafting();
+        GameManager.Instance.m_tileDataController.SetGridOverlay(true);
 
         AudioManager.instance?.PlayOneShot(SFXType.BuildModeOpen);
     }
@@ -100,9 +99,9 @@ public class MenuManager : MonoBehaviour
         this.IsInStore = false;
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
 
-        GameManager.Instance.m_gridSystem.FinishDrafting();
-        GameManager.Instance.m_gridSystem.SetGridOverlay(false);
-
+        GameManager.Instance.m_tileDataController.FinishDrafting();
+        GameManager.Instance.m_tileDataController.SetGridOverlay(false);
+        GameManager.Instance.TryToUnpause("StoreMenu");
         AudioManager.instance?.PlayOneShot(SFXType.BuildModeClose);
     }
 
@@ -127,7 +126,6 @@ public class MenuManager : MonoBehaviour
             this.currentMenu = null;
             ///this.PlayerBalanceHUD.SetActive(false);
             this.IsInStore = false;
-            GameManager.Instance.TryToUnpause();
         }
 
         EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Events;
 using DialogueEditor;
 using TMPro;
@@ -8,18 +10,9 @@ using TMPro;
 public class QuizConversation : MonoBehaviour
 {
     #region Public Properties
-    public QuizInstance CurrentQuiz
-    {
-        get
-        {
-            if(currentQuiz == null)
-            {
-                currentQuiz = new QuizInstance(quizTemplate);
-            }
-            return currentQuiz;
-        }
-    }
-    public NPCConversation CurrentResponse => currentResponse;
+    public QuizTemplate Template => template;
+    public QuizInstance CurrentQuiz => currentQuiz;
+    public UnityEvent OnConversationEnded => onConversationEnded;
     #endregion
 
     #region Public Typedefs
@@ -34,7 +27,8 @@ public class QuizConversation : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the quiz template to run the quiz for")]
-    private QuizTemplate quizTemplate;
+    [FormerlySerializedAs("quizTemplate")]
+    private QuizTemplate template;
 
     [Space]
 
@@ -61,12 +55,28 @@ public class QuizConversation : MonoBehaviour
     [Tooltip("List of NPCConversations to respond with based on the quizes' grade")]
     [EditArrayWrapperOnEnum("responses", typeof(QuizGrade))]
     private NPCConversationArray response;
+    [SerializeField]
+    [Tooltip("If true, the quiz conversation will be re-spoken if the player fails the quiz")]
+    private bool requizOnFail = false;
+
+    [Space]
+
+    [SerializeField]
+    [Tooltip("Event invoked when the quiz conversation is finished")]
+    private UnityEvent onConversationEnded;
     #endregion
 
     #region Private Fields
     private QuizInstance currentQuiz;
-    // Current response to the quiz being spoken
     private NPCConversation currentResponse;
+    // Conversation that the NPC speaks to say all of the questions
+    private NPCConversation currentQuizConversation;
+    private readonly string[] optionLabels = new string[]
+    {
+        "Not at all useful",
+        "Somewhat useful",
+        "Very useful"
+    };
     #endregion
 
     #region Public Methods
@@ -80,19 +90,42 @@ public class QuizConversation : MonoBehaviour
             dialogueManager.SetNewDialogue(openingConversation);
 
             // Then, say the quiz part of the conversation
-            NPCConversation conversation = Create(dialogueManager);
-            dialogueManager.SetNewQuiz(conversation);
+            SayQuizConversationNext();
         }
     }
     public NPCConversation Create(DialogueManager dialogueManager)
     {
+        // Build a new quiz. This will result in regenerating new questions from any randomized pools
+        GenerateQuizInstance();
+
         // Create the callback that is called after any option is answered
         UnityAction OptionSelectedFunctor(int questionIndex, int optionIndex)
         {
-            return () => CurrentQuiz.AnswerQuestion(questionIndex, optionIndex);
+            return () => currentQuiz.AnswerQuestion(questionIndex, optionIndex);
         }
         // Say the conversation that corresponds to the grade that the player got on the quiz
-        void SayResponse() => currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
+        void SayResponse()
+        {
+            // Destroy any previous response
+            if (currentResponse) Destroy(currentResponse);
+            // Instantiate a new response
+            currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
+
+            // If we should requiz when we fail, then we must say the quiz after the response
+            if (requizOnFail && CurrentQuiz.Grade != QuizGrade.Excellent)
+            {
+                SayQuizConversationNext();
+            }
+            // If we will not requiz, then invoke my conversation ended event when this conversation is done
+            else
+            {
+                // Set the quiz on the reports data to the quiz that we just finished
+                GameManager.Instance.NotebookUI.Data.Reports.SetQuiz(LevelID.Current(), currentQuiz);
+
+                // Invoke the quiz conversation ended event when the response is over
+                currentResponse.OnConversationEnded(onConversationEnded.Invoke);
+            }
+        }
 
         // Try to get an npc conversation. If it exists, destroy it and add a new one
         NPCConversation conversation = gameObject.GetComponent<NPCConversation>();
@@ -114,10 +147,10 @@ public class QuizConversation : MonoBehaviour
         List<EditableConversationNode> nodes = new List<EditableConversationNode>();
 
         // Loop over every question and add speech and option nodes for each
-        for (int i = 0; i < quizTemplate.Questions.Length; i++)
+        for (int i = 0; i < currentQuiz.RuntimeTemplate.Questions.Length; i++)
         {
             // Cache the current question
-            QuizQuestion question = quizTemplate.Questions[i];
+            QuizQuestion question = currentQuiz.RuntimeTemplate.Questions[i];
 
             // Create a new speech node
             EditableSpeechNode currentSpeechNode = CreateSpeechNode(conversation, editableConversation, question.Question, 0, i * 300, i == 0, null);
@@ -163,7 +196,7 @@ public class QuizConversation : MonoBehaviour
         }
 
         // Create the end of quiz node
-        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, quizTemplate.Questions.Length * 300, false, SayResponse);
+        EditableSpeechNode endOfQuiz = CreateSpeechNode(conversation, editableConversation, endOfQuizText, 0, currentQuiz.RuntimeTemplate.Questions.Length * 300, false, SayResponse);
         nodes.Add(endOfQuiz);
 
         // If a previous speech node exists, 
@@ -189,6 +222,17 @@ public class QuizConversation : MonoBehaviour
     #endregion
 
     #region Private Methods
+    private void SayQuizConversationNext()
+    {
+        DialogueManager dialogue = GameManager.Instance.m_dialogueManager;
+
+        // If there is a current quiz conversation, then destroy it
+        if (currentQuizConversation) Destroy(currentQuizConversation);
+        // Set the current quiz conversation
+        currentQuizConversation = Create(dialogue);
+        // Tell the dialogue manager to say the quiz conversation after the currently running conversation
+        dialogue.SetNewQuiz(currentQuizConversation);
+    }
     private EditableSpeechNode CreateSpeechNode(NPCConversation conversation, EditableConversation editableConversation, string text, float xPos, float yPos, bool isRoot, UnityAction callback)
     {
         // Create a new speech node
@@ -247,6 +291,108 @@ public class QuizConversation : MonoBehaviour
 
         // Return the new node
         return optionNode;
+    }
+    private void GenerateQuizInstance()
+    {
+        // Get the list of reviews for the current attempt of this level
+        ReviewedResourceRequestList reviewsList = GameManager
+            .Instance
+            .NotebookUI
+            .Data
+            .Concepts
+            .GetEntryWithLatestAttempt(LevelID.Current())
+            .reviews;
+
+        // If there are reviewed requests then create a quiz with additional questions
+        if (reviewsList.Reviews.Count > 0)
+        {
+            // Filter only reviews that were granted,
+            // and combine reviews that addressed and requested the same item
+            ReviewedResourceRequest[] filteredReviews = reviewsList
+                .Reviews
+                .Where(ResourceRequestGeneratesQuestion)
+                .Distinct(new ReviewedResourceRequest.ItemComparer())
+                .ToArray();
+
+            // Check to make sure there are some reviews to quiz on
+            if (filteredReviews.Length > 0)
+            {
+                // Create an array with all the quiz questions
+                QuizQuestion[] requestQuestions = new QuizQuestion[filteredReviews.Length];
+
+                // Fill in the info for each question
+                for (int i = 0; i < requestQuestions.Length; i++)
+                {
+                    ResourceRequest request = filteredReviews[i].Request;
+
+                    // Set the category to the item addressed by the request
+                    QuizCategory category = new QuizCategory(request.ItemAddressed, request.NeedAddressed);
+
+                    // Generate the quiz options
+                    QuizOption[] options = GenerateQuizOptions(request, category);
+
+                    // Setup the format for the question
+                    string question = $"Was the requested {request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                        $"useful for improving the {request.ItemAddressed.Data.Name.Get(ItemName.Type.Colloquial)}" +
+                        $" {request.NeedAddressed} need?";
+
+                    // Create the question
+                    requestQuestions[i] = new QuizQuestion(question, category, options);
+                }
+
+                // Set the current quiz with additional request questions
+                currentQuiz = new QuizInstance(template, requestQuestions);
+            }
+            else currentQuiz = new QuizInstance(template);
+        }
+        // If there are no reviwed requests
+        // then create a quiz without additional questions
+        else currentQuiz = new QuizInstance(template);
+    }
+    private QuizOption[] GenerateQuizOptions(ResourceRequest request, QuizCategory category)
+    {
+        // Create the options
+        QuizOption[] options = new QuizOption[3];
+
+        // Get the usefulness of the request
+        int usefulness = request.Usefulness;
+
+        // The option at the usefulness level has full score
+        options[usefulness] = new QuizOption(optionLabels[usefulness], 2);
+
+        if (usefulness != 1)
+        {
+            // Middle option has score of 1
+            options[1] = new QuizOption(optionLabels[1], 1);
+
+            // The other usefulness option has score of 0
+            usefulness = (usefulness + 2) % 4;
+            options[usefulness] = new QuizOption(optionLabels[usefulness], 0);
+        }
+        else
+        {
+            options[2] = new QuizOption(optionLabels[2], 1);
+            options[0] = new QuizOption(optionLabels[0], 0);
+        }
+
+        return options;
+    }
+    private bool ResourceRequestGeneratesQuestion(ReviewedResourceRequest review)
+    {
+        // Get the categories of all fixed quesitons
+        IEnumerable<QuizCategory> testedCategories = template.AllQuestions
+            .Select(q => q.Category);
+        // Create the category this request represents
+        QuizCategory myCategory = new QuizCategory(review.Request.ItemAddressed, review.Request.NeedAddressed);
+
+        // Resource request will generate a question
+        // if the status is not denied or invalid,
+        // and the category of the review is somewhere in the quiz
+        return review.CurrentStatus != ReviewedResourceRequest.Status.Denied &&
+            review.CurrentStatus != ReviewedResourceRequest.Status.Invalid &&
+            (review.Request.NeedAddressed == NeedType.Terrain || 
+            review.Request.NeedAddressed == NeedType.FoodSource) &&
+            testedCategories.Contains(myCategory);
     }
     #endregion
 }

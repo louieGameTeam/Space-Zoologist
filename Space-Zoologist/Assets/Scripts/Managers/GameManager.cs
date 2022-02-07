@@ -59,7 +59,8 @@ public class GameManager : MonoBehaviour
     public int CurrentDay => currentDay;
     [SerializeField] Text CurrentDayText = default;
     public bool IsPaused { get; private set; }
-    public bool WasPaused { get; private set; }
+
+    private HashSet<string> m_pauseStack = new HashSet<string>();
 
     public bool IsGameOver { get { return m_isGameOver; } }
     private bool m_isGameOver = false;
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviour
     public BehaviorPatternUpdater m_behaviorPatternUpdater { get; private set; }
     public TilePlacementController m_tilePlacementController { get; private set; }
     public PlotIO m_plotIO { get; private set; }
-    public GridSystem m_gridSystem { get; private set; }
+    public TileDataController m_tileDataController { get; private set; }
     public EnclosureSystem m_enclosureSystem { get; private set; }
     public Inspector m_inspector { get; private set; }
     public PlayerController m_playerController { get; private set; }
@@ -134,72 +135,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Loading Functions
-    public static int[] ExtractLevelInfo(string levelName)
-    {
-        levelName = levelName.Trim();
-        levelName = levelName.Replace("Level", "");
-        string[] temp = levelName.Split('E');
-        int[] info = new int[temp.Length];
-        for (int i = 0; i < info.Length; i++)
-        {
-            info[i] = int.Parse(temp[i]);
-        }
-        return info;
-    }
-
-    public void SaveGame(string curLevel)
-    {
-        string name = "sz.save";
-        string fullPath = Path.Combine(Application.persistentDataPath, name);
-        string prevLevel = LoadGame();
-        int prev = ExtractLevelInfo(prevLevel)[0];
-        int cur = ExtractLevelInfo(curLevel)[0];
-        if (cur < prev) return;
-        try
-        {
-            File.WriteAllText(fullPath, curLevel);
-        }
-        catch
-        {
-            Debug.LogError("Serialization error, NOT saved to protect existing saves");
-            return;
-        }
-        Debug.Log("Game Saved to: " + fullPath);
-    }
-
-    public void ClearSave()
-    {
-        string name = "sz.save";
-        string fullPath = Path.Combine(Application.persistentDataPath, name);
-        try
-        {
-            File.WriteAllText(fullPath, "Level1E1");
-        }
-        catch
-        {
-            Debug.LogError("Serialization error.");
-            return;
-        }
-        Debug.Log("Game Data Reset.");
-    }
-
-    public static string LoadGame()
-    {
-        string name = "sz.save";
-        string fullPath = Path.Combine(Application.persistentDataPath, name);
-        try
-        {
-            string json = File.ReadAllText(fullPath);
-            if (json.Length > 15 || json.Length < 7) throw new System.FormatException("Level longer than expected.");
-            return json;
-        }
-        catch (System.Exception e)
-        {
-            print("Error reading from or no save file");
-            return "Level1E1";
-        }
-    }
-
     public void SaveMap(string name = null, bool preset = true)
     {
         name = name ?? LevelOnPlay;
@@ -239,7 +174,7 @@ public class GameManager : MonoBehaviour
             var jsonTextFile = Resources.Load<TextAsset>(fullPath).ToString();
             serializedLevel = JsonUtility.FromJson<SerializedLevel>(jsonTextFile);
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             Debug.LogWarning($"An error occurred when trying to load map '{name}':" +
                 $"\n\t{e}");
@@ -286,7 +221,7 @@ public class GameManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.Log("No save data or error loading notebook data, creating new data...");
+            Debug.Log("No save data or error loading notebook data, creating new data");
             return null;
         }
     }
@@ -300,8 +235,6 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevelData()
     {
-        SaveGame(m_levelData.Level.SceneName);
-
         // set balance
         Balance = LevelData.StartingBalance;
 
@@ -334,7 +267,7 @@ public class GameManager : MonoBehaviour
         m_behaviorPatternUpdater = FindObjectOfType<BehaviorPatternUpdater>();
         m_tilePlacementController = FindObjectOfType<TilePlacementController>();
         m_plotIO = FindObjectOfType<PlotIO>();
-        m_gridSystem = FindObjectOfType<GridSystem>();
+        m_tileDataController = FindObjectOfType<TileDataController>();
         m_enclosureSystem = FindObjectOfType<EnclosureSystem>();
         m_inspector = FindObjectOfType<Inspector>();
         m_playerController = FindObjectOfType<PlayerController>();
@@ -437,7 +370,6 @@ public class GameManager : MonoBehaviour
         this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
         UpdateDayText(currentDay);
         this.IsPaused = false;
-        this.WasPaused = false;
     }
     #endregion
 
@@ -446,7 +378,7 @@ public class GameManager : MonoBehaviour
     {
         this.Balance += value;
     }
-    
+
     public void SubtractFromBalance(float value)
     {
         if (this.Balance - value >= 0)
@@ -480,7 +412,7 @@ public class GameManager : MonoBehaviour
     {
         this.UpdateAllNeedSystems();
         m_populationManager.UpdateAllGrowthConditions();
-        TogglePause();
+        //TogglePause("InitialNeedSystemUpdate");
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
         {
             this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
@@ -545,7 +477,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateAccessMap()
     {
-        m_reservePartitionManager.UpdateAccessMapChangedAt(m_gridSystem.ChangedTiles.ToList<Vector3Int>());
+        m_reservePartitionManager.UpdateAccessMapChangedAt(m_tileDataController.ChangedTiles.ToList<Vector3Int>());
     }
 
     /// <summary>
@@ -560,10 +492,10 @@ public class GameManager : MonoBehaviour
     public void UpdateDirtyNeedSystems()
     {
         // Update populations' accessible map when terrain was modified
-        if (m_gridSystem.HasTerrainChanged)
+        if (m_tileDataController.HasTerrainChanged)
         {
             // TODO: Update population's accessible map only for changed terrain
-            m_reservePartitionManager.UpdateAccessMapChangedAt(m_gridSystem.ChangedTiles.ToList<Vector3Int>());
+            m_reservePartitionManager.UpdateAccessMapChangedAt(m_tileDataController.ChangedTiles.ToList<Vector3Int>());
         }
 
         foreach (KeyValuePair<NeedType, NeedSystem> entry in m_needSystems)
@@ -588,52 +520,55 @@ public class GameManager : MonoBehaviour
         m_foodSourceManager.UpdateAccessibleTerrainInfoForAll();
 
         // Reset terrain modified flag
-        m_gridSystem.HasTerrainChanged = false;
+        m_tileDataController.HasTerrainChanged = false;
     }
     #endregion
 
     #region Game State Functions
-    public void TryToPause()
+
+    public void TryToPause(string pauseID)
     {
         // prevents accidentally unpausing when should not (two different accessors)
-        if (this.IsPaused)
-            this.WasPaused = true;
-        else
-            this.Pause();
+        if(m_pauseStack.Add(pauseID))
+        {
+            if (m_pauseStack.Count == 1)
+                this.Pause();
+        }
     }
 
-    public void TryToUnpause()
+    public void TryToUnpause(string pauseID)
     {
         // prevents accidentally pausing when should not (two different accessors)
-        if (this.WasPaused)
-            this.WasPaused = false;
-        else
-            this.Unpause();
+        if (m_pauseStack.Remove(pauseID))
+        {
+            if (m_pauseStack.Count == 0)
+                this.Unpause();
+        }
     }
 
-    public void TogglePause()
+    public void TogglePause(string pauseID)
     {
         if (this.IsPaused)
         {
-            this.Unpause();
+            this.TryToUnpause(pauseID);
         }
         else
         {
-            this.Pause();
+            this.TryToPause(pauseID);
         }
     }
 
-    public void Pause()
+    private void Pause()
     {
         Time.timeScale = 1;
         this.IsPaused = true;
         foreach (Population population in m_populationManager.Populations)
             population.PauseAnimalsMovementController();
-        m_gridSystem.UpdateAnimalCellGrid();
+        m_tileDataController.UpdateAnimalCellGrid();
         AudioManager.instance?.PlayOneShot(SFXType.Pause);
     }
 
-    public void Unpause()
+    private void Unpause()
     {
         this.IsPaused = false;
         foreach (Population population in m_populationManager.Populations)
@@ -665,11 +600,9 @@ public class GameManager : MonoBehaviour
         this.IngameUI.SetActive(false);
     }
 
-    public void HandleExitLevel() {
-        // Is not currently in level
-        if (SceneNavigator.RecentlyLoadedLevel != "MainLevel") return;
-
-        m_gridSystem.SetGridOverlay(false);
+    public void HandleExitLevel()
+    {
+        m_tileDataController.SetGridOverlay(false);
         SaveNotebook(NotebookUI.Data);
     }
 
@@ -698,16 +631,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DebugWin() {
+    public void DebugWin()
+    {
         isMainObjectivesCompleted = true;
 
         DebugGameOver();
     }
-    
-    public void DebugGameOver() {
+
+    public void DebugGameOver()
+    {
         this.m_isGameOver = true;
 
-        // TODO figure out what should happen when the main objectives are complete
         EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
 
         // GameOver.cs listens for the event and handles gameover
@@ -732,7 +666,7 @@ public class GameManager : MonoBehaviour
         this.UpdateObjectivePanel();
     }
 
-    private void CheckWinConditions() 
+    private void CheckWinConditions()
     {
         isMainObjectivesCompleted = true;
         numSecondaryObjectivesCompleted = 0;
@@ -748,7 +682,6 @@ public class GameManager : MonoBehaviour
         {
             this.m_isGameOver = true;
 
-            // TODO figure out what should happen when the main objectives are complete
             EventManager.Instance.InvokeEvent(EventType.MainObjectivesCompleted, null);
 
             // GameOver.cs listens for the event and handles gameover
@@ -823,7 +756,7 @@ public class GameManager : MonoBehaviour
 
     public void nextDay()
     {
-        m_gridSystem.CountDown();
+        m_tileDataController.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
         UpdateAllNeedSystems();
@@ -838,19 +771,24 @@ public class GameManager : MonoBehaviour
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 
         UpdateDayText(++currentDay);
+        CheckWinConditions();
+
+        // Invoke next day event
+        EventManager.Instance.InvokeEvent(EventType.NextDay, null);
+
         if (currentDay > maxDay)
         {
             Debug.Log("Time is up!");
             // GameOver.cs listens for the event and handles gameover
             EventManager.Instance.InvokeEvent(EventType.GameOver, null);
         }
-        CheckWinConditions();
     }
 
     public void EnableInspectorToggle(bool enabled)
     {
         InspectorToggle.interactable = enabled;
-        if (!enabled) {
+        if (!enabled)
+        {
             InspectorToggle.isOn = false;
             ObjectiveToggle.isOn = true;
         }

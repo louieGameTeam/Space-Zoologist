@@ -5,13 +5,13 @@ using UnityEngine;
 public class PredatoryPreySystem : NeedSystem
 {
 
-    private readonly GridSystem gridSystem = default;
+    private readonly TileDataController gridSystem = default;
     private readonly ReservePartitionManager rpm = default;
 
     public PredatoryPreySystem(NeedType needType = NeedType.Prey) : base(needType)
     {
         this.rpm = GameManager.Instance.m_reservePartitionManager;
-        this.gridSystem = GameManager.Instance.m_gridSystem;
+        this.gridSystem = GameManager.Instance.m_tileDataController;
     }
 
     /* 

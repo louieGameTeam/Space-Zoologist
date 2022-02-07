@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level0Quiz
   m_EditorClassIdentifier: 
   importantCategories: []
-  questions:
+  fixedQuestions:
   - question: What does the "R" in roct man stand for?
     category:
       item:
@@ -40,9 +40,13 @@ MonoBehaviour:
       weight: 0
     - label: Observe
       weight: 1
-  gradingRubric:
-    scoreToPassImportantQuestions: 0
-    scoreToPassUnimportantQuestions: 2
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
-    template: {fileID: 0}
-    answers: 
+    template: {fileID: 11400000}
+    answers: 0000000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []
