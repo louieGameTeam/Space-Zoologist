@@ -122,7 +122,7 @@ public class TilePlacementController : MonoBehaviour
 
         if (isFirstTile)
         {
-            PlaceTile(currentMouseCellPosition);
+            print (PlaceTile(currentMouseCellPosition));
             return;
         }
         if (!FourNeighborTileLocations(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps
@@ -132,7 +132,7 @@ public class TilePlacementController : MonoBehaviour
                 foreach (int y in TileDataController.Range(lastPlacedTile.y, currentMouseCellPosition.y))
                 {
                     Vector3Int location = new Vector3Int(lastPlacedTile.x, y, currentMouseCellPosition.z);
-                    PlaceTile(location);
+                    PlaceTile (location);
                 }
             }
             else
@@ -143,11 +143,11 @@ public class TilePlacementController : MonoBehaviour
                     float interpolatedY = gradient * (x - lastPlacedTile.x);
                     int incrementY = TileDataController.RoundTowardsZeroInt(interpolatedY);
                     Vector3Int interpolateTileLocation = new Vector3Int(TileDataController.RoundTowardsZeroInt(x), lastPlacedTile.y + incrementY, lastPlacedTile.z);
-                    PlaceTile(interpolateTileLocation);
+                    PlaceTile (interpolateTileLocation);
                 }
             }
         }
-        PlaceTile(currentMouseCellPosition);
+        PlaceTile (currentMouseCellPosition);
     }
 
     private int lastCornerX;
@@ -231,14 +231,14 @@ public class TilePlacementController : MonoBehaviour
     {
         if (IsPlacable(cellPosition) || !checkPlacable)
         {
+            // If animal/food at location
+            if (!IsPositionFree (cellPosition)) {
+                return PlacementResult.Restricted;
+            }
+
             // Check availability
             foreach (GameTile tile in referencedTiles)
             {
-                // If animal/food at location
-                if (!IsPositionFree(cellPosition))
-                {
-                    return PlacementResult.Restricted;
-                }
                 // If same tile
                 if (gridSystemReference.GetGameTileAt(cellPosition) == tile)
                 {
@@ -252,7 +252,7 @@ public class TilePlacementController : MonoBehaviour
             }
             this.triedToPlaceTiles.Add(cellPosition);
             this.addedTiles.Add(cellPosition);
-            
+
             return PlacementResult.Placed;
         }
         return PlacementResult.Restricted;
@@ -282,12 +282,21 @@ public class TilePlacementController : MonoBehaviour
         }
 
         TileData tileData = gridSystemReference.GetTileData(cellLocation);
+        // Can't place liquids under a food tile
         if (tileData.Food)
         {
             foreach(GameTile tile in referencedTiles)
             {
-                if(tile.type == TileType.Liquid)
+                if(tile.type == TileType.Liquid || tile.type == TileType.Wall)
                     return false;
+            }
+        }
+        
+        // Can't place certain tiles
+        foreach (GameTile tile in referencedTiles) {
+            if (!gridSystemReference.IsTilePlacementValid (cellLocation, tileData.currentTile.type, tile.type)) {
+                print ("Should not be able to place tile here!");
+                return false;
             }
         }
 
