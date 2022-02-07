@@ -29,6 +29,7 @@ public class EnclosedArea
     public List<FoodSource> foodSources;
     public byte id;
     public Dictionary<byte, float> previousArea = new Dictionary<byte, float>();
+    public bool isEnclosed;
 
     /// <summary>
     /// This represents the all the (x,y) coordinates inside this enclosed area.
@@ -45,6 +46,7 @@ public class EnclosedArea
         this.populations = new List<Population>();
         this.foodSources = new List<FoodSource>();
         this.previousArea = new Dictionary<byte, float>();
+        this.isEnclosed = true;
         this.id = id;
     }
 
@@ -77,6 +79,12 @@ public class EnclosedArea
                 this.foodSources.Add(tileData.Food.GetComponent<FoodSource>());
             }
 
+            // TODO: If an enclosure is not contained entirely within walls (IE if any tile touches an empty space), then set this.isEnclosed to false
+            // NOTE: This code works, but will fail if the level is not entirely surrounded by walls and is not square-shaped
+            if (tileType != (int)TileType.Wall && GameManager.Instance.m_gridSystem.IsCellOnGridEdge (coordinate.x, coordinate.y)) 
+            {
+                isEnclosed = false;
+            }
         }
 
         this.terrainComposition[tileType]++;
