@@ -4,17 +4,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Bookmark
+[Serializable]
+/// <summary>
+/// A single bookmark in the NotebookUI. It has a label and 
+/// a list of bookmark data that handle navigation
+/// </summary>
+public struct Bookmark
 {
     #region Public Properties
     // Public accessors
     public string Label => label;
     #endregion
 
-    #region Protected Fields
-    protected string label;
-    protected BookmarkData[] datas = new BookmarkData[0];
+    #region Private Editor Fields
+    [SerializeField]
+    [Tooltip("Label to display for the bookmark")]
+    private string label;
+    [SerializeField]
+    [Tooltip("List of data to set for the bookmark")]
+    private BookmarkData[] datas;
     #endregion
 
     #region Constructors
