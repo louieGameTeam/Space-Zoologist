@@ -175,7 +175,7 @@ namespace DialogueEditor
                         if (t > 1)
                         {
                             SetState(eState.Idle);
-                            
+
                             return;
                         }
 
@@ -329,6 +329,11 @@ namespace DialogueEditor
             // Exit
             switch (m_state)
             {
+                case eState.TransitioningOptionsOn:
+                    // Make sure all options are completely visible
+                    foreach (UIConversationButton option in m_uiOptions)
+                        option.SetAlpha(1);
+                    break;
                 case eState.TransitioningOptionsOff:
                     m_selectedOption = null;
                     break;
