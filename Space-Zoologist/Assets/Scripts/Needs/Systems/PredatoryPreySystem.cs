@@ -11,7 +11,7 @@ public class PredatoryPreySystem : NeedSystem
     public PredatoryPreySystem(NeedType needType = NeedType.Prey) : base(needType)
     {
         this.rpm = GameManager.Instance.m_reservePartitionManager;
-        this.gridSystem = GameManager.Instance.m_gridSystem;
+        this.gridSystem = GameManager.Instance.m_tileDataController;
     }
 
     /* 

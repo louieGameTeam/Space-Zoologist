@@ -15,7 +15,7 @@ public class DebugTextUIHandler : MonoBehaviour
 
         DebugText = GetComponent<Text>();
 
-        gridSystem = GameManager.Instance.m_gridSystem;
+        gridSystem = GameManager.Instance.m_tileDataController;
     }
 
     void Update()

@@ -8,7 +8,7 @@ public class SerializedTilemap
     public string TilemapName;
     public SerializedTileData[] SerializedTileDatas;
     public SerializedLiquidBody[] SerializedLiquidBodies;
-    public SerializedTilemap (string tilemapName, TileData[,] tiles, int width, int height, HashSet<LiquidBody> liquidBodies)
+    public SerializedTilemap (string tilemapName, TileData[,] tiles, int width, int height, List<LiquidBody> liquidBodies)
     {
         this.TilemapName = tilemapName;
 
@@ -18,7 +18,6 @@ public class SerializedTilemap
         // read first tile for reference
         TileData tileData = tiles[0, 0];
         GameTile gameTile = tileData.currentTile;
-        LiquidBody body = tileData.currentLiquidBody;
         bool placeable = tileData.isTilePlaceable;
         int repetitions = 1;
 
@@ -36,12 +35,11 @@ public class SerializedTilemap
                     if (gameTile != tileData.currentTile || placeable != tileData.isTilePlaceable)
                     {
                         // create and add a new serialized tile data
-                        SerializedTileData serializedTileData = new SerializedTileData(gameTile, body, placeable, repetitions);
+                        SerializedTileData serializedTileData = new SerializedTileData(gameTile, LiquidbodyController.Instance.GetBodyID(tileData.tilePosition), placeable, repetitions);
                         serializedTileDataList.Add(serializedTileData);
 
                         // update other values for future matching
                         gameTile = tileData.currentTile;
-                        body = tileData.currentLiquidBody;
                         placeable = tileData.isTilePlaceable;
                         repetitions = 1;
                     }
@@ -52,7 +50,7 @@ public class SerializedTilemap
         }
 
         // add in the last set of tile data
-        SerializedTileData lastSerializedTileData = new SerializedTileData(gameTile, body, placeable, repetitions);
+        SerializedTileData lastSerializedTileData = new SerializedTileData(gameTile, LiquidbodyController.Instance.GetBodyID(tileData.tilePosition), placeable, repetitions);
         serializedTileDataList.Add(lastSerializedTileData);
 
         // turn list into array

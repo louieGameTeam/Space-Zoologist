@@ -17,7 +17,7 @@ MonoBehaviour:
       category: 0
       index: 0
     need: 3
-  questions:
+  fixedQuestions:
   - question: "We\u2019ll start off with an easy one. What food do Zeigs prefer? "
     category:
       item:
@@ -67,9 +67,10 @@ MonoBehaviour:
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
-  gradingRubric:
-    scoreToPassImportantQuestions: 2
-    scoreToPassUnimportantQuestions: 1
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
     answers: 010000000300000002000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

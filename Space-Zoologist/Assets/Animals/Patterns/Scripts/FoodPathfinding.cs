@@ -35,12 +35,11 @@ public class FoodPathfinding : GeneralPathfinding
 
             if (destination.Equals(new Vector3Int(-1, -1, -1)))
             {
-                // TODO figure out how to exit pattern since condition not satisfied
                 int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
                 destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
             }
 
-            AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+            AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
         }
         else {
             // If the edible food doesn't exist, just go to a random food (or whatever ItemType destination is set to)

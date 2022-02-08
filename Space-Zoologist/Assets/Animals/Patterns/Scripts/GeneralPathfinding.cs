@@ -12,14 +12,14 @@ public class GeneralPathfinding : BehaviorPattern
         Vector3Int destination;
         if (Destination.Equals(ItemType.Terrain))
         {
-            destination = base.GridSystem.FindClosestLiquidSource(animalData.animal.PopulationInfo, gameObject);
+            destination = base.TileDataController.FindClosestLiquidSource(animalData.animal.PopulationInfo, gameObject);
         }
         else
         {
             int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
             destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         }
-        AnimalPathfinding.PathRequestManager.RequestPath(base.GridSystem.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+        AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
     {

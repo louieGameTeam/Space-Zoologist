@@ -78,6 +78,15 @@ public class EditorGUIAuto
     }
     #endregion
 
+    #region Object Field
+    public static void ObjectField(ref Rect position, SerializedProperty property, System.Type objType)
+    {
+        position.height = EditorGUI.GetPropertyHeight(property, true);
+        EditorGUI.ObjectField(position, property, objType);
+        position.y += position.height;
+    }
+    #endregion
+
     #region Property Field
     public static bool PropertyField(ref Rect position, SerializedProperty property, bool includeChildren = false)
     {
