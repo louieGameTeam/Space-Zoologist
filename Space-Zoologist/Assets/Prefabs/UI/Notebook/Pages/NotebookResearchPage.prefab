@@ -30,11 +30,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 854688378130973877}
   - {fileID: 2980199278855324755}
   - {fileID: 7528006328712617941}
   m_Father: {fileID: 1946188334023468341}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -53,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07dc4f467509584cb775f89ed45320a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   itemPicker: {fileID: 3235043093249134813}
   dropdown: {fileID: 2982568721257937135}
   articleBody: {fileID: 490503159629033427}
@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95959e3341cfe844b985ec69ba2e7961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
 --- !u!114 &5705847947919802900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,13 +84,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foldoutRect: {fileID: 288790671615339466}
   foldoutToggle: {fileID: 7976306884298917383}
-  foldoutTime: 0.1
+  foldoutTime: 0.2
   foldoutAnchors:
     anchor: {x: 1, y: 1}
     sizeDelta: {x: 0, y: 0}
   foldinAnchors:
     anchor: {x: 0.359, y: 1}
     sizeDelta: {x: 0, y: 0}
+  hasContent: 1
   content: {fileID: 6512981120992328857}
 --- !u!1 &680156742210838673
 GameObject:
@@ -732,6 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38f69dd6c0684542b53d6f0fbc668ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   suggestedTitle: New Bookmark
   dropdown: {fileID: 7727909402503950508}
   hasBookmarkGraphic: {fileID: 8858183327001636316}
@@ -1070,7 +1073,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.000061035156, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1289,7 +1292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &727190929579681038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1589,7 +1592,7 @@ GameObject:
   - component: {fileID: 854688378130973877}
   - component: {fileID: 6479142773592952464}
   - component: {fileID: 2705662419552504522}
-  - component: {fileID: 3786598239144497923}
+  - component: {fileID: 7764535776453045174}
   m_Layer: 5
   m_Name: EncyclopediaBackgroundFill
   m_TagString: Untagged
@@ -1608,13 +1611,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 288790671615339466}
-  m_RootOrder: 0
+  m_Father: {fileID: 1946188334023468341}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.325, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0.97, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -55, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &6479142773592952464
 CanvasRenderer:
@@ -1654,27 +1657,29 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!223 &3786598239144497923
-Canvas:
+--- !u!114 &7764535776453045174
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3597137357777198406}
   m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: -1
-  m_TargetDisplay: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423c2099b0e47f440aa38ccd941bdd18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foldoutRect: {fileID: 854688378130973877}
+  foldoutToggle: {fileID: 7976306884298917383}
+  foldoutTime: 0.2
+  foldoutAnchors:
+    anchor: {x: 0.97, y: 1}
+    sizeDelta: {x: 0, y: 0}
+  foldinAnchors:
+    anchor: {x: 0.325, y: 1}
+    sizeDelta: {x: 0, y: 0}
+  hasContent: 0
+  content: {fileID: 0}
 --- !u!1 &3737662012070886414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,7 +2015,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2260,6 +2265,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9019918896353570966}
+  - {fileID: 854688378130973877}
   - {fileID: 288790671615339466}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2689,6 +2695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf74784e1cc6fc84dbf00a753fefd2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   textField: {fileID: 3988869380459071310}
   imageParent: {fileID: 8062510308608880556}
   imagePrefab: {fileID: 8246632628767254003, guid: a9541522916750f439d16e915162a613,
@@ -2908,6 +2915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38f69dd6c0684542b53d6f0fbc668ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   suggestedTitle: New Bookmark
   dropdown: {fileID: 5714840331143670139}
   hasBookmarkGraphic: {fileID: 6818075337314448395}
@@ -3056,7 +3064,7 @@ RectTransform:
   - {fileID: 3235043093249134814}
   - {fileID: 7337995346588241024}
   m_Father: {fileID: 288790671615339466}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.325, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3218,7 +3226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2384802538818412331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3824,7 +3832,7 @@ RectTransform:
   - {fileID: 265985022866351818}
   - {fileID: 1939777039612305957}
   m_Father: {fileID: 288790671615339466}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3958,6 +3966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a1f08681206eba488d58d115fbdf6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 1
   itemPicker: {fileID: 3235043093767601943}
   titleText: {fileID: 9019918896768000586}
   scrollView: {fileID: 761163319650764915}

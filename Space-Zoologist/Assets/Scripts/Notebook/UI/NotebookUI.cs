@@ -18,6 +18,7 @@ public class NotebookUI : MonoBehaviour
     public NotebookTabPicker TabPicker => tabPicker;
     public UnityEvent OnContentChanged => onContentChanged;
     public BoolEvent OnNotebookToggle => onNotebookToggle;
+    public BoolEvent OnEnableInspectorToggle => onEnableInspectorToggle;
     public bool IsOpen => isOpen;
     public ResourceRequestEditor ResourceRequestEditor => resourceRequestEditor;
     #endregion
@@ -48,6 +49,9 @@ public class NotebookUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Event invoked each time the notebook is enabled/disabled")]
     private BoolEvent onNotebookToggle;
+    [SerializeField]
+    [Tooltip("Event invoked each time the inspector needs to be enabled/disabled by the notebook")]
+    private BoolEvent onEnableInspectorToggle;
     #endregion
 
     #region Private Fields
@@ -66,6 +70,9 @@ public class NotebookUI : MonoBehaviour
 
     //Band-aid fix for dialogue offset being bugged due to event listener ordering
     private bool frameDialogueOffsetLock = false;
+
+    //Used to determine if the inspector should be showing or not
+    private int inspectorShowStack = 1;
     #endregion
 
     #region Monobehaviour Messages
@@ -129,6 +136,12 @@ public class NotebookUI : MonoBehaviour
             }
             SetRectTransformOffsets(ConversationManager.Instance.IsConversationActive);
         }
+        inspectorShowStack--;
+    }
+
+    private void OnDisable()
+    {
+        inspectorShowStack++;
     }
     // Unset the callbacks when this object is destroyed
     private void OnDestroy()
@@ -178,6 +191,22 @@ public class NotebookUI : MonoBehaviour
     {
         // This one property set invokes a cascade of events automatically so that the ui updates correctly
         resourceRequestEditor.Request = resourceRequest;
+    }
+
+    public void ChildToggled(bool val,NotebookUIChild child)
+    {
+        if(val)
+        {
+            inspectorShowStack += child.ShowInspector ? 1 : 0;
+        }
+        else
+        {
+            inspectorShowStack -= child.ShowInspector ? 1 : 0;
+        }
+        if (inspectorShowStack != 0)
+            onEnableInspectorToggle.Invoke(true);
+        else
+            onEnableInspectorToggle.Invoke(false);
     }
     #endregion
 

@@ -44,6 +44,9 @@ public class GenericFoldout : MonoBehaviour
     [Tooltip("Anchors of the rect transform when the canvas is folded in")]
     private FoldoutAnchor foldinAnchors;
     [SerializeField]
+    [Tooltip("Has content")]
+    private bool hasContent;
+    [SerializeField]
     [Tooltip("Content of foldout")]
     private GameObject content;
     #endregion
@@ -64,19 +67,15 @@ public class GenericFoldout : MonoBehaviour
         // Change the anchor to either the far right of the parent or the middle of the parent
         if (state)
         {
-            foldoutAnchors.Apply(foldoutRect, foldoutTime).OnComplete(() => content.SetActive(true));
+            foldoutAnchors.Apply(foldoutRect, foldoutTime).OnComplete(() => { if (hasContent) content.SetActive(true);  });
         }
         else
         {
-            content.SetActive(false);
+            if(hasContent)
+                content.SetActive(false);
             foldinAnchors.Apply(foldoutRect, foldoutTime);
         }
     }
     #endregion
 
-    [ContextMenu("Toggle")]
-    private void DebugToggle()
-    {
-        foldoutToggle.isOn = !foldoutToggle.isOn;
-    }
 }
