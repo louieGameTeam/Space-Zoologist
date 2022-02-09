@@ -72,9 +72,8 @@ public class TutorialPrompter : MonoBehaviour
     #region Prompt Callbacks
     public void FreezeUntilNotebookOpen()
     {
-        bool NotebookIsOpen() => GameManager.Instance.NotebookUI.IsOpen;
         HighlightingScheduler.SetHighlights(HighlightNotebookButton());
-        FreezingScheduler.FreezeUntilConditionIsMet(NotebookIsOpen);
+        FreezingScheduler.FreezeUntilConditionIsMet(() => GameManager.Instance.NotebookUI.IsOpen);
     }
     public void FreezeUntilResearchTabOpen()
     {
@@ -116,18 +115,12 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilBuildUIOpen()
     {
-        FreezingScheduler.FreezeUntilConditionIsMet(() =>
-        {
-            return GameManager.Instance.m_menuManager.IsInStore;
-        });
+        FreezingScheduler.FreezeUntilConditionIsMet(() => GameManager.Instance.m_menuManager.IsInStore);
         HighlightingScheduler.SetHighlights(HighlightBuildButton(true));
     }
     public void FreezeUntilBuildUIClosed()
     {
-        FreezingScheduler.FreezeUntilConditionIsMet(() =>
-        {
-            return !GameManager.Instance.m_menuManager.IsInStore;
-        });
+        FreezingScheduler.FreezeUntilConditionIsMet(() => !GameManager.Instance.m_menuManager.IsInStore);
         HighlightingScheduler.SetHighlights(HighlightBuildButton(false));
     }
     public void FreezeUntilZeigPickedForPlacement()
@@ -136,8 +129,7 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilZeigsExist(int numZeigs)
     {
-        PopulationManager populationManager = GameManager.Instance.m_populationManager;
-        FreezingScheduler.FreezeUntilConditionIsMet(() => populationManager.TotalPopulationSize(SpeciesType.Goat) >= numZeigs);
+        FreezingScheduler.FreezeUntilConditionIsMet(() => PopulationExists(SpeciesType.Goat, numZeigs));
     }
     public void FreezeUntilZeigPopulationIncrease()
     {
@@ -164,10 +156,7 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilInspectorOpened()
     {
-        FreezingScheduler.FreezeUntilConditionIsMet(() =>
-        {
-            return GameManager.Instance.m_inspector.IsInInspectorMode;
-        });
+        FreezingScheduler.FreezeUntilConditionIsMet(() => GameManager.Instance.m_inspector.IsInInspectorMode);
         HighlightingScheduler.SetHighlights(HighlightInspectorButton());
     }
     public void FreezeUntilGoatIsInspected()
@@ -177,6 +166,39 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilDirtRequested(int quantity)
     {
         FreezeUntilResourceRequestSubmitted(new ItemID(ItemRegistry.Category.Tile, 0), quantity);
+    }
+    public void FreezeUntilGoatPlacedMaplePlacedAndDaysAdvanced()
+    {
+        bool GoatsExist() => PopulationExists(SpeciesType.Goat, 3);
+        bool GoatsDontExist() => !GoatsExist();
+        bool MaplesExist() => FoodSourceExists("Space Maple", 2);
+        bool MaplesDontExist() => !MaplesExist();
+
+        FreezingScheduler.FreezeUntilConditionIsMet(() =>
+        {
+            return GoatsExist() && 
+                MaplesExist() && 
+                GameManager.Instance.CurrentDay >= 3 && 
+                PopulationIsInspected(SpeciesType.Goat);
+        });
+        HighlightingScheduler.SetHighlights(
+            // Prompt player to put down some goats
+            HighlightBuildButton(true),
+            HighlightBuildSectionPicker(2),
+            HighlightBuildItem<PodSection>(new ItemID(ItemRegistry.Category.Species, 0)),
+            ConditionalHighlight.NoTarget(GoatsDontExist),
+
+            // Prompt player to put down some maples
+            HighlightBuildSectionPicker(0),
+            HighlightBuildItem<FoodSourceStoreSection>(new ItemID(ItemRegistry.Category.Food, 0)),
+            ConditionalHighlight.NoTarget(MaplesDontExist),
+           
+            // Prompt player to advance a few days
+            HighlightBuildButton(false),
+            HighlightNextDayButton(() => GameManager.Instance.CurrentDay >= 3),
+            
+            // Prompt player to use the inspector to inspect the goats
+            HighlightInspectorButton());
     }
     public void FreezeUntilConceptCanvasExpanded(bool expanded)
     {
@@ -201,8 +223,6 @@ public class TutorialPrompter : MonoBehaviour
     #region FreezeUntil Helpers
     private void FreezeUntilNotebookTabOpen(NotebookTab tab)
     {
-        NotebookUI notebook = GameManager.Instance.NotebookUI;
-
         // Freeze until notebook tab is open
         FreezingScheduler.FreezeUntilConditionIsMet(() => NotebookTabIsOpen(tab));
 
@@ -253,16 +273,8 @@ public class TutorialPrompter : MonoBehaviour
     }
     private void FreezeUntilNotebookItemPicked(NotebookTab targetTab, ItemID targetItem, string nameFilter)
     {
-        NotebookUI notebook = GameManager.Instance.NotebookUI;
-        // Get all pickers in the given tab
-        ItemPicker[] pickers = notebook.TabPicker.GetTabRoot(targetTab).GetComponentsInChildren<ItemPicker>(true);
-        // Find a picker whose name contains the filter
-        ItemPicker picker = Array.Find(pickers, p => p.name.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+        FreezingScheduler.FreezeUntilConditionIsMet(() => NotebookItemPicked(targetTab, targetItem, nameFilter));
 
-        FreezingScheduler.FreezeUntilConditionIsMet(() =>
-        {
-            return picker.SelectedItem == targetItem && notebook.IsOpen && notebook.TabPicker.CurrentTab == targetTab;
-        });
         // Highlight notebook button if not open, then highlight correct tab
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
             // Highlight the correct tab
@@ -274,20 +286,8 @@ public class TutorialPrompter : MonoBehaviour
     private void FreezeUntilBuildItemPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex) 
         where StoreSectionType : StoreSection
     {
-        MenuManager menuManager = GameManager.Instance.m_menuManager;
-        BuildUI buildUI = GameManager.Instance.BuildUI;
-        // Get the store section that manages the placement of the target item
-        StoreSectionType storeSection = buildUI.GetComponentInChildren<StoreSectionType>(true);
-
         // Freeze until the menu is in store, the store section is picked and the item selected is the target item
-        FreezingScheduler.FreezeUntilConditionIsMet(() =>
-        {
-            if (storeSection.SelectedItem != null)
-            {
-                return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == storeSectionIndex && storeSection.SelectedItem.ItemID == targetItem;
-            }
-            else return false;
-        });
+        FreezingScheduler.FreezeUntilConditionIsMet(() => BuildItemIsPicked<StoreSectionType>(targetItem, storeSectionIndex));
 
         // Set the highlights for the build button, the section picker, and the item in that section
         HighlightingScheduler.SetHighlights(HighlightBuildButton(true),
@@ -296,25 +296,8 @@ public class TutorialPrompter : MonoBehaviour
     }
     private void FreezeUntilPopulationIsInspected(SpeciesType targetSpecies)
     {
-        Inspector inspector = GameManager.Instance.m_inspector;
-
-        FreezingScheduler.FreezeUntilConditionIsMet(() =>
-        {
-            // Get the population highlighted
-            if(inspector.PopulationHighlighted)
-            {
-                // Get the population script on the object highlighted
-                Population population = inspector.PopulationHighlighted.GetComponent<Population>();
-
-                // If you got the script then check the species type highlighted
-                if(population)
-                {
-                    return population.Species.Species == targetSpecies;
-                }
-                return false;
-            }
-            return false;
-        });
+        FreezingScheduler.FreezeUntilConditionIsMet(() => PopulationIsInspected(targetSpecies));
+        HighlightingScheduler.SetHighlights(HighlightInspectorButton());
     }
     private void FreezeUntilResourceRequestSubmitted(ItemID requestedItem, int requestQuantity)
     {
@@ -326,22 +309,8 @@ public class TutorialPrompter : MonoBehaviour
         TMP_InputField quantityInput = requestEditor.QuantityInput;
         ItemDropdown itemRequestedDropdown = requestEditor.ItemRequestedDropdown;
 
-        // Set local review confirmed bool based on data in the reviewed request
-        bool ReviewConfirmed()
-        {
-            ReviewedResourceRequest review = reviewDisplay.LastReviewConfirmed;
-
-            // If there is a review that was just confirmed then check if it was the correct request
-            if (review != null)
-            {
-                ResourceRequest request = review.Request;
-                return request.ItemRequested == requestedItem && request.QuantityRequested == requestQuantity;
-            }
-            else return false;
-        }
-
         // Freeze conversation until correct review was confirmed
-        FreezingScheduler.FreezeUntilConditionIsMet(ReviewConfirmed, HighlightingScheduler.ClearHighlights);
+        FreezingScheduler.FreezeUntilConditionIsMet(() => ResourceRequestWasSubmitted(requestedItem, requestQuantity), HighlightingScheduler.ClearHighlights);
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
             HighlightNotebookTabButton(NotebookTab.Concepts),
             HighlightItemDropdown(itemRequestedDropdown, requestedItem)[0],
@@ -352,6 +321,79 @@ public class TutorialPrompter : MonoBehaviour
                 predicate = () => !reviewDisplay.gameObject.activeInHierarchy,
                 target = () => concepts.RequestButton.transform as RectTransform
             });
+    }
+    #endregion
+
+    #region Freezing Conditions
+    private bool NotebookItemPicked(NotebookTab targetTab, ItemID targetItem, string nameFilter)
+    {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        ItemPicker[] pickers = notebook.TabPicker.GetTabRoot(targetTab).GetComponentsInChildren<ItemPicker>(true);
+        // Find a picker whose name contains the filter
+        ItemPicker picker = Array.Find(pickers, p => p.name.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+
+        return picker.SelectedItem == targetItem && notebook.IsOpen && notebook.TabPicker.CurrentTab == targetTab;
+    }
+    private bool BuildItemIsPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex)
+        where StoreSectionType : StoreSection
+    {
+        MenuManager menuManager = GameManager.Instance.m_menuManager;
+        BuildUI buildUI = GameManager.Instance.BuildUI;
+        // Get the store section that manages the placement of the target item
+        StoreSectionType storeSection = buildUI.GetComponentInChildren<StoreSectionType>(true);
+
+        // Freeze until the menu is in store, the store section is picked and the item selected is the target item
+        if (storeSection.SelectedItem != null)
+        {
+            return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == storeSectionIndex && storeSection.SelectedItem.ItemID == targetItem;
+        }
+        else return false;
+    }
+    private bool PopulationIsInspected(SpeciesType species)
+    {
+        Inspector inspector = GameManager.Instance.m_inspector;
+
+        // Get the population highlighted
+        if (inspector.PopulationHighlighted)
+        {
+            // Get the population script on the object highlighted
+            Population population = inspector.PopulationHighlighted.GetComponent<Population>();
+
+            // If you got the script then check the species type highlighted
+            if (population)
+            {
+                return population.Species.Species == species;
+            }
+            return false;
+        }
+        return false;
+    }
+    private bool PopulationExists(SpeciesType species, int amount)
+    {
+        PopulationManager populationManager = GameManager.Instance.m_populationManager;
+        return populationManager.TotalPopulationSize(species) >= amount;
+    }
+    private bool FoodSourceExists(string speciesName, int amount)
+    {
+        FoodSourceManager foodManager = GameManager.Instance.m_foodSourceManager;
+        int totalFood = foodManager.GetFoodSourcesWithSpecies(speciesName).Count;
+        return totalFood >= amount;
+    }
+    private bool ResourceRequestWasSubmitted(ItemID requestedItem, int requestQuantity)
+    {
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true);
+        ReviewedResourceRequest review = reviewDisplay.LastReviewConfirmed;
+
+        // If there is a review that was just confirmed then check if it was the correct request
+        if (review != null)
+        {
+            ResourceRequest request = review.Request;
+            return request.ItemRequested == requestedItem && request.QuantityRequested == requestQuantity;
+        }
+        else return false;
     }
     private bool NotebookTabIsOpen(NotebookTab tab)
     {
@@ -536,6 +578,16 @@ public class TutorialPrompter : MonoBehaviour
         {
             predicate = () => inputField.text != targetInput,
             target = () => rectTransform
+        };
+    }
+    private ConditionalHighlight HighlightNextDayButton(Func<bool> predicate, bool invert = false)
+    {
+        RectTransform nextDay = FindRectTransform("NextDay");
+        return new ConditionalHighlight()
+        {
+            predicate = predicate,
+            invert = invert,
+            target = () => nextDay
         };
     }
     // Find rect transform in children of the parent with the given name

@@ -225,8 +225,14 @@ public class NotebookUI : MonoBehaviour
     private void SetDialogueOffsets()
     {
         root.SetOffsets(dialogueSize);
-        frameDialogueOffsetLock = true;
-        StartCoroutine(Corout_FrameDialogueOffsetUnlocking());
+
+        // Make sure not to start a coroutine
+        // while the behaviour is disabled
+        if (gameObject.activeInHierarchy)
+        {
+            frameDialogueOffsetLock = true;
+            StartCoroutine(Corout_FrameDialogueOffsetUnlocking());
+        }
     }
     private IEnumerator Corout_FrameDialogueOffsetUnlocking()
     {

@@ -36,14 +36,8 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     private GameObject outline;
 
     [SerializeField]
-    [Tooltip("Flavor text describing the rating of this level")]
-    private TextMeshProUGUI ratingText;
-    [SerializeField]
-    [Tooltip("Game object prefab to instantiate for each rating level")]
-    private GameObject ratingObjectPrefab;
-    [SerializeField]
-    [Tooltip("Parent to instantiate the rating objects into")]
-    private Transform ratingObjectParent;
+    [Tooltip("Script used to display the rating for this level")]
+    private LevelRatingUI ratingUI;
     #endregion
 
     #region Private Fields
@@ -62,25 +56,11 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         title.text = enclosure.Level.Name;
         image.sprite = enclosure.Level.Sprite;
 
-        if (CurrentID < SaveData.LatestLevelQualified)
-        {
-            // Setup the rating text and rating objects
-            ratingText.text = LevelRatingSystem.GetRatingText(Rating);
-
-            // Create a rating object for each rating level
-            for (int i = 0; i <= Rating; i++)
-            {
-                Instantiate(ratingObjectPrefab, ratingObjectParent);
-            }
-
-            // Make the parent enabled
-            ratingObjectParent.gameObject.SetActive(true);
-        }
-        // Make the rating object disabled if we do not qualify for this level
-        else ratingObjectParent.gameObject.SetActive(false);
-
         // Disable the outline
         outline.SetActive(false);
+
+        // Setup the rating ui with this enclosure
+        ratingUI.Setup(enclosure);
     }
     public void LoadLevel() => LevelDataLoader.LoadLevel(enclosure);
     public void SetOverride(LevelID levelOverride)
