@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
+[System.Obsolete("ResourcePicker is obsolete. One of these components " +
+    "should be used to replace it: ItemPicker, ItemDropdown, CategoryFilteredItemDropdown")]
 public class ResourcePicker : NotebookUIChild
 {
     #region Typedefs
