@@ -7,6 +7,7 @@ public enum SpeciesType { Goat, Cow, Anteater, Spider, Slug, Momo }
 [CreateAssetMenu]
 public class AnimalSpecies : ScriptableObject
 {
+    public ItemID ID => ItemRegistry.SpeciesID(this);
     // Getters
     public string SpeciesName => speciesName;
     public SpeciesType Species => species;

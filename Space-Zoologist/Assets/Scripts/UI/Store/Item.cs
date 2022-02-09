@@ -7,7 +7,7 @@ public enum ItemType {Food, Terrain, Machine, Pod}
 [CreateAssetMenu(menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
-    public ItemID ItemID => itemID;
+    public ItemID ItemID => ItemRegistry.ShopItemID(this);
     public string ID => id;
     public ItemType Type => type;
     public string ItemName => itemName;

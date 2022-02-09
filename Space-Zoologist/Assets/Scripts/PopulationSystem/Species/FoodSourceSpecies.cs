@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FoodSourceSpecies : ScriptableObject
 {
+    public ItemID ID => ItemRegistry.SpeciesID(this);
     public string SpeciesName => speciesName;
     public int RootRadius => rootRadius;
     public int BaseOutput => baseOutput;
