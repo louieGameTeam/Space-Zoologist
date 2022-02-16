@@ -7,13 +7,23 @@ using UnityEngine;
 public class ItemName
 {
     #region Public Typedefs
-    public enum Type { English, Colloquial, Science }
+    public enum Type 
+    { 
+        English, 
+        Colloquial, 
+        Science,
+
+        // The name of the item as it will appear
+        // in the JSON file used by the GameManager
+        // to load up an instance of type "SerializedLevel"
+        Serialized
+    }
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of names for the item - parallel to the internal 'Type' enum")]
-    private string[] names = { "Goat", "Zeig", "CapraX Zeigrun" };
+    private string[] names = { "Goat", "Zeig", "CapraX Zeigrun", "Goat" };
     #endregion
 
     #region Constructors

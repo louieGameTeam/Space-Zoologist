@@ -20,6 +20,7 @@ MonoBehaviour:
           - Goat
           - Zeig
           - CapraX Zeigrun
+          - Goat
         tile: 7
         shopItem: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
         species: {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
@@ -29,6 +30,7 @@ MonoBehaviour:
           - Cow
           - Star Cow
           - Eligans Impar
+          - Cow
         tile: 7
         shopItem: {fileID: 11400000, guid: f14f48275cb6c0c408cb6a6304049322, type: 2}
         species: {fileID: 11400000, guid: b19757b4d113c9047afc67b8ca20f94e, type: 2}
@@ -38,6 +40,7 @@ MonoBehaviour:
           - Anteater
           - Stroteater
           - Ligurio Vermis
+          - Anteater
         tile: 7
         shopItem: {fileID: 11400000, guid: bbfbb40c97bab4ec69618bda24523c73, type: 2}
         species: {fileID: 11400000, guid: 353741bf0f87e4f57b50cba9f7d44e91, type: 2}
@@ -47,6 +50,7 @@ MonoBehaviour:
           - Spider
           - Strot
           - Thalassius Succo
+          - Spider
         tile: 7
         shopItem: {fileID: 11400000, guid: e94f6a290327543b992ad34919ac953e, type: 2}
         species: {fileID: 11400000, guid: 9b6e89509c2c941f9b66cec391d19c43, type: 2}
@@ -56,6 +60,7 @@ MonoBehaviour:
           - Slug
           - Flan
           - Humidum Limax
+          - Slug
         tile: 7
         shopItem: {fileID: 11400000, guid: 659b28bf8183e489ab6ba4b28a5a6dc8, type: 2}
         species: {fileID: 11400000, guid: 2c8a5d582d11a4b359ffb31db9796e95, type: 2}
@@ -65,6 +70,7 @@ MonoBehaviour:
           - Momo
           - Mimi
           - Lemuroidea Empathicus
+          - Momo
         tile: 7
         shopItem: {fileID: 0}
         species: {fileID: 0}
@@ -75,6 +81,7 @@ MonoBehaviour:
           - Maple Tree
           - Astral Maple
           - Candentis Acernis
+          - Space Maple
         tile: 7
         shopItem: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
         species: {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -84,6 +91,7 @@ MonoBehaviour:
           - Golden Maple Tree
           - Gilded Astral Maple
           - Candentis Acernis Aurum
+          - Gold Space Maple
         tile: 7
         shopItem: {fileID: 11400000, guid: 011aebdeac608401ea2bece03b01dd8c, type: 2}
         species: {fileID: 11400000, guid: 09079a79eb6ae41a887cdcfd15c7b359, type: 2}
@@ -93,6 +101,7 @@ MonoBehaviour:
           - Berry Bush
           - Bacca Bush
           - Vaccinum Spatium Bacca
+          - Berries
         tile: 7
         shopItem: {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}
         species: {fileID: 11400000, guid: b65662df451a6444ebdb1ef6d79cddb1, type: 2}
@@ -102,6 +111,7 @@ MonoBehaviour:
           - Ant Colony
           - Formica Hive
           - Formica Collis
+          - Ants
         tile: 7
         shopItem: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
         species: {fileID: 11400000, guid: df43116331ac049f6a18327890673ac5, type: 2}
@@ -111,6 +121,7 @@ MonoBehaviour:
           - Kelp
           - Flanweed
           - Coruscent Laminar
+          - Kelp
         tile: 7
         shopItem: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
         species: {fileID: 11400000, guid: 8bbed6e11bf70469684ca67fd7eb95a3, type: 2}
@@ -120,6 +131,7 @@ MonoBehaviour:
           - Mushroom
           - Glowcaps
           - Boletus Anceps
+          - Mushrooms
         tile: 7
         shopItem: {fileID: 11400000, guid: 38cda74f699f241129cf6815fa33a73c, type: 2}
         species: {fileID: 11400000, guid: 7acff68d8eb9046449b02b2743067688, type: 2}
@@ -127,6 +139,7 @@ MonoBehaviour:
     - items:
       - name:
           names:
+          - Dirt
           - Dirt
           - Dirt
           - Dirt
@@ -139,12 +152,14 @@ MonoBehaviour:
           - Grass
           - Grass
           - Grass
+          - Grass
         tile: 1
         shopItem: {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
         species: {fileID: 0}
         categoryFilter: 2
       - name:
           names:
+          - Sand
           - Sand
           - Sand
           - Sand
@@ -157,12 +172,14 @@ MonoBehaviour:
           - Stone
           - Stone
           - Stone
+          - Stone
         tile: 2
         shopItem: {fileID: 11400000, guid: 6f7adeb8e5b3d4885a77f418109a7422, type: 2}
         species: {fileID: 0}
         categoryFilter: 2
       - name:
           names:
+          - Swamp
           - Swamp
           - Swamp
           - Swamp
@@ -175,12 +192,14 @@ MonoBehaviour:
           - Wall
           - Wall
           - Wall
+          - Wall
         tile: 5
         shopItem: {fileID: 11400000, guid: 611d10484ac544bc9812f39f3b1630ce, type: 2}
         species: {fileID: 0}
         categoryFilter: 2
       - name:
           names:
+          - Fresh Water
           - Fresh Water
           - Fresh Water
           - Fresh Water
@@ -193,12 +212,14 @@ MonoBehaviour:
           - Salt Water
           - Salt Water
           - Salt Water
+          - Salt Water
         tile: 6
         shopItem: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
         species: {fileID: 0}
         categoryFilter: 2
       - name:
           names:
+          - Stagnant Water
           - Stagnant Water
           - Stagnant Water
           - Stagnant Water
