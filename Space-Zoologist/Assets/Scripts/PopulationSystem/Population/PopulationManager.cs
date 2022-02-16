@@ -36,9 +36,10 @@ public class PopulationManager : MonoBehaviour
 
     private AnimalSpecies LoadSpecies(string name)
     {
-        if (GameManager.Instance.AnimalSpecies.ContainsKey(name))
+        ItemID id = ItemRegistry.FindWithName(name);
+        if (GameManager.Instance.AnimalSpecies.ContainsKey(id))
         {
-            return GameManager.Instance.AnimalSpecies[name];
+            return GameManager.Instance.AnimalSpecies[id];
         }
         Debug.LogError("No animal match the name '" + name + "' can be found in the species list. Did you attach the AnimalSpecies ScriptableObjects to the Population Manager?");
         return null;

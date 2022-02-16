@@ -1105,7 +1105,7 @@ public class TileDataController : MonoBehaviour
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem = null, FoodSourceSpecies species = null)
     {
         if (selectedItem)
-            species = GameManager.Instance.FoodSources[selectedItem.IDPlaceholder];
+            species = GameManager.Instance.FoodSources[selectedItem.ID];
 
         Vector3Int gridPosition = WorldToCell(mousePosition);
         return CheckSurroundingTiles(gridPosition, species);
@@ -1275,14 +1275,14 @@ public class TileDataController : MonoBehaviour
     // this too
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
-        if (GameManager.Instance.FoodSources.ContainsKey(selectedItem.IDPlaceholder))
+        if (GameManager.Instance.FoodSources.ContainsKey(selectedItem.ID))
         {
-            FoodSourceSpecies species = GameManager.Instance.FoodSources[selectedItem.IDPlaceholder];
+            FoodSourceSpecies species = GameManager.Instance.FoodSources[selectedItem.ID];
             CheckSurroundingTiles(gridPosition, species);
         }
-        else if (GameManager.Instance.AnimalSpecies.ContainsKey(selectedItem.IDPlaceholder))
+        else if (GameManager.Instance.AnimalSpecies.ContainsKey(selectedItem.ID))
         {
-            AnimalSpecies species = GameManager.Instance.AnimalSpecies[selectedItem.IDPlaceholder];
+            AnimalSpecies species = GameManager.Instance.AnimalSpecies[selectedItem.ID];
             CheckSurroundingTerrain(gridPosition, species);
         }
         else

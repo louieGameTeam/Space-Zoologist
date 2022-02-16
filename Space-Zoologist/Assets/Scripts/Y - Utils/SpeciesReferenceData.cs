@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpeciesReferenceData : MonoBehaviour
 {
-    public Dictionary<string, FoodSourceSpecies> FoodSources = new Dictionary<string, FoodSourceSpecies>();
-    public Dictionary<string, AnimalSpecies> AnimalSpecies = new Dictionary<string, AnimalSpecies>();
+    public Dictionary<ItemID, FoodSourceSpecies> FoodSources = new Dictionary<ItemID, FoodSourceSpecies>();
+    public Dictionary<ItemID, AnimalSpecies> AnimalSpecies = new Dictionary<ItemID, AnimalSpecies>();
 
     // Ensure the Species are all indexed by their name
     public void Start()
@@ -17,16 +17,16 @@ public class SpeciesReferenceData : MonoBehaviour
                 Item item = data.itemObject;
                 if (item)
                 {
-                    if (item.Type.Equals(ItemRegistry.Category.Food) && item.IDPlaceholder.Equals(foodSource.SpeciesName))
+                    if (item.Type.Equals(ItemRegistry.Category.Food) && item.ID.Equals(foodSource.ID))
                     {
-                        this.FoodSources.Add(item.IDPlaceholder, foodSource);
+                        this.FoodSources.Add(item.ID, foodSource);
                     }
                 }
             }
         }
         foreach (AnimalSpecies animalSpecies in LevelDataReference.instance.LevelData.AnimalSpecies)
         {
-            this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
+            this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
         }
     }
 }

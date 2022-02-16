@@ -7,8 +7,6 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public ItemID ID => ItemRegistry.FindShopItem(this);
-    [Obsolete("IDPlaceholder is obsolete, use ID property instead")]
-    public string IDPlaceholder => string.Empty;
     public ItemRegistry.Category Type => ID.Category;
     public string ItemName => itemName;
     public int Price => price;

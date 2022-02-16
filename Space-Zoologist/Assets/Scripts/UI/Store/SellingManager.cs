@@ -94,11 +94,11 @@ public class SellingManager : MonoBehaviour
     private void SellFoodOnTile(TileData tileData, Vector3Int cellPos)
     {
         GameObject food = tileData.Food;
-        string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
+        ItemID id = food.GetComponent<FoodSource>().Species.ID;
         foreach (LevelData.ItemData data in GameManager.Instance.LevelData.ItemQuantities)
         {
             Item item = data.itemObject;
-            if (item.IDPlaceholder.Equals(id))
+            if (item.ID.Equals(id))
             {
                 // NOTE: selling should no longer give the player money - money is spent requesting items, not placing them
                 // GameManager.Instance.SubtractFromBalance(-1 * item.Price);

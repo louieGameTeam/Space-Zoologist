@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     [Expandable, SerializeField] private LevelData m_levelData;
     public LevelData LevelData { get { return m_levelData; } }
     public SerializedLevel PresetMap { get; private set; }
-    public Dictionary<string, FoodSourceSpecies> FoodSources = new Dictionary<string, FoodSourceSpecies>();
-    public Dictionary<string, AnimalSpecies> AnimalSpecies = new Dictionary<string, AnimalSpecies>();
+    public Dictionary<ItemID, FoodSourceSpecies> FoodSources = new Dictionary<ItemID, FoodSourceSpecies>();
+    public Dictionary<ItemID, AnimalSpecies> AnimalSpecies = new Dictionary<ItemID, AnimalSpecies>();
     public float Balance { get; private set; }
     #endregion
 
@@ -241,14 +241,14 @@ public class GameManager : MonoBehaviour
         // set the food source dictionary
         foreach (FoodSourceSpecies foodSource in m_levelData.FoodSourceSpecies)
         {
-            this.FoodSources.Add(foodSource.SpeciesName, foodSource);
+            this.FoodSources.Add(foodSource.ID, foodSource);
         }
 
         // set the animal dictionary
         foreach (AnimalSpecies animalSpecies in m_levelData.AnimalSpecies)
         {
-            if (AnimalSpecies.ContainsKey(animalSpecies.SpeciesName)) continue;
-            this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
+            if (AnimalSpecies.ContainsKey(animalSpecies.ID)) continue;
+            this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
         }
 
         LoadMap();

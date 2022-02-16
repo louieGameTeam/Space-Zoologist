@@ -16,7 +16,7 @@ public class MoveObject : MonoBehaviour
     // do this better
     [SerializeField] Sprite LiquidSprite = default;
 
-    Dictionary<string, Item> itemByID = new Dictionary<string, Item>();
+    Dictionary<ItemID, Item> itemByID = new Dictionary<ItemID, Item>();
     Item tempItem;
     private enum ItemType { NONE, FOOD, ANIMAL, TILE }
 
@@ -48,8 +48,8 @@ public class MoveObject : MonoBehaviour
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
         foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
             // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
-            if(!itemByID.ContainsKey(itemData.itemObject.IDPlaceholder))
-                itemByID.Add(itemData.itemObject.IDPlaceholder, itemData.itemObject);
+            if(!itemByID.ContainsKey(itemData.itemObject.ID))
+                itemByID.Add(itemData.itemObject.ID, itemData.itemObject);
         }
 
         tempItem = (Item)ScriptableObject.CreateInstance("Item");
@@ -215,18 +215,18 @@ public class MoveObject : MonoBehaviour
         switch (movingItemType)
         {
             case ItemType.ANIMAL:
-                int price = itemByID[objectToMove.GetComponent<Animal>().PopulationInfo.species.SpeciesName].Price;
+                int price = itemByID[objectToMove.GetComponent<Animal>().PopulationInfo.species.ID].Price;
                 moveCost = Mathf.RoundToInt(MoveCost * price);
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.FOOD:
                 FoodSourceSpecies species = objectToMove.GetComponent<FoodSource>().Species;
-                price = itemByID[species.SpeciesName].Price;
+                price = itemByID[species.ID].Price;
                 moveCost = Mathf.RoundToInt(MoveCost * price);
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.TILE:
-                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.IDPlaceholder.ToLower().Equals(objectToMove.name));
+                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Data.Name.Get(ItemName.Type.English).ToLower().Equals(objectToMove.name));
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
                 break;
             default:

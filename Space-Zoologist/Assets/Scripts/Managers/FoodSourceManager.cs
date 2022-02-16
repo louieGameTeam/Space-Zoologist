@@ -67,7 +67,8 @@ public class FoodSourceManager : GridObjectManager
 
     public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position, int ttb = -1)
     {
-        return CreateFoodSource(GameManager.Instance.FoodSources[foodsourceSpeciesID], position, ttb);
+        ItemID id = ItemRegistry.FindWithName(foodsourceSpeciesID);
+        return CreateFoodSource(GameManager.Instance.FoodSources[id], position, ttb);
     }
 
     public void DestroyFoodSource(FoodSource foodSource) {
@@ -95,7 +96,7 @@ public class FoodSourceManager : GridObjectManager
         if (GameManager.Instance.FoodSources.ContainsValue(species)) {
             for (var pair = GameManager.Instance.FoodSources.GetEnumerator(); pair.MoveNext() != false;) {
                 if (pair.Current.Value.Equals(species)) {
-                    return pair.Current.Key;
+                    return pair.Current.Key.Data.Name.Get(ItemName.Type.English);
                 }
             }
         }
@@ -108,13 +109,14 @@ public class FoodSourceManager : GridObjectManager
     /// <param name="speciesName">Same as FoodSourceSpecies.SpeciesName</param>
     /// <returns>An list of Food Source with the given species name</returns>
     public List<FoodSource> GetFoodSourcesWithSpecies(string speciesName) {
+        ItemID id = ItemRegistry.FindWithName(speciesName);
         // Given species doesn't exist in the level
-        if (!GameManager.Instance.FoodSources.ContainsKey(speciesName))
+        if (!GameManager.Instance.FoodSources.ContainsKey(id))
         {
             Debug.Log("Food source not in level data");
             return null;
         } 
-        FoodSourceSpecies species = GameManager.Instance.FoodSources[speciesName];
+        FoodSourceSpecies species = GameManager.Instance.FoodSources[id];
 
         // No food source of given species exist
         if (!foodSourcesBySpecies.ContainsKey(species))
@@ -159,9 +161,10 @@ public class FoodSourceManager : GridObjectManager
     }
     public override void Serialize(SerializedMapObjects serializedMapObjects)
     {
-        foreach (string speciesName in GameManager.Instance.FoodSources.Keys)
+        foreach (ItemID speciesID in GameManager.Instance.FoodSources.Keys)
         {
-            serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(GameManager.Instance.FoodSources[speciesName]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
+            string speciesName = speciesID.Data.Name.Get(ItemName.Type.English);
+            serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(GameManager.Instance.FoodSources[speciesID]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
         }
     }
     public override void Parse()

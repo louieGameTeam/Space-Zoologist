@@ -67,7 +67,7 @@ public class FoodSourceStoreSection : StoreSection
         // If instance exists use it to access the food source manager
         if(instance)
         {
-            instance.m_foodSourceManager.placeFood(mouseGridPosition, GameManager.Instance.FoodSources[selectedItem.IDPlaceholder], this.selectedItem.buildTime);
+            instance.m_foodSourceManager.placeFood(mouseGridPosition, GameManager.Instance.FoodSources[selectedItem.ID], this.selectedItem.buildTime);
         }
         else
         {
