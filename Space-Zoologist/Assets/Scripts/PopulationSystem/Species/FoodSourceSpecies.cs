@@ -6,11 +6,11 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FoodSourceSpecies : ScriptableObject
 {
-    public ItemID ID => ItemRegistry.SpeciesID(this);
-    public string SpeciesName => speciesName;
+    public ItemID ID => ItemRegistry.FindSpecies(this);
+    public string SpeciesName => ID.Data.Name.Get(ItemName.Type.English);
     public int RootRadius => rootRadius;
     public int BaseOutput => baseOutput;
-    public Item FoodSourceItem => FoodSource;
+    public Item FoodSourceItem => ID.Data.ShopItem;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
     public Vector2Int Size => size;
     public List<TerrainNeedConstructData> TerrainNeeds => terrainNeeds;
@@ -18,13 +18,10 @@ public class FoodSourceSpecies : ScriptableObject
 
     [SerializeField] private Vector2Int size = new Vector2Int(1, 1); // default to 1 tile big
     [SerializeField] private List<TileType> accessibleTerrain = default;
-    [SerializeField] private string speciesName = default;
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int baseOutput = default;
     [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
     [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
-    [SerializeField] private Item FoodSource = default;
-
 
     public Dictionary<string, Need> SetupNeeds()
     {
@@ -60,9 +57,8 @@ public class FoodSourceSpecies : ScriptableObject
         return needs;
     }
 
-    public void SetupData(string name, int rootRadius, int output, List<List<NeedConstructData>> needs)
+    public void SetupData(int rootRadius, int output, List<List<NeedConstructData>> needs)
     {
-        this.speciesName = name;
         this.rootRadius = rootRadius;
         this.baseOutput = output;
 

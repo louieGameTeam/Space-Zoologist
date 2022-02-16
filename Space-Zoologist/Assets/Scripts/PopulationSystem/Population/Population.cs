@@ -10,7 +10,7 @@ public class Population : MonoBehaviour, Life
 {
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.enclosedPopulationCount; }
-    public float FoodDominance => FoodSourceNeedSystem.foodDominanceRatios[species.Species]; //* Count;
+    public float FoodDominance => FoodSourceNeedSystem.foodDominanceRatios[species.ID]; //* Count;
     public int PrePopulationCount => this.prePopulationCount;
     public Vector3 Origin => this.origin;
     public bool IsPaused => this.isPaused;

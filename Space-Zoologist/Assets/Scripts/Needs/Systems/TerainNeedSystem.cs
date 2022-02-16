@@ -12,14 +12,14 @@ public class TerrainNeedSystem : NeedSystem
     private static readonly TileType[] terrainOrder = new TileType[] {TileType.Sand, TileType.Liquid, TileType.Dirt, TileType.Swamp, TileType.Stone, TileType.Grass};
 
     //The ratios of terrain allocation sorted by dominance
-    private static readonly Dictionary<TileType, Dictionary<SpeciesType, float>> dominanceRatiosByTileType = new Dictionary<TileType, Dictionary<SpeciesType, float>>
+    private static readonly Dictionary<TileType, Dictionary<ItemID, float>> dominanceRatiosByTileType = new Dictionary<TileType, Dictionary<ItemID, float>>
     {
-        { TileType.Grass, new Dictionary<SpeciesType, float> { {SpeciesType.Anteater, 0.4f}, {SpeciesType.Cow, 0.3f}, {SpeciesType.Goat, 0.2f}, {SpeciesType.Spider, 0.1f} } },
-        { TileType.Dirt, new Dictionary<SpeciesType, float> { {SpeciesType.Goat, 0.6f}, {SpeciesType.Cow, 0.4f} } },
-        { TileType.Sand, new Dictionary<SpeciesType, float> { {SpeciesType.Spider, 1f} } },
-        { TileType.Stone, new Dictionary<SpeciesType, float> { {SpeciesType.Spider, 0.6f}, {SpeciesType.Anteater, 0.4f} } },
-        { TileType.Swamp, new Dictionary<SpeciesType, float> { {SpeciesType.Slug, 0.6f}, {SpeciesType.Anteater, 0.4f} } },
-        { TileType.Liquid, new Dictionary<SpeciesType, float> { {SpeciesType.Slug, 1f} } }
+        { TileType.Grass, new Dictionary<ItemID, float> { {ItemRegistry.FindWithName("Anteater"), 0.4f}, {ItemRegistry.FindWithName("Cow"), 0.3f}, { ItemRegistry.FindWithName("Goat"), 0.2f}, { ItemRegistry.FindWithName("Spider"), 0.1f} } },
+        { TileType.Dirt, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Goat"), 0.6f}, { ItemRegistry.FindWithName("Cow"), 0.4f} } },
+        { TileType.Sand, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Spider"), 1f} } },
+        { TileType.Stone, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Spider"), 0.6f}, { ItemRegistry.FindWithName("Anteater"), 0.4f} } },
+        { TileType.Swamp, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Slug"), 0.6f}, { ItemRegistry.FindWithName("Anteater"), 0.4f} } },
+        { TileType.Liquid, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Slug"), 1f} } }
     };
 
     public TerrainNeedSystem(NeedType needType = NeedType.Terrain) : base(needType)
@@ -120,7 +120,7 @@ public class TerrainNeedSystem : NeedSystem
         //All tiles in the grid that can be accessed by some population, organized by tiletype
         Dictionary<TileType, HashSet<Vector3Int>> accessibleTilesByTileType = new Dictionary<TileType, HashSet<Vector3Int>>();
         //All populations currently in the level, organized by speciesType
-        Dictionary<SpeciesType, HashSet<Population>> populationsBySpeciesType = new Dictionary<SpeciesType, HashSet<Population>>();
+        Dictionary<ItemID, HashSet<Population>> populationsByItemID = new Dictionary<ItemID, HashSet<Population>>();
         //Number of tiles needed by a given population
         Dictionary<Population, int> tilesNeeded = new Dictionary<Population, int>();
         //Number of tiles allocated to a given population
@@ -140,15 +140,15 @@ public class TerrainNeedSystem : NeedSystem
         //Organize the populations currently in the level by their SpeciesType
         foreach(Population population in Consumers.OfType<Population>())
         {
-            SpeciesType type = population.Species.Species;
-            if(!populationsBySpeciesType.ContainsKey(type))
-                populationsBySpeciesType.Add(type, new HashSet<Population>());
+            ItemID id = population.Species.ID;
+            if(!populationsByItemID.ContainsKey(id))
+                populationsByItemID.Add(id, new HashSet<Population>());
 
-            populationsBySpeciesType[type].Add(population);
+            populationsByItemID[id].Add(population);
         }
 
         //Calculate the tiles needed for each population and add all the tiles that the population can access to the tile dictionary
-        foreach(HashSet<Population> populations in populationsBySpeciesType.Values)
+        foreach(HashSet<Population> populations in populationsByItemID.Values)
         {
             foreach (Population population in populations)
             {
@@ -176,10 +176,10 @@ public class TerrainNeedSystem : NeedSystem
 
             //Get all of the populations that require this TileType
             List<Population> accessiblePopulations = new List<Population>();
-            foreach(SpeciesType species in dominanceRatiosByTileType[tile].Keys)
+            foreach(ItemID id in dominanceRatiosByTileType[tile].Keys)
             {
-                if(populationsBySpeciesType.ContainsKey(species))
-                    accessiblePopulations.AddRange(populationsBySpeciesType[species]);
+                if(populationsByItemID.ContainsKey(id))
+                    accessiblePopulations.AddRange(populationsByItemID[id]);
             }
 
             //If no populations require this tileType, move on to next tile type
@@ -202,7 +202,7 @@ public class TerrainNeedSystem : NeedSystem
                     if(!tilesAllocated[population].ContainsKey(tile))
                         return 0;
                         
-                    return tilesAllocated[population][tile] / dominanceRatiosByTileType[tile][population.species.Species];
+                    return tilesAllocated[population][tile] / dominanceRatiosByTileType[tile][population.species.ID];
                 }
 
                 //Find the population with the least tiles allocated (weighted). Also find the next lowest weighted allocation, to use as a stopping place
@@ -262,7 +262,7 @@ public class TerrainNeedSystem : NeedSystem
         //Go through each tile type and update the need value for that tile for each population that needs it
         foreach (TileType tile in terrainOrder)
         {
-            foreach(HashSet<Population> populationSet in populationsBySpeciesType.Values)
+            foreach(HashSet<Population> populationSet in populationsByItemID.Values)
             {
                 foreach(Population population in populationSet)
                 {
@@ -313,8 +313,8 @@ public class TerrainNeedSystem : NeedSystem
         public int Compare(Population x, Population y)
         {
             return (int) 
-               (tilesAllocated[x][tileType] / dominanceRatiosByTileType[tileType][x.Species.Species] -
-                tilesAllocated[y][tileType] / dominanceRatiosByTileType[tileType][y.Species.Species]);
+               (tilesAllocated[x][tileType] / dominanceRatiosByTileType[tileType][x.Species.ID] -
+                tilesAllocated[y][tileType] / dominanceRatiosByTileType[tileType][y.Species.ID]);
         }
     }
 }

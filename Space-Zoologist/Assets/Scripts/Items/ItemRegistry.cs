@@ -25,7 +25,7 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     private ItemRegistryData itemData;
     #endregion
 
-    #region Public Methods
+    #region Data Access Methods
     public static bool ValidID(ItemID id)
     {
         ItemData[] datas = GetItemsWithCategory(id.Category);
@@ -85,46 +85,70 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
 
         return ids;
     }
-    public static ItemID SpeciesID(ScriptableObject species)
+    #endregion
+
+    #region Search Methods
+    public static ItemID FindWithName(string name)
     {
-        // Get all species
-        ItemData[] speciesList = GetItemsWithCategory(Category.Species);
-
-        // Find an item data with the same species
-        int index = Array.FindIndex(speciesList, item => item.Species == species);
-
-        // If an item was found then return its id
-        if (index >= 0) return new ItemID(Category.Species, index);
-        // If no item was found then return an invalid id
-        else throw new ArgumentException($"{nameof(ItemRegistry)}: " +
-            $"species {species} does not exist in the item registry");
+        return FindInternal(data => data.Name.HasName(name), name);
     }
-    public static ItemID ShopItemID(Item searchItem)
+    public static ItemID FindWithName(string name, StringComparison comparison)
+    {
+        return FindInternal(data => data.Name.HasName(name, comparison), name, comparison);
+    }
+    public static ItemID FindSpecies(ScriptableObject species)
+    {
+        return FindInternal(data => data.Species == species, species);
+    }
+    public static ItemID FindShopItem(Item searchItem)
+    {
+        return FindInternal(data => data.ShopItem == searchItem, searchItem);
+    }
+    public static ItemID Find(Predicate<ItemData> predicate)
+    {
+        return FindInternal(predicate);
+    }
+    private static ItemID FindInternal(Predicate<ItemData> predicate, params object[] searchParameters)
     {
         ItemDataList[] dataLists = Instance.itemData.itemDataLists;
 
-        for(int category = 0; category < dataLists.Length; category++)
+        for (int category = 0; category < dataLists.Length; category++)
         {
             // Get the list of item data in this category
             ItemData[] datas = dataLists[category].Items;
 
             for (int index = 0; index < datas.Length; index++)
             {
-                Item shopItem = datas[index].ShopItem;
+                ItemData data = datas[index];
 
                 // If this shop item is the same as the search item,
                 // then return the id of this item
-                if (shopItem == searchItem)
+                if (predicate.Invoke(data))
                 {
                     return new ItemID((Category)category, index);
                 }
             }
         }
 
-        // If the search did not find the shop item
-        // then throw an exception
-        throw new ArgumentException($"{nameof(ItemRegistry)}: " +
-            $"shop item {searchItem} does not exist in the item registry");
+        // Create a string to make a statement about the search parameters
+        string searchParametersStatement = string.Empty;
+
+        // If some search parameters were specified then 
+        // state them in the string
+        if (searchParameters != null && searchParameters.Length > 0)
+        {
+            searchParametersStatement = "Search parameters: ";
+
+            // Add a string for each argument
+            for(int i = 0; i < searchParameters.Length; i++)
+            {
+                searchParametersStatement += $"\n\tParameter {i + 1}: {searchParameters[i]}";
+            }
+        }
+
+        // If the search did not find the data then return invalid id
+        throw new ItemNotFoundException("No item could be found " +
+            $"that matched the given predicate. {searchParametersStatement}");
     }
     #endregion
 }

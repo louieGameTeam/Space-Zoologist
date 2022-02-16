@@ -236,13 +236,9 @@ public class PopulationManager : MonoBehaviour
 
         return populations;
     }
-    public List<Population> GetPopulationsBySpeciesType(SpeciesType speciesType)
+    public int TotalPopulationSize(AnimalSpecies species)
     {
-        return ExistingPopulations.FindAll(pop => pop.species.Species == speciesType);
-    }
-    public int TotalPopulationSize(SpeciesType speciesType)
-    {
-        List<Population> populations = GetPopulationsBySpeciesType(speciesType);
+        List<Population> populations = GetPopulationsBySpecies(species);
         return populations.Sum(pop => pop.Count);
     }
 }

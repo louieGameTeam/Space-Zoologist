@@ -9,13 +9,13 @@ using System.Linq;
 public class FoodSourceNeedSystem : NeedSystem
 {
 
-    public static readonly Dictionary<SpeciesType, float> foodDominanceRatios = new Dictionary<SpeciesType, float>() 
+    public static readonly Dictionary<ItemID, float> foodDominanceRatios = new Dictionary<ItemID, float>() 
     {
-        {SpeciesType.Cow, 0.3f}, 
-        {SpeciesType.Anteater, 0.25f}, 
-        {SpeciesType.Goat, 0.20f}, 
-        {SpeciesType.Slug, 0.15f}, 
-        {SpeciesType.Spider, 0.10f}
+        {ItemRegistry.FindWithName("Cow"), 0.3f}, 
+        {ItemRegistry.FindWithName("Anteater"), 0.25f}, 
+        {ItemRegistry.FindWithName("Goat"), 0.20f}, 
+        {ItemRegistry.FindWithName("Slug"), 0.15f}, 
+        {ItemRegistry.FindWithName("Spider"), 0.10f}
     };
 
     // Food name to food calculators
