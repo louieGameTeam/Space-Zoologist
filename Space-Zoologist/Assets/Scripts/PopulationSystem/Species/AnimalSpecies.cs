@@ -6,8 +6,6 @@ using System;
 public class AnimalSpecies : ScriptableObject
 {
     public ItemID ID => ItemRegistry.FindSpecies(this);
-    // Getters
-    public string SpeciesName => ID.Data.Name.Get(ItemName.Type.English);
     public int TerrainTilesRequired => terrainTilesRequired;
     public int MinFoodRequired => minFoodRequired;
     public int MaxFoodRequired => maxFoodRequired;

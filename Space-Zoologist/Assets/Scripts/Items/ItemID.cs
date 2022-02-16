@@ -46,5 +46,9 @@ public struct ItemID
     {
         return category.GetHashCode() + index.GetHashCode();
     }
+    public override string ToString()
+    {
+        return $"ItemID - ({Data.Name})";
+    }
     #endregion
 }

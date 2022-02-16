@@ -7,7 +7,6 @@ using UnityEngine;
 public class FoodSourceSpecies : ScriptableObject
 {
     public ItemID ID => ItemRegistry.FindSpecies(this);
-    public string SpeciesName => ID.Data.Name.Get(ItemName.Type.English);
     public int RootRadius => rootRadius;
     public int BaseOutput => baseOutput;
     public Item FoodSourceItem => ID.Data.ShopItem;

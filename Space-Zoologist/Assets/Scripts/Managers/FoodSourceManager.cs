@@ -24,7 +24,8 @@ public class FoodSourceManager : GridObjectManager
     public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position, int ttb = -1)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
-        newFoodSourceGameObject.name = species.SpeciesName;
+        ItemName speciesName = species.ID.Data.Name;
+        newFoodSourceGameObject.name = speciesName.Get(ItemName.Type.Serialized);
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
@@ -36,7 +37,7 @@ public class FoodSourceManager : GridObjectManager
         if (ttb > 0)
         {
             m_gridSystemReference.CreateRectangleBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD);
+                speciesName.AnyNameContains("Gold Space Maple") || speciesName.AnyNameContains("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD);
             foodSource.isUnderConstruction = true;
             m_gridSystemReference.ConstructionFinishedCallback(() =>
             {
@@ -90,17 +91,6 @@ public class FoodSourceManager : GridObjectManager
         {
             foodSource.UpdateAccessibleTerrainInfo();
         }
-    }
-
-    public string GetSpeciesID(FoodSourceSpecies species) {
-        if (GameManager.Instance.FoodSources.ContainsValue(species)) {
-            for (var pair = GameManager.Instance.FoodSources.GetEnumerator(); pair.MoveNext() != false;) {
-                if (pair.Current.Value.Equals(species)) {
-                    return pair.Current.Key.Data.Name.Get(ItemName.Type.English);
-                }
-            }
-        }
-        return null;
     }
 
     /// <summary>
@@ -163,8 +153,8 @@ public class FoodSourceManager : GridObjectManager
     {
         foreach (ItemID speciesID in GameManager.Instance.FoodSources.Keys)
         {
-            string speciesName = speciesID.Data.Name.Get(ItemName.Type.English);
-            serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(GameManager.Instance.FoodSources[speciesID]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
+            string speciesName = speciesID.Data.Name.Get(ItemName.Type.Serialized);
+            serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(speciesName, this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
         }
     }
     public override void Parse()

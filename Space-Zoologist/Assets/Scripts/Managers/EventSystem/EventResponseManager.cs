@@ -42,7 +42,7 @@ public class EventResponseManager : MonoBehaviour
 public class EventResponseData
 {
     [SerializeField] public int PopulationTriggerSize = default;
-    [SerializeField] public string resourceName = default;
+    [SerializeField] public ItemID resourceID = default;
     [SerializeField] public int amount = default;
     [SerializeField] public DialogueEditor.NPCConversation NPCConversation = default;
 }
@@ -50,9 +50,9 @@ public class EventResponseData
 /// <summary>
 /// Sets up serial responses with different data for each response.
 /// </summary>
-/// <param name="resourceName"></param>
+/// <param name="resourceID"></param>
 /// <param name="amount"></param>
-public delegate void eventResponse(string resourceName, int amount);
+public delegate void eventResponse(ItemID resourceID, int amount);
 [System.Serializable]
 public class EventResponse
 {
@@ -106,7 +106,7 @@ public class EventResponse
         {
             return;
         }
-        response(eventResponseData.resourceName, eventResponseData.amount);
+        response(eventResponseData.resourceID, eventResponseData.amount);
         if (eventResponseData.NPCConversation != null)
         {
             DialogueManager.SetNewDialogue(eventResponseData.NPCConversation);

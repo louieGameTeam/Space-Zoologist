@@ -194,7 +194,7 @@ public class FoodSource : MonoBehaviour, Life
     /// <param name="value">The need's new value</param>
     public void UpdateNeed(string need, float value)
     {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } food source has no need { need }");
+        Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } food source has no need { need }");
         this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }

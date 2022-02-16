@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class ItemName
 {
     #region Public Typedefs
@@ -34,30 +34,48 @@ public class ItemName
     }
     #endregion
 
-    #region Public Methods
-    public string Get(Type type) => names[(int)type];
-    public string Set(Type type, string name) => names[(int)type] = name;
+    #region Data Access Methods
+    public string Get(int index)
+    {
+        if (index >= 0 && index < names.Length) return names[index];
+        else throw new IndexOutOfRangeException(
+            $"No name specified at index {index}. " +
+            $"Total names: {names.Length}");
+    }
+    public string Get(Type type) => Get((int)type);
+    public void Set(int index, string name)
+    {
+        if (index >= 0 && index < names.Length)
+        {
+            names[index] = name;
+        }
+        else throw new IndexOutOfRangeException(
+            $"No name specified at index {index}. " +
+            $"Total names: {names.Length}");
+    }
+    public void Set(Type type, string name) => Set((int)type, name);
+    #endregion
+
+    #region Search Methods
     public bool HasName(string name)
     {
-        foreach (string s in names)
-        {
-            if (s.Equals(name))
-            {
-                return true;
-            }
-        }
-        return false;
+        return Contains(n => n.Equals(name));
     }
     public bool HasName(string name, StringComparison comparison)
     {
-        foreach (string s in names)
-        {
-            if (s.Equals(name, comparison))
-            {
-                return true;
-            }
-        }
-        return false;
+        return Contains(n => n.Equals(name, comparison));
+    }
+    public bool AnyNameContains(string name)
+    {
+        return Contains(n => n.Contains(name));
+    }
+    public bool Contains(Predicate<string> predicate)
+    {
+        // Find the index of the item matching the predicate
+        int index = Array.FindIndex(names, predicate);
+
+        // Return true if index is in range of the array
+        return index >= 0 && index < names.Length;
     }
     #endregion
 

@@ -8,12 +8,12 @@ using UnityEngine;
 /// </summary>
 public class FoodSourceCalculator : NeedCalculator
 {
-    public string FoodSourceName => this.foodSourceName;
+    public ItemID FoodSourceID => this.foodSourceID;
     public List<FoodSource> FoodSources => this.foodSources;
     public List<Population> Consumers => this.consumers;
     public bool IsDirty => this.isDirty;
 
-    private string foodSourceName = default;
+    private ItemID foodSourceID = default;
     private List<FoodSource> foodSources = new List<FoodSource>();
     private List<Population> consumers = new List<Population>();
     private bool isDirty = default;
@@ -26,9 +26,9 @@ public class FoodSourceCalculator : NeedCalculator
     private Dictionary<FoodSource, float> foodRemaining = new Dictionary<FoodSource, float>();
     Dictionary<FoodSource, float> localDominanceRemaining = new Dictionary<FoodSource, float>();
 
-    public FoodSourceCalculator(string foodSourceName)
+    public FoodSourceCalculator(ItemID foodSourceID)
     {
-        this.foodSourceName = foodSourceName;
+        this.foodSourceID = foodSourceID;
     }
 
     public void MarkDirty()
@@ -93,7 +93,7 @@ public class FoodSourceCalculator : NeedCalculator
 
     public bool RemoveSource(Life source)
     {
-        Debug.Log(this.FoodSourceName);
+        Debug.Log(this.FoodSourceID);
         FoodSource foodSource = (FoodSource)source;
         Debug.Log(foodSources.Contains(foodSource));
         this.isDirty = true;
@@ -139,6 +139,7 @@ public class FoodSourceCalculator : NeedCalculator
             }
         }
         UpdateLocalDominance(population);
+        string foodSourceName = foodSourceID.Data.Name.Get(ItemName.Type.English);
         population.UpdateNeed(foodSourceName, foodAcquired);
         //Debug.Log(population.species.SpeciesName + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;

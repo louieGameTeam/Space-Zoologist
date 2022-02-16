@@ -226,6 +226,8 @@ public class MoveObject : MonoBehaviour
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.TILE:
+                // Why are we searching in the item quantities for an item data?
+                // And how is the "objectToMove" actually named?
                 LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Data.Name.Get(ItemName.Type.English).ToLower().Equals(objectToMove.name));
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
                 break;

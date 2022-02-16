@@ -173,7 +173,6 @@ public class GameManager : MonoBehaviour
         {
             var jsonTextFile = Resources.Load<TextAsset>(fullPath).ToString();
             serializedLevel = JsonUtility.FromJson<SerializedLevel>(jsonTextFile);
-            Debug.Log($"Successfully deserialized level:\n{JsonUtility.ToJson(serializedLevel, true)}");
         }
         catch (System.Exception e)
         {

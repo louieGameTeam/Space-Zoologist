@@ -19,7 +19,7 @@ public class FoodSourceNeedSystem : NeedSystem
     };
 
     // Food name to food calculators
-    private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
+    private Dictionary<ItemID, FoodSourceCalculator> foodSourceCalculators = new Dictionary<ItemID, FoodSourceCalculator>();
 
     public FoodSourceNeedSystem(NeedType needType = NeedType.FoodSource) : base(needType)
     {
@@ -94,21 +94,24 @@ public class FoodSourceNeedSystem : NeedSystem
             {
                 foreach (KeyValuePair<string, Need> need in population.Needs)
                 {
+                    // Try to find an item id with the given need name
+                    ItemID needID = ItemRegistry.FindWithName(need.Key);
+
                     // 4. Calculate preferred and available food, skipping if need already met
-                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(need.Key))
+                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(needID))
                     {
                         continue;
                     }
 
                     if (j == 0 && need.Value.IsPreferred)
                     {
-                        preferredAmount += foodSourceCalculators[need.Key].CalculateDistribution(population);
+                        preferredAmount += foodSourceCalculators[needID].CalculateDistribution(population);
                         continue;
                     }
 
                     if (j == 1 && !need.Value.IsPreferred)
                     {
-                        compatibleAmount += foodSourceCalculators[need.Key].CalculateDistribution(population);
+                        compatibleAmount += foodSourceCalculators[needID].CalculateDistribution(population);
                     }
                 }
             }
@@ -118,20 +121,20 @@ public class FoodSourceNeedSystem : NeedSystem
 
     public void AddFoodSource(FoodSource foodSource)
     {
-        if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
+        if (!this.foodSourceCalculators.ContainsKey(foodSource.Species.ID))
         {
-            this.foodSourceCalculators.Add(foodSource.Species.SpeciesName, new FoodSourceCalculator(foodSource.Species.SpeciesName));
+            this.foodSourceCalculators.Add(foodSource.Species.ID, new FoodSourceCalculator(foodSource.Species.ID));
         }
 
-        this.foodSourceCalculators[foodSource.Species.SpeciesName].AddSource(foodSource);
+        this.foodSourceCalculators[foodSource.Species.ID].AddSource(foodSource);
 
         this.isDirty = true;
     }
 
     public void RemoveFoodSource(FoodSource foodSource) {
-        if (this.foodSourceCalculators.ContainsKey(foodSource.Species.SpeciesName))
+        if (this.foodSourceCalculators.ContainsKey(foodSource.Species.ID))
         {
-            this.foodSourceCalculators[foodSource.Species.SpeciesName].RemoveSource(foodSource);
+            this.foodSourceCalculators[foodSource.Species.ID].RemoveSource(foodSource);
 
             this.isDirty = true;
         }
@@ -144,15 +147,18 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if the need is a 'FoodSource' type
             if (need.NeedType == NeedType.FoodSource)
             {
+                // Try to find an item id with the given name
+                ItemID needID = ItemRegistry.FindWithName(need.NeedName);
+
                 // Create a food source calculator for this food source,
                 // if not already exist
-                if (!this.foodSourceCalculators.ContainsKey(need.NeedName))
+                if (!this.foodSourceCalculators.ContainsKey(needID))
                 {
-                    this.foodSourceCalculators.Add(need.NeedName, new FoodSourceCalculator(need.NeedName));
+                    this.foodSourceCalculators.Add(needID, new FoodSourceCalculator(need.NeedName));
                 }
 
                 // Add consumer to food source calculator
-                this.foodSourceCalculators[need.NeedName].AddConsumer((Population)life);
+                this.foodSourceCalculators[needID].AddConsumer((Population)life);
             }
         }
 
@@ -166,7 +172,8 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if the need is a 'FoodSource' type
             if (need.NeedType == NeedType.FoodSource)
             {
-                Debug.Assert(this.foodSourceCalculators[need.NeedName].RemoveConsumer((Population)life), "Remove conumer failed!");
+                ItemID needID = ItemRegistry.FindWithName(need.NeedName);
+                Debug.Assert(this.foodSourceCalculators[needID].RemoveConsumer((Population)life), "Remove conumer failed!");
             }
         }
 
