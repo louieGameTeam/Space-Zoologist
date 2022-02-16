@@ -99,11 +99,26 @@ public class Population : MonoBehaviour, Life
         enclosedPopulationCount = AnimalPopulation.Count;
         // Only counts animals that are in an enclosure that is completely enclosed
         foreach (GameObject animal in AnimalPopulation) {
-            //GameManager.Instance.m_enclosureSystem.UpdateEnclosedAreas (true);
-            //print (GameManager.Instance.m_enclosureSystem.GetEnclosedAreaByCellPosition (new Vector3Int ((int) animal.transform.position.x, (int) animal.transform.position.y, (int) animal.transform.position.z)));
-            if (!GameManager.Instance.m_enclosureSystem.GetEnclosedAreaByCellPosition (new Vector3Int ((int) animal.transform.position.x, (int) animal.transform.position.y, (int) animal.transform.position.z)).isEnclosed) 
+
+            // Get my grid position
+            Vector3Int myGridPosition = new Vector3Int(
+                (int)animal.transform.position.x,
+                (int)animal.transform.position.y,
+                (int)animal.transform.position.z);
+
+            // Get the enclosed area I'm enclosed in
+            EnclosedArea myArea = GameManager
+                .Instance
+                .m_enclosureSystem
+                .GetEnclosedAreaByCellPosition(myGridPosition);
+
+            // If the area is not enclosed,
+            // then reduce the number of enclosed animals
+            // WHY?!
+            // Simply commenting this out fixes a bug. Is there any reason for this at all?
+            if (!myArea.isEnclosed) 
             {
-                enclosedPopulationCount--;
+                // enclosedPopulationCount--;
             }
         }
         //Debug.Log ("Population Count: " + enclosedPopulationCount);
