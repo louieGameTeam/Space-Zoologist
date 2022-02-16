@@ -48,8 +48,8 @@ public class MoveObject : MonoBehaviour
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
         foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
             // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
-            if(!itemByID.ContainsKey(itemData.itemObject.ID))
-                itemByID.Add(itemData.itemObject.ID, itemData.itemObject);
+            if(!itemByID.ContainsKey(itemData.itemObject.IDPlaceholder))
+                itemByID.Add(itemData.itemObject.IDPlaceholder, itemData.itemObject);
         }
 
         tempItem = (Item)ScriptableObject.CreateInstance("Item");
@@ -226,7 +226,7 @@ public class MoveObject : MonoBehaviour
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.TILE:
-                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
+                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.IDPlaceholder.ToLower().Equals(objectToMove.name));
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
                 break;
             default:
@@ -262,15 +262,15 @@ public class MoveObject : MonoBehaviour
         {
             toMove = tileData.Animal;
             movingItemType = ItemType.ANIMAL;
-            string ID = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
-            tempItem.SetupData(ID, "Pod", ID, 0);
+            string itemName = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
+            tempItem.SetupData(itemName, 0);
         }
         else if (tileData.Food)
         {
             toMove = tileData.Food;
             movingItemType = ItemType.FOOD;
-            string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
-            tempItem.SetupData(ID, "Food", ID, 0);
+            string itemName = toMove.GetComponent<FoodSource>().Species.SpeciesName;
+            tempItem.SetupData(itemName, 0);
         }
         else if (gridSystem.IsWithinGridBounds(pos))
         {
@@ -292,8 +292,8 @@ public class MoveObject : MonoBehaviour
                 movingItemType = ItemType.TILE;
                 tileToDelete.transform.position = (Vector3)pos + new Vector3(0.5f, 0.5f, 0);
                 toMove = tileToDelete;
-                string ID = tileToDelete.name;
-                tempItem.SetupData(ID, "Tile", ID, 0);
+                string tileName = tileToDelete.name;
+                tempItem.SetupData(tileName, 0);
 
                 initialTilePosition = pos;
                 initialTile = gridSystem.GetTileData(pos).currentTile;
@@ -496,15 +496,7 @@ public class MoveObject : MonoBehaviour
     }
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
     {
-        string itemID = "";
-        foreach (KeyValuePair<string, FoodSourceSpecies> nameToFoodSpecies in GameManager.Instance.FoodSources)
-        {
-            if (nameToFoodSpecies.Value == foodSourceSpecies)
-            {
-                itemID = nameToFoodSpecies.Key;
-            }
-        }
-        return this.FoodSourceStoreSection.GetItemByID(itemID);
+        return this.FoodSourceStoreSection.GetItemByID(foodSourceSpecies.ID);
     }
     public void removeOriginalFood(FoodSource foodSource)
     {

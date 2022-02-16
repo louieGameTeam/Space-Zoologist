@@ -88,7 +88,7 @@ public class NotebookUI : MonoBehaviour
         {
             foreach (LevelData.ItemData item in instance.LevelData.ItemQuantities)
             {
-                data.UnlockItem(item.itemObject.ItemID);
+                data.UnlockItem(item.itemObject.ID);
             }
         }
 

@@ -17,9 +17,9 @@ public class SpeciesReferenceData : MonoBehaviour
                 Item item = data.itemObject;
                 if (item)
                 {
-                    if (item.Type.Equals(ItemType.Food) && item.ID.Equals(foodSource.SpeciesName))
+                    if (item.Type.Equals(ItemRegistry.Category.Food) && item.IDPlaceholder.Equals(foodSource.SpeciesName))
                     {
-                        this.FoodSources.Add(item.ID, foodSource);
+                        this.FoodSources.Add(item.IDPlaceholder, foodSource);
                     }
                 }
             }

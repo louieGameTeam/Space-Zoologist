@@ -60,10 +60,10 @@ public class ResourcePicker : NotebookUIChild
             // Only add options that are not pods so we cannot request animals as resources
             foreach (LevelData.ItemData item in instance.LevelData.ItemQuantities)
             {
-                if (item.itemObject.Type != ItemType.Pod && item.itemObject.Type != ItemType.Machine)
-                {
-                    dropdown.options.Add(ItemDataToOptionData(item.itemObject));
-                }
+                //if (item.itemObject.Type != ItemType.Pod && item.itemObject.Type != ItemType.Machine)
+                //{
+                //    dropdown.options.Add(ItemDataToOptionData(item.itemObject));
+                //}
             }
         }
         else

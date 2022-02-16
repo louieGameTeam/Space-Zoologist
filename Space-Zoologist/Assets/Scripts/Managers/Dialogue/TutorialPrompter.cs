@@ -350,7 +350,7 @@ public class TutorialPrompter : MonoBehaviour
         // Freeze until the menu is in store, the store section is picked and the item selected is the target item
         if (storeSection.SelectedItem != null)
         {
-            return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == storeSectionIndex && storeSection.SelectedItem.ItemID == targetItem;
+            return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == storeSectionIndex && storeSection.SelectedItem.ID == targetItem;
         }
         else return false;
     }
@@ -453,14 +453,14 @@ public class TutorialPrompter : MonoBehaviour
         // Get a list of all store item cells in the store section
         StoreItemCell[] cells = storeSection.GetComponentsInChildren<StoreItemCell>(true);
         // Find a cell in the list of all the cells that will be our target
-        StoreItemCell target = Array.Find(cells, cell => cell.item.ItemID == item);
+        StoreItemCell target = Array.Find(cells, cell => cell.item.ID == item);
         // Convert the target transform to a rect transform
         RectTransform targetTransform = target.transform as RectTransform;
 
         // Return a highlight for the item cell with the given id
         return new ConditionalHighlight()
         {
-            predicate = () => storeSection.SelectedItem == null || storeSection.SelectedItem.ItemID != item,
+            predicate = () => storeSection.SelectedItem == null || storeSection.SelectedItem.ID != item,
             target = () => targetTransform
         };
     }
