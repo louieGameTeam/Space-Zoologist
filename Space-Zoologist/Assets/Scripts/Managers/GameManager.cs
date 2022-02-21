@@ -296,11 +296,14 @@ public class GameManager : MonoBehaviour
         // If notebook is opened, then close the build ui
         notebookUI.OnNotebookToggle.AddListener(notebookIsOn =>
         {
-            inspectorObjectiveUI.SetIsOpen(!notebookIsOn);
             if (notebookIsOn) m_menuManager.SetStoreIsOn(false);
 
             // Set npc active only if both notebook and build ui are not open
             m_dialogueManager.SetNPCActive(!notebookUI.IsOpen && !m_menuManager.IsInStore);
+        });
+        notebookUI.OnEnableInspectorToggle.AddListener(inspectorEnabled => 
+        {
+            inspectorObjectiveUI.SetIsOpen(inspectorEnabled);
         });
         // If store is opened, then close the notebook
         m_menuManager.OnStoreToggled.AddListener(storeIsOn =>

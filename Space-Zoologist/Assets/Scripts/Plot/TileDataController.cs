@@ -764,6 +764,10 @@ public class TileDataController : MonoBehaviour
 
                 LiquidbodyController.Instance.MergeConstructingTiles();
 
+                //Remove from the liquidbody controller's construction buffer after merging
+                foreach(Vector2Int position in cluster.ConstructionTilePositions)
+                    LiquidbodyController.Instance.RemoveConstructingTile((Vector3Int)position);
+
                 if (constructionFinishedCallback != null)
                     constructionFinishedCallback();
             }

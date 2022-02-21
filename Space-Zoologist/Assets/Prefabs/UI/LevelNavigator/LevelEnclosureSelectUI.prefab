@@ -189,8 +189,9 @@ GameObject:
   - component: {fileID: 6788242691269969804}
   - component: {fileID: 2369302086161425494}
   - component: {fileID: 2779676191397708098}
+  - component: {fileID: 8926407926249262941}
   m_Layer: 5
-  m_Name: RatingStarGroup
+  m_Name: RatingUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,6 +279,22 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &8926407926249262941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743585109883729742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68282ebc9107c7641acfdc29e209399f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ratingText: {fileID: 4849345180737972446}
+  ratingObjectPrefab: {fileID: 5761014166293907640, guid: 6097baab8ef9e9e439b1d0003b90f93b,
+    type: 3}
+  ratingObjectParent: {fileID: 6078813161094195004}
 --- !u!1 &7264009457629942337
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,7 +694,4 @@ MonoBehaviour:
   title: {fileID: 981054839784343991}
   image: {fileID: 6477376020788663882}
   outline: {fileID: 7264009457629942337}
-  ratingText: {fileID: 4849345180737972446}
-  ratingObjectPrefab: {fileID: 5761014166293907640, guid: 6097baab8ef9e9e439b1d0003b90f93b,
-    type: 3}
-  ratingObjectParent: {fileID: 6078813161094195004}
+  ratingUI: {fileID: 8926407926249262941}

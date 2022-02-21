@@ -1032,7 +1032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -0.00024414062}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3252210220900439743
@@ -1330,6 +1330,7 @@ GameObject:
   - component: {fileID: 16592560593046399}
   - component: {fileID: 6168294539112114924}
   - component: {fileID: 2192681357731932473}
+  - component: {fileID: 1815347074763188574}
   m_Layer: 5
   m_Name: StoreInfo
   m_TagString: Untagged
@@ -1407,6 +1408,19 @@ MonoBehaviour:
   itemClickedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1815347074763188574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055285871976117160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 6168294539112114924}
 --- !u!1 &1236863451386374813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3010,6 +3024,7 @@ GameObject:
   - component: {fileID: 3266695907776272303}
   - component: {fileID: 4980093852757653458}
   - component: {fileID: 8422855006132618932}
+  - component: {fileID: 8530317419901616406}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -3105,6 +3120,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8530317419901616406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276664524888644695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 8422855006132618932}
 --- !u!1 &2291011306033106661
 GameObject:
   m_ObjectHideFlags: 0
@@ -3117,6 +3145,7 @@ GameObject:
   - component: {fileID: 3244485543345734941}
   - component: {fileID: 4994421680412599648}
   - component: {fileID: 8408474456273359878}
+  - component: {fileID: 4495299625122624111}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -3212,6 +3241,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4495299625122624111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291011306033106661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 8408474456273359878}
 --- !u!1 &2362143524752984470
 GameObject:
   m_ObjectHideFlags: 0
@@ -8953,6 +8995,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2192501986004160929}
   - component: {fileID: 2640805646313652791}
+  - component: {fileID: 1201985397707273912}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -8978,7 +9021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -117.50098, y: 0}
+  m_AnchoredPosition: {x: -117.5, y: 0}
   m_SizeDelta: {x: 25, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2640805646313652791
@@ -9011,6 +9054,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1201985397707273912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7316303488187663123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 2640805646313652791}
 --- !u!1 &7366928107608701954
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,21 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
+[Serializable]
 public class TileData
 {
-    public Vector3Int tilePosition { get; private set; }
-    public GameObject Food { get; set; }
-    public GameObject Animal { get; set; }
+    // The three variables below were { get; private set; } but that prevents these fields from being serialized for the verbose inspector so they're not
+    public Vector3Int tilePosition;
+    public GameTile currentTile;
+    public GameTile previousTile;
 
-    public GameTile currentTile { get; private set; }
-    public GameTile previousTile { get; private set; }
+    public GameObject Food;
+    public GameObject Animal;
+    public float [] contents;
+    public bool isTilePlaceable = false;
+    public bool isConstructing = false;
+
     // no longer relevant to prevent coupling
     // public LiquidBody currentLiquidBody { get; set; }
     // public LiquidBody previewLiquidBody { get; private set; }
     // public float[] contents { get; set; }
-    public bool isTilePlaceable { get; set; } = false;
-    public bool isConstructing { get; set; } = false;
+
     public TileData(Vector3Int tilePosition, GameTile tile = null)
     {
         this.Food = null;
