@@ -207,6 +207,7 @@ public class EnclosureSystem : MonoBehaviour
     /// <remarks>
     /// This is using a flood fill (https://en.wikipedia.org/wiki/Flood_fill) to find enclosed areas.
     /// Assumptions: the reserve is bordered by walls
+    /// NOTE: this assumption does not hold up for some reserves, such as Level2E2 and Level2E3
     /// </remarks>
     public void UpdateEnclosedAreas(bool isUpdate = true)
     {

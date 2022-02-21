@@ -12,37 +12,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
   m_Name: Level0Quiz
   m_EditorClassIdentifier: 
-  importantCategories: []
-  fixedQuestions:
-  - question: What does the "R" in roct man stand for?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 0
-    options:
-    - label: Random
-      weight: 0
-    - label: Research
-      weight: 1
-    - label: Ronald
-      weight: 0
-  - question: What does the "O" in roct man stand for?
-    category:
-      item:
-        category: 0
-        index: 0
-      need: 0
-    options:
-    - label: Organize
-      weight: 0
-    - label: Osteoporosis
-      weight: 0
-    - label: Observe
-      weight: 1
+  importantCategories:
+  - item:
+      category: 0
+      index: 0
+    need: 3
+  fixedQuestions: []
   randomQuestionPool:
-    questionsToPick: 0
-    questionPool: []
+    questionsToPick: 2
+    questionPool:
+    - question: What does the "R" in roct man stand for?
+      category:
+        item:
+          category: 0
+          index: 0
+        need: 3
+      options:
+      - label: Research
+        weight: 1
+      - label: Refine
+        weight: 0
+      - label: Resign
+        weight: 0
+      - label: Redefine
+        weight: 0
+    - question: What does the "O" in roct man stand for?
+      category:
+        item:
+          category: 0
+          index: 0
+        need: 3
+      options:
+      - label: Obviate
+        weight: 0
+      - label: Observe
+        weight: 1
+      - label: Obstruct
+        weight: 0
+      - label: Oblivion
+        weight: 0
+    - question: What does the "C" in roct man stand for?
+      category:
+        item:
+          category: 0
+          index: 0
+        need: 3
+      options:
+      - label: Confidence
+        weight: 0
+      - label: Contingencies
+        weight: 0
+      - label: Conditions
+        weight: 0
+      - label: Concepts
+        weight: 1
+    - question: What does the "T" in roct man stand for?
+      category:
+        item:
+          category: 0
+          index: 0
+        need: 3
+      options:
+      - label: Taste
+        weight: 0
+      - label: Try
+        weight: 0
+      - label: Test
+        weight: 1
+      - label: Triangulate
+        weight: 0
+    - question: What does the "M" in roct man stand for?
+      category:
+        item:
+          category: 0
+          index: 0
+        need: 3
+      options:
+      - label: Meters
+        weight: 0
+      - label: Metrics
+        weight: 1
+      - label: Memes
+        weight: 0
+      - label: Meteors
+        weight: 0
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}

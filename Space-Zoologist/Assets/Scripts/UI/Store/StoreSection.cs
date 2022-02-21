@@ -58,12 +58,13 @@ public class StoreSection : MonoBehaviour
             if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
 
             Vector3Int gridLocation = GridSystem.WorldToCell(mousePosition);
-            if (this.GridSystem.IsOnWall(gridLocation)) return;
 
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
             {
                 previousLocation = gridLocation;
                 GridSystem.ClearHighlights();
+                //Invalid if the level does not allow placing on walls
+                if (this.GridSystem.IsOnWall(gridLocation) && !GameManager.Instance.LevelData.WallBreakable) return;
                 GridSystem.updateVisualPlacement(gridLocation, selectedItem);
             }
         }

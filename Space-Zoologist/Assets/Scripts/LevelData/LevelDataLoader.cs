@@ -7,43 +7,43 @@ using UnityEngine.SceneManagement;
 public class LevelDataLoader : MonoBehaviour
 {
     #region Public Properties
-    public static string CurrentLevel => currentLevel;
+    public static LevelData CurrentLevel => currentLevel;
     #endregion
 
     #region Editor Fields
     [Header("Used when playing level scene directly")]
-    [SerializeField] string LevelOnPlay = "Level1E1";
+    [SerializeField] LevelData levelOnPlay;
     #endregion
 
     #region Private Fields
-    private static string currentLevel = "";
+    private static LevelData currentLevel;
     #endregion
 
     #region Monobehaviour Messages
     private void Awake()
     {
         // If the current level is empty then use the level on play
-        if (currentLevel == "")
+        if (currentLevel == null)
         {
-            currentLevel = LevelOnPlay;
+            currentLevel = levelOnPlay;
         }
-        LevelDataReference.instance.LevelData = GetLevelData(currentLevel);
+        LevelDataReference.instance.LevelData = currentLevel;
     }
     #endregion
 
     #region Public Methods
     public static void LoadLatestQualifiedLevel() => LoadLevel(SaveData.LatestLevelQualified);
-    public static void LoadLevel(LevelData level) => LoadLevel(level.Level.SceneName);
-    public static void LoadLevel(LevelID levelToLoad) => LoadLevel(levelToLoad.LevelName);
-    public static void LoadLevel(string levelToLoad)
+    public static void LoadLevel(string levelToLoad) => LoadLevel(GetLevelData(levelToLoad));
+    public static void LoadLevel(LevelID levelToLoad) => LoadLevel(GetLevelData(levelToLoad));
+    public static void LoadLevel(LevelData level)
     {
         if (GameManager.Instance)
         {
             GameManager.Instance.HandleExitLevel();
         }
         // Set the current level to the level we are about to load
-        currentLevel = levelToLoad;
-        SceneManager.LoadScene("MainLevel"); 
+        currentLevel = level;
+        SceneManager.LoadScene("MainLevel");
     }
     public static void ReloadLevel() => LoadLevel(currentLevel);
     public static void LoadNextLevel()
@@ -75,7 +75,17 @@ public class LevelDataLoader : MonoBehaviour
         else throw new MissingReferenceException($"{nameof(LevelDataLoader)}: " +
             $"Failed to load level {levelID.LevelName} from resource path {path}");
     }
-    public static LevelData GetLevelData(string levelToLoad) => GetLevelData(LevelID.FromSceneName(levelToLoad));
+    public static LevelData GetLevelData(string levelToLoad)
+    {
+        LevelID id = LevelID.FromSceneName(levelToLoad);
+
+        if (id.IsValid)
+        {
+            return GetLevelData(id);
+        }
+        else throw new System.ArgumentException($"Level '{levelToLoad}' " +
+            $"could not be parsed into a valid LevelID object");
+    }
     public static LevelData[] GetAllLevelEnclosures(int levelNumber)
     {
         string path = $"LevelData/Level{levelNumber}/";

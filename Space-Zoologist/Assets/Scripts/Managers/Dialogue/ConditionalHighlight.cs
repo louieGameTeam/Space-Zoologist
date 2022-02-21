@@ -5,10 +5,25 @@ using UnityEngine;
 
 public class ConditionalHighlight
 {
+    #region Public Fields
     public Func<bool> predicate;
     public bool invert = false;
     public Func<RectTransform> target;
+    #endregion
 
+    #region Factories
+    public static ConditionalHighlight NoTarget(Func<bool> predicate, bool invert = false)
+    {
+        return new ConditionalHighlight()
+        {
+            predicate = predicate,
+            invert = invert,
+            target = () => null
+        };
+    }
+    #endregion
+
+    #region Public Methods
     public bool Target(TutorialHighlight highlight)
     {
         bool result = predicate.Invoke();
@@ -22,20 +37,13 @@ public class ConditionalHighlight
             RectTransform target = this.target.Invoke();
 
             // Target the rect transform received
-            if (target)
-            {
-                // If the target of the highlight is not already this object then set the target
-                if (target != highlight.Root.parent) highlight.Target(target);
-                return true;
-            }
-            // If no target received log it and return false
-            else
-            {
-                Debug.Log($"{nameof(ConditionalHighlight)}: Target functor " +
-                    $"failed to find a target");
-                return false;
-            }
+            // If the target of the highlight is not already this object then set the target
+            if (target && target != highlight.Root.parent) highlight.Target(target);
+
+            // Return true since the predicate was true
+            return true;
         }
         else return false;
     }
+    #endregion
 }

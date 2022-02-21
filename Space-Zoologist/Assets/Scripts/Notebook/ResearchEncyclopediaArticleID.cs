@@ -5,25 +5,31 @@ using UnityEngine;
 [System.Serializable]
 public struct ResearchEncyclopediaArticleID
 {
-    // Public accessors
+    #region Public Properties
     public string Title => title;
     public string Author => author;
+    public static ResearchEncyclopediaArticleID Empty => new ResearchEncyclopediaArticleID(
+        string.Empty, string.Empty);
+    #endregion
 
-    // Private editor data
+    #region Private Editor Fields
     [SerializeField]
     [Tooltip("Title of the article")]
     private string title;
     [SerializeField]
     [Tooltip("Author of the article")]
     private string author;
+    #endregion
 
-    // Constructor to set the values
+    #region Constructors
     public ResearchEncyclopediaArticleID(string title, string author)
     {
         this.title = title;
         this.author = author;
     }
+    #endregion
 
+    #region Operator Overloads
     public static bool operator==(ResearchEncyclopediaArticleID a, ResearchEncyclopediaArticleID b)
     {
         return a.title == b.title && a.author == b.author;
@@ -32,6 +38,9 @@ public struct ResearchEncyclopediaArticleID
     {
         return !(a == b);
     }
+    #endregion
+
+    #region Object Overrides
     public override bool Equals(object obj)
     {
         // If other object is null, it cannot be equal to this struct
@@ -54,4 +63,5 @@ public struct ResearchEncyclopediaArticleID
         if (author != "") str += " by " + author;
         return str;
     }
+    #endregion
 }

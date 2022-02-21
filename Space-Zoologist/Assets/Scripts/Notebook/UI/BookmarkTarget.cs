@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Identifies a ui object in the Notebook
+/// that can be the target of a bookmark. Most
+/// LevelID pickers and ItemPicker components
+/// have one of these attached
+/// </summary>
 public class BookmarkTarget : NotebookUIChild
 {
     #region Private Fields
