@@ -354,7 +354,7 @@ public class Population : MonoBehaviour, Life
         int i=0;
         foreach (KeyValuePair<string, Need> need in this.needs)
         {
-            if (this.NeedEditorTesting[i].NeedName.Equals(need.Key))
+            if (this.NeedEditorTesting[i].ID.Equals(need.Value.ID))
             {
                 this.NeedEditorTesting[i] = need.Value;
             }
@@ -364,7 +364,7 @@ public class Population : MonoBehaviour, Life
         {
             foreach (Need need in this.NeedEditorTesting)
             {
-                this.needs[need.NeedName] = need;
+                this.needs[need.ID.Data.Name.Get(ItemName.Type.Serialized)] = need;
             }
         }
     }

@@ -53,16 +53,22 @@ public class AnimalSpecies : ScriptableObject
         //Terrain Needs
         foreach (TerrainNeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.NeedName, new TerrainNeed(need, this));
+            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), 
+                new TerrainNeed(need, this));
         }
 
         //Food Needs
         foreach (FoodNeedConstructData need in foodNeeds)
         {
-            needs.Add(need.NeedName, new FoodNeed(need, minFoodRequired));
+            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), 
+                new FoodNeed(need, minFoodRequired));
         }
 
-        //Water Needs
+        // Water Needs
+        // NOTE: if this could be changed, then we could use ItemID's 
+        // instead of strings. We could give the liquid needs a bool
+        // called "poison" and give it an id for Fresh, Sald, or 
+        // Stagnant water
         foreach (LiquidNeedConstructData need in liquidNeeds)
         {
             if(need.TileNeedThreshold <= 0)
@@ -92,7 +98,7 @@ public class AnimalSpecies : ScriptableObject
         //Prey Needs
         foreach (PreyNeedConstructData need in preyNeeds)
         {
-            needs.Add(need.NeedName, new PreyNeed(need));
+            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), new PreyNeed(need));
         }
 
         return needs;

@@ -91,7 +91,7 @@ public class ResourceRequest
 
                 // Find a need with the same name as the item addressed
                 NeedConstructData need = speciesNeeds
-                    .Find(n => itemRequestedData.Name.AnyNameContains(n.NeedName));
+                    .Find(n => n.ID == itemRequested);
 
                 if (need != null)
                 {

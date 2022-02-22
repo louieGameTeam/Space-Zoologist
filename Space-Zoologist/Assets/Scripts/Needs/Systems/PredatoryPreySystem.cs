@@ -5,13 +5,11 @@ using UnityEngine;
 public class PredatoryPreySystem : NeedSystem
 {
 
-    private readonly TileDataController gridSystem = default;
     private readonly ReservePartitionManager rpm = default;
 
     public PredatoryPreySystem(NeedType needType = NeedType.Prey) : base(needType)
     {
         this.rpm = GameManager.Instance.m_reservePartitionManager;
-        this.gridSystem = GameManager.Instance.m_tileDataController;
     }
 
     /* 
@@ -33,10 +31,9 @@ public class PredatoryPreySystem : NeedSystem
                         {
                             // Get the ID of the predator and need
                             ItemID predatorID = potentialPredator.Species.ID;
-                            ItemID needID = ItemRegistry.FindHasName(need.Value.NeedName);
 
                             // Check if the id's are equal
-                            if (predatorID == needID)
+                            if (predatorID == need.Value.ID)
                             {
                                 int numOverlapTiles = rpm.NumOverlapTiles(prey, potentialPredator);
                                 if (numOverlapTiles > potentialPredator.Count)
@@ -49,7 +46,7 @@ public class PredatoryPreySystem : NeedSystem
                                 }
                             }
                         }
-                        prey.UpdateNeed(need.Value.NeedName, needValue);
+                        prey.UpdateNeed(need.Value.ID.Data.Name.Get(ItemName.Type.Serialized), needValue);
                     }
                 }
             }

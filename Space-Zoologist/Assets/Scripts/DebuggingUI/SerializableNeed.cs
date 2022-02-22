@@ -6,7 +6,7 @@ using UnityEngine;
 public class SerializableNeed
 {
     #region Public Fields
-    public string needName;
+    public ItemID needID;
     public string needType;
     public float needValue;
     public float severity;
@@ -16,7 +16,7 @@ public class SerializableNeed
     #region Constructors
     public SerializableNeed(Need need)
     {
-        needName = need.NeedName;
+        needID = need.ID;
         needType = need.NeedType.ToString();
         needValue = need.NeedValue;
         severity = need.Severity;

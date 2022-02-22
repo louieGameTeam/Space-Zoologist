@@ -15,11 +15,6 @@ public class TerrainNeedConstructData : NeedConstructData
     [ItemIDFilter(ItemRegistry.Category.Tile)]
     private ItemID tileID;
 
-    public TerrainNeedConstructData(string name) 
-        : base(name)
-    {
-    }
-
     protected override bool getIsPreferred()
     {
         return isPreferred;
@@ -40,11 +35,6 @@ public class FoodNeedConstructData : NeedConstructData
     [Tooltip("ID of the food that this animal can consume")]
     [ItemIDFilter(ItemRegistry.Category.Food)]
     private ItemID foodID;
-
-    public FoodNeedConstructData(string name) 
-        : base(name)
-    {
-    }
 
     public override float GetSurvivableThreshold()
     {
@@ -80,11 +70,6 @@ public class LiquidNeedConstructData : NeedConstructData
     [Range(0,1)] [SerializeField] private float bacteriaMinThreshold;
     [Range(0,1)] [SerializeField] private float bacteriaMaxThreshold = 1;
 
-    public LiquidNeedConstructData(string name) 
-        : base(name)
-    {
-    }
-
     public override float GetSurvivableThreshold()
     {
         return tileNeedThreshold;
@@ -108,8 +93,6 @@ public class PreyNeedConstructData : NeedConstructData
     [ItemIDFilter(ItemRegistry.Category.Species)]
     private ItemID preyID;
 
-    public PreyNeedConstructData(string name) : base(name) {}
-
     public override float GetSurvivableThreshold() { return 0; }
     protected override ItemID getID() => preyID;
     protected override bool getIsPreferred() { return false; }
@@ -122,18 +105,9 @@ public class PreyNeedConstructData : NeedConstructData
 public abstract class NeedConstructData
 {
     public ItemID ID => getID();
-    public string NeedName => needName;
     public bool IsPreferred => getIsPreferred();
 
-    [SerializeField] private string needName = default;
-
-    public NeedConstructData(string name)
-    {
-        this.needName = name;
-    }
-
     public abstract float GetSurvivableThreshold();
-
     protected abstract ItemID getID();
     protected abstract bool getIsPreferred();
 }

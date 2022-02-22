@@ -29,7 +29,8 @@ public class FoodSourceSpecies : ScriptableObject
         //Terrain Needs
         foreach (TerrainNeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.NeedName, new TerrainNeed(need, this));
+            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), 
+                new TerrainNeed(need, this));
         }
 
         //Water Needs
