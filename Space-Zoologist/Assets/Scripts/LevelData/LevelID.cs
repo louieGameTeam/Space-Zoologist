@@ -21,6 +21,7 @@ public struct LevelID : System.IComparable<LevelID>
             else return $"Level{levelNumber}";
         }
     }
+    public bool IsValid => levelNumber >= 0 && enclosureNumber >= 0;
     public static LevelID Invalid => new LevelID(-1, -1);
     #endregion
 

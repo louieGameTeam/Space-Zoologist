@@ -44,95 +44,101 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 63
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":453.5,\"yPos\":155},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Good
-    morning! You must be Juno!\",\"parentUIDs\":[1,1],\"SpeechUID\":4},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":803.5,\"yPos\":155},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Uhh\u2026Hello?\",\"parentUIDs\":[1,1],\"SpeechUID\":4},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":342.5,\"yPos\":407},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"The
-    what?\",\"parentUIDs\":[4,4],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":160.5,\"yPos\":593},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Of
-    course!\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":461.5,\"yPos\":595},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Yeah,
-    but no need to be so mean about it.\",\"parentUIDs\":[8,6,6],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":710.5,\"yPos\":445},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I
-    haven\u2019t.\",\"parentUIDs\":[10,4,4],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":611.5,\"yPos\":1450},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"\u2026\",\"parentUIDs\":[17,17],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":525.5,\"yPos\":1652},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"\u2026Don\u2019t
-    we have work to do? I have this note from Dr. Star\u2026\",\"parentUIDs\":[19,19],\"SpeechUID\":23},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":963.5,\"yPos\":1620},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"\u2026
-    \u2026 \u2026\",\"parentUIDs\":[19,19],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":531.5,\"yPos\":2600},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"So
-    what do you do now?\",\"parentUIDs\":[28,28],\"SpeechUID\":32},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":755.5,\"yPos\":2600},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
-    sorry\u2026\",\"parentUIDs\":[28,28],\"SpeechUID\":31},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":437.5,\"yPos\":3098},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"Well,
-    some of those food resources are species.\",\"parentUIDs\":[34,34],\"SpeechUID\":36},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":691.5,\"yPos\":3122},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Yup!\",\"parentUIDs\":[36,34,34],\"SpeechUID\":38},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":356.5,\"yPos\":3653},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Candentis
-    Acernis\",\"parentUIDs\":[40,40],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":605.5,\"yPos\":3671},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
-    Spatium Bacca\",\"parentUIDs\":[40,40],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":828.5,\"yPos\":3668},\"ID\":47,\"TMPFontGUID\":null,\"Text\":\"Formica
-    Collis\",\"parentUIDs\":[45,40,40],\"SpeechUID\":48},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":1078.5,\"yPos\":3678},\"ID\":49,\"TMPFontGUID\":null,\"Text\":\"Humidum
-    Limax\",\"parentUIDs\":[48,40,40],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":581.5,\"yPos\":5009},\"ID\":56,\"TMPFontGUID\":null,\"Text\":\"Most
-    of the time?\",\"parentUIDs\":[55,55],\"SpeechUID\":57}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":609.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hmm\u2026Hmmmm\u2026\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":597.5,\"yPos\":282},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Have
-    you ever taken a moment to closely consider the Candentis Acernis Aurum, newbie?\",\"parentUIDs\":[2,3,2,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[5,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":321.5,\"yPos\":473},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Ah,
+  CurrentIDCounter: 69
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":223,\"yPos\":-2022},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Good
+    morning! You must be Juno!\",\"parentUIDs\":[1,1],\"SpeechUID\":4},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":573,\"yPos\":-2022},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Uhh\u2026Hello?\",\"parentUIDs\":[1,1],\"SpeechUID\":4},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":112,\"yPos\":-1770},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"The
+    what?\",\"parentUIDs\":[4,4],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-70,\"yPos\":-1584},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Of
+    course!\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":231,\"yPos\":-1582},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Yeah,
+    but no need to be so mean about it.\",\"parentUIDs\":[8,6,6],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":480,\"yPos\":-1732},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I
+    haven\u2019t.\",\"parentUIDs\":[10,4,4],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":381,\"yPos\":-727},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"\u2026\",\"parentUIDs\":[17,17],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":295,\"yPos\":-525},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"\u2026Don\u2019t
+    we have work to do? I have this note from Dr. Star\u2026\",\"parentUIDs\":[19,19],\"SpeechUID\":23},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":733,\"yPos\":-557},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"\u2026
+    \u2026 \u2026\",\"parentUIDs\":[19,19],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":288,\"yPos\":489},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"So
+    what do you do now?\",\"parentUIDs\":[28,67],\"SpeechUID\":32},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":528,\"yPos\":480},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+    sorry\u2026\",\"parentUIDs\":[28,67],\"SpeechUID\":31},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":207,\"yPos\":921},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"Well,
+    some of those food resources are species.\",\"parentUIDs\":[34,34],\"SpeechUID\":36},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":461,\"yPos\":945},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Yup!\",\"parentUIDs\":[36,34,34],\"SpeechUID\":38},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":126,\"yPos\":1476},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Candentis
+    Acernis\",\"parentUIDs\":[40,40],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":375,\"yPos\":1494},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"Vaccinum
+    Spatium Bacca\",\"parentUIDs\":[40,40],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":598,\"yPos\":1491},\"ID\":47,\"TMPFontGUID\":null,\"Text\":\"Formica
+    Collis\",\"parentUIDs\":[45,40,40],\"SpeechUID\":48},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":848,\"yPos\":1501},\"ID\":49,\"TMPFontGUID\":null,\"Text\":\"Humidum
+    Limax\",\"parentUIDs\":[48,40,40],\"SpeechUID\":45},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":351,\"yPos\":2832},\"ID\":56,\"TMPFontGUID\":null,\"Text\":\"Most
+    of the time?\",\"parentUIDs\":[55,55],\"SpeechUID\":57},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":160,\"yPos\":300},\"ID\":64,\"TMPFontGUID\":null,\"Text\":\"Of
+    course I have!\",\"parentUIDs\":[28],\"SpeechUID\":63},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":589,\"yPos\":303},\"ID\":65,\"TMPFontGUID\":null,\"Text\":\"Err...Not...Exactly.\",\"parentUIDs\":[28],\"SpeechUID\":68}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":379,\"yPos\":-2155},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hmm\u2026Hmmmm\u2026\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2,3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":367,\"yPos\":-1895},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Have
+    you ever taken a moment to closely consider the Candentis Acernis Aurum, newbie?\",\"parentUIDs\":[2,3,2,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[5,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":91,\"yPos\":-1704},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Ah,
     the joys of instruction. The vernacular name for what I call the Candentis Acernis
-    Aurum is the Golden Space Maple. Are you familiar?\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[7,9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":189.5,\"yPos\":698},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Good.
-    T\u2019would be a concern were you ignorant of it.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":469.5,\"yPos\":677},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Hmm?
+    Aurum is the Golden Space Maple. Are you familiar?\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[7,9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-41,\"yPos\":-1479},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Good.
+    T\u2019would be a concern were you ignorant of it.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":239,\"yPos\":-1500},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Hmm?
     Cruelty exists only in the eye of the beholder, newbie. I meant no insult. I
-    assure you, you would know if I did.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":744.5,\"yPos\":537},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"You
-    should. It is worth the look.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":603.5,\"yPos\":889},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"The
+    assure you, you would know if I did.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":514,\"yPos\":-1640},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"You
+    should. It is worth the look.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":13,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":373,\"yPos\":-1288},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"The
     leaves look as if they are made of actual gold. It makes one wonder\u2026Are
-    they made of gold, or merely some visual simulacrum?\",\"parentUIDs\":[12,10,8,8,10,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":14,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":615.5,\"yPos\":1063},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Either
+    they made of gold, or merely some visual simulacrum?\",\"parentUIDs\":[12,10,8,8,10,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":14,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":385,\"yPos\":-1114},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"Either
     possibility raises interesting evolutionary questions. What advantages do the
     Candentis Acernis Aurum have over their gildless kin that made nature take such
-    a course?\",\"parentUIDs\":[13,13],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":616.5,\"yPos\":1149},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Whatever
+    a course?\",\"parentUIDs\":[13,13],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":15,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":386,\"yPos\":-1028},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"Whatever
     the case, they are an evolutionary oddity which we are privileged to witness,
     don\u2019t you think? There are beautiful species amongst terran flora, do not
-    misunderstand me, but none quite so radiant\u2026\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":615.5,\"yPos\":1237},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Let
-    us take a moment to revel in its magnificence.\",\"parentUIDs\":[15,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":610.5,\"yPos\":1345},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"\u2026\",\"parentUIDs\":[16,21,16,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[18],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":620.5,\"yPos\":1528},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"\u2026
-    \u2026 \u2026\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[20,21],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":610.5,\"yPos\":1773},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"Yes,
+    misunderstand me, but none quite so radiant\u2026\",\"parentUIDs\":[14,14],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":16,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":385,\"yPos\":-940},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Let
+    us take a moment to revel in its magnificence.\",\"parentUIDs\":[15,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":17,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":380,\"yPos\":-832},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"\u2026\",\"parentUIDs\":[16,21,16,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[18],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":390,\"yPos\":-649},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"\u2026
+    \u2026 \u2026\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[20,21],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":380,\"yPos\":-404},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"Yes,
     yes. But remember, one must always keep in mind why it is they do the work they
     do. Each species is as beautiful as the Candentis Acernis Aurum, in its own way,
-    and it is that beauty we are working to preserve.\",\"parentUIDs\":[20,21,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":611.5,\"yPos\":1982},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Now
-    hand me that missive, if you please.\",\"parentUIDs\":[23,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":627.5,\"yPos\":2132},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"\u2026Hmm\u2026Mmhmm\u2026I
-    see\u2026\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":26,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":615.5,\"yPos\":2231},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"I
+    and it is that beauty we are working to preserve.\",\"parentUIDs\":[20,21,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":381,\"yPos\":-195},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Now
+    hand me that missive, if you please.\",\"parentUIDs\":[23,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":397,\"yPos\":-45},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"\u2026Hmm\u2026Mmhmm\u2026I
+    see\u2026\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":26,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":385,\"yPos\":54},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"I
     see. So you are the new engineer everyone is talking about. They saw you\u2019ve
-    all but saved the Caprax Zeigrun. I commend your efforts.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":625.5,\"yPos\":2378},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"As
+    all but saved the Caprax Zeigrun. I commend your efforts.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":389,\"yPos\":145},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"As
     you already know, my name is Juno. I specialize in field research on Planet X\u2019s
     various flora and fauna. Or, at least, I did. Little of that work left to be
-    done now, I suppose.\",\"parentUIDs\":[26,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":28,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":614.5,\"yPos\":2485},\"ID\":28,\"TMPFontGUID\":null,\"Text\":\"My
-    field observations are in your notebook, are they not? I trust they have been
-    useful. Were that there was more of that work to be done.\",\"parentUIDs\":[27,27],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[29,30],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":781.5,\"yPos\":2661},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"Oh?
+    done now, I suppose.\",\"parentUIDs\":[26,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":28,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":385,\"yPos\":232},\"ID\":28,\"TMPFontGUID\":null,\"Text\":\"My
+    field observations are in your notebook, are they not? Have you reviewed them?
+    They are critical to your work here.\",\"parentUIDs\":[27,27],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[64,65],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":539,\"yPos\":548},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"Oh?
     What for? Are you the one who sent Planet X on a collision course for that errant
-    singularity? No? Then what is there to apologize for. What is done is done.\",\"parentUIDs\":[30,29,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":612.5,\"yPos\":2830},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Now
+    singularity? No? Then what is there to apologize for. What is done is done.\",\"parentUIDs\":[30,29,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":382,\"yPos\":653},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Now
     I work on the only work it seems is left to do: enclosure design. I monitor the
     biometric data of species in each enclosure and compare it to values taken from
-    when my observations of them on Planet X.\",\"parentUIDs\":[31,29,31,29],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":599.5,\"yPos\":2933},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"In
+    when my observations of them on Planet X.\",\"parentUIDs\":[31,29,31,29],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":369,\"yPos\":756},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"In
     short, I am responsible for ensuring your inspector provides accurate data. It
     pales in comparison to field work, but tedium is a small price to pay to save
-    such glorious creatures, is it not?\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":595.5,\"yPos\":3016},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"But
+    such glorious creatures, is it not?\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":365,\"yPos\":839},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"But
     enough about me. Dr. Star indicated that you haven\u2019t managed an enclosure
-    with more than one species yet. Is this correct?\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[35,37],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":402.5,\"yPos\":3179},\"ID\":36,\"TMPFontGUID\":null,\"Text\":\"Ah,
+    with more than one species yet. Is this correct?\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[35,37],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":172,\"yPos\":1002},\"ID\":36,\"TMPFontGUID\":null,\"Text\":\"Ah,
     right you are. I see I wasn\u2019t clear. I apologize. I meant an enclosure with
-    multiple sapient species.\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":38,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":616.5,\"yPos\":3294},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"Interesting.
+    multiple sapient species.\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":38,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":386,\"yPos\":1117},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"Interesting.
     Then this task will prove a bit of a challenge. Probably. Do not despair, though.
-    I\u2019ll show you the ropes.\",\"parentUIDs\":[37,36,36,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":605.5,\"yPos\":3447},\"ID\":39,\"TMPFontGUID\":null,\"Text\":\"But
+    I\u2019ll show you the ropes.\",\"parentUIDs\":[37,36,36,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":375,\"yPos\":1270},\"ID\":39,\"TMPFontGUID\":null,\"Text\":\"But
     before we move to practical matters, let us ensure you understand the theoretical.
     Open up the new Eligans Impar research entry. Take all the time you need to peruse
-    it.\",\"parentUIDs\":[38,45,38,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":40,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":603.5,\"yPos\":3547},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"Now,
-    based on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[39,39],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[41,44,47,49],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":885.5,\"yPos\":3451},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"I
+    it.\",\"parentUIDs\":[38,45,38,45],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":40,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":373,\"yPos\":1370},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"Now,
+    based on what you read, what food source does Eligans Impar dislike?\",\"parentUIDs\":[39,39],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[41,44,47,49],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":655,\"yPos\":1274},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"I
     believe you may have perused a bit too quickly. Review the research again. And
-    do so properly this time, if you please.\",\"parentUIDs\":[44,41,49,41,44,49],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":812.5,\"yPos\":3784},\"ID\":48,\"TMPFontGUID\":null,\"Text\":\"Correct.
-    They despise the Formica Collis with nearly the same vigor as the CapraX Zeigrun.\",\"parentUIDs\":[47,47],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":52,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":616.5,\"yPos\":4021},\"ID\":52,\"TMPFontGUID\":null,\"Text\":\"As
+    do so properly this time, if you please.\",\"parentUIDs\":[44,41,49,41,44,49],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":582,\"yPos\":1607},\"ID\":48,\"TMPFontGUID\":null,\"Text\":\"Correct.
+    They despise the Formica Collis with nearly the same vigor as the CapraX Zeigrun.\",\"parentUIDs\":[47,47],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":52,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":386,\"yPos\":1844},\"ID\":52,\"TMPFontGUID\":null,\"Text\":\"As
     you might have guessed, the two species have essentially the same food preferences.
-    Which makes it troublesome to build an enclosure incorporating both.\",\"parentUIDs\":[48,48],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":609.5,\"yPos\":4172},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"And
+    Which makes it troublesome to build an enclosure incorporating both.\",\"parentUIDs\":[48,48],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":53,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":379,\"yPos\":1995},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"And
     yet, that is exactly the task before you. You will design the enclosure before
     us, and ensure it is suitable for a small population of both Caprax Zeigrun and
-    Eligans Impar.\",\"parentUIDs\":[52,52],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":54,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":594.5,\"yPos\":4762},\"ID\":54,\"TMPFontGUID\":null,\"Text\":\"The
+    Eligans Impar.\",\"parentUIDs\":[52,52],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":54,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":364,\"yPos\":2585},\"ID\":54,\"TMPFontGUID\":null,\"Text\":\"The
     challenge lies in figuring out how to feed both species at once, off the same
     resources. Do not despair, however. Dr. Star has assured me that you are up to
-    the task, and she is a keen judge of character.\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":55,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":584.5,\"yPos\":4868},\"ID\":55,\"TMPFontGUID\":null,\"Text\":\"Well.
-    Most of the time\u2026\",\"parentUIDs\":[54,54],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[56],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":566.5,\"yPos\":5099},\"ID\":57,\"TMPFontGUID\":null,\"Text\":\"Let
+    the task, and she is a keen judge of character.\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":55,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":354,\"yPos\":2691},\"ID\":55,\"TMPFontGUID\":null,\"Text\":\"Well.
+    Most of the time\u2026\",\"parentUIDs\":[54,54],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[56],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":336,\"yPos\":2922},\"ID\":57,\"TMPFontGUID\":null,\"Text\":\"Let
     us just say that not all of Star\u2019s disciples have proven as competent as
-    us, and one of Planet X\u2019s species paid the price for his incompetence.\",\"parentUIDs\":[56,56],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":58,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":573.5,\"yPos\":5182},\"ID\":58,\"TMPFontGUID\":null,\"Text\":\"But
+    us, and one of Planet X\u2019s species paid the price for his incompetence.\",\"parentUIDs\":[56,56],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":58,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":343,\"yPos\":3005},\"ID\":58,\"TMPFontGUID\":null,\"Text\":\"But
     you did not hear that from me. Focus not on the past, but on the work before
     you. Your goal is to get the Caprax Zeigrun population up to at least 20, and
-    that of the Eligans Impar up to 15.\",\"parentUIDs\":[57,57],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":59,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":573.5,\"yPos\":5288},\"ID\":59,\"TMPFontGUID\":null,\"Text\":\"I
+    that of the Eligans Impar up to 15.\",\"parentUIDs\":[57,57],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":59,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":343,\"yPos\":3111},\"ID\":59,\"TMPFontGUID\":null,\"Text\":\"I
     would implore you to be meticulous with your enclosure modifications. This will
-    be a much more difficult task than the ones set before you thus far.\",\"parentUIDs\":[58,58],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":60,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":567.5,\"yPos\":5406},\"ID\":60,\"TMPFontGUID\":null,\"Text\":\"I
+    be a much more difficult task than the ones set before you thus far.\",\"parentUIDs\":[58,58],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":60,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":337,\"yPos\":3229},\"ID\":60,\"TMPFontGUID\":null,\"Text\":\"I
     hope to be impressed by your engineering skills when I return in 30 days. Ah,
-    and lest you wonder, we will be conducting a report back when I return\",\"parentUIDs\":[59,59],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":61,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":566.5,\"yPos\":5493},\"ID\":61,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    and lest you wonder, we will be conducting a report back when I return\",\"parentUIDs\":[59,59],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":61,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":336,\"yPos\":3316},\"ID\":61,\"TMPFontGUID\":null,\"Text\":\"Oh,
     and so you know, I am not nearly as tolerant a grader as Dr. Star. A passing
-    understanding of the material will not be sufficient.\",\"parentUIDs\":[60,60],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":62,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":559.5,\"yPos\":5600},\"ID\":62,\"TMPFontGUID\":null,\"Text\":\"I
+    understanding of the material will not be sufficient.\",\"parentUIDs\":[60,60],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":62,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":329,\"yPos\":3423},\"ID\":62,\"TMPFontGUID\":null,\"Text\":\"I
     shall leave you to your work. Remember, the future of these animals is in your
-    hands. Pray be careful with it.\",\"parentUIDs\":[61,61],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+    hands. Pray be careful with it.\",\"parentUIDs\":[61,61],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":176,\"yPos\":364},\"ID\":63,\"TMPFontGUID\":null,\"Text\":\"
+    Good. Those notes are the apex of my ecological research. \",\"parentUIDs\":[64],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"\",\"OptionUIDs\":[],\"SpeechUID\":67,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":416,\"yPos\":388},\"ID\":67,\"TMPFontGUID\":null,\"Text\":\"They
+    prove of utmost use to you, if you read them closely. Were that there was more
+    work like that to be done.\",\"parentUIDs\":[63,68],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[29,30],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":638,\"yPos\":360},\"ID\":68,\"TMPFontGUID\":null,\"Text\":\"Oh?
+    Then you have made it this far on luck alone? Best review them at your earliest
+    opportunity, so you aren't lost once that luck runs out.\",\"parentUIDs\":[65],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":67,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -198,6 +204,11 @@ MonoBehaviour:
   - {fileID: 2761161325617332618}
   - {fileID: 7583024345494018243}
   - {fileID: 2186707142838437727}
+  - {fileID: 3340051771218704482}
+  - {fileID: 4484419249198015935}
+  - {fileID: 5404782929561923802}
+  - {fileID: 3217089080820686735}
+  - {fileID: 2879731977958657085}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -270,6 +281,13 @@ GameObject:
   - component: {fileID: 2761161325617332618}
   - component: {fileID: 7583024345494018243}
   - component: {fileID: 2186707142838437727}
+  - component: {fileID: 6600706543118885729}
+  - component: {fileID: 7114804085287915363}
+  - component: {fileID: 3340051771218704482}
+  - component: {fileID: 4484419249198015935}
+  - component: {fileID: 5404782929561923802}
+  - component: {fileID: 3217089080820686735}
+  - component: {fileID: 2879731977958657085}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -1430,4 +1448,137 @@ MonoBehaviour:
       m_Calls: []
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &6600706543118885729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758044195240114591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 99
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &7114804085287915363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758044195240114591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 63
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &3340051771218704482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758044195240114591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 63
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &4484419249198015935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758044195240114591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 67
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &5404782929561923802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758044195240114591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 68
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &3217089080820686735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758044195240114591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 64
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &2879731977958657085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758044195240114591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 65
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
   Audio: {fileID: 0}

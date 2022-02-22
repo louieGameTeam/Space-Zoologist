@@ -102,6 +102,12 @@ public class LiquidbodyController : MonoBehaviour
         }
     }
 
+    public void RemoveConstructingTile(Vector3Int pos)
+    {
+        //Remove constructing tile from dictionary (generally after merging)
+        constructingTileContentDict.Remove(pos);
+    }
+
     public bool RemoveLiquidContentsFromLiquidbodyAt(Vector3Int pos)
     {
         // check if the liquid actually exists
@@ -276,4 +282,12 @@ public class LiquidbodyController : MonoBehaviour
 
     
     #endregion
+
+    [ContextMenu("Print data")]
+    private void PrintLiquidBodyData()
+    {
+        foreach(var body in liquidBodies)
+            print(body.TileCount);
+        print("Constructing " + constructingTileContentDict.Count);
+    }
 }
