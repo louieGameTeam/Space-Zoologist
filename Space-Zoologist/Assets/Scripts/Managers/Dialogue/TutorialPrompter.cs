@@ -129,7 +129,7 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilZeigsExist(int numZeigs)
     {
-        ItemID goatID = ItemRegistry.FindWithName("Goat");
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
         FreezingScheduler.FreezeUntilConditionIsMet(() => PopulationExists(goatID, numZeigs));
     }
     public void FreezeUntilZeigPopulationIncrease()
@@ -139,7 +139,7 @@ public class TutorialPrompter : MonoBehaviour
 
         // Get the current population
         PopulationManager populationManager = GameManager.Instance.m_populationManager;
-        ItemID goatID = ItemRegistry.FindWithName("Goat");
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
         int currentGoats = populationManager.TotalPopulationSize(goatID.Data.Species as AnimalSpecies);
 
         // Population increased if current population exceeds population computed just now
@@ -163,7 +163,7 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilGoatIsInspected()
     {
-        ItemID goatID = ItemRegistry.FindWithName("Goat");
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
         FreezeUntilPopulationIsInspected(goatID);
     }
     public void FreezeUntilDirtRequested(int quantity)
@@ -172,7 +172,7 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilGoatPlacedMaplePlacedAndDaysAdvanced()
     {
-        ItemID goatID = ItemRegistry.FindWithName("Goat");
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
         bool GoatsExist() => PopulationExists(goatID, 3);
         bool GoatsDontExist() => !GoatsExist();
         bool MaplesExist() => FoodSourceExists("Space Maple", 2);

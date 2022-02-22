@@ -10,6 +10,10 @@ public enum NeedCondition { Bad, Neutral, Good }
 public class TerrainNeedConstructData : NeedConstructData
 {
     [SerializeField] private bool isPreferred;
+    [SerializeField]
+    [Tooltip("ID of the terrain tile that this species needs")]
+    [ItemIDFilter(ItemRegistry.Category.Tile)]
+    private ItemID tileID;
 
     public TerrainNeedConstructData(string name) 
         : base(name)
@@ -20,6 +24,10 @@ public class TerrainNeedConstructData : NeedConstructData
     {
         return isPreferred;
     }
+    protected override ItemID getID()
+    {
+        return tileID;
+    }
 
     public override float GetSurvivableThreshold() { return -1f; }
 }
@@ -28,6 +36,10 @@ public class TerrainNeedConstructData : NeedConstructData
 public class FoodNeedConstructData : NeedConstructData
 {
     [SerializeField] private bool isPreferred;
+    [SerializeField]
+    [Tooltip("ID of the food that this animal can consume")]
+    [ItemIDFilter(ItemRegistry.Category.Food)]
+    private ItemID foodID;
 
     public FoodNeedConstructData(string name) 
         : base(name)
@@ -42,6 +54,10 @@ public class FoodNeedConstructData : NeedConstructData
     protected override bool getIsPreferred()
     {
         return isPreferred;
+    }
+    protected override ItemID getID()
+    {
+        return foodID;
     }
 }
 
@@ -78,14 +94,24 @@ public class LiquidNeedConstructData : NeedConstructData
     {
         return false;
     }
+    protected override ItemID getID()
+    {
+        return ItemRegistry.FindHasName("Fresh Water");
+    }
 }
 
 [System.Serializable]
 public class PreyNeedConstructData : NeedConstructData
 {
+    [SerializeField]
+    [Tooltip("ID of the animal that this animal devours")]
+    [ItemIDFilter(ItemRegistry.Category.Species)]
+    private ItemID preyID;
+
     public PreyNeedConstructData(string name) : base(name) {}
 
     public override float GetSurvivableThreshold() { return 0; }
+    protected override ItemID getID() => preyID;
     protected override bool getIsPreferred() { return false; }
 }
 
@@ -95,6 +121,7 @@ public class PreyNeedConstructData : NeedConstructData
 [System.Serializable]
 public abstract class NeedConstructData
 {
+    public ItemID ID => getID();
     public string NeedName => needName;
     public bool IsPreferred => getIsPreferred();
 
@@ -107,5 +134,6 @@ public abstract class NeedConstructData
 
     public abstract float GetSurvivableThreshold();
 
+    protected abstract ItemID getID();
     protected abstract bool getIsPreferred();
 }

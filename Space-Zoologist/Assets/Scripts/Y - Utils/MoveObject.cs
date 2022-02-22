@@ -264,14 +264,14 @@ public class MoveObject : MonoBehaviour
         {
             toMove = tileData.Animal;
             movingItemType = ItemType.ANIMAL;
-            string itemName = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
+            string itemName = toMove.GetComponent<Animal>().PopulationInfo.Species.ID.Data.Name.Get(ItemName.Type.Serialized);
             tempItem.SetupData(itemName, 0);
         }
         else if (tileData.Food)
         {
             toMove = tileData.Food;
             movingItemType = ItemType.FOOD;
-            string itemName = toMove.GetComponent<FoodSource>().Species.SpeciesName;
+            string itemName = toMove.GetComponent<FoodSource>().Species.ID.Data.Name.Get(ItemName.Type.Serialized);
             tempItem.SetupData(itemName, 0);
         }
         else if (gridSystem.IsWithinGridBounds(pos))
@@ -472,7 +472,7 @@ public class MoveObject : MonoBehaviour
         Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
         FoodLocation += new Vector3((float)species.Size.x / 2, (float)species.Size.y / 2, 0);
 
-        GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
+        GameObject Food = foodSourceManager.CreateFoodSource(species, FoodLocation);
         FoodSource foodSource = Food.GetComponent<FoodSource>();
 
         gridSystem.AddFoodReferenceToTile(mouseGridPosition, species.Size, Food);
@@ -484,8 +484,22 @@ public class MoveObject : MonoBehaviour
             {
                 foodSource.isUnderConstruction = false;
             });
-            gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
+
+            // Determine the construction type based on if this is a tree or just one food
+            TileDataController.ConstructionCluster.ConstructionType constructionType;
+
+            if (species.ID.Data.Name.Get(ItemName.Type.Serialized).Equals("Gold Space Maple") ||
+                species.ID.Data.Name.Get(ItemName.Type.Serialized).Equals("Space Maple"))
+            {
+                constructionType = TileDataController.ConstructionCluster.ConstructionType.TREE;
+            }
+            else constructionType = TileDataController.ConstructionCluster.ConstructionType.ONEFOOD;
+
+            // Create a rectangle buffer for the given construction type
+            gridSystem.CreateRectangleBuffer(
+                new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), 
+                this.GetStoreItem(species).buildTime, species.Size,
+                constructionType, buildProgress);
         }
         else //Otherwise, make sure its needs are up to date
         {

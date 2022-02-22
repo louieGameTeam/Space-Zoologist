@@ -96,7 +96,7 @@ public class StoreSection : MonoBehaviour
         GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid);
         StoreItemCell itemCell = newItemCellGO.GetComponent<StoreItemCell>();
         itemCell.Initialize(item, false, OnItemSelected);
-        if (this.ResourceManager.hasLimitedSupply(item.ItemName))
+        if (this.ResourceManager.hasLimitedSupply(item.ID))
         {
             this.ResourceManager.setupItemSupplyTracker(itemCell);
             if (!storeItems.ContainsKey(item))
@@ -112,7 +112,7 @@ public class StoreSection : MonoBehaviour
         }
         else
         {
-            this.ResourceManager.AddItem(item.ItemName, count);
+            this.ResourceManager.AddItem(item.ID, count);
             //storeItems[item].RemainingAmount += count;
         }
     }

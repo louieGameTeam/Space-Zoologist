@@ -68,7 +68,7 @@ public class FoodSourceManager : GridObjectManager
 
     public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position, int ttb = -1)
     {
-        ItemID id = ItemRegistry.FindWithName(foodsourceSpeciesID);
+        ItemID id = ItemRegistry.FindHasName(foodsourceSpeciesID);
         return CreateFoodSource(GameManager.Instance.FoodSources[id], position, ttb);
     }
 
@@ -99,7 +99,7 @@ public class FoodSourceManager : GridObjectManager
     /// <param name="speciesName">Same as FoodSourceSpecies.SpeciesName</param>
     /// <returns>An list of Food Source with the given species name</returns>
     public List<FoodSource> GetFoodSourcesWithSpecies(string speciesName) {
-        ItemID id = ItemRegistry.FindWithName(speciesName);
+        ItemID id = ItemRegistry.FindHasName(speciesName);
         // Given species doesn't exist in the level
         if (!GameManager.Instance.FoodSources.ContainsKey(id))
         {

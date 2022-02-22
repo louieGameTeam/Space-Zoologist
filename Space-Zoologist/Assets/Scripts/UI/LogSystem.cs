@@ -251,7 +251,9 @@ public class LogSystem : MonoBehaviour
                 this.populationLogs.Add(population, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"New {population.species.SpeciesName} created!");
+            LogEntry newLog = new LogEntry(
+                Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+                $"New {population.species.ID.Data.Name.Get(ItemName.Type.English)} created!");
 
             this.populationLogs[population].Add(newLog);
             this.worldLog.Add(newLog);
@@ -265,7 +267,9 @@ public class LogSystem : MonoBehaviour
                 this.foodSourceLogs.Add(foodSource, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"New {foodSource.Species.SpeciesName} created!");
+            LogEntry newLog = new LogEntry(
+                Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+                $"New {foodSource.Species.ID.Data.Name.Get(ItemName.Type.English)} created!");
 
             this.foodSourceLogs[foodSource].Add(newLog);
             this.worldLog.Add(newLog);
@@ -299,7 +303,9 @@ public class LogSystem : MonoBehaviour
             this.populationLogs.Add(population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} population size increased!");
+        LogEntry newLog = new LogEntry(
+            Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+            $"{population.species.ID.Data.Name.Get(ItemName.Type.English)} population size increased!");
 
         // Store to population log
         this.populationLogs[population].Add(newLog);
@@ -314,7 +320,9 @@ public class LogSystem : MonoBehaviour
             this.populationLogs.Add(population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} population size decreased!");
+        LogEntry newLog = new LogEntry(
+            Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+            $"{population.species.ID.Data.Name.Get(ItemName.Type.English)} population size decreased!");
 
         // Store to population log
         this.populationLogs[population].Add(newLog);
@@ -329,7 +337,9 @@ public class LogSystem : MonoBehaviour
             this.populationLogs.Add(population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} has gone extinct!");
+        LogEntry newLog = new LogEntry(
+            Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+            $"{population.species.ID.Data.Name.Get(ItemName.Type.English)} has gone extinct!");
 
         this.populationLogs[population].Add(newLog);
         this.worldLog.Add(newLog);

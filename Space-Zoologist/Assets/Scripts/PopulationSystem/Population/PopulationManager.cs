@@ -36,7 +36,7 @@ public class PopulationManager : MonoBehaviour
 
     private AnimalSpecies LoadSpecies(string name)
     {
-        ItemID id = ItemRegistry.FindWithName(name);
+        ItemID id = ItemRegistry.FindHasName(name);
         if (GameManager.Instance.AnimalSpecies.ContainsKey(id))
         {
             return GameManager.Instance.AnimalSpecies[id];
@@ -54,7 +54,7 @@ public class PopulationManager : MonoBehaviour
     {
         // Create population
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
-        newPopulationGameObject.name = species.SpeciesName;
+        newPopulationGameObject.name = species.ID.Data.Name.Get(ItemName.Type.Serialized);
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
@@ -116,7 +116,7 @@ public class PopulationManager : MonoBehaviour
         List<Population> localPopulations = GameManager.Instance.m_reservePartitionManager.GetPopulationsWithAccessTo(position);
         foreach (Population preexistingPopulation in localPopulations)
         {
-            if (preexistingPopulation.Species.SpeciesName.Equals(species.SpeciesName))
+            if (preexistingPopulation.Species.ID == species.ID)
             {
                 return preexistingPopulation;
             }

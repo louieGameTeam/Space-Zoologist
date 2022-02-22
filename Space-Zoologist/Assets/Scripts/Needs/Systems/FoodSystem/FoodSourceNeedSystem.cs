@@ -11,11 +11,11 @@ public class FoodSourceNeedSystem : NeedSystem
 
     public static readonly Dictionary<ItemID, float> foodDominanceRatios = new Dictionary<ItemID, float>() 
     {
-        {ItemRegistry.FindWithName("Cow"), 0.3f}, 
-        {ItemRegistry.FindWithName("Anteater"), 0.25f}, 
-        {ItemRegistry.FindWithName("Goat"), 0.20f}, 
-        {ItemRegistry.FindWithName("Slug"), 0.15f}, 
-        {ItemRegistry.FindWithName("Spider"), 0.10f}
+        {ItemRegistry.FindHasName("Cow"), 0.3f}, 
+        {ItemRegistry.FindHasName("Anteater"), 0.25f}, 
+        {ItemRegistry.FindHasName("Goat"), 0.20f}, 
+        {ItemRegistry.FindHasName("Slug"), 0.15f}, 
+        {ItemRegistry.FindHasName("Spider"), 0.10f}
     };
 
     // Food name to food calculators
@@ -95,7 +95,7 @@ public class FoodSourceNeedSystem : NeedSystem
                 foreach (KeyValuePair<string, Need> need in population.Needs)
                 {
                     // Try to find an item id with the given need name
-                    ItemID needID = ItemRegistry.FindWithName(need.Key);
+                    ItemID needID = ItemRegistry.FindHasName(need.Key);
 
                     // 4. Calculate preferred and available food, skipping if need already met
                     if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(needID))
@@ -148,13 +148,13 @@ public class FoodSourceNeedSystem : NeedSystem
             if (need.NeedType == NeedType.FoodSource)
             {
                 // Try to find an item id with the given name
-                ItemID needID = ItemRegistry.FindWithName(need.NeedName);
+                ItemID needID = ItemRegistry.FindHasName(need.NeedName);
 
                 // Create a food source calculator for this food source,
                 // if not already exist
                 if (!this.foodSourceCalculators.ContainsKey(needID))
                 {
-                    this.foodSourceCalculators.Add(needID, new FoodSourceCalculator(need.NeedName));
+                    this.foodSourceCalculators.Add(needID, new FoodSourceCalculator(needID));
                 }
 
                 // Add consumer to food source calculator
@@ -172,7 +172,7 @@ public class FoodSourceNeedSystem : NeedSystem
             // Check if the need is a 'FoodSource' type
             if (need.NeedType == NeedType.FoodSource)
             {
-                ItemID needID = ItemRegistry.FindWithName(need.NeedName);
+                ItemID needID = ItemRegistry.FindHasName(need.NeedName);
                 Debug.Assert(this.foodSourceCalculators[needID].RemoveConsumer((Population)life), "Remove conumer failed!");
             }
         }

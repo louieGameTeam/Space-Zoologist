@@ -31,7 +31,12 @@ public class PredatoryPreySystem : NeedSystem
                         int needValue = 0;
                         foreach (Population potentialPredator in rpm.Populations)
                         {
-                            if (potentialPredator.Species.SpeciesName.Equals(need.Value.NeedName))
+                            // Get the ID of the predator and need
+                            ItemID predatorID = potentialPredator.Species.ID;
+                            ItemID needID = ItemRegistry.FindHasName(need.Value.NeedName);
+
+                            // Check if the id's are equal
+                            if (predatorID == needID)
                             {
                                 int numOverlapTiles = rpm.NumOverlapTiles(prey, potentialPredator);
                                 if (numOverlapTiles > potentialPredator.Count)

@@ -87,14 +87,18 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     }
     #endregion
 
-    #region Search Methods
-    public static ItemID FindWithName(string name)
+    #region Find Methods
+    public static ItemID FindHasName(string name)
     {
         return FindInternal(data => data.Name.HasName(name), name);
     }
-    public static ItemID FindWithName(string name, StringComparison comparison)
+    public static ItemID FindHasName(string name, StringComparison comparison)
     {
         return FindInternal(data => data.Name.HasName(name, comparison), name, comparison);
+    }
+    public static ItemID FindAnyNameContains(string name)
+    {
+        return FindInternal(data => data.Name.AnyNameContains(name), name);
     }
     public static ItemID FindSpecies(ScriptableObject species)
     {
@@ -109,6 +113,37 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         return FindInternal(predicate);
     }
     private static ItemID FindInternal(Predicate<ItemData> predicate, params object[] searchParameters)
+    {
+        ItemID id = Exists(predicate);
+
+        if (ValidID(id)) return id;
+        else
+        {
+            // Create a string to make a statement about the search parameters
+            string searchParametersStatement = string.Empty;
+
+            // If some search parameters were specified then 
+            // state them in the string
+            if (searchParameters != null && searchParameters.Length > 0)
+            {
+                searchParametersStatement = "Search parameters: ";
+
+                // Add a string for each argument
+                for (int i = 0; i < searchParameters.Length; i++)
+                {
+                    searchParametersStatement += $"\n\tParameter {i + 1}: {searchParameters[i]}";
+                }
+            }
+
+            // If the search did not find the data then return invalid id
+            throw new ItemNotFoundException("No item could be found " +
+                $"that matched the given predicate. {searchParametersStatement}");
+        }
+    }
+    #endregion
+
+    #region Exists Methods
+    public static ItemID Exists(Predicate<ItemData> predicate)
     {
         ItemDataList[] dataLists = Instance.itemData.itemDataLists;
 
@@ -130,25 +165,8 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
             }
         }
 
-        // Create a string to make a statement about the search parameters
-        string searchParametersStatement = string.Empty;
-
-        // If some search parameters were specified then 
-        // state them in the string
-        if (searchParameters != null && searchParameters.Length > 0)
-        {
-            searchParametersStatement = "Search parameters: ";
-
-            // Add a string for each argument
-            for(int i = 0; i < searchParameters.Length; i++)
-            {
-                searchParametersStatement += $"\n\tParameter {i + 1}: {searchParameters[i]}";
-            }
-        }
-
-        // If the search did not find the data then return invalid id
-        throw new ItemNotFoundException("No item could be found " +
-            $"that matched the given predicate. {searchParametersStatement}");
+        // Return the invalid ID
+        return ItemID.Invalid;
     }
     #endregion
 }

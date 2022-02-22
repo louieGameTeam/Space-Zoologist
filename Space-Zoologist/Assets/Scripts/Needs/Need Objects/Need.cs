@@ -123,6 +123,7 @@ public class PreyNeed : Need
 [System.Serializable]
 public abstract class Need
 {
+    public ItemID ID => needConstructData.ID;
     public string NeedName => needConstructData.NeedName;
     public NeedType NeedType => GetNeedType();
     public Sprite Sprite => sprite;

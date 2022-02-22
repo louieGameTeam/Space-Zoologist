@@ -24,7 +24,7 @@ public class DisplayInspectorText : MonoBehaviour
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Population;
-        inspectorWindowTitle.text = population.species.SpeciesName;
+        inspectorWindowTitle.text = population.species.ID.Data.Name.Get(ItemName.Type.Colloquial);
         populationInfoText.text = "Population: " + population.Count;
 
         DetailButton.SetActive(true);
@@ -65,7 +65,7 @@ public class DisplayInspectorText : MonoBehaviour
     {
         ClearInspectorWindow();
         currentDisplay = InspectorText.Food;
-        inspectorWindowTitle.text = foodSource.Species.SpeciesName;
+        inspectorWindowTitle.text = foodSource.Species.ID.Data.Name.Get(ItemName.Type.Colloquial);
 
         string displayText;
 

@@ -14,12 +14,12 @@ public class TerrainNeedSystem : NeedSystem
     //The ratios of terrain allocation sorted by dominance
     private static readonly Dictionary<TileType, Dictionary<ItemID, float>> dominanceRatiosByTileType = new Dictionary<TileType, Dictionary<ItemID, float>>
     {
-        { TileType.Grass, new Dictionary<ItemID, float> { {ItemRegistry.FindWithName("Anteater"), 0.4f}, {ItemRegistry.FindWithName("Cow"), 0.3f}, { ItemRegistry.FindWithName("Goat"), 0.2f}, { ItemRegistry.FindWithName("Spider"), 0.1f} } },
-        { TileType.Dirt, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Goat"), 0.6f}, { ItemRegistry.FindWithName("Cow"), 0.4f} } },
-        { TileType.Sand, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Spider"), 1f} } },
-        { TileType.Stone, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Spider"), 0.6f}, { ItemRegistry.FindWithName("Anteater"), 0.4f} } },
-        { TileType.Swamp, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Slug"), 0.6f}, { ItemRegistry.FindWithName("Anteater"), 0.4f} } },
-        { TileType.Liquid, new Dictionary<ItemID, float> { { ItemRegistry.FindWithName("Slug"), 1f} } }
+        { TileType.Grass, new Dictionary<ItemID, float> { {ItemRegistry.FindHasName("Anteater"), 0.4f}, {ItemRegistry.FindHasName("Cow"), 0.3f}, { ItemRegistry.FindHasName("Goat"), 0.2f}, { ItemRegistry.FindHasName("Spider"), 0.1f} } },
+        { TileType.Dirt, new Dictionary<ItemID, float> { { ItemRegistry.FindHasName("Goat"), 0.6f}, { ItemRegistry.FindHasName("Cow"), 0.4f} } },
+        { TileType.Sand, new Dictionary<ItemID, float> { { ItemRegistry.FindHasName("Spider"), 1f} } },
+        { TileType.Stone, new Dictionary<ItemID, float> { { ItemRegistry.FindHasName("Spider"), 0.6f}, { ItemRegistry.FindHasName("Anteater"), 0.4f} } },
+        { TileType.Swamp, new Dictionary<ItemID, float> { { ItemRegistry.FindHasName("Slug"), 0.6f}, { ItemRegistry.FindHasName("Anteater"), 0.4f} } },
+        { TileType.Liquid, new Dictionary<ItemID, float> { { ItemRegistry.FindHasName("Slug"), 1f} } }
     };
 
     public TerrainNeedSystem(NeedType needType = NeedType.Terrain) : base(needType)

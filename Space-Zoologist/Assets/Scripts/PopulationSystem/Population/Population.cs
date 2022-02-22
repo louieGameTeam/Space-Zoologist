@@ -167,7 +167,7 @@ public class Population : MonoBehaviour, Life
     /// <param name="value">The need's new value</param>
     public void UpdateNeed(string need, float value)
     {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
@@ -184,7 +184,7 @@ public class Population : MonoBehaviour, Life
     /// <returns></returns>
     public float GetNeedValue(string need)
     {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
+        Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } population has no need { need }");
         return this.needs[need].NeedValue;
     }
 
