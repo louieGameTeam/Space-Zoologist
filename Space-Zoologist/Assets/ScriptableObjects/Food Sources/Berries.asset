@@ -14,16 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 2, y: 1}
   accessibleTerrain: 0000000001000000020000000300000004000000
-  speciesName: Berries
   rootRadius: 2
   baseOutput: 6
-  moveCost: 7
-  sellBackPrice: 3
   terrainNeeds:
   - needName: Dirt
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 0
   - needName: Grass
     isPreferred: 1
+    tileID:
+      category: 2
+      index: 1
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 3
@@ -33,4 +36,3 @@ MonoBehaviour:
     saltMaxThreshold: 1
     bacteriaMinThreshold: 0
     bacteriaMaxThreshold: 1
-  FoodSource: {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}

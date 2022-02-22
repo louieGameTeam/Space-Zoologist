@@ -12,21 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
   m_Name: Mushrooms
   m_EditorClassIdentifier: 
-  size: 1
+  size: {x: 1, y: 1}
   accessibleTerrain: 0000000001000000020000000300000004000000
-  speciesName: Mushrooms
   rootRadius: 1
   baseOutput: 5
-  moveCost: 1
-  sellBackPrice: 1
   terrainNeeds:
   - needName: Swamp
     isPreferred: 1
+    tileID:
+      category: 2
+      index: 4
   - needName: Dirt
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 0
   - needName: Grass
     isPreferred: 0
-  foodNeeds: []
+    tileID:
+      category: 2
+      index: 1
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 1
@@ -36,4 +41,3 @@ MonoBehaviour:
     saltMaxThreshold: 1
     bacteriaMinThreshold: 0.02
     bacteriaMaxThreshold: 1
-  FoodSource: {fileID: 11400000, guid: 38cda74f699f241129cf6815fa33a73c, type: 2}

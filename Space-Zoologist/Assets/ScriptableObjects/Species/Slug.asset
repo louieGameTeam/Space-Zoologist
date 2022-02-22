@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Slug
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: afe80bc84a5bc22449b95bda8c01671b, type: 2}
-  speciesName: Humidum Limax
-  species: 4
   terrainTilesRequired: 2
   minFoodRequired: 2
   maxFoodRequired: 3
@@ -27,13 +25,25 @@ MonoBehaviour:
   terrainNeeds:
   - needName: Liquid
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 6
   - needName: Swamp
     isPreferred: 1
+    tileID:
+      category: 2
+      index: 4
   foodNeeds:
   - needName: Kelp
     isPreferred: 1
+    foodID:
+      category: 1
+      index: 4
   - needName: Mushroom
     isPreferred: 0
+    foodID:
+      category: 1
+      index: 5
   liquidNeeds:
   - needName: 
     tileNeedThreshold: 1
@@ -45,4 +55,7 @@ MonoBehaviour:
     bacteriaMaxThreshold: 1
   preyNeeds:
   - needName: Thalassius Succo
+    preyID:
+      category: 0
+      index: 3
   representation: {fileID: 0}

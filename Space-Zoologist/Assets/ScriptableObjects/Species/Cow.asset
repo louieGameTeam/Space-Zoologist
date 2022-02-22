@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Cow
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: 06bdde8720ee148999e71ea56f897401, type: 2}
-  speciesName: Eligans Impar
-  species: 1
   terrainTilesRequired: 8
   minFoodRequired: 8
   maxFoodRequired: 10
@@ -27,15 +25,30 @@ MonoBehaviour:
   terrainNeeds:
   - needName: Dirt
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 0
   - needName: Grass
     isPreferred: 1
+    tileID:
+      category: 2
+      index: 1
   foodNeeds:
   - needName: Space Maple
     isPreferred: 0
+    foodID:
+      category: 1
+      index: 0
   - needName: Berries
     isPreferred: 0
+    foodID:
+      category: 1
+      index: 2
   - needName: Gold Space Maple
     isPreferred: 1
+    foodID:
+      category: 1
+      index: 1
   liquidNeeds:
   - needName: 
     tileNeedThreshold: 3
@@ -47,4 +60,7 @@ MonoBehaviour:
     bacteriaMaxThreshold: 0.02
   preyNeeds:
   - needName: Humidum Limax
+    preyID:
+      category: 0
+      index: 4
   representation: {fileID: 0}

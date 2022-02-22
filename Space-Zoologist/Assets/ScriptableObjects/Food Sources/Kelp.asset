@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
   m_Name: Kelp
   m_EditorClassIdentifier: 
-  size: 1
+  size: {x: 1, y: 1}
   accessibleTerrain: 06000000
-  speciesName: Kelp
   rootRadius: 1
   baseOutput: 3
-  moveCost: 0
-  sellBackPrice: 1
   terrainNeeds:
   - needName: Liquid
     isPreferred: 1
-  foodNeeds: []
+    tileID:
+      category: 2
+      index: 6
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 1
@@ -32,4 +31,3 @@ MonoBehaviour:
     saltMaxThreshold: 1
     bacteriaMinThreshold: 0.02
     bacteriaMaxThreshold: 1
-  FoodSource: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}

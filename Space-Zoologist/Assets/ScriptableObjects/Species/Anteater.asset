@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Anteater
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: 44d06f4ffdcee4844a340c774dcfe7af, type: 2}
-  speciesName: Ligurio Vermis
-  species: 2
   terrainTilesRequired: 4
   minFoodRequired: 6
   maxFoodRequired: 8
@@ -27,17 +25,35 @@ MonoBehaviour:
   terrainNeeds:
   - needName: Grass
     isPreferred: 1
+    tileID:
+      category: 2
+      index: 1
   - needName: Stone
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 3
   - needName: Swamp
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 4
   foodNeeds:
   - needName: Berries
     isPreferred: 1
+    foodID:
+      category: 1
+      index: 2
   - needName: Space Maple
     isPreferred: 0
+    foodID:
+      category: 1
+      index: 0
   - needName: Ants
     isPreferred: 0
+    foodID:
+      category: 1
+      index: 3
   liquidNeeds:
   - needName: 
     tileNeedThreshold: 2
@@ -49,4 +65,7 @@ MonoBehaviour:
     bacteriaMaxThreshold: 0.02
   preyNeeds:
   - needName: Thalassius Succo
+    preyID:
+      category: 0
+      index: 3
   representation: {fileID: 0}

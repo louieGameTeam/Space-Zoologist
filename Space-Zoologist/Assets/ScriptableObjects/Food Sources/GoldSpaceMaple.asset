@@ -14,16 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 2, y: 2}
   accessibleTerrain: 0000000001000000020000000300000004000000
-  speciesName: Gold Space Maple
   rootRadius: 4
   baseOutput: 3
-  moveCost: 15
-  sellBackPrice: 10
   terrainNeeds:
   - needName: Dirt
     isPreferred: 1
+    tileID:
+      category: 2
+      index: 0
   - needName: Grass
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 1
   liquidNeeds:
   - needName: Water
     tileNeedThreshold: 4
@@ -33,4 +36,3 @@ MonoBehaviour:
     saltMaxThreshold: 1
     bacteriaMinThreshold: 0
     bacteriaMaxThreshold: 1
-  FoodSource: {fileID: 11400000, guid: 011aebdeac608401ea2bece03b01dd8c, type: 2}

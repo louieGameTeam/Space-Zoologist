@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Spider
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: 46af803652d4d4e38b84d177baba5f60, type: 2}
-  speciesName: Thalassius Succo
-  species: 3
   terrainTilesRequired: 1
   minFoodRequired: 3
   maxFoodRequired: 5
@@ -27,15 +25,30 @@ MonoBehaviour:
   terrainNeeds:
   - needName: Stone
     isPreferred: 1
+    tileID:
+      category: 2
+      index: 3
   - needName: Grass
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 1
   - needName: Sand
     isPreferred: 0
+    tileID:
+      category: 2
+      index: 2
   foodNeeds:
   - needName: Ants
     isPreferred: 0
+    foodID:
+      category: 1
+      index: 3
   - needName: Mushroom
     isPreferred: 1
+    foodID:
+      category: 1
+      index: 5
   liquidNeeds:
   - needName: 
     tileNeedThreshold: 1
