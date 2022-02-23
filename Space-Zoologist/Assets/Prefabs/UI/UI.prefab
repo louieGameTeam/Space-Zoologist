@@ -1652,6 +1652,7 @@ MonoBehaviour:
     type: 3}
   FoodSourceStoreSection: {fileID: 0}
   TileStoreSection: {fileID: 0}
+  LiquidSprite: {fileID: 0}
 --- !u!1 &7541118653787032156
 GameObject:
   m_ObjectHideFlags: 0
@@ -5439,6 +5440,7 @@ MonoBehaviour:
   AllowMouseInteraction: 1
   AdvanceInput: Submit
   Background: {fileID: 0}
+  SkipConversationButton: {fileID: 0}
   DialoguePanel: {fileID: 4063352759163150274}
   OptionsPanel: {fileID: 8236895370450134536}
   DialogueBackground: {fileID: 8096769933222329181}
@@ -5964,6 +5966,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7541118655384215845}
     m_Modifications:
+    - target: {fileID: 6423215287888283054, guid: c617b7d1f8241406caf4b82976917ae9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8.3333435
+      objectReference: {fileID: 0}
     - target: {fileID: 8946323213000099164, guid: c617b7d1f8241406caf4b82976917ae9,
         type: 3}
       propertyPath: m_LocalPosition.x
