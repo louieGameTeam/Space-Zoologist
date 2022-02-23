@@ -26,7 +26,8 @@ public class FoodSourceStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Right ||
+        if (!UIBlockerSettings.OperationIsAvailable("Build") || 
+            eventData.button == PointerEventData.InputButton.Right ||
             base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
             Debug.Log("Cannot place item that location");
@@ -46,8 +47,8 @@ public class FoodSourceStoreSection : StoreSection
 
     public void PlaceFood(Vector3 mousePosition)
     {
-        // if over ui don't do it
-        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+        // Exit if build is unavailable
+        if (!UIBlockerSettings.OperationIsAvailable("Build"))
             return;
 
         if (!base.GridSystem.IsFoodPlacementValid(mousePosition, base.selectedItem))

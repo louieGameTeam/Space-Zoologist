@@ -19,14 +19,14 @@ public class UIBlockerSettings : ScriptableObjectSingleton<UIBlockerSettings>
 
     #region Public Methods
     public static int GetTotalBlockableOperations() => Instance.blockableOperations.Length;
-    public static string GetBlockablOperation(int index)
+    public static string GetBlockableOperation(int index)
     {
         if (index >= 0 && index < Instance.blockableOperations.Length)
         {
             return Instance.blockableOperations[index];
         }
-        else throw new System.IndexOutOfRangeException($"{nameof(UIBlockerSettings)}: " +
-            $"no ui blockable operation found at index '{index}'. " +
+        else throw new System.IndexOutOfRangeException(
+            $"No ui blockable operation found at index '{index}'. " +
             $"Total operations: {Instance.blockableOperations.Length}");
     }
     public static int IndexOf(string operation) => System.Array.IndexOf(Instance.blockableOperations, operation);
