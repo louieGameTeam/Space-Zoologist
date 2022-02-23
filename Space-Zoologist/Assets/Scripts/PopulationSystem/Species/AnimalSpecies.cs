@@ -103,5 +103,4 @@ public class AnimalSpecies : ScriptableObject
 
         return needs;
     }
-
 }

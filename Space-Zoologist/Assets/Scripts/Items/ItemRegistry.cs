@@ -46,7 +46,7 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
         {
             return GetItemsWithCategory(category);
         }
-        else throw new System.ArgumentException($"{nameof(ItemRegistry)}: " +
+        else throw new ArgumentException($"{nameof(ItemRegistry)}: " +
             $"attempted to get items with category '{categoryName}', " +
             $"but no such category exists");
     }
@@ -108,6 +108,10 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     {
         return FindInternal(data => data.ShopItem == searchItem, searchItem);
     }
+    public static ItemID Find(ItemData search)
+    {
+        return FindInternal(data => data == search, search);
+    }
     public static ItemID Find(Predicate<ItemData> predicate)
     {
         return FindInternal(predicate);
@@ -143,6 +147,10 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     #endregion
 
     #region Exists Methods
+    public static ItemID Exists(ItemData search)
+    {
+        return Exists(data => data == search);
+    }
     public static ItemID Exists(Predicate<ItemData> predicate)
     {
         ItemDataList[] dataLists = Instance.itemData.itemDataLists;
