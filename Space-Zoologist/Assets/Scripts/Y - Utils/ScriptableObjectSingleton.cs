@@ -4,6 +4,10 @@ using UnityEngine;
 public class ScriptableObjectSingleton<BaseType> : ScriptableObject 
     where BaseType : ScriptableObjectSingleton<BaseType>
 {
+    #region Private Properties
+    private static string FilePath => typeof(BaseType).Name;
+    #endregion
+
     #region Private Fields
     private static BaseType instance;
     #endregion
@@ -15,37 +19,17 @@ public class ScriptableObjectSingleton<BaseType> : ScriptableObject
         {
             if (!instance)
             {
-                BaseType[] baseTypes = Resources.LoadAll<BaseType>(string.Empty);
+                // Try to get a scriptable object at the file path
+                BaseType scriptableObject = Resources.Load<BaseType>(FilePath);
 
                 // If some objects were found then set the instance to the first one
-                if (baseTypes.Length > 0)
-                {
-                    instance = baseTypes[0];
-
-                    if (baseTypes.Length > 1)
-                    {
-                        // Get a string listing the names of the objects found
-                        string objectsFound = "\n\tObjects found:\n\t\t";
-                        objectsFound += string.Join("\n\t\t", baseTypes.Select(obj => obj.name));
-
-                        // Get a string displaying the object picked
-                        string objectPicked = "\n\tObject picked:\n\t\t" + instance.name;
-
-                        // Log a warning with the information
-                        Debug.LogWarning("ScriptableObjectSingleton: found multiple scriptable objects where only ONE was expected" + objectsFound + objectPicked);
-                    }
-                }
+                if (scriptableObject) instance = scriptableObject;
                 // If no instances found then throw exception
-                else
-                {
-                    string myTypename = typeof(ScriptableObjectSingleton<BaseType>).Name;
-                    string typename = typeof(BaseType).Name;
-                    throw new MissingReferenceException(
-                        myTypename + ": no scriptable object with the type '" + typename +
-                        "' could be loaded from the resources folder where one was expected. " +
-                        "Make sure a scriptable object with the type '" + typename + 
-                        "' exists somewhere in a directory with a parent file named 'Resources'");
-                }
+                else throw new MissingReferenceException(
+                    $"Expected to find a scriptable object of type '{typeof(BaseType).Name}' " +
+                    $"at any resources path 'Resources/{FilePath}', but no such scriptable " +
+                    $"object could be found. Please create an object of type " +
+                    $"'{typeof(BaseType).Name}' at any resources path 'Resources/{FilePath}'");
             }
             // If instance is not null return it
             return instance;
