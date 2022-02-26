@@ -36,8 +36,9 @@ public class GeneralPathfinding : BehaviorPattern
                 // Debug.Log(animal.name + " has reached their destination of " + this.Destination.ToString());
                 return true;
             }
+            return false;
         }
-        return false;
+        return true;
     }
 
     protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
