@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,13 +10,15 @@ using UnityEngine;
 public class ItemIDFilterAttribute : PropertyAttribute
 {
     #region Public Properties
-    public ItemRegistry.Category Category { get; private set; }
+    public Func<ItemID, bool> Filter { get; private set; }
     #endregion
 
     #region Constructors
     public ItemIDFilterAttribute(ItemRegistry.Category category)
+        : this(id => id.Category == category) { }
+    public ItemIDFilterAttribute(Func<ItemID, bool> filter)
     {
-        Category = category;
+        Filter= filter;
     }
     #endregion
 }

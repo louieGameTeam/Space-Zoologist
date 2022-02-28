@@ -23,49 +23,43 @@ MonoBehaviour:
   accessibleTerrain: 01000000040000000200000000000000
   icon: {fileID: -3508657767902738148, guid: 8b1f20dcb4d89490ba37a48668ed6fac, type: 3}
   terrainNeeds:
-  - needName: Grass
-    isPreferred: 1
+  - isPreferred: 1
     tileID:
       category: 2
       index: 1
-  - needName: Stone
-    isPreferred: 0
+  - isPreferred: 0
     tileID:
       category: 2
       index: 3
-  - needName: Swamp
-    isPreferred: 0
+  - isPreferred: 0
     tileID:
       category: 2
       index: 4
   foodNeeds:
-  - needName: Berries
-    isPreferred: 1
+  - isPreferred: 1
     foodID:
       category: 1
       index: 2
-  - needName: Space Maple
-    isPreferred: 0
+  - isPreferred: 0
     foodID:
       category: 1
       index: 0
-  - needName: Ants
-    isPreferred: 0
+  - isPreferred: 0
     foodID:
       category: 1
       index: 3
   liquidNeeds:
-  - needName: 
-    tileNeedThreshold: 2
+  - tileNeedThreshold: 2
     freshWaterMinThreshold: 0.95
     freshWaterMaxThreshold: 1
     saltMinThreshold: 0.005
     saltMaxThreshold: 0.02
     bacteriaMinThreshold: 0
     bacteriaMaxThreshold: 0.02
+    minThreshold: 0
+    maxThreshold: 1
   preyNeeds:
-  - needName: Thalassius Succo
-    preyID:
+  - preyID:
       category: 0
       index: 3
   representation: {fileID: 0}

@@ -70,6 +70,12 @@ public class LiquidNeedConstructData : NeedConstructData
     [Range(0,1)] [SerializeField] private float bacteriaMinThreshold;
     [Range(0,1)] [SerializeField] private float bacteriaMaxThreshold = 1;
 
+
+    [Range(0, 1)] [SerializeField] private float minThreshold = 0;
+    [Range(0, 1)] [SerializeField] private float maxThreshold = 1;
+
+
+
     public override float GetSurvivableThreshold()
     {
         return tileNeedThreshold;
