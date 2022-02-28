@@ -16,6 +16,7 @@ MonoBehaviour:
   terrainTilesRequired: 1
   minFoodRequired: 3
   maxFoodRequired: 5
+  waterTilesRequired: 1
   growthRate: 1
   decayRate: 1
   moveCost: 0
@@ -23,40 +24,39 @@ MonoBehaviour:
   accessibleTerrain: 02000000030000000100000000000000
   icon: {fileID: -2984124832550384540, guid: 5015206299b8e40848efa2bad0e91dd4, type: 3}
   terrainNeeds:
-  - needName: Stone
-    isPreferred: 1
+  - isPreferred: 1
     tileID:
       category: 2
       index: 3
-  - needName: Grass
-    isPreferred: 0
+  - isPreferred: 0
     tileID:
       category: 2
       index: 1
-  - needName: Sand
-    isPreferred: 0
+  - isPreferred: 0
     tileID:
       category: 2
       index: 2
   foodNeeds:
-  - needName: Ants
-    isPreferred: 0
+  - isPreferred: 0
     foodID:
       category: 1
       index: 3
-  - needName: Mushroom
-    isPreferred: 1
+  - isPreferred: 1
     foodID:
       category: 1
       index: 5
   liquidNeeds:
-  - needName: 
-    tileNeedThreshold: 1
-    freshWaterMinThreshold: 0.965
-    freshWaterMaxThreshold: 1
-    saltMinThreshold: 0.005
-    saltMaxThreshold: 0.015
-    bacteriaMinThreshold: 0
-    bacteriaMaxThreshold: 1
+  - tileNeedThreshold: 1
+    id:
+      category: 2
+      index: 6
+    minThreshold: 0.965
+    maxThreshold: 1
+  - tileNeedThreshold: 1
+    id:
+      category: 2
+      index: 7
+    minThreshold: 0.005
+    maxThreshold: 0.015
   preyNeeds: []
   representation: {fileID: 0}

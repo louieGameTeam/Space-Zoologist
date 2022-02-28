@@ -16,9 +16,11 @@ public class ItemIDFilterAttribute : PropertyAttribute
     #region Constructors
     public ItemIDFilterAttribute(ItemRegistry.Category category)
         : this(id => id.Category == category) { }
+    public ItemIDFilterAttribute(string nameFilter)
+        : this(id => id.Data.Name.AnyNameContains(nameFilter)) { }
     public ItemIDFilterAttribute(Func<ItemID, bool> filter)
     {
-        Filter= filter;
+        Filter = filter;
     }
     #endregion
 }

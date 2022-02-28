@@ -14,20 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 1, y: 1}
   accessibleTerrain: 06000000
+  waterTilesRequired: 1
   rootRadius: 1
   baseOutput: 3
   terrainNeeds:
-  - needName: Liquid
-    isPreferred: 1
+  - isPreferred: 1
     tileID:
       category: 2
       index: 6
   liquidNeeds:
-  - needName: Water
-    tileNeedThreshold: 1
-    freshWaterMinThreshold: 0.97
-    freshWaterMaxThreshold: 1
-    saltMinThreshold: 0
-    saltMaxThreshold: 1
-    bacteriaMinThreshold: 0.02
-    bacteriaMaxThreshold: 1
+  - tileNeedThreshold: 1
+    id:
+      category: 2
+      index: 6
+    minThreshold: 0.97
+    maxThreshold: 1
+  - tileNeedThreshold: 1
+    id:
+      category: 2
+      index: 8
+    minThreshold: 0.02
+    maxThreshold: 1

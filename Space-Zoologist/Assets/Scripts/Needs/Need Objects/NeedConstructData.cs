@@ -61,16 +61,27 @@ public class LiquidNeedConstructData : NeedConstructData
     public float SaltMaxThreshold => saltMaxThreshold;
     public float BacteriaMinThreshold => bacteriaMinThreshold;
     public float BacteriaMaxThreshold => bacteriaMaxThreshold;
+    public float MinThreshold => minThreshold;
+    public float MaxThreshold => maxThreshold;
 
-    [SerializeField] private float tileNeedThreshold;
-    [Range(0,1)] [SerializeField] private float freshWaterMinThreshold;
-    [Range(0,1)] [SerializeField] private float freshWaterMaxThreshold = 1;
-    [Range(0,1)] [SerializeField] private float saltMinThreshold;
-    [Range(0,1)] [SerializeField] private float saltMaxThreshold = 1;
-    [Range(0,1)] [SerializeField] private float bacteriaMinThreshold;
-    [Range(0,1)] [SerializeField] private float bacteriaMaxThreshold = 1;
+    /*[SerializeField]*/ 
+    private float tileNeedThreshold;
+    /*[Range(0,1)] [SerializeField]*/ 
+    private float freshWaterMinThreshold;
+    /*[Range(0,1)] [SerializeField]*/
+    private float freshWaterMaxThreshold = 1;
+    /*[Range(0,1)] [SerializeField]*/
+    private float saltMinThreshold;
+    /*[Range(0,1)] [SerializeField]*/
+    private float saltMaxThreshold = 1;
+    /*[Range(0,1)] [SerializeField]*/
+    private float bacteriaMinThreshold;
+    /*[Range(0,1)] [SerializeField]*/
+    private float bacteriaMaxThreshold = 1;
 
-
+    [SerializeField]
+    [ItemIDFilter("Water")]
+    private ItemID id;
     [Range(0, 1)] [SerializeField] private float minThreshold = 0;
     [Range(0, 1)] [SerializeField] private float maxThreshold = 1;
 
@@ -87,7 +98,7 @@ public class LiquidNeedConstructData : NeedConstructData
     }
     protected override ItemID getID()
     {
-        return ItemRegistry.FindHasName("Fresh Water");
+        return id;
     }
 }
 

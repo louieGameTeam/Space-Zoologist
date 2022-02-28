@@ -16,6 +16,7 @@ MonoBehaviour:
   terrainTilesRequired: 8
   minFoodRequired: 8
   maxFoodRequired: 10
+  waterTilesRequired: 3
   growthRate: 5
   decayRate: 3
   moveCost: 0
@@ -23,44 +24,48 @@ MonoBehaviour:
   accessibleTerrain: 02000000010000000000000003000000
   icon: {fileID: 7585194069153929163, guid: 6967f3801b637e540acdb61c1e9c9e46, type: 3}
   terrainNeeds:
-  - needName: Dirt
-    isPreferred: 0
+  - isPreferred: 0
     tileID:
       category: 2
       index: 0
-  - needName: Grass
-    isPreferred: 1
+  - isPreferred: 1
     tileID:
       category: 2
       index: 1
   foodNeeds:
-  - needName: Space Maple
-    isPreferred: 0
+  - isPreferred: 0
     foodID:
       category: 1
       index: 0
-  - needName: Berries
-    isPreferred: 0
+  - isPreferred: 0
     foodID:
       category: 1
       index: 2
-  - needName: Gold Space Maple
-    isPreferred: 1
+  - isPreferred: 1
     foodID:
       category: 1
       index: 1
   liquidNeeds:
-  - needName: 
-    tileNeedThreshold: 3
-    freshWaterMinThreshold: 0.96
-    freshWaterMaxThreshold: 1
-    saltMinThreshold: 0.005
-    saltMaxThreshold: 0.025
-    bacteriaMinThreshold: 0
-    bacteriaMaxThreshold: 0.02
+  - tileNeedThreshold: 3
+    id:
+      category: 2
+      index: 6
+    minThreshold: 0.96
+    maxThreshold: 1
+  - tileNeedThreshold: 3
+    id:
+      category: 2
+      index: 7
+    minThreshold: 0.005
+    maxThreshold: 0.025
+  - tileNeedThreshold: 3
+    id:
+      category: 2
+      index: 8
+    minThreshold: 0
+    maxThreshold: 0.02
   preyNeeds:
-  - needName: Humidum Limax
-    preyID:
+  - preyID:
       category: 0
       index: 4
   representation: {fileID: 0}

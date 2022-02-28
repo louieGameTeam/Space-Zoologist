@@ -16,6 +16,7 @@ MonoBehaviour:
   terrainTilesRequired: 4
   minFoodRequired: 6
   maxFoodRequired: 8
+  waterTilesRequired: 2
   growthRate: 4
   decayRate: 2
   moveCost: 0
@@ -50,14 +51,23 @@ MonoBehaviour:
       index: 3
   liquidNeeds:
   - tileNeedThreshold: 2
-    freshWaterMinThreshold: 0.95
-    freshWaterMaxThreshold: 1
-    saltMinThreshold: 0.005
-    saltMaxThreshold: 0.02
-    bacteriaMinThreshold: 0
-    bacteriaMaxThreshold: 0.02
-    minThreshold: 0
+    id:
+      category: 2
+      index: 6
+    minThreshold: 0.95
     maxThreshold: 1
+  - tileNeedThreshold: 2
+    id:
+      category: 2
+      index: 7
+    minThreshold: 0.005
+    maxThreshold: 0.02
+  - tileNeedThreshold: 2
+    id:
+      category: 2
+      index: 8
+    minThreshold: 0
+    maxThreshold: 0.02
   preyNeeds:
   - preyID:
       category: 0

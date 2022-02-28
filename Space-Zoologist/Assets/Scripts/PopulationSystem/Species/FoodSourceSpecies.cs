@@ -17,6 +17,7 @@ public class FoodSourceSpecies : ScriptableObject
 
     [SerializeField] private Vector2Int size = new Vector2Int(1, 1); // default to 1 tile big
     [SerializeField] private List<TileType> accessibleTerrain = default;
+    [SerializeField] private int waterTilesRequired = default;
     [SerializeField] private int rootRadius = default;
     [SerializeField] private int baseOutput = default;
     [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;

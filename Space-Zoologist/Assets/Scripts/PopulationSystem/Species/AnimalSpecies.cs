@@ -30,6 +30,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int terrainTilesRequired = default;
     [SerializeField] private int minFoodRequired = default;
     [SerializeField] private int maxFoodRequired = default;
+    [SerializeField] private int waterTilesRequired = default;
     [SerializeField] private int growthRate = 3;
     [SerializeField] private int decayRate = 3;
     [SerializeField] private int moveCost = default;
