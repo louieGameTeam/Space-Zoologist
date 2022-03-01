@@ -193,23 +193,9 @@ public class StoreSection : MonoBehaviour
         }
     }
 
-    public virtual bool IsPlacementValid(Vector3 mousePosition)
-    {
-        return false;
-    }
-
     private void OnDisable()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
-    }
-
-    public bool IsCursorOverUI(PointerEventData pointerEventData)
-    {
-        List<RaycastResult> castResults = new List<RaycastResult>();
-        raycaster.Raycast(pointerEventData, castResults);
-
-        // the one result should only be the cursor item
-        return castResults.Count > 2;
     }
 
     protected virtual void HandleAudio()

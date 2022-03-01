@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036143ad2332e83409663b111224013f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   pagesRoot: {fileID: 243387395173941843}
   tabPrefabs:
     tabObjects:
@@ -158,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95959e3341cfe844b985ec69ba2e7961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
 --- !u!1 &8731580173207704173
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +232,9 @@ MonoBehaviour:
   onNotebookToggle:
     m_PersistentCalls:
       m_Calls: []
+  onEnableInspectorToggle:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4094907799507573782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f809d759522fed49a7380a82122dda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
 --- !u!114 &5324753248463572222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,4 +261,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   operationsBlocked:
-    operationsBlocked: 01010101
+    operationsBlocked: 0101010101

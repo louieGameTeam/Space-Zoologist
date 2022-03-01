@@ -32,7 +32,7 @@ public class UIBlockableOperationDrawer : PropertyDrawer
             // Read the result of the popup back into the property
             if (property.propertyType == SerializedPropertyType.String)
             {
-                property.stringValue = UIBlockerSettings.GetBlockablOperation(selected);
+                property.stringValue = UIBlockerSettings.GetBlockableOperation(selected);
             }
             else property.intValue = selected;
         }
