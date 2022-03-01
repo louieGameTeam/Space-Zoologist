@@ -32,6 +32,7 @@ public class EatingPattern : UniversalAnimatorPattern
                     {
                         this.AnimatorTriggerName = GetTriggerName(i, j);
                         base.EnterPattern(animal, animalData);
+                        SetAnimDirectionFloat(animal, i, j);
                         return;
                     }
                 }
