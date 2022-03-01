@@ -60,6 +60,13 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     private ResearchEncyclopediaArticleData articleData;
     #endregion
 
+    #region Monobehaviour Messages
+    private void OnDisable()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+    #endregion
+
     #region UI Events
     public void OnEndDrag(PointerEventData data)
     {
