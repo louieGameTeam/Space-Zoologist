@@ -19,6 +19,9 @@ public class LiquidNeedSystem : NeedSystem
 
     public override void UpdateSystem()
     {
+        throw new System.NotImplementedException(
+            "Liquid need system no longer able to update");
+
         if (this.Consumers.Count == 0)
         {
             this.isDirty = false;
@@ -30,7 +33,7 @@ public class LiquidNeedSystem : NeedSystem
 
         foreach(Population population in Consumers.OfType<Population>())
         {
-            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey("Liquid"))
+            if(!liquidTilesPerPopulation.ContainsKey(population) && population.GetNeedValues().ContainsKey(/*"Liquid"*/ new ItemID()))
                 liquidTilesPerPopulation.Add(population, 0);
         }
 
@@ -40,33 +43,33 @@ public class LiquidNeedSystem : NeedSystem
             HashSet<Population> accessiblePopulations = new HashSet<Population>();
             foreach(Population population in Consumers.OfType<Population>())
             {
-                Dictionary<string, Need> popNeeds = population.GetNeedValues();
+                Dictionary<ItemID, Need> popNeeds = population.GetNeedValues();
 
-                if(!popNeeds.ContainsKey("Liquid") || //If the food source doesn't need liquid
-                  (popNeeds.ContainsKey("WaterPoison") && popNeeds["WaterPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) || //or it has a fresh water poison threshold and that threshold is surpassed
-                  (popNeeds.ContainsKey("SaltPoison") && popNeeds["SaltPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) ||  //or it has a salt poison threshold and that threshold is surpassed
-                  (popNeeds.ContainsKey("BacteriaPoison") && popNeeds["BacteriaPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //or it has a bacteria poison threshold and that threshold is surpassed
-                {
-                    continue;
-                }
+                //if(!popNeeds.ContainsKey("Liquid") || //If the food source doesn't need liquid
+                //  (popNeeds.ContainsKey("WaterPoison") && popNeeds["WaterPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) || //or it has a fresh water poison threshold and that threshold is surpassed
+                //  (popNeeds.ContainsKey("SaltPoison") && popNeeds["SaltPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) ||  //or it has a salt poison threshold and that threshold is surpassed
+                //  (popNeeds.ContainsKey("BacteriaPoison") && popNeeds["BacteriaPoison"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //or it has a bacteria poison threshold and that threshold is surpassed
+                //{
+                //    continue;
+                //}
 
-                if ((!popNeeds.ContainsKey("Water") || popNeeds["Water"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) && //If the population either doesn't need fresh water or the fresh water threshold is met
-                    (!popNeeds.ContainsKey("Salt") || popNeeds["Salt"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
-                    (!popNeeds.ContainsKey("Bacteria") || popNeeds["Bacteria"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
-                {
-                    bool populationCanAccess = false;
-                    foreach(Vector3Int location in GameManager.Instance.m_reservePartitionManager.GetLiquidLocations(population)) //check if any of the liquidbody's tiles are accessible to this population
-                    {
-                        if(liquidBody.ContainsTile(location))
-                        {
-                            populationCanAccess = true;
-                            break;
-                        }
-                    }
+                //if ((!popNeeds.ContainsKey("Water") || popNeeds["Water"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Water])) && //If the population either doesn't need fresh water or the fresh water threshold is met
+                //    (!popNeeds.ContainsKey("Salt") || popNeeds["Salt"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
+                //    (!popNeeds.ContainsKey("Bacteria") || popNeeds["Bacteria"].IsThresholdMet(liquidBody.contents[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
+                //{
+                //    bool populationCanAccess = false;
+                //    foreach(Vector3Int location in GameManager.Instance.m_reservePartitionManager.GetLiquidLocations(population)) //check if any of the liquidbody's tiles are accessible to this population
+                //    {
+                //        if(liquidBody.ContainsTile(location))
+                //        {
+                //            populationCanAccess = true;
+                //            break;
+                //        }
+                //    }
 
-                    if(populationCanAccess) //if the population can access this water source, add it to the set
-                        accessiblePopulations.Add(population);
-                }
+                //    if(populationCanAccess) //if the population can access this water source, add it to the set
+                //        accessiblePopulations.Add(population);
+                //}
             }
 
             //split this water source equally between all populations that have access to it, regardless of that population's size
@@ -89,7 +92,7 @@ public class LiquidNeedSystem : NeedSystem
             {
                 Population population = (Population)life;
                 
-                population.UpdateNeed("Liquid", liquidTilesPerPopulation[population]);
+                population.UpdateNeed(/*"Liquid"*/ new ItemID(), liquidTilesPerPopulation[population]);
                 //Debug.Log(population.name + " updates LiquidTiles with value: " + liquidTilesPerPopulation[population]);
 
                 // Check is there is found composition
@@ -124,7 +127,7 @@ public class LiquidNeedSystem : NeedSystem
             else if (life is FoodSource)
             {
                 FoodSource foodSource = (FoodSource)life;
-                Dictionary<string, Need> foodNeeds = foodSource.GetNeedValues();
+                Dictionary<ItemID, Need> foodNeeds = foodSource.GetNeedValues();
 
                 float liquidCount = 0;
                 List<float[]> liquidCompositions = new List<float[]>();
@@ -132,16 +135,16 @@ public class LiquidNeedSystem : NeedSystem
 
                 foreach(float[] composition in potentialCompositions)
                 {
-                    if ((!foodNeeds.ContainsKey("Water") || foodNeeds["Water"].IsThresholdMet(composition[(int)LiquidComposition.Water])) && //If the food source either doesn't need fresh water or the fresh water threshold is met
-                        (!foodNeeds.ContainsKey("Salt") || foodNeeds["Salt"].IsThresholdMet(composition[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
-                        (!foodNeeds.ContainsKey("Bacteria") || foodNeeds["Bacteria"].IsThresholdMet(composition[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
+                    //if ((!foodNeeds.ContainsKey("Water") || foodNeeds["Water"].IsThresholdMet(composition[(int)LiquidComposition.Water])) && //If the food source either doesn't need fresh water or the fresh water threshold is met
+                    //    (!foodNeeds.ContainsKey("Salt") || foodNeeds["Salt"].IsThresholdMet(composition[(int)LiquidComposition.Salt])) &&  //and it either doesn't need salt or the salt threshold is met
+                    //    (!foodNeeds.ContainsKey("Bacteria") || foodNeeds["Bacteria"].IsThresholdMet(composition[(int)LiquidComposition.Bacteria])) ) //and it either doesn't need bacteria or the bacteria threshold is met
                     {
                         ++liquidCount;
                         liquidCompositions.Add(composition);
                     }
                 }
 
-                foodSource.UpdateNeed("LiquidTiles", liquidCount);
+                // foodSource.UpdateNeed("LiquidTiles", liquidCount);
                 //Debug.Log(foodSource.name + " updated LiquidTiles with value: " + liquidCount);
 
                 // Check is there is found composition
@@ -174,9 +177,9 @@ public class LiquidNeedSystem : NeedSystem
             foreach (var (value, index) in liquidCompositionToUpdate.WithIndex())
             {
                 string needName = ((LiquidComposition)index).ToString();
-                if (life.GetNeedValues().ContainsKey(needName))
+                // if (life.GetNeedValues().ContainsKey(needName))
                 {
-                    life.UpdateNeed(needName, value);
+                    // life.UpdateNeed(needName, value);
                     //Debug.Log("Life: " + ((MonoBehaviour)life).gameObject.name + " updates need of type: " + needName + " with value " + value);
                 }
             }

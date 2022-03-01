@@ -47,59 +47,36 @@ public class AnimalSpecies : ScriptableObject
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
 
-    public Dictionary<string, Need> SetupNeeds()
+    public Dictionary<ItemID, Need> SetupNeeds()
     {
-        Dictionary<string, Need> needs = new Dictionary<string, Need>();
+        Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
         
         //Terrain Needs
         foreach (TerrainNeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), 
-                new TerrainNeed(need, this));
+            needs.Add(need.ID, new TerrainNeed(need, this));
         }
 
         //Food Needs
         foreach (FoodNeedConstructData need in foodNeeds)
         {
-            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), 
-                new FoodNeed(need, minFoodRequired));
+            needs.Add(need.ID, new FoodNeed(need, minFoodRequired));
         }
 
         // Water Needs
         // NOTE: if this could be changed, then we could use ItemID's 
         // instead of strings. We could give the liquid needs a bool
-        // called "poison" and give it an id for Fresh, Sald, or 
+        // called "poison" and give it an id for Fresh, Salt, or 
         // Stagnant water
         foreach (LiquidNeedConstructData need in liquidNeeds)
         {
-            if(need.TileNeedThreshold <= 0)
-                continue;
-
-            needs.Add("Liquid", new LiquidNeed("Liquid", need));
-
-            if(need.FreshWaterMinThreshold != 0)
-                needs.Add("Water", new LiquidNeed("Water", need));
-
-            if(need.FreshWaterMaxThreshold != 1)
-                needs.Add("WaterPoison", new LiquidNeed("WaterPoison", need));
-
-            if(need.SaltMinThreshold != 0)
-                needs.Add("Salt", new LiquidNeed("Salt", need));
-
-            if(need.SaltMaxThreshold != 1)
-                needs.Add("SaltPoison", new LiquidNeed("SaltPoison", need));
-
-            if(need.BacteriaMinThreshold != 0)
-                needs.Add("Bacteria", new LiquidNeed("Bacteria", need));
-
-            if(need.BacteriaMaxThreshold != 1)
-                needs.Add("BacteriaPoison", new LiquidNeed("BacteriaPoison", need));
+            needs.Add(need.ID, new LiquidNeed(need));
         }
 
         //Prey Needs
         foreach (PreyNeedConstructData need in preyNeeds)
         {
-            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), new PreyNeed(need));
+            needs.Add(need.ID, new PreyNeed(need));
         }
 
         return needs;

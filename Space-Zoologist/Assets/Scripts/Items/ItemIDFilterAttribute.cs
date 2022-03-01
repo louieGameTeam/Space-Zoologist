@@ -18,7 +18,7 @@ public class ItemIDFilterAttribute : PropertyAttribute
         : this(id => id.Category == category) { }
     public ItemIDFilterAttribute(string nameFilter)
         : this(id => id.Data.Name.AnyNameContains(nameFilter)) { }
-    public ItemIDFilterAttribute(Func<ItemID, bool> filter)
+    private ItemIDFilterAttribute(Func<ItemID, bool> filter)
     {
         Filter = filter;
     }

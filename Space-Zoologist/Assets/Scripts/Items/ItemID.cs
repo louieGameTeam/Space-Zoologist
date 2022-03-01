@@ -10,6 +10,7 @@ public struct ItemID
     public int Index => index;
     public ItemData Data => ItemRegistry.Get(this);
     public bool IsValid => ItemRegistry.ValidID(this);
+    public bool IsWater => Data.Name.AnyNameContains("Water");
     public static ItemID Invalid => new ItemID(0, -1);
     #endregion
 

@@ -11,6 +11,7 @@ public class FoodSourceSpecies : ScriptableObject
     public int BaseOutput => baseOutput;
     public Item FoodSourceItem => ID.Data.ShopItem;
     public List<TileType> AccessibleTerrain => accessibleTerrain;
+    public int WaterTilesRequired => waterTilesRequired;
     public Vector2Int Size => size;
     public List<TerrainNeedConstructData> TerrainNeeds => terrainNeeds;
     public List<LiquidNeedConstructData> LiquidNeeds => liquidNeeds;
@@ -23,33 +24,20 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
     [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
 
-    public Dictionary<string, Need> SetupNeeds()
+    public Dictionary<ItemID, Need> SetupNeeds()
     {
-        Dictionary<string, Need> needs = new Dictionary<string, Need>();
+        Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
 
         //Terrain Needs
         foreach (TerrainNeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.ID.Data.Name.Get(ItemName.Type.Serialized), 
-                new TerrainNeed(need, this));
+            needs.Add(need.ID, new TerrainNeed(need, this));
         }
 
         //Water Needs
         foreach (LiquidNeedConstructData need in liquidNeeds)
         {
-            if(need.TileNeedThreshold <= 0)
-                continue;
-
-            needs.Add("LiquidTiles", new LiquidNeed("LiquidTiles", need));
-
-            if(need.FreshWaterMinThreshold != 0)
-                needs.Add("Water", new LiquidNeed("Water", need));
-
-            if(need.SaltMinThreshold != 0)
-                needs.Add("Salt", new LiquidNeed("Salt", need));
-
-            if(need.BacteriaMinThreshold != 0)
-                needs.Add("Bacteria", new LiquidNeed("Bacteria", need));
+            needs.Add(need.ID, new LiquidNeed(need));
 
             //Food sources do not have liquid poisons so no need to worry about those here
         }

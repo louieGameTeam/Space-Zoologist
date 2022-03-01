@@ -108,6 +108,10 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     {
         return FindInternal(data => data.ShopItem == searchItem, searchItem);
     }
+    public static ItemID FindTile(TileType tile)
+    {
+        return FindInternal(data => data.Tile == tile, tile);
+    }
     public static ItemID Find(ItemData search)
     {
         return FindInternal(data => data == search, search);
@@ -175,6 +179,31 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
 
         // Return the invalid ID
         return ItemID.Invalid;
+    }
+    public static ItemID[] ExistsAll(Predicate<ItemData> predicate)
+    {
+        ItemDataList[] dataLists = Instance.itemData.itemDataLists;
+        List<ItemID> ids = new List<ItemID>();
+
+        for (int category = 0; category < dataLists.Length; category++)
+        {
+            // Get the list of item data in this category
+            ItemData[] datas = dataLists[category].Items;
+
+            for (int index = 0; index < datas.Length; index++)
+            {
+                ItemData data = datas[index];
+
+                // If this data matches then add it to the list
+                if (predicate.Invoke(data))
+                {
+                    ids.Add(new ItemID((Category)category, index));
+                }
+            }
+        }
+
+        // Return the invalid ID
+        return ids.ToArray();
     }
     #endregion
 }

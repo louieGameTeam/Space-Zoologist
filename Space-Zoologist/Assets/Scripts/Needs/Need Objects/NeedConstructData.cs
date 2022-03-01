@@ -54,44 +54,25 @@ public class FoodNeedConstructData : NeedConstructData
 [System.Serializable]
 public class LiquidNeedConstructData : NeedConstructData
 {
-    public float TileNeedThreshold => tileNeedThreshold;
-    public float FreshWaterMinThreshold => freshWaterMinThreshold;
-    public float FreshWaterMaxThreshold => freshWaterMaxThreshold;
-    public float SaltMinThreshold => saltMinThreshold;
-    public float SaltMaxThreshold => saltMaxThreshold;
-    public float BacteriaMinThreshold => bacteriaMinThreshold;
-    public float BacteriaMaxThreshold => bacteriaMaxThreshold;
-    public float MinThreshold => minThreshold;
-    public float MaxThreshold => maxThreshold;
-
-    /*[SerializeField]*/ 
-    private float tileNeedThreshold;
-    /*[Range(0,1)] [SerializeField]*/ 
-    private float freshWaterMinThreshold;
-    /*[Range(0,1)] [SerializeField]*/
-    private float freshWaterMaxThreshold = 1;
-    /*[Range(0,1)] [SerializeField]*/
-    private float saltMinThreshold;
-    /*[Range(0,1)] [SerializeField]*/
-    private float saltMaxThreshold = 1;
-    /*[Range(0,1)] [SerializeField]*/
-    private float bacteriaMinThreshold;
-    /*[Range(0,1)] [SerializeField]*/
-    private float bacteriaMaxThreshold = 1;
-
     [SerializeField]
     [ItemIDFilter("Water")]
+    [Tooltip("The type of water needed by the species")]
     private ItemID id;
-    [Range(0, 1)] [SerializeField] private float minThreshold = 0;
-    [Range(0, 1)] [SerializeField] private float maxThreshold = 1;
-
-
+    [Range(0, 1)] 
+    [SerializeField]
+    [Tooltip("The minimum amount of this water type needed " +
+        "to be drinkable by this species")]
+    private float minThreshold = 0;
+    [Range(0, 1)] 
+    [SerializeField]
+    [Tooltip("The maximum amount of this water type tolerated " +
+        "to be drinkable by this species")]
+    private float maxThreshold = 1;
 
     public override float GetSurvivableThreshold()
     {
-        return tileNeedThreshold;
+        return -1;
     }
-
     protected override bool getIsPreferred()
     {
         return false;
@@ -106,7 +87,7 @@ public class LiquidNeedConstructData : NeedConstructData
 public class PreyNeedConstructData : NeedConstructData
 {
     [SerializeField]
-    [Tooltip("ID of the animal that this animal devours")]
+    [Tooltip("ID of the animal that this animal devours/symbiots with")]
     [ItemIDFilter(ItemRegistry.Category.Species)]
     private ItemID preyID;
 

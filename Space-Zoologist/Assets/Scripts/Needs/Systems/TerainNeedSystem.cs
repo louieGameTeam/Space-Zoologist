@@ -266,10 +266,16 @@ public class TerrainNeedSystem : NeedSystem
             {
                 foreach(Population population in populationSet)
                 {
-                    string needName = tile.ToString();
-                    if(tilesAllocated[population].ContainsKey(tile)) {
-                        population.UpdateNeed(needName, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
-                        //Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                    // Get all item ids for tiles of this type
+                    ItemID[] tileIDs = ItemRegistry.ExistsAll(data => data.Tile == tile);
+
+                    foreach (ItemID tileID in tileIDs)
+                    {
+                        if (tilesAllocated[population].ContainsKey(tile))
+                        {
+                            population.UpdateNeed(tileID, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
+                            //Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                        }
                     }
                 }
             }
@@ -282,16 +288,15 @@ public class TerrainNeedSystem : NeedSystem
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
-                string needName = ((TileType)index).ToString();
-                if (needName.Equals("Liquid"))
-                {
-                    continue;
-                }
+                ItemID tileID = ItemRegistry.FindTile((TileType)index);
 
-                if (foodSource.GetNeedValues().ContainsKey(needName))
+                // Skip water tiles
+                if (tileID.IsWater) continue;
+
+                if (foodSource.GetNeedValues().ContainsKey(tileID))
                 {
                     //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
-                    foodSource.UpdateNeed(needName, count);
+                    foodSource.UpdateNeed(tileID, count);
                 }
             }
         }

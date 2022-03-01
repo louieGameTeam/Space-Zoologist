@@ -92,7 +92,7 @@ public class FoodSourceNeedSystem : NeedSystem
             // 3. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
             for (int j = 0; j <= 1; j++)
             {
-                foreach (KeyValuePair<string, Need> need in population.Needs)
+                foreach (KeyValuePair<ItemID, Need> need in population.Needs)
                 {
                     // 4. Calculate preferred and available food, skipping if need already met
                     if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(need.Value.ID))

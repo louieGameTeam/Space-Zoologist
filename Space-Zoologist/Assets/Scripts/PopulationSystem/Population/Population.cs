@@ -18,7 +18,7 @@ public class Population : MonoBehaviour, Life
     public bool HasAccessibilityChanged = false;
     public System.Random random = new System.Random();
 
-    public Dictionary<string, Need> Needs => needs;
+    public Dictionary<ItemID, Need> Needs => needs;
     public AnimalPathfinding.Grid Grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
@@ -35,7 +35,7 @@ public class Population : MonoBehaviour, Life
     [SerializeField] private List<Need> NeedEditorTesting = default;
     [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
 
-    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
 
     private Vector3 origin = Vector3.zero;
     public GrowthCalculator GrowthCalculator;
@@ -78,7 +78,7 @@ public class Population : MonoBehaviour, Life
         this.GrowthCalculator = new GrowthCalculator(this);
         this.needs = this.Species.SetupNeeds();
         this.NeedEditorTesting = new List<Need>();
-        foreach (KeyValuePair<string, Need> need in this.needs)
+        foreach (KeyValuePair<ItemID, Need> need in this.needs)
         {
             this.NeedEditorTesting.Add(need.Value);
             this.GrowthCalculator.setupNeedTracker(need.Value.NeedType);
@@ -180,7 +180,7 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    public void UpdateNeed(string need, float value)
+    public void UpdateNeed(ItemID need, float value)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } population has no need { need }");
         this.needs[need].UpdateNeedValue(value);
@@ -197,7 +197,7 @@ public class Population : MonoBehaviour, Life
     /// </summary>
     /// <param name="need">The need to get the value of</param>
     /// <returns></returns>
-    public float GetNeedValue(string need)
+    public float GetNeedValue(ItemID need)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } population has no need { need }");
         return this.needs[need].NeedValue;
@@ -364,7 +364,7 @@ public class Population : MonoBehaviour, Life
     {
         // Debug.Log("Needs updated with editor");
         int i=0;
-        foreach (KeyValuePair<string, Need> need in this.needs)
+        foreach (KeyValuePair<ItemID, Need> need in this.needs)
         {
             if (this.NeedEditorTesting[i].ID.Equals(need.Value.ID))
             {
@@ -376,12 +376,12 @@ public class Population : MonoBehaviour, Life
         {
             foreach (Need need in this.NeedEditorTesting)
             {
-                this.needs[need.ID.Data.Name.Get(ItemName.Type.Serialized)] = need;
+                this.needs[need.ID] = need;
             }
         }
     }
 
-    public Dictionary<string, Need> GetNeedValues()
+    public Dictionary<ItemID, Need> GetNeedValues()
     {
         return this.Needs;
     }

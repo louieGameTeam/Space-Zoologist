@@ -19,8 +19,8 @@ public class FoodSource : MonoBehaviour, Life
     public float TerrainRating => terrainRating;
     public float WaterRating => waterRating;
 
-    public Dictionary<string, Need> Needs => needs;
-    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
+    public Dictionary<ItemID, Need> Needs => needs;
+    private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
 
     // For runtime instances of a food source
     [Expandable][SerializeField] private FoodSourceSpecies species = default;
@@ -91,7 +91,7 @@ public class FoodSource : MonoBehaviour, Life
         float availableSurvivableTiles = 0f;
         float totalTilesAvailable = 0f;
 
-        foreach (KeyValuePair<string, Need> need in this.needs)
+        foreach (KeyValuePair<ItemID, Need> need in this.needs)
         {
             if (need.Value.NeedType.Equals(NeedType.Terrain))
             {
@@ -123,28 +123,18 @@ public class FoodSource : MonoBehaviour, Life
 
     public void CalculateWaterNeed()
     {
-        if(!needs.ContainsKey("LiquidTiles"))
-        {
-            waterRating = 0;
-            return;
-        }
-
-        LiquidNeed tileNeed = (LiquidNeed)needs["LiquidTiles"];
+        throw new NotImplementedException(
+            "Water need calculations not yet implemented " +
+            "for food sources");
 
         LiquidNeed waterNeed = null;
-        if(needs.ContainsKey("Water"))
-            waterNeed = (LiquidNeed)needs["Water"];
-
         LiquidNeed saltNeed = null;
-        if(needs.ContainsKey("Salt"))
-            saltNeed = (LiquidNeed)needs["Salt"];
-
         LiquidNeed bacteriaNeed = null;
-        if(needs.ContainsKey("Bacteria"))
-            bacteriaNeed = (LiquidNeed)needs["Bacteria"];
 
-        float waterSourceSize = tileNeed.NeedValue;
-        float totalNeedWaterTiles = tileNeed.GetThreshold();
+        // Is this really a good idea?
+        // Get the liquidbody size from the need object?
+        float waterSourceSize = /*tileNeed.NeedValue*/ 0;
+        float totalNeedWaterTiles = species.WaterTilesRequired;
         float waterTilesUsed = Mathf.Min(waterSourceSize, totalNeedWaterTiles);
 
         if (waterTilesUsed >= totalNeedWaterTiles)
@@ -192,14 +182,14 @@ public class FoodSource : MonoBehaviour, Life
     /// </summary>
     /// <param name="need">The need to update</param>Z
     /// <param name="value">The need's new value</param>
-    public void UpdateNeed(string need, float value)
+    public void UpdateNeed(ItemID need, float value)
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } food source has no need { need }");
         this.needs[need].UpdateNeedValue(value);
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
     }
 
-    public Dictionary<string, Need> GetNeedValues()
+    public Dictionary<ItemID, Need> GetNeedValues()
     {
         return this.Needs;
     }

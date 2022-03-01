@@ -22,7 +22,7 @@ public class PredatoryPreySystem : NeedSystem
             if (life.GetType() == typeof(Population))
             {
                 Population prey = (Population)life;
-                foreach (KeyValuePair<string, Need> need in prey.Needs)
+                foreach (KeyValuePair<ItemID, Need> need in prey.Needs)
                 {
                     if (need.Value.NeedType.Equals(NeedType.Prey))
                     {
@@ -46,7 +46,7 @@ public class PredatoryPreySystem : NeedSystem
                                 }
                             }
                         }
-                        prey.UpdateNeed(need.Value.ID.Data.Name.Get(ItemName.Type.Serialized), needValue);
+                        prey.UpdateNeed(need.Value.ID, needValue);
                     }
                 }
             }

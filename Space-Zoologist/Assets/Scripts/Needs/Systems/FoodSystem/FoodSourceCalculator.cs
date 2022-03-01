@@ -139,8 +139,7 @@ public class FoodSourceCalculator : NeedCalculator
             }
         }
         UpdateLocalDominance(population);
-        string foodSourceName = foodSourceID.Data.Name.Get(ItemName.Type.Serialized);
-        population.UpdateNeed(foodSourceName, foodAcquired);
+        population.UpdateNeed(foodSourceID, foodAcquired);
         //Debug.Log(population.species.SpeciesName + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;
     }

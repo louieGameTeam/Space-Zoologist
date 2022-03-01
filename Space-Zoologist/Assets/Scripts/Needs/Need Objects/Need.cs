@@ -61,12 +61,10 @@ public class FoodNeed : Need
 public class LiquidNeed : Need
 {
     private new LiquidNeedConstructData needConstructData;
-    private string needType;
 
-    public LiquidNeed(string needType, LiquidNeedConstructData needConstructData) : base(needConstructData) 
+    public LiquidNeed(LiquidNeedConstructData needConstructData) : base(needConstructData) 
     { 
         this.needConstructData = needConstructData; 
-        this.needType = needType;
     }
 
     protected override NeedType GetNeedType()
@@ -81,33 +79,9 @@ public class LiquidNeed : Need
 
     public override float GetThreshold()
     {
-        switch(needType)
-        {
-            case "LiquidTiles":
-                return base.GetThreshold();
-            case "Water":
-                return GetFreshThreshold();
-            case "WaterPoison":
-                return GetFreshPoisonThreshold();
-            case "Salt":
-                return GetSaltThreshold();
-            case "SaltPoison":
-                return GetSaltPoisonThreshold();
-            case "Bacteria":
-                return GetBacteriaThreshold();
-            case "BacteriaPoison":
-                return GetBacteriaPoisonThreshold();
-            default:
-                return base.GetThreshold();
-        }
+        throw new System.NotImplementedException(
+            "Not implemented for water needs. How could it be?");
     }
-
-    private float GetFreshThreshold() { return needConstructData.FreshWaterMinThreshold; }
-    private float GetFreshPoisonThreshold() { return needConstructData.FreshWaterMaxThreshold; }
-    private float GetSaltThreshold() { return needConstructData.SaltMinThreshold; }
-    private float GetSaltPoisonThreshold() { return needConstructData.SaltMaxThreshold; }
-    private float GetBacteriaThreshold() { return needConstructData.BacteriaMinThreshold; }
-    private float GetBacteriaPoisonThreshold() { return needConstructData.BacteriaMaxThreshold; }
 }
 
 public class PreyNeed : Need

@@ -11,7 +11,7 @@ public interface Life
     /// Returns a reference to the NeedValues
     /// </summary>
     /// <returns>A reference</returns>
-    Dictionary<string, Need> GetNeedValues();
+    Dictionary<ItemID, Need> GetNeedValues();
 
     /// <summary>
     /// Gets the position of the transform of the game object
@@ -24,7 +24,7 @@ public interface Life
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    void UpdateNeed(string need, float value);
+    void UpdateNeed(ItemID need, float value);
 
     /// <summary>
     /// Get the accessibility status, true if accessibility or accessible terrain had changed

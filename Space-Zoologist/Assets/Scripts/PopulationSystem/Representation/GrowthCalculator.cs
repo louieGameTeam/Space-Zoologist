@@ -90,26 +90,35 @@ public class GrowthCalculator
 
     public void CalculateWaterNeed()
     {
+        throw new NotImplementedException(
+            "Water need calculation not yet implemented " +
+            "for the growth calculator");
+
         //Debug.Log(population.species.SpeciesName + " has liquid need " + population.Needs.ContainsKey("Liquid"));
-        if(!population.Needs.ContainsKey("Liquid"))
-        {
-            waterRating = 0;
-            return;
-        }
+        //if(!population.Needs.ContainsKey("Liquid"))
+        //{
+        //    waterRating = 0;
+        //    return;
+        //}
 
-        LiquidNeed tileNeed = (LiquidNeed)population.Needs["Liquid"];
+        //LiquidNeed tileNeed = (LiquidNeed)population.Needs["Liquid"];
 
-        LiquidNeed waterNeed = null;
-        if(population.Needs.ContainsKey("Water"))
-            waterNeed = (LiquidNeed)population.Needs["Water"];
+        //LiquidNeed waterNeed = null;
+        //if(population.Needs.ContainsKey("Water"))
+        //    waterNeed = (LiquidNeed)population.Needs["Water"];
 
-        LiquidNeed saltNeed = null;
-        if(population.Needs.ContainsKey("Salt"))
-            saltNeed = (LiquidNeed)population.Needs["Salt"];
+        //LiquidNeed saltNeed = null;
+        //if(population.Needs.ContainsKey("Salt"))
+        //    saltNeed = (LiquidNeed)population.Needs["Salt"];
 
-        LiquidNeed bacteriaNeed = null;
-        if(population.Needs.ContainsKey("Bacteria"))
-            bacteriaNeed = (LiquidNeed)population.Needs["Bacteria"];
+        //LiquidNeed bacteriaNeed = null;
+        //if(population.Needs.ContainsKey("Bacteria"))
+        //    bacteriaNeed = (LiquidNeed)population.Needs["Bacteria"];
+
+        LiquidNeed tileNeed = null, 
+            waterNeed = null, 
+            saltNeed = null, 
+            bacteriaNeed = null;
 
         int numAnimals = population.AnimalPopulation.Count;
         float waterSourceSize = tileNeed.NeedValue;
@@ -189,7 +198,7 @@ public class GrowthCalculator
         float survivableTilesOccupied = 0f;
         float totalTilesOccupied = 0f;
 
-        foreach (KeyValuePair<string, Need> need in population.Needs)
+        foreach (KeyValuePair<ItemID, Need> need in population.Needs)
         {
             if (need.Value.NeedType.Equals(NeedType.Terrain))
             {
@@ -240,7 +249,7 @@ public class GrowthCalculator
     public float calculatePredatorPreyNeed()
     {
         float predatorValue = 0;
-        foreach (KeyValuePair<string, Need> need in population.Needs)
+        foreach (KeyValuePair<ItemID, Need> need in population.Needs)
         {
             if (need.Value.NeedType.Equals(NeedType.Prey))
             {
