@@ -71,17 +71,6 @@ public class LiquidNeed : Need
     {
         return NeedType.Liquid;
     }
-
-    public override bool IsThresholdMet(float value)
-    {
-        return value >= GetThreshold();
-    }
-
-    public override float GetThreshold()
-    {
-        throw new System.NotImplementedException(
-            "Not implemented for water needs. How could it be?");
-    }
 }
 
 public class PreyNeed : Need
