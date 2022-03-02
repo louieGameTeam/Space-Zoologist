@@ -266,20 +266,26 @@ public class TerrainNeedSystem : NeedSystem
             {
                 foreach(Population population in populationSet)
                 {
-                    // Get all item ids for tiles of this type
-                    ItemID[] tileIDs = ItemRegistry.ExistsAll(data => data.Tile == tile);
-
-                    foreach (ItemID tileID in tileIDs)
+                    // If this tile type has been allocated to this population
+                    if (tilesAllocated[population].ContainsKey(tile))
                     {
-                        if (tilesAllocated[population].ContainsKey(tile))
+                        float needValue = tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1);
+
+                        // If this is a liquid need, update the special value
+                        if (tile == TileType.Liquid && population.TerrainWaterNeed != null)
                         {
-                            population.UpdateNeed(tileID, tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1));
-                            //Debug.Log(needName + " tiles allocated to " + population.Species.SpeciesName + ": " + tilesAllocated[population][tile]);
+                            population.TerrainWaterNeed.UpdateNeedValue(needValue);
                         }
-                    }
-                }
-            }
-        }
+                        // Otherwise update the value in the dictionary
+                        else 
+                        {
+                            ItemID id = ItemRegistry.FindTile(tile);
+                            population.UpdateNeed(id, needValue);
+                        }
+                    }// end if
+                }// end foreach population
+            }// end foreach hash set
+        }// end foreach tile
 
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {

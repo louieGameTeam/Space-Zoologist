@@ -55,7 +55,10 @@ public class AnimalSpecies : ScriptableObject
         //Terrain Needs
         foreach (TerrainNeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.ID, new TerrainNeed(need, this));
+            if (!need.ID.IsWater)
+            {
+                needs.Add(need.ID, new TerrainNeed(need, this));
+            }
         }
 
         //Food Needs
@@ -81,5 +84,16 @@ public class AnimalSpecies : ScriptableObject
         }
 
         return needs;
+    }
+
+    public Need GetTerrainWaterNeed()
+    {
+        TerrainNeedConstructData terrainWaterNeed = terrainNeeds.Find(need => need.ID.IsWater);
+
+        if (terrainWaterNeed != null)
+        {
+            return new TerrainNeed(terrainWaterNeed, this);
+        }
+        else return null;
     }
 }

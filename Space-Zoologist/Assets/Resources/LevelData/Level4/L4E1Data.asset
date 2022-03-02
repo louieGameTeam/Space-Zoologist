@@ -16,6 +16,7 @@ MonoBehaviour:
   startingBalance: 750
   MapWidth: 29
   MapHeight: 29
+  WallBreakable: 0
   LevelObjectiveData: {fileID: 11400000, guid: a83c490379b8941b49666ec1763ae8d1, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -77,7 +78,8 @@ MonoBehaviour:
     nextLevelID:
       levelNumber: 0
       enclosureNumber: 0
-    quizConversation: {fileID: 0}
+    quizConversation: {fileID: 8938176367728474889, guid: 32d08c68c96de0a4b9609ce6fb117c7d,
+      type: 3}
     nextLevelIDs:
       levelIDs:
       - levelNumber: 4

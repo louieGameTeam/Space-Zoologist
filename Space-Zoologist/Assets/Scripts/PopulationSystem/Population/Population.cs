@@ -40,7 +40,8 @@ public class Population : MonoBehaviour, Life
     [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
 
     private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
-    public Need TerrainWaterNeed => null;
+    public Need TerrainWaterNeed => terrainWaterNeed;
+    private Need terrainWaterNeed = null;
 
     private Vector3 origin = Vector3.zero;
     public GrowthCalculator GrowthCalculator;
@@ -98,6 +99,9 @@ public class Population : MonoBehaviour, Life
             this.NeedEditorTesting.Add(need.Value);
             this.GrowthCalculator.setupNeedTracker(need.Value.NeedType);
         }
+
+        // Setup the special terrain-water need
+        terrainWaterNeed = species.GetTerrainWaterNeed();
     }
 
     /// <summary>
