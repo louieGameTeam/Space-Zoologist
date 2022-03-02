@@ -69,7 +69,7 @@ public struct ItemID
     public static bool operator !=(ItemID a, ItemID b) => !(a == b);
     #endregion
 
-    #region Overrides
+    #region Object Overrides
     public override bool Equals(object obj)
     {
         if (obj == null) return false;
