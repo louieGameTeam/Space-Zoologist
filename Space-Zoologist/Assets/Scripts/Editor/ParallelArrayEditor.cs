@@ -29,7 +29,7 @@ public class ParallelArrayEditor<TElement>
             {
                 EditorGUI.indentLevel++;
 
-                // Get the enum labels and set the length of the list to the length of the enum
+                // Set the seriaized property length to the parallel array size length
                 if (parallelArray.Length != array.arraySize) array.arraySize = parallelArray.Length;
 
                 // Edit each property in the array
@@ -68,6 +68,10 @@ public class ParallelArrayEditor<TElement>
             // If array is expanded, add heights for all 
             if (array.isExpanded)
             {
+                // Set the seriaized property length to the parallel array size length
+                if (parallelArray.Length != array.arraySize) array.arraySize = parallelArray.Length;
+
+                // Add up the heights for each sub property
                 for (int i = 0; i < parallelArray.Length; i++)
                 {
                     SerializedProperty element = array.GetArrayElementAtIndex(i);

@@ -24,7 +24,7 @@ public class PodSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         // If in CursorItem mode and the cursor is clicked while over the menu
-        if (IsCursorOverUI(eventData))
+        if (!UIBlockerSettings.OperationIsAvailable("Build"))
         {
             Debug.Log("Clicked over UI");
             base.OnItemSelectionCanceled();

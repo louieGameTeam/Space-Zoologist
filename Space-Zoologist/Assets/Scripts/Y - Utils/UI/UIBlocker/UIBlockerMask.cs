@@ -20,8 +20,8 @@ public class UIBlockerMask
         {
             return operationsBlocked[index];
         }
-        else throw new System.IndexOutOfRangeException($"{nameof(UIBlockerMask)}: " +
-            $"No mask value could be found for the operations '{operation}'");
+        else throw new System.IndexOutOfRangeException(
+            $"No mask value could be found for the operation '{operation}'");
     }
     #endregion
 }

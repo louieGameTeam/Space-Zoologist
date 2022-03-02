@@ -77,7 +77,7 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerDown(PointerEventData eventData)
     {
         base.OnCursorPointerDown(eventData);
-        if (base.IsCursorOverUI(eventData))
+        if (!UIBlockerSettings.OperationIsAvailable("Build"))
         {
             base.OnItemSelectionCanceled();
             return;

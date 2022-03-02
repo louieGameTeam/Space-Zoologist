@@ -1080,6 +1080,9 @@ MonoBehaviour:
   inspectorWindow: {fileID: 4368926420888670963}
   inspectorWindowDisplayScript: {fileID: 7331818809557388825}
   GrowthInfo: {fileID: 7243082125307740525}
+  selectionChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5085092707625676474
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,7 +2176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   operationsBlocked:
-    operationsBlocked: 01010000
+    operationsBlocked: 0101000001
 --- !u!1 &7536904850095213284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2397,7 +2400,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: c273f6cb0c7e24042acfa714074aa551, type: 3}
-    m_FontSize: 25
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
