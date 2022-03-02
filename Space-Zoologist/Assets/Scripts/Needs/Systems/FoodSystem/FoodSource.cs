@@ -22,31 +22,7 @@ public class FoodSource : MonoBehaviour, Life
     public Dictionary<ItemID, Need> Needs => needs;
     private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
 
-    /// <summary>
-    /// Special terrain water need
-    /// </summary>
-    /// <remarks>
-    /// This is used by food sources that need
-    /// water as a terrain need and not a liquid need
-    /// </remarks>
-    /// <example>
-    /// Kelp needs to be placed in water to grow, 
-    /// but it still has liquid needs 
-    /// for specific water compositions
-    /// </example>
     public Need TerrainWaterNeed => terrainWaterNeed;
-    /// <summary>
-    /// Special terrain water need
-    /// </summary>
-    /// <remarks>
-    /// This is used by food sources that need
-    /// water as a terrain need and not a liquid need
-    /// </remarks>
-    /// <example>
-    /// Kelp needs to be placed in water to grow, 
-    /// but it still has liquid needs 
-    /// for specific water compositions
-    /// </example>
     private Need terrainWaterNeed = null;
 
     // For runtime instances of a food source

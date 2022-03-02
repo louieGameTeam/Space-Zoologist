@@ -40,6 +40,7 @@ public class Population : MonoBehaviour, Life
     [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
 
     private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
+    public Need TerrainWaterNeed => null;
 
     private Vector3 origin = Vector3.zero;
     public GrowthCalculator GrowthCalculator;

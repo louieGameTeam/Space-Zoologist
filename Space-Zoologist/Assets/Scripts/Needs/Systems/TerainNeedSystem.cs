@@ -281,12 +281,8 @@ public class TerrainNeedSystem : NeedSystem
             }
         }
 
-        string message = "Food sources in terrain need system:";
-
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
-            message += $"\n\t{foodSource.Species.ID}";
-
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
             terrainCountsByType = GameManager.Instance.m_tileDataController.CountOfTilesUnderSpecies(GameManager.Instance.m_tileDataController.WorldToCell(foodSource.GetPosition()), foodSource.Species);
             // Update need values
@@ -313,7 +309,7 @@ public class TerrainNeedSystem : NeedSystem
             }
         }
 
-        Debug.Log(message);
+        Debug.Log($"Food Sources:\n\t{string.Join("\n\t", Consumers.OfType<FoodSource>())}");
 
         this.isDirty = false;
     }

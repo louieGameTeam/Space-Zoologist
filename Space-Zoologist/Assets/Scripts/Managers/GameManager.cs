@@ -434,6 +434,13 @@ public class GameManager : MonoBehaviour
             Debug.Assert(m_needSystems.ContainsKey(need.NeedType), $"No { need.NeedType } system");
             m_needSystems[need.NeedType].AddConsumer(life);
         }
+
+        // If this life has a terrain water need then add it as a consumer
+        // to the correct need system
+        if (life.TerrainWaterNeed != null)
+        {
+            m_needSystems[life.TerrainWaterNeed.NeedType].AddConsumer(life);
+        }
     }
 
     public void UnregisterWithNeedSystems(Life life)
