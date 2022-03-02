@@ -182,7 +182,7 @@ public class GrowthCalculator
         }
         else
         {
-            preferredTilesOccupied = availableSurvivableTiles;
+            preferredTilesOccupied = availablePreferredTiles;
         }
 
         if (availableSurvivableTiles >= totalNeededTiles - preferredTilesOccupied)

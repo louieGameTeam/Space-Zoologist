@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 /// <summary>
 /// Abstract class that all NeedSystems will inherit from. Every need system will have a list of consumers (Life) 
@@ -58,4 +59,61 @@ abstract public class NeedSystem
     }
 
     abstract public void UpdateSystem();
+
+    #region Experimental Methods
+    public static float FoodRating(NeedRegistry needs, NeedAvailability availability, int minFoodNeeded, int maxFoodConsumed)
+    {
+        // Get all food needs
+        NeedData[] foodNeeds = needs.FindFoodNeeds();
+
+        // Get the amount of foods consumed
+        return SimplePreferenceNeedRating(foodNeeds, availability, minFoodNeeded, maxFoodConsumed);
+    }
+    public static float TerrainRating(NeedRegistry needs, NeedAvailability availability, int terrainTilesNeeded)
+    {
+        // Get all terrain needs
+        NeedData[] terrainNeeds = needs.FindTerrainNeeds();
+
+        // Return a simple preference need rating
+        return SimplePreferenceNeedRating(terrainNeeds, availability, terrainTilesNeeded, terrainTilesNeeded);
+    }
+    private static float SimplePreferenceNeedRating(NeedData[] needs, NeedAvailability availability, int minNeeded, int maxUsed)
+    {
+        // Start at using none
+        int preferredUsed = 0;
+        int survivableUsed = 0;
+
+        // Go through each need in the terrain needs
+        foreach (NeedData need in needs)
+        {
+            NeedAvailabilityItem availabilityItem = availability.FindItem(need.ID);
+
+            // If that item is available,
+            // then increase tiles occupied by the amount available
+            if (availabilityItem != null)
+            {
+                if (need.Preferred)
+                {
+                    preferredUsed += availabilityItem.AmountAvailable;
+                }
+                else survivableUsed += availabilityItem.AmountAvailable;
+            }
+        }
+
+        // Cannot use more than what is needed
+        preferredUsed = Mathf.Min(preferredUsed, maxUsed);
+        survivableUsed = Mathf.Min(survivableUsed, maxUsed - preferredUsed);
+        int totalUsed = preferredUsed + survivableUsed;
+
+        // If we used the amound we needed, then boost the rating
+        // by the amount used that is preferred
+        if (totalUsed >= minNeeded)
+        {
+            return 1 + ((float)preferredUsed / totalUsed);
+        }
+        // If we did not use the amount we needed
+        // then the rating is the proportion that we needed
+        else return (float)totalUsed / minNeeded;
+    }
+    #endregion
 }

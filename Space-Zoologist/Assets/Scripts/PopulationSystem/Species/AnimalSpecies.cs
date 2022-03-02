@@ -45,6 +45,10 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
     [SerializeField] private List<PreyNeedConstructData> preyNeeds = default;
 
+    [SerializeField]
+    [Tooltip("Registry of all the animal's needs")]
+    private NeedRegistry needRegistry;
+
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
 

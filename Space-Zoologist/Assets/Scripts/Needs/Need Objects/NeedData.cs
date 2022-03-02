@@ -2,17 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The data for a single need of a 
+/// food or animal species
+/// </summary>
+/// <remarks>
+/// The need data has a lot of information that goes unused
+/// for many need types. Custom editor code is used to display
+/// only the properties that apply for the item identified
+/// by the need
+/// </remarks>
 [System.Serializable]
 public class NeedData
 {
     #region Public Properties
     public bool Needed => needed;
-    public int PreferenceRating => preferenceRating;
+    public bool TraversibleOnly => traversibleOnly;
+    public bool UseAsTerrainNeed => useAsTerrainNeed;
+    public bool Preferred => preferred;
     public SpeciesNeedType SpeciesNeedType => speciesNeedType;
+    public bool UseAsWaterNeed => useAsWaterNeed;
     public float Minimum => minimum;
     public float Maximum => maximum;
     public ItemID ID => id;
-    public bool IsWater => id.Data.Name.AnyNameContains("Water");
     #endregion
 
     #region Private Editor Fields
@@ -21,17 +33,26 @@ public class NeedData
     private bool needed;
 
     [SerializeField]
-    [Tooltip("How much the need is preferred. Larger numbers indicate " +
-        "a higher preference. Values below zero are used to indicate " +
-        "items that do not contribute to the need of the species, as is " +
-        "the case with terrain that species can traverse but cannot " +
-        "contribute to the overall terrain need")]
-    private int preferenceRating = -1;
+    [Tooltip("A traversible only terrain can be traversed by the species " +
+        "but does not contribute to the species terrain need")]
+    private bool traversibleOnly = false;
+    [SerializeField]
+    [Tooltip("If true, then this water need should be treated as terrain " +
+        "that the species can traverse")]
+    private bool useAsTerrainNeed = false;
+    [SerializeField]
+    [Tooltip("How much the need is preferred compared to other needs" +
+        " with the same type")]
+    private bool preferred = false;
 
     [SerializeField]
     [Tooltip("The way in which this species needs this animal")]
     private SpeciesNeedType speciesNeedType;
 
+    [SerializeField]
+    [Tooltip("If true, then this water need should be treated as water " +
+        "that the species can drink from")]
+    private bool useAsWaterNeed = true;
     [SerializeField]
     [Tooltip("A minimum of this much water needs to be present " +
         "to be drinkable by this species")]

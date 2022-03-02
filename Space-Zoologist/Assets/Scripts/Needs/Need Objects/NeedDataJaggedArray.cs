@@ -14,8 +14,4 @@ public class NeedDataJaggedArray
     [Tooltip("List of need data arrays")]
     private NeedDataArray[] needArrays = new NeedDataArray[0];
     #endregion
-
-    #region Public Methods
-
-    #endregion
 }
