@@ -281,23 +281,39 @@ public class TerrainNeedSystem : NeedSystem
             }
         }
 
+        string message = "Food sources in terrain need system:";
+
         foreach (FoodSource foodSource in Consumers.OfType<FoodSource>())
         {
+            message += $"\n\t{foodSource.Species.ID}";
+
             int[] terrainCountsByType = new int[(int)TileType.TypesOfTiles];
             terrainCountsByType = GameManager.Instance.m_tileDataController.CountOfTilesUnderSpecies(GameManager.Instance.m_tileDataController.WorldToCell(foodSource.GetPosition()), foodSource.Species);
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
                 TileType type = (TileType)index;
-                ItemID tileID = ItemRegistry.FindTile(type);
 
-                if (foodSource.GetNeedValues().ContainsKey(tileID))
+                // If we are checking a liquid tile then check if the food source has a terrain water need
+                if (type == TileType.Liquid && foodSource.TerrainWaterNeed != null)
                 {
-                    //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
-                    foodSource.UpdateNeed(tileID, count);
+                    foodSource.TerrainWaterNeed.UpdateNeedValue(count);
+                }
+                // Otherwise look for the need in the dictionary
+                else
+                {
+                    ItemID tileID = ItemRegistry.FindTile(type);
+
+                    if (foodSource.GetNeedValues().ContainsKey(tileID))
+                    {
+                        //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
+                        foodSource.UpdateNeed(tileID, count);
+                    }
                 }
             }
         }
+
+        Debug.Log(message);
 
         this.isDirty = false;
     }

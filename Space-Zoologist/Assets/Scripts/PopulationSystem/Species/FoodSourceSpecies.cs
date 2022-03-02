@@ -31,7 +31,11 @@ public class FoodSourceSpecies : ScriptableObject
         //Terrain Needs
         foreach (TerrainNeedConstructData need in terrainNeeds)
         {
-            needs.Add(need.ID, new TerrainNeed(need, this));
+            // Only add non water terrain needs to the dictionary
+            if (!need.ID.IsWater)
+            {
+                needs.Add(need.ID, new TerrainNeed(need, this));
+            }
         }
 
         //Water Needs
@@ -42,8 +46,18 @@ public class FoodSourceSpecies : ScriptableObject
             //Food sources do not have liquid poisons so no need to worry about those here
         }
 
-
         return needs;
+    }
+
+    public Need GetTerrainWaterNeed()
+    {
+        TerrainNeedConstructData terrainWaterNeed = terrainNeeds.Find(need => need.ID.IsWater);
+
+        if (terrainWaterNeed != null)
+        {
+            return new TerrainNeed(terrainWaterNeed, this);
+        }
+        else return null;
     }
 
     public void SetupData(int rootRadius, int output, List<List<NeedConstructData>> needs)

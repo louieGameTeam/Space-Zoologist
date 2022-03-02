@@ -22,6 +22,33 @@ public class FoodSource : MonoBehaviour, Life
     public Dictionary<ItemID, Need> Needs => needs;
     private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
 
+    /// <summary>
+    /// Special terrain water need
+    /// </summary>
+    /// <remarks>
+    /// This is used by food sources that need
+    /// water as a terrain need and not a liquid need
+    /// </remarks>
+    /// <example>
+    /// Kelp needs to be placed in water to grow, 
+    /// but it still has liquid needs 
+    /// for specific water compositions
+    /// </example>
+    public Need TerrainWaterNeed => terrainWaterNeed;
+    /// <summary>
+    /// Special terrain water need
+    /// </summary>
+    /// <remarks>
+    /// This is used by food sources that need
+    /// water as a terrain need and not a liquid need
+    /// </remarks>
+    /// <example>
+    /// Kelp needs to be placed in water to grow, 
+    /// but it still has liquid needs 
+    /// for specific water compositions
+    /// </example>
+    private Need terrainWaterNeed = null;
+
     // For runtime instances of a food source
     [Expandable][SerializeField] private FoodSourceSpecies species = default;
 
@@ -63,6 +90,7 @@ public class FoodSource : MonoBehaviour, Life
     private void InitializeNeedValues()
     {
         this.needs = this.species.SetupNeeds();
+        terrainWaterNeed = species.GetTerrainWaterNeed();
     }
 
     private float CalculateOutput()
@@ -89,7 +117,7 @@ public class FoodSource : MonoBehaviour, Life
         float totalNeededTiles = species.Size.x * species.Size.y;
         float availablePreferredTiles = 0f;
         float availableSurvivableTiles = 0f;
-        float totalTilesAvailable = 0f;
+        float totalTilesAvailable;
 
         foreach (KeyValuePair<ItemID, Need> need in this.needs)
         {
@@ -104,6 +132,16 @@ public class FoodSource : MonoBehaviour, Life
                     availableSurvivableTiles += need.Value.NeedValue;
                 }
             }
+        }
+
+        // Factor in the special terrain water need
+        if (terrainWaterNeed != null)
+        {
+            if (terrainWaterNeed.IsPreferred)
+            {
+                availablePreferredTiles += terrainWaterNeed.NeedValue;
+            }
+            else availableSurvivableTiles += terrainWaterNeed.NeedValue;
         }
 
         totalTilesAvailable = availablePreferredTiles + availableSurvivableTiles;
