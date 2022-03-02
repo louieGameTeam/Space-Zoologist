@@ -68,10 +68,6 @@ public class AnimalSpecies : ScriptableObject
         }
 
         // Water Needs
-        // NOTE: if this could be changed, then we could use ItemID's 
-        // instead of strings. We could give the liquid needs a bool
-        // called "poison" and give it an id for Fresh, Salt, or 
-        // Stagnant water
         foreach (LiquidNeedConstructData need in liquidNeeds)
         {
             needs.Add(need.ID, new LiquidNeed(need));

@@ -166,6 +166,16 @@ public class GrowthCalculator
             }
         }
 
+        // Check the terrain water need
+        if (population.TerrainWaterNeed != null)
+        {
+            if (population.TerrainWaterNeed.IsPreferred)
+            {
+                availablePreferredTiles += population.TerrainWaterNeed.NeedValue;
+            }
+            else availableSurvivableTiles += population.TerrainWaterNeed.NeedValue;
+        }
+
         if (availablePreferredTiles >= totalNeededTiles)
         {
             preferredTilesOccupied = totalNeededTiles;
