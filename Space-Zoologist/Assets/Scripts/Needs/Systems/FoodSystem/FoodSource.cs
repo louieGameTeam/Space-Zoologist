@@ -121,56 +121,51 @@ public class FoodSource : MonoBehaviour, Life
         //Debug.Log(gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + availablePreferredTiles + ", survivable tiles: " + availableSurvivableTiles);
     }
 
+    /// <summary>
+    /// Compute the number of tiles that the food source can drink from
+    /// within range of the plant's root radius
+    /// </summary>
+    /// <returns></returns>
+    public int DrinkableWaterInRange()
+    {
+        TileDataController tileDataController = GameManager.Instance.m_tileDataController;
+        List<float[]> accessibleLiquidBodies = tileDataController
+            .GetLiquidCompositionWithinRange(
+                GetCellPosition(),
+                Species.Size, 
+                Species.RootRadius);
+
+        // Compute how many of the compositions are drinkable
+        return accessibleLiquidBodies
+            .Where(body => LiquidNeedSystem.LiquidIsDrinkable(species.LiquidNeeds, body))
+            .Count();
+    }
+
     public void CalculateWaterNeed()
     {
-        throw new NotImplementedException(
-            "Water need calculations not yet implemented " +
-            "for food sources");
+        float waterTilesRequired = species.WaterTilesRequired;
+        float waterTilesUsed = Mathf.Min(DrinkableWaterInRange(), waterTilesRequired);
 
-        LiquidNeed waterNeed = null;
-        LiquidNeed saltNeed = null;
-        LiquidNeed bacteriaNeed = null;
-
-        // Is this really a good idea?
-        // Get the liquidbody size from the need object?
-        float waterSourceSize = /*tileNeed.NeedValue*/ 0;
-        float totalNeedWaterTiles = species.WaterTilesRequired;
-        float waterTilesUsed = Mathf.Min(waterSourceSize, totalNeedWaterTiles);
-
-        if (waterTilesUsed >= totalNeedWaterTiles)
+        if (waterTilesUsed >= waterTilesRequired)
         {
             //Debug.Log("Water need met");
             waterNeedMet = true;
             waterRating = 0;
 
-            if(waterNeed != null)
+            // Update water rating for each liquid need
+            foreach (LiquidNeedConstructData data in species.LiquidNeeds)
             {
-                float percentPureWater = waterNeed.NeedValue;
-                float neededPureWaterThreshold = waterNeed.GetThreshold();
-                waterRating += (percentPureWater - neededPureWaterThreshold) / (GrowthCalculator.maxFreshWaterTilePercent - neededPureWaterThreshold);
-                //Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
-            }
-
-            if(saltNeed != null)
-            {
-                float percentSalt = saltNeed.NeedValue;
-                float neededSaltThreshold = saltNeed.GetThreshold();
-                waterRating += (percentSalt - neededSaltThreshold) / (GrowthCalculator.maxSaltTilePercent - neededSaltThreshold);
-                //Debug.Log("Salt received: " + percentSalt + " out of " + neededSaltThreshold);
-            }
-
-            if(bacteriaNeed != null)
-            {
-                float percentBacteria = bacteriaNeed.NeedValue;
-                float neededBacteriaThreshold = bacteriaNeed.GetThreshold();
-                waterRating += (percentBacteria - neededBacteriaThreshold) / (GrowthCalculator.maxBacteriaTilePercent - neededBacteriaThreshold);
-                //Debug.Log("Bacteria received: " + percentBacteria + " out of " + neededBacteriaThreshold);
+                LiquidNeed waterNeed = needs[data.ID] as LiquidNeed;
+                float percent = waterNeed.NeedValue;
+                float minNeeded = data.MinThreshold;
+                float maxWaterTilePercent = GrowthCalculator.GetMaxWaterTilePercent(data.ID.WaterIndex);
+                waterRating += (percent - minNeeded) / (maxWaterTilePercent - minNeeded);
             }
         }
         else
         {
             waterNeedMet = false;
-            waterRating = (waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles;
+            waterRating = (waterTilesUsed - waterTilesRequired) / waterTilesRequired;
         }
 
         //if (gameObject)
@@ -197,6 +192,11 @@ public class FoodSource : MonoBehaviour, Life
     public Vector3 GetPosition()
     {
         return this.gameObject.transform.position;
+    }
+
+    public Vector3Int GetCellPosition()
+    {
+        return GameManager.Instance.m_tileDataController.WorldToCell(GetPosition());
     }
 
     /// <summary>

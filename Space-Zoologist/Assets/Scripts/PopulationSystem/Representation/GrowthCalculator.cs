@@ -9,6 +9,8 @@ public enum GrowthStatus {declining, stagnate, growing}
 /// </summary>
 public class GrowthCalculator
 {
+    // Huh? Are these values outdated?
+    // Better check the design documents to see how it's supposed to go
     public const float maxFreshWaterTilePercent = 0.98f; //Someday this will need to be changed to get the value from the scriptableObject
     public const float maxSaltTilePercent = 0.04f; //Someday this will need to be changed to get the value from the scriptableObject
     public const float maxBacteriaTilePercent = 0.09f; //Someday this will need to be changed to get the value from the scriptableObject
@@ -90,75 +92,26 @@ public class GrowthCalculator
 
     public void CalculateWaterNeed()
     {
-        throw new NotImplementedException(
-            "Water need calculation not yet implemented " +
-            "for the growth calculator");
-
-        //Debug.Log(population.species.SpeciesName + " has liquid need " + population.Needs.ContainsKey("Liquid"));
-        //if(!population.Needs.ContainsKey("Liquid"))
-        //{
-        //    waterRating = 0;
-        //    return;
-        //}
-
-        //LiquidNeed tileNeed = (LiquidNeed)population.Needs["Liquid"];
-
-        //LiquidNeed waterNeed = null;
-        //if(population.Needs.ContainsKey("Water"))
-        //    waterNeed = (LiquidNeed)population.Needs["Water"];
-
-        //LiquidNeed saltNeed = null;
-        //if(population.Needs.ContainsKey("Salt"))
-        //    saltNeed = (LiquidNeed)population.Needs["Salt"];
-
-        //LiquidNeed bacteriaNeed = null;
-        //if(population.Needs.ContainsKey("Bacteria"))
-        //    bacteriaNeed = (LiquidNeed)population.Needs["Bacteria"];
-
-        LiquidNeed tileNeed = null, 
-            waterNeed = null, 
-            saltNeed = null, 
-            bacteriaNeed = null;
-
-        int numAnimals = population.AnimalPopulation.Count;
-        float waterSourceSize = tileNeed.NeedValue;
-        float totalNeedWaterTiles = tileNeed.GetThreshold() * numAnimals;
-        float waterTilesUsed = Mathf.Min(waterSourceSize, totalNeedWaterTiles);
-
-        if (waterTilesUsed >= totalNeedWaterTiles)
+        if (population.NeededWaterTilesPresent)
         {
             //Debug.Log("Water need met");
             IsNeedMet[NeedType.Liquid] = true;
             waterRating = 0;
 
-            if(waterNeed != null)
+            // Update water rating for each liquid need
+            foreach (LiquidNeedConstructData data in population.species.LiquidNeeds)
             {
-                float percentPureWater = waterNeed.NeedValue;
-                float neededPureWaterThreshold = waterNeed.GetThreshold();
-                waterRating += (percentPureWater - neededPureWaterThreshold) / (maxFreshWaterTilePercent - neededPureWaterThreshold);
-                //Debug.Log("Pure water received: " + percentPureWater + " out of " + neededPureWaterThreshold);
-            }
-
-            if(saltNeed != null)
-            {
-                float percentSalt = saltNeed.NeedValue;
-                float neededSaltThreshold = saltNeed.GetThreshold();
-                waterRating += (percentSalt - neededSaltThreshold) / (maxSaltTilePercent - neededSaltThreshold);
-                //Debug.Log("Salt received: " + percentSalt + " out of " + neededSaltThreshold);
-            }
-
-            if(bacteriaNeed != null)
-            {
-                float percentBacteria = bacteriaNeed.NeedValue;
-                float neededBacteriaThreshold = bacteriaNeed.GetThreshold();
-                waterRating += (percentBacteria - neededBacteriaThreshold) / (maxBacteriaTilePercent - neededBacteriaThreshold);
-                //Debug.Log("Bacteria received: " + percentBacteria + " out of " + neededBacteriaThreshold);
+                LiquidNeed waterNeed = population.Needs[data.ID] as LiquidNeed;
+                float percent = waterNeed.NeedValue;
+                float minNeeded = data.MinThreshold;
+                float maxWaterTilePercent = GetMaxWaterTilePercent(data.ID.WaterIndex);
+                waterRating += (percent - minNeeded) / (maxWaterTilePercent - minNeeded);
             }
         }
         else
         {
             IsNeedMet[NeedType.Liquid] = false;
-            waterRating = (waterTilesUsed - totalNeedWaterTiles) / totalNeedWaterTiles;
+            waterRating = (population.WaterTilesUsed - population.TotalWaterTilesRequired) / population.TotalWaterTilesRequired;
         }
 
         //Debug.Log(population.gameObject.name + " water Rating: " + waterRating + ", water source size: "+ waterTilesUsed);
@@ -299,5 +252,16 @@ public class GrowthCalculator
             return true;
         }
         return false;
+    }
+
+    public static float GetMaxWaterTilePercent(int waterIndex)
+    {
+        if (waterIndex == 0) return maxFreshWaterTilePercent;
+        else if (waterIndex == 1) return maxSaltTilePercent;
+        else if (waterIndex == 2) return maxBacteriaTilePercent;
+        else throw new ArgumentException(
+            $"No max water tile percent associated with index '{waterIndex}'. " +
+            $"Please use a different water index or add another tile percent " +
+            $"to the source code for the {nameof(GrowthCalculator)}");
     }
 }

@@ -54,6 +54,9 @@ public class FoodNeedConstructData : NeedConstructData
 [System.Serializable]
 public class LiquidNeedConstructData : NeedConstructData
 {
+    public float MinThreshold => minThreshold;
+    public float MaxThreshold => maxThreshold;
+
     [SerializeField]
     [ItemIDFilter("Water")]
     [Tooltip("The type of water needed by the species")]

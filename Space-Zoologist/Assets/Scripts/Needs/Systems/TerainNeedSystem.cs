@@ -288,15 +288,17 @@ public class TerrainNeedSystem : NeedSystem
             // Update need values
             foreach (var (count, index) in terrainCountsByType.WithIndex())
             {
-                ItemID tileID = ItemRegistry.FindTile((TileType)index);
+                TileType type = (TileType)index;
 
-                // Skip water tiles
-                if (tileID.IsWater) continue;
-
-                if (foodSource.GetNeedValues().ContainsKey(tileID))
+                if (type != TileType.Liquid)
                 {
-                    //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
-                    foodSource.UpdateNeed(tileID, count);
+                    ItemID tileID = ItemRegistry.FindTile(type);
+
+                    if (foodSource.GetNeedValues().ContainsKey(tileID))
+                    {
+                        //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
+                        foodSource.UpdateNeed(tileID, count);
+                    }
                 }
             }
         }

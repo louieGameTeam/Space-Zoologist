@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -14,6 +15,9 @@ public class Population : MonoBehaviour, Life
     public int PrePopulationCount => this.prePopulationCount;
     public Vector3 Origin => this.origin;
     public bool IsPaused => this.isPaused;
+    public int TotalWaterTilesRequired => Count * Species.WaterTilesRequired;
+    public float WaterTilesUsed => Mathf.Min(TotalWaterTilesRequired, drinkableLiquidTiles);
+    public bool NeededWaterTilesPresent => drinkableLiquidTiles >= TotalWaterTilesRequired;
     [HideInInspector]
     public bool HasAccessibilityChanged = false;
     public System.Random random = new System.Random();
@@ -44,6 +48,16 @@ public class Population : MonoBehaviour, Life
     private PopulationBehaviorManager PopulationBehaviorManager = default;
     private bool isPaused = false;
     private int enclosedPopulationCount = default;
+
+    /// <summary>
+    /// The number of liquid tiles that this population can drink from
+    /// </summary>
+    /// <remarks>
+    /// This value is direclty set by the liquid need system because
+    /// the liquid tiles need to be evenly distributed between all populations
+    /// in the enclosure
+    /// </remarks>
+    public float drinkableLiquidTiles = 0;
 
     private void Start()
     {
@@ -95,7 +109,8 @@ public class Population : MonoBehaviour, Life
         this.Grid = grid;
     }
 
-    public void RecountAnimals () {
+    public void RecountAnimals () 
+    {
         enclosedPopulationCount = AnimalPopulation.Count;
         // Only counts animals that are in an enclosure that is completely enclosed
         foreach (GameObject animal in AnimalPopulation) {
@@ -112,8 +127,7 @@ public class Population : MonoBehaviour, Life
                 .m_enclosureSystem
                 .GetEnclosedAreaByCellPosition(myGridPosition);
 
-            // If the area is not enclosed,
-            // then reduce the number of enclosed animals
+            // If the area is not enclosed, then reduce the number of enclosed animals
             // WHY?!
             // Simply commenting this out fixes a bug. Is there any reason for this at all?
             if (!myArea.isEnclosed) 
@@ -384,6 +398,11 @@ public class Population : MonoBehaviour, Life
     public Dictionary<ItemID, Need> GetNeedValues()
     {
         return this.Needs;
+    }
+
+    public bool HasWaterNeeds()
+    {
+        return Needs.Keys.Any(id => id.IsWater);
     }
 
     public Vector3 GetPosition()

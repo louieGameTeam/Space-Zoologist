@@ -7,6 +7,7 @@ public class AnimalSpecies : ScriptableObject
 {
     public ItemID ID => ItemRegistry.FindSpecies(this);
     public int TerrainTilesRequired => terrainTilesRequired;
+    public int WaterTilesRequired => waterTilesRequired;
     public int MinFoodRequired => minFoodRequired;
     public int MaxFoodRequired => maxFoodRequired;
     public int GrowthRate => growthRate;

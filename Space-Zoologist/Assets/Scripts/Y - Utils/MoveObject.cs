@@ -52,7 +52,6 @@ public class MoveObject : MonoBehaviour
                 itemByID.Add(itemData.itemObject.ID, itemData.itemObject);
         }
 
-        tempItem = (Item)ScriptableObject.CreateInstance("Item");
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
         DeleteButton = Instantiate(DeleteButtonPrefab, this.transform);
         MoveButton.GetComponent<Button>().onClick.AddListener(StartMovement);
@@ -264,15 +263,13 @@ public class MoveObject : MonoBehaviour
         {
             toMove = tileData.Animal;
             movingItemType = ItemType.ANIMAL;
-            string itemName = toMove.GetComponent<Animal>().PopulationInfo.Species.ID.Data.Name.Get(ItemName.Type.Serialized);
-            tempItem.SetupData(itemName, 0);
+            tempItem = toMove.GetComponent<Animal>().PopulationInfo.Species.ID.Data.ShopItem;
         }
         else if (tileData.Food)
         {
             toMove = tileData.Food;
             movingItemType = ItemType.FOOD;
-            string itemName = toMove.GetComponent<FoodSource>().Species.ID.Data.Name.Get(ItemName.Type.Serialized);
-            tempItem.SetupData(itemName, 0);
+            tempItem = toMove.GetComponent<FoodSource>().Species.ID.Data.ShopItem;
         }
         else if (gridSystem.IsWithinGridBounds(pos))
         {
