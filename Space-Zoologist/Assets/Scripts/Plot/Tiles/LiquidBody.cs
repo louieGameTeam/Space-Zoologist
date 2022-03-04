@@ -175,7 +175,7 @@ public class LiquidBody
                 // the whole thing is still continuous
                 if (continuousBodies.Count <= 1)
                 {
-                    Debug.Log("Liquid removal from liquidbody successful.");
+                    //Debug.Log("Liquid removal from liquidbody successful.");
                     dividedBodiesTiles = null;
                     return false;
                 }

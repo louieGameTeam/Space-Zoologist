@@ -38,6 +38,7 @@ public class LiquidNeedSystem : NeedSystem
         foreach(LiquidBody liquidBody in LiquidbodyController.Instance.liquidBodies)
         {
             HashSet<Population> accessiblePopulations = new HashSet<Population>();
+            Dictionary<Vector3Int,List<Population>> liquidTilePopulations = new Dictionary<Vector3Int, List<Population>>();
             foreach(Population population in Consumers.OfType<Population>())
             {
                 Dictionary<string, Need> popNeeds = population.GetNeedValues();
@@ -59,8 +60,10 @@ public class LiquidNeedSystem : NeedSystem
                     {
                         if(liquidBody.ContainsTile(location))
                         {
+                            if (!liquidTilePopulations.ContainsKey(location))
+                                liquidTilePopulations.Add(location, new List<Population>());
+                            liquidTilePopulations[location].Add(population);
                             populationCanAccess = true;
-                            break;
                         }
                     }
 
@@ -68,12 +71,22 @@ public class LiquidNeedSystem : NeedSystem
                         accessiblePopulations.Add(population);
                 }
             }
-
+            //Go through each accessible water tile, and split it evenly among all the populations that have access to it
+            foreach(var accessibleLiquidPopulations in liquidTilePopulations)
+            {
+                var populations = accessibleLiquidPopulations.Value;
+                float waterSplit = 1f / populations.Count;
+                foreach (var population in populations)
+                {
+                    liquidTilesPerPopulation[population] += waterSplit;
+                }
+            }
             //split this water source equally between all populations that have access to it, regardless of that population's size
-            float waterSplit = liquidBody.TileCount / (float)accessiblePopulations.Count;
+            //float waterSplit = liquidBody.TileCount / (float)accessiblePopulations.Count;
             foreach(Population population in accessiblePopulations)
             {
-                liquidTilesPerPopulation[population] += waterSplit;
+                //tile count moved to previous loop
+                //liquidTilesPerPopulation[population] += waterSplit;
 
                 if(!liquidBodiesPerPopulation.ContainsKey(population))
                     liquidBodiesPerPopulation.Add(population, new HashSet<LiquidBody>());
