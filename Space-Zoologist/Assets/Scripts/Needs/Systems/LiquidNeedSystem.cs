@@ -38,7 +38,7 @@ public class LiquidNeedSystem : NeedSystem
         foreach(LiquidBody liquidBody in LiquidbodyController.Instance.liquidBodies)
         {
             HashSet<Population> accessiblePopulations = new HashSet<Population>();
-            Dictionary<Vector3Int,List<Population>> liquidTilePopulations = new Dictionary<Vector3Int, List<Population>>();
+            Dictionary<Vector3Int,LinkedList<Population>> liquidTilePopulations = new Dictionary<Vector3Int, LinkedList<Population>>();
             foreach(Population population in Consumers.OfType<Population>())
             {
                 Dictionary<string, Need> popNeeds = population.GetNeedValues();
@@ -61,8 +61,8 @@ public class LiquidNeedSystem : NeedSystem
                         if(liquidBody.ContainsTile(location))
                         {
                             if (!liquidTilePopulations.ContainsKey(location))
-                                liquidTilePopulations.Add(location, new List<Population>());
-                            liquidTilePopulations[location].Add(population);
+                                liquidTilePopulations.Add(location, new LinkedList<Population>());
+                            liquidTilePopulations[location].AddFirst(population);
                             populationCanAccess = true;
                         }
                     }
