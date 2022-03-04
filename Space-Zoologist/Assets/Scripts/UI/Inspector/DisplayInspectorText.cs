@@ -25,7 +25,8 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
         currentDisplay = InspectorText.Population;
         inspectorWindowTitle.text = population.species.SpeciesName;
-        populationInfoText.text = "Population: " + population.Count;
+        //An enclosed population of zero implies that the entire population is not enclosed
+        populationInfoText.text = population.Count > 0 ? "Population: " + population.Count : "Population:\nNot Enclosed!";
 
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);

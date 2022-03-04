@@ -114,11 +114,11 @@ public class Population : MonoBehaviour, Life
 
             // If the area is not enclosed,
             // then reduce the number of enclosed animals
-            // WHY?!
-            // Simply commenting this out fixes a bug. Is there any reason for this at all?
+            // Note - because populations are based on area, either the entire population is enclosed or none of it is
+            // This implementation of enclosedPopulationCount might need reworking, although it works fine as is
             if (!myArea.isEnclosed) 
             {
-                // enclosedPopulationCount--;
+                enclosedPopulationCount--;
             }
         }
         //Debug.Log ("Population Count: " + enclosedPopulationCount);
