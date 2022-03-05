@@ -122,6 +122,8 @@ public class Population : MonoBehaviour, Life
             }
         }
         //Debug.Log ("Population Count: " + enclosedPopulationCount);
+        //Update needs whenever population changes
+        GameManager.Instance.UpdateAllPopulationNeedsAndGrowth();
     }
 
     // Only pauses movements
@@ -234,7 +236,7 @@ public class Population : MonoBehaviour, Life
     }
 
     /// <summary>
-    /// Calculate growth, then remove or add animals as needed.
+    /// Calculate growth, (does not) remove or add animals as needed(that is handled by HandleGrowth).
     /// </summary>
     public void UpdateGrowthConditions()
     {

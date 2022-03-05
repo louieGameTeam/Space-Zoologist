@@ -141,7 +141,7 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    public void UdateAllPopulationStateForChecking()
+    public void UpdateAllPopulationStateForChecking()
     {
         foreach (Population population in this.ExistingPopulations)
         {

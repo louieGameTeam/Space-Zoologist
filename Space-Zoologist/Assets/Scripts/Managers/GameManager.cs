@@ -517,7 +517,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Reset pop accessibility status
-        m_populationManager.UdateAllPopulationStateForChecking();
+        m_populationManager.UpdateAllPopulationStateForChecking();
 
         // Reset food source accessibility status
         m_foodSourceManager.UpdateAccessibleTerrainInfoForAll();
@@ -757,20 +757,24 @@ public class GameManager : MonoBehaviour
         return currentDay <= maxDay;
     }
 
+    public void UpdateAllPopulationNeedsAndGrowth(bool updateInspector = false)
+    {
+        UpdateDirtyNeedSystems();
+        m_populationManager.UpdateAllGrowthConditions();
+        if(updateInspector) m_inspector.UpdateCurrentDisplay();
+    }
+
     public void nextDay()
     {
         m_tileDataController.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
-        UpdateAllNeedSystems();
-        m_populationManager.UpdateAllGrowthConditions();
+        UpdateAllPopulationNeedsAndGrowth();
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
         {
             m_populationManager.Populations[i].HandleGrowth();
         }
-        UpdateAllNeedSystems();
-        m_populationManager.UpdateAllGrowthConditions();
-        m_inspector.UpdateCurrentDisplay();
+        UpdateAllPopulationNeedsAndGrowth(true);
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 
         UpdateDayText(++currentDay);
