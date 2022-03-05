@@ -15,26 +15,25 @@ public class EatingPattern : UniversalAnimatorPattern
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
+        print("Trying to eat");
         Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
-        for (int i = -1; i < 2; i++)
+        (int, int)[] checks = { (1, 0), (-1, 0), (0, 1), (0, -1) };
+        foreach (var position in checks)
         {
-            for (int j = -1; j < 2; j++)
+            int i = position.Item1, j = position.Item2;
+            if (currentCell[0] + j < 0 || currentCell[1] + i < 0)
             {
-                if (currentCell[0] + j < 0 || currentCell[1] + i < 0)
+                continue;
+            }
+            Vector3Int loopedTile = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);
+            if (TileDataController.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && TileDataController.GetTileData(loopedTile).Food)
+            {
+                if (TileDataController.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
                 {
-                    continue;
-                }
-                Vector3Int loopedTile = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);
-
-                if (TileDataController.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && TileDataController.GetTileData(loopedTile).Food)
-                {
-                    if (TileDataController.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
-                    {
-                        this.AnimatorTriggerName = GetTriggerName(i, j);
-                        base.EnterPattern(animal, animalData);
-                        SetAnimDirectionFloat(animal, i, j);
-                        return;
-                    }
+                    this.AnimatorTriggerName = GetTriggerName(i, j);
+                    base.EnterPattern(animal, animalData);
+                    SetAnimDirectionFloat(animal, i, j);
+                    return;
                 }
             }
         }
