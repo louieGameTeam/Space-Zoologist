@@ -8,6 +8,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
     [SerializeField] private string Down = default;
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
+    (int, int)[] tileChecks = { (1, 0), (-1, 0), (0, 1), (0, -1) };
     public override void StartUp()
     {
         base.StartUp();
@@ -15,8 +16,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
         Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
-        (int,int)[] checks = {(1,0), (-1, 0), (0, 1), (0,-1) };
-        foreach(var position in checks)
+        foreach(var position in tileChecks)
         {
             int i = position.Item1, j = position.Item2;
             Vector3Int loopedCell = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);

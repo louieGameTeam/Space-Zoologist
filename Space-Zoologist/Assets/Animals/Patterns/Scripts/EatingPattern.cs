@@ -9,16 +9,15 @@ public class EatingPattern : UniversalAnimatorPattern
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
     [SerializeField] private string foodName = default;
+    (int, int)[] tileChecks = { (1, 0), (-1, 0), (0, 1), (0, -1) };
     public override void StartUp()
     {
         base.StartUp();
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
-        print("Trying to eat");
         Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
-        (int, int)[] checks = { (1, 0), (-1, 0), (0, 1), (0, -1) };
-        foreach (var position in checks)
+        foreach (var position in tileChecks)
         {
             int i = position.Item1, j = position.Item2;
             if (currentCell[0] + j < 0 || currentCell[1] + i < 0)
@@ -28,7 +27,8 @@ public class EatingPattern : UniversalAnimatorPattern
             Vector3Int loopedTile = new Vector3Int(currentCell[0] + j, currentCell[1] + i, 0);
             if (TileDataController.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && TileDataController.GetTileData(loopedTile).Food)
             {
-                if (TileDataController.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName == foodName)
+                //Check if population can eat this species(replacing foodName matching for now)
+                if (animalData.animal.PopulationInfo.Needs.ContainsKey(TileDataController.GetTileData(loopedTile).Food.GetComponent<FoodSource>().Species.SpeciesName))
                 {
                     this.AnimatorTriggerName = GetTriggerName(i, j);
                     base.EnterPattern(animal, animalData);

@@ -9,15 +9,22 @@ public class FoodPathfinding : GeneralPathfinding
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        Vector3Int[] destinations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(FoodSpeciesName);
+        List<Vector3Int> destinations = new List<Vector3Int>();
+        //Searches for edible foods based on animal's food needs
+        var needs = animalData.animal.PopulationInfo.GetNeedValues();
+        foreach(var need in needs)
+        {
+            var location = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(need.Key);
+            if(location != null) destinations.AddRange(location);
+        }
         Vector3Int destination = new Vector3Int(-1,-1,-1);
-        if (destinations != null)
+        if (destinations.Count != 0)
         {
             // Shuffle destinations
             Vector3Int temp;
-            for (int i = 0; i < destinations.Length; i++)
+            for (int i = 0; i < destinations.Count; i++)
             {
-                int random = Random.Range(i, destinations.Length);
+                int random = Random.Range(i, destinations.Count);
                 temp = destinations[i];
                 destinations[i] = destinations[random];
                 destinations[random] = destinations[i];
@@ -38,7 +45,6 @@ public class FoodPathfinding : GeneralPathfinding
                 int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
                 destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
             }
-
             AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
         }
         else {
