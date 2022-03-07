@@ -27,6 +27,23 @@ public class NeedRegistry
     {
         return needData.NeedArrays[(int)category].Needs;
     }
+    public bool WaterIsDrinkable(float[] composition)
+    {
+        bool AcceptableWaterRange(NeedData need)
+        {
+            float currentComposition = composition[need.ID.WaterIndex];
+
+            // Check if this water composition is in range of the water need
+            return currentComposition >= need.Minimum && currentComposition <= need.Maximum;
+        }
+
+        // Get all the water needs
+        NeedData[] waterNeeds = FindWaterNeeds();
+
+        // Water is drinkable if each component of water composition
+        // is in range of the need
+        return waterNeeds.All(AcceptableWaterRange);
+    }
     #endregion
 
     #region Find Methods
@@ -40,6 +57,14 @@ public class NeedRegistry
             .Distinct();
 
         return new HashSet<TileType>(tileTypes);
+    }
+    public NeedData[] FindWaterNeeds()
+    {
+        return GetNeedsWithCategory(ItemRegistry.Category.Tile)
+            .Where(need => need.Needed)
+            .Where(need => need.ID.IsWater)
+            .Where(need => need.ID.WaterIndex != 0 || need.UseAsWaterNeed)
+            .ToArray();
     }
     public NeedData[] FindFoodNeeds()
     {

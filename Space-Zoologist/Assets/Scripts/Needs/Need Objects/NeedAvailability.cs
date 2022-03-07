@@ -25,12 +25,27 @@ public class NeedAvailability
     }
     #endregion
 
-    #region Public Methods
-    public NeedAvailabilityItem FindItem(ItemID id)
+    #region Find Methods
+    public NeedAvailabilityItem FindWithItem(ItemID id)
     {
-        int index = Array.FindIndex(items, needItem => needItem.ID == id);
+        return Find(item => item.ID == id);
+    }
+    public NeedAvailabilityItem Find(Predicate<NeedAvailabilityItem> predicate)
+    {
+        int index = Array.FindIndex(items, predicate);
         if (index >= 0) return items[index];
         else return null;
+    }
+    #endregion
+
+    #region Find All Methods
+    public NeedAvailabilityItem[] FindAllWater()
+    {
+        return FindAll(item => item.IsDrinkingWater);
+    }
+    public NeedAvailabilityItem[] FindAll(Predicate<NeedAvailabilityItem> predicate)
+    {
+        return Array.FindAll(items, predicate);
     }
     #endregion
 }

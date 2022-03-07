@@ -11,6 +11,19 @@ public class NeedAvailabilityItem
     public ItemID ID => id;
     public int AmountAvailable => amountAvailable;
     public object MetaData => metaData;
+    public bool IsDrinkingWater => id.IsWater &&
+        metaData != null &&
+        metaData is float[];
+    public float[] WaterComposition
+    {
+        get
+        {
+            if (IsDrinkingWater) return metaData as float[];
+            else throw new System.InvalidOperationException(
+                "Cannot obtain the water composition for this item " +
+                "because it is not a drinking water need");
+        }
+    }
     #endregion
 
     #region Private Fields
@@ -28,9 +41,5 @@ public class NeedAvailabilityItem
         this.amountAvailable = amountAvailable;
         this.metaData = metaData;
     }
-    #endregion
-
-    #region Public Methods
-
     #endregion
 }

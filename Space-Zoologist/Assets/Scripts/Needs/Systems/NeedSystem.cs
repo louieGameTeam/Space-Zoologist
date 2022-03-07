@@ -11,8 +11,6 @@ using System;
 /// </summary>
 abstract public class NeedSystem
 {
-
-
     #region Legacy Code
     public NeedType NeedType { get; private set; }
     public bool IsDirty => this.isDirty;
@@ -65,13 +63,36 @@ abstract public class NeedSystem
     #endregion
 
     #region Experimental Methods
+    public static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
+    {
+        // Number of water tiles that the species can drink from
+        int drinkableWaterUsed = availability
+            .FindAllWater()
+            .Where(item => needs.WaterIsDrinkable(item.WaterComposition))
+            .Sum(item => item.AmountAvailable);
+        // Drinkable water used will not exceed the amount actually needed
+        drinkableWaterUsed = Mathf.Min(drinkableWaterUsed, waterTilesNeeded);
+
+        if (drinkableWaterUsed >= waterTilesNeeded)
+        {
+            // This computation will have to be changed later,
+            // because I don't understand how to "boost" the rating yet
+            return 2f;
+        }
+        else return (float)drinkableWaterUsed / waterTilesNeeded;
+    }
     public static float FoodRating(NeedRegistry needs, NeedAvailability availability, int minFoodNeeded, int maxFoodConsumed)
     {
         // Get all food needs
         NeedData[] foodNeeds = needs.FindFoodNeeds();
 
         // Get the amount of foods consumed
-        return SimplePreferenceNeedRating(foodNeeds, availability, minFoodNeeded, maxFoodConsumed);
+        return SimplePreferenceNeedRating(
+            foodNeeds, 
+            availability, 
+            minFoodNeeded,
+            maxFoodConsumed,
+            (item, need) => item.ID == need.ID);
     }
     public static float TerrainRating(NeedRegistry needs, NeedAvailability availability, int terrainTilesNeeded)
     {
@@ -79,9 +100,19 @@ abstract public class NeedSystem
         NeedData[] terrainNeeds = needs.FindTerrainNeeds();
 
         // Return a simple preference need rating
-        return SimplePreferenceNeedRating(terrainNeeds, availability, terrainTilesNeeded, terrainTilesNeeded);
+        return SimplePreferenceNeedRating(
+            terrainNeeds, 
+            availability, 
+            terrainTilesNeeded, 
+            terrainTilesNeeded,
+            (item, need) => item.ID == need.ID && !item.IsDrinkingWater);
     }
-    private static float SimplePreferenceNeedRating(NeedData[] needs, NeedAvailability availability, int minNeeded, int maxUsed)
+    private static float SimplePreferenceNeedRating(
+        NeedData[] needs, 
+        NeedAvailability availability, 
+        int minNeeded, 
+        int maxUsed, 
+        Func<NeedAvailabilityItem, NeedData, bool> itemMatch)
     {
         // Start at using none
         int preferredUsed = 0;
@@ -90,7 +121,8 @@ abstract public class NeedSystem
         // Go through each need in the terrain needs
         foreach (NeedData need in needs)
         {
-            NeedAvailabilityItem availabilityItem = availability.FindItem(need.ID);
+            NeedAvailabilityItem availabilityItem = availability
+                .Find(item => itemMatch.Invoke(item, need));
 
             // If that item is available,
             // then increase tiles occupied by the amount available

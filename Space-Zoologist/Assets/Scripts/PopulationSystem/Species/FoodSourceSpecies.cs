@@ -15,6 +15,8 @@ public class FoodSourceSpecies : ScriptableObject
     public Vector2Int Size => size;
     public List<TerrainNeedConstructData> TerrainNeeds => terrainNeeds;
     public List<LiquidNeedConstructData> LiquidNeeds => liquidNeeds;
+    public NeedRegistry Needs => needs;
+    public int TerrainTilesNeeded => size.x * size.y;
 
     [SerializeField] private Vector2Int size = new Vector2Int(1, 1); // default to 1 tile big
     [SerializeField] private List<TileType> accessibleTerrain = default;
@@ -23,6 +25,9 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private int baseOutput = default;
     [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
     [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
+    [SerializeField]
+    [Tooltip("Registry of everything that the food source needs")]
+    private NeedRegistry needs;
 
     public Dictionary<ItemID, Need> SetupNeeds()
     {

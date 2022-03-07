@@ -9,32 +9,23 @@ public class DebuggingScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
-            PopulationManager populationManager = GameManager.Instance.m_populationManager;
+            FoodSourceManager foodSourceManager = GameManager.Instance.m_foodSourceManager;
+            string message = "Food source ratings (experimental):";
 
-            if (populationManager.Populations.Count > 0)
+            // Go through each food source in the manager
+            foreach (FoodSource foodSource in foodSourceManager.FoodSources)
             {
-                Population population = populationManager.Populations[0];
+                // Get food source need availability
+                NeedAvailability needAvailability = NeedAvailabilityFactory.BuildFoodSourceNeedAvailability(foodSource);
+                float terrainRating = NeedSystem.TerrainRating(foodSource.Species.Needs, needAvailability, foodSource.Species.TerrainTilesNeeded);
+                float waterRating = NeedSystem.WaterRating(foodSource.Species.Needs, needAvailability, foodSource.Species.WaterTilesRequired);
 
-                // On the first level, the goat has 28 dirt, 36 grass and 21 maple fruits
-                NeedAvailability goatAvailability = new NeedAvailability(
-                    new NeedAvailabilityItem(ItemRegistry.FindHasName("Dirt"), 28),
-                    new NeedAvailabilityItem(ItemRegistry.FindHasName("Grass"), 36),
-                    new NeedAvailabilityItem(new ItemID(ItemRegistry.Category.Food, 0), 21));
-
-                float terrainRating = NeedSystem.TerrainRating(
-                    population.species.Needs, 
-                    goatAvailability, 
-                    population.species.TerrainTilesRequired * population.Count);
-                float foodRating = NeedSystem.FoodRating(
-                    population.species.Needs, 
-                    goatAvailability, 
-                    population.species.MinFoodRequired * population.Count, 
-                    population.species.MaxFoodRequired * population.Count);
-
-                Debug.Log($"Population {population.species} ratings (experimental):" +
-                    $"\n\tFood Rating: {foodRating}" + 
-                    $"\n\tTerrain Rating: {terrainRating}");
+                message += $"\n\t{foodSource.Species} at {foodSource.GetCellPosition()}: " +
+                    $"\n\t\tTerrain rating: {terrainRating}" +
+                    $"\n\t\tWater rating: {waterRating}";
             }
+
+            Debug.Log(message);
         }
     }
 }
