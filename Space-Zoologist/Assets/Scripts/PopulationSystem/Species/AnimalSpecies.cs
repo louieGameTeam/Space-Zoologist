@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class AnimalSpecies : ScriptableObject
@@ -25,6 +25,7 @@ public class AnimalSpecies : ScriptableObject
     public List<FoodNeedConstructData> FoodNeeds => foodNeeds;
     public List<LiquidNeedConstructData> LiquidNeeds => liquidNeeds;
     public List<PreyNeedConstructData> PreyNeeds => preyNeeds;
+    public NeedRegistry Needs => needs;
 
     // Values
     [SerializeField] private RuntimeAnimatorController animatorController = default;
@@ -47,7 +48,8 @@ public class AnimalSpecies : ScriptableObject
 
     [SerializeField]
     [Tooltip("Registry of all the animal's needs")]
-    private NeedRegistry needRegistry;
+    [FormerlySerializedAs("needRegistry")]
+    private NeedRegistry needs;
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;

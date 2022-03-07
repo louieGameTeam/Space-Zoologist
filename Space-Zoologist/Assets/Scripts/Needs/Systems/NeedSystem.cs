@@ -11,6 +11,9 @@ using System;
 /// </summary>
 abstract public class NeedSystem
 {
+
+
+    #region Legacy Code
     public NeedType NeedType { get; private set; }
     public bool IsDirty => this.isDirty;
 
@@ -59,6 +62,7 @@ abstract public class NeedSystem
     }
 
     abstract public void UpdateSystem();
+    #endregion
 
     #region Experimental Methods
     public static float FoodRating(NeedRegistry needs, NeedAvailability availability, int minFoodNeeded, int maxFoodConsumed)

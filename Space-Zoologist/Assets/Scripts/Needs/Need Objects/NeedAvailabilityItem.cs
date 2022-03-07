@@ -29,4 +29,8 @@ public class NeedAvailabilityItem
         this.metaData = metaData;
     }
     #endregion
+
+    #region Public Methods
+
+    #endregion
 }
