@@ -54,6 +54,29 @@ public class FoodSource : MonoBehaviour, Life
         
     }
 
+    private void OnDrawGizmos()
+    {
+        if (GameManager.Instance)
+        {
+            TileDataController tileDataController = GameManager.Instance.m_tileDataController;
+            
+            if (tileDataController)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(Position, 0.1f);
+
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(GetLowerLeftPosition(), 0.1f);
+
+                Gizmos.color = Color.green;
+                foreach(Vector3Int cellPos in GetAllCellPositions())
+                {
+                    Gizmos.DrawCube(cellPos, Vector3.one * 0.1f);
+                }
+            }
+        }
+    }
+
     public void InitializeFoodSource(FoodSourceSpecies species, Vector2 position)
     {
         this.species = species;
@@ -208,9 +231,66 @@ public class FoodSource : MonoBehaviour, Life
         return this.gameObject.transform.position;
     }
 
+    /// <summary>
+    /// Get the world position of the lower left cell of the food source
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetLowerLeftPosition()
+    {
+        // Get tile data controller and the cell size
+        TileDataController tileDataController = GameManager.Instance.m_tileDataController;
+        Vector3 cellSize = tileDataController.CellSize();
+
+        // Compute an offset from the center of the food source
+        // down to the bottom left of the food source
+        Vector3 offset = (Vector2)(Species.Size - Vector2Int.one) / 2f;
+        offset.x *= cellSize.x;
+        offset.y *= cellSize.y;
+
+        // Lower left position is the 
+        return GetPosition() - offset;
+    }
+
+    /// <summary>
+    /// Get the cell position of the lower left corner of the food source
+    /// </summary>
+    /// <returns></returns>
     public Vector3Int GetCellPosition()
     {
         return GameManager.Instance.m_tileDataController.WorldToCell(GetPosition());
+    }
+
+    /// <summary>
+    /// Get a list of all the cell positions that the food source takes up
+    /// </summary>
+    /// <returns></returns>
+    public List<Vector3Int> GetAllCellPositions()
+    {
+        TileDataController tileDataController = GameManager.Instance.m_tileDataController;
+        List<Vector3Int> positions = new List<Vector3Int>();
+
+        for(int x = 0; x < Species.Size.x; x++)
+        {
+            for (int y = 0; y < Species.Size.y; y++)
+            {
+                // Get the cell size
+                Vector2 cellSize = tileDataController.CellSize();
+
+                // Compute an offset from the lower left position
+                Vector3 offset = new Vector3(
+                    cellSize.x * x,
+                    cellSize.y * y,
+                    0f);
+
+                // Add the offset to the lower left position
+                Vector3 worldPosition = GetLowerLeftPosition() + offset;
+
+                // Compute the grid position for this world position
+                positions.Add(tileDataController.WorldToCell(worldPosition));
+            }
+        }
+
+        return positions;
     }
 
     /// <summary>

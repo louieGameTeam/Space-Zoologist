@@ -7,6 +7,7 @@ using UnityEngine;
 /// Registers the availability 
 /// of different needed items
 /// </summary>
+[Serializable]
 public class NeedAvailability
 {
     #region Public Properties
@@ -14,6 +15,8 @@ public class NeedAvailability
     #endregion
 
     #region Private Fields
+    [SerializeField]
+    [Tooltip("List of the items that are available")]
     private NeedAvailabilityItem[] items;
     #endregion
 

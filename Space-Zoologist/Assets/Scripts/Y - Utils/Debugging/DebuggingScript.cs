@@ -9,23 +9,51 @@ public class DebuggingScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
-            FoodSourceManager foodSourceManager = GameManager.Instance.m_foodSourceManager;
+            List<FoodSource> foodSources = GameManager.Instance.m_foodSourceManager.FoodSources;
             string message = "Food source ratings (experimental):";
 
             // Go through each food source in the manager
-            foreach (FoodSource foodSource in foodSourceManager.FoodSources)
+            foreach (FoodSource food in foodSources)
             {
                 // Get food source need availability
-                NeedAvailability needAvailability = NeedAvailabilityFactory.BuildFoodSourceNeedAvailability(foodSource);
-                float terrainRating = NeedSystem.TerrainRating(foodSource.Species.Needs, needAvailability, foodSource.Species.TerrainTilesNeeded);
-                float waterRating = NeedSystem.WaterRating(foodSource.Species.Needs, needAvailability, foodSource.Species.WaterTilesRequired);
+                NeedRating rating = NeedRatingFactory.Build(food);
+                string ratingJson = JsonUtility.ToJson(rating, true);
 
-                message += $"\n\t{foodSource.Species} at {foodSource.GetCellPosition()}: " +
-                    $"\n\t\tTerrain rating: {terrainRating}" +
-                    $"\n\t\tWater rating: {waterRating}";
+                message += $"\n\t{food.Species} at {food.GetCellPosition()}: \n{ratingJson}";
+            }
+
+            message += "\nPopulation ratings (experimental):";
+
+            // Build need distribution for each population
+            Dictionary<Population, NeedAvailability> distribution = NeedAvailabilityFactory.BuildDistribution();
+
+            // Go through all entries in the dictionary
+            foreach (KeyValuePair<Population, NeedAvailability> kvp in distribution)
+            {
+                // Build need rating for this population
+                NeedRating rating = NeedRatingFactory.Build(kvp.Key, kvp.Value);
+                string ratingJson = JsonUtility.ToJson(rating, true);
+
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{ratingJson}";
             }
 
             Debug.Log(message);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (GameManager.Instance)
+        {
+            TileDataController tileDataController = GameManager.Instance.m_tileDataController;
+
+            if (tileDataController)
+            {
+                Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3Int mouseGridPosition = GameManager.Instance.m_tileDataController.WorldToCell(mouseWorldPosition);
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(mouseGridPosition, 0.5f);
+            }
         }
     }
 }

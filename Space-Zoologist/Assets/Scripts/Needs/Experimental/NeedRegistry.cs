@@ -70,6 +70,7 @@ public class NeedRegistry
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Food)
             .Where(need => need.Needed)
+            .OrderByDescending(need => need.Preferred)
             .ToArray();
     }
     public NeedData[] FindTerrainNeeds()
@@ -78,6 +79,7 @@ public class NeedRegistry
             .Where(need => need.Needed)
             .Where(need => !need.TraversibleOnly)
             .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
+            .OrderByDescending(need => need.Preferred)
             .ToArray();
     }
     public NeedData[] FindAllNeeded()

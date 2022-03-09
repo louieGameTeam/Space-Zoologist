@@ -1888,6 +1888,12 @@ public class TileDataController : MonoBehaviour
     }
 
     /// <summary>
+    /// Get the cell size for the grid
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 CellSize() => Grid.cellSize;
+
+    /// <summary>
     /// Convert a world position to cell positions on the grid.
     /// </summary>
     /// <param name="worldPosition"></param>

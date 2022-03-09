@@ -15,6 +15,16 @@ using UnityEngine;
 [System.Serializable]
 public class NeedData
 {
+    #region Public Typedefs
+    public class PreferenceComparer : IComparer<NeedData> 
+    {
+        public int Compare(NeedData a, NeedData b)
+        {
+            return a.preferred.CompareTo(b.preferred);
+        }
+    }
+    #endregion
+
     #region Public Properties
     public bool Needed => needed;
     public bool TraversibleOnly => traversibleOnly;

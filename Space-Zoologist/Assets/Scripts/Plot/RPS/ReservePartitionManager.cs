@@ -461,8 +461,46 @@ public class ReservePartitionManager : MonoBehaviour
     /// </summary>
     /// <param name="population"></param>
     /// <returns></returns>
-    public int[] GetTypesOfTiles(Population population) {
+    public int[] GetTypesOfTiles(Population population) 
+    {
         return TypesOfTerrain[population];
+    }
+
+    /// <summary>
+    /// Get a list of the food sources that this population can access
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
+    public List<FoodSource> GetAccessibleFoodSources(Population population)
+    {
+        if (population == null)
+            throw new ArgumentNullException(
+                "Cannot get the accessible food sources for population 'null'");
+
+        if (!AccessibleArea.ContainsKey(population))
+            throw new ArgumentException(
+                $"Population '{population}' has no list of accessible area associated with it");
+
+        // Get the area that this population can access
+        HashSet<Vector3Int> area = new HashSet<Vector3Int>(AccessibleArea[population]);
+
+        // Local function checks if this food source has any cell position
+        // in the set of positions that the population can access
+        bool AnyPositionInArea(FoodSource food)
+        {
+            foreach (Vector3Int cell in food.GetAllCellPositions())
+            {
+                if (area.Contains(cell)) return true;
+            }
+            return false;
+        }
+
+        // Find all food sources with a position within the accessible area
+        return GameManager
+            .Instance
+            .m_foodSourceManager
+            .FoodSources
+            .FindAll(source => AnyPositionInArea(source));
     }
 
     public List<float[]> GetLiquidComposition(Population population)
