@@ -86,13 +86,108 @@ public static class NeedAvailabilityFactory
         //    result[population] = Build(population);
         //}
 
+        // FOOD
+
         // Get the food that is contested over multiple species
         Dictionary<FoodSource, List<Population>> foodCompetition = rpm.FoodCompetition();
 
         foreach (KeyValuePair<FoodSource, List<Population>> kvp in foodCompetition)
         {
             // Sum the total dominance applied to this food source
-            float appliedDominance = kvp.Value.Sum(pop => pop.FoodDominance);
+            float appliedDominance = kvp
+                .Value
+                .Sum(pop => pop.FoodDominance);
+
+            // Go through each population competing for this food source
+            foreach (Population population in kvp.Value)
+            {
+                // If the population does not exist in the dictionary yet 
+                // then add a new list to the dictionary
+                if (!populationToItems.ContainsKey(population))
+                {
+                    populationToItems.Add(population, new List<NeedAvailabilityItem>());
+                }
+
+                // Compute the proportion of the food that this species gets
+                float foodProportionConsumed = population.FoodDominance / appliedDominance;
+                NeedAvailabilityItem item = new NeedAvailabilityItem(
+                    kvp.Key.Species.ID,
+                    kvp.Key.FoodOutput * foodProportionConsumed);
+                populationToItems[population].Add(item);
+            }
+        }
+
+        // TERRAIN
+
+        // Get the terrain tiles contested across multiple species
+        Dictionary<Vector3Int, List<Population>> terrainCompetition = rpm.TerrainCompetition();
+
+        foreach (KeyValuePair<Vector3Int, List<Population>> kvp in terrainCompetition)
+        {
+            // Get the type of tile at this position
+            TileType tile = GameManager
+                .Instance
+                .m_tileDataController
+                .GetTileData(kvp.Key)
+                .currentTile
+                .type;
+
+            // Sum all the dominance applied to this tile
+            float appliedDominance = kvp
+                .Value
+                .Sum(pop => pop.Species.GetTerrainDominance(tile));
+
+            // If no dominance is applied to this tile then 
+            // there is no need to compute the need availability
+            // for this tile
+            if (appliedDominance > 0f)
+            {
+                // Go through each population competing for this food source
+                foreach (Population population in kvp.Value)
+                {
+                    // If the population does not exist in the dictionary yet 
+                    // then add a new list to the dictionary
+                    if (!populationToItems.ContainsKey(population))
+                    {
+                        populationToItems.Add(population, new List<NeedAvailabilityItem>());
+                    }
+
+                    // Compute the proportion of the tile that this species gets for themselves
+                    float tileProportionOwned = population.GetTerrainDominance(tile) / appliedDominance;
+                    NeedAvailabilityItem item = new NeedAvailabilityItem(
+                        ItemRegistry.FindTile(tile),
+                        tileProportionOwned);
+                    populationToItems[population].Add(item);
+                }
+            }
+        }
+
+        // WATER
+        // Water is evenly shared among all populations, so dominance is not a factor
+
+        foreach (Population population in rpm.Populations)
+        {
+            List<float[]> accessibleLiquids = rpm.GetLiquidComposition(population);
+            ItemID waterID = ItemRegistry.FindAnyNameContains("Water");
+
+            // Convert accessible liquids to need availability items
+            IEnumerable<NeedAvailabilityItem> waterItems = accessibleLiquids
+                .Select(comp => new NeedAvailabilityItem(waterID, 1, comp));
+
+            // If the population is not in the dictionary yet then add it
+            if (!populationToItems.ContainsKey(population))
+            {
+                populationToItems.Add(population, new List<NeedAvailabilityItem>());
+            }
+
+            // Add the water items to the list in the dictionary
+            populationToItems[population].AddRange(waterItems);
+        }
+
+        // Go through the lists of need availability and add them to the result
+        foreach (KeyValuePair<Population, List<NeedAvailabilityItem>> kvp in populationToItems)
+        {
+            result.Add(kvp.Key, new NeedAvailability(kvp.Value.ToArray()));
         }
 
         return result;

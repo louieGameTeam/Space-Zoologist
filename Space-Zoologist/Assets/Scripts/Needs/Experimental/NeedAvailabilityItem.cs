@@ -11,7 +11,7 @@ public class NeedAvailabilityItem
 {
     #region Public Properties
     public ItemID ID => id;
-    public int AmountAvailable => amountAvailable;
+    public float AmountAvailable => amountAvailable;
     public object MetaData => metaData;
     public bool IsDrinkingWater => id.IsWater &&
         metaData != null &&
@@ -34,14 +34,14 @@ public class NeedAvailabilityItem
     private ItemID id;
     [SerializeField]
     [Tooltip("Amount of the item that is available")]
-    private int amountAvailable;
+    private float amountAvailable;
     private object metaData;
     #endregion
 
     #region Constructors
-    public NeedAvailabilityItem(ItemID id, int amountAvailable)
+    public NeedAvailabilityItem(ItemID id, float amountAvailable)
         : this(id, amountAvailable, null) { }
-    public NeedAvailabilityItem(ItemID id, int amountAvailable, object metaData)
+    public NeedAvailabilityItem(ItemID id, float amountAvailable, object metaData)
     {
         this.id = id;
         this.amountAvailable = amountAvailable;

@@ -90,7 +90,7 @@ public static class NeedRatingFactory
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
     {
         // Number of water tiles that the species can drink from
-        int drinkableWaterUsed = availability
+        float drinkableWaterUsed = availability
             .FindAllWater()
             .Where(item => needs.WaterIsDrinkable(item.WaterComposition))
             .Sum(item => item.AmountAvailable);
@@ -113,8 +113,8 @@ public static class NeedRatingFactory
         Func<NeedAvailabilityItem, NeedData, bool> itemMatch)
     {
         // Start at using none
-        int preferredUsed = 0;
-        int survivableUsed = 0;
+        float preferredUsed = 0;
+        float survivableUsed = 0;
 
         // Go through each need in the terrain needs
         foreach (NeedData need in needs)
@@ -137,7 +137,7 @@ public static class NeedRatingFactory
         // Cannot use more than what is needed
         preferredUsed = Mathf.Min(preferredUsed, maxUsed);
         survivableUsed = Mathf.Min(survivableUsed, maxUsed - preferredUsed);
-        int totalUsed = preferredUsed + survivableUsed;
+        float totalUsed = preferredUsed + survivableUsed;
 
         // If we used the amound we needed, then boost the rating
         // by the amount used that is preferred
