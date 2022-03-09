@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class AnimalSpecies : ScriptableObject
 {
     public ItemID ID => ItemRegistry.FindSpecies(this);
+    public float FoodDominance => AnimalDominance.GetFoodDominance(ID).Dominance;
     public int TerrainTilesRequired => terrainTilesRequired;
     public int WaterTilesRequired => waterTilesRequired;
     public int MinFoodRequired => minFoodRequired;
@@ -97,5 +98,10 @@ public class AnimalSpecies : ScriptableObject
             return new TerrainNeed(terrainWaterNeed, this);
         }
         else return null;
+    }
+
+    public float GetTerrainDominance(TileType tile)
+    {
+        return AnimalDominance.TerrainDominance.GetAnimalDominance(tile, ID).Dominance;
     }
 }
