@@ -11,7 +11,7 @@ using UnityEngine;
 /// The complex task of computing which populations get
 /// what resources is handled by this class
 /// </remarks>
-public static class NeedAvailabilityFactory
+public static class NeedAvailabilityBuilder
 {
     #region Public Methods
     /// <summary>

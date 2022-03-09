@@ -28,7 +28,7 @@ public class NeedAvailabilityCache
     public void RebuildCache()
     {
         // Build population distribution
-        populationNeedAvailabilities = NeedAvailabilityFactory.BuildDistribution();
+        populationNeedAvailabilities = NeedAvailabilityBuilder.BuildDistribution();
 
         // Get a list of all food sources
         foodSourceNeedAvailabilities.Clear();
@@ -37,7 +37,7 @@ public class NeedAvailabilityCache
         // Create the need availability for each food
         foreach (FoodSource food in foodSources)
         {
-            NeedAvailability availability = NeedAvailabilityFactory.Build(food);
+            NeedAvailability availability = NeedAvailabilityBuilder.Build(food);
             foodSourceNeedAvailabilities[food] = availability;
         }
     }

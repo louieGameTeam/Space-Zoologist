@@ -7,15 +7,28 @@ using UnityEngine;
 /// <summary>
 /// Used to build a need rating for a species
 /// </summary>
-public static class NeedRatingFactory
+public static class NeedRatingBuilder
 {
+    #region Public Constants
+    public const float MaxFreshWater = 0.98f;
+    #endregion
+
     #region Public Methods
+    /// <summary>
+    /// Build the need rating for a single population
+    /// </summary>
+    /// <param name="population">Population to rate</param>
+    /// <param name="availability">
+    /// Needs available to that population.
+    /// If 'null' is provided, builds the need availability from scratch
+    /// </param>
+    /// <returns>The rating for the population's needs</returns>
     public static NeedRating Build(Population population, NeedAvailability availability = null)
     {
         // If no availability is given then build it from scratch
         if (availability == null)
         {
-            Dictionary<Population, NeedAvailability> distribution = NeedAvailabilityFactory.BuildDistribution();
+            Dictionary<Population, NeedAvailability> distribution = NeedAvailabilityBuilder.BuildDistribution();
             availability = distribution[population];
         }
 
@@ -37,12 +50,21 @@ public static class NeedRatingFactory
         // Return the new need rating object
         return new NeedRating(foodRating, terrainRating, waterRating);
     }
+    /// <summary>
+    /// Build the need rating for a single food source
+    /// </summary>
+    /// <param name="foodSource"></param>
+    /// <param name="availability">
+    /// Needs available to that population.
+    /// If 'null' is proved, builds the need availability from scratch
+    /// </param>
+    /// <returns></returns>
     public static NeedRating Build(FoodSource foodSource, NeedAvailability availability = null)
     {
         // If no availability is given then build it from scratch
         if (availability == null)
         {
-            availability = NeedAvailabilityFactory.Build(foodSource);
+            availability = NeedAvailabilityBuilder.Build(foodSource);
         }
 
         // Compute each rating
@@ -89,19 +111,38 @@ public static class NeedRatingFactory
     }
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
     {
-        // Number of water tiles that the species can drink from
-        float drinkableWaterUsed = availability
+        // Select only water that is drinkable
+        IEnumerable<NeedAvailabilityItem> drinkableWater = availability
             .FindAllWater()
-            .Where(item => needs.WaterIsDrinkable(item.WaterComposition))
-            .Sum(item => item.AmountAvailable);
+            .Where(item => needs.WaterIsDrinkable(item.WaterComposition));
+
+        // Number of water tiles that the species can drink from
+        float totalDrinkableWater = drinkableWater.Sum(item => item.AmountAvailable);
+        
         // Drinkable water used will not exceed the amount actually needed
-        drinkableWaterUsed = Mathf.Min(drinkableWaterUsed, waterTilesNeeded);
+        float drinkableWaterUsed = Mathf.Min(totalDrinkableWater, waterTilesNeeded);
 
         if (drinkableWaterUsed >= waterTilesNeeded)
         {
-            // This computation will have to be changed later,
-            // because I don't understand how to "boost" the rating yet
-            return 2f;
+            // Find the need for fresh water
+            NeedData freshWaterNeed = Array.Find(
+                needs.FindWaterNeeds(), 
+                need => need.ID.WaterIndex == 0);
+
+            // If we have a fresh water need, boost it
+            if (freshWaterNeed != null)
+            {
+                // Average the fresh water from all water sources
+                float averageFreshWater = drinkableWater
+                    .Average(item => item.WaterComposition[0] * item.AmountAvailable);
+                averageFreshWater /= totalDrinkableWater;
+
+                // Boost the rating by how close it is to the max possible fresh water
+                return 1 + (averageFreshWater - freshWaterNeed.Minimum) / (MaxFreshWater - freshWaterNeed.Minimum);
+            }
+            // If we have no fresh water need,
+            // for now just assume a max boost
+            else return 2f;
         }
         else return (float)drinkableWaterUsed / waterTilesNeeded;
     }

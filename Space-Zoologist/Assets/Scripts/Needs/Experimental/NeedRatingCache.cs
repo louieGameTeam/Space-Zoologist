@@ -42,7 +42,7 @@ public class NeedRatingCache
         foreach (Population population in populations)
         {
             NeedAvailability availability = cache.GetAvailability(population);
-            NeedRating rating = NeedRatingFactory.Build(population, availability);
+            NeedRating rating = NeedRatingBuilder.Build(population, availability);
             populationRatings.Add(population, rating);
         }
 
@@ -54,7 +54,7 @@ public class NeedRatingCache
         foreach (FoodSource food in foodSources)
         {
             NeedAvailability availability = cache.GetAvailability(food);
-            NeedRating rating = NeedRatingFactory.Build(food, availability);
+            NeedRating rating = NeedRatingBuilder.Build(food, availability);
             foodSourceRatings.Add(food, rating);
         }
     }
