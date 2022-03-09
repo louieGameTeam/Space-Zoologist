@@ -51,6 +51,16 @@ public class NeedRegistry
     #endregion
 
     #region Find Methods
+    public bool TerrainIsTraversible(TileType tile)
+    {
+        return FindTraversibleTerrain().Contains(tile);
+    }
+    public bool TerrainIsNeeded(TileType tile)
+    {
+        NeedData[] terrainNeeds = FindTerrainNeeds();
+        int index = Array.FindIndex(terrainNeeds, need => need.ID.Data.Tile == tile);
+        return index >= 0 && index < terrainNeeds.Length;
+    }
     public HashSet<TileType> FindTraversibleTerrain()
     {
         // Get all tile types on traversible terrain

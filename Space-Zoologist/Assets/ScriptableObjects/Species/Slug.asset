@@ -56,7 +56,7 @@ MonoBehaviour:
   - preyID:
       category: 0
       index: 3
-  needRegistry:
+  needs:
     needData:
       needArrays:
       - needs:
@@ -171,10 +171,10 @@ MonoBehaviour:
           id:
             category: 1
             index: 3
-        - needed: 0
+        - needed: 1
           traversibleOnly: 0
           useAsTerrainNeed: 0
-          preferred: 0
+          preferred: 1
           speciesNeedType: 0
           useAsWaterNeed: 0
           minimum: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
           id:
             category: 1
             index: 4
-        - needed: 0
+        - needed: 1
           traversibleOnly: 0
           useAsTerrainNeed: 0
           preferred: 0
@@ -271,14 +271,14 @@ MonoBehaviour:
           id:
             category: 2
             index: 6
-        - needed: 0
+        - needed: 1
           traversibleOnly: 0
           useAsTerrainNeed: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 0
           minimum: 0
-          maximum: 0
+          maximum: 0.015
           id:
             category: 2
             index: 7

@@ -27,6 +27,7 @@ public class EditArrayWrapperOnEnumDrawer : WrappedPropertyDrawer
     #region Public Methods
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
+        SetEnumValues(WrappedArray(property));
         editor.OnGUI(position, WrappedArray(property), label, EnumNames);
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -39,15 +40,28 @@ public class EditArrayWrapperOnEnumDrawer : WrappedPropertyDrawer
         SerializedProperty wrappedArray = WrappedProperty(property);
 
         if (wrappedArray.isArray) return wrappedArray;
-        else
+        else throw ParallelArrayEditor<string>.PropertyIsNotArray(wrappedArray);
+    }
+    #endregion
+
+    #region Private Methods
+    private void SetEnumValues(SerializedProperty list)
+    {
+        if (list.isArray)
         {
-            Debug.LogError("EditArrayWrapperOnEnumDrawer: array wrapper at path '" +
-                property.propertyPath + "' expected the relative property at path '" +
-                wrappedArray.propertyPath + "' to be an array type, but instead it has the type '" +
-                wrappedArray.propertyType + "'. Make sure that the relative property at path '" +
-                wrappedArray.propertyType + "' is a type of array");
-            throw new ExitGUIException();
+            for (int i = 0; i < list.arraySize; i++)
+            {
+                SerializedProperty element = list.GetArrayElementAtIndex(i);
+                SerializedProperty enumValue = element.FindPropertyRelative(nameof(enumValue));
+
+                // Set the enum value if this element has one
+                if (enumValue != null)
+                {
+                    enumValue.enumValueIndex = i;
+                }
+            }
         }
+        else throw ParallelArrayEditor<string>.PropertyIsNotArray(list);
     }
     #endregion
 }

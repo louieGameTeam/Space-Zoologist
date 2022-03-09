@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DebuggingScript : MonoBehaviour
 {
+    public TerrainDominance terrainDominance;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))

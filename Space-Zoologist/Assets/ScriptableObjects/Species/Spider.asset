@@ -46,17 +46,252 @@ MonoBehaviour:
       category: 1
       index: 5
   liquidNeeds:
-  - tileNeedThreshold: 1
-    id:
+  - id:
       category: 2
       index: 6
     minThreshold: 0.965
     maxThreshold: 1
-  - tileNeedThreshold: 1
-    id:
+  - id:
       category: 2
       index: 7
     minThreshold: 0.005
     maxThreshold: 0.015
   preyNeeds: []
+  needs:
+    needData:
+      needArrays:
+      - needs:
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 0
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 1
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 2
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 3
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 4
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 5
+      - needs:
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 0
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 1
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 2
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 3
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 4
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 1
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 5
+      - needs:
+        - needed: 1
+          traversibleOnly: 1
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 0
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 1
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 2
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 1
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 3
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 4
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 5
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 1
+          minimum: 0.965
+          maximum: 1
+          id:
+            category: 2
+            index: 6
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0.005
+          maximum: 0.015
+          id:
+            category: 2
+            index: 7
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 8
   representation: {fileID: 0}

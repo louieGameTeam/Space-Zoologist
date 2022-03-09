@@ -85,6 +85,18 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
 
         return ids;
     }
+    public static ItemID[] GetItemIDsWithCategory(Category category)
+    {
+        ItemID[] ids = new ItemID[CountItemsWithCategory(category)];
+
+        // Load the 
+        for (int i = 0; i < ids.Length; i++)
+        {
+            ids[i] = new ItemID(category, i);
+        }
+
+        return ids;
+    }
     #endregion
 
     #region Find Methods
