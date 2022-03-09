@@ -23,6 +23,10 @@ public class NeedRegistry
     #endregion
 
     #region Public Methods
+    public NeedData Get(ItemID itemID)
+    {
+        return GetNeedsWithCategory(itemID.Category)[itemID.Index];
+    }
     public NeedData[] GetNeedsWithCategory(ItemRegistry.Category category)
     {
         return needData.NeedArrays[(int)category].Needs;

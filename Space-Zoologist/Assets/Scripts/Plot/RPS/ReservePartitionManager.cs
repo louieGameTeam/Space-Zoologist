@@ -503,6 +503,74 @@ public class ReservePartitionManager : MonoBehaviour
             .FindAll(source => AnyPositionInArea(source));
     }
 
+    /// <summary>
+    /// Return a dictionary that maps the food source
+    /// to a list of populations that can access it
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<FoodSource, List<Population>> FoodCompetition()
+    {
+        Dictionary<FoodSource, List<Population>> result = new Dictionary<FoodSource, List<Population>>();
+
+        // Go through every population
+        foreach (Population population in Populations)
+        {
+            // Get a list of the food sources that this population accesses
+            List<FoodSource> accessibleFood = GetAccessibleFoodSources(population);
+
+            // Go through each food source 
+            foreach (FoodSource food in accessibleFood)
+            {
+                // Get the need on the population corresponding to this food source
+                NeedData foodNeed = population.Species.Needs.Get(food.Species.ID);
+
+                // Check if the population needs this food before adding it to the dictionary
+                if (foodNeed.Needed)
+                {
+                    // If this food is not in the dictionary yet then add it
+                    if (!result.ContainsKey(food))
+                    {
+                        result.Add(food, new List<Population>());
+                    }
+
+                    // Add this population to the list
+                    result[food].Add(population);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Return a dictionary that maps the position on the grid
+    /// with a list of populations that compete for that terrain tile
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<Vector3Int, List<Population>> TerrainCompetition()
+    {
+        Dictionary<Vector3Int, List<Population>> result = new Dictionary<Vector3Int, List<Population>>();
+
+        // Go through each entry in the accessible area
+        foreach (KeyValuePair<Population, List<Vector3Int>> kvp in AccessibleArea)
+        {
+            // Go through each cell position in the list
+            foreach (Vector3Int cell in kvp.Value)
+            {
+                // Add a new list to the dictionary if it does not exist yet
+                if (!result.ContainsKey(cell))
+                {
+                    result.Add(cell, new List<Population>());
+                }
+
+                // Add this population to the list contending for this tile
+                result[cell].Add(kvp.Key);
+            }
+        }
+
+        return result;
+    }
+
     public List<float[]> GetLiquidComposition(Population population)
     {
         if (!this.populationAccessibleLiquidCompositions.ContainsKey(population))
