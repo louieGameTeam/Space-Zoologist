@@ -7,6 +7,11 @@ using UnityEngine;
 /// </summary>
 public class NeedAvailabilityCache
 {
+    #region Public Properties
+    public IReadOnlyDictionary<Population, NeedAvailability> PopulationNeedAvailabilities => populationNeedAvailabilities;
+    public IReadOnlyDictionary<FoodSource, NeedAvailability> FoodSourceNeedAvailabilities => foodSourceNeedAvailabilities;
+    #endregion
+
     #region Private Fields
     private Dictionary<Population, NeedAvailability> populationNeedAvailabilities;
     private Dictionary<FoodSource, NeedAvailability> foodSourceNeedAvailabilities = new Dictionary<FoodSource, NeedAvailability>();

@@ -13,20 +13,6 @@ using UnityEngine;
 /// </remarks>
 public static class NeedAvailabilityFactory
 {
-    #region Public Typedefs
-    public class LiquidCompositionComparer : IEqualityComparer<float[]>
-    {
-        public bool Equals(float[] a, float[] b)
-        {
-            return a.SequenceEqual(b);
-        }
-        public int GetHashCode(float[] a)
-        {
-            return a[0].GetHashCode() + a[1].GetHashCode() + a[2].GetHashCode();
-        }
-    }
-    #endregion
-
     #region Public Methods
     /// <summary>
     /// Build the need availability for a single population.
@@ -45,26 +31,8 @@ public static class NeedAvailabilityFactory
 
         // Get a list of available food sources
         List<FoodSource> sourcesAvailable = rpm.GetAccessibleFoodSources(population);
-
-        // Maps the food item to the number that is available
-        Dictionary<ItemID, float> foodToAmount = new Dictionary<ItemID, float>();
-
-        foreach (FoodSource source in sourcesAvailable)
-        {
-            // Get the id of the food source
-            ItemID sourceID = source.Species.ID;
-
-            // Check if this already has the key
-            if (foodToAmount.ContainsKey(sourceID))
-            {
-                foodToAmount[sourceID] += source.FoodOutput;
-            }
-            else foodToAmount[sourceID] = source.FoodOutput;
-        }
-
-        // Add food items to the list
-        IEnumerable<NeedAvailabilityItem> foodItems = foodToAmount
-            .Select(kvp => new NeedAvailabilityItem(kvp.Key, (int)kvp.Value));
+        IEnumerable<NeedAvailabilityItem> foodItems = sourcesAvailable
+            .Select(food => new NeedAvailabilityItem(food.Species.ID, (int)food.FoodOutput));
         items.AddRange(foodItems);
 
         // TERRAIN
@@ -90,9 +58,11 @@ public static class NeedAvailabilityFactory
         // LIQUID
 
         List<float[]> accessibleLiquids = rpm.GetLiquidComposition(population);
+        ItemID waterID = ItemRegistry.FindAnyNameContains("Water");
 
         // Convert accessible liquids to need availability items
-        IEnumerable<NeedAvailabilityItem> waterItems = ConvertLiquidCompositions(accessibleLiquids);
+        IEnumerable<NeedAvailabilityItem> waterItems = accessibleLiquids
+            .Select(comp => new NeedAvailabilityItem(waterID, 1, comp));
         items.AddRange(waterItems);
 
         return new NeedAvailability(items.ToArray());
@@ -108,12 +78,21 @@ public static class NeedAvailabilityFactory
     public static Dictionary<Population, NeedAvailability> BuildDistribution()
     {
         Dictionary<Population, NeedAvailability> result = new Dictionary<Population, NeedAvailability>();
+        Dictionary<Population, List<NeedAvailabilityItem>> populationToItems = new Dictionary<Population, List<NeedAvailabilityItem>>();
         ReservePartitionManager rpm = GameManager.Instance.m_reservePartitionManager;
 
-        // Go through every population in the reserve partition manager
-        foreach (Population population in rpm.Populations)
+        //foreach (Population population in rpm.Populations)
+        //{
+        //    result[population] = Build(population);
+        //}
+
+        // Get the food that is contested over multiple species
+        Dictionary<FoodSource, List<Population>> foodCompetition = rpm.FoodCompetition();
+
+        foreach (KeyValuePair<FoodSource, List<Population>> kvp in foodCompetition)
         {
-            result[population] = Build(population);
+            // Sum the total dominance applied to this food source
+            float appliedDominance = kvp.Value.Sum(pop => pop.FoodDominance);
         }
 
         return result;
@@ -148,10 +127,11 @@ public static class NeedAvailabilityFactory
                 foodSource.GetCellPosition(),
                 foodSource.Species.Size,
                 foodSource.Species.RootRadius);
+        ItemID waterID = ItemRegistry.FindAnyNameContains("Water");
 
-        // Convert each kvp in the dictionary to a need availability item
-        // and add it to the list of items
-        IEnumerable<NeedAvailabilityItem> waterItems = ConvertLiquidCompositions(liquidCompositionsInRange);
+        // Add the water items
+        IEnumerable<NeedAvailabilityItem> waterItems = liquidCompositionsInRange
+            .Select(composition => new NeedAvailabilityItem(waterID, 1, composition));
         needAvailabilityItems.AddRange(waterItems);
              
         return new NeedAvailability(needAvailabilityItems.ToArray());

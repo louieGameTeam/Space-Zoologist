@@ -11,34 +11,42 @@ public class DebuggingScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
-            List<FoodSource> foodSources = GameManager.Instance.m_foodSourceManager.FoodSources;
-            string message = "Food source ratings (experimental):";
+            NeedAvailabilityCache availabilityCache = new NeedAvailabilityCache();
+            NeedRatingCache ratingCache = new NeedRatingCache(availabilityCache);
 
-            // Go through each food source in the manager
-            foreach (FoodSource food in foodSources)
+            // Report the availabilities of all populations
+            string message = "Population need availabilities:";
+            foreach (KeyValuePair<Population, NeedAvailability> kvp in availabilityCache.PopulationNeedAvailabilities)
             {
-                // Get food source need availability
-                NeedRating rating = NeedRatingFactory.Build(food);
-                string ratingJson = JsonUtility.ToJson(rating, true);
-
-                message += $"\n\t{food.Species} at {food.GetCellPosition()}: \n{ratingJson}";
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
             }
 
-            message += "\nPopulation ratings (experimental):";
-
-            // Build need distribution for each population
-            Dictionary<Population, NeedAvailability> distribution = NeedAvailabilityFactory.BuildDistribution();
-
-            // Go through all entries in the dictionary
-            foreach (KeyValuePair<Population, NeedAvailability> kvp in distribution)
+            // Report the ratings of all populations
+            message += "\nPopulation need ratings:";
+            foreach (KeyValuePair<Population, NeedRating> kvp in ratingCache.PopulationRatings)
             {
-                // Build need rating for this population
-                NeedRating rating = NeedRatingFactory.Build(kvp.Key, kvp.Value);
-                string ratingJson = JsonUtility.ToJson(rating, true);
-
-                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{ratingJson}";
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
             }
 
+            // Report the availabilities of all food sources
+            message += "\nFood source need availabilities:";
+            foreach(KeyValuePair<FoodSource, NeedAvailability> kvp in availabilityCache.FoodSourceNeedAvailabilities)
+            {
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
+            }
+
+            // Report the ratings of all food sources
+            message += "\nFood source need ratings:";
+            foreach (KeyValuePair<FoodSource, NeedRating> kvp in ratingCache.FoodSourceRatings)
+            {
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
+            }
+
+            // Log the big message
             Debug.Log(message);
         }
     }

@@ -7,6 +7,11 @@ using UnityEngine;
 /// </summary>
 public class NeedRatingCache
 {
+    #region Public Properties
+    public IReadOnlyDictionary<Population, NeedRating> PopulationRatings => populationRatings;
+    public IReadOnlyDictionary<FoodSource, NeedRating> FoodSourceRatings => foodSourceRatings;
+    #endregion
+
     #region Private Fields
     private Dictionary<Population, NeedRating> populationRatings = new Dictionary<Population, NeedRating>();
     private Dictionary<FoodSource, NeedRating> foodSourceRatings = new Dictionary<FoodSource, NeedRating>();
