@@ -134,7 +134,7 @@ public static class NeedRatingBuilder
             {
                 // Average the fresh water from all water sources
                 float averageFreshWater = drinkableWater
-                    .Average(item => item.WaterComposition[0] * item.AmountAvailable);
+                    .Sum(item => item.WaterComposition[0] * item.AmountAvailable);
                 averageFreshWater /= totalDrinkableWater;
 
                 // Boost the rating by how close it is to the max possible fresh water
