@@ -102,8 +102,10 @@ public class VerboseInspector : MonoBehaviour
             {
                 // Inspect the food source component
                 FoodSource food = tileData.Food.GetComponent<FoodSource>();
-                CreateInspectorItem(food);
+                CreateInspectorItem(food, "FoodSource");
                 CreateInspectorItem(food.Species);
+                CreateInspectorItem(food.Availability, "FoodSourceNeedAvailability");
+                CreateInspectorItem(food.Rating, "FoodSourceNeedRating");
             }
             if (tileData.Animal)
             {
@@ -114,6 +116,9 @@ public class VerboseInspector : MonoBehaviour
 
                 CreateInspectorItem(animal.PopulationInfo.Species);
                 CreateInspectorItem(population, "Population");
+                CreateInspectorItem(growthCalculator, "GrowthCalculator");
+                CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Availabilty, "PopulationNeedAvailability");
+                CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Rating, "PopulationNeedRating");
             }
         }
     }

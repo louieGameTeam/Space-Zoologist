@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+[System.Obsolete("Need system is obsolete, use the NeedRatingBuilder to compute a need rating " +
+    "or read the need rating from the need rating cache on the GameManager")]
 /// <summary>
 /// Handles neeed value updates of all the `FoodSource` type need
 /// </summary>
@@ -112,7 +114,7 @@ public class FoodSourceNeedSystem : NeedSystem
                     }
                 }
             }
-            population.UpdateFoodNeed(preferredAmount, compatibleAmount);
+            // population.UpdateFoodNeed(preferredAmount, compatibleAmount);
         }
     }
 

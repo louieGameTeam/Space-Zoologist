@@ -500,9 +500,7 @@ public class MoveObject : MonoBehaviour
         }
         else //Otherwise, make sure its needs are up to date
         {
-            GameManager.Instance.UpdateAllNeedSystems();
-            foodSource.CalculateTerrainNeed();
-            foodSource.CalculateWaterNeed();
+            GameManager.Instance.RebuildNeedCache();
             GameManager.Instance.m_inspector.UpdateCurrentDisplay();
         }
 

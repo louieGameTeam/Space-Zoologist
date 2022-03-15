@@ -41,18 +41,26 @@ public class NeedAvailabilityCache
             foodSourceNeedAvailabilities[food] = availability;
         }
     }
+    public bool HasAvailability(Population population)
+    {
+        return populationNeedAvailabilities.ContainsKey(population);
+    }
     public NeedAvailability GetAvailability(Population population)
     {
-        if (populationNeedAvailabilities.ContainsKey(population))
+        if (HasAvailability(population))
         {
             return populationNeedAvailabilities[population];
         }
         else throw new System.ArgumentException(
             $"No need availability exists for population '{population}'");
     }
+    public bool HasAvailability(FoodSource food)
+    {
+        return foodSourceNeedAvailabilities.ContainsKey(food);
+    }
     public NeedAvailability GetAvailability(FoodSource food)
     {
-        if (foodSourceNeedAvailabilities.ContainsKey(food))
+        if (HasAvailability(food))
         {
             return foodSourceNeedAvailabilities[food];
         }

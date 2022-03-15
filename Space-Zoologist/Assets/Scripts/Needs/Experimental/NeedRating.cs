@@ -12,6 +12,9 @@ public class NeedRating
     public float FoodRating => foodRating;
     public float TerrainRating => terrainRating;
     public float WaterRating => waterRating;
+    public bool FoodNeedIsMet => foodRating >= 1;
+    public bool TerrainNeedIsMet => terrainRating >= 1;
+    public bool WaterNeedIsMet => waterRating >= 1;
     #endregion
 
     #region Private Fields

@@ -15,9 +15,6 @@ public class Population : MonoBehaviour, Life
     public int PrePopulationCount => this.prePopulationCount;
     public Vector3 Origin => this.origin;
     public bool IsPaused => this.isPaused;
-    public int TotalWaterTilesRequired => Count * Species.WaterTilesRequired;
-    public float WaterTilesUsed => Mathf.Min(TotalWaterTilesRequired, drinkableLiquidTiles);
-    public bool NeededWaterTilesPresent => drinkableLiquidTiles >= TotalWaterTilesRequired;
     [HideInInspector]
     public bool HasAccessibilityChanged = false;
     public System.Random random = new System.Random();
@@ -26,7 +23,6 @@ public class Population : MonoBehaviour, Life
     public AnimalPathfinding.Grid Grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
-    public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
     private float animatorSpeed = 1f;
     private float overlaySpeed = 1f;
 
@@ -84,10 +80,6 @@ public class Population : MonoBehaviour, Life
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         this.SetupNeeds();
     }
-    public void LoadGrowthRate(float growthRate)
-    {
-        this.GrowthCalculator.populationIncreaseRate = growthRate;
-    }
 
     private void SetupNeeds()
     {
@@ -97,7 +89,6 @@ public class Population : MonoBehaviour, Life
         foreach (KeyValuePair<ItemID, Need> need in this.needs)
         {
             this.NeedEditorTesting.Add(need.Value);
-            this.GrowthCalculator.setupNeedTracker(need.Value.NeedType);
         }
 
         // Setup the special terrain-water need
@@ -206,11 +197,6 @@ public class Population : MonoBehaviour, Life
         // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
     }
 
-    public void UpdateFoodNeed(float preferredValue, float compatibleValue)
-    {
-        this.GrowthCalculator.CalculateFoodNeed(preferredValue, compatibleValue);
-    }
-
     /// <summary>
     /// Get the value of the given need.
     /// </summary>
@@ -220,24 +206,6 @@ public class Population : MonoBehaviour, Life
     {
         Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } population has no need { need }");
         return this.needs[need].NeedValue;
-    }
-
-    public List<NeedType> GetUnmentNeeds()
-    {
-        List<NeedType> needStatus = new List<NeedType>();
-        foreach (KeyValuePair<NeedType, bool> need in this.GrowthCalculator.IsNeedMet)
-        {
-            if (!need.Value)
-            {
-                needStatus.Add(need.Key);
-            }
-        }
-        return needStatus;
-    }
-
-    public bool IsStagnate()
-    {
-        return this.GrowthCalculator.populationIncreaseRate == 0;
     }
 
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
@@ -252,47 +220,37 @@ public class Population : MonoBehaviour, Life
         return this.GrowthCalculator.GrowthCountdown;
     }
 
-    /// <summary>
-    /// Calculate growth, then remove or add animals as needed.
-    /// </summary>
-    public void UpdateGrowthConditions()
-    {
-        if (this.Species == null) return;
-        this.GrowthCalculator.CalculateGrowth();
-    }
-
     public bool HandleGrowth()
     {
-        bool readyForGrowth = false;
-        switch (this.GrowthCalculator.GrowthStatus)
+        bool readyForGrowth;
+
+        if (GrowthCalculator.ChangeRate > 0f)
         {
-            case GrowthStatus.growing:
-                readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
-                if (readyForGrowth)
+            readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
+            if (readyForGrowth)
+            {
+                //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
+                float populationIncreaseAmount = this.Count * GrowthCalculator.ChangeRate;
+                for (int i = 0; i < populationIncreaseAmount; ++i)
                 {
-                    //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
-                    float populationIncreaseAmount = this.Count * this.GrowthCalculator.populationIncreaseRate;
-                    for (int i = 0; i < populationIncreaseAmount; ++i)
-                    {
-                        this.AddAnimal(this.gameObject.transform.position);
-                    }
+                    this.AddAnimal(this.gameObject.transform.position);
                 }
-                break;
-            case GrowthStatus.declining:
-                readyForGrowth = this.GrowthCalculator.ReadyForDecay();
-                if (readyForGrowth)
-                {
-                    //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
-                    float populationDecreaseAmount = this.Count * this.GrowthCalculator.populationIncreaseRate * -1;
-                    for (int i = 0; i < populationDecreaseAmount; ++i)
-                    {
-                        this.RemoveAnimal(this.AnimalPopulation[i]);
-                    }
-                }
-                break;
-            default:
-                break;
+            }
         }
+        else
+        {
+            readyForGrowth = this.GrowthCalculator.ReadyForDecay();
+            if (readyForGrowth)
+            {
+                //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
+                float populationDecreaseAmount = this.Count * this.GrowthCalculator.ChangeRate * -1;
+                for (int i = 0; i < populationDecreaseAmount; ++i)
+                {
+                    this.RemoveAnimal(this.AnimalPopulation[i]);
+                }
+            }
+        }
+
         RecountAnimals ();
         return readyForGrowth;
     }

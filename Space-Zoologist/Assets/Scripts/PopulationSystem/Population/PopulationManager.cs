@@ -27,7 +27,6 @@ public class PopulationManager : MonoBehaviour
             {
                 pop = UpdatePopulation(species, position);
             }
-            pop.LoadGrowthRate(serializedPopulations[i].populationIncreaseRate);
         }
 
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
@@ -130,8 +129,9 @@ public class PopulationManager : MonoBehaviour
         GameManager.Instance.m_reservePartitionManager.AddPopulation(population);
         population.UpdateAccessibleArea(GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population),
         GameManager.Instance.m_tileDataController.GetGridWithAccess(population));
-        GameManager.Instance.RegisterWithNeedSystems(population);
         this.BehaviorPatternUpdater.RegisterPopulation(population);
+
+        // NOTE: does the need cache need to be updated now?
     }
 
     public void UpdateAllPopulationRegistration()
@@ -147,14 +147,6 @@ public class PopulationManager : MonoBehaviour
         foreach (Population population in this.ExistingPopulations)
         {
             population.UpdatePopulationStateForChecking();
-        }
-    }
-
-    public void UpdateAllGrowthConditions()
-    {
-        foreach(Population population in this.ExistingPopulations)
-        {
-            population.UpdateGrowthConditions();
         }
     }
 
@@ -217,10 +209,11 @@ public class PopulationManager : MonoBehaviour
     {
         Debug.Log("Removing " + population);
         population.RemoveAll();
-        this.Populations.Remove(population);
-        GameManager.Instance.UnregisterWithNeedSystems(population);
+        Populations.Remove(population);
         GameManager.Instance.m_reservePartitionManager.RemovePopulation(population);
         Destroy(population.gameObject);
+
+        // NOTE: does the need cache need to be updated now?
     }
 
     public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)

@@ -55,13 +55,10 @@ public class FoodSourceManager : GridObjectManager
             foodSourcesBySpecies[foodSource.Species].Add(foodSource);
         }
 
-        //Debug.Log("Food source being added: " + foodSource.Species.SpeciesName);
-        ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).AddFoodSource(foodSource);
-
-        // Register with NeedSystemManager
-        GameManager.Instance.RegisterWithNeedSystems(foodSource);
-
+        // Invoke the event that occurs when a new food source is created
         EventManager.Instance.InvokeEvent(EventType.NewFoodSource, newFoodSourceGameObject.GetComponent<FoodSource>());
+
+        // NOTE: does the game manager need cache need to be rebuilt now?
 
         return newFoodSourceGameObject;
     }
@@ -74,11 +71,11 @@ public class FoodSourceManager : GridObjectManager
 
     public void DestroyFoodSource(FoodSource foodSource) {
         foodSources.Remove(foodSource);
-        ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).RemoveFoodSource(foodSource);
         foodSourcesBySpecies[foodSource.Species].Remove(foodSource);
-        GameManager.Instance.UnregisterWithNeedSystems(foodSource);
         m_gridSystemReference.RemoveFoodReference(m_gridSystemReference.WorldToCell(foodSource.Position));
         Destroy(foodSource.gameObject);
+
+        // NOTE: does the game manager need cache need to be rebuilt now?
     }
 
     /// <summary>

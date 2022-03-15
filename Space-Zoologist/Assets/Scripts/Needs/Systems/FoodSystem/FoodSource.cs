@@ -11,13 +11,22 @@ using UnityEngine.UI;
 public class FoodSource : MonoBehaviour, Life
 {
     public FoodSourceSpecies Species => species;
-    public float FoodOutput => CalculateOutput();
+    public float FoodOutput
+    {
+        get
+        {
+            // Check if terrain and water ratings are above zero
+            if (Rating.TerrainRating > 0.001f && Rating.WaterRating > 0.001f)
+            {
+                float boost = (Rating.TerrainRating + Rating.WaterRating) / 2;
+                return Mathf.Ceil(species.BaseOutput * boost);
+            }
+            else return 0f;
+        }
+    }
     public Vector2 Position { get; private set; } = Vector2.zero;
-    public bool terrainNeedMet = false;
-    public bool waterNeedMet = false;
-
-    public float TerrainRating => terrainRating;
-    public float WaterRating => waterRating;
+    public NeedAvailability Availability => GameManager.Instance.needAvailability.GetAvailability(this);
+    public NeedRating Rating => GameManager.Instance.needRatings.GetRating(this);
 
     public Dictionary<ItemID, Need> Needs => needs;
     private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
@@ -28,10 +37,7 @@ public class FoodSource : MonoBehaviour, Life
     // For runtime instances of a food source
     [Expandable][SerializeField] private FoodSourceSpecies species = default;
 
-
     public bool isUnderConstruction = false;
-    private float terrainRating = 0f;
-    private float waterRating = 0f;
 
     private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
     private bool hasAccessibilityChanged = default;
@@ -90,123 +96,6 @@ public class FoodSource : MonoBehaviour, Life
     {
         this.needs = this.species.SetupNeeds();
         terrainWaterNeed = species.GetTerrainWaterNeed();
-    }
-
-    private float CalculateOutput()
-    {
-        CalculateTerrainNeed();
-        CalculateWaterNeed();
-
-        float output;
-
-        if(waterNeedMet && terrainNeedMet)
-        {
-            output = species.BaseOutput * (1 + (waterRating + terrainRating)/2);
-        }
-        else
-        {
-            output = species.BaseOutput * (1 + Mathf.Min(waterRating, 0)) * (1 + Mathf.Min(terrainRating, 0));
-        }
-
-        return Mathf.Ceil(output);
-    }
-
-    public void CalculateTerrainNeed()
-    {
-        float totalNeededTiles = species.Size.x * species.Size.y;
-        float availablePreferredTiles = 0f;
-        float availableSurvivableTiles = 0f;
-        float totalTilesAvailable;
-
-        foreach (KeyValuePair<ItemID, Need> need in this.needs)
-        {
-            if (need.Value.NeedType.Equals(NeedType.Terrain))
-            {
-                if (need.Value.IsPreferred)
-                {
-                    availablePreferredTiles += need.Value.NeedValue;
-                }
-                else
-                {
-                    availableSurvivableTiles += need.Value.NeedValue;
-                }
-            }
-        }
-
-        // Factor in the special terrain water need
-        if (terrainWaterNeed != null)
-        {
-            if (terrainWaterNeed.IsPreferred)
-            {
-                availablePreferredTiles += terrainWaterNeed.NeedValue;
-            }
-            else availableSurvivableTiles += terrainWaterNeed.NeedValue;
-        }
-
-        totalTilesAvailable = availablePreferredTiles + availableSurvivableTiles;
-        if (totalTilesAvailable >= totalNeededTiles)
-        {
-            terrainNeedMet = true;
-            terrainRating = availablePreferredTiles / totalNeededTiles;
-        }
-        else
-        {
-            terrainNeedMet = false;
-            terrainRating = (totalTilesAvailable - totalNeededTiles) / totalNeededTiles;
-        }
-
-        //Debug.Log(gameObject.name + " terrain Rating: " + terrainRating + ", preferred tiles: " + availablePreferredTiles + ", survivable tiles: " + availableSurvivableTiles);
-    }
-
-    /// <summary>
-    /// Compute the number of tiles that the food source can drink from
-    /// within range of the plant's root radius
-    /// </summary>
-    /// <returns></returns>
-    public int DrinkableWaterInRange()
-    {
-        TileDataController tileDataController = GameManager.Instance.m_tileDataController;
-        List<float[]> accessibleLiquidBodies = tileDataController
-            .GetLiquidCompositionWithinRange(
-                GetCellPosition(),
-                Species.Size, 
-                Species.RootRadius);
-
-        // Compute how many of the compositions are drinkable
-        return accessibleLiquidBodies
-            .Where(body => LiquidNeedSystem.LiquidIsDrinkable(species.LiquidNeeds, body))
-            .Count();
-    }
-
-    public void CalculateWaterNeed()
-    {
-        float waterTilesRequired = species.WaterTilesRequired;
-        float waterTilesUsed = Mathf.Min(DrinkableWaterInRange(), waterTilesRequired);
-
-        if (waterTilesUsed >= waterTilesRequired)
-        {
-            //Debug.Log("Water need met");
-            waterNeedMet = true;
-            waterRating = 0;
-
-            // Update water rating for each liquid need
-            foreach (LiquidNeedConstructData data in species.LiquidNeeds)
-            {
-                LiquidNeed waterNeed = needs[data.ID] as LiquidNeed;
-                float percent = waterNeed.NeedValue;
-                float minNeeded = data.MinThreshold;
-                float maxWaterTilePercent = GrowthCalculator.GetMaxWaterTilePercent(data.ID.WaterIndex);
-                waterRating += (percent - minNeeded) / (maxWaterTilePercent - minNeeded);
-            }
-        }
-        else
-        {
-            waterNeedMet = false;
-            waterRating = (waterTilesUsed - waterTilesRequired) / waterTilesRequired;
-        }
-
-        //if (gameObject)
-            //Debug.Log(gameObject.name + " water Rating: " + waterRating + ", water source size: " + waterTilesUsed);
     }
 
     /// <summary>

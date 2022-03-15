@@ -58,18 +58,26 @@ public class NeedRatingCache
             foodSourceRatings.Add(food, rating);
         }
     }
+    public bool HasRating(Population population)
+    {
+        return populationRatings.ContainsKey(population);
+    }
     public NeedRating GetRating(Population population)
     {
-        if (populationRatings.ContainsKey(population))
+        if (HasRating(population))
         {
             return populationRatings[population];
         }
         else throw new System.ArgumentException(
             $"No need rating associated with population '{population}'");
     }
+    public bool HasRating(FoodSource food)
+    {
+        return foodSourceRatings.ContainsKey(food);
+    }
     public NeedRating GetRating(FoodSource food)
     {
-        if (foodSourceRatings.ContainsKey(food))
+        if (HasRating(food))
         {
             return foodSourceRatings[food];
         }
