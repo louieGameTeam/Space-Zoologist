@@ -62,6 +62,7 @@ public class DisplayInspectorText : MonoBehaviour
         else
         {
             detailText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
+            inspectorWindowText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
         }
     }
 

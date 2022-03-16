@@ -16,8 +16,11 @@ public class SerializableGrowthCalculator
     #region Constructors
     public SerializableGrowthCalculator(GrowthCalculator calculator)
     {
-        changeRate = calculator.ChangeRate;
-        growthStatus = calculator.GrowthStatus.ToString();
+        if (GameManager.Instance.needRatings.HasRating(calculator.Population))
+        {
+            changeRate = calculator.ChangeRate;
+            growthStatus = calculator.GrowthStatus.ToString();
+        }
         growthCountdown = calculator.GrowthCountdown;
         decayCountdown = calculator.DecayCountdown;
     }

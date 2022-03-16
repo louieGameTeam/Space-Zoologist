@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum SpeciesNeedType
 {
-    Prey, Symbiotic
+    Predator, Friend
 }

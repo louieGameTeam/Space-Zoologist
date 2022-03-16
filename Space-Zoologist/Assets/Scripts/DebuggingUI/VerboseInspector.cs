@@ -104,8 +104,13 @@ public class VerboseInspector : MonoBehaviour
                 FoodSource food = tileData.Food.GetComponent<FoodSource>();
                 CreateInspectorItem(food, "FoodSource");
                 CreateInspectorItem(food.Species);
-                CreateInspectorItem(food.Availability, "FoodSourceNeedAvailability");
-                CreateInspectorItem(food.Rating, "FoodSourceNeedRating");
+
+                // Make sure the food source has a rating before trying to access it
+                if (GameManager.Instance.needRatings.HasRating(food))
+                {
+                    CreateInspectorItem(food.Availability, "FoodSourceNeedAvailability");
+                    CreateInspectorItem(food.Rating, "FoodSourceNeedRating");
+                }
             }
             if (tileData.Animal)
             {
@@ -117,8 +122,13 @@ public class VerboseInspector : MonoBehaviour
                 CreateInspectorItem(animal.PopulationInfo.Species);
                 CreateInspectorItem(population, "Population");
                 CreateInspectorItem(growthCalculator, "GrowthCalculator");
-                CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Availabilty, "PopulationNeedAvailability");
-                CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Rating, "PopulationNeedRating");
+
+                // Make sure the population has a rating before trying to access it
+                if (GameManager.Instance.needRatings.HasRating(animal.PopulationInfo))
+                {
+                    CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Availabilty, "PopulationNeedAvailability");
+                    CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Rating, "PopulationNeedRating");
+                }
             }
         }
     }

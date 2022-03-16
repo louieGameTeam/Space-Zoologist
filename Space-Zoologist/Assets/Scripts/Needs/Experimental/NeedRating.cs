@@ -19,6 +19,11 @@ public class NeedRating
 
     #region Private Fields
     [SerializeField]
+    [Tooltip("Number of species related to this species in the area. " +
+        "Negative numbers indicate the number of predators, whereas " +
+        "positive numbers indicate the number of friend animals")]
+    private int relatedSpeciesCount;
+    [SerializeField]
     [Tooltip("Rating of how well the food need is met, from 0 - 2")]
     private float foodRating;
     [SerializeField]
