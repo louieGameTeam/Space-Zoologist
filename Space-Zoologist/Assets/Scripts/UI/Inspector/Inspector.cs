@@ -42,7 +42,7 @@ public class Inspector : MonoBehaviour
         this.inspectorWindow.SetActive(false);
         //this.HUD.SetActive(true);
         this.UnHighlightAll();
-        EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
+        EventManager.Instance.InvokeEvent(EventType.InspectorToggled, false);
         this.IsInInspectorMode = false;
     }
 
@@ -63,7 +63,7 @@ public class Inspector : MonoBehaviour
         this.inspectorWindow.SetActive(true);
         GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);
-        EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
+        EventManager.Instance.InvokeEvent(EventType.InspectorToggled, true);
         this.IsInInspectorMode = true;
     }
 
