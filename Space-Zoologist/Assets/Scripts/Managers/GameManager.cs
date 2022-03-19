@@ -286,9 +286,7 @@ public class GameManager : MonoBehaviour
         m_conversationManager.Initialize();
         m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
-        m_foodSourceManager.Initialize();
         m_resourceManager.Initialize();
-        m_tilePlacementController.Initialize();
     }
 
     private void InitializeUI()

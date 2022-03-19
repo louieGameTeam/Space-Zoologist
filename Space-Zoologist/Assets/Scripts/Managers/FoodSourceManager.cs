@@ -14,12 +14,7 @@ public class FoodSourceManager : GridObjectManager
 
     // FoodSourceSpecies to string name
     [SerializeField] private GameObject foodSourcePrefab = default;
-    private TileDataController m_gridSystemReference;
-
-    public void Initialize()
-    {
-        m_gridSystemReference = GameManager.Instance.m_tileDataController;
-    }
+    private TileDataController m_gridSystemReference => GameManager.Instance.m_tileDataController;
     
     public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position, int ttb = -1)
     {
