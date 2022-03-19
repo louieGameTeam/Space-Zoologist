@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class PredatoryPreySystem : NeedSystem
 {
+    private ReservePartitionManager rpm => GameManager.Instance.m_reservePartitionManager;
 
-    private readonly TileDataController gridSystem = default;
-    private readonly ReservePartitionManager rpm = default;
-
-    public PredatoryPreySystem(NeedType needType = NeedType.Prey) : base(needType)
-    {
-        this.rpm = GameManager.Instance.m_reservePartitionManager;
-        this.gridSystem = GameManager.Instance.m_tileDataController;
-    }
+    public PredatoryPreySystem(NeedType needType = NeedType.Prey) : base(needType) {}
 
     /* 
      * Population decays at a rate equal to min(numPredatorsNearby, totalTilesSharedWithPredator)
