@@ -470,7 +470,7 @@ public class MoveObject : MonoBehaviour
         Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
         FoodLocation += new Vector3((float)species.Size.x / 2, (float)species.Size.y / 2, 0);
 
-        GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
+        GameObject Food = foodSourceManager.CreateFoodSource(GameManager.Instance.FoodSources [species.SpeciesName], FoodLocation);
         FoodSource foodSource = Food.GetComponent<FoodSource>();
 
         gridSystem.AddFoodReferenceToTile(mouseGridPosition, species.Size, Food);

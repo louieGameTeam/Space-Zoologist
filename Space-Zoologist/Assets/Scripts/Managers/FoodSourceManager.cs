@@ -65,11 +65,6 @@ public class FoodSourceManager : GridObjectManager
         return newFoodSourceGameObject;
     }
 
-    public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position, int ttb = -1)
-    {
-        return CreateFoodSource(GameManager.Instance.FoodSources[foodsourceSpeciesID], position, ttb);
-    }
-
     public void DestroyFoodSource(FoodSource foodSource) {
         foodSources.Remove(foodSource);
         ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).RemoveFoodSource(foodSource);
@@ -173,7 +168,7 @@ public class FoodSourceManager : GridObjectManager
             {
                 foreach (Vector3 position in SerializationUtils.ParseVector3(keyValuePair.Value.coords))
                 {
-                    this.CreateFoodSource(keyValuePair.Value.name, position);
+                    this.CreateFoodSource(GameManager.Instance.FoodSources [keyValuePair.Value.name], position);
                 }
             }
         }
@@ -193,13 +188,5 @@ public class FoodSourceManager : GridObjectManager
         {
             this.DestroyFoodSource(foodSources[foodSources.Count - 1]);
         }
-    }
-
-    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species, int ttb = -1)
-    {
-        Vector3 FoodLocation = m_gridSystemReference.CellToWorld(mouseGridPosition);
-        FoodLocation.x += (float)species.Size.x / 2;
-        FoodLocation.y += (float)species.Size.y / 2;
-        CreateFoodSource(species, FoodLocation, ttb);
     }
 }

@@ -20,7 +20,6 @@ public class StoreSection : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
-    protected CanvasObjectStrobe PlayerBalanceDisplay = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
     protected TileDataController GridSystem = default;
@@ -30,12 +29,11 @@ public class StoreSection : MonoBehaviour
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
 
-    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
+    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, ResourceManager resourceManager)
     {
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = GameManager.Instance.m_tileDataController;
-        this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
     }
     public Item GetItemByID(string id)

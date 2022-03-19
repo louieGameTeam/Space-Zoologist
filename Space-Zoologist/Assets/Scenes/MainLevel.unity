@@ -127,18 +127,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1724520918}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8922884 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7011737153203809868, guid: f2d8077c97fcfd2478849204b1c4a546,
-    type: 3}
-  m_PrefabInstance: {fileID: 1724520918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8922883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6d6a56fcdf7403194ea0f60ee8c422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &9046726 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7243082126267867200, guid: b6fa91312476840f19ee43626e3f9dfb,
@@ -830,7 +818,6 @@ MonoBehaviour:
   - {fileID: 1491879216}
   - {fileID: 2094406301}
   ResourceManager: {fileID: 1738013071}
-  PlayerBalanceDisplay: {fileID: 8922884}
   CursorItem: {fileID: 380907109}
   UIElements: []
   StoreCanvas: {fileID: 1957932609}
@@ -1143,7 +1130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 491272617}
-  - component: {fileID: 491272613}
   - component: {fileID: 491272616}
   - component: {fileID: 491272615}
   - component: {fileID: 491272614}
@@ -1154,18 +1140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &491272613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491272612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6d6a56fcdf7403194ea0f60ee8c422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &491272614
 MonoBehaviour:
   m_ObjectHideFlags: 0
