@@ -26,7 +26,8 @@ public class ResourceManager : MonoBehaviour
             initialResources[item.itemObject.ItemName] = item.initialAmount;
         }
 
-        EventResponseManager.InitializeResponseHandler(EventType.PopulationCountIncreased, AddItem);
+        // TODO: Figure out what the hell this was even supposed to do, then remove it cause it's not doing anything
+        //EventResponseManager.InitializeResponseHandler(EventType.PopulationCountIncreased, AddItem);
     }
 
     public bool hasLimitedSupply(string itemName)

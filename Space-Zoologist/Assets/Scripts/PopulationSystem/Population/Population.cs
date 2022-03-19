@@ -296,7 +296,7 @@ public class Population : MonoBehaviour, Life
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
         RecountAnimals ();
         // Invoke a population growth event
-        EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
+        EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, true));
     }
 
     // removes last animal in list and last behavior
@@ -324,7 +324,7 @@ public class Population : MonoBehaviour, Life
             else
             {
                 // Invoke a population decline event
-                EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
+                EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, false));
             }
             //Debug.Log ("Animal removed; new population count: " + Count);
         }
