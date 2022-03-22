@@ -9,6 +9,7 @@ using UnityEngine;
 public class NeedRating
 {
     #region Public Properties
+    public int PredatorCount => predatorCount;
     public float FoodRating => foodRating;
     public float TerrainRating => terrainRating;
     public float WaterRating => waterRating;
@@ -19,10 +20,8 @@ public class NeedRating
 
     #region Private Fields
     [SerializeField]
-    [Tooltip("Number of species related to this species in the area. " +
-        "Negative numbers indicate the number of predators, whereas " +
-        "positive numbers indicate the number of friend animals")]
-    private int relatedSpeciesCount;
+    [Tooltip("Number of species hostile to this species in the area")]
+    private int predatorCount;
     [SerializeField]
     [Tooltip("Rating of how well the food need is met, from 0 - 2")]
     private float foodRating;
@@ -35,8 +34,9 @@ public class NeedRating
     #endregion
 
     #region Constructors
-    public NeedRating(float foodRating, float terrainRating, float waterRating)
+    public NeedRating(int predatorCount, float foodRating, float terrainRating, float waterRating)
     {
+        this.predatorCount = predatorCount;
         this.foodRating = foodRating;
         this.terrainRating = terrainRating;
         this.waterRating = waterRating;

@@ -15,59 +15,6 @@ public static class NeedAvailabilityBuilder
 {
     #region Public Methods
     /// <summary>
-    /// Build the need availability for a single population.
-    /// </summary>
-    /// <remarks>
-    /// This function does NOT take species dominance into account
-    /// </remarks>
-    /// <param name="population"></param>
-    /// <returns></returns>
-    public static NeedAvailability Build(Population population)
-    {
-        List<NeedAvailabilityItem> items = new List<NeedAvailabilityItem>();
-        ReservePartitionManager rpm = GameManager.Instance.m_reservePartitionManager;
-
-        // FOOD SOURCE
-
-        // Get a list of available food sources
-        List<FoodSource> sourcesAvailable = rpm.GetAccessibleFoodSources(population);
-        IEnumerable<NeedAvailabilityItem> foodItems = sourcesAvailable
-            .Select(food => new NeedAvailabilityItem(food.Species.ID, (int)food.FoodOutput));
-        items.AddRange(foodItems);
-
-        // TERRAIN
-
-        // Get the counts for each tile type for this population
-        int[] tileCountByType = rpm.GetTypesOfTiles(population);
-
-        // Go through each tile count
-        for (int tileType = 0; tileType < tileCountByType.Length; tileType++)
-        {
-            int count = tileCountByType[tileType];
-
-            // If the population can access some tiles of this type,
-            // then add a need availability item to the list
-            if (count > 0)
-            {
-                TileType tile = (TileType)tileType;
-                ItemID tileID = ItemRegistry.FindTile(tile);
-                items.Add(new NeedAvailabilityItem(tileID, count));
-            }
-        }
-
-        // LIQUID
-
-        List<float[]> accessibleLiquids = rpm.GetLiquidComposition(population);
-        ItemID waterID = ItemRegistry.FindAnyNameContains("Water");
-
-        // Convert accessible liquids to need availability items
-        IEnumerable<NeedAvailabilityItem> waterItems = accessibleLiquids
-            .Select(comp => new NeedAvailabilityItem(waterID, 1, comp));
-        items.AddRange(waterItems);
-
-        return new NeedAvailability(items.ToArray());
-    }
-    /// <summary>
     /// Build the distribution of need availability across all populations.
     /// </summary>
     /// <remarks>
@@ -81,10 +28,42 @@ public static class NeedAvailabilityBuilder
         Dictionary<Population, List<NeedAvailabilityItem>> populationToItems = new Dictionary<Population, List<NeedAvailabilityItem>>();
         ReservePartitionManager rpm = GameManager.Instance.m_reservePartitionManager;
 
-        //foreach (Population population in rpm.Populations)
-        //{
-        //    result[population] = Build(population);
-        //}
+        // Function to help get the list. If it is not in the dictionary yet,
+        // we add it first and then return it
+        List<NeedAvailabilityItem> Get(Population population)
+        {
+            if (!populationToItems.ContainsKey(population))
+            {
+                populationToItems.Add(population, new List<NeedAvailabilityItem>());
+            }
+            return populationToItems[population];
+        }
+
+        // SPECIES
+
+        // Loop from the first species to the second to last species
+        for (int i = 0; i < rpm.Populations.Count - 1; i++)
+        {
+            // Another loop starts at the species after the current
+            for (int j = i + 1; j < rpm.Populations.Count; j++)
+            {
+                // Get the two populations
+                Population popA = rpm.Populations[i];
+                Population popB = rpm.Populations[j];
+
+                // Get the number of tiles shared
+                int sharedTiles = rpm.NumOverlapTiles(popA, popB);
+
+                // Count the number of popA invading popB's space,
+                // then the number of popB invading popA's space
+                int aInvadesB = Mathf.Min(sharedTiles, popA.Count);
+                int bInvadesA = Mathf.Min(sharedTiles, popB.Count);
+
+                // Add availability items for each other species
+                Get(popA).Add(new NeedAvailabilityItem(popB.Species.ID, bInvadesA));
+                Get(popB).Add(new NeedAvailabilityItem(popA.Species.ID, aInvadesB));
+            }
+        }
 
         // FOOD
 
@@ -101,19 +80,12 @@ public static class NeedAvailabilityBuilder
             // Go through each population competing for this food source
             foreach (Population population in kvp.Value)
             {
-                // If the population does not exist in the dictionary yet 
-                // then add a new list to the dictionary
-                if (!populationToItems.ContainsKey(population))
-                {
-                    populationToItems.Add(population, new List<NeedAvailabilityItem>());
-                }
-
                 // Compute the proportion of the food that this species gets
                 float foodProportionConsumed = population.FoodDominance / appliedDominance;
                 NeedAvailabilityItem item = new NeedAvailabilityItem(
                     kvp.Key.Species.ID,
                     kvp.Key.FoodOutput * foodProportionConsumed);
-                populationToItems[population].Add(item);
+                Get(population).Add(item);
             }
         }
 
@@ -145,19 +117,12 @@ public static class NeedAvailabilityBuilder
                 // Go through each population competing for this food source
                 foreach (Population population in kvp.Value)
                 {
-                    // If the population does not exist in the dictionary yet 
-                    // then add a new list to the dictionary
-                    if (!populationToItems.ContainsKey(population))
-                    {
-                        populationToItems.Add(population, new List<NeedAvailabilityItem>());
-                    }
-
                     // Compute the proportion of the tile that this species gets for themselves
                     float tileProportionOwned = population.GetTerrainDominance(tile) / appliedDominance;
                     NeedAvailabilityItem item = new NeedAvailabilityItem(
                         ItemRegistry.FindTile(tile),
                         tileProportionOwned);
-                    populationToItems[population].Add(item);
+                    Get(population).Add(item);
                 }
             }
         }
@@ -174,14 +139,8 @@ public static class NeedAvailabilityBuilder
             IEnumerable<NeedAvailabilityItem> waterItems = accessibleLiquids
                 .Select(comp => new NeedAvailabilityItem(waterID, 1, comp));
 
-            // If the population is not in the dictionary yet then add it
-            if (!populationToItems.ContainsKey(population))
-            {
-                populationToItems.Add(population, new List<NeedAvailabilityItem>());
-            }
-
             // Add the water items to the list in the dictionary
-            populationToItems[population].AddRange(waterItems);
+            Get(population).AddRange(waterItems);
         }
 
         // Go through the lists of need availability and add them to the result

@@ -72,6 +72,13 @@ public class NeedRegistry
 
         return new HashSet<TileType>(tileTypes);
     }
+    public NeedData[] FindPredatorNeeds()
+    {
+        return GetNeedsWithCategory(ItemRegistry.Category.Species)
+            .Where(need => need.Needed)
+            .Where(need => need.SpeciesNeedType == SpeciesNeedType.Predator)
+            .ToArray();
+    }
     public NeedData[] FindWaterNeeds()
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Tile)

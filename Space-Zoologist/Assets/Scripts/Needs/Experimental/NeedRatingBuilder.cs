@@ -33,6 +33,9 @@ public static class NeedRatingBuilder
         }
 
         // Compute each rating
+        int predatorCount = CountPredators(
+            population.Species.Needs,
+            availability);
         float foodRating = FoodRating(
             population.Species.Needs, 
             availability, 
@@ -48,7 +51,7 @@ public static class NeedRatingBuilder
             population.Species.WaterTilesRequired * population.Count);
 
         // Return the new need rating object
-        return new NeedRating(foodRating, terrainRating, waterRating);
+        return new NeedRating(predatorCount, foodRating, terrainRating, waterRating);
     }
     /// <summary>
     /// Build the need rating for a single food source
@@ -78,11 +81,30 @@ public static class NeedRatingBuilder
             foodSource.Species.WaterTilesRequired);
 
         // Return the new need rating object
-        return new NeedRating(-1f, terrainRating, waterRating);
+        return new NeedRating(0, -1f, terrainRating, waterRating);
     }
     #endregion
 
     #region Private Methods
+    private static int CountPredators(NeedRegistry needs, NeedAvailability availability)
+    {
+        NeedData[] predatorNeeds = needs.FindPredatorNeeds();
+        float predatorCount = 0;
+
+        foreach (NeedData need in predatorNeeds)
+        {
+            // Find the availability of predators
+            NeedAvailabilityItem predator = availability.FindWithItem(need.ID);
+
+            // If that predator is available then increase the count by the number available
+            if (predator != null)
+            {
+                predatorCount += predator.AmountAvailable;
+            }
+        }
+
+        return (int)predatorCount;
+    }
     private static float FoodRating(NeedRegistry needs, NeedAvailability availability, int minFoodNeeded, int maxFoodConsumed)
     {
         // Get all food needs
