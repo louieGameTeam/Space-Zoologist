@@ -57,13 +57,13 @@ MonoBehaviour:
     minThreshold: 0.005
     maxThreshold: 0.02
   preyNeeds: []
-  needRegistry:
+  needs:
     needData:
       needArrays:
       - needs:
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -73,8 +73,8 @@ MonoBehaviour:
             category: 0
             index: 0
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -84,8 +84,8 @@ MonoBehaviour:
             category: 0
             index: 1
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -95,8 +95,8 @@ MonoBehaviour:
             category: 0
             index: 2
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -106,8 +106,8 @@ MonoBehaviour:
             category: 0
             index: 3
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -117,8 +117,8 @@ MonoBehaviour:
             category: 0
             index: 4
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -129,8 +129,8 @@ MonoBehaviour:
             index: 5
       - needs:
         - needed: 1
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -140,8 +140,8 @@ MonoBehaviour:
             category: 1
             index: 0
         - needed: 1
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 1
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -151,8 +151,8 @@ MonoBehaviour:
             category: 1
             index: 1
         - needed: 1
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -162,8 +162,8 @@ MonoBehaviour:
             category: 1
             index: 2
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -173,8 +173,8 @@ MonoBehaviour:
             category: 1
             index: 3
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -184,8 +184,8 @@ MonoBehaviour:
             category: 1
             index: 4
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -196,8 +196,8 @@ MonoBehaviour:
             index: 5
       - needs:
         - needed: 1
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 1
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -207,8 +207,8 @@ MonoBehaviour:
             category: 2
             index: 0
         - needed: 1
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -218,8 +218,8 @@ MonoBehaviour:
             category: 2
             index: 1
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -229,8 +229,8 @@ MonoBehaviour:
             category: 2
             index: 2
         - needed: 1
+          useAsTerrainNeed: 0
           traversibleOnly: 1
-          useAsTerrainNeed: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -240,8 +240,8 @@ MonoBehaviour:
             category: 2
             index: 3
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -251,8 +251,8 @@ MonoBehaviour:
             category: 2
             index: 4
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -262,8 +262,8 @@ MonoBehaviour:
             category: 2
             index: 5
         - needed: 1
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -273,8 +273,8 @@ MonoBehaviour:
             category: 2
             index: 6
         - needed: 1
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1
@@ -284,8 +284,8 @@ MonoBehaviour:
             category: 2
             index: 7
         - needed: 0
-          traversibleOnly: 0
           useAsTerrainNeed: 0
+          traversibleOnly: 0
           preferred: 0
           speciesNeedType: 0
           useAsWaterNeed: 1

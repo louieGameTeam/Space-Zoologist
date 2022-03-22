@@ -43,13 +43,13 @@ public class NeedData
     private bool needed;
 
     [SerializeField]
-    [Tooltip("A traversible only terrain can be traversed by the species " +
-        "but does not contribute to the species terrain need")]
-    private bool traversibleOnly = false;
-    [SerializeField]
     [Tooltip("If true, then this water need should be treated as terrain " +
         "that the species can traverse")]
     private bool useAsTerrainNeed = false;
+    [SerializeField]
+    [Tooltip("A traversible only terrain can be traversed by the species " +
+        "but does not contribute to the species terrain need")]
+    private bool traversibleOnly = false;
     [SerializeField]
     [Tooltip("How much the need is preferred compared to other needs" +
         " with the same type")]
