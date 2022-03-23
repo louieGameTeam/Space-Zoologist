@@ -22,33 +22,34 @@ public class PredatoryPreySystem : NeedSystem
             if (life.GetType() == typeof(Population))
             {
                 Population prey = (Population)life;
-                foreach (KeyValuePair<ItemID, Need> need in prey.Needs)
-                {
-                    if (need.Value.NeedType.Equals(NeedType.Prey))
-                    {
-                        int needValue = 0;
-                        foreach (Population potentialPredator in rpm.Populations)
-                        {
-                            // Get the ID of the predator and need
-                            ItemID predatorID = potentialPredator.Species.ID;
+                // NOTE: uses the old need system
+                //foreach (KeyValuePair<ItemID, Need> need in prey.Needs)
+                //{
+                //    if (need.Value.NeedType.Equals(NeedType.Prey))
+                //    {
+                //        int needValue = 0;
+                //        foreach (Population potentialPredator in rpm.Populations)
+                //        {
+                //            // Get the ID of the predator and need
+                //            ItemID predatorID = potentialPredator.Species.ID;
 
-                            // Check if the id's are equal
-                            if (predatorID == need.Value.ID)
-                            {
-                                int numOverlapTiles = rpm.NumOverlapTiles(prey, potentialPredator);
-                                if (numOverlapTiles > potentialPredator.Count)
-                                {
-                                    needValue += potentialPredator.Count;
-                                }
-                                else
-                                {
-                                    needValue += numOverlapTiles;
-                                }
-                            }
-                        }
-                        prey.UpdateNeed(need.Value.ID, needValue);
-                    }
-                }
+                //            // Check if the id's are equal
+                //            if (predatorID == need.Value.ID)
+                //            {
+                //                int numOverlapTiles = rpm.NumOverlapTiles(prey, potentialPredator);
+                //                if (numOverlapTiles > potentialPredator.Count)
+                //                {
+                //                    needValue += potentialPredator.Count;
+                //                }
+                //                else
+                //                {
+                //                    needValue += numOverlapTiles;
+                //                }
+                //            }
+                //        }
+                //        prey.UpdateNeed(need.Value.ID, needValue);
+                //    }
+                //}
             }
         }
     }

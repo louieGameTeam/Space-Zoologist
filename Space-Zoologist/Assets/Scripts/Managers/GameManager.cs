@@ -77,8 +77,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Need System Variables
-    public NeedAvailabilityCache needAvailability { get; private set; }
-    public NeedRatingCache needRatings { get; private set; }
+    public NeedCache Needs { get; private set; } = new NeedCache();
     #endregion
 
     #region Managers
@@ -115,7 +114,7 @@ public class GameManager : MonoBehaviour
         LoadLevelData();
         SetupObjectives();
         InitializeGameStateVariables();
-        SetupNeedCache();
+        RebuildNeedCache();
     }
 
     void Update()
@@ -396,16 +395,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Need System Functions
-    private void SetupNeedCache()
-    {
-        // Setup the need availability and rating cache
-        needAvailability = new NeedAvailabilityCache();
-        needRatings = new NeedRatingCache(needAvailability);
-    }
     public void RebuildNeedCache()
     {
-        needAvailability.RebuildCache();
-        needRatings.RebuildCache(needAvailability);
+        Needs.RebuildAll(m_reservePartitionManager, m_foodSourceManager.FoodSources);
     }
     public void UpdateAccessMap()
     {

@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
-public class Population : MonoBehaviour, Life
+public class Population : MonoBehaviour
 {
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.enclosedPopulationCount; }
@@ -19,7 +19,6 @@ public class Population : MonoBehaviour, Life
     public bool HasAccessibilityChanged = false;
     public System.Random random = new System.Random();
 
-    public Dictionary<ItemID, Need> Needs => needs;
     public AnimalPathfinding.Grid Grid { get; private set; }
     public List<Vector3Int>  AccessibleLocations { get; private set; }
 
@@ -31,13 +30,7 @@ public class Population : MonoBehaviour, Life
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [Header("Lowest Priority Behaviors")]
-    [Header("Modify values and thresholds for testing")]
-    [SerializeField] private List<Need> NeedEditorTesting = default;
     [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
-
-    private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
-    public Need TerrainWaterNeed => terrainWaterNeed;
-    private Need terrainWaterNeed = null;
 
     private Vector3 origin = Vector3.zero;
     public GrowthCalculator GrowthCalculator;
@@ -78,21 +71,7 @@ public class Population : MonoBehaviour, Life
         this.GrowthCalculator = new GrowthCalculator(this);
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
-        this.SetupNeeds();
-    }
-
-    private void SetupNeeds()
-    {
         this.GrowthCalculator = new GrowthCalculator(this);
-        this.needs = this.Species.SetupNeeds();
-        this.NeedEditorTesting = new List<Need>();
-        foreach (KeyValuePair<ItemID, Need> need in this.needs)
-        {
-            this.NeedEditorTesting.Add(need.Value);
-        }
-
-        // Setup the special terrain-water need
-        terrainWaterNeed = species.GetTerrainWaterNeed();
     }
 
     /// <summary>
@@ -183,29 +162,6 @@ public class Population : MonoBehaviour, Life
         }
         this.prePopulationCount = this.Count;
         this.PopulationBehaviorManager.Initialize();
-    }
-
-    /// <summary>
-    /// Update the given need of the population with the given value.
-    /// </summary>
-    /// <param name="need">The need to update</param>
-    /// <param name="value">The need's new value</param>
-    public void UpdateNeed(ItemID need, float value)
-    {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } population has no need { need }");
-        this.needs[need].UpdateNeedValue(value);
-        // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
-    }
-
-    /// <summary>
-    /// Get the value of the given need.
-    /// </summary>
-    /// <param name="need">The need to get the value of</param>
-    /// <returns></returns>
-    public float GetNeedValue(ItemID need)
-    {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } population has no need { need }");
-        return this.needs[need].NeedValue;
     }
 
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
@@ -337,40 +293,9 @@ public class Population : MonoBehaviour, Life
         //}
     }
 
-    private void UpdateEditorNeeds()
-    {
-        // Debug.Log("Needs updated with editor");
-        int i=0;
-        foreach (KeyValuePair<ItemID, Need> need in this.needs)
-        {
-            if (this.NeedEditorTesting[i].ID.Equals(need.Value.ID))
-            {
-                this.NeedEditorTesting[i] = need.Value;
-            }
-            i++;
-        }
-        if (this.NeedEditorTesting != null)
-        {
-            foreach (Need need in this.NeedEditorTesting)
-            {
-                this.needs[need.ID] = need;
-            }
-        }
-    }
-
-    public Dictionary<ItemID, Need> GetNeedValues()
-    {
-        return this.Needs;
-    }
-
     public float GetTerrainDominance(TileType tile)
     {
         return Species.GetTerrainDominance(tile);
-    }
-
-    public bool HasWaterNeeds()
-    {
-        return Needs.Keys.Any(id => id.IsWater);
     }
 
     public Vector3 GetPosition()

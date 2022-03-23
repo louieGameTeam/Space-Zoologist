@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// A runtime instance of a food source
 /// </summary>
-public class FoodSource : MonoBehaviour, Life
+public class FoodSource : MonoBehaviour
 {
     public FoodSourceSpecies Species => species;
     public float FoodOutput
@@ -25,14 +25,8 @@ public class FoodSource : MonoBehaviour, Life
         }
     }
     public Vector2 Position { get; private set; } = Vector2.zero;
-    public NeedAvailability Availability => GameManager.Instance.needAvailability.GetAvailability(this);
-    public NeedRating Rating => GameManager.Instance.needRatings.GetRating(this);
-
-    public Dictionary<ItemID, Need> Needs => needs;
-    private Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
-
-    public Need TerrainWaterNeed => terrainWaterNeed;
-    private Need terrainWaterNeed = null;
+    public NeedAvailability Availability => GameManager.Instance.Needs.Availability.GetAvailability(this);
+    public NeedRating Rating => GameManager.Instance.Needs.Ratings.GetRating(this);
 
     // For runtime instances of a food source
     [Expandable][SerializeField] private FoodSourceSpecies species = default;
@@ -88,31 +82,7 @@ public class FoodSource : MonoBehaviour, Life
         this.species = species;
         this.Position = position;
         this.GetComponent<SpriteRenderer>().sprite = species.FoodSourceItem.Icon;
-        this.InitializeNeedValues();
         this.accessibleTerrian = GameManager.Instance.m_tileDataController.CountOfTilesInRange(Vector3Int.FloorToInt(this.Position), this.Species.RootRadius);
-    }
-
-    private void InitializeNeedValues()
-    {
-        this.needs = this.species.SetupNeeds();
-        terrainWaterNeed = species.GetTerrainWaterNeed();
-    }
-
-    /// <summary>
-    /// Update the given need of the population with the given value.
-    /// </summary>
-    /// <param name="need">The need to update</param>Z
-    /// <param name="value">The need's new value</param>
-    public void UpdateNeed(ItemID need, float value)
-    {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.ID } food source has no need { need }");
-        this.needs[need].UpdateNeedValue(value);
-        // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {NeedsValues[need]}");
-    }
-
-    public Dictionary<ItemID, Need> GetNeedValues()
-    {
-        return this.Needs;
     }
 
     public Vector3 GetPosition()

@@ -34,8 +34,9 @@ public class LiquidNeedSystem : NeedSystem
         // Setup the dictionary for each population if that population has water needs
         foreach(Population population in Consumers.OfType<Population>())
         {
-            if(!liquidTilesPerPopulation.ContainsKey(population) && population.HasWaterNeeds())
-                liquidTilesPerPopulation.Add(population, 0);
+            // NOTE: uses the old need system
+            //if(!liquidTilesPerPopulation.ContainsKey(population) && population.HasWaterNeeds())
+            //    liquidTilesPerPopulation.Add(population, 0);
         }
 
         //Go through each body of water in the level and divide it between all populations that can access it
@@ -47,24 +48,25 @@ public class LiquidNeedSystem : NeedSystem
             foreach(Population population in Consumers.OfType<Population>())
             {
                 // Check if the species can drink from this liquid body
-                if (LiquidIsDrinkable(population.species.LiquidNeeds, liquidBody))
-                {
-                    bool populationCanAccess = false;
+                // NOTE: this logic does not work anymore because it is based on the deprecated needs system
+                //if (LiquidIsDrinkable(population.species.LiquidNeeds, liquidBody))
+                //{
+                //    bool populationCanAccess = false;
 
-                    // check if any of the liquidbody's tiles are accessible to this population
-                    foreach (Vector3Int location in GameManager.Instance.m_reservePartitionManager.GetLiquidLocations(population)) 
-                    {
-                        if (liquidBody.ContainsTile(location))
-                        {
-                            populationCanAccess = true;
-                            break;
-                        }
-                    }
+                //    // check if any of the liquidbody's tiles are accessible to this population
+                //    foreach (Vector3Int location in GameManager.Instance.m_reservePartitionManager.GetLiquidLocations(population)) 
+                //    {
+                //        if (liquidBody.ContainsTile(location))
+                //        {
+                //            populationCanAccess = true;
+                //            break;
+                //        }
+                //    }
 
-                    //if the population can access this water source, add it to the set
-                    if (populationCanAccess) 
-                        accessiblePopulations.Add(population);
-                }
+                //    //if the population can access this water source, add it to the set
+                //    if (populationCanAccess) 
+                //        accessiblePopulations.Add(population);
+                //}
             }
 
             // split this water source equally between all populations that have access to it, regardless of that population's size
@@ -131,11 +133,12 @@ public class LiquidNeedSystem : NeedSystem
 
                 foreach(float[] composition in potentialCompositions)
                 {
-                    if (LiquidIsDrinkable(foodSource.Species.LiquidNeeds, composition))
-                    {
-                        ++liquidCount;
-                        liquidCompositions.Add(composition);
-                    }
+                    // NOTE: this logic does not work anymore because it is based on the deprecated needs system
+                    //if (LiquidIsDrinkable(foodSource.Species.LiquidNeeds, composition))
+                    //{
+                    //    ++liquidCount;
+                    //    liquidCompositions.Add(composition);
+                    //}
                 }
 
                 // foodSource.UpdateNeed("LiquidTiles", liquidCount);

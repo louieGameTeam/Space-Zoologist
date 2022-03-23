@@ -271,17 +271,18 @@ public class TerrainNeedSystem : NeedSystem
                     {
                         float needValue = tilesAllocated[population][tile] * (tile == TileType.Grass ? 2 : 1);
 
+                        // NOTE: uses the old need system
                         // If this is a liquid need, update the special value
-                        if (tile == TileType.Liquid && population.TerrainWaterNeed != null)
-                        {
-                            population.TerrainWaterNeed.UpdateNeedValue(needValue);
-                        }
-                        // Otherwise update the value in the dictionary
-                        else 
-                        {
-                            ItemID id = ItemRegistry.FindTile(tile);
-                            population.UpdateNeed(id, needValue);
-                        }
+                        //if (tile == TileType.Liquid && population.TerrainWaterNeed != null)
+                        //{
+                        //    population.TerrainWaterNeed.UpdateNeedValue(needValue);
+                        //}
+                        //// Otherwise update the value in the dictionary
+                        //else 
+                        //{
+                        //    ItemID id = ItemRegistry.FindTile(tile);
+                        //    population.UpdateNeed(id, needValue);
+                        //}
                     }// end if
                 }// end foreach population
             }// end foreach hash set
@@ -296,22 +297,23 @@ public class TerrainNeedSystem : NeedSystem
             {
                 TileType type = (TileType)index;
 
+                // NOTE: this uses the old need system to update the need on the food source
                 // If we are checking a liquid tile then check if the food source has a terrain water need
-                if (type == TileType.Liquid && foodSource.TerrainWaterNeed != null)
-                {
-                    foodSource.TerrainWaterNeed.UpdateNeedValue(count);
-                }
-                // Otherwise look for the need in the dictionary
-                else
-                {
-                    ItemID tileID = ItemRegistry.FindTile(type);
+                //if (type == TileType.Liquid && foodSource.TerrainWaterNeed != null)
+                //{
+                //    foodSource.TerrainWaterNeed.UpdateNeedValue(count);
+                //}
+                //// Otherwise look for the need in the dictionary
+                //else
+                //{
+                //    ItemID tileID = ItemRegistry.FindTile(type);
 
-                    if (foodSource.GetNeedValues().ContainsKey(tileID))
-                    {
-                        //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
-                        foodSource.UpdateNeed(tileID, count);
-                    }
-                }
+                //    if (foodSource.GetNeedValues().ContainsKey(tileID))
+                //    {
+                //        //Debug.Log(foodSource.name + " updated " + needName + " with value: " + count);
+                //        foodSource.UpdateNeed(tileID, count);
+                //    }
+                //}
             }
         }
 
@@ -337,16 +339,5 @@ public class TerrainNeedSystem : NeedSystem
                (tilesAllocated[x][tileType] / dominanceRatiosByTileType[tileType][x.Species.ID] -
                 tilesAllocated[y][tileType] / dominanceRatiosByTileType[tileType][y.Species.ID]);
         }
-    }
-}
-
-/// <summary>
-/// To use .WithIndex
-/// </summary>
-public static class ForeachExtension
-{
-    public static  IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self)
-    {
-        return self.Select((item, index) => (item, index));
     }
 }

@@ -23,15 +23,8 @@ public static class NeedRatingBuilder
     /// If 'null' is provided, builds the need availability from scratch
     /// </param>
     /// <returns>The rating for the population's needs</returns>
-    public static NeedRating Build(Population population, NeedAvailability availability = null)
+    public static NeedRating Build(Population population, NeedAvailability availability)
     {
-        // If no availability is given then build it from scratch
-        if (availability == null)
-        {
-            Dictionary<Population, NeedAvailability> distribution = NeedAvailabilityBuilder.BuildDistribution();
-            availability = distribution[population];
-        }
-
         // Compute each rating
         int predatorCount = CountPredators(
             population.Species.Needs,
@@ -62,14 +55,8 @@ public static class NeedRatingBuilder
     /// If 'null' is proved, builds the need availability from scratch
     /// </param>
     /// <returns></returns>
-    public static NeedRating Build(FoodSource foodSource, NeedAvailability availability = null)
+    public static NeedRating Build(FoodSource foodSource, NeedAvailability availability)
     {
-        // If no availability is given then build it from scratch
-        if (availability == null)
-        {
-            availability = NeedAvailabilityBuilder.Build(foodSource);
-        }
-
         // Compute each rating
         float terrainRating = TerrainRating(
             foodSource.Species.Needs,
@@ -179,7 +166,7 @@ public static class NeedRatingBuilder
         float preferredUsed = 0;
         float survivableUsed = 0;
 
-        // Go through each need in the terrain needs
+        // Go through each need in the needs
         foreach (NeedData need in needs)
         {
             NeedAvailabilityItem availabilityItem = availability

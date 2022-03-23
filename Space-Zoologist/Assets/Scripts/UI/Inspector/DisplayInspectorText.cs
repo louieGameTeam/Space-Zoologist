@@ -31,7 +31,7 @@ public class DisplayInspectorText : MonoBehaviour
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
 
-        if (GameManager.Instance.needRatings.HasRating(population))
+        if (GameManager.Instance.Needs.HasCache(population))
         {
             switch (population.GrowthCalculator.GrowthStatus)
             {
@@ -74,7 +74,7 @@ public class DisplayInspectorText : MonoBehaviour
         inspectorWindowTitle.text = foodSource.Species.ID.Data.Name.Get(ItemName.Type.Colloquial);
 
         string displayText;
-        bool hasNeeds = GameManager.Instance.needRatings.HasRating(foodSource);
+        bool hasNeeds = GameManager.Instance.Needs.HasCache(foodSource);
 
         if (foodSource.isUnderConstruction || !hasNeeds)
         {
@@ -162,7 +162,7 @@ public class DisplayInspectorText : MonoBehaviour
         needSliders.Clear();
     }
 
-    private void GenerateSliders(Life life) 
+    private void GenerateSliders(MonoBehaviour life) 
     {
         if (life is FoodSource)
         {

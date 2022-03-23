@@ -11,8 +11,8 @@ public class DebuggingScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
-            NeedAvailabilityCache availabilityCache = new NeedAvailabilityCache();
-            NeedRatingCache ratingCache = new NeedRatingCache(availabilityCache);
+            NeedAvailabilityCache availabilityCache = GameManager.Instance.Needs.Availability;
+            NeedRatingCache ratingCache = GameManager.Instance.Needs.Ratings;
 
             // Report the availabilities of all populations
             string message = "Population need availabilities:";

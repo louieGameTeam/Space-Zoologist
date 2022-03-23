@@ -21,12 +21,14 @@ public static class NeedAvailabilityBuilder
     /// This function takes poulation dominance into account, distributing needs available
     /// based on the dominance of each species over the other species
     /// </remarks>
+    /// <param name="rpm">
+    /// Script that partitions all populations
+    /// </param>
     /// <returns></returns>
-    public static Dictionary<Population, NeedAvailability> BuildDistribution()
+    public static Dictionary<Population, NeedAvailability> BuildDistribution(ReservePartitionManager rpm)
     {
         Dictionary<Population, NeedAvailability> result = new Dictionary<Population, NeedAvailability>();
         Dictionary<Population, List<NeedAvailabilityItem>> populationToItems = new Dictionary<Population, List<NeedAvailabilityItem>>();
-        ReservePartitionManager rpm = GameManager.Instance.m_reservePartitionManager;
 
         // Function to help get the list. If it is not in the dictionary yet,
         // we add it first and then return it

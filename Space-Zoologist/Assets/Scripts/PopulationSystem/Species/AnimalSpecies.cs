@@ -14,7 +14,7 @@ public class AnimalSpecies : ScriptableObject
     public int GrowthRate => growthRate;
     public int DecayRate => decayRate;
     public float Size => size;
-    public List<TileType> AccessibleTerrain => accessibleTerrain;
+    public HashSet<TileType> AccessibleTerrain => needs.FindTraversibleTerrain();
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
     public int MoveCost => moveCost;
@@ -22,10 +22,6 @@ public class AnimalSpecies : ScriptableObject
     // TODO setup tile weights for species
     public Dictionary<TileType, byte> TilePreference = default;
     public RuntimeAnimatorController AnimatorController => animatorController;
-    public List<TerrainNeedConstructData> TerrainNeeds => terrainNeeds;
-    public List<FoodNeedConstructData> FoodNeeds => foodNeeds;
-    public List<LiquidNeedConstructData> LiquidNeeds => liquidNeeds;
-    public List<PreyNeedConstructData> PreyNeeds => preyNeeds;
     public NeedRegistry Needs => needs;
 
     // Values
@@ -39,13 +35,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int moveCost = default;
 
     [SerializeField] private float size = default;
-    [SerializeField] private List<TileType> accessibleTerrain = default;
     [SerializeField] private Sprite icon = default;
-
-    [SerializeField] private List<TerrainNeedConstructData> terrainNeeds = default;
-    [SerializeField] private List<FoodNeedConstructData> foodNeeds = default;
-    [SerializeField] private List<LiquidNeedConstructData> liquidNeeds = default;
-    [SerializeField] private List<PreyNeedConstructData> preyNeeds = default;
 
     [SerializeField]
     [Tooltip("Registry of all the animal's needs")]
@@ -54,51 +44,6 @@ public class AnimalSpecies : ScriptableObject
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;
-
-    public Dictionary<ItemID, Need> SetupNeeds()
-    {
-        Dictionary<ItemID, Need> needs = new Dictionary<ItemID, Need>();
-        
-        //Terrain Needs
-        foreach (TerrainNeedConstructData need in terrainNeeds)
-        {
-            if (!need.ID.IsWater)
-            {
-                needs.Add(need.ID, new TerrainNeed(need, this));
-            }
-        }
-
-        //Food Needs
-        foreach (FoodNeedConstructData need in foodNeeds)
-        {
-            needs.Add(need.ID, new FoodNeed(need, minFoodRequired));
-        }
-
-        // Water Needs
-        foreach (LiquidNeedConstructData need in liquidNeeds)
-        {
-            needs.Add(need.ID, new LiquidNeed(need));
-        }
-
-        //Prey Needs
-        foreach (PreyNeedConstructData need in preyNeeds)
-        {
-            needs.Add(need.ID, new PreyNeed(need));
-        }
-
-        return needs;
-    }
-
-    public Need GetTerrainWaterNeed()
-    {
-        TerrainNeedConstructData terrainWaterNeed = terrainNeeds.Find(need => need.ID.IsWater);
-
-        if (terrainWaterNeed != null)
-        {
-            return new TerrainNeed(terrainWaterNeed, this);
-        }
-        else return null;
-    }
 
     public float GetTerrainDominance(TileType tile)
     {

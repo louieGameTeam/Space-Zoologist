@@ -11,8 +11,8 @@ public enum GrowthStatus { growing, stagnant, decaying }
 public class GrowthCalculator
 {
     #region Public Properties
-    public NeedAvailability Availabilty => GameManager.Instance.needAvailability.GetAvailability(population);
-    public NeedRating Rating => GameManager.Instance.needRatings.GetRating(population);
+    public NeedAvailability Availabilty => GameManager.Instance.Needs.Availability.GetAvailability(population);
+    public NeedRating Rating => GameManager.Instance.Needs.Ratings.GetRating(population);
     /// <summary>
     /// Rate of change for the population, 1f for doubling the population
     /// and -1f for removing the population

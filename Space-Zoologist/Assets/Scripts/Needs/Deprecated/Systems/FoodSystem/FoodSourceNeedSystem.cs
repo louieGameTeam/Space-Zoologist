@@ -94,25 +94,26 @@ public class FoodSourceNeedSystem : NeedSystem
             // 3. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
             for (int j = 0; j <= 1; j++)
             {
-                foreach (KeyValuePair<ItemID, Need> need in population.Needs)
-                {
-                    // 4. Calculate preferred and available food, skipping if need already met
-                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(need.Value.ID))
-                    {
-                        continue;
-                    }
+                // NOTE: uses the old need system
+                //foreach (KeyValuePair<ItemID, Need> need in population.Needs)
+                //{
+                //    // 4. Calculate preferred and available food, skipping if need already met
+                //    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(need.Value.ID))
+                //    {
+                //        continue;
+                //    }
 
-                    if (j == 0 && need.Value.IsPreferred)
-                    {
-                        preferredAmount += foodSourceCalculators[need.Value.ID].CalculateDistribution(population);
-                        continue;
-                    }
+                //    if (j == 0 && need.Value.IsPreferred)
+                //    {
+                //        preferredAmount += foodSourceCalculators[need.Value.ID].CalculateDistribution(population);
+                //        continue;
+                //    }
 
-                    if (j == 1 && !need.Value.IsPreferred)
-                    {
-                        compatibleAmount += foodSourceCalculators[need.Value.ID].CalculateDistribution(population);
-                    }
-                }
+                //    if (j == 1 && !need.Value.IsPreferred)
+                //    {
+                //        compatibleAmount += foodSourceCalculators[need.Value.ID].CalculateDistribution(population);
+                //    }
+                //}
             }
             // population.UpdateFoodNeed(preferredAmount, compatibleAmount);
         }
@@ -125,7 +126,7 @@ public class FoodSourceNeedSystem : NeedSystem
             this.foodSourceCalculators.Add(foodSource.Species.ID, new FoodSourceCalculator(foodSource.Species.ID));
         }
 
-        this.foodSourceCalculators[foodSource.Species.ID].AddSource(foodSource);
+        //this.foodSourceCalculators[foodSource.Species.ID].AddSource(foodSource);
 
         this.isDirty = true;
     }
@@ -133,7 +134,7 @@ public class FoodSourceNeedSystem : NeedSystem
     public void RemoveFoodSource(FoodSource foodSource) {
         if (this.foodSourceCalculators.ContainsKey(foodSource.Species.ID))
         {
-            this.foodSourceCalculators[foodSource.Species.ID].RemoveSource(foodSource);
+            //this.foodSourceCalculators[foodSource.Species.ID].RemoveSource(foodSource);
 
             this.isDirty = true;
         }

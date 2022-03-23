@@ -139,7 +139,9 @@ public class FoodSourceCalculator : NeedCalculator
             }
         }
         UpdateLocalDominance(population);
-        population.UpdateNeed(foodSourceID, foodAcquired);
+        
+        // Cannot update the population need because that system is deprecated
+        //population.UpdateNeed(foodSourceID, foodAcquired);
         //Debug.Log(population.species.SpeciesName + " receieved " + foodAcquired + " from " + this.FoodSourceName);
         return foodAcquired;
     }

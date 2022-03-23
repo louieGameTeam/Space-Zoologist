@@ -106,7 +106,7 @@ public class VerboseInspector : MonoBehaviour
                 CreateInspectorItem(food.Species);
 
                 // Make sure the food source has a rating before trying to access it
-                if (GameManager.Instance.needRatings.HasRating(food))
+                if (GameManager.Instance.Needs.HasCache(food))
                 {
                     CreateInspectorItem(food.Availability, "FoodSourceNeedAvailability");
                     CreateInspectorItem(food.Rating, "FoodSourceNeedRating");
@@ -124,7 +124,7 @@ public class VerboseInspector : MonoBehaviour
                 CreateInspectorItem(growthCalculator, "GrowthCalculator");
 
                 // Make sure the population has a rating before trying to access it
-                if (GameManager.Instance.needRatings.HasRating(animal.PopulationInfo))
+                if (GameManager.Instance.Needs.HasCache(animal.PopulationInfo))
                 {
                     CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Availabilty, "PopulationNeedAvailability");
                     CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Rating, "PopulationNeedRating");
