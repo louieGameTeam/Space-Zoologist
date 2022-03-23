@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,22 +7,50 @@ using UnityEngine;
 /// <summary>
 /// An available item that a species needs
 /// </summary>
-[System.Serializable]
+[Serializable]
 public class NeedAvailabilityItem
 {
+    #region Public Typedefs
+    /// <summary>
+    /// Compares two need availability items id and metadata, ignoring amount available
+    /// </summary>
+    public class ItemComparer : IEqualityComparer<NeedAvailabilityItem>
+    {
+        public bool Equals(NeedAvailabilityItem a, NeedAvailabilityItem b)
+        {
+            // Check if both are not null
+            if (a != null && b != null)
+            {
+                // Equal if they have equal id and metadata
+                return a.id == b.id && Equals(a.metaData, b.metaData);
+            }
+            // If both are null then they are equal
+            else if (a == null && b == null) return true;
+            // If one is null and the other is not null they are unequal
+            else return false;
+        }
+        public int GetHashCode(NeedAvailabilityItem item)
+        {
+            int hash = item.id.GetHashCode();
+            if (item.metaData != null) hash ^= item.metaData.GetHashCode();
+            return hash;
+        }
+    }
+    #endregion
+
     #region Public Properties
     public ItemID ID => id;
     public float AmountAvailable => amountAvailable;
     public object MetaData => metaData;
     public bool IsDrinkingWater => id.IsWater &&
         metaData != null &&
-        metaData is float[];
-    public float[] WaterComposition
+        metaData is LiquidBodyContent;
+    public LiquidBodyContent WaterContent
     {
         get
         {
-            if (IsDrinkingWater) return metaData as float[];
-            else throw new System.InvalidOperationException(
+            if (IsDrinkingWater) return metaData as LiquidBodyContent;
+            else throw new InvalidOperationException(
                 "Cannot obtain the water composition for this item " +
                 "because it is not a drinking water need");
         }
@@ -73,28 +102,20 @@ public class NeedAvailabilityItem
         else
         {
             NeedAvailabilityItem item = obj as NeedAvailabilityItem;
-
-            // If both are drinking water 
-            if (IsDrinkingWater && item.IsDrinkingWater)
-            {
-                return id == item.id &&
-                    amountAvailable == item.AmountAvailable &&
-                    WaterComposition.SequenceEqual(item.WaterComposition);
-            }
-            else if (!IsDrinkingWater && !item.IsDrinkingWater)
-            {
-                return id == item.ID && amountAvailable == item.AmountAvailable;
-            }
-            else return false;
+            return id == item.id && amountAvailable == item.amountAvailable && Equals(metaData, item.metaData);
         }
     }
     public override int GetHashCode()
     {
-        if (IsDrinkingWater)
+        int hash = id.GetHashCode() ^ amountAvailable.GetHashCode();
+
+        // If there is metadata then add its hash code
+        if (metaData != null)
         {
-            return id.GetHashCode() + amountAvailable.GetHashCode() + WaterComposition.GetHashCode();
+            return hash ^ metaData.GetHashCode();
         }
-        else return id.GetHashCode() + amountAvailable.GetHashCode();
+        // If there is no metadata do not add its hash
+        else return hash;
     }
     #endregion
 }

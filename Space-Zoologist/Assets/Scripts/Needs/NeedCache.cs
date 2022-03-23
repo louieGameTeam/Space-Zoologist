@@ -14,7 +14,7 @@ public class NeedCache
     #endregion
 
     #region Public Methods
-    public void RebuildAll(ReservePartitionManager rpm, List<FoodSource> foodSources)
+    public void RebuildAll(List<FoodSource> foodSources)
     {
         // Rebuild the food source first, because population depends on their output,
         // which depends on their ratings
@@ -22,7 +22,7 @@ public class NeedCache
         Ratings.RebuildFoodSourceRatings(Availability);
 
         // Rebuild the populations now that foods are taken care of
-        Availability.RebuildAllAvailabilities(rpm);
+        Availability.RebuildAllAvailabilities();
         Ratings.RebuildPopulationRatings(Availability);
     }
     /// <summary>

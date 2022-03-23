@@ -397,7 +397,7 @@ public class GameManager : MonoBehaviour
     #region Need System Functions
     public void RebuildNeedCache()
     {
-        Needs.RebuildAll(m_reservePartitionManager, m_foodSourceManager.FoodSources);
+        Needs.RebuildAll(m_foodSourceManager.FoodSources);
     }
     public void UpdateAccessMap()
     {

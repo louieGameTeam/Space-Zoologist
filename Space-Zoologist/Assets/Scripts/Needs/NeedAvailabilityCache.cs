@@ -26,9 +26,9 @@ public class NeedAvailabilityCache
     /// availabilities must be rebuilt in one operation. The codebase 
     /// does not currently support insertions or updates of existing availability
     /// </remarks>
-    public void RebuildAllAvailabilities(ReservePartitionManager rpm)
+    public void RebuildAllAvailabilities()
     {
-        populationNeedAvailabilities = NeedAvailabilityBuilder.BuildDistribution(rpm);
+        populationNeedAvailabilities = NeedAvailabilityBuilder.BuildDistribution();
     }
 
     /// <summary>

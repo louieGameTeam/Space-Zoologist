@@ -43,6 +43,10 @@ public class NeedData
     private bool needed;
 
     [SerializeField]
+    [Tooltip("The way in which this species needs this animal")]
+    private SpeciesNeedType speciesNeedType;
+
+    [SerializeField]
     [Tooltip("If true, then this water need should be treated as terrain " +
         "that the species can traverse")]
     private bool useAsTerrainNeed = false;
@@ -54,10 +58,6 @@ public class NeedData
     [Tooltip("How much the need is preferred compared to other needs" +
         " with the same type")]
     private bool preferred = false;
-
-    [SerializeField]
-    [Tooltip("The way in which this species needs this animal")]
-    private SpeciesNeedType speciesNeedType;
 
     [SerializeField]
     [Tooltip("If true, then this water need should be treated as water " +

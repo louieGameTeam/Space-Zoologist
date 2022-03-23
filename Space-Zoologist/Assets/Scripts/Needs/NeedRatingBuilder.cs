@@ -18,10 +18,7 @@ public static class NeedRatingBuilder
     /// Build the need rating for a single population
     /// </summary>
     /// <param name="population">Population to rate</param>
-    /// <param name="availability">
-    /// Needs available to that population.
-    /// If 'null' is provided, builds the need availability from scratch
-    /// </param>
+    /// <param name="availability">Needs available to that population</param>
     /// <returns>The rating for the population's needs</returns>
     public static NeedRating Build(Population population, NeedAvailability availability)
     {
@@ -68,7 +65,7 @@ public static class NeedRatingBuilder
             foodSource.Species.WaterTilesRequired);
 
         // Return the new need rating object
-        return new NeedRating(0, -1f, terrainRating, waterRating);
+        return new NeedRating(0, 1, terrainRating, waterRating);
     }
     #endregion
 
@@ -81,13 +78,7 @@ public static class NeedRatingBuilder
         foreach (NeedData need in predatorNeeds)
         {
             // Find the availability of predators
-            NeedAvailabilityItem predator = availability.FindWithItem(need.ID);
-
-            // If that predator is available then increase the count by the number available
-            if (predator != null)
-            {
-                predatorCount += predator.AmountAvailable;
-            }
+            predatorCount += availability.CountAvailable(need.ID);
         }
 
         return (int)predatorCount;
@@ -123,7 +114,7 @@ public static class NeedRatingBuilder
         // Select only water that is drinkable
         IEnumerable<NeedAvailabilityItem> drinkableWater = availability
             .FindAllWater()
-            .Where(item => needs.WaterIsDrinkable(item.WaterComposition));
+            .Where(item => needs.WaterIsDrinkable(item.WaterContent.Contents));
 
         // Number of water tiles that the species can drink from
         float totalDrinkableWater = drinkableWater.Sum(item => item.AmountAvailable);
@@ -143,7 +134,7 @@ public static class NeedRatingBuilder
             {
                 // Average the fresh water from all water sources
                 float averageFreshWater = drinkableWater
-                    .Sum(item => item.WaterComposition[0] * item.AmountAvailable);
+                    .Sum(item => item.WaterContent.Contents[0] * item.AmountAvailable);
                 averageFreshWater /= totalDrinkableWater;
 
                 // Boost the rating by how close it is to the max possible fresh water
@@ -169,19 +160,17 @@ public static class NeedRatingBuilder
         // Go through each need in the needs
         foreach (NeedData need in needs)
         {
-            NeedAvailabilityItem availabilityItem = availability
-                .Find(item => itemMatch.Invoke(item, need));
+            // NOTE: this won't work properly for Momos, 
+            // we have to find a way to count INDIVIDUAL plants instead of
+            // the number of fruits the plants are outputting
+            float totalAvailable = availability
+                .CountAvailable(item => itemMatch.Invoke(item, need));
 
-            // If that item is available,
-            // then increase tiles occupied by the amount available
-            if (availabilityItem != null)
+            if (need.Preferred)
             {
-                if (need.Preferred)
-                {
-                    preferredUsed += availabilityItem.AmountAvailable;
-                }
-                else survivableUsed += availabilityItem.AmountAvailable;
+                preferredUsed += totalAvailable;
             }
+            else survivableUsed += totalAvailable;
         }
 
         // Cannot use more than what is needed

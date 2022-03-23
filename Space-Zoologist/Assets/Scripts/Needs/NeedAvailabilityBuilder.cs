@@ -21,14 +21,12 @@ public static class NeedAvailabilityBuilder
     /// This function takes poulation dominance into account, distributing needs available
     /// based on the dominance of each species over the other species
     /// </remarks>
-    /// <param name="rpm">
-    /// Script that partitions all populations
-    /// </param>
     /// <returns></returns>
-    public static Dictionary<Population, NeedAvailability> BuildDistribution(ReservePartitionManager rpm)
+    public static Dictionary<Population, NeedAvailability> BuildDistribution()
     {
         Dictionary<Population, NeedAvailability> result = new Dictionary<Population, NeedAvailability>();
         Dictionary<Population, List<NeedAvailabilityItem>> populationToItems = new Dictionary<Population, List<NeedAvailabilityItem>>();
+        ReservePartitionManager rpm = GameManager.Instance.m_reservePartitionManager;
 
         // Function to help get the list. If it is not in the dictionary yet,
         // we add it first and then return it
@@ -116,7 +114,7 @@ public static class NeedAvailabilityBuilder
             // for this tile
             if (appliedDominance > 0f)
             {
-                // Go through each population competing for this food source
+                // Go through each population competing for this tile
                 foreach (Population population in kvp.Value)
                 {
                     // Compute the proportion of the tile that this species gets for themselves
@@ -139,7 +137,7 @@ public static class NeedAvailabilityBuilder
 
             // Convert accessible liquids to need availability items
             IEnumerable<NeedAvailabilityItem> waterItems = accessibleLiquids
-                .Select(comp => new NeedAvailabilityItem(waterID, 1, comp));
+                .Select(comp => new NeedAvailabilityItem(waterID, 1, new LiquidBodyContent(comp)));
 
             // Add the water items to the list in the dictionary
             Get(population).AddRange(waterItems);
@@ -187,36 +185,10 @@ public static class NeedAvailabilityBuilder
 
         // Add the water items
         IEnumerable<NeedAvailabilityItem> waterItems = liquidCompositionsInRange
-            .Select(composition => new NeedAvailabilityItem(waterID, 1, composition));
+            .Select(composition => new NeedAvailabilityItem(waterID, 1, new LiquidBodyContent(composition)));
         needAvailabilityItems.AddRange(waterItems);
              
         return new NeedAvailability(needAvailabilityItems.ToArray());
-    }
-    #endregion
-
-    #region Private Methods
-    private static IEnumerable<NeedAvailabilityItem> ConvertLiquidCompositions(List<float[]> liquidCompositions)
-    {
-        // Map liquid composition to the number of times it appears
-        Dictionary<float[], int> liquidCompositionCounts = new Dictionary<float[], int>(new LiquidCompositionComparer());
-
-        // Go through each composition and add it to the dictionary
-        foreach (float[] composition in liquidCompositions)
-        {
-            if (liquidCompositionCounts.ContainsKey(composition))
-            {
-                liquidCompositionCounts[composition]++;
-            }
-            else liquidCompositionCounts.Add(composition, 1);
-        }
-
-        // Get the id of the water
-        ItemID freshWaterID = ItemRegistry.FindAnyNameContains("Water");
-
-        // Convert each kvp in the dictionary to a need availability item
-        // and add it to the list of items
-        return liquidCompositionCounts
-            .Select(kvp => new NeedAvailabilityItem(freshWaterID, kvp.Value, kvp.Key));
     }
     #endregion
 }
