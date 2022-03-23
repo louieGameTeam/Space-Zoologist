@@ -11,8 +11,12 @@ public enum GrowthStatus { growing, stagnant, decaying }
 public class GrowthCalculator
 {
     #region Public Properties
+    public bool HasNeedCache => GameManager.Instance.Needs.HasCache(Population);
     public NeedAvailability Availabilty => GameManager.Instance.Needs.Availability.GetAvailability(population);
     public NeedRating Rating => GameManager.Instance.Needs.Ratings.GetRating(population);
+    public Population Population => population;
+    public int GrowthCountdown { get; private set; } = 0;
+    public int DecayCountdown { get; private set; } = 0;
     /// <summary>
     /// Rate of change for the population, 1f for doubling the population
     /// and -1f for removing the population
@@ -21,10 +25,19 @@ public class GrowthCalculator
     {
         get
         {
-            if (Rating.FoodNeedIsMet && Rating.TerrainNeedIsMet && Rating.WaterNeedIsMet)
+            // If there are some predators then the decay rate depends on the number of predators
+            if (Rating.PredatorCount > 0)
+            {
+                float ratio = -Rating.PredatorCount / (float)population.Count;
+                return Mathf.Max(ratio, -1f);
+            }
+            // If there are no predators and all needs are met then compute the total change rate
+            else if (Rating.FoodNeedIsMet && Rating.TerrainNeedIsMet && Rating.WaterNeedIsMet)
             {
                 return (Rating.FoodRating + Rating.TerrainRating + Rating.WaterRating - 3) / 3f;
             }
+            // If there are no predators but not all needs are met then
+            // the population will decline
             else
             {
                 float rate = 0f;
@@ -47,9 +60,6 @@ public class GrowthCalculator
             else return GrowthStatus.stagnant;
         }
     }
-    public Population Population => population;
-    public int GrowthCountdown { get; private set; } = 0;
-    public int DecayCountdown { get; private set; } = 0;
     #endregion
 
     #region Private Fields
@@ -66,34 +76,6 @@ public class GrowthCalculator
     #endregion
 
     #region Public Methods
-    // Keep this so we know how the predator-prey used to be computed
-    //public void CalculateGrowth()
-    //{
-    //    float predatorvalue = calculatepredatorpreyneed();
-    //    if (predatorvalue > 0f)
-    //    {
-    //        this.growthstatus = growthstatus.declining;
-    //        this.decaycountdown = 1;
-    //        this.populationincreaserate = -1 * predatorvalue;
-    //        return;
-    //    }
-    //}
-
-    // Used to compute the predator prey need,
-    // this should be moved to the NeedRatingFactory
-    //public float calculatePredatorPreyNeed()
-    //{
-    //    float predatorValue = 0;
-    //    foreach (KeyValuePair<ItemID, Need> need in population.Needs)
-    //    {
-    //        if (need.Value.NeedType.Equals(NeedType.Prey))
-    //        {
-    //            predatorValue += need.Value.NeedValue;
-    //        }
-    //    }
-    //    return predatorValue;
-    //}
-
     /// <summary>
     /// Compute the new population size when the population grows/shrinks
     /// </summary>

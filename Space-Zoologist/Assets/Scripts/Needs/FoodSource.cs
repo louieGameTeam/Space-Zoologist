@@ -15,8 +15,9 @@ public class FoodSource : MonoBehaviour
     {
         get
         {
-            // Check if terrain and water ratings are above zero
-            if (Rating.TerrainRating > 0.001f && Rating.WaterRating > 0.001f)
+            // Compute the output only if we are not under construction and all ratings
+            // are a little over 0
+            if (!isUnderConstruction && Rating.TerrainRating > 0.001f && Rating.WaterRating > 0.001f)
             {
                 float boost = (Rating.TerrainRating + Rating.WaterRating) / 2;
                 return Mathf.Ceil(species.BaseOutput * boost);
@@ -25,6 +26,7 @@ public class FoodSource : MonoBehaviour
         }
     }
     public Vector2 Position { get; private set; } = Vector2.zero;
+    public bool HasNeedCache => GameManager.Instance.Needs.HasCache(this);
     public NeedAvailability Availability => GameManager.Instance.Needs.Availability.GetAvailability(this);
     public NeedRating Rating => GameManager.Instance.Needs.Ratings.GetRating(this);
 
@@ -36,9 +38,6 @@ public class FoodSource : MonoBehaviour
     private int[] accessibleTerrian = new int[(int)TileType.TypesOfTiles];
     private bool hasAccessibilityChanged = default;
     private bool hasAccessibilityChecked = default;
-
-    // To figure out if the output has changed, in order to invoke vent
-    private float prevOutput = 0;
 
     private void Awake()
     {

@@ -31,7 +31,7 @@ public class DisplayInspectorText : MonoBehaviour
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
 
-        if (GameManager.Instance.Needs.HasCache(population))
+        if (population.GrowthCalculator.HasNeedCache)
         {
             switch (population.GrowthCalculator.GrowthStatus)
             {
@@ -52,10 +52,10 @@ public class DisplayInspectorText : MonoBehaviour
             this.inspectorWindowText.text = "";
 
             // Gotta handle predator prey differently
-            //if (population.GrowthCalculator.calculatePredatorPreyNeed() > 0)
-            //{
-            //    this.inspectorWindowText.text = $"{population.gameObject.name} looks frightened...";
-            //}
+            if (population.GrowthCalculator.Rating.PredatorCount > 0)
+            {
+                this.inspectorWindowText.text = $"{population.gameObject.name} looks frightened...";
+            }
 
             GenerateSliders(population);
         }

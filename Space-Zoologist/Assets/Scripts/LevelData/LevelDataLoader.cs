@@ -31,10 +31,13 @@ public class LevelDataLoader : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        foreach (Vector3Int start in currentLevel.StartinPositions)
+        if (currentLevel)
         {
-            Gizmos.DrawSphere(start, 0.5f);
+            Gizmos.color = Color.green;
+            foreach (Vector3Int start in currentLevel.StartinPositions)
+            {
+                Gizmos.DrawSphere(start, 0.5f);
+            }
         }
     }
     #endregion
