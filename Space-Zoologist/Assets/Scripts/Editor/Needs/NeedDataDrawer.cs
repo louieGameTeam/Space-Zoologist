@@ -32,11 +32,20 @@ public class NeedDataDrawer : PropertyDrawer
             // Iterate over all children
             foreach (SerializedProperty child in children)
             {
+                // Check if we should indent this property
+                bool indent = IndentProperty(parent, child);
+
+                // If we should indent then increase the indent
+                if (indent) EditorGUI.indentLevel++;
+
                 // Only display the property if we are supposed to
                 if (DisplayProperty(parent, child))
                 {
                     EditorGUIAuto.PropertyField(ref position, child, true);
                 }
+
+                // If we indented before then restore normal indentation
+                if (indent) EditorGUI.indentLevel--;
             }
 
             // Decrease indent
@@ -73,63 +82,89 @@ public class NeedDataDrawer : PropertyDrawer
     #endregion
 
     #region Private Methods
+    private static bool IndentProperty(SerializedProperty parent, SerializedProperty child)
+    {
+        ItemID itemID = GetID(parent);
+
+        // Traversible-only field is conditional on "useAsTerrainNeed" for first water, so indent it
+        return (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "traversibleOnly") ||
+
+            // Preferred field is conditional on "useAsTerrainNeed" for first water, so indent it
+            (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "preferred") ||
+
+            // Preferred field is conditional on "useAsFoodNeed" for foods, so indent it
+            (itemID.Category == ItemRegistry.Category.Food && child.name == "preferred") ||
+
+            // Preferred tree field is conditional on "useAsTreeNeed", so indent it 
+            (child.name == "preferredTree") ||
+
+            // Minimum is conditional on "useAsWaterNeed" for first water, so indent it
+            (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "minimum") ||
+
+            // Maximum is conditional on "useAsWaterNeed" for first water, so indent it
+            (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "maximum");
+    }
     private static bool DisplayProperty(SerializedProperty parent, SerializedProperty child)
     {
-        // Get the category
-        SerializedProperty id = parent.FindPropertyRelative(nameof(id));
-        SerializedProperty category = id.FindPropertyRelative(nameof(category));
-        ItemRegistry.Category categoryData = (ItemRegistry.Category)category.enumValueIndex;
-
-        // Get the index
-        SerializedProperty index = id.FindPropertyRelative(nameof(index));
-        int indexData = index.intValue;
-
         // Construct the item id
-        ItemID itemID = new ItemID(categoryData, indexData);
-        // Check if the item is water
-        bool isWater = itemID.IsWater;
+        ItemID itemID = GetID(parent);
 
-        // Traversible only applies to terrain
-        if (child.name == "traversibleOnly")
-        {
-            return IsTerrainNeed(parent);
-        }
-        // Only the first water ID can be used as terrain need
-        if (child.name == "useAsTerrainNeed")
-        {
-            return itemID.IsWater && itemID.WaterIndex == 0;
-        }
-        // Can only prefer a food or tile that is not water
-        if (child.name == "preferred")
-        {
-            // Only display tile preference rating if it is not traversible only
-            if (IsTerrainNeed(parent))
-            {
-                SerializedProperty traversibleOnly = parent.FindPropertyRelative(nameof(traversibleOnly));
-                return !traversibleOnly.boolValue;
-            }
-            // Always display food preference
-            return categoryData == ItemRegistry.Category.Food;
-        }
-        // Species type only applies for species
-        else if (child.name == "speciesNeedType")
-        {
-            return categoryData == ItemRegistry.Category.Species;
-        }
-        // Display use as water need for the first water
-        else if (child.name == "useAsWaterNeed")
-        {
-            return isWater && itemID.WaterIndex == 0;
-        }
-        // Min max only applies for water
-        else if (child.name == "minimum" || child.name == "maximum")
-        {
-            return IsWaterNeed(parent);
-        }
-        // Any child that does not match a name is displayed by default
-        else return true;
+        // Get some values to help with displaying other properties
+        bool useAsTerrainNeed = parent.FindPropertyRelative(nameof(useAsTerrainNeed)).boolValue;
+        bool useAsFoodNeed = parent.FindPropertyRelative(nameof(useAsFoodNeed)).boolValue;
+        bool useAsTreeNeed = parent.FindPropertyRelative(nameof(useAsTreeNeed)).boolValue;
+        bool useAsWaterNeed = parent.FindPropertyRelative(nameof(useAsWaterNeed)).boolValue;
+        bool traversibleOnly = parent.FindPropertyRelative(nameof(traversibleOnly)).boolValue;
+        bool isNonWaterTile = itemID.Category == ItemRegistry.Category.Tile && !itemID.IsWater;
+        bool isFirstWater = itemID.IsWater && itemID.WaterIndex == 0;
+        bool nonFirstWater = itemID.IsWater && itemID.WaterIndex != 0;
+
+        // Display species need type for all species
+        return (itemID.Category == ItemRegistry.Category.Species && child.name == "speciesNeedType") ||
+
+            // Display "useAsTerrainNeed" only for the first water
+            (isFirstWater && child.name == "useAsTerrainNeed") ||
+
+            // Display "traversibleOnly" for any non water tile
+            (isNonWaterTile && child.name == "traversibleOnly") ||
+
+            // Display "traversibleOnly" for the first water if it is used as a terrain need
+            (isFirstWater && useAsTerrainNeed && child.name == "traversibleOnly") ||
+
+            // Display "useAsFoodNeed" for all food
+            (itemID.Category == ItemRegistry.Category.Food && child.name == "useAsFoodNeed") ||
+
+            // Display "preferred" only for foods used as food needs
+            (itemID.Category == ItemRegistry.Category.Food && useAsFoodNeed && child.name == "preferred") ||
+
+            // Display "preferred" for any non water tile that is not traversible only
+            (isNonWaterTile && !traversibleOnly && child.name == "preferred") ||
+
+            // Display "preferred" for first water tile only if it is used as a terrain need
+            (isFirstWater && useAsTerrainNeed && !traversibleOnly && child.name == "preferred") ||
+
+            // Display "useAsTreeNeed" for any food
+            (itemID.Category == ItemRegistry.Category.Food && child.name == "useAsTreeNeed") ||
+
+            // Display "preferredTree" only for food that is used as tree need
+            (itemID.Category == ItemRegistry.Category.Food && useAsTreeNeed && child.name == "preferredTree") ||
+
+            // Display "useAsWaterNeed" only for first water
+            (isFirstWater && child.name == "useAsWaterNeed") ||
+
+            // Display "minimum" for first water only if it is used as a water need
+            (isFirstWater && useAsWaterNeed && child.name == "minimum") ||
+
+            // Display "minimum" for any non-first water
+            (nonFirstWater && child.name == "minimum") ||
+
+            // Display "maximum" for first water only if it is used as a water need
+            (isFirstWater && useAsWaterNeed && child.name == "maximum") ||
+
+            // Display "maximum" for any non-first water
+            (nonFirstWater && child.name == "maximum");
     }
-    private static bool IsTerrainNeed(SerializedProperty needData)
+    private static ItemID GetID(SerializedProperty needData)
     {
         // Get the category
         SerializedProperty id = needData.FindPropertyRelative(nameof(id));
@@ -141,39 +176,7 @@ public class NeedDataDrawer : PropertyDrawer
         int indexData = index.intValue;
 
         // Construct the item id
-        ItemID itemID = new ItemID(categoryData, indexData);
-
-        // Determine if the need data is used as terrain
-        bool useAsTerrainNeed = needData.FindPropertyRelative(nameof(useAsTerrainNeed)).boolValue;
-
-        // This is a terrain need if the category is a tile and...
-        return itemID.Category == ItemRegistry.Category.Tile && 
-            // ...either the item is not water or...
-            (!itemID.IsWater || 
-            // ...if it is the first water, it should be used as a terrain need
-            (itemID.WaterIndex == 0 && useAsTerrainNeed));
-    }
-    private static bool IsWaterNeed(SerializedProperty needData)
-    {
-        // Get the category
-        SerializedProperty id = needData.FindPropertyRelative(nameof(id));
-        SerializedProperty category = id.FindPropertyRelative(nameof(category));
-        ItemRegistry.Category categoryData = (ItemRegistry.Category)category.enumValueIndex;
-
-        // Get the index
-        SerializedProperty index = id.FindPropertyRelative(nameof(index));
-        int indexData = index.intValue;
-
-        // Construct the item id
-        ItemID itemID = new ItemID(categoryData, indexData);
-
-        // Determine if the need data is used as terrain
-        bool useAsWaterNeed = needData.FindPropertyRelative(nameof(useAsWaterNeed)).boolValue;
-
-        // This is a water need if the item is water and either
-        // it is not the first water or if it is, then the first water
-        // is marked for use as a water need
-        return itemID.IsWater && (itemID.WaterIndex != 0 || useAsWaterNeed);
+        return new ItemID(categoryData, indexData);
     }
     #endregion
 }

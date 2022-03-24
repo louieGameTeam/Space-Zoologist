@@ -91,6 +91,15 @@ public class NeedRegistry
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Food)
             .Where(need => need.Needed)
+            .Where(need => need.UseAsFoodNeed)
+            .OrderByDescending(need => need.Preferred)
+            .ToArray();
+    }
+    public NeedData[] FindTreeNeeds()
+    {
+        return GetNeedsWithCategory(ItemRegistry.Category.Food)
+            .Where(need => need.Needed)
+            .Where(need => need.UseAsTreeNeed)
             .OrderByDescending(need => need.Preferred)
             .ToArray();
     }
@@ -102,10 +111,6 @@ public class NeedRegistry
             .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
             .OrderByDescending(need => need.Preferred)
             .ToArray();
-    }
-    public NeedData[] FindAllNeeded()
-    {
-        return FindAll(need => need.Needed);
     }
     public NeedData[] FindAll(Predicate<NeedData> predicate)
     {

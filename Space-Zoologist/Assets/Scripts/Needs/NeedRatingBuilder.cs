@@ -39,9 +39,13 @@ public static class NeedRatingBuilder
             population.Species.Needs,
             availability,
             population.Species.WaterTilesRequired * population.Count);
+        float treeRating = TreeRating(
+            population.Species.Needs,
+            availability,
+            population.Species.TerrainTilesRequired * population.Count);
 
         // Return the new need rating object
-        return new NeedRating(predatorCount, foodRating, terrainRating, waterRating);
+        return new NeedRating(predatorCount, foodRating, terrainRating, waterRating, treeRating);
     }
     /// <summary>
     /// Build the need rating for a single food source
@@ -65,7 +69,7 @@ public static class NeedRatingBuilder
             foodSource.Species.WaterTilesRequired);
 
         // Return the new need rating object
-        return new NeedRating(0, 1, terrainRating, waterRating);
+        return new NeedRating(0, float.NaN, terrainRating, waterRating, float.NaN);
     }
     #endregion
 
@@ -77,43 +81,46 @@ public static class NeedRatingBuilder
 
         foreach (NeedData need in predatorNeeds)
         {
-            // Find the availability of predators
-            predatorCount += availability.CountAvailable(need.ID);
+            // Add up the amount of species available with this ID
+            predatorCount += availability
+                .FindWithItem(need.ID)
+                .AmountAvailable;
         }
 
         return (int)predatorCount;
     }
     private static float FoodRating(NeedRegistry needs, NeedAvailability availability, int minFoodNeeded, int maxFoodConsumed)
     {
-        // Get all food needs
-        NeedData[] foodNeeds = needs.FindFoodNeeds();
-
-        // Get the amount of foods consumed
         return SimplePreferenceNeedRating(
-            foodNeeds,
-            availability,
+            needs.FindFoodNeeds(),
+            availability.FindFoodItems(),
             minFoodNeeded,
             maxFoodConsumed,
-            (item, need) => item.ID == need.ID);
+            true);
     }
     private static float TerrainRating(NeedRegistry needs, NeedAvailability availability, int terrainTilesNeeded)
     {
-        // Get all terrain needs
-        NeedData[] terrainNeeds = needs.FindTerrainNeeds();
-
-        // Return a simple preference need rating
         return SimplePreferenceNeedRating(
-            terrainNeeds,
-            availability,
+            needs.FindTerrainNeeds(),
+            availability.FindTerrainItems(),
             terrainTilesNeeded,
             terrainTilesNeeded,
-            (item, need) => item.ID == need.ID && !item.IsDrinkingWater);
+            true);
+    }
+    private static float TreeRating(NeedRegistry needs, NeedAvailability availability, int treesNeeded)
+    {
+        return SimplePreferenceNeedRating(
+            needs.FindTreeNeeds(),
+            availability.FindTreeItems(),
+            treesNeeded,
+            treesNeeded,
+            false);
     }
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
     {
         // Select only water that is drinkable
         IEnumerable<NeedAvailabilityItem> drinkableWater = availability
-            .FindAllWater()
+            .FindWaterItems()
             .Where(item => needs.WaterIsDrinkable(item.WaterContent.Contents));
 
         // Number of water tiles that the species can drink from
@@ -148,45 +155,58 @@ public static class NeedRatingBuilder
     }
     private static float SimplePreferenceNeedRating(
         NeedData[] needs,
-        NeedAvailability availability,
+        NeedAvailabilityItem[] items,
         int minNeeded,
         int maxUsed,
-        Func<NeedAvailabilityItem, NeedData, bool> itemMatch)
+        bool useAmount)
     {
-        // Start at using none
-        float preferredUsed = 0;
-        float survivableUsed = 0;
-
-        // Go through each need in the needs
-        foreach (NeedData need in needs)
+        // Check if some needs were passed in
+        if (needs.Length > 0)
         {
-            // NOTE: this won't work properly for Momos, 
-            // we have to find a way to count INDIVIDUAL plants instead of
-            // the number of fruits the plants are outputting
-            float totalAvailable = availability
-                .CountAvailable(item => itemMatch.Invoke(item, need));
+            // Start at using none
+            float preferredUsed = 0;
+            float survivableUsed = 0;
 
-            if (need.Preferred)
+            // Go through each need in the needs
+            foreach (NeedData need in needs)
             {
-                preferredUsed += totalAvailable;
+                // Find an item with the same id as the need
+                NeedAvailabilityItem applicableItem = Array
+                    .Find(items, item => item.ID == need.ID);
+
+                if (applicableItem != null)
+                {
+                    // Get total available based on whether to use the item count or amount available
+                    float totalAvailable = useAmount ? applicableItem.AmountAvailable : applicableItem.ItemCount;
+
+                    // If the need is preferred then add to preferred used
+                    if (need.Preferred)
+                    {
+                        preferredUsed += totalAvailable;
+                    }
+                    // If the need is not preferred the add to survivable used
+                    else survivableUsed += totalAvailable;
+                }
+
             }
-            else survivableUsed += totalAvailable;
-        }
 
-        // Cannot use more than what is needed
-        preferredUsed = Mathf.Min(preferredUsed, maxUsed);
-        survivableUsed = Mathf.Min(survivableUsed, maxUsed - preferredUsed);
-        float totalUsed = preferredUsed + survivableUsed;
+            // Cannot use more than what is needed
+            preferredUsed = Mathf.Min(preferredUsed, maxUsed);
+            survivableUsed = Mathf.Min(survivableUsed, maxUsed - preferredUsed);
+            float totalUsed = preferredUsed + survivableUsed;
 
-        // If we used the amound we needed, then boost the rating
-        // by the amount used that is preferred
-        if (totalUsed >= minNeeded)
-        {
-            return 1 + ((float)preferredUsed / totalUsed);
+            // If we used the amound we needed, then boost the rating
+            // by the amount used that is preferred
+            if (totalUsed >= minNeeded)
+            {
+                return 1 + ((float)preferredUsed / totalUsed);
+            }
+            // If we did not use the amount we needed
+            // then the rating is the proportion that we needed
+            else return (float)totalUsed / minNeeded;
         }
-        // If we did not use the amount we needed
-        // then the rating is the proportion that we needed
-        else return (float)totalUsed / minNeeded;
+        // If there were no needs then return the number for no need rating "NaN"
+        else return float.NaN;
     }
 
     #endregion

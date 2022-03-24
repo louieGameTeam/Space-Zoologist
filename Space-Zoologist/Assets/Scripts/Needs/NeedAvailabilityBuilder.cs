@@ -60,8 +60,8 @@ public static class NeedAvailabilityBuilder
                 int bInvadesA = Mathf.Min(sharedTiles, popB.Count);
 
                 // Add availability items for each other species
-                Get(popA).Add(new NeedAvailabilityItem(popB.Species.ID, bInvadesA));
-                Get(popB).Add(new NeedAvailabilityItem(popA.Species.ID, aInvadesB));
+                Get(popA).Add(new NeedAvailabilityItem(popB.Species.ID, popB.Count, bInvadesA));
+                Get(popB).Add(new NeedAvailabilityItem(popA.Species.ID, popA.Count, aInvadesB));
             }
         }
 
@@ -84,6 +84,7 @@ public static class NeedAvailabilityBuilder
                 float foodProportionConsumed = population.FoodDominance / appliedDominance;
                 NeedAvailabilityItem item = new NeedAvailabilityItem(
                     kvp.Key.Species.ID,
+                    1,
                     kvp.Key.FoodOutput * foodProportionConsumed);
                 Get(population).Add(item);
             }
@@ -121,6 +122,7 @@ public static class NeedAvailabilityBuilder
                     float tileProportionOwned = population.GetTerrainDominance(tile) / appliedDominance;
                     NeedAvailabilityItem item = new NeedAvailabilityItem(
                         ItemRegistry.FindTile(tile),
+                        1,
                         tileProportionOwned);
                     Get(population).Add(item);
                 }
@@ -137,7 +139,7 @@ public static class NeedAvailabilityBuilder
 
             // Convert accessible liquids to need availability items
             IEnumerable<NeedAvailabilityItem> waterItems = accessibleLiquids
-                .Select(comp => new NeedAvailabilityItem(waterID, 1, new LiquidBodyContent(comp)));
+                .Select(comp => new NeedAvailabilityItem(waterID, 1, 1, new LiquidBodyContent(comp)));
 
             // Add the water items to the list in the dictionary
             Get(population).AddRange(waterItems);
@@ -172,7 +174,10 @@ public static class NeedAvailabilityBuilder
         {
             TileType tileType = (TileType)i;
             ItemID tileID = ItemRegistry.FindTile(tileType);
-            needAvailabilityItems.Add(new NeedAvailabilityItem(tileID, terrainCountsByTileType[i]));
+            needAvailabilityItems.Add(new NeedAvailabilityItem(
+                tileID, 
+                Mathf.Min(1, terrainCountsByTileType[i]), 
+                terrainCountsByTileType[i]));
         }
 
         // Get a list of the liquid compositions in range
@@ -185,7 +190,7 @@ public static class NeedAvailabilityBuilder
 
         // Add the water items
         IEnumerable<NeedAvailabilityItem> waterItems = liquidCompositionsInRange
-            .Select(composition => new NeedAvailabilityItem(waterID, 1, new LiquidBodyContent(composition)));
+            .Select(composition => new NeedAvailabilityItem(waterID, 1, 1, new LiquidBodyContent(composition)));
         needAvailabilityItems.AddRange(waterItems);
              
         return new NeedAvailability(needAvailabilityItems.ToArray());

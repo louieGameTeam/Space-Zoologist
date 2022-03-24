@@ -27,10 +27,13 @@ public class NeedData
 
     #region Public Properties
     public bool Needed => needed;
-    public bool TraversibleOnly => traversibleOnly;
-    public bool UseAsTerrainNeed => useAsTerrainNeed;
-    public bool Preferred => preferred;
     public SpeciesNeedType SpeciesNeedType => speciesNeedType;
+    public bool UseAsTerrainNeed => useAsTerrainNeed;
+    public bool TraversibleOnly => traversibleOnly;
+    public bool UseAsFoodNeed => useAsFoodNeed;
+    public bool Preferred => preferred;
+    public bool UseAsTreeNeed => useAsTreeNeed;
+    public bool PreferredTree => preferredTree;
     public bool UseAsWaterNeed => useAsWaterNeed;
     public float Minimum => minimum;
     public float Maximum => maximum;
@@ -54,10 +57,23 @@ public class NeedData
     [Tooltip("A traversible only terrain can be traversed by the species " +
         "but does not contribute to the species terrain need")]
     private bool traversibleOnly = false;
+
+    [SerializeField]
+    [Tooltip("If true, then this food source should be treated as food " +
+        "that the species needs to eat")]
+    private bool useAsFoodNeed = false;
     [SerializeField]
     [Tooltip("How much the need is preferred compared to other needs" +
         " with the same type")]
     private bool preferred = false;
+    
+    [SerializeField]
+    [Tooltip("If true, then this food source should be used as a tree " +
+        "that the species needs to perch in")]
+    private bool useAsTreeNeed = false;
+    [SerializeField]
+    [Tooltip("Whether this is the animal's preferred tree to perch in")]
+    private bool preferredTree = false;
 
     [SerializeField]
     [Tooltip("If true, then this water need should be treated as water " +

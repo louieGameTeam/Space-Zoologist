@@ -10,36 +10,9 @@ using UnityEngine;
 [Serializable]
 public class NeedAvailabilityItem
 {
-    #region Public Typedefs
-    /// <summary>
-    /// Compares two need availability items id and metadata, ignoring amount available
-    /// </summary>
-    public class ItemComparer : IEqualityComparer<NeedAvailabilityItem>
-    {
-        public bool Equals(NeedAvailabilityItem a, NeedAvailabilityItem b)
-        {
-            // Check if both are not null
-            if (a != null && b != null)
-            {
-                // Equal if they have equal id and metadata
-                return a.id == b.id && Equals(a.metaData, b.metaData);
-            }
-            // If both are null then they are equal
-            else if (a == null && b == null) return true;
-            // If one is null and the other is not null they are unequal
-            else return false;
-        }
-        public int GetHashCode(NeedAvailabilityItem item)
-        {
-            int hash = item.id.GetHashCode();
-            if (item.metaData != null) hash ^= item.metaData.GetHashCode();
-            return hash;
-        }
-    }
-    #endregion
-
     #region Public Properties
     public ItemID ID => id;
+    public int ItemCount => itemCount;
     public float AmountAvailable => amountAvailable;
     public object MetaData => metaData;
     public bool IsDrinkingWater => id.IsWater &&
@@ -62,17 +35,24 @@ public class NeedAvailabilityItem
     [Tooltip("ID of the item that is available")]
     private ItemID id;
     [SerializeField]
+    [Tooltip("Count the number of this item that is available. " +
+        "This is distinct from the amount available in the case of food, " +
+        "where the count is the number of food sources whereas " +
+        "the amount available is the total fruit output")]
+    private int itemCount;
+    [SerializeField]
     [Tooltip("Amount of the item that is available")]
     private float amountAvailable;
     private object metaData;
     #endregion
 
     #region Constructors
-    public NeedAvailabilityItem(ItemID id, float amountAvailable)
-        : this(id, amountAvailable, null) { }
-    public NeedAvailabilityItem(ItemID id, float amountAvailable, object metaData)
+    public NeedAvailabilityItem(ItemID id, int itemCount, float amountAvailable)
+        : this(id, itemCount, amountAvailable, null) { }
+    public NeedAvailabilityItem(ItemID id, int itemCount, float amountAvailable, object metaData)
     {
         this.id = id;
+        this.itemCount = itemCount;
         this.amountAvailable = amountAvailable;
         this.metaData = metaData;
     }
