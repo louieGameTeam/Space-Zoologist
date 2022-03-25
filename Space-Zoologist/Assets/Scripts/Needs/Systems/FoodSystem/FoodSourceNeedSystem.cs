@@ -21,9 +21,7 @@ public class FoodSourceNeedSystem : NeedSystem
     // Food name to food calculators
     private Dictionary<string, FoodSourceCalculator> foodSourceCalculators = new Dictionary<string, FoodSourceCalculator>();
 
-    public FoodSourceNeedSystem(NeedType needType = NeedType.FoodSource) : base(needType)
-    {
-    }
+    public FoodSourceNeedSystem(NeedType needType = NeedType.FoodSource) : base(needType) {}
 
     public override bool CheckState()
     {
@@ -89,29 +87,28 @@ public class FoodSourceNeedSystem : NeedSystem
             float preferredAmount = 0;
             float compatibleAmount = 0;
 
-            // 3. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
-            for (int j = 0; j <= 1; j++)
-            {
-                foreach (KeyValuePair<string, Need> need in population.Needs)
+
+            List<KeyValuePair<string, Need>> orderedNeeds = population.Needs.ToList ();
+            orderedNeeds.Sort ((a, b) => a.Value.CompareTo (b.Value));
+
+            // 3. Iterate through sorted list of needs
+            foreach (KeyValuePair<string, Need> need in orderedNeeds) {
+                // 4. Assign food need distributions, skipping if need already met
+                if (!need.Value.NeedType.Equals (NeedType.FoodSource) || !foodSourceCalculators.ContainsKey (need.Key)) {
+                    continue;
+                }
+
+                float value = foodSourceCalculators [need.Key].CalculateDistribution (population);
+
+                if (need.Value.IsPreferred) 
                 {
-                    // 4. Calculate preferred and available food, skipping if need already met
-                    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(need.Key))
-                    {
-                        continue;
-                    }
-
-                    if (j == 0 && need.Value.IsPreferred)
-                    {
-                        preferredAmount += foodSourceCalculators[need.Key].CalculateDistribution(population);
-                        continue;
-                    }
-
-                    if (j == 1 && !need.Value.IsPreferred)
-                    {
-                        compatibleAmount += foodSourceCalculators[need.Key].CalculateDistribution(population);
-                    }
+                    preferredAmount += value;
+                } else 
+                {
+                    compatibleAmount += value;
                 }
             }
+
             population.UpdateFoodNeed(preferredAmount, compatibleAmount);
         }
     }

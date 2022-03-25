@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 [System.Serializable]
 public class TerrainNeed : Need
@@ -162,5 +163,9 @@ public abstract class Need
     public virtual void UpdateNeedValue(float value)
     {
         this.needValue = value;
+    }
+
+    public int CompareTo (Need value) {
+        return (this.IsPreferred ? -1 : 0) + (value.IsPreferred ? 1 : 0);
     }
 }
