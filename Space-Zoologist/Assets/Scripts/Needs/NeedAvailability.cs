@@ -12,13 +12,15 @@ using UnityEngine;
 /// Food needs: the object will hold food availability
 /// even for species that do not eat that food.  The NeedRatingFactory
 /// should check if the food is edible to rate the food need of animals.
+/// The ItemCount is the number of food sources that the animal
+/// has access to, whereas the AmountAvailable is the amount of
+/// fruit that the food is producing
 /// 
 /// Terrain needs: the need availability will have an item
-/// for every individual tile that the animal can occupy. 
-/// For contested terrain this results in multiple availability items 
-/// that have decimal amounts available. For example, when cows and 
-/// goats compete for a land tile, the cow might get 0.4 of that tile
-/// and the goat might get 0.6 of that tile.
+/// for each tile type. The ItemCount will represent the number of tiles
+/// that the species can traverse, whereas the AmountAvailable will
+/// represent how much contributes to their needs after dominance
+/// is taken into account
 /// 
 /// Water needs: water needs are identified with the fresh water id.
 /// The metadata of the item should hold an object of type "LiquidBodyContent"
@@ -98,6 +100,10 @@ public class NeedAvailability
 
     #region Public Methods
     public NeedAvailabilityItem[] FindPredatorItems()
+    {
+        return FindAll(item => item.ID.Category == ItemRegistry.Category.Species);
+    }
+    public NeedAvailabilityItem[] FindFriendItems()
     {
         return FindAll(item => item.ID.Category == ItemRegistry.Category.Species);
     }

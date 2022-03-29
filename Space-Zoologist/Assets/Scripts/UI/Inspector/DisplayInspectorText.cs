@@ -171,9 +171,23 @@ public class DisplayInspectorText : MonoBehaviour
         }
         if (life is Population)
         {
-            setupSlider("Liquid", ((Population)life).GrowthCalculator.Rating.WaterRating);
-            setupSlider("Terrain", ((Population)life).GrowthCalculator.Rating.TerrainRating);
-            setupSlider("Food", ((Population)life).GrowthCalculator.Rating.FoodRating);
+            Population population = life as Population;
+
+            if (population)
+            {
+                NeedRating rating = population.GrowthCalculator.Rating;
+
+                if (rating.HasFoodNeed) setupSlider("Food", rating.FoodRating);
+                if (rating.HasFriendNeed) setupSlider("Friend", rating.FriendRating);
+                if (rating.HasTerrainNeed) setupSlider("Terrain", rating.TerrainRating);
+                if (rating.HasTreeNeed) setupSlider("Tree", rating.TreeRating);
+                if (rating.HasWaterNeed) setupSlider("Water", rating.WaterRating);
+            }
+            else
+            {
+                Debug.LogWarning($"Cannot display need sliders for object {life} " +
+                    $"because it is not a population!");
+            }
         }
     }
 

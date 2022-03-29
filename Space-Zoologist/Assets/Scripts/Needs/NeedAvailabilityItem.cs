@@ -82,7 +82,10 @@ public class NeedAvailabilityItem
         else
         {
             NeedAvailabilityItem item = obj as NeedAvailabilityItem;
-            return id == item.id && amountAvailable == item.amountAvailable && Equals(metaData, item.metaData);
+            return id == item.id && 
+                itemCount == item.itemCount &&
+                amountAvailable == item.amountAvailable && 
+                Equals(metaData, item.metaData);
         }
     }
     public override int GetHashCode()

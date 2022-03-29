@@ -39,22 +39,24 @@ public static class NeedRatingBuilder
             population.Species.Needs,
             availability,
             population.Species.WaterTilesRequired * population.Count);
+        float friendRating = FriendRating(
+            population.Species.Needs,
+            availability,
+            population.Species.MinFoodRequired * population.Count,
+            population.Species.MaxFoodRequired * population.Count);
         float treeRating = TreeRating(
             population.Species.Needs,
             availability,
             population.Species.TerrainTilesRequired * population.Count);
 
         // Return the new need rating object
-        return new NeedRating(predatorCount, foodRating, terrainRating, waterRating, treeRating);
+        return new NeedRating(predatorCount, foodRating, terrainRating, waterRating, friendRating, treeRating);
     }
     /// <summary>
     /// Build the need rating for a single food source
     /// </summary>
     /// <param name="foodSource"></param>
-    /// <param name="availability">
-    /// Needs available to that population.
-    /// If 'null' is proved, builds the need availability from scratch
-    /// </param>
+    /// <param name="availability"></param>
     /// <returns></returns>
     public static NeedRating Build(FoodSource foodSource, NeedAvailability availability)
     {
@@ -69,7 +71,7 @@ public static class NeedRatingBuilder
             foodSource.Species.WaterTilesRequired);
 
         // Return the new need rating object
-        return new NeedRating(0, float.NaN, terrainRating, waterRating, float.NaN);
+        return new NeedRating(0, float.NaN, terrainRating, waterRating, float.NaN, float.NaN);
     }
     #endregion
 
@@ -114,6 +116,15 @@ public static class NeedRatingBuilder
             availability.FindTreeItems(),
             treesNeeded,
             treesNeeded,
+            false);
+    }
+    private static float FriendRating(NeedRegistry needs, NeedAvailability availability, int minFriendsNeeded, int maxFriendsNeeded)
+    {
+        return SimplePreferenceNeedRating(
+            needs.FindFriendNeeds(),
+            availability.FindFriendItems(),
+            minFriendsNeeded,
+            maxFriendsNeeded,
             false);
     }
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)

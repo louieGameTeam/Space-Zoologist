@@ -79,6 +79,14 @@ public class NeedRegistry
             .Where(need => need.SpeciesNeedType == SpeciesNeedType.Predator)
             .ToArray();
     }
+    public NeedData[] FindFriendNeeds()
+    {
+        return GetNeedsWithCategory(ItemRegistry.Category.Species)
+            .Where(need => need.Needed)
+            .Where(need => need.SpeciesNeedType == SpeciesNeedType.Friend)
+            .OrderByDescending(need => need.Preferred)
+            .ToArray();
+    }
     public NeedData[] FindWaterNeeds()
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Tile)

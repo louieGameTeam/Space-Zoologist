@@ -86,6 +86,9 @@ public class NeedDataDrawer : PropertyDrawer
     {
         ItemID itemID = GetID(parent);
 
+        // Get the species need type
+        SpeciesNeedType speciesNeedType = (SpeciesNeedType)parent.FindPropertyRelative(nameof(speciesNeedType)).enumValueIndex;
+
         // Traversible-only field is conditional on "useAsTerrainNeed" for first water, so indent it
         return (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "traversibleOnly") ||
 
@@ -94,6 +97,9 @@ public class NeedDataDrawer : PropertyDrawer
 
             // Preferred field is conditional on "useAsFoodNeed" for foods, so indent it
             (itemID.Category == ItemRegistry.Category.Food && child.name == "preferred") ||
+
+            // Preferred field is conditional on "speciesType" so indent it
+            (itemID.Category == ItemRegistry.Category.Species && speciesNeedType == SpeciesNeedType.Friend && child.name == "preferred") || 
 
             // Preferred tree field is conditional on "useAsTreeNeed", so indent it 
             (child.name == "preferredTree") ||
@@ -115,6 +121,7 @@ public class NeedDataDrawer : PropertyDrawer
         bool useAsTreeNeed = parent.FindPropertyRelative(nameof(useAsTreeNeed)).boolValue;
         bool useAsWaterNeed = parent.FindPropertyRelative(nameof(useAsWaterNeed)).boolValue;
         bool traversibleOnly = parent.FindPropertyRelative(nameof(traversibleOnly)).boolValue;
+        SpeciesNeedType speciesNeedType = (SpeciesNeedType)parent.FindPropertyRelative(nameof(speciesNeedType)).enumValueIndex;
         bool isNonWaterTile = itemID.Category == ItemRegistry.Category.Tile && !itemID.IsWater;
         bool isFirstWater = itemID.IsWater && itemID.WaterIndex == 0;
         bool nonFirstWater = itemID.IsWater && itemID.WaterIndex != 0;
@@ -133,6 +140,9 @@ public class NeedDataDrawer : PropertyDrawer
 
             // Display "useAsFoodNeed" for all food
             (itemID.Category == ItemRegistry.Category.Food && child.name == "useAsFoodNeed") ||
+
+            // Display "preferred" for species friend needs
+            (itemID.Category == ItemRegistry.Category.Species && speciesNeedType == SpeciesNeedType.Friend && child.name == "preferred") ||
 
             // Display "preferred" only for foods used as food needs
             (itemID.Category == ItemRegistry.Category.Food && useAsFoodNeed && child.name == "preferred") ||
