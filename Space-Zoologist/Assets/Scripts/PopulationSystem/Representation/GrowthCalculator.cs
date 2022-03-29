@@ -21,36 +21,7 @@ public class GrowthCalculator
     /// Rate of change for the population, 1f for doubling the population
     /// and -1f for removing the population
     /// </summary>
-    public float ChangeRate
-    {
-        get
-        {
-            // If there are some predators then the decay rate depends on the number of predators
-            if (Rating.PredatorCount > 0)
-            {
-                float ratio = -Rating.PredatorCount / (float)population.Count;
-                return Mathf.Max(ratio, -1f);
-            }
-            // If there are no predators and all needs are met then compute the total change rate
-            else if (Rating.FoodNeedIsMet && Rating.TerrainNeedIsMet && Rating.WaterNeedIsMet)
-            {
-                return (Rating.FoodRating + Rating.TerrainRating + Rating.WaterRating - 3) / 3f;
-            }
-            // If there are no predators but not all needs are met then
-            // the population will decline
-            else
-            {
-                float rate = 0f;
-
-                // Decrease the rate by every unmet need
-                if (!Rating.FoodNeedIsMet) rate += Rating.FoodRating - 1;
-                if (!Rating.TerrainNeedIsMet) rate += Rating.TerrainRating - 1;
-                if (!Rating.WaterNeedIsMet) rate += Rating.WaterRating - 1;
-
-                return rate / 3f;
-            }
-        }
-    }
+    public float ChangeRate => Rating.ComputeChangeRate(population.Count);
     public GrowthStatus GrowthStatus
     {
         get

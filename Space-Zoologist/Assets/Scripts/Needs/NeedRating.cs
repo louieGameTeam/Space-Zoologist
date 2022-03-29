@@ -27,6 +27,11 @@ public class NeedRating
     public bool WaterNeedIsMet => waterRating >= 1;
     public bool FriendNeedIsMet => friendRating >= 1;
     public bool TreeNeedIsMet => treeRating >= 1;
+    public bool AllNeedsAreMet => (!HasFoodNeed || FoodNeedIsMet) &&
+        (!HasTerrainNeed || TerrainNeedIsMet) &&
+        (!HasWaterNeed || WaterNeedIsMet) &&
+        (!HasFriendNeed || FriendNeedIsMet) &&
+        (!HasTreeNeed || TreeNeedIsMet);
     #endregion
 
     #region Private Fields
@@ -59,6 +64,68 @@ public class NeedRating
         this.waterRating = waterRating;
         this.friendRating = friendRating;
         this.treeRating = treeRating;
+    }
+    #endregion
+
+    #region Public Methods
+    /// <summary>
+    /// Compute the change rate for a hypothetical population, 
+    /// assuming that it has this need rating
+    /// </summary>
+    /// <param name="populationSize"></param>
+    /// <returns></returns>
+    public float ComputeChangeRate(int populationSize)
+    {
+        if (predatorCount > 0)
+        {
+            float ratio = -predatorCount / (float)populationSize;
+            return Mathf.Max(ratio, -1f);
+        }
+        else if(AllNeedsAreMet)
+        {
+            float totalRating = 0;
+            int appliedRatings = 0;
+
+            // Apply the ratings to the local variables
+            ApplyRatingIf(HasFoodNeed, FoodRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasTerrainNeed, TerrainRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasWaterNeed, WaterRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasTreeNeed, TreeRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasFriendNeed, FriendRating - 1, ref totalRating, ref appliedRatings);
+
+            // If some ratings were applied then return the average rating
+            if (appliedRatings > 0) return totalRating / appliedRatings;
+            // If no ratings were applied then do not change the population size at all
+            else return 0;
+        }
+        else
+        {
+            float totalRating = 0;
+            int appliedRatings = 0;
+
+            // Apply the ratings to the local variables
+            ApplyRatingIf(HasFoodNeed && !FoodNeedIsMet, FoodRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasTerrainNeed && !TerrainNeedIsMet, TerrainRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasWaterNeed && !WaterNeedIsMet, WaterRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasTreeNeed && !TreeNeedIsMet, TreeRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf(HasFriendNeed && !FriendNeedIsMet, FriendRating - 1, ref totalRating, ref appliedRatings);
+
+            // If some ratings were applied then compute the average
+            if (appliedRatings > 0) return totalRating / appliedRatings;
+            // If no ratings were applied then population size will not change at all
+            else return 0;
+        }
+    }
+    #endregion
+
+    #region Private Methods
+    private void ApplyRatingIf(bool condition, float rating, ref float totalRating, ref int appliedRatings)
+    {
+        if (condition)
+        {
+            totalRating += rating;
+            appliedRatings++;
+        }
     }
     #endregion
 }

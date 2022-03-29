@@ -18,11 +18,11 @@ public class NeedCache
     {
         // Rebuild the food source first, because population depends on their output,
         // which depends on their ratings
-        Availability.RebuildAllAvailabilities(foodSources);
+        Availability.RebuildAllFoodAvailabilities(foodSources);
         Ratings.RebuildFoodSourceRatings(Availability);
 
         // Rebuild the populations now that foods are taken care of
-        Availability.RebuildAllAvailabilities();
+        Availability.RebuildAllPopulationAvailabilities();
         Ratings.RebuildPopulationRatings(Availability);
     }
     /// <summary>

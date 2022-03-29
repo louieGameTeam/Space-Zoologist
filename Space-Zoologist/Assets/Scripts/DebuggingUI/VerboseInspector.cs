@@ -108,7 +108,7 @@ public class VerboseInspector : MonoBehaviour
                 // Make sure the food source has a rating before trying to access it
                 if (food.HasNeedCache)
                 {
-                    CreateInspectorItem(food.Availability, "FoodSourceNeedAvailability");
+                    CreateInspectorItem(new SerializableNeedAvailability(food.Availability), "FoodSourceNeedAvailability");
                     CreateInspectorItem(food.Rating, "FoodSourceNeedRating");
                 }
             }
@@ -126,7 +126,7 @@ public class VerboseInspector : MonoBehaviour
                 // Make sure the population has a rating before trying to access it
                 if (animal.PopulationInfo.GrowthCalculator.HasNeedCache)
                 {
-                    CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Availabilty, "PopulationNeedAvailability");
+                    CreateInspectorItem(new SerializableNeedAvailability(animal.PopulationInfo.GrowthCalculator.Availabilty), "PopulationNeedAvailability");
                     CreateInspectorItem(animal.PopulationInfo.GrowthCalculator.Rating, "PopulationNeedRating");
                 }
             }
