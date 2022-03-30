@@ -6,8 +6,7 @@ using UnityEngine;
 public class SerializableNeedAvailabilityItem
 {
     #region Public Fields
-    public string name;
-    public ItemID id;
+    public string id;
     public int itemCount;
     public float amountAvailable;
     public bool isDrinkingWater;
@@ -17,8 +16,7 @@ public class SerializableNeedAvailabilityItem
     #region Constructors
     public SerializableNeedAvailabilityItem(NeedAvailabilityItem item)
     {
-        name = item.ID.ToString();
-        id = item.ID;
+        id = item.ID.ToString();
         itemCount = item.ItemCount;
         amountAvailable = item.AmountAvailable;
         isDrinkingWater = item.IsDrinkingWater;

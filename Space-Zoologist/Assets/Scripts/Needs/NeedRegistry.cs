@@ -99,7 +99,7 @@ public class NeedRegistry
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Food)
             .Where(need => need.Needed)
-            .Where(need => need.UseAsFoodNeed)
+            .Where(need => need.FoodNeedType == FoodNeedType.Food)
             .OrderByDescending(need => need.Preferred)
             .ToArray();
     }
@@ -107,7 +107,7 @@ public class NeedRegistry
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Food)
             .Where(need => need.Needed)
-            .Where(need => need.UseAsTreeNeed)
+            .Where(need => need.FoodNeedType == FoodNeedType.Tree)
             .OrderByDescending(need => need.Preferred)
             .ToArray();
     }

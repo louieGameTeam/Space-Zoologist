@@ -42,12 +42,12 @@ public static class NeedRatingBuilder
         float friendRating = FriendRating(
             population.Species.Needs,
             availability,
-            population.Species.MinFoodRequired * population.Count,
-            population.Species.MaxFoodRequired * population.Count);
+            population.Species.FriendsRequired.x * population.Count,
+            population.Species.FriendsRequired.y * population.Count);
         float treeRating = TreeRating(
             population.Species.Needs,
             availability,
-            population.Species.TerrainTilesRequired * population.Count);
+            population.Species.TreesRequired * population.Count);
 
         // Return the new need rating object
         return new NeedRating(predatorCount, foodRating, terrainRating, waterRating, friendRating, treeRating);

@@ -30,10 +30,8 @@ public class NeedData
     public SpeciesNeedType SpeciesNeedType => speciesNeedType;
     public bool UseAsTerrainNeed => useAsTerrainNeed;
     public bool TraversibleOnly => traversibleOnly;
-    public bool UseAsFoodNeed => useAsFoodNeed;
+    public FoodNeedType FoodNeedType => foodNeedType;
     public bool Preferred => preferred;
-    public bool UseAsTreeNeed => useAsTreeNeed;
-    public bool PreferredTree => preferredTree;
     public bool UseAsWaterNeed => useAsWaterNeed;
     public float Minimum => minimum;
     public float Maximum => maximum;
@@ -59,22 +57,14 @@ public class NeedData
     private bool traversibleOnly = false;
 
     [SerializeField]
-    [Tooltip("If true, then this food source should be treated as food " +
-        "that the species needs to eat")]
-    private bool useAsFoodNeed = false;
+    [Tooltip("How the food source is used. The species may use it as food to eat " +
+        "or as a tree that it can nest in")]
+    private FoodNeedType foodNeedType;
     [SerializeField]
     [Tooltip("How much the need is preferred compared to other needs" +
         " with the same type")]
     private bool preferred = false;
     
-    [SerializeField]
-    [Tooltip("If true, then this food source should be used as a tree " +
-        "that the species needs to perch in")]
-    private bool useAsTreeNeed = false;
-    [SerializeField]
-    [Tooltip("Whether this is the animal's preferred tree to perch in")]
-    private bool preferredTree = false;
-
     [SerializeField]
     [Tooltip("If true, then this water need should be treated as water " +
         "that the species can drink from")]
