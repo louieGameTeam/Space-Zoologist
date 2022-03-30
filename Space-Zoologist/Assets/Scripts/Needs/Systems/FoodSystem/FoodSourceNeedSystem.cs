@@ -87,26 +87,33 @@ public class FoodSourceNeedSystem : NeedSystem
             float preferredAmount = 0;
             float compatibleAmount = 0;
 
+            // 3. Get food needs seperated by preference
+            List<KeyValuePair<string, Need>> preferredNeeds = new List<KeyValuePair<string, Need>>();
+            List<KeyValuePair<string, Need>> compatibleNeeds = new List<KeyValuePair<string, Need>>();
 
-            List<KeyValuePair<string, Need>> orderedNeeds = population.Needs.ToList ();
-            orderedNeeds.Sort ((a, b) => a.Value.CompareTo (b.Value));
-
-            // 3. Iterate through sorted list of needs
-            foreach (KeyValuePair<string, Need> need in orderedNeeds) {
-                // 4. Assign food need distributions, skipping if need already met
+            foreach (KeyValuePair<string, Need> need in population.Needs.ToList ()) {
                 if (!need.Value.NeedType.Equals (NeedType.FoodSource) || !foodSourceCalculators.ContainsKey (need.Key)) {
                     continue;
                 }
 
-                float value = foodSourceCalculators [need.Key].CalculateDistribution (population);
-
                 if (need.Value.IsPreferred) 
                 {
-                    preferredAmount += value;
+                    preferredNeeds.Add(need);
                 } else 
                 {
-                    compatibleAmount += value;
+                    compatibleNeeds.Add(need);
                 }
+            }
+
+            // 4. Iterate through food sources and calculate distribution, starting with preferred needs
+            foreach (KeyValuePair<string, Need> need in preferredNeeds) 
+            {
+                preferredAmount += foodSourceCalculators [need.Key].CalculateDistribution (population);
+            }
+
+            foreach (KeyValuePair<string, Need> need in compatibleNeeds) 
+            {
+                compatibleAmount += foodSourceCalculators [need.Key].CalculateDistribution (population);
             }
 
             population.UpdateFoodNeed(preferredAmount, compatibleAmount);
