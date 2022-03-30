@@ -154,6 +154,7 @@ public class ReservePartitionManager : MonoBehaviour
         List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
         List<Vector3Int> newLiquidLocations = new List<Vector3Int>();
         List<float[]> newLiquidCompositions = new List<float[]>();
+        List<LiquidBody> newLiquidBodies = new List<LiquidBody>();
 
         if (!this.AccessibleArea.ContainsKey(population))
         {
@@ -501,6 +502,36 @@ public class ReservePartitionManager : MonoBehaviour
             .m_foodSourceManager
             .FoodSources
             .FindAll(source => AnyPositionInArea(source));
+    }
+
+    public List<LiquidBody> GetAccessibleLiquidBodies(Population population)
+    {
+        if (population == null)
+            throw new ArgumentNullException(
+                "Cannot get the accessible food sources for population 'null'");
+
+        if (!populationAccessibleLiquidLocations.ContainsKey(population))
+            throw new ArgumentException(
+                $"Population '{population}' has no list of accessible area associated with it");
+
+        HashSet<LiquidBody> accessibleBodies = new HashSet<LiquidBody>();
+
+        // Iterate over each shore position that the population can access
+        foreach (Vector3Int shorePosition in populationAccessibleLiquidLocations[population])
+        {
+            // Iterate over each liquid body in the main controller
+            foreach (LiquidBody body in LiquidbodyController.Instance.liquidBodies)
+            {
+                // If we do not already have this liquid body in the set
+                // and the body contains this tile then add it to the set
+                if (!accessibleBodies.Contains(body) && body.ContainsTile(shorePosition))
+                {
+                    accessibleBodies.Add(body);
+                }
+            }
+        }
+
+        return new List<LiquidBody>(accessibleBodies);
     }
 
     /// <summary>
