@@ -9,6 +9,29 @@ public class ParallelItemRegistryDrawer : EditArrayWrapperOnEnumDrawer
     #region Private Fields
     private ParallelArrayEditor<ItemData> innerArrayEditor = new ParallelArrayEditor<ItemData>()
     {
+        arrayElementPropertyField = (r, s, g, e) =>
+        {
+            SerializedProperty id = s.FindPropertyRelative(nameof(id));
+
+            if (id != null)
+            {
+                // Try to get the item id
+                ItemID itemID = ItemRegistry.Exists(e);
+
+                // Make sure the item id is valid
+                if (itemID.IsValid)
+                {
+                    // Set the sub properties on this property
+                    id.Next(true);
+                    id.enumValueIndex = (int)itemID.Category;
+                    id.Next(false);
+                    id.intValue = itemID.Index;
+                }
+            }
+
+            // Layout the property field for this array element
+            EditorGUI.PropertyField(r, s, g, true);
+        },
         arrayElementLabel = (s, e) => new GUIContent(e.Name.ToString())
     };
     #endregion

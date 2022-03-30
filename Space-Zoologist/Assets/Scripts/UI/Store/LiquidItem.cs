@@ -9,15 +9,15 @@ public class LiquidItem : Item
 
     [SerializeField] private Vector3 liquidContents = default;
 
-    public new void SetupData(string id, string type, string name, int price)
+    public new void SetupData(string name, int price)
     {
-        base.SetupData(id, type, name, price);
+        base.SetupData(name, price);
         this.liquidContents = new Vector3(0.98f, 0, 0.02f);
     }
 
-    public void SetupData(string id, string type, string name, int price, Vector3 liquidContents)
+    public void SetupData(string name, int price, Vector3 liquidContents)
     {
-        base.SetupData(id, type, name, price);
+        base.SetupData(name, price);
         this.liquidContents = liquidContents;
     }
 }

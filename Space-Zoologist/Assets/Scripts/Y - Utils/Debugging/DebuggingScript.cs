@@ -5,28 +5,65 @@ using UnityEngine;
 
 public class DebuggingScript : MonoBehaviour
 {
-    public struct ReflectionContainer
+    public TerrainDominance terrainDominance;
+
+    private void Update()
     {
-        public string field;
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            NeedAvailabilityCache availabilityCache = GameManager.Instance.Needs.Availability;
+            NeedRatingCache ratingCache = GameManager.Instance.Needs.Ratings;
+
+            // Report the availabilities of all populations
+            string message = "Population need availabilities:";
+            foreach (KeyValuePair<Population, NeedAvailability> kvp in availabilityCache.PopulationNeedAvailabilities)
+            {
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
+            }
+
+            // Report the ratings of all populations
+            message += "\nPopulation need ratings:";
+            foreach (KeyValuePair<Population, NeedRating> kvp in ratingCache.PopulationRatings)
+            {
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
+            }
+
+            // Report the availabilities of all food sources
+            message += "\nFood source need availabilities:";
+            foreach(KeyValuePair<FoodSource, NeedAvailability> kvp in availabilityCache.FoodSourceNeedAvailabilities)
+            {
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
+            }
+
+            // Report the ratings of all food sources
+            message += "\nFood source need ratings:";
+            foreach (KeyValuePair<FoodSource, NeedRating> kvp in ratingCache.FoodSourceRatings)
+            {
+                string json = JsonUtility.ToJson(kvp.Value, true);
+                message += $"\n\t{kvp.Key.Species} at {kvp.Key.GetPosition()}: \n{json}";
+            }
+
+            // Log the big message
+            Debug.Log(message);
+        }
     }
 
-    private void Awake()
+    private void OnDrawGizmos()
     {
-        ReflectionContainer container = new ReflectionContainer
+        if (GameManager.Instance)
         {
-            field = "Value 1"
-        };
-        Type containerType = container.GetType();
-        FieldInfo fieldInfo = containerType.GetField("field");
+            TileDataController tileDataController = GameManager.Instance.m_tileDataController;
 
-        Debug.Log($"container.field = {container.field}");
-        Debug.Log($"fieldInfo.GetValue(container) = {fieldInfo.GetValue(container)}");
-
-        Debug.Log($"Calling fieldInfo.SetValue(container, \"Value 2\")");
-
-        fieldInfo.SetValue(container, "Value 2");
-        
-        Debug.Log($"container.field = {container.field}");
-        Debug.Log($"fieldInfo.GetValue(container) = {fieldInfo.GetValue(container)}");
+            if (tileDataController)
+            {
+                Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3Int mouseGridPosition = GameManager.Instance.m_tileDataController.WorldToCell(mouseWorldPosition);
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(mouseGridPosition, 0.5f);
+            }
+        }
     }
 }

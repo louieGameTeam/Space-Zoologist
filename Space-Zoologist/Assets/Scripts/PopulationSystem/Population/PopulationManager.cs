@@ -27,7 +27,6 @@ public class PopulationManager : MonoBehaviour
             {
                 pop = UpdatePopulation(species, position);
             }
-            pop.LoadGrowthRate(serializedPopulations[i].populationIncreaseRate);
         }
 
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
@@ -36,9 +35,10 @@ public class PopulationManager : MonoBehaviour
 
     private AnimalSpecies LoadSpecies(string name)
     {
-        if (GameManager.Instance.AnimalSpecies.ContainsKey(name))
+        ItemID id = ItemRegistry.FindHasName(name);
+        if (GameManager.Instance.AnimalSpecies.ContainsKey(id))
         {
-            return GameManager.Instance.AnimalSpecies[name];
+            return GameManager.Instance.AnimalSpecies[id];
         }
         Debug.LogError("No animal match the name '" + name + "' can be found in the species list. Did you attach the AnimalSpecies ScriptableObjects to the Population Manager?");
         return null;
@@ -53,7 +53,7 @@ public class PopulationManager : MonoBehaviour
     {
         // Create population
         GameObject newPopulationGameObject = Instantiate(this.PopulationPrefab, position, Quaternion.identity, this.transform);
-        newPopulationGameObject.name = species.SpeciesName;
+        newPopulationGameObject.name = species.ID.Data.Name.Get(ItemName.Type.Serialized);
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
@@ -115,7 +115,7 @@ public class PopulationManager : MonoBehaviour
         List<Population> localPopulations = GameManager.Instance.m_reservePartitionManager.GetPopulationsWithAccessTo(position);
         foreach (Population preexistingPopulation in localPopulations)
         {
-            if (preexistingPopulation.Species.SpeciesName.Equals(species.SpeciesName))
+            if (preexistingPopulation.Species.ID == species.ID)
             {
                 return preexistingPopulation;
             }
@@ -129,8 +129,9 @@ public class PopulationManager : MonoBehaviour
         GameManager.Instance.m_reservePartitionManager.AddPopulation(population);
         population.UpdateAccessibleArea(GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population),
         GameManager.Instance.m_tileDataController.GetGridWithAccess(population));
-        GameManager.Instance.RegisterWithNeedSystems(population);
         this.BehaviorPatternUpdater.RegisterPopulation(population);
+
+        // NOTE: does the need cache need to be updated now?
     }
 
     public void UpdateAllPopulationRegistration()
@@ -146,14 +147,6 @@ public class PopulationManager : MonoBehaviour
         foreach (Population population in this.ExistingPopulations)
         {
             population.UpdatePopulationStateForChecking();
-        }
-    }
-
-    public void UpdateAllGrowthConditions()
-    {
-        foreach(Population population in this.ExistingPopulations)
-        {
-            population.UpdateGrowthConditions();
         }
     }
 
@@ -216,10 +209,11 @@ public class PopulationManager : MonoBehaviour
     {
         Debug.Log("Removing " + population);
         population.RemoveAll();
-        this.Populations.Remove(population);
-        GameManager.Instance.UnregisterWithNeedSystems(population);
+        Populations.Remove(population);
         GameManager.Instance.m_reservePartitionManager.RemovePopulation(population);
         Destroy(population.gameObject);
+
+        // NOTE: does the need cache need to be updated now?
     }
 
     public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)
@@ -236,13 +230,9 @@ public class PopulationManager : MonoBehaviour
 
         return populations;
     }
-    public List<Population> GetPopulationsBySpeciesType(SpeciesType speciesType)
+    public int TotalPopulationSize(AnimalSpecies species)
     {
-        return ExistingPopulations.FindAll(pop => pop.species.Species == speciesType);
-    }
-    public int TotalPopulationSize(SpeciesType speciesType)
-    {
-        List<Population> populations = GetPopulationsBySpeciesType(speciesType);
+        List<Population> populations = GetPopulationsBySpecies(species);
         return populations.Sum(pop => pop.Count);
     }
 }

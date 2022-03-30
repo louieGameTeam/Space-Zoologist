@@ -28,15 +28,9 @@ public class ItemRegistryEditor : Editor
             // Go through each item data in the array
             for (int j = 0; j < items.arraySize; j++)
             {
-                SerializedProperty hasSpecies = items
-                    .GetArrayElementAtIndex(j)
-                    .FindPropertyRelative(nameof(hasSpecies));
                 SerializedProperty categoryFilter = items
                     .GetArrayElementAtIndex(j)
                     .FindPropertyRelative(nameof(categoryFilter));
-
-                // This has species if the category is not tile
-                hasSpecies.boolValue = i < 2;
 
                 // Set the category filter
                 categoryFilter.enumValueIndex = i;

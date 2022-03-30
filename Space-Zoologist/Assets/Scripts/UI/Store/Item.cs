@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType {Food, Terrain, Machine, Pod}
 // Modify as needed
 [CreateAssetMenu(menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
-    public ItemID ItemID => itemID;
-    public string ID => id;
-    public ItemType Type => type;
+    public ItemID ID => ItemRegistry.FindShopItem(this);
+    public ItemRegistry.Category Type => ID.Category;
     public string ItemName => itemName;
     public int Price => price;
     public string Description => description;
@@ -17,9 +15,6 @@ public class Item : ScriptableObject
     public List<AudioClip> AudioClips => audio;
     public int buildTime => BuildTime;
 
-    [SerializeField] private ItemID itemID = default;
-    [SerializeField] private string id = default;
-    [SerializeField] private ItemType type = default;
     [SerializeField] private string itemName = default;
     [SerializeField] private int price = default;
     [SerializeField] private string description = default;
@@ -27,25 +22,8 @@ public class Item : ScriptableObject
     [SerializeField] private List<AudioClip> audio = default;
     [SerializeField] private int BuildTime = default;
 
-    public void SetupData(string id, string type, string name, int price)
+    public void SetupData(string name, int price)
     {
-        this.id = id;
-        if (type.Equals("Terrain", StringComparison.OrdinalIgnoreCase))
-        {
-            this.type = ItemType.Terrain;
-        }
-        if (type.Equals("Atmosphere", StringComparison.OrdinalIgnoreCase))
-        {
-            this.type = ItemType.Machine;
-        }
-        if (type.Equals("Liquid", StringComparison.OrdinalIgnoreCase))
-        {
-            this.type = ItemType.Machine;
-        }
-        if (type.Equals("Food", StringComparison.OrdinalIgnoreCase))
-        {
-            this.type = ItemType.Food;
-        }
         this.itemName = name;
         this.price = price;
     }

@@ -16,7 +16,7 @@ public class MoveObject : MonoBehaviour
     // do this better
     [SerializeField] Sprite LiquidSprite = default;
 
-    Dictionary<string, Item> itemByID = new Dictionary<string, Item>();
+    Dictionary<ItemID, Item> itemByID = new Dictionary<ItemID, Item>();
     Item tempItem;
     private enum ItemType { NONE, FOOD, ANIMAL, TILE }
 
@@ -52,7 +52,6 @@ public class MoveObject : MonoBehaviour
                 itemByID.Add(itemData.itemObject.ID, itemData.itemObject);
         }
 
-        tempItem = (Item)ScriptableObject.CreateInstance("Item");
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
         DeleteButton = Instantiate(DeleteButtonPrefab, this.transform);
         MoveButton.GetComponent<Button>().onClick.AddListener(StartMovement);
@@ -215,18 +214,20 @@ public class MoveObject : MonoBehaviour
         switch (movingItemType)
         {
             case ItemType.ANIMAL:
-                int price = itemByID[objectToMove.GetComponent<Animal>().PopulationInfo.species.SpeciesName].Price;
+                int price = itemByID[objectToMove.GetComponent<Animal>().PopulationInfo.species.ID].Price;
                 moveCost = Mathf.RoundToInt(MoveCost * price);
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.FOOD:
                 FoodSourceSpecies species = objectToMove.GetComponent<FoodSource>().Species;
-                price = itemByID[species.SpeciesName].Price;
+                price = itemByID[species.ID].Price;
                 moveCost = Mathf.RoundToInt(MoveCost * price);
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.TILE:
-                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.ToLower().Equals(objectToMove.name));
+                // Why are we searching in the item quantities for an item data?
+                // And how is the "objectToMove" actually named?
+                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Data.Name.Get(ItemName.Type.English).ToLower().Equals(objectToMove.name));
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
                 break;
             default:
@@ -262,15 +263,13 @@ public class MoveObject : MonoBehaviour
         {
             toMove = tileData.Animal;
             movingItemType = ItemType.ANIMAL;
-            string ID = toMove.GetComponent<Animal>().PopulationInfo.Species.SpeciesName;
-            tempItem.SetupData(ID, "Pod", ID, 0);
+            tempItem = toMove.GetComponent<Animal>().PopulationInfo.Species.ID.Data.ShopItem;
         }
         else if (tileData.Food)
         {
             toMove = tileData.Food;
             movingItemType = ItemType.FOOD;
-            string ID = toMove.GetComponent<FoodSource>().Species.SpeciesName;
-            tempItem.SetupData(ID, "Food", ID, 0);
+            tempItem = toMove.GetComponent<FoodSource>().Species.ID.Data.ShopItem;
         }
         else if (gridSystem.IsWithinGridBounds(pos))
         {
@@ -292,8 +291,8 @@ public class MoveObject : MonoBehaviour
                 movingItemType = ItemType.TILE;
                 tileToDelete.transform.position = (Vector3)pos + new Vector3(0.5f, 0.5f, 0);
                 toMove = tileToDelete;
-                string ID = tileToDelete.name;
-                tempItem.SetupData(ID, "Tile", ID, 0);
+                string tileName = tileToDelete.name;
+                tempItem.SetupData(tileName, 0);
 
                 initialTilePosition = pos;
                 initialTile = gridSystem.GetTileData(pos).currentTile;
@@ -470,7 +469,7 @@ public class MoveObject : MonoBehaviour
         Vector3 FoodLocation = gridSystem.CellToWorld(mouseGridPosition); //equivalent since cell and world is 1:1, but in Vector3
         FoodLocation += new Vector3((float)species.Size.x / 2, (float)species.Size.y / 2, 0);
 
-        GameObject Food = foodSourceManager.CreateFoodSource(species.SpeciesName, FoodLocation);
+        GameObject Food = foodSourceManager.CreateFoodSource(species, FoodLocation);
         FoodSource foodSource = Food.GetComponent<FoodSource>();
 
         gridSystem.AddFoodReferenceToTile(mouseGridPosition, species.Size, Food);
@@ -482,29 +481,33 @@ public class MoveObject : MonoBehaviour
             {
                 foodSource.isUnderConstruction = false;
             });
-            gridSystem.CreateRectangleBuffer(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), this.GetStoreItem(species).buildTime, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD, buildProgress);
+
+            // Determine the construction type based on if this is a tree or just one food
+            TileDataController.ConstructionCluster.ConstructionType constructionType;
+
+            if (species.ID.Data.Name.Get(ItemName.Type.Serialized).Equals("Gold Space Maple") ||
+                species.ID.Data.Name.Get(ItemName.Type.Serialized).Equals("Space Maple"))
+            {
+                constructionType = TileDataController.ConstructionCluster.ConstructionType.TREE;
+            }
+            else constructionType = TileDataController.ConstructionCluster.ConstructionType.ONEFOOD;
+
+            // Create a rectangle buffer for the given construction type
+            gridSystem.CreateRectangleBuffer(
+                new Vector2Int(mouseGridPosition.x, mouseGridPosition.y), 
+                this.GetStoreItem(species).buildTime, species.Size,
+                constructionType, buildProgress);
         }
         else //Otherwise, make sure its needs are up to date
         {
-            GameManager.Instance.UpdateAllNeedSystems();
-            foodSource.CalculateTerrainNeed();
-            foodSource.CalculateWaterNeed();
+            GameManager.Instance.RebuildNeedCache();
             GameManager.Instance.m_inspector.UpdateCurrentDisplay();
         }
 
     }
     private Item GetStoreItem(FoodSourceSpecies foodSourceSpecies)
     {
-        string itemID = "";
-        foreach (KeyValuePair<string, FoodSourceSpecies> nameToFoodSpecies in GameManager.Instance.FoodSources)
-        {
-            if (nameToFoodSpecies.Value == foodSourceSpecies)
-            {
-                itemID = nameToFoodSpecies.Key;
-            }
-        }
-        return this.FoodSourceStoreSection.GetItemByID(itemID);
+        return this.FoodSourceStoreSection.GetItemByID(foodSourceSpecies.ID);
     }
     public void removeOriginalFood(FoodSource foodSource)
     {

@@ -24,7 +24,8 @@ public class FoodSourceManager : GridObjectManager
     public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position, int ttb = -1)
     {
         GameObject newFoodSourceGameObject = Instantiate(foodSourcePrefab, position, Quaternion.identity, this.transform);
-        newFoodSourceGameObject.name = species.SpeciesName;
+        ItemName speciesName = species.ID.Data.Name;
+        newFoodSourceGameObject.name = speciesName.Get(ItemName.Type.Serialized);
         FoodSource foodSource = newFoodSourceGameObject.GetComponent<FoodSource>();
         foodSource.InitializeFoodSource(species, position);
         foodSources.Add(foodSource);
@@ -36,7 +37,7 @@ public class FoodSourceManager : GridObjectManager
         if (ttb > 0)
         {
             m_gridSystemReference.CreateRectangleBuffer(new Vector2Int((int)pos.x, (int)pos.y), ttb, species.Size,
-                species.SpeciesName.Equals("Gold Space Maple") || species.SpeciesName.Equals("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD);
+                speciesName.AnyNameContains("Gold Space Maple") || speciesName.AnyNameContains("Space Maple") ? TileDataController.ConstructionCluster.ConstructionType.TREE : TileDataController.ConstructionCluster.ConstructionType.ONEFOOD);
             foodSource.isUnderConstruction = true;
             m_gridSystemReference.ConstructionFinishedCallback(() =>
             {
@@ -54,29 +55,27 @@ public class FoodSourceManager : GridObjectManager
             foodSourcesBySpecies[foodSource.Species].Add(foodSource);
         }
 
-        //Debug.Log("Food source being added: " + foodSource.Species.SpeciesName);
-        ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).AddFoodSource(foodSource);
-
-        // Register with NeedSystemManager
-        GameManager.Instance.RegisterWithNeedSystems(foodSource);
-
+        // Invoke the event that occurs when a new food source is created
         EventManager.Instance.InvokeEvent(EventType.NewFoodSource, newFoodSourceGameObject.GetComponent<FoodSource>());
+
+        // NOTE: does the game manager need cache need to be rebuilt now?
 
         return newFoodSourceGameObject;
     }
 
     public GameObject CreateFoodSource(string foodsourceSpeciesID, Vector2 position, int ttb = -1)
     {
-        return CreateFoodSource(GameManager.Instance.FoodSources[foodsourceSpeciesID], position, ttb);
+        ItemID id = ItemRegistry.FindHasName(foodsourceSpeciesID);
+        return CreateFoodSource(GameManager.Instance.FoodSources[id], position, ttb);
     }
 
     public void DestroyFoodSource(FoodSource foodSource) {
         foodSources.Remove(foodSource);
-        ((FoodSourceNeedSystem)GameManager.Instance.NeedSystems[NeedType.FoodSource]).RemoveFoodSource(foodSource);
         foodSourcesBySpecies[foodSource.Species].Remove(foodSource);
-        GameManager.Instance.UnregisterWithNeedSystems(foodSource);
         m_gridSystemReference.RemoveFoodReference(m_gridSystemReference.WorldToCell(foodSource.Position));
         Destroy(foodSource.gameObject);
+
+        // NOTE: does the game manager need cache need to be rebuilt now?
     }
 
     /// <summary>
@@ -91,30 +90,20 @@ public class FoodSourceManager : GridObjectManager
         }
     }
 
-    public string GetSpeciesID(FoodSourceSpecies species) {
-        if (GameManager.Instance.FoodSources.ContainsValue(species)) {
-            for (var pair = GameManager.Instance.FoodSources.GetEnumerator(); pair.MoveNext() != false;) {
-                if (pair.Current.Value.Equals(species)) {
-                    return pair.Current.Key;
-                }
-            }
-        }
-        return null;
-    }
-
     /// <summary>
     /// Get a list of Food Source with the given species name.
     /// </summary>
     /// <param name="speciesName">Same as FoodSourceSpecies.SpeciesName</param>
     /// <returns>An list of Food Source with the given species name</returns>
     public List<FoodSource> GetFoodSourcesWithSpecies(string speciesName) {
+        ItemID id = ItemRegistry.FindHasName(speciesName);
         // Given species doesn't exist in the level
-        if (!GameManager.Instance.FoodSources.ContainsKey(speciesName))
+        if (!GameManager.Instance.FoodSources.ContainsKey(id))
         {
             Debug.Log("Food source not in level data");
             return null;
         } 
-        FoodSourceSpecies species = GameManager.Instance.FoodSources[speciesName];
+        FoodSourceSpecies species = GameManager.Instance.FoodSources[id];
 
         // No food source of given species exist
         if (!foodSourcesBySpecies.ContainsKey(species))
@@ -159,9 +148,10 @@ public class FoodSourceManager : GridObjectManager
     }
     public override void Serialize(SerializedMapObjects serializedMapObjects)
     {
-        foreach (string speciesName in GameManager.Instance.FoodSources.Keys)
+        foreach (ItemID speciesID in GameManager.Instance.FoodSources.Keys)
         {
-            serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(this.GetSpeciesID(GameManager.Instance.FoodSources[speciesName]), this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
+            string speciesName = speciesID.Data.Name.Get(ItemName.Type.Serialized);
+            serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(speciesName, this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
         }
     }
     public override void Parse()

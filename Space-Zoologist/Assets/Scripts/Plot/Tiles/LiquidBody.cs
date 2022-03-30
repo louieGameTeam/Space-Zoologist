@@ -217,4 +217,26 @@ public class LiquidBody
     {
         return new SerializedLiquidBody(this.bodyID, this.contents);
     }
+
+    #region Object Overrides
+    public override bool Equals(object other)
+    {
+        // If the other is null, then it cannot equal this
+        if (ReferenceEquals(other, null)) return false;
+        // If types are equal then check equal contents
+        else if (other.GetType() == GetType())
+        {
+            LiquidBody otherBody = other as LiquidBody;
+            return bodyID == otherBody.bodyID && contents.SequenceEqual(otherBody.contents) && tiles.SequenceEqual(otherBody.tiles);
+        }
+        // If the types are unequal then the objects are unequal
+        else return false;
+    }
+    public override int GetHashCode()
+    {
+        int contentHash = contents.Sum(content => content.GetHashCode());
+        int tileHash = tiles.Sum(tile => tile.GetHashCode());
+        return bodyID.GetHashCode() + contentHash + tileHash;
+    }
+    #endregion
 }

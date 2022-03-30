@@ -10,7 +10,7 @@ public class FoodSourceStoreSection : StoreSection
 {
     public override void Initialize()
     {
-        base.itemType = ItemType.Food;
+        base.itemType = ItemRegistry.Category.Food;
         base.Initialize();
     }
 

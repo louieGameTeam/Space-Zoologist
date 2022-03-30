@@ -23,7 +23,7 @@ public class ResourceRequest
             // If the item requested is food, the need type addressed is food
             if (ItemRequested.Category == ItemRegistry.Category.Food) return NeedType.FoodSource;
             // If it's not food we assume it is a tile. Check if it is a water tile
-            else if (ItemRequested.Data.Name.Get(ItemName.Type.English).Contains("Water")) return NeedType.Liquid;
+            else if (ItemRequested.Data.Name.AnyNameContains("Water")) return NeedType.Liquid;
             // If it is not water it must be a tile to address terrain needs
             else return NeedType.Terrain;
         }
@@ -46,67 +46,32 @@ public class ResourceRequest
     {
         get
         {
-            List<NeedConstructData> ConvertNeeds<T>(List<T> needs)
-            {
-                return needs.Cast<NeedConstructData>().ToList();
-            }
-
             // Try to get the animal and food species
             ItemData itemAddressedData = ItemAddressed.Data;
             ItemData itemRequestedData = ItemRequested.Data;
             AnimalSpecies animalSpeciesAddressed = itemAddressedData.Species as AnimalSpecies;
             FoodSourceSpecies foodSpeciesAddressed = itemAddressedData.Species as FoodSourceSpecies;
+            NeedRegistry needs;
 
-            // Check if the addressed item is an animal or food species
-            if (animalSpeciesAddressed != null || foodSpeciesAddressed != null)
-            {
-                List<NeedConstructData> speciesNeeds;
-
-                // If the item addressed is an animal species,
-                // convert their needs
-                if (animalSpeciesAddressed)
-                {
-                    if (NeedAddressed == NeedType.Terrain)
-                    {
-                        speciesNeeds = ConvertNeeds(animalSpeciesAddressed.TerrainNeeds);
-                    }
-                    else if (NeedAddressed == NeedType.FoodSource)
-                    {
-                        speciesNeeds = ConvertNeeds(animalSpeciesAddressed.FoodNeeds);
-                    }
-                    else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
-                        $"Usefulness cannot be computed for need {NeedAddressed}");
-                }
-                // If the item addressed is a food species,
-                // convert their needs
-                else
-                {
-                    if (NeedAddressed == NeedType.Terrain)
-                    {
-                        speciesNeeds = ConvertNeeds(foodSpeciesAddressed.TerrainNeeds);
-                    }
-                    else throw new System.NotImplementedException($"{nameof(QuizConversation)}: " +
-                        $"Usefulness cannot be computed for need {NeedAddressed}");
-                }
-
-                // Find a need with the same name as the item addressed
-                // NOTE: this does not work because some need names do not match the item ID english name
-                NeedConstructData need = speciesNeeds
-                    .Find(n => n.NeedName == itemRequestedData.Name.Get(ItemName.Type.English));
-
-                if (need != null)
-                {
-                    // Preferred need is more useful than non preferred
-                    if (need.IsPreferred) return 2;
-                    else return 1;
-                }
-                // If no need was found then this item is not edible/traversible,
-                // it is not useful at all
-                else return 0;
-            }
+            // Try to get the needs of the species addressed
+            if (animalSpeciesAddressed) needs = animalSpeciesAddressed.Needs;
+            else if (foodSpeciesAddressed) needs = foodSpeciesAddressed.Needs;
             else throw new System.ArgumentException($"{nameof(QuizConversation)}: " +
                 $"Item addressed '{itemAddressedData.Name}' has no valid species associated with it, " +
                 $"so we cannot compute the usefulness of a requested item for it");
+
+            // Get the need of the species with this item requested
+            NeedData need = needs.Get(itemRequested);
+
+            if (need.Needed)
+            {
+                // Preferred need is more useful than non preferred
+                if (need.Preferred) return 2;
+                else return 1;
+            }
+            // If no need was found then this item is not edible/traversible,
+            // it is not useful at all
+            else return 0;
         }
     }
     #endregion

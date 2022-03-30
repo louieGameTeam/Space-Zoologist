@@ -5,12 +5,13 @@ using UnityEngine;
 public class GeneralPathfinding : BehaviorPattern
 {
     [Header("Terrain used in place of liquid")]
-    [SerializeField] ItemType Destination = default;
+    [SerializeField] 
+    ItemRegistry.Category Destination = default;
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         Vector3Int destination;
-        if (Destination.Equals(ItemType.Terrain))
+        if (Destination.Equals(ItemRegistry.Category.Tile))
         {
             destination = base.TileDataController.FindClosestLiquidSource(animalData.animal.PopulationInfo, gameObject);
         }

@@ -1112,7 +1112,8 @@ public class TileDataController : MonoBehaviour
             species = GameManager.Instance.FoodSources[selectedItem.ID];
 
         Vector3Int gridPosition = WorldToCell(mousePosition);
-        return CheckSurroundingTiles(gridPosition, species);
+        bool tileCheck = CheckSurroundingTiles(gridPosition, species);
+        return tileCheck;
     }
 
     public bool IsTilePlacementValid (Vector3Int tilePos, TileType oldTile, TileType newTile) {
@@ -1279,15 +1280,15 @@ public class TileDataController : MonoBehaviour
     // this too
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
-        if (GameManager.Instance.FoodSources.ContainsKey(selectedItem.ID))
+        if (selectedItem.ID.Category == ItemRegistry.Category.Species)
         {
-            FoodSourceSpecies species = GameManager.Instance.FoodSources[selectedItem.ID];
-            CheckSurroundingTiles(gridPosition, species);
-        }
-        else if (GameManager.Instance.AnimalSpecies.ContainsKey(selectedItem.ID))
-        {
-            AnimalSpecies species = GameManager.Instance.AnimalSpecies[selectedItem.ID];
+            AnimalSpecies species = selectedItem.ID.Data.Species as AnimalSpecies;
             CheckSurroundingTerrain(gridPosition, species);
+        }
+        else if (selectedItem.ID.Category == ItemRegistry.Category.Food)
+        {
+            FoodSourceSpecies species = selectedItem.ID.Data.Species as FoodSourceSpecies;
+            CheckSurroundingTiles(gridPosition, species);
         }
         else
         {
@@ -1885,6 +1886,12 @@ public class TileDataController : MonoBehaviour
     {
         return direction == Direction2D.X ? Direction2D.Y : Direction2D.X;
     }
+
+    /// <summary>
+    /// Get the cell size for the grid
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 CellSize() => Grid.cellSize;
 
     /// <summary>
     /// Convert a world position to cell positions on the grid.

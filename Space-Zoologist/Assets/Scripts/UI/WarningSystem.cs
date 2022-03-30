@@ -42,7 +42,7 @@ public class WarningSystem : MonoBehaviour
             // If the population is declining at a rate lower than -0.5f,
             // and it has not been marked as endangered already, then 
             // add it to the list of endangered species
-            if (growth.populationIncreaseRate <= -0.5f && 
+            if (growth.ChangeRate <= -0.5f && 
                 !endangeredSpecies.Contains(pop.Species))
             {
                 endangeredSpecies.Add(pop.species);
@@ -63,7 +63,7 @@ public class WarningSystem : MonoBehaviour
         // Setup the message
         string message = "Some animal populations are rapidly declining. Please improve their needs as soon as possible.";
         message += "\n\nEndangered species: ";
-        message += string.Join(", ", endangeredSpecies.Select(animal => animal.SpeciesName));
+        message += string.Join(", ", endangeredSpecies.Select(animal => animal.ID.Data.Name.Get(ItemName.Type.English)));
 
         // Set the message text and open the window
         warningWindow.MessageText.text = message;

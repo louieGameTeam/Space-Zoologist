@@ -66,7 +66,7 @@ public class ConceptsUI : NotebookUIChild
     }
     private void SetRequestedItem(Item item)
     {
-        requestEditor.Request.ItemRequested = item.ItemID;
+        requestEditor.Request.ItemRequested = item.ID;
         requestEditor.UpdateUI();
     }
     #endregion

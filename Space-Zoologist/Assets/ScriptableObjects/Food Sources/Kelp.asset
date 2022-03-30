@@ -12,24 +12,261 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083b514ead8714e15af1a32d8b51e1a5, type: 3}
   m_Name: Kelp
   m_EditorClassIdentifier: 
-  size: 1
+  size: {x: 1, y: 1}
   accessibleTerrain: 06000000
-  speciesName: Kelp
+  waterTilesRequired: 1
   rootRadius: 1
   baseOutput: 3
-  moveCost: 0
-  sellBackPrice: 1
   terrainNeeds:
-  - needName: Liquid
-    isPreferred: 1
-  foodNeeds: []
+  - isPreferred: 1
+    tileID:
+      category: 2
+      index: 6
   liquidNeeds:
-  - needName: Water
-    tileNeedThreshold: 1
-    freshWaterMinThreshold: 0.97
-    freshWaterMaxThreshold: 1
-    saltMinThreshold: 0
-    saltMaxThreshold: 1
-    bacteriaMinThreshold: 0.02
-    bacteriaMaxThreshold: 1
-  FoodSource: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
+  - id:
+      category: 2
+      index: 6
+    minThreshold: 0.97
+    maxThreshold: 1
+  - id:
+      category: 2
+      index: 8
+    minThreshold: 0.02
+    maxThreshold: 1
+  needs:
+    needData:
+      needArrays:
+      - needs:
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 0
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 1
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 2
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 3
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 4
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 0
+            index: 5
+      - needs:
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 0
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 1
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 2
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 3
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 4
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 1
+            index: 5
+      - needs:
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 0
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 1
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 2
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 3
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 4
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 5
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 1
+          preferred: 1
+          speciesNeedType: 0
+          useAsWaterNeed: 1
+          minimum: 0.97
+          maximum: 1
+          id:
+            category: 2
+            index: 6
+        - needed: 0
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
+          id:
+            category: 2
+            index: 7
+        - needed: 1
+          traversibleOnly: 0
+          useAsTerrainNeed: 0
+          preferred: 0
+          speciesNeedType: 0
+          useAsWaterNeed: 0
+          minimum: 0.02
+          maximum: 1
+          id:
+            category: 2
+            index: 8
