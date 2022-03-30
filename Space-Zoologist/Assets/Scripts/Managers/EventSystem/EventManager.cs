@@ -11,7 +11,6 @@ public enum EventType {
     PopulationGrowthChange, PopulationExtinct, // Pass the population
     FoodSourceChange, // Pass the food source
     TerrainChange, // Pass a list of change tiles
-    AtmosphereChange, // Pass the enclosed area
     LiquidChange, // Pass the cell posistion
     NPCDialogue,
     NextDay,
