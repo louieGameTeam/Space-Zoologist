@@ -83,10 +83,15 @@ public static class NeedRatingBuilder
 
         foreach (NeedData need in predatorNeeds)
         {
-            // Add up the amount of species available with this ID
-            predatorCount += availability
-                .FindWithItem(need.ID)
-                .AmountAvailable;
+            // Find a predator with the same id as the need
+            NeedAvailabilityItem predator = availability.FindWithItem(need.ID);
+
+            // If we found an available predator then 
+            // add the number available to the local variable
+            if (predator != null)
+            {
+                predatorCount += predator.AmountAvailable;
+            }
         }
 
         return (int)predatorCount;
