@@ -43,7 +43,7 @@ public class NeedRatingCache
     /// </summary>
     /// <param name="foods"></param>
     /// <param name="cache"></param>
-    public void RebuildFoodSourceRatings(NeedAvailabilityCache cache)
+    public void RebuildFoodRatings(NeedAvailabilityCache cache)
     {
         // Clear existing ratings
         foodSourceRatings.Clear();

@@ -26,7 +26,7 @@ public class NeedAvailabilityCache
     /// availabilities must be rebuilt in one operation. The codebase 
     /// does not currently support insertions or updates of existing availability
     /// </remarks>
-    public void RebuildAllPopulationAvailabilities()
+    public void RebuildPopulationAvailabilities()
     {
         populationNeedAvailabilities = NeedAvailabilityBuilder.BuildDistribution();
     }
@@ -34,9 +34,12 @@ public class NeedAvailabilityCache
     /// <summary>
     /// Rebuild the need availabilities for all food sources
     /// </summary>
-    public void RebuildAllFoodAvailabilities(List<FoodSource> foodSources)
+    public void RebuildFoodAvailabilities()
     {
         // Get a list of all food sources
+        List<FoodSource> foodSources = GameManager.Instance.m_foodSourceManager.FoodSources;
+
+        // Clear existing availabilities
         foodSourceNeedAvailabilities.Clear();
 
         // Create the need availability for each food
