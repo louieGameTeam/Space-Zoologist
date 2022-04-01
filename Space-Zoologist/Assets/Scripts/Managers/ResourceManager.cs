@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ResourceManager : MonoBehaviour
 {
     // [SerializeField] LevelDataReference LevelDataRef = default;
-    [SerializeField] EventResponseManager EventResponseManager = default;
     Dictionary<ItemID, int> remainingResources = new Dictionary<ItemID, int>();
 
     // a copy of the dictionary before draft
@@ -25,8 +24,6 @@ public class ResourceManager : MonoBehaviour
             remainingResources[item.itemObject.ID] = item.initialAmount;
             initialResources[item.itemObject.ID] = item.initialAmount;
         }
-
-        EventResponseManager.InitializeResponseHandler(EventType.PopulationCountIncreased, AddItem);
     }
 
     public bool hasLimitedSupply(ItemID itemID)
