@@ -104,11 +104,13 @@ public class MoveObject : MonoBehaviour
                         Reset();
                     }
 
-                    // Select the food or animal at mouse position
-                    GameObject SelectedObject = SelectGameObjectAtMousePosition();
-                    //Cannot select through UI
-                    if (SelectedObject != null && !EventSystem.current.IsPointerOverGameObject())
-                        objectToMove = SelectedObject;
+                    // Select the food or animal at mouse position(Cannot select through UI)
+                    if (!EventSystem.current.IsPointerOverGameObject())
+                    {
+                        GameObject SelectedObject = SelectGameObjectAtMousePosition();
+                        if (SelectedObject != null)
+                            objectToMove = SelectedObject;
+                    }
                 }
             }
 
@@ -139,7 +141,6 @@ public class MoveObject : MonoBehaviour
                 // Preview placement
                 GameObjectFollowMouse(objectToMove);
                 HighlightGrid();
-
                 // If trying to place
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -244,13 +245,18 @@ public class MoveObject : MonoBehaviour
         DeleteButton.transform.position = screenPos + new Vector3(50, 100, 0);
     }
 
-    // Find what the mouse clicked on
     private GameObject SelectGameObjectAtMousePosition()
     {
         // Update animal location reference
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
+        return SelectGameObjectAtGridPosition(pos);
+    }
+
+    // Find what the mouse clicked on
+    private GameObject SelectGameObjectAtGridPosition(Vector3Int pos)
+    {
         TileData tileData = gridSystem.GetTileData(pos);
         GameObject toMove = null;
 
@@ -370,7 +376,7 @@ public class MoveObject : MonoBehaviour
         if (!gridSystem.IsWithinGridBounds(curPos)) return;
 
         Vector3Int gridLocation = gridSystem.WorldToCell(curPos);
-        if (this.gridSystem.IsOnWall(gridLocation)) return;
+        //if (this.gridSystem.IsOnWall(gridLocation)) return;
 
         // Different position: need to repaint
         if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
@@ -427,11 +433,10 @@ public class MoveObject : MonoBehaviour
         if(cluster != null)
             buildProgress = cluster.currentDays;
 
-        //Remove the food so it doesn't interfere with its own placement
-        
+        //Check for placement validity using the initial position as a blind spot
         float cost = moveCost;
-        bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
-        if (valid) //If valid, place the food at the mouse destination
+        bool valid = gridSystem.IsFoodPlacementValid(worldPos, initialGridPos, null, species) && GameManager.Instance.Balance >= cost;
+        if (valid) //If valid, place the food at the mouse destination and remove the previous food
         {
             removeOriginalFood(foodSource);
             placeFood(pos, species);
