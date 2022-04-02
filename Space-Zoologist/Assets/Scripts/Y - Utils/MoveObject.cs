@@ -154,14 +154,14 @@ public class MoveObject : MonoBehaviour
                     Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     worldPos.z = 0;
 
-
+                    bool successfullyMoved = true;
                     switch (movingItemType)
                     {
                         case ItemType.ANIMAL:
-                            TryPlaceAnimal(worldPos, objectToMove);
+                            successfullyMoved = TryPlaceAnimal(worldPos, objectToMove);
                             break;
                         case ItemType.FOOD:
-                            TryPlaceFood(worldPos, objectToMove);
+                            successfullyMoved = TryPlaceFood(worldPos, objectToMove);
                             break;
                         case ItemType.TILE:
                             TryPlaceTile(worldPos, objectToMove);
@@ -169,8 +169,8 @@ public class MoveObject : MonoBehaviour
                         default:
                             break;
                     }
-
-                    Reset();
+                    if(successfullyMoved)
+                        Reset();
                 }
             }
 
@@ -189,7 +189,7 @@ public class MoveObject : MonoBehaviour
 
     private void Reset()
     {
-        if (objectToMove?.name == "tile")
+        if (objectToMove && objectToMove.name == "tile")
         {
             Destroy(objectToMove);
         }
@@ -381,7 +381,7 @@ public class MoveObject : MonoBehaviour
         }
     }
 
-    private void TryPlaceAnimal(Vector3 worldPos, GameObject toMove)
+    private bool TryPlaceAnimal(Vector3 worldPos, GameObject toMove)
     {
         Population population = toMove.GetComponent<Animal>().PopulationInfo;
         AnimalSpecies species = population.Species;
@@ -404,11 +404,12 @@ public class MoveObject : MonoBehaviour
         }
         else
         {
-            toMove.transform.position = initialPos;
+            return false;
         }
+        return true;
     }
 
-    private void TryPlaceFood(Vector3 worldPos, GameObject toMove)
+    private bool TryPlaceFood(Vector3 worldPos, GameObject toMove)
     {
         FoodSource foodSource = toMove.GetComponent<FoodSource>();
         FoodSourceSpecies species = foodSource.Species;
@@ -418,8 +419,7 @@ public class MoveObject : MonoBehaviour
         //If the player clicks on the food source's original position, don't bother with the mess below
         if (pos == initialGridPos)
         {
-            toMove.transform.position = initialPos;
-            return;
+            return false;
         }
         //Check if the food source is under construction and if so, grab its build progress
         TileDataController.ConstructionCluster cluster = this.gridSystem.GetConstructionClusterAtPosition(initialGridPos);
@@ -428,19 +428,20 @@ public class MoveObject : MonoBehaviour
             buildProgress = cluster.currentDays;
 
         //Remove the food so it doesn't interfere with its own placement
-        removeOriginalFood(foodSource);
+        
         float cost = moveCost;
         bool valid = gridSystem.IsFoodPlacementValid(worldPos, null, species) && GameManager.Instance.Balance >= cost;
         if (valid) //If valid, place the food at the mouse destination
         {
+            removeOriginalFood(foodSource);
             placeFood(pos, species);
             GameManager.Instance.SubtractFromBalance(cost);
         }
-        else //Otherwise, place it back at the original position with the correct build progress
+        else //Otherwise ignore the placement command entirely
         {
-            placeFood(initialGridPos, species, buildProgress);
-            toMove.transform.position = initialPos;
+            return false;
         }
+        return true;
     }
 
     private void TryPlaceTile(Vector3 worldPos, GameObject toMove)
