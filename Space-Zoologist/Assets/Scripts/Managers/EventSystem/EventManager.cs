@@ -4,13 +4,13 @@ using UnityEngine;
 using System;
 
 public enum EventType {
-    PopulationCountIncreased, PopulationCountDecreased, PopulationGrowing, PopulationDeclining, // Pass the population
-    PopulationAccessibleAreaChanged, PopulationExtinct, // Pass the population
-    FoodSourceTerrainChange, FoodSourceOutputChange, // Pass the food source
-    StoreOpened, StoreClosed,InspectorOpened, InspectorClosed, LogOpened, LogClosed, // Pass null is okay
+    // TODO: If LogToggled isn't going to be used in the future, remove it
+    StoreToggled, InspectorToggled, LogToggled, // Pass bool (true if opened, false if closed)
     NewPopulation, NewFoodSource, NewEnclosedArea, // Pass the created object
+    PopulationCountChange, // Pass a tuple (population, bool (true if increased, false if decreased))
+    PopulationGrowthChange, PopulationExtinct, // Pass the population
+    FoodSourceChange, // Pass the food source
     TerrainChange, // Pass a list of change tiles
-    AtmosphereChange, // Pass the enclosed area
     LiquidChange, // Pass the cell posistion
     NPCDialogue,
     NextDay,
