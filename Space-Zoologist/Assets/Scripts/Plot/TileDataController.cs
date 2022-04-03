@@ -66,11 +66,6 @@ public class TileDataController : MonoBehaviour
     {
         try
         {
-            EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
-            {
-                this.ChangedTiles.Clear();
-            });
-
             List<Vector3Int> changedTilesNoWall = new List<Vector3Int>();
             foreach (Vector3Int tilePosition in ChangedTiles)
             {
@@ -78,10 +73,13 @@ public class TileDataController : MonoBehaviour
                     changedTilesNoWall.Add(tilePosition);
             }
 
-            EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
-            {
-                // Invoke event and pass the changed tiles that are not walls
-                EventManager.Instance.InvokeEvent(EventType.TerrainChange, changedTilesNoWall);
+            EventManager.Instance.SubscribeToEvent (EventType.StoreToggled, () => {
+                if ((bool) EventManager.Instance.EventData) {
+                    // Invoke event and pass the changed tiles that are not walls
+                    EventManager.Instance.InvokeEvent (EventType.TerrainChange, changedTilesNoWall);
+                } else {
+                    this.ChangedTiles.Clear ();
+                }
             });
         }
         catch { };

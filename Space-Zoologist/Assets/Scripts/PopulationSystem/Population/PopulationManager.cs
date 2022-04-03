@@ -30,7 +30,7 @@ public class PopulationManager : MonoBehaviour
         }
 
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
-        EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, UpdateAccessibleLocations);
+        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, () => { if (!(bool) EventManager.Instance.EventData) UpdateAccessibleLocations(); });
     }
 
     private AnimalSpecies LoadSpecies(string name)
