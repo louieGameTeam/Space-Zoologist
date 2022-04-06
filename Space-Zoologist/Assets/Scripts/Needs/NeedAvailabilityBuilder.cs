@@ -134,12 +134,21 @@ public static class NeedAvailabilityBuilder
 
         foreach (Population population in rpm.Populations)
         {
-            List<float[]> accessibleLiquids = rpm.GetLiquidComposition(population);
+            List<LiquidBody> accessibleBodies = rpm.GetAccessibleLiquidBodies(population);
             ItemID waterID = ItemRegistry.FindAnyNameContains("Water");
 
+            // Local function to convert liquid body to availability item
+            NeedAvailabilityItem ConvertBodyToItem(LiquidBody body)
+            {
+                return new NeedAvailabilityItem(
+                    waterID, 
+                    body.TileCount, 
+                    body.TileCount, 
+                    new LiquidBodyContent(body.contents));
+            }
+
             // Convert accessible liquids to need availability items
-            IEnumerable<NeedAvailabilityItem> waterItems = accessibleLiquids
-                .Select(comp => new NeedAvailabilityItem(waterID, 1, 1, new LiquidBodyContent(comp)));
+            IEnumerable<NeedAvailabilityItem> waterItems = accessibleBodies.Select(ConvertBodyToItem);
 
             // Add the water items to the list in the dictionary
             Get(population).AddRange(waterItems);

@@ -66,13 +66,24 @@ public class GrowthCalculator
 
     public bool ReadyForDecay()
     {
-        this.DecayCountdown--;
-        if (this.DecayCountdown == 0)
+        // If the population has predators
+        // then decay without a countdown
+        if (Rating.PredatorCount > 0)
         {
-            this.DecayCountdown = population.Species.DecayRate;
             return true;
         }
-        return false;
+        // If the population has no predators 
+        // then countdown to decay
+        else
+        {
+            this.DecayCountdown--;
+            if (this.DecayCountdown == 0)
+            {
+                this.DecayCountdown = population.Species.DecayRate;
+                return true;
+            }
+            return false;
+        }
     }
 
     public bool ReadyForGrowth()

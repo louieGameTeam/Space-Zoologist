@@ -14,15 +14,23 @@ public class NeedCache
     #endregion
 
     #region Public Methods
-    public void RebuildAll(List<FoodSource> foodSources)
+    public void Rebuild()
     {
         // Rebuild the food source first, because population depends on their output,
         // which depends on their ratings
-        Availability.RebuildAllFoodAvailabilities(foodSources);
-        Ratings.RebuildFoodSourceRatings(Availability);
+        RebuildFoodCache();
 
         // Rebuild the populations now that foods are taken care of
-        Availability.RebuildAllPopulationAvailabilities();
+        RebuildPopulationCache();
+    }
+    public void RebuildFoodCache()
+    {
+        Availability.RebuildFoodAvailabilities();
+        Ratings.RebuildFoodRatings(Availability);
+    }
+    public void RebuildPopulationCache()
+    {
+        Availability.RebuildPopulationAvailabilities();
         Ratings.RebuildPopulationRatings(Availability);
     }
     /// <summary>

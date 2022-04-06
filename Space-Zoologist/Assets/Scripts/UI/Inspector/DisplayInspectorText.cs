@@ -31,6 +31,7 @@ public class DisplayInspectorText : MonoBehaviour
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
 
+        // Check to make sure that the population needs have been cached
         if (population.GrowthCalculator.HasNeedCache)
         {
             switch (population.GrowthCalculator.GrowthStatus)
@@ -59,6 +60,7 @@ public class DisplayInspectorText : MonoBehaviour
 
             GenerateSliders(population);
         }
+        // If there is no need cache then tell the player to wait a day
         else
         {
             detailText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
@@ -172,22 +174,13 @@ public class DisplayInspectorText : MonoBehaviour
         if (life is Population)
         {
             Population population = life as Population;
+            NeedRating rating = population.GrowthCalculator.Rating;
 
-            if (population)
-            {
-                NeedRating rating = population.GrowthCalculator.Rating;
-
-                if (rating.HasFoodNeed) setupSlider("Food", rating.FoodRating);
-                if (rating.HasFriendNeed) setupSlider("Friend", rating.FriendRating);
-                if (rating.HasTerrainNeed) setupSlider("Terrain", rating.TerrainRating);
-                if (rating.HasTreeNeed) setupSlider("Tree", rating.TreeRating);
-                if (rating.HasWaterNeed) setupSlider("Water", rating.WaterRating);
-            }
-            else
-            {
-                Debug.LogWarning($"Cannot display need sliders for object {life} " +
-                    $"because it is not a population!");
-            }
+            if (rating.HasFoodNeed) setupSlider("Food", rating.FoodRating);
+            if (rating.HasFriendNeed) setupSlider("Friend", rating.FriendRating);
+            if (rating.HasTerrainNeed) setupSlider("Terrain", rating.TerrainRating);
+            if (rating.HasTreeNeed) setupSlider("Tree", rating.TreeRating);
+            if (rating.HasWaterNeed) setupSlider("Water", rating.WaterRating);
         }
     }
 

@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
         LoadLevelData();
         SetupObjectives();
         InitializeGameStateVariables();
-        RebuildNeedCache();
+        Needs.Rebuild();
     }
 
     void Update()
@@ -395,10 +395,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Need System Functions
-    public void RebuildNeedCache()
-    {
-        Needs.RebuildAll(m_foodSourceManager.FoodSources);
-    }
     public void UpdateAccessMap()
     {
         m_reservePartitionManager.UpdateAccessMapChangedAt(m_tileDataController.ChangedTiles.ToList<Vector3Int>());
@@ -640,12 +636,23 @@ public class GameManager : MonoBehaviour
         m_tileDataController.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
-        RebuildNeedCache();
+        Needs.Rebuild();
+        
+        // Handle growth for all populations
+        bool anyPopulationChange = false;
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
         {
-            m_populationManager.Populations[i].HandleGrowth();
+            anyPopulationChange |= m_populationManager.Populations[i].HandleGrowth();
         }
-        RebuildNeedCache();
+
+        // Rebuild population cache after population levels change
+        // NOTE: this assumes population changes do not affect food sources.
+        // Make sure to change this if that assumption is no longer true
+        if (anyPopulationChange)
+        {
+            Needs.RebuildPopulationCache();
+        }
+        
         m_inspector.UpdateCurrentDisplay();
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 

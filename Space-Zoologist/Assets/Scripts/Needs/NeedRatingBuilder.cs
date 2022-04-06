@@ -83,10 +83,15 @@ public static class NeedRatingBuilder
 
         foreach (NeedData need in predatorNeeds)
         {
-            // Add up the amount of species available with this ID
-            predatorCount += availability
-                .FindWithItem(need.ID)
-                .AmountAvailable;
+            // Find a predator with the same id as the need
+            NeedAvailabilityItem predator = availability.FindWithItem(need.ID);
+
+            // If we found an available predator then 
+            // add the number available to the local variable
+            if (predator != null)
+            {
+                predatorCount += predator.AmountAvailable;
+            }
         }
 
         return (int)predatorCount;
@@ -207,10 +212,25 @@ public static class NeedRatingBuilder
             float totalUsed = preferredUsed + survivableUsed;
 
             // If we used the amound we needed, then boost the rating
-            // by the amount used that is preferred
             if (totalUsed >= minNeeded)
             {
-                return 1 + ((float)preferredUsed / totalUsed);
+                int magnitude = maxUsed - minNeeded;
+
+                // Boost amounts used to boost the rating
+                float towardsMaxBoost = 0f;
+                float preferenceBoost = preferredUsed / totalUsed;
+
+                // If there is a difference between min-max used,
+                // then half the boost comes from how close to the max is used
+                // and the other half of the boost comes from how much of 
+                // the preferred item is used
+                if (magnitude > 0)
+                {
+                    towardsMaxBoost = 0.5f * (totalUsed / maxUsed);
+                    preferenceBoost *= 0.5f;
+                }
+
+                return 1 + towardsMaxBoost + preferenceBoost;
             }
             // If we did not use the amount we needed
             // then the rating is the proportion that we needed

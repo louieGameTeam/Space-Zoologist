@@ -20,7 +20,7 @@ public class Population : MonoBehaviour
     public System.Random random = new System.Random();
 
     public AnimalPathfinding.Grid Grid { get; private set; }
-    public List<Vector3Int>  AccessibleLocations { get; private set; }
+    public List<Vector3Int> AccessibleLocations { get; private set; }
 
     private float animatorSpeed = 1f;
     private float overlaySpeed = 1f;
@@ -167,7 +167,8 @@ public class Population : MonoBehaviour
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
     public int DaysTillDeath()
     {
-        return this.GrowthCalculator.DecayCountdown;
+        if (GrowthCalculator.Rating.PredatorCount > 0) return 1;
+        else return this.GrowthCalculator.DecayCountdown; 
     }
 
     // Don't add one because this value is updated when HandleGrowth is called
