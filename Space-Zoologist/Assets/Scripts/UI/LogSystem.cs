@@ -97,10 +97,10 @@ public class LogSystem : MonoBehaviour
         {
             this.handleLog(EventType.NewEnclosedArea);
         });
-        this.eventManager.SubscribeToEvent(EventType.AtmosphereChange, () =>
+/*        this.eventManager.SubscribeToEvent(EventType.AtmosphereChange, () =>
         {
             this.handleLog(EventType.AtmosphereChange);
-        });
+        });*/
         this.eventManager.SubscribeToEvent(EventType.LiquidChange, () =>
         {
             this.handleLog(EventType.LiquidChange);
@@ -134,9 +134,9 @@ public class LogSystem : MonoBehaviour
             case EventType.NewEnclosedArea:
                 this.logNewCreation((EnclosedArea)EventManager.Instance.EventData);
                 break;
-            case EventType.AtmosphereChange:
+/*            case EventType.AtmosphereChange:
                 this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.EventData);
-                break;
+                break;*/
             case EventType.LiquidChange:
                 this.logLiquidChange((Vector3Int)EventManager.Instance.EventData);
                 break;

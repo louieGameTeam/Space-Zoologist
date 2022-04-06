@@ -1106,11 +1106,14 @@ public class TileDataController : MonoBehaviour
 
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem = null, FoodSourceSpecies species = null)
     {
+        return IsFoodPlacementValid(mousePosition, new Vector3Int(999, 999, 999), selectedItem, species);
+    }
+    public bool IsFoodPlacementValid(Vector3 mousePosition, Vector3Int blindSpot, Item selectedItem = null, FoodSourceSpecies species = null)
+    {
         if (selectedItem)
             species = GameManager.Instance.FoodSources[selectedItem.ID];
-
         Vector3Int gridPosition = WorldToCell(mousePosition);
-        bool tileCheck = CheckSurroundingTiles(gridPosition, species);
+        bool tileCheck = CheckSurroundingTiles(gridPosition, species, blindSpot);
         return tileCheck;
     }
 
@@ -1159,6 +1162,11 @@ public class TileDataController : MonoBehaviour
 
     private bool CheckSurroundingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
     {
+        return CheckSurroundingTiles(cellPosition, species, new Vector3Int(999, 999, 999));
+    }
+
+    private bool CheckSurroundingTiles(Vector3Int cellPosition, FoodSourceSpecies species,Vector3Int blindSpot)
+    {
         Vector3Int pos;
         bool isValid = true;
         // Size is even, offset by 1
@@ -1172,7 +1180,8 @@ public class TileDataController : MonoBehaviour
                 pos = cellPosition;
                 pos.x += x;
                 pos.y += y;
-                if (!IsFoodPlacementValid(pos, species))
+                bool isInBlindSpot = pos.x >= blindSpot.x && pos.x <= blindSpot.x + species.Size.x - 1 && pos.y >= blindSpot.y && pos.y <= blindSpot.y + species.Size.y - 1;
+                if (!IsFoodPlacementValid(pos, species) && !isInBlindSpot)
                 {
                     isValid = false;
                     HighlightTile(pos, Color.red);
