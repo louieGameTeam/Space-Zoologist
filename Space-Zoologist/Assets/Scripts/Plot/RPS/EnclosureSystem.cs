@@ -82,8 +82,8 @@ public class EnclosureSystem : MonoBehaviour
     public EnclosedArea GetEnclosedAreaByCellPosition(Vector3Int cellPos)
     {
         Vector3Int position = GameManager.Instance.m_tileDataController.WorldToCell(cellPos);
-
-        return this.GetEnclosedAreaById(positionToEnclosedArea[position]);
+        positionToEnclosedArea.TryGetValue(position, out byte val);
+        return this.GetEnclosedAreaById(val);
     }
 
     public EnclosedArea GetEnclosedAreaById(byte id)
