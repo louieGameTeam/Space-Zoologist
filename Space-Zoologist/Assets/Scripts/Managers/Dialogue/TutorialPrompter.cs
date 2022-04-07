@@ -129,7 +129,8 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilZeigsExist(int numZeigs)
     {
-        FreezingScheduler.FreezeUntilConditionIsMet(() => PopulationExists(SpeciesType.Goat, numZeigs));
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
+        FreezingScheduler.FreezeUntilConditionIsMet(() => PopulationExists(goatID, numZeigs));
     }
     public void FreezeUntilZeigPopulationIncrease()
     {
@@ -138,12 +139,13 @@ public class TutorialPrompter : MonoBehaviour
 
         // Get the current population
         PopulationManager populationManager = GameManager.Instance.m_populationManager;
-        int currentGoats = populationManager.TotalPopulationSize(SpeciesType.Goat);
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
+        int currentGoats = populationManager.TotalPopulationSize(goatID.Data.Species as AnimalSpecies);
 
         // Population increased if current population exceeds population computed just now
         bool PopulationIncrease()
         {
-            return populationManager.TotalPopulationSize(SpeciesType.Goat) > currentGoats;
+            return populationManager.TotalPopulationSize(goatID.Data.Species as AnimalSpecies) > currentGoats;
         }
 
         FreezingScheduler.FreezeUntilConditionIsMet(PopulationIncrease);
@@ -161,7 +163,8 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilGoatIsInspected()
     {
-        FreezeUntilPopulationIsInspected(SpeciesType.Goat);
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
+        FreezeUntilPopulationIsInspected(goatID);
     }
     public void FreezeUntilDirtRequested(int quantity)
     {
@@ -169,7 +172,8 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilGoatPlacedMaplePlacedAndDaysAdvanced()
     {
-        bool GoatsExist() => PopulationExists(SpeciesType.Goat, 3);
+        ItemID goatID = ItemRegistry.FindHasName("Goat");
+        bool GoatsExist() => PopulationExists(goatID, 3);
         bool GoatsDontExist() => !GoatsExist();
         bool MaplesExist() => FoodSourceExists("Space Maple", 2);
         bool MaplesDontExist() => !MaplesExist();
@@ -179,7 +183,7 @@ public class TutorialPrompter : MonoBehaviour
             return GoatsExist() && 
                 MaplesExist() && 
                 GameManager.Instance.CurrentDay >= 3 && 
-                PopulationIsInspected(SpeciesType.Goat);
+                PopulationIsInspected(goatID);
         });
         HighlightingScheduler.SetHighlights(
             // Prompt player to put down some goats
@@ -294,7 +298,7 @@ public class TutorialPrompter : MonoBehaviour
             HighlightBuildSectionPicker(storeSectionIndex),
             HighlightBuildItem<StoreSectionType>(targetItem));
     }
-    private void FreezeUntilPopulationIsInspected(SpeciesType targetSpecies)
+    private void FreezeUntilPopulationIsInspected(ItemID targetSpecies)
     {
         FreezingScheduler.FreezeUntilConditionIsMet(() => PopulationIsInspected(targetSpecies));
         HighlightingScheduler.SetHighlights(HighlightInspectorButton());
@@ -346,11 +350,11 @@ public class TutorialPrompter : MonoBehaviour
         // Freeze until the menu is in store, the store section is picked and the item selected is the target item
         if (storeSection.SelectedItem != null)
         {
-            return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == storeSectionIndex && storeSection.SelectedItem.ItemID == targetItem;
+            return menuManager.IsInStore && buildUI.StoreSectionIndexPicker.FirstValuePicked == storeSectionIndex && storeSection.SelectedItem.ID == targetItem;
         }
         else return false;
     }
-    private bool PopulationIsInspected(SpeciesType species)
+    private bool PopulationIsInspected(ItemID species)
     {
         Inspector inspector = GameManager.Instance.m_inspector;
 
@@ -363,16 +367,16 @@ public class TutorialPrompter : MonoBehaviour
             // If you got the script then check the species type highlighted
             if (population)
             {
-                return population.Species.Species == species;
+                return population.Species.ID == species;
             }
             return false;
         }
         return false;
     }
-    private bool PopulationExists(SpeciesType species, int amount)
+    private bool PopulationExists(ItemID species, int amount)
     {
         PopulationManager populationManager = GameManager.Instance.m_populationManager;
-        return populationManager.TotalPopulationSize(species) >= amount;
+        return populationManager.TotalPopulationSize(species.Data.Species as AnimalSpecies) >= amount;
     }
     private bool FoodSourceExists(string speciesName, int amount)
     {
@@ -449,14 +453,14 @@ public class TutorialPrompter : MonoBehaviour
         // Get a list of all store item cells in the store section
         StoreItemCell[] cells = storeSection.GetComponentsInChildren<StoreItemCell>(true);
         // Find a cell in the list of all the cells that will be our target
-        StoreItemCell target = Array.Find(cells, cell => cell.item.ItemID == item);
+        StoreItemCell target = Array.Find(cells, cell => cell.item.ID == item);
         // Convert the target transform to a rect transform
         RectTransform targetTransform = target.transform as RectTransform;
 
         // Return a highlight for the item cell with the given id
         return new ConditionalHighlight()
         {
-            predicate = () => storeSection.SelectedItem == null || storeSection.SelectedItem.ItemID != item,
+            predicate = () => storeSection.SelectedItem == null || storeSection.SelectedItem.ID != item,
             target = () => targetTransform
         };
     }

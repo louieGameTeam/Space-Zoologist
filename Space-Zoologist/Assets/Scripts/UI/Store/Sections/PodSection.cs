@@ -17,7 +17,7 @@ public class PodSection : StoreSection
     {
         populationManager = GameManager.Instance.m_populationManager;
         tilePlacementController = GameManager.Instance.m_tilePlacementController;
-        base.itemType = ItemType.Pod;
+        base.itemType = ItemRegistry.Category.Species;
         base.Initialize();
     }
 

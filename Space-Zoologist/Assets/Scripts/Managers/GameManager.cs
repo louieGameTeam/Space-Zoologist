@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     [Expandable, SerializeField] private LevelData m_levelData;
     public LevelData LevelData { get { return m_levelData; } }
     public SerializedLevel PresetMap { get; private set; }
-    public Dictionary<string, FoodSourceSpecies> FoodSources = new Dictionary<string, FoodSourceSpecies>();
-    public Dictionary<string, AnimalSpecies> AnimalSpecies = new Dictionary<string, AnimalSpecies>();
+    public Dictionary<ItemID, FoodSourceSpecies> FoodSources = new Dictionary<ItemID, FoodSourceSpecies>();
+    public Dictionary<ItemID, AnimalSpecies> AnimalSpecies = new Dictionary<ItemID, AnimalSpecies>();
     public float Balance { get; private set; }
     #endregion
 
@@ -77,8 +77,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Need System Variables
-    private Dictionary<NeedType, NeedSystem> m_needSystems;
-    public Dictionary<NeedType, NeedSystem> NeedSystems { get { return m_needSystems; } }
+    public NeedCache Needs { get; private set; } = new NeedCache();
     #endregion
 
     #region Managers
@@ -110,13 +109,12 @@ public class GameManager : MonoBehaviour
         m_levelData = LevelDataReference.instance.LevelData;
         SetManagers();
         LoadResources();
-        SetNeedSystems();
         InitializeManagers();
         InitializeUI();
         LoadLevelData();
         SetupObjectives();
         InitializeGameStateVariables();
-        InitialNeedSystemUpdate();
+        Needs.Rebuild();
     }
 
     void Update()
@@ -241,14 +239,14 @@ public class GameManager : MonoBehaviour
         // set the food source dictionary
         foreach (FoodSourceSpecies foodSource in m_levelData.FoodSourceSpecies)
         {
-            this.FoodSources.Add(foodSource.SpeciesName, foodSource);
+            this.FoodSources.Add(foodSource.ID, foodSource);
         }
 
         // set the animal dictionary
         foreach (AnimalSpecies animalSpecies in m_levelData.AnimalSpecies)
         {
-            if (AnimalSpecies.ContainsKey(animalSpecies.SpeciesName)) continue;
-            this.AnimalSpecies.Add(animalSpecies.SpeciesName, animalSpecies);
+            if (AnimalSpecies.ContainsKey(animalSpecies.ID)) continue;
+            this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
         }
 
         LoadMap();
@@ -395,133 +393,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Need System Functions
-
-    private void SetNeedSystems()
-    {
-        // create dictionary
-        m_needSystems = new Dictionary<NeedType, NeedSystem>();
-
-        // Add environmental NeedSystem
-        AddNeedSystem(new TerrainNeedSystem());
-        AddNeedSystem(new LiquidNeedSystem());
-        // FoodSource and Species NS
-        AddNeedSystem(new FoodSourceNeedSystem());
-        AddNeedSystem(new PredatoryPreySystem());
-    }
-
-    private void InitialNeedSystemUpdate()
-    {
-        this.UpdateAllNeedSystems();
-        m_populationManager.UpdateAllGrowthConditions();
-        //TogglePause("InitialNeedSystemUpdate");
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () =>
-        {
-            this.UnregisterWithNeedSystems((Life)EventManager.Instance.EventData);
-        });
-    }
-
-    /// <summary>
-    /// Register a Population or FoodSource with the systems using the strings need names.b
-    /// </summary>
-    /// <param name="life">This could be a Population or FoodSource since they both inherit from Life</param>
-    public void RegisterWithNeedSystems(Life life)
-    {
-        // Register to NS by NeedType (string)
-        foreach (Need need in life.GetNeedValues().Values)
-        {
-            Debug.Assert(m_needSystems.ContainsKey(need.NeedType), $"No { need.NeedType } system");
-            m_needSystems[need.NeedType].AddConsumer(life);
-        }
-    }
-
-    public void UnregisterWithNeedSystems(Life life)
-    {
-        foreach (Need need in life.GetNeedValues().Values)
-        {
-            Debug.Assert(m_needSystems.ContainsKey(need.NeedType), $"No { need } system");
-            m_needSystems[need.NeedType].RemoveConsumer(life);
-        }
-    }
-
-    /// <summary>
-    /// Add a system so that populations can register with it via it's need name.
-    /// </summary>
-    /// <param name="needSystem">The system to add</param>
-    private void AddNeedSystem(NeedSystem needSystem)
-    {
-        if (!this.m_needSystems.ContainsKey(needSystem.NeedType))
-        {
-            m_needSystems.Add(needSystem.NeedType, needSystem);
-        }
-        else
-        {
-            Debug.Log($"{needSystem.NeedType} need system already existed");
-        }
-    }
-
-    public void UpdateAllNeedSystems()
-    {
-        foreach (KeyValuePair<NeedType, NeedSystem> entry in m_needSystems)
-        {
-            entry.Value.UpdateSystem();
-        }
-    }
-
-
-    public void UpdateNeedSystem(NeedType needType)
-    {
-        if (this.m_needSystems.ContainsKey(needType))
-        {
-            this.m_needSystems[needType].UpdateSystem();
-        }
-    }
-
     public void UpdateAccessMap()
     {
         m_reservePartitionManager.UpdateAccessMapChangedAt(m_tileDataController.ChangedTiles.ToList<Vector3Int>());
-    }
-
-    /// <summary>
-    /// Update all the need system that is mark "dirty"
-    /// </summary>
-    /// <remarks>
-    /// The order of the NeedSystems' update metter,
-    /// this should be their relative order(temp) :
-    /// Terrian/Atmosphere -> Species -> FoodSource -> Density
-    /// This order can be gerenteed in how NeedSystems is add to the manager in Awake()
-    /// </remarks>
-    public void UpdateDirtyNeedSystems()
-    {
-        // Update populations' accessible map when terrain was modified
-        if (m_tileDataController.HasTerrainChanged)
-        {
-            // TODO: Update population's accessible map only for changed terrain
-            m_reservePartitionManager.UpdateAccessMapChangedAt(m_tileDataController.ChangedTiles.ToList<Vector3Int>());
-        }
-
-        foreach (KeyValuePair<NeedType, NeedSystem> entry in m_needSystems)
-        {
-            NeedSystem system = entry.Value;
-            if (system.IsDirty)
-            {
-                //Debug.Log($"Updating {system.NeedType} NS by dirty flag");
-                system.UpdateSystem();
-            }
-            else if (system.CheckState())
-            {
-                //Debug.Log($"Updating {system.NeedType} NS by dirty pre-check");
-                system.UpdateSystem();
-            }
-        }
-
-        // Reset pop accessibility status
-        m_populationManager.UpdateAllPopulationStateForChecking();
-
-        // Reset food source accessibility status
-        m_foodSourceManager.UpdateAccessibleTerrainInfoForAll();
-
-        // Reset terrain modified flag
-        m_tileDataController.HasTerrainChanged = false;
     }
     #endregion
 
@@ -760,11 +634,23 @@ public class GameManager : MonoBehaviour
         m_tileDataController.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
-        UpdateAllNeedSystems();
-        m_populationManager.UpdateAllGrowthConditions();
-        m_populationManager.HandleGrowth ();
-        UpdateAllNeedSystems ();
-        m_populationManager.UpdateAllGrowthConditions();
+        Needs.Rebuild();
+        
+        // Handle growth for all populations
+        bool anyPopulationChange = false;
+        for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
+        {
+            anyPopulationChange |= m_populationManager.Populations[i].HandleGrowth();
+        }
+
+        // Rebuild population cache after population levels change
+        // NOTE: this assumes population changes do not affect food sources.
+        // Make sure to change this if that assumption is no longer true
+        if (anyPopulationChange)
+        {
+            Needs.RebuildPopulationCache();
+        }
+        
         m_inspector.UpdateCurrentDisplay();
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 

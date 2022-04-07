@@ -40,30 +40,24 @@ public class ItemDataDrawer : PropertyDrawer
             // Get other important properties
             SerializedProperty name = property.FindPropertyRelative(nameof(name));
             SerializedProperty shopItem = property.FindPropertyRelative(nameof(shopItem));
+            SerializedProperty tile = property.FindPropertyRelative(nameof(tile));
             SerializedProperty species = property.FindPropertyRelative(nameof(species));
-            SerializedProperty hasSpecies = property.FindPropertyRelative(nameof(hasSpecies));
             SerializedProperty categoryFilter = property.FindPropertyRelative(nameof(categoryFilter));
 
             EditorGUIAuto.PropertyField(ref position, name, true);
             EditorGUIAuto.PropertyField(ref position, shopItem, true);
 
-            // If this item data has species then layout the field for it
-            if (hasSpecies.boolValue)
+            if (categoryFilter.enumValueIndex == (int)ItemRegistry.Category.Species)
             {
-                System.Type typeFilter = typeof(ScriptableObject);
-
-                // Filter specific species based on the category filter
-                if (categoryFilter.enumValueIndex == 0)
-                {
-                    typeFilter = typeof(AnimalSpecies);
-                }
-                else if (categoryFilter.enumValueIndex == 1)
-                {
-                    typeFilter = typeof(FoodSourceSpecies);
-                }
-
-                // Layout the object field
-                EditorGUIAuto.ObjectField(ref position, species, typeFilter);
+                EditorGUIAuto.ObjectField(ref position, species, typeof(AnimalSpecies));
+            }
+            else if (categoryFilter.enumValueIndex == (int)ItemRegistry.Category.Food)
+            {
+                EditorGUIAuto.ObjectField(ref position, species, typeof(FoodSourceSpecies));
+            }
+            else if (categoryFilter.enumValueIndex == (int)ItemRegistry.Category.Tile)
+            {
+                EditorGUIAuto.PropertyField(ref position, tile, true);
             }
 
             // Restore old indent
@@ -81,17 +75,12 @@ public class ItemDataDrawer : PropertyDrawer
             // Get other important properties
             SerializedProperty name = property.FindPropertyRelative(nameof(name));
             SerializedProperty shopItem = property.FindPropertyRelative(nameof(shopItem));
-            SerializedProperty species = property.FindPropertyRelative(nameof(species));
-            SerializedProperty hasSpecies = property.FindPropertyRelative(nameof(hasSpecies));
 
             height += EditorGUI.GetPropertyHeight(name, true);
             height += EditorGUI.GetPropertyHeight(shopItem, true);
 
-            // If this item data has species then layout the field for it
-            if (hasSpecies.boolValue)
-            {
-                height += EditorGUI.GetPropertyHeight(species, true);
-            }
+            // Add space for species object or tile type
+            height += EditorGUIAuto.SingleControlHeight;
         }
 
         return height;

@@ -77,13 +77,9 @@ public class LogSystem : MonoBehaviour
         this.eventManager = EventManager.Instance;
 
         // Subscribe to the events
-        this.eventManager.SubscribeToEvent(EventType.PopulationCountIncreased, () =>
+        this.eventManager.SubscribeToEvent(EventType.PopulationCountChange, () =>
         {
-            this.handleLog(EventType.PopulationCountIncreased);
-        });
-        this.eventManager.SubscribeToEvent(EventType.PopulationCountDecreased, () =>
-        {
-            this.handleLog(EventType.PopulationCountDecreased);
+            this.handleLog(EventType.PopulationCountChange);
         });
         this.eventManager.SubscribeToEvent(EventType.PopulationExtinct, () =>
         {
@@ -101,17 +97,17 @@ public class LogSystem : MonoBehaviour
         {
             this.handleLog(EventType.NewEnclosedArea);
         });
-        this.eventManager.SubscribeToEvent(EventType.AtmosphereChange, () =>
+/*        this.eventManager.SubscribeToEvent(EventType.AtmosphereChange, () =>
         {
             this.handleLog(EventType.AtmosphereChange);
-        });
+        });*/
         this.eventManager.SubscribeToEvent(EventType.LiquidChange, () =>
         {
             this.handleLog(EventType.LiquidChange);
         });
-        this.eventManager.SubscribeToEvent(EventType.FoodSourceOutputChange, () =>
+        this.eventManager.SubscribeToEvent(EventType.FoodSourceChange, () =>
         {
-            this.handleLog(EventType.FoodSourceOutputChange);
+            this.handleLog(EventType.FoodSourceChange);
         });
         this.eventManager.SubscribeToEvent(EventType.TerrainChange, () =>
         {
@@ -123,11 +119,8 @@ public class LogSystem : MonoBehaviour
     {
         switch(eventType)
         {
-            case EventType.PopulationCountIncreased:
-                this.logPopulationIncrease((Population)EventManager.Instance.EventData);
-                break;
-            case EventType.PopulationCountDecreased:
-                this.logPopulationDecrease((Population)EventManager.Instance.EventData);
+            case EventType.PopulationCountChange:
+                this.logPopulationCountChange(((Population population, bool increased)) EventManager.Instance.EventData);
                 break;
             case EventType.PopulationExtinct:
                 this.logPopulationExtinct((Population)EventManager.Instance.EventData);
@@ -141,14 +134,14 @@ public class LogSystem : MonoBehaviour
             case EventType.NewEnclosedArea:
                 this.logNewCreation((EnclosedArea)EventManager.Instance.EventData);
                 break;
-            case EventType.AtmosphereChange:
+/*            case EventType.AtmosphereChange:
                 this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.EventData);
-                break;
+                break;*/
             case EventType.LiquidChange:
                 this.logLiquidChange((Vector3Int)EventManager.Instance.EventData);
                 break;
-            case EventType.FoodSourceOutputChange:
-                this.logFoodSourceOutputChanged((FoodSource)EventManager.Instance.EventData);
+            case EventType.FoodSourceChange:
+                this.logFoodSourceChanged((FoodSource)EventManager.Instance.EventData);
                 break;
             case EventType.TerrainChange:
                 this.logTerrainChange((List<Vector3Int>)EventManager.Instance.EventData);
@@ -200,7 +193,7 @@ public class LogSystem : MonoBehaviour
         }
     }
 
-    private void logFoodSourceOutputChanged(FoodSource foodSource)
+    private void logFoodSourceChanged (FoodSource foodSource)
     {
         if (!this.foodSourceLogs.ContainsKey(foodSource))
         {
@@ -251,7 +244,9 @@ public class LogSystem : MonoBehaviour
                 this.populationLogs.Add(population, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"New {population.species.SpeciesName} created!");
+            LogEntry newLog = new LogEntry(
+                Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+                $"New {population.species.ID.Data.Name.Get(ItemName.Type.English)} created!");
 
             this.populationLogs[population].Add(newLog);
             this.worldLog.Add(newLog);
@@ -265,7 +260,9 @@ public class LogSystem : MonoBehaviour
                 this.foodSourceLogs.Add(foodSource, new List<LogEntry>());
             }
 
-            LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"New {foodSource.Species.SpeciesName} created!");
+            LogEntry newLog = new LogEntry(
+                Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+                $"New {foodSource.Species.ID.Data.Name.Get(ItemName.Type.English)} created!");
 
             this.foodSourceLogs[foodSource].Add(newLog);
             this.worldLog.Add(newLog);
@@ -292,32 +289,18 @@ public class LogSystem : MonoBehaviour
         }
     }
 
-    private void logPopulationIncrease(Population population)
+    private void logPopulationCountChange((Population population, bool increased) populationData)
     {
-        if (!this.populationLogs.ContainsKey(population))
+        if (!this.populationLogs.ContainsKey(populationData.population))
         {
-            this.populationLogs.Add(population, new List<LogEntry>());
+            this.populationLogs.Add(populationData.population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} population size increased!");
+        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+                                       $"{populationData.population.species.ID.Data.Name.Get(ItemName.Type.English)} population size {(populationData.increased ? "increased" : "decreased")}!");
 
         // Store to population log
-        this.populationLogs[population].Add(newLog);
-        // Store to world log
-        this.worldLog.Add(newLog);
-    }
-
-    private void logPopulationDecrease(Population population)
-    {
-        if (!this.populationLogs.ContainsKey(population))
-        {
-            this.populationLogs.Add(population, new List<LogEntry>());
-        }
-
-        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} population size decreased!");
-
-        // Store to population log
-        this.populationLogs[population].Add(newLog);
+        this.populationLogs[populationData.population].Add(newLog);
         // Store to world log
         this.worldLog.Add(newLog);
     }
@@ -329,7 +312,9 @@ public class LogSystem : MonoBehaviour
             this.populationLogs.Add(population, new List<LogEntry>());
         }
 
-        LogEntry newLog = new LogEntry(Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), $"{population.species.SpeciesName} has gone extinct!");
+        LogEntry newLog = new LogEntry(
+            Math.Round(Time.time, 0, MidpointRounding.AwayFromZero).ToString(), 
+            $"{population.species.ID.Data.Name.Get(ItemName.Type.English)} has gone extinct!");
 
         this.populationLogs[population].Add(newLog);
         this.worldLog.Add(newLog);

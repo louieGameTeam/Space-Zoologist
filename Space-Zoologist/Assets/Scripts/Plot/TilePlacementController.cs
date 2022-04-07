@@ -54,19 +54,19 @@ public class TilePlacementController : MonoBehaviour
     /// <summary>
     /// Start tile placement preview.
     /// </summary>
-    /// <param name="tileID">The ID of the tile to preview its placement.</param>
-    public void StartPreview(string tileID, bool godMode = false, float[] liquidContents = null)
+    /// <param name="tileType">The ID of the tile to preview its placement.</param>
+    public void StartPreview(TileType tileType, bool godMode = false, float[] liquidContents = null)
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         this.dragStartPosition = gridSystemReference.WorldToCell(mouseWorldPosition);
-        if (!Enum.IsDefined(typeof(TileType), tileID))
+        if (!Enum.IsDefined(typeof(TileType), tileType))
         {
-            throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
+            throw new System.ArgumentException(tileType + " was not found in the TilePlacementController's tiles");
         }
         this.isPreviewing = true;
         foreach (GameTile tile in gameTiles)
         {
-            if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
+            if (tile.type == tileType)
             {
                 if(liquidContents != null)
                 {

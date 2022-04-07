@@ -10,13 +10,13 @@ using System.Collections.Generic;
 /// </summary>
 public class StoreSection : MonoBehaviour
 {
-    public ItemType ItemType => itemType;
+    public ItemRegistry.Category ItemType => itemType;
     public Item SelectedItem => selectedItem;
 
     // Can't display in editor anymore because it is in a prefab
     /*[SerializeField] */private GraphicRaycaster raycaster;
 
-    protected ItemType itemType = default;
+    protected ItemRegistry.Category itemType = default;
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
@@ -36,7 +36,7 @@ public class StoreSection : MonoBehaviour
         this.GridSystem = GameManager.Instance.m_tileDataController;
         this.ResourceManager = resourceManager;
     }
-    public Item GetItemByID(string id)
+    public Item GetItemByID(ItemID id)
     {
         foreach (Item item in this.storeItems.Keys)
         {
@@ -95,7 +95,7 @@ public class StoreSection : MonoBehaviour
         GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid);
         StoreItemCell itemCell = newItemCellGO.GetComponent<StoreItemCell>();
         itemCell.Initialize(item, false, OnItemSelected);
-        if (this.ResourceManager.hasLimitedSupply(item.ItemName))
+        if (this.ResourceManager.hasLimitedSupply(item.ID))
         {
             this.ResourceManager.setupItemSupplyTracker(itemCell);
             if (!storeItems.ContainsKey(item))
@@ -111,7 +111,7 @@ public class StoreSection : MonoBehaviour
         }
         else
         {
-            this.ResourceManager.AddItem(item.ItemName, count);
+            this.ResourceManager.AddItem(item.ID, count);
             //storeItems[item].RemainingAmount += count;
         }
     }

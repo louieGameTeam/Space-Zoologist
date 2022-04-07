@@ -154,6 +154,7 @@ public class ReservePartitionManager : MonoBehaviour
         List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
         List<Vector3Int> newLiquidLocations = new List<Vector3Int>();
         List<float[]> newLiquidCompositions = new List<float[]>();
+        List<LiquidBody> newLiquidBodies = new List<LiquidBody>();
 
         if (!this.AccessibleArea.ContainsKey(population))
         {
@@ -461,8 +462,144 @@ public class ReservePartitionManager : MonoBehaviour
     /// </summary>
     /// <param name="population"></param>
     /// <returns></returns>
-    public int[] GetTypesOfTiles(Population population) {
+    public int[] GetTypesOfTiles(Population population) 
+    {
         return TypesOfTerrain[population];
+    }
+
+    /// <summary>
+    /// Get a list of the food sources that this population can access
+    /// </summary>
+    /// <param name="population"></param>
+    /// <returns></returns>
+    public List<FoodSource> GetAccessibleFoodSources(Population population)
+    {
+        if (population == null)
+            throw new ArgumentNullException(
+                "Cannot get the accessible food sources for population 'null'");
+
+        if (!AccessibleArea.ContainsKey(population))
+            throw new ArgumentException(
+                $"Population '{population}' has no list of accessible area associated with it");
+
+        // Get the area that this population can access
+        HashSet<Vector3Int> area = new HashSet<Vector3Int>(AccessibleArea[population]);
+
+        // Local function checks if this food source has any cell position
+        // in the set of positions that the population can access
+        bool AnyPositionInArea(FoodSource food)
+        {
+            foreach (Vector3Int cell in food.GetAllCellPositions())
+            {
+                if (area.Contains(cell)) return true;
+            }
+            return false;
+        }
+
+        // Find all food sources with a position within the accessible area
+        return GameManager
+            .Instance
+            .m_foodSourceManager
+            .FoodSources
+            .FindAll(source => AnyPositionInArea(source));
+    }
+
+    public List<LiquidBody> GetAccessibleLiquidBodies(Population population)
+    {
+        if (population == null)
+            throw new ArgumentNullException(
+                "Cannot get the accessible food sources for population 'null'");
+
+        if (!populationAccessibleLiquidLocations.ContainsKey(population))
+            throw new ArgumentException(
+                $"Population '{population}' has no list of accessible area associated with it");
+
+        HashSet<LiquidBody> accessibleBodies = new HashSet<LiquidBody>();
+
+        // Iterate over each shore position that the population can access
+        foreach (Vector3Int shorePosition in populationAccessibleLiquidLocations[population])
+        {
+            // Iterate over each liquid body in the main controller
+            foreach (LiquidBody body in LiquidbodyController.Instance.liquidBodies)
+            {
+                // If we do not already have this liquid body in the set
+                // and the body contains this tile then add it to the set
+                if (!accessibleBodies.Contains(body) && body.ContainsTile(shorePosition))
+                {
+                    accessibleBodies.Add(body);
+                }
+            }
+        }
+
+        return new List<LiquidBody>(accessibleBodies);
+    }
+
+    /// <summary>
+    /// Return a dictionary that maps the food source
+    /// to a list of populations that can access it
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<FoodSource, List<Population>> FoodCompetition()
+    {
+        Dictionary<FoodSource, List<Population>> result = new Dictionary<FoodSource, List<Population>>();
+
+        // Go through every population
+        foreach (Population population in Populations)
+        {
+            // Get a list of the food sources that this population accesses
+            List<FoodSource> accessibleFood = GetAccessibleFoodSources(population);
+
+            // Go through each food source 
+            foreach (FoodSource food in accessibleFood)
+            {
+                // Get the need on the population corresponding to this food source
+                NeedData foodNeed = population.Species.Needs.Get(food.Species.ID);
+
+                // Check if the population needs this food before adding it to the dictionary
+                if (foodNeed.Needed)
+                {
+                    // If this food is not in the dictionary yet then add it
+                    if (!result.ContainsKey(food))
+                    {
+                        result.Add(food, new List<Population>());
+                    }
+
+                    // Add this population to the list
+                    result[food].Add(population);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Return a dictionary that maps the position on the grid
+    /// with a list of populations that compete for that terrain tile
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<Vector3Int, List<Population>> TerrainCompetition()
+    {
+        Dictionary<Vector3Int, List<Population>> result = new Dictionary<Vector3Int, List<Population>>();
+
+        // Go through each entry in the accessible area
+        foreach (KeyValuePair<Population, List<Vector3Int>> kvp in AccessibleArea)
+        {
+            // Go through each cell position in the list
+            foreach (Vector3Int cell in kvp.Value)
+            {
+                // Add a new list to the dictionary if it does not exist yet
+                if (!result.ContainsKey(cell))
+                {
+                    result.Add(cell, new List<Population>());
+                }
+
+                // Add this population to the list contending for this tile
+                result[cell].Add(kvp.Key);
+            }
+        }
+
+        return result;
     }
 
     public List<float[]> GetLiquidComposition(Population population)

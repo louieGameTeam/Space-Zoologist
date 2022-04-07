@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -6,11 +7,11 @@ using UnityEngine;
 /// <summary>
 /// A runtime instance of a population.
 /// </summary>
-public class Population : MonoBehaviour, Life
+public class Population : MonoBehaviour
 {
     public AnimalSpecies Species { get => species; }
     public int Count { get => this.enclosedPopulationCount; }
-    public float FoodDominance => FoodSourceNeedSystem.foodDominanceRatios[species.Species]; //* Count;
+    public float FoodDominance => Species.FoodDominance;
     public int PrePopulationCount => this.prePopulationCount;
     public Vector3 Origin => this.origin;
     public bool IsPaused => this.isPaused;
@@ -18,11 +19,9 @@ public class Population : MonoBehaviour, Life
     public bool HasAccessibilityChanged = false;
     public System.Random random = new System.Random();
 
-    public Dictionary<string, Need> Needs => needs;
     public AnimalPathfinding.Grid Grid { get; private set; }
-    public List<Vector3Int>  AccessibleLocations { get; private set; }
+    public List<Vector3Int> AccessibleLocations { get; private set; }
 
-    public GrowthStatus GrowthStatus => this.GrowthCalculator.GrowthStatus;
     private float animatorSpeed = 1f;
     private float overlaySpeed = 1f;
 
@@ -31,11 +30,7 @@ public class Population : MonoBehaviour, Life
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
     [Header("Lowest Priority Behaviors")]
-    [Header("Modify values and thresholds for testing")]
-    [SerializeField] private List<Need> NeedEditorTesting = default;
     [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
-
-    private Dictionary<string, Need> needs = new Dictionary<string, Need>();
 
     private Vector3 origin = Vector3.zero;
     public GrowthCalculator GrowthCalculator;
@@ -44,6 +39,16 @@ public class Population : MonoBehaviour, Life
     private PopulationBehaviorManager PopulationBehaviorManager = default;
     private bool isPaused = false;
     private int enclosedPopulationCount = default;
+
+    /// <summary>
+    /// The number of liquid tiles that this population can drink from
+    /// </summary>
+    /// <remarks>
+    /// This value is direclty set by the liquid need system because
+    /// the liquid tiles need to be evenly distributed between all populations
+    /// in the enclosure
+    /// </remarks>
+    public float drinkableLiquidTiles = 0;
 
     private void Start()
     {
@@ -66,23 +71,7 @@ public class Population : MonoBehaviour, Life
         this.GrowthCalculator = new GrowthCalculator(this);
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
-        this.SetupNeeds();
-    }
-    public void LoadGrowthRate(float growthRate)
-    {
-        this.GrowthCalculator.populationIncreaseRate = growthRate;
-    }
-
-    private void SetupNeeds()
-    {
         this.GrowthCalculator = new GrowthCalculator(this);
-        this.needs = this.Species.SetupNeeds();
-        this.NeedEditorTesting = new List<Need>();
-        foreach (KeyValuePair<string, Need> need in this.needs)
-        {
-            this.NeedEditorTesting.Add(need.Value);
-            this.GrowthCalculator.setupNeedTracker(need.Value.NeedType);
-        }
     }
 
     /// <summary>
@@ -95,7 +84,8 @@ public class Population : MonoBehaviour, Life
         this.Grid = grid;
     }
 
-    public void RecountAnimals () {
+    public void RecountAnimals () 
+    {
         enclosedPopulationCount = AnimalPopulation.Count;
         // Only counts animals that are in an enclosure that is completely enclosed
         foreach (GameObject animal in AnimalPopulation) {
@@ -112,8 +102,7 @@ public class Population : MonoBehaviour, Life
                 .m_enclosureSystem
                 .GetEnclosedAreaByCellPosition(myGridPosition);
 
-            // If the area is not enclosed,
-            // then reduce the number of enclosed animals
+            // If the area is not enclosed, then reduce the number of enclosed animals
             // WHY?!
             // Simply commenting this out fixes a bug. Is there any reason for this at all?
             if (!myArea.isEnclosed) 
@@ -175,56 +164,11 @@ public class Population : MonoBehaviour, Life
         this.PopulationBehaviorManager.Initialize();
     }
 
-    /// <summary>
-    /// Update the given need of the population with the given value.
-    /// </summary>
-    /// <param name="need">The need to update</param>
-    /// <param name="value">The need's new value</param>
-    public void UpdateNeed(string need, float value)
-    {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        this.needs[need].UpdateNeedValue(value);
-        // Debug.Log($"The { species.SpeciesName } population { need } need has new value: {this.needs[need].NeedValue}");
-    }
-
-    public void UpdateFoodNeed(float preferredValue, float compatibleValue)
-    {
-        this.GrowthCalculator.CalculateFoodNeed(preferredValue, compatibleValue);
-    }
-
-    /// <summary>
-    /// Get the value of the given need.
-    /// </summary>
-    /// <param name="need">The need to get the value of</param>
-    /// <returns></returns>
-    public float GetNeedValue(string need)
-    {
-        Debug.Assert(this.needs.ContainsKey(need), $"{ species.SpeciesName } population has no need { need }");
-        return this.needs[need].NeedValue;
-    }
-
-    public List<NeedType> GetUnmentNeeds()
-    {
-        List<NeedType> needStatus = new List<NeedType>();
-        foreach (KeyValuePair<NeedType, bool> need in this.GrowthCalculator.IsNeedMet)
-        {
-            if (!need.Value)
-            {
-                needStatus.Add(need.Key);
-            }
-        }
-        return needStatus;
-    }
-
-    public bool IsStagnate()
-    {
-        return this.GrowthCalculator.populationIncreaseRate == 0;
-    }
-
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
     public int DaysTillDeath()
     {
-        return this.GrowthCalculator.DecayCountdown;
+        if (GrowthCalculator.Rating.PredatorCount > 0) return 1;
+        else return this.GrowthCalculator.DecayCountdown; 
     }
 
     // Don't add one because this value is updated when HandleGrowth is called
@@ -233,47 +177,37 @@ public class Population : MonoBehaviour, Life
         return this.GrowthCalculator.GrowthCountdown;
     }
 
-    /// <summary>
-    /// Calculate growth, then remove or add animals as needed.
-    /// </summary>
-    public void UpdateGrowthConditions()
-    {
-        if (this.Species == null) return;
-        this.GrowthCalculator.CalculateGrowth();
-    }
-
     public bool HandleGrowth()
     {
-        bool readyForGrowth = false;
-        switch (this.GrowthCalculator.GrowthStatus)
+        bool readyForGrowth;
+
+        if (GrowthCalculator.ChangeRate > 0f)
         {
-            case GrowthStatus.growing:
-                readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
-                if (readyForGrowth)
+            readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
+            if (readyForGrowth)
+            {
+                //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
+                float populationIncreaseAmount = this.Count * GrowthCalculator.ChangeRate;
+                for (int i = 0; i < populationIncreaseAmount; ++i)
                 {
-                    //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
-                    float populationIncreaseAmount = this.Count * this.GrowthCalculator.populationIncreaseRate;
-                    for (int i = 0; i < populationIncreaseAmount; ++i)
-                    {
-                        this.AddAnimal(this.gameObject.transform.position);
-                    }
+                    this.AddAnimal(this.gameObject.transform.position);
                 }
-                break;
-            case GrowthStatus.declining:
-                readyForGrowth = this.GrowthCalculator.ReadyForDecay();
-                if (readyForGrowth)
-                {
-                    //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
-                    float populationDecreaseAmount = this.Count * this.GrowthCalculator.populationIncreaseRate * -1;
-                    for (int i = 0; i < populationDecreaseAmount; ++i)
-                    {
-                        this.RemoveAnimal(this.AnimalPopulation[i]);
-                    }
-                }
-                break;
-            default:
-                break;
+            }
         }
+        else
+        {
+            readyForGrowth = this.GrowthCalculator.ReadyForDecay();
+            if (readyForGrowth)
+            {
+                //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
+                float populationDecreaseAmount = this.Count * this.GrowthCalculator.ChangeRate * -1;
+                for (int i = 0; i < populationDecreaseAmount; ++i)
+                {
+                    this.RemoveAnimal(this.AnimalPopulation[i]);
+                }
+            }
+        }
+
         RecountAnimals ();
         return readyForGrowth;
     }
@@ -296,7 +230,7 @@ public class Population : MonoBehaviour, Life
         this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
         RecountAnimals ();
         // Invoke a population growth event
-        EventManager.Instance.InvokeEvent(EventType.PopulationCountIncreased, this);
+        EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, true));
     }
 
     // removes last animal in list and last behavior
@@ -324,7 +258,7 @@ public class Population : MonoBehaviour, Life
             else
             {
                 // Invoke a population decline event
-                EventManager.Instance.InvokeEvent(EventType.PopulationCountDecreased, this);
+                EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, false));
             }
             //Debug.Log ("Animal removed; new population count: " + Count);
         }
@@ -360,30 +294,9 @@ public class Population : MonoBehaviour, Life
         //}
     }
 
-    private void UpdateEditorNeeds()
+    public float GetTerrainDominance(TileType tile)
     {
-        // Debug.Log("Needs updated with editor");
-        int i=0;
-        foreach (KeyValuePair<string, Need> need in this.needs)
-        {
-            if (this.NeedEditorTesting[i].NeedName.Equals(need.Key))
-            {
-                this.NeedEditorTesting[i] = need.Value;
-            }
-            i++;
-        }
-        if (this.NeedEditorTesting != null)
-        {
-            foreach (Need need in this.NeedEditorTesting)
-            {
-                this.needs[need.NeedName] = need;
-            }
-        }
-    }
-
-    public Dictionary<string, Need> GetNeedValues()
-    {
-        return this.Needs;
+        return Species.GetTerrainDominance(tile);
     }
 
     public Vector3 GetPosition()

@@ -29,6 +29,17 @@ public class LevelDataLoader : MonoBehaviour
         }
         LevelDataReference.instance.LevelData = currentLevel;
     }
+    private void OnDrawGizmos()
+    {
+        if (currentLevel)
+        {
+            Gizmos.color = Color.green;
+            foreach (Vector3Int start in currentLevel.StartinPositions)
+            {
+                Gizmos.DrawSphere(start, 0.5f);
+            }
+        }
+    }
     #endregion
 
     #region Public Methods
@@ -100,5 +111,4 @@ public class LevelDataLoader : MonoBehaviour
             .Max();
     }
     #endregion
-
 }

@@ -66,11 +66,6 @@ public class TileDataController : MonoBehaviour
     {
         try
         {
-            EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
-            {
-                this.ChangedTiles.Clear();
-            });
-
             List<Vector3Int> changedTilesNoWall = new List<Vector3Int>();
             foreach (Vector3Int tilePosition in ChangedTiles)
             {
@@ -78,10 +73,13 @@ public class TileDataController : MonoBehaviour
                     changedTilesNoWall.Add(tilePosition);
             }
 
-            EventManager.Instance.SubscribeToEvent(EventType.StoreClosed, () =>
-            {
-                // Invoke event and pass the changed tiles that are not walls
-                EventManager.Instance.InvokeEvent(EventType.TerrainChange, changedTilesNoWall);
+            EventManager.Instance.SubscribeToEvent (EventType.StoreToggled, () => {
+                if ((bool) EventManager.Instance.EventData) {
+                    // Invoke event and pass the changed tiles that are not walls
+                    EventManager.Instance.InvokeEvent (EventType.TerrainChange, changedTilesNoWall);
+                } else {
+                    this.ChangedTiles.Clear ();
+                }
             });
         }
         catch { };
@@ -1108,11 +1106,15 @@ public class TileDataController : MonoBehaviour
 
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem = null, FoodSourceSpecies species = null)
     {
+        return IsFoodPlacementValid(mousePosition, new Vector3Int(999, 999, 999), selectedItem, species);
+    }
+    public bool IsFoodPlacementValid(Vector3 mousePosition, Vector3Int blindSpot, Item selectedItem = null, FoodSourceSpecies species = null)
+    {
         if (selectedItem)
             species = GameManager.Instance.FoodSources[selectedItem.ID];
-
         Vector3Int gridPosition = WorldToCell(mousePosition);
-        return CheckSurroundingTiles(gridPosition, species);
+        bool tileCheck = CheckSurroundingTiles(gridPosition, species, blindSpot);
+        return tileCheck;
     }
 
     public bool IsTilePlacementValid (Vector3Int tilePos, TileType oldTile, TileType newTile) {
@@ -1160,6 +1162,11 @@ public class TileDataController : MonoBehaviour
 
     private bool CheckSurroundingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
     {
+        return CheckSurroundingTiles(cellPosition, species, new Vector3Int(999, 999, 999));
+    }
+
+    private bool CheckSurroundingTiles(Vector3Int cellPosition, FoodSourceSpecies species,Vector3Int blindSpot)
+    {
         Vector3Int pos;
         bool isValid = true;
         // Size is even, offset by 1
@@ -1173,7 +1180,8 @@ public class TileDataController : MonoBehaviour
                 pos = cellPosition;
                 pos.x += x;
                 pos.y += y;
-                if (!IsFoodPlacementValid(pos, species))
+                bool isInBlindSpot = pos.x >= blindSpot.x && pos.x <= blindSpot.x + species.Size.x - 1 && pos.y >= blindSpot.y && pos.y <= blindSpot.y + species.Size.y - 1;
+                if (!IsFoodPlacementValid(pos, species) && !isInBlindSpot)
                 {
                     isValid = false;
                     HighlightTile(pos, Color.red);
@@ -1279,15 +1287,15 @@ public class TileDataController : MonoBehaviour
     // this too
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
-        if (GameManager.Instance.FoodSources.ContainsKey(selectedItem.ID))
+        if (selectedItem.ID.Category == ItemRegistry.Category.Species)
         {
-            FoodSourceSpecies species = GameManager.Instance.FoodSources[selectedItem.ID];
-            CheckSurroundingTiles(gridPosition, species);
-        }
-        else if (GameManager.Instance.AnimalSpecies.ContainsKey(selectedItem.ID))
-        {
-            AnimalSpecies species = GameManager.Instance.AnimalSpecies[selectedItem.ID];
+            AnimalSpecies species = selectedItem.ID.Data.Species as AnimalSpecies;
             CheckSurroundingTerrain(gridPosition, species);
+        }
+        else if (selectedItem.ID.Category == ItemRegistry.Category.Food)
+        {
+            FoodSourceSpecies species = selectedItem.ID.Data.Species as FoodSourceSpecies;
+            CheckSurroundingTiles(gridPosition, species);
         }
         else
         {
@@ -1885,6 +1893,12 @@ public class TileDataController : MonoBehaviour
     {
         return direction == Direction2D.X ? Direction2D.Y : Direction2D.X;
     }
+
+    /// <summary>
+    /// Get the cell size for the grid
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 CellSize() => Grid.cellSize;
 
     /// <summary>
     /// Convert a world position to cell positions on the grid.

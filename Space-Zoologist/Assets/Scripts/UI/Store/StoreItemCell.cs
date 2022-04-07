@@ -24,7 +24,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         this.item = item;
         this.itemImage.sprite = item.Icon;
-        this.ItemName.text = this.item.ItemID.Data.Name.Get(global::ItemName.Type.Colloquial);
+        this.ItemName.text = this.item.ID.Data.Name.Get(global::ItemName.Type.Colloquial);
 
         // Display the price
         PriceRoot.SetActive(displayPrice);
@@ -48,7 +48,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 ResourceRequest request = new ResourceRequest()
                 {
                     QuantityRequested = 1,
-                    ItemRequested = item.ItemID
+                    ItemRequested = item.ID
                 };
 
                 notebookUI.NavigateToBookmark(bookmark);
@@ -69,7 +69,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void Update()
     {
         this.RemainingAmountText.text = "" + this.RemainingAmount;
-        RequestButton.gameObject.SetActive(RemainingAmount <= 0 && !PriceRoot.activeInHierarchy && item.ItemID.Category != ItemRegistry.Category.Species);
+        RequestButton.gameObject.SetActive(RemainingAmount <= 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
 
         if (RemainingAmount > 0)
         {
