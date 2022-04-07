@@ -158,7 +158,7 @@ public class FoodSourceManager : GridObjectManager
             {
                 foreach (Vector3 position in SerializationUtils.ParseVector3(keyValuePair.Value.coords))
                 {
-                    this.CreateFoodSource(GameManager.Instance.FoodSources [keyValuePair.Value.name], position);
+                    this.CreateFoodSource(keyValuePair.Value.name, position);
                 }
             }
         }
