@@ -6,7 +6,7 @@ public class PopulationBehaviorManager : MonoBehaviour
 {
     private Population population = default;
     [SerializeField] public Dictionary<GameObject, BehaviorExecutionData> animalsToExecutionData = new Dictionary<GameObject, BehaviorExecutionData>();
-    [SerializeField] public List<PopulationBehavior> defaultBehaviors = new List<PopulationBehavior>();
+    [SerializeField] public List<PopulationBehavior> defaultBehaviors;
     private BehaviorCompleteCallback BehaviorCompleteCallback;
 
     public void Initialize()

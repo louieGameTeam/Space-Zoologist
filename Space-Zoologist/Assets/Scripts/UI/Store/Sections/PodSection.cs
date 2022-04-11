@@ -44,7 +44,7 @@ public class PodSection : StoreSection
                 return;
             }
             base.HandleAudio();
-            populationManager.UpdatePopulation(selectedSpecies, position);
+            populationManager.SpawnAnimal(selectedSpecies, position);
             base.ResourceManager.Placed(selectedSpecies, 1);
         }
         if (!base.CanBuy(selectedItem))

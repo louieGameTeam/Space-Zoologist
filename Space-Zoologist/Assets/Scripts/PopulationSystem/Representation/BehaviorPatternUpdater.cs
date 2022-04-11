@@ -22,7 +22,7 @@ public class BehaviorPatternUpdater : MonoBehaviour
     {
         if (!behaviorPatterns.Contains(behaviorPattern))
         {
-            behaviorPattern.StartUp();
+            behaviorPattern.Init();
             behaviorPatterns.Add(behaviorPattern);
         }
     }

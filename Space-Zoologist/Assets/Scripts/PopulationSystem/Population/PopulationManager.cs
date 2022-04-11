@@ -10,9 +10,8 @@ public class PopulationManager : MonoBehaviour
     // FindTag population to populate
     public List<Population> Populations => ExistingPopulations;
     private List<Population> ExistingPopulations = new List<Population>();
-    [SerializeField] private BehaviorPatternUpdater BehaviorPatternUpdater = default;
+    private BehaviorPatternUpdater BehaviorPatternUpdater => GameManager.Instance.m_behaviorPatternUpdater;
     [SerializeField] private GameObject PopulationPrefab = default;
-    [SerializeField] private List<PopulationBehavior> GenericBehaviors = default;
 
     public void Initialize()
     {
@@ -25,7 +24,7 @@ public class PopulationManager : MonoBehaviour
             Population pop = null;
             foreach (Vector3 position in pos)
             {
-                pop = UpdatePopulation(species, position);
+                pop = SpawnAnimal(species, position);
             }
         }
 
@@ -57,31 +56,11 @@ public class PopulationManager : MonoBehaviour
         Population population = newPopulationGameObject.GetComponent<Population>();
         this.ExistingPopulations.Add(population);
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
-        population.GetComponent<PopulationBehaviorManager>().defaultBehaviors = CopyBehaviors();
         population.InitializeNewPopulation(species, position);
         this.HandlePopulationRegistration(population);
         population.InitializeExistingAnimals();
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
         return population;
-    }
-
-    // TODO determine better way to setup behaviors
-    private List<PopulationBehavior> CopyBehaviors()
-    {
-        List<PopulationBehavior> copiedBehaviors = new List<PopulationBehavior>();
-        // Have to copy behavior scriptable objects for them to work on multiple populations
-        foreach (PopulationBehavior behavior in GenericBehaviors)
-        {
-            List<BehaviorPattern> patterns = new List<BehaviorPattern>();
-            foreach (BehaviorPattern pattern in behavior.behaviorPatterns)
-            {
-                patterns.Add(Instantiate(pattern, BehaviorPatternUpdater.gameObject.transform));
-            }
-            PopulationBehavior newBehavior = Instantiate(behavior);
-            newBehavior.behaviorPatterns = patterns;
-            copiedBehaviors.Add(newBehavior);
-        }
-        return copiedBehaviors;
     }
 
     private void RemovePopulation()
@@ -99,9 +78,9 @@ public class PopulationManager : MonoBehaviour
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public Population UpdatePopulation(AnimalSpecies species, Vector3 position)
+    public Population SpawnAnimal(AnimalSpecies species, Vector3 position)
     {
-        Population population = DoesPopulationExist(species, position);
+        Population population = GetPopulation(species, position);
         if (population == null)
         {
             population = CreatePopulation(species, position);
@@ -110,7 +89,7 @@ public class PopulationManager : MonoBehaviour
         return population;
     }
 
-    private Population DoesPopulationExist(AnimalSpecies species, Vector3 position)
+    private Population GetPopulation(AnimalSpecies species, Vector3 position)
     {
         List<Population> localPopulations = GameManager.Instance.m_reservePartitionManager.GetPopulationsWithAccessTo(position);
         foreach (Population preexistingPopulation in localPopulations)
@@ -153,7 +132,7 @@ public class PopulationManager : MonoBehaviour
     public void UpdateAccessibleLocations()
     {
         GameManager.Instance.m_reservePartitionManager.UpdateAccessMap();
-        CombinePopulations();
+        SimplifyPopulations();
         List<Population> currentPopulations = new List<Population>();
         currentPopulations = this.Populations.GetRange(0, this.ExistingPopulations.Count);
         foreach (Population population in currentPopulations)
@@ -162,9 +141,9 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    private void CombinePopulations()
+    // Combines populations that are connected and support the same species
+    private void SimplifyPopulations()
     {
-        // combines populations
         for (int i = 1; i < this.ExistingPopulations.Count; i++)
         {
             if (this.ExistingPopulations[i - 1].Species.Equals(this.ExistingPopulations[i].Species) 
@@ -190,7 +169,7 @@ public class PopulationManager : MonoBehaviour
             if (!accessibleLocations.Contains(animalLocation))
             {
                 Debug.Log("Creating new population");
-                UpdatePopulation(population.Species, animal.transform.position);
+                SpawnAnimal(population.Species, animal.transform.position);
                 population.RemoveAnimal(animal);
             }
         }
