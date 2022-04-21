@@ -422,9 +422,7 @@ namespace DialogueEditor
             if (OnConversationEnded != null)
                 OnConversationEnded.Invoke();
             //Clear out any highlights should conversation be ended
-            var highlightScheduler = FindObjectOfType<TutorialHighlightingScheduler>();
-            if(highlightScheduler != null)
-                highlightScheduler.ClearHighlights();
+            FindObjectOfType<TutorialHighlightingScheduler>()?.ClearHighlights();
         }
 
         //--------------------------------------
