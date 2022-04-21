@@ -62,6 +62,8 @@ namespace DialogueEditor
         public UIConversationButton ButtonPrefab;
         // Default values
         public Sprite BlankSprite;
+        //Used for freezing
+        private eState preFreezeState = eState.NONE;
 
         // Getter properties
         public bool IsConversationActive
@@ -419,6 +421,10 @@ namespace DialogueEditor
             SetSkipConversationButton(false);
             if (OnConversationEnded != null)
                 OnConversationEnded.Invoke();
+            //Clear out any highlights should conversation be ended
+            var highlightScheduler = FindObjectOfType<TutorialHighlightingScheduler>();
+            if(highlightScheduler != null)
+                highlightScheduler.ClearHighlights();
         }
 
         //--------------------------------------
@@ -447,14 +453,14 @@ namespace DialogueEditor
         public void FreezeConversation()
         {
             isFrozen = true;
+            preFreezeState = m_state;
             SetState(eState.Idle);
         }
 
         public void UnfreezeConversation()
         {
-            print("Unfroze");
             isFrozen = false;
-            SetState(eState.TransitioningOptionsOff);
+            SetState(preFreezeState);
         }
         //--------------------------------------
         // Public functions
