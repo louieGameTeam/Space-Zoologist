@@ -6,11 +6,13 @@ public class CursorManager : MonoBehaviour
 {
     public Texture2D CursorIconDefault;
     public Texture2D CursorIconInspector;
+    public Vector2 CursorHotspot;
 
     void Start()
     {
         EventManager.Instance.SubscribeToEvent(EventType.InspectorToggled, () => {
-                Cursor.SetCursor(((bool) EventManager.Instance.EventData ? CursorIconInspector : null), Vector2.zero, CursorMode.Auto);
+                bool inspecting = (bool) EventManager.Instance.EventData;
+                Cursor.SetCursor((inspecting ? CursorIconInspector : null), inspecting ? CursorHotspot : Vector2.zero, CursorMode.Auto);
                 });
     }
 }
