@@ -10,6 +10,12 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private RectTransform layoutGroupRect = default;
     [SerializeField] private TextMeshProUGUI inspectorWindowText = default;
     [SerializeField] private TextMeshProUGUI populationInfoText = default;
+    [SerializeField] private Image populationStatusIndicator = default;
+    [SerializeField] private Sprite populationIncreasingIcon = default;
+    [SerializeField] private Sprite populationStagnantIcon = default;
+    [SerializeField] private Sprite populationDecreasingIcon = default;
+    [SerializeField] private Color populationGrowingColor = default;
+    [SerializeField] private Color populationDecayingColor = default;
     [SerializeField] private GameObject DetailButton = default;
     [SerializeField] private GameObject detailBackground = default;
     [SerializeField] private Text detailText = default;
@@ -19,6 +25,11 @@ public class DisplayInspectorText : MonoBehaviour
     public enum InspectorText { Population, Food, Area, Liquid }
 
     private List<GameObject> needSliders = new List<GameObject>();
+    private Color populationDefaultColor;
+
+    private void Awake() {
+        populationDefaultColor = populationInfoText.color;
+    }
 
     public void DisplayPopulationStatus(Population population)
     {
@@ -30,23 +41,31 @@ public class DisplayInspectorText : MonoBehaviour
 
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
+        populationStatusIndicator.enabled = true;
 
         // Check to make sure that the population needs have been cached
         if (population.GrowthCalculator.HasNeedCache)
         {
+            
             switch (population.GrowthCalculator.GrowthStatus)
             {
                 case GrowthStatus.growing:
                     detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
                         $"population will increase in {population.DaysTillGrowth()} days";
+                    populationInfoText.color = populationGrowingColor;
+                    populationStatusIndicator.sprite = populationIncreasingIcon;
                     break;
                 case GrowthStatus.stagnant:
                     detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
                         $"is stagnate";
+                    populationInfoText.color = populationDefaultColor;
+                    populationStatusIndicator.sprite = populationStagnantIcon;
                     break;
                 case GrowthStatus.decaying:
                     detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
                         $"population will decrease in {population.DaysTillDeath()} days";
+                    populationInfoText.color = populationDecayingColor;
+                    populationStatusIndicator.sprite = populationDecreasingIcon;
                     break;
             }
 
@@ -65,6 +84,8 @@ public class DisplayInspectorText : MonoBehaviour
         {
             detailText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
             inspectorWindowText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
+            detailText.color = populationDefaultColor;
+            populationStatusIndicator.sprite = populationStagnantIcon;
         }
     }
 
@@ -153,6 +174,7 @@ public class DisplayInspectorText : MonoBehaviour
     public void ClearInspectorWindow() {
         DetailButton.SetActive(false);
         detailBackground.SetActive(false);
+        populationStatusIndicator.enabled = false;
         detailText.text = "";
 
         inspectorWindowTitle.text = "Title";
