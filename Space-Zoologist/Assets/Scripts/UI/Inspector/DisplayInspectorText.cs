@@ -84,7 +84,7 @@ public class DisplayInspectorText : MonoBehaviour
         {
             detailText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
             inspectorWindowText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
-            detailText.color = populationDefaultColor;
+            populationInfoText.color = populationDefaultColor;
             populationStatusIndicator.sprite = populationStagnantIcon;
         }
     }

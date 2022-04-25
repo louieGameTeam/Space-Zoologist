@@ -1063,7 +1063,7 @@ MonoBehaviour:
   populationStatusIndicator: {fileID: 2292000729655384442}
   populationIncreasingIcon: {fileID: 21300000, guid: 8a22e918b1f55324a8d40948d7591d32,
     type: 3}
-  populationStagnantIcon: {fileID: 21300000, guid: 30829a64bec0585428c6b50483f6c955,
+  populationStagnantIcon: {fileID: 21300000, guid: c90010383279c26448e61d9d207d1dd8,
     type: 3}
   populationDecreasingIcon: {fileID: 21300000, guid: e1b1d74fe24c21b4a95994da070f4f79,
     type: 3}
@@ -2912,9 +2912,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 191.4, y: 120}
-  m_SizeDelta: {x: 22, y: 22}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 182.4, y: 116.71301}
+  m_SizeDelta: {x: 18.725586, y: 28.059998}
+  m_Pivot: {x: 0.5, y: 0.348293}
 --- !u!222 &8081454744622181900
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2942,7 +2942,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c90010383279c26448e61d9d207d1dd8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
