@@ -7,12 +7,8 @@ public class PopulationBehaviorManager : MonoBehaviour
     private Population population = default;
     [SerializeField] public Dictionary<GameObject, int> animalsToBehaviorIndex = new Dictionary<GameObject, int>();
     [SerializeField] public List<PopulationBehavior> defaultBehaviors;
-    // Unused
     private BehaviorCompleteCallback BehaviorCompleteCallback;
 
-    private void Start() {
-        //print (readableDict(animalsToBehaviorIndex));
-    }
 
     public void Initialize()
     {
@@ -44,21 +40,15 @@ public class PopulationBehaviorManager : MonoBehaviour
     }
     
     public void OnBehaviorComplete(GameObject animal)
-    {
-        //print ("behavior completed!");
-        //Debug.Log("Callback invoked on " + this.gameObject.GetInstanceID());
-        
+    {        
         if (!animalsToBehaviorIndex.ContainsKey(animal))// Discriminate force exited callbacks from removing animals
         {
-            //print ("object not found: " + animal.GetInstanceID());
-            //print ("stored on " + this.gameObject.GetInstanceID() + ":\n" + readableDict(animalsToBehaviorIndex));
             return;
         }
         int nextBehaviorIndex = animalsToBehaviorIndex[animal] + 1;
         nextBehaviorIndex = nextBehaviorIndex >= defaultBehaviors.Count ? 0 : nextBehaviorIndex;
         animalsToBehaviorIndex[animal] = nextBehaviorIndex;
         PopulationBehavior behavior = defaultBehaviors[nextBehaviorIndex];
-        //print (nextBehaviorIndex);
         if (behavior == null)
         {
             return;

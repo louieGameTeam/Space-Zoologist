@@ -63,12 +63,7 @@ public class PopulationBehavior : ScriptableObject
             animalsToSteps.Remove(animal);
             animal.GetComponent<AnimalBehaviorManager>().activeBehavior = null;
             behaviorCompleteCallbacks[animalsToCallbacks[animal]].Invoke(animal);
-            animalsToCallbacks.Remove(animal);/*
-            Debug.Log (behaviorCompleteCallbacks.Count);
-            foreach (BehaviorCompleteCallback callback in behaviorCompleteCallbacks){
-                Debug.Log(callback);
-            }
-            Debug.Log(animal.GetInstanceID() + " completed behavior and invoked on manager " + animalsToCallbacks[animal]);*/
+            animalsToCallbacks.Remove(animal);
         }
     }
     /// <summary>
