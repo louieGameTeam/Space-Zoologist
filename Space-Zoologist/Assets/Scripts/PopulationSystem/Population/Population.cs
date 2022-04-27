@@ -215,8 +215,7 @@ public class Population : MonoBehaviour
 
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
-        this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
+        this.PopulationBehaviorManager.AddAnimal(newAnimal);
         RecountAnimals ();
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, true));

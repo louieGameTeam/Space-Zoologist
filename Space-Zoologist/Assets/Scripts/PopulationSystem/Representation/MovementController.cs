@@ -261,6 +261,10 @@ public class MovementController : MonoBehaviour
     // Can be modified for different angles of direction change
     private void HandleDirectionChange(Vector3 currentPosition, Vector3 nextTile)
     {
+        if (Animal == null)
+        {
+            Animal = this.GetComponent<Animal>();
+        }
         Vector3 direction = (nextTile - currentPosition).normalized;
         int angle = (int)Vector3.Angle(Vector3.up, direction);
         // Moving left. Subtracting 360 and making the angle positive makes it easy to determine what the angle of direction is

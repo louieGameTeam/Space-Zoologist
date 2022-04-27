@@ -164,7 +164,7 @@ public class StoreSection : MonoBehaviour
 
     public bool CanBuy(Item item)
     {
-        if (storeItems.ContainsKey(item) && ResourceManager.CheckRemainingResource(item) == 0)
+        if (item != null && storeItems.ContainsKey(item) && ResourceManager.CheckRemainingResource(item) == 0)
         {
             return false;
         }
