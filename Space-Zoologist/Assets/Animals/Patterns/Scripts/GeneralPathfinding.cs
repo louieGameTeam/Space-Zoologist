@@ -10,7 +10,7 @@ public class GeneralPathfinding : BehaviorPattern
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        Vector3Int destination;
+        Vector3Int destination = base.TileDataController.WorldToCell(gameObject.transform.position);
         if (Destination.Equals(ItemRegistry.Category.Tile))
         {
             destination = base.TileDataController.FindClosestLiquidSource(animalData.animal.PopulationInfo, gameObject);
@@ -18,7 +18,8 @@ public class GeneralPathfinding : BehaviorPattern
         else
         {
             int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-            destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+            if (animalData.animal.PopulationInfo.AccessibleLocationsExist)
+                destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         }
         AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
