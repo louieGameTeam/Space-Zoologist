@@ -49,7 +49,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7518209195204478437
 MonoBehaviour:
@@ -68,7 +68,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &2456539824124398513
 GameObject:
@@ -115,8 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce03d40a13756b46b0099769113401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quizTemplate: {fileID: 11400000, guid: e62ec8fbd8e64c0469bf3fad896d8d8c, type: 2}
-  npcIcon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
+  template: {fileID: 11400000, guid: e62ec8fbd8e64c0469bf3fad896d8d8c, type: 2}
+  npcIcon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   npcName: Juno
   npcFont: {fileID: 0}
   openingConversation: {fileID: 2911074987948934811}
@@ -180,7 +180,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &6438108440152344660
 MonoBehaviour:
@@ -199,7 +199,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &728835926160063966
 MonoBehaviour:
@@ -218,7 +218,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &4234906297277886889
 GameObject:
@@ -265,12 +265,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 5
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":530,\"yPos\":534},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"So
-    does that mean we can skip the report back?\",\"parentUIDs\":[2,2],\"SpeechUID\":4}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":530,\"yPos\":334},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":202.5,\"yPos\":216},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"So
+    does that mean we can skip the report back?\",\"parentUIDs\":[2,2],\"SpeechUID\":4}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":202.5,\"yPos\":16},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I
     must admit, newbie, you\u2019re beginning to impress me. This enclosure was more
-    than the equal of many of your more experienced peers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":530,\"yPos\":434},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
+    than the equal of many of your more experienced peers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":202.5,\"yPos\":116},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
     thought that Dr. Star had sent you here to be babysat, but you\u2019ve made it
-    clear nothing could be further from the truth.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":532,\"yPos\":634},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Absolutely
+    clear nothing could be further from the truth.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":204.5,\"yPos\":316},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Absolutely
     not. I hope you have taken comprehensive notes. You will need them. Let us begin.
     .\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
@@ -330,10 +330,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 4
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":250,\"yPos\":263},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Excellent.
-    It seems you are quite an apt pupil, unlike the last one Star foisted upon me.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":252,\"yPos\":363},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"If
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Excellent.
+    It seems you are quite an apt pupil, unlike the last one Star foisted upon me.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":245.5,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"If
     you keep this up, you\u2019ll become quite a valuable asset. I can only hope
-    you do so. Doing all of this enclosure modification work is becoming tiresome.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":250,\"yPos\":463},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
+    you do so. Doing all of this enclosure modification work is becoming tiresome.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":222},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
     that\u2019s a question for the future, still. We\u2019re done in this wing, but
     there\u2019s another that requires our attention. Follow me.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
@@ -392,8 +392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 3
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-65,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"An
-    admirable attempt, but unfortunately your results are a bit lacking.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-65,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Let\u2019s
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"An
+    admirable attempt, but unfortunately your results are a bit lacking.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":250.5,\"yPos\":118},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Let\u2019s
     head back to the last enclosure, where we can more thoroughly review the theoretical
     aspects of inter-species dominance.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
@@ -457,7 +457,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &5279507465917268369
 MonoBehaviour:
@@ -476,7 +476,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7280543424004926192
 MonoBehaviour:
@@ -495,7 +495,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7068191870698217428
 MonoBehaviour:

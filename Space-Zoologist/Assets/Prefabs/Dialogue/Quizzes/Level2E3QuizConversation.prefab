@@ -78,8 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce03d40a13756b46b0099769113401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quizTemplate: {fileID: 11400000, guid: a598c5c723ef83e4190724df8734c228, type: 2}
-  npcIcon: {fileID: 21300000, guid: af6869bacd7fb6b4d8a634f208c923e7, type: 3}
+  template: {fileID: 11400000, guid: a598c5c723ef83e4190724df8734c228, type: 2}
+  npcIcon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   npcName: Juno
   npcFont: {fileID: 0}
   openingConversation: {fileID: 7160778945212694777}
@@ -138,8 +138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 3
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-65,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Good
-    enough. Glad to see these lessons haven\u2019t gone to waste.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-65,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Let\u2019s
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Good
+    enough. Glad to see these lessons haven\u2019t gone to waste.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Let\u2019s
     head to the final enclosure in this wing, where you can put everything you\u2019ve
     learned together.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
@@ -201,7 +201,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7160778944163252456
 MonoBehaviour:
@@ -220,7 +220,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &7160778944197427427
 GameObject:
@@ -273,7 +273,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7160778944197427431
 MonoBehaviour:
@@ -292,7 +292,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7160778944197427430
 MonoBehaviour:
@@ -311,7 +311,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7160778944197427429
 MonoBehaviour:
@@ -330,7 +330,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &7160778944206758784
 GameObject:
@@ -381,7 +381,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7160778944206758786
 MonoBehaviour:
@@ -400,7 +400,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &7160778944499405385
 GameObject:
@@ -447,10 +447,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 4
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":104,\"yPos\":133},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Excellent.
-    It seems you are quite an apt pupil, unlike the last one Star foisted upon me.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":104,\"yPos\":233},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"If
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Excellent.
+    It seems you are quite an apt pupil, unlike the last one Star foisted upon me.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"If
     you keep this up, you\u2019ll become quite a valuable asset. I can only hope
-    you do so. Doing all of this enclosure modification work is becoming tiresome.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":104,\"yPos\":333},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
+    you do so. Doing all of this enclosure modification work is becoming tiresome.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":222},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
     that\u2019s a question for the future, still. We\u2019re done in this wing, but
     there\u2019s another that requires our attention. Follow me.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
@@ -509,12 +509,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 5
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":180,\"yPos\":130},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Interesting.
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Interesting.
     Seems like some of the most critical theoretical concepts for our work haven\u2019t
-    quite rubbed off on you, yet.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":180,\"yPos\":230},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
-    have created a remedial enclosure where you can focus on mastering these concepts.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":180,\"yPos\":330},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Please
+    quite rubbed off on you, yet.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
+    have created a remedial enclosure where you can focus on mastering these concepts.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":241.5,\"yPos\":223},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Please
     endeavor to either take more detailed notes, or use whatever method of information
-    retention works best for you this time.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":180,\"yPos\":430},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"I
+    retention works best for you this time.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":322},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"I
     would hate for us to have to repeat these lessons yet again.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
@@ -578,7 +578,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7160778944960347654
 MonoBehaviour:
@@ -597,7 +597,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7160778944960347652
 MonoBehaviour:
@@ -616,7 +616,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &7160778945212694776
 GameObject:
@@ -662,10 +662,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 3
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":236,\"yPos\":175},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Nicely
+  CurrentIDCounter: 4
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Nicely
     done, newbie. It seems you\u2019ve mastered the practical elements of inter-species
-    dominance.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":236,\"yPos\":275},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"But
+    dominance.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"But
     have you similarly mastered the theoretical? Let us begin our report back.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
@@ -674,6 +674,7 @@ MonoBehaviour:
   NodeSerializedDataList:
   - {fileID: 7160778944163252458}
   - {fileID: 7160778944163252456}
+  - {fileID: 0}
   Event:
     m_PersistentCalls:
       m_Calls: []
