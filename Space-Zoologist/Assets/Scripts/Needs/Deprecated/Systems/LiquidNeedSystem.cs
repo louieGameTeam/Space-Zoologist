@@ -10,12 +10,9 @@ public enum LiquidComposition { Water, Salt, Bacteria };
 /// </summary>
 public class LiquidNeedSystem : NeedSystem
 {
-    private TileDataController m_gridsystemReference;
+    private TileDataController m_gridsystemReference => GameManager.Instance.m_tileDataController;
 
-    public LiquidNeedSystem(NeedType needType = NeedType.Liquid) : base(needType)
-    {
-        m_gridsystemReference = GameManager.Instance.m_tileDataController;
-    }
+    public LiquidNeedSystem(NeedType needType = NeedType.Liquid) : base(needType) {}
 
     public override void UpdateSystem()
     {

@@ -23,9 +23,7 @@ public class FoodSourceNeedSystem : NeedSystem
     // Name of the need to the food source calculator
     private Dictionary<ItemID, FoodSourceCalculator> foodSourceCalculators = new Dictionary<ItemID, FoodSourceCalculator>();
 
-    public FoodSourceNeedSystem(NeedType needType = NeedType.FoodSource) : base(needType)
-    {
-    }
+    public FoodSourceNeedSystem(NeedType needType = NeedType.FoodSource) : base(needType) {}
 
     public override bool CheckState()
     {
@@ -91,31 +89,39 @@ public class FoodSourceNeedSystem : NeedSystem
             float preferredAmount = 0;
             float compatibleAmount = 0;
 
-            // 3. Iterate through needs starting with preferred (inefficient, could be refactored to first calculate list of ordered needs)
-            for (int j = 0; j <= 1; j++)
-            {
-                // NOTE: uses the old need system
-                //foreach (KeyValuePair<ItemID, Need> need in population.Needs)
-                //{
-                //    // 4. Calculate preferred and available food, skipping if need already met
-                //    if (!need.Value.NeedType.Equals(NeedType.FoodSource) || !foodSourceCalculators.ContainsKey(need.Value.ID))
-                //    {
-                //        continue;
-                //    }
+            // NOTE: Use new needs system
+            /*
+            // 3. Get food needs seperated by preference
+            List<KeyValuePair<string, Need>> preferredNeeds = new List<KeyValuePair<string, Need>>();
+            List<KeyValuePair<string, Need>> compatibleNeeds = new List<KeyValuePair<string, Need>>();
+            
+            foreach (KeyValuePair<string, Need> need in population.Needs.ToList ()) {
+                if (!need.Value.NeedType.Equals (NeedType.FoodSource) || !foodSourceCalculators.ContainsKey (need.Key)) {
+                    continue;
+                }
 
-                //    if (j == 0 && need.Value.IsPreferred)
-                //    {
-                //        preferredAmount += foodSourceCalculators[need.Value.ID].CalculateDistribution(population);
-                //        continue;
-                //    }
-
-                //    if (j == 1 && !need.Value.IsPreferred)
-                //    {
-                //        compatibleAmount += foodSourceCalculators[need.Value.ID].CalculateDistribution(population);
-                //    }
-                //}
+                if (need.Value.IsPreferred) 
+                {
+                    preferredNeeds.Add(need);
+                } else 
+                {
+                    compatibleNeeds.Add(need);
+                }
             }
-            // population.UpdateFoodNeed(preferredAmount, compatibleAmount);
+
+            // 4. Iterate through food sources and calculate distribution, starting with preferred needs
+            foreach (KeyValuePair<string, Need> need in preferredNeeds) 
+            {
+                preferredAmount += foodSourceCalculators [need.Key].CalculateDistribution (population);
+            }
+
+            foreach (KeyValuePair<string, Need> need in compatibleNeeds) 
+            {
+                compatibleAmount += foodSourceCalculators [need.Key].CalculateDistribution (population);
+            }
+
+            population.UpdateFoodNeed(preferredAmount, compatibleAmount);
+            */
         }
     }
 

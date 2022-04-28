@@ -142,7 +142,7 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
-    public void UdateAllPopulationStateForChecking()
+    public void UpdateAllPopulationStateForChecking()
     {
         foreach (Population population in this.ExistingPopulations)
         {
@@ -202,6 +202,12 @@ public class PopulationManager : MonoBehaviour
         {
             AnimalPathfinding.Grid grid = GameManager.Instance.m_tileDataController.GetGridWithAccess(population);
             population.UpdateAccessibleArea(accessibleLocations, grid);
+        }
+    }
+
+    public void HandleGrowth () {
+        foreach (Population population in this.ExistingPopulations) {
+            population.HandleGrowth ();
         }
     }
 
