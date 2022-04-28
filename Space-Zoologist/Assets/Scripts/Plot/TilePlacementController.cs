@@ -11,7 +11,7 @@ public class TilePlacementController : MonoBehaviour
 {
     public enum PlacementResult { Placed, Restricted, AlreadyExisted }
     
-    private TileDataController gridSystemReference;
+    private TileDataController gridSystemReference => GameManager.Instance.m_tileDataController;
 
     [SerializeField] public bool godMode = false;
     private bool isPreviewing;
@@ -26,10 +26,6 @@ public class TilePlacementController : MonoBehaviour
     public GameTile[] gameTiles { get; private set; } = default;
     public HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
-    public void Initialize()
-    {
-        gridSystemReference = GameManager.Instance.m_tileDataController;
-    }
 
     private void Update()
     {
