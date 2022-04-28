@@ -10,8 +10,8 @@ public class CursorManager : MonoBehaviour
 
     void Start()
     {
-        EventManager.Instance.SubscribeToEvent(EventType.InspectorToggled, () => {
-                bool inspecting = (bool) EventManager.Instance.EventData;
+        EventManager.Instance.SubscribeToEvent(EventType.InspectorToggled, (eventData) => {
+                bool inspecting = (bool) eventData;
                 Cursor.SetCursor((inspecting ? CursorIconInspector : null), inspecting ? CursorHotspot : Vector2.zero, CursorMode.Auto);
                 });
     }

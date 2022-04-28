@@ -76,75 +76,57 @@ public class LogSystem : MonoBehaviour
     {
         this.eventManager = EventManager.Instance;
 
-        // Subscribe to the events
-        this.eventManager.SubscribeToEvent(EventType.PopulationCountChange, () =>
+        var handleLogEvents = new EventType[]
         {
-            this.handleLog(EventType.PopulationCountChange);
-        });
-        this.eventManager.SubscribeToEvent(EventType.PopulationExtinct, () =>
+            EventType.PopulationCountChange,
+            EventType.PopulationExtinct,
+            EventType.NewPopulation,
+            EventType.NewFoodSource,
+            EventType.NewEnclosedArea,
+            EventType.LiquidChange,
+            EventType.FoodSourceChange,
+            EventType.TerrainChange
+        };
+
+        foreach(var logEventType in handleLogEvents)
         {
-            this.handleLog(EventType.PopulationExtinct);
-        });
-        this.eventManager.SubscribeToEvent(EventType.NewPopulation, () =>
-        {
-            this.handleLog(EventType.NewPopulation);
-        });
-        this.eventManager.SubscribeToEvent(EventType.NewFoodSource, () =>
-        {
-            this.handleLog(EventType.NewFoodSource);
-        });
-        this.eventManager.SubscribeToEvent(EventType.NewEnclosedArea, () =>
-        {
-            this.handleLog(EventType.NewEnclosedArea);
-        });
-/*        this.eventManager.SubscribeToEvent(EventType.AtmosphereChange, () =>
-        {
-            this.handleLog(EventType.AtmosphereChange);
-        });*/
-        this.eventManager.SubscribeToEvent(EventType.LiquidChange, () =>
-        {
-            this.handleLog(EventType.LiquidChange);
-        });
-        this.eventManager.SubscribeToEvent(EventType.FoodSourceChange, () =>
-        {
-            this.handleLog(EventType.FoodSourceChange);
-        });
-        this.eventManager.SubscribeToEvent(EventType.TerrainChange, () =>
-        {
-            this.handleLog(EventType.TerrainChange);
-        });
+            this.eventManager.SubscribeToEvent(logEventType, (eventData) =>
+            {
+                this.handleLog(logEventType,eventData);
+            });
+        }
     }
 
-    private void handleLog(EventType eventType)
+    private void handleLog(EventType eventType, object eventData)
     {
         switch(eventType)
         {
             case EventType.PopulationCountChange:
-                this.logPopulationCountChange(((Population population, bool increased)) EventManager.Instance.EventData);
+                this.logPopulationCountChange(((Population population, bool increased)) eventData);
                 break;
             case EventType.PopulationExtinct:
-                this.logPopulationExtinct((Population)EventManager.Instance.EventData);
+                this.logPopulationExtinct((Population)eventData);
                 break;
             case EventType.NewPopulation:
-                this.logNewCreation((Population)EventManager.Instance.EventData);
+                this.logNewCreation((Population)eventData);
                 break;
             case EventType.NewFoodSource:
-                this.logNewCreation((FoodSource)EventManager.Instance.EventData);
+                this.logNewCreation((FoodSource)eventData);
                 break;
             case EventType.NewEnclosedArea:
-                this.logNewCreation((EnclosedArea)EventManager.Instance.EventData);
+                this.logNewCreation((EnclosedArea)eventData);
                 break;
 /*            case EventType.AtmosphereChange:
                 this.logAtmoesphereChange((EnclosedArea)EventManager.Instance.EventData);
                 break;*/
             case EventType.LiquidChange:
-                this.logLiquidChange((Vector3Int)EventManager.Instance.EventData);
+                this.logLiquidChange((Vector3Int)eventData);
                 break;
             case EventType.FoodSourceChange:
-                this.logFoodSourceChanged((FoodSource)EventManager.Instance.EventData);
+                this.logFoodSourceChanged((FoodSource)eventData);
                 break;
             case EventType.TerrainChange:
-                this.logTerrainChange((List<Vector3Int>)EventManager.Instance.EventData);
+                this.logTerrainChange((List<Vector3Int>)eventData);
                 break;
             default:
                 Debug.Assert(true, $"LogSystem does not knows how to handle {eventType} yet");
