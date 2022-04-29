@@ -127,18 +127,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1724520918}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8922884 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7011737153203809868, guid: f2d8077c97fcfd2478849204b1c4a546,
-    type: 3}
-  m_PrefabInstance: {fileID: 1724520918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8922883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6d6a56fcdf7403194ea0f60ee8c422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &9046726 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7243082126267867200, guid: b6fa91312476840f19ee43626e3f9dfb,
@@ -844,7 +832,6 @@ MonoBehaviour:
   - {fileID: 1491879216}
   - {fileID: 2094406301}
   ResourceManager: {fileID: 1738013071}
-  PlayerBalanceDisplay: {fileID: 8922884}
   CursorItem: {fileID: 380907109}
   UIElements: []
   StoreCanvas: {fileID: 1957932609}
@@ -1226,7 +1213,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 491272617}
-  - component: {fileID: 491272613}
   - component: {fileID: 491272616}
   - component: {fileID: 491272615}
   - component: {fileID: 491272614}
@@ -1237,18 +1223,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &491272613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491272612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6d6a56fcdf7403194ea0f60ee8c422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &491272614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,6 +2059,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6238c2724e7624d0580fcf5738f4fd83, type: 3}
+--- !u!1 &730735790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 730735791}
+  - component: {fileID: 730735792}
+  m_Layer: 0
+  m_Name: CursorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &730735791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730735790}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 26666793554278037}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &730735792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730735790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec4ff7e821c4ea4198d1a2f4f8876b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CursorIconDefault: {fileID: 0}
+  CursorIconInspector: {fileID: 2800000, guid: a95f24377d8353a4bbf28f7f0462f64a, type: 3}
+  CursorHotspot: {x: 10, y: 10}
 --- !u!1 &740143007
 GameObject:
   m_ObjectHideFlags: 0
@@ -6890,6 +6910,7 @@ Transform:
   - {fileID: 1290313822}
   - {fileID: 1968132020}
   - {fileID: 117570706}
+  - {fileID: 730735791}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

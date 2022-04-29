@@ -14,12 +14,7 @@ public class FoodSourceManager : GridObjectManager
 
     // FoodSourceSpecies to string name
     [SerializeField] private GameObject foodSourcePrefab = default;
-    private TileDataController m_gridSystemReference;
-
-    public void Initialize()
-    {
-        m_gridSystemReference = GameManager.Instance.m_tileDataController;
-    }
+    private TileDataController m_gridSystemReference => GameManager.Instance.m_tileDataController;
     
     public GameObject CreateFoodSource(FoodSourceSpecies species, Vector2 position, int ttb = -1)
     {
@@ -183,13 +178,5 @@ public class FoodSourceManager : GridObjectManager
         {
             this.DestroyFoodSource(foodSources[foodSources.Count - 1]);
         }
-    }
-
-    public void placeFood(Vector3Int mouseGridPosition, FoodSourceSpecies species, int ttb = -1)
-    {
-        Vector3 FoodLocation = m_gridSystemReference.CellToWorld(mouseGridPosition);
-        FoodLocation.x += (float)species.Size.x / 2;
-        FoodLocation.y += (float)species.Size.y / 2;
-        CreateFoodSource(species, FoodLocation, ttb);
     }
 }
