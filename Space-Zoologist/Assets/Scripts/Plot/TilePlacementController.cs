@@ -235,8 +235,9 @@ public class TilePlacementController : MonoBehaviour
             // Check availability
             foreach (GameTile tile in referencedTiles)
             {
-                // If same tile
-                if (gridSystemReference.GetGameTileAt(cellPosition) == tile)
+                // If same tile, but not liquid
+                GameTile tileAtPos = gridSystemReference.GetGameTileAt(cellPosition);
+                if (tileAtPos == tile && tileAtPos.type != TileType.Liquid)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;
