@@ -44,11 +44,6 @@ public class Population : MonoBehaviour
     /// </remarks>
     public float drinkableLiquidTiles = 0;
 
-    private void Start()
-    {
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
-    }
-
     /// <summary>
     /// Initialize the population as the given species at the given origin after runtime.
     /// </summary>
@@ -58,7 +53,6 @@ public class Population : MonoBehaviour
     public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin)
     {
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.species = species;
         this.transform.position = origin;
         this.GrowthCalculator = new GrowthCalculator(this);
@@ -205,13 +199,7 @@ public class Population : MonoBehaviour
     public void AddAnimal(Vector3 position)
     {
         MovementData data = new MovementData();
-        GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
-
-        if (newAnimal == null)
-        {
-            this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
-            newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
-        }
+        GameObject newAnimal = this.PoolingSystem.GetGuaranteedPooledObject(this.AnimalPrefab, this.AnimalPopulation);
 
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);

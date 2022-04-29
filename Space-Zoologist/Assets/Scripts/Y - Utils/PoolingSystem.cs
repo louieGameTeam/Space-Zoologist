@@ -41,6 +41,25 @@ public class PoolingSystem : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Finds the first inactive gameobject and returns it as active. Returns a new instance of the poolable prefab if no active objects found.
+    /// </summary>
+    /// <param name="listToPullFrom"></param>
+    /// <returns></returns>
+    public GameObject GetGuaranteedPooledObject(GameObject poolablePrefab, List<GameObject> listToAddTo)
+    {
+        for (int i = 0; i < PooledObjects.Count; i++) {
+            if (!PooledObjects[i].activeSelf)
+            {
+                PooledObjects[i].SetActive(true);
+                listToAddTo.Add(PooledObjects[i]);
+                PooledObjects.RemoveAt(i);
+                return listToAddTo[listToAddTo.Count - 1];
+            }
+        }
+        return Instantiate(poolablePrefab, this.gameObject.transform);
+    }
+
     public void ReturnObjectToPool(GameObject gameObject)
     {
         this.PooledObjects.Add(gameObject);
