@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
             serializedLevel.SetPlot(new SerializedPlot(new SerializedMapObjects(),
                 JsonUtility.FromJson<SerializedGrid>(File.ReadAllText(this.directory + "_defaultGrid.json"))));
         }
-        Debug.Log("Loading " + name);
+        Debug.Log("Loading " + fullPath);
         m_plotIO.LoadPlot(serializedLevel.serializedPlot);
         //Animals loaded after map to avoid path finding issues
         this.PresetMap = serializedLevel;

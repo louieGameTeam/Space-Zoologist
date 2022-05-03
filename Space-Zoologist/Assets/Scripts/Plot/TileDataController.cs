@@ -166,8 +166,13 @@ public class TileDataController : MonoBehaviour
                             TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
 
                             // if it is a liquid, add it to the dictionary
-                            if (gameTile.type == TileType.Liquid)
-                                liquidbodyIDToTiles[serializedTileData.LiquidBodyID].Add(tilePosition);
+                            if (gameTile.type == TileType.Liquid) {
+                                try {
+                                    liquidbodyIDToTiles[serializedTileData.LiquidBodyID].Add(tilePosition);
+                                } catch {
+                                    print ("failed to load at " + tilePosition.x + ", " + tilePosition.y);
+                                }
+                            }
 
                             // set the tile type in the red channel
                             Color pixelColor = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);

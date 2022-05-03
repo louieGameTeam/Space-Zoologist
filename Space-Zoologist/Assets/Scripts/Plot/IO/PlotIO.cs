@@ -41,7 +41,7 @@ public class PlotIO : MonoBehaviour
             gridObjectManager.Store(this.SerializedPlot.serializedMapObjects);
             mapObjectNames.Add(gridObjectManager.MapObjectName);
         }
-        GridSystem.ParseSerializedGrid(SerializedPlot.serializedGrid, this.tilePlacementController.gameTiles);
+        GridSystem.ParseSerializedGrid(this.SerializedPlot.serializedGrid, this.tilePlacementController.gameTiles);
         // Notify if a saved object is not been serialized
         if (this.SerializedPlot.serializedMapObjects.names == null)
         {
