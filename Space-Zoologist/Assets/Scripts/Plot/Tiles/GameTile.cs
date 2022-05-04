@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum TileType { Dirt, Grass, Stone, Sand, Swamp, Wall, Liquid, TypesOfTiles };
+public enum TileType { Dirt, Grass, Stone, Sand, Swamp, Wall, Liquid, TypesOfTiles, Air };
 [CreateAssetMenu]
 [System.Serializable]
 public class GameTile : Tile

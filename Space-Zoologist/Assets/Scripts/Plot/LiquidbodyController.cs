@@ -17,6 +17,10 @@ public class LiquidbodyController : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] public LiquidBody[] liquidBodyDisplay;
+    [SerializeField] public List<Vector3Int> tileDisplay;
+
+    [SerializeField]
     public List<LiquidBody> liquidBodies { get; private set; }
     private Dictionary<Vector3Int, float[]> constructingTileContentDict;
 
@@ -168,10 +172,14 @@ public class LiquidbodyController : MonoBehaviour
     /// <returns></returns>
     public int GetBodyID(Vector3Int pos)
     {
+        if (liquidBodies == null) { /*print ("Liquidbodies not initialized!!"); */return -1; }
         foreach (LiquidBody l in liquidBodies)
         {
-            if (l.ContainsTile(pos))
+            if (l.ContainsTile(pos)) {
                 return l.bodyID;
+            } else {
+                Debug.Log ("Liquid body " + l.bodyID + "does not contain tile at " + pos);
+            }
         }
 
         return -1;
@@ -289,5 +297,16 @@ public class LiquidbodyController : MonoBehaviour
         foreach(var body in liquidBodies)
             print(body.TileCount);
         print("Constructing " + constructingTileContentDict.Count);
+    }
+
+// DEBUG VIEW
+
+    private void Update() {
+        liquidBodyDisplay = liquidBodies.ToArray();
+        tileDisplay = new List<Vector3Int>();
+        foreach (LiquidBody body in liquidBodyDisplay)
+        {
+            tileDisplay.AddRange(body.tiles);
+        }
     }
 }

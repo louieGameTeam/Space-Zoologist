@@ -24,6 +24,7 @@ public class PlotIO : MonoBehaviour
         foreach (GridObjectManager gridObjectManager in this.gridObjectManagers)
         {
             gridObjectManager.Serialize(serializedMapObjects);
+            print (gridObjectManager.gameObject.name);
         }
         return new SerializedPlot(serializedMapObjects, serializedGrid);
     }

@@ -144,17 +144,17 @@ public class GameManager : MonoBehaviour
             Debug.Log("Overwriting file at " + fullPath);
 
         SerializedLevel level;
-        try
-        {
+        /*try
+        {*/
             level = new SerializedLevel();
             level.SetPopulations(m_populationManager);
             level.SetPlot(m_plotIO.SavePlot());
-        }
+        /*}
         catch
         {
             Debug.LogError("Serialization error, NOT saved to protect existing saves");
             return;
-        }
+        }*/
 
         using (StreamWriter streamWriter = new StreamWriter(fullPath))
             streamWriter.Write(JsonUtility.ToJson(level));

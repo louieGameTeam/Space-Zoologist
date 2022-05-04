@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using System;
 
 using static TilemapStatics;
 
-[Serializable]
+[System.Serializable]
 public class LiquidBody
 {
-    public int bodyID;
+    public int bodyID = -1;
     public float[] contents;
-    private HashSet<Vector3Int> tiles;
+    public HashSet<Vector3Int> tiles;
     public int TileCount { 
         get { return tiles == null ? 0 : tiles.Count; } 
     }
