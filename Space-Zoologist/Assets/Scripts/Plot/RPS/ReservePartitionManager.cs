@@ -69,7 +69,7 @@ public class ReservePartitionManager : MonoBehaviour
         populationAccessibleLiquidCompositions = new Dictionary<Population, List<float[]>>();
         populationAccessibleLiquidLocations = new Dictionary<Population, List<Vector3Int>>();
 
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => this.RemovePopulation((Population)EventManager.Instance.EventData));
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, (eventData) => this.RemovePopulation((Population)eventData));
     }
 
     /// <summary>

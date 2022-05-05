@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class MoveObject : MonoBehaviour
 {
+    public UnityEvent OnObjectMoved => onObjectMoved;
     private TileDataController gridSystem = default;
     private FoodSourceManager foodSourceManager = default;
     [SerializeField] CursorItem cursorItem = default;
@@ -41,6 +43,7 @@ public class MoveObject : MonoBehaviour
     private Vector3Int initialTilePosition;
     private GameTile initialTile;
     private float[] initialTileContents;
+    private UnityEvent onObjectMoved = new UnityEvent();
 
     private void Start()
     {
@@ -411,7 +414,13 @@ public class MoveObject : MonoBehaviour
         else
         {
             return false;
-        }
+        }    
+
+        toMove.transform.position = worldPos;
+        GameManager.Instance.m_populationManager.UpdatePopulation(species, worldPos);
+        GameManager.Instance.SubtractFromBalance(cost);
+        population.RemoveAnimal(toMove);
+        onObjectMoved.Invoke();
         return true;
     }
 
@@ -441,6 +450,7 @@ public class MoveObject : MonoBehaviour
             removeOriginalFood(foodSource);
             placeFood(pos, species);
             GameManager.Instance.SubtractFromBalance(cost);
+            onObjectMoved.Invoke();
         }
         else //Otherwise ignore the placement command entirely
         {

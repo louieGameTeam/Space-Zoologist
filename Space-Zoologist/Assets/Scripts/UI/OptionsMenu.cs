@@ -13,14 +13,16 @@ public class OptionsMenu : MonoBehaviour
         this.gameObject.SetActive(false);
         GameManager.Instance.TryToUnpause("OptionsMenu");
         //this.PauseManager.PauseButton.SetActive(true);
-        this.IngameUI.SetActive(true);
+        DialogueEditor.ConversationManager.Instance.UnfreezeConversation();
+        //this.IngameUI.SetActive(true);
     }
 
     public void OpenOptionsMenu()
     {
         this.gameObject.SetActive(true);
-        this.IngameUI.SetActive(false);
+        //this.IngameUI.SetActive(false);
         GameManager.Instance.TryToPause("OptionsMenu");
+        DialogueEditor.ConversationManager.Instance.FreezeConversation();
         //this.PauseManager.PauseButton.SetActive(true);
     }
 

@@ -335,9 +335,9 @@ public class GameManager : MonoBehaviour
         }
 
         // Add the population to related objective if not seen before
-        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, () =>
+        EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, (eventData) =>
         {
-            Population population = (Population)EventManager.Instance.EventData;
+            Population population = (Population)eventData;
             this.RegisterWithSurvivalObjectives(population);
         });
         this.UpdateObjectivePanel();

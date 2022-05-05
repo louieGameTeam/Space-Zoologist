@@ -90,6 +90,14 @@ public class LiquidBody
             this.contents[i] = (this.contents[i] * (tiles.Count-1) + contents[i]) / (tiles.Count);
     }
 
+    // Note that tile position doesn't matter when replacing an existing tile
+    public void InsertTile(float[] contents)
+    {
+        // update the contents with the values
+        for (int i = 0; i < this.contents.Length; ++i)
+            this.contents[i] = (this.contents[i] * (tiles.Count-1) + contents[i]) / (tiles.Count);
+    }
+
     public bool RemoveTile(Vector3Int pos, out List<HashSet<Vector3Int>> dividedBodiesTiles)
     {
         // check if the tile exists in the liquidbody

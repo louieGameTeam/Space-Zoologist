@@ -29,7 +29,7 @@ public class PopulationManager : MonoBehaviour
         }
 
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
-        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, () => { if (!(bool) EventManager.Instance.EventData) UpdateAccessibleLocations(); });
+        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, (eventData) => { if (!(bool) eventData) UpdateAccessibleLocations(); });
     }
 
     private AnimalSpecies LoadSpecies(string name)
@@ -62,14 +62,33 @@ public class PopulationManager : MonoBehaviour
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
         return population;
     }
-
-    private void RemovePopulation()
+    
+    // TODO determine better way to setup behaviors
+    private List<PopulationBehavior> CopyBehaviors()
     {
-        if (!ExistingPopulations.Contains((Population)EventManager.Instance.EventData))
+        List<PopulationBehavior> copiedBehaviors = new List<PopulationBehavior>();
+        // Have to copy behavior scriptable objects for them to work on multiple populations
+        foreach (PopulationBehavior behavior in GenericBehaviors)
+        {
+            List<BehaviorPattern> patterns = new List<BehaviorPattern>();
+            foreach (BehaviorPattern pattern in behavior.behaviorPatterns)
+            {
+                patterns.Add(Instantiate(pattern, BehaviorPatternUpdater.gameObject.transform));
+            }
+            PopulationBehavior newBehavior = Instantiate(behavior);
+            newBehavior.behaviorPatterns = patterns;
+            copiedBehaviors.Add(newBehavior);
+        }
+        return copiedBehaviors;
+    }
+
+    private void RemovePopulation(object eventData)
+    {
+        if (!ExistingPopulations.Contains((Population)eventData))
         {
             return;
         }
-        this.ExistingPopulations.Remove((Population)EventManager.Instance.EventData);
+        this.ExistingPopulations.Remove((Population)eventData);
     }
 
     /// <summary>

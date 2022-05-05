@@ -41,7 +41,7 @@ public class SellingManager : MonoBehaviour
 
         IsSelling = false;
         // stop selling when store opens
-        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, () => { if ((bool) EventManager.Instance.EventData) this.IsSelling = false; });
+        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, (eventData) => { if ((bool) eventData) this.IsSelling = false; });
     }
 
     // Update is called once per frame

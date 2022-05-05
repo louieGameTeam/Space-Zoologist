@@ -27,28 +27,19 @@ public class LiquidbodyController : MonoBehaviour
         constructingTileContentDict = new Dictionary<Vector3Int, float[]>();
     }
 
-    public bool AddLiquidContentsAt(Vector3Int pos, float[] contents, bool constructing = true)
+    public void AddLiquidContentsAt(Vector3Int pos, float[] contents, bool constructing = true)
     {
-        // if tile already exists in the system
-        // functionality may need to change in the near future
-        // TODO: check with Ana for this functionality
-        if (CheckLiquidTileAlreadyExistsAt(pos))
-        {
-            Debug.LogError("Tile already exists!");
-            return false;
-        }
-
         if (constructing)
         {
-            // add to construction list, do not affect the existing liquidbodies
-            constructingTileContentDict.Add(pos, contents);
-            Debug.Log("Liquid constructing at " + pos);
-            return true;
+            if (!constructingTileContentDict.ContainsKey(pos)) {
+                // add to construction list, do not affect the existing liquidbodies
+                constructingTileContentDict.Add(pos, contents);
+                Debug.Log("Liquid constructing at " + pos);
+            }
         }
         else
         {
             MergeTile(pos, contents);
-            return true;
         }
     }
 
@@ -113,7 +104,7 @@ public class LiquidbodyController : MonoBehaviour
         // check if the liquid actually exists
         if (!CheckLiquidTileAlreadyExistsAt(pos))
         {
-            Debug.LogError("Liquid does not exist at " + pos);
+            //Debug.LogError("Liquid does not exist at " + pos);
             return false;
         }
 
@@ -196,11 +187,12 @@ public class LiquidbodyController : MonoBehaviour
 
         foreach (LiquidBody l in liquidBodies)
         {
-            // return false if contains the position already
+            // adjust values without adding new tile if replacing existing tile
             if (l.ContainsTile(pos))
             {
-                Debug.LogError("Tile already exists in liquidbody!");
-                return false;
+                l.InsertTile(contents);
+                Debug.Log("Liquidbody merge successful.");
+                return true;
             }
             else
             {

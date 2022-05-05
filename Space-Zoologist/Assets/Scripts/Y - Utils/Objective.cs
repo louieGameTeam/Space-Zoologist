@@ -53,13 +53,18 @@ public class SurvivalObjective : Objective
             totalPopulationCount += population.Count;
 
             // Found a population that has enough pop count
-            if (population.Count >= this.TargetPopulationSize)
+ /*           if (population.Count >= this.TargetPopulationSize)
             {
                 satisfiedPopulationCount++;
-            }
+            }*/
+
+            /*
+             * Note - while TargetPopulationCount exists, the intended design is
+             * to calculate objective completion based on totalPopulationCount
+            */
 
             // Have met the population number requirement
-            if (satisfiedPopulationCount >= this.TargetPopulationCount)
+            if (totalPopulationCount >= this.TargetPopulationSize)
             {
 
                 if (this.timer >= this.TargetTime)
