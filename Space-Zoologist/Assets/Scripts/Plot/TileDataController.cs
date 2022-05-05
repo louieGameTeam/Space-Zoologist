@@ -73,8 +73,8 @@ public class TileDataController : MonoBehaviour
                     changedTilesNoWall.Add(tilePosition);
             }
 
-            EventManager.Instance.SubscribeToEvent (EventType.StoreToggled, () => {
-                if ((bool) EventManager.Instance.EventData) {
+            EventManager.Instance.SubscribeToEvent (EventType.StoreToggled, (eventData) => {
+                if ((bool)eventData) {
                     // Invoke event and pass the changed tiles that are not walls
                     EventManager.Instance.InvokeEvent (EventType.TerrainChange, changedTilesNoWall);
                 } else {

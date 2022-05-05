@@ -10,7 +10,7 @@ public class FoodPathfinding : GeneralPathfinding
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
         Vector3Int[] destinations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(FoodSpeciesName);
-        Vector3Int destination = new Vector3Int(-1,-1,-1);
+        Vector3Int destination = base.TileDataController.WorldToCell(gameObject.transform.position);
         if (destinations != null)
         {
             // Shuffle destinations
@@ -36,7 +36,8 @@ public class FoodPathfinding : GeneralPathfinding
             if (destination.Equals(new Vector3Int(-1, -1, -1)))
             {
                 int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-                destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+                if(animalData.animal.PopulationInfo.AccessibleLocationsExist)
+                    destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
             }
 
             AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);

@@ -30,7 +30,7 @@ public class PopulationManager : MonoBehaviour
         }
 
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
-        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, () => { if (!(bool) EventManager.Instance.EventData) UpdateAccessibleLocations(); });
+        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, (eventData) => { if (!(bool) eventData) UpdateAccessibleLocations(); });
     }
 
     private AnimalSpecies LoadSpecies(string name)
@@ -84,13 +84,13 @@ public class PopulationManager : MonoBehaviour
         return copiedBehaviors;
     }
 
-    private void RemovePopulation()
+    private void RemovePopulation(object eventData)
     {
-        if (!ExistingPopulations.Contains((Population)EventManager.Instance.EventData))
+        if (!ExistingPopulations.Contains((Population)eventData))
         {
             return;
         }
-        this.ExistingPopulations.Remove((Population)EventManager.Instance.EventData);
+        this.ExistingPopulations.Remove((Population)eventData);
     }
 
     /// <summary>

@@ -21,6 +21,7 @@ public class Population : MonoBehaviour
 
     public AnimalPathfinding.Grid Grid { get; private set; }
     public List<Vector3Int> AccessibleLocations { get; private set; }
+    public bool AccessibleLocationsExist { get => AccessibleLocations.Count > 0; }
 
     private float animatorSpeed = 1f;
     private float overlaySpeed = 1f;
@@ -203,7 +204,9 @@ public class Population : MonoBehaviour
                 float populationDecreaseAmount = this.Count * this.GrowthCalculator.ChangeRate * -1;
                 for (int i = 0; i < populationDecreaseAmount; ++i)
                 {
-                    this.RemoveAnimal(this.AnimalPopulation[i]);
+                    if (this.AnimalPopulation.Count == 0)
+                        break;
+                    this.RemoveAnimal(this.AnimalPopulation[0]);
                 }
             }
         }
