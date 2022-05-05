@@ -73,12 +73,12 @@ public class SerializedTilemap
                 }
             }
         }
-
+        /*
         foreach (SerializedTileData data in serializedTileDataList) {
             if (data.TileID == 6) {
                 Debug.Log(data.TileID + " is in pool " + data.LiquidBodyID);
             }
-        }
+        }*/
 
         // add in the last set of tile data
         int lastLiquidBodyID = -1;
