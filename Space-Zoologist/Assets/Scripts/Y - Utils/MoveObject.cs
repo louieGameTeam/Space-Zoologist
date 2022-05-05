@@ -417,7 +417,7 @@ public class MoveObject : MonoBehaviour
         }    
 
         toMove.transform.position = worldPos;
-        GameManager.Instance.m_populationManager.UpdatePopulation(species, worldPos);
+        GameManager.Instance.m_populationManager.SpawnAnimal(species, worldPos);
         GameManager.Instance.SubtractFromBalance(cost);
         population.RemoveAnimal(toMove);
         onObjectMoved.Invoke();

@@ -64,11 +64,12 @@ public class PopulationManager : MonoBehaviour
     }
     
     // TODO determine better way to setup behaviors
+    /*
     private List<PopulationBehavior> CopyBehaviors()
     {
         List<PopulationBehavior> copiedBehaviors = new List<PopulationBehavior>();
         // Have to copy behavior scriptable objects for them to work on multiple populations
-        foreach (PopulationBehavior behavior in GenericBehaviors)
+        foreach (PopulationBehavior behavior in BehaviorPatternUpdater)
         {
             List<BehaviorPattern> patterns = new List<BehaviorPattern>();
             foreach (BehaviorPattern pattern in behavior.behaviorPatterns)
@@ -80,7 +81,7 @@ public class PopulationManager : MonoBehaviour
             copiedBehaviors.Add(newBehavior);
         }
         return copiedBehaviors;
-    }
+    }*/
 
     private void RemovePopulation(object eventData)
     {

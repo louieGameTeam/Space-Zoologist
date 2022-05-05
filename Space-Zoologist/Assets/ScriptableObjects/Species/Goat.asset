@@ -18,7 +18,7 @@ MonoBehaviour:
   maxFoodRequired: 6
   treesRequired: 0
   friendsRequired: {x: 0, y: 0}
-  waterTilesRequired: 2
+  waterTilesRequired: 0
   growthRate: 2
   decayRate: 3
   moveCost: 0
@@ -34,19 +34,19 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
             category: 0
             index: 0
         - needed: 0
-          speciesNeedType: 1
+          speciesNeedType: 0
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
-          preferred: 1
-          useAsWaterNeed: 1
+          preferred: 0
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -58,7 +58,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -70,7 +70,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -82,7 +82,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -94,7 +94,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -106,8 +106,8 @@ MonoBehaviour:
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
-          preferred: 0
-          useAsWaterNeed: 1
+          preferred: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -118,8 +118,8 @@ MonoBehaviour:
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
-          preferred: 1
-          useAsWaterNeed: 1
+          preferred: 0
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -131,7 +131,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -143,7 +143,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -155,7 +155,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -167,7 +167,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -179,8 +179,8 @@ MonoBehaviour:
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
-          preferred: 1
-          useAsWaterNeed: 1
+          preferred: 0
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -191,20 +191,20 @@ MonoBehaviour:
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
-          preferred: 0
-          useAsWaterNeed: 1
+          preferred: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
             category: 2
             index: 1
-        - needed: 0
+        - needed: 1
           speciesNeedType: 0
           useAsTerrainNeed: 0
-          traversibleOnly: 0
+          traversibleOnly: 1
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -216,7 +216,7 @@ MonoBehaviour:
           traversibleOnly: 1
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -228,7 +228,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -240,7 +240,7 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
@@ -253,8 +253,8 @@ MonoBehaviour:
           foodNeedType: 0
           preferred: 0
           useAsWaterNeed: 1
-          minimum: 0.96
-          maximum: 1
+          minimum: 0
+          maximum: 0
           id:
             category: 2
             index: 6
@@ -264,19 +264,19 @@ MonoBehaviour:
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
-          minimum: 0.005
-          maximum: 0.02
+          useAsWaterNeed: 0
+          minimum: 0
+          maximum: 0
           id:
             category: 2
             index: 7
-        - needed: 0
+        - needed: 1
           speciesNeedType: 0
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
-          useAsWaterNeed: 1
+          useAsWaterNeed: 0
           minimum: 0
           maximum: 0
           id:
