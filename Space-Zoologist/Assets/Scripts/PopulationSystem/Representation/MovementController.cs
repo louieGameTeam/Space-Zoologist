@@ -136,48 +136,53 @@ public class MovementController : MonoBehaviour
             this.Animal.MovementData.MovementStatus = Movement.idle;
             return;
         }
-        Vector3 vectorDirection = new Vector3(0, 0, 0);
+        Vector3 vectorDirection = this.transform.position;
+        vectorDirection.z = 0;
         float speed = this.CalculateSpeed() * Time.deltaTime;
         switch (direction)
         {
             case Direction.up:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + speed, 0);
+                    vectorDirection.y += speed;
                     break;
                 }
             case Direction.down:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x, this.transform.position.y + -speed, 0);
+                    vectorDirection.y -= speed;
                     break;
                 }
             case Direction.left:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y, 0);
+                    vectorDirection.x -= speed;
                     break;
                 }
             case Direction.right:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y, 0);
+                    vectorDirection.x += speed;
                     break;
                 }
             case Direction.upRight:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y + speed, 0);
+                    vectorDirection.x += speed;
+                    vectorDirection.y += speed;
                     break;
                 }
             case Direction.upLeft:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y + speed, 0);
+                    vectorDirection.x -= speed;
+                    vectorDirection.y += speed;
                     break;
                 }
             case Direction.downRight:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x + speed, this.transform.position.y + -speed, 0);
+                    vectorDirection.x += speed;
+                    vectorDirection.y -= speed;
                     break;
                 }
             case Direction.downLeft:
                 {
-                    vectorDirection = new Vector3(this.transform.position.x + -speed, this.transform.position.y + -speed, 0);
+                    vectorDirection.x -= speed;
+                    vectorDirection.y -= speed;
                     break;
                 }
         }
@@ -261,6 +266,10 @@ public class MovementController : MonoBehaviour
     // Can be modified for different angles of direction change
     private void HandleDirectionChange(Vector3 currentPosition, Vector3 nextTile)
     {
+        if (Animal == null)
+        {
+            Animal = this.GetComponent<Animal>();
+        }
         Vector3 direction = (nextTile - currentPosition).normalized;
         int angle = (int)Vector3.Angle(Vector3.up, direction);
         // Moving left. Subtracting 360 and making the angle positive makes it easy to determine what the angle of direction is

@@ -1262,7 +1262,7 @@ public class TileDataController : MonoBehaviour
     }
     #endregion
 
-    // figure out if this still works
+    // TODO: figure out if this still works
     public void UpdateAnimalCellGrid()
     {
         for (int i = 0; i < this.TileDataGrid.GetLength(0); i++)
@@ -1288,7 +1288,7 @@ public class TileDataController : MonoBehaviour
         }
     }
 
-    // this too
+    // TODO: this too
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
         if (selectedItem.ID.Category == ItemRegistry.Category.Species)

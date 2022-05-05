@@ -404,7 +404,15 @@ public class MoveObject : MonoBehaviour
             !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos);*/
 
         // placement is valid and population did not already reach here
-        if (!valid) {
+        if (valid)
+        {
+            toMove.transform.position = worldPos;
+            GameManager.Instance.m_populationManager.SpawnAnimal(species, worldPos);
+            GameManager.Instance.SubtractFromBalance(cost);
+            population.RemoveAnimal(toMove);
+        }
+        else
+        {
             return false;
         }    
 

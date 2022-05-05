@@ -10,8 +10,6 @@ public class SerializablePopulation
     public int count;
     public int prePopulationCount;
     public float foodDominance;
-    public Vector3 origin;
-    public bool isPaused;
     public bool hasAccessibilityChanged;
     #endregion
 
@@ -21,8 +19,6 @@ public class SerializablePopulation
         count = population.Count;
         prePopulationCount = population.PrePopulationCount;
         foodDominance = population.FoodDominance;
-        origin = population.Origin;
-        isPaused = population.IsPaused;
         hasAccessibilityChanged = population.HasAccessibilityChanged;
     }
     #endregion

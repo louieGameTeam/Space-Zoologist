@@ -13,8 +13,6 @@ public class Population : MonoBehaviour
     public int Count { get => this.enclosedPopulationCount; }
     public float FoodDominance => Species.FoodDominance;
     public int PrePopulationCount => this.prePopulationCount;
-    public Vector3 Origin => this.origin;
-    public bool IsPaused => this.isPaused;
     [HideInInspector]
     public bool HasAccessibilityChanged = false;
     public System.Random random = new System.Random();
@@ -30,15 +28,11 @@ public class Population : MonoBehaviour
     [SerializeField] private GameObject AnimalPrefab = default;
     [Header("Add existing animals")]
     [SerializeField] public List<GameObject> AnimalPopulation = default;
-    [Header("Lowest Priority Behaviors")]
-    [SerializeField] private Dictionary<Animal, MovementData> AnimalsMovementData = new Dictionary<Animal, MovementData>();
 
-    private Vector3 origin = Vector3.zero;
     public GrowthCalculator GrowthCalculator;
     private PoolingSystem PoolingSystem = default;
     private int prePopulationCount = default;
     private PopulationBehaviorManager PopulationBehaviorManager = default;
-    private bool isPaused = false;
     private int enclosedPopulationCount = default;
 
     /// <summary>
@@ -51,11 +45,6 @@ public class Population : MonoBehaviour
     /// </remarks>
     public float drinkableLiquidTiles = 0;
 
-    private void Start()
-    {
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
-    }
-
     /// <summary>
     /// Initialize the population as the given species at the given origin after runtime.
     /// </summary>
@@ -65,9 +54,7 @@ public class Population : MonoBehaviour
     public void InitializeNewPopulation(AnimalSpecies species, Vector3 origin)
     {
         this.PopulationBehaviorManager = this.GetComponent<PopulationBehaviorManager>();
-        this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.species = species;
-        this.origin = origin;
         this.transform.position = origin;
         this.GrowthCalculator = new GrowthCalculator(this);
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
@@ -119,7 +106,6 @@ public class Population : MonoBehaviour
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
-            this.isPaused = true;
             Animator animator = animal.GetComponent<Animator>();
             Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
             if (animator.speed != 0)
@@ -141,7 +127,6 @@ public class Population : MonoBehaviour
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
-            this.isPaused = false;
             Animator animator = animal.GetComponent<Animator>();
             Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
             animator.speed = this.animatorSpeed;
@@ -157,7 +142,6 @@ public class Population : MonoBehaviour
             if (animal.activeSelf)
             {
                 MovementData data = new MovementData();
-                this.AnimalsMovementData.Add(animal.GetComponent<Animal>(), data);
                 animal.GetComponent<Animal>().Initialize(this, data);
             }
         }
@@ -218,19 +202,11 @@ public class Population : MonoBehaviour
     public void AddAnimal(Vector3 position)
     {
         MovementData data = new MovementData();
-        GameObject newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
-
-        if (newAnimal == null)
-        {
-            this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
-            newAnimal = this.PoolingSystem.GetPooledObject(this.AnimalPopulation);
-        }
-        this.AnimalsMovementData.Add(newAnimal.GetComponent<Animal>(), data);
+        GameObject newAnimal = this.PoolingSystem.GetGuaranteedPooledObject(this.AnimalPrefab, this.AnimalPopulation);
 
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        this.PopulationBehaviorManager.animalsToExecutionData.Add(newAnimal, new BehaviorExecutionData(0));
-        this.PopulationBehaviorManager.OnBehaviorComplete(newAnimal);
+        this.PopulationBehaviorManager.AddAnimal(newAnimal);
         RecountAnimals ();
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, true));
@@ -247,7 +223,6 @@ public class Population : MonoBehaviour
         if (this.Count > 0)
         {
             Debug.Log("Animal removed");
-            this.AnimalsMovementData.Remove(animal.GetComponent<Animal>());
             this.PopulationBehaviorManager.RemoveAnimal(animal);
             animal.SetActive(false);
 
@@ -277,24 +252,6 @@ public class Population : MonoBehaviour
             this.RemoveAnimal(this.AnimalPopulation[i]);
         }
         RecountAnimals ();
-    }
-
-    // Ensure there are enough behavior data scripts mapped to the population size
-    void OnValidate()
-    {
-        // while (this.AnimalsMovementData.Count < this.AnimalPopulation.Count)
-        // {
-        //     this.AnimalsMovementData.Add(new MovementData());
-        // }
-        // while (this.AnimalsMovementData.Count > this.AnimalPopulation.Count)
-        // {
-        //     this.AnimalsMovementData.RemoveAt(this.AnimalsMovementData.Count - 1);
-        // }
-        //if (this.GrowthCalculator != null)
-        //{
-        //    this.UpdateEditorNeeds();
-        //    this.UpdateGrowthConditions();
-        //}
     }
 
     public float GetTerrainDominance(TileType tile)

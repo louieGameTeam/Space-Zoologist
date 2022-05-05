@@ -76,16 +76,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9549afc7087a6b14aaec260caad611d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeedSystemManager: {fileID: 0}
   BehaviorPatternUpdater: {fileID: 6097518277392313952}
-  PopulationPrefab: {fileID: 2623145373019258570, guid: 2684919613425e34d815583d801a54b9,
+  PopulationPrefab: {fileID: 2404175397146934353, guid: 88a3ba85465d242a2b30639be12248b4,
     type: 3}
-  ReservePartitionManager: {fileID: 0}
-  GridSystem: {fileID: 0}
   GenericBehaviors:
-  - {fileID: 11400000, guid: 68f88ecfd3bad42fe8b36869efb36a69, type: 2}
-  levelIO: {fileID: 0}
-  speciesReferenceData: {fileID: 0}
+  - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
+  - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
+  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
+  - {fileID: 11400000, guid: 67351244fd9664436b04c43bae5d0d10, type: 2}
+  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
+  - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
 --- !u!1 &6097518277392313953
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,9 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111eb3ad57f04c548aa453096a787a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridSystem: {fileID: 0}
   behaviorPatterns: []
-  IsPaused: 0
 --- !u!1 &6097518277466043178
 GameObject:
   m_ObjectHideFlags: 0
