@@ -1133,6 +1133,10 @@ public class TileDataController : MonoBehaviour
             }
         }
 
+        if (oldTile == TileType.Liquid) {
+            return true;
+        }
+        
         return oldTile != newTile;
     }
 
