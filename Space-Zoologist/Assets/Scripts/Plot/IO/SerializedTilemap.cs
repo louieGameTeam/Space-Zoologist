@@ -49,17 +49,17 @@ public class SerializedTilemap
                                     liquidBodyID = l.bodyID;
                                 }
                             }
-                            Debug.Log("should be " + liquidBodyID);
+                            //Debug.Log("should be " + liquidBodyID);
                             if (liquidBodyID == -1) {
                                 Debug.LogError ("failed to save at " + prevTilePos.x + ", " + prevTilePos.y);
                             }
                         }
                         // TODO: LOOK HERE
-                        Debug.Log("before " + liquidBodyID);
+                        //Debug.Log("before " + liquidBodyID);
                         SerializedTileData serializedTileData = new SerializedTileData(gameTile, liquidBodyID, placeable, repetitions);
-                        Debug.Log("after " + serializedTileData.LiquidBodyID);
+                        //Debug.Log("after " + serializedTileData.LiquidBodyID);
                         serializedTileDataList.Add(serializedTileData);
-                        Debug.Log("stored " + serializedTileDataList[serializedTileDataList.Count - 1].LiquidBodyID);
+                        //Debug.Log("stored " + serializedTileDataList[serializedTileDataList.Count - 1].LiquidBodyID);
 
                         // update other values for future matching
                         gameTile = tileData.currentTile;
