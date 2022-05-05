@@ -44,6 +44,8 @@ public class ConceptsUI : NotebookUIChild
         reviewDisplay.OnReviewConfirmed.AddListener(OnReviewConfirmed);
         // Set the requested item when the item cell display has an item clicked on it
         itemCellDisplay.ItemClickedEvent.AddListener(SetRequestedItem);
+        // Update the text whenever an object is moved
+        FindObjectOfType<MoveObject>().OnObjectMoved.AddListener(UpdateText);
 
         // Update text once at the beginning
         UpdateText();
@@ -53,6 +55,7 @@ public class ConceptsUI : NotebookUIChild
     #region Private Methods
     private void UpdateText()
     {
+        print ("updated text");
         if(GameManager.Instance)
         {
             balanceText.text = "$" + GameManager.Instance.Balance;
