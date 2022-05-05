@@ -9,7 +9,7 @@ public class BehaviorPattern : MonoBehaviour
     private List<GameObject> compeletedAnimals; //Lists to remove animals from updating before updating to avoid modifying while iterating
     private List<GameObject> alternativeCompletedAnimals;
     private List<GameObject> forceRemoveAnimals;
-    public virtual void StartUp()
+    public virtual void Init()
     {
         TileDataController = GameManager.Instance.m_tileDataController;
         this.AnimalsToAnimalData = new Dictionary<GameObject, AnimalData>();

@@ -41,10 +41,7 @@ public class SellingManager : MonoBehaviour
 
         IsSelling = false;
         // stop selling when store opens
-        EventManager.Instance.SubscribeToEvent(EventType.StoreOpened, () =>
-        {
-            this.IsSelling = false;
-        });
+        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, (eventData) => { if ((bool) eventData) this.IsSelling = false; });
     }
 
     // Update is called once per frame
@@ -94,7 +91,7 @@ public class SellingManager : MonoBehaviour
     private void SellFoodOnTile(TileData tileData, Vector3Int cellPos)
     {
         GameObject food = tileData.Food;
-        string id = FindObjectOfType<FoodSourceManager>().GetSpeciesID(food.GetComponent<FoodSource>().Species);
+        ItemID id = food.GetComponent<FoodSource>().Species.ID;
         foreach (LevelData.ItemData data in GameManager.Instance.LevelData.ItemQuantities)
         {
             Item item = data.itemObject;

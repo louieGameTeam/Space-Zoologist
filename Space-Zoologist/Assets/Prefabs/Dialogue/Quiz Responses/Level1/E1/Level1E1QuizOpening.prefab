@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6497106792021679358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 908701907048870536}
+  - component: {fileID: 3271004316553625410}
+  - component: {fileID: 4626014205019873959}
+  - component: {fileID: 4820350626416670782}
+  - component: {fileID: 6120876592389641796}
+  - component: {fileID: 4108417459354757997}
+  - component: {fileID: 7047468526225240678}
+  m_Layer: 0
+  m_Name: ConversationEventInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &908701907048870536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497106792021679358}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 759311743817675018}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3271004316553625410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497106792021679358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 0
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 82d5126eed89849bda97e0110a6d732f, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &4626014205019873959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497106792021679358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 1
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &4820350626416670782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497106792021679358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 2
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &6120876592389641796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497106792021679358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 4
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &4108417459354757997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497106792021679358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 5
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7047468526225240678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497106792021679358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 6
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!1 &8203586250976559768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 759311743817675018}
+  - component: {fileID: 8641869773848467654}
+  m_Layer: 0
+  m_Name: Level1E1QuizOpening
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &759311743817675018
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8203586250976559768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 908701907048870536}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8641869773848467654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8203586250976559768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentIDCounter: 7
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":32,\"yPos\":173},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Ha-ha,
+    sportsball. I love sportsball!\",\"parentUIDs\":[0,0],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":282,\"yPos\":166},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You
+    bet. Keep putting me in, and I\u2019ll knock your expectations out of the park!\\r\",\"parentUIDs\":[0,0],\"SpeechUID\":5}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":144,\"yPos\":-1},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Whoa,
+    you actually pulled it off! Not many new recruits can pull off a job this tough.
+    Looks like you\u2019re our new pinch hitter, kid!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[1,2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":158,\"yPos\":288},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    time for your report-back, like I mentioned when you first got here. I\u2019ll
+    be asking a series of questions to gauge your learning.\",\"parentUIDs\":[1,2,1,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":152,\"yPos\":413},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+    worry. There\u2019s no trick questions here. Just remember the work you did,
+    and you\u2019ll be fine. If you can handle the enclosure, you can handle the
+    report-back.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+  saveVersion: 103
+  DefaultName: Star
+  DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  DefaultFont: {fileID: 0}
+  NodeSerializedDataList:
+  - {fileID: 3271004316553625410}
+  - {fileID: 4626014205019873959}
+  - {fileID: 4820350626416670782}
+  - {fileID: 6120876592389641796}
+  - {fileID: 4108417459354757997}
+  - {fileID: 7047468526225240678}
+  Event:
+    m_PersistentCalls:
+      m_Calls: []

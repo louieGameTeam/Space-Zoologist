@@ -50,9 +50,7 @@ MonoBehaviour:
   AnimalPrefab: {fileID: 4839607305319048993, guid: c072b4d6d32e2478dab3b3b2ace40048,
     type: 3}
   AnimalPopulation: []
-  DefaultBehaviors: []
-  NeedEditorTesting: []
-  AnimalsMovementData: []
+  drinkableLiquidTiles: 0
 --- !u!114 &5740529011517092076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,8 +63,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6c2c38391c4c44c96ecc0a939d3080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempBehaviors: []
-  defaultBehavior: {fileID: 0}
+  defaultBehaviors:
+  - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
+  - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
+  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
+  - {fileID: 11400000, guid: 67351244fd9664436b04c43bae5d0d10, type: 2}
+  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
+  - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
 --- !u!114 &3250218611192633704
 MonoBehaviour:
   m_ObjectHideFlags: 0

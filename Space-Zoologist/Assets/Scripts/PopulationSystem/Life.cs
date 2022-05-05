@@ -8,10 +8,24 @@ using UnityEngine;
 public interface Life
 {
     /// <summary>
+    /// Special terrain water need
+    /// </summary>
+    /// <remarks>
+    /// This is used by food sources that need
+    /// water as a terrain need and not a liquid need
+    /// </remarks>
+    /// <example>
+    /// Kelp needs to be placed in water to grow, 
+    /// but it still has liquid needs 
+    /// for specific water compositions
+    /// </example>
+    Need TerrainWaterNeed { get; }
+
+    /// <summary>
     /// Returns a reference to the NeedValues
     /// </summary>
     /// <returns>A reference</returns>
-    Dictionary<string, Need> GetNeedValues();
+    Dictionary<ItemID, Need> GetNeedValues();
 
     /// <summary>
     /// Gets the position of the transform of the game object
@@ -24,7 +38,7 @@ public interface Life
     /// </summary>
     /// <param name="need">The need to update</param>
     /// <param name="value">The need's new value</param>
-    void UpdateNeed(string need, float value);
+    void UpdateNeed(ItemID need, float value);
 
     /// <summary>
     /// Get the accessibility status, true if accessibility or accessible terrain had changed

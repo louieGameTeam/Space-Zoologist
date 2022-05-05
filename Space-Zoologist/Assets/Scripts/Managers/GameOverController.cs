@@ -64,9 +64,9 @@ public class GameOverController : MonoBehaviour
             });
         }
     }
-    private void OnPopulationExtinct()
+    private void OnPopulationExtinct(object eventData)
     {
-        Population population = EventManager.Instance.EventData as Population;
+        Population population = eventData as Population;
         // Count the number of animals that can still be placed in the enclosure
         int animalsRemainingToPlace = GameManager.Instance.m_resourceManager
             .CheckRemainingResource(population.species);

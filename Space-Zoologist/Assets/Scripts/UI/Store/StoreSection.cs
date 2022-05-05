@@ -10,17 +10,16 @@ using System.Collections.Generic;
 /// </summary>
 public class StoreSection : MonoBehaviour
 {
-    public ItemType ItemType => itemType;
+    public ItemRegistry.Category ItemType => itemType;
     public Item SelectedItem => selectedItem;
 
     // Can't display in editor anymore because it is in a prefab
     /*[SerializeField] */private GraphicRaycaster raycaster;
 
-    protected ItemType itemType = default;
+    protected ItemRegistry.Category itemType = default;
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
-    protected CanvasObjectStrobe PlayerBalanceDisplay = default;
     protected CursorItem cursorItem = default;
     protected List<RectTransform> UIElements = default;
     protected TileDataController GridSystem = default;
@@ -30,15 +29,14 @@ public class StoreSection : MonoBehaviour
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
 
-    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, CanvasObjectStrobe playerBalanceDisplay, ResourceManager resourceManager)
+    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, ResourceManager resourceManager)
     {
         this.cursorItem = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = GameManager.Instance.m_tileDataController;
-        this.PlayerBalanceDisplay = playerBalanceDisplay;
         this.ResourceManager = resourceManager;
     }
-    public Item GetItemByID(string id)
+    public Item GetItemByID(ItemID id)
     {
         foreach (Item item in this.storeItems.Keys)
         {
@@ -97,7 +95,7 @@ public class StoreSection : MonoBehaviour
         GameObject newItemCellGO = Instantiate(itemCellPrefab, itemGrid);
         StoreItemCell itemCell = newItemCellGO.GetComponent<StoreItemCell>();
         itemCell.Initialize(item, false, OnItemSelected);
-        if (this.ResourceManager.hasLimitedSupply(item.ItemName))
+        if (this.ResourceManager.hasLimitedSupply(item.ID))
         {
             this.ResourceManager.setupItemSupplyTracker(itemCell);
             if (!storeItems.ContainsKey(item))
@@ -113,7 +111,7 @@ public class StoreSection : MonoBehaviour
         }
         else
         {
-            this.ResourceManager.AddItem(item.ItemName, count);
+            this.ResourceManager.AddItem(item.ID, count);
             //storeItems[item].RemainingAmount += count;
         }
     }
@@ -164,7 +162,7 @@ public class StoreSection : MonoBehaviour
 
     public bool CanBuy(Item item)
     {
-        if (storeItems.ContainsKey(item) && ResourceManager.CheckRemainingResource(item) == 0)
+        if (item != null && storeItems.ContainsKey(item) && ResourceManager.CheckRemainingResource(item) == 0)
         {
             return false;
         }
@@ -193,23 +191,9 @@ public class StoreSection : MonoBehaviour
         }
     }
 
-    public virtual bool IsPlacementValid(Vector3 mousePosition)
-    {
-        return false;
-    }
-
     private void OnDisable()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
-    }
-
-    public bool IsCursorOverUI(PointerEventData pointerEventData)
-    {
-        List<RaycastResult> castResults = new List<RaycastResult>();
-        raycaster.Raycast(pointerEventData, castResults);
-
-        // the one result should only be the cursor item
-        return castResults.Count > 2;
     }
 
     protected virtual void HandleAudio()

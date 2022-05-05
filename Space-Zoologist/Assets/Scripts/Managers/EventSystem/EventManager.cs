@@ -4,13 +4,13 @@ using UnityEngine;
 using System;
 
 public enum EventType {
-    PopulationCountIncreased, PopulationCountDecreased, PopulationGrowing, PopulationDeclining, // Pass the population
-    PopulationAccessibleAreaChanged, PopulationExtinct, // Pass the population
-    FoodSourceTerrainChange, FoodSourceOutputChange, // Pass the food source
-    StoreOpened, StoreClosed,InspectorOpened, InspectorClosed, LogOpened, LogClosed, // Pass null is okay
+    // TODO: If LogToggled isn't going to be used in the future, remove it
+    StoreToggled, InspectorToggled, LogToggled, // Pass bool (true if opened, false if closed)
     NewPopulation, NewFoodSource, NewEnclosedArea, // Pass the created object
+    PopulationCountChange, // Pass a tuple (population, bool (true if increased, false if decreased))
+    PopulationGrowthChange, PopulationExtinct, // Pass the population
+    FoodSourceChange, // Pass the food source
     TerrainChange, // Pass a list of change tiles
-    AtmosphereChange, // Pass the enclosed area
     LiquidChange, // Pass the cell posistion
     NPCDialogue,
     NextDay,
@@ -22,18 +22,18 @@ public enum EventType {
 /// </summary>
 public class Publisher
 { 
-    public event Action Handlers;
+    public event Action<object> Handlers;
 
-    public void PublishTheEvent()
+    public void PublishTheEvent(object eventArgs)
     {
         // Invoke the action when it is not null
-        Handlers?.Invoke();
+        Handlers?.Invoke(eventArgs);
     }
 
     public void UnSubscribeAllMethods()
     {
         // Removes each action associates to this handler
-        foreach (Action handler in Handlers.GetInvocationList())
+        foreach (Action<object> handler in Handlers.GetInvocationList())
         {
             Handlers -= handler;
         }
@@ -42,7 +42,7 @@ public class Publisher
     public string PrintInvocationList()
     {
         string str = "Invocation list:";
-        foreach (Action handler in Handlers.GetInvocationList())
+        foreach (Action<object> handler in Handlers.GetInvocationList())
         {
             str += $"\n\tTarget: {handler.Target}, Method: {handler.Method.Name}";
         }
@@ -64,12 +64,6 @@ public class EventManager : MonoBehaviour
 {
     private static EventManager instance;
     private Dictionary<EventType, Publisher> eventPublishers = new Dictionary<EventType, Publisher>();
-    private object eventData = null;
-
-    // Holds a reference to the invoker (for the log system)
-    // TODO Consider safety issues with this reference 
-    public object EventData => this.eventData;
-
 
     public static EventManager Instance => EventManager.instance;
 
@@ -110,8 +104,7 @@ public class EventManager : MonoBehaviour
     /// <param name="eventType">Type of the event that just happens</param>
     public void InvokeEvent(EventType eventType, object eventData)
     {
-        this.eventData = eventData;
-        this.eventPublishers[eventType].PublishTheEvent();
+        this.eventPublishers[eventType].PublishTheEvent(eventData);
     }
 
     /// <summary>
@@ -119,16 +112,27 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="eventType">The event that suscripber is interested in</param>
     /// <param name="action">What action to be triggered when event happens</param>
-    public void SubscribeToEvent(EventType eventType, Action handler)
+    public void SubscribeToEvent(EventType eventType, Action<object> handler)
     {
         this.eventPublishers[eventType].Handlers += handler;
+    }
+
+    /// <summary>
+    /// Wrapper delegate for event listeners that take no parameters
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="handler"></param>
+    public void SubscribeToEvent(EventType eventType, Action handler)
+    {
+        Action<object> handlerWrapper = (args) => handler();
+        this.eventPublishers[eventType].Handlers += handlerWrapper;
     }
 
     /// <summary>
     /// Unsubscribes to an event
     /// </summary>
     /// <remarks>Forget to unsubcribe would cause errors</remarks>
-    public void UnsubscribeToEvent(EventType eventType, Action handler)
+    public void UnsubscribeToEvent(EventType eventType, Action<object> handler)
     {
         this.eventPublishers[eventType].Handlers -= handler;
     }

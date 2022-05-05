@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb43224d6f3ee97448552e334a6e0c8f, type: 3}
   m_Name: SpiderItem
   m_EditorClassIdentifier: 
-  itemID:
-    category: 0
-    index: 3
-  id: Thalassius Succo
-  type: 3
   itemName: Thalassius Succo
   price: 0
   description: 
   icon: {fileID: -2984124832550384540, guid: 5015206299b8e40848efa2bad0e91dd4, type: 3}
-  audio: []
+  audio:
+  - {fileID: 8300000, guid: d666fd2d75535774fb1953d1e8414152, type: 3}
   BuildTime: 0

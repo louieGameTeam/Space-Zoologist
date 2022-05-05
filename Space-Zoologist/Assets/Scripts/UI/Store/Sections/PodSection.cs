@@ -17,14 +17,14 @@ public class PodSection : StoreSection
     {
         populationManager = GameManager.Instance.m_populationManager;
         tilePlacementController = GameManager.Instance.m_tilePlacementController;
-        base.itemType = ItemType.Pod;
+        base.itemType = ItemRegistry.Category.Species;
         base.Initialize();
     }
 
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         // If in CursorItem mode and the cursor is clicked while over the menu
-        if (IsCursorOverUI(eventData))
+        if (!UIBlockerSettings.OperationIsAvailable("Build"))
         {
             Debug.Log("Clicked over UI");
             base.OnItemSelectionCanceled();
@@ -44,7 +44,7 @@ public class PodSection : StoreSection
                 return;
             }
             base.HandleAudio();
-            populationManager.UpdatePopulation(selectedSpecies, position);
+            populationManager.SpawnAnimal(selectedSpecies, position);
             base.ResourceManager.Placed(selectedSpecies, 1);
         }
         if (!base.CanBuy(selectedItem))

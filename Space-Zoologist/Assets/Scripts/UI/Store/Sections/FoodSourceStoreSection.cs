@@ -10,7 +10,7 @@ public class FoodSourceStoreSection : StoreSection
 {
     public override void Initialize()
     {
-        base.itemType = ItemType.Food;
+        base.itemType = ItemRegistry.Category.Food;
         base.Initialize();
     }
 
@@ -26,7 +26,8 @@ public class FoodSourceStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
-        if (base.IsCursorOverUI(eventData) || eventData.button == PointerEventData.InputButton.Right ||
+        if (!UIBlockerSettings.OperationIsAvailable("Build") || 
+            eventData.button == PointerEventData.InputButton.Right ||
             base.ResourceManager.CheckRemainingResource(selectedItem) == 0)
         {
             Debug.Log("Cannot place item that location");
@@ -46,8 +47,8 @@ public class FoodSourceStoreSection : StoreSection
 
     public void PlaceFood(Vector3 mousePosition)
     {
-        // if over ui don't do it
-        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+        // Exit if build is unavailable
+        if (!UIBlockerSettings.OperationIsAvailable("Build"))
             return;
 
         if (!base.GridSystem.IsFoodPlacementValid(mousePosition, base.selectedItem))
@@ -67,7 +68,11 @@ public class FoodSourceStoreSection : StoreSection
         // If instance exists use it to access the food source manager
         if(instance)
         {
-            instance.m_foodSourceManager.placeFood(mouseGridPosition, GameManager.Instance.FoodSources[selectedItem.ID], this.selectedItem.buildTime);
+            FoodSourceSpecies species = instance.FoodSources [selectedItem.ID];
+            Vector3 FoodLocation = instance.m_tileDataController.CellToWorld (mouseGridPosition);
+            FoodLocation.x += species.Size.x / 2f;
+            FoodLocation.y += species.Size.y / 2f;
+            instance.m_foodSourceManager.CreateFoodSource (species, FoodLocation, this.selectedItem.buildTime);
         }
         else
         {

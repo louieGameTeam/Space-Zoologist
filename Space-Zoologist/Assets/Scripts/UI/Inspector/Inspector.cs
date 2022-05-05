@@ -42,7 +42,7 @@ public class Inspector : MonoBehaviour
         this.inspectorWindow.SetActive(false);
         //this.HUD.SetActive(true);
         this.UnHighlightAll();
-        EventManager.Instance.InvokeEvent(EventType.InspectorClosed, null);
+        EventManager.Instance.InvokeEvent(EventType.InspectorToggled, false);
         this.IsInInspectorMode = false;
     }
 
@@ -63,7 +63,7 @@ public class Inspector : MonoBehaviour
         this.inspectorWindow.SetActive(true);
         GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);
-        EventManager.Instance.InvokeEvent(EventType.InspectorOpened, null);
+        EventManager.Instance.InvokeEvent(EventType.InspectorToggled, true);
         this.IsInInspectorMode = true;
     }
 
@@ -181,8 +181,15 @@ public class Inspector : MonoBehaviour
     {
         this.HighlightPopulation(tileData.Animal.transform.parent.gameObject);
 
-        //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
-        this.inspectorWindowDisplayScript.DisplayPopulationStatus(tileData.Animal.GetComponent<Animal>().PopulationInfo);
+        // Get the animal's population info
+        Population population = tileData.Animal.GetComponent<Animal>().PopulationInfo;
+
+        // Check to make sure the population manager still has this population in it
+        if (GameManager.Instance.m_populationManager.Populations.Contains(population))
+        {
+            //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
+            this.inspectorWindowDisplayScript.DisplayPopulationStatus(tileData.Animal.GetComponent<Animal>().PopulationInfo);
+        }
     }
 
     private void DisplayFoodText(TileData cellData)

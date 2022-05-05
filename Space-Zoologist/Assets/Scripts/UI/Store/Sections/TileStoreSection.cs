@@ -22,7 +22,7 @@ public class TileStoreSection : StoreSection
     {
         EnclosureSystem = GameManager.Instance.m_enclosureSystem;
         tilePlacementController = GameManager.Instance.m_tilePlacementController;
-        base.itemType = ItemType.Terrain;
+        base.itemType = ItemRegistry.Category.Tile;
         base.Initialize();
         //Debug.Assert(tilePlacementController != null);
     }
@@ -45,7 +45,7 @@ public class TileStoreSection : StoreSection
             contents = new float[] {liquidVector.x, liquidVector.y, liquidVector.z};
         }
 
-        tilePlacementController.StartPreview(selectedItem.ID, liquidContents: contents);
+        tilePlacementController.StartPreview(selectedItem.ID.Data.Tile, liquidContents: contents);
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerDown(PointerEventData eventData)
     {
         base.OnCursorPointerDown(eventData);
-        if (base.IsCursorOverUI(eventData))
+        if (!UIBlockerSettings.OperationIsAvailable("Build"))
         {
             base.OnItemSelectionCanceled();
             return;

@@ -8,9 +8,9 @@ public class DrinkingPattern : UniversalAnimatorPattern
     [SerializeField] private string Down = default;
     [SerializeField] private string Left = default;
     [SerializeField] private string Right = default;
-    public override void StartUp()
+    public override void Init()
     {
-        base.StartUp();
+        base.Init();
     }
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
@@ -24,6 +24,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
                 {
                     this.AnimatorTriggerName = GetTriggerName(i, j);
                     base.EnterPattern(animal, animalData);
+                    SetAnimDirectionFloat(animal, i, j);
                     return;
                 }
             }

@@ -29,7 +29,7 @@ public class ParallelArrayEditor<TElement>
             {
                 EditorGUI.indentLevel++;
 
-                // Get the enum labels and set the length of the list to the length of the enum
+                // Set the seriaized property length to the parallel array size length
                 if (parallelArray.Length != array.arraySize) array.arraySize = parallelArray.Length;
 
                 // Edit each property in the array
@@ -47,13 +47,7 @@ public class ParallelArrayEditor<TElement>
                 EditorGUI.indentLevel--;
             }
         }
-        else
-        {
-            Debug.LogError("ParallelArrayEditor: expected the property at path '" + array.propertyPath +
-                "' to be an array, but this property is not an array. Please change the property to a type of array in the source code " +
-                "or pass in a different property");
-            throw new ExitGUIException();
-        }
+        else throw PropertyIsNotArray(array);
     }
     public virtual void OnGUI(Rect position, SerializedProperty array, TElement[] parallelArray)
     {
@@ -61,13 +55,17 @@ public class ParallelArrayEditor<TElement>
     }
     public virtual float GetPropertyHeight(SerializedProperty array, TElement[] parallelArray)
     {
-        if(array.isArray)
+        if (array.isArray)
         {
             float height = EditorExtensions.StandardControlHeight;
 
             // If array is expanded, add heights for all 
             if (array.isExpanded)
             {
+                // Set the seriaized property length to the parallel array size length
+                if (parallelArray.Length != array.arraySize) array.arraySize = parallelArray.Length;
+
+                // Add up the heights for each sub property
                 for (int i = 0; i < parallelArray.Length; i++)
                 {
                     SerializedProperty element = array.GetArrayElementAtIndex(i);
@@ -77,13 +75,7 @@ public class ParallelArrayEditor<TElement>
 
             return height;
         }
-        else
-        {
-            Debug.LogError("ParallelArrayEditor: expected the property at path " + array.propertyPath +
-                " to be an array, but this property is not an array. Please change the property to a type of array in the source code " +
-                "or pass in a different property");
-            throw new ExitGUIException();
-        }
+        else throw PropertyIsNotArray(array);
     }
     #endregion
 
@@ -113,6 +105,18 @@ public class ParallelArrayEditor<TElement>
 
             EditorGUI.indentLevel--;
         }
+    }
+    #endregion
+
+    #region Public Methods
+    public static ExitGUIException PropertyIsNotArray(SerializedProperty property)
+    {
+        Debug.LogError(
+            $"Expected the property at path '{property.propertyPath}' " +
+            $"to be an array, but the property is of type '{property.type}'. " +
+            $"Please change the property to a type of array in the source code " +
+            $"or pass in a different property");
+        return new ExitGUIException();
     }
     #endregion
 }

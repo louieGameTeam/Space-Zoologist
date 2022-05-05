@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 1
-  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":51,"yPos":135},"ID":0,"TMPFontGUID":null,"Text":"Oh
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":243.5,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Oh
     dear... your results deviate significantly...","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0}]}'
   saveVersion: 103
   DefaultName: 
@@ -186,7 +186,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 572941659986665973}
   m_Father: {fileID: 6455619126537920445}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -203,12 +204,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 1
-  json: 
-  saveVersion: 0
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":243.5,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":null,"parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":null,"OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0}]}'
+  saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
   DefaultFont: {fileID: 0}
-  NodeSerializedDataList: []
+  NodeSerializedDataList:
+  - {fileID: 3836766369092610483}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -312,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce03d40a13756b46b0099769113401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quizTemplate: {fileID: 11400000, guid: e36b4901ccb6c3c4db1bedda49af732e, type: 2}
+  template: {fileID: 11400000, guid: e36b4901ccb6c3c4db1bedda49af732e, type: 2}
   npcIcon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   npcName: Star
   npcFont: {fileID: 0}
@@ -320,9 +322,60 @@ MonoBehaviour:
   endOfQuizText: Alright, give me a minute to process your answers...
   response:
     responses:
-    - conversation: {fileID: 6455619125451817633}
-      nextLevelName: Level1E2
-    - conversation: {fileID: 6455619126524531053}
-      nextLevelName: 
-    - conversation: {fileID: 6455619125067967807}
-      nextLevelName: 
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  requizOnFail: 0
+  onConversationEnded:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &8347356482795767772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 572941659986665973}
+  - component: {fileID: 3836766369092610483}
+  m_Layer: 0
+  m_Name: ConversationEventInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &572941659986665973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347356482795767772}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6455619125724372864}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3836766369092610483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347356482795767772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 0
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}

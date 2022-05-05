@@ -63,6 +63,6 @@ public class LevelData : ScriptableObject
 
     public ItemData GetItemWithID(ItemID itemID)
     {
-        return itemQuantities.Find(i => i.itemObject.ItemID == itemID);
+        return itemQuantities.Find(i => i.itemObject.ID == itemID);
     }
 }

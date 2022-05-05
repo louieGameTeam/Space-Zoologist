@@ -60,6 +60,13 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     private ResearchEncyclopediaArticleData articleData;
     #endregion
 
+    #region Monobehaviour Messages
+    private void OnDisable()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+    #endregion
+
     #region UI Events
     public void OnEndDrag(PointerEventData data)
     {
@@ -121,10 +128,13 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             // Destroy all images
             foreach (Transform child in imageParent) Destroy(child.gameObject);
             // Create an image object for each sprite
-            foreach (Sprite sprite in articleConfig.Sprites)
+            if(articleConfig.Sprites != null)
             {
-                ImagePreviewManager preview = Instantiate(imagePrefab, imageParent);
-                preview.BaseImage.sprite = sprite;
+                foreach (Sprite sprite in articleConfig.Sprites)
+                {
+                    ImagePreviewManager preview = Instantiate(imagePrefab, imageParent);
+                    preview.BaseImage.sprite = sprite;
+                }
             }
         }
         // No article given implies this encyclopedia has no entries

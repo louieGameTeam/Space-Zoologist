@@ -10,6 +10,12 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private RectTransform layoutGroupRect = default;
     [SerializeField] private TextMeshProUGUI inspectorWindowText = default;
     [SerializeField] private TextMeshProUGUI populationInfoText = default;
+    [SerializeField] private Image populationStatusIndicator = default;
+    [SerializeField] private Sprite populationIncreasingIcon = default;
+    [SerializeField] private Sprite populationStagnantIcon = default;
+    [SerializeField] private Sprite populationDecreasingIcon = default;
+    [SerializeField] private Color populationGrowingColor = default;
+    [SerializeField] private Color populationDecayingColor = default;
     [SerializeField] private GameObject DetailButton = default;
     [SerializeField] private GameObject detailBackground = default;
     [SerializeField] private Text detailText = default;
@@ -19,65 +25,87 @@ public class DisplayInspectorText : MonoBehaviour
     public enum InspectorText { Population, Food, Area, Liquid }
 
     private List<GameObject> needSliders = new List<GameObject>();
+    private Color populationDefaultColor;
+
+    private void Awake() {
+        populationDefaultColor = populationInfoText.color;
+    }
 
     public void DisplayPopulationStatus(Population population)
     {
         ClearInspectorWindow();
+
         currentDisplay = InspectorText.Population;
-        inspectorWindowTitle.text = population.species.SpeciesName;
+        inspectorWindowTitle.text = population.species.ID.Data.Name.Get(ItemName.Type.Colloquial);
         populationInfoText.text = "Population: " + population.Count;
 
         DetailButton.SetActive(true);
         detailBackground.SetActive(false);
+        populationStatusIndicator.enabled = true;
 
-        if (population.GrowthStatus.Equals(GrowthStatus.stagnate))
+        // Check to make sure that the population needs have been cached
+        if (population.GrowthCalculator.HasNeedCache)
         {
-            //displayText += $"Please wait 1 day for population to get accustomed to enclosure\n";
-            detailText.text = $"Please wait 1 day for population to get accustomed to enclosure";
+            
+            switch (population.GrowthCalculator.GrowthStatus)
+            {
+                case GrowthStatus.growing:
+                    detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                        $"population will increase in {population.DaysTillGrowth()} days";
+                    populationInfoText.color = populationGrowingColor;
+                    populationStatusIndicator.sprite = populationIncreasingIcon;
+                    break;
+                case GrowthStatus.stagnant:
+                    detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                        $"is stagnate";
+                    populationInfoText.color = populationDefaultColor;
+                    populationStatusIndicator.sprite = populationStagnantIcon;
+                    break;
+                case GrowthStatus.decaying:
+                    detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                        $"population will decrease in {population.DaysTillDeath()} days";
+                    populationInfoText.color = populationDecayingColor;
+                    populationStatusIndicator.sprite = populationDecreasingIcon;
+                    break;
+            }
+
+            this.inspectorWindowText.text = "";
+
+            // Gotta handle predator prey differently
+            if (population.GrowthCalculator.Rating.PredatorCount > 0)
+            {
+                this.inspectorWindowText.text = $"{population.gameObject.name} looks frightened...";
+            }
+
+            GenerateSliders(population);
         }
-        else if (population.GrowthStatus.Equals(GrowthStatus.growing))
-        {
-            //displayText += $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days\n";
-            detailText.text = $"{population.gameObject.name} population will increase in {population.DaysTillGrowth()} days";
-        }
+        // If there is no need cache then tell the player to wait a day
         else
         {
-            if (population.IsStagnate())
-            {
-                //displayText += $"{population.gameObject.name} is stagnate\n";
-                detailText.text = $"{population.gameObject.name} is stagnate";
-            }
-            else
-            {
-                //displayText += $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days\n";
-                detailText.text = $"{population.gameObject.name} population will decrease in {population.DaysTillDeath()} days";
-            }
+            detailText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
+            inspectorWindowText.text = "Please wait 1 day for the population to get accustomed to the enclosure";
+            populationInfoText.color = populationDefaultColor;
+            populationStatusIndicator.sprite = populationStagnantIcon;
         }
-        this.inspectorWindowText.text = "";
-        if (population.GrowthCalculator.calculatePredatorPreyNeed() > 0)
-        {
-            this.inspectorWindowText.text = $"{population.gameObject.name} looks frightened...";
-        }
-        GenerateSliders(population);
     }
 
     public void DisplayFoodSourceStatus(FoodSource foodSource)
     {
         ClearInspectorWindow();
+
         currentDisplay = InspectorText.Food;
-        inspectorWindowTitle.text = foodSource.Species.SpeciesName;
+        inspectorWindowTitle.text = foodSource.Species.ID.Data.Name.Get(ItemName.Type.Colloquial);
 
         string displayText;
+        bool hasNeeds = GameManager.Instance.Needs.HasCache(foodSource);
 
-        if (foodSource.isUnderConstruction)
+        if (foodSource.isUnderConstruction || !hasNeeds)
         {
             displayText = $"Under Construction \n";
-
         }
         else
         {
             displayText = $"Output: {foodSource.FoodOutput}\n";
-
             GenerateSliders(foodSource);
         }
         this.inspectorWindowText.text = displayText;
@@ -146,6 +174,7 @@ public class DisplayInspectorText : MonoBehaviour
     public void ClearInspectorWindow() {
         DetailButton.SetActive(false);
         detailBackground.SetActive(false);
+        populationStatusIndicator.enabled = false;
         detailText.text = "";
 
         inspectorWindowTitle.text = "Title";
@@ -157,22 +186,30 @@ public class DisplayInspectorText : MonoBehaviour
         needSliders.Clear();
     }
 
-    private void GenerateSliders(Life life) {
+    private void GenerateSliders(MonoBehaviour life) 
+    {
         if (life is FoodSource)
         {
-            setupSlider("Liquid", ((FoodSource)life).WaterRating);
-            setupSlider("Terrain", ((FoodSource)life).TerrainRating);
+            setupSlider("Liquid", ((FoodSource)life).Rating.WaterRating);
+            setupSlider("Terrain", ((FoodSource)life).Rating.TerrainRating);
         }
         if (life is Population)
         {
-            setupSlider("Liquid", ((Population)life).GrowthCalculator.WaterRating);
-            setupSlider("Terrain", ((Population)life).GrowthCalculator.TerrainRating);
-            setupSlider("Food", ((Population)life).GrowthCalculator.FoodRating);
+            Population population = life as Population;
+            NeedRating rating = population.GrowthCalculator.Rating;
+
+            if (rating.HasFoodNeed) setupSlider("Food", rating.FoodRating);
+            if (rating.HasFriendNeed) setupSlider("Friend", rating.FriendRating);
+            if (rating.HasTerrainNeed) setupSlider("Terrain", rating.TerrainRating);
+            if (rating.HasTreeNeed) setupSlider("Tree", rating.TreeRating);
+            if (rating.HasWaterNeed) setupSlider("Water", rating.WaterRating);
         }
     }
 
     private void setupSlider(string name, float value, int min = -1, int max = 1)
     {
+        // Original ratings range from 0:2, so we change it to range from -1:1
+        value--;
         GameObject sliderObj = Instantiate(NeedSliderPrefab, layoutGroupRect);
         needSliders.Add(sliderObj);
         NeedSlider slider = sliderObj.GetComponent<NeedSlider>();

@@ -17,7 +17,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] List<StoreSection> StoreMenus = default;
     [SerializeField] ResourceManager ResourceManager = default;
     [Header("Shared menu dependencies")]
-    [SerializeField] CanvasObjectStrobe PlayerBalanceDisplay = default;
     [SerializeField] CursorItem CursorItem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
@@ -34,7 +33,7 @@ public class MenuManager : MonoBehaviour
         this.IsInStore = false;
         foreach (StoreSection storeMenu in this.StoreMenus)
         {
-            storeMenu?.SetupDependencies(this.CursorItem, this.UIElements, this.PlayerBalanceDisplay, this.ResourceManager);
+            storeMenu?.SetupDependencies(this.CursorItem, this.UIElements, this.ResourceManager);
             storeMenu?.Initialize();
         }
         StoreMenus[curMenu]?.gameObject.SetActive(true);
@@ -47,7 +46,7 @@ public class MenuManager : MonoBehaviour
         {
             if (!this.IsInStore)
             {
-                EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
+                EventManager.Instance.InvokeEvent(EventType.StoreToggled, true);
             }
             this.StoreMenuToggledOn(menu);
         }
@@ -82,7 +81,7 @@ public class MenuManager : MonoBehaviour
         if (!this.IsInStore)
         {
             GameManager.Instance.TryToPause("StoreMenu");
-            EventManager.Instance.InvokeEvent(EventType.StoreOpened, null);
+            EventManager.Instance.InvokeEvent(EventType.StoreToggled, true);
         }
         StoreCanvas.DOScale(0.8f, 0.5f);
         this.IsInStore = true;
@@ -97,7 +96,7 @@ public class MenuManager : MonoBehaviour
     {
         StoreCanvas.DOScale(0, 0.5f);
         this.IsInStore = false;
-        EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
+        EventManager.Instance.InvokeEvent(EventType.StoreToggled, false);
 
         GameManager.Instance.m_tileDataController.FinishDrafting();
         GameManager.Instance.m_tileDataController.SetGridOverlay(false);
@@ -128,7 +127,7 @@ public class MenuManager : MonoBehaviour
             this.IsInStore = false;
         }
 
-        EventManager.Instance.InvokeEvent(EventType.StoreClosed, null);
+        EventManager.Instance.InvokeEvent(EventType.StoreToggled, false);
     }
 
     public void OpenMenu(int menu) {

@@ -11,23 +11,29 @@ public class PopulationBehavior : ScriptableObject
     public int numberOfAnimalsRequired = 1;
     public List<BehaviorPattern> behaviorPatterns = default;
     protected Dictionary<GameObject, int> animalsToSteps = new Dictionary<GameObject, int>();
+    protected Dictionary<GameObject, int> animalsToCallbacks = new Dictionary<GameObject, int>();
     protected StepCompletedCallBack stepCompletedCallback;
-    protected BehaviorCompleteCallback behaviorCompleteCallback;
+    protected List<BehaviorCompleteCallback> behaviorCompleteCallbacks = new List<BehaviorCompleteCallback>();
     public void AssignCallback(BehaviorCompleteCallback callback)
     {
-        behaviorCompleteCallback = callback;
+        behaviorCompleteCallbacks.Add(callback);
+    }
+    public void RemoveCallback(int callbackIndex)
+    {
+        behaviorCompleteCallbacks.RemoveAt(callbackIndex);
     }
     /// <summary>
     /// Called when animal enters behavior
     /// </summary>
     /// <param name="avalabilityToAnimals"></param>
-    public void EnterBehavior(GameObject animal)
+    public void EnterBehavior(GameObject animal, int callbackIndex)
     {
         behaviorData.behaviorName = this.name;
         behaviorData.ForceExitCallback = RemoveBehavior;
         stepCompletedCallback = OnStepCompleted;
         animal.GetComponent<AnimalBehaviorManager>().activeBehavior = behaviorData;
         animalsToSteps.Add(animal, 0);
+        animalsToCallbacks.Add(animal, callbackIndex);
         ProceedToNext(animal);
     }
 
@@ -56,7 +62,8 @@ public class PopulationBehavior : ScriptableObject
         {
             animalsToSteps.Remove(animal);
             animal.GetComponent<AnimalBehaviorManager>().activeBehavior = null;
-            behaviorCompleteCallback.Invoke(animal);
+            behaviorCompleteCallbacks[animalsToCallbacks[animal]].Invoke(animal);
+            animalsToCallbacks.Remove(animal);
         }
     }
     /// <summary>

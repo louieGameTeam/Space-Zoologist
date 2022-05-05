@@ -9,13 +9,13 @@ public static class LevelRatingSystem
     [System.Serializable]
     public class SpeciesStability
     {
-        public SpeciesType species;
+        public ItemID species;
         public bool isStable;
     }
     [System.Serializable]
     public class SpeciesCount
     {
-        public SpeciesType species;
+        public ItemID species;
         public int count;
     }
     #endregion
@@ -74,11 +74,11 @@ public static class LevelRatingSystem
         // Compute the stability of each species based on the projected minimum
         for (int i = 0; i < speciesCounts.Length; i++)
         {
-            SpeciesType species = speciesCounts[i].species;
+            ItemID species = speciesCounts[i].species;
 
             // Add up the target population for every data that has the same species
             int targetAmount = objective.survivalObjectiveDatas
-                .Where(data => data.targetSpecies.Species == species)
+                .Where(data => data.targetSpecies.ID == species)
                 .Sum(data => data.targetPopulationSize);
 
             // Species is stable if the projected minimum
@@ -95,13 +95,13 @@ public static class LevelRatingSystem
     public static SpeciesCount[] ProjectNextSpeciesCount(PopulationManager populationManager)
     {
         // Use a dictionary to easily store and look up the counts
-        Dictionary<SpeciesType, SpeciesCount> counts = new Dictionary<SpeciesType, SpeciesCount>();
+        Dictionary<ItemID, SpeciesCount> counts = new Dictionary<ItemID, SpeciesCount>();
 
         // Update the counts for each population in the population manager
         foreach (Population population in populationManager.Populations)
         {
             // Assign the species for convenience
-            SpeciesType species = population.species.Species;
+            ItemID species = population.species.ID;
 
             // If the dictionary does not yet contain the key
             // then add the key to the dictionary 
@@ -109,7 +109,7 @@ public static class LevelRatingSystem
             {
                 counts.Add(species, new SpeciesCount()
                 {
-                    species = population.species.Species,
+                    species = population.species.ID,
                     count = 0
                 });
             }

@@ -11,7 +11,7 @@ public class TilePlacementController : MonoBehaviour
 {
     public enum PlacementResult { Placed, Restricted, AlreadyExisted }
     
-    private TileDataController gridSystemReference;
+    private TileDataController gridSystemReference => GameManager.Instance.m_tileDataController;
 
     [SerializeField] public bool godMode = false;
     private bool isPreviewing;
@@ -26,10 +26,6 @@ public class TilePlacementController : MonoBehaviour
     public GameTile[] gameTiles { get; private set; } = default;
     public HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
-    public void Initialize()
-    {
-        gridSystemReference = GameManager.Instance.m_tileDataController;
-    }
 
     private void Update()
     {
@@ -58,19 +54,19 @@ public class TilePlacementController : MonoBehaviour
     /// <summary>
     /// Start tile placement preview.
     /// </summary>
-    /// <param name="tileID">The ID of the tile to preview its placement.</param>
-    public void StartPreview(string tileID, bool godMode = false, float[] liquidContents = null)
+    /// <param name="tileType">The ID of the tile to preview its placement.</param>
+    public void StartPreview(TileType tileType, bool godMode = false, float[] liquidContents = null)
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         this.dragStartPosition = gridSystemReference.WorldToCell(mouseWorldPosition);
-        if (!Enum.IsDefined(typeof(TileType), tileID))
+        if (!Enum.IsDefined(typeof(TileType), tileType))
         {
-            throw new System.ArgumentException(tileID + " was not found in the TilePlacementController's tiles");
+            throw new System.ArgumentException(tileType + " was not found in the TilePlacementController's tiles");
         }
         this.isPreviewing = true;
         foreach (GameTile tile in gameTiles)
         {
-            if (tile.type == (TileType)Enum.Parse(typeof(TileType), tileID))
+            if (tile.type == tileType)
             {
                 if(liquidContents != null)
                 {
@@ -239,8 +235,9 @@ public class TilePlacementController : MonoBehaviour
             // Check availability
             foreach (GameTile tile in referencedTiles)
             {
-                // If same tile
-                if (gridSystemReference.GetGameTileAt(cellPosition) == tile)
+                // If same tile, but not liquid
+                GameTile tileAtPos = gridSystemReference.GetGameTileAt(cellPosition);
+                if (tileAtPos == tile && tileAtPos.type != TileType.Liquid)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;

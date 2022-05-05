@@ -5,19 +5,21 @@ using UnityEngine;
 public class GeneralPathfinding : BehaviorPattern
 {
     [Header("Terrain used in place of liquid")]
-    [SerializeField] ItemType Destination = default;
+    [SerializeField] 
+    ItemRegistry.Category Destination = default;
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        Vector3Int destination;
-        if (Destination.Equals(ItemType.Terrain))
+        Vector3Int destination = base.TileDataController.WorldToCell(gameObject.transform.position);
+        if (Destination.Equals(ItemRegistry.Category.Tile))
         {
             destination = base.TileDataController.FindClosestLiquidSource(animalData.animal.PopulationInfo, gameObject);
         }
         else
         {
             int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-            destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+            if (animalData.animal.PopulationInfo.AccessibleLocationsExist)
+                destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         }
         AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
     }
@@ -36,8 +38,9 @@ public class GeneralPathfinding : BehaviorPattern
                 // Debug.Log(animal.name + " has reached their destination of " + this.Destination.ToString());
                 return true;
             }
+            return false;
         }
-        return false;
+        return true;
     }
 
     protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)

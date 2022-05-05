@@ -53,13 +53,18 @@ public class SurvivalObjective : Objective
             totalPopulationCount += population.Count;
 
             // Found a population that has enough pop count
-            if (population.Count >= this.TargetPopulationSize)
+ /*           if (population.Count >= this.TargetPopulationSize)
             {
                 satisfiedPopulationCount++;
-            }
+            }*/
+
+            /*
+             * Note - while TargetPopulationCount exists, the intended design is
+             * to calculate objective completion based on totalPopulationCount
+            */
 
             // Have met the population number requirement
-            if (satisfiedPopulationCount >= this.TargetPopulationCount)
+            if (totalPopulationCount >= this.TargetPopulationSize)
             {
 
                 if (this.timer >= this.TargetTime)
@@ -106,12 +111,12 @@ public class SurvivalObjective : Objective
         }
         if (this.TargetTime.Equals(0f))
         {
-            displayText += $"Reach a population size of {this.TargetPopulationSize} {this.AnimalSpecies.SpeciesName}s\n\n";
+            displayText += $"Reach a population size of {this.TargetPopulationSize} {this.AnimalSpecies.ID.Data.Name.Get(ItemName.Type.English)}s\n\n";
             displayText += $"Current population size: {totalPopulationCount}\n\n";
             return displayText;
         }
         displayText += $"Maintain at least {this.satisfiedPopulationCount}/{this.TargetPopulationCount} ";
-        displayText += $"{this.AnimalSpecies.SpeciesName} {population} with a count of {this.TargetPopulationSize}";
+        displayText += $"{this.AnimalSpecies.ID.Data.Name.Get(ItemName.Type.English)} {population} with a count of {this.TargetPopulationSize}";
         displayText += $" for {targetTime} {timeLabel} ";
         displayText += $"[{this.Status.ToString()}] [{Math.Round(this.timer, 0)}/{this.TargetTime}]\n";
 

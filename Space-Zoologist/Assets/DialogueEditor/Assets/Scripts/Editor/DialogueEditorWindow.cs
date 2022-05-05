@@ -1153,6 +1153,11 @@ namespace DialogueEditor
                 {
                     UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
                 }
+                var prefabStage = UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+                if (prefabStage != null)
+                {
+                    UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(prefabStage.scene);
+                }
 #endif
             }
         }

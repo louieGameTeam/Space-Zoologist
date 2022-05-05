@@ -103,4 +103,134 @@ public class EditorGUIAuto
         return result;
     }
     #endregion
+
+    #region Toggle Left
+    public static bool ToggleLeft(ref Rect position, string label, bool value, GUIStyle labelStyle = null)
+    {
+        return ToggleLeft(ref position, label, value, labelStyle);
+    }
+    public static bool ToggleLeft(ref Rect position, GUIContent label, bool value, GUIStyle labelStyle = null)
+    {
+        if (labelStyle == null)
+            labelStyle = EditorStyles.label;
+
+        position.height = SingleControlHeight;
+        bool result = EditorGUI.ToggleLeft(position, label, value, labelStyle);
+        position.y += position.height;
+        return result;
+    }
+    #endregion
+
+    #region Custom Methods
+    public static SerializedProperty[] GetArrayElements(SerializedProperty array)
+    {
+        // Check if array is null
+        if (array == null) throw new System.ArgumentNullException(
+            $"Argument {nameof(array)} cannot be null");
+
+        // Check if this is an array
+        if (!array.isArray) throw new System.ArgumentNullException(
+            $"Property {array.name} is not an array. Please provide a property " +
+            $"that is an arry");
+
+        // Create the array
+        SerializedProperty[] properties = new SerializedProperty[array.arraySize];
+
+        // Load up each of the array elements
+        for (int i = 0; i < array.arraySize; i++)
+        {
+            properties[i] = array.GetArrayElementAtIndex(i);
+        }
+
+        // Return the array
+        return properties;
+    }
+    public static IEnumerable<SerializedProperty> ToEnd(SerializedProperty parent, string startFieldName, bool enterChildren, bool skipInvisible)
+    {
+        SerializedProperty start = parent.FindPropertyRelative(startFieldName);
+
+        if (start != null) return ToEnd(start, enterChildren, skipInvisible);
+        else throw new System.NullReferenceException($"Property {parent.name} " +
+            $"has no serialized property at the relative path " +
+            $"{parent.name}.{startFieldName}. Make sure the name " +
+            $"of the relative path is correct " +
+            $"and that the property at that path is serializable");
+    }
+    public static IEnumerable<SerializedProperty> ToEnd(SerializedProperty iterator, bool enterChildren, bool skipInvisible)
+    {
+        // Check if start is not null
+        if (iterator != null)
+        {
+            bool hasNext = true;
+
+            while (hasNext)
+            {
+                yield return iterator;
+
+                // If we should skip invisible then go to the next visible property
+                if (skipInvisible)
+                {
+                    hasNext = iterator.NextVisible(enterChildren);
+                }
+                // If we do not skip invisible then go to next property
+                else hasNext = iterator.Next(enterChildren);
+            }
+        }
+        else throw new System.ArgumentNullException(
+            $"Parameter '{nameof(iterator)}' cannot be null");
+    }
+    public static IEnumerable<SerializedProperty> ToEnd(SerializedProperty parent, string startFieldName, string endFieldName, bool enterChildren, bool skipInvisible)
+    {
+        // Get start and end properties
+        SerializedProperty start = parent.FindPropertyRelative(startFieldName);
+        SerializedProperty end = parent.FindPropertyRelative(endFieldName);
+
+        // If start and end are not null then invoke the function
+        if (start != null && end != null)
+        {
+            // Advance to the property after the end
+            end.Next(false);
+            return ToEnd(start, end, enterChildren, skipInvisible);
+        }
+
+        // If start is null then throw exception
+        else if (start == null) throw new System.NullReferenceException($"Property {parent.name} " +
+            $"has no serialized property at the relative path " +
+            $"{parent.name}.{startFieldName}. Make sure the name " +
+            $"of the relative path is correct " +
+            $"and that the property at that path is serializable");
+
+        // If end is null then throw exception
+        else throw new System.NullReferenceException($"Property {parent.name} " +
+            $"has no serialized property at the relative path " +
+            $"{parent.name}.{endFieldName}. Make sure the name " +
+            $"of the relative path is correct " +
+            $"and that the property at that path is serializable");
+    }
+    public static IEnumerable<SerializedProperty> ToEnd(SerializedProperty start, SerializedProperty end, bool enterChildren, bool skipInvisible)
+    {
+        if (start == null) throw new System.ArgumentNullException(
+            $"Parameter '{nameof(start)}' cannot be null");
+
+        if (end == null) throw new System.ArgumentNullException(
+            $"Parameter '{nameof(end)}' cannot be null");
+
+        // Store if the start has a next property
+        bool hasNext = true;
+
+        // Loop until start equals end or it has no next property
+        while (start.propertyPath != end.propertyPath && hasNext)
+        {
+            yield return start;
+
+            // If we should skip invisible then go to the next visible property
+            if (skipInvisible)
+            {
+                hasNext = start.NextVisible(enterChildren);
+            }
+            // If we do not skip invisible then go to next property
+            else hasNext = start.Next(enterChildren);
+        }
+    }
+    #endregion
 }

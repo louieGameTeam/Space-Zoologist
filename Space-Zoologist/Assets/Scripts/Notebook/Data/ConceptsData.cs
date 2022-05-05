@@ -69,7 +69,7 @@ public class ConceptsData : NotebookDataModule
         {
             // Add the item to the resource manager and subtract the total cost
             Item itemObjectGranted = GameManager.Instance.LevelData.GetItemWithID(review.Request.ItemRequested).itemObject;
-            GameManager.Instance.m_resourceManager.AddItem(itemObjectGranted.ItemName, review.QuantityGranted);
+            GameManager.Instance.m_resourceManager.AddItem(itemObjectGranted.ID, review.QuantityGranted);
             GameManager.Instance.SubtractFromBalance(review.TotalCost);
         }
 
