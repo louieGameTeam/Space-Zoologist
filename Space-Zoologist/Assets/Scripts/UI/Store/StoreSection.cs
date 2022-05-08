@@ -53,10 +53,14 @@ public class StoreSection : MonoBehaviour
         if (cursorItem.IsOn)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
-            if (!GridSystem.IsWithinGridBounds(mousePosition)) return;
-
             Vector3Int gridLocation = GridSystem.WorldToCell(mousePosition);
 
+            if (!GridSystem.IsWithinGridBounds(mousePosition))
+            {
+                previousLocation = gridLocation;
+                GridSystem.ClearHighlights();
+                return;
+            }
             if (gridLocation.x != previousLocation.x || gridLocation.y != previousLocation.y)
             {
                 previousLocation = gridLocation;

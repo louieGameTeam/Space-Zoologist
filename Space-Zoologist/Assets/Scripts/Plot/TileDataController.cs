@@ -1144,6 +1144,7 @@ public class TileDataController : MonoBehaviour
     {
         Vector3Int pos;
         GameTile tile;
+        bool valid = true;
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
@@ -1154,12 +1155,15 @@ public class TileDataController : MonoBehaviour
                 tile = GetGameTileAt(pos);
                 if (tile == null)
                 {
-                    return false;
+                    valid = false;
                 }
-                
-                HighlightTile(pos, selectedSpecies.AccessibleTerrain.Contains(tile.type) ? Color.green : Color.red);
+                else
+                {
+                    HighlightTile(pos, selectedSpecies.AccessibleTerrain.Contains(tile.type) ? Color.green : Color.red);
+                }
             }
         }
+        if (!valid) return false;
         tile = GetGameTileAt(cellPosition);
         return selectedSpecies.AccessibleTerrain.Contains(tile.type);
     }
@@ -1257,7 +1261,6 @@ public class TileDataController : MonoBehaviour
     public bool IsWithinGridBounds(Vector3 mousePosition)
     {
         Vector3Int loc = new Vector3Int((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.z);//Grid.WorldToCell(mousePosition); old implementation that causes stack overflow
-
         return IsCellinGrid(loc.x, loc.y);
     }
     #endregion
