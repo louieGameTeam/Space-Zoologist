@@ -52,9 +52,7 @@ public class FoodSourceManager : GridObjectManager
 
         // Invoke the event that occurs when a new food source is created
         EventManager.Instance.InvokeEvent(EventType.NewFoodSource, newFoodSourceGameObject.GetComponent<FoodSource>());
-
-        // NOTE: does the game manager need cache need to be rebuilt now?
-
+        EventManager.Instance.InvokeEvent(EventType.FoodSourceChange, newFoodSourceGameObject.GetComponent<FoodSource>());
         return newFoodSourceGameObject;
     }
 
@@ -70,7 +68,7 @@ public class FoodSourceManager : GridObjectManager
         m_gridSystemReference.RemoveFoodReference(m_gridSystemReference.WorldToCell(foodSource.Position));
         Destroy(foodSource.gameObject);
 
-        // NOTE: does the game manager need cache need to be rebuilt now?
+        EventManager.Instance.InvokeEvent(EventType.FoodSourceChange, null);
     }
 
     /// <summary>

@@ -179,7 +179,7 @@ MonoBehaviour:
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
-          preferred: 0
+          preferred: 1
           useAsWaterNeed: 0
           minimum: 0
           maximum: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
         - needed: 1
           speciesNeedType: 0
           useAsTerrainNeed: 0
-          traversibleOnly: 0
+          traversibleOnly: 1
           foodNeedType: 0
           preferred: 1
           useAsWaterNeed: 0
@@ -198,10 +198,10 @@ MonoBehaviour:
           id:
             category: 2
             index: 1
-        - needed: 1
+        - needed: 0
           speciesNeedType: 0
           useAsTerrainNeed: 0
-          traversibleOnly: 1
+          traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
           useAsWaterNeed: 0
@@ -253,8 +253,8 @@ MonoBehaviour:
           foodNeedType: 0
           preferred: 0
           useAsWaterNeed: 1
-          minimum: 0
-          maximum: 0
+          minimum: 0.96
+          maximum: 1
           id:
             category: 2
             index: 6
@@ -265,8 +265,8 @@ MonoBehaviour:
           foodNeedType: 0
           preferred: 0
           useAsWaterNeed: 0
-          minimum: 0
-          maximum: 0
+          minimum: 0.005
+          maximum: 0.02
           id:
             category: 2
             index: 7
@@ -278,7 +278,7 @@ MonoBehaviour:
           preferred: 0
           useAsWaterNeed: 0
           minimum: 0
-          maximum: 0
+          maximum: 1
           id:
             category: 2
             index: 8

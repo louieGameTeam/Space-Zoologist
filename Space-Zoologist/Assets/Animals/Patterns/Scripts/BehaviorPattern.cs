@@ -106,7 +106,10 @@ public class BehaviorPattern : MonoBehaviour
     protected virtual void ExitPattern(GameObject animal, bool callCallback = true)
     {
         animal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern = null;
-        StepCompletedCallBack callback = AnimalsToAnimalData[animal].callback;
+        StepCompletedCallBack callback = 
+            AnimalsToAnimalData.ContainsKey(animal) ? 
+            AnimalsToAnimalData[animal].callback : null;
+
         AnimalsToAnimalData.Remove(animal);
         if (callCallback)
         {

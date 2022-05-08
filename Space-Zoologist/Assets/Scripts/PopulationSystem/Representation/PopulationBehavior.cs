@@ -20,6 +20,8 @@ public class PopulationBehavior : ScriptableObject
     }
     public void RemoveCallback(int callbackIndex)
     {
+        if (callbackIndex < 0 || callbackIndex >= behaviorCompleteCallbacks.Count)
+            return;
         behaviorCompleteCallbacks.RemoveAt(callbackIndex);
     }
     /// <summary>
