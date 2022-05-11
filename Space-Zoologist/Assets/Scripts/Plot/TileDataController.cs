@@ -129,7 +129,7 @@ public class TileDataController : MonoBehaviour
         foreach (SerializedTileData serializedTileData in serializedGrid.serializedTilemap.SerializedTileDatas)
         {
             // if the tile id is negative
-            if (serializedTileData.TileID == -1)
+            if (serializedTileData.TileID == -1 || serializedTileData.TileID == 8)
             {
                 for (int i = 0; i < serializedTileData.Repetitions; ++i)
                 {
@@ -166,8 +166,15 @@ public class TileDataController : MonoBehaviour
                             TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
 
                             // if it is a liquid, add it to the dictionary
-                            if (gameTile.type == TileType.Liquid)
-                                liquidbodyIDToTiles[serializedTileData.LiquidBodyID].Add(tilePosition);
+                            if (gameTile.type == TileType.Liquid) {
+                                try {
+                                    liquidbodyIDToTiles[serializedTileData.LiquidBodyID].Add(tilePosition);
+                                    //print ("loaded liquid from pool" + serializedTileData.LiquidBodyID + " at " + tilePosition.x + ", " + tilePosition.y);
+                                } catch {
+                                    print ("failed to load at " + tilePosition.x + ", " + tilePosition.y);
+                                    print (serializedTileData.LiquidBodyID + " not found in serialized liquid bodies");
+                                }
+                            }
 
                             // set the tile type in the red channel
                             Color pixelColor = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);

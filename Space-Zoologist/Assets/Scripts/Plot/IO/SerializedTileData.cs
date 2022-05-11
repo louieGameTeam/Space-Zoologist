@@ -11,7 +11,7 @@ public class SerializedTileData
     public SerializedTileData(GameTile tile, int liquidbodyID, bool placeable, int repetitions)
     {
         this.TileID = tile == null ? -1 : (int)tile.type;
-        this.LiquidBodyID = liquidbodyID != -1 ? liquidbodyID : 0;
+        this.LiquidBodyID = liquidbodyID;
         this.Placeable = placeable;
         this.Repetitions = repetitions;
     }

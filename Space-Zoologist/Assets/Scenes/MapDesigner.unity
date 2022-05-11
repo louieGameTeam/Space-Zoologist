@@ -1829,7 +1829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc86807f5dc24198962246390635ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventResponses: []
 --- !u!1 &276199504
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,7 +2450,6 @@ MonoBehaviour:
   - {fileID: 1653305017}
   - {fileID: 1653305016}
   ResourceManager: {fileID: 1955895233}
-  PlayerBalanceDisplay: {fileID: 1653305015}
   CursorItem: {fileID: 1894927740}
   UIElements: []
   StoreCanvas: {fileID: 1653305023}
@@ -7404,18 +7402,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1653305013}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1653305015 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7011737153203809868, guid: f2d8077c97fcfd2478849204b1c4a546,
-    type: 3}
-  m_PrefabInstance: {fileID: 1653305013}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1653305019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6d6a56fcdf7403194ea0f60ee8c422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1653305016 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7027968297815238384, guid: f2d8077c97fcfd2478849204b1c4a546,
@@ -8477,7 +8463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6baf5374a918e44fe9c8b2cdddc4df6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventResponseManager: {fileID: 263504111}
 --- !u!1 &1959284469
 GameObject:
   m_ObjectHideFlags: 0
@@ -8584,9 +8569,9 @@ MonoBehaviour:
   debug: 0
   autoWin: 0
   skipConversation: 0
-  LevelOnPlay: Level1E1
+  LevelOnPlay: CreativeMode
   directory: Levels/
-  m_levelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}
+  m_levelData: {fileID: 11400000, guid: 398a61438fed54f0992d65281f1eeea9, type: 2}
   SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
   RestartButton: {fileID: 1686799859}
   NextLevelButton: {fileID: 2039389378}
@@ -8915,7 +8900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c0611965dbfe64ba3647e409e3790b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  godMode: 0
+  godMode: 1
   isErasing: 0
 --- !u!156049354 &1990318523
 Grid:

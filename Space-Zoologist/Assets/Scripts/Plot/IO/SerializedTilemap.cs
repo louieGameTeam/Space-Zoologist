@@ -19,6 +19,7 @@ public class SerializedTilemap
         TileData tileData = tiles[0, 0];
         GameTile gameTile = tileData.currentTile;
         bool placeable = tileData.isTilePlaceable;
+        Vector3Int prevTilePos = tileData.tilePosition;
         int repetitions = 1;
 
         // loop through tilemap to parse information
@@ -31,26 +32,62 @@ public class SerializedTilemap
                 {
                     tileData = tiles[i, j];
 
+                    if (tileData.currentTile == null) {
+                        tileData.currentTile = new GameTile();
+                        tileData.currentTile.TileName = null;
+                        tileData.currentTile.type = TileType.Air;
+                    }
+
                     // if tile does not match current
-                    if (gameTile != tileData.currentTile || placeable != tileData.isTilePlaceable)
+                    if (tileData.currentTile == null || gameTile.type != tileData.currentTile.type || placeable != tileData.isTilePlaceable)
                     {
                         // create and add a new serialized tile data
-                        SerializedTileData serializedTileData = new SerializedTileData(gameTile, LiquidbodyController.Instance.GetBodyID(tileData.tilePosition), placeable, repetitions);
+                        int liquidBodyID = -1;
+                        if (gameTile.type == TileType.Liquid) {
+                            foreach (LiquidBody l in liquidBodies) {
+                                if (l.ContainsTile(prevTilePos)) {
+                                    liquidBodyID = l.bodyID;
+                                }
+                            }
+                            //Debug.Log("should be " + liquidBodyID);
+                            if (liquidBodyID == -1) {
+                                Debug.LogError ("failed to save at " + prevTilePos.x + ", " + prevTilePos.y);
+                            }
+                        }
+                        // TODO: LOOK HERE
+                        //Debug.Log("before " + liquidBodyID);
+                        SerializedTileData serializedTileData = new SerializedTileData(gameTile, liquidBodyID, placeable, repetitions);
+                        //Debug.Log("after " + serializedTileData.LiquidBodyID);
                         serializedTileDataList.Add(serializedTileData);
+                        //Debug.Log("stored " + serializedTileDataList[serializedTileDataList.Count - 1].LiquidBodyID);
 
                         // update other values for future matching
                         gameTile = tileData.currentTile;
                         placeable = tileData.isTilePlaceable;
+                        prevTilePos = tileData.tilePosition;
                         repetitions = 1;
                     }
-                    else
+                    else {
                         ++repetitions;
+                    }
                 }
             }
         }
+        /*
+        foreach (SerializedTileData data in serializedTileDataList) {
+            if (data.TileID == 6) {
+                Debug.Log(data.TileID + " is in pool " + data.LiquidBodyID);
+            }
+        }*/
 
         // add in the last set of tile data
-        SerializedTileData lastSerializedTileData = new SerializedTileData(gameTile, LiquidbodyController.Instance.GetBodyID(tileData.tilePosition), placeable, repetitions);
+        int lastLiquidBodyID = -1;
+        foreach (LiquidBody l in liquidBodies) {
+            if (l.ContainsTile(tileData.tilePosition)) {
+                lastLiquidBodyID = l.bodyID;
+            }
+        }
+        SerializedTileData lastSerializedTileData = new SerializedTileData(gameTile, lastLiquidBodyID, placeable, repetitions);
         serializedTileDataList.Add(lastSerializedTileData);
 
         // turn list into array

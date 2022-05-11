@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2edab3d2645437d872ebb87024a9be, type: 3}
   m_Name: L4E1Objective
   m_EditorClassIdentifier: 
-  numberOfDays: 20
+  numberOfDays: 30
   survivalObjectiveDatas:
   - targetSpecies: {fileID: 11400000, guid: b19757b4d113c9047afc67b8ca20f94e, type: 2}
     targetPopulationCount: 1
@@ -25,5 +25,9 @@ MonoBehaviour:
   - targetSpecies: {fileID: 11400000, guid: 9b6e89509c2c941f9b66cec391d19c43, type: 2}
     targetPopulationCount: 1
     targetPopulationSize: 30
+    timeRequirement: 0
+  - targetSpecies: {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
+    targetPopulationCount: 1
+    targetPopulationSize: 10
     timeRequirement: 0
   resourceObjectiveDatas: []

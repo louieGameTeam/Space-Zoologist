@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
-  m_Name: L4E1Data
+  m_Name: L3E2Data
   m_EditorClassIdentifier: 
-  Level: {fileID: 11400000, guid: f1d60b2f49f694e60bd60f9542f8db27, type: 2}
+  Level: {fileID: 11400000, guid: ec42c76cce84a5e48ab94a01129816f4, type: 2}
   startingBalance: 750
   MapWidth: 29
   MapHeight: 29
-  WallBreakable: 1
-  LevelObjectiveData: {fileID: 11400000, guid: a83c490379b8941b49666ec1763ae8d1, type: 2}
+  WallBreakable: 0
+  LevelObjectiveData: {fileID: 11400000, guid: b853f30439aaf457092f4688f2473a5b, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
   - {fileID: 11400000, guid: df43116331ac049f6a18327890673ac5, type: 2}
@@ -27,33 +27,33 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7acff68d8eb9046449b02b2743067688, type: 2}
   animalSpecies:
   - {fileID: 11400000, guid: b19757b4d113c9047afc67b8ca20f94e, type: 2}
+  - {fileID: 11400000, guid: 353741bf0f87e4f57b50cba9f7d44e91, type: 2}
   - {fileID: 11400000, guid: 9b6e89509c2c941f9b66cec391d19c43, type: 2}
-  - {fileID: 11400000, guid: 2c8a5d582d11a4b359ffb31db9796e95, type: 2}
   itemQuantities:
   - itemObject: {fileID: 11400000, guid: e94f6a290327543b992ad34919ac953e, type: 2}
-    initialAmount: 5
+    initialAmount: 4
   - itemObject: {fileID: 11400000, guid: f14f48275cb6c0c408cb6a6304049322, type: 2}
-    initialAmount: 3
+    initialAmount: 2
   - itemObject: {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
     initialAmount: 40
   - itemObject: {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
     initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 6f7adeb8e5b3d4885a77f418109a7422, type: 2}
-    initialAmount: 30
-  - itemObject: {fileID: 11400000, guid: d3eae864c0aa24b1591464e1e01489b6, type: 2}
-    initialAmount: 30
-  - itemObject: {fileID: 11400000, guid: 611d10484ac544bc9812f39f3b1630ce, type: 2}
-    initialAmount: 20
-  - itemObject: {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
-    initialAmount: 35
-  - itemObject: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
     initialAmount: 10
+  - itemObject: {fileID: 11400000, guid: d3eae864c0aa24b1591464e1e01489b6, type: 2}
+    initialAmount: 10
+  - itemObject: {fileID: 11400000, guid: 611d10484ac544bc9812f39f3b1630ce, type: 2}
+    initialAmount: 0
+  - itemObject: {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
+    initialAmount: 0
+  - itemObject: {fileID: 11400000, guid: 59db126429cb4c647ab218358974279b, type: 2}
+    initialAmount: 0
   - itemObject: {fileID: 11400000, guid: aed977f8bd1866647ae7b98411756bc2, type: 2}
-    initialAmount: 20
+    initialAmount: 0
   - itemObject: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-    initialAmount: 8
+    initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}
-    initialAmount: 15
+    initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 011aebdeac608401ea2bece03b01dd8c, type: 2}
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
@@ -61,16 +61,14 @@ MonoBehaviour:
   - itemObject: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 38cda74f699f241129cf6815fa33a73c, type: 2}
-    initialAmount: 15
-  - itemObject: {fileID: 11400000, guid: 659b28bf8183e489ab6ba4b28a5a6dc8, type: 2}
+    initialAmount: 5
+  - itemObject: {fileID: 11400000, guid: bbfbb40c97bab4ec69618bda24523c73, type: 2}
     initialAmount: 4
-  - itemObject: {fileID: 11400000, guid: e1a86e6fe53b24ba18f84e5efc86a5a8, type: 2}
-    initialAmount: 20
-  levelMusic: {fileID: 8300000, guid: 62792088a7f1edc40bf0057d5138e5fa, type: 3}
+  levelMusic: {fileID: 8300000, guid: 6d5042ad3461ac04d82a1d0a960fd39e, type: 3}
   startingPositions:
-  - {x: 5, y: 20, z: 0}
-  - {x: 17, y: 3, z: 0}
-  startingConversation: {fileID: 9161315908772567349, guid: af1e581d2866a4ba9a73900a20b72b76,
+  - {x: 10, y: 4, z: 0}
+  - {x: 20, y: 15, z: 0}
+  startingConversation: {fileID: 492502004931850185, guid: 14cafe0bb96a54d769df0401e323ef30,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
@@ -80,15 +78,15 @@ MonoBehaviour:
     nextLevelID:
       levelNumber: 0
       enclosureNumber: 0
-    quizConversation: {fileID: 8938176367728474889, guid: 32d08c68c96de0a4b9609ce6fb117c7d,
+    quizConversation: {fileID: 8938176367728474889, guid: f6cf09b327d9283489e62435dc54420c,
       type: 3}
     nextLevelIDs:
       levelIDs:
-      - levelNumber: 4
+      - levelNumber: 3
         enclosureNumber: 1
-      - levelNumber: 4
-        enclosureNumber: 2
-      - levelNumber: 4
+      - levelNumber: 3
         enclosureNumber: 3
+      - levelNumber: 3
+        enclosureNumber: 4
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}
