@@ -5,16 +5,17 @@ using System;
 
 public enum EventType {
     // TODO: If LogToggled isn't going to be used in the future, remove it
-    StoreToggled, InspectorToggled, LogToggled, // Pass bool (true if opened, false if closed)
+    StoreToggled, InspectorToggled, LogToggled, InspectorSelectionChanged, // Pass bool (true if opened, false if closed)
     NewPopulation, NewFoodSource, NewEnclosedArea, // Pass the created object
     PopulationCountChange, // Pass a tuple (population, bool (true if increased, false if decreased))
     PopulationGrowthChange, PopulationExtinct, // Pass the population
     FoodSourceChange, // Pass the food source
-    TerrainChange, // Pass a list of change tiles
+    TerrainChange, TilemapChange, // Pass a list of change tiles
     LiquidChange, // Pass the cell posistion
     NPCDialogue,
     NextDay,
-    MainObjectivesCompleted, GameOver // Pass null is fine
+    MainObjectivesCompleted, GameOver, // Pass null is fine
+    PopulationCacheRebuilt, FoodCacheRebuilt,
 };
 
 /// <summary>
@@ -66,6 +67,8 @@ public class EventManager : MonoBehaviour
     private Dictionary<EventType, Publisher> eventPublishers = new Dictionary<EventType, Publisher>();
 
     public static EventManager Instance => EventManager.instance;
+
+    private Dictionary<Action,Action<object>> noParamWrappers = new Dictionary<Action, Action<object>>();
 
     private void Awake()
     {
@@ -119,12 +122,15 @@ public class EventManager : MonoBehaviour
 
     /// <summary>
     /// Wrapper delegate for event listeners that take no parameters
+    /// Adds the wrapper to a dictionary for unsubscribing
     /// </summary>
     /// <param name="eventType"></param>
     /// <param name="handler"></param>
     public void SubscribeToEvent(EventType eventType, Action handler)
     {
         Action<object> handlerWrapper = (args) => handler();
+        if(!noParamWrappers.ContainsKey(handler))
+            noParamWrappers.Add(handler, handlerWrapper);
         this.eventPublishers[eventType].Handlers += handlerWrapper;
     }
 
@@ -135,5 +141,15 @@ public class EventManager : MonoBehaviour
     public void UnsubscribeToEvent(EventType eventType, Action<object> handler)
     {
         this.eventPublishers[eventType].Handlers -= handler;
+    }
+
+    /// <summary>
+    /// Unsubscribes to an event, taking in a no param action and looking up its wrapper
+    /// </summary>
+    /// <remarks>Forget to unsubcribe would cause errors</remarks>
+    public void UnsubscribeToEvent(EventType eventType, Action handler)
+    {
+        if(noParamWrappers.ContainsKey(handler))
+            this.eventPublishers[eventType].Handlers -= noParamWrappers[handler];
     }
 }

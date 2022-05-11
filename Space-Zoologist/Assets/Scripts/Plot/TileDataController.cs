@@ -395,6 +395,7 @@ public class TileDataController : MonoBehaviour
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
                 ApplyChangeToTilemapTexture(tilePosition);
+                EventManager.Instance.InvokeEvent(EventType.TilemapChange, tilePosition);
             }
         }
     }

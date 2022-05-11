@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Need System Variables
-    public NeedCache Needs { get; private set; } = new NeedCache();
+    public NeedCache Needs { get; private set; }
     #endregion
 
     #region Managers
@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
         LoadLevelData();
         SetupObjectives();
         InitializeGameStateVariables();
+        Needs = new NeedCache();
         Needs.Rebuild();
     }
 

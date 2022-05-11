@@ -82,6 +82,7 @@ MonoBehaviour:
   - {fileID: 6007554260346152682}
   - {fileID: 7995183552713338283}
   - {fileID: 0}
+  - {fileID: 8175925614809940537}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -104,6 +105,7 @@ GameObject:
   - component: {fileID: 282234943515039857}
   - component: {fileID: 6007554260346152682}
   - component: {fileID: 7995183552713338283}
+  - component: {fileID: 8175925614809940537}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -309,6 +311,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 2
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &8175925614809940537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750823513909423511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 4
   Event:
     m_PersistentCalls:
       m_Calls: []

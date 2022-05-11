@@ -148,6 +148,7 @@ public class LiquidbodyController : MonoBehaviour
             liquidBodies.Remove(originalLiquidbody);
         }
 
+        EventManager.Instance.InvokeEvent(EventType.LiquidChange, pos);
         return true;
     }
 
@@ -235,7 +236,7 @@ public class LiquidbodyController : MonoBehaviour
                 liquidBodies.Add(mergedLiquidbody);
                 break;
         }
-
+        EventManager.Instance.InvokeEvent(EventType.LiquidChange, pos);
         Debug.Log("Liquidbody merge successful.");
         return true;
     }

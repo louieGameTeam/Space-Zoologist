@@ -43,6 +43,8 @@ public class Inspector : MonoBehaviour
         //this.HUD.SetActive(true);
         this.UnHighlightAll();
         EventManager.Instance.InvokeEvent(EventType.InspectorToggled, false);
+        EventManager.Instance.UnsubscribeToEvent(EventType.FoodCacheRebuilt, UpdateCurrentDisplay);
+        EventManager.Instance.UnsubscribeToEvent(EventType.PopulationCacheRebuilt, UpdateCurrentDisplay);
         this.IsInInspectorMode = false;
     }
 
@@ -64,6 +66,8 @@ public class Inspector : MonoBehaviour
         GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);
         EventManager.Instance.InvokeEvent(EventType.InspectorToggled, true);
+        EventManager.Instance.SubscribeToEvent(EventType.FoodCacheRebuilt, UpdateCurrentDisplay);
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationCacheRebuilt, UpdateCurrentDisplay);
         this.IsInInspectorMode = true;
     }
 
@@ -76,7 +80,7 @@ public class Inspector : MonoBehaviour
         if (this.IsInInspectorMode && Input.GetMouseButtonDown(0) && FindObjectOfType<StoreSection>().SelectedItem == null)
         {
             //Deselect if over UI
-            if(EventSystem.current.IsPointerOverGameObject())
+            if (EventSystem.current.IsPointerOverGameObject())
             {
                 UnHighlightAll();
                 return;
@@ -96,6 +100,11 @@ public class Inspector : MonoBehaviour
         }
     }
 
+    private void AttemptInspect()
+    {
+
+    }
+
     // TODO break this up and refactor
     public void UpdateInspectorValues()
     {
@@ -109,6 +118,7 @@ public class Inspector : MonoBehaviour
         if (cellData == null) { 
             return;
         }
+
         bool somethingSelected = true;
         this.UnHighlightAll();
         if (cellData.Animal)
@@ -143,6 +153,7 @@ public class Inspector : MonoBehaviour
         if (somethingSelected)
         {
             AudioManager.instance.PlayOneShot(SFXType.Observation);
+            EventManager.Instance.InvokeEvent(EventType.InspectorSelectionChanged, true);
             selectionChangedEvent.Invoke();
         }
     }
