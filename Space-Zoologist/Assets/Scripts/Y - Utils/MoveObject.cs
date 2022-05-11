@@ -375,10 +375,14 @@ public class MoveObject : MonoBehaviour
 
     private void HighlightGrid()
     {
-        curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (!gridSystem.IsWithinGridBounds(curPos)) return;
-
+        curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);       
         Vector3Int gridLocation = gridSystem.WorldToCell(curPos);
+        if (!gridSystem.IsWithinGridBounds(curPos))
+        {
+            previousLocation = gridLocation;
+            gridSystem.ClearHighlights();
+            return;
+        }
         //if (this.gridSystem.IsOnWall(gridLocation)) return;
 
         // Different position: need to repaint
