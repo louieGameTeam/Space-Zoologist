@@ -1109,7 +1109,7 @@ public class TileDataController : MonoBehaviour
     public bool IsPodPlacementValid(Vector3 mousePosition, AnimalSpecies species)
     {
         Vector3Int gridPosition = WorldToCell(mousePosition);
-        return this.CheckSurroundingTerrain(gridPosition, species);
+        return this.IsValidAnimalPlacement(gridPosition, species);
     }
 
     public bool IsFoodPlacementValid(Vector3 mousePosition, Item selectedItem = null, FoodSourceSpecies species = null)
@@ -1121,7 +1121,7 @@ public class TileDataController : MonoBehaviour
         if (selectedItem)
             species = GameManager.Instance.FoodSources[selectedItem.ID];
         Vector3Int gridPosition = WorldToCell(mousePosition);
-        bool tileCheck = CheckSurroundingTiles(gridPosition, species, blindSpot);
+        bool tileCheck = IsValidFoodSourcePlacement(gridPosition, species, blindSpot);
         return tileCheck;
     }
 
@@ -1148,7 +1148,9 @@ public class TileDataController : MonoBehaviour
         return oldTile != newTile;
     }
 
-    private bool CheckSurroundingTerrain(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
+    // Highlights nearby tiles based on the terrain accessible to an animal
+    // Returns true if the animal can be placed on the target cell
+    private bool IsValidAnimalPlacement(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
     {
         Vector3Int pos;
         GameTile tile;
@@ -1176,12 +1178,14 @@ public class TileDataController : MonoBehaviour
         return selectedSpecies.AccessibleTerrain.Contains(tile.type);
     }
 
-    private bool CheckSurroundingTiles(Vector3Int cellPosition, FoodSourceSpecies species)
+    private bool IsValidFoodSourcePlacement(Vector3Int cellPosition, FoodSourceSpecies species)
     {
-        return CheckSurroundingTiles(cellPosition, species, new Vector3Int(999, 999, 999));
+        return IsValidFoodSourcePlacement(cellPosition, species, new Vector3Int(999, 999, 999));
     }
 
-    private bool CheckSurroundingTiles(Vector3Int cellPosition, FoodSourceSpecies species,Vector3Int blindSpot)
+    // Highlights nearby tiles based on the size of a food source
+    // Returns true if the food source can be placed
+    private bool IsValidFoodSourcePlacement(Vector3Int cellPosition, FoodSourceSpecies species,Vector3Int blindSpot)
     {
         Vector3Int pos;
         bool isValid = true;
@@ -1207,6 +1211,30 @@ public class TileDataController : MonoBehaviour
                     HighlightTile(pos, Color.green);
                 }
             }
+        }
+        return isValid;
+    }
+
+    // Highlights tile
+    // Returns true if the tile can be placed
+    private bool IsValidTile(Vector3Int cellPosition, Item tile)
+    {
+        bool isValid = true;
+        if (!GetTileData(cellPosition).currentTile){
+            return false;
+        }
+        // TODO: Figure out why this doesn't work lol
+        TileType type;
+        Enum.TryParse(tile.ItemName, out type);
+        TileType curType = GetTileData(cellPosition).currentTile.type;
+        if (!IsTilePlacementValid(cellPosition, curType, type))
+        {
+            isValid = false;
+            HighlightTile(cellPosition, Color.red);
+        }
+        else
+        {
+            HighlightTile(cellPosition, Color.green);
         }
         return isValid;
     }
@@ -1300,22 +1328,22 @@ public class TileDataController : MonoBehaviour
     }
 
     // TODO: this too
+    // Highlight tiles based on selected item's size and placement validity conditions
     public void updateVisualPlacement(Vector3Int gridPosition, Item selectedItem)
     {
         if (selectedItem.ID.Category == ItemRegistry.Category.Species)
         {
             AnimalSpecies species = selectedItem.ID.Data.Species as AnimalSpecies;
-            CheckSurroundingTerrain(gridPosition, species);
+            IsValidAnimalPlacement(gridPosition, species);
         }
         else if (selectedItem.ID.Category == ItemRegistry.Category.Food)
         {
             FoodSourceSpecies species = selectedItem.ID.Data.Species as FoodSourceSpecies;
-            CheckSurroundingTiles(gridPosition, species);
+            IsValidFoodSourcePlacement(gridPosition, species);
         }
         else
         {
-            // TODO figure out how to determine if tile is placable
-            HighlightTile(gridPosition, Color.green);
+            IsValidTile(gridPosition, selectedItem);
         }
     }
 
