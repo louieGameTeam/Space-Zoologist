@@ -1126,13 +1126,15 @@ public class TileDataController : MonoBehaviour
     }
 
     public bool IsTilePlacementValid (Vector3Int tilePos, TileType oldTile, TileType newTile) {
+        // If there is food on the tile, make sure the food supports the new tile's type
+        if (GetTileData (tilePos).Food && !GetTileData (tilePos).Food.GetComponent<FoodSource> ().Species.AccessibleTerrain.Contains(newTile)) {
+            return false;
+        }
 
-        // If the new tile is a wall or liquid, make sure there aren't any animals standing on the tile and make sure there isn't food on the tile
-        if (newTile == TileType.Wall || newTile == TileType.Liquid) {
-            foreach (Population pop in GameManager.Instance.m_reservePartitionManager.GetPopulationsWithAccessTo (tilePos)) {
-                if (GetTileData (tilePos).Food) 
-                    return false;
-                
+        // If there are any animals standing on the tile, make sure they can walk on the new tile type
+        // Actual code: For every population of species that can't walk on the new tile, make sure there isn't an animal currently on the tile
+        foreach (Population pop in GameManager.Instance.m_reservePartitionManager.GetPopulationsWithAccessTo (tilePos)) {
+            if (!pop.species.AccessibleTerrain.Contains(newTile)) {
                 foreach (GameObject animal in pop.AnimalPopulation) {
                     if (WorldToCell (animal.transform.position) == tilePos) {
                         return false;
@@ -1141,10 +1143,12 @@ public class TileDataController : MonoBehaviour
             }
         }
 
+        // Allow liquids to be replaced by liquids
         if (oldTile == TileType.Liquid) {
             return true;
         }
         
+        // Prevent identical tiles from being replaced
         return oldTile != newTile;
     }
 
