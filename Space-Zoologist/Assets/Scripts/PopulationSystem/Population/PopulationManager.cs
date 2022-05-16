@@ -169,7 +169,7 @@ public class PopulationManager : MonoBehaviour
             if (this.ExistingPopulations[i - 1].Species.Equals(this.ExistingPopulations[i].Species) 
                 && GameManager.Instance.m_reservePartitionManager.CanAccessPopulation(this.ExistingPopulations[i - 1], this.ExistingPopulations[i]))
             {
-                for (int j = this.ExistingPopulations[i - 1].AnimalPopulation.Count - 1; j >= 0; j--)
+                for (int j = this.ExistingPopulations[i - 1].Count - 1; j >= 0; j--)
                 {
                     GameObject animal = this.ExistingPopulations[i - 1].AnimalPopulation[j];
                     this.ExistingPopulations[i].AddAnimal(animal.transform.position);
@@ -182,7 +182,7 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationSplitting(Population population)
     {
         List<Vector3Int> accessibleLocations = GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population);
-        for (int i = population.AnimalPopulation.Count - 1; i >= 0; i--)
+        for (int i = population.Count - 1; i >= 0; i--)
         {
             GameObject animal = population.AnimalPopulation[i];
             Vector3Int animalLocation = GameManager.Instance.m_tileDataController.WorldToCell(animal.transform.position);
@@ -193,7 +193,7 @@ public class PopulationManager : MonoBehaviour
                 population.RemoveAnimal(animal);
             }
         }
-        if (accessibleLocations.Count == 0 || population.AnimalPopulation.Count == 0)
+        if (accessibleLocations.Count == 0 || population.Count == 0)
         {
             RemovePopulation(population);
         }

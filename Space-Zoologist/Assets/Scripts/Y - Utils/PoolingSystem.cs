@@ -27,15 +27,15 @@ public class PoolingSystem : MonoBehaviour
     /// </summary>
     /// <param name="listToPullFrom"></param>
     /// <returns></returns>
-    public GameObject GetPooledObject(List<GameObject> listToAddTo)
+    public GameObject GetPooledObject()
     {
         for (int i = 0; i < PooledObjects.Count; i++) {
-            if (!PooledObjects[i].activeSelf)
+            GameObject pooled = PooledObjects[i];
+            if (!pooled.activeSelf)
             {
-                PooledObjects[i].SetActive(true);
-                listToAddTo.Add(PooledObjects[i]);
                 PooledObjects.RemoveAt(i);
-                return listToAddTo[listToAddTo.Count - 1];
+                pooled.SetActive(true);
+                return pooled;
             }
         }
         return null;
@@ -46,15 +46,15 @@ public class PoolingSystem : MonoBehaviour
     /// </summary>
     /// <param name="listToPullFrom"></param>
     /// <returns></returns>
-    public GameObject GetGuaranteedPooledObject(GameObject poolablePrefab, List<GameObject> listToAddTo)
+    public GameObject GetGuaranteedPooledObject(GameObject poolablePrefab)
     {
         for (int i = 0; i < PooledObjects.Count; i++) {
-            if (!PooledObjects[i].activeSelf)
+            GameObject pooled = PooledObjects[i];
+            if (!pooled.activeSelf)
             {
-                PooledObjects[i].SetActive(true);
-                listToAddTo.Add(PooledObjects[i]);
                 PooledObjects.RemoveAt(i);
-                return listToAddTo[listToAddTo.Count - 1];
+                pooled.SetActive(true);
+                return pooled;
             }
         }
         return Instantiate(poolablePrefab, this.gameObject.transform);
