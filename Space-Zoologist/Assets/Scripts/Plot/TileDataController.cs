@@ -1223,23 +1223,21 @@ public class TileDataController : MonoBehaviour
     // Returns true if the tile can be placed
     private bool IsValidTile(Vector3Int cellPosition, Item tile)
     {
-        bool isValid = true;
-        if (!GetTileData(cellPosition).currentTile){
+        if (GetTileData(cellPosition) == null || !GetTileData(cellPosition).currentTile){
             return false;
         }
-        // TODO: Figure out why this doesn't work lol
+
+        // TODO: Find a better way than hard-coding tiles whose name doesn't match their type
         TileType type;
-        Enum.TryParse(tile.ItemName, out type);
+        if (tile.GetType() == typeof(LiquidItem)) {
+            type = TileType.Liquid;
+        } else {
+            Enum.TryParse(tile.ItemName, out type);
+        }
         TileType curType = GetTileData(cellPosition).currentTile.type;
-        if (!IsTilePlacementValid(cellPosition, curType, type))
-        {
-            isValid = false;
-            HighlightTile(cellPosition, Color.red);
-        }
-        else
-        {
-            HighlightTile(cellPosition, Color.green);
-        }
+        
+        bool isValid = IsTilePlacementValid(cellPosition, curType, type);
+        HighlightTile(cellPosition, isValid ? Color.green : Color.red);
         return isValid;
     }
 
