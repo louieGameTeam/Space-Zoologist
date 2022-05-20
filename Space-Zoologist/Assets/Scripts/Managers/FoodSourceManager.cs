@@ -68,7 +68,7 @@ public class FoodSourceManager : GridObjectManager
         m_gridSystemReference.RemoveFoodReference(m_gridSystemReference.WorldToCell(foodSource.Position));
         Destroy(foodSource.gameObject);
 
-        EventManager.Instance.InvokeEvent(EventType.FoodSourceChange, null);
+        EventManager.Instance.InvokeEvent(EventType.FoodSourceChange, foodSource);
     }
 
     /// <summary>
