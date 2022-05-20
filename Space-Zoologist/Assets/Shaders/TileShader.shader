@@ -6,6 +6,7 @@
         [PerRendererData]_GridInfoTex ("Grid Information Texture", 2D) = "white" {}
         _NoiseTexture("Noise Texture", 2D) = "white" {}
         _TileAtlas("Tile Atlas", 2D) = "white" {}
+        _WallTileAtlas("Wall Tile Atlas", 2D) = "white" {}
         _PropAtlas("Prop Atlas", 2D) = "white" {}
 
         _TileNoiseDistribution("Tile Noise Distribution", float) = 1
@@ -90,6 +91,8 @@
             float4 _NoiseTexture_ST;
             sampler2D _TileAtlas;
             float4 _TileAtlas_ST;
+            sampler2D _WallTileAtlas;
+            float4 _WallTileAtlas_ST;
             sampler2D _PropAtlas;
             float4 _PropAtlas_ST;
 
@@ -398,6 +401,33 @@
 
                     if (localUV.x > 0.5 && localUV.y > 0.5)
                         col = lerp(col, trInnerCorner, trInnerCorner.a);
+                }
+
+                if (ttm[1][1] == TILE_TYPE_WALL) {
+                    float3 tileUVUnit3 = float3(float(1) / 6, float(1) / 2, 0);
+                    float2 localUVTile = float2(localUV.x / 6, localUV.y / 2);
+
+                    col = tex2D(_WallTileAtlas, localUVTile + tileUVUnit3.xz * 3);
+
+                    // front facing wall
+                    if ((ttm[1][0] == TILE_TYPE_WALL || ttm[1][2] == TILE_TYPE_WALL) &&
+                        (ttm[0][1] != TILE_TYPE_WALL)) {
+                        col = tex2D(_WallTileAtlas, localUVTile + tileUVUnit3.zy + tileUVUnit3.xz * (int)(tileNoise * 5));
+                    }
+
+                    // top left
+                    if ((ttm[1][2] == TILE_TYPE_WALL && ttm[0][1] == TILE_TYPE_WALL &&
+                        ttm[2][1] != TILE_TYPE_WALL && ttm[1][0] != TILE_TYPE_WALL) ||
+                        (tilePos.x == 0 && tilePos.y == _GridTexDim.y - 2)) {
+                        col = tex2D(_WallTileAtlas, localUVTile);
+                    }
+
+                    // top right
+                    if ((ttm[1][0] == TILE_TYPE_WALL && ttm[0][1] == TILE_TYPE_WALL &&
+                        ttm[2][1] != TILE_TYPE_WALL && ttm[1][2] != TILE_TYPE_WALL) ||
+                        (tilePos.x == _GridTexDim.x - 1 && tilePos.y == _GridTexDim.y - 2)) {
+                        col = tex2D(_WallTileAtlas, localUVTile);
+                    }
                 }
 
                 // add liquid and other animated tiles first
