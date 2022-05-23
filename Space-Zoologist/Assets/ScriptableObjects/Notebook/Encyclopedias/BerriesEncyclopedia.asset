@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52e53c4d2142814a94f3088eec699e5, type: 3}
   m_Name: BerriesEncyclopedia
   m_EditorClassIdentifier: 
-  articlesList:
+  articles:
   - id:
       title: Ecological Summary
       author: Vaccinum Spatium Bacca
@@ -21,9 +21,11 @@ MonoBehaviour:
       frequently called, have been observed as compatible food for a wide variety
       of Planet X species. \r\n\r\nInformally termed Bacca Bushes, this species is
       a deciduous fruiting shrub, thus far primarily found in heathlands and biomes
-      featuring acidic soil. {As a shallow-rooted plant, Bacca Bushes rarely grow
-      in close proximity to flora with deeper roots, such as the astral maple and
-      its subspecies.}"
+      featuring acidic soil along with dirt and grass-based terrain. {As a shallow-rooted
+      plant with a reach of only 3 tiles, Bacca Bushes rarely grow in close proximity
+      to flora with deeper roots, such as the astral maple and its subspecies.} They
+      also require a water purity level of at least 96% and need around 7 tiles of
+      water to thrive properly. "
     sprites: []
   - id:
       title: Transport Log
