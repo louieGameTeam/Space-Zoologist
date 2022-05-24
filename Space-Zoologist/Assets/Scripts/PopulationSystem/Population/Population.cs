@@ -10,7 +10,7 @@ using UnityEngine;
 public class Population : MonoBehaviour
 {
     public AnimalSpecies Species { get => species; }
-    public int Count { get => this.enclosedPopulationCount; }
+    public int Count { get => AnimalPopulation.Count; }
     public float FoodDominance => Species.FoodDominance;
     public int PrePopulationCount => this.prePopulationCount;
     [HideInInspector]
@@ -33,7 +33,6 @@ public class Population : MonoBehaviour
     private PoolingSystem PoolingSystem = default;
     private int prePopulationCount = default;
     private PopulationBehaviorManager PopulationBehaviorManager = default;
-    private int enclosedPopulationCount = default;
 
     /// <summary>
     /// The number of liquid tiles that this population can drink from
@@ -70,35 +69,6 @@ public class Population : MonoBehaviour
     {
         this.AccessibleLocations = accessibleLocations;
         this.Grid = grid;
-    }
-
-    public void RecountAnimals () 
-    {
-        enclosedPopulationCount = AnimalPopulation.Count;
-        // Only counts animals that are in an enclosure that is completely enclosed
-        foreach (GameObject animal in AnimalPopulation) {
-
-            // Get my grid position
-            Vector3Int myGridPosition = new Vector3Int(
-                (int)animal.transform.position.x,
-                (int)animal.transform.position.y,
-                (int)animal.transform.position.z);
-
-            // Get the enclosed area I'm enclosed in
-            EnclosedArea myArea = GameManager
-                .Instance
-                .m_enclosureSystem
-                .GetEnclosedAreaByCellPosition(myGridPosition);
-
-            // If the area is not enclosed, then reduce the number of enclosed animals
-            // WHY?!
-            // Simply commenting this out fixes a bug. Is there any reason for this at all?
-            if (!myArea.isEnclosed) 
-            {
-                // enclosedPopulationCount--;
-            }
-        }
-        //Debug.Log ("Population Count: " + enclosedPopulationCount);
     }
 
     // Only pauses movements
@@ -195,19 +165,17 @@ public class Population : MonoBehaviour
             }
         }
 
-        RecountAnimals ();
         return readyForGrowth;
     }
 
     public void AddAnimal(Vector3 position)
     {
         MovementData data = new MovementData();
-        GameObject newAnimal = this.PoolingSystem.GetGuaranteedPooledObject(this.AnimalPrefab, this.AnimalPopulation);
-
+        GameObject newAnimal = this.PoolingSystem.GetGuaranteedPooledObject(this.AnimalPrefab);
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
         this.PopulationBehaviorManager.AddAnimal(newAnimal);
-        RecountAnimals ();
+        this.AnimalPopulation.Add(newAnimal);
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, true));
     }
@@ -228,7 +196,6 @@ public class Population : MonoBehaviour
 
             this.PoolingSystem.ReturnObjectToPool(animal);
             this.AnimalPopulation.Remove(animal);
-            RecountAnimals ();
             if (this.Count == 0)
             {
                 EventManager.Instance.InvokeEvent(EventType.PopulationExtinct, this);
@@ -251,7 +218,6 @@ public class Population : MonoBehaviour
         {
             this.RemoveAnimal(this.AnimalPopulation[i]);
         }
-        RecountAnimals ();
     }
 
     public float GetTerrainDominance(TileType tile)

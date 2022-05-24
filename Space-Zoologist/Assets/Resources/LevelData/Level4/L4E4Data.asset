@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L4E4Data
   m_EditorClassIdentifier: 
   Level: {fileID: 11400000, guid: 28baa43e3be40df448222e789c04b4ae, type: 2}
-  startingBalance: 750
+  startingBalance: 350
   MapWidth: 29
   MapHeight: 29
   WallBreakable: 0
@@ -29,6 +29,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b19757b4d113c9047afc67b8ca20f94e, type: 2}
   - {fileID: 11400000, guid: 9b6e89509c2c941f9b66cec391d19c43, type: 2}
   - {fileID: 11400000, guid: 2c8a5d582d11a4b359ffb31db9796e95, type: 2}
+  - {fileID: 11400000, guid: 277018c922ef54cba8ee934e979f6a6d, type: 2}
   itemQuantities:
   - itemObject: {fileID: 11400000, guid: e94f6a290327543b992ad34919ac953e, type: 2}
     initialAmount: 5
@@ -64,6 +65,8 @@ MonoBehaviour:
     initialAmount: 15
   - itemObject: {fileID: 11400000, guid: 659b28bf8183e489ab6ba4b28a5a6dc8, type: 2}
     initialAmount: 4
+  - itemObject: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
+    initialAmount: 0
   - itemObject: {fileID: 11400000, guid: e1a86e6fe53b24ba18f84e5efc86a5a8, type: 2}
     initialAmount: 20
   levelMusic: {fileID: 8300000, guid: 62792088a7f1edc40bf0057d5138e5fa, type: 3}

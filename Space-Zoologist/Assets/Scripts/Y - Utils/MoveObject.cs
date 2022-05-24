@@ -163,6 +163,7 @@ public class MoveObject : MonoBehaviour
                     {
                         case ItemType.ANIMAL:
                             successfullyMoved = TryPlaceAnimal(worldPos, objectToMove);
+                            print (objectToMove.GetInstanceID());
                             break;
                         case ItemType.FOOD:
                             successfullyMoved = TryPlaceFood(worldPos, objectToMove);
@@ -408,18 +409,11 @@ public class MoveObject : MonoBehaviour
             !GameManager.Instance.m_reservePartitionManager.CanAccess(population, worldPos);*/
 
         // placement is valid and population did not already reach here
-        if (valid)
-        {
-            toMove.transform.position = worldPos;
-            GameManager.Instance.m_populationManager.SpawnAnimal(species, worldPos);
-            GameManager.Instance.SubtractFromBalance(cost);
-            population.RemoveAnimal(toMove);
-        }
-        else
+        if (!valid)
         {
             return false;
-        }    
-
+        }
+        
         toMove.transform.position = worldPos;
         GameManager.Instance.m_populationManager.SpawnAnimal(species, worldPos);
         GameManager.Instance.SubtractFromBalance(cost);

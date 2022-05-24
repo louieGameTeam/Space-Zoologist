@@ -81,6 +81,10 @@ public class EnclosureSystem : MonoBehaviour
 
     public EnclosedArea GetEnclosedAreaByCellPosition(Vector3Int cellPos)
     {
+        if (positionToEnclosedArea == null) {
+            Debug.LogError("Enclosure System hasn't been initialized yet");
+            return null;
+        }
         Vector3Int position = GameManager.Instance.m_tileDataController.WorldToCell(cellPos);
         positionToEnclosedArea.TryGetValue(position, out byte val);
         return this.GetEnclosedAreaById(val);

@@ -277,21 +277,10 @@ public class TilePlacementController : MonoBehaviour
         {
             return false;
         }
-
-        TileData tileData = gridSystemReference.GetTileData(cellLocation);
-        // Can't place liquids under a food tile
-        if (tileData.Food)
-        {
-            foreach(GameTile tile in referencedTiles)
-            {
-                if(tile.type == TileType.Liquid || tile.type == TileType.Wall)
-                    return false;
-            }
-        }
         
         // Can't place certain tiles
         foreach (GameTile tile in referencedTiles) {
-            if (!gridSystemReference.IsTilePlacementValid (cellLocation, tileData.currentTile.type, tile.type)) {
+            if (!gridSystemReference.IsTilePlacementValid (cellLocation, gridSystemReference.GetTileData(cellLocation).currentTile.type, tile.type)) {
                 print ("Should not be able to place tile here!");
                 return false;
             }
