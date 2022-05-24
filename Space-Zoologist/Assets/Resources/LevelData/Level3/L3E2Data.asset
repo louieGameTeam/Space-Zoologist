@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L3E2Data
   m_EditorClassIdentifier: 
   Level: {fileID: 11400000, guid: ec42c76cce84a5e48ab94a01129816f4, type: 2}
-  startingBalance: 750
+  startingBalance: 600
   MapWidth: 29
   MapHeight: 29
   WallBreakable: 0
@@ -64,6 +64,8 @@ MonoBehaviour:
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: bbfbb40c97bab4ec69618bda24523c73, type: 2}
     initialAmount: 4
+  - itemObject: {fileID: 11400000, guid: e1a86e6fe53b24ba18f84e5efc86a5a8, type: 2}
+    initialAmount: 0
   levelMusic: {fileID: 8300000, guid: 6d5042ad3461ac04d82a1d0a960fd39e, type: 3}
   startingPositions:
   - {x: 10, y: 4, z: 0}
