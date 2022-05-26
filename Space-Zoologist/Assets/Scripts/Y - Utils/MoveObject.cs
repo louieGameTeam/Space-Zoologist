@@ -76,6 +76,8 @@ public class MoveObject : MonoBehaviour
 
     public void StartMovement()
     {
+        if (moveCost > GameManager.Instance.Balance)
+            return;
         moving = true;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
