@@ -320,8 +320,8 @@ public class TileDataController : MonoBehaviour
                 ChangedTiles.Add(tilePosition);
                 ApplyChangeToTilemapTexture(tilePosition);
             }
-            else if ((tilePosition.x >= ReserveWidth && tilePosition.y > 0) ||
-                (tilePosition.x > 0 && tilePosition.y >= ReserveHeight))
+            else if ((tilePosition.x >= ReserveWidth && tilePosition.y >= 0) ||
+                (tilePosition.x >= 0 && tilePosition.y >= ReserveHeight))
             {
                 // if it isn't within grid bounds and is bigger than the current reserve size
                 // change the array such that it will now contain the new tile
@@ -1300,6 +1300,11 @@ public class TileDataController : MonoBehaviour
     {
         Vector3Int loc = new Vector3Int((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.z);//Grid.WorldToCell(mousePosition); old implementation that causes stack overflow
         return IsCellinGrid(loc.x, loc.y);
+    }
+
+    public bool IsWithinGridBounds(Vector3Int tilePosition)
+    {        
+        return IsCellinGrid(tilePosition.x, tilePosition.y);
     }
     #endregion
 
