@@ -1090,11 +1090,7 @@ public class TileDataController : MonoBehaviour
         var toHighlight = new List<Vector3Int>();
         foreach(var tile in tilePositionList)
         {
-            if (!HighlightedTiles.Contains(tile))
-            {
-                HighlightedTiles.Add(tile);
-            }
-            else
+            if (HighlightedTiles.Add(tile))
             {
                 toHighlight.Add(tile);
             }
@@ -1104,9 +1100,8 @@ public class TileDataController : MonoBehaviour
 
     public void HighlightTile(Vector3Int tile, Color color)
     {
-        if (!HighlightedTiles.Contains(tile))
-        {
-            HighlightedTiles.Add(tile);
+        if (HighlightedTiles.Add(tile))
+        {           
             ApplyFlagsToTileTexture(Tilemap, new List<Vector3Int>() { tile }, TileFlag.HIGHLIGHT_FLAG, color);
         }
     }
