@@ -45,7 +45,7 @@ public class TileDataController : MonoBehaviour
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
-    private List<Vector3Int> HighlightedTiles = new List<Vector3Int>();
+    private HashSet<Vector3Int> HighlightedTiles = new HashSet<Vector3Int>();
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
@@ -262,7 +262,7 @@ public class TileDataController : MonoBehaviour
         TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
         renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTexDim", new Vector2(ReserveWidth, ReserveHeight));
-        HighlightedTiles = new List<Vector3Int>();
+        HighlightedTiles = new HashSet<Vector3Int>();
 
         for (int i = 0; i < ReserveWidth; ++i)
         {
@@ -997,29 +997,33 @@ public class TileDataController : MonoBehaviour
     /// <param name="tilePosition">Position of tile in grid space.</param>
     /// <param name="flag">Compiled flags to be set.</param>
     /// <param name="color">Color of the tile (in cases of highlighting or other effects that require color).</param>
-    public void ApplyFlagToTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag, Color color)
+    public void ApplyFlagsToTileTexture(Tilemap tilemap, List<Vector3Int> tilePositionList, TileFlag flag, Color color)
     {
-        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+        // Apply to each pixel
+        foreach(var tilePosition in tilePositionList)
+        {
+            Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
 
-        // currently only in alpha channel, can expand to rgb as well
-        // note that color channels can only contain [0...1] due to samplers
-        int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
-        int flagInt = (int)flag;
+            // currently only in alpha channel, can expand to rgb as well
+            // note that color channels can only contain [0...1] due to samplers
+            int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
+            int flagInt = (int)flag;
 
-        // if nothing there, just set the flag
-        if (alphaBitMask == 0)
-            alphaBitMask = flagInt;
-        // otherwise if the flag isn't already there then add it
-        else if (alphaBitMask % flagInt != 0)
-            alphaBitMask *= flagInt;
-        // if there is already the flag do nothing
-        else
-            return;
+            // if nothing there, just set the flag
+            if (alphaBitMask == 0)
+                alphaBitMask = flagInt;
+            // otherwise if the flag isn't already there then add it
+            else if (alphaBitMask % flagInt != 0)
+                alphaBitMask *= flagInt;
+            // if there is already the flag do nothing
+            else
+                return;
 
-        tilemap.SetColor(tilePosition, color);
+            tilemap.SetColor(tilePosition, color);
 
-        tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
-        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+            tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
+            TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        }       
         TilemapTexture.Apply();
 
         // add to propertyblock
@@ -1033,24 +1037,28 @@ public class TileDataController : MonoBehaviour
     /// <param name="tilemap">Tilemap to be affected (mostly for terrain).</param>
     /// <param name="tilePosition">Position of tile in grid space.</param>
     /// <param name="flag">Compiled flags to be set.</param>
-    public void RemoveFlagsFromTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag)
+    public void RemoveFlagsFromTileTexture(Tilemap tilemap, HashSet<Vector3Int> tilePositionList, TileFlag flag)
     {
-        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+        foreach(var tilePosition in tilePositionList)
+        {
+            Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
 
-        int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
-        int flagInt = (int)flag;
+            int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
+            int flagInt = (int)flag;
 
-        // return if flag is not there
-        if (alphaBitMask == 0 || alphaBitMask % flagInt != 0)
-            return;
+            // return if flag is not there
+            if (alphaBitMask == 0 || alphaBitMask % flagInt != 0)
+                return;
 
-        alphaBitMask /= flagInt;
+            alphaBitMask /= flagInt;
 
-        if (flag == TileFlag.HIGHLIGHT_FLAG)
-            tilemap.SetColor(tilePosition, Color.white);
+            if (flag == TileFlag.HIGHLIGHT_FLAG)
+                tilemap.SetColor(tilePosition, Color.white);
 
-        tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
-        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+            tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
+            TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        }
+        
         TilemapTexture.Apply();
 
         // add to propertyblock
@@ -1073,21 +1081,36 @@ public class TileDataController : MonoBehaviour
 
     public void ClearHighlights()
     {
-        foreach (Vector3Int tilePosition in HighlightedTiles)
-            RemoveFlagsFromTileTexture(Tilemap, tilePosition, TileFlag.HIGHLIGHT_FLAG);
-
+        RemoveFlagsFromTileTexture(Tilemap, HighlightedTiles, TileFlag.HIGHLIGHT_FLAG);
         HighlightedTiles.Clear();
     }
 
-    public void HighlightTile(Vector3Int tilePosition, Color color)
+    public void HighlightTiles(List<Vector3Int> tilePositionList, Color color)
     {
-        if (!HighlightedTiles.Contains(tilePosition))
+        var toHighlight = new List<Vector3Int>();
+        foreach(var tile in tilePositionList)
         {
-            HighlightedTiles.Add(tilePosition);
-            
-            ApplyFlagToTileTexture(Tilemap, tilePosition, TileFlag.HIGHLIGHT_FLAG, color);
+            if (!HighlightedTiles.Contains(tile))
+            {
+                HighlightedTiles.Add(tile);
+            }
+            else
+            {
+                toHighlight.Add(tile);
+            }
+        }
+        ApplyFlagsToTileTexture(Tilemap, toHighlight, TileFlag.HIGHLIGHT_FLAG, color);
+    }
+
+    public void HighlightTile(Vector3Int tile, Color color)
+    {
+        if (!HighlightedTiles.Contains(tile))
+        {
+            HighlightedTiles.Add(tile);
+            ApplyFlagsToTileTexture(Tilemap, new List<Vector3Int>() { tile }, TileFlag.HIGHLIGHT_FLAG, color);
         }
     }
+
 
     // super inefficient but not priority rn
     public void HighlightRadius(Vector3Int tilePosition, Color color, float radius)
