@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Grid Saved to: " + fullPath);
     }
 
-    public void LoadMap(string name = null, bool preset = true)
+    public SerializedLevel LoadMap(string name = null, bool preset = true)
     {
         name = name ?? m_levelData.Level.SceneName;
         string fullPath = preset ? this.directory + name : Path.Combine(Application.persistentDataPath, name);
@@ -187,6 +187,8 @@ public class GameManager : MonoBehaviour
         //Animals loaded after map to avoid path finding issues
         this.PresetMap = serializedLevel;
         Reload();
+        m_cameraController?.UpdateBounds(serializedLevel.serializedPlot);
+        return serializedLevel;
     }
 
     public void SaveNotebook(NotebookData data)
@@ -249,7 +251,6 @@ public class GameManager : MonoBehaviour
             if (AnimalSpecies.ContainsKey(animalSpecies.ID)) continue;
             this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
         }
-
         LoadMap();
     }
 
