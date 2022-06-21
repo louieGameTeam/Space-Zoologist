@@ -1943,7 +1943,7 @@ public class TileDataController : MonoBehaviour
     /// Get the cell size for the grid
     /// </summary>
     /// <returns></returns>
-    public Vector3 CellSize() => Grid.cellSize;
+    public Vector3 CellSize => Grid.cellSize;
 
     /// <summary>
     /// Convert a world position to cell positions on the grid.
@@ -1958,6 +1958,13 @@ public class TileDataController : MonoBehaviour
     public Vector3 CellToWorld(Vector3Int worldPosition)
     {
         return Grid.CellToWorld(worldPosition);
+    }
+
+    public Vector3 SnapAreaToCell(Vector3 worldPos, Vector2Int size)
+    {
+        Vector3 pos = CellToWorld(WorldToCell(worldPos));
+        pos += new Vector3(size.x / 2f, size.y / 2f, 0);
+        return pos;
     }
 
     public ConstructionCluster GetConstructionClusterAtPosition(Vector3Int position)

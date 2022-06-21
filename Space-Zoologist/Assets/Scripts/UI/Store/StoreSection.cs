@@ -20,7 +20,10 @@ public class StoreSection : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
+    // Cursor dependencies
     protected CursorItem cursorItem = default;
+    protected ItemPlaceCursorPreviewMover cursorPreviewObject = null;
+
     protected List<RectTransform> UIElements = default;
     protected TileDataController GridSystem = default;
     protected ResourceManager ResourceManager = default;
@@ -54,7 +57,7 @@ public class StoreSection : MonoBehaviour
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
             Vector3Int gridLocation = GridSystem.WorldToCell(mousePosition);
-
+            cursorPreviewObject?.UpdatePosition();
             if (!GridSystem.IsWithinGridBounds(mousePosition))
             {
                 previousLocation = gridLocation;
@@ -133,14 +136,34 @@ public class StoreSection : MonoBehaviour
         }
         AudioManager.instance.PlayOneShot(SFXType.Valid);
         cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        CreateCursorPreview(item);
         selectedItem = item;
         //Reset inspector selection
         GameManager.Instance.m_inspector.ResetSelection();
     }
 
+    protected void CreateCursorPreview(Item item)
+    {        
+        Vector2Int size = Vector2Int.zero;
+        bool snap = false;
+        if(item.Type == ItemRegistry.Category.Food)
+        {
+            snap = true;
+            size = GameManager.Instance.FoodSources[item.ID].Size;
+        }
+        else if(item.Type == ItemRegistry.Category.Tile)
+        {
+            snap = true;
+            size = new Vector2Int(1, 1);
+        }
+        cursorPreviewObject = new ItemPlaceCursorPreviewMover(GridSystem, item.Icon, size, snap);
+    }
+
     public virtual void OnItemSelectionCanceled()
     {
         cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorPreviewObject.Clear();
+        cursorPreviewObject = null;
         selectedItem = null;
         AudioManager.instance?.PlayOneShot(SFXType.Cancel);
         GridSystem.ClearHighlights();

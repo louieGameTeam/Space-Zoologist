@@ -32,8 +32,7 @@ public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
 
     private void Update()
     {
-        transform.position = Input.mousePosition;
-        
+        transform.position = Input.mousePosition;       
     }
 
     /// <summary>
@@ -46,6 +45,7 @@ public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     public void Begin(Sprite sprite, ClickHandler clickHandler = null, PointerDownHandler pointerDownHandler = null, PointerUpHandler pointerUpHandler = null)
     {
         image.enabled = true;
+        image.color = image.color.SetAlpha(0);
         image.sprite = sprite;
         onClick += clickHandler;
         onPointerDown += pointerDownHandler;
