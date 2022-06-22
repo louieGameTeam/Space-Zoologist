@@ -21,7 +21,7 @@ public class StoreSection : MonoBehaviour
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
     // Cursor dependencies
-    protected CursorItem cursorItem = default;
+    protected UICursorInput cursorInput = default;
     protected ItemPlaceCursorPreviewMover cursorPreviewObject = null;
 
     protected List<RectTransform> UIElements = default;
@@ -32,9 +32,9 @@ public class StoreSection : MonoBehaviour
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
 
-    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, ResourceManager resourceManager)
+    public void SetupDependencies(UICursorInput cursorItem, List<RectTransform> UIElements, ResourceManager resourceManager)
     {
-        this.cursorItem = cursorItem;
+        this.cursorInput = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = GameManager.Instance.m_tileDataController;
         this.ResourceManager = resourceManager;
@@ -53,9 +53,9 @@ public class StoreSection : MonoBehaviour
 
     public void Update()
     {
-        if (cursorItem.IsOn)
+        if (cursorInput.IsOn)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorInput.transform.position);
             Vector3Int gridLocation = GridSystem.WorldToCell(mousePosition);
             cursorPreviewObject?.UpdatePosition();
             if (!GridSystem.IsWithinGridBounds(mousePosition))
@@ -135,7 +135,7 @@ public class StoreSection : MonoBehaviour
             return;
         }
         AudioManager.instance.PlayOneShot(SFXType.Valid);
-        cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorInput.Begin(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         CreateCursorPreview(item);
         selectedItem = item;
         //Reset inspector selection
@@ -161,7 +161,7 @@ public class StoreSection : MonoBehaviour
 
     public virtual void OnItemSelectionCanceled()
     {
-        cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorInput.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         cursorPreviewObject.Clear();
         cursorPreviewObject = null;
         selectedItem = null;
@@ -220,7 +220,7 @@ public class StoreSection : MonoBehaviour
 
     private void OnDisable()
     {
-        cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorInput.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
     }
 
     protected virtual void HandleAudio()

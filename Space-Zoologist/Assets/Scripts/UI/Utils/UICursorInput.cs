@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 /// Component of a gameobject to store an image of a selected item and report back the mouse events that occur while the item resides underneath the cursor.
 /// </summary>
 [RequireComponent(typeof(Image))]
-public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class UICursorInput : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     // Events and delegates to handle the different mouse events. Other classes subscribe to the events during a call to CursorItem.Begin and unsubscribe during the CursorItem.Stop call.
     public delegate void ClickHandler(PointerEventData eventData);
@@ -28,6 +28,7 @@ public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     {
         image = GetComponent<Image>();
         image.enabled = false;
+        image.color = image.color.SetAlpha(0);
     }
 
     private void Update()
@@ -42,11 +43,9 @@ public class CursorItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     /// <param name="clickHandler">Callback to receive mouse click events. Optional.</param>
     /// <param name="pointerDownHandler">Callback to receive mouse down events. Optional.</param>
     /// <param name="pointerUpHandler">Callback to receive mouse up events. Optional.</param>
-    public void Begin(Sprite sprite, ClickHandler clickHandler = null, PointerDownHandler pointerDownHandler = null, PointerUpHandler pointerUpHandler = null)
+    public void Begin(ClickHandler clickHandler = null, PointerDownHandler pointerDownHandler = null, PointerUpHandler pointerUpHandler = null)
     {
         image.enabled = true;
-        image.color = image.color.SetAlpha(0);
-        image.sprite = sprite;
         onClick += clickHandler;
         onPointerDown += pointerDownHandler;
         onPointerUp += pointerUpHandler;

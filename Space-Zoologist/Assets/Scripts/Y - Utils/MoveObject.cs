@@ -10,7 +10,7 @@ public class MoveObject : MonoBehaviour
     public UnityEvent OnObjectMoved => onObjectMoved;
     private TileDataController gridSystem = default;
     private FoodSourceManager foodSourceManager = default;
-    [SerializeField] CursorItem cursorItem = default;
+    [SerializeField] UICursorInput cursorItem = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
     [SerializeField] GameObject DeleteButtonPrefab = default;
     [SerializeField] FoodSourceStoreSection FoodSourceStoreSection = default;
