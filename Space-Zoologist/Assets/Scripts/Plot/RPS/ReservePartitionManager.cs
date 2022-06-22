@@ -212,7 +212,7 @@ public class ReservePartitionManager : MonoBehaviour
                 newLiquidLocations.Add(cur);
             }
 
-            if (tile != null && population.Species.AccessibleTerrain.Contains(tile.type))
+            if (tile != null && gridSystem.IsValidTileForAnimal(population.species,cur))
             {
                 // save the accessible location
                 accessible.Add(cur);

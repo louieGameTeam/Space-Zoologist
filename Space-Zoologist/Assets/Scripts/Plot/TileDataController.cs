@@ -1191,13 +1191,33 @@ public class TileDataController : MonoBehaviour
                 }
                 else
                 {
-                    HighlightTile(pos, selectedSpecies.AccessibleTerrain.Contains(tile.type) ? Color.green : Color.red);
+                    HighlightTile(pos, IsValidTileForAnimal(selectedSpecies,pos) ? Color.green : Color.red);
                 }
             }
         }
         if (!valid) return false;
-        tile = GetGameTileAt(cellPosition);
-        return selectedSpecies.AccessibleTerrain.Contains(tile.type);
+        return IsValidTileForAnimal(selectedSpecies, cellPosition);
+    }
+
+    /// <summary>
+    /// Checks if a single tile is valid for a certain species
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <returns></returns>
+    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
+    {
+        var tile = GetGameTileAt(cellPosition);
+        return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.AccessibleTerrain.Contains(tile.type);
+    }
+
+    public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition)
+    {
+        // Check for tree requirements
+        var treeNeeds = species.RequiredTreeNeeds;
+        var tileFoodID = GetTileData(cellPosition).Food?.GetComponent<FoodSource>().Species.ID;
+        bool found = treeNeeds.Where(need => need.ID == tileFoodID).Count() > 0;
+        return (found || treeNeeds.Length == 0);
     }
 
     private bool IsValidFoodSourcePlacement(Vector3Int cellPosition, FoodSourceSpecies species)
