@@ -636,7 +636,7 @@ public class GameManager : MonoBehaviour
         m_tileDataController.CountDown();
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
-        Needs.Rebuild();
+        Needs.RebuildIfDirty();
         
         // Handle growth for all populations
         bool anyPopulationChange = false;
