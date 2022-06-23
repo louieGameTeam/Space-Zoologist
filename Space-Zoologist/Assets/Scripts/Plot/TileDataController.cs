@@ -312,7 +312,7 @@ public class TileDataController : MonoBehaviour
                 {
                     // TODO: liquid implementation
                     //tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
-                    LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents);
+                    LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents,false);
                 }
                 if (tile.type != TileType.Wall)
                     TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
