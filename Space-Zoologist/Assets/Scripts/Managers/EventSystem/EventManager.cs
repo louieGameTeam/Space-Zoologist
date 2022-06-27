@@ -5,7 +5,8 @@ using System;
 
 public enum EventType {
     // TODO: If LogToggled isn't going to be used in the future, remove it
-    StoreToggled, InspectorToggled, LogToggled, InspectorSelectionChanged, // Pass bool (true if opened, false if closed)
+    StoreToggled, InspectorToggled, LogToggled, InspectorSelectionChanged, 
+    InspectorHoverTargetChange, // pass in hover target
     NewPopulation, NewFoodSource, NewEnclosedArea, // Pass the created object
     PopulationCountChange, // Pass a tuple (population, bool (true if increased, false if decreased))
     PopulationGrowthChange, PopulationExtinct, // Pass the population
