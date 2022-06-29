@@ -33,7 +33,6 @@ public class NeedCache
         EventManager.Instance.UnsubscribeToEvent(EventType.FoodSourceChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.TilemapChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.InspectorSelectionChanged, RebuildIfDirty);
-
     }
 
     private void MarkPopulationCacheDirty()

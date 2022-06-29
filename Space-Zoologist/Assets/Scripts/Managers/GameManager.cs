@@ -637,7 +637,6 @@ public class GameManager : MonoBehaviour
         m_populationManager.UpdateAccessibleLocations();
         m_populationManager.UpdateAllPopulationRegistration();
         Needs.RebuildIfDirty();
-        
         // Handle growth for all populations
         bool anyPopulationChange = false;
         for (int i = m_populationManager.Populations.Count - 1; i >= 0; i--)
@@ -652,7 +651,6 @@ public class GameManager : MonoBehaviour
         {
             Needs.RebuildPopulationCache();
         }
-        
         m_inspector.UpdateCurrentDisplay();
         AudioManager.instance?.PlayOneShot(SFXType.NextDay);
 

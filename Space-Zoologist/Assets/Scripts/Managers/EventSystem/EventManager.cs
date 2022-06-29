@@ -43,6 +43,7 @@ public class Publisher
     public string PrintInvocationList()
     {
         string str = "Invocation list:";
+        if (Handlers == null) return "";
         foreach (Action<object> handler in Handlers.GetInvocationList())
         {
             str += $"\n\tTarget: {handler.Target}, Method: {handler.Method.Name}";

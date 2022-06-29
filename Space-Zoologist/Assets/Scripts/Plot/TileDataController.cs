@@ -748,7 +748,6 @@ public class TileDataController : MonoBehaviour
         List<Vector3Int> changedTiles = new List<Vector3Int>();
 
         List<ConstructionCluster> finishedClusters = new List<ConstructionCluster>();
-
         foreach (ConstructionCluster cluster in ConstructionClusters)
         {
             // do the countdown
@@ -764,16 +763,8 @@ public class TileDataController : MonoBehaviour
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
-
                     LiquidbodyController.Instance.RemoveLiquidContentsFromLiquidbodyAt((Vector3Int)bufferPosition);
                 }
-
-                LiquidbodyController.Instance.MergeConstructingTiles();
-
-                //Remove from the liquidbody controller's construction buffer after merging
-                foreach(Vector2Int position in cluster.ConstructionTilePositions)
-                    LiquidbodyController.Instance.RemoveConstructingTile((Vector3Int)position);
-
                 if (constructionFinishedCallback != null)
                     constructionFinishedCallback();
             }
@@ -788,10 +779,9 @@ public class TileDataController : MonoBehaviour
                 }
             }
         }
-
         foreach (ConstructionCluster cluster in finishedClusters)
             ConstructionClusters.Remove(cluster);
-
+        LiquidbodyController.Instance.MergeConstructingTiles();
         BufferTexture.Apply();
         BufferCenterTexture.Apply();
         Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
