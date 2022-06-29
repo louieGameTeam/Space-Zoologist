@@ -29,7 +29,8 @@ public class PopulationManager : MonoBehaviour
         }
 
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
-        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, (eventData) => { if (!(bool) eventData) UpdateAccessibleLocations(); });
+        EventManager.Instance.SubscribeToEvent(EventType.PreFoodCacheRebuild, UpdateAccessibleLocations);
+        EventManager.Instance.SubscribeToEvent(EventType.PrePopulationCacheRebuild, UpdateAccessibleLocations);
     }
 
     private AnimalSpecies LoadSpecies(string name)

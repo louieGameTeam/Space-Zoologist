@@ -162,6 +162,7 @@ public class Inspector : MonoBehaviour
     public void UpdateCurrentDisplay()
     {
         TileData cellData = GameManager.Instance.m_tileDataController.GetTileData(selectedPosition);
+        this.UnHighlightAll();
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
@@ -170,6 +171,7 @@ public class Inspector : MonoBehaviour
                     return;
                 }
                 DisplayPopulationText(cellData);
+                this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
                 break;
             case DisplayInspectorText.InspectorText.Food:
                 if (!cellData.Food)

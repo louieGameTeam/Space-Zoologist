@@ -15,7 +15,7 @@ public enum EventType {
     NPCDialogue,
     NextDay,
     MainObjectivesCompleted, GameOver, // Pass null is fine
-    PopulationCacheRebuilt, FoodCacheRebuilt,
+    PrePopulationCacheRebuild, PopulationCacheRebuilt, PreFoodCacheRebuild, FoodCacheRebuilt,
 };
 
 /// <summary>

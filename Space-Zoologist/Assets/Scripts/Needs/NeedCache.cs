@@ -70,6 +70,7 @@ public class NeedCache
     }
     public void RebuildFoodCache()
     {
+        EventManager.Instance.InvokeEvent(EventType.PreFoodCacheRebuild, null);
         Availability.RebuildFoodAvailabilities();
         Ratings.RebuildFoodRatings(Availability);
         FoodCacheDirty = false;
@@ -77,6 +78,7 @@ public class NeedCache
     }
     public void RebuildPopulationCache()
     {
+        EventManager.Instance.InvokeEvent(EventType.PrePopulationCacheRebuild, null);
         Availability.RebuildPopulationAvailabilities();
         Ratings.RebuildPopulationRatings(Availability);
         PopulationCacheDirty = false;

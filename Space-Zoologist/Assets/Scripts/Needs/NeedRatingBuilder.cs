@@ -226,7 +226,7 @@ public static class NeedRatingBuilder
                 // the preferred item is used
                 if (magnitude > 0)
                 {
-                    towardsMaxBoost = 0.5f * (totalUsed / maxUsed);
+                    towardsMaxBoost = 0.5f * (minNeeded - totalUsed / maxUsed);
                     preferenceBoost *= 0.5f;
                 }
 
