@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 /// <summary>
 /// Holds the cache for the availability of needs 
 /// and ratings of different populations and food source
@@ -24,6 +23,7 @@ public class NeedCache
         EventManager.Instance.SubscribeToEvent(EventType.FoodSourceChange, MarkFoodCacheDirty);
         EventManager.Instance.SubscribeToEvent(EventType.TilemapChange, MarkFoodCacheDirty);
         EventManager.Instance.SubscribeToEvent(EventType.InspectorSelectionChanged, RebuildIfDirty);
+        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, RebuildIfDirty);
     }
 
     ~NeedCache()
@@ -33,6 +33,7 @@ public class NeedCache
         EventManager.Instance.UnsubscribeToEvent(EventType.FoodSourceChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.TilemapChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.InspectorSelectionChanged, RebuildIfDirty);
+        EventManager.Instance.UnsubscribeToEvent(EventType.StoreToggled, RebuildIfDirty);
     }
 
     private void MarkPopulationCacheDirty()
@@ -50,16 +51,22 @@ public class NeedCache
         // If food cache is dirty then rebuild both food and population cache
         if (FoodCacheDirty)
         {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            EventManager.Instance.InvokeEvent(EventType.PreCacheRebuild, null);
+            Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
             Rebuild();
         }
         // If population cache is dirty then rebuild only that
         else if (PopulationCacheDirty)
         {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            EventManager.Instance.InvokeEvent(EventType.PreCacheRebuild, null);
+            Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
             RebuildPopulationCache();
         }
     }
 
-    public void Rebuild()
+    private void Rebuild()
     {
         // Rebuild the food source first, because population depends on their output,
         // which depends on their ratings
@@ -70,16 +77,18 @@ public class NeedCache
     }
     public void RebuildFoodCache()
     {
-        EventManager.Instance.InvokeEvent(EventType.PreFoodCacheRebuild, null);
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         Availability.RebuildFoodAvailabilities();
         Ratings.RebuildFoodRatings(Availability);
         FoodCacheDirty = false;
         EventManager.Instance.InvokeEvent(EventType.FoodCacheRebuilt, null);
+        Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
     }
     public void RebuildPopulationCache()
     {
-        EventManager.Instance.InvokeEvent(EventType.PrePopulationCacheRebuild, null);
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         Availability.RebuildPopulationAvailabilities();
+        Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
         Ratings.RebuildPopulationRatings(Availability);
         PopulationCacheDirty = false;
         EventManager.Instance.InvokeEvent(EventType.PopulationCacheRebuilt, null);

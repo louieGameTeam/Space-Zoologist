@@ -514,9 +514,10 @@ public class MoveObject : MonoBehaviour
         }
         else //Otherwise, make sure its needs are up to date
         {
+            // Note: This is now handled by the NeedCache
             // We may want to change this to rebuild the cache for only the food source that was moved
-            GameManager.Instance.Needs.Rebuild();
-            GameManager.Instance.m_inspector.UpdateCurrentDisplay();
+/*            GameManager.Instance.Needs.Rebuild();
+            GameManager.Instance.m_inspector.UpdateCurrentDisplay();*/
         }
 
     }

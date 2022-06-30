@@ -155,6 +155,9 @@ public class ReservePartitionManager : MonoBehaviour
         List<Vector3Int> newLiquidLocations = new List<Vector3Int>();
         List<float[]> newLiquidCompositions = new List<float[]>();
         List<LiquidBody> newLiquidBodies = new List<LiquidBody>();
+        // cache needs for performance to avoid repeating costly linq searches
+        var treeNeeds = population.species.RequiredTreeNeeds;
+        var accessibleTerrain = population.species.AccessibleTerrain;
 
         if (!this.AccessibleArea.ContainsKey(population))
         {
@@ -171,13 +174,13 @@ public class ReservePartitionManager : MonoBehaviour
 
         // Clear TypesOfTerrain for given population
         this.TypesOfTerrain[population] = new int[(int)TileType.TypesOfTiles];
-
         // iterate until no tile left in list, ends in iteration 1 if population.location is not accessible
+        int counter = 0;
         while (stack.Count > 0)
         {
             // next point
             cur = stack.Pop();
-
+            counter++;
             if (accessible.Contains(cur) || unaccessible.Contains(cur))
             {
                 // checked before, move on
@@ -211,8 +214,8 @@ public class ReservePartitionManager : MonoBehaviour
                 newLiquidCompositions.Add(composition);
                 newLiquidLocations.Add(cur);
             }
-
-            if (tile != null && gridSystem.IsValidTileForAnimal(population.species,cur))
+            bool isTileValid = tile != null && gridSystem.IsValidTileForAnimal(population.species,cur , treeNeeds, accessibleTerrain);
+            if (isTileValid)
             {
                 // save the accessible location
                 accessible.Add(cur);
@@ -245,13 +248,10 @@ public class ReservePartitionManager : MonoBehaviour
                 // save the Vector3Int since it is already checked
                 unaccessible.Add(cur);
             }
-
             population.HasAccessibilityChanged = true;
         }
-
         // Amount of accessible area
         //Spaces[population] = accessible.Count;
-
         // Store the info on overlapping space
         int id = PopulationToID[population];
         SharedSpaces[id] = SharedTiles;
@@ -262,9 +262,8 @@ public class ReservePartitionManager : MonoBehaviour
                 SharedSpaces[i][id] = SharedSpaces[id][i];
             }
         }
-
         // Update space
-        if(population.HasAccessibilityChanged)
+        if (population.HasAccessibilityChanged)
         {
             this.AccessibleArea[population] = newAccessibleLocations;
             this.populationAccessibleLiquidCompositions[population] = newLiquidCompositions;

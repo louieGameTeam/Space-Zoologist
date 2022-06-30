@@ -15,7 +15,8 @@ public enum EventType {
     NPCDialogue,
     NextDay,
     MainObjectivesCompleted, GameOver, // Pass null is fine
-    PrePopulationCacheRebuild, PopulationCacheRebuilt, PreFoodCacheRebuild, FoodCacheRebuilt,
+    PopulationCacheRebuilt, FoodCacheRebuilt,
+    PreCacheRebuild, // called before any rebuild, but only once (even if multiple rebuilds happen simutaneously)
 };
 
 /// <summary>

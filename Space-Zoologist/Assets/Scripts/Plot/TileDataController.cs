@@ -1201,13 +1201,36 @@ public class TileDataController : MonoBehaviour
         return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.AccessibleTerrain.Contains(tile.type);
     }
 
+    /// <summary>
+    /// Overload where treeNeeds and AccessibleTerrain can be passed in from a cache for improved performance
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <param name="treeNeeds"></param>
+    /// <returns></returns>
+    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds, HashSet<TileType> accessibleTerrain)
+    {
+        var tile = GetGameTileAt(cellPosition);
+        return IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds) && accessibleTerrain.Contains(tile.type);
+    }
+
     public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition)
     {
         // Check for tree requirements
         var treeNeeds = species.RequiredTreeNeeds;
+        if (treeNeeds.Length == 0)
+            return true;
         var tileFoodID = GetTileData(cellPosition).Food?.GetComponent<FoodSource>().Species.ID;
         bool found = treeNeeds.Where(need => need.ID == tileFoodID).Count() > 0;
-        return (found || treeNeeds.Length == 0);
+        return found;
+    }
+    public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds)
+    {
+        if (treeNeeds.Length == 0)
+            return true;
+        var tileFoodID = GetTileData(cellPosition).Food?.GetComponent<FoodSource>().Species.ID;
+        bool found = treeNeeds.Where(need => need.ID == tileFoodID).Count() > 0;
+        return found;
     }
 
     private bool IsValidFoodSourcePlacement(Vector3Int cellPosition, FoodSourceSpecies species)
