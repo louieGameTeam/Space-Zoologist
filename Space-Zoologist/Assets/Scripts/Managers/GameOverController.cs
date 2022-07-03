@@ -112,7 +112,7 @@ public class GameOverController : MonoBehaviour
         GameManager.Instance.HandleExitLevel();
 
         // Open the success window
-        OpenWindow(successWindow, () => LevelDataLoader.LoadNextLevel(), () => SceneManager.LoadScene("LevelMenu"));
+        OpenWindow(successWindow, () => SceneManager.LoadScene("LevelMenu"), () => LevelDataLoader.ReloadLevel());
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {
