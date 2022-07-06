@@ -670,7 +670,7 @@ namespace DialogueEditor
             if (!speech.enableNotebookUI && GameManager.Instance.NotebookUI.IsOpen)
                 GameManager.Instance.NotebookUI.Toggle();
             // magic string, should refactor if this becomes an issue later
-            GameManager.Instance.m_menuManager.ToggleUI(speech.enableNotebookUI,"notebook");
+            GameManager.Instance.m_menuManager.ToggleUISingleButton(speech.enableNotebookUI,"notebook");
             SetState(eState.ScrollingText);
         }
 

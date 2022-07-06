@@ -142,21 +142,11 @@ public class MenuManager : MonoBehaviour
     }
 
     // Currently this function is only called by the dialogue system
-    public void ToggleUI(bool isActive, string filter = "")
+    public void ToggleUI(bool isActive)
     {
         foreach(GameObject ui in UI)
         {
-            if(filter == "" || ui.name.ToLower().Contains(filter))
-            {
-                ui.GetComponent<Button>().interactable = isActive;
-
-                // If this ui element has children,
-                // try to get the image in the first child and set it's color to disabled
-                if (ui.transform.childCount > 0)
-                {
-                    ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
-                }
-            }
+            SetUIButton(isActive, ui.GetComponent<Button>());
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
@@ -180,15 +170,32 @@ public class MenuManager : MonoBehaviour
             if(ui.name == buttonName)
             {
                 bool isActive = !ui.GetComponent<Button>().interactable;
-                ui.GetComponent<Button>().interactable = isActive;
-
-                // Make sure the UI element has a child with an image to change color for
-                if (ui.transform.childCount >= 1)
-                {
-                    ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
-                }
+                SetUIButton(isActive, ui.GetComponent<Button>());
                 break;
             }
+        }
+    }
+
+    public void ToggleUISingleButton(bool isActive, string buttonName)
+    {
+        foreach (GameObject ui in UI)
+        {
+            if (ui.name == buttonName)
+            {
+                SetUIButton(isActive,ui.GetComponent<Button>());
+                break;
+            }
+        }
+    }
+
+    private void SetUIButton(bool isActive, Button button)
+    {
+        button.interactable = isActive;
+
+        // Make sure the UI element has a child with an image to change color for
+        if (button.transform.childCount >= 1)
+        {
+            button.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
         }
     }
 }
