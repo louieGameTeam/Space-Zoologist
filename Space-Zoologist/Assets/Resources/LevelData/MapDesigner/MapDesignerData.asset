@@ -16,6 +16,7 @@ MonoBehaviour:
   startingBalance: 1e+11
   MapWidth: 34
   MapHeight: 32
+  WallBreakable: 0
   LevelObjectiveData: {fileID: 11400000, guid: 0fda617c7827b4782a70ae364eb134a5, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -69,14 +70,21 @@ MonoBehaviour:
     initialAmount: 9999
   - itemObject: {fileID: 11400000, guid: e94f6a290327543b992ad34919ac953e, type: 2}
     initialAmount: 9999
-  levelMusic: {fileID: 8300000, guid: e4af200c658c1474a9c50c71d549d812, type: 3}
+  levelMusic: {fileID: 8300000, guid: fecac3f871902db46908924e1f64900c, type: 3}
   startingPositions:
   - {x: 0, y: 0, z: 0}
   startingConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
-  passedConversation: {fileID: 1826082310421440555, guid: ad41fe0a269bd47278eee6db21ebcbad,
-    type: 3}
+  ending:
+    isQuiz: 0
+    normalConversation: {fileID: 0}
+    nextLevelID:
+      levelNumber: 0
+      enclosureNumber: 0
+    quizConversation: {fileID: 0}
+    nextLevelIDs:
+      levelIDs: []
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
     type: 3}
