@@ -130,6 +130,7 @@ namespace DialogueEditor
                 node.Icon = ec.SpeechNodes[i].Icon;
                 node.Audio = ec.SpeechNodes[i].Audio;
                 node.Volume = ec.SpeechNodes[i].Volume;
+                node.enableNotebookUI = ec.SpeechNodes[i].enableNotebookUI;
                 node.Options = new List<OptionNode>();
                 if (this.GetNodeData(ec.SpeechNodes[i].ID) != null)
                 {
@@ -213,6 +214,7 @@ namespace DialogueEditor
                 node.Icon = ec.SpeechNodes[i].Icon;
                 node.Audio = ec.SpeechNodes[i].Audio;
                 node.Volume = ec.SpeechNodes[i].Volume;
+                node.enableNotebookUI = ec.SpeechNodes[i].enableNotebookUI;
                 node.Options = new List<OptionNode>();
                 if (this.GetNodeData(ec.SpeechNodes[i].ID) != null)
                 {
@@ -539,6 +541,11 @@ namespace DialogueEditor
         /// The time it will take for the Dialogue to automaically advance
         /// </summary>
         [DataMember] public float TimeUntilAdvance;
+
+        /// <summary>
+        /// Should enable notebook UI or not during dialogue (disabled by default)
+        /// </summary>
+        [DataMember] public bool enableNotebookUI;
 
         // ------------------------------
 

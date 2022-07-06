@@ -142,17 +142,20 @@ public class MenuManager : MonoBehaviour
     }
 
     // Currently this function is only called by the dialogue system
-    public void ToggleUI(bool isActive)
+    public void ToggleUI(bool isActive, string filter = "")
     {
         foreach(GameObject ui in UI)
         {
-            ui.GetComponent<Button>().interactable = isActive;
-
-            // If this ui element has children,
-            // try to get the image in the first child and set it's color to disabled
-            if (ui.transform.childCount > 0)
+            if(filter == "" || ui.name.ToLower().Contains(filter))
             {
-                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+                ui.GetComponent<Button>().interactable = isActive;
+
+                // If this ui element has children,
+                // try to get the image in the first child and set it's color to disabled
+                if (ui.transform.childCount > 0)
+                {
+                    ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
+                }
             }
         }
 

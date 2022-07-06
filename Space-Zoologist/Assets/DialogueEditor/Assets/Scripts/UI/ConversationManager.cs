@@ -666,6 +666,11 @@ namespace DialogueEditor
                 m_uiOptions[i].gameObject.SetActive(false);
             }
 
+            // update UI
+            if (!speech.enableNotebookUI && GameManager.Instance.NotebookUI.IsOpen)
+                GameManager.Instance.NotebookUI.Toggle();
+            // magic string, should refactor if this becomes an issue later
+            GameManager.Instance.m_menuManager.ToggleUI(speech.enableNotebookUI,"notebook");
             SetState(eState.ScrollingText);
         }
 
