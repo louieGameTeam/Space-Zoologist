@@ -2787,7 +2787,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 30
-  m_CharacterLimit: 0
+  m_CharacterLimit: 10000
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -4453,6 +4453,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 510221991745008253}
     m_Modifications:
+    - target: {fileID: 2423984001051666289, guid: 49cccaf42984a2c43bcc16f46a920e00,
+        type: 3}
+      propertyPath: m_CharacterLimit
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 3163245148649284758, guid: 49cccaf42984a2c43bcc16f46a920e00,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -4685,6 +4690,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9066989413016559093}
     m_Modifications:
+    - target: {fileID: 2423984001051666289, guid: 49cccaf42984a2c43bcc16f46a920e00,
+        type: 3}
+      propertyPath: m_CharacterLimit
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 3163245148649284758, guid: 49cccaf42984a2c43bcc16f46a920e00,
         type: 3}
       propertyPath: m_SizeDelta.x

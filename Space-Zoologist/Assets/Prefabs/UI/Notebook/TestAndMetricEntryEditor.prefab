@@ -556,7 +556,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 25
-  m_CharacterLimit: 0
+  m_CharacterLimit: 1000
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -894,6 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f1c5e3f4108e048a41eed685046eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   group: {fileID: 291669096375991072}
   itemDropdown: {fileID: 2209227925187086729}
   needDropdown: {fileID: 294207407042786445}
