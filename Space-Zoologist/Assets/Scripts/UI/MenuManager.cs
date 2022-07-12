@@ -165,9 +165,10 @@ public class MenuManager : MonoBehaviour
 
     public void ToggleUISingleButton(string buttonName)
     {
+        buttonName = buttonName.ToLower();  
         foreach(GameObject ui in UI)
         {
-            if(ui.name == buttonName)
+            if(ui.name.ToLower().Contains(buttonName))
             {
                 bool isActive = !ui.GetComponent<Button>().interactable;
                 SetUIButton(isActive, ui.GetComponent<Button>());
@@ -178,9 +179,10 @@ public class MenuManager : MonoBehaviour
 
     public void ToggleUISingleButton(bool isActive, string buttonName)
     {
+        buttonName = buttonName.ToLower();
         foreach (GameObject ui in UI)
         {
-            if (ui.name == buttonName)
+            if (ui.name.ToLower().Contains(buttonName))
             {
                 SetUIButton(isActive,ui.GetComponent<Button>());
                 break;
