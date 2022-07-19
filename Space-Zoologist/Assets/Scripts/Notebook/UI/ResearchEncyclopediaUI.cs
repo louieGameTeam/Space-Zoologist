@@ -47,6 +47,9 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Script that is targetted by the bookmarking system")]
     private BookmarkTarget bookmarkTarget;
+    [SerializeField]
+    [Tooltip("Scrolling")]
+    private Scrollbar contentScrollbar;
     #endregion
 
     #region Private Fields
@@ -56,6 +59,8 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     private ItemID currentItem = new ItemID(ItemRegistry.Category.Species, -1);
     // Current research article selected
     private ResearchEncyclopediaArticleID currentArticleID;
+    // saves the scroll position of each article
+    private Dictionary<ItemID, float> scrollValues = new Dictionary<ItemID,float>();
     #endregion
 
     #region Public Methods
@@ -110,6 +115,15 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     #region Private Methods
     private void OnItemIDChanged(ItemID id)
     {
+        // save scroll value
+        if(id != currentItem)
+        {
+            if (scrollValues.ContainsKey(currentItem))
+                scrollValues[currentItem] = contentScrollbar.value;
+            else
+                scrollValues.Add(currentItem, contentScrollbar.value);
+        }
+
         // If a current item is selected that save the dropdown value that was previously selected
         if (currentItem.Index >= 0) previousSelected[currentItem] = dropdown.value;
 
@@ -145,12 +159,23 @@ public class ResearchEncyclopediaUI : NotebookUIChild
         // Refresh the shown value since we just changed it
         dropdown.RefreshShownValue();
         OnDropdownValueChanged(dropdown.value);
+
+        // load saved scroll value
+        var scrollvalue = scrollValues.ContainsKey(currentItem) ? scrollValues[currentItem] : 1;
+        if(gameObject.activeInHierarchy) StartCoroutine(LoadScrollDelayed(scrollvalue));
+    }
+
+    // Frame delay to wait for UI to resize
+    private IEnumerator LoadScrollDelayed(float scrollvalue)
+    {
+        contentScrollbar.value = scrollvalue;
+        yield return new WaitForEndOfFrame();
     }
 
     private void OnDropdownValueChanged(int value)
     {
         if (EncyclopediaConfig != null)
-        {
+        {  
             // Create the id object
             currentArticleID = DropdownLabelToArticleID(dropdown.options[value].text);
             // Update the article on the script
