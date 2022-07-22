@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] List<StoreSection> StoreMenus = default;
     [SerializeField] ResourceManager ResourceManager = default;
     [Header("Shared menu dependencies")]
-    [SerializeField] CursorItem CursorItem = default;
+    [SerializeField] UICursorInput CursorItem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
     [SerializeField] List<GameObject> UI = default;

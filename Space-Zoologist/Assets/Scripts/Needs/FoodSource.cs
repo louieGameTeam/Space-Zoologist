@@ -97,7 +97,7 @@ public class FoodSource : MonoBehaviour
     {
         // Get tile data controller and the cell size
         TileDataController tileDataController = GameManager.Instance.m_tileDataController;
-        Vector3 cellSize = tileDataController.CellSize();
+        Vector3 cellSize = tileDataController.CellSize;
 
         // Compute an offset from the center of the food source
         // down to the bottom left of the food source
@@ -132,7 +132,7 @@ public class FoodSource : MonoBehaviour
             for (int y = 0; y < Species.Size.y; y++)
             {
                 // Get the cell size
-                Vector2 cellSize = tileDataController.CellSize();
+                Vector2 cellSize = tileDataController.CellSize;
 
                 // Compute an offset from the lower left position
                 Vector3 offset = new Vector3(
