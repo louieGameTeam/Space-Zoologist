@@ -28,7 +28,7 @@ public class LogSystem : MonoBehaviour
             return $"[{this.logTime}] {this.logText}";
         }
     }
-
+    [SerializeField] private bool logSystemEnabled;
     // Stores all logs
     private List<LogEntry> worldLog = default;
     // Stores logs about populations
@@ -74,6 +74,7 @@ public class LogSystem : MonoBehaviour
 
     private void Start()
     {
+        if (!logSystemEnabled) return;
         this.eventManager = EventManager.Instance;
 
         var handleLogEvents = new EventType[]

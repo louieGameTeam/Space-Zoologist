@@ -5,7 +5,8 @@ using System;
 
 public enum EventType {
     // TODO: If LogToggled isn't going to be used in the future, remove it
-    StoreToggled, InspectorToggled, LogToggled, InspectorSelectionChanged, // Pass bool (true if opened, false if closed)
+    StoreToggled, InspectorToggled, LogToggled, InspectorSelectionChanged, 
+    InspectorHoverTargetChange, // pass in hover target
     NewPopulation, NewFoodSource, NewEnclosedArea, // Pass the created object
     PopulationCountChange, // Pass a tuple (population, bool (true if increased, false if decreased))
     PopulationGrowthChange, PopulationExtinct, // Pass the population
@@ -16,6 +17,7 @@ public enum EventType {
     NextDay,
     MainObjectivesCompleted, GameOver, // Pass null is fine
     PopulationCacheRebuilt, FoodCacheRebuilt,
+    PreCacheRebuild, // called before any rebuild, but only once (even if multiple rebuilds happen simutaneously)
 };
 
 /// <summary>
@@ -43,6 +45,7 @@ public class Publisher
     public string PrintInvocationList()
     {
         string str = "Invocation list:";
+        if (Handlers == null) return "";
         foreach (Action<object> handler in Handlers.GetInvocationList())
         {
             str += $"\n\tTarget: {handler.Target}, Method: {handler.Method.Name}";

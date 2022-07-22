@@ -120,6 +120,13 @@ public class StoreSection : MonoBehaviour
         }
     }
 
+    public int SellItem(Item item, int amount)
+    {
+        int soldAmount = ResourceManager.SellItem(item, amount);
+        GameManager.Instance.AddToBalance(soldAmount * item.Price);
+        return soldAmount;
+    }
+
     /// <summary>
     /// Triggered by items in the section.
     /// </summary>
