@@ -145,8 +145,6 @@ public class StoreSection : MonoBehaviour
         cursorInput.Begin(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
         CreateCursorPreview(item);
         selectedItem = item;
-        //Reset inspector selection
-        GameManager.Instance.m_inspector.ResetSelection();
     }
 
     protected void CreateCursorPreview(Item item)

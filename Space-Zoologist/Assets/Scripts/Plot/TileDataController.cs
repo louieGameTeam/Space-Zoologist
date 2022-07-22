@@ -514,6 +514,7 @@ public class TileDataController : MonoBehaviour
     {
         IsDrafting = false;
         GameManager.Instance.TryToUnpause("GridSystemDrafting");
+        GameManager.Instance.m_inspector.ResetSelection();
         UpdateUI(true);
     }
 
