@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 674947355866260815}
   - component: {fileID: 674947355866260814}
   - component: {fileID: 674947355866260817}
+  - component: {fileID: 3973223578623727520}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -450,6 +451,25 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
+--- !u!114 &3973223578623727520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 22
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
 --- !u!1 &674947355878461199
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,50 +514,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 22
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-264.5,\"yPos\":123},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Level
-    Progression\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-37.5,\"yPos\":126},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Population
-    Stagnation\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":217.5,\"yPos\":141},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"UI\",\"parentUIDs\":[5,1,1],\"SpeechUID\":20},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-267.5,\"yPos\":491},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Encyclopedia
-    & Notebook\",\"parentUIDs\":[5,20,20],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-40.5,\"yPos\":497},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Observation
-    tool\",\"parentUIDs\":[10,20,20],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":49.5,\"yPos\":825},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Place
-    Food\",\"parentUIDs\":[15,20,20],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":255.5,\"yPos\":684},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Place
-    Terrain\",\"parentUIDs\":[17,20,20],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":244.5,\"yPos\":515},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Accessing
-    build mode\",\"parentUIDs\":[20,20],\"SpeechUID\":15}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-108.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
-    it going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-283.5,\"yPos\":226},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Like
+  CurrentIDCounter: 23
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":62,\"yPos\":296},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Level
+    Progression\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289,\"yPos\":299},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Population
+    Stagnation\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":547,\"yPos\":304},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"UI\",\"parentUIDs\":[5,1,1],\"SpeechUID\":20},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":59,\"yPos\":664},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Encyclopedia
+    & Notebook\",\"parentUIDs\":[5,20,20],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":286,\"yPos\":670},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Observation
+    tool\",\"parentUIDs\":[10,20,20],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":376,\"yPos\":998},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Place
+    Food\",\"parentUIDs\":[15,20,20],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":582,\"yPos\":857},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Place
+    Terrain\",\"parentUIDs\":[17,20,20],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":571,\"yPos\":688},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Accessing
+    build mode\",\"parentUIDs\":[20,20],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":790,\"yPos\":301},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Nevermind\",\"parentUIDs\":[1],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":231,\"yPos\":177},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
+    it going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6,22],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":43,\"yPos\":399},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Like
     I mentioned during your orientation, after 30 days, or after you complete your
     goal, we\u2019ll be having a one-on-one report-back. I\u2019ll ask you a series
     of questions about what you\u2019ve observed. Use the Notebook to track the responses
     you see in the CapraX Zeigrun based on variable changes, like different food
-    sources, changes in terrain, and increases or decreases in resources.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-43.5,\"yPos\":215},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
+    sources, changes in terrain, and increases or decreases in resources.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":283,\"yPos\":388},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
     species population is represented by the animals moving around in the reserve.
     We are most concerned with how the population as a whole is doing, which means
     that each signal given to us by an individual animal is indicative of how the
     whole population is doing. Make sure to use the observation tool! Depending on
     what you observe, try buying different resources and use our time accelerator,
-    to see their effect on the population. Remember, change isn\u2019t instantaneous!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-231.5,\"yPos\":612},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"On
+    to see their effect on the population. Remember, change isn\u2019t instantaneous!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":95,\"yPos\":785},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
     one that looks like this to open your notebook and encyclopedia. In the Encyclopedia,
     you can find current research observations, drawings, photos, and more of your
-    selected topic. To select a species of plant or animal, use the tabs on the Encyclopedia.\",\"parentUIDs\":[6,8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-208.5,\"yPos\":768},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"On
+    selected topic. To select a species of plant or animal, use the tabs on the Encyclopedia.\",\"parentUIDs\":[6,8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":118,\"yPos\":941},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"On
     the side is the Notebook, where you can take freehand notes here at any time
     as you read through the Encyclopedia. You can also use our special highlighting
     feature. Whenever I\u2014or someone else\u2014is talking with you, you can click
-    and drag over any words they say, and it\u2019ll fill into a column in your notebook.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-16.5,\"yPos\":604},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"On
+    and drag over any words they say, and it\u2019ll fill into a column in your notebook.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":310,\"yPos\":777},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
     one that looks like this to observe tiles, creatures, and objects you select
-    with your mouse.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430.5,\"yPos\":584},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"On
+    with your mouse.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":757,\"yPos\":757},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
     one that looks like this to enter Build Mode. In Build Mode, you can design a
     concept, i.e. modify terrain, add vegetation...but there is a limited number
     of terrain, like dirt, and vegetation, like space maples, available at the moment.
-    Remember to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":10.5,\"yPos\":930},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Enter
+    Remember to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":337,\"yPos\":1103},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Enter
     build mode, then filter for food using the dropdown menu, and select the food
     you want to place. For now, try placing the space maple on dirt patches. Remember
-    to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":287.5,\"yPos\":871},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Enter
+    to apply any changes you make, and that should build the new modifications.\",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":614,\"yPos\":1044},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Enter
     build mode, then filter for terrain using the dropdown menu, and select the terrain
     you want to place. Terrain can be placed in all locations except for a population's
     starting location, which is shaded gray. Remember to apply any changes you make,
-    and that should build the new modifications.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-105.5,\"yPos\":346},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Which
+    and that should build the new modifications.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":221,\"yPos\":519},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Which
     part of the UI can I clarify?\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[8,11,16,18,21],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
   saveVersion: 103
   DefaultName: 
@@ -565,6 +585,7 @@ MonoBehaviour:
   - {fileID: 674947355866260815}
   - {fileID: 674947355866260814}
   - {fileID: 674947355866260817}
+  - {fileID: 3973223578623727520}
   Event:
     m_PersistentCalls:
       m_Calls: []

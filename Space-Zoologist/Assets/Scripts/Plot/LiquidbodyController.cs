@@ -95,6 +95,7 @@ public class LiquidbodyController : MonoBehaviour
         {
             MergeTile(entry.Key, entry.Value);
         }
+        constructingTileContentDict.Clear();
     }
 
     public void RemoveConstructingTile(Vector3Int pos)
@@ -200,7 +201,7 @@ public class LiquidbodyController : MonoBehaviour
             if (l.ContainsTile(pos))
             {
                 l.InsertTile(contents);
-                Debug.Log("Liquidbody merge successful.");
+                //Debug.Log("Liquidbody merge successful.");
                 return true;
             }
             else
@@ -209,6 +210,7 @@ public class LiquidbodyController : MonoBehaviour
                     neighborLiquidbodies.Add(l);
             }
         }
+
 
         switch (neighborLiquidbodies.Count)
         {
@@ -237,7 +239,7 @@ public class LiquidbodyController : MonoBehaviour
                 break;
         }
         EventManager.Instance.InvokeEvent(EventType.LiquidChange, pos);
-        Debug.Log("Liquidbody merge successful.");
+        //Debug.Log("Liquidbody merge successful.");
         return true;
     }
 
