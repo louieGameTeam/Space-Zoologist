@@ -184,6 +184,7 @@ public class DisplayInspectorText : MonoBehaviour
             Destroy(obj);
         }
         needSliders.Clear();
+        currentDisplay = InspectorText.Nothing;
     }
 
     private void GenerateSliders(MonoBehaviour life) 

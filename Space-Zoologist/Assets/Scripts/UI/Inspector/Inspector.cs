@@ -33,6 +33,9 @@ public class Inspector : MonoBehaviour
     private Vector3Int mouseCellPos;
     private GameTile mouseTileData;
     private TileData mouseCellData;
+    // cache target population/celldata
+    private TileData currentlyInspectingCellData;
+    private Population currentlyInspectingPopulationData;
     // hover
     private GameObject currentHoverTarget = null;
 
@@ -60,6 +63,8 @@ public class Inspector : MonoBehaviour
     {
         this.inspectorWindowDisplayScript.ClearInspectorWindow();
         this.UnHighlightAll();
+        currentlyInspectingCellData = null;
+        currentlyInspectingPopulationData = null;
     }
 
     // Referenced by the details button
@@ -85,23 +90,27 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        UpdateMousePositionState();
         if (Input.GetMouseButtonDown(1))
             ResetSelection();
         if (this.IsInInspectorMode && FindObjectOfType<StoreSection>().SelectedItem == null)
         {
+            UpdateMousePositionState();
             UpdateHoverSelection();
             if(Input.GetMouseButtonDown(0))
             {
                 if(mouseCellData == null)
                 {
-                    ResetSelection();
+                    if(!EventSystem.current.IsPointerOverGameObject()) 
+                        ResetSelection();
+                    else
+                        UpdateCurrentDisplay();
                     return;
                 }
                 if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
                 {
                     return;
                 }
+                currentlyInspectingCellData = mouseCellData;
                 this.UpdateInspectorValues();
             }
         }
@@ -112,7 +121,7 @@ public class Inspector : MonoBehaviour
                 GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
             if (this.PopulationHighlighted != null)
             {
-                //this.HighlightPopulation(this.PopulationHighlighted);
+                this.HighlightPopulation(this.PopulationHighlighted);
             }
         }
     }
@@ -132,9 +141,10 @@ public class Inspector : MonoBehaviour
         this.UnHighlightAll();
         if (mouseCellData.Animal)
         {
-            DisplayPopulationText(mouseCellData);
+            currentlyInspectingPopulationData = mouseCellData.Animal.transform.parent.GetComponent<Population>();
+            DisplayPopulationText(currentlyInspectingPopulationData);
             selectedPosition = mouseCellPos;
-            HighlightPopulation(mouseCellData.Animal.transform.parent.gameObject);
+            HighlightPopulation(currentlyInspectingPopulationData.gameObject);
         }
         // Selection is food source or item
         else if (mouseCellData.Food)
@@ -195,17 +205,18 @@ public class Inspector : MonoBehaviour
 
     public void UpdateCurrentDisplay()
     {
-        TileData cellData = GameManager.Instance.m_tileDataController.GetTileData(selectedPosition);
+        TileData cellData = currentlyInspectingCellData;
+        if (cellData == null) return;
         this.UnHighlightAll();
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
-                if (!cellData.Animal)
+                if (!currentlyInspectingPopulationData)
                 {
                     return;
                 }
-                DisplayPopulationText(cellData);
-                this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
+                DisplayPopulationText(currentlyInspectingPopulationData);
+                this.HighlightPopulation(currentlyInspectingPopulationData.gameObject);
                 break;
             case DisplayInspectorText.InspectorText.Food:
                 if (!cellData.Food)
@@ -225,17 +236,15 @@ public class Inspector : MonoBehaviour
         }
     }
 
-    private void DisplayPopulationText(TileData tileData)
+    private void DisplayPopulationText(Population population)
     {
-
         // Get the animal's population info
-        Population population = tileData.Animal.GetComponent<Animal>().PopulationInfo;
 
         // Check to make sure the population manager still has this population in it
         if (GameManager.Instance.m_populationManager.Populations.Contains(population))
         {
             //Debug.Log($"Found animal {cellData.Animal.GetComponent<Animal>().PopulationInfo.Species.SpeciesName} @ {cellPos}");
-            this.inspectorWindowDisplayScript.DisplayPopulationStatus(tileData.Animal.GetComponent<Animal>().PopulationInfo);
+            this.inspectorWindowDisplayScript.DisplayPopulationStatus(population);
         }
     }
 
@@ -281,7 +290,7 @@ public class Inspector : MonoBehaviour
 
     private void UnHighlightAll()
     {
-        if( this.lastFoodSourceSelected)
+        if ( this.lastFoodSourceSelected)
         {
             this.lastFoodSourceSelected.GetComponent<SpriteRenderer>().color = Color.white;
             this.lastFoodSourceSelected = null;
