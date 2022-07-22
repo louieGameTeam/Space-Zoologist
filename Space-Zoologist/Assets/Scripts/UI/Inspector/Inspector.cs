@@ -107,10 +107,12 @@ public class Inspector : MonoBehaviour
         }
         if (this.IsInInspectorMode)
         {
-            GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
+            // performance heavy so slower update interval
+            if(Time.frameCount % 5 == 0)
+                GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
             if (this.PopulationHighlighted != null)
             {
-                this.HighlightPopulation(this.PopulationHighlighted);
+                //this.HighlightPopulation(this.PopulationHighlighted);
             }
         }
     }
