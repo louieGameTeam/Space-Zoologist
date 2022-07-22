@@ -1083,6 +1083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d0ef1be15f2554f9bf66ff5d383788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  liquidBodyDisplay: []
+  tileDisplay: []
 --- !u!1001 &218497415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3745,16 +3747,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9549afc7087a6b14aaec260caad611d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BehaviorPatternUpdater: {fileID: 1288893580}
   PopulationPrefab: {fileID: 2404175397146934353, guid: 88a3ba85465d242a2b30639be12248b4,
     type: 3}
-  GenericBehaviors:
-  - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
-  - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
-  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
-  - {fileID: 11400000, guid: 67351244fd9664436b04c43bae5d0d10, type: 2}
-  - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
-  - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
 --- !u!4 &834213028
 Transform:
   m_ObjectHideFlags: 0
@@ -7003,9 +6997,9 @@ MonoBehaviour:
   EdgeMovement: 0
   edgeSpeed: 10
   edgeBoundary: 30
-  zoomHeight: 15
-  MapWidth: 30
-  MapHeight: 30
+  zoomHeight: 20
+  MapWidth: 125
+  MapHeight: 12
 --- !u!114 &1620086703
 MonoBehaviour:
   m_ObjectHideFlags: 0

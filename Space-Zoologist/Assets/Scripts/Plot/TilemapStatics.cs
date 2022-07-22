@@ -20,13 +20,13 @@ public static class TilemapStatics
     }
 
     /// <summary>
-    /// Checks if the tile neighbors in 4 directions.
+    /// Checks if the tile neighbors in 4 directions
     /// </summary>
     /// <param name="pos1"></param>
     /// <param name="pos2"></param>
     /// <returns></returns>
     public static bool IsNeighborTile(Vector3Int pos1, Vector3Int pos2)
     {
-        return (pos1 - pos2).magnitude == 1;
+        return (pos1 - pos2).sqrMagnitude == 1;
     }
 }

@@ -124,6 +124,7 @@ public class Inspector : MonoBehaviour
         if (cellData.Animal)
         {
             DisplayPopulationText(cellData);
+            this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
             selectedPosition = pos;
         }
         // Selection is food source or item
@@ -161,6 +162,7 @@ public class Inspector : MonoBehaviour
     public void UpdateCurrentDisplay()
     {
         TileData cellData = GameManager.Instance.m_tileDataController.GetTileData(selectedPosition);
+        this.UnHighlightAll();
         switch (inspectorWindowDisplayScript.CurrentDisplay)
         {
             case DisplayInspectorText.InspectorText.Population:
@@ -169,6 +171,7 @@ public class Inspector : MonoBehaviour
                     return;
                 }
                 DisplayPopulationText(cellData);
+                this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
                 break;
             case DisplayInspectorText.InspectorText.Food:
                 if (!cellData.Food)
@@ -190,7 +193,6 @@ public class Inspector : MonoBehaviour
 
     private void DisplayPopulationText(TileData tileData)
     {
-        this.HighlightPopulation(tileData.Animal.transform.parent.gameObject);
 
         // Get the animal's population info
         Population population = tileData.Animal.GetComponent<Animal>().PopulationInfo;
@@ -274,10 +276,7 @@ public class Inspector : MonoBehaviour
         // highlight their accessible terrain too
         Population populationScript = population.GetComponent<Population>();
         List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.AccessibleArea[populationScript];
-
-        foreach (Vector3Int tilePosition in accessibleTiles)
-            GameManager.Instance.m_tileDataController.HighlightTile(tilePosition, Color.green);
-
+        GameManager.Instance.m_tileDataController.HighlightTiles(accessibleTiles, Color.green);
         this.lastPopulationSelected = population;
     }
 
