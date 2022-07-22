@@ -51,10 +51,12 @@ public class ResearchEntryData : NotebookDataModule
             {
                 return notes[index];
             }
-            else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
+            else
+                return string.Empty;
+            /*else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
                 $"no corresponding note found for label '{label}'" +
                 $"\n\tLabel index: {index}" +
-                $"\n\tNote count: {notes.Count}");
+                $"\n\tNote count: {notes.Count}");*/
         }
         else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
             $"no label '{label}' was found in the list of research entry note labels" +
@@ -66,14 +68,13 @@ public class ResearchEntryData : NotebookDataModule
 
         if (index >= 0)
         {
-            if (index < notes.Count)
-            {
-                notes[index] = note;
-            }
-            else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
+            while (notes.Count <= index)
+                notes.Add(string.Empty);
+            notes[index] = note;
+            /*else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
                 $"no corresponding note found for label '{label}'" +
                 $"\n\tLabel index: {index}" +
-                $"\n\tNote count: {notes.Count}");
+                $"\n\tNote count: {notes.Count}");*/
         }
         else throw new System.IndexOutOfRangeException($"{nameof(ResearchEntryData)}: " +
             $"no label '{label}' was found in the list of research entry note labels" +

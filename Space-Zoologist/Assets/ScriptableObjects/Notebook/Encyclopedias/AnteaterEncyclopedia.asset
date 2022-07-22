@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52e53c4d2142814a94f3088eec699e5, type: 3}
   m_Name: AnteaterEncyclopedia
   m_EditorClassIdentifier: 
-  articlesList:
+  articles:
   - id:
       title: Ecological Summary
       author: Ligurio Vermis
@@ -58,7 +58,10 @@ MonoBehaviour:
       Ligurio Vermis, is a predator to Thalassius Succo, a spider-like species. Classifications
       of Planet X\u2019s flora and fauna reliant on terran classification are misleading,
       and often incorrect. Unlike most other mammals we\u2019ve recovered from Planet
-      X, Ligurio Vermis appears able to subsist on relatively impure water and even
-      seems remarkably resistant to the effects of drinking from bacterially infected
-      water sources."
+      X, Ligurio Vermis appears able to subsist on relatively impure water, able
+      to take in as low as 95% pure water. They even seem to be remarkably resistant
+      to the effects of drinking from bacterially infected water sources, able to
+      drink as high as 2% bacterially infected water. They are also able to handle
+      a decent amount of salt, as much as 2%, but won't drink water that has no salt
+      in it at all. "
     sprites: []
