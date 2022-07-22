@@ -614,7 +614,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 30
-  m_CharacterLimit: 0
+  m_CharacterLimit: 40
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -743,6 +743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d519725f7819a54aa6c15fc6eab52b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   label: {fileID: 2369565535564836041}
   inputField: {fileID: 7111798829425841837}
   onNoteEdited:
