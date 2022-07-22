@@ -51,17 +51,13 @@ public class NeedCache
         // If food cache is dirty then rebuild both food and population cache
         if (FoodCacheDirty)
         {
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             EventManager.Instance.InvokeEvent(EventType.PreCacheRebuild, null);
-            Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
             Rebuild();
         }
         // If population cache is dirty then rebuild only that
         else if (PopulationCacheDirty)
         {
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             EventManager.Instance.InvokeEvent(EventType.PreCacheRebuild, null);
-            Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
             RebuildPopulationCache();
         }
     }
@@ -77,18 +73,14 @@ public class NeedCache
     }
     public void RebuildFoodCache()
     {
-        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         Availability.RebuildFoodAvailabilities();
         Ratings.RebuildFoodRatings(Availability);
         FoodCacheDirty = false;
         EventManager.Instance.InvokeEvent(EventType.FoodCacheRebuilt, null);
-        Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
     }
     public void RebuildPopulationCache()
     {
-        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         Availability.RebuildPopulationAvailabilities();
-        Debug.Log(stopwatch.Elapsed.TotalMilliseconds / 1000f);
         Ratings.RebuildPopulationRatings(Availability);
         PopulationCacheDirty = false;
         EventManager.Instance.InvokeEvent(EventType.PopulationCacheRebuilt, null);

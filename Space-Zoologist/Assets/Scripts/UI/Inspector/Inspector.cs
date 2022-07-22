@@ -107,9 +107,12 @@ public class Inspector : MonoBehaviour
         }
         if (this.IsInInspectorMode)
         {
+            // performance heavy so slower update interval
+            if(Time.frameCount % 5 == 0)
+                GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
             if (this.PopulationHighlighted != null)
             {
-                this.HighlightPopulation(this.PopulationHighlighted);
+                //this.HighlightPopulation(this.PopulationHighlighted);
             }
         }
     }
@@ -131,6 +134,7 @@ public class Inspector : MonoBehaviour
         {
             DisplayPopulationText(mouseCellData);
             selectedPosition = mouseCellPos;
+            HighlightPopulation(mouseCellData.Animal.transform.parent.gameObject);
         }
         // Selection is food source or item
         else if (mouseCellData.Food)
