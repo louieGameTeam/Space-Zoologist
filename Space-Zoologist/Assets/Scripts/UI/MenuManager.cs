@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] List<StoreSection> StoreMenus = default;
     [SerializeField] ResourceManager ResourceManager = default;
     [Header("Shared menu dependencies")]
-    [SerializeField] CursorItem CursorItem = default;
+    [SerializeField] UICursorInput CursorItem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
     [SerializeField] List<GameObject> UI = default;
@@ -38,6 +38,15 @@ public class MenuManager : MonoBehaviour
         }
         StoreMenus[curMenu]?.gameObject.SetActive(true);
         StoreCanvas.localScale = Vector3.zero;
+    }
+
+    public void TrySellItem(Item item, int amount)
+    {
+        foreach(var section in StoreMenus)
+        {
+            if (section?.SellItem(item, amount) > 0)
+                return;
+        }
     }
 
     public void OnToggleMenu(GameObject menu)

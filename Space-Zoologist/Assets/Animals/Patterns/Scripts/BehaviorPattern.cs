@@ -113,7 +113,7 @@ public class BehaviorPattern : MonoBehaviour
         AnimalsToAnimalData.Remove(animal);
         if (callCallback)
         {
-            callback.Invoke(animal);
+            callback?.Invoke(animal);
         }
     }
     protected virtual void ExitPatternAlternative(GameObject animal)

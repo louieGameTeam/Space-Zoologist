@@ -57,6 +57,7 @@ MonoBehaviour:
   dropdown: {fileID: 2982568721257937135}
   articleBody: {fileID: 490503159629033427}
   bookmarkTarget: {fileID: 1080413727569536003}
+  contentScrollbar: {fileID: 4541593328654777265}
 --- !u!114 &1080413727569536003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2787,7 +2788,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 30
-  m_CharacterLimit: 0
+  m_CharacterLimit: 10000
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -4453,6 +4454,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 510221991745008253}
     m_Modifications:
+    - target: {fileID: 2423984001051666289, guid: 49cccaf42984a2c43bcc16f46a920e00,
+        type: 3}
+      propertyPath: m_CharacterLimit
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 3163245148649284758, guid: 49cccaf42984a2c43bcc16f46a920e00,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -4685,6 +4691,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9066989413016559093}
     m_Modifications:
+    - target: {fileID: 2423984001051666289, guid: 49cccaf42984a2c43bcc16f46a920e00,
+        type: 3}
+      propertyPath: m_CharacterLimit
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 3163245148649284758, guid: 49cccaf42984a2c43bcc16f46a920e00,
         type: 3}
       propertyPath: m_SizeDelta.x

@@ -17,6 +17,7 @@ public class AnimalSpecies : ScriptableObject
     public int DecayRate => decayRate;
     public float Size => size;
     public HashSet<TileType> AccessibleTerrain => needs.FindTraversibleTerrain();
+    public NeedData[] RequiredTreeNeeds => needs.FindTreeNeeds();
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
     public int MoveCost => moveCost;

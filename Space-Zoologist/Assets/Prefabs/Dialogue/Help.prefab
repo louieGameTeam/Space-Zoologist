@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 674947355866260815}
   - component: {fileID: 674947355866260814}
   - component: {fileID: 674947355866260817}
+  - component: {fileID: 3973223578623727520}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -450,6 +451,25 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 0}
   Audio: {fileID: 0}
+--- !u!114 &3973223578623727520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 22
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
 --- !u!1 &674947355878461199
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +585,7 @@ MonoBehaviour:
   - {fileID: 674947355866260815}
   - {fileID: 674947355866260814}
   - {fileID: 674947355866260817}
+  - {fileID: 3973223578623727520}
   Event:
     m_PersistentCalls:
       m_Calls: []

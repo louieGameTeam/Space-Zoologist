@@ -64,7 +64,8 @@ public class PopulationBehavior : ScriptableObject
         {
             animalsToSteps.Remove(animal);
             animal.GetComponent<AnimalBehaviorManager>().activeBehavior = null;
-            behaviorCompleteCallbacks[animalsToCallbacks[animal]].Invoke(animal);
+            if(animalsToCallbacks[animal] < behaviorCompleteCallbacks.Count)
+                behaviorCompleteCallbacks[animalsToCallbacks[animal]].Invoke(animal);
             animalsToCallbacks.Remove(animal);
         }
     }

@@ -20,7 +20,10 @@ public class StoreSection : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
-    protected CursorItem cursorItem = default;
+    // Cursor dependencies
+    protected UICursorInput cursorInput = default;
+    protected ItemPlaceCursorPreviewMover cursorPreviewObject = null;
+
     protected List<RectTransform> UIElements = default;
     protected TileDataController GridSystem = default;
     protected ResourceManager ResourceManager = default;
@@ -29,9 +32,9 @@ public class StoreSection : MonoBehaviour
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;
 
-    public void SetupDependencies(CursorItem cursorItem, List<RectTransform> UIElements, ResourceManager resourceManager)
+    public void SetupDependencies(UICursorInput cursorItem, List<RectTransform> UIElements, ResourceManager resourceManager)
     {
-        this.cursorItem = cursorItem;
+        this.cursorInput = cursorItem;
         this.UIElements = UIElements;
         this.GridSystem = GameManager.Instance.m_tileDataController;
         this.ResourceManager = resourceManager;
@@ -50,11 +53,11 @@ public class StoreSection : MonoBehaviour
 
     public void Update()
     {
-        if (cursorItem.IsOn)
+        if (cursorInput.IsOn)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorItem.transform.position);
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorInput.transform.position);
             Vector3Int gridLocation = GridSystem.WorldToCell(mousePosition);
-
+            cursorPreviewObject?.UpdatePosition();
             if (!GridSystem.IsWithinGridBounds(mousePosition))
             {
                 previousLocation = gridLocation;
@@ -120,6 +123,13 @@ public class StoreSection : MonoBehaviour
         }
     }
 
+    public int SellItem(Item item, int amount)
+    {
+        int soldAmount = ResourceManager.SellItem(item, amount);
+        GameManager.Instance.AddToBalance(soldAmount * item.Price);
+        return soldAmount;
+    }
+
     /// <summary>
     /// Triggered by items in the section.
     /// </summary>
@@ -132,15 +142,35 @@ public class StoreSection : MonoBehaviour
             return;
         }
         AudioManager.instance.PlayOneShot(SFXType.Valid);
-        cursorItem.Begin(item.Icon, OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorInput.Begin(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        CreateCursorPreview(item);
         selectedItem = item;
         //Reset inspector selection
         GameManager.Instance.m_inspector.ResetSelection();
     }
 
+    protected void CreateCursorPreview(Item item)
+    {        
+        Vector2Int size = Vector2Int.zero;
+        bool snap = false;
+        if(item.Type == ItemRegistry.Category.Food)
+        {
+            snap = true;
+            size = GameManager.Instance.FoodSources[item.ID].Size;
+        }
+        else if(item.Type == ItemRegistry.Category.Tile)
+        {
+            snap = true;
+            size = new Vector2Int(1, 1);
+        }
+        cursorPreviewObject = new ItemPlaceCursorPreviewMover(GridSystem, item.Icon, size, snap);
+    }
+
     public virtual void OnItemSelectionCanceled()
     {
-        cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorInput.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorPreviewObject.Clear();
+        cursorPreviewObject = null;
         selectedItem = null;
         AudioManager.instance?.PlayOneShot(SFXType.Cancel);
         GridSystem.ClearHighlights();
@@ -197,7 +227,7 @@ public class StoreSection : MonoBehaviour
 
     private void OnDisable()
     {
-        cursorItem.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
+        cursorInput.Stop(OnCursorItemClicked, OnCursorPointerDown, OnCursorPointerUp);
     }
 
     protected virtual void HandleAudio()

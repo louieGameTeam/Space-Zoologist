@@ -289,7 +289,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 25
-  m_CharacterLimit: 0
+  m_CharacterLimit: 1000
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -433,7 +433,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 30
-  m_CharacterLimit: 0
+  m_CharacterLimit: 1000
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -683,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec9872a354731d4190acc2e5be17ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   group: {fileID: 2813925804214160147}
   titleInput: {fileID: 2737255707510548503}
   textInput: {fileID: 2704484643200810732}

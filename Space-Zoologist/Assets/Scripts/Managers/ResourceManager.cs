@@ -53,27 +53,35 @@ public class ResourceManager : MonoBehaviour
             Debug.Log("ResourceManager: " + itemID + " does not exist!");
         }
     }
+    
+    public int SellItem(Item item, int amount)
+    {
+        return ReduceItem(item.ID, amount);
+    }
 
     public void Placed(Item item, int amount)
     {
-        PlacedItem(item.ID, amount);
+        ReduceItem(item.ID, amount);
     }
 
     public void Placed(AnimalSpecies species, int amount)
     {
-        PlacedItem(species.ID, amount);
+        ReduceItem(species.ID, amount);
     }
 
-    void PlacedItem(ItemID itemID, int amount)
+    int ReduceItem(ItemID itemID, int amount)
     {
         if (remainingResources.ContainsKey(itemID))
         {
-            remainingResources[itemID] -= amount;
+            int toReduce = Mathf.Min(remainingResources[itemID], amount);
+            remainingResources[itemID] -= toReduce; 
             updateItemDisplayInfo(itemID);
+            return toReduce;
         }
         else
         {
             Debug.Log("ResourceManager: " + itemID + " does not exist!");
+            return -1;
         }
     }
 
