@@ -583,6 +583,10 @@ namespace DialogueEditor
                     node.TMPFont = (TMPro.TMP_FontAsset)EditorGUILayout.ObjectField(node.TMPFont, typeof(TMPro.TMP_FontAsset), false);
                     EditorGUILayout.Space();
 
+                    GUILayout.Label("Enable Notebook UI", EditorStyles.boldLabel);
+                    node.enableNotebookUI = EditorGUILayout.Toggle(node.enableNotebookUI);
+                    EditorGUILayout.Space();
+
                     // Events
                     {
                         NodeEventHolder NodeEvent = CurrentAsset.GetNodeData(node.ID);
