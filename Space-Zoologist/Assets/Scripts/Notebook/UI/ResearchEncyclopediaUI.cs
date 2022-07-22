@@ -168,8 +168,8 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     // Frame delay to wait for UI to resize
     private IEnumerator LoadScrollDelayed(float scrollvalue)
     {
-        contentScrollbar.value = scrollvalue;
         yield return new WaitForEndOfFrame();
+        contentScrollbar.value = scrollvalue;
     }
 
     private void OnDropdownValueChanged(int value)
