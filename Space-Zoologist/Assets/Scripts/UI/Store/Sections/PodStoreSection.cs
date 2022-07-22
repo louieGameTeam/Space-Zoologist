@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PodSection : StoreSection
+public class PodStoreSection : StoreSection
 {
     [Header("Handled by Prefab")]
     [SerializeField] Transform PodItemContainer = default;
@@ -45,6 +45,7 @@ public class PodSection : StoreSection
             }
             base.HandleAudio();
             populationManager.SpawnAnimal(selectedSpecies, position);
+            GridSystem.UpdateAnimalCellGrid();
             base.ResourceManager.Placed(selectedSpecies, 1);
         }
         if (!base.CanBuy(selectedItem))

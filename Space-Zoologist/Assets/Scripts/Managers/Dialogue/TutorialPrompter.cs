@@ -125,7 +125,7 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilZeigPickedForPlacement()
     {
-        FreezeUntilBuildItemPicked<PodSection>(new ItemID(ItemRegistry.Category.Species, 0), 2);
+        FreezeUntilBuildItemPicked<PodStoreSection>(new ItemID(ItemRegistry.Category.Species, 0), 2);
     }
     public void FreezeUntilZeigsExist(int numZeigs)
     {
@@ -189,7 +189,7 @@ public class TutorialPrompter : MonoBehaviour
             // Prompt player to put down some goats
             HighlightBuildButton(true),
             HighlightBuildSectionPicker(2),
-            HighlightBuildItem<PodSection>(new ItemID(ItemRegistry.Category.Species, 0)),
+            HighlightBuildItem<PodStoreSection>(new ItemID(ItemRegistry.Category.Species, 0)),
             ConditionalHighlight.NoTarget(GoatsDontExist),
 
             // Prompt player to put down some maples

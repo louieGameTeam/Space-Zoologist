@@ -28,6 +28,14 @@ public class Inspector : MonoBehaviour
     public GameObject PopulationHighlighted { get; private set; } = null;
     public Vector3Int selectedPosition { get; private set; }
 
+    // per-frame mouse data
+    private Vector3 mouseWorldPos;
+    private Vector3Int mouseCellPos;
+    private GameTile mouseTileData;
+    private TileData mouseCellData;
+    // hover
+    private GameObject currentHoverTarget = null;
+
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
 
@@ -77,19 +85,25 @@ public class Inspector : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        if (this.IsInInspectorMode && Input.GetMouseButtonDown(0) && FindObjectOfType<StoreSection>().SelectedItem == null)
+        UpdateMousePositionState();
+        if (Input.GetMouseButtonDown(1))
+            ResetSelection();
+        if (this.IsInInspectorMode && FindObjectOfType<StoreSection>().SelectedItem == null)
         {
-            //Deselect if over UI
-            if (EventSystem.current.IsPointerOverGameObject())
+            UpdateHoverSelection();
+            if(Input.GetMouseButtonDown(0))
             {
-                UnHighlightAll();
-                return;
+                if(mouseCellData == null)
+                {
+                    ResetSelection();
+                    return;
+                }
+                if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
+                {
+                    return;
+                }
+                this.UpdateInspectorValues();
             }
-            if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.layer == 5)
-            {
-                return;
-            }
-            this.UpdateInspectorValues();
         }
         if (this.IsInInspectorMode)
         {
@@ -110,34 +124,25 @@ public class Inspector : MonoBehaviour
     {
         // Update animal location reference
         GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int pos = GameManager.Instance.m_tileDataController.WorldToCell(worldPos);
-        GameTile tile = GameManager.Instance.m_tileDataController.GetGameTileAt(pos);
-        TileData cellData = GameManager.Instance.m_tileDataController.GetTileData(pos);
-
-        if (cellData == null) { 
-            return;
-        }
 
         bool somethingSelected = true;
         this.UnHighlightAll();
-        if (cellData.Animal)
+        if (mouseCellData.Animal)
         {
-            DisplayPopulationText(cellData);
-            this.HighlightPopulation(cellData.Animal.transform.parent.gameObject);
-            selectedPosition = pos;
+            DisplayPopulationText(mouseCellData);
+            selectedPosition = mouseCellPos;
         }
         // Selection is food source or item
-        else if (cellData.Food)
+        else if (mouseCellData.Food)
         {
-            DisplayFoodText(cellData);
-            selectedPosition = pos;
+            DisplayFoodText(mouseCellData);
+            selectedPosition = mouseCellPos;
         }
         // Selection is liquid tile
-        else if (tile && tile.type == TileType.Liquid)
+        else if (mouseTileData && mouseTileData.type == TileType.Liquid)
         {
-            DisplayLiquidText(pos);
-            selectedPosition = pos;
+            DisplayLiquidText(mouseCellPos);
+            selectedPosition = mouseCellPos;
         }
         // Selection is enclosed area
         // Disabled
@@ -156,6 +161,31 @@ public class Inspector : MonoBehaviour
             AudioManager.instance.PlayOneShot(SFXType.Observation);
             EventManager.Instance.InvokeEvent(EventType.InspectorSelectionChanged, true);
             selectionChangedEvent.Invoke();
+        }
+    }
+
+    private void UpdateMousePositionState()
+    {
+        mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseCellPos = GameManager.Instance.m_tileDataController.WorldToCell(mouseWorldPos);
+        mouseCellData = GameManager.Instance.m_tileDataController.GetTileData(mouseCellPos);
+        mouseTileData = GameManager.Instance.m_tileDataController.GetGameTileAt(mouseCellPos);
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            mouseCellData = null;
+            mouseTileData = null;
+        }
+    }
+
+    private void UpdateHoverSelection()
+    {
+        if (mouseCellData != null && (mouseCellData.Animal || mouseCellData.Food || (mouseTileData && mouseTileData.type == TileType.Liquid)))
+        {
+            EventManager.Instance.InvokeEvent(EventType.InspectorHoverTargetChange, mouseTileData);
+        }
+        else
+        {
+            EventManager.Instance.InvokeEvent(EventType.InspectorHoverTargetChange, null);
         }
     }
 
