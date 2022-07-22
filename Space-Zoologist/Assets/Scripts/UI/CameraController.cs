@@ -55,8 +55,14 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         targetZoom = Cam.orthographicSize;
+    }
 
-        transform.position = new Vector3(GameManager.Instance.LevelData.MapWidth / 2, GameManager.Instance.LevelData.MapHeight / 2, transform.position.z);
+    public void UpdateBounds(object serializedPlot)
+    {
+        var grid = ((SerializedPlot)serializedPlot).serializedGrid;
+        MapWidth = grid.width;
+        MapHeight = grid.height;
+        transform.position = new Vector3(MapWidth / 2, MapHeight / 2, transform.position.z);
         originalPosition = transform.position;
     }
 
