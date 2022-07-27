@@ -11,6 +11,7 @@ public enum SFXType
     Valid, Locked, Unavailable,
     BuildModeOpen, BuildModeClose, BuildModeTabSwitch,
     NotebookOpen, NotebookClose, NotebookDropdown, NotebookTabSwitch,
+    HighQualityFood, AcceptableFood, LowQualityFood,
     NumTypes
 }
 
