@@ -12,10 +12,13 @@ public class EatingPattern : UniversalAnimatorPattern
     [SerializeField]
     [ItemIDFilter(ItemRegistry.Category.Food)]
     private ItemID foodID = default;
+
+
     public override void Init()
     {
         base.Init();
     }
+
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
         Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
@@ -46,6 +49,7 @@ public class EatingPattern : UniversalAnimatorPattern
         base.EnterPattern(animal, animalData);
         base.ExitPattern(animal, true);
     }
+
     private string GetTriggerName(int i, int j)
     {
         if (i == 1)
