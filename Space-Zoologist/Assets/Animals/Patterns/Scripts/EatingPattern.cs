@@ -12,6 +12,7 @@ public class EatingPattern : UniversalAnimatorPattern
     [SerializeField]
     [ItemIDFilter(ItemRegistry.Category.Food)]
     private ItemID foodID = default;
+    public ItemID FoodID => foodID;
 
 
     public override void Init()

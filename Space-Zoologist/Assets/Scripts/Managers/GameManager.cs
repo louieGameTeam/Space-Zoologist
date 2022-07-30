@@ -252,6 +252,7 @@ public class GameManager : MonoBehaviour
             this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
         }
         LoadMap();
+        VFXManager.Instance.UpdateSpeciesList();
     }
 
     private void SetManagers()
