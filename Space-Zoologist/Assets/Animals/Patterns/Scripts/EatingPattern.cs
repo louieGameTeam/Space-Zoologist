@@ -14,7 +14,6 @@ public class EatingPattern : UniversalAnimatorPattern
     private ItemID foodID = default;
     public ItemID FoodID => foodID;
 
-
     public override void Init()
     {
         base.Init();
