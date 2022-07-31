@@ -9,6 +9,13 @@ public class FoodPathfinding : GeneralPathfinding
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
+        Animal abm = gameObject.GetComponent<Animal>();
+        foreach (NeedData need in abm.PopulationInfo.Species.Needs.FindFoodNeeds())
+        {
+            if (need.Preferred)
+                Debug.Log(need.ID);
+        }
+
         Vector3Int[] destinations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(FoodSpeciesName);
         Vector3Int destination = base.TileDataController.WorldToCell(gameObject.transform.position);
         if (destinations != null)
