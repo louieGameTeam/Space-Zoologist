@@ -22,6 +22,7 @@ public class FoodQualityVFXHandler : MonoBehaviour
     }
 
     #region Private Fields
+    private Dictionary<ItemID, bool> EdibleFoods;
     private List<AnimalSpecies> SpeciesList;
     private int NextSpeciesToDisplayIndex;
     private GameObject SelectedAnimal = null;
@@ -56,42 +57,7 @@ public class FoodQualityVFXHandler : MonoBehaviour
 
             else
             {
-                if (CanDisplayFoodQualityFX)
-                {
-                    EatingData eatingData = GetEatingData();
-                    if (eatingData.IsEating)
-                    {
-                        foreach (NeedData need in SelectedSpecies.Needs.FindFoodNeeds())
-                        {
-                            // Food is edible
-                            if (eatingData.FoodBeingEaten == need.ID)
-                            {
-                                // If food eaten is a preferred food
-                                if (need.Preferred)
-                                {
-                                    VFXManager.Instance.DisplayVFX(SelectedAnimal.transform.position, VFXType.GoodFood);
-                                }
-
-                                else
-                                {
-                                    VFXManager.Instance.DisplayVFX(SelectedAnimal.transform.position, VFXType.NeutralFood);
-                                }
-
-                                break;
-                            }
-
-                            // Food is inedible
-                            else
-                            {
-                                VFXManager.Instance.DisplayVFX(SelectedAnimal.transform.position, VFXType.BadFood);
-                                break;
-                            }
-                        }
-
-                        // Once VFX has been played, start cooldown before next VFX can be played
-                        StartCoroutine(FoodQualityFXCooldown(FOOD_QUALITY_VFX_INTERVAL));
-                    }
-                }
+                DisplayFoodFX();
             }
         }
     }
@@ -122,6 +88,40 @@ public class FoodQualityVFXHandler : MonoBehaviour
     #endregion
 
     #region Private Methods
+    /// <summary>
+    /// Displays relevant effects for food that animal is currently eating
+    /// </summary>
+    private void DisplayFoodFX()
+    {
+        if (CanDisplayFoodQualityFX)
+        {
+            EatingData eatingData = GetEatingData();
+            if (eatingData.IsEating)
+            {
+                EdibleFoods = GetEdibleFoods(SelectedSpecies.Needs.FindFoodNeeds());
+
+                // If food being eaten is edible for the selected species
+                if (EdibleFoods.ContainsKey(eatingData.FoodBeingEaten))
+                {
+                    // If food being eaten is preferred
+                    if (EdibleFoods[eatingData.FoodBeingEaten] == true)
+                        VFXManager.Instance.DisplayVFX(SelectedAnimal.transform.position, VFXType.GoodFood);
+
+                    // If food being eaten is not preferred
+                    else
+                        VFXManager.Instance.DisplayVFX(SelectedAnimal.transform.position, VFXType.NeutralFood);
+                }
+
+                // If the food being eaten is not edible for the selected species
+                else
+                    VFXManager.Instance.DisplayVFX(SelectedAnimal.transform.position, VFXType.BadFood);
+
+                // Once VFX has been played, start cooldown before next VFX can be played
+                StartCoroutine(FoodQualityFXCooldown(FOOD_QUALITY_VFX_INTERVAL));
+            }
+        }
+    }
+
     /// <summary>
     /// Enforces cooldown between instances of displaying food FX
     /// </summary>
@@ -168,6 +168,10 @@ public class FoodQualityVFXHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Determine whether animal is currently eating as well as what food they are eating
+    /// </summary>
+    /// <returns></returns>
     private EatingData GetEatingData()
     {
         BehaviorPattern temp = SelectedAnimal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern;
@@ -178,6 +182,22 @@ public class FoodQualityVFXHandler : MonoBehaviour
         }
 
         return new EatingData(false, ItemID.Invalid);
+    }
+    
+    /// <summary>
+    /// Converts a species' food needs into a dictionary for comparison with food currently being eaten
+    /// </summary>
+    /// <param name="foodNeeds"></param>
+    /// <returns></returns>
+    private Dictionary<ItemID, bool> GetEdibleFoods(NeedData[] foodNeeds)
+    {
+        Dictionary<ItemID, bool> edibleFoods = new Dictionary<ItemID, bool>();
+        foreach (NeedData need in foodNeeds)
+        {
+            edibleFoods.Add(need.ID, need.Preferred);
+        }
+
+        return edibleFoods;
     }
     #endregion
 }
