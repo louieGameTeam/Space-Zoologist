@@ -123,6 +123,7 @@ public class FoodSourceManager : GridObjectManager
         //Debug.Log("Returned locations");
         return locations;
     }
+
     public Vector3[] GetFoodSourcesWorldLocationWithSpecies(string speciesName)
     {
         List<FoodSource> foods = GetFoodSourcesWithSpecies(speciesName);
@@ -139,6 +140,7 @@ public class FoodSourceManager : GridObjectManager
         }
         return locations;
     }
+
     public override void Serialize(SerializedMapObjects serializedMapObjects)
     {
         foreach (ItemID speciesID in GameManager.Instance.FoodSources.Keys)
@@ -147,6 +149,7 @@ public class FoodSourceManager : GridObjectManager
             serializedMapObjects.AddType(this.MapObjectName, new GridItemSet(speciesName, this.GetFoodSourcesWorldLocationWithSpecies(speciesName)));
         }
     }
+
     public override void Parse()
     {
         DestroyAll();
@@ -161,6 +164,7 @@ public class FoodSourceManager : GridObjectManager
             }
         }
     }
+
     protected override string GetMapObjectName()
     {
         // String used to identify serialized map objects being handled by this manager

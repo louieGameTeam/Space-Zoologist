@@ -297,6 +297,7 @@ public class GameManager : MonoBehaviour
         m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
         m_resourceManager.Initialize();
+        FoodQualityVFXHandler.Instance.Initialize();
     }
 
     private void InitializeUI()

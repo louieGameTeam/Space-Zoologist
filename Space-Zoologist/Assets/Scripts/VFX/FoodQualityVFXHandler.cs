@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,6 +66,19 @@ public class FoodQualityVFXHandler : MonoBehaviour
 
     #region Public Methods
     /// <summary>
+    /// Initialization function for use by GameManager, to guarantee presence of EventManager.
+    /// Event subscription should occur here
+    /// </summary>
+    public void Initialize()
+    {
+        // When population goes extinct, SelectedAnimal should be deselected to prevent getting locked in no animation playing
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => DeselectAnimalSelection());
+
+        // Same scenario for when population decreases, in case the SelectedAnimal has died
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountChange, (eventData) => HandlePopulationDecrease(eventData));
+    }
+
+    /// <summary>
     /// Updates SpeciesSet to contain all species in the current level
     /// </summary>
     public void UpdateSpeciesList()
@@ -99,7 +113,7 @@ public class FoodQualityVFXHandler : MonoBehaviour
             if (eatingData.IsEating)
             {
                 EdibleFoods = GetEdibleFoods(SelectedSpecies.Needs.FindFoodNeeds());
-
+                Debug.Log($"FOOD CONSUMED: {eatingData.FoodBeingEaten}");
                 // If food being eaten is edible for the selected species
                 if (EdibleFoods.ContainsKey(eatingData.FoodBeingEaten))
                 {
@@ -131,9 +145,7 @@ public class FoodQualityVFXHandler : MonoBehaviour
     {
         CanDisplayFoodQualityFX = false;
 
-        // Deselect animal and species
-        SelectedAnimal = null;
-        SelectedSpecies = null;
+        DeselectAnimalSelection();
 
         yield return new WaitForSeconds(checkInterval);
         CanDisplayFoodQualityFX = true;
@@ -151,21 +163,20 @@ public class FoodQualityVFXHandler : MonoBehaviour
         if (populationList.Count > 0)
         {
             // Select random population from the species
-            int selectedPopIndex = Random.Range(0, populationList.Count);
+            int selectedPopIndex = UnityEngine.Random.Range(0, populationList.Count);
             Population selectedPop = populationList[selectedPopIndex];
 
             // Selects random animal from the selected population
-            SelectedAnimal = selectedPop.AnimalPopulation[Random.Range(0, selectedPop.AnimalPopulation.Count)];
+            SelectedAnimal = selectedPop.AnimalPopulation[UnityEngine.Random.Range(0, selectedPop.AnimalPopulation.Count)];
             SelectedSpecies = SpeciesList[NextSpeciesToDisplayIndex];
 
             // Cycle through species to display FoodVFX for
             NextSpeciesToDisplayIndex = (NextSpeciesToDisplayIndex + 1) % SpeciesList.Count;
         }
 
+        // Reset SelectedSpecies to null if populationList is empty
         else
-        {
             SelectedSpecies = null;
-        }
     }
 
     /// <summary>
@@ -198,6 +209,40 @@ public class FoodQualityVFXHandler : MonoBehaviour
         }
 
         return edibleFoods;
+    }
+
+    /// <summary>
+    /// Deselects animal and species, allowing for new animal to be selected and avoiding
+    /// the possibility that selected animal no longer exists.
+    /// </summary>
+    private void DeselectAnimalSelection()
+    {
+        SelectedAnimal = null;
+        SelectedSpecies = null;
+    }
+
+    /// <summary>
+    /// Handles deselection of animal and species when population count decreases, allowing
+    /// for new animal to be selected and avoiding the possibility that a selected animal no
+    /// longer exists.
+    /// </summary>
+    /// <param name="eventData"> Tuple data passed by event invocation </param>
+    private void HandlePopulationDecrease(object eventData)
+    {
+        ValueTuple<Population, bool> eventTuple = (ValueTuple<Population, bool>)eventData;
+        try
+        {
+            if (eventTuple.Item2 == false)
+            {
+                // Deselect animal and species
+                DeselectAnimalSelection();
+            }
+        }
+            
+        catch
+        {
+            Debug.LogError("FoodQualityVFXHandler.DeselectAnimal: Cast from eventData to tuple failed");
+        }
     }
     #endregion
 }
