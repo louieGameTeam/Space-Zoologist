@@ -20,6 +20,7 @@ public class EatingPattern : UniversalAnimatorPattern
     protected override void EnterPattern(GameObject animal, AnimalData animalData)
     {
         Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
+
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
@@ -34,6 +35,12 @@ public class EatingPattern : UniversalAnimatorPattern
                 {
                     FoodSource foodSource = TileDataController.GetTileData(loopedTile).Food.GetComponent<FoodSource>();
                     foodID = foodSource.Species.ID;
+
+                    // Added to address bug with animals eating incorrect food if foods were placed too closely
+                    if (foodID.Data.Name.Get(ItemName.Type.Serialized) != animal.GetComponent<Animal>().FoodTargetSpeciesName)
+                    {
+                        continue;
+                    }
 
                     this.AnimatorTriggerName = GetTriggerName(i, j);
                     base.EnterPattern(animal, animalData);
