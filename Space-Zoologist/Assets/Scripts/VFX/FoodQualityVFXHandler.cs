@@ -187,10 +187,7 @@ public class FoodQualityVFXHandler : MonoBehaviour
     {
         BehaviorPattern temp = SelectedAnimal.GetComponent<AnimalBehaviorManager>().activeBehaviorPattern;
         if (temp is EatingPattern)
-        {
-            EatingPattern tempEatingPattern = (EatingPattern)temp;
-            return new EatingData(true, tempEatingPattern.FoodID);
-        }
+            return new EatingData(true, ((EatingPattern)temp).FoodID);
 
         return new EatingData(false, ItemID.Invalid);
     }

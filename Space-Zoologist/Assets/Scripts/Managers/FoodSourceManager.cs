@@ -87,7 +87,7 @@ public class FoodSourceManager : GridObjectManager
     /// Get a list of Food Source with the given species name.
     /// </summary>
     /// <param name="speciesName">Same as FoodSourceSpecies.SpeciesName</param>
-    /// <returns>An list of Food Source with the given species name</returns>
+    /// <returns>A list of FoodSource with the given species name</returns>
     public List<FoodSource> GetFoodSourcesWithSpecies(string speciesName) {
         ItemID id = ItemRegistry.FindHasName(speciesName);
         // Given species doesn't exist in the level
@@ -112,7 +112,7 @@ public class FoodSourceManager : GridObjectManager
     /// Get an array of tile positions of Food Source with the given species name.Used to bypass having access to TileSystem.
     /// </summary>
     /// <param name="speciesName">Same as FoodSourceSpecies.SpeciesName</param>
-    /// <returns>An array of tile positions of Food Source with the given species name</returns>
+    /// <returns>An array of tile positions of FoodSource with the given species name</returns>
     public Vector3Int[] GetFoodSourcesLocationWithSpecies(string speciesName) {
         List<FoodSource> foods = GetFoodSourcesWithSpecies(speciesName);
         if (foods == null) return null;
