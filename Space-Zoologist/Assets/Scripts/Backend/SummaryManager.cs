@@ -254,8 +254,8 @@ public class SummaryManager : MonoBehaviour
     private void OnJournalClosed()
     {
         picker = null;
-        EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, null);
-        EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, null);
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, (Action)null);
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, (Action)null);
     }
 
     // A function that processes notebook tab change events.
@@ -272,7 +272,7 @@ public class SummaryManager : MonoBehaviour
         {
             Debug.Log("Research tab was closed.");
             researchOpen = false;
-            EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, null);
+            EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, (Action)null);
         }
 
         // Handle observation tab.
