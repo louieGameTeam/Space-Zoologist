@@ -94,6 +94,7 @@ public class TileStoreSection : StoreSection
     public override void OnCursorPointerUp(PointerEventData eventData)
     {
         base.OnCursorPointerUp(eventData);
+        Debug.Log("IsPlacing " + isPlacing);
         if (eventData.button == PointerEventData.InputButton.Left && isPlacing)
         {
             FinishPlacing();

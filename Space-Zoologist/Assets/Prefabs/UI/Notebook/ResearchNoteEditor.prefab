@@ -260,7 +260,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 25
-  m_CharacterLimit: 0
+  m_CharacterLimit: 1000
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -520,6 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a538a999ae8c39546b069d3326e5cc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   labelText: {fileID: 683279561079602461}
   myInputField: {fileID: 8536026507882544261}
 --- !u!114 &5254684855205236945

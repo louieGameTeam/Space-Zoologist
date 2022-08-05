@@ -187,7 +187,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 StartNewConversationWithoutDeserialization();
-                GameManager.Instance.m_menuManager.ToggleUISingleButton("NotebookButton");
+                GameManager.Instance.m_menuManager.ToggleUISingleButton(false,"NotebookButton");
             }
         }
         else

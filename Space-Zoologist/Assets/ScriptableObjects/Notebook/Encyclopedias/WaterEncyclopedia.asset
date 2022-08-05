@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52e53c4d2142814a94f3088eec699e5, type: 3}
   m_Name: WaterEncyclopedia
   m_EditorClassIdentifier: 
-  articlesList:
+  articles:
   - id:
       title: Summary
       author: 
@@ -21,5 +21,7 @@ MonoBehaviour:
       and 2% bacteria content. \n\nSalt water is composed of 96% pure water, 4% salt
       content, and 0% bacteria content. \n\nStagnant water is composed of 90% pure
       water, 1% salt content, and 9% bacteria content. \n\nWater and their properties
-      may be mixed to create new variants.\n"
-    image: {fileID: 0}
+      may be mixed to create new variants.\n\nGenerally flora and fauna have no problem
+      with high purity water as long as their other water needs of salt and bacteria
+      are met."
+    sprites: []

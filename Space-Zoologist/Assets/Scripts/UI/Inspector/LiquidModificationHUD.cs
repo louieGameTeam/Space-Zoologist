@@ -39,7 +39,7 @@ public class LiquidModificationHUD : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && MenuManager.IsInStore) //If clicking MMB on liquid tile, open HUD
+        if (Input.GetMouseButtonDown(2) && MenuManager.IsInStore) //If clicking MMB on liquid tile, open HUD
         {
             liquidModificationHUD.SetActive(true);
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

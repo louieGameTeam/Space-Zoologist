@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] List<StoreSection> StoreMenus = default;
     [SerializeField] ResourceManager ResourceManager = default;
     [Header("Shared menu dependencies")]
-    [SerializeField] CursorItem CursorItem = default;
+    [SerializeField] UICursorInput CursorItem = default;
     [SerializeField] List<RectTransform> UIElements = default;
     [SerializeField] RectTransform StoreCanvas = default;
     [SerializeField] List<GameObject> UI = default;
@@ -38,6 +38,15 @@ public class MenuManager : MonoBehaviour
         }
         StoreMenus[curMenu]?.gameObject.SetActive(true);
         StoreCanvas.localScale = Vector3.zero;
+    }
+
+    public void TrySellItem(Item item, int amount)
+    {
+        foreach(var section in StoreMenus)
+        {
+            if (section?.SellItem(item, amount) > 0)
+                return;
+        }
     }
 
     public void OnToggleMenu(GameObject menu)
@@ -146,14 +155,7 @@ public class MenuManager : MonoBehaviour
     {
         foreach(GameObject ui in UI)
         {
-            ui.GetComponent<Button>().interactable = isActive;
-
-            // If this ui element has children,
-            // try to get the image in the first child and set it's color to disabled
-            if (ui.transform.childCount > 0)
-            {
-                ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
-            }
+            SetUIButton(isActive, ui.GetComponent<Button>());
         }
 
         // Commented out 10/07/2021 because dialogue system shouldn't close inspector
@@ -172,20 +174,39 @@ public class MenuManager : MonoBehaviour
 
     public void ToggleUISingleButton(string buttonName)
     {
+        buttonName = buttonName.ToLower();  
         foreach(GameObject ui in UI)
         {
-            if(ui.name == buttonName)
+            if(ui.name.ToLower().Contains(buttonName))
             {
                 bool isActive = !ui.GetComponent<Button>().interactable;
-                ui.GetComponent<Button>().interactable = isActive;
-
-                // Make sure the UI element has a child with an image to change color for
-                if (ui.transform.childCount >= 1)
-                {
-                    ui.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
-                }
+                SetUIButton(isActive, ui.GetComponent<Button>());
                 break;
             }
+        }
+    }
+
+    public void ToggleUISingleButton(bool isActive, string buttonName)
+    {
+        buttonName = buttonName.ToLower();
+        foreach (GameObject ui in UI)
+        {
+            if (ui.name.ToLower().Contains(buttonName))
+            {
+                SetUIButton(isActive,ui.GetComponent<Button>());
+                break;
+            }
+        }
+    }
+
+    private void SetUIButton(bool isActive, Button button)
+    {
+        button.interactable = isActive;
+
+        // Make sure the UI element has a child with an image to change color for
+        if (button.transform.childCount >= 1)
+        {
+            button.transform.GetChild(0).GetComponent<Image>().color = isActive ? Color.white : Color.gray;
         }
     }
 }

@@ -45,7 +45,7 @@ public class TileDataController : MonoBehaviour
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
     public HashSet<Vector3Int> ChangedTiles = new HashSet<Vector3Int>();
     private HashSet<Vector3Int> RemovedTiles = new HashSet<Vector3Int>();
-    private List<Vector3Int> HighlightedTiles = new List<Vector3Int>();
+    private HashSet<Vector3Int> HighlightedTiles = new HashSet<Vector3Int>();
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
@@ -262,7 +262,7 @@ public class TileDataController : MonoBehaviour
         TilemapRenderer renderer = Tilemap.GetComponent<TilemapRenderer>();
         renderer.sharedMaterial.SetTexture("_GridInfoTex", TilemapTexture);
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetVector("_GridTexDim", new Vector2(ReserveWidth, ReserveHeight));
-        HighlightedTiles = new List<Vector3Int>();
+        HighlightedTiles = new HashSet<Vector3Int>();
 
         for (int i = 0; i < ReserveWidth; ++i)
         {
@@ -312,7 +312,7 @@ public class TileDataController : MonoBehaviour
                 {
                     // TODO: liquid implementation
                     //tileData.PreviewLiquidBody(MergeLiquidBodies(tilePosition, tile));
-                    LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents);
+                    LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents,false);
                 }
                 if (tile.type != TileType.Wall)
                     TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
@@ -320,8 +320,8 @@ public class TileDataController : MonoBehaviour
                 ChangedTiles.Add(tilePosition);
                 ApplyChangeToTilemapTexture(tilePosition);
             }
-            else if ((tilePosition.x >= ReserveWidth && tilePosition.y > 0) ||
-                (tilePosition.x > 0 && tilePosition.y >= ReserveHeight))
+            else if ((tilePosition.x >= ReserveWidth && tilePosition.y >= 0) ||
+                (tilePosition.x >= 0 && tilePosition.y >= ReserveHeight))
             {
                 // if it isn't within grid bounds and is bigger than the current reserve size
                 // change the array such that it will now contain the new tile
@@ -514,6 +514,7 @@ public class TileDataController : MonoBehaviour
     {
         IsDrafting = false;
         GameManager.Instance.TryToUnpause("GridSystemDrafting");
+        GameManager.Instance.m_inspector.ResetSelection();
         UpdateUI(true);
     }
 
@@ -748,7 +749,6 @@ public class TileDataController : MonoBehaviour
         List<Vector3Int> changedTiles = new List<Vector3Int>();
 
         List<ConstructionCluster> finishedClusters = new List<ConstructionCluster>();
-
         foreach (ConstructionCluster cluster in ConstructionClusters)
         {
             // do the countdown
@@ -764,16 +764,8 @@ public class TileDataController : MonoBehaviour
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
-
                     LiquidbodyController.Instance.RemoveLiquidContentsFromLiquidbodyAt((Vector3Int)bufferPosition);
                 }
-
-                LiquidbodyController.Instance.MergeConstructingTiles();
-
-                //Remove from the liquidbody controller's construction buffer after merging
-                foreach(Vector2Int position in cluster.ConstructionTilePositions)
-                    LiquidbodyController.Instance.RemoveConstructingTile((Vector3Int)position);
-
                 if (constructionFinishedCallback != null)
                     constructionFinishedCallback();
             }
@@ -788,10 +780,9 @@ public class TileDataController : MonoBehaviour
                 }
             }
         }
-
         foreach (ConstructionCluster cluster in finishedClusters)
             ConstructionClusters.Remove(cluster);
-
+        LiquidbodyController.Instance.MergeConstructingTiles();
         BufferTexture.Apply();
         BufferCenterTexture.Apply();
         Material bufferMaterial = bufferGameObject.GetComponent<MeshRenderer>().material;
@@ -997,29 +988,33 @@ public class TileDataController : MonoBehaviour
     /// <param name="tilePosition">Position of tile in grid space.</param>
     /// <param name="flag">Compiled flags to be set.</param>
     /// <param name="color">Color of the tile (in cases of highlighting or other effects that require color).</param>
-    public void ApplyFlagToTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag, Color color)
+    public void ApplyFlagsToTileTexture(Tilemap tilemap, List<Vector3Int> tilePositionList, TileFlag flag, Color color)
     {
-        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+        // Apply to each pixel
+        foreach(var tilePosition in tilePositionList)
+        {
+            Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
 
-        // currently only in alpha channel, can expand to rgb as well
-        // note that color channels can only contain [0...1] due to samplers
-        int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
-        int flagInt = (int)flag;
+            // currently only in alpha channel, can expand to rgb as well
+            // note that color channels can only contain [0...1] due to samplers
+            int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
+            int flagInt = (int)flag;
 
-        // if nothing there, just set the flag
-        if (alphaBitMask == 0)
-            alphaBitMask = flagInt;
-        // otherwise if the flag isn't already there then add it
-        else if (alphaBitMask % flagInt != 0)
-            alphaBitMask *= flagInt;
-        // if there is already the flag do nothing
-        else
-            return;
+            // if nothing there, just set the flag
+            if (alphaBitMask == 0)
+                alphaBitMask = flagInt;
+            // otherwise if the flag isn't already there then add it
+            else if (alphaBitMask % flagInt != 0)
+                alphaBitMask *= flagInt;
+            // if there is already the flag do nothing
+            else
+                return;
 
-        tilemap.SetColor(tilePosition, color);
+            tilemap.SetColor(tilePosition, color);
 
-        tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
-        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+            tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
+            TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        }       
         TilemapTexture.Apply();
 
         // add to propertyblock
@@ -1033,24 +1028,28 @@ public class TileDataController : MonoBehaviour
     /// <param name="tilemap">Tilemap to be affected (mostly for terrain).</param>
     /// <param name="tilePosition">Position of tile in grid space.</param>
     /// <param name="flag">Compiled flags to be set.</param>
-    public void RemoveFlagsFromTileTexture(Tilemap tilemap, Vector3Int tilePosition, TileFlag flag)
+    public void RemoveFlagsFromTileTexture(Tilemap tilemap, HashSet<Vector3Int> tilePositionList, TileFlag flag)
     {
-        Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
+        foreach(var tilePosition in tilePositionList)
+        {
+            Color tilePixel = TilemapTexture.GetPixel(tilePosition.x, tilePosition.y);
 
-        int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
-        int flagInt = (int)flag;
+            int alphaBitMask = (int)(tilePixel.a * FLAG_VALUE_MULTIPLIER);
+            int flagInt = (int)flag;
 
-        // return if flag is not there
-        if (alphaBitMask == 0 || alphaBitMask % flagInt != 0)
-            return;
+            // return if flag is not there
+            if (alphaBitMask == 0 || alphaBitMask % flagInt != 0)
+                return;
 
-        alphaBitMask /= flagInt;
+            alphaBitMask /= flagInt;
 
-        if (flag == TileFlag.HIGHLIGHT_FLAG)
-            tilemap.SetColor(tilePosition, Color.white);
+            if (flag == TileFlag.HIGHLIGHT_FLAG)
+                tilemap.SetColor(tilePosition, Color.white);
 
-        tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
-        TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+            tilePixel.a = (float)alphaBitMask / FLAG_VALUE_MULTIPLIER;
+            TilemapTexture.SetPixel(tilePosition.x, tilePosition.y, tilePixel);
+        }
+        
         TilemapTexture.Apply();
 
         // add to propertyblock
@@ -1073,21 +1072,31 @@ public class TileDataController : MonoBehaviour
 
     public void ClearHighlights()
     {
-        foreach (Vector3Int tilePosition in HighlightedTiles)
-            RemoveFlagsFromTileTexture(Tilemap, tilePosition, TileFlag.HIGHLIGHT_FLAG);
-
+        RemoveFlagsFromTileTexture(Tilemap, HighlightedTiles, TileFlag.HIGHLIGHT_FLAG);
         HighlightedTiles.Clear();
     }
 
-    public void HighlightTile(Vector3Int tilePosition, Color color)
+    public void HighlightTiles(List<Vector3Int> tilePositionList, Color color)
     {
-        if (!HighlightedTiles.Contains(tilePosition))
+        var toHighlight = new List<Vector3Int>();
+        foreach(var tile in tilePositionList)
         {
-            HighlightedTiles.Add(tilePosition);
-            
-            ApplyFlagToTileTexture(Tilemap, tilePosition, TileFlag.HIGHLIGHT_FLAG, color);
+            if (HighlightedTiles.Add(tile))
+            {
+                toHighlight.Add(tile);
+            }
+        }
+        ApplyFlagsToTileTexture(Tilemap, toHighlight, TileFlag.HIGHLIGHT_FLAG, color);
+    }
+
+    public void HighlightTile(Vector3Int tile, Color color)
+    {
+        if (HighlightedTiles.Add(tile))
+        {           
+            ApplyFlagsToTileTexture(Tilemap, new List<Vector3Int>() { tile }, TileFlag.HIGHLIGHT_FLAG, color);
         }
     }
+
 
     // super inefficient but not priority rn
     public void HighlightRadius(Vector3Int tilePosition, Color color, float radius)
@@ -1173,13 +1182,56 @@ public class TileDataController : MonoBehaviour
                 }
                 else
                 {
-                    HighlightTile(pos, selectedSpecies.AccessibleTerrain.Contains(tile.type) ? Color.green : Color.red);
+                    HighlightTile(pos, IsValidTileForAnimal(selectedSpecies,pos) ? Color.green : Color.red);
                 }
             }
         }
         if (!valid) return false;
-        tile = GetGameTileAt(cellPosition);
-        return selectedSpecies.AccessibleTerrain.Contains(tile.type);
+        return IsValidTileForAnimal(selectedSpecies, cellPosition);
+    }
+
+    /// <summary>
+    /// Checks if a single tile is valid for a certain species
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <returns></returns>
+    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
+    {
+        var tile = GetGameTileAt(cellPosition);
+        return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.AccessibleTerrain.Contains(tile.type);
+    }
+
+    /// <summary>
+    /// Overload where treeNeeds and AccessibleTerrain can be passed in from a cache for improved performance
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <param name="treeNeeds"></param>
+    /// <returns></returns>
+    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds, HashSet<TileType> accessibleTerrain)
+    {
+        var tile = GetGameTileAt(cellPosition);
+        return IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds) && accessibleTerrain.Contains(tile.type);
+    }
+
+    public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition)
+    {
+        // Check for tree requirements
+        var treeNeeds = species.RequiredTreeNeeds;
+        if (treeNeeds.Length == 0)
+            return true;
+        var tileFoodID = GetTileData(cellPosition).Food?.GetComponent<FoodSource>().Species.ID;
+        bool found = treeNeeds.Where(need => need.ID == tileFoodID).Count() > 0;
+        return found;
+    }
+    public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds)
+    {
+        if (treeNeeds.Length == 0)
+            return true;
+        var tileFoodID = GetTileData(cellPosition).Food?.GetComponent<FoodSource>().Species.ID;
+        bool found = treeNeeds.Where(need => need.ID == tileFoodID).Count() > 0;
+        return found;
     }
 
     private bool IsValidFoodSourcePlacement(Vector3Int cellPosition, FoodSourceSpecies species)
@@ -1300,6 +1352,11 @@ public class TileDataController : MonoBehaviour
     {
         Vector3Int loc = new Vector3Int((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.z);//Grid.WorldToCell(mousePosition); old implementation that causes stack overflow
         return IsCellinGrid(loc.x, loc.y);
+    }
+
+    public bool IsWithinGridBounds(Vector3Int tilePosition)
+    {        
+        return IsCellinGrid(tilePosition.x, tilePosition.y);
     }
     #endregion
 
@@ -1943,7 +2000,7 @@ public class TileDataController : MonoBehaviour
     /// Get the cell size for the grid
     /// </summary>
     /// <returns></returns>
-    public Vector3 CellSize() => Grid.cellSize;
+    public Vector3 CellSize => Grid.cellSize;
 
     /// <summary>
     /// Convert a world position to cell positions on the grid.
@@ -1958,6 +2015,13 @@ public class TileDataController : MonoBehaviour
     public Vector3 CellToWorld(Vector3Int worldPosition)
     {
         return Grid.CellToWorld(worldPosition);
+    }
+
+    public Vector3 SnapAreaToCell(Vector3 worldPos, Vector2Int size)
+    {
+        Vector3 pos = CellToWorld(WorldToCell(worldPos));
+        pos += new Vector3(size.x / 2f, size.y / 2f, 0);
+        return pos;
     }
 
     public ConstructionCluster GetConstructionClusterAtPosition(Vector3Int position)

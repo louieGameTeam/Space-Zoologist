@@ -22,7 +22,7 @@ public class DisplayInspectorText : MonoBehaviour
     [SerializeField] private GameObject NeedSliderPrefab = null;
     public InspectorText CurrentDisplay => currentDisplay;
     private InspectorText currentDisplay = InspectorText.Population;
-    public enum InspectorText { Population, Food, Area, Liquid }
+    public enum InspectorText { Population, Food, Area, Liquid, Nothing }
 
     private List<GameObject> needSliders = new List<GameObject>();
     private Color populationDefaultColor;
@@ -184,6 +184,7 @@ public class DisplayInspectorText : MonoBehaviour
             Destroy(obj);
         }
         needSliders.Clear();
+        currentDisplay = InspectorText.Nothing;
     }
 
     private void GenerateSliders(MonoBehaviour life) 

@@ -10,7 +10,7 @@ public class MoveObject : MonoBehaviour
     public UnityEvent OnObjectMoved => onObjectMoved;
     private TileDataController gridSystem = default;
     private FoodSourceManager foodSourceManager = default;
-    [SerializeField] CursorItem cursorItem = default;
+    [SerializeField] UICursorInput cursorItem = default;
     [SerializeField] GameObject MoveButtonPrefab = default;
     [SerializeField] GameObject DeleteButtonPrefab = default;
     [SerializeField] FoodSourceStoreSection FoodSourceStoreSection = default;
@@ -23,6 +23,7 @@ public class MoveObject : MonoBehaviour
     private enum ItemType { NONE, FOOD, ANIMAL, TILE }
 
     GameObject objectToMove = null;
+    ItemPlaceCursorPreviewMover cursorPreviewMover = null;
     GameObject MoveButton = null;
     GameObject DeleteButton = null;
     private ItemType movingItemType;
@@ -76,12 +77,26 @@ public class MoveObject : MonoBehaviour
 
     public void StartMovement()
     {
+        if (moveCost > GameManager.Instance.Balance)
+            return;
         moving = true;
         MoveButton.SetActive(false);
         DeleteButton.SetActive(false);
-
+        bool shouldSnap = false;
+        Vector2Int size = Vector2Int.zero;
+        Sprite sprite = tempItem.Icon;
         if (movingItemType == ItemType.TILE)
+        {
             tileToDelete.SetActive(true);
+            shouldSnap = true;
+            size = new Vector2Int(1, 1);
+        }            
+        else if(movingItemType == ItemType.FOOD)
+        {
+            shouldSnap = true;
+            size = objectToMove.GetComponent<FoodSource>().Species.Size;
+        }
+        cursorPreviewMover = new ItemPlaceCursorPreviewMover(gridSystem, sprite , size, shouldSnap);
     }
 
     // Update is called once per frame
@@ -141,9 +156,8 @@ public class MoveObject : MonoBehaviour
 
             if (objectToMove != null && moving)
             {
-                // Preview placement
-                GameObjectFollowMouse(objectToMove);
                 HighlightGrid();
+                cursorPreviewMover.UpdatePosition();
                 // If trying to place
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -163,12 +177,12 @@ public class MoveObject : MonoBehaviour
                     {
                         case ItemType.ANIMAL:
                             successfullyMoved = TryPlaceAnimal(worldPos, objectToMove);
-                            print (objectToMove.GetInstanceID());
                             break;
                         case ItemType.FOOD:
                             successfullyMoved = TryPlaceFood(worldPos, objectToMove);
                             break;
                         case ItemType.TILE:
+                            Debug.Log("PLace");
                             TryPlaceTile(worldPos, objectToMove);
                             break;
                         default:
@@ -206,6 +220,8 @@ public class MoveObject : MonoBehaviour
         moveCost = 0;
         sellBackCost = 0;
         gridSystem.ClearHighlights();
+        cursorPreviewMover?.Clear();
+        cursorPreviewMover = null;
     }
     // Set up UI for move and delete
     private void SetMoveUI()
@@ -263,7 +279,6 @@ public class MoveObject : MonoBehaviour
     {
         TileData tileData = gridSystem.GetTileData(pos);
         GameObject toMove = null;
-
         if (tileData == null)
         {
             return null;
@@ -302,6 +317,7 @@ public class MoveObject : MonoBehaviour
                 tileToDelete.transform.position = (Vector3)pos + new Vector3(0.5f, 0.5f, 0);
                 toMove = tileToDelete;
                 string tileName = tileToDelete.name;
+                tempItem = ItemRegistry.Get(ItemRegistry.FindTile(gridSystem.GetGameTileAt(pos).type)).ShopItem;
                 tempItem.SetupData(tileName, 0);
 
                 initialTilePosition = pos;
@@ -364,14 +380,6 @@ public class MoveObject : MonoBehaviour
                 break;
         }
         Reset();
-    }
-
-    private void GameObjectFollowMouse(GameObject toMove)
-    {
-        float z = toMove.transform.position.z;
-        curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        curPos.z = z;
-        toMove.transform.position = curPos;
     }
 
     private void HighlightGrid()
@@ -514,9 +522,10 @@ public class MoveObject : MonoBehaviour
         }
         else //Otherwise, make sure its needs are up to date
         {
+            // Note: This is now handled by the NeedCache
             // We may want to change this to rebuild the cache for only the food source that was moved
-            GameManager.Instance.Needs.Rebuild();
-            GameManager.Instance.m_inspector.UpdateCurrentDisplay();
+/*            GameManager.Instance.Needs.Rebuild();
+            GameManager.Instance.m_inspector.UpdateCurrentDisplay();*/
         }
 
     }

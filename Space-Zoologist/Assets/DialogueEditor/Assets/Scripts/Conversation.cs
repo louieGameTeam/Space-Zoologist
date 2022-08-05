@@ -53,6 +53,11 @@ namespace DialogueEditor
         /// </summary>
         public SpeechNode Dialogue;
 
+        /// <summary>
+        /// Shoud enable noetbook UI during dialogue or not 
+        /// </summary>
+        public bool enableNotebookUI;
+
         public UnityEngine.Events.UnityEvent Event;
     }
 

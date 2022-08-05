@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 /// <summary>
 /// Holds the cache for the availability of needs 
 /// and ratings of different populations and food source
@@ -24,6 +23,7 @@ public class NeedCache
         EventManager.Instance.SubscribeToEvent(EventType.FoodSourceChange, MarkFoodCacheDirty);
         EventManager.Instance.SubscribeToEvent(EventType.TilemapChange, MarkFoodCacheDirty);
         EventManager.Instance.SubscribeToEvent(EventType.InspectorSelectionChanged, RebuildIfDirty);
+        EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, RebuildIfDirty);
     }
 
     ~NeedCache()
@@ -33,7 +33,7 @@ public class NeedCache
         EventManager.Instance.UnsubscribeToEvent(EventType.FoodSourceChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.TilemapChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.InspectorSelectionChanged, RebuildIfDirty);
-
+        EventManager.Instance.UnsubscribeToEvent(EventType.StoreToggled, RebuildIfDirty);
     }
 
     private void MarkPopulationCacheDirty()
@@ -51,16 +51,18 @@ public class NeedCache
         // If food cache is dirty then rebuild both food and population cache
         if (FoodCacheDirty)
         {
+            EventManager.Instance.InvokeEvent(EventType.PreCacheRebuild, null);
             Rebuild();
         }
         // If population cache is dirty then rebuild only that
         else if (PopulationCacheDirty)
         {
+            EventManager.Instance.InvokeEvent(EventType.PreCacheRebuild, null);
             RebuildPopulationCache();
         }
     }
 
-    public void Rebuild()
+    private void Rebuild()
     {
         // Rebuild the food source first, because population depends on their output,
         // which depends on their ratings

@@ -12,6 +12,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [SerializeField] TextMeshProUGUI ItemName = default;
     [SerializeField] Text RemainingAmountText = default;
     [SerializeField] Button RequestButton = default;
+    [SerializeField] Button SellButton = default;
     [SerializeField] GameObject PriceRoot = default;
     [SerializeField] TextMeshProUGUI PriceText = default;
     public int RemainingAmount = -1;
@@ -55,6 +56,12 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 notebookUI.FillResourceRequest(request);
             }
         });
+
+        SellButton.onClick.AddListener(() =>
+        {
+            // sell
+            GameManager.Instance.m_menuManager.TrySellItem(item,1);
+        });
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -70,7 +77,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         this.RemainingAmountText.text = "" + this.RemainingAmount;
         RequestButton.gameObject.SetActive(RemainingAmount <= 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
-
+        SellButton.gameObject.SetActive(RemainingAmount > 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
         if (RemainingAmount > 0)
         {
             if (highlightImage.enabled) RemainingAmountText.color = Color.green;

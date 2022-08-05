@@ -224,9 +224,10 @@ public static class NeedRatingBuilder
                 // then half the boost comes from how close to the max is used
                 // and the other half of the boost comes from how much of 
                 // the preferred item is used
+                // towardsMaxBoost is ignored if the min and max are the same
                 if (magnitude > 0)
                 {
-                    towardsMaxBoost = 0.5f * (totalUsed / maxUsed);
+                    towardsMaxBoost = 0.5f * ((totalUsed - minNeeded) / magnitude);
                     preferenceBoost *= 0.5f;
                 }
 
