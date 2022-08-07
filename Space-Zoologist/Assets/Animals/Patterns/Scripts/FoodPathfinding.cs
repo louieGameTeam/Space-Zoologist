@@ -10,7 +10,6 @@ public class FoodPathfinding : GeneralPathfinding
 
     #region Private Fields
     private Dictionary<ItemID, float> FoodProbabilities;
-    private HashSet<ItemID> FoodItems; // Set of all possible food items
     [Header("Food Probabilities (Weights)")]
     [SerializeField] private float GoodFoodProbability = default;
     [SerializeField] private float NeutralFoodProbability = default;
@@ -19,14 +18,10 @@ public class FoodPathfinding : GeneralPathfinding
 
     protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
     {
-        // If the FoodItems set hasn't been initialized yet, do so
-        if (FoodItems == null)
-            FoodItems = new HashSet<ItemID>(ItemRegistry.GetItemIDsWithCategory(ItemRegistry.Category.Food));
-
         Animal animal = gameObject.GetComponent<Animal>();
 
         // Assign weights to each food ItemID based on species of current animal
-        FoodProbabilities = AssignFoodProbabilities(animal.PopulationInfo.Species.Needs.FindFoodNeeds());
+        FoodProbabilities = AssignFoodProbabilities(animal.PopulationInfo.Species.Needs.FindFoodNeeds(), animal);
 
         // Select random accessible food species to path to, accounting for weights of each food type
         SelectRandomFood(animalData);
@@ -79,26 +74,71 @@ public class FoodPathfinding : GeneralPathfinding
     /// </summary>
     /// <param name="foodNeeds"></param>
     /// <returns></returns>
-    private Dictionary<ItemID, float> AssignFoodProbabilities(NeedData[] foodNeeds)
+    private Dictionary<ItemID, float> AssignFoodProbabilities(NeedData[] foodNeeds, Animal animal)
     {
         Dictionary<ItemID, float> foodProbabilities = new Dictionary<ItemID, float>();
+        NeedRatingCache needRatingCache = GameManager.Instance.Needs.Ratings;
 
-        // A species' foodNeeds only contain foods that are edible for them
-        // Assign food weights for good and neutral foods, any food ID not in
-        // the foodWeights dict should default to the bad food weight.
-        foreach (NeedData need in foodNeeds)
+        // If NeedRatingCache has been built, use need ratings to determine food probabilities
+        if (needRatingCache.HasRating(animal.PopulationInfo))
         {
-            if (need.Preferred)
-                foodProbabilities.Add(need.ID, GoodFoodProbability);
+            NeedRating needRating = needRatingCache.GetRating(animal.PopulationInfo);
 
-            else
-                foodProbabilities.Add(need.ID, NeutralFoodProbability);
+            foreach (NeedData need in foodNeeds)
+            {
+                if (need.Preferred)
+                {
+                    // If food needs are met and food is good, add good probability
+                    if (needRating.FoodNeedIsMet)
+                        foodProbabilities.Add(need.ID, GoodFoodProbability);
+
+                    // If food needs are not met and food is good, add bad probability
+                    else
+                        foodProbabilities.Add(need.ID, BadFoodProbability);
+                }
+
+                // If food is not preferred, must be neutral, which is always assigned neutral probability
+                else
+                {
+                    foodProbabilities.Add(need.ID, NeutralFoodProbability);
+                }
+            }
+
+            foreach (ItemID foodItem in FoodQualityVFXHandler.Instance.FoodItems)
+            {
+                if (!foodProbabilities.ContainsKey(foodItem))
+                {
+                    // If food needs are met, normal probability assigned
+                    if (needRating.FoodNeedIsMet)
+                        foodProbabilities.Add(foodItem, BadFoodProbability);
+
+                    // If food needs are not met, good food probability is assigned to bad food
+                    else
+                        foodProbabilities.Add(foodItem, GoodFoodProbability);
+                }
+            }
         }
 
-        foreach (ItemID foodItem in FoodItems)
+        // If NeedRatingCache has not been built, default to basic probability assignment
+        else
         {
-            if (!foodProbabilities.ContainsKey(foodItem))
-                foodProbabilities.Add(foodItem, BadFoodProbability);
+            // A species' foodNeeds only contain foods that are edible for them
+            // Assign food weights for good and neutral foods, any food ID not in
+            // the foodWeights dict should default to the bad food weight.
+            foreach (NeedData need in foodNeeds)
+            {
+                if (need.Preferred)
+                    foodProbabilities.Add(need.ID, GoodFoodProbability);
+
+                else
+                    foodProbabilities.Add(need.ID, NeutralFoodProbability);
+            }
+
+            foreach (ItemID foodItem in FoodQualityVFXHandler.Instance.FoodItems)
+            {
+                if (!foodProbabilities.ContainsKey(foodItem))
+                    foodProbabilities.Add(foodItem, BadFoodProbability);
+            }
         }
 
         return foodProbabilities;
@@ -113,7 +153,7 @@ public class FoodPathfinding : GeneralPathfinding
         // Set of all reachable food species to the current animal
         HashSet<ItemID> reachableFoodSpecies = new HashSet<ItemID>();
         float universalProbability = 0;
-        foreach (ItemID foodItem in FoodItems)
+        foreach (ItemID foodItem in FoodQualityVFXHandler.Instance.FoodItems)
         {
             Vector3Int[] foodItemLocations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(foodItem.Data.Name.Get(ItemName.Type.Serialized));
             if (foodItemLocations != null)

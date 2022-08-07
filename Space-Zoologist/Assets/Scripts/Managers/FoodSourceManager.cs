@@ -93,7 +93,7 @@ public class FoodSourceManager : GridObjectManager
         // Given species doesn't exist in the level
         if (!GameManager.Instance.FoodSources.ContainsKey(id))
         {
-            Debug.Log("Food source not in level data");
+            // Debug.Log("Food source not in level data");
             return null;
         } 
         FoodSourceSpecies species = GameManager.Instance.FoodSources[id];
