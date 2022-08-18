@@ -171,7 +171,6 @@ public class NotebookUI : MonoBehaviour
                 GameManager.Instance.TryToUnpause("Notebook");
                 AudioManager.instance.PlayOneShot(SFXType.NotebookClose);
             }
-                
         }
 
         this.isOpen = isOpen;
