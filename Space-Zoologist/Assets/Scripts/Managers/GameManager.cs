@@ -252,6 +252,16 @@ public class GameManager : MonoBehaviour
             this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
         }
         LoadMap();
+
+        if (FoodQualityVFXHandler.Instance != null)
+        {
+            FoodQualityVFXHandler.Instance.UpdateSpeciesList();
+        }
+        
+        else
+        {
+            Debug.LogError("FoodQualityVFXHandler Instance not found");
+        }
     }
 
     private void SetManagers()
@@ -287,6 +297,7 @@ public class GameManager : MonoBehaviour
         m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
         m_resourceManager.Initialize();
+        FoodQualityVFXHandler.Instance.Initialize();
     }
 
     private void InitializeUI()

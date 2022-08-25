@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 797833649837637184}
   - component: {fileID: -3547515025713862425}
   m_Layer: 0
-  m_Name: SpaceMaplePathfinding
+  m_Name: FoodPathfinding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destination: 0
-  FoodSpeciesName: Space Maple
+  foodSpeciesName: Berries
+  GoodFoodProbability: 1
+  NeutralFoodProbability: 0.2
+  BadFoodProbability: 0.1

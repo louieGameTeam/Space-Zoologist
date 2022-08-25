@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[CustomPropertyDrawer(typeof(EditorReadOnlyAttribute))]
 public class EditorReadOnlyDrawer : PropertyDrawer
 {
     #region Public Methods

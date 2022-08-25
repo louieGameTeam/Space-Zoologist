@@ -60,11 +60,11 @@ public class MovementController : MonoBehaviour
         this.UpdateVisualLogic(this.NextPathTile);
         this.CalculateSpeed();
         this.HasPath = true;
-        // Debug.Log(gameObject.name + " path assigned");
-        // foreach(Vector3 pathTile in pathToDestination)
-        // {
-        //     Debug.Log(pathTile.x + ", " + pathTile.y);
-        // }
+        //Debug.Log(gameObject.name + " path assigned");
+        //foreach (Vector3 pathTile in pathToDestination)
+        //{
+        //    Debug.Log(pathTile.x + ", " + pathTile.y);
+        //}
     }
 
     public void ResetPathfindingConditions()
