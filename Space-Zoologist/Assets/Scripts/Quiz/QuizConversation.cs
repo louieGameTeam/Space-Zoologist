@@ -154,6 +154,11 @@ public class QuizConversation : MonoBehaviour
 
             // Create a new speech node
             EditableSpeechNode currentSpeechNode = CreateSpeechNode(conversation, editableConversation, question.Question, 0, i * 300, i == 0, null);
+
+            // Allow notebook to be accessed during reportback quizzes, but disable encyclopedia
+            currentSpeechNode.enableNotebookUI = true;
+            EventManager.Instance.InvokeEvent(EventType.ReportBackStart, null);
+
             nodes.Add(currentSpeechNode);
 
             // If a previous speech node exists, then make the options on the previous node
@@ -180,6 +185,10 @@ public class QuizConversation : MonoBehaviour
                 // Create a dummy node. It is used to invoke events
                 UnityAction optionCallback = OptionSelectedFunctor(i, j);
                 EditableSpeechNode dummyNode = CreateSpeechNode(conversation, editableConversation, string.Empty, j * 220, (i * 300) + 200, false, optionCallback);
+
+                // Continues allowing notebook to be accessed in between reportback questions, prevents closing of notebook
+                dummyNode.enableNotebookUI = true;
+
                 nodes.Add(dummyNode);
 
                 // Make the dummy node advance immediately
