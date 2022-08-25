@@ -6797,6 +6797,53 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 228618991}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2005446642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2005446644}
+  - component: {fileID: 2005446643}
+  m_Layer: 0
+  m_Name: FoodQualityVFXHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2005446643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005446642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8865c6c8e808ed445a28b3a4b08dae2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectedAnimal: {fileID: 0}
+  SelectedSpecies: {fileID: 0}
+  CanDisplayFoodQualityFX: 1
+  FoodQualityVFXInterval: 15
+--- !u!4 &2005446644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005446642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 661.43744, y: 681.81067, z: -254.16582}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092096914 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5848914588836196529, guid: b6fa91312476840f19ee43626e3f9dfb,
@@ -7609,8 +7656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: -80, y: -140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3162495226808526272
 CanvasRenderer:
@@ -7846,7 +7893,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25, y: 0}
+  m_AnchoredPosition: {x: -25, y: -65}
   m_SizeDelta: {x: -130, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &3579607859477499988
@@ -8246,7 +8293,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -156, y: 77}
-  m_SizeDelta: {x: 1102, y: 0}
+  m_SizeDelta: {x: 1102, y: 330}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &5839509403556141088
 MonoBehaviour:

@@ -21,7 +21,6 @@ public class FoodQualityVFXHandler : MonoBehaviour
     }
 
     #region Public Fields
-    public static FoodQualityVFXHandler Instance = null;
     public HashSet<ItemID> FoodItems => foodItems;
     #endregion
 
@@ -40,17 +39,6 @@ public class FoodQualityVFXHandler : MonoBehaviour
     #endregion
 
     #region Monobehaviour Callbacks
-    private void Awake()
-    {
-        if (Instance)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        Instance = this;
-        foodItems = new HashSet<ItemID>(ItemRegistry.GetItemIDsWithCategory(ItemRegistry.Category.Food));
-    }
 
     private void Update()
     {
@@ -76,6 +64,8 @@ public class FoodQualityVFXHandler : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
+        foodItems = new HashSet<ItemID> (ItemRegistry.GetItemIDsWithCategory (ItemRegistry.Category.Food));
+
         // When population goes extinct, SelectedAnimal should be deselected to prevent getting locked in no animation playing
         EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, () => DeselectAnimalSelection());
 

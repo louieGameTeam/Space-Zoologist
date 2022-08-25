@@ -104,7 +104,7 @@ public class FoodPathfinding : GeneralPathfinding
                 }
             }
 
-            foreach (ItemID foodItem in FoodQualityVFXHandler.Instance.FoodItems)
+            foreach (ItemID foodItem in GameManager.Instance.m_foodQualityVFXManager.FoodItems)
             {
                 if (!foodProbabilities.ContainsKey(foodItem))
                 {
@@ -134,7 +134,7 @@ public class FoodPathfinding : GeneralPathfinding
                     foodProbabilities.Add(need.ID, NeutralFoodProbability);
             }
 
-            foreach (ItemID foodItem in FoodQualityVFXHandler.Instance.FoodItems)
+            foreach (ItemID foodItem in GameManager.Instance.m_foodQualityVFXManager.FoodItems)
             {
                 if (!foodProbabilities.ContainsKey(foodItem))
                     foodProbabilities.Add(foodItem, BadFoodProbability);
@@ -153,7 +153,7 @@ public class FoodPathfinding : GeneralPathfinding
         // Set of all reachable food species to the current animal
         HashSet<ItemID> reachableFoodSpecies = new HashSet<ItemID>();
         float universalProbability = 0;
-        foreach (ItemID foodItem in FoodQualityVFXHandler.Instance.FoodItems)
+        foreach (ItemID foodItem in GameManager.Instance.m_foodQualityVFXManager.FoodItems)
         {
             Vector3Int[] foodItemLocations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(foodItem.Data.Name.Get(ItemName.Type.Serialized));
             if (foodItemLocations != null)
