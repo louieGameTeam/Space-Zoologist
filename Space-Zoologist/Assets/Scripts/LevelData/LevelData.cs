@@ -22,6 +22,8 @@ public class LevelData : ScriptableObject
         }
     }
 
+    public bool IsSpacer = false;
+
     public Level Level = default;
     public float StartingBalance => startingBalance;
     public List<FoodSourceSpecies> FoodSourceSpecies => foodSources;

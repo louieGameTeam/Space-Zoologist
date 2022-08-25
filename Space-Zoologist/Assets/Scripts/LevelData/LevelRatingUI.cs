@@ -51,5 +51,10 @@ public class LevelRatingUI : MonoBehaviour
         // Do not display ratings for levels we are not qualified to complete
         else gameObject.SetActive(false);
     }
+
+    public void Disable () {
+        gameObject.SetActive (false);
+    }
+
     #endregion
 }
