@@ -52,9 +52,21 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         // Set this enclosure to the one given
         this.enclosure = enclosure;
 
-        // Set the title, rating text, and image
-        title.text = enclosure.Level.Name;
+        // Set the image
         image.sprite = enclosure.Level.Sprite;
+
+        if (enclosure.IsSpacer) {
+            // Disable the panel, which is currently the parent of the text in the heirarchy
+            // TODO: Get a direct reference instead
+            title.transform.parent.gameObject.SetActive(false);
+            outline.SetActive (false);
+            ratingUI.Disable ();
+            Destroy (this);
+            return;
+        }
+
+        // Set the title and rating text
+        title.text = enclosure.Level.Name;
 
         // Disable the outline
         outline.SetActive(false);
