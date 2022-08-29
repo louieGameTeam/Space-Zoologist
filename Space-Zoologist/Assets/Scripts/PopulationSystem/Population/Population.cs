@@ -145,7 +145,7 @@ public class Population : MonoBehaviour
                 float populationIncreaseAmount = this.Count * GrowthCalculator.ChangeRate;
                 for (int i = 0; i < populationIncreaseAmount; ++i)
                 {
-                    this.AddAnimal(this.gameObject.transform.position);
+                    SpawnAnimalDueToGrowth();
                 }
             }
         }
@@ -166,6 +166,19 @@ public class Population : MonoBehaviour
         }
 
         return readyForGrowth;
+    }
+
+    /// <summary>
+    /// Handles Adding animals due to growth, 
+    /// Calls AddAnimal at randomized valid positions
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="taxicabDistance"></param>
+    public void SpawnAnimalDueToGrowth()
+    {
+        // choose a random current animal as the source position
+        Vector3 sourcePos = AnimalPopulation[UnityEngine.Random.Range(0, Count - 1)].transform.position;
+        AddAnimal(sourcePos);
     }
 
     public void AddAnimal(Vector3 position)
