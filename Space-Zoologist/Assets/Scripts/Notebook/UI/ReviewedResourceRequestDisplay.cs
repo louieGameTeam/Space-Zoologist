@@ -112,7 +112,7 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
         // Change the text displayed based on whether the request was granted or denied
         if((int)review.CurrentStatus < 2)
         {
-            itemText.text = review.QuantityGranted + " " + request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial);
+            itemText.text = review.QuantityGranted + " " + request.ItemRequested.Data.Name.GetDisplayName();
             costText.text = "$" + review.TotalCost;
         }
         else

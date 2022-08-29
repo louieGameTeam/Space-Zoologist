@@ -341,8 +341,8 @@ public class QuizConversation : MonoBehaviour
                     QuizOption[] options = GenerateQuizOptions(request, category);
 
                     // Setup the format for the question
-                    string question = $"Was the requested {request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial)} " +
-                        $"useful for improving the {request.ItemAddressed.Data.Name.Get(ItemName.Type.Colloquial)}" +
+                    string question = $"Was the requested {request.ItemAddressed.Data.Name.GetDisplayName()} " +
+                        $"useful for improving the {request.ItemAddressed.Data.Name.GetDisplayName()}" +
                         $" {request.NeedAddressed} need?";
 
                     // Create the question

@@ -77,6 +77,19 @@ public class ItemName
         // Return true if index is in range of the array
         return index >= 0 && index < names.Length;
     }
+    /// <summary>
+    /// Returns the name in format "scientific(colloqial)", 
+    /// or "scientific" if both forms are identical
+    /// </summary>
+    /// <returns></returns>
+    public string GetDisplayName(bool newLine = false)
+    {
+        // avoid duplicates if identicala
+        string scientific = Get(Type.Science), colloq = Get(Type.Colloquial);
+        if(scientific.CompareTo(colloq) == 0)
+            return scientific;
+        return scientific + (newLine ? "\n" : " ") + $"({colloq})";
+    }
     #endregion
 
     #region Overrides

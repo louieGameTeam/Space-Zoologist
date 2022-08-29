@@ -53,7 +53,7 @@ public class ResearchNotesUI : NotebookUIChild
     {
         // Set the title text to the name of the category
         ItemData data = ItemRegistry.Get(id);
-        titleText.text = data.Name.Get(ItemName.Type.Science) + ": Target Specifications";
+        titleText.text = data.Name.GetDisplayName() + ": Target Specifications";
 
         // Destroy all notes
         foreach(ResearchSingleNoteUI note in currentNotes)
