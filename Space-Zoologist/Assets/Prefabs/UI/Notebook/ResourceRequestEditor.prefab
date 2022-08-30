@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e125dd416651214b8057373d956c077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   parentObject: {fileID: 835837162996260453}
   statusText: {fileID: 2577036764324307396}
   statusTrigger: {fileID: 1600108962465736491}
@@ -565,24 +566,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c575dda1f406a547bbb748992a871da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   rectTransform: {fileID: 7584775176707301220}
-  group: {fileID: 367507072220731492}
-  statusUI: {fileID: 6393359553504419053}
-  priorityInput: {fileID: 2919458350998504155}
   targetDropdown: {fileID: 4594711315669235222}
   needDisplay: {fileID: 4843745971214717435}
   quantityInput: {fileID: 1076002889026388843}
   itemRequestedDropdown: {fileID: 4580347113931007140}
-  deleteButton: {fileID: 2757929247913877935}
-  onNewRequestCreated:
-    m_PersistentCalls:
-      m_Calls: []
-  onPriorityUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  onRequestDeleted:
-    m_PersistentCalls:
-      m_Calls: []
+  clearButton: {fileID: 0}
 --- !u!1 &2505115022043556427
 GameObject:
   m_ObjectHideFlags: 0

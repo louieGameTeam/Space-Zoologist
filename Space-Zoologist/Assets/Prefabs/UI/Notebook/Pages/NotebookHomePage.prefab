@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba594a10259ee8843ad79b21968dfc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 1
   noteEditorPrefab: {fileID: 3238501867342852014, guid: 8caacc2fadfca634e9e120fbf28f6d22,
     type: 3}
 --- !u!1 &3661351263862573348
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd41008825584242be12645e21b13d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   buttonPrefab: {fileID: 5837523646480909994, guid: 5437a66a5de499b4fb6e9a78c0900fac,
     type: 3}
   buttonParent: {fileID: 3910038607136417467}

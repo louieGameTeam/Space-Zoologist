@@ -168,6 +168,7 @@ public class Inspector : MonoBehaviour
         //}
         else
         {
+            ResetSelection();
             somethingSelected = false;
         }
         if (somethingSelected)

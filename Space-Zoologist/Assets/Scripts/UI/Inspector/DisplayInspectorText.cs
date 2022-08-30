@@ -46,23 +46,23 @@ public class DisplayInspectorText : MonoBehaviour
         // Check to make sure that the population needs have been cached
         if (population.GrowthCalculator.HasNeedCache)
         {
-            
+            string displayName = population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial);
             switch (population.GrowthCalculator.GrowthStatus)
             {
                 case GrowthStatus.growing:
-                    detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                    detailText.text = $"{displayName} " +
                         $"population will increase in {population.DaysTillGrowth()} days";
                     populationInfoText.color = populationGrowingColor;
                     populationStatusIndicator.sprite = populationIncreasingIcon;
                     break;
                 case GrowthStatus.stagnant:
-                    detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                    detailText.text = $"{displayName} " +
                         $"is stagnate";
                     populationInfoText.color = populationDefaultColor;
                     populationStatusIndicator.sprite = populationStagnantIcon;
                     break;
                 case GrowthStatus.decaying:
-                    detailText.text = $"{population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                    detailText.text = $"{displayName} " +
                         $"population will decrease in {population.DaysTillDeath()} days";
                     populationInfoText.color = populationDecayingColor;
                     populationStatusIndicator.sprite = populationDecreasingIcon;
@@ -177,7 +177,7 @@ public class DisplayInspectorText : MonoBehaviour
         populationStatusIndicator.enabled = false;
         detailText.text = "";
 
-        inspectorWindowTitle.text = "Title";
+        inspectorWindowTitle.text = "---";
         inspectorWindowText.text = "Click on an item to inspect it";
         populationInfoText.text = "";
         foreach (GameObject obj in needSliders) {
