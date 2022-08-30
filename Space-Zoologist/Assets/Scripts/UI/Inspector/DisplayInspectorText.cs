@@ -36,7 +36,7 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
 
         currentDisplay = InspectorText.Population;
-        inspectorWindowTitle.text = population.species.ID.Data.Name.GetDisplayName(true);
+        inspectorWindowTitle.text = population.species.ID.Data.Name.Get(ItemName.Type.Colloquial);
         populationInfoText.text = "Population: " + population.Count;
 
         DetailButton.SetActive(true);
@@ -46,7 +46,7 @@ public class DisplayInspectorText : MonoBehaviour
         // Check to make sure that the population needs have been cached
         if (population.GrowthCalculator.HasNeedCache)
         {
-            string displayName = population.Species.ID.Data.Name.GetDisplayName(true);
+            string displayName = population.Species.ID.Data.Name.Get(ItemName.Type.Colloquial);
             switch (population.GrowthCalculator.GrowthStatus)
             {
                 case GrowthStatus.growing:
@@ -94,7 +94,7 @@ public class DisplayInspectorText : MonoBehaviour
         ClearInspectorWindow();
 
         currentDisplay = InspectorText.Food;
-        inspectorWindowTitle.text = foodSource.Species.ID.Data.Name.GetDisplayName(true);
+        inspectorWindowTitle.text = foodSource.Species.ID.Data.Name.Get(ItemName.Type.Colloquial);
 
         string displayText;
         bool hasNeeds = GameManager.Instance.Needs.HasCache(foodSource);

@@ -25,7 +25,7 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         this.item = item;
         this.itemImage.sprite = item.Icon;
-        this.ItemName.text = this.item.ID.Data.Name.GetDisplayName();
+        this.ItemName.text = this.item.ID.Data.Name.Get(global::ItemName.Type.Colloquial);
 
         // Display the price
         PriceRoot.SetActive(displayPrice);

@@ -82,13 +82,13 @@ public class ItemName
     /// or "scientific" if both forms are identical
     /// </summary>
     /// <returns></returns>
-    public string GetDisplayName(bool newLine = false)
+    public string GetCombinedName()
     {
         // avoid duplicates if identicala
         string scientific = Get(Type.Science), colloq = Get(Type.Colloquial);
         if(scientific.CompareTo(colloq) == 0)
             return scientific;
-        return scientific + (newLine ? "\n" : " ") + $"({colloq})";
+        return scientific + $" ({colloq})";
     }
     #endregion
 

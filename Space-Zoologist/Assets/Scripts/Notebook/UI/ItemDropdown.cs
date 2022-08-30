@@ -53,7 +53,7 @@ public class ItemDropdown : NotebookUIChild
         {
             // Get the current option
             ItemData data = ItemRegistry.Get(id);
-            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(data.Name.GetDisplayName(), data.ShopItem.Icon);
+            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(data.Name.GetCombinedName(), data.ShopItem.Icon);
             
             // Add the option to the dropdown and the dictionary
             dropdown.options.Add(option);
