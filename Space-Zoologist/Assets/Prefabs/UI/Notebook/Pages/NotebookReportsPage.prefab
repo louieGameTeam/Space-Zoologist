@@ -831,7 +831,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3616341133575273541}
   m_HandleRect: {fileID: 478494306360185555}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -942,7 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daee74eefff3bcc49b0d1b7e280be3ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 1
   quizTemplateUI: {fileID: 8299034311674594651}
   levelPicker: {fileID: 3993734819577613980}
   quizInstanceUI: {fileID: 5757380006229561451}
