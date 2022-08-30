@@ -6459,6 +6459,21 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Population: '
       objectReference: {fileID: 0}
+    - target: {fileID: 1301564626824900752, guid: b6fa91312476840f19ee43626e3f9dfb,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301564626824900752, guid: b6fa91312476840f19ee43626e3f9dfb,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301564626824900752, guid: b6fa91312476840f19ee43626e3f9dfb,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 516
+      objectReference: {fileID: 0}
     - target: {fileID: 2454266187531293449, guid: b6fa91312476840f19ee43626e3f9dfb,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -6787,7 +6802,7 @@ PrefabInstance:
     - target: {fileID: 8542442934588200798, guid: b6fa91312476840f19ee43626e3f9dfb,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 16
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8542442934588200798, guid: b6fa91312476840f19ee43626e3f9dfb,
         type: 3}
@@ -6797,7 +6812,7 @@ PrefabInstance:
     - target: {fileID: 8542442934588200798, guid: b6fa91312476840f19ee43626e3f9dfb,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8542442934588200798, guid: b6fa91312476840f19ee43626e3f9dfb,
         type: 3}
@@ -6823,6 +6838,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542442934588200798, guid: b6fa91312476840f19ee43626e3f9dfb,
+        type: 3}
+      propertyPath: m_text
+      value: 'Inspected '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542442934588200798, guid: b6fa91312476840f19ee43626e3f9dfb,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 513
       objectReference: {fileID: 0}
     - target: {fileID: 9157047929815711621, guid: b6fa91312476840f19ee43626e3f9dfb,
         type: 3}

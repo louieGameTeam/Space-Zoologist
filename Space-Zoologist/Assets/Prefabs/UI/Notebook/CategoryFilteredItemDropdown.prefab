@@ -383,6 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowInspector: 0
   dropdown: {fileID: 280808446006572626}
   itemDisplayName: 2
   textAndImage: 0
@@ -506,9 +507,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 20
   m_fontStyle: 0
   m_textAlignment: 513
   m_characterSpacing: 0
