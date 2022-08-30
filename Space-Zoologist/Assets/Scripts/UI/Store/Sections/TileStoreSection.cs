@@ -24,7 +24,16 @@ public class TileStoreSection : StoreSection
         tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemRegistry.Category.Tile;
         base.Initialize();
+        InitializeTileTypeToData();
         //Debug.Assert(tilePlacementController != null);
+    }
+
+    private void InitializeTileTypeToData()
+    {
+        var list = new List<ItemData>();
+        foreach (var pair in storeItems)
+            list.Add(pair.Key.ID.Data);
+            GameManager.Instance.m_tileDataController.InitializeTileToItemDataMap(list);
     }
 
     /// <summary>

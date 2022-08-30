@@ -27,7 +27,7 @@ public class StoreSection : MonoBehaviour
     protected List<RectTransform> UIElements = default;
     protected TileDataController GridSystem = default;
     protected ResourceManager ResourceManager = default;
-    private Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
+    protected Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
     protected Item selectedItem = null;
     private Vector3Int previousLocation = default;
     protected int currentAudioIndex = 0;

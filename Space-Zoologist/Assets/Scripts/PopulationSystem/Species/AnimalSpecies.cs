@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class AnimalSpecies : ScriptableObject
 {
     public ItemID ID => ItemRegistry.FindSpecies(this);
+    public Item AnimalShopItem => ID.Data.ShopItem;
     public float FoodDominance => AnimalDominance.GetFoodDominance(ID).Dominance;
     public int TerrainTilesRequired => terrainTilesRequired;
     public int WaterTilesRequired => waterTilesRequired;
