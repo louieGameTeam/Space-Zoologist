@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737e49252704fd44891a1655f8163e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   requestEditor: {fileID: 7088230898415026998}
   reviewDisplay: {fileID: 1311070127211598703}
   requestButton: {fileID: 3336114968575890308}
@@ -3953,7 +3953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9182733f6b09cf4585eab0bcf887169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 1
   foldoutRect: {fileID: 3124231678465412281}
   foldoutToggle: {fileID: 3740408763807836584}
   foldoutTime: 0.1
@@ -5409,7 +5409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   dropdown: {fileID: 5769690592856790838}
   itemDisplayName: 2
   textAndImage: 1
@@ -5586,7 +5586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   dropdown: {fileID: 5782929724084651396}
   itemDisplayName: 2
   textAndImage: 1
@@ -6247,7 +6247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8801754049829504125
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7955,7 +7955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c575dda1f406a547bbb748992a871da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   rectTransform: {fileID: 2398822755998766641}
   targetDropdown: {fileID: 8632113889851899715}
   needDisplay: {fileID: 806334601336412334}
@@ -8340,7 +8340,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9992,7 +9992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff558076fb789640a3f9f206386c136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   displayRoot: {fileID: 7619431531920499090}
   border: {fileID: 2305507458064914873}
   statusColors:
