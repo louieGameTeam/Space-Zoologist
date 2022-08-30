@@ -177,8 +177,24 @@ public class Population : MonoBehaviour
     public void SpawnAnimalDueToGrowth()
     {
         // choose a random current animal as the source position
-        Vector3 sourcePos = AnimalPopulation[UnityEngine.Random.Range(0, Count - 1)].transform.position;
-        AddAnimal(sourcePos);
+        Vector3Int sourcePos = AnimalPopulation[UnityEngine.Random.Range(0, Count - 1)].transform.position.ToVector3Int();
+        // select a valid tile from 3x3 around the animal
+        var possibleSpawnPos = new List<Vector3Int>();
+        for(int y = -1;y <= 1;y++)
+        {
+            for(int x = -1;x <= 1;x++)
+            {
+                Vector3Int position = sourcePos + new Vector3Int(x, y, 0);
+                if(AccessibleLocations.Contains(position))
+                    possibleSpawnPos.Add(position);
+            }
+        }
+        sourcePos = possibleSpawnPos[UnityEngine.Random.Range(0, possibleSpawnPos.Count - 1)];
+        // random position inside the chosen tile
+        Vector3 finalPos = sourcePos + new Vector3(0.5f, 0.5f, 0);
+        finalPos += (0.4f * UnityEngine.Random.insideUnitCircle).ToVector3();
+        // spawn
+        AddAnimal(finalPos);
     }
 
     public void AddAnimal(Vector3 position)
