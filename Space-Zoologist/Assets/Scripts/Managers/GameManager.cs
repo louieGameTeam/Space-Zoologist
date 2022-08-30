@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
     public PlayerController m_playerController { get; private set; }
     public CameraController m_cameraController { get; private set; }
     public MenuManager m_menuManager { get; private set; }
+    public FoodQualityVFXHandler m_foodQualityVFXManager { get; private set; }
     #endregion
 
     #region Monobehaviour Callbacks
@@ -252,6 +253,16 @@ public class GameManager : MonoBehaviour
             this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
         }
         LoadMap();
+
+        if (m_foodQualityVFXManager != null)
+        {
+            m_foodQualityVFXManager.UpdateSpeciesList();
+        }
+        
+        else
+        {
+            Debug.LogError("FoodQualityVFXHandler Instance not found");
+        }
     }
 
     private void SetManagers()
@@ -273,6 +284,7 @@ public class GameManager : MonoBehaviour
         m_playerController = FindObjectOfType<PlayerController>();
         m_cameraController = FindObjectOfType<CameraController>();
         m_menuManager = FindObjectOfType<MenuManager>();
+        m_foodQualityVFXManager = FindObjectOfType<FoodQualityVFXHandler> ();
     }
 
     private void LoadResources()
@@ -287,6 +299,7 @@ public class GameManager : MonoBehaviour
         m_dialogueManager.Initialize();
         m_reservePartitionManager.Initialize();
         m_resourceManager.Initialize();
+        m_foodQualityVFXManager.Initialize();
     }
 
     private void InitializeUI()

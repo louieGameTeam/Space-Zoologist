@@ -201,6 +201,8 @@ public class MenuManager : MonoBehaviour
 
     private void SetUIButton(bool isActive, Button button)
     {
+        // Debug.Log($"UI Button Set: {button.name}\n - isActive: {isActive}");
+
         button.interactable = isActive;
 
         // Make sure the UI element has a child with an image to change color for
