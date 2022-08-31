@@ -1,5 +1,11 @@
 {
   "projects": {
     "default": "space-zoologist-backend"
-  }
+  },
+  "rewrites": [
+    {
+        "source": "**",
+        "function": "app"
+    }
+  ]
 }
