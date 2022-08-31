@@ -11,7 +11,7 @@ public class SubmitSummaryTrace : MonoBehaviour
 
     public static IEnumerator TrySubmitSummaryTrace(string json)
     {
-        var request = new UnityWebRequest(devSummarytraceEndpoint, "POST");
+        var request = new UnityWebRequest(prodSummarytraceEndpoint, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
         request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();

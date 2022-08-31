@@ -13,7 +13,7 @@ public class GetSummaryTrace : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("playerID", playerID);
-        UnityWebRequest request = UnityWebRequest.Post(devSummarytraceEndpoint, form);
+        UnityWebRequest request = UnityWebRequest.Post(prodSummarytraceEndpoint, form);
         var handler = request.SendWebRequest();
 
         float startTime = 0.0f;
