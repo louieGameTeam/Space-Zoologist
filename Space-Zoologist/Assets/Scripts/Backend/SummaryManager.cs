@@ -80,7 +80,9 @@ public class SummaryManager : MonoBehaviour
         }
 
         // Track time in levels. CurrentLevel is determined by OnSceneLoaded and CheckLevelAndSet functions.
-        if (currentLevel == 1)
+        if (currentLevel == 0) {
+            currentSummaryTrace.TutorialTime += Time.deltaTime;
+        } else if (currentLevel == 1)
         {
             currentSummaryTrace.Level1Time += Time.deltaTime;
         } else if (currentLevel == 2)
@@ -216,6 +218,7 @@ public class SummaryManager : MonoBehaviour
     // leaves level 5 out of completion.
     private void CheckAndModifyProgression(int currentLevel, SummaryTrace trace)
     {
+        SaveSummaryTrace();
         if (currentLevel == 0)
         {
             trace.TutorialComplete = true;
