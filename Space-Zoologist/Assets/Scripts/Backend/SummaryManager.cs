@@ -20,11 +20,13 @@ public class SummaryManager : MonoBehaviour
     // Keep track of certain objects in scene globally.
     private LevelDataReference levelData;
     private NotebookTabPicker picker;
+    private float timer;
 
     // On Awake, check the status of the instance. If the instance is null, replace it with the current SummaryManager.
     // Else, destroy the gameObject this script is attached to. There can only be one.
     void Awake()
     {
+        timer = 0;
         if (instance == null)
         {
             instance = this;
@@ -73,6 +75,12 @@ public class SummaryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        if (timer >= 60) {
+            timer = 0;
+            SaveSummaryTrace();
+        }
+
         // Begin tracking total play time.
         if (currentSummaryTrace != null)
         {
@@ -137,9 +145,10 @@ public class SummaryManager : MonoBehaviour
     }
 
     // Placeholder functions to gather basic information related to player info: playerID and sessionID.
+    // Note: PlayerID is set later on if they choose to sign in with their email.
     private string GetPlayerID()
     {
-        return "test";
+        return "default_user";
     }
 
     // Probably no longer necessary
