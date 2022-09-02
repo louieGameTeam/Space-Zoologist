@@ -6,7 +6,10 @@ jobs:
   Auto_Build:
     runs-on: ubuntu-latest
     steps:
-      - uses: game-ci/unity-builder@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
