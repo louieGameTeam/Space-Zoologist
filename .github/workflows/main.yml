@@ -1,0 +1,51 @@
+name: CI
+on:
+  - push
+  - pull_request
+jobs:
+  Auto_Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: Space-Zoologist/Library
+          key: Library-Space-Zoologist-TargetPlatform
+          restore-keys: |
+            Library-Space-Zoologist-
+            Library-
+      - name: Build
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: Space-Zoologist
+          buildsPath: Build
+          targetPlatform: WebGL
+      - name: Push to other repo
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: Build/
+          destination-github-username: 'louieGameTeam'
+          destination-repository-name: 'ResearchACampusStoryGame'
+          user-email: ${{ secrets.UNITY_EMAIL }}
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: master
+      - name: Pushes test folder
+        uses: datalbry/copy_folder_to_another_repo_action@1.0.0
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_folder: 'Build'
+          destination_repo: 'louieGameTeam/ResearchACampusStoryGame'
+          destination_folder: 'SpaceZoologist/Build'
+          user_email: ${{ secrets.UNITY_EMAIL }}
+          user_name: notpresident35
+          commit_msg: '[GHA] Updated Space Zoologist build.'
