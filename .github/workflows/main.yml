@@ -31,7 +31,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_folder: 'Build'
+          source_folder: 'Build/WebGL/WebGL'
           destination_repo: 'louieGameTeam/ResearchACampusStoryGame'
           destination_folder: 'SpaceZoologist/Build'
           user_email: ${{ secrets.UNITY_EMAIL }}
