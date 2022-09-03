@@ -33,7 +33,7 @@ jobs:
         with:
           source_folder: 'Build/WebGL/WebGL'
           destination_repo: 'louieGameTeam/ResearchACampusStoryGame'
-          destination_folder: 'SpaceZoologist/Build'
+          destination_folder: 'SpaceZoologist'
           user_email: ${{ secrets.UNITY_EMAIL }}
           user_name: notpresident35
           commit_msg: '[GHA] Updated Space Zoologist build.'
