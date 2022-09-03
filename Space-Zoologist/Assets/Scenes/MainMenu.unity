@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -485,7 +485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1846431, y: 0.039}
   m_AnchorMax: {x: 0.8, y: 0.26135042}
-  m_AnchoredPosition: {x: -0.6000061, y: 0.30999756}
+  m_AnchoredPosition: {x: -0.5999756, y: 0.30993652}
   m_SizeDelta: {x: 1.1629639, y: 1.521286}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &155320050
@@ -2161,7 +2161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.13174215, y: 0.62649345}
   m_AnchorMax: {x: 0.8715252, y: 0.8537139}
-  m_AnchoredPosition: {x: -0.1000061, y: -163}
+  m_AnchoredPosition: {x: -0.099975586, y: -163}
   m_SizeDelta: {x: 185.98389, y: 250.29358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1306046590
@@ -2241,7 +2241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4055348, y: 0.13820833}
   m_AnchorMax: {x: 0.5962748, y: 0.4806875}
-  m_AnchoredPosition: {x: -1.1000977, y: 2.2000732}
+  m_AnchoredPosition: {x: -1.1000977, y: 2.2001953}
   m_SizeDelta: {x: -6.052002, y: -3.465454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1336693820
@@ -2335,7 +2335,7 @@ GameObject:
   - component: {fileID: 1423902985}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: MainCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2890,6 +2890,7 @@ GameObject:
   - component: {fileID: 2010015509}
   - component: {fileID: 2010015508}
   - component: {fileID: 2010015511}
+  - component: {fileID: 2010015512}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -2961,8 +2962,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
-        m_MethodName: LoadLevelMenu
+      - m_Target: {fileID: 2010015512}
+        m_MethodName: RequestLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3034,6 +3035,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 595229135}
   SelectedColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &2010015512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010015506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779c74a82ba571245a71329c702e6d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loginWindow: {fileID: 5323336896914112067, guid: 8c068a0c8a151a741a54d0ee18bc2e00,
+    type: 3}
 --- !u!1 &2025512663
 GameObject:
   m_ObjectHideFlags: 0
