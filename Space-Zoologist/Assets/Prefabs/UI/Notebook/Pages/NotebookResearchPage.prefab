@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowInspector: 0
+  ForceHideInspector: 0
   itemPicker: {fileID: 3235043093249134813}
   dropdown: {fileID: 2982568721257937135}
   articleBody: {fileID: 490503159629033427}
@@ -71,6 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowInspector: 0
+  ForceHideInspector: 0
 --- !u!114 &5705847947919802900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -736,6 +738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowInspector: 0
+  ForceHideInspector: 0
   suggestedTitle: New Bookmark
   dropdown: {fileID: 7727909402503950508}
   hasBookmarkGraphic: {fileID: 8858183327001636316}
@@ -1074,7 +1077,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.000061035156, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1343,7 +1346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &727190929579681038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1406,7 +1409,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5179286796374613963}
   m_HandleRect: {fileID: 4401228088156197936}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2066,7 +2069,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2979,6 +2982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowInspector: 0
+  ForceHideInspector: 0
   textField: {fileID: 3988869380459071310}
   imageParent: {fileID: 8062510308608880556}
   imagePrefab: {fileID: 8246632628767254003, guid: a9541522916750f439d16e915162a613,
@@ -3199,6 +3203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowInspector: 0
+  ForceHideInspector: 0
   suggestedTitle: New Bookmark
   dropdown: {fileID: 5714840331143670139}
   hasBookmarkGraphic: {fileID: 6818075337314448395}
@@ -3511,7 +3516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2384802538818412331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3574,7 +3579,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5170102282717840287}
   m_HandleRect: {fileID: 2130329675280885393}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4555,6 +4560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowInspector: 1
+  ForceHideInspector: 0
   itemPicker: {fileID: 3235043093767601943}
   titleText: {fileID: 9019918896768000586}
   scrollView: {fileID: 761163319650764915}

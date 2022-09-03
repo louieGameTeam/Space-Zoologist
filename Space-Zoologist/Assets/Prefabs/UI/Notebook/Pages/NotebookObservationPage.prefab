@@ -82,7 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71e1c4c4a1cbb9449adde26db43406e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShowInspector: 1
+  ForceHideInspector: 0
   enclosurePicker: {fileID: 1722996906498515672}
   editorPrefab: {fileID: 4501573332791222197, guid: 8e31920211c69af4ea390bb08097b4a0,
     type: 3}
@@ -416,7 +417,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5881311811590124669}
   m_HandleRect: {fileID: 4160291749307916069}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

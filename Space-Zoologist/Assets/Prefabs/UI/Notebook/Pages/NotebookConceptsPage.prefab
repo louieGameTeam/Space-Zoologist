@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737e49252704fd44891a1655f8163e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   requestEditor: {fileID: 7088230898415026998}
   reviewDisplay: {fileID: 1311070127211598703}
   requestButton: {fileID: 3336114968575890308}
@@ -2461,7 +2461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleGroupPicker: {fileID: 2276183264584320066}
-  togglePickerPrefab: {fileID: 9018466970532040970, guid: afd9aeb460677e241926ca1b04b4b401,
+  togglePickerPrefab: {fileID: 1155248320865106739, guid: afd9aeb460677e241926ca1b04b4b401,
     type: 3}
   toggleGroup: {fileID: 2724229386684270914}
   toggleParent: {fileID: 4022450860413651042}
@@ -3953,7 +3953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9182733f6b09cf4585eab0bcf887169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 1
   foldoutRect: {fileID: 3124231678465412281}
   foldoutToggle: {fileID: 3740408763807836584}
   foldoutTime: 0.1
@@ -5409,7 +5409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   dropdown: {fileID: 5769690592856790838}
   itemDisplayName: 2
   textAndImage: 1
@@ -5586,7 +5586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b32896d497cd8e4da7a80ef023fc786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   dropdown: {fileID: 5782929724084651396}
   itemDisplayName: 2
   textAndImage: 1
@@ -7955,7 +7955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c575dda1f406a547bbb748992a871da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   rectTransform: {fileID: 2398822755998766641}
   targetDropdown: {fileID: 8632113889851899715}
   needDisplay: {fileID: 806334601336412334}
@@ -9992,7 +9992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff558076fb789640a3f9f206386c136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowInspector: 0
+  ShouldHideInspector: 0
   displayRoot: {fileID: 7619431531920499090}
   border: {fileID: 2305507458064914873}
   statusColors:

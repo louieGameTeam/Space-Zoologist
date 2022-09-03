@@ -45,6 +45,7 @@ namespace DialogueEditor
         public string AdvanceInput = "Submit";
         public RectTransform Background;
         public GameObject SkipConversationButton;
+        public Button ProgressConversationButton;
         // Non-User facing 
         // Not exposed via custom inspector
         //
@@ -84,6 +85,7 @@ namespace DialogueEditor
         private List<UIConversationButton> m_uiOptions;
         private bool skipping;
         private bool isFrozen = false;
+        private bool progressUIButtonDown = false;
 
         private SpeechNode m_pendingDialogue;
         private OptionNode m_selectedOption;
@@ -117,6 +119,9 @@ namespace DialogueEditor
             TurnOffUI();
 
             m_uiOptions = new List<UIConversationButton>();
+
+            // Set the state when progress button is clicked (the state is cleared at the end of update)
+            ProgressConversationButton.onClick.AddListener(() => progressUIButtonDown = true);
         }
 
         private void OnDestroy()
@@ -166,6 +171,7 @@ namespace DialogueEditor
                     break;
 
                 case eState.ScrollingText:
+                    ProgressConversationButton.interactable = true;
                     UpdateScrollingText();
                     break;
 
@@ -193,11 +199,17 @@ namespace DialogueEditor
                         {
                             if (m_stateTime > m_currentSpeech.TimeUntilAdvance)
                             {
+                                ProgressConversationButton.interactable = true;
                                 if ((progressInput || skipping || m_currentSpeech.AutomaticallyAdvance) && !isFrozen)
                                 {
                                     SetState(eState.TransitioningOptionsOff);
+                                    ProgressConversationButton.interactable = false;
                                 }
                             }
+                        }
+                        else
+                        {
+                            ProgressConversationButton.interactable = false;
                         }
                     }
                     break;
@@ -271,6 +283,9 @@ namespace DialogueEditor
                 case eState.freeze:
                     break;
             }
+
+            // Because progression is polled in update instead of an event trigger, reset the state of the button down
+            progressUIButtonDown = false;
         }
 
         private void UpdateScrollingText()
@@ -792,27 +807,14 @@ namespace DialogueEditor
          */
         private bool Progress()
         {
-            // Advance by click only if the mouse button was pressed down and the ui is not blocking the dialogue
-            bool advanceClick = Input.GetMouseButtonDown(0) && UIBlockerSettings.OperationIsAvailable("Dialogue");
-
-            // Store the current selected game object
-            GameObject currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
-            // True if a typing UI object is currently selected
-            bool typingUIObjectSelected = false;
-
-            // If a game object is selected, then check to see if it has text selected on it
-            if (currentSelectedGameObject)
-            {
-                InputField selectedInput = currentSelectedGameObject.GetComponent<InputField>();
-                TMP_InputField selectedInputTMP = currentSelectedGameObject.GetComponent<TMP_InputField>();
-                typingUIObjectSelected = selectedInput || selectedInputTMP;
-            }
+            // Advance by click only if the progress UI button was pressed down and the ui is not blocking the dialogue
+            bool buttonClickAdvanceInput = progressUIButtonDown && UIBlockerSettings.OperationIsAvailable("Dialogue");
 
             // Only use the advance input if some typing UI object is not currently selected
-            bool advanceInput = !typingUIObjectSelected && Input.GetButtonDown(AdvanceInput);
+            bool keyAdvanceInput = Input.GetButtonDown(AdvanceInput);
 
             // Progress if the advance button was clicked or the button in the input axes was just pressed
-            return advanceClick || advanceInput;
+            return buttonClickAdvanceInput || keyAdvanceInput;
         }
     }
 }
