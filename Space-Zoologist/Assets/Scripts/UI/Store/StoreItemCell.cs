@@ -13,12 +13,17 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [SerializeField] Text RemainingAmountText = default;
     [SerializeField] Button RequestButton = default;
     [SerializeField] Button SellButton = default;
-    [SerializeField] GameObject PriceRoot = default;
+    [SerializeField] GameObject PriceRoot = default; // TODO: This seems deprecated, gut it
     [SerializeField] TextMeshProUGUI PriceText = default;
     public int RemainingAmount = -1;
+    [SerializeField] Color RemainingAmountTextDefaultColor = Color.white;
+    [SerializeField] Color RemainingAmountTextHighlightColor = Color.green;
+    [SerializeField] Color RemainingAmountTextEmptyColor = Color.red;
 
     public delegate void ItemSelectedHandler(Item item);
     public event ItemSelectedHandler onSelected;
+
+    private string levelName;
 
     #region Public Methods
     public void Initialize(Item item, bool displayPrice, ItemSelectedHandler itemSelectedHandler)
@@ -34,31 +39,40 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         // Check if the selected handler is null. If not then add it to the event
         if(itemSelectedHandler != null) this.onSelected += itemSelectedHandler;
 
+        if (!GameManager.Instance) { return; }
+
+        // Disable sell button in tutorial
+        levelName = GameManager.Instance.LevelData.Level.Name;
+        if (levelName == "Tutorial") {
+            SellButton.gameObject.SetActive (false);
+            // Request button is disabled by default
+        }
+
         RequestButton.onClick.AddListener(() =>
-        { 
-            if(GameManager.Instance)
+        {
+            if (!GameManager.Instance) { return; }
+
+            // Reference the notebook ui
+            NotebookUI notebookUI = GameManager.Instance.NotebookUI;
+            // Tab picker reference
+            NotebookTabPicker tabPicker = notebookUI.TabPicker;
+
+            // Create the bookmark to navigate to
+            Bookmark bookmark = new Bookmark(string.Empty, new BookmarkData(tabPicker.name, NotebookTab.Concepts));
+            // Create a request to prefill in the notebook
+            ResourceRequest request = new ResourceRequest()
             {
-                // Reference the notebook ui
-                NotebookUI notebookUI = GameManager.Instance.NotebookUI;
-                // Tab picker reference
-                NotebookTabPicker tabPicker = notebookUI.TabPicker;
+                QuantityRequested = 1,
+                ItemRequested = item.ID
+            };
 
-                // Create the bookmark to navigate to
-                Bookmark bookmark = new Bookmark(string.Empty, new BookmarkData(tabPicker.name, NotebookTab.Concepts));
-                // Create a request to prefill in the notebook
-                ResourceRequest request = new ResourceRequest()
-                {
-                    QuantityRequested = 1,
-                    ItemRequested = item.ID
-                };
-
-                notebookUI.NavigateToBookmark(bookmark);
-                notebookUI.FillResourceRequest(request);
-            }
+            notebookUI.NavigateToBookmark(bookmark);
+            notebookUI.FillResourceRequest(request);
         });
 
         SellButton.onClick.AddListener(() =>
         {
+            if (!GameManager.Instance) { return; }
             // sell
             GameManager.Instance.m_menuManager.TrySellItem(item,1);
         });
@@ -73,21 +87,37 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         highlightImage.enabled = true;
     }
-    public void Update()
-    {
-        this.RemainingAmountText.text = "" + this.RemainingAmount;
-        RequestButton.gameObject.SetActive(RemainingAmount <= 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
-        SellButton.gameObject.SetActive(RemainingAmount > 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
-        if (RemainingAmount > 0)
-        {
-            if (highlightImage.enabled) RemainingAmountText.color = Color.green;
-            else RemainingAmountText.color = Color.white;
-        }
-        else RemainingAmountText.color = Color.red;
-    }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         highlightImage.enabled = false;
+    }
+
+    void Refresh() {
+        this.RemainingAmountText.text = this.RemainingAmount.ToString();
+
+        if (levelName != "Tutorial") {
+            RequestButton.gameObject.SetActive (RemainingAmount <= 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
+            SellButton.gameObject.SetActive (RemainingAmount > 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
+        }
+
+        if (RemainingAmount > 0) {
+            if (highlightImage.enabled) {
+                RemainingAmountText.color = RemainingAmountTextHighlightColor;
+            } else {
+                RemainingAmountText.color = RemainingAmountTextDefaultColor;
+            }
+        } else {
+            RemainingAmountText.color = RemainingAmountTextEmptyColor;
+        }
+    }
+    #endregion
+
+    #region Monobehavior Methods
+    // whyyyy is this happening on update ew ew no
+    // TODO: make this happen every time something is placed or purchased
+    public void Update () {
+        Refresh ();
     }
     #endregion
 }
