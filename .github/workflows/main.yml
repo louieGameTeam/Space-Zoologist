@@ -28,7 +28,7 @@ jobs:
           buildsPath: Build
           targetPlatform: WebGL
       - name: Copy to Host Repository
-        uses: datalbry/copy_folder_to_another_repo_action@1.0.0
+        uses: notpresident35/copy_large_folder_to_another_repo_action@1.0.3
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
