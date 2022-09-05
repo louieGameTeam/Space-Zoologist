@@ -43,9 +43,10 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
         // Disable sell button in tutorial
         levelName = GameManager.Instance.LevelData.Level.Name;
-        if (levelName == "Tutorial") {
-            SellButton.gameObject.SetActive (false);
-            // Request button is disabled by default
+        if (levelName != "Tutorial") {
+            // Sell button is disabled by default
+            // SellButton.gameObject.SetActive (!displayPrice);
+            RequestButton.gameObject.SetActive (!displayPrice);
         }
 
         RequestButton.onClick.AddListener(() =>
@@ -95,11 +96,11 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     void Refresh() {
         this.RemainingAmountText.text = this.RemainingAmount.ToString();
-
+        /*
         if (levelName != "Tutorial") {
             RequestButton.gameObject.SetActive (RemainingAmount <= 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
             SellButton.gameObject.SetActive (RemainingAmount > 0 && !PriceRoot.activeInHierarchy && item.ID.Category != ItemRegistry.Category.Species);
-        }
+        }*/
 
         if (RemainingAmount > 0) {
             if (highlightImage.enabled) {
