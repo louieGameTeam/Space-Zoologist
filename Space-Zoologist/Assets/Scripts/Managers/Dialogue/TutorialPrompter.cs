@@ -91,6 +91,12 @@ public class TutorialPrompter : MonoBehaviour
     {
         FreezeUntilNotebookTabOpen(NotebookTab.TestAndMetrics);
     }
+    public void HighlightNotesNoFreeze () {
+        HighlightingScheduler.SetHighlights (HighlightNotes ());
+    }
+    public void HighlightAnimalDropdownNoFreeze (string pickerNameFilter) {
+        HighlightingScheduler.SetHighlights (HighlightItemPickerCategory (NotebookTab.Research, ItemRegistry.Category.Species, pickerNameFilter));
+    }
     public void FreezeUntilGoatTerrainHighlightAdd()
     {
         FreezeUntilHighlightPresent(
@@ -112,6 +118,9 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilSlugPicked(string pickerNameFilter)
     {
         FreezeUntilNotebookItemPicked(NotebookTab.Research, new ItemID(ItemRegistry.Category.Species, 4), pickerNameFilter);
+    }
+    public void FreezeUntilTreePicked (string pickerNameFilter) {
+        FreezeUntilNotebookItemPicked (NotebookTab.Research, new ItemID (ItemRegistry.Category.Food, 0), pickerNameFilter);
     }
     public void FreezeUntilBuildUIOpen()
     {
@@ -479,6 +488,20 @@ public class TutorialPrompter : MonoBehaviour
         ItemDropdown categoryDropdown = itemPicker.GetDropdown(targetItem.Category);
         return HighlightItemDropdownUtility(categoryDropdown, targetItem, () => itemPicker.SelectedItem);
     }
+    private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        ItemPicker [] pickers = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<ItemPicker> (true);
+        // Find a picker whose name contains the filter
+        ItemPicker picker = Array.Find (pickers, p => p.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+        // Get the item dropdown for this category
+        ItemDropdown categoryDropdown = picker.GetDropdown (itemCategory);
+        return new ConditionalHighlight () 
+        {
+            predicate = () => true,
+            target = () => categoryDropdown.GetComponent<RectTransform> ()
+        };
+    }
     private ConditionalHighlight[] HighlightItemDropdown(ItemDropdown itemDropdown, ItemID targetItem)
     {
         return HighlightItemDropdownUtility(itemDropdown, targetItem, () => itemDropdown.SelectedItem);
@@ -573,6 +596,15 @@ public class TutorialPrompter : MonoBehaviour
         {
             predicate = () => !notebook.IsOpen,
             target = () => notebookButton
+        };
+    }
+    private ConditionalHighlight HighlightNotes () {
+        RectTransform notesTitle = FindRectTransform ("ResearchPageNotesTitle");
+
+        // Highlight the notes until the next dialogue entry
+        return new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => notesTitle
         };
     }
     private ConditionalHighlight HighlightInputField(TMP_InputField inputField, string targetInput)
