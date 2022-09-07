@@ -73,7 +73,6 @@ public class SummaryManager : MonoBehaviour
         // Begin tracking total play time.
         if (currentSummaryTrace != null)
         {
-            Debug.Log(currentSummaryTrace.PlayerID);
             currentSummaryTrace.TotalPlayTime += Time.deltaTime;
             // Track time in levels. CurrentLevel is determined by OnSceneLoaded and CheckLevelAndSet functions.
             if (currentLevel == 0) {
