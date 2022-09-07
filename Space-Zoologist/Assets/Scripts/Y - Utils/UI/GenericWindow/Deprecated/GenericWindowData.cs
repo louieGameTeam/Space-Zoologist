@@ -29,13 +29,13 @@ public class GenericWindowData
 
     [SerializeField]
     [Tooltip("Starting position for the window animation")]
-    private Vector2 startingAnchorPosition;
+    private Vector2 startingAnchorPosition = Vector2.zero;
     [SerializeField]
     [Tooltip("Ease of the window animation")]
-    private Ease startingAnimationEase;
+    private Ease startingAnimationEase = Ease.Unset;
     [SerializeField]
     [Tooltip("Ease of the window when it goes away")]
-    private Ease endingAnimationEase;
+    private Ease endingAnimationEase = Ease.Unset;
     
     [Space]
     

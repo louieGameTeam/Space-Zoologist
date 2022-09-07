@@ -19,7 +19,7 @@ public class QuizConversation : MonoBehaviour
     [System.Serializable]
     public class NPCConversationArray
     {
-        public NPCConversation[] responses;
+        public NPCConversation[] responses = null;
         public NPCConversation Get(QuizGrade grade) => responses[(int)grade];
     }
     #endregion
@@ -63,14 +63,14 @@ public class QuizConversation : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Event invoked when the quiz conversation is finished")]
-    private UnityEvent onConversationEnded;
+    private UnityEvent onConversationEnded = null;
     #endregion
 
     #region Private Fields
-    private QuizInstance currentQuiz;
-    private NPCConversation currentResponse;
+    private QuizInstance currentQuiz = null;
+    private NPCConversation currentResponse = null;
     // Conversation that the NPC speaks to say all of the questions
-    private NPCConversation currentQuizConversation;
+    private NPCConversation currentQuizConversation = null;
     private readonly string[] optionLabels = new string[]
     {
         "Not at all useful",

@@ -45,7 +45,7 @@ public class NeedData
 
     [SerializeField]
     [Tooltip("The way in which this species needs this animal")]
-    private SpeciesNeedType speciesNeedType;
+    private SpeciesNeedType speciesNeedType = SpeciesNeedType.Friend;
 
     [SerializeField]
     [Tooltip("If true, then this water need should be treated as terrain " +
@@ -59,7 +59,7 @@ public class NeedData
     [SerializeField]
     [Tooltip("How the food source is used. The species may use it as food to eat " +
         "or as a tree that it can nest in")]
-    private FoodNeedType foodNeedType;
+    private FoodNeedType foodNeedType = FoodNeedType.Food;
     [SerializeField]
     [Tooltip("How much the need is preferred compared to other needs" +
         " with the same type")]
@@ -73,7 +73,7 @@ public class NeedData
     [Tooltip("A minimum of this much water needs to be present " +
         "to be drinkable by this species")]
     [Range(0f, 1f)]
-    private float minimum;
+    private float minimum = 0f;
     [SerializeField]
     [Tooltip("Water with more than this maximum of water " +
         "cannot be drinkable by this species")]
@@ -84,6 +84,6 @@ public class NeedData
     #region Private Fields
     [SerializeField]
     [HideInInspector]
-    private ItemID id;
+    private ItemID id = ItemID.Invalid;
     #endregion
 }

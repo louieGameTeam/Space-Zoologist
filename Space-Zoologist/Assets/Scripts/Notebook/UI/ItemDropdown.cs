@@ -21,16 +21,16 @@ public class ItemDropdown : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the research category")]
-    protected TMP_Dropdown dropdown;
+    protected TMP_Dropdown dropdown = null;
     [SerializeField]
     [Tooltip("Name to display for the item in the dropdown")]
-    private ItemName.Type itemDisplayName;
+    private ItemName.Type itemDisplayName = ItemName.Type.Colloquial;
     [SerializeField]
     [Tooltip("True if text and image should display simultaneously")]
     protected bool textAndImage = false;
     [SerializeField]
     [Tooltip("Event invoked when this dropdown selects a research category")]
-    protected ItemIDEvent onItemSelected;
+    protected ItemIDEvent onItemSelected = null;
     #endregion
 
     #region Private Fields

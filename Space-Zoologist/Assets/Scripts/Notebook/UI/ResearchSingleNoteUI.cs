@@ -17,10 +17,10 @@ public class ResearchSingleNoteUI : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Text used to display the label for this note")]
-    private TextMeshProUGUI labelText;
+    private TextMeshProUGUI labelText = null;
     [SerializeField]
     [Tooltip("Input field used to write the note")]
-    private TMP_InputField myInputField;
+    private TMP_InputField myInputField = null;
     #endregion
 
     #region Public Methods

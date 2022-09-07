@@ -44,16 +44,16 @@ public class ResourceRequestQuantityRegistry
     [SerializeField]
     [Tooltip("List of quantities requestable for each item")]
     [ParallelItemRegistry("intArrays", "array")]
-    private ArrayOfIntArrays quantities;
+    private ArrayOfIntArrays quantities = null;
     [SerializeField]
     [Tooltip("Total amount of resources that can be requested for this level")]
-    private int totalRequestableResources;
+    private int totalRequestableResources = 0;
     [SerializeField]
     [Tooltip("The number of requests that can be made on the first day of the enclosure")]
-    private int initialRequests;
+    private int initialRequests = 0;
     [SerializeField]
     [Tooltip("The number of requests that can be made for the rest of the level")]
-    private int subsequentRequests;
+    private int subsequentRequests = 0;
     #endregion
 
     #region Public Methods

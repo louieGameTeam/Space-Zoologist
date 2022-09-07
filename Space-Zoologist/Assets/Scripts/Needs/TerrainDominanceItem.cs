@@ -13,7 +13,7 @@ public class TerrainDominanceItem
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Determines animal dominance on this terrain type")]
-    private AnimalDominanceItem[] dominances;
+    private AnimalDominanceItem[] dominances = null;
     #endregion
 
     #region Private Fields

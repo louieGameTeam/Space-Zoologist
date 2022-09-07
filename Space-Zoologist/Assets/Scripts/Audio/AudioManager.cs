@@ -16,14 +16,14 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region Private Fields
-    [SerializeField] MusicManager musicManager;
-    [SerializeField] AudioSource sfx;
+    [SerializeField] MusicManager musicManager = null;
+    [SerializeField] AudioSource sfx = null;
 
     float masterVolume = 1;
     float musicVolume = 1;
     float sfxVolume = 1;
 
-    [SerializeField] SFXLibrary SFXLibrary;
+    [SerializeField] SFXLibrary SFXLibrary = null;
     Dictionary<SFXType, SFXLibrary.AudioObject> SFXDict;
     #endregion
 

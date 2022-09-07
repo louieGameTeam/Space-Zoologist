@@ -9,7 +9,7 @@ public enum NeedCondition { Bad, Neutral, Good }
 [System.Serializable]
 public class TerrainNeedConstructData : NeedConstructData
 {
-    [SerializeField] private bool isPreferred;
+    [SerializeField] private bool isPreferred = false;
     [SerializeField]
     [Tooltip("ID of the terrain tile that this species needs")]
     [ItemIDFilter(ItemRegistry.Category.Tile)]
@@ -30,11 +30,11 @@ public class TerrainNeedConstructData : NeedConstructData
 [System.Serializable]
 public class FoodNeedConstructData : NeedConstructData
 {
-    [SerializeField] private bool isPreferred;
+    [SerializeField] private bool isPreferred = false;
     [SerializeField]
     [Tooltip("ID of the food that this animal can consume")]
     [ItemIDFilter(ItemRegistry.Category.Food)]
-    private ItemID foodID;
+    private ItemID foodID = ItemID.Invalid;
 
     public override float GetSurvivableThreshold()
     {
@@ -60,7 +60,7 @@ public class LiquidNeedConstructData : NeedConstructData
     [SerializeField]
     [ItemIDFilter("Water")]
     [Tooltip("The type of water needed by the species")]
-    private ItemID id;
+    private ItemID id = ItemID.Invalid;
     [Range(0, 1)] 
     [SerializeField]
     [Tooltip("The minimum amount of this water type needed " +
@@ -92,7 +92,7 @@ public class PreyNeedConstructData : NeedConstructData
     [SerializeField]
     [Tooltip("ID of the animal that this animal devours/symbiots with")]
     [ItemIDFilter(ItemRegistry.Category.Species)]
-    private ItemID preyID;
+    private ItemID preyID = ItemID.Invalid;
 
     public override float GetSurvivableThreshold() { return 0; }
     protected override ItemID getID() => preyID;

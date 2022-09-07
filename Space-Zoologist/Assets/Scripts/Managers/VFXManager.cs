@@ -10,7 +10,7 @@ public class VFXManager : MonoBehaviour
     public static VFXManager Instance = null;
 
     #region Private Fields
-    [SerializeField] private VFXLibrary VFXLibrary;
+    [SerializeField] private VFXLibrary VFXLibrary = null;
     private Dictionary<VFXType, VFXLibrary.VFXObject> VFXDict;
     #endregion
 

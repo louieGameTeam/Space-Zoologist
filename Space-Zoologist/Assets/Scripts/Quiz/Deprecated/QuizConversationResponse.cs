@@ -10,7 +10,7 @@ public class QuizConversationResponse
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the conversation spoken when the response is activated")]
-    private NPCConversation conversation;
+    private NPCConversation conversation = null;
     [SerializeField]
     [Tooltip("Name of the next level to load when this response is finished")]
     private string nextLevelName = "Level1E1";

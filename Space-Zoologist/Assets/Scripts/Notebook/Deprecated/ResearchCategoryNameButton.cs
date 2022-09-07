@@ -19,19 +19,19 @@ public class ResearchCategoryNameButton : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The toggle that manages this button")]
-    private Toggle myToggle;
+    private Toggle myToggle = null;
     [SerializeField]
     [Tooltip("Text displayed in the button")]
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI text = null;
     [SerializeField]
     [Tooltip("Reference to the image that will render the item")]
-    private Image image;
+    private Image image = null;
     [SerializeField]
     [Tooltip("Event invoked when this button is selected")]
-    private StringSpriteEvent onSelected;
+    private StringSpriteEvent onSelected = null;
 
     [Tooltip("This button's name")]
-    private string researchCategoryName;
+    private string researchCategoryName = "";
 
     public void Setup(ToggleGroup group, string researchCategoryName, Sprite sprite, UnityAction<string, Sprite> callback)
     {

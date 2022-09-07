@@ -45,13 +45,13 @@ public class TutorialHighlight : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform at the root of the highlight object")]
-    private RectTransform root;
+    private RectTransform root = null;
     [SerializeField]
     [Tooltip("Reference to the image that displays the pointing arrow")]
-    private Image pointer;
+    private Image pointer = null;
     [SerializeField]
     [Tooltip("Panel that highlights over the item the user should click")]
-    private Image highlightPanel;
+    private Image highlightPanel = null;
 
     [Space]
 

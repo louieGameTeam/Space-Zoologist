@@ -18,13 +18,13 @@ public class ResearchCategoryTypeButton : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The toggle that manages this button")]
-    private Toggle myToggle;
+    private Toggle myToggle = null;
     [SerializeField]
     [Tooltip("Text displayed in the button")]
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI text = null;
     [SerializeField]
     [Tooltip("Event invoked when this button is selected")]
-    private ItemCategoryEvent onSelected;
+    private ItemCategoryEvent onSelected = null;
 
     [Tooltip("This button's type")]
     private ItemRegistry.Category type;
