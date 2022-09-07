@@ -13,7 +13,7 @@ public class TerrainNeedConstructData : NeedConstructData
     [SerializeField]
     [Tooltip("ID of the terrain tile that this species needs")]
     [ItemIDFilter(ItemRegistry.Category.Tile)]
-    private ItemID tileID;
+    private ItemID tileID = ItemID.Invalid;
 
     protected override bool getIsPreferred()
     {

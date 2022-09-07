@@ -41,7 +41,7 @@ public class NeedData
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Determine if this item is needed by the species")]
-    private bool needed;
+    private bool needed = false;
 
     [SerializeField]
     [Tooltip("The way in which this species needs this animal")]
@@ -78,7 +78,7 @@ public class NeedData
     [Tooltip("Water with more than this maximum of water " +
         "cannot be drinkable by this species")]
     [Range(0f, 1f)]
-    private float maximum;
+    private float maximum = 1.0f;
     #endregion
 
     #region Private Fields

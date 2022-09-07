@@ -28,9 +28,9 @@ public class ResearchEncyclopediaArticleConfig
     [SerializeField]
     [TextArea(3, 20)] 
     [Tooltip("Text in the article")]
-    private string text;
+    private string text = "";
     [SerializeField]
     [Tooltip("Image that can display in the article")]
-    private Sprite[] sprites;
+    private Sprite[] sprites = null;
     #endregion
 }

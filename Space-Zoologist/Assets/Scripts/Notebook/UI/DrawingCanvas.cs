@@ -41,10 +41,10 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform of this canvas")]
-    private RectTransform rectTransform;
+    private RectTransform rectTransform = null;
     [SerializeField]
     [Tooltip("Image used to render the drawing material")]
-    private RawImage rawImage;
+    private RawImage rawImage = null;
     [SerializeField]
     [Tooltip("Background color of the canvas")]
     private Color backgroundColor;

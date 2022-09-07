@@ -28,25 +28,25 @@ public class QuizConversation : MonoBehaviour
     [SerializeField]
     [Tooltip("Reference to the quiz template to run the quiz for")]
     [FormerlySerializedAs("quizTemplate")]
-    private QuizTemplate template;
+    private QuizTemplate template = null;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Icon to display for the npc")]
-    private Sprite npcIcon;
+    private Sprite npcIcon = null;
     [SerializeField]
     [Tooltip("Name of the npc giving the quiz")]
     private string npcName = "Star";
     [SerializeField]
     [Tooltip("Font to use when saying each speech node")]
-    private TMP_FontAsset npcFont;
+    private TMP_FontAsset npcFont = null;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Conversation to say at the beginning")]
-    private NPCConversation openingConversation;
+    private NPCConversation openingConversation = null;
     [SerializeField]
     [TextArea(3, 10)]
     [Tooltip("Speech node spoken when the quiz ends")]
@@ -54,7 +54,7 @@ public class QuizConversation : MonoBehaviour
     [SerializeField]
     [Tooltip("List of NPCConversations to respond with based on the quizes' grade")]
     [EditArrayWrapperOnEnum("responses", typeof(QuizGrade))]
-    private NPCConversationArray response;
+    private NPCConversationArray response = null;
     [SerializeField]
     [Tooltip("If true, the quiz conversation will be re-spoken if the player fails the quiz")]
     private bool requizOnFail = false;
