@@ -85,37 +85,37 @@ public class SummaryManager : MonoBehaviour
         if (currentSummaryTrace != null)
         {
             currentSummaryTrace.TotalPlayTime += Time.deltaTime;
+            // Track time in levels. CurrentLevel is determined by OnSceneLoaded and CheckLevelAndSet functions.
+            if (currentLevel == 0) {
+                currentSummaryTrace.TutorialTime += Time.deltaTime;
+            } else if (currentLevel == 1)
+            {
+                currentSummaryTrace.Level1Time += Time.deltaTime;
+            } else if (currentLevel == 2)
+            {
+                currentSummaryTrace.Level2Time += Time.deltaTime;
+            } else if (currentLevel == 3)
+            {
+                currentSummaryTrace.Level3Time += Time.deltaTime;
+            } else if (currentLevel == 4)
+            {
+                currentSummaryTrace.Level4Time += Time.deltaTime;
+            } else if (currentLevel == 5)
+            {
+                currentSummaryTrace.Level5Time += Time.deltaTime;
+            }
+
+            // Track time in notebook tabs/tools.
+            if (researchOpen)
+            {
+                currentSummaryTrace.TimeResearchTabOpen += Time.deltaTime;
+            }
+            if (observationOpen)
+            {
+                currentSummaryTrace.TimeObservationToolOpen += Time.deltaTime;
+            }
         }
 
-        // Track time in levels. CurrentLevel is determined by OnSceneLoaded and CheckLevelAndSet functions.
-        if (currentLevel == 0) {
-            currentSummaryTrace.TutorialTime += Time.deltaTime;
-        } else if (currentLevel == 1)
-        {
-            currentSummaryTrace.Level1Time += Time.deltaTime;
-        } else if (currentLevel == 2)
-        {
-            currentSummaryTrace.Level2Time += Time.deltaTime;
-        } else if (currentLevel == 3)
-        {
-            currentSummaryTrace.Level3Time += Time.deltaTime;
-        } else if (currentLevel == 4)
-        {
-            currentSummaryTrace.Level4Time += Time.deltaTime;
-        } else if (currentLevel == 5)
-        {
-            currentSummaryTrace.Level5Time += Time.deltaTime;
-        }
-
-        // Track time in notebook tabs/tools.
-        if (researchOpen)
-        {
-            currentSummaryTrace.TimeResearchTabOpen += Time.deltaTime;
-        }
-        if (observationOpen)
-        {
-            currentSummaryTrace.TimeObservationToolOpen += Time.deltaTime;
-        }
     }
 
     // Use scene change functions to determine level being loaded/unloaded.
