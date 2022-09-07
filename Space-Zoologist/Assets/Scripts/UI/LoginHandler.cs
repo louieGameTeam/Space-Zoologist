@@ -26,7 +26,8 @@ public class LoginHandler : MonoBehaviour
     public void SubmitLogin () {
         print (emailInput.text);
         // TODO: Encrypt and store email from emailInput
-        // TODO: Assign playerID based on email for use with cookies and backend data
+        SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
+        summaryManager.SetUpCurrentSummaryTrace(emailInput.text);
         SceneManager.LoadScene ("LevelMenu");
     }
     #endregion

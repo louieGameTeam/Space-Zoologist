@@ -6,6 +6,7 @@ using System;
 
 public class SummaryManager : MonoBehaviour
 {
+    #region Private Fields
     // Initialize the instance of this SummaryManager to null.
     private static SummaryManager instance = null;
     // Initialize the current SummaryTrace object.
@@ -21,6 +22,7 @@ public class SummaryManager : MonoBehaviour
     private LevelDataReference levelData;
     private NotebookTabPicker picker;
     private float timer;
+    #endregion
 
     // On Awake, check the status of the instance. If the instance is null, replace it with the current SummaryManager.
     // Else, destroy the gameObject this script is attached to. There can only be one.
@@ -37,20 +39,7 @@ public class SummaryManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Check if current user has summary trace data in DB.
-        StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(GetPlayerID(), (value) => {
-            SummaryTraceResponse response = value;
-            // If the trace was found for the user, set its data field to be the current summary trace.
-            if (response.code == 0)
-            {
-                currentSummaryTrace = JsonUtility.FromJson<SummaryTrace>(response.data);
-            // If no trace for the current user is found, create a new summary trace to work from.
-            } else if (response.code == 2)
-            {
-                currentSummaryTrace = new SummaryTrace();
-                currentSummaryTrace.PlayerID = GetPlayerID();
-            }
-        }));
+        SetUpCurrentSummaryTrace(GetPlayerID());
     }
 
     // Enable and disable functions to allocate delegates.
@@ -84,6 +73,7 @@ public class SummaryManager : MonoBehaviour
         // Begin tracking total play time.
         if (currentSummaryTrace != null)
         {
+            Debug.Log(currentSummaryTrace.PlayerID);
             currentSummaryTrace.TotalPlayTime += Time.deltaTime;
             // Track time in levels. CurrentLevel is determined by OnSceneLoaded and CheckLevelAndSet functions.
             if (currentLevel == 0) {
@@ -142,6 +132,24 @@ public class SummaryManager : MonoBehaviour
             // Create a new set trace, and set the current set trace to the one created.
             currentSetTrace = CreateSetTrace(currentLevel, currentSet, currentSummaryTrace.PlayerID);
         }
+    }
+
+    public void SetUpCurrentSummaryTrace(string id)
+    {
+        // Check if current user has summary trace data in DB.
+        StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(id, (value) => {
+            SummaryTraceResponse response = value;
+            // If the trace was found for the user, set its data field to be the current summary trace.
+            if (response.code == 0)
+            {
+                currentSummaryTrace = JsonUtility.FromJson<SummaryTrace>(response.data);
+            // If no trace for the current user is found, create a new summary trace to work from.
+            } else if (response.code == 2)
+            {
+                currentSummaryTrace = new SummaryTrace();
+                currentSummaryTrace.PlayerID = id;
+            }
+        }));
     }
 
     // Placeholder functions to gather basic information related to player info: playerID and sessionID.
