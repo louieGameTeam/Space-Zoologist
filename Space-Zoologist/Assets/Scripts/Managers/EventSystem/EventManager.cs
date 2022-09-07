@@ -19,6 +19,9 @@ public enum EventType {
     PopulationCacheRebuilt, FoodCacheRebuilt,
     PreCacheRebuild, // called before any rebuild, but only once (even if multiple rebuilds happen simutaneously)
     ReportBackStart, ReportBackEnd,
+    OnJournalOpened, OnJournalClosed, OnTabChanged, OnArticleChanged, OnBookmarkAdded, // Pass null
+    OnSetEnd, OnSetPass, OnSetFail, OnQuizEnd, // Pass null
+    TriggerSave, // Pass null
 };
 
 /// <summary>
