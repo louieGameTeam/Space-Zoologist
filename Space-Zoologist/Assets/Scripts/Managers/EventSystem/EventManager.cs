@@ -18,9 +18,7 @@ public enum EventType {
     MainObjectivesCompleted, GameOver, // Pass null is fine
     PopulationCacheRebuilt, FoodCacheRebuilt,
     PreCacheRebuild, // called before any rebuild, but only once (even if multiple rebuilds happen simutaneously)
-    OnJournalOpened, OnJournalClosed, OnTabChanged, OnArticleChanged, OnBookmarkAdded, // Pass null
-    OnSetEnd, OnSetPass, OnSetFail, OnQuizEnd, // Pass null
-    TriggerSave, // Pass null
+    ReportBackStart, ReportBackEnd,
 };
 
 /// <summary>

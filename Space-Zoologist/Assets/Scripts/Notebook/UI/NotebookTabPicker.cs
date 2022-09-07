@@ -26,6 +26,7 @@ public class NotebookTabPicker : NotebookUIChild
 
     #region Public Properties
     public NotebookTab CurrentTab => currentTab;
+    public System.Action OnTabSelect { get => onTabSelect; set => onTabSelect = value; }
     #endregion
 
     #region Private Editor Fields
@@ -53,6 +54,7 @@ public class NotebookTabPicker : NotebookUIChild
     // List of the buttons used to select a tab
     private List<NotebookTabSelectButton> buttons = new List<NotebookTabSelectButton>();
     private NotebookTabObjects tabObjects = new NotebookTabObjects();
+    private System.Action onTabSelect;
     #endregion
 
     #region Public Methods
@@ -126,6 +128,7 @@ public class NotebookTabPicker : NotebookUIChild
         }
         // For backend: Event invocation for tab switch.
         EventManager.Instance.InvokeEvent(EventType.OnTabChanged, null);
+        onTabSelect?.Invoke();
     }
     #endregion
 }

@@ -471,7 +471,6 @@ namespace DialogueEditor
                     {
                         string path = UnityEditor.AssetDatabase.GUIDToAssetPath(TMPFontGUID);
                         this.TMPFont = (TMPro.TMP_FontAsset)UnityEditor.AssetDatabase.LoadAssetAtPath(path, typeof(TMPro.TMP_FontAsset));
-
                     }
                 }
             }

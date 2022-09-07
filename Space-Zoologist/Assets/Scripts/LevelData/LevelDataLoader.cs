@@ -102,6 +102,8 @@ public class LevelDataLoader : MonoBehaviour
         string path = $"LevelData/Level{levelNumber}/";
         return Resources.LoadAll<LevelData>(path);
     }
+    // TODO: Load this data once and cache it, rather than loading it multiple times
+    // See GetAllLevelData, GetAllLevelEnclosures, and GetLevelData, for starters
     public static LevelData[] GetAllLevelData() => Resources.LoadAll<LevelData>("");
     public static int MaxLevel()
     {

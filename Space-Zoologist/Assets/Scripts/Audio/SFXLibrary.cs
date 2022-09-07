@@ -11,13 +11,13 @@ public enum SFXType
     Valid, Locked, Unavailable,
     BuildModeOpen, BuildModeClose, BuildModeTabSwitch,
     NotebookOpen, NotebookClose, NotebookDropdown, NotebookTabSwitch,
+    GoodFood, NeutralFood, BadFood,
     NumTypes
 }
 
 [CreateAssetMenu]
 public class SFXLibrary : ScriptableObject
 {
-
     /// <summary>
     /// A contianer for Audioclips that keeps track of the index of the next clip that should be played.
     /// Used for SFX
@@ -29,7 +29,6 @@ public class SFXLibrary : ScriptableObject
         public SFXType type;
         public AudioClip[] clips;
     }
-
 
     public AudioObject[] SoundEffects => soundEffects;
     [SerializeField] AudioObject[] soundEffects;

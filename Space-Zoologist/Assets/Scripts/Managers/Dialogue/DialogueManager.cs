@@ -36,7 +36,7 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region Private Fields
-    private NPCConversation currentDialogue = default;
+    [SerializeField][EditorReadOnly] private NPCConversation currentDialogue = default;
     [SerializeField] private bool skipOpeningConversation = false;
     [SerializeField] private bool HideNPC = default;
     private NPCConversation startingConversation = default;
@@ -112,6 +112,7 @@ public class DialogueManager : MonoBehaviour
         queuedConversations.Enqueue(newDialogue);
         needForDeserialization.Enqueue(true);
     }
+
     public void SetNewQuiz(NPCConversation newDialogue)
     {
         if (queuedConversations.Contains(newDialogue))
@@ -187,7 +188,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 StartNewConversationWithoutDeserialization();
-                GameManager.Instance.m_menuManager.ToggleUISingleButton(false,"NotebookButton");
+                GameManager.Instance.m_menuManager.ToggleUISingleButton(false, "NotebookButton");
             }
         }
         else
@@ -199,6 +200,7 @@ public class DialogueManager : MonoBehaviour
             GameManager.Instance.m_menuManager.ToggleUI(true);
         }
     }
+
     private void StartNewConversation()
     {
         GameManager.Instance.m_menuManager.ToggleUI(false);
@@ -206,6 +208,7 @@ public class DialogueManager : MonoBehaviour
         ConversationManager.Instance.StartConversation(currentDialogue);
         ContinueSpeech = true;
     }
+
     private void StartNewConversationWithoutDeserialization()
     {
         GameManager.Instance.m_menuManager.ToggleUI(false);

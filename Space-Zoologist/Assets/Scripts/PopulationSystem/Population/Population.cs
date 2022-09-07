@@ -145,7 +145,7 @@ public class Population : MonoBehaviour
                 float populationIncreaseAmount = this.Count * GrowthCalculator.ChangeRate;
                 for (int i = 0; i < populationIncreaseAmount; ++i)
                 {
-                    this.AddAnimal(this.gameObject.transform.position);
+                    AddAnimal(FindValidPositionAroundCurrentAnimals());
                 }
             }
         }
@@ -166,6 +166,33 @@ public class Population : MonoBehaviour
         }
 
         return readyForGrowth;
+    }
+
+    /// <summary>
+    /// Finds a valid spawning position around a random existing animal in the population
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="taxicabDistance"></param>
+    public Vector3 FindValidPositionAroundCurrentAnimals()
+    {
+        // choose a random current animal as the source position
+        Vector3Int sourcePos = AnimalPopulation[UnityEngine.Random.Range(0, Count - 1)].transform.position.ToVector3Int();
+        // select a random tile from 3x3 around the animal
+        var possibleSpawnPos = new List<Vector3Int>();
+        for(int y = -1;y <= 1;y++)
+        {
+            for(int x = -1;x <= 1;x++)
+            {
+                Vector3Int position = sourcePos + new Vector3Int(x, y, 0);
+                if(AccessibleLocations.Contains(position))
+                    possibleSpawnPos.Add(position);
+            }
+        }
+        sourcePos = possibleSpawnPos[UnityEngine.Random.Range(0, possibleSpawnPos.Count - 1)];
+        // random position inside the chosen tile
+        Vector3 finalPos = sourcePos + new Vector3(0.5f, 0.5f, 0);
+        finalPos += (0.4f * UnityEngine.Random.insideUnitCircle).ToVector3();
+        return finalPos;
     }
 
     public void AddAnimal(Vector3 position)

@@ -11,6 +11,10 @@ public class Animal : MonoBehaviour
     public MovementController MovementController {get; set; }
     private AnimalBehaviorManager AnimalBehaviorManager = default;
     private Vector3 lastPos;
+
+    [SerializeField][EditorReadOnly] private string foodTargetSpeciesName;
+    public string FoodTargetSpeciesName => foodTargetSpeciesName;
+
     public void Start()
     {
         lastPos = this.gameObject.transform.position;
@@ -21,6 +25,7 @@ public class Animal : MonoBehaviour
             Debug.Log("Animator component not attached");
         }
     }
+
     public void Initialize(Population population, MovementData data)
     {
         this.MovementController = this.gameObject.GetComponent<MovementController>();
@@ -94,22 +99,35 @@ public class Animal : MonoBehaviour
     {
         Animator.SetTrigger(triggerName);
     }
+
     public void SetAnimatorBool(string boolName, bool value)
     {
         Animator.SetBool(boolName, value);
     }
+
     public void SetAnimatorInt(string intName, int value)
     {
         Animator.SetInteger(intName, value);
     }
+
     public void SetAnimatorFloat(string floatName, float value)
     {
         Animator.SetFloat(floatName, value);
     }
+
     private float PythagoreanTheorem(Vector3 v1, Vector3 v2)
     {
         float distx = Mathf.Abs(v1.x - v2.x);
         float disty = Mathf.Abs(v1.y - v2.y);
         return Mathf.Sqrt(distx * distx + disty * disty);
+    }
+
+    /// <summary>
+    /// Updates the current foodTargetSpeciesName for lookup by EatingPattern
+    /// </summary>
+    /// <returns></returns>
+    public void SetFoodTargetSpeciesName(string newFoodTargetSpeciesName)
+    {
+        foodTargetSpeciesName = newFoodTargetSpeciesName;
     }
 }

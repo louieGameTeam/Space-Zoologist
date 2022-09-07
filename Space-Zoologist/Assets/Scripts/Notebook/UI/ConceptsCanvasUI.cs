@@ -188,6 +188,9 @@ public class ConceptsCanvasUI : NotebookUIChild
                 scroll.normalizedPosition = Vector2.zero;
                 SetCameraPosition();
             }
+
+            // hide inspector
+            TryAddBlockInspectorSet();
         }
         else
         {
@@ -197,6 +200,7 @@ public class ConceptsCanvasUI : NotebookUIChild
             // Unlock the camera so it goes back to its previous position
             GameManager instance = GameManager.Instance;
             if (instance) instance.m_cameraController.Unlock();
+            TryRemoveBlockInspectorSet();
         }
     }
     private void SetCameraPositionWithDialogue() => SetCameraPosition(true);
