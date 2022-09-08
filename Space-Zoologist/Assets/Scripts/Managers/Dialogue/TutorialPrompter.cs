@@ -293,13 +293,14 @@ public class TutorialPrompter : MonoBehaviour
     {
         FreezingScheduler.FreezeUntilConditionIsMet(() => NotebookItemPicked(targetTab, targetItem, nameFilter));
 
+        ConditionalHighlight [] itemPickerHighlights = HighlightItemPicker (GetItemPicker (targetTab, nameFilter), targetItem);
         // Highlight notebook button if not open, then highlight correct tab
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
             // Highlight the correct tab
             HighlightNotebookTabButton(targetTab),
             // Highlight the dropdown in the picker
-            HighlightItemPicker(targetTab, targetItem, nameFilter)[0],
-            HighlightItemPicker(targetTab, targetItem, nameFilter)[1]);
+            itemPickerHighlights [0],
+            itemPickerHighlights [1]);
     }
     private void FreezeUntilBuildItemPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex) 
         where StoreSectionType : StoreSection
@@ -478,38 +479,35 @@ public class TutorialPrompter : MonoBehaviour
             target = () => targetTransform
         };
     }
-    private ConditionalHighlight[] HighlightItemPicker(NotebookTab targetTab, ItemID targetItem, string nameFilter)
-    {
-        NotebookUI notebook = GameManager.Instance.NotebookUI;
-        // Get all pickers in the given tab
-        ItemPicker[] pickers = notebook.TabPicker.GetTabRoot(targetTab).GetComponentsInChildren<ItemPicker>(true);
-        // Find a picker whose name contains the filter
-        ItemPicker picker = Array.Find(pickers, p => p.name.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
-        return HighlightItemPicker(picker, targetItem);
-    }
-    private ConditionalHighlight[] HighlightItemPicker(ItemPicker itemPicker, ItemID targetItem)
-    {
-        // Get the item dropdown for this category
-        ItemDropdown categoryDropdown = itemPicker.GetDropdown(targetItem.Category);
-        return HighlightItemDropdownUtility(categoryDropdown, targetItem, () => itemPicker.SelectedItem);
-    }
-    private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
+    private ItemPicker GetItemPicker (NotebookTab targetTab, string nameFilter) {
         NotebookUI notebook = GameManager.Instance.NotebookUI;
         // Get all pickers in the given tab
         ItemPicker [] pickers = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<ItemPicker> (true);
         // Find a picker whose name contains the filter
-        ItemPicker picker = Array.Find (pickers, p => p.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+        return Array.Find (pickers, p => p.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
+    private ItemDropdown GetItemDropdown (ItemPicker itemPicker, ItemRegistry.Category targetItemCategory) {
+        return itemPicker.GetDropdown (targetItemCategory);
+    }
+    // Highlights a dropdown category without highlighting items in the dropdown
+    private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
         // Get the item dropdown for this category
-        ItemDropdown categoryDropdown = picker.GetDropdown (itemCategory);
+        ItemDropdown categoryDropdown = GetItemDropdown (GetItemPicker (targetTab, nameFilter), itemCategory);
         return new ConditionalHighlight () 
-        {
+        { 
             predicate = () => true,
             target = () => categoryDropdown.GetComponent<RectTransform> ()
         };
     }
-    private ConditionalHighlight[] HighlightItemDropdown(ItemDropdown itemDropdown, ItemID targetItem)
+    // Should only be used when an item is in a dropdown contained in an item picker
+    private ConditionalHighlight [] HighlightItemPicker(ItemPicker itemPicker, ItemID targetItem)
     {
-        return HighlightItemDropdownUtility(itemDropdown, targetItem, () => itemDropdown.SelectedItem);
+        ItemDropdown itemDropdown = GetItemDropdown (itemPicker, targetItem.Category);
+        return HighlightItemDropdownUtility(itemDropdown, targetItem, () => itemPicker.SelectedItem);
+    }
+    // Should only be used when a dropdown is independent of an item picker
+    private ConditionalHighlight [] HighlightItemDropdown (ItemDropdown itemDropdown, ItemID targetItem) {
+        return HighlightItemDropdownUtility (itemDropdown, targetItem, () => itemDropdown.SelectedItem);
     }
     private ConditionalHighlight[] HighlightItemDropdownUtility(ItemDropdown itemDropdown, ItemID targetItem, Func<ItemID> selectedItem)
     {
@@ -521,19 +519,17 @@ public class TutorialPrompter : MonoBehaviour
         RectTransform DropdownItemGetter()
         {
             Transform dropdownList = itemDropdownTransform.Find("Dropdown List");
-            Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
+            /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
 
             // Search all the template item's children for the item with the same index in the name
-            Transform itemParent = templateItem.transform.parent;
-            for(int i = 0; i < itemParent.childCount; i++)
+            Transform itemParent = templateItem.transform.parent;*/
+            foreach (Transform child in dropdownList)
             {
-                Transform currentChild = itemParent.GetChild(i);
-                if (currentChild.name.Contains($"Item {itemIndex}: "))
+                if (child.name.Contains(itemIndex.ToString()))
                 {
-                    return currentChild as RectTransform;
+                    return child as RectTransform;
                 }
             }
-
             return null;
         }
 
@@ -542,14 +538,14 @@ public class TutorialPrompter : MonoBehaviour
             // Highlight the dropdown in the picker
             new ConditionalHighlight()
             {
-                predicate = () => !itemDropdown.Dropdown.IsExpanded && selectedItem.Invoke() != targetItem,
+                predicate = () => !(itemDropdown.Dropdown.IsExpanded || selectedItem.Invoke () == targetItem),
                 target = () => itemDropdownTransform
             },
             // Highlight the single option button in the dropdown list
             new ConditionalHighlight()
             {
-                predicate = () => selectedItem.Invoke() != targetItem,
-                target = DropdownItemGetter
+                predicate = () => selectedItem.Invoke () != targetItem,
+                target = () => DropdownItemGetter()
             }
         };
     }
