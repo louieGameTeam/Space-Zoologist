@@ -177,8 +177,15 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilGoatIsInspected()
     {
-        ItemID goatID = ItemRegistry.FindHasName("Goat");
-        FreezeUntilPopulationIsInspected(goatID);
+        FreezeUntilPopulationIsInspected(new ItemID (ItemRegistry.Category.Species, 0));
+    }
+    public void FreezeUntilMapleIsInspected () {
+        // TODO: HOW??
+        //FreezeUntilPopulationIsInspected (new ItemID (ItemRegistry.Category.Food, 0));
+    }
+    public void FreezeUntilWaterIsInspected () {
+        // TODO: HOW?? WHY IS THE INSPECTOR WRITTEN LIKE THIS??
+        //FreezeUntilPopulationIsInspected (new ItemID (ItemRegistry.Category.Tile, 3));
     }
     public void FreezeUntilDirtRequested(int quantity)
     {
