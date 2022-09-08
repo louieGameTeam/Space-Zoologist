@@ -71,7 +71,7 @@ public class ItemDropdown : NotebookUIChild
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex(option => option.text == id.Data.Name.Get(itemDisplayName));
+    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex(option => option.text.Contains (id.Data.Name.Get(itemDisplayName)));
 
     // Set the value of the dropdown
     public void SetDropdownValue(int value) => SetDropdownValueHelper(value, true);

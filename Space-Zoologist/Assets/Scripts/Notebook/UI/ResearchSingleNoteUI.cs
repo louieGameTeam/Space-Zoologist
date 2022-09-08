@@ -35,6 +35,7 @@ public class ResearchSingleNoteUI : NotebookUIChild
         // Setup the initial note and label
         labelText.text = label + ":";
         myInputField.text = initialNote;
+        myInputField.gameObject.name = label;
 
         // When input finishes editing then write the note to the notebook model
         myInputField.onEndEdit.AddListener(s =>
