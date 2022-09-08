@@ -122,6 +122,11 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilTreePicked (string pickerNameFilter) {
         FreezeUntilNotebookItemPicked (NotebookTab.Research, new ItemID (ItemRegistry.Category.Food, 0), pickerNameFilter);
     }
+    public void FreezeUntilInputFieldHas4CharactersTyped (string inputFieldNameFilter) {
+        ConditionalHighlight highlight = HighlightInputField (NotebookTab.Research, inputFieldNameFilter, 4);
+        FreezingScheduler.FreezeUntilConditionIsMet (() => !highlight.predicate());
+        HighlightingScheduler.SetHighlights (highlight);
+    }
     public void FreezeUntilBuildUIOpen()
     {
         FreezingScheduler.FreezeUntilConditionIsMet(() => GameManager.Instance.m_menuManager.IsInStore);
@@ -614,6 +619,17 @@ public class TutorialPrompter : MonoBehaviour
         {
             predicate = () => inputField.text != targetInput,
             target = () => rectTransform
+        };
+    }
+    private ConditionalHighlight HighlightInputField (NotebookTab targetTab, string nameFilter, int targetInputLength) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        TMP_InputField [] inputFields = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TMP_InputField> (true);
+        // Find a picker whose name contains the filter
+        TMP_InputField inputField = Array.Find (inputFields, p => p.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+        return new ConditionalHighlight () {
+            predicate = () => inputField.text.Length < targetInputLength,
+            target = () => inputField.transform.parent.GetComponent<RectTransform> ()
         };
     }
     private ConditionalHighlight HighlightNextDayButton(Func<bool> predicate, bool invert = false)
