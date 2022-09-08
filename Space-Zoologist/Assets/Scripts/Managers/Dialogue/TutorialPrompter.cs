@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using DialogueEditor;
 
 using TMPro;
+using DG.Tweening.Core.Easing;
 
 /// <summary>
 /// Manager of miscellaneous events that occur during tutorials in the dialogue
@@ -180,12 +181,10 @@ public class TutorialPrompter : MonoBehaviour
         FreezeUntilPopulationIsInspected(new ItemID (ItemRegistry.Category.Species, 0));
     }
     public void FreezeUntilMapleIsInspected () {
-        // TODO: HOW??
-        //FreezeUntilPopulationIsInspected (new ItemID (ItemRegistry.Category.Food, 0));
+        FreezeUntilFoodIsInspected (new ItemID (ItemRegistry.Category.Food, 0));
     }
     public void FreezeUntilWaterIsInspected () {
-        // TODO: HOW?? WHY IS THE INSPECTOR WRITTEN LIKE THIS??
-        //FreezeUntilPopulationIsInspected (new ItemID (ItemRegistry.Category.Tile, 3));
+        FreezingScheduler.FreezeUntilConditionIsMet (() => WaterIsInspected ());
     }
     public void FreezeUntilDirtRequested(int quantity)
     {
@@ -325,6 +324,9 @@ public class TutorialPrompter : MonoBehaviour
         FreezingScheduler.FreezeUntilConditionIsMet(() => PopulationIsInspected(targetSpecies));
         HighlightingScheduler.SetHighlights(HighlightInspectorButton());
     }
+    private void FreezeUntilFoodIsInspected (ItemID targetFood) {
+        FreezingScheduler.FreezeUntilConditionIsMet (() => FoodIsInspected (targetFood));
+    }
     private void FreezeUntilResourceRequestSubmitted(ItemID requestedItem, int requestQuantity)
     {
         // Grab a bunch of references to various scripts in the Notebook
@@ -381,19 +383,33 @@ public class TutorialPrompter : MonoBehaviour
         Inspector inspector = GameManager.Instance.m_inspector;
 
         // Get the population highlighted
-        if (inspector.PopulationHighlighted)
-        {
-            // Get the population script on the object highlighted
-            Population population = inspector.PopulationHighlighted.GetComponent<Population>();
+        if (!inspector.PopulationHighlighted) return false;
 
-            // If you got the script then check the species type highlighted
-            if (population)
-            {
-                return population.Species.ID == species;
-            }
-            return false;
-        }
-        return false;
+        // Get the population script on the object highlighted
+        Population population = inspector.PopulationHighlighted.GetComponent<Population>();
+
+        // If you got the script then check the species type highlighted
+        if (!population) return false;
+
+        return population.Species.ID == species;
+    }
+    private bool FoodIsInspected (ItemID food) {
+        Inspector inspector = GameManager.Instance.m_inspector;
+
+        TileData tileData = GameManager.Instance.m_tileDataController.GetTileData (inspector.selectedPosition);
+
+        if (!tileData.Food) return false;
+
+        return tileData.Food.GetComponent<FoodSource>().Species.ID == food;
+    }
+    private bool WaterIsInspected () {
+        Inspector inspector = GameManager.Instance.m_inspector;
+
+        TileData tileData = GameManager.Instance.m_tileDataController.GetTileData (inspector.selectedPosition);
+
+        if (!tileData.currentTile) return false;
+
+        return tileData.currentTile.type == TileType.Liquid;
     }
     private bool PopulationExists(ItemID species, int amount)
     {
