@@ -16,13 +16,13 @@ public class QuizQuestionOrPool
     [SerializeField]
     [Tooltip("If true, this represents a pool of questions to randomly pick from. " +
         "If false, this is just a single question")]
-    private bool isPool;
+    private bool isPool = false;
     [SerializeField]
     [Tooltip("Question to ask in the quiz")]
-    private QuizQuestion question;
+    private QuizQuestion question = null;
     [SerializeField]
     [Tooltip("Pool of questions to pick from")]
-    private QuizQuestionPool pool;
+    private QuizQuestionPool pool = null;
     #endregion
 
     #region Public Methods

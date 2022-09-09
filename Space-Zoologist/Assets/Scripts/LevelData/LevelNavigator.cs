@@ -14,10 +14,10 @@ public class LevelNavigator : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the level select UI used to select a level")]
-    private LevelSelectUI levelUIPrefab;
+    private LevelSelectUI levelUIPrefab = null;
     [SerializeField]
     [Tooltip("Layout group used to display all level ui selectors")]
-    private LayoutGroup levelUIGroup;
+    private LayoutGroup levelUIGroup = null;
     #endregion
 
     #region Private Fields

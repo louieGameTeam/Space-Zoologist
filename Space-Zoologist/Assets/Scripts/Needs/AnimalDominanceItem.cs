@@ -13,7 +13,7 @@ public class AnimalDominanceItem
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Amount that this animal dominates over other animals for this resource")]
-    private float dominance;
+    private float dominance = 0f;
     #endregion
 
     #region Private Fields

@@ -20,33 +20,33 @@ public class GenericWindowData
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Image used for the background of the generic window")]
-    private Sprite background;
+    private Sprite background = null;
     [SerializeField]
     [Tooltip("Text to display in the window")]
-    private string message;
+    private string message = null;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Starting position for the window animation")]
-    private Vector2 startingAnchorPosition;
+    private Vector2 startingAnchorPosition = Vector2.zero;
     [SerializeField]
     [Tooltip("Ease of the window animation")]
-    private Ease startingAnimationEase;
+    private Ease startingAnimationEase = Ease.Unset;
     [SerializeField]
     [Tooltip("Ease of the window when it goes away")]
-    private Ease endingAnimationEase;
+    private Ease endingAnimationEase = Ease.Unset;
     
     [Space]
     
     [SerializeField]
     [Tooltip("Button data for the primary button in the window")]
-    private GenericButtonData primaryButtonData;
+    private GenericButtonData primaryButtonData = null;
     [SerializeField]
     [Tooltip("True if the window has a secondary button and false if it should be hidden")]
     private bool hasSecondaryButton = true;
     [SerializeField]
     [Tooltip("Button data for the secondary button in the window")]
-    private GenericButtonData secondaryButtonData;
+    private GenericButtonData secondaryButtonData = null;
     #endregion
 }

@@ -38,10 +38,10 @@ public class ResourcePicker : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to pick the resource")]
-    private TMP_Dropdown dropdown;
+    private TMP_Dropdown dropdown = null;
     [SerializeField]
     [Tooltip("Event invoked when a resource is selected from the list")]
-    private ItemEvent onItemSelected;
+    private ItemEvent onItemSelected = null;
     #endregion
 
     #region Public Methods

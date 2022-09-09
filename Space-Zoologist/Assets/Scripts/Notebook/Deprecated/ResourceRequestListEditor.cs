@@ -14,13 +14,13 @@ public class ResourceRequestListEditor : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
-    private ResourceRequestEditor editorPrefab;
+    private ResourceRequestEditor editorPrefab = null;
     [SerializeField]
     [Tooltip("Parent transform for the editor of the individual entries")]
-    private LayoutGroup editorParent;
+    private LayoutGroup editorParent = null;
     [SerializeField]
     [Tooltip("Reference to the scroll rect that the editors will fit into")]
-    private ScrollRect editorScroller;
+    private ScrollRect editorScroller = null;
     #endregion
 
     #region Private Fields

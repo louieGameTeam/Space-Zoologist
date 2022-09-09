@@ -53,7 +53,7 @@ public class TileDataController : MonoBehaviour
     private Action constructionFinishedCallback = null;
 
     private Texture2D TilemapTexture;
-    [SerializeField] private GameObject bufferGameObject;
+    [SerializeField] private GameObject bufferGameObject = null;
     private Texture2D BufferTexture;
     private Texture2D BufferCenterTexture;
 

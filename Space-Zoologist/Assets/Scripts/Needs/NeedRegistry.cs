@@ -19,7 +19,7 @@ public class NeedRegistry
     [SerializeField]
     [Tooltip("List of all needs for this species")]
     [ParallelItemRegistry("needArrays", "needs")]
-    private NeedDataJaggedArray needData;
+    private NeedDataJaggedArray needData = null;
     #endregion
 
     #region Public Methods

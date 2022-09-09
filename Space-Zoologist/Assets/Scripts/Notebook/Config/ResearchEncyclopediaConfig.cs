@@ -15,7 +15,7 @@ public class ResearchEncyclopediaConfig : ScriptableObject
     [SerializeField]
     [FormerlySerializedAs("articlesList")]
     [Tooltip("List of all the articles in this encyclopedia")]
-    private List<ResearchEncyclopediaArticleConfig> articles;
+    private List<ResearchEncyclopediaArticleConfig> articles = null;
     #endregion
 
     #region Public Methods

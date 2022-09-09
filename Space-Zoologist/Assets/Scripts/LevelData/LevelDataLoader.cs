@@ -12,7 +12,7 @@ public class LevelDataLoader : MonoBehaviour
 
     #region Editor Fields
     [Header("Used when playing level scene directly")]
-    [SerializeField] LevelData levelOnPlay;
+    [SerializeField] LevelData levelOnPlay = null;
     #endregion
 
     #region Private Fields

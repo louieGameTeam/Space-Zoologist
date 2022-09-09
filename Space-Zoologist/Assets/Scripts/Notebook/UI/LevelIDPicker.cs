@@ -55,16 +55,16 @@ public class LevelIDPicker : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the level number")]
-    private TMP_Dropdown levelDropdown;
+    private TMP_Dropdown levelDropdown = null;
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the enclosure number")]
-    private TMP_Dropdown enclosureDropdown;
+    private TMP_Dropdown enclosureDropdown = null;
     [SerializeField]
     [Tooltip("Reference to the script targetted by the bookmarking system")]
-    private BookmarkTarget bookmarkTarget;
+    private BookmarkTarget bookmarkTarget = null;
     [SerializeField]
     [Tooltip("Event invoked when an enclosure ID is picked")]
-    private LevelIDEvent onLevelIDPicked;
+    private LevelIDEvent onLevelIDPicked = null;
     #endregion
 
     #region Public Methods
