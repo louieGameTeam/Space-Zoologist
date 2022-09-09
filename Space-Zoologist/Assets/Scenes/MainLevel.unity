@@ -604,49 +604,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174579047}
   m_CullTransparentMesh: 0
---- !u!1 &208159618
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 208159619}
-  - component: {fileID: 208159620}
-  m_Layer: 0
-  m_Name: EventResponseManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &208159619
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208159618}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 497773653}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &208159620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208159618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efc86807f5dc24198962246390635ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &228618991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1323,7 +1280,6 @@ Transform:
   m_Children:
   - {fileID: 1959954724}
   - {fileID: 1242613438}
-  - {fileID: 208159619}
   m_Father: {fileID: 26666793554278037}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1506,7 +1462,7 @@ PrefabInstance:
         type: 3}
       propertyPath: levelOnPlay
       value: 
-      objectReference: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90,
+      objectReference: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb013aaea76714c69b04e49a6b98f035, type: 3}
@@ -7294,9 +7250,9 @@ MonoBehaviour:
   debug: 0
   autoWin: 0
   skipConversation: 0
-  LevelOnPlay: Level1E1
+  LevelOnPlay: Level0E1
   directory: Levels/
-  m_levelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}
+  m_levelData: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4, type: 2}
   SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
   RestartButton: {fileID: 1410644951}
   NextLevelButton: {fileID: 1246903123}
@@ -7525,6 +7481,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1443550855}
     m_Modifications:
+    - target: {fileID: 1320017396596517679, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017396596517679, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017396596517679, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -140
+      objectReference: {fileID: 0}
     - target: {fileID: 1320017397453811434, guid: 3b3eebfc2662f49a5b6225da95a2181c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7634,6 +7605,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ConversationManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017397879972379, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017397953761342, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b3eebfc2662f49a5b6225da95a2181c, type: 3}
