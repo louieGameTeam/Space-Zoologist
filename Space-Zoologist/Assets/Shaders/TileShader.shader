@@ -11,21 +11,18 @@
 
         _TileNoiseDistribution("Tile Noise Distribution", float) = 1
         _TilePropSparsity("Tile Prop Sparsity", Range(0, 1)) = 1
-
+        
         [Toggle]_GridOverlayToggle("Grid Overlay Toggle", float) = 0
         _GridOverlayLineWidth("Grid Overlay Line Width", Range(0, 32)) = 0
         _GridOverlayDesaturation("Grid Overlay Desaturation", Range(0, 1)) = 0
         _GridOverlayRulerTiles("Grid Overlay Ruler Tiles", Range(0, 32)) = 0
         _GridOverlayRulerColor("Grid Overlay Ruler Color", COLOR) = (1, 1, 1, 1)
         _GridOverlayRulerLineWidth("Grid Overlay Ruler Line Width", Range(0, 32)) = 0
-
+        
         _CameraDefaultOrthoHeight("Camera Default Zoom Ortho Height(For grid scaling reference)", float) = 9.4
 
         _LiquidColor("Liquid Color", COLOR) = (1, 1, 1, 1)
         _LiquidSubColor("Liquid Sub Color", COLOR) = (1, 1, 1, 1)
-        _LiquidCrossSubAlpha("Liquid Cross-Sub Alpha", Range(0, 1)) = 1
-        _LiquidWaveScrollSpeed("Liquid Scroll Speed (X1, Y1, X2, Y2)", Vector) = (1, 1, 1, 1)
-        _LiquidSubScale("Liquid Sub Scale", float) = 1
         _LiquidTextureScaling("Liquid Texture Scaling", Vector) = (1, 1, 0, 0)
 
         _BlendBorderWidth("Blend Border Width", float) = 0
@@ -142,32 +139,16 @@
 
             float4 _LiquidColor;
             float4 _LiquidSubColor;
-            float _LiquidCrossSubAlpha;
             float4 _LiquidTextureScaling;
-            float4 _LiquidWaveScrollSpeed;
-            float _LiquidSubScale;
 
             float4 AddLiquid(float4 col, float2 localPixel, float2 worldPos) {
                 float4 liquid = 1;
                 worldPos.xy /= _LiquidTextureScaling.xy;
-
-                float2 worldPosMain = worldPos;
-                worldPosMain.x += _Time.x * _LiquidWaveScrollSpeed.r;
-                worldPosMain.y += _Time.x * _LiquidWaveScrollSpeed.g;
-
-                float2 noiseUV = float2(int2(frac(worldPosMain) * PIXELS_PER_TILE)) / PIXELS_PER_TILE;
+                worldPos.y += _Time.x / 2;
+                float2 noiseUV = float2(int2(frac(worldPos) * PIXELS_PER_TILE)) / PIXELS_PER_TILE;
                 float noise = tex2D(_NoiseTexture, noiseUV);
 
                 liquid = lerp(_LiquidColor, _LiquidSubColor, noise);
-
-                worldPos.xy *= _LiquidSubScale;
-                worldPos.x += _Time.x * _LiquidWaveScrollSpeed.b;
-                worldPos.y += _Time.x * _LiquidWaveScrollSpeed.a;
-
-                float2 noise2UV = float2(int2(frac(worldPos) * PIXELS_PER_TILE)) / PIXELS_PER_TILE;
-                float noise2 = tex2D(_NoiseTexture, noise2UV) * _LiquidCrossSubAlpha;
-
-                liquid += noise2;
 
                 col = liquid;
 
