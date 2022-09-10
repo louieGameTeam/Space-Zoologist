@@ -8,13 +8,13 @@ public class QuizAnswerUI : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Text used to display the question")]
-    private TextMeshProUGUI questionText;
+    private TextMeshProUGUI questionText = null;
     [SerializeField]
     [Tooltip("Text used to display the answer")]
-    private TextMeshProUGUI answerText;
+    private TextMeshProUGUI answerText = null;
     [SerializeField]
     [Tooltip("Text used to tell the player how correct their answer is")]
-    private TextMeshProUGUI gradeText;
+    private TextMeshProUGUI gradeText = null;
     #endregion
 
     #region Public Methods

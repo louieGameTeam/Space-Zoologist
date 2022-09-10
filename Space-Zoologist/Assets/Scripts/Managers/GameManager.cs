@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(json, data);
             return data;
         }
-        catch (System.Exception e)
+        catch
         {
             Debug.Log("No save data or error loading notebook data, creating new data");
             return null;

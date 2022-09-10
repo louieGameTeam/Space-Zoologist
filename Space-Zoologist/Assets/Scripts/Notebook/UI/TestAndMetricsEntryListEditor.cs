@@ -7,16 +7,16 @@ public class TestAndMetricsEntryListEditor : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Script used to pick the enclosure we are currently taking notes on")]
-    private LevelIDPicker enclosurePicker;
+    private LevelIDPicker enclosurePicker = null;
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single test and metrics entry")]
-    private TestAndMetricsEntryEditor editorPrefab;
+    private TestAndMetricsEntryEditor editorPrefab = null;
     [SerializeField]
     [Tooltip("Parent transform for the editor of the individual entries")]
-    private LayoutGroup editorParent;
+    private LayoutGroup editorParent = null;
     [SerializeField]
     [Tooltip("Reference to the scroll rect that the editors will fit into")]
-    private ScrollRect editorScroller;
+    private ScrollRect editorScroller = null;
 
     private List<TestAndMetricsEntryEditor> currentEditors = new List<TestAndMetricsEntryEditor>();
 

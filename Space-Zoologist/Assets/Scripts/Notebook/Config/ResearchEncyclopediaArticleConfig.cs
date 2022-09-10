@@ -24,13 +24,13 @@ public class ResearchEncyclopediaArticleConfig
     #region Private editor data
     [SerializeField]
     [Tooltip("Identification for this encyclopedia article")]
-    private ResearchEncyclopediaArticleID id;
+    private ResearchEncyclopediaArticleID id = ResearchEncyclopediaArticleID.Empty;
     [SerializeField]
     [TextArea(3, 20)] 
     [Tooltip("Text in the article")]
-    private string text;
+    private string text = "";
     [SerializeField]
     [Tooltip("Image that can display in the article")]
-    private Sprite[] sprites;
+    private Sprite[] sprites = null;
     #endregion
 }

@@ -51,7 +51,7 @@ public class StoreSection : MonoBehaviour
         return null;
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (cursorInput.IsOn)
         {

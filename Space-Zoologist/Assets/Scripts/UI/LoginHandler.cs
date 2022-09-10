@@ -10,7 +10,7 @@ public class LoginHandler : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip ("Data for the window displayed when a login is requested")]
-    private GenericWindow loginWindow;
+    private GenericWindow loginWindow = null;
     #endregion
 
     #region Private Fields

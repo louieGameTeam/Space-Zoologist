@@ -50,7 +50,7 @@ public class TutorialPrompter : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Prefab used to highlight different parts of the tutorial")]
-    private TutorialHighlight highlightPrefab;
+    private TutorialHighlight highlightPrefab = null;
     #endregion
 
     #region Private Fields

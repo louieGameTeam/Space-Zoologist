@@ -8,13 +8,13 @@ public class ScrollButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 {
     [SerializeField]
     [Tooltip("Reference to the scroll view that this button modifies")]
-    private ScrollRect scrollRect;
+    private ScrollRect scrollRect = null;
     [SerializeField]
     [Tooltip("Direction that the button scrolls")]
-    private Vector2 direction;
+    private Vector2 direction = Vector2.zero;
     [SerializeField]
     [Tooltip("Percentage of the scroll area that the button scrolls per second")]
-    private float normalSpeed;
+    private float normalSpeed = 0.1f;
 
     [Tooltip("True if the pointer is down on this button and false if not")]
     private bool pointerIsDown = false;

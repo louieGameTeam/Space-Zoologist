@@ -12,19 +12,19 @@ public class DebuggingUI : MonoBehaviour
     private KeyCode activationCode = KeyCode.BackQuote;
     [SerializeField]
     [Tooltip("Main panel that appears / disappears by pressing the back quote button")]
-    private GameObject mainPanel;
+    private GameObject mainPanel = null;
     [SerializeField]
     [Tooltip("Reference to the button that lets the player instantly win the game")]
-    private Button winButton;
+    private Button winButton = null;
     [SerializeField]
     [Tooltip("Button that unlocks all levels when clicked")]
-    private Button toggleLevelOverrideButton;
+    private Button toggleLevelOverrideButton = null;
     [SerializeField]
     [Tooltip("Button that toggles the verbose inspector")]
-    private Button toggleVerboseInspectorButton;
+    private Button toggleVerboseInspectorButton = null;
     [SerializeField]
     [Tooltip("Reference to a verbose inspector")]
-    private VerboseInspector verboseInspector;
+    private VerboseInspector verboseInspector = null;
     #endregion
 
     #region Private Fields

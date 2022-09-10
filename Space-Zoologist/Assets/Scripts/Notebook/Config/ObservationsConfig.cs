@@ -15,9 +15,9 @@ public class ObservationsConfig
     [SerializeField]
     [FormerlySerializedAs("enclosureScaffold")]
     [Tooltip("Scaffolding of the observation page based on the current enclosure level")]
-    private LevelScaffold scaffold;
+    private LevelScaffold scaffold = null;
     [SerializeField]
     [Tooltip("Set of initial entries corresponding to each scaffolding level")]
-    private List<ObservationsEntryListData> initialEntries;
+    private List<ObservationsEntryListData> initialEntries = null;
     #endregion
 }

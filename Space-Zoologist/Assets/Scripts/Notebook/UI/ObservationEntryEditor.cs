@@ -9,13 +9,13 @@ public class ObservationEntryEditor : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Canvas group used to control alpha of all graphics")]
-    private CanvasGroup group;
+    private CanvasGroup group = null;
     [SerializeField]
     [Tooltip("Input field used to edit the title of the observations")]
-    private TMP_InputField titleInput;
+    private TMP_InputField titleInput = null;
     [SerializeField]
     [Tooltip("Input field used to edit the text of the observations")]
-    private TMP_InputField textInput;
+    private TMP_InputField textInput = null;
 
     // Setup this editor with the entry that it will edit
     public void Setup(ObservationsEntryData entry, LevelID id, ScrollRect scrollTarget)

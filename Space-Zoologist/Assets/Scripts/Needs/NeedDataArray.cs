@@ -12,6 +12,6 @@ public class NeedDataArray
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of needs")]
-    private NeedData[] needs;
+    private NeedData[] needs = null;
     #endregion
 }
