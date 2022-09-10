@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TextEffects : MonoBehaviour
+public class IntroManager : MonoBehaviour
 {
-    [Range(0, 1)]
     [SerializeField] float speed = default;
 
     [SerializeField] TMPro.TextMeshProUGUI Introduction = default;
@@ -14,10 +14,9 @@ public class TextEffects : MonoBehaviour
     [SerializeField] Image BackgroundImage = default;
     [SerializeField] Image PreviousBackgroundImage = default;
     [SerializeField] Image TextBoxImage = default;
-    [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] MusicManager musicManager = default;
     private int Index = 0;
-
+    private bool hasLoadedMenu = false;
 
     private void Start()
     {
@@ -53,9 +52,12 @@ public class TextEffects : MonoBehaviour
             color.a += Time.deltaTime * speed;
             PreviousBackgroundImage.color = color;
         }
-        else if (Index == IntroductionTexts.Count + 1)
+        else if (Index == IntroductionTexts.Count + 1 && !hasLoadedMenu)
         {
-            SceneNavigator.LoadMainMenu();
+            hasLoadedMenu = true;
+            SceneNavigator.LoadLevel ("MainMenu"/*, LoadSceneMode.Additive*/);/*
+            SceneManager.SetActiveScene (SceneManager.GetSceneByName ("MainMenu"));
+            SceneManager.UnloadSceneAsync ("Introduction");*/
         }
 
         if (Index == IntroductionTexts.Count + 1) {
@@ -78,17 +80,13 @@ public class TextEffects : MonoBehaviour
         PreviousBackgroundImage.sprite = BackgroundImage.sprite;
 
         // Set next image - reuse a black copy of the previous image as the transition fader
-        // TODO: 
         if (Index == IntroductionTexts.Count)
         {
-            // HACK hardcoded coordination
             float delay = musicManager.StartTransition(true);
-            //int numIntroBars = 3;
-            //speed = 1 / (delay + MusicManager.SECONDS_PER_BAR * numIntroBars);
-            // TODO: Replace line below with commented lines above, but fix the timing
-            speed = 0.55f;
+            print ("Starting transition");
+            int numIntroBeats = 3;
+            speed = 1.0f / (delay + MusicManager.SECONDS_PER_BAR / MusicManager.BEATS_PER_BAR * numIntroBeats);
             color = Color.black;
-
             Introduction.alignment = TMPro.TextAlignmentOptions.Center;
         }
         else

@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
 
     #region Game State Variables
     [Header("Game State Variables")]
-    [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] Button RestartButton = default;
     [SerializeField] Button NextLevelButton = default;
     [SerializeField] Toggle ObjectiveToggle = default;
@@ -380,8 +379,8 @@ public class GameManager : MonoBehaviour
         // set up the game state
         // Game Manger no longer hanldes npc end conversation, that's the GameOverController's job
         // EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
-        this.RestartButton.onClick.AddListener(() => { this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel); });
-        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
+        this.RestartButton.onClick.AddListener(() => { SceneNavigator.LoadLevel(SceneNavigator.RecentlyLoadedLevel); });
+        this.NextLevelButton?.onClick.AddListener(() => { SceneNavigator.LoadLevel ("LevelMenu"); });
         UpdateDayText(currentDay);
         this.IsPaused = false;
     }

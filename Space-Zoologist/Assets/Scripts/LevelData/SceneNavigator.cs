@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class SceneNavigator : ScriptableObject
 {
     [Expandable] public List<Level> Levels = default;
-    public string RecentlyLoadedLevel { get; private set; }
+    public static string RecentlyLoadedLevel { get; private set; }
 
-    public void LoadLevel(string levelName)
+    public static void LoadLevel(string levelName, LoadSceneMode mode = LoadSceneMode.Single)
     {
         if (GameManager.Instance)
         {
@@ -18,28 +18,13 @@ public class SceneNavigator : ScriptableObject
         }
         else Debug.Log("Did not get a game manager");
 
-        this.UpdateRecentlyLoadedLevel(levelName);
-        SceneManager.LoadScene(levelName, LoadSceneMode.Single);
+        UpdateRecentlyLoadedLevel(levelName);
+        SceneManager.LoadScene(levelName, mode);
     }
 
-    public void RestartLevel()
+    private static void UpdateRecentlyLoadedLevel(string levelName)
     {
-        LoadLevel("MainLevel");
-    }
-
-    public void LoadMainMenu()
-    {
-        LoadLevel("MainMenu");
-    }
-
-    public void LoadLevelMenu()
-    {
-        LoadLevel("LevelMenu");
-    }
-
-    private void UpdateRecentlyLoadedLevel(string levelName)
-    {
-        this.RecentlyLoadedLevel = levelName;
+        RecentlyLoadedLevel = levelName;
     }
 
     public void ExitGame()
