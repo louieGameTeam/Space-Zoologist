@@ -9,7 +9,7 @@ public class SceneNavigator : ScriptableObject
     [Expandable] public List<Level> Levels = default;
     public static string RecentlyLoadedLevel { get; private set; }
 
-    public static void LoadLevel(string levelName, LoadSceneMode mode = LoadSceneMode.Single)
+    public static void LoadLevel(string levelName/*, LoadSceneMode mode = LoadSceneMode.Single*/)
     {
         if (GameManager.Instance)
         {
@@ -19,7 +19,7 @@ public class SceneNavigator : ScriptableObject
         else Debug.Log("Did not get a game manager");
 
         UpdateRecentlyLoadedLevel(levelName);
-        SceneManager.LoadScene(levelName, mode);
+        SceneManager.LoadScene(levelName/*, mode*/);
     }
 
     private static void UpdateRecentlyLoadedLevel(string levelName)
