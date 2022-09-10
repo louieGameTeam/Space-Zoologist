@@ -123,6 +123,9 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilTreePicked (string pickerNameFilter) {
         FreezeUntilNotebookItemPicked (NotebookTab.Research, new ItemID (ItemRegistry.Category.Food, 0), pickerNameFilter);
     }
+    public void FreezeUntilSecondArticlePicked (string articleDropdownNameFilter) {
+        FreezeUntilArticlePicked (NotebookTab.Research, 1, articleDropdownNameFilter);
+    }
     public void FreezeUntilInputFieldHas4CharactersTyped (string inputFieldNameFilter) {
         ConditionalHighlight highlight = HighlightInputField (NotebookTab.Research, inputFieldNameFilter, 4);
         FreezingScheduler.FreezeUntilConditionIsMet (() => !highlight.predicate());
@@ -308,6 +311,18 @@ public class TutorialPrompter : MonoBehaviour
             itemPickerHighlights [0],
             itemPickerHighlights [1]);
     }
+    private void FreezeUntilArticlePicked (NotebookTab targetTab, int targetArticleIndex, string nameFilter) {
+        FreezingScheduler.FreezeUntilConditionIsMet (() => ArticlePicked (targetTab, targetArticleIndex, nameFilter));
+
+        ConditionalHighlight [] itemPickerHighlights = HighlightArticle (GetDropdown (targetTab, nameFilter), targetArticleIndex);
+        // Highlight notebook button if not open, then highlight correct tab
+        HighlightingScheduler.SetHighlights (HighlightNotebookButton (),
+            // Highlight the correct tab
+            HighlightNotebookTabButton (targetTab),
+            // Highlight the dropdown in the picker
+            itemPickerHighlights [0],
+            itemPickerHighlights [1]);
+    }
     private void FreezeUntilBuildItemPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex) 
         where StoreSectionType : StoreSection
     {
@@ -356,12 +371,15 @@ public class TutorialPrompter : MonoBehaviour
     private bool NotebookItemPicked(NotebookTab targetTab, ItemID targetItem, string nameFilter)
     {
         NotebookUI notebook = GameManager.Instance.NotebookUI;
-        // Get all pickers in the given tab
-        ItemPicker[] pickers = notebook.TabPicker.GetTabRoot(targetTab).GetComponentsInChildren<ItemPicker>(true);
-        // Find a picker whose name contains the filter
-        ItemPicker picker = Array.Find(pickers, p => p.name.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+        ItemPicker picker = GetItemPicker (targetTab, nameFilter);
 
         return picker.SelectedItem == targetItem && notebook.IsOpen && notebook.TabPicker.CurrentTab == targetTab;
+    }
+    private bool ArticlePicked (NotebookTab targetTab, int targetArticleIndex, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        TMP_Dropdown selector = GetDropdown (targetTab, nameFilter);
+
+        return selector.value == targetArticleIndex && notebook.IsOpen && notebook.TabPicker.CurrentTab == targetTab;
     }
     private bool BuildItemIsPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex)
         where StoreSectionType : StoreSection
@@ -512,6 +530,13 @@ public class TutorialPrompter : MonoBehaviour
     private ItemDropdown GetItemDropdown (ItemPicker itemPicker, ItemRegistry.Category targetItemCategory) {
         return itemPicker.GetDropdown (targetItemCategory);
     }
+    private TMP_Dropdown GetDropdown (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        TMP_Dropdown [] selectors = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TMP_Dropdown> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (selectors, s => s.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
     // Highlights a dropdown category without highlighting items in the dropdown
     private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
         // Get the item dropdown for this category
@@ -568,6 +593,44 @@ public class TutorialPrompter : MonoBehaviour
             new ConditionalHighlight()
             {
                 predicate = () => selectedItem.Invoke () != targetItem,
+                target = () => DropdownItemGetter()
+            }
+        };
+    }
+    private ConditionalHighlight [] HighlightArticle (TMP_Dropdown articleDropdown, int targetArticleIndex) {
+        return HighlightArticleUtility (articleDropdown, targetArticleIndex, () => articleDropdown.value);
+    }
+    private ConditionalHighlight [] HighlightArticleUtility (TMP_Dropdown articleDropdown, int targetArticleIndex, Func<int> selectedArticle) {
+        // Get the dropdown of the target category
+        RectTransform itemDropdownTransform = articleDropdown.GetComponent<RectTransform> ();
+
+        // Local function used to get the rect transform of the particular item in the dropdown
+        RectTransform DropdownItemGetter () {
+            Transform dropdownList = itemDropdownTransform.Find ("Dropdown List");
+            /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
+
+            // Search all the template item's children for the item with the same index in the name
+            Transform itemParent = templateItem.transform.parent;*/
+            foreach (Transform child in dropdownList) {
+                if (child.name.Contains (targetArticleIndex.ToString ())) {
+                    return child as RectTransform;
+                }
+            }
+            return null;
+        }
+
+        return new ConditionalHighlight []
+        {
+            // Highlight the dropdown in the picker
+            new ConditionalHighlight()
+            {
+                predicate = () => !(articleDropdown.IsExpanded || selectedArticle.Invoke () == targetArticleIndex),
+                target = () => itemDropdownTransform
+            },
+            // Highlight the single option button in the dropdown list
+            new ConditionalHighlight()
+            {
+                predicate = () => selectedArticle.Invoke () != targetArticleIndex,
                 target = () => DropdownItemGetter()
             }
         };

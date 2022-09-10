@@ -72,6 +72,7 @@ public class MoveObject : MonoBehaviour
             tileToDelete = new GameObject();
             tileToDelete.AddComponent<SpriteRenderer>();
             tileToDelete.tag = "tiletodelete";
+            tileToDelete.name = "Tile To Delete (Helper for MoveObject.cs)";
         }
     }
 
