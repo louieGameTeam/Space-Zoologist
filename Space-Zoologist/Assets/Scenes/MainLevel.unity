@@ -1462,7 +1462,7 @@ PrefabInstance:
         type: 3}
       propertyPath: levelOnPlay
       value: 
-      objectReference: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90,
+      objectReference: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb013aaea76714c69b04e49a6b98f035, type: 3}
@@ -7250,9 +7250,9 @@ MonoBehaviour:
   debug: 0
   autoWin: 0
   skipConversation: 0
-  LevelOnPlay: Level1E1
+  LevelOnPlay: Level0E1
   directory: Levels/
-  m_levelData: {fileID: 11400000, guid: aa45ac2da35734bb996cefaa05c19f90, type: 2}
+  m_levelData: {fileID: 11400000, guid: 3a71821cc0f534fdea463f9f5accdcc4, type: 2}
   SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
   RestartButton: {fileID: 1410644951}
   NextLevelButton: {fileID: 1246903123}
@@ -7481,6 +7481,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1443550855}
     m_Modifications:
+    - target: {fileID: 1320017396596517679, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017396596517679, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017396596517679, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -140
+      objectReference: {fileID: 0}
     - target: {fileID: 1320017397453811434, guid: 3b3eebfc2662f49a5b6225da95a2181c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7590,6 +7605,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ConversationManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017397879972379, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320017397953761342, guid: 3b3eebfc2662f49a5b6225da95a2181c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b3eebfc2662f49a5b6225da95a2181c, type: 3}
