@@ -541,7 +541,8 @@ public class TutorialPrompter : MonoBehaviour
         // Local function used to get the rect transform of the particular item in the dropdown
         RectTransform DropdownItemGetter()
         {
-            Transform dropdownList = itemDropdownTransform.Find("Dropdown List");
+            Transform dropdownList = itemDropdownTransform.Find("Dropdown List").Find("Viewport").Find("Content");
+        
             /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
 
             // Search all the template item's children for the item with the same index in the name
@@ -553,6 +554,7 @@ public class TutorialPrompter : MonoBehaviour
                     return child as RectTransform;
                 }
             }
+
             return null;
         }
 
