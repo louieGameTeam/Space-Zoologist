@@ -343,6 +343,7 @@ public class TutorialPrompter : MonoBehaviour
             HighlightNotebookTabButton(NotebookTab.Concepts),
             HighlightItemDropdown(itemRequestedDropdown, requestedItem)[0],
             HighlightItemDropdown(itemRequestedDropdown, requestedItem)[1],
+            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[2],
             HighlightInputField(quantityInput, requestQuantity.ToString()),
             new ConditionalHighlight()
             {
@@ -558,6 +559,33 @@ public class TutorialPrompter : MonoBehaviour
             return null;
         }
 
+        // Local function used to determine if the target item is visible in the Viewport of the dropdown
+        bool TargetItemVisible()
+        {
+            RectTransform viewport = itemDropdownTransform.Find("Dropdown List").Find("Viewport") as RectTransform;
+            RectTransform targetItemTransform = viewport.Find("Content").GetChild(itemIndex + 1) as RectTransform; // +1 to account for disabled Item child in Viewport
+
+            if (viewport != null && targetItemTransform != null)
+            {
+                // Corners are stored starting from bottom left of rect, going clockwise. Corners are positions in world space
+                Vector3[] viewportCorners = new Vector3[4];
+                Vector3[] targetItemCorners = new Vector3[4];
+                viewport.GetWorldCorners(viewportCorners);
+                targetItemTransform.GetWorldCorners(targetItemCorners);
+
+                // We only care about comparing the y-values of the bottom-left and top-left corners, since this is a dropdown list and x-values are locked
+                // Viewport of dropdown list should be guaranteed to be at least as small as a single entry, so only checking if target item entry is within viewport
+                if ( (targetItemCorners[0].y >= viewportCorners[0].y) && (targetItemCorners[1].y <= viewportCorners[1].y) )
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
         return new ConditionalHighlight[]
         {
             // Highlight the dropdown in the picker
@@ -566,10 +594,16 @@ public class TutorialPrompter : MonoBehaviour
                 predicate = () => !(itemDropdown.Dropdown.IsExpanded || selectedItem.Invoke () == targetItem),
                 target = () => itemDropdownTransform
             },
+            // Highlight nothing while target item is not visible on viewport
+            new ConditionalHighlight()
+            {
+                predicate = () => itemDropdown.Dropdown.IsExpanded && !TargetItemVisible(),
+                target = () => null
+            },
             // Highlight the single option button in the dropdown list
             new ConditionalHighlight()
             {
-                predicate = () => selectedItem.Invoke () != targetItem,
+                predicate = () => TargetItemVisible() && selectedItem.Invoke () != targetItem,
                 target = () => DropdownItemGetter()
             }
         };
