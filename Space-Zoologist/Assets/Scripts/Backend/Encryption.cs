@@ -8,6 +8,7 @@ using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Crypto;
 using System.IO;
+using System;
 
 
 public class Encryption : MonoBehaviour
@@ -22,7 +23,7 @@ public class Encryption : MonoBehaviour
 
             RSACryptoServiceProvider publicRSA = ImportPublicKey(System.IO.File.ReadAllText("./Assets/Scripts/Backend/publicKey.txt"));
             encryptedData = RSAEncrypt(dataToEncrypt, publicRSA.ExportParameters(false), false);
-            return ByteConverter.GetString(encryptedData);
+            return Convert.ToBase64String(encryptedData);
     }
 
     /// <summary>
