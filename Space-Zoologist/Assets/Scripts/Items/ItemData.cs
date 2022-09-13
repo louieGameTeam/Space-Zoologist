@@ -17,16 +17,16 @@ public class ItemData
     [SerializeField]
     [Tooltip("Name used to identify the item")]
     [EditArrayWrapperOnEnum("names", typeof(ItemName.Type))]
-    private ItemName name;
+    private ItemName name = null;
     [SerializeField]
     [Tooltip("Type of tile that this item represents on the tile data controller")]
     private TileType tile = TileType.TypesOfTiles;
     [SerializeField]
     [Tooltip("Reference to the scriptable object used to buy this item in the shop")]
-    private Item shopItem;
+    private Item shopItem = null;
     [SerializeField]
     [Tooltip("Reference to the scriptable object that holds species information for this item")]
-    private ScriptableObject species;
+    private ScriptableObject species = null;
     #endregion
 
     #region Private Fields

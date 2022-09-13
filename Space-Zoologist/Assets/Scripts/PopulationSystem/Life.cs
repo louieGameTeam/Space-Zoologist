@@ -8,26 +8,6 @@ using UnityEngine;
 public interface Life
 {
     /// <summary>
-    /// Special terrain water need
-    /// </summary>
-    /// <remarks>
-    /// This is used by food sources that need
-    /// water as a terrain need and not a liquid need
-    /// </remarks>
-    /// <example>
-    /// Kelp needs to be placed in water to grow, 
-    /// but it still has liquid needs 
-    /// for specific water compositions
-    /// </example>
-    Need TerrainWaterNeed { get; }
-
-    /// <summary>
-    /// Returns a reference to the NeedValues
-    /// </summary>
-    /// <returns>A reference</returns>
-    Dictionary<ItemID, Need> GetNeedValues();
-
-    /// <summary>
     /// Gets the position of the transform of the game object
     /// </summary>
     /// <returns>The position vector</returns>

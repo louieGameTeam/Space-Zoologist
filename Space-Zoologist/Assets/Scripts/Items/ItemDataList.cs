@@ -12,6 +12,6 @@ public class ItemDataList
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of item datas")]
-    private ItemData[] items;
+    private ItemData[] items = null;
     #endregion
 }

@@ -7,10 +7,10 @@ public class QuizTemplateUI : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the prefab to use to display each question")]
-    private QuizQuestionUI questionUIPrefab;
+    private QuizQuestionUI questionUIPrefab = null;
     [SerializeField]
     [Tooltip("Parent to instantiate all children into")]
-    private Transform questionUIParent;
+    private Transform questionUIParent = null;
     #endregion
 
     #region Private Fields

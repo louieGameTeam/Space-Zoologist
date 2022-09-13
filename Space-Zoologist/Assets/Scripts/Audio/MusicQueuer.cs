@@ -11,7 +11,7 @@ using UnityEngine;
 public class MusicQueuer : MonoBehaviour
 {
     [SerializeField] CustomMusicLoopController nextTrack = default;
-    [SerializeField] bool fading;
+    [SerializeField] bool fading = false;
 
     // Start is called before the first frame update
     private void Start()

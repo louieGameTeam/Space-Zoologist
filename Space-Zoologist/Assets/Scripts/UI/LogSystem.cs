@@ -28,7 +28,7 @@ public class LogSystem : MonoBehaviour
             return $"[{this.logTime}] {this.logText}";
         }
     }
-    [SerializeField] private bool logSystemEnabled;
+    [SerializeField] private bool logSystemEnabled = false;
     // Stores all logs
     private List<LogEntry> worldLog = default;
     // Stores logs about populations

@@ -12,6 +12,6 @@ public class ResearchEntryListConfig
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of research entries")]
-    private ResearchEntryConfig[] entries;
+    private ResearchEntryConfig[] entries = null;
     #endregion
 }

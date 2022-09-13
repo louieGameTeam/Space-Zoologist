@@ -14,19 +14,19 @@ public class ResearchNotesUI : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the picker object that selects the research category")]
-    private ItemPicker itemPicker;
+    private ItemPicker itemPicker = null;
     [SerializeField]
     [Tooltip("Text that displays the name of the current category taking notes on")]
-    private TextMeshProUGUI titleText;
+    private TextMeshProUGUI titleText = null;
     [SerializeField]
     [Tooltip("Scroll view used to view all of the notes")]
-    private ScrollRect scrollView;
+    private ScrollRect scrollView = null;
     [SerializeField]
     [Tooltip("Layout group used as the parent for all notes")]
-    private LayoutGroup noteParent;
+    private LayoutGroup noteParent = null;
     [SerializeField]
     [Tooltip("Prefab to instantiate for each note")]
-    private ResearchSingleNoteUI notePrefab;
+    private ResearchSingleNoteUI notePrefab = null;
     #endregion
 
     #region Private Fields

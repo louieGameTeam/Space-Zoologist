@@ -37,19 +37,19 @@ public class ResearchEncyclopediaUI : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the widget that selects the category for the encyclopedia")]
-    private ItemPicker itemPicker;
+    private ItemPicker itemPicker = null;
     [SerializeField]
     [Tooltip("Dropdown used to select available encyclopedia articles")]
-    private TMP_Dropdown dropdown;
+    private TMP_Dropdown dropdown = null;
     [SerializeField]
     [Tooltip("Input field used to display the encyclopedia article")]
-    private ResearchEncyclopediaArticleInputField articleBody;
+    private ResearchEncyclopediaArticleInputField articleBody = null;
     [SerializeField]
     [Tooltip("Script that is targetted by the bookmarking system")]
-    private BookmarkTarget bookmarkTarget;
+    private BookmarkTarget bookmarkTarget = null;
     [SerializeField]
     [Tooltip("Scrolling")]
-    private Scrollbar contentScrollbar;
+    private Scrollbar contentScrollbar = null;
     #endregion
 
     #region Private Fields
