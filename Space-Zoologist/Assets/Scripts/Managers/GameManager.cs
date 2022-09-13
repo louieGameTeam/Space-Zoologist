@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public SerializedLevel PresetMap { get; private set; }
     public Dictionary<ItemID, FoodSourceSpecies> FoodSources = new Dictionary<ItemID, FoodSourceSpecies>();
     public Dictionary<ItemID, AnimalSpecies> AnimalSpecies = new Dictionary<ItemID, AnimalSpecies>();
+
     public float Balance { get; private set; }
     #endregion
 

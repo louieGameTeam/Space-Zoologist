@@ -60,12 +60,16 @@ public class TileDataController : MonoBehaviour
     public bool HasTerrainChanged = false;
     public bool IsDrafting { get; private set; }
 
+    // Matches tile type to item data, since the map data does not store ItemData per tile
+    private Dictionary<TileType, ItemData> tileToItemDataMap = new Dictionary<TileType, ItemData>();
+
     #region Monobehaviour Callbacks
 
     private void Start()
     {
         try
         {
+            InitializeTileToItemDataMap();
             List<Vector3Int> changedTilesNoWall = new List<Vector3Int>();
             foreach (Vector3Int tilePosition in ChangedTiles)
             {
@@ -92,6 +96,23 @@ public class TileDataController : MonoBehaviour
         Tilemap.GetComponent<TilemapRenderer>().sharedMaterial.SetFloat("_GridOverlayToggle", 0);
     }
     #endregion
+
+    public void InitializeTileToItemDataMap()
+    {
+        var tiles = ItemRegistry.GetItemsWithCategory(ItemRegistry.Category.Tile);
+        foreach(var data in tiles)
+        {
+            if(!tileToItemDataMap.ContainsKey(data.Tile))
+            {
+                tileToItemDataMap.Add(data.Tile, data);
+            }
+        }
+    }
+
+    public ItemData GetTileItemData(TileType tileType)
+    {
+        return tileToItemDataMap[tileType];
+    }
 
     #region I/O
     public void ParseSerializedGrid(SerializedGrid serializedGrid, GameTile[] gameTiles)
