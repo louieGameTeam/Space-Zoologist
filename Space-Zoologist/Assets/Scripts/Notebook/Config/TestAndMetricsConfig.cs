@@ -15,11 +15,11 @@ public class TestAndMetricsConfig
     [SerializeField]
     [FormerlySerializedAs("enclosureScaffold")]
     [Tooltip("Enclosure scaffolding information")]
-    private LevelScaffold scaffold;
+    private LevelScaffold scaffold = null;
     [SerializeField]
     [TextArea(3, 10)]
     [Tooltip("Initial text for each scaffold level")]
-    private List<string> initialTexts;
+    private List<string> initialTexts = null;
     #endregion
 
     #region Public Methods

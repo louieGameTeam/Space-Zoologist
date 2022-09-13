@@ -8,19 +8,19 @@ public class ToggleSpriteSwap : UIBehaviour
 {
     [SerializeField]
     [Tooltip("Reference to the toggle")]
-    private Toggle toggle;
+    private Toggle toggle = null;
     [SerializeField]
     [Tooltip("Graphic to change sprites on")]
-    private Image image;
+    private Image image = null;
     [SerializeField]
     [Tooltip("Sprite while the toggle is on")]
-    private Sprite onSprite;
+    private Sprite onSprite = null;
     [SerializeField]
     [Tooltip("Color of the image while the toggle is on")]
     private Color onColor = Color.white;
     [SerializeField]
     [Tooltip("Sprite while the toggle is off")]
-    private Sprite offSprite;
+    private Sprite offSprite = null;
     [SerializeField]
     [Tooltip("Color of the image while the toggle is off")]
     private Color offColor = Color.white;

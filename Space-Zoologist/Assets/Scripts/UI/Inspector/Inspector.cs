@@ -18,9 +18,9 @@ public class Inspector : MonoBehaviour
 
     // The inspector window
     [SerializeField] private GameObject inspectorWindow = null;
-    [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript;
+    [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript = null;
     [SerializeField] private GameObject GrowthInfo = default;
-    [SerializeField] private UnityEvent selectionChangedEvent;
+    [SerializeField] private UnityEvent selectionChangedEvent = null;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
@@ -168,6 +168,7 @@ public class Inspector : MonoBehaviour
         //}
         else
         {
+            ResetSelection();
             somethingSelected = false;
         }
         if (somethingSelected)

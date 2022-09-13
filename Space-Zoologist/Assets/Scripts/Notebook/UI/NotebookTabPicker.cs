@@ -26,25 +26,26 @@ public class NotebookTabPicker : NotebookUIChild
 
     #region Public Properties
     public NotebookTab CurrentTab => currentTab;
+    public System.Action OnTabSelect { get => onTabSelect; set => onTabSelect = value; }
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root object where all of the pages will be found")]
-    private Transform pagesRoot;
+    private Transform pagesRoot = null;
     [SerializeField]
     [EditArrayWrapperOnEnum("tabObjects", typeof(NotebookTab))]
     [Tooltip("List of prefabs to instantiate for each notebook page")]
-    private NotebookTabObjects tabPrefabs;
+    private NotebookTabObjects tabPrefabs = null;
     [SerializeField]
     [Tooltip("Prefab of the button used to select notebook tabs")]
-    private NotebookTabSelectButton buttonPrefab;
+    private NotebookTabSelectButton buttonPrefab = null;
     [SerializeField]
     [Tooltip("Toggle group used to make only one button selected")]
-    private ToggleGroup parent;
+    private ToggleGroup parent = null;
     [SerializeField]
     [Tooltip("Reference to the bookmark target to use")]
-    private BookmarkTarget bookmarkTarget;
+    private BookmarkTarget bookmarkTarget = null;
     #endregion
 
     #region Private Fields
@@ -53,6 +54,7 @@ public class NotebookTabPicker : NotebookUIChild
     // List of the buttons used to select a tab
     private List<NotebookTabSelectButton> buttons = new List<NotebookTabSelectButton>();
     private NotebookTabObjects tabObjects = new NotebookTabObjects();
+    private System.Action onTabSelect;
     #endregion
 
     #region Public Methods
@@ -124,6 +126,7 @@ public class NotebookTabPicker : NotebookUIChild
         {
             tabObjects.Get(t).SetActive(t == tab);
         }
+        onTabSelect?.Invoke();
     }
     #endregion
 }

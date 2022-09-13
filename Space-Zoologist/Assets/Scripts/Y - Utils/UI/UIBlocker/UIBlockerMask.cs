@@ -8,7 +8,7 @@ public class UIBlockerMask
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Each value is 'true' if the given operation will be blocked")]
-    private bool[] operationsBlocked;
+    private bool[] operationsBlocked = null;
     #endregion
 
     #region Public Methods

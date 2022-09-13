@@ -27,38 +27,38 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Game object at the root of the display object")]
-    private GameObject displayRoot;
+    private GameObject displayRoot = null;
     [SerializeField]
     [Tooltip("Reference to the image that displays the border")]
-    private Image border;
+    private Image border = null;
     [SerializeField]
     [Tooltip("List of colors displayed depending on the status of the review")]
     [EditArrayWrapperOnEnum("colors", typeof(ReviewedResourceRequest.Status))]
     private ColorArray statusColors = new ColorArray();
     [SerializeField]
     [Tooltip("Reference to the text to display the status")]
-    private TextMeshProUGUI statusText;
+    private TextMeshProUGUI statusText = null;
     [SerializeField]
     [Tooltip("Text that displays the reason for the current status")]
-    private TextMeshProUGUI statusReasonText;
+    private TextMeshProUGUI statusReasonText = null;
     [SerializeField]
     [Tooltip("Text that displays number of items granted")]
-    private TextMeshProUGUI itemText;
+    private TextMeshProUGUI itemText = null;
     [SerializeField]
     [Tooltip("Test that displays the total cost of the request")]
-    private TextMeshProUGUI costText;
+    private TextMeshProUGUI costText = null;
     [SerializeField]
     [Tooltip("Button to accept the request")]
-    private Button confirmButton;
+    private Button confirmButton = null;
     [SerializeField]
     [Tooltip("Button the cancel the request")]
-    private Button cancelButton;
+    private Button cancelButton = null;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Event invoked when the review is confirmed by the player")]
-    private UnityEvent onReviewConfirmed;
+    private UnityEvent onReviewConfirmed = null;
     #endregion
 
     #region Private Fields
@@ -112,7 +112,7 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
         // Change the text displayed based on whether the request was granted or denied
         if((int)review.CurrentStatus < 2)
         {
-            itemText.text = review.QuantityGranted + " " + request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial);
+            itemText.text = review.QuantityGranted + " " + request.ItemRequested.Data.Name.GetCombinedName();
             costText.text = "$" + review.TotalCost;
         }
         else

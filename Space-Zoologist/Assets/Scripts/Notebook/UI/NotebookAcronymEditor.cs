@@ -6,7 +6,7 @@ public class NotebookAcronymEditor : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Reference to the prefab of acronym note editors to instantiate")]
-    private NotebookAcronymSingleNoteEditor noteEditorPrefab;
+    private NotebookAcronymSingleNoteEditor noteEditorPrefab = null;
 
     public override void Setup()
     {

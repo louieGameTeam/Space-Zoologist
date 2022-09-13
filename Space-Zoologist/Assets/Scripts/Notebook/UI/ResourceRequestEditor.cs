@@ -30,22 +30,22 @@ public class ResourceRequestEditor : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the rect transform of this editor")]
-    private RectTransform rectTransform;
+    private RectTransform rectTransform = null;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets a research category")]
-    private CategoryFilteredItemDropdown targetDropdown;
+    private CategoryFilteredItemDropdown targetDropdown = null;
     [SerializeField]
     [Tooltip("Reference to the text that displays the need")]
-    private TextMeshProUGUI needDisplay;
+    private TextMeshProUGUI needDisplay = null;
     [SerializeField]
     [Tooltip("Text input field that sets the quantity of resources to request")]
-    private TMP_InputField quantityInput;
+    private TMP_InputField quantityInput = null;
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
-    private CategoryFilteredItemDropdown itemRequestedDropdown;
+    private CategoryFilteredItemDropdown itemRequestedDropdown = null;
     [SerializeField]
     [Tooltip("Button that deletes this request when clicked")]
-    private Button clearButton;
+    private Button clearButton = null;
     #endregion
 
     #region Private Fields

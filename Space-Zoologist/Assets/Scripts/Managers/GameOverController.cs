@@ -13,13 +13,13 @@ public class GameOverController : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Data for the window displayed when all objectives finish, before final NPC dialogue")]
-    private GenericWindow objectiveFinishedWindow;
+    private GenericWindow objectiveFinishedWindow = null;
     [SerializeField]
     [Tooltip("Data for the window displayed when the enclosure is finished")]
-    private GenericWindow successWindow;
+    private GenericWindow successWindow = null;
     [SerializeField]
     [Tooltip("Data for the window displayed when the level fails")]
-    private GenericWindow failWindow;
+    private GenericWindow failWindow = null;
     #endregion
 
     #region Private Fields

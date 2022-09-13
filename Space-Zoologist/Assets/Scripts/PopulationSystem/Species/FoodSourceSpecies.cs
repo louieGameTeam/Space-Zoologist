@@ -22,5 +22,5 @@ public class FoodSourceSpecies : ScriptableObject
     [SerializeField] private int baseOutput = default;
     [SerializeField]
     [Tooltip("Registry of everything that the food source needs")]
-    private NeedRegistry needs;
+    private NeedRegistry needs = null;
 }

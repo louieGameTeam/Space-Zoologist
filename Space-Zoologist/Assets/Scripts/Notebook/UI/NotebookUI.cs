@@ -21,37 +21,38 @@ public class NotebookUI : MonoBehaviour
     public BoolEvent OnEnableInspectorToggle => onEnableInspectorToggle;
     public bool IsOpen => isOpen;
     public ResourceRequestEditor ResourceRequestEditor => resourceRequestEditor;
+    public List<NotebookUIChild> NotebookUIChildren => notebookUIChildren;
     #endregion
 
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform at the root of the notebook UI")]
-    private RectTransform root;
+    private RectTransform root = null;
     [SerializeField]
     [FormerlySerializedAs("notebook")]
     [Tooltip("Reference to the serialized object that holds all info about the notebook")]
-    private NotebookConfig config;
+    private NotebookConfig config = null;
     [SerializeField]
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
-    private NotebookTabPicker tabPicker;
+    private NotebookTabPicker tabPicker = null;
     [SerializeField]
     [Tooltip("Reference to the audio manager for the notebook")]
-    private NotebookSoundManager soundManager;
+    private NotebookSoundManager soundManager = null;
     [SerializeField]
     [Tooltip("Offsets from the sceen edges for the notebook")]
-    private RectOffset defaultSize;
+    private RectOffset defaultSize = null;
     [SerializeField]
     [Tooltip("Size of the notebook while dialogue is present")]
-    private RectOffset dialogueSize;
+    private RectOffset dialogueSize = null;
     [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
-    private UnityEvent onContentChanged;
+    private UnityEvent onContentChanged = null;
     [SerializeField]
     [Tooltip("Event invoked each time the notebook is enabled/disabled")]
-    private BoolEvent onNotebookToggle;
+    private BoolEvent onNotebookToggle = null;
     [SerializeField]
     [Tooltip("Event invoked each time the inspector needs to be enabled/disabled by the notebook")]
-    private BoolEvent onEnableInspectorToggle;
+    private BoolEvent onEnableInspectorToggle = null;
     #endregion
 
     #region Private Fields
@@ -72,7 +73,10 @@ public class NotebookUI : MonoBehaviour
     private bool frameDialogueOffsetLock = false;
 
     //Used to determine if the inspector should be showing or not
-    private int inspectorShowStack = 1;
+    private HashSet<NotebookUIChild> inspectorBlockingSet = new HashSet<NotebookUIChild>();
+
+    // tracks notebookuichildren
+    private  List<NotebookUIChild> notebookUIChildren = new List<NotebookUIChild>();
     #endregion
 
     #region Monobehaviour Messages
@@ -101,6 +105,7 @@ public class NotebookUI : MonoBehaviour
 
         // Setup the tab picker first of all children
         tabPicker.Setup();
+        tabPicker.OnTabSelect += UpdateInspectorHiddenByChild;
 
         // Get the resource request editor manually
         resourceRequestEditor = GetComponentInChildren<ResourceRequestEditor>(true);
@@ -136,13 +141,8 @@ public class NotebookUI : MonoBehaviour
             }
             SetRectTransformOffsets(ConversationManager.Instance.IsConversationActive);
         }
-        inspectorShowStack--;
     }
 
-    private void OnDisable()
-    {
-        inspectorShowStack++;
-    }
     // Unset the callbacks when this object is destroyed
     private void OnDestroy()
     {
@@ -164,18 +164,22 @@ public class NotebookUI : MonoBehaviour
             if (isOpen)
             {
                 GameManager.Instance.TryToPause("Notebook");
-                AudioManager.instance.PlayOneShot(SFXType.NotebookOpen);
+                AudioManager.instance.PlayOneShot(SFXType.NotebookOpen);                
             }               
             else
             {
                 GameManager.Instance.TryToUnpause("Notebook");
-                AudioManager.instance.PlayOneShot(SFXType.NotebookClose);
+                AudioManager.instance.PlayOneShot(SFXType.NotebookClose);               
             }
         }
 
         this.isOpen = isOpen;
         gameObject.SetActive(isOpen);
         onNotebookToggle.Invoke(isOpen);
+        if(isOpen) 
+            UpdateInspectorHiddenByChild();
+        else
+            onEnableInspectorToggle.Invoke(true);
     }
     public void NavigateToBookmark(Bookmark bookmark)
     {
@@ -192,21 +196,38 @@ public class NotebookUI : MonoBehaviour
         resourceRequestEditor.Request = resourceRequest;
     }
 
-    public void ChildToggled(bool val,NotebookUIChild child)
+    /// <summary>
+    /// Add or remove NotebookUIChild from the inspector blocker set
+    /// </summary>
+    /// <param name="child"></param>
+    /// <param name="adding"></param>
+    public void UpdateHideInspectorSet(NotebookUIChild child, bool adding = true)
     {
-        if(val)
+        if(adding)
         {
-            inspectorShowStack += child.ShowInspector ? 1 : 0;
+            inspectorBlockingSet.Add(child);
         }
         else
         {
-            inspectorShowStack -= child.ShowInspector ? 1 : 0;
+            inspectorBlockingSet.Remove(child);
         }
-        if (inspectorShowStack != 0)
-            onEnableInspectorToggle.Invoke(true);
-        else
-            onEnableInspectorToggle.Invoke(false);
+        UpdateInspectorHiddenByChild();
     }
+    
+    /// <summary>
+    /// Hide or show the inspector based on NotebookUIChildren in the blocker set
+    /// </summary>
+    private void UpdateInspectorHiddenByChild()
+    {
+        bool shouldHide = false;
+        foreach(var child in inspectorBlockingSet)
+        {
+            if (child.gameObject.activeInHierarchy)
+                shouldHide = true;
+        }
+        onEnableInspectorToggle.Invoke(!shouldHide);
+    }
+
     #endregion
 
     #region Private Methods

@@ -8,10 +8,10 @@ public class WarningSystem : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the canvas to create the warning window on")]
-    private Canvas mainCanvas;
+    private Canvas mainCanvas = null;
     [SerializeField]
     [Tooltip("Window to instantiate for the warning")]
-    private GenericWindow warningWindowPrefab;
+    private GenericWindow warningWindowPrefab = null;
     #endregion
 
     #region Private Fields
@@ -63,7 +63,7 @@ public class WarningSystem : MonoBehaviour
         // Setup the message
         string message = "Some animal populations are rapidly declining. Please improve their needs as soon as possible.";
         message += "\n\nEndangered species: ";
-        message += string.Join(", ", endangeredSpecies.Select(animal => animal.ID.Data.Name.Get(ItemName.Type.English)));
+        message += string.Join(", ", endangeredSpecies.Select(animal => animal.ID.Data.Name.Get(ItemName.Type.Colloquial)));
 
         // Set the message text and open the window
         warningWindow.MessageText.text = message;

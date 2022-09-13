@@ -3,8 +3,8 @@
 public class EncyclopediaVisibilityController : MonoBehaviour
 {
     #region Private Fields
-    [SerializeField] private GenericFoldout EncyclopediaBackgroundFill;
-    [SerializeField] private ResearchEncyclopediaUI EncyclopediaUI;
+    [SerializeField] private GenericFoldout EncyclopediaBackgroundFill = null;
+    [SerializeField] private ResearchEncyclopediaUI EncyclopediaUI = null;
     #endregion
 
     #region Monobehaviour Callbacks

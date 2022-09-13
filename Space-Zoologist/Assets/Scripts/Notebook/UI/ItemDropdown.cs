@@ -21,16 +21,16 @@ public class ItemDropdown : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the research category")]
-    protected TMP_Dropdown dropdown;
+    protected TMP_Dropdown dropdown = null;
     [SerializeField]
     [Tooltip("Name to display for the item in the dropdown")]
-    private ItemName.Type itemDisplayName;
+    private ItemName.Type itemDisplayName = ItemName.Type.Colloquial;
     [SerializeField]
     [Tooltip("True if text and image should display simultaneously")]
     protected bool textAndImage = false;
     [SerializeField]
     [Tooltip("Event invoked when this dropdown selects a research category")]
-    protected ItemIDEvent onItemSelected;
+    protected ItemIDEvent onItemSelected = null;
     #endregion
 
     #region Private Fields
@@ -53,7 +53,7 @@ public class ItemDropdown : NotebookUIChild
         {
             // Get the current option
             ItemData data = ItemRegistry.Get(id);
-            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(data.Name.Get(itemDisplayName), data.ShopItem.Icon);
+            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(data.Name.GetCombinedName(), data.ShopItem.Icon);
             
             // Add the option to the dropdown and the dictionary
             dropdown.options.Add(option);
@@ -71,7 +71,7 @@ public class ItemDropdown : NotebookUIChild
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex(option => option.text == id.Data.Name.Get(itemDisplayName));
+    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex(option => option.text.Contains (id.Data.Name.Get(itemDisplayName)));
 
     // Set the value of the dropdown
     public void SetDropdownValue(int value) => SetDropdownValueHelper(value, true);
