@@ -60,6 +60,7 @@ public class TileDataController : MonoBehaviour
     public bool HasTerrainChanged = false;
     public bool IsDrafting { get; private set; }
 
+    // Matches tile type to item data, since the map data does not store ItemData per tile
     private Dictionary<TileType, ItemData> tileToItemDataMap = new Dictionary<TileType, ItemData>();
 
     #region Monobehaviour Callbacks
@@ -68,6 +69,7 @@ public class TileDataController : MonoBehaviour
     {
         try
         {
+            InitializeTileToItemDataMap();
             List<Vector3Int> changedTilesNoWall = new List<Vector3Int>();
             foreach (Vector3Int tilePosition in ChangedTiles)
             {
@@ -95,13 +97,13 @@ public class TileDataController : MonoBehaviour
     }
     #endregion
 
-    public void InitializeTileToItemDataMap(List<ItemData> itemData)
+    public void InitializeTileToItemDataMap()
     {
-        foreach(var data in itemData)
+        var tiles = ItemRegistry.GetItemsWithCategory(ItemRegistry.Category.Tile);
+        foreach(var data in tiles)
         {
             if(!tileToItemDataMap.ContainsKey(data.Tile))
             {
-                Debug.Log(data.Tile);
                 tileToItemDataMap.Add(data.Tile, data);
             }
         }
