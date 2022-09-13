@@ -329,27 +329,23 @@ public class TutorialPrompter : MonoBehaviour
     }
     private void FreezeUntilResourceRequestSubmitted(ItemID requestedItem, int requestQuantity)
     {
-        // Grab a bunch of references to various scripts in the Notebook
-        NotebookUI notebook = GameManager.Instance.NotebookUI;
-        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
-        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
-        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true); 
-        TMP_InputField quantityInput = requestEditor.QuantityInput;
-        ItemDropdown itemRequestedDropdown = requestEditor.ItemRequestedDropdown;
+        ConditionalHighlight[] resourceRequestDropdownHighlights = HighlightResourceRequestDropdown(requestedItem, requestQuantity);
 
         // Freeze conversation until correct review was confirmed
         FreezingScheduler.FreezeUntilConditionIsMet(() => ResourceRequestWasSubmitted(requestedItem, requestQuantity), HighlightingScheduler.ClearHighlights);
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
             HighlightNotebookTabButton(NotebookTab.Concepts),
-            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[0],
-            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[1],
-            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[2],
-            HighlightInputField(quantityInput, requestQuantity.ToString()),
-            new ConditionalHighlight()
-            {
-                predicate = () => !reviewDisplay.gameObject.activeInHierarchy,
-                target = () => concepts.RequestButton.transform as RectTransform
-            });
+            resourceRequestDropdownHighlights[0],
+            resourceRequestDropdownHighlights[1],
+            resourceRequestDropdownHighlights[2],
+            resourceRequestDropdownHighlights[3]
+            // HighlightInputField(quantityInput, requestQuantity.ToString()),
+            //new ConditionalHighlight()
+            //{
+            //    predicate = () => !reviewDisplay.gameObject.activeInHierarchy,
+            //    target = () => concepts.RequestButton.transform as RectTransform
+            //}
+            );
     }
     #endregion
 
@@ -542,12 +538,60 @@ public class TutorialPrompter : MonoBehaviour
         // Local function used to get the rect transform of the particular item in the dropdown
         RectTransform DropdownItemGetter()
         {
-            Transform dropdownList = itemDropdownTransform.Find("Dropdown List").Find("Viewport").Find("Content");
-        
+            Transform dropdownList = itemDropdownTransform.Find("Dropdown List");
             /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
-
             // Search all the template item's children for the item with the same index in the name
             Transform itemParent = templateItem.transform.parent;*/
+            foreach (Transform child in dropdownList)
+            {
+                if (child.name.Contains(itemIndex.ToString()))
+                {
+                    return child as RectTransform;
+                }
+            }
+            return null;
+        }
+
+        return new ConditionalHighlight[]
+        {
+            // Highlight the dropdown in the picker
+            new ConditionalHighlight()
+            {
+                predicate = () => !(itemDropdown.Dropdown.IsExpanded || selectedItem.Invoke () == targetItem),
+                target = () => itemDropdownTransform
+            },
+            // Highlight the single option button in the dropdown list
+            new ConditionalHighlight()
+            {
+                predicate = () => selectedItem.Invoke () != targetItem,
+                target = () => DropdownItemGetter()
+            }
+        };
+    }
+    // Used for specific behaviors relating to the dropdown used in resource requests
+    private ConditionalHighlight[] HighlightResourceRequestDropdown(ItemID targetItem, int requestQuantity)
+    {
+        return HighlightResourceRequestDropdownUtility(targetItem, requestQuantity);
+    }
+    private ConditionalHighlight[] HighlightResourceRequestDropdownUtility(ItemID targetItem, int requestQuantity)
+    {
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
+        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true);
+        TMP_InputField quantityInput = requestEditor.QuantityInput;
+        ItemDropdown itemReqDropdown = requestEditor.ItemRequestedDropdown;
+
+        // Get the dropdown of the target category
+        RectTransform itemDropdownTransform = itemReqDropdown.GetComponent<RectTransform>();
+        int itemIndex = itemReqDropdown.DropdownIndex(targetItem);
+
+        // Local function used to get the rect transform of the particular item in the dropdown
+        RectTransform DropdownItemGetter()
+        {
+            Transform dropdownList = itemDropdownTransform.Find("Dropdown List").Find("Viewport").Find("Content");
+
             foreach (Transform child in dropdownList)
             {
                 if (child.name.Contains(itemIndex.ToString()))
@@ -575,12 +619,10 @@ public class TutorialPrompter : MonoBehaviour
 
                 // We only care about comparing the y-values of the bottom-left and top-left corners, since this is a dropdown list and x-values are locked
                 // Viewport of dropdown list should be guaranteed to be at least as small as a single entry, so only checking if target item entry is within viewport
-                if ( (targetItemCorners[0].y >= viewportCorners[0].y) && (targetItemCorners[1].y <= viewportCorners[1].y) )
+                if ((targetItemCorners[0].y >= viewportCorners[0].y) && (targetItemCorners[1].y <= viewportCorners[1].y))
                 {
                     return true;
                 }
-
-                return false;
             }
 
             return false;
@@ -591,20 +633,26 @@ public class TutorialPrompter : MonoBehaviour
             // Highlight the dropdown in the picker
             new ConditionalHighlight()
             {
-                predicate = () => !(itemDropdown.Dropdown.IsExpanded || selectedItem.Invoke () == targetItem),
+                predicate = () => !(itemReqDropdown.Dropdown.IsExpanded || itemReqDropdown.SelectedItem == targetItem),
                 target = () => itemDropdownTransform
-            },
-            // Highlight nothing while target item is not visible on viewport
-            new ConditionalHighlight()
-            {
-                predicate = () => itemDropdown.Dropdown.IsExpanded && !TargetItemVisible(),
-                target = () => null
             },
             // Highlight the single option button in the dropdown list
             new ConditionalHighlight()
             {
-                predicate = () => TargetItemVisible() && selectedItem.Invoke () != targetItem,
+                predicate = () => itemReqDropdown.Dropdown.IsExpanded && TargetItemVisible() && itemReqDropdown.SelectedItem != targetItem,
                 target = () => DropdownItemGetter()
+            },
+            // Highlight the input field only after the dropdown is closed
+            new ConditionalHighlight()
+            {
+                predicate = () => !itemReqDropdown.Dropdown.IsExpanded && quantityInput.text != requestQuantity.ToString(),
+                target = () => quantityInput.transform as RectTransform
+            },
+            // Highlight the request button only after the correct quantity is entered
+            new ConditionalHighlight()
+            {
+                predicate = () => quantityInput.text == requestQuantity.ToString() && !reviewDisplay.gameObject.activeInHierarchy,
+                target = () => concepts.RequestButton.transform as RectTransform
             }
         };
     }
