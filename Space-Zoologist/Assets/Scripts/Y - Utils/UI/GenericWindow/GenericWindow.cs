@@ -105,7 +105,7 @@ public class GenericWindow : MonoBehaviour
                 window.DOAnchorPos(Vector2.zero, windowAnimateTime).SetEase(openingEase);
             });
     }
-    public void Close(UnityAction action = null)
+    public virtual void Close(UnityAction action = null)
     {
         // Animate the window back to the starting anchor
         window.DOAnchorPos(openingPosition, windowAnimateTime)

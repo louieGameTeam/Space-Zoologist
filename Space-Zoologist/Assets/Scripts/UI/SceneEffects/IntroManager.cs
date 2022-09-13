@@ -55,7 +55,7 @@ public class IntroManager : MonoBehaviour
         else if (Index == IntroductionTexts.Count + 1 && !hasLoadedMenu)
         {
             hasLoadedMenu = true;
-            SceneNavigator.LoadLevel ("MainMenu"/*, LoadSceneMode.Additive*/);/*
+            SceneNavigator.LoadScene ("MainMenu"/*, LoadSceneMode.Additive*/);/*
             SceneManager.SetActiveScene (SceneManager.GetSceneByName ("MainMenu"));
             SceneManager.UnloadSceneAsync ("Introduction");*/
         }

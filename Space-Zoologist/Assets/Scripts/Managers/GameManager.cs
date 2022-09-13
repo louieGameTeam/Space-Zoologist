@@ -379,8 +379,8 @@ public class GameManager : MonoBehaviour
         // set up the game state
         // Game Manger no longer hanldes npc end conversation, that's the GameOverController's job
         // EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
-        this.RestartButton.onClick.AddListener(() => { SceneNavigator.LoadLevel(SceneNavigator.RecentlyLoadedLevel); });
-        this.NextLevelButton?.onClick.AddListener(() => { SceneNavigator.LoadLevel ("LevelMenu"); });
+        this.RestartButton.onClick.AddListener(() => { SceneNavigator.LoadScene(SceneNavigator.RecentlyLoadedLevel); });
+        this.NextLevelButton?.onClick.AddListener(() => { SceneNavigator.LoadScene ("LevelMenu"); });
         UpdateDayText(currentDay);
         this.IsPaused = false;
     }
