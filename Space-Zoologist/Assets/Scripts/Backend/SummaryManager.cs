@@ -135,8 +135,11 @@ public class SummaryManager : MonoBehaviour
 
     public void SetUpCurrentSummaryTrace(string id)
     {
+        var encryption = GetComponent<Encryption>();
+        var encryptedId = encryption.Encrypt(id);
+
         // Check if current user has summary trace data in DB.
-        StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(id, (value) => {
+        StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(encryptedId, (value) => {
             SummaryTraceResponse response = value;
             // If the trace was found for the user, set its data field to be the current summary trace.
             if (response.code == 0)
@@ -146,7 +149,7 @@ public class SummaryManager : MonoBehaviour
             } else if (response.code == 2)
             {
                 currentSummaryTrace = new SummaryTrace();
-                currentSummaryTrace.PlayerID = id;
+                currentSummaryTrace.PlayerID = encryptedId;
             }
         }));
     }
