@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.Linq;
 
 public class ResourceRequestEditor : NotebookUIChild
 {
@@ -57,11 +58,13 @@ public class ResourceRequestEditor : NotebookUIChild
     public override void Setup()
     {
         base.Setup();
-
+        // only generate dropdowns using level data's items
+        var source = GameManager.Instance.LevelData?.ItemQuantities.Select(x => x.itemObject.ID).ToArray();
         // Setup each dropdown
+        targetDropdown.SetSource(source);
+        itemRequestedDropdown.SetSource(source);
         targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
-
         // Set private data
         ResetRequest();
 
