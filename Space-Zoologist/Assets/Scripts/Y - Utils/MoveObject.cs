@@ -46,6 +46,9 @@ public class MoveObject : MonoBehaviour
     private float[] initialTileContents;
     private UnityEvent onObjectMoved = new UnityEvent();
 
+    // audio
+    private int currentAudioIndex;
+
     private void Start()
     {
         gridSystem = GameManager.Instance.m_tileDataController;
@@ -72,6 +75,7 @@ public class MoveObject : MonoBehaviour
             tileToDelete = new GameObject();
             tileToDelete.AddComponent<SpriteRenderer>();
             tileToDelete.tag = "tiletodelete";
+            tileToDelete.name = "Tile To Delete (Helper for MoveObject.cs)";
         }
     }
 
@@ -182,7 +186,6 @@ public class MoveObject : MonoBehaviour
                             successfullyMoved = TryPlaceFood(worldPos, objectToMove);
                             break;
                         case ItemType.TILE:
-                            Debug.Log("PLace");
                             TryPlaceTile(worldPos, objectToMove);
                             break;
                         default:
@@ -204,6 +207,17 @@ public class MoveObject : MonoBehaviour
             Reset();
         }
 
+    }
+
+    protected virtual void HandleAudio(Item selectedItem)
+    {
+        if (selectedItem.AudioClips.Count == 0)
+        {
+            Debug.Log("Selected item " + selectedItem.ItemName + " has no audio sources!");
+            return;
+        }
+        currentAudioIndex = (currentAudioIndex + 1) % selectedItem.AudioClips.Count;
+        AudioManager.instance.PlayOneShot(selectedItem.AudioClips[currentAudioIndex]);
     }
 
     private void Reset()
@@ -300,8 +314,8 @@ public class MoveObject : MonoBehaviour
         {
             if (gridSystem.IsConstructing(pos.x, pos.y))
             {
-                tileToDelete.name = gridSystem.GetGameTileAt(pos).TileName;
-
+                var tile = gridSystem.GetGameTileAt(pos);
+                tileToDelete.name = tile.TileName;
                 if (tileToDelete.name.Equals("liquid"))
                 {
                     tileToDelete.GetComponent<SpriteRenderer>().sprite = LiquidSprite;
@@ -310,7 +324,7 @@ public class MoveObject : MonoBehaviour
                 }
                 else
                 {
-                    tileToDelete.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ItemName.ToLower().Equals(tileToDelete.name.ToLower())).itemObject.Icon;
+                    tileToDelete.GetComponent<SpriteRenderer>().sprite = gridSystem.GetTileItemData(tile.type).ShopItem.Icon;
                 }
 
                 movingItemType = ItemType.TILE;
@@ -425,6 +439,7 @@ public class MoveObject : MonoBehaviour
         toMove.transform.position = worldPos;
         GameManager.Instance.m_populationManager.SpawnAnimal(species, worldPos);
         GameManager.Instance.SubtractFromBalance(cost);
+        HandleAudio(species.AnimalShopItem);
         population.RemoveAnimal(toMove);
         onObjectMoved.Invoke();
         return true;
@@ -456,6 +471,7 @@ public class MoveObject : MonoBehaviour
             removeOriginalFood(foodSource);
             placeFood(pos, species);
             GameManager.Instance.SubtractFromBalance(cost);
+            HandleAudio(foodSource.Species.FoodSourceItem);
             onObjectMoved.Invoke();
         }
         else //Otherwise ignore the placement command entirely
@@ -468,8 +484,8 @@ public class MoveObject : MonoBehaviour
     private void TryPlaceTile(Vector3 worldPos, GameObject toMove)
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
-
-        if (gridSystem.IsTilePlacementValid (tilePos, gridSystem.GetTileData(tilePos).currentTile.type, initialTile.type))
+        var currentGameTile = gridSystem.GetTileData(tilePos).currentTile;
+        if (gridSystem.IsTilePlacementValid (tilePos, currentGameTile.type, initialTile.type))
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
@@ -482,6 +498,8 @@ public class MoveObject : MonoBehaviour
             gridSystem.SetTile(tilePos, initialTile);
             gridSystem.CreateUnitBuffer((Vector2Int)tilePos, 1, TileDataController.ConstructionCluster.ConstructionType.TILE);
             gridSystem.ApplyChangeToTilemapTexture(tilePos);
+            var tileItem = gridSystem.GetTileItemData(initialTile.type);
+            HandleAudio(tileItem.ShopItem);
         }
     }
 

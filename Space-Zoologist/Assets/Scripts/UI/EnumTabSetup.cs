@@ -10,22 +10,22 @@ public class EnumTabSetup<TEnum> : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the toggle group picker used to select a toggle")]
-    private AbstractToggleGroupPicker toggleGroupPicker;
+    private AbstractToggleGroupPicker toggleGroupPicker = null;
     [SerializeField]
     [Tooltip("Prefab of the toggle picker to instantiate for each enum value")]
-    private AbstractTogglePicker togglePickerPrefab;
+    private AbstractTogglePicker togglePickerPrefab = null;
     [SerializeField]
     [Tooltip("Toggle group used to make only one toggle active at a time")]
-    private ToggleGroup toggleGroup;
+    private ToggleGroup toggleGroup = null;
     [SerializeField]
     [Tooltip("Transform that all of the toggle are instantiated under")]
-    private Transform toggleParent;
+    private Transform toggleParent = null;
     [SerializeField]
     [Tooltip("If true, the enum list marks enums to INCLUDE, if false, it marks enums to EXCLUDE")]
     private bool filterMarksInclusions = false;
     [SerializeField]
     [Tooltip("List of enums to exclude/include from the tab setup")]
-    private List<TEnum> filter;
+    private List<TEnum> filter = null;
     #endregion
 
     #region Monobehaviour Messages

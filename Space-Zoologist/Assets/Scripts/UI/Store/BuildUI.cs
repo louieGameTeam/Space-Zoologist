@@ -14,10 +14,10 @@ public class BuildUI : MonoBehaviour
     [SerializeField]
     [Tooltip("Toggle group that picks the store menu to show")]
     [FormerlySerializedAs("indexPicker")]
-    private IntToggleGroupPicker storeSectionIndexPicker;
+    private IntToggleGroupPicker storeSectionIndexPicker = null;
     [SerializeField]
     [Tooltip("Button that closes the build UI when clicked")]
-    private Button closeButton;
+    private Button closeButton = null;
     #endregion
 
     #region Private Fields

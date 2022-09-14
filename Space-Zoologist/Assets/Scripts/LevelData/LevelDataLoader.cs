@@ -12,7 +12,7 @@ public class LevelDataLoader : MonoBehaviour
 
     #region Editor Fields
     [Header("Used when playing level scene directly")]
-    [SerializeField] LevelData levelOnPlay;
+    [SerializeField] LevelData levelOnPlay = null;
     #endregion
 
     #region Private Fields
@@ -54,7 +54,7 @@ public class LevelDataLoader : MonoBehaviour
         }
         // Set the current level to the level we are about to load
         currentLevel = level;
-        SceneManager.LoadScene("MainLevel");
+        SceneNavigator.LoadScene("MainLevel");
     }
     public static void ReloadLevel() => LoadLevel(currentLevel);
     public static void LoadNextLevel()

@@ -13,13 +13,13 @@ public class GameOverController : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Data for the window displayed when all objectives finish, before final NPC dialogue")]
-    private GenericWindow objectiveFinishedWindow;
+    private GenericWindow objectiveFinishedWindow = null;
     [SerializeField]
     [Tooltip("Data for the window displayed when the enclosure is finished")]
-    private GenericWindow successWindow;
+    private GenericWindow successWindow = null;
     [SerializeField]
     [Tooltip("Data for the window displayed when the level fails")]
-    private GenericWindow failWindow;
+    private GenericWindow failWindow = null;
     #endregion
 
     #region Private Fields
@@ -60,7 +60,7 @@ public class GameOverController : MonoBehaviour
             // When the conversation ends then show the fail window
             restartConversation.OnConversationEnded(() =>
             {
-                OpenWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
+                OpenWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneNavigator.LoadScene("LevelMenu"));
             });
         }
     }
@@ -112,7 +112,7 @@ public class GameOverController : MonoBehaviour
         GameManager.Instance.HandleExitLevel();
 
         // Open the success window
-        OpenWindow(successWindow, () => SceneManager.LoadScene("LevelMenu"), () => LevelDataLoader.ReloadLevel());
+        OpenWindow(successWindow, () => SceneNavigator.LoadScene("LevelMenu"), () => LevelDataLoader.ReloadLevel());
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {

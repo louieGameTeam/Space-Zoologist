@@ -14,7 +14,7 @@ public class UIBlockerSettings : ScriptableObjectSingleton<UIBlockerSettings>
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of operations that can be blocked by UI elements")]
-    private string[] blockableOperations;
+    private string[] blockableOperations = null;
     #endregion
 
     #region Public Methods

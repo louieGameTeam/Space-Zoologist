@@ -25,22 +25,22 @@ public class LevelEndingData
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("If true, this uses a quiz conversation, otherwise use a normal NPCConversation")]
-    private bool isQuiz;
+    private bool isQuiz = false;
     
     [SerializeField]
     [Tooltip("The normal NPCConversation to speak")]
-    private NPCConversation normalConversation;
+    private NPCConversation normalConversation = null;
     [SerializeField]
     [Tooltip("Next level to load after the normal conversation finishes")]
-    private LevelID nextLevelID;
+    private LevelID nextLevelID = LevelID.Invalid;
     
     [SerializeField]
     [Tooltip("Conversation to speak if this is a quiz conversation")]
-    private QuizConversation quizConversation;
+    private QuizConversation quizConversation = null;
     [SerializeField]
     [Tooltip("Level to load after this level given the score on the quiz")]
     [EditArrayWrapperOnEnum("levelIDs", typeof(QuizGrade))]
-    private LevelIDArray nextLevelIDs;
+    private LevelIDArray nextLevelIDs = null;
     #endregion
 
     #region Private Fields
