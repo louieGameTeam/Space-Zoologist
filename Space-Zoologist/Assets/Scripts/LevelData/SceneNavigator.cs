@@ -9,7 +9,20 @@ public class SceneNavigator : ScriptableObject
     [Expandable] public List<Level> Levels = default;
     public static string RecentlyLoadedLevel { get; private set; }
 
-    public static void LoadLevel(string levelName/*, LoadSceneMode mode = LoadSceneMode.Single*/)
+    // Used by scripts
+    public static void LoadScene (string levelName) {
+        if (GameManager.Instance) {
+            Debug.Log ("Got a game manager");
+            GameManager.Instance.HandleExitLevel ();
+        } else Debug.Log ("Did not get a game manager");
+
+        UpdateRecentlyLoadedLevel (levelName);
+        LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (levelName));
+
+    }
+
+    // Used by UI buttons in prefabs
+    public void LoadLevel (string levelName)
     {
         if (GameManager.Instance)
         {
@@ -19,7 +32,7 @@ public class SceneNavigator : ScriptableObject
         else Debug.Log("Did not get a game manager");
 
         UpdateRecentlyLoadedLevel(levelName);
-        SceneManager.LoadScene(levelName/*, mode*/);
+        LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (levelName));
     }
 
     private static void UpdateRecentlyLoadedLevel(string levelName)

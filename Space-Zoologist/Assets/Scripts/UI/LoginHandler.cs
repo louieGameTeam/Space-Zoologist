@@ -20,7 +20,7 @@ public class LoginHandler : MonoBehaviour
 
     #region Public Methods
     public void RequestLogin () {
-        OpenWindow (loginWindow, () => SubmitLogin (), () => SceneManager.LoadScene ("LevelMenu"));
+        OpenWindow (loginWindow, () => SubmitLogin (), () => SceneNavigator.LoadScene ("LevelMenu"));
     }
 
     public void SubmitLogin () {
@@ -28,7 +28,7 @@ public class LoginHandler : MonoBehaviour
         // TODO: Encrypt and store email from emailInput
         SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
         summaryManager.SetUpCurrentSummaryTrace(emailInput.text);
-        SceneManager.LoadScene ("LevelMenu");
+        SceneNavigator.LoadScene ("LevelMenu");
     }
     #endregion
 
