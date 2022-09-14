@@ -92,6 +92,10 @@ public class TutorialPrompter : MonoBehaviour
     {
         FreezeUntilNotebookTabOpen(NotebookTab.TestAndMetrics);
     }
+    public void FreezeUntilReportsTabOpen()
+    {
+        FreezeUntilNotebookTabOpen(NotebookTab.Reports);
+    }
     public void HighlightNotesNoFreeze () {
         HighlightingScheduler.SetHighlights (HighlightNotes ());
     }
