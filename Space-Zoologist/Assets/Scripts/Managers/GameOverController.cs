@@ -60,7 +60,7 @@ public class GameOverController : MonoBehaviour
             // When the conversation ends then show the fail window
             restartConversation.OnConversationEnded(() =>
             {
-                OpenWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneManager.LoadScene("LevelMenu"));
+                OpenWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneNavigator.LoadScene("LevelMenu"));
             });
         }
     }
@@ -112,7 +112,7 @@ public class GameOverController : MonoBehaviour
         GameManager.Instance.HandleExitLevel();
 
         // Open the success window
-        OpenWindow(successWindow, () => SceneManager.LoadScene("LevelMenu"), () => LevelDataLoader.ReloadLevel());
+        OpenWindow(successWindow, () => SceneNavigator.LoadScene("LevelMenu"), () => LevelDataLoader.ReloadLevel());
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {
