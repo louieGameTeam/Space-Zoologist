@@ -41,22 +41,22 @@ public class TestAndMetricsEntryEditor : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the canvas group that handles all child elements")]
-    private CanvasGroup group;
+    private CanvasGroup group = null;
     [SerializeField]
     [Tooltip("Reference to the dropdown to select the research category")]
-    private CategoryFilteredItemDropdown itemDropdown;
+    private CategoryFilteredItemDropdown itemDropdown = null;
     [SerializeField]
     [Tooltip("Reference to the dropdown that selects the needs analyzed in the metric")]
-    private NeedTypeDropdown needDropdown;
+    private NeedTypeDropdown needDropdown = null;
     [SerializeField]
     [Tooltip("Reference to the dropdown that selects if the need increased or decreased")]
-    private TMP_Dropdown differenceDropdown;
+    private TMP_Dropdown differenceDropdown = null;
     [SerializeField]
     [Tooltip("Reference to the input field used to write notes")]
-    private TMP_InputField inputField;
+    private TMP_InputField inputField = null;
     [SerializeField]
     [Tooltip("Event invoked when this editor creates a new entry")]
-    private UnityEvent onNewEntryCreated;
+    private UnityEvent onNewEntryCreated = null;
     #endregion
 
     #region Private Fields

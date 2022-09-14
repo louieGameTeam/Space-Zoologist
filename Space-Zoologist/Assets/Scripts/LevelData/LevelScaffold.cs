@@ -12,7 +12,7 @@ public class LevelScaffold : ScriptableObject
 
     [SerializeField]
     [Tooltip("Scaffold level switches at each enclosure id in this list")]
-    private List<LevelID> scaffoldLevelSwitches;
+    private List<LevelID> scaffoldLevelSwitches = null;
 
     // Get the scaffold level of the given id
     public int ScaffoldLevel(LevelID id)

@@ -29,16 +29,16 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Prefab used to select each individual enslosure for this level")]
-    private LevelSelectEnclosureUI enclosureUI;
+    private LevelSelectEnclosureUI enclosureUI = null;
     [SerializeField]
     [Tooltip("Layout group used to display all enslosure selections")]
-    private LayoutGroup enclosureUIGroup;
+    private LayoutGroup enclosureUIGroup = null;
     [SerializeField]
     [Tooltip("Outline that appears when the ui is hovered over")]
-    private GameObject outline;
+    private GameObject outline = null;
     [SerializeField]
     [Tooltip("Object that creates a dull overlay when the level is not clickable")]
-    private GameObject overlay;
+    private GameObject overlay = null;
     #endregion
 
     #region Private Fields

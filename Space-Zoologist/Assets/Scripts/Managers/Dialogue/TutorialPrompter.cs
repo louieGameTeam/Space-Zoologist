@@ -50,7 +50,7 @@ public class TutorialPrompter : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Prefab used to highlight different parts of the tutorial")]
-    private TutorialHighlight highlightPrefab;
+    private TutorialHighlight highlightPrefab = null;
     #endregion
 
     #region Private Fields
@@ -92,10 +92,6 @@ public class TutorialPrompter : MonoBehaviour
     {
         FreezeUntilNotebookTabOpen(NotebookTab.TestAndMetrics);
     }
-    public void FreezeUntilReportsTabOpen()
-    {
-        FreezeUntilNotebookTabOpen(NotebookTab.Reports);
-    }
     public void HighlightNotesNoFreeze () {
         HighlightingScheduler.SetHighlights (HighlightNotes ());
     }
@@ -126,6 +122,9 @@ public class TutorialPrompter : MonoBehaviour
     }
     public void FreezeUntilTreePicked (string pickerNameFilter) {
         FreezeUntilNotebookItemPicked (NotebookTab.Research, new ItemID (ItemRegistry.Category.Food, 0), pickerNameFilter);
+    }
+    public void FreezeUntilSecondArticlePicked (string articleDropdownNameFilter) {
+        FreezeUntilArticlePicked (NotebookTab.Research, 1, articleDropdownNameFilter);
     }
     public void FreezeUntilInputFieldHas4CharactersTyped (string inputFieldNameFilter) {
         ConditionalHighlight highlight = HighlightInputField (NotebookTab.Research, inputFieldNameFilter, 4);
@@ -312,6 +311,18 @@ public class TutorialPrompter : MonoBehaviour
             itemPickerHighlights [0],
             itemPickerHighlights [1]);
     }
+    private void FreezeUntilArticlePicked (NotebookTab targetTab, int targetArticleIndex, string nameFilter) {
+        FreezingScheduler.FreezeUntilConditionIsMet (() => ArticlePicked (targetTab, targetArticleIndex, nameFilter));
+
+        ConditionalHighlight [] itemPickerHighlights = HighlightArticle (GetDropdown (targetTab, nameFilter), targetArticleIndex);
+        // Highlight notebook button if not open, then highlight correct tab
+        HighlightingScheduler.SetHighlights (HighlightNotebookButton (),
+            // Highlight the correct tab
+            HighlightNotebookTabButton (targetTab),
+            // Highlight the dropdown in the picker
+            itemPickerHighlights [0],
+            itemPickerHighlights [1]);
+    }
     private void FreezeUntilBuildItemPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex) 
         where StoreSectionType : StoreSection
     {
@@ -333,23 +344,26 @@ public class TutorialPrompter : MonoBehaviour
     }
     private void FreezeUntilResourceRequestSubmitted(ItemID requestedItem, int requestQuantity)
     {
-        ConditionalHighlight[] resourceRequestDropdownHighlights = HighlightResourceRequestDropdown(requestedItem, requestQuantity);
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
+        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true); 
+        TMP_InputField quantityInput = requestEditor.QuantityInput;
+        ItemDropdown itemRequestedDropdown = requestEditor.ItemRequestedDropdown;
 
         // Freeze conversation until correct review was confirmed
         FreezingScheduler.FreezeUntilConditionIsMet(() => ResourceRequestWasSubmitted(requestedItem, requestQuantity), HighlightingScheduler.ClearHighlights);
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
             HighlightNotebookTabButton(NotebookTab.Concepts),
-            resourceRequestDropdownHighlights[0],
-            resourceRequestDropdownHighlights[1],
-            resourceRequestDropdownHighlights[2],
-            resourceRequestDropdownHighlights[3]
-            // HighlightInputField(quantityInput, requestQuantity.ToString()),
-            //new ConditionalHighlight()
-            //{
-            //    predicate = () => !reviewDisplay.gameObject.activeInHierarchy,
-            //    target = () => concepts.RequestButton.transform as RectTransform
-            //}
-            );
+            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[0],
+            HighlightItemDropdown(itemRequestedDropdown, requestedItem)[1],
+            HighlightInputField(quantityInput, requestQuantity.ToString()),
+            new ConditionalHighlight()
+            {
+                predicate = () => !reviewDisplay.gameObject.activeInHierarchy,
+                target = () => concepts.RequestButton.transform as RectTransform
+            });
     }
     #endregion
 
@@ -357,12 +371,15 @@ public class TutorialPrompter : MonoBehaviour
     private bool NotebookItemPicked(NotebookTab targetTab, ItemID targetItem, string nameFilter)
     {
         NotebookUI notebook = GameManager.Instance.NotebookUI;
-        // Get all pickers in the given tab
-        ItemPicker[] pickers = notebook.TabPicker.GetTabRoot(targetTab).GetComponentsInChildren<ItemPicker>(true);
-        // Find a picker whose name contains the filter
-        ItemPicker picker = Array.Find(pickers, p => p.name.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+        ItemPicker picker = GetItemPicker (targetTab, nameFilter);
 
         return picker.SelectedItem == targetItem && notebook.IsOpen && notebook.TabPicker.CurrentTab == targetTab;
+    }
+    private bool ArticlePicked (NotebookTab targetTab, int targetArticleIndex, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        TMP_Dropdown selector = GetDropdown (targetTab, nameFilter);
+
+        return selector.value == targetArticleIndex && notebook.IsOpen && notebook.TabPicker.CurrentTab == targetTab;
     }
     private bool BuildItemIsPicked<StoreSectionType>(ItemID targetItem, int storeSectionIndex)
         where StoreSectionType : StoreSection
@@ -513,6 +530,13 @@ public class TutorialPrompter : MonoBehaviour
     private ItemDropdown GetItemDropdown (ItemPicker itemPicker, ItemRegistry.Category targetItemCategory) {
         return itemPicker.GetDropdown (targetItemCategory);
     }
+    private TMP_Dropdown GetDropdown (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        TMP_Dropdown [] selectors = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TMP_Dropdown> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (selectors, s => s.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
     // Highlights a dropdown category without highlighting items in the dropdown
     private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
         // Get the item dropdown for this category
@@ -544,6 +568,7 @@ public class TutorialPrompter : MonoBehaviour
         {
             Transform dropdownList = itemDropdownTransform.Find("Dropdown List");
             /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
+
             // Search all the template item's children for the item with the same index in the name
             Transform itemParent = templateItem.transform.parent;*/
             foreach (Transform child in dropdownList)
@@ -572,91 +597,41 @@ public class TutorialPrompter : MonoBehaviour
             }
         };
     }
-    // Used for specific behaviors relating to the dropdown used in resource requests
-    private ConditionalHighlight[] HighlightResourceRequestDropdown(ItemID targetItem, int requestQuantity)
-    {
-        return HighlightResourceRequestDropdownUtility(targetItem, requestQuantity);
+    private ConditionalHighlight [] HighlightArticle (TMP_Dropdown articleDropdown, int targetArticleIndex) {
+        return HighlightArticleUtility (articleDropdown, targetArticleIndex, () => articleDropdown.value);
     }
-    private ConditionalHighlight[] HighlightResourceRequestDropdownUtility(ItemID targetItem, int requestQuantity)
-    {
-        // Grab a bunch of references to various scripts in the Notebook
-        NotebookUI notebook = GameManager.Instance.NotebookUI;
-        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
-        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
-        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true);
-        TMP_InputField quantityInput = requestEditor.QuantityInput;
-        ItemDropdown itemReqDropdown = requestEditor.ItemRequestedDropdown;
-
+    private ConditionalHighlight [] HighlightArticleUtility (TMP_Dropdown articleDropdown, int targetArticleIndex, Func<int> selectedArticle) {
         // Get the dropdown of the target category
-        RectTransform itemDropdownTransform = itemReqDropdown.GetComponent<RectTransform>();
-        int itemIndex = itemReqDropdown.DropdownIndex(targetItem);
+        RectTransform itemDropdownTransform = articleDropdown.GetComponent<RectTransform> ();
 
         // Local function used to get the rect transform of the particular item in the dropdown
-        RectTransform DropdownItemGetter()
-        {
-            Transform dropdownList = itemDropdownTransform.Find("Dropdown List").Find("Viewport").Find("Content");
+        RectTransform DropdownItemGetter () {
+            Transform dropdownList = itemDropdownTransform.Find ("Dropdown List");
+            /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
 
-            foreach (Transform child in dropdownList)
-            {
-                if (child.name.Contains(itemIndex.ToString()))
-                {
+            // Search all the template item's children for the item with the same index in the name
+            Transform itemParent = templateItem.transform.parent;*/
+            foreach (Transform child in dropdownList) {
+                if (child.name.Contains (targetArticleIndex.ToString ())) {
                     return child as RectTransform;
                 }
             }
-
             return null;
         }
 
-        // Local function used to determine if the target item is visible in the Viewport of the dropdown
-        bool TargetItemVisible()
-        {
-            RectTransform viewport = itemDropdownTransform.Find("Dropdown List").Find("Viewport") as RectTransform;
-            RectTransform targetItemTransform = viewport.Find("Content").GetChild(itemIndex + 1) as RectTransform; // +1 to account for disabled Item child in Viewport
-
-            if (viewport != null && targetItemTransform != null)
-            {
-                // Corners are stored starting from bottom left of rect, going clockwise. Corners are positions in world space
-                Vector3[] viewportCorners = new Vector3[4];
-                Vector3[] targetItemCorners = new Vector3[4];
-                viewport.GetWorldCorners(viewportCorners);
-                targetItemTransform.GetWorldCorners(targetItemCorners);
-
-                // We only care about comparing the y-values of the bottom-left and top-left corners, since this is a dropdown list and x-values are locked
-                // Viewport of dropdown list should be guaranteed to be at least as small as a single entry, so only checking if target item entry is within viewport
-                if ((targetItemCorners[0].y >= viewportCorners[0].y) && (targetItemCorners[1].y <= viewportCorners[1].y))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        return new ConditionalHighlight[]
+        return new ConditionalHighlight []
         {
             // Highlight the dropdown in the picker
             new ConditionalHighlight()
             {
-                predicate = () => !(itemReqDropdown.Dropdown.IsExpanded || itemReqDropdown.SelectedItem == targetItem),
+                predicate = () => !(articleDropdown.IsExpanded || selectedArticle.Invoke () == targetArticleIndex),
                 target = () => itemDropdownTransform
             },
             // Highlight the single option button in the dropdown list
             new ConditionalHighlight()
             {
-                predicate = () => itemReqDropdown.Dropdown.IsExpanded && TargetItemVisible() && itemReqDropdown.SelectedItem != targetItem,
+                predicate = () => selectedArticle.Invoke () != targetArticleIndex,
                 target = () => DropdownItemGetter()
-            },
-            // Highlight the input field only after the dropdown is closed
-            new ConditionalHighlight()
-            {
-                predicate = () => !itemReqDropdown.Dropdown.IsExpanded && quantityInput.text != requestQuantity.ToString(),
-                target = () => quantityInput.transform as RectTransform
-            },
-            // Highlight the request button only after the correct quantity is entered
-            new ConditionalHighlight()
-            {
-                predicate = () => quantityInput.text == requestQuantity.ToString() && !reviewDisplay.gameObject.activeInHierarchy,
-                target = () => concepts.RequestButton.transform as RectTransform
             }
         };
     }

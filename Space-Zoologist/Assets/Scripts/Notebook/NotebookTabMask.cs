@@ -8,7 +8,7 @@ public class NotebookTabMask
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("True false value for each notebook tab")]
-    private bool[] mask;
+    private bool[] mask = null;
     #endregion
 
     #region Public Methods

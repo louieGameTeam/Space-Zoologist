@@ -23,7 +23,7 @@ public class LevelJumper : MonoBehaviour
         {
             int level = int.Parse(levelInput.text);
             int enclosure = int.Parse(enclosureInput.text);
-            SceneManager.LoadScene(levelPrefix + level + "E" + enclosure);
+            SceneNavigator.LoadScene(levelPrefix + level + "E" + enclosure);
         }
     }
 }

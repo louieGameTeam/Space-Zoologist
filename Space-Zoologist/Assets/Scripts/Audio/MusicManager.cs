@@ -11,8 +11,8 @@ public class MusicManager : MonoBehaviour
     bool isInTransition;
 
     const int TEMPO = 112;                                      // tempo of track, in beats per minute
-    const int BEATS_PER_BAR = 4;                                // the tracks have 4 beats per bar, used to be 2 for half-bar transitions
-    public const float SECONDS_PER_BAR = BEATS_PER_BAR * 60f / TEMPO;  // (beats / bars) * (60 seconds / 1 minute) * (minutes / beats)
+    public const int BEATS_PER_BAR = 4;                                // the tracks have 4 beats per bar, used to be 2 for half-bar transitions
+    public const float SECONDS_PER_BAR = BEATS_PER_BAR * 60.0f / TEMPO;  // (beats / bars) * (60 seconds / 1 minute) * (minutes / beats)
 
     float volume = 1f;
 
@@ -140,8 +140,8 @@ public class MusicManager : MonoBehaviour
         isInTransition = true;
 
         float curPlayheadTime = curMusic.GetCurrentTime();
-        int nextBar = Mathf.RoundToInt(curPlayheadTime / SECONDS_PER_BAR);
-        float nextBarTime = (nextBar+0.5f) * SECONDS_PER_BAR;
+        int nextBar = Mathf.CeilToInt(curPlayheadTime / SECONDS_PER_BAR);
+        float nextBarTime = nextBar * SECONDS_PER_BAR;
         transition = StartCoroutine(MusicTransition(nextBarTime - curPlayheadTime));
         return nextBarTime - curPlayheadTime;
     }
