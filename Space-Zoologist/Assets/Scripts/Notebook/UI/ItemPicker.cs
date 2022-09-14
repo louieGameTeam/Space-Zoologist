@@ -33,16 +33,16 @@ public class ItemPicker : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the prefab used to select a research category")]
-    private CategoryFilteredItemDropdown dropdown = null;
+    private CategoryFilteredItemDropdown dropdown;
     [SerializeField]
     [Tooltip("Parent transform that the dropdowns are instantiated into")]
-    private Transform dropdownParent = null;
+    private Transform dropdownParent;
     [SerializeField]
     [Tooltip("Sprite of the dropdown when it is selected")]
-    private Sprite selectedSprite = null;
+    private Sprite selectedSprite;
     [SerializeField]
     [Tooltip("Sprite of the dropdown when it is not selected")]
-    private Sprite notSelectedSprite = null;
+    private Sprite notSelectedSprite;
     [SerializeField]
     [Tooltip("Scale of the button when it is selected")]
     private float selectedScale = 0.2f;
@@ -51,10 +51,10 @@ public class ItemPicker : NotebookUIChild
     private float sizeChangeTime = 0.5f;
     [SerializeField]
     [Tooltip("Reference to the script targetted by the bookmarking system")]
-    private BookmarkTarget bookmarkTarget = null;
+    private BookmarkTarget bookmarkTarget;
     [SerializeField]
     [Tooltip("Event invoked when the research category picker changes category picked")]
-    private ItemIDEvent onItemPicked = null;
+    private ItemIDEvent onItemPicked;
     #endregion
 
     #region Private Fields

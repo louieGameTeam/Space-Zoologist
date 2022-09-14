@@ -21,16 +21,16 @@ public class ItemDropdown : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the research category")]
-    protected TMP_Dropdown dropdown = null;
+    protected TMP_Dropdown dropdown;
     [SerializeField]
     [Tooltip("Name to display for the item in the dropdown")]
-    private ItemName.Type itemDisplayName = ItemName.Type.Colloquial;
+    private ItemName.Type itemDisplayName;
     [SerializeField]
     [Tooltip("True if text and image should display simultaneously")]
     protected bool textAndImage = false;
     [SerializeField]
     [Tooltip("Event invoked when this dropdown selects a research category")]
-    protected ItemIDEvent onItemSelected = null;
+    protected ItemIDEvent onItemSelected;
     #endregion
 
     #region Private Fields
@@ -38,26 +38,18 @@ public class ItemDropdown : NotebookUIChild
     // NOTE: why don't we just change this to two conversion functions to change betweeen types?
     // NOTE: CAN'T do that because cannot find an item on the registry from its name, you need the index
     protected Dictionary<TMP_Dropdown.OptionData, ItemID> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ItemID>();
-    // source
-    private ItemID[] currentSource;
     #endregion
 
     #region Public Methods
-    /// <summary>
-    /// Set ItemID source to custom source (Entire ItemRegistry by default)
-    /// </summary>
-    /// <param name=""></param>
-    public void SetSource(ItemID[] source)
-    {
-        currentSource = source;
-    }
     public override void Setup()
     {
         base.Setup();
+
         // Clear any existing data
         dropdown.ClearOptions();
-        optionCategoryMap.Clear(); 
-        foreach(ItemID id in GetItemIDs(currentSource))
+        optionCategoryMap.Clear();
+
+        foreach(ItemID id in GetItemIDs())
         {
             // Get the current option
             ItemData data = ItemRegistry.Get(id);
@@ -125,10 +117,6 @@ public class ItemDropdown : NotebookUIChild
         // If we are notifying then raise the event
         if (notify) onItemSelected.Invoke(optionCategoryMap[selection]);
     }
-    protected virtual ItemID[] GetItemIDs(ItemID[] source)
-    {
-        // use all items as source if no source specified
-        return (source ?? ItemRegistry.GetAllItemIDs()).Where(i => UIParent.Data.ItemIsUnlocked(i)).ToArray();
-    }
+    protected virtual ItemID[] GetItemIDs() => ItemRegistry.GetAllItemIDs().Where(i => UIParent.Data.ItemIsUnlocked(i)).ToArray();
     #endregion
 }

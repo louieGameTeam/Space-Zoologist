@@ -22,7 +22,7 @@ public class QuizQuestionPool
     private int questionsToPick = 0;
     [SerializeField]
     [Tooltip("Pool of questions to pick from")]
-    private QuizQuestion[] questionPool = null;
+    private QuizQuestion[] questionPool;
     #endregion
 
     #region Public Methods

@@ -19,17 +19,17 @@ public class DisplayItemCellsByCategory : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the toggle group used to select an item category")]
-    private ItemCategoryToggleGroupPicker groupPicker = null;
+    private ItemCategoryToggleGroupPicker groupPicker;
     [SerializeField]
     [Tooltip("Reference to the transform to instantiate the cells under")]
-    private Transform cellParent = null;
+    private Transform cellParent;
     [SerializeField]
     [Tooltip("Reference to the prefab to instantiate for each cell")]
-    private StoreItemCell itemCellPrefab = null;
+    private StoreItemCell itemCellPrefab;
 
     [SerializeField]
     [Tooltip("Item invoked when an item cell is clicked on")]
-    private ItemEvent itemClickedEvent = null;
+    private ItemEvent itemClickedEvent;
     #endregion
 
     #region Private Fields

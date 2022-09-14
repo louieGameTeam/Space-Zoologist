@@ -10,7 +10,7 @@ public class VFXManager : MonoBehaviour
     public static VFXManager Instance = null;
 
     #region Private Fields
-    [SerializeField] private VFXLibrary VFXLibrary = null;
+    [SerializeField] private VFXLibrary VFXLibrary;
     private Dictionary<VFXType, VFXLibrary.VFXObject> VFXDict;
     #endregion
 
@@ -42,10 +42,9 @@ public class VFXManager : MonoBehaviour
         VisualEffect visualEffect = Instantiate(vfx.effect);
         visualEffect.transform.position = pos;
 
-        // TODO: Decouple VFX from SFX
         if (vfx.sfxType != SFXType.NumTypes)
         {
-            AudioManager.instance.PlayOneShot(vfx.sfxType, 0.6f);
+            AudioManager.instance.PlayOneShot(vfx.sfxType);
         }
     }
     #endregion

@@ -10,10 +10,10 @@ public class OptionalResizeData2D
 
     [SerializeField]
     [Tooltip("Determine if the resize will take place or not")]
-    private bool willResize = false;
+    private bool willResize;
     [SerializeField]
     [Tooltip("Data used to resize")]
-    private ResizeData2D resizeData = null;
+    private ResizeData2D resizeData;
 
     public Vector2 Resize(Vector2 oldSize)
     {

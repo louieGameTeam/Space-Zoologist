@@ -15,13 +15,13 @@ public class NeedTypeDropdown : NotebookUIChild
 
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the need type")]
-    private TMP_Dropdown dropdown = null;
+    private TMP_Dropdown dropdown;
     [SerializeField]
     [Tooltip("List of selectable needs in this dropdown")]
-    private List<NeedType> needs = null;
+    private List<NeedType> needs;
     [SerializeField]
     [Tooltip("Event raised when the dropdown value changes")]
-    private NeedTypeEvent onNeedTypeSelected = null;
+    private NeedTypeEvent onNeedTypeSelected;
 
     private const string suffix = " Need";
 

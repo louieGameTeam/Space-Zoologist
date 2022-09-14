@@ -27,32 +27,32 @@ public class NotebookUI : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform at the root of the notebook UI")]
-    private RectTransform root = null;
+    private RectTransform root;
     [SerializeField]
     [FormerlySerializedAs("notebook")]
     [Tooltip("Reference to the serialized object that holds all info about the notebook")]
-    private NotebookConfig config = null;
+    private NotebookConfig config;
     [SerializeField]
     [Tooltip("Reference to the script that selects the tabs in the notebook")]
-    private NotebookTabPicker tabPicker = null;
+    private NotebookTabPicker tabPicker;
     [SerializeField]
     [Tooltip("Reference to the audio manager for the notebook")]
-    private NotebookSoundManager soundManager = null;
+    private NotebookSoundManager soundManager;
     [SerializeField]
     [Tooltip("Offsets from the sceen edges for the notebook")]
-    private RectOffset defaultSize = null;
+    private RectOffset defaultSize;
     [SerializeField]
     [Tooltip("Size of the notebook while dialogue is present")]
-    private RectOffset dialogueSize = null;
+    private RectOffset dialogueSize;
     [SerializeField]
     [Tooltip("Event invoked when the content on the notebook changes")]
-    private UnityEvent onContentChanged = null;
+    private UnityEvent onContentChanged;
     [SerializeField]
     [Tooltip("Event invoked each time the notebook is enabled/disabled")]
-    private BoolEvent onNotebookToggle = null;
+    private BoolEvent onNotebookToggle;
     [SerializeField]
     [Tooltip("Event invoked each time the inspector needs to be enabled/disabled by the notebook")]
-    private BoolEvent onEnableInspectorToggle = null;
+    private BoolEvent onEnableInspectorToggle;
     #endregion
 
     #region Private Fields

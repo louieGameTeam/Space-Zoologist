@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class AudioUI : MonoBehaviour
 {
-    [SerializeField] Slider vol = null;
-    [SerializeField] Slider musicVol = null;
-    [SerializeField] Slider sfxVol = null;
+    [SerializeField] Slider vol;
+    [SerializeField] Slider musicVol;
+    [SerializeField] Slider sfxVol;
     // Start is called before the first frame update
     void Start()
     {

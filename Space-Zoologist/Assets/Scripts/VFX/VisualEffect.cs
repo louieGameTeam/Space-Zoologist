@@ -5,7 +5,7 @@ using UnityEngine;
 public class VisualEffect : MonoBehaviour
 {
     #region Private Fields
-    [SerializeField] private Animator animator = null;
+    [SerializeField] private Animator animator;
     #endregion
 
     #region Monobehaviour Callbacks

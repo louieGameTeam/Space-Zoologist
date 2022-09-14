@@ -16,14 +16,14 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region Private Fields
-    [SerializeField] MusicManager musicManager = null;
-    [SerializeField] AudioSource sfx = null;
+    [SerializeField] MusicManager musicManager;
+    [SerializeField] AudioSource sfx;
 
     float masterVolume = 1;
     float musicVolume = 1;
     float sfxVolume = 1;
 
-    [SerializeField] SFXLibrary SFXLibrary = null;
+    [SerializeField] SFXLibrary SFXLibrary;
     Dictionary<SFXType, SFXLibrary.AudioObject> SFXDict;
     #endregion
 
@@ -101,19 +101,20 @@ public class AudioManager : MonoBehaviour
     /// Play the audioclip.
     /// </summary>
     /// <param name="clip"></param>
-    public void PlayOneShot (AudioClip clip, float volume = 1) {
+    public void PlayOneShot(AudioClip clip)
+    {
         // introduce a little bit of variety
-        sfx.PlayOneShot (clip, (Random.value * 0.2f + 0.8f) * volume);
+        sfx.PlayOneShot(clip, Random.value * 0.2f + 0.8f);
     }
 
     /// <summary>
     /// Play the sfx from SFXType in order. If there is only one, repeat that sound each time this is called.
     /// </summary>
     /// <param name="type"></param>
-    public void PlayOneShot(SFXType type, float volume = 1)
+    public void PlayOneShot(SFXType type)
     {
         var audio = SFXDict[type];
-        PlayOneShot(audio.clips[audio.index], volume);
+        PlayOneShot(audio.clips[audio.index]);
 
         audio.index++;
         if (audio.index == audio.clips.Length) audio.index = 0;

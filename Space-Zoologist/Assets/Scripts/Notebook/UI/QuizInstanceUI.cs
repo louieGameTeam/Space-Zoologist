@@ -11,10 +11,10 @@ public class QuizInstanceUI : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Prefab to instantiate for each quiz answer")]
-    private QuizAnswerUI answerUIPrefab = null;
+    private QuizAnswerUI answerUIPrefab;
     [SerializeField]
     [Tooltip("Transform parent for each answer ui")]
-    private Transform answerUIParent = null;
+    private Transform answerUIParent;
     #endregion
 
     #region Private Fields

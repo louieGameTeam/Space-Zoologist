@@ -19,7 +19,7 @@ public class QuizConversation : MonoBehaviour
     [System.Serializable]
     public class NPCConversationArray
     {
-        public NPCConversation[] responses = null;
+        public NPCConversation[] responses;
         public NPCConversation Get(QuizGrade grade) => responses[(int)grade];
     }
     #endregion
@@ -28,25 +28,25 @@ public class QuizConversation : MonoBehaviour
     [SerializeField]
     [Tooltip("Reference to the quiz template to run the quiz for")]
     [FormerlySerializedAs("quizTemplate")]
-    private QuizTemplate template = null;
+    private QuizTemplate template;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Icon to display for the npc")]
-    private Sprite npcIcon = null;
+    private Sprite npcIcon;
     [SerializeField]
     [Tooltip("Name of the npc giving the quiz")]
     private string npcName = "Star";
     [SerializeField]
     [Tooltip("Font to use when saying each speech node")]
-    private TMP_FontAsset npcFont = null;
+    private TMP_FontAsset npcFont;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Conversation to say at the beginning")]
-    private NPCConversation openingConversation = null;
+    private NPCConversation openingConversation;
     [SerializeField]
     [TextArea(3, 10)]
     [Tooltip("Speech node spoken when the quiz ends")]
@@ -54,7 +54,7 @@ public class QuizConversation : MonoBehaviour
     [SerializeField]
     [Tooltip("List of NPCConversations to respond with based on the quizes' grade")]
     [EditArrayWrapperOnEnum("responses", typeof(QuizGrade))]
-    private NPCConversationArray response = null;
+    private NPCConversationArray response;
     [SerializeField]
     [Tooltip("If true, the quiz conversation will be re-spoken if the player fails the quiz")]
     private bool requizOnFail = false;
@@ -63,14 +63,14 @@ public class QuizConversation : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Event invoked when the quiz conversation is finished")]
-    private UnityEvent onConversationEnded = null;
+    private UnityEvent onConversationEnded;
     #endregion
 
     #region Private Fields
-    private QuizInstance currentQuiz = null;
-    private NPCConversation currentResponse = null;
+    private QuizInstance currentQuiz;
+    private NPCConversation currentResponse;
     // Conversation that the NPC speaks to say all of the questions
-    private NPCConversation currentQuizConversation = null;
+    private NPCConversation currentQuizConversation;
     private readonly string[] optionLabels = new string[]
     {
         "Not at all useful",

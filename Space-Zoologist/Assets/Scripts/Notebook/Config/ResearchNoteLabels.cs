@@ -11,5 +11,5 @@ public class ResearchNoteLabels : ScriptableObject
 
     // Private data
     [SerializeField]
-    private List<string> labels = null;
+    private List<string> labels;
 }

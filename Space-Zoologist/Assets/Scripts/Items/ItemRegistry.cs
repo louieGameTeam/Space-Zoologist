@@ -22,7 +22,7 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
     [SerializeField]
     [Tooltip("List of item data lists - parallel to the 'Category' enum")]
     [EditArrayWrapperOnEnum("itemDataLists", typeof(Category))]
-    private ItemRegistryData itemData = null;
+    private ItemRegistryData itemData;
     #endregion
 
     #region Data Access Methods

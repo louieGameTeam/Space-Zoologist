@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class OnClickViewer : MonoBehaviour
 {
-    [SerializeField] private Button button = null;
+    [SerializeField] private Button button;
 
     public void PrintButtonListeners()
     {

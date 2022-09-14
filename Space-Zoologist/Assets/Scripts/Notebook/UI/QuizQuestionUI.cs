@@ -8,10 +8,10 @@ public class QuizQuestionUI : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Text component used to display the title of the question")]
-    private TextMeshProUGUI titleText = null;
+    private TextMeshProUGUI titleText;
     [SerializeField]
     [Tooltip("Text component used to display the question")]
-    private TextMeshProUGUI questionText = null;
+    private TextMeshProUGUI questionText;
     #endregion
 
     #region Public Methods

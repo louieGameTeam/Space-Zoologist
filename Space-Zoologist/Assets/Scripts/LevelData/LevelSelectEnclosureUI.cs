@@ -27,17 +27,17 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Component used to display the name of the level")]
-    private TextMeshProUGUI title = null;
+    private TextMeshProUGUI title;
     [SerializeField]
     [Tooltip("Component used to display the image of the level")]
-    private Image image = null;
+    private Image image;
     [SerializeField]
     [Tooltip("Outline object that appears when the button is hovered over")]
-    private GameObject outline = null;
+    private GameObject outline;
 
     [SerializeField]
     [Tooltip("Script used to display the rating for this level")]
-    private LevelRatingUI ratingUI = null;
+    private LevelRatingUI ratingUI;
     #endregion
 
     #region Private Fields
