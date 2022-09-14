@@ -7,16 +7,16 @@ public class ObservationEntryListEditor : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Script used to pick the enclosure we are currently taking notes on")]
-    private LevelIDPicker enclosurePicker = null;
+    private LevelIDPicker enclosurePicker;
     [SerializeField]
     [Tooltip("Reference to the prefab used to edit a single observation entry")]
-    private ObservationEntryEditor editorPrefab = null;
+    private ObservationEntryEditor editorPrefab;
     [SerializeField]
     [Tooltip("Parent transform for the editor of the individual entries")]
-    private LayoutGroup editorParent = null;
+    private LayoutGroup editorParent;
     [SerializeField]
     [Tooltip("Reference to the scroll rect that the editors will fit into")]
-    private ScrollRect editorScroller = null;
+    private ScrollRect editorScroller;
 
     private List<ObservationEntryEditor> currentEditors = new List<ObservationEntryEditor>();
 

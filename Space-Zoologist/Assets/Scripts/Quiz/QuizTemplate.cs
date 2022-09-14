@@ -36,23 +36,23 @@ public class QuizTemplate : ScriptableObject
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of categories that are considered important for this quiz")]
-    private QuizCategory[] importantCategories = null;
+    private QuizCategory[] importantCategories;
     [SerializeField]
     [Tooltip("List of questions to ask in the quiz")]
     [FormerlySerializedAs("questions")]
-    private QuizQuestion[] fixedQuestions = null;
+    private QuizQuestion[] fixedQuestions;
     [SerializeField]
     [Tooltip("A pool of random questions that will be asked last in the quiz")]
-    private QuizQuestionPool randomQuestionPool = null;
+    private QuizQuestionPool randomQuestionPool;
     [SerializeField]
     [Tooltip("Percentage to get correct to be considered a 'partial pass'")]
-    private QuizGradingRubric gradingRubric = null;
+    private QuizGradingRubric gradingRubric;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Example quiz instance. Use this to test the parameters of this template")]
-    private QuizInstance exampleQuiz = null;
+    private QuizInstance exampleQuiz;
     #endregion
 
     #region Public Methods

@@ -90,6 +90,15 @@ public class ItemName
             return scientific;
         return scientific + $" ({colloq})";
     }
+    /// <summary>
+    /// Returns the item name in requested format
+    /// </summary>
+    /// <param name="nameType"></param>
+    /// <returns></returns>
+    public string GetName(Type nameType)
+    {
+        return Get(nameType);
+    }
     #endregion
 
     #region Overrides

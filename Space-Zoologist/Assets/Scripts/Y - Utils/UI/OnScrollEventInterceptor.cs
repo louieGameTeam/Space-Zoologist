@@ -6,7 +6,7 @@ public class OnScrollEventInterceptor : MonoBehaviour, IScrollHandler
     [SerializeField]
     [Tooltip("Reference to the game object to intercept the scroll event for. " +
         "This game object must have a component that implements IScrollHandler attached")]
-    private GameObject interceptTargetObject = null;
+    private GameObject interceptTargetObject;
 
     private IScrollHandler interceptTarget = null;
     public IScrollHandler InterceptTarget

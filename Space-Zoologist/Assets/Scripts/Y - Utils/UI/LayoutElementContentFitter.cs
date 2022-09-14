@@ -16,13 +16,13 @@ public class LayoutElementContentFitter : UIBehaviour, ILayoutElement
 
     [SerializeField]
     [Tooltip("Priority of this layout element")]
-    private int m_layoutPriority = 0;
+    private int m_layoutPriority;
     [SerializeField]
     [Tooltip("Objects that span this object horizontally")]
-    private SpanningContent horizontalSpan = default;
+    private SpanningContent horizontalSpan;
     [SerializeField]
     [Tooltip("Objects that span this object vertically")]
-    private SpanningContent verticalSpan = default;
+    private SpanningContent verticalSpan;
 
     private float m_minWidth;
     private float m_minHeight;

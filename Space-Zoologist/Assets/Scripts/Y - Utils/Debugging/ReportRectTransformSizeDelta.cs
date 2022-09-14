@@ -7,7 +7,7 @@ public class ReportRectTransformSizeDelta : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform to report the size delta on")]
-    private RectTransform rectTransform = null;
+    private RectTransform rectTransform;
     #endregion
 
     #region Public Methods

@@ -9,22 +9,22 @@ public class ItemCategoryTabSetup : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip ("Prefab of the toggle picker to instantiate for each enum value")]
-    private GameObject togglePickerPrefab = null;
+    private GameObject togglePickerPrefab;
     [SerializeField]
     [Tooltip ("Toggle group used to make only one toggle active at a time")]
-    private ToggleGroup toggleGroup = null;
+    private ToggleGroup toggleGroup;
     [SerializeField]
     [Tooltip ("Transform that all of the toggle are instantiated under")]
-    private Transform toggleParent = null;
+    private Transform toggleParent;
     [SerializeField]
     [Tooltip ("If true, the enum list marks enums to INCLUDE, if false, it marks enums to EXCLUDE")]
     private bool filterMarksInclusions = false;
     [SerializeField]
     [Tooltip ("List of enums to exclude/include from the tab setup")]
-    private List<ItemRegistry.Category> filter = null;
+    private List<ItemRegistry.Category> filter;
     #endregion
 
-    private AbstractToggleGroupPicker toggleGroupPicker = null;
+    private AbstractToggleGroupPicker toggleGroupPicker;
 
     #region Monobehaviour Messages
     private void Start () {

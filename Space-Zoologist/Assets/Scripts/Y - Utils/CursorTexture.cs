@@ -17,7 +17,7 @@ public class CursorTexture
 
     [SerializeField]
     [Tooltip("Reference to the texture that displays on the cursor")]
-    private Texture2D texture = null;
+    private Texture2D texture;
     [SerializeField]
     [Tooltip("Hotspot of this cursor, ranges from [0, 0] at the top left to [1, 1] at the bottom right")]
     private Vector2 hotspotAnchor = Vector2.zero;

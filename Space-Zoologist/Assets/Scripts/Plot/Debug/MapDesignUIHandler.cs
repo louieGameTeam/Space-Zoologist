@@ -5,7 +5,7 @@ using UnityEngine.UI;
 enum SelectionType {Tile, Animal, FoodSource, None }
 public class MapDesignUIHandler : MonoBehaviour
 {
-    [SerializeField] private InputField fileNameInputField = null;
+    [SerializeField] private InputField fileNameInputField;
     private TilePlacementController tilePlacementController;
     private string fileName;
 

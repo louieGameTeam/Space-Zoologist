@@ -30,25 +30,25 @@ public class GenericFoldout : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform that expands and contracts when the canvas folds in/out")]
-    private RectTransform foldoutRect = null;
+    private RectTransform foldoutRect;
     [SerializeField]
     [Tooltip("Toggle that expands/collapses the concept canvas")]
-    private Toggle foldoutToggle = null;
+    private Toggle foldoutToggle;
     [SerializeField]
     [Tooltip("Time it takes for the canvas to expand/collapse")]
     private float foldoutTime = 0.3f;
     [SerializeField]
     [Tooltip("Anchors of the rect transform when the canvas is folded out")]
-    private FoldoutAnchor foldoutAnchors = null;
+    private FoldoutAnchor foldoutAnchors;
     [SerializeField]
     [Tooltip("Anchors of the rect transform when the canvas is folded in")]
-    private FoldoutAnchor foldinAnchors = null;
+    private FoldoutAnchor foldinAnchors;
     [SerializeField]
     [Tooltip("Has content")]
-    private bool hasContent = false;
+    private bool hasContent;
     [SerializeField]
     [Tooltip("Content of foldout")]
-    private GameObject content = null;
+    private GameObject content;
     #endregion
 
     #region Monobehaviour Messages

@@ -13,13 +13,13 @@ public class NotebookAcronymSingleNoteEditor : NotebookUIChild
 
     [SerializeField]
     [Tooltip("Reference to the text that will display the character in the acronym that this note edits")]
-    private TextMeshProUGUI label = null;
+    private TextMeshProUGUI label;
     [SerializeField]
     [Tooltip("Reference to the input field used to write the note")]
-    private TMP_InputField inputField = null;
+    private TMP_InputField inputField;
     [SerializeField]
     [Tooltip("Event invoked when the note is finished editing")]
-    private CharStringEvent onNoteEdited = null;
+    private CharStringEvent onNoteEdited;
 
     // Character in the acronym that this character edits
     private char acronymChar;

@@ -16,13 +16,13 @@ public class ImagePreviewManager : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the image to enlarge when clicked")]
-    private Image baseImage = null;
+    private Image baseImage;
     [SerializeField]
     [Tooltip("Reference to the button that causes the button to become enlarged")]
-    private Button previewButton = null;
+    private Button previewButton;
     [SerializeField]
     [Tooltip("Reference to the image prefab instantiated and used as a preview for this image")]
-    private ImagePreview previewPrefab = null;
+    private ImagePreview previewPrefab;
     #endregion
 
     #region Private Fields

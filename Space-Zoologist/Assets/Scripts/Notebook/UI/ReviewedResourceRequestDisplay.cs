@@ -27,38 +27,38 @@ public class ReviewedResourceRequestDisplay : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Game object at the root of the display object")]
-    private GameObject displayRoot = null;
+    private GameObject displayRoot;
     [SerializeField]
     [Tooltip("Reference to the image that displays the border")]
-    private Image border = null;
+    private Image border;
     [SerializeField]
     [Tooltip("List of colors displayed depending on the status of the review")]
     [EditArrayWrapperOnEnum("colors", typeof(ReviewedResourceRequest.Status))]
     private ColorArray statusColors = new ColorArray();
     [SerializeField]
     [Tooltip("Reference to the text to display the status")]
-    private TextMeshProUGUI statusText = null;
+    private TextMeshProUGUI statusText;
     [SerializeField]
     [Tooltip("Text that displays the reason for the current status")]
-    private TextMeshProUGUI statusReasonText = null;
+    private TextMeshProUGUI statusReasonText;
     [SerializeField]
     [Tooltip("Text that displays number of items granted")]
-    private TextMeshProUGUI itemText = null;
+    private TextMeshProUGUI itemText;
     [SerializeField]
     [Tooltip("Test that displays the total cost of the request")]
-    private TextMeshProUGUI costText = null;
+    private TextMeshProUGUI costText;
     [SerializeField]
     [Tooltip("Button to accept the request")]
-    private Button confirmButton = null;
+    private Button confirmButton;
     [SerializeField]
     [Tooltip("Button the cancel the request")]
-    private Button cancelButton = null;
+    private Button cancelButton;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Event invoked when the review is confirmed by the player")]
-    private UnityEvent onReviewConfirmed = null;
+    private UnityEvent onReviewConfirmed;
     #endregion
 
     #region Private Fields

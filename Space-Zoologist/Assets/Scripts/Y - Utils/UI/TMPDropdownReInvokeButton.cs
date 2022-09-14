@@ -10,16 +10,16 @@ public class TMPDropdownReInvokeButton : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Reference to the dropdown to re-invoke the event for")]
-    private TMP_Dropdown dropdown = null;
+    private TMP_Dropdown dropdown;
     [SerializeField]
     [Tooltip("Root object for this item")]
-    private GameObject itemRoot = null;
+    private GameObject itemRoot;
     [SerializeField]
     [Tooltip("Toggle attached to this item")]
-    private Toggle toggle = null;
+    private Toggle toggle;
     [SerializeField]
     [Tooltip("Button that forces dropdown to re-invoke OnValueChanged regardless of dropdown item clicked")]
-    private Button button = null;
+    private Button button;
 
     private int index = 0;
 

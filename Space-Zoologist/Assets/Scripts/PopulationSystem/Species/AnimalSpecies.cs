@@ -6,7 +6,6 @@ using UnityEngine.Serialization;
 public class AnimalSpecies : ScriptableObject
 {
     public ItemID ID => ItemRegistry.FindSpecies(this);
-    public Item AnimalShopItem => ID.Data.ShopItem;
     public float FoodDominance => AnimalDominance.GetFoodDominance(ID).Dominance;
     public int TerrainTilesRequired => terrainTilesRequired;
     public int WaterTilesRequired => waterTilesRequired;
@@ -33,8 +32,8 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField] private int terrainTilesRequired = default;
     [SerializeField] private int minFoodRequired = default;
     [SerializeField] private int maxFoodRequired = default;
-    [SerializeField] private int treesRequired = default;
-    [SerializeField] private Vector2Int friendsRequired = default;
+    [SerializeField] private int treesRequired;
+    [SerializeField] private Vector2Int friendsRequired;
     [SerializeField] private int waterTilesRequired = default;
     [SerializeField] private int growthRate = 3;
     [SerializeField] private int decayRate = 3;
@@ -46,7 +45,7 @@ public class AnimalSpecies : ScriptableObject
     [SerializeField]
     [Tooltip("Registry of all the animal's needs")]
     [FormerlySerializedAs("needRegistry")]
-    private NeedRegistry needs = null;
+    private NeedRegistry needs;
 
     // Replace later with actual representation/animations/behaviors
     [SerializeField] private Sprite representation = default;

@@ -26,19 +26,19 @@ public class GeneralDropdown : UIBehaviour
 
     [SerializeField]
     [Tooltip("Reference to the button that enables the dropdown")]
-    private Button button = null;
+    private Button button;
     [SerializeField]
     [Tooltip("Panel that is activated-deactivated for the dropdown")]
-    private GameObject dropdownPanel = null;
+    private GameObject dropdownPanel;
     [SerializeField]
     [Tooltip("List of buttons on the dropdown panel that make it deactivate")]
-    private List<Button> dropdownDisableButtons = null;
+    private List<Button> dropdownDisableButtons;
     [SerializeField]
     [Tooltip("Event invoked when the dropdown is activated")]
-    private UnityEvent onDropdownEnabled = null;
+    private UnityEvent onDropdownEnabled;
     [SerializeField]
     [Tooltip("Event invoked when the dropdown is deactivated")]
-    private UnityEvent onDropdownDisabled = null;
+    private UnityEvent onDropdownDisabled;
     #endregion
 
     #region Private Data

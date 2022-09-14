@@ -8,13 +8,13 @@ public class VerticalLayoutElementImageResizer : UIBehaviour
 
     [SerializeField]
     [Tooltip("Image component")]
-    private Image image = null;
+    private Image image;
     [SerializeField]
     [Tooltip("Layout element component that will be adjusted")]
-    private LayoutElement layoutElement = null;
+    private LayoutElement layoutElement;
     [SerializeField]
     [Tooltip("Rect transform to be referenced")]
-    private RectTransform rectTransformRef = null;
+    private RectTransform rectTransformRef;
 
     private float prevSizeDelta_x = 0;
 

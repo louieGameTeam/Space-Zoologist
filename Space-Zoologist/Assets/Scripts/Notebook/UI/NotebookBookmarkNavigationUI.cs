@@ -6,10 +6,10 @@ public class NotebookBookmarkNavigationUI : NotebookUIChild
 {
     [SerializeField]
     [Tooltip("Prefab of the buttons used to navigate to a bookmark")]
-    private NotebookBookmarkNavigateButton buttonPrefab = null;
+    private NotebookBookmarkNavigateButton buttonPrefab;
     [SerializeField]
     [Tooltip("Parent object for all navigation buttons")]
-    private Transform buttonParent = null;
+    private Transform buttonParent;
 
     public override void Setup()
     {

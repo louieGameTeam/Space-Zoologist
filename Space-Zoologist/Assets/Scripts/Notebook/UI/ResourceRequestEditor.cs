@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using TMPro;
-using System.Linq;
 
 public class ResourceRequestEditor : NotebookUIChild
 {
@@ -31,22 +30,22 @@ public class ResourceRequestEditor : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the rect transform of this editor")]
-    private RectTransform rectTransform = null;
+    private RectTransform rectTransform;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets a research category")]
-    private CategoryFilteredItemDropdown targetDropdown = null;
+    private CategoryFilteredItemDropdown targetDropdown;
     [SerializeField]
     [Tooltip("Reference to the text that displays the need")]
-    private TextMeshProUGUI needDisplay = null;
+    private TextMeshProUGUI needDisplay;
     [SerializeField]
     [Tooltip("Text input field that sets the quantity of resources to request")]
-    private TMP_InputField quantityInput = null;
+    private TMP_InputField quantityInput;
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
-    private CategoryFilteredItemDropdown itemRequestedDropdown = null;
+    private CategoryFilteredItemDropdown itemRequestedDropdown;
     [SerializeField]
     [Tooltip("Button that deletes this request when clicked")]
-    private Button clearButton = null;
+    private Button clearButton;
     #endregion
 
     #region Private Fields
@@ -58,13 +57,11 @@ public class ResourceRequestEditor : NotebookUIChild
     public override void Setup()
     {
         base.Setup();
-        // only generate dropdowns using level data's items
-        var source = GameManager.Instance.LevelData?.ItemQuantities.Select(x => x.itemObject.ID).ToArray();
+
         // Setup each dropdown
-        targetDropdown.SetSource(source);
-        itemRequestedDropdown.SetSource(source);
         targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
+
         // Set private data
         ResetRequest();
 

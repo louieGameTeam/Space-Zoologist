@@ -8,10 +8,10 @@ public class DisplayObjectPicked : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the toggle with the object to display")]
-    private AbstractTogglePicker togglePicker = null;
+    private AbstractTogglePicker togglePicker;
     [SerializeField]
     [Tooltip("Reference to the text used to display the object picked on the toggle")]
-    private TextMeshProUGUI text = null;
+    private TextMeshProUGUI text;
     #endregion
 
     #region Monobehaviour Messages

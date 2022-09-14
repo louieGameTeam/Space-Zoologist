@@ -41,25 +41,25 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform of this canvas")]
-    private RectTransform rectTransform = null;
+    private RectTransform rectTransform;
     [SerializeField]
     [Tooltip("Image used to render the drawing material")]
-    private RawImage rawImage = null;
+    private RawImage rawImage;
     [SerializeField]
     [Tooltip("Background color of the canvas")]
-    private Color backgroundColor = Color.white;
+    private Color backgroundColor;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Current mode of drawing")]
-    private Mode currentMode = Mode.Drawing;
+    private Mode currentMode;
     [SerializeField]
     [Tooltip("Current color used for drawing")]
-    private Color currentColor = Color.white;
+    private Color currentColor;
     [SerializeField]
     [Tooltip("Current weight of the lines to draw")]
-    private StrokeWeight currentWeight = StrokeWeight.Small;
+    private StrokeWeight currentWeight;
     #endregion
 
     #region Private Fields

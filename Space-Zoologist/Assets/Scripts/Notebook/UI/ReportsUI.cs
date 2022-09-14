@@ -9,16 +9,16 @@ public class ReportsUI : NotebookUIChild
     [SerializeField]
     [Tooltip("Object used to display current research questions")]
     [FormerlySerializedAs("quizUI")]
-    private QuizTemplateUI quizTemplateUI = null;
+    private QuizTemplateUI quizTemplateUI;
     [SerializeField]
     [Tooltip("Object used to select a level id")]
-    private LevelIDPicker levelPicker = null;
+    private LevelIDPicker levelPicker;
     [SerializeField]
     [Tooltip("Object used to display the results of a quiz that the player took")]
-    private QuizInstanceUI quizInstanceUI = null;
+    private QuizInstanceUI quizInstanceUI;
     [SerializeField]
     [Tooltip("Text displayed if there is no quiz to display for the current level id")]
-    private GameObject noQuizText = null;
+    private GameObject noQuizText;
     #endregion
 
     #region Public Methods

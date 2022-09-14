@@ -30,10 +30,10 @@ public class VerboseInspector : MonoBehaviour
     private bool connectOnAwake = false;
     [SerializeField]
     [Tooltip("Prefab used to display an object from the verbose inspector")]
-    private VerboseInspectorItem itemPrefab = null;
+    private VerboseInspectorItem itemPrefab;
     [SerializeField]
     [Tooltip("Layout group to display the items in")]
-    private Transform itemParent = null;
+    private Transform itemParent;
     #endregion
 
     #region Private Fields

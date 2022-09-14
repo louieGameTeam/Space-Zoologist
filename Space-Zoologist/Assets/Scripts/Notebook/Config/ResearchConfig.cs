@@ -24,7 +24,7 @@ public class ResearchConfig
     [Tooltip("List of research entry lists - used to make the entries parallel to the item registry")]
     [FormerlySerializedAs("researchEntryData")]
     [ParallelItemRegistry("entryLists", "entries")]
-    private ResearchEntryRegistry researchEntryRegistry = null;
+    private ResearchEntryRegistry researchEntryRegistry;
     #endregion
 
     #region Public Methods

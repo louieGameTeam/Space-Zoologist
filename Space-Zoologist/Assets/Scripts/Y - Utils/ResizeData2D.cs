@@ -12,13 +12,13 @@ public class ResizeData2D
 
     [SerializeField]
     [Tooltip("Type of resize to be performed")]
-    private ResizeType type = ResizeType.Exact;
+    private ResizeType type;
     [SerializeField]
     [Tooltip("New width of the object")]
-    private float width = 1.0f;
+    private float width;
     [SerializeField]
     [Tooltip("New height of the object")]
-    private float height = 1.0f;
+    private float height;
 
     public Vector2 Resize(Vector2 originalSize)
     {

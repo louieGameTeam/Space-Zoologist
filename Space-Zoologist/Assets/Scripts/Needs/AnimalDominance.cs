@@ -14,11 +14,11 @@ public class AnimalDominance : ScriptableObjectSingleton<AnimalDominance>
     [SerializeField]
     [Tooltip("Measures how much each animal dominates other animals " +
         "when competing for the same terrain space")]
-    private TerrainDominance terrainDominance = null;
+    private TerrainDominance terrainDominance;
     [SerializeField]
     [Tooltip("List of dominance amounts for each animal " +
         "competing for shared food sources")]
-    private AnimalDominanceItem[] foodDominance = null;
+    private AnimalDominanceItem[] foodDominance;
     #endregion
 
     #region Public Methods
