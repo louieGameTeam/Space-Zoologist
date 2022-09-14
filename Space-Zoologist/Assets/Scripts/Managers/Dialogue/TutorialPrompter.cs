@@ -660,48 +660,6 @@ public class TutorialPrompter : MonoBehaviour
             }
         };
     }
-    private ConditionalHighlight[] HighlightArticle(TMP_Dropdown articleDropdown, int targetArticleIndex)
-    {
-        return HighlightArticleUtility(articleDropdown, targetArticleIndex, () => articleDropdown.value);
-    }
-    private ConditionalHighlight[] HighlightArticleUtility(TMP_Dropdown articleDropdown, int targetArticleIndex, Func<int> selectedArticle)
-    {
-        // Get the dropdown of the target category
-        RectTransform itemDropdownTransform = articleDropdown.GetComponent<RectTransform>();
-
-        // Local function used to get the rect transform of the particular item in the dropdown
-        RectTransform DropdownItemGetter()
-        {
-            Transform dropdownList = itemDropdownTransform.Find("Dropdown List");
-            /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
-            // Search all the template item's children for the item with the same index in the name
-            Transform itemParent = templateItem.transform.parent;*/
-            foreach (Transform child in dropdownList)
-            {
-                if (child.name.Contains(targetArticleIndex.ToString()))
-                {
-                    return child as RectTransform;
-                }
-            }
-            return null;
-        }
-
-        return new ConditionalHighlight[]
-        {
-            // Highlight the dropdown in the picker
-            new ConditionalHighlight()
-            {
-                predicate = () => !(articleDropdown.IsExpanded || selectedArticle.Invoke () == targetArticleIndex),
-                target = () => itemDropdownTransform
-            },
-            // Highlight the single option button in the dropdown list
-            new ConditionalHighlight()
-            {
-                predicate = () => selectedArticle.Invoke () != targetArticleIndex,
-                target = () => DropdownItemGetter()
-            }
-        };
-    }
     private ConditionalHighlight HighlightEraseButton()
     {
         // Cache some useful values
