@@ -28,9 +28,9 @@ public class CategoryFilteredItemDropdown : ItemDropdown
     #endregion
 
     #region Private/Protected Methods
-    protected override ItemID[] GetItemIDs()
+    protected override ItemID[] GetItemIDs(ItemID[] source)
     {
-        return ItemRegistry.GetAllItemIDs()
+        return base.GetItemIDs(source)
             .Where(id => categoryFilter.Contains(id.Category) && UIParent.Data.ItemIsUnlocked(id))
             .ToArray();
     }

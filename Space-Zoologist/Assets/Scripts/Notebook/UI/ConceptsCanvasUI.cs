@@ -49,58 +49,58 @@ public class ConceptsCanvasUI : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform that expands and contracts when the canvas folds in/out")]
-    private RectTransform foldoutRect;
+    private RectTransform foldoutRect = null;
     [SerializeField]
     [Tooltip("Toggle that expands/collapses the concept canvas")]
-    private Toggle foldoutToggle;
+    private Toggle foldoutToggle = null;
     [SerializeField]
     [Tooltip("Time it takes for the canvas to expand/collapse")]
     private float foldoutTime = 0.3f;
     [SerializeField]
     [Tooltip("Anchors of the rect transform when the canvas is folded out")]
-    private FoldoutAnchor foldoutAnchors;
+    private FoldoutAnchor foldoutAnchors = null;
     [SerializeField]
     [Tooltip("Anchors of the rect transform when the canvas is folded in")]
-    private FoldoutAnchor foldinAnchors;
+    private FoldoutAnchor foldinAnchors = null;
     
     [Space]
 
     [SerializeField]
     [Tooltip("Reference to the game object at the root of the drawing canvas to enable/disable on foldout")]
-    private GameObject drawingCanvasParent;
+    private GameObject drawingCanvasParent = null;
     [SerializeField]
     [Tooltip("Rect transform attached to the drawing canvas")]
-    private RectTransform drawingCanvasRect;
+    private RectTransform drawingCanvasRect = null;
     [SerializeField]
     [Tooltip("Reference to the script that handles drawing on the canvas")]
-    private DrawingCanvas drawingCanvas;
+    private DrawingCanvas drawingCanvas = null;
     [SerializeField]
     [Tooltip("Script that is used to select a drawing mode for the canvas")]
-    private DrawingCanvasModeGroupPicker modePicker;
+    private DrawingCanvasModeGroupPicker modePicker = null;
     [SerializeField]
     [Tooltip("Picker group used to select the color of the drawing canvas")]
-    private ColorToggleGroupPicker colorPicker;
+    private ColorToggleGroupPicker colorPicker = null;
     [SerializeField]
     [Tooltip("Script used to select a stroke weight for the canvas")]
-    private StrokeWeightGroupPicker strokeWeightPicker;
+    private StrokeWeightGroupPicker strokeWeightPicker = null;
     [SerializeField]
     [Tooltip("Button used to clear the canvas")]
-    private Button clearButton;
+    private Button clearButton = null;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Reference to the scroll rect that moves the drafting area side to side")]
-    private ScrollRect scroll;
+    private ScrollRect scroll = null;
     [SerializeField]
     [Tooltip("Time it takes for the camera to move into zoomed position")]
     private float smoothingTime = 1f;
     [SerializeField]
     [Tooltip("Zoom applied to the camera while folded out and dialogue is not active")]
-    private CameraZoom dialogueInactiveZoom;
+    private CameraZoom dialogueInactiveZoom = null;
     [SerializeField]
     [Tooltip("Zoom applied to the camera while folded out and dialogue is active")]
-    private CameraZoom dialogueActiveZoom;
+    private CameraZoom dialogueActiveZoom = null;
     #endregion
 
     #region Monobehaviour Messages

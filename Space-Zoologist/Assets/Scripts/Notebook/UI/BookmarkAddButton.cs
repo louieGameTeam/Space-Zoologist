@@ -28,20 +28,20 @@ public class BookmarkAddButton : NotebookUIChild
     private string suggestedTitle = "New Bookmark";
     [SerializeField]
     [Tooltip("Reference to the script to assist with the dropdown functionality")]
-    private GeneralDropdown dropdown;
+    private GeneralDropdown dropdown = null;
     [SerializeField]
     [Tooltip("Game object that is enabled if the current page has a bookmark")]
-    private GameObject hasBookmarkGraphic;
+    private GameObject hasBookmarkGraphic = null;
     [SerializeField]
     [Tooltip("Text used to input the name of the new bookmark")]
-    private TMP_InputField bookmarkTitle;
+    private TMP_InputField bookmarkTitle = null;
     [SerializeField]
     [Tooltip("Reference to the button that adds the bookmark when clicked")]
-    private Button confirmButton;
+    private Button confirmButton = null;
     [SerializeField]
     [FormerlySerializedAs("bookmarkTargets")]
     [Tooltip("List of components to target when navigating to the newly added bookmark")]
-    protected BookmarkTarget[] additionalBookmarkTargets;
+    protected BookmarkTarget[] additionalBookmarkTargets = null;
     #endregion
 
     #region Private Fields

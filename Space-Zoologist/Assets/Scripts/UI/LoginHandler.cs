@@ -10,7 +10,7 @@ public class LoginHandler : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip ("Data for the window displayed when a login is requested")]
-    private GenericWindow loginWindow;
+    private GenericWindow loginWindow = null;
     #endregion
 
     #region Private Fields
@@ -20,14 +20,14 @@ public class LoginHandler : MonoBehaviour
 
     #region Public Methods
     public void RequestLogin () {
-        OpenWindow (loginWindow, () => SubmitLogin (), () => SceneManager.LoadScene ("LevelMenu"));
+        OpenWindow (loginWindow, () => SubmitLogin (), () => SceneNavigator.LoadScene ("LevelMenu"));
     }
 
     public void SubmitLogin () {
         print (emailInput.text);
         // TODO: Encrypt and store email from emailInput
         // TODO: Assign playerID based on email for use with cookies and backend data
-        SceneManager.LoadScene ("LevelMenu");
+        SceneNavigator.LoadScene ("LevelMenu");
     }
     #endregion
 

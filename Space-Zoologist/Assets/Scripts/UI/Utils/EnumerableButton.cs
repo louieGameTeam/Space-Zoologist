@@ -10,19 +10,19 @@ public class EnumerableButton : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Reference to the toggle that toggles this button on/off")]
-    private Toggle toggle;
+    private Toggle toggle = null;
     [SerializeField]
     [Tooltip("Text that the button uses to display the enumerable item")]
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI text = null;
     [SerializeField]
     [Tooltip("Image that the button uses to display the enumerable item")]
-    private Image image;
+    private Image image = null;
     [SerializeField]
     [Tooltip("Event invoked when this button is selected")]
-    private EnumerablePicker.EnumerableItemEvent onSelected;
+    private EnumerablePicker.EnumerableItemEvent onSelected = null;
 
     // Reference to the item that this button picks
-    private EnumerableItem item;
+    private EnumerableItem item = null;
 
     public void Setup(ToggleGroup group, EnumerableItem item, UnityAction<EnumerableItem> callback)
     {

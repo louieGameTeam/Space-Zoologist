@@ -8,10 +8,10 @@ public class WarningSystem : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the canvas to create the warning window on")]
-    private Canvas mainCanvas;
+    private Canvas mainCanvas = null;
     [SerializeField]
     [Tooltip("Window to instantiate for the warning")]
-    private GenericWindow warningWindowPrefab;
+    private GenericWindow warningWindowPrefab = null;
     #endregion
 
     #region Private Fields
