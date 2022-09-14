@@ -126,6 +126,8 @@ public class NotebookTabPicker : NotebookUIChild
         {
             tabObjects.Get(t).SetActive(t == tab);
         }
+        // For backend: Event invocation for tab switch.
+        EventManager.Instance.InvokeEvent(EventType.OnTabChanged, null);
         onTabSelect?.Invoke();
     }
     #endregion
