@@ -32,20 +32,20 @@ public class NotebookTabPicker : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root object where all of the pages will be found")]
-    private Transform pagesRoot = null;
+    private Transform pagesRoot;
     [SerializeField]
     [EditArrayWrapperOnEnum("tabObjects", typeof(NotebookTab))]
     [Tooltip("List of prefabs to instantiate for each notebook page")]
-    private NotebookTabObjects tabPrefabs = null;
+    private NotebookTabObjects tabPrefabs;
     [SerializeField]
     [Tooltip("Prefab of the button used to select notebook tabs")]
-    private NotebookTabSelectButton buttonPrefab = null;
+    private NotebookTabSelectButton buttonPrefab;
     [SerializeField]
     [Tooltip("Toggle group used to make only one button selected")]
-    private ToggleGroup parent = null;
+    private ToggleGroup parent;
     [SerializeField]
     [Tooltip("Reference to the bookmark target to use")]
-    private BookmarkTarget bookmarkTarget = null;
+    private BookmarkTarget bookmarkTarget;
     #endregion
 
     #region Private Fields
@@ -126,6 +126,8 @@ public class NotebookTabPicker : NotebookUIChild
         {
             tabObjects.Get(t).SetActive(t == tab);
         }
+        // For backend: Event invocation for tab switch.
+        EventManager.Instance.InvokeEvent(EventType.OnTabChanged, null);
         onTabSelect?.Invoke();
     }
     #endregion

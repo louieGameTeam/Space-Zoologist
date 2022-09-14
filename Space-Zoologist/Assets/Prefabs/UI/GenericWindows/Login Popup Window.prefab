@@ -761,7 +761,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5323336896914112095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 454e4be8966d0424c98e7da8af92ae6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 23fe5160528257246a9965ca99cf5921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 5323336897604432209}
@@ -770,7 +770,7 @@ MonoBehaviour:
   messageText: {fileID: 0}
   fadeTime: 0.3
   windowAnimateTime: 1
-  openingPosition: {x: 0, y: 2000}
+  openingPosition: {x: 0, y: 1000}
   restingPosition: {x: 0, y: 0}
   openingEase: 30
   closingEase: 18
@@ -1319,7 +1319,6 @@ GameObject:
   - component: {fileID: 2972257527131659740}
   - component: {fileID: 4152969410211970397}
   - component: {fileID: 1114260682445606176}
-  - component: {fileID: 8227697218171710829}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1465,31 +1464,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8227697218171710829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6167998292339895198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 454e4be8966d0424c98e7da8af92ae6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  window: {fileID: 0}
-  overlay: {fileID: 0}
-  titleText: {fileID: 0}
-  messageText: {fileID: 0}
-  fadeTime: 0.3
-  windowAnimateTime: 1
-  openingPosition: {x: 0, y: 0}
-  restingPosition: {x: 0, y: 0}
-  openingEase: 0
-  closingEase: 0
-  primaryButton: {fileID: 0}
-  hasSecondaryButton: 0
-  secondaryButton: {fileID: 0}
 --- !u!1 &7172357402698499659
 GameObject:
   m_ObjectHideFlags: 0

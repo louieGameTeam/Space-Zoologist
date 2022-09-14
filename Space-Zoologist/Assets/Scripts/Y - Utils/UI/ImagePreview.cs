@@ -8,13 +8,13 @@ public class ImagePreview : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root object of the image preview")]
-    private GameObject root = null;
+    private GameObject root;
     [SerializeField]
     [Tooltip("Reference to the image used to preview the sprite")]
-    private Image image = null;
+    private Image image;
     [SerializeField]
     [Tooltip("Buttons used to close the image preview")]
-    private Button[] closeButtons = null;
+    private Button[] closeButtons;
     #endregion
 
     #region Monobehaviour Messages

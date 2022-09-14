@@ -14,13 +14,13 @@ public class NotebookTabSelectButton : NotebookUIChild
 
     [SerializeField]
     [Tooltip("Reference to the rect transform to change size for")]
-    private RectTransform rectTransform = null;
+    private RectTransform rectTransform;
     [SerializeField]
     [Tooltip("Toggle that selects the notebook tab")]
-    private Toggle myToggle = null;
+    private Toggle myToggle;
     [SerializeField]
     [Tooltip("Text that displays the name of the notebook tab this button navigates to")]
-    private TextMeshProUGUI tabName = null;
+    private TextMeshProUGUI tabName;
     [SerializeField]
     [Tooltip("Amount that the notebook tab select button grows when it is selected")]
     private float selectedGrowthSize = 0.3f;
@@ -29,7 +29,7 @@ public class NotebookTabSelectButton : NotebookUIChild
     private float sizeChangeTime = 0.5f;
     [SerializeField]
     [Tooltip("Event invoked when this button is selected")]
-    private NotebookTabEvent selectedEvent = null;
+    private NotebookTabEvent selectedEvent;
 
     // Notebook tab that this button navigates to
     private NotebookTab tab;

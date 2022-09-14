@@ -17,7 +17,7 @@ public class TerrainDominance
     [SerializeField]
     [Tooltip("List of terrain dominance for each tile for each species")]
     [EditArrayWrapperOnEnum(typeof(TileType))]
-    private TerrainDominanceItemArray itemsArray = null;
+    private TerrainDominanceItemArray itemsArray;
     #endregion
 
     #region Public Methods

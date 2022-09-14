@@ -7,7 +7,7 @@ public class UIBlocker : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Operations that this blocker blocks")]
-    private UIBlockerMask operationsBlocked = null;
+    private UIBlockerMask operationsBlocked;
     #endregion
 
     #region Public Methods

@@ -29,28 +29,28 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     // Private editor data
     [SerializeField]
     [Tooltip("Text field used to display the encyclopedia article")]
-    private TMP_InputField textField = null;
+    private TMP_InputField textField;
     [SerializeField]
     [Tooltip("Parent of the image objects for this article")]
-    private RectTransform imageParent = null;
+    private RectTransform imageParent;
     [SerializeField]
     [Tooltip("Prefab instantiated to display the encyclopedia images")]
-    private ImagePreviewManager imagePrefab = null;
+    private ImagePreviewManager imagePrefab;
     [SerializeField]
     [Tooltip("Group of toggles used to determine whether we are highlighting or not")]
-    private BoolToggleGroupPicker highlightPicker = null;
+    private BoolToggleGroupPicker highlightPicker;
     [SerializeField]
     [Tooltip("Texture of the cursor while highlighting")]
-    private CursorTexture highlightAddTexture = null;
+    private CursorTexture highlightAddTexture;
     [SerializeField]
     [Tooltip("Texture of the cursor while removing highlights")]
-    private CursorTexture highlightRemoveTexture = null;
+    private CursorTexture highlightRemoveTexture;
     [SerializeField]
     [Tooltip("List of tags used to render highlighted encyclopedia article text")]
-    private List<RichTextTag> highlightTags = null;
+    private List<RichTextTag> highlightTags;
     [SerializeField]
     [Tooltip("Event invoked when the user finishes dragging")]
-    private IntIntEvent onHighlightConfirm = null;
+    private IntIntEvent onHighlightConfirm;
     #endregion
 
     #region Private Fields

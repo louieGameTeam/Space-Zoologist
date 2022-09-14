@@ -25,21 +25,21 @@ public class NotebookConfig : ScriptableObject
     [WrappedProperty("researchEntryRegistry")]
     [Tooltip("Reference to the model holding all the player's research and info" +
         "about the different species, foods, and tiles")]
-    private ResearchConfig research = null;
+    private ResearchConfig research;
     [SerializeField]
     [Tooltip("Player observation notes")]
-    private ObservationsConfig observations = null;
+    private ObservationsConfig observations;
     [SerializeField]
     [Tooltip("Test and metrics that the player has taken")]
-    private TestAndMetricsConfig testAndMetrics = null;
+    private TestAndMetricsConfig testAndMetrics;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Controls which tabs are available in what levels")]
-    private NotebookTabScaffold tabScaffold = null;
+    private NotebookTabScaffold tabScaffold;
     [SerializeField]
     [Tooltip("List of items that should be unlocked at the beginning of the game")]
-    private List<ItemID> initiallyUnlockedItems = null;
+    private List<ItemID> initiallyUnlockedItems;
     #endregion
 }

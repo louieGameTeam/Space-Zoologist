@@ -25,10 +25,10 @@ public abstract class AbstractToggleGroupPicker : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of toggles in this group")]
-    protected List<AbstractTogglePicker> pickers = null;
+    protected List<AbstractTogglePicker> pickers;
     [SerializeField]
     [Tooltip("Event invoked when any toggle state in any child picker changes")]
-    private UnityEvent onToggleStateChanged = null;
+    private UnityEvent onToggleStateChanged;
     #endregion
 
     #region Monobehaviour Messages

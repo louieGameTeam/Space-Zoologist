@@ -11,13 +11,13 @@ public class NotebookBookmarkNavigateButton : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Button that navigates to the bookmark when clicked")]
-    private Button navigateButton = null;
+    private Button navigateButton;
     [SerializeField]
     [Tooltip("Reference to the toggle that will delete the bookmark when navigating to another page")]
-    private Toggle deleteToggle = null;
+    private Toggle deleteToggle;
     [SerializeField]
     [Tooltip("Reference to the object used to display the text of the button")]
-    private TextMeshProUGUI text = null;
+    private TextMeshProUGUI text;
     #endregion
 
     #region Private Fields

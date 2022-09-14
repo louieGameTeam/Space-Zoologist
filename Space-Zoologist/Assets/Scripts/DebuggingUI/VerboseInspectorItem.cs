@@ -8,10 +8,10 @@ public class VerboseInspectorItem : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Text used to display the type name of the inspected item")]
-    private TextMeshProUGUI titleText = null;
+    private TextMeshProUGUI titleText;
     [SerializeField]
     [Tooltip("Text used to display the information of the inspected item")]
-    private TextMeshProUGUI informationText = null;
+    private TextMeshProUGUI informationText;
     #endregion
 
     #region Public Methods

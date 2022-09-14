@@ -21,19 +21,19 @@ public class GenericWindow : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Rect transform for the window that shrinks in and out of view")]
-    private RectTransform window = null;
+    private RectTransform window;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Image used to create the overlay over all other UI elements")]
-    private Image overlay = null;
+    private Image overlay;
     [SerializeField]
     [Tooltip("Text used to display the title of the window")]
-    private TextMeshProUGUI titleText = null;
+    private TextMeshProUGUI titleText;
     [SerializeField]
     [Tooltip("Text used to display the message of the window")]
-    private TextMeshProUGUI messageText = null;
+    private TextMeshProUGUI messageText;
     [SerializeField]
     [Tooltip("Time it takes for the overlay to fade in")]
     private float fadeTime = 0.3f;
@@ -42,28 +42,28 @@ public class GenericWindow : MonoBehaviour
     private float windowAnimateTime = 1f;
     [SerializeField]
     [Tooltip("Anchor position that the window starts at when opened")]
-    private Vector2 openingPosition = Vector2.zero;
+    private Vector2 openingPosition;
     [SerializeField]
     [Tooltip("Anchor position that the window rests at after it is opened")]
-    private Vector2 restingPosition = Vector2.zero;
+    private Vector2 restingPosition;
     [SerializeField]
     [Tooltip("Easing style used when opening the window")]
-    private Ease openingEase = Ease.Unset;
+    private Ease openingEase;
     [SerializeField]
     [Tooltip("Easing style used when closing the window")]
-    private Ease closingEase = Ease.Unset;
+    private Ease closingEase;
 
     [Space]
 
     [SerializeField]
     [Tooltip("Primary button in the window")]
-    private GenericButton primaryButton = null;
+    private GenericButton primaryButton;
     [SerializeField]
     [Tooltip("Determines if this generic window has another button")]
-    private bool hasSecondaryButton = false;
+    private bool hasSecondaryButton;
     [SerializeField]
     [Tooltip("Secondary button in the window")]
-    private GenericButton secondaryButton = null;
+    private GenericButton secondaryButton;
     #endregion
 
     #region Monobehaviour Messages
@@ -105,7 +105,7 @@ public class GenericWindow : MonoBehaviour
                 window.DOAnchorPos(Vector2.zero, windowAnimateTime).SetEase(openingEase);
             });
     }
-    public virtual void Close(UnityAction action = null)
+    public void Close(UnityAction action = null)
     {
         // Animate the window back to the starting anchor
         window.DOAnchorPos(openingPosition, windowAnimateTime)

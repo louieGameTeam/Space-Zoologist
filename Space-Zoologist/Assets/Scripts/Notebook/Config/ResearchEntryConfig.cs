@@ -12,8 +12,8 @@ public class ResearchEntryConfig
 
     #region Private Editor Fields
     [SerializeField]
-    private ResearchNoteLabels noteLabels = null;
+    private ResearchNoteLabels noteLabels;
     [SerializeField]
-    private ResearchEncyclopediaConfig encyclopedia = null;
+    private ResearchEncyclopediaConfig encyclopedia;
     #endregion
 }

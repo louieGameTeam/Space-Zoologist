@@ -8,13 +8,13 @@ public class LevelRatingUI : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Flavor text describing the rating of this level")]
-    private TextMeshProUGUI ratingText = null;
+    private TextMeshProUGUI ratingText;
     [SerializeField]
     [Tooltip("Game object prefab to instantiate for each rating level")]
-    private GameObject ratingObjectPrefab = null;
+    private GameObject ratingObjectPrefab;
     [SerializeField]
     [Tooltip("Parent to instantiate the rating objects into")]
-    private Transform ratingObjectParent = null;
+    private Transform ratingObjectParent;
     #endregion
 
     #region Public Methods

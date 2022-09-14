@@ -8,7 +8,7 @@ public class ToggleGraphicData
 {
     [SerializeField]
     [Tooltip("Reference to the graphic to change color for")]
-    private Graphic graphic = null;
+    private Graphic graphic;
     [SerializeField]
     [Tooltip("Color of the graphic while the toggle is on")]
     private Color isOnColor = Color.white;

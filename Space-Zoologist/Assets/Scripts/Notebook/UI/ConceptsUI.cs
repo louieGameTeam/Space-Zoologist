@@ -13,22 +13,22 @@ public class ConceptsUI : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Object used to edit the current resource request")]
-    private ResourceRequestEditor requestEditor = null;
+    private ResourceRequestEditor requestEditor;
     [SerializeField]
     [Tooltip("Object that displays when the player attempts to request the resource")]
-    private ReviewedResourceRequestDisplay reviewDisplay = null;
+    private ReviewedResourceRequestDisplay reviewDisplay;
     [SerializeField]
     [Tooltip("Button used to request resources")]
-    private Button requestButton = null;
+    private Button requestButton;
     [SerializeField]
     [Tooltip("Button that opens the build ui when clicked")]
-    private Button buildButton = null;
+    private Button buildButton;
     [SerializeField]
     [Tooltip("Text that displays the money remaining")]
-    private TextMeshProUGUI balanceText = null;
+    private TextMeshProUGUI balanceText;
     [SerializeField]
     [Tooltip("Object used to display the store item cells")]
-    private DisplayItemCellsByCategory itemCellDisplay = null;
+    private DisplayItemCellsByCategory itemCellDisplay;
     #endregion
 
     #region Public Methods

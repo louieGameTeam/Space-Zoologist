@@ -26,12 +26,12 @@ public class GameManager : MonoBehaviour
     public SerializedLevel PresetMap { get; private set; }
     public Dictionary<ItemID, FoodSourceSpecies> FoodSources = new Dictionary<ItemID, FoodSourceSpecies>();
     public Dictionary<ItemID, AnimalSpecies> AnimalSpecies = new Dictionary<ItemID, AnimalSpecies>();
-
     public float Balance { get; private set; }
     #endregion
 
     #region Game State Variables
     [Header("Game State Variables")]
+    [SerializeField] SceneNavigator SceneNavigator = default;
     [SerializeField] Button RestartButton = default;
     [SerializeField] Button NextLevelButton = default;
     [SerializeField] Toggle ObjectiveToggle = default;
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(json, data);
             return data;
         }
-        catch
+        catch (System.Exception e)
         {
             Debug.Log("No save data or error loading notebook data, creating new data");
             return null;
@@ -380,8 +380,8 @@ public class GameManager : MonoBehaviour
         // set up the game state
         // Game Manger no longer hanldes npc end conversation, that's the GameOverController's job
         // EventManager.Instance.SubscribeToEvent(EventType.GameOver, HandleNPCEndConversation);
-        this.RestartButton.onClick.AddListener(() => { SceneNavigator.LoadScene(SceneNavigator.RecentlyLoadedLevel); });
-        this.NextLevelButton?.onClick.AddListener(() => { SceneNavigator.LoadScene ("LevelMenu"); });
+        this.RestartButton.onClick.AddListener(() => { this.SceneNavigator.LoadLevel(this.SceneNavigator.RecentlyLoadedLevel); });
+        this.NextLevelButton?.onClick.AddListener(() => { this.SceneNavigator.LoadLevelMenu(); });
         UpdateDayText(currentDay);
         this.IsPaused = false;
     }
@@ -713,6 +713,11 @@ public class GameManager : MonoBehaviour
     {
         FoodSourceManager foodSourceManager = FindObjectOfType<FoodSourceManager>();
         foodSourceManager.DestroyAll();
+    }
+    // For backend: event invocations for triggering save/transmission to DB.
+    public void TriggerSave()
+    {
+        EventManager.Instance.InvokeEvent(EventType.TriggerSave, null);
     }
     #endregion
 }

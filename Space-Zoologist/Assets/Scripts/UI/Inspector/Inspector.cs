@@ -18,9 +18,9 @@ public class Inspector : MonoBehaviour
 
     // The inspector window
     [SerializeField] private GameObject inspectorWindow = null;
-    [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript = null;
+    [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript;
     [SerializeField] private GameObject GrowthInfo = default;
-    [SerializeField] private UnityEvent selectionChangedEvent = null;
+    [SerializeField] private UnityEvent selectionChangedEvent;
 
     private GameObject lastFoodSourceSelected = null;
     private GameObject lastPopulationSelected = null;
