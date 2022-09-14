@@ -1,19 +1,18 @@
 ﻿// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "Custom/FadeEffect"
+Shader "Custom/UIMultiply"
 {
     Properties
     {
-        [PerRendererData] _MainTex("Main Texture", 2D) = "white" {}
-        _FadeTex("Fade Texture", 2D) = "white" {}
-        _Fade("Fade Progress", Range(0.0, 1.0)) = 1
-        _Flip("Flip", Int) = 0
+        [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+        _Color("Tint", Color) = (1,1,1,1)
 
         _StencilComp("Stencil Comparison", Float) = 8
         _Stencil("Stencil ID", Float) = 0
         _StencilOp("Stencil Operation", Float) = 0
         _StencilWriteMask("Stencil Write Mask", Float) = 255
         _StencilReadMask("Stencil Read Mask", Float) = 255
+
         _ColorMask("Color Mask", Float) = 15
 
         [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip("Use Alpha Clip", Float) = 0
@@ -78,13 +77,10 @@ Shader "Custom/FadeEffect"
             };
 
             sampler2D _MainTex;
-            sampler2D _FadeTex;
+            fixed4 _Color;
             fixed4 _TextureSampleAdd;
             float4 _ClipRect;
             float4 _MainTex_ST;
-            float4 _FadeTex_ST;
-            float _Fade;
-            int _Flip;
 
             v2f vert(appdata_t v)
             {
@@ -96,22 +92,13 @@ Shader "Custom/FadeEffect"
 
                 OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 
-                OUT.color = v.color;
+                OUT.color = v.color * _Color;
                 return OUT;
             }
 
             fixed4 frag(v2f IN) : SV_Target
             {
-                float2 samplePos = IN.texcoord;
-                samplePos.x *= sign(_Flip - 0.5f);
-                samplePos.y *= sign(_Flip - 0.5f);
-                samplePos.x = _Flip - samplePos.x;
-                samplePos.y = _Flip - samplePos.y;
-                half4 color = ((tex2D(_MainTex, IN.texcoord)) + _TextureSampleAdd) * IN.color;
-                float fadeMask = 0.99f - clamp(tex2D(_FadeTex, samplePos), 0, 0.99f) + (_Fade - 0.5f) * 2;
-                //float fadeMask = clamp(ceil(1 - tex2D(_FadeTex, IN.texcoord) - _Fade * 0.9999f + 0.00001f), 0, 1);
-
-                color.a *= fadeMask;
+                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
