@@ -156,7 +156,15 @@ public class NotebookUI : MonoBehaviour
     public void Toggle()
     {
         SetIsOpen(!isOpen);
+        if (isOpen)
+        {
+            EventManager.Instance.InvokeEvent(EventType.OnJournalOpened, null);
+        } else
+        {
+            EventManager.Instance.InvokeEvent(EventType.OnJournalClosed, null);
+        }
     }
+
     public void SetIsOpen(bool isOpen)
     {
         if (isOpen != this.isOpen)

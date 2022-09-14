@@ -97,6 +97,9 @@ public class BookmarkAddButton : NotebookUIChild
 
             // Update interactable state of the button
             UpdateInteractable();
+
+            // For backend: event invocation for tracking number of bookmarks added.
+            EventManager.Instance.InvokeEvent(EventType.OnBookmarkAdded, null);
         }
     }
     #endregion
