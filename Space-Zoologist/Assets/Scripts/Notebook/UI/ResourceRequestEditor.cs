@@ -60,13 +60,14 @@ public class ResourceRequestEditor : NotebookUIChild
         base.Setup();
         // only generate dropdowns using level data's items
         var source = GameManager.Instance.LevelData?.ItemQuantities.Select(x => x.itemObject.ID).ToArray();
-        // Setup each dropdown
+        // Setup each dropdown, using the level data items as the source
         targetDropdown.SetSource(source);
         itemRequestedDropdown.SetSource(source);
         targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
         // Set private data
         ResetRequest();
+        // Set the private data to the top of the dropdowns
 
         // Add listeners
         targetDropdown.OnItemSelected.AddListener(x => 
@@ -90,11 +91,12 @@ public class ResourceRequestEditor : NotebookUIChild
     }
     public void ResetRequest()
     {
-        request.ItemAddressed = new ItemID(ItemRegistry.Category.Species, 0);
-        request.ItemRequested = new ItemID(ItemRegistry.Category.Food, 0);
+        request.ItemAddressed = targetDropdown.SelectedItem;
+        request.ItemRequested = itemRequestedDropdown.SelectedItem;
         request.QuantityRequested = 1;
         UpdateUI();
     }
+
     public void UpdateUI()
     {
         targetDropdown.SetSelectedItem(request.ItemAddressed);
