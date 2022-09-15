@@ -20,7 +20,7 @@ public class LevelLoadEffectsHandler : MonoBehaviour {
 
     static LevelLoadEffectsHandler instance;
 
-    static bool useTransitionEffects = true;
+    static bool useTransitionEffects = false;
     static bool isTransitioning = false;
     static float sceneTransitionFadeSpeed = 1.5f;
     static float sceneTransitionWaitTime = 0.5f;
@@ -42,12 +42,16 @@ public class LevelLoadEffectsHandler : MonoBehaviour {
         GameObject sceneTransition = Instantiate (sceneTransitionPrefab);
         DontDestroyOnLoad (sceneTransition);
         Material mat = sceneTransition.transform.GetChild (0).GetChild (0).GetComponent<Image> ().material;
-        sceneTransition.transform.GetChild (0).GetChild (1).gameObject.SetActive (false);
+        Transform zeig = sceneTransition.transform.GetChild (0).GetChild (1);
+        zeig.gameObject.SetActive (false);
 
         // Fade in
         mat.SetFloat ("_Flip", 0);
         for (float i = 0; i < 1.0f; i += Time.deltaTime * sceneTransitionFadeSpeed) {
             mat.SetFloat ("_Fade", i);
+            if (i > 0.2f) {
+                zeig.gameObject.SetActive (true);
+            }
             yield return null;
         }
         mat.SetFloat ("_Fade", 1);
@@ -65,6 +69,7 @@ public class LevelLoadEffectsHandler : MonoBehaviour {
 
         // Fade out
         mat.SetFloat ("_Flip", 1);
+        zeig.gameObject.SetActive (false);
         for (float i = 1; i > 0.0f; i -= Time.deltaTime * sceneTransitionFadeSpeed) {
             mat.SetFloat ("_Fade", i);
             yield return null;
