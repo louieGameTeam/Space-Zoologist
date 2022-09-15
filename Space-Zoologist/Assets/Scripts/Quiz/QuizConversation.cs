@@ -323,6 +323,11 @@ public class QuizConversation : MonoBehaviour
                 .Distinct(new ReviewedResourceRequest.ItemComparer())
                 .ToArray();
 
+            foreach(var req in reviewsList.Reviews)
+            {
+                Debug.Log(req.Request.ItemRequested.Data.Name + "|" + req.Request.ItemAddressed.Data.Name);
+            }
+
             // Check to make sure there are some reviews to quiz on
             if (filteredReviews.Length > 0)
             {
@@ -341,7 +346,7 @@ public class QuizConversation : MonoBehaviour
                     QuizOption[] options = GenerateQuizOptions(request, category);
 
                     // Setup the format for the question
-                    string question = $"Was the requested {request.ItemAddressed.Data.Name.Get(ItemName.Type.Colloquial)} " +
+                    string question = $"Was the requested {request.ItemRequested.Data.Name.Get(ItemName.Type.Colloquial)} " +
                         $"useful for improving the {request.ItemAddressed.Data.Name.Get(ItemName.Type.Colloquial)}" +
                         $" {request.NeedAddressed} need?";
 
