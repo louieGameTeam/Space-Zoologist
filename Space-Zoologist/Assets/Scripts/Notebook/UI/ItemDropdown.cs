@@ -24,6 +24,7 @@ public class ItemDropdown : NotebookUIChild
     protected TMP_Dropdown dropdown = null;
     [SerializeField]
     [Tooltip("Name to display for the item in the dropdown")]
+    // NOTE: This breaks shit if it's set to anything other than Colloquial, since tutorial prompts depend on string names to find items
     private ItemName.Type itemDisplayName = ItemName.Type.Colloquial;
     [SerializeField]
     [Tooltip("True if text and image should display simultaneously")]
@@ -79,7 +80,7 @@ public class ItemDropdown : NotebookUIChild
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex(option => option.text.Contains (id.Data.Name.Get(itemDisplayName)));
+    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex (option => option.text.Contains (id.Data.Name.Get (itemDisplayName)));
 
     // Set the value of the dropdown
     public void SetDropdownValue(int value) => SetDropdownValueHelper(value, true);

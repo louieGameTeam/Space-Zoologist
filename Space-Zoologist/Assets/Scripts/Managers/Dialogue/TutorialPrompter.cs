@@ -638,7 +638,37 @@ public class TutorialPrompter : MonoBehaviour
     }
     private ConditionalHighlight[] HighlightItemDropdownUtility(ItemDropdown itemDropdown, ItemID targetItem, Func<ItemID> selectedItem)
     {
-        return HighlightDropdownItemUtility (itemDropdown.Dropdown, itemDropdown.DropdownIndex (targetItem), () => selectedItem.Invoke().Index);
+        // Get the dropdown of the target category
+        RectTransform itemDropdownTransform = itemDropdown.Dropdown.GetComponent<RectTransform> ();
+
+        // Local function used to get the rect transform of the particular item in the dropdown
+        RectTransform DropdownItemGetter () {
+            Transform dropdownList = itemDropdownTransform.Find ("Dropdown List");
+            /*Toggle templateItem = dropdownList.GetComponentInChildren<Toggle>(true);
+            // Search all the template item's children for the item with the same index in the name
+            Transform itemParent = templateItem.transform.parent;*/
+            foreach (Transform child in dropdownList) {
+                if (child.name.Contains (targetItem.Index.ToString ())) {
+                    return child as RectTransform;
+                }
+            }
+            return null;
+        }
+
+        return new ConditionalHighlight [] {
+            // Highlight the dropdown in the picker
+            new ConditionalHighlight()
+            {
+                predicate = () => !(itemDropdown.Dropdown.IsExpanded || selectedItem.Invoke () == targetItem),
+                target = () => itemDropdownTransform
+            },
+            // Highlight the single option button in the dropdown list
+            new ConditionalHighlight()
+            {
+                predicate = () => itemDropdown.Dropdown.IsExpanded && selectedItem.Invoke () != targetItem,
+                target = () => DropdownItemGetter()
+            },
+        };
     }
     private ConditionalHighlight [] HighlightArticle (TMP_Dropdown articleDropdown, int targetArticleIndex) {
         return HighlightDropdownItemUtility (articleDropdown, targetArticleIndex, () => articleDropdown.value);
@@ -655,13 +685,11 @@ public class TutorialPrompter : MonoBehaviour
             Transform itemParent = templateItem.transform.parent;*/
             foreach (Transform child in dropdownList) 
             {
-                print (child.name);
                 if (child.name.Contains (targetItemIndex.ToString ())) 
                 {
                     return child as RectTransform;
                 }
             }
-            print ("no child with index " + targetItemIndex.ToString() + " in name!!!");
             return null;
         }
 
@@ -669,7 +697,7 @@ public class TutorialPrompter : MonoBehaviour
             // Highlight the dropdown in the picker
             new ConditionalHighlight()
             {
-                predicate = () => false/*!(dropdown.IsExpanded || selectedItem.Invoke () == targetItemIndex)*/,
+                predicate = () => !(dropdown.IsExpanded || selectedItem.Invoke () == targetItemIndex),
                 target = () => itemDropdownTransform
             },
             // Highlight the single option button in the dropdown list
