@@ -20,6 +20,7 @@ public class LevelLoadEffectsHandler : MonoBehaviour {
 
     static LevelLoadEffectsHandler instance;
 
+    static bool useTransitionEffects = true;
     static bool isTransitioning = false;
     static float sceneTransitionFadeSpeed = 1.5f;
     static float sceneTransitionWaitTime = 0.5f;
@@ -30,12 +31,16 @@ public class LevelLoadEffectsHandler : MonoBehaviour {
             yield break;
         }
 
+        if (!useTransitionEffects) {
+            SceneManager.LoadScene (sceneName);
+            yield break;
+        }
+
         // Setup
         isTransitioning = true;
         GameObject sceneTransitionPrefab = Resources.Load ("UI/Effects/SceneTransition") as GameObject;
         GameObject sceneTransition = Instantiate (sceneTransitionPrefab);
         DontDestroyOnLoad (sceneTransition);
-        //sceneTransition.GetComponentInChildren<Animation> ().Play ();
         Material mat = sceneTransition.transform.GetChild (0).GetChild (0).GetComponent<Image> ().material;
         sceneTransition.transform.GetChild (0).GetChild (1).gameObject.SetActive (false);
 
