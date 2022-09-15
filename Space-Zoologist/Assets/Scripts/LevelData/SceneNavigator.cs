@@ -7,9 +7,22 @@ using UnityEngine.SceneManagement;
 public class SceneNavigator : ScriptableObject
 {
     [Expandable] public List<Level> Levels = default;
-    public string RecentlyLoadedLevel { get; private set; }
+    public static string RecentlyLoadedLevel { get; private set; }
 
-    public void LoadLevel(string levelName)
+    // Used by scripts
+    public static void LoadScene (string levelName) {
+        if (GameManager.Instance) {
+            Debug.Log ("Got a game manager");
+            GameManager.Instance.HandleExitLevel ();
+        } else Debug.Log ("Did not get a game manager");
+
+        UpdateRecentlyLoadedLevel (levelName);
+        LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (levelName));
+
+    }
+
+    // Used by UI buttons in prefabs
+    public void LoadLevel (string levelName)
     {
         if (GameManager.Instance)
         {
@@ -18,28 +31,13 @@ public class SceneNavigator : ScriptableObject
         }
         else Debug.Log("Did not get a game manager");
 
-        this.UpdateRecentlyLoadedLevel(levelName);
-        SceneManager.LoadScene(levelName, LoadSceneMode.Single);
+        UpdateRecentlyLoadedLevel(levelName);
+        LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (levelName));
     }
 
-    public void RestartLevel()
+    private static void UpdateRecentlyLoadedLevel(string levelName)
     {
-        LoadLevel("MainLevel");
-    }
-
-    public void LoadMainMenu()
-    {
-        LoadLevel("MainMenu");
-    }
-
-    public void LoadLevelMenu()
-    {
-        LoadLevel("LevelMenu");
-    }
-
-    private void UpdateRecentlyLoadedLevel(string levelName)
-    {
-        this.RecentlyLoadedLevel = levelName;
+        RecentlyLoadedLevel = levelName;
     }
 
     public void ExitGame()

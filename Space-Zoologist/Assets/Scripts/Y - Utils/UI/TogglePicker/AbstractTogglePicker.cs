@@ -19,10 +19,10 @@ public abstract class AbstractTogglePicker : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the toggle that picks the object")]
-    private Toggle toggle;
+    private Toggle toggle = null;
     [SerializeField]
     [Tooltip("Event invoked anytime the value of the object this toggle picked is changed")]
-    private ObjectEvent onObjectPickedChanged;
+    private ObjectEvent onObjectPickedChanged = null;
     #endregion
 
     #region Public Methods

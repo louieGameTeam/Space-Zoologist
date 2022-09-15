@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.Linq;
 
 public class ResourceRequestEditor : NotebookUIChild
 {
@@ -30,22 +31,22 @@ public class ResourceRequestEditor : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the rect transform of this editor")]
-    private RectTransform rectTransform;
+    private RectTransform rectTransform = null;
     [SerializeField]
     [Tooltip("Reference to the dropdown that gets a research category")]
-    private CategoryFilteredItemDropdown targetDropdown;
+    private CategoryFilteredItemDropdown targetDropdown = null;
     [SerializeField]
     [Tooltip("Reference to the text that displays the need")]
-    private TextMeshProUGUI needDisplay;
+    private TextMeshProUGUI needDisplay = null;
     [SerializeField]
     [Tooltip("Text input field that sets the quantity of resources to request")]
-    private TMP_InputField quantityInput;
+    private TMP_InputField quantityInput = null;
     [SerializeField]
     [Tooltip("Dropdown used to select the item name to request")]
-    private CategoryFilteredItemDropdown itemRequestedDropdown;
+    private CategoryFilteredItemDropdown itemRequestedDropdown = null;
     [SerializeField]
     [Tooltip("Button that deletes this request when clicked")]
-    private Button clearButton;
+    private Button clearButton = null;
     #endregion
 
     #region Private Fields
@@ -57,13 +58,16 @@ public class ResourceRequestEditor : NotebookUIChild
     public override void Setup()
     {
         base.Setup();
-
-        // Setup each dropdown
+        // only generate dropdowns using level data's items
+        var source = GameManager.Instance.LevelData?.ItemQuantities.Select(x => x.itemObject.ID).ToArray();
+        // Setup each dropdown, using the level data items as the source
+        targetDropdown.SetSource(source);
+        itemRequestedDropdown.SetSource(source);
         targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
         itemRequestedDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Tile);
-
         // Set private data
         ResetRequest();
+        // Set the private data to the top of the dropdowns
 
         // Add listeners
         targetDropdown.OnItemSelected.AddListener(x => 
@@ -87,11 +91,12 @@ public class ResourceRequestEditor : NotebookUIChild
     }
     public void ResetRequest()
     {
-        request.ItemAddressed = new ItemID(ItemRegistry.Category.Species, 0);
-        request.ItemRequested = new ItemID(ItemRegistry.Category.Food, 0);
+        request.ItemAddressed = targetDropdown.SelectedItem;
+        request.ItemRequested = itemRequestedDropdown.SelectedItem;
         request.QuantityRequested = 1;
         UpdateUI();
     }
+
     public void UpdateUI()
     {
         targetDropdown.SetSelectedItem(request.ItemAddressed);

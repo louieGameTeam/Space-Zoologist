@@ -21,16 +21,17 @@ public class ItemDropdown : NotebookUIChild
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Reference to the dropdown used to select the research category")]
-    protected TMP_Dropdown dropdown;
+    protected TMP_Dropdown dropdown = null;
     [SerializeField]
     [Tooltip("Name to display for the item in the dropdown")]
-    private ItemName.Type itemDisplayName;
+    // NOTE: This breaks shit if it's set to anything other than Colloquial, since tutorial prompts depend on string names to find items
+    private ItemName.Type itemDisplayName = ItemName.Type.Colloquial;
     [SerializeField]
     [Tooltip("True if text and image should display simultaneously")]
     protected bool textAndImage = false;
     [SerializeField]
     [Tooltip("Event invoked when this dropdown selects a research category")]
-    protected ItemIDEvent onItemSelected;
+    protected ItemIDEvent onItemSelected = null;
     #endregion
 
     #region Private Fields
@@ -38,18 +39,26 @@ public class ItemDropdown : NotebookUIChild
     // NOTE: why don't we just change this to two conversion functions to change betweeen types?
     // NOTE: CAN'T do that because cannot find an item on the registry from its name, you need the index
     protected Dictionary<TMP_Dropdown.OptionData, ItemID> optionCategoryMap = new Dictionary<TMP_Dropdown.OptionData, ItemID>();
+    // source
+    private ItemID[] currentSource;
     #endregion
 
     #region Public Methods
+    /// <summary>
+    /// Set ItemID source to custom source (Entire ItemRegistry by default)
+    /// </summary>
+    /// <param name=""></param>
+    public void SetSource(ItemID[] source)
+    {
+        currentSource = source;
+    }
     public override void Setup()
     {
         base.Setup();
-
         // Clear any existing data
         dropdown.ClearOptions();
-        optionCategoryMap.Clear();
-
-        foreach(ItemID id in GetItemIDs())
+        optionCategoryMap.Clear(); 
+        foreach(ItemID id in GetItemIDs(currentSource))
         {
             // Get the current option
             ItemData data = ItemRegistry.Get(id);
@@ -71,7 +80,7 @@ public class ItemDropdown : NotebookUIChild
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex(option => option.text.Contains (id.Data.Name.Get(itemDisplayName)));
+    public int DropdownIndex(ItemID id) => dropdown.options.FindIndex (option => option.text.Contains (id.Data.Name.Get (itemDisplayName)));
 
     // Set the value of the dropdown
     public void SetDropdownValue(int value) => SetDropdownValueHelper(value, true);
@@ -117,6 +126,10 @@ public class ItemDropdown : NotebookUIChild
         // If we are notifying then raise the event
         if (notify) onItemSelected.Invoke(optionCategoryMap[selection]);
     }
-    protected virtual ItemID[] GetItemIDs() => ItemRegistry.GetAllItemIDs().Where(i => UIParent.Data.ItemIsUnlocked(i)).ToArray();
+    protected virtual ItemID[] GetItemIDs(ItemID[] source)
+    {
+        // use all items as source if no source specified
+        return (source ?? ItemRegistry.GetAllItemIDs()).Where(i => UIParent.Data.ItemIsUnlocked(i)).ToArray();
+    }
     #endregion
 }

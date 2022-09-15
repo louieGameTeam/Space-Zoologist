@@ -7,10 +7,10 @@ public class ToggleGraphics : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Reference to the toggle with changing graphics")]
-    private Toggle toggle;
+    private Toggle toggle = null;
     [SerializeField]
     [Tooltip("List of graphics to change colors for when the toggle changes")]
-    private List<ToggleGraphicData> graphicData;
+    private List<ToggleGraphicData> graphicData = null;
 
     private void Start()
     {

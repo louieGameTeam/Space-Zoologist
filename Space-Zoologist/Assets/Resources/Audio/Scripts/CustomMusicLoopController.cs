@@ -22,8 +22,9 @@ public class CustomMusicLoopController : MonoBehaviour, System.IEquatable<Custom
 
     void Awake()
     {
-        AudioSource attachedSource = GetComponent<AudioSource>();
-        Initialize(attachedSource);
+        source = GetComponent<AudioSource>();
+        if (source.clip != null)
+            Initialize(source);
     }
 
     public void Reinitialize() {

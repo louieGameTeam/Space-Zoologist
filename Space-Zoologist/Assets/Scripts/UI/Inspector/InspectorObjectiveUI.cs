@@ -12,19 +12,19 @@ public class InspectorObjectiveUI : MonoBehaviour
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Root game object of the full inspector/object UI")]
-    private GameObject root;
+    private GameObject root = null;
     [SerializeField]
     [Tooltip("Toggle that turns the objective panel on")]
-    private Toggle objectiveToggle;
+    private Toggle objectiveToggle = null;
     [SerializeField]
     [Tooltip("Reference to the objective panel")]
-    private GameObject objectivePanel;
+    private GameObject objectivePanel = null;
     [SerializeField]
     [Tooltip("Toggle that turns the inspector panel on")]
-    private Toggle inspectorToggle;
+    private Toggle inspectorToggle = null;
     [SerializeField]
     [Tooltip("Reference to the main inspector script")]
-    private Inspector inspector;
+    private Inspector inspector = null;
     #endregion
 
     #region Monobehaviour Messages

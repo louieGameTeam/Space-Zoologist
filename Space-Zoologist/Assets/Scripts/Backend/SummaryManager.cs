@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
+[RequireComponent(typeof(Encryption))]
 public class SummaryManager : MonoBehaviour
 {
     #region Private Fields

@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class NeedSlider : MonoBehaviour
 {
     #region Private Editor Fields
-    [SerializeField] Text Name;
-    [SerializeField] Slider lowSlider;
-    [SerializeField] Slider highSlider;
+    [SerializeField] Text Name = null;
+    [SerializeField] Slider lowSlider = null;
+    [SerializeField] Slider highSlider = null;
     [SerializeField] Color lowNeedColor = Color.red;
     [SerializeField] Color highNeedColor = Color.blue;
     #endregion

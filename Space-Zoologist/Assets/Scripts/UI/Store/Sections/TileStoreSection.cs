@@ -115,7 +115,7 @@ public class TileStoreSection : StoreSection
         //CancelPlacing();
     }
 
-    private void Update()
+    public override void Update()
     {
         base.Update();
         if (isPlacing)

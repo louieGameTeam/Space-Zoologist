@@ -8,10 +8,10 @@ public class NotebookTabScaffold
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("Scaffold used to determine when different tabs are available")]
-    private LevelScaffold enclosureScaffold;
+    private LevelScaffold enclosureScaffold = null;
     [SerializeField]
     [Tooltip("List of notebook tab masks to match the enclosure scaffold levels")]
-    private List<NotebookTabMask> masks;
+    private List<NotebookTabMask> masks = null;
     #endregion
 
     #region Public Methods
