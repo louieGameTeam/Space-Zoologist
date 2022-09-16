@@ -8,8 +8,19 @@ public class DebuggingUI : MonoBehaviour
 {
     #region Private Editor Fields
     [SerializeField]
-    [Tooltip("Button that activates debugging UI")]
-    private KeyCode activationCode = KeyCode.BackQuote;
+    [Tooltip("Button sequence that activates debugging UI")]
+    // This is the tilde key (~ or `) followed by the konami code (minus "start" because it doesn't exist :P)
+    private KeyCode[] activationSequence = new KeyCode [] {
+        KeyCode.BackQuote, 
+        KeyCode.UpArrow, KeyCode.UpArrow,
+        KeyCode.DownArrow, KeyCode.DownArrow, 
+        KeyCode.LeftArrow, KeyCode.RightArrow,
+        KeyCode.LeftArrow, KeyCode.RightArrow, 
+        KeyCode.B, KeyCode.A
+    };
+    [SerializeField]
+    [Tooltip ("Time allowed between keystrokes before activation is aborted")]
+    private float activationSequenceTimerForgiveness = 4.0f;
     [SerializeField]
     [Tooltip("Main panel that appears / disappears by pressing the back quote button")]
     private GameObject mainPanel = null;
@@ -30,6 +41,9 @@ public class DebuggingUI : MonoBehaviour
     #region Private Fields
     private static DebuggingUI instance;
     private static readonly string prefabPath = nameof(DebuggingUI);
+    int activatedSequenceIndex = 0;
+    float activationSequenceTimer = 0;
+    bool active = false;
     #endregion
 
     #region Monobehaviour Messages
@@ -40,12 +54,33 @@ public class DebuggingUI : MonoBehaviour
         toggleLevelOverrideButton.onClick.AddListener(ToggleLevelSelectOverride);
         toggleVerboseInspectorButton.onClick.AddListener(ToggleVerboseInspector);
     }
+
     private void Update()
     {
-        if (Input.GetKeyDown(activationCode))
-        {
-            mainPanel.SetActive(!mainPanel.activeInHierarchy);
+        if (active) {
+            if (Input.GetKeyDown (activationSequence [0])) {
+                mainPanel.SetActive (false);
+                active = false;
+            }
+        } else {
+            if (Input.GetKeyDown (activationSequence [activatedSequenceIndex])) {
+                activatedSequenceIndex++;
+                activationSequenceTimer = activationSequenceTimerForgiveness;
+
+                if (activatedSequenceIndex >= activationSequence.Length) {
+                    activatedSequenceIndex = 0;
+                    mainPanel.SetActive (true);
+                    active = true;
+                }
+            }
+
+            if (activationSequenceTimer <= 0) {
+                activatedSequenceIndex = 0;
+            }
+
+            activationSequenceTimer = Mathf.Clamp (activationSequenceTimer - Time.deltaTime, 0, activationSequenceTimerForgiveness);
         }
+        print (active + ", " + activatedSequenceIndex + ", " + activationSequenceTimer);
     }
     #endregion
 
