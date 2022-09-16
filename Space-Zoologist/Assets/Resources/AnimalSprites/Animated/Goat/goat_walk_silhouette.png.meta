@@ -27,7 +27,7 @@ TextureImporter:
       213: -6754797798770590080
     second: goat_walk_silhouette_3
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -44,9 +44,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -56,8 +59,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -78,10 +81,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -119,6 +127,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -138,7 +158,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fae902b8b73292a70800000000000000
-      internalID: 8802605960194465455
+      internalID: 4532958566299746056
       vertices: []
       indices: 
       edges: []
@@ -159,7 +179,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c0deddf71ac0243e0800000000000000
-      internalID: -2071078990862488308
+      internalID: 8978077951321923387
       vertices: []
       indices: 
       edges: []
@@ -180,7 +200,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 40b307051eb6a0b10800000000000000
-      internalID: 1948488404252506884
+      internalID: 3741396980116545874
       vertices: []
       indices: 
       edges: []
@@ -201,7 +221,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 08e30b2c0332242a0800000000000000
-      internalID: -6754797798770590080
+      internalID: 5161131794202272694
       vertices: []
       indices: 
       edges: []
@@ -216,9 +236,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      goat_walk_silhouette_3: 5161131794202272694
+      goat_walk_silhouette_1: 8978077951321923387
+      goat_walk_silhouette_0: 4532958566299746056
+      goat_walk_silhouette_2: 3741396980116545874
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -39,7 +39,7 @@ public class VFXManager : MonoBehaviour
     public void DisplayVFX(Vector3 pos, VFXType type)
     {
         VFXLibrary.VFXObject vfx = VFXDict[type];
-        VisualEffect visualEffect = Instantiate(vfx.effect);
+        VisualEffectPlayer visualEffect = Instantiate(vfx.effect);
         visualEffect.transform.position = pos;
 
         // TODO: Decouple VFX from SFX

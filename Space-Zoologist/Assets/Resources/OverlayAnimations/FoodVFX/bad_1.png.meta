@@ -66,7 +66,7 @@ TextureImporter:
       213: -7812635406869362306
     second: bad_1_20
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -83,9 +83,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -95,8 +98,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -117,10 +120,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -148,6 +156,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -612,9 +632,30 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      bad_1_6: 126513820565303420
+      bad_1_13: -3239938156593936377
+      bad_1_19: 3104531018783191815
+      bad_1_2: 7144325427161929131
+      bad_1_0: -1222924864551563152
+      bad_1_8: 5120130873121703119
+      bad_1_18: -529738072045813217
+      bad_1_1: 7052966906148036555
+      bad_1_3: 8542707787541341393
+      bad_1_17: -6868419026285490413
+      bad_1_20: -7812635406869362306
+      bad_1_9: 2092644714304393197
+      bad_1_5: 566120657341377504
+      bad_1_12: 6149067854937432726
+      bad_1_4: -631392780991772489
+      bad_1_14: 4012020299132915743
+      bad_1_10: -8134622711384968203
+      bad_1_7: 2422351029681321332
+      bad_1_11: 4186565935165917199
+      bad_1_15: -2504428364141646630
+      bad_1_16: -1149788729449016253
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

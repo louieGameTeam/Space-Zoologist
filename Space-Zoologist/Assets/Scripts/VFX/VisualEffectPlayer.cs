@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisualEffect : MonoBehaviour
+public class VisualEffectPlayer : MonoBehaviour
 {
     #region Private Fields
     [SerializeField] private Animator animator = null;

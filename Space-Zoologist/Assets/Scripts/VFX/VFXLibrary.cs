@@ -21,7 +21,7 @@ public class VFXLibrary : ScriptableObject
     {
         public VFXType type;
         public SFXType sfxType = SFXType.NumTypes;
-        public VisualEffect effect;
+        public VisualEffectPlayer effect;
     }
 
     public VFXObject[] VisualEffects => visualEffects;
