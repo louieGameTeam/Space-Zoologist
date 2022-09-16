@@ -80,7 +80,6 @@ public class DebuggingUI : MonoBehaviour
 
             activationSequenceTimer = Mathf.Clamp (activationSequenceTimer - Time.deltaTime, 0, activationSequenceTimerForgiveness);
         }
-        print (active + ", " + activatedSequenceIndex + ", " + activationSequenceTimer);
     }
     #endregion
 
