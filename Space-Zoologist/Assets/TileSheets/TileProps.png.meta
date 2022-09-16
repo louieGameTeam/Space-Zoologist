@@ -111,7 +111,7 @@ TextureImporter:
       213: 8705092361607685673
     second: TileProps_35
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -128,9 +128,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -140,8 +143,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 0
     wrapV: 0
     wrapW: 0
@@ -162,10 +165,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -193,6 +201,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -972,9 +992,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      TileProps_31: -899769668199960326
+      TileProps_10: 594696889603650218
+      TileProps_2: -7266118158893011047
+      TileProps_13: -673229705322976981
+      TileProps_6: -5569790547543276871
+      TileProps_4: 717956847506325581
+      TileProps_11: 3159954864830407487
+      TileProps_3: -841090998976392866
+      TileProps_20: -2469804266497596437
+      TileProps_8: 9071312152893260257
+      TileProps_1: 5257100391797348541
+      TileProps_30: -8882144025204484376
+      TileProps_5: 8909637393384661492
+      TileProps_15: 7209982916026794620
+      TileProps_9: 952680682820943249
+      TileProps_0: 1538642684415767048
+      TileProps_7: 787140103896745915
+      TileProps_21: 9081995480688496697
+      TileProps_29: -163267873341769199
+      TileProps_17: 3140251282108477920
+      TileProps_25: 6532688661861166021
+      TileProps_26: -1673394471650738049
+      TileProps_16: -466207438898033155
+      TileProps_24: 2431282528516684348
+      TileProps_27: -985939402334259870
+      TileProps_33: 8827028877598547343
+      TileProps_14: 1458012736751427266
+      TileProps_35: 8705092361607685673
+      TileProps_12: 590795998067048219
+      TileProps_23: -2824567492473004556
+      TileProps_18: 8535426450864524989
+      TileProps_32: -409174624126098853
+      TileProps_22: -5388279270546844306
+      TileProps_19: 7552983048163147240
+      TileProps_28: -8622457149595318788
+      TileProps_34: -3938344850904877370
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
