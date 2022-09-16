@@ -20,7 +20,7 @@ public class LevelLoadEffectsHandler : MonoBehaviour {
 
     static LevelLoadEffectsHandler instance;
 
-    static bool useTransitionEffects = false;
+    static bool useTransitionEffects = true;
     static bool isTransitioning = false;
     static float sceneTransitionFadeSpeed = 1.5f;
     static float sceneTransitionWaitTime = 0.5f;
