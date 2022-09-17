@@ -41,42 +41,40 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
         if (!GameManager.Instance) { return; }
 
-        // Disable sell button in tutorial
+        // Disable request button in tutorial or if item has price
         levelName = GameManager.Instance.LevelData.Level.Name;
         if (levelName != "Tutorial") {
-            // Sell button is disabled by default
-            // SellButton.gameObject.SetActive (!displayPrice);
             RequestButton.gameObject.SetActive (!displayPrice);
-        }
 
-        RequestButton.onClick.AddListener(() =>
-        {
-            if (!GameManager.Instance) { return; }
-
-            // Reference the notebook ui
-            NotebookUI notebookUI = GameManager.Instance.NotebookUI;
-            // Tab picker reference
-            NotebookTabPicker tabPicker = notebookUI.TabPicker;
-
-            // Create the bookmark to navigate to
-            Bookmark bookmark = new Bookmark(string.Empty, new BookmarkData(tabPicker.name, NotebookTab.Concepts));
-            // Create a request to prefill in the notebook
-            ResourceRequest request = new ResourceRequest()
+            RequestButton.onClick.AddListener (() =>
             {
-                QuantityRequested = 1,
-                ItemRequested = item.ID
-            };
+                if (!GameManager.Instance) { return; }
 
-            notebookUI.NavigateToBookmark(bookmark);
-            notebookUI.FillResourceRequest(request);
-        });
+                // Reference the notebook ui
+                NotebookUI notebookUI = GameManager.Instance.NotebookUI;
+                // Tab picker reference
+                NotebookTabPicker tabPicker = notebookUI.TabPicker;
 
-        SellButton.onClick.AddListener(() =>
-        {
-            if (!GameManager.Instance) { return; }
-            // sell
-            GameManager.Instance.m_menuManager.TrySellItem(item,1);
-        });
+                // Create the bookmark to navigate to
+                Bookmark bookmark = new Bookmark (string.Empty, new BookmarkData (tabPicker.name, NotebookTab.Concepts));
+                // Create a request to prefill in the notebook
+                ResourceRequest request = new ResourceRequest () {
+                    QuantityRequested = 1,
+                    ItemRequested = item.ID
+                };
+
+                notebookUI.NavigateToBookmark (bookmark);
+                notebookUI.FillResourceRequest (request);
+            });
+
+            /*
+            SellButton.onClick.AddListener(() =>
+            {
+                if (!GameManager.Instance) { return; }
+                // sell
+                GameManager.Instance.m_menuManager.TrySellItem(item,1);
+            });*/
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
