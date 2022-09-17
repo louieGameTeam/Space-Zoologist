@@ -70,7 +70,7 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
     #region UI Events
     public void OnEndDrag(PointerEventData data)
     {
-        if(articleConfig != null)
+        if (articleConfig != null)
         {
             // Use selection position on the input field to determine position of highlights
             int start = textField.selectionAnchorPosition;
