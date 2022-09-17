@@ -6,8 +6,8 @@ using System.Text;
 
 public class SubmitSummaryTrace : MonoBehaviour
 {
-    [SerializeField] private static string prodSummarytraceEndpoint = "http://spacezoologist.herokuapp.com/traces/summarytrace/submit"; 
-    [SerializeField] private static string devSummarytraceEndpoint = "http://127.0.0.1:13756/traces/summarytrace/submit";
+    [SerializeField] private static string prodSummarytraceEndpoint = "https://spacezoologist.herokuapp.com/traces/summarytrace/submit"; 
+    [SerializeField] private static string devSummarytraceEndpoint = "https://127.0.0.1:13756/traces/summarytrace/submit";
 
     public static IEnumerator TrySubmitSummaryTrace(string json)
     {
