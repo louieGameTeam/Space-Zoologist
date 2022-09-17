@@ -35,6 +35,15 @@ public class SceneNavigator : ScriptableObject
         LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (levelName));
     }
 
+    public void RestartLevel () {
+        if (GameManager.Instance) {
+            Debug.Log ("Got a game manager");
+            GameManager.Instance.HandleExitLevel ();
+        } else Debug.Log ("Did not get a game manager");
+
+        LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (RecentlyLoadedLevel));
+    }
+
     private static void UpdateRecentlyLoadedLevel(string levelName)
     {
         RecentlyLoadedLevel = levelName;
