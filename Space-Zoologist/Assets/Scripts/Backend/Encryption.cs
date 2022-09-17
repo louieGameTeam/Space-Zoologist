@@ -21,7 +21,8 @@ public class Encryption : MonoBehaviour
             byte[] dataToEncrypt = ByteConverter.GetBytes(id);
             byte[] encryptedData;
 
-            RSACryptoServiceProvider publicRSA = ImportPublicKey(System.IO.File.ReadAllText("./Assets/Scripts/Backend/publicKey.txt"));
+            var publicKey = Resources.Load<TextAsset>("Backend/publicKey");
+            RSACryptoServiceProvider publicRSA = ImportPublicKey(publicKey.ToString());
             encryptedData = RSAEncrypt(dataToEncrypt, publicRSA.ExportParameters(false), false);
             return Convert.ToBase64String(encryptedData);
     }
