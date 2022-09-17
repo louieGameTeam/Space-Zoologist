@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -61,7 +62,7 @@ public class CreditsManager : MonoBehaviour
 
     #region Private Functions
     /// <summary>
-    /// Loads data from EmployeeList into RoleDict and PriorityDict
+    /// Loads data from EmployeeList into RoleDict
     /// </summary>
     private void LoadCredits()
     {
@@ -86,21 +87,34 @@ public class CreditsManager : MonoBehaviour
                 CaptureCollection roleNames = match.Groups[4].Captures;
                 foreach (Capture roleName in roleNames)
                 {
-                    if (!string.IsNullOrWhiteSpace(roleName.Value))
+                    string trimmedRoleName = roleName.Value.Trim(new char[] { ' ', '\n', '\r', '\0', '\t' });
+                    if (!string.IsNullOrWhiteSpace(trimmedRoleName))
                     {
-                        if (roleName.Value != "Faculty\0")
-                        {
-                            Debug.Log(roleName.Value);
-                        }
-                        RoleDict.Add(PriorityDict[roleName.Value], fullName);
+                        if (!RoleDict.ContainsKey(PriorityDict[trimmedRoleName]))
+                            RoleDict.Add(PriorityDict[trimmedRoleName], "");
+
+                        RoleDict[PriorityDict[trimmedRoleName]] += $"{fullName}\n";
                     }
                 }
             }
         }
+    }
 
-        foreach (var test in RoleDict.Values)
+    // TODO: FINISH IMPLEMENTING CREATION OF ROLELIST OBJECTS AND SETTING THEIR VALUES AND SCROLLING/BOUNDCHECKING/CLEANUP
+
+    /// <summary>
+    /// Prints the contents of RoleDict to Debug.Log
+    /// </summary>
+    private void DebugLogRoleDict()
+    {
+        foreach (RolePriority role in Enum.GetValues(typeof(RolePriority)))
         {
-            Debug.Log(test);
+            Debug.Log(Enum.GetName(typeof(RolePriority), role));
+
+            if (RoleDict.ContainsKey(role))
+                Debug.Log(RoleDict[role]);
+            else
+                Debug.Log("NO MEMBERS");
         }
     }
     #endregion
