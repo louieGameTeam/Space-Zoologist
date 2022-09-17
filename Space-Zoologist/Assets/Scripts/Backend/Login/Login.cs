@@ -54,50 +54,52 @@ public class Login : MonoBehaviour
         form.AddField("username", username);
         form.AddField("password", password);
 
-        UnityWebRequest request = UnityWebRequest.Post(devLoginEndpoint, form);
-        var handler = request.SendWebRequest();
-
-        float startTime = 0.0f;
-        while (!handler.isDone)
+        using (UnityWebRequest request = UnityWebRequest.Post(devLoginEndpoint, form))
         {
-            startTime += Time.deltaTime;
-            if (startTime > 10.0f)
+            var handler = request.SendWebRequest();
+
+            float startTime = 0.0f;
+            while (!handler.isDone)
             {
-                break;
+                startTime += Time.deltaTime;
+                if (startTime > 10.0f)
+                {
+                    break;
+                }
+
+                yield return null;
+            }
+
+            if (request.responseCode == 200)
+            {
+                LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
+
+                if (response.code == 0) // login success?
+                {
+                    ActivateButtons(false);
+                    alertText.text = "Welcome!";
+                } else
+                {
+                    switch(response.code)
+                    {
+                        case 1:
+                            alertText.text = "Invalid credentials.";
+                            ActivateButtons(true);
+                            break;
+                        default:
+                            alertText.text = "Corruption detected.";
+                            ActivateButtons(false);
+                            break;
+                    }
+                }
+            } else
+            {
+                alertText.text = "Error connecting to server.";
+                ActivateButtons(true);
             }
 
             yield return null;
         }
-
-        if (request.responseCode == 200)
-        {
-            LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
-
-            if (response.code == 0) // login success?
-            {
-                ActivateButtons(false);
-                alertText.text = "Welcome!";
-            } else
-            {
-                switch(response.code)
-                {
-                    case 1:
-                        alertText.text = "Invalid credentials.";
-                        ActivateButtons(true);
-                        break;
-                    default:
-                        alertText.text = "Corruption detected.";
-                        ActivateButtons(false);
-                        break;
-                }
-            }
-        } else
-        {
-            alertText.text = "Error connecting to server.";
-            ActivateButtons(true);
-        }
-
-        yield return null;
     }
 
     private IEnumerator TryCreate()
@@ -123,50 +125,52 @@ public class Login : MonoBehaviour
         form.AddField("username", username);
         form.AddField("password", password);
 
-        UnityWebRequest request = UnityWebRequest.Post(devCreateEndpoint, form);
-        var handler = request.SendWebRequest();
-
-        float startTime = 0.0f;
-        while (!handler.isDone)
+        using (UnityWebRequest request = UnityWebRequest.Post(devCreateEndpoint, form))
         {
-            startTime += Time.deltaTime;
-            if (startTime > 10.0f)
+            var handler = request.SendWebRequest();
+
+            float startTime = 0.0f;
+            while (!handler.isDone)
             {
-                break;
+                startTime += Time.deltaTime;
+                if (startTime > 10.0f)
+                {
+                    break;
+                }
+
+                yield return null;
             }
+
+            if (request.responseCode == 200)
+            {
+                CreateResponse response = JsonUtility.FromJson<CreateResponse>(request.downloadHandler.text);
+                if (response.code == 0) // login success?
+                {
+                    alertText.text = "Account has been created.";
+                } else
+                {
+                    switch(response.code)
+                    {
+                        case 1:
+                            alertText.text = "Invalid credentials.";
+                            break;
+                        case 2:
+                            alertText.text = "Username is already in use.";
+                            break;
+                        default:
+                            alertText.text = "Corruption detected.";
+                            break;
+                    }
+                }
+            } else
+            {
+                alertText.text = "Error connecting to server.";
+            }
+
+            ActivateButtons(true);
 
             yield return null;
         }
-
-        if (request.responseCode == 200)
-        {
-            CreateResponse response = JsonUtility.FromJson<CreateResponse>(request.downloadHandler.text);
-            if (response.code == 0) // login success?
-            {
-                alertText.text = "Account has been created.";
-            } else
-            {
-                switch(response.code)
-                {
-                    case 1:
-                        alertText.text = "Invalid credentials.";
-                        break;
-                    case 2:
-                        alertText.text = "Username is already in use.";
-                        break;
-                    default:
-                        alertText.text = "Corruption detected.";
-                        break;
-                }
-            }
-        } else
-        {
-            alertText.text = "Error connecting to server.";
-        }
-
-        ActivateButtons(true);
-
-        yield return null;
     }
 
     private void ActivateButtons(bool toggle)
