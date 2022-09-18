@@ -94,13 +94,10 @@ public class NotebookUI : MonoBehaviour
         // Try to get an instance of the game manager
         GameManager instance = GameManager.Instance;
 
-        // If the instance exists then unlock all item id's that exist in the list of items
-        if (instance)
+        // Unlock everything by default
+        foreach (var item in ItemRegistry.GetAllItems())
         {
-            foreach (LevelData.ItemData item in instance.LevelData.ItemQuantities)
-            {
-                data.UnlockItem(item.itemObject.ID);
-            }
+            data.UnlockItem(item.ShopItem.ID);
         }
 
         // Setup the tab picker first of all children

@@ -15,7 +15,6 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [SerializeField] Button SellButton = default;
     [SerializeField] GameObject PriceRoot = default; // TODO: This seems deprecated, gut it
     [SerializeField] TextMeshProUGUI PriceText = default;
-    public int RemainingAmount = -1;
     [SerializeField] Color RemainingAmountTextDefaultColor = Color.white;
     [SerializeField] Color RemainingAmountTextHighlightColor = Color.green;
     [SerializeField] Color RemainingAmountTextEmptyColor = Color.red;
@@ -24,6 +23,17 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public event ItemSelectedHandler onSelected;
 
     private string levelName;
+
+    private int remainingAmount = 0;
+    public int RemainingAmount
+    {
+        get { return remainingAmount; }
+        set
+        {
+            remainingAmount = value;
+            Refresh();
+        }
+    }
 
     #region Public Methods
     public void Initialize(Item item, bool displayPrice, ItemSelectedHandler itemSelectedHandler)
@@ -74,7 +84,9 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 // sell
                 GameManager.Instance.m_menuManager.TrySellItem(item,1);
             });*/
+            
         }
+        Refresh();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -109,14 +121,6 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         } else {
             RemainingAmountText.color = RemainingAmountTextEmptyColor;
         }
-    }
-    #endregion
-
-    #region Monobehavior Methods
-    // whyyyy is this happening on update ew ew no
-    // TODO: make this happen every time something is placed or purchased
-    public void Update () {
-        Refresh ();
     }
     #endregion
 }

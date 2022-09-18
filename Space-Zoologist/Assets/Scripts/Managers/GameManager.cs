@@ -239,18 +239,17 @@ public class GameManager : MonoBehaviour
     {
         // set balance
         Balance = LevelData.StartingBalance;
-
         // set the food source dictionary
-        foreach (FoodSourceSpecies foodSource in m_levelData.FoodSourceSpecies)
+        foreach (var foodSource in ItemRegistry.GetItemsWithCategory(ItemRegistry.Category.Food))
         {
-            this.FoodSources.Add(foodSource.ID, foodSource);
+            this.FoodSources.Add(foodSource.ShopItem.ID, (FoodSourceSpecies)foodSource.Species);
         }
 
         // set the animal dictionary
-        foreach (AnimalSpecies animalSpecies in m_levelData.AnimalSpecies)
+        foreach (var animalSpecies in ItemRegistry.GetItemsWithCategory(ItemRegistry.Category.Species))
         {
-            if (AnimalSpecies.ContainsKey(animalSpecies.ID)) continue;
-            this.AnimalSpecies.Add(animalSpecies.ID, animalSpecies);
+            if (AnimalSpecies.ContainsKey(animalSpecies.ShopItem.ID)) continue;
+            this.AnimalSpecies.Add(animalSpecies.ShopItem.ID, (AnimalSpecies)animalSpecies.Species);
         }
         LoadMap();
 

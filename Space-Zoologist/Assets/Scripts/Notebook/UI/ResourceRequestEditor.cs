@@ -58,9 +58,9 @@ public class ResourceRequestEditor : NotebookUIChild
     public override void Setup()
     {
         base.Setup();
-        // only generate dropdowns using level data's items
-        var source = GameManager.Instance.LevelData?.ItemQuantities.Select(x => x.itemObject.ID).ToArray();
-        // Setup each dropdown, using the level data items as the source
+        // Specify the source of items to show in the request editor
+        var source = ItemRegistry.GetAllItemIDs();
+        // Setup each dropdown, using the given source
         targetDropdown.SetSource(source);
         itemRequestedDropdown.SetSource(source);
         targetDropdown.Setup(ItemRegistry.Category.Food, ItemRegistry.Category.Species);
