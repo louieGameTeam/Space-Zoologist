@@ -63,16 +63,15 @@ public class DisplayItemCellsByCategory : MonoBehaviour
         if(GameManager.Instance)
         {
             // Select items with the given category
-            IEnumerable<LevelData.ItemData> itemsWithCategory = GameManager.Instance.LevelData.itemQuantities
-                .Where(item => item.itemObject.ID.Category == groupPicker.FirstValuePicked);
+            IEnumerable<ItemData> itemsWithCategory = ItemRegistry.GetItemsWithCategory(groupPicker.FirstValuePicked);
 
             // For each item, create a new cell, initialize it, and add it to the list
-            foreach (LevelData.ItemData itemData in itemsWithCategory)
+            foreach (ItemData itemData in itemsWithCategory)
             {
                 StoreItemCell cell = Instantiate(itemCellPrefab, cellParent);
                 // Initialize the cell instance
-                cell.Initialize(itemData.itemObject, true, itemClickedEvent.Invoke);
-                cell.RemainingAmount = GameManager.Instance.m_resourceManager.CheckRemainingResource(itemData.itemObject);
+                cell.Initialize(itemData.ShopItem, true, itemClickedEvent.Invoke);
+                cell.RemainingAmount = GameManager.Instance.m_resourceManager.CheckRemainingResource(itemData.ShopItem);
                 existingCells.Add(cell);
             }
         }

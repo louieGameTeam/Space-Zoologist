@@ -22,6 +22,9 @@ public class MoveObject : MonoBehaviour
     Item tempItem;
     private enum ItemType { NONE, FOOD, ANIMAL, TILE }
 
+    // ONLY USED FOR TILES
+    private Item tileToMoveItem;
+
     GameObject objectToMove = null;
     ItemPlaceCursorPreviewMover cursorPreviewMover = null;
     GameObject MoveButton = null;
@@ -53,10 +56,10 @@ public class MoveObject : MonoBehaviour
     {
         gridSystem = GameManager.Instance.m_tileDataController;
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
-        foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
+        foreach (var itemData in ItemRegistry.GetAllItems()) {
             // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
-            if(!itemByID.ContainsKey(itemData.itemObject.ID))
-                itemByID.Add(itemData.itemObject.ID, itemData.itemObject);
+            if(!itemByID.ContainsKey(itemData.ShopItem.ID))
+                itemByID.Add(itemData.ShopItem.ID, itemData.ShopItem);
         }
 
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
@@ -260,10 +263,7 @@ public class MoveObject : MonoBehaviour
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.TILE:
-                // Why are we searching in the item quantities for an item data?
-                // And how is the "objectToMove" actually named?
-                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Data.Name.Get(ItemName.Type.English).ToLower().Equals(objectToMove.name));
-                sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
+                sellBackCost = Mathf.RoundToInt(SellBackRefund * tileToMoveItem.Price);
                 break;
             default:
                 break;
@@ -333,6 +333,7 @@ public class MoveObject : MonoBehaviour
                 string tileName = tileToDelete.name;
                 tempItem = ItemRegistry.Get(ItemRegistry.FindTile(gridSystem.GetGameTileAt(pos).type)).ShopItem;
                 tempItem.SetupData(tileName, 0);
+                tileToMoveItem = tempItem;
 
                 initialTilePosition = pos;
                 initialTile = gridSystem.GetTileData(pos).currentTile;

@@ -38,6 +38,8 @@ public class StoreSection : MonoBehaviour
         this.UIElements = UIElements;
         this.GridSystem = GameManager.Instance.m_tileDataController;
         this.ResourceManager = resourceManager;
+
+        resourceManager.OnRemainingResourcesChanged += UpdateDisplayValue;
     }
     public Item GetItemByID(ItemID id)
     {
@@ -81,9 +83,9 @@ public class StoreSection : MonoBehaviour
         raycaster = GetComponentInParent<GraphicRaycaster>();
         // Add the items to the store section
         LevelData levelData = GameManager.Instance.LevelData;
-        foreach (LevelData.ItemData data in levelData.ItemQuantities)
+        foreach (ItemData itemData in ItemRegistry.GetAllItems())
         {
-            Item item = data.itemObject;
+            Item item = itemData.ShopItem;
             if (item)
             {
                 if (item.Type.Equals(itemType))
@@ -104,10 +106,21 @@ public class StoreSection : MonoBehaviour
         itemCell.Initialize(item, false, OnItemSelected);
         if (this.ResourceManager.hasLimitedSupply(item.ID))
         {
-            this.ResourceManager.setupItemSupplyTracker(itemCell);
             if (!storeItems.ContainsKey(item))
                 storeItems.Add(item, itemCell);
+            // try to get initial value
+            itemCell.RemainingAmount = ResourceManager.CheckRemainingResource(item);
         }
+    }
+
+    private void UpdateDisplayValue(ItemID item, int newQuantity)
+    {
+        foreach(var v in storeItems)
+        {
+            if (v.Key.ID == item)
+                v.Value.RemainingAmount = newQuantity;
+        }
+        //storeItems[ItemRegistry.Get(item).ShopItem].RemainingAmount = newQuantity;
     }
 
     public void AddItemQuantity(Item item, int count = 1)
@@ -118,7 +131,7 @@ public class StoreSection : MonoBehaviour
         }
         else
         {
-            this.ResourceManager.AddItem(item.ID, count);
+            this.ResourceManager.ChangeItemQuantity(item.ID, count);
             //storeItems[item].RemainingAmount += count;
         }
     }

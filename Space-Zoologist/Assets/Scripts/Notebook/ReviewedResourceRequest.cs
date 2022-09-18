@@ -47,7 +47,7 @@ public class ReviewedResourceRequest
         {
             if (GameManager.Instance)
             {
-                Item itemObject = GameManager.Instance.LevelData.GetItemWithID(Request.ItemRequested).itemObject;
+                Item itemObject = ItemRegistry.Get(Request.ItemRequested).ShopItem;
                 return itemObject.Price * QuantityGranted;
             }
             else return 0f;
@@ -96,7 +96,7 @@ public class ReviewedResourceRequest
                 return review;
 
             // Get the item object with the given id
-            Item itemObject = GameManager.Instance.LevelData.GetItemWithID(request.ItemRequested).itemObject;
+            Item itemObject = ItemRegistry.Get(request.ItemRequested).ShopItem;
             // Compute the total price
             float totalPrice = itemObject.Price * request.QuantityRequested;
 
