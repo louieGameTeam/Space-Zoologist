@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WarningSystem : MonoBehaviour
 {
@@ -12,10 +13,20 @@ public class WarningSystem : MonoBehaviour
     [SerializeField]
     [Tooltip("Window to instantiate for the warning")]
     private GenericWindow warningWindowPrefab = null;
+    [SerializeField]
+    [Tooltip ("Popup showing continuing population decline")]
+    private GameObject warningPopup = null;
+    [SerializeField]
+    private float popupAnimationSpeed = 2;
+    [SerializeField]
+    private float popupAnimationHoldTime = 3;
     #endregion
 
     #region Private Fields
     private GenericWindow warningWindow;
+    private bool justSignalledWarning = false;
+    private Coroutine popupAnimator = null;
+    
     #endregion
 
     #region Monobehaviour Messages
@@ -53,6 +64,9 @@ public class WarningSystem : MonoBehaviour
         if (endangeredSpecies.Count > 0)
         {
             SignalWarning(endangeredSpecies);
+            justSignalledWarning = true;
+        } else {
+            justSignalledWarning = false;
         }
     }
     #endregion
@@ -60,14 +74,39 @@ public class WarningSystem : MonoBehaviour
     #region Private Methods
     private void SignalWarning(List<AnimalSpecies> endangeredSpecies)
     {
-        // Setup the message
-        string message = "Some animal populations are rapidly declining. Please improve their needs as soon as possible.";
-        message += "\n\nEndangered species: ";
-        message += string.Join(", ", endangeredSpecies.Select(animal => animal.ID.Data.Name.Get(ItemName.Type.Colloquial)));
+        if (justSignalledWarning) {
+            if (popupAnimator != null) {
+                StopCoroutine (popupAnimator);
+            }
+            popupAnimator = StartCoroutine (SignalWarningPopup ());
+        } else {
+            // Setup the message
+            string message = "Some animal populations are rapidly declining. Please improve their needs as soon as possible.";
+            message += "\n\nEndangered species: ";
+            message += string.Join (", ", endangeredSpecies.Select (animal => animal.ID.Data.Name.Get (ItemName.Type.Colloquial)));
 
-        // Set the message text and open the window
-        warningWindow.MessageText.text = message;
-        warningWindow.Open();
+            // Set the message text and open the window
+            warningWindow.MessageText.text = message;
+            warningWindow.Open ();
+        }
+    }
+
+    IEnumerator SignalWarningPopup() {
+        warningPopup.SetActive (true);
+
+        for (float i = 0; i < 1; i += Time.deltaTime * popupAnimationSpeed) {
+            warningPopup.transform.localScale = Vector3.one * i;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds (popupAnimationHoldTime);
+
+        for (float i = 0; i < 1; i += Time.deltaTime * popupAnimationSpeed) {
+            warningPopup.transform.localScale = Vector3.one * (1 - i);
+            yield return null;
+        }
+
+        warningPopup.SetActive (false);
     }
     #endregion
 }
