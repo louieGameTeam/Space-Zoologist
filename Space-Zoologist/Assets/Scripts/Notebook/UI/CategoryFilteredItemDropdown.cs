@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
-
 using TMPro;
 
 public class CategoryFilteredItemDropdown : ItemDropdown
@@ -15,6 +15,9 @@ public class CategoryFilteredItemDropdown : ItemDropdown
     [SerializeField]
     [Tooltip("Research category type that this dropdown represents")]
     protected List<ItemRegistry.Category> categoryFilter;
+    [SerializeField]
+    [Tooltip("Reference to the dropdown arrow")]
+    protected Image dropdownArrow;
     #endregion
 
     #region Public Methods
@@ -33,6 +36,11 @@ public class CategoryFilteredItemDropdown : ItemDropdown
         return base.GetItemIDs(source)
             .Where(id => categoryFilter.Contains(id.Category) && UIParent.Data.ItemIsUnlocked(id))
             .ToArray();
+    }
+    private void FlipDropdownArrow()
+    {
+        Debug.Log("AAA");
+        dropdownArrow.transform.eulerAngles = new Vector3(dropdownArrow.transform.eulerAngles.x, dropdownArrow.transform.eulerAngles.y, dropdownArrow.transform.eulerAngles.z + 180);
     }
     #endregion
 }
