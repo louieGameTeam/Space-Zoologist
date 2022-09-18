@@ -8,7 +8,11 @@ using TMPro;
 public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     #region Public Properties
-    public bool Interactable => LatestLevelQualified.LevelNumber == levelNumber;
+    #if UNITY_EDITOR
+    public bool Interactable => false;
+    #else
+    public bool Interactable => LatestLevelQualified.LevelNumber == levelNumber && levelNumber <= Statics.LatestUnlockableLevel;
+    #endif
     public bool Overridden => overridden;
     #endregion
 
@@ -70,7 +74,11 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         outline.transform.SetAsLastSibling();
 
         // Set the disable overlay if we are not yet qualified to try this level
-        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber);
+        #if UNITY_EDITOR
+        overlay.SetActive(false);
+        #else
+        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber || levelNumber > Statics.LatestUnlockableLevel);
+        #endif
         overlay.transform.SetAsLastSibling();
     }
     public void SetOverride(LevelID levelOverride)
