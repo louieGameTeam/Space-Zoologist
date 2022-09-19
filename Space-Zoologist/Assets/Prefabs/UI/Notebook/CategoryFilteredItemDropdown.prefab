@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 280808446006572627}
   - component: {fileID: 280808446006572626}
   - component: {fileID: -5040437111534914993}
+  - component: {fileID: 7269398526623623472}
   - component: {fileID: 8307147311670574005}
   - component: {fileID: 2873904687074795298}
   m_Layer: 5
@@ -379,6 +380,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   categoryFilter: 
+--- !u!114 &7269398526623623472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280808446006572636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43186be1a00ce6345b7562570c9b231e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   dropdownArrow: {fileID: 9205534196828586306}
 --- !u!114 &8307147311670574005
 MonoBehaviour:
@@ -397,8 +410,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: -5040437111534914993}
-          m_TargetAssemblyTypeName: CategoryFilteredItemDropdown, Assembly-CSharp
+        - m_Target: {fileID: 7269398526623623472}
+          m_TargetAssemblyTypeName: DropdownArrowController, Assembly-CSharp
           m_MethodName: OnDropdownExpand
           m_Mode: 1
           m_Arguments:
@@ -413,8 +426,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: -5040437111534914993}
-          m_TargetAssemblyTypeName: CategoryFilteredItemDropdown, Assembly-CSharp
+        - m_Target: {fileID: 7269398526623623472}
+          m_TargetAssemblyTypeName: DropdownArrowController, Assembly-CSharp
           m_MethodName: OnDropdownCollapse
           m_Mode: 1
           m_Arguments:
