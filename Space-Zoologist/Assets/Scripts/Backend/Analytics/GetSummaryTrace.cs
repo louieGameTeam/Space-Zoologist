@@ -44,10 +44,11 @@ public class GetSummaryTrace : MonoBehaviour
                 callback(response);
             } else {
                 yield return null;
-                callback(null);  
+                callback(null); 
             }
 
             Debug.Log("Status Code: " + request.responseCode);
+            request.Dispose(); 
         }
     }
 }
