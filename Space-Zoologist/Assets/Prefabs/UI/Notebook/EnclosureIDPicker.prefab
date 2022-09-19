@@ -1283,7 +1283,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.3
+  m_fontSize: 21.65
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1419,7 +1419,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.3
+  m_fontSize: 21.65
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1607,7 +1607,7 @@ RectTransform:
   - {fileID: 3441783686770459848}
   - {fileID: 132448668655479148}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1784,6 +1784,7 @@ GameObject:
   - component: {fileID: 5714997804650836589}
   - component: {fileID: 6805812952272937970}
   - component: {fileID: 370339982456861053}
+  - component: {fileID: 7680601676136946662}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -1882,6 +1883,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &370339982456861053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269102678356236891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 6805812952272937970}
+--- !u!114 &7680601676136946662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2353,6 +2367,7 @@ GameObject:
   - component: {fileID: 3099359710883005397}
   - component: {fileID: 5760043073626379443}
   - component: {fileID: 3869591237664508145}
+  - component: {fileID: 5962100355964648773}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -2451,6 +2466,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &3869591237664508145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830723389979006812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 5760043073626379443}
+--- !u!114 &5962100355964648773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
