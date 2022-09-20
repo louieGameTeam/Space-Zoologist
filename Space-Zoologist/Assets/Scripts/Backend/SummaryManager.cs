@@ -63,15 +63,15 @@ public class SummaryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= 60) {
-            timer = 0;
-            SaveSummaryTrace();
-        }
-
-        // Begin tracking total play time.
         if (currentSummaryTrace != null)
         {
+            // Every 60s, save the summary trace
+            timer += Time.deltaTime;
+            if (timer >= 60) {
+                timer = 0;
+                SaveSummaryTrace();
+            }
+            // Begin tracking total play time.
             currentSummaryTrace.TotalPlayTime += Time.deltaTime;
             // Track time in levels. CurrentLevel is determined by OnSceneLoaded and CheckLevelAndSet functions.
             if (currentLevel == 0) {
