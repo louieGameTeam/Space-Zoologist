@@ -103,6 +103,14 @@ public class TutorialPrompter : MonoBehaviour
     public void HighlightAnimalDropdownNoFreeze (string pickerNameFilter) {
         HighlightingScheduler.SetHighlights (HighlightItemPickerCategory (NotebookTab.Research, ItemRegistry.Category.Species, pickerNameFilter));
     }
+    public void HighlightDropdownNoFreeze (string pickerNameFilter) {
+        // Highlight notebook button if not open, then highlight correct tab
+        HighlightingScheduler.SetHighlights (HighlightNotebookButton (),
+            // Highlight the correct tab
+            HighlightNotebookTabButton (NotebookTab.Research),
+            // Highlight the dropdown in the picker
+            HighlightDropdownUtility (GetDropdown (NotebookTab.Research, pickerNameFilter)));
+    }
     public void FreezeUntilGoatTerrainHighlightAdd()
     {
         FreezeUntilHighlightPresent(
@@ -706,6 +714,14 @@ public class TutorialPrompter : MonoBehaviour
                 predicate = () => dropdown.IsExpanded && selectedItem.Invoke () != targetItemIndex,
                 target = () => DropdownItemGetter()
             },
+        };
+    }
+    private ConditionalHighlight HighlightDropdownUtility (TMP_Dropdown dropdown) {
+        RectTransform itemDropdownTransform = dropdown.GetComponent<RectTransform> ();
+
+        return new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => itemDropdownTransform
         };
     }
     private ConditionalHighlight HighlightEraseButton()
