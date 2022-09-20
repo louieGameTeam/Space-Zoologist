@@ -19,22 +19,22 @@ MonoBehaviour:
     need: 3
   fixedQuestions:
   - question: "First question: From the perspective of the Zeigs, what\u2019s the
-      difference between Space Maples and Golden Space Maples?"
+      difference between Astral Maples and Gilded Astral Maples?"
     category:
       item:
         category: 0
         index: 0
       need: 3
     options:
-    - label: They prefer to eat the fruit of golden over normal Space Maples.
+    - label: They prefer to eat the fruit of Gilded over normal Astral Maples.
       weight: 2
-    - label: They'll eat golden Space Maple fruit only after eating all available
-        normal Space Maple fruit.
+    - label: They'll eat Gilded fruit only after eating all available normal Astral
+        Maple fruit.
       weight: 0
     - label: Nothing. They eat the fruits of both trees.
       weight: 1
-    - label: They prefer to eat berries over the fruit of normal Space Maples, but
-        not over the fruit of the Golden Space Maples.
+    - label: They prefer Bacca Berries over normal Astral Maples, but not over Gilded
+        ones.
       weight: 0
   - question: 'Alright, alright. How about this: How do the Zeigs respond to sandy
       terrain?'
@@ -61,13 +61,13 @@ MonoBehaviour:
       need: 0
     options:
     - label: 3
-      weight: 0
+      weight: 1
     - label: 2
       weight: 0
     - label: 1
       weight: 0
     - label: 4
-      weight: 1
+      weight: 2
     - label: 0
       weight: 0
   randomQuestionPool:
