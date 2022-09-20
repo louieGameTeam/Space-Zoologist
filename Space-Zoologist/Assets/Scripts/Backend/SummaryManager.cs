@@ -275,37 +275,75 @@ public class SummaryManager : MonoBehaviour
     private void OnJournalClosed()
     {
         picker = null;
-        EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, (Action)null);
-        EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, (Action)null);
+        //EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, (Action)null);
+        //EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, (Action)null);
+
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, OnTabChanged);
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, OnBookmarkAdded);
     }
 
     // A function that processes notebook tab change events.
     private void OnTabChanged()
     {
         // Handle research tab.
-        if (picker.CurrentTab == NotebookTab.Research)
-        {
-            Debug.Log("Research tab was opened.");
-            researchOpen = true;
-            currentSummaryTrace.NumResearchTabOpen += 1;
-            EventManager.Instance.SubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
-        } else if (picker.CurrentTab != NotebookTab.Research)
-        {
-            Debug.Log("Research tab was closed.");
-            researchOpen = false;
-            EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, (Action)null);
-        }
+        //if (picker.CurrentTab == NotebookTab.Research)
+        //{
+        //    Debug.Log("Research tab was opened.");
+        //    researchOpen = true;
+        //    currentSummaryTrace.NumResearchTabOpen += 1;
+        //    EventManager.Instance.SubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+        //} else if (picker.CurrentTab != NotebookTab.Research)
+        //{
+        //    Debug.Log("Research tab was closed.");
+        //    researchOpen = false;
+        //    //EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, (Action)null);
+        //    EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+        //}
 
         // Handle observation tab.
-        if (picker.CurrentTab == NotebookTab.Observe)
+        //if (picker.CurrentTab == NotebookTab.Observe)
+        //{
+        //    Debug.Log("Observation tab was opened.");
+        //    observationOpen = true;
+        //    currentSummaryTrace.NumObservationToolOpen += 1;
+        //} else if (picker.CurrentTab != NotebookTab.Observe)
+        //{
+        //    Debug.Log("Observation tab was closed.");
+        //    observationOpen = false;
+        //}
+
+
+
+        // Handle research tab
+        if (picker.CurrentTab == NotebookTab.Research)
         {
-            Debug.Log("Observation tab was opened.");
-            observationOpen = true;
-            currentSummaryTrace.NumObservationToolOpen += 1;
-        } else if (picker.CurrentTab != NotebookTab.Research)
+            ResearchTabOpened();
+
+            // If observation tab was open, run its relevant closing function
+            if (observationOpen)
+                ObservationTabClosed();
+        }
+
+        // Handle observation tab
+        else if (picker.CurrentTab == NotebookTab.Observe)
         {
-            Debug.Log("Observation tab was closed.");
-            observationOpen = false;
+            ObservationTabOpened();
+
+            // If research tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+        }
+
+        // Handle generic tab switch behaviors
+        else
+        {
+            // If research tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+
+            // If observation tab was open, run its relevant closing function
+            else if (observationOpen)
+                ObservationTabClosed();
         }
     }
 
@@ -384,5 +422,41 @@ public class SummaryManager : MonoBehaviour
         Debug.Log("Player ID POST: " + currentSummaryTrace.PlayerID);
         string json = ConvertSummaryTraceToJSON(currentSummaryTrace);
         StartCoroutine(SubmitSummaryTrace.TrySubmitSummaryTrace(json));
+    }
+
+    // Helper function for when research tab is opened
+    private void ResearchTabOpened()
+    {
+        Debug.Log("Research tab opened");
+
+        researchOpen = true;
+        currentSummaryTrace.NumResearchTabOpen += 1;
+        EventManager.Instance.SubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+    }
+
+    // Helper function for when research tab is closed
+    private void ResearchTabClosed()
+    {
+        Debug.Log("Research tab closed");
+
+        researchOpen = false;
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+    }
+
+    // Helper function for when observation tab is opened
+    private void ObservationTabOpened()
+    {
+        Debug.Log("Observation tab opened");
+
+        observationOpen = true;
+        currentSummaryTrace.NumObservationToolOpen += 1;
+    }
+
+    // Helper function for when observation tab is closed
+    private void ObservationTabClosed()
+    {
+        Debug.Log("Observation tab closed");
+
+        observationOpen = false;
     }
 }
