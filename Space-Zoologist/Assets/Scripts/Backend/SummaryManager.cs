@@ -39,8 +39,6 @@ public class SummaryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        SetUpCurrentSummaryTrace(GetPlayerID());
     }
 
     // Enable and disable functions to allocate delegates.
