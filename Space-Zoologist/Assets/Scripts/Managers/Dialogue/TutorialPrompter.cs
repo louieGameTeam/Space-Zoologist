@@ -1,16 +1,7 @@
 using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
-
-using UnityEngine;
-using UnityEngine.UI;
-
-using DialogueEditor;
-
 using TMPro;
-using DG.Tweening.Core.Easing;
-using Org.BouncyCastle.Asn1.Ocsp;
+using UnityEngine;
 
 /// <summary>
 /// Manager of miscellaneous events that occur during tutorials in the dialogue
@@ -104,12 +95,23 @@ public class TutorialPrompter : MonoBehaviour
         HighlightingScheduler.SetHighlights (HighlightItemPickerCategory (NotebookTab.Research, ItemRegistry.Category.Species, pickerNameFilter));
     }
     public void HighlightDropdownNoFreeze (string pickerNameFilter) {
-        // Highlight notebook button if not open, then highlight correct tab
-        HighlightingScheduler.SetHighlights (HighlightNotebookButton (),
-            // Highlight the correct tab
-            HighlightNotebookTabButton (NotebookTab.Research),
-            // Highlight the dropdown in the picker
-            HighlightDropdownUtility (GetDropdown (NotebookTab.Research, pickerNameFilter)));
+        HighlightingScheduler.SetHighlights (HighlightDropdownUtility (GetDropdown (NotebookTab.Research, pickerNameFilter)));
+    }
+    // TODO: Fix this, it's just technical debt :P
+    public void HighlightTestAndMetricsDropdownNoFreeze (string pickerNameFilter) {
+        Transform entryEditor = GetEntryEditor (NotebookTab.TestAndMetrics).transform;
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => entryEditor.transform.GetChild (0).GetComponent<RectTransform> ()
+        });
+    }
+    // More technical debt
+    public void HighlightTestAndMetricContentNoFreeze() {
+        Transform entryEditor = GetEntryEditor (NotebookTab.TestAndMetrics).transform;
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => entryEditor.transform.GetChild (1).GetComponent<RectTransform> ()
+        });
     }
     public void FreezeUntilGoatTerrainHighlightAdd()
     {
@@ -543,6 +545,13 @@ public class TutorialPrompter : MonoBehaviour
         TMP_Dropdown [] selectors = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TMP_Dropdown> (true);
         // Find a picker whose name contains the filter
         return Array.Find (selectors, s => s.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
+    private TestAndMetricsEntryEditor GetEntryEditor (NotebookTab targetTab) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        TestAndMetricsEntryEditor [] editors = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TestAndMetricsEntryEditor> (true);
+        // Find a picker whose name contains the filter
+        return editors [0];
     }
     // Highlights a dropdown category without highlighting items in the dropdown
     private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
