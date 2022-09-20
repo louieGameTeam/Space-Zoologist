@@ -20,14 +20,19 @@ public class LoginHandler : MonoBehaviour
 
     #region Public Methods
     public void RequestLogin () {
-        OpenWindow (loginWindow, () => SubmitLogin (), () => SceneNavigator.LoadScene ("LevelMenu"));
+        OpenWindow (loginWindow, () => SubmitLogin (), () => SkipLogin ());
     }
 
     public void SubmitLogin () {
         print (emailInput.text);
-        // TODO: Encrypt and store email from emailInput
         SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
         summaryManager.SetUpCurrentSummaryTrace(emailInput.text);
+        SceneNavigator.LoadScene ("LevelMenu");
+    }
+
+    public void SkipLogin () {
+        SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
+        summaryManager.SetUpCurrentSummaryTrace("default_user");
         SceneNavigator.LoadScene ("LevelMenu");
     }
     #endregion
