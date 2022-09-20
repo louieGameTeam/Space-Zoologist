@@ -25,13 +25,13 @@ MonoBehaviour:
         index: 0
       need: 3
     options:
-    - label: Space Maple
+    - label: Astral Maple
       weight: 1
-    - label: Gold Space Maple
+    - label: Gilded Astral Maple
       weight: 2
-    - label: Berries
+    - label: Bacca Berries
       weight: 1
-    - label: Mushrooms
+    - label: Glowcaps
       weight: 0
   - question: Alright. Now, what food do zeigs absolutely, positively refuse to eat?
     category:
@@ -40,13 +40,13 @@ MonoBehaviour:
         index: 0
       need: 3
     options:
-    - label: Berries
+    - label: Bacca Berries
       weight: 0
-    - label: Space Maples
+    - label: Astral Maple
       weight: 0
-    - label: Flan
+    - label: Gilded Astral Maple
       weight: 0
-    - label: Mushrooms
+    - label: Glowcaps
       weight: 1
   - question: "Last question. Let\u2019s change it up a bit and talk about terrain.
       What kind of terrain will the zeigs never enter? "
@@ -60,9 +60,9 @@ MonoBehaviour:
       weight: 0
     - label: Grass
       weight: 0
-    - label: Rocks
-      weight: 1
-    - label: Swamp
+    - label: Stone
+      weight: 0
+    - label: Sand
       weight: 1
   randomQuestionPool:
     questionsToPick: 0

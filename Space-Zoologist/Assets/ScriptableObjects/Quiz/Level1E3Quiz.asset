@@ -29,10 +29,10 @@ MonoBehaviour:
       weight: 0
     - label: Grass
       weight: 0
-    - label: Rocky
-      weight: 1
+    - label: Stone
+      weight: 0
     - label: Swamp
-      weight: 2
+      weight: 1
   - question: How many tiles of water does each Zeig need in order to thrive?
     category:
       item:
@@ -45,11 +45,11 @@ MonoBehaviour:
     - label: 4
       weight: 0
     - label: 3
-      weight: 0
-    - label: 1
-      weight: 0
-    - label: 2
       weight: 1
+    - label: 1
+      weight: 1
+    - label: 2
+      weight: 2
   - question: "What\u2019s the max salination Zeigs can handle in their water?"
     category:
       item:
@@ -57,13 +57,13 @@ MonoBehaviour:
         index: 0
       need: 4
     options:
-    - label: 0.5%
+    - label: 1.99%
       weight: 2
     - label: 2.5%
       weight: 0
-    - label: .25%
+    - label: .99%
       weight: 0
-    - label: 1%
+    - label: 1.5%
       weight: 1
   randomQuestionPool:
     questionsToPick: 0
