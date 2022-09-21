@@ -118,7 +118,7 @@ public class TilePlacementController : MonoBehaviour
 
         if (isFirstTile)
         {
-            print (PlaceTile(currentMouseCellPosition));
+            //print (PlaceTile(currentMouseCellPosition));
             return;
         }
         if (!FourNeighborTileLocations(currentMouseCellPosition).Contains(lastPlacedTile)) // Detect non-continuous points, and linearly interpolate to fill the gaps

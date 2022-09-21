@@ -11,7 +11,7 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     #if UNITY_EDITOR
     public bool Interactable => false;
     #else
-    public bool Interactable => LatestLevelQualified.LevelNumber == levelNumber && levelNumber <= Statics.LatestUnlockableLevel;
+    public bool Interactable => false /*LatestLevelQualified.LevelNumber == levelNumber && levelNumber <= Statics.LatestUnlockableLevel*/;
     #endif
     public bool Overridden => overridden;
     #endregion
@@ -78,6 +78,7 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         overlay.SetActive(false);
         #else
         overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber || levelNumber > Statics.LatestUnlockableLevel);
+        //print (levelNumber + ", " + LatestLevelQualified.LevelNumber);
         #endif
         overlay.transform.SetAsLastSibling();
     }
