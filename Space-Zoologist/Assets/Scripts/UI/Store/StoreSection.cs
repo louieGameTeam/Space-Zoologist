@@ -20,7 +20,6 @@ public class StoreSection : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
-    [SerializeField] private float clickDeterminantTime = default;
     // Cursor dependencies
     protected UICursorInput cursorInput = default;
     protected ItemPlaceCursorPreviewMover cursorPreviewObject = null;

@@ -35,14 +35,16 @@ public class PodStoreSection : StoreSection
             if (!this.GridSystem.IsPodPlacementValid (position, selectedSpecies)) {
                 return;
             }
-            if (base.ResourceManager.CheckRemainingResource (selectedSpecies) <= 0 && !tilePlacementController.godMode) {
-                base.OnItemSelectionCanceled ();
-                return;
-            }
+            
             base.HandleAudio ();
             populationManager.SpawnAnimal (selectedSpecies, position);
             GridSystem.UpdateAnimalCellGrid ();
             base.ResourceManager.Placed (selectedSpecies, 1);
+        }
+
+        if (selectedSpecies && base.ResourceManager.CheckRemainingResource (selectedSpecies) <= 0 && !tilePlacementController.godMode) {
+            base.OnItemSelectionCanceled ();
+            return;
         }
     }
 

@@ -32,7 +32,7 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void StartPlacing()
     {
-        //Debug.Log("Start placing");
+        Debug.Log("Start placing");
         numTilesPlaced = 0;
         initialAmt = ResourceManager.CheckRemainingResource(selectedItem);
         isPlacing = true;
@@ -53,7 +53,7 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void FinishPlacing()
     {
-        //Debug.Log("Finish placing");
+        Debug.Log("Finish placing");
         isPlacing = false;
         foreach (Vector3Int pos in this.tilePlacementController.addedTiles)
         {
@@ -111,7 +111,7 @@ public class TileStoreSection : StoreSection
         if (!UIBlockerSettings.OperationIsAvailable ("Build")) {
             return;
         }
-
+        print ("Place tiles...");
         if (Input.GetMouseButtonDown (0) && !isPlacing) {
             this.StartPlacing ();
         }

@@ -12,7 +12,7 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     //public bool Interactable => true;
     //#else
     public bool Interactable => LatestLevelQualified.LevelNumber >= enclosure.Level.ID.LevelNumber && 
-                                LatestLevelQualified.EnclosureNumber >= enclosure.Level.ID.EnclosureNumber;
+                                (LatestLevelQualified.LevelNumber == enclosure.Level.ID.LevelNumber ? LatestLevelQualified.EnclosureNumber >= enclosure.Level.ID.EnclosureNumber : true);
     //#endif
     #endregion
 
