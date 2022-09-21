@@ -20,6 +20,7 @@ public class StoreSection : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private Transform itemGrid = default;
     [SerializeField] private GameObject itemCellPrefab = default;
+    [SerializeField] private float clickDeterminantTime = default;
     // Cursor dependencies
     protected UICursorInput cursorInput = default;
     protected ItemPlaceCursorPreviewMover cursorPreviewObject = null;
@@ -55,6 +56,9 @@ public class StoreSection : MonoBehaviour
 
     public virtual void Update()
     {
+        if (selectedItem) {
+            HandleCursor ();
+        }
         if (cursorInput.IsOn)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorInput.transform.position);
@@ -193,7 +197,7 @@ public class StoreSection : MonoBehaviour
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)
-    {
+    {/*
         if (!this.CanBuy(this.selectedItem))
         {
             OnItemSelectionCanceled();
@@ -202,7 +206,7 @@ public class StoreSection : MonoBehaviour
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnItemSelectionCanceled();
-        }
+        }*/
     }
 
     public bool CanBuy(Item item)
@@ -212,6 +216,14 @@ public class StoreSection : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public virtual void HandleCursor () {
+        if (Input.GetMouseButtonDown (1) || 
+            (Input.GetMouseButtonDown (0) && (!this.CanBuy (this.selectedItem) || !UIBlockerSettings.OperationIsAvailable ("Build")))) {
+            OnItemSelectionCanceled ();
+            return;
+        }
     }
 
     /// <summary>
@@ -229,11 +241,11 @@ public class StoreSection : MonoBehaviour
     /// <param name="eventData"></param>
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
-        if (!this.CanBuy(this.selectedItem))
+        /*if (!this.CanBuy(this.selectedItem))
         {
             OnItemSelectionCanceled();
             return;
-        }
+        }*/
     }
 
     private void OnDisable()

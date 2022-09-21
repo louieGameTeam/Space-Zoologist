@@ -32,7 +32,7 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void StartPlacing()
     {
-        Debug.Log("Start placing");
+        //Debug.Log("Start placing");
         numTilesPlaced = 0;
         initialAmt = ResourceManager.CheckRemainingResource(selectedItem);
         isPlacing = true;
@@ -53,7 +53,7 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void FinishPlacing()
     {
-        Debug.Log("Finish placing");
+        //Debug.Log("Finish placing");
         isPlacing = false;
         foreach (Vector3Int pos in this.tilePlacementController.addedTiles)
         {
@@ -75,7 +75,7 @@ public class TileStoreSection : StoreSection
     /// Triggered by mouse down on the cursor item.
     /// </summary>
     public override void OnCursorPointerDown(PointerEventData eventData)
-    {
+    {/*
         base.OnCursorPointerDown(eventData);
         if (!UIBlockerSettings.OperationIsAvailable("Build"))
         {
@@ -85,14 +85,14 @@ public class TileStoreSection : StoreSection
         if (eventData.button == PointerEventData.InputButton.Left && !isPlacing)
         {
             this.StartPlacing();
-        }
+        }*/
     }
 
     /// <summary>
     /// Triggered by mouse up on the cursor item.
     /// </summary>
     public override void OnCursorPointerUp(PointerEventData eventData)
-    {
+    {/*
         base.OnCursorPointerUp(eventData);
         Debug.Log("IsPlacing " + isPlacing);
         if (eventData.button == PointerEventData.InputButton.Left && isPlacing)
@@ -102,6 +102,21 @@ public class TileStoreSection : StoreSection
         if (!base.CanBuy(selectedItem))
         {
             base.OnItemSelectionCanceled();
+        }*/
+    }
+
+    public override void HandleCursor () {
+        base.HandleCursor ();
+
+        if (!UIBlockerSettings.OperationIsAvailable ("Build")) {
+            return;
+        }
+
+        if (Input.GetMouseButtonDown (0) && !isPlacing) {
+            this.StartPlacing ();
+        }
+        if (Input.GetMouseButtonUp (0) && isPlacing) {
+            FinishPlacing ();
         }
     }
 
