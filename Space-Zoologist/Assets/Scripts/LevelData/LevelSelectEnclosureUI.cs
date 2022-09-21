@@ -8,11 +8,12 @@ using TMPro;
 public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     #region Public Properties
-    #if UNITY_EDITOR
-    public bool Interactable => true;
-    #else
-    public bool Interactable => LatestLevelQualified.LevelNumber > enclosure.Level.ID.LevelNumber;
-    #endif
+    //#if UNITY_EDITOR
+    //public bool Interactable => true;
+    //#else
+    public bool Interactable => LatestLevelQualified.LevelNumber >= enclosure.Level.ID.LevelNumber && 
+                                LatestLevelQualified.EnclosureNumber >= enclosure.Level.ID.EnclosureNumber;
+    //#endif
     #endregion
 
     #region Private Properties
