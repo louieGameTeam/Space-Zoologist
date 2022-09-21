@@ -24,7 +24,7 @@ public class FoodSourceStoreSection : StoreSection
     /// Handles the click release on the cursor item.
     /// </summary>
     public override void OnCursorPointerUp(PointerEventData eventData)
-    {
+    {/*
         base.OnCursorPointerUp(eventData);
         if (!UIBlockerSettings.OperationIsAvailable("Build") || 
             eventData.button == PointerEventData.InputButton.Right ||
@@ -42,6 +42,22 @@ public class FoodSourceStoreSection : StoreSection
         if (!base.CanBuy(selectedItem))
         {
             base.OnItemSelectionCanceled();
+        }*/
+    }
+
+    public override void HandleCursor () {
+        base.HandleCursor ();
+
+        if (!UIBlockerSettings.OperationIsAvailable ("Build")) {
+            return;
+        }
+
+        if (Input.GetMouseButtonUp (0)) {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+            PlaceFood (mousePosition);
+        }
+        if (base.ResourceManager.CheckRemainingResource (selectedItem) == 0) {
+            base.OnItemSelectionCanceled ();
         }
     }
 

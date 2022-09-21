@@ -987,6 +987,7 @@ GameObject:
   - component: {fileID: 380907111}
   - component: {fileID: 380907110}
   - component: {fileID: 380907109}
+  - component: {fileID: 380907112}
   m_Layer: 5
   m_Name: CursorItem
   m_TagString: Untagged
@@ -1064,6 +1065,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380907107}
   m_CullTransparentMesh: 0
+--- !u!225 &380907112
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380907107}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &442284274
 PrefabInstance:
   m_ObjectHideFlags: 0
