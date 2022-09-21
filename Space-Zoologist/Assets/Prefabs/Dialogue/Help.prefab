@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 674947355866260801}
   - component: {fileID: 674947355866260800}
   - component: {fileID: 674947355866260803}
-  - component: {fileID: 674947355866260802}
   - component: {fileID: 674947355866260805}
   - component: {fileID: 674947355866260804}
   - component: {fileID: 674947355866260807}
@@ -36,9 +35,10 @@ GameObject:
   - component: {fileID: 1125139815167484152}
   - component: {fileID: 1973460566090291798}
   - component: {fileID: 3914842217409827596}
-  - component: {fileID: 5338012026435506585}
   - component: {fileID: 7399697651255073831}
   - component: {fileID: 1570049134190676775}
+  - component: {fileID: 6564486730037008980}
+  - component: {fileID: 7850210174309538110}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -188,25 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 15
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &674947355866260802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674947355866260819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 17
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -574,25 +555,6 @@ MonoBehaviour:
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
---- !u!114 &5338012026435506585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674947355866260819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 31
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
-  Audio: {fileID: 0}
 --- !u!114 &7399697651255073831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +587,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 33
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &6564486730037008980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 34
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7850210174309538110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 35
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -676,56 +676,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 34
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-150,\"yPos\":-356},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Level
-    Progression\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":186,\"yPos\":-290.000061},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Population
-    Stagnation\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":441,\"yPos\":-275.000061},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"UI\",\"parentUIDs\":[5,1,1],\"SpeechUID\":20},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-44,\"yPos\":74.9999847},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Encyclopedia
-    & Notebook\",\"parentUIDs\":[5,20,20],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":183,\"yPos\":80.9999847},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Observation
-    tool\",\"parentUIDs\":[10,20,20],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":273,\"yPos\":409},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Place
-    Food\",\"parentUIDs\":[15,20,20],\"SpeechUID\":17},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":479,\"yPos\":268},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Place
-    Terrain\",\"parentUIDs\":[17,20,20],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":468,\"yPos\":98.9999847},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Accessing
-    build mode\",\"parentUIDs\":[20,20],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":678.5,\"yPos\":-279.000061},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Nevermind\",\"parentUIDs\":[1,1],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":177,\"yPos\":-473},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
-    it going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6,22],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-254,\"yPos\":-239.000061},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Like
-    I mentioned during your orientation, after 30 days, or after you complete your
-    goal, we\u2019ll be having a one-on-one report-back. I\u2019ll ask you a series
-    of questions about what you\u2019ve observed. \",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":23,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":4,\"yPos\":-208.000061},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
+  CurrentIDCounter: 36
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-348,\"yPos\":-328.000061},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Level
+    Progression\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-12,\"yPos\":-262.0001},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Population
+    Stagnation\",\"parentUIDs\":[3,1,1],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243,\"yPos\":-247.000092},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"UI\",\"parentUIDs\":[5,1,1],\"SpeechUID\":20},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-242,\"yPos\":102.999908},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Encyclopedia
+    & Notebook\",\"parentUIDs\":[5,20,20],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-15,\"yPos\":108.999908},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Inspector
+    tool\",\"parentUIDs\":[10,20,20],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":248,\"yPos\":118.999908},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"Requesting
+    Resources\",\"parentUIDs\":[20,20],\"SpeechUID\":19},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":486,\"yPos\":104.999908},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"Accessing
+    build mode\",\"parentUIDs\":[20,20],\"SpeechUID\":15},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":480.5,\"yPos\":-251.000092},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Nevermind\",\"parentUIDs\":[1,1],\"SpeechUID\":-1}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-21,\"yPos\":-444.999969},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"How\u2019s
+    it going? Anything I can help you with?\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[2,4,6,22],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-452,\"yPos\":-211.000092},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Like
+    I mentioned during your orientation, after the given number of days, or after
+    you complete your goal, we\u2019ll be having a one-on-one report-back. I\u2019ll
+    ask you a series of questions about what you\u2019ve observed. \",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":23,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-193,\"yPos\":-180.000092},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
     species population is represented by the animals moving around in the reserve.
     We are most concerned with how the population as a whole is doing, which means
     that each signal given to us by an individual animal is indicative of how the
-    -\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-8,\"yPos\":195.999985},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"On
+    -\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-351,\"yPos\":199.999908},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
-    one that looks like this to open your notebook and encyclopedia. \",\"parentUIDs\":[6,8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-116,\"yPos\":503},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"On
+    one that looks like a book to open your Notebook.\",\"parentUIDs\":[6,8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-377,\"yPos\":500.000122},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"On
     the side is the Notebook, where you can take freehand notes here at any time
-    as you read through the Encyclopedia. \",\"parentUIDs\":[9,32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":209,\"yPos\":185.999985},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"On
+    as you read through the Encyclopedia. \",\"parentUIDs\":[9,32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":54,\"yPos\":255.999908},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"On
+    the top right of your screen is the inspector and objective window. Select the
+    inspector panel to enter inspection mode, and left click on objects to view their
+    details. \",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":692,\"yPos\":190.999908},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
-    one that looks like this to observe tiles, creatures, and objects you select
-    with your mouse.\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":697,\"yPos\":147.999985},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"On
+    one that looks like a hammer to enter Build Mode. \",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":338,\"yPos\":248.000031},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"On
     the bottom of your nifty Command Center is a row of clickable icons. Look for
-    one that looks like this to enter Build Mode. \",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":234,\"yPos\":514},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Enter
-    build mode, then filter for food using the dropdown menu, and select the food
-    you want to place. For now, try placing the space maple on dirt patches. \",\"parentUIDs\":[16,16],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":511,\"yPos\":455},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"Enter
-    build mode, then filter for terrain using the dropdown menu, and select the terrain
-    you want to place. Terrain can be placed in all locations except for a population's
-    starting location, which is shaded gray. \",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":118,\"yPos\":-70.00006},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Which
-    part of the UI can I clarify?\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[8,11,16,18,21],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-377,\"yPos\":-52.3334351},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"Use
+    one that looks like a book to open your Notebook.\",\"parentUIDs\":[18,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-80,\"yPos\":-42.0001526},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"Which
+    part of the UI can I clarify?\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[8,11,18,21],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-575,\"yPos\":-24.3335266},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"Use
     the Notebook to track the responses you see in the CapraX Zeigrun based on variable
     changes, like different food sources, changes in terrain, and increases or decreases
-    in resources.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-135,\"yPos\":-83.333374},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"-
-    whole population is doing. Make sure to use the observation tool! Depending on
-    what you observe, try buying different resources and use our time accelerator,
-    to see their effect on the population. Remember, change isn\u2019t instantaneous!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":812,\"yPos\":297.666626},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"In
-    Build Mode, you can design a concept, i.e. modify terrain, add vegetation...but
-    there is a limited number of terrain, like dirt, and vegetation, like space maples,
-    available at the moment. \",\"parentUIDs\":[15,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":29,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":877,\"yPos\":429.666626},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"Remember
-    to apply any changes you make, and that should build the new modifications!\",\"parentUIDs\":[27,27],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":565,\"yPos\":587.666748},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"Remember
-    to apply any changes you make, and that should build the new modifications!\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":191,\"yPos\":644.666748},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"Remember
-    to apply any changes you make, and that should build the new modifications!\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-51,\"yPos\":325.666626},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"In
-    the Encyclopedia, you can find current research observations, drawings, photos,
-    and more of your selected topic. To select a species of plant or animal, use
-    the tabs on the Encyclopedia.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-182,\"yPos\":614.666748},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"You
+    in resources.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-333,\"yPos\":-55.3334045},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"-
+    whole population is doing. Make sure to use the inspector tool! Depending on
+    what you observe, try building different resources and use our time accelerator
+    to see their effect. Remember, population change isn\u2019t instantaneous!\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":695,\"yPos\":325.666626},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"In
+    Build Mode, you can construct terrain and food sources, as well as place animals.
+    There is a limited number of construction resources, though, so plan ahead!\",\"parentUIDs\":[15,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":29,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":700,\"yPos\":463.666748},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"While
+    in build mode, you can also left click on existing or constructing objects. This
+    will show the moving and selling options.\",\"parentUIDs\":[27,27],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":355,\"yPos\":407.66687},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"In
+    the Notebook's Concepts tab, you can fill out resource requests in exchange for
+    currency. Make sure to specify what Need the request is for!\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":35,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-343,\"yPos\":347.666626},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"In
+    the Notebook's Research tab, you can find current research observations, drawings,
+    photos, and more of your selected topic. To select a species of plant or animal,
+    use the tabs on the Encyclopedia.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-324,\"yPos\":667.667},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"You
     can also use our special highlighting feature. Whenever I\u2014or someone else\u2014is
     talking with you, you can click and drag over any words they say, and it\u2019ll
-    fill into a column in your notebook.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true}]}"
+    fill into a column in your notebook.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":53,\"yPos\":401.666748},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"By
+    the way, when hovering over something inspectable, your cursor will become a
+    magnifying glass!\",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":372,\"yPos\":562.666748},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"You
+    can also put in a request through the build menu. Click on the green 'plus' icon
+    next to the item you need, and the request form will pop up with the item filled
+    in for you.\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -738,7 +739,6 @@ MonoBehaviour:
   - {fileID: 674947355866260801}
   - {fileID: 674947355866260800}
   - {fileID: 674947355866260803}
-  - {fileID: 674947355866260802}
   - {fileID: 674947355866260805}
   - {fileID: 674947355866260804}
   - {fileID: 674947355866260807}
@@ -758,9 +758,10 @@ MonoBehaviour:
   - {fileID: 1125139815167484152}
   - {fileID: 1973460566090291798}
   - {fileID: 3914842217409827596}
-  - {fileID: 5338012026435506585}
   - {fileID: 7399697651255073831}
   - {fileID: 1570049134190676775}
+  - {fileID: 6564486730037008980}
+  - {fileID: 7850210174309538110}
   Event:
     m_PersistentCalls:
       m_Calls: []
