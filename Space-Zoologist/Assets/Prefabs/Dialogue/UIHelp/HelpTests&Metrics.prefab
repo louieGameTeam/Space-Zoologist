@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 674947355866260815}
   - component: {fileID: 674947355866260817}
   - component: {fileID: 3973223578623727520}
+  - component: {fileID: 7420494577019947622}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -39,6 +40,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 674947355878461196}
   m_RootOrder: 0
@@ -58,7 +60,43 @@ MonoBehaviour:
   NodeID: 1
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SimpleResearchCategory
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: NeedType
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: IncreaseDecrease
+          m_BoolArgument: 0
+        m_CallState: 2
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
@@ -286,9 +324,64 @@ MonoBehaviour:
   NodeID: 22
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: ClearHighlights
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightTestAndMetricContentNoFreeze
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7420494577019947622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 23
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: ClearHighlights
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &674947355878461199
 GameObject:
@@ -300,6 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 674947355878461196}
   - component: {fileID: 674947355878461197}
+  - component: {fileID: 441157961251796164}
   m_Layer: 0
   m_Name: HelpTests&Metrics
   m_TagString: Untagged
@@ -317,6 +411,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 674947355866260816}
   m_Father: {fileID: 0}
@@ -334,9 +429,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 22
-  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":123.5,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"This
-    is the Tests and Metrics tab. DIALOGUE GOES HERE","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true}]}'
+  CurrentIDCounter: 24
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":51.5,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"This
+    is the Test and Metrics tab. Here you can plan tests and record the results for
+    any particular enclosure.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":22,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true},{"EditorInfo":{"isRoot":false,"xPos":60,"yPos":124},"ID":22,"TMPFontGUID":null,"Text":"You
+    can choose what plant or animal the test is for, what you are testing, and if
+    the test resulted in an improvement or deterioration of their needs.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":23,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true},{"EditorInfo":{"isRoot":false,"xPos":51,"yPos":235},"ID":23,"TMPFontGUID":null,"Text":"You
+    can also specify when the test took place and other further details that pertain
+    to the test.","parentUIDs":[22],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true}]}'
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -355,6 +455,57 @@ MonoBehaviour:
   - {fileID: 674947355866260815}
   - {fileID: 674947355866260817}
   - {fileID: 3973223578623727520}
+  - {fileID: 7420494577019947622}
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SimpleResearchCategory
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: NeedType
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 441157961251796164}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: IncreaseDecrease
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &441157961251796164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355878461199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77ebfae569d54841bfdaf8ac61d81ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 9002464118305383576, guid: dd7b74c981e3e954eb06eb926cfab813,
+    type: 3}
