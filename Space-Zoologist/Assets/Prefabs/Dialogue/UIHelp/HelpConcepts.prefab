@@ -22,6 +22,11 @@ GameObject:
   - component: {fileID: 674947355866260815}
   - component: {fileID: 674947355866260817}
   - component: {fileID: 3973223578623727520}
+  - component: {fileID: 1948862785748283044}
+  - component: {fileID: 7852227263152956468}
+  - component: {fileID: 1014284013854166663}
+  - component: {fileID: 7119022210081763218}
+  - component: {fileID: 5270220851653536996}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -59,7 +64,19 @@ MonoBehaviour:
   NodeID: 1
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4796105373468403413}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightConceptsToggle
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Expand
+          m_BoolArgument: 0
+        m_CallState: 2
   TMPFont: {fileID: 0}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
@@ -289,7 +306,150 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1948862785748283044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 23
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4796105373468403413}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightConceptsInputField
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Quantity
+          m_BoolArgument: 0
+        m_CallState: 2
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7852227263152956468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 24
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4796105373468403413}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightConceptsButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Request
+          m_BoolArgument: 0
+        m_CallState: 2
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1014284013854166663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 25
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4796105373468403413}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightConceptsDropdownNoFreeze
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Need
+          m_BoolArgument: 0
+        m_CallState: 2
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7119022210081763218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 26
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4796105373468403413}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: ClearHighlights
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &5270220851653536996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355866260819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 27
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &674947355878461199
 GameObject:
@@ -301,6 +461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 674947355878461196}
   - component: {fileID: 674947355878461197}
+  - component: {fileID: 4796105373468403413}
   m_Layer: 0
   m_Name: HelpConcepts
   m_TagString: Untagged
@@ -336,9 +497,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 22
-  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":566.5,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"This
-    is the Concept tab. DIALOGUE GOES HERE","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true}]}'
+  CurrentIDCounter: 28
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":53.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":true,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":22,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":54,\"yPos\":120},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"This
+    is the Concepts tab. On the right side, if you click this little arrow, you can
+    use a drawing tablet to plan out what you want to build in the current enclosure.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":23,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":52,\"yPos\":219},\"ID\":23,\"TMPFontGUID\":null,\"Text\":\"On
+    the left you request more food and terrain tiles if you find yourself needing
+    more of a particular resource.\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":56,\"yPos\":327},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"Just
+    click on the item you want, then type out how many you want of that item here...\",\"parentUIDs\":[23,23],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":63,\"yPos\":435},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"...and
+    then hit Request!\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":26,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":61,\"yPos\":540},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"You
+    can also specify why you\u2019re requesting a certain resource by clicking here.\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":61,\"yPos\":635},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"Make
+    sure you keep an eye on how much money you have and how much everything costs,
+    always plan accordingly!\",\"parentUIDs\":[26,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -357,6 +526,37 @@ MonoBehaviour:
   - {fileID: 674947355866260815}
   - {fileID: 674947355866260817}
   - {fileID: 3973223578623727520}
+  - {fileID: 1948862785748283044}
+  - {fileID: 7852227263152956468}
+  - {fileID: 1014284013854166663}
+  - {fileID: 7119022210081763218}
+  - {fileID: 5270220851653536996}
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4796105373468403413}
+        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
+        m_MethodName: HighlightConceptsButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Request
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4796105373468403413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674947355878461199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77ebfae569d54841bfdaf8ac61d81ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 9002464118305383576, guid: dd7b74c981e3e954eb06eb926cfab813,
+    type: 3}

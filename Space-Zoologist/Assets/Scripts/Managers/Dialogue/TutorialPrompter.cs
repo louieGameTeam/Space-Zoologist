@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager of miscellaneous events that occur during tutorials in the dialogue
@@ -105,12 +106,41 @@ public class TutorialPrompter : MonoBehaviour
             target = () => entryEditor.transform.GetChild (0).GetComponent<RectTransform> ()
         });
     }
+    // Ick more tech debt
+    public void HighlightConceptsDropdownNoFreeze (string pickerNameFilter) {
+        RectTransform entryEditor = GetDropdown (NotebookTab.Concepts, pickerNameFilter).GetComponent<RectTransform> ();
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => entryEditor
+        });
+    }
     // More technical debt
     public void HighlightTestAndMetricContentNoFreeze() {
         Transform entryEditor = GetEntryEditor (NotebookTab.TestAndMetrics).transform;
         HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
             predicate = () => true,
             target = () => entryEditor.transform.GetChild (1).GetComponent<RectTransform> ()
+        });
+    }
+    // Even more
+    public void HighlightConceptsToggle (string toggleNameFilter) {
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => GetToggle (NotebookTab.Concepts, toggleNameFilter).GetComponent<RectTransform> ()
+        }); 
+    }
+    // MOre
+    public void HighlightConceptsInputField (string fieldNameFilter) {
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => GetInputField (NotebookTab.Concepts, fieldNameFilter).GetComponent<RectTransform> ()
+        }); 
+    }
+    // eVen MorE
+    public void HighlightConceptsButton (string fieldNameFilter) {
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => GetButton (NotebookTab.Concepts, fieldNameFilter).GetComponent<RectTransform> ()
         });
     }
     public void FreezeUntilGoatTerrainHighlightAdd()
@@ -546,12 +576,37 @@ public class TutorialPrompter : MonoBehaviour
         // Find a picker whose name contains the filter
         return Array.Find (selectors, s => s.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
     }
+    // TODO: Fix, it's technical debt-y
     private TestAndMetricsEntryEditor GetEntryEditor (NotebookTab targetTab) {
         NotebookUI notebook = GameManager.Instance.NotebookUI;
         // Get all pickers in the given tab
         TestAndMetricsEntryEditor [] editors = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TestAndMetricsEntryEditor> (true);
         // Find a picker whose name contains the filter
         return editors [0];
+    }
+    // Also fix
+    private TMP_InputField GetInputField (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        TMP_InputField [] fields = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TMP_InputField> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (fields, f => f.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
+    // Nasty, fix
+    private Button GetButton (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        Button [] fields = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<Button> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (fields, f => f.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
+    // Fix fix fix
+    private Toggle GetToggle (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        Toggle [] toggles = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<Toggle> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (toggles, t => t.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
     }
     // Highlights a dropdown category without highlighting items in the dropdown
     private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
