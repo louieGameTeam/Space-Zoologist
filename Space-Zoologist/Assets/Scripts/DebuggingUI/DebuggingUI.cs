@@ -137,7 +137,7 @@ public class DebuggingUI : MonoBehaviour
         // If the navigator exists then toggle its override
         if (navigator)
         {
-            LevelID maxID = new LevelID(LevelDataLoader.MaxLevel() + 1, 1);
+            LevelID maxID = new LevelID(LevelDataLoader.MaxLevel() + 1, 4);
             navigator.ToggleOverride(maxID);
         }
     }
