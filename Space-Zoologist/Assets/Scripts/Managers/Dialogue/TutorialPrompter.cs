@@ -234,9 +234,9 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilWaterIsInspected () {
         FreezingScheduler.FreezeUntilConditionIsMet (() => WaterIsInspected ());
     }
-    public void FreezeUntilDirtRequested(int quantity)
+    public void FreezeUntilSpaceMapleRequested(int quantity)
     {
-        FreezeUntilResourceRequestSubmitted(new ItemID(ItemRegistry.Category.Tile, 0), quantity);
+        FreezeUntilResourceRequestSubmitted(new ItemID(ItemRegistry.Category.Food, 0), quantity);
     }
     public void FreezeUntilGoatPlacedMaplePlacedAndDaysAdvanced()
     {
@@ -284,6 +284,24 @@ public class TutorialPrompter : MonoBehaviour
             {
                 predicate = () => canvas.IsExpanded != expanded,
                 target = () => canvas.FoldoutToggle.transform as RectTransform
+            });
+    }
+    public void HighlightDropdownConceptsTutorial()
+    {
+        // Doesn't freeze
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
+        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true);
+        ItemDropdown itemReqDropdown = requestEditor.ItemRequestedDropdown;
+        RectTransform itemDropdownTransform = itemReqDropdown.GetComponent<RectTransform>();
+
+        HighlightingScheduler.SetHighlights(
+            new ConditionalHighlight()
+            {
+                predicate = () => !itemReqDropdown.Dropdown.IsExpanded,
+                target = () => itemDropdownTransform
             });
     }
     public void ClearHighlights()
@@ -389,16 +407,35 @@ public class TutorialPrompter : MonoBehaviour
     }
     private void FreezeUntilResourceRequestSubmitted(ItemID requestedItem, int requestQuantity)
     {
-        ConditionalHighlight[] resourceRequestDropdownHighlights = HighlightResourceRequestDropdown(requestedItem, requestQuantity);
+        //ConditionalHighlight[] resourceRequestDropdownHighlights = HighlightResourceRequestDropdown(requestedItem, requestQuantity);
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
+        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true);
+        TMP_InputField quantityInput = requestEditor.QuantityInput;
+        ItemDropdown itemReqDropdown = requestEditor.ItemRequestedDropdown;
 
         // Freeze conversation until correct review was confirmed
         FreezingScheduler.FreezeUntilConditionIsMet(() => ResourceRequestWasSubmitted(requestedItem, requestQuantity), HighlightingScheduler.ClearHighlights);
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
             HighlightNotebookTabButton(NotebookTab.Concepts),
-            resourceRequestDropdownHighlights[0],
-            resourceRequestDropdownHighlights[1],
-            resourceRequestDropdownHighlights[2],
-            resourceRequestDropdownHighlights[3]
+            new ConditionalHighlight()
+            {
+                predicate = () => !itemReqDropdown.Dropdown.IsExpanded && quantityInput.text != requestQuantity.ToString(),
+                target = () => quantityInput.transform as RectTransform
+            },
+            // Highlight the request button only after the correct quantity is entered
+            new ConditionalHighlight()
+            {
+                predicate = () => quantityInput.text == requestQuantity.ToString() && !reviewDisplay.gameObject.activeInHierarchy,
+                target = () => concepts.RequestButton.transform as RectTransform
+            }
+            // COMMENTED OUT CODE IS RELEVANT TO HIGHLIGHTING RESOURCES THAT ARE REQUESTED THAT AREN'T CURRENTLY VISIBLE IN THE DROPDOWN
+            //resourceRequestDropdownHighlights[0],
+            //resourceRequestDropdownHighlights[1],
+            //resourceRequestDropdownHighlights[2],
+            //resourceRequestDropdownHighlights[3]
             // HighlightInputField(quantityInput, requestQuantity.ToString()),
             //new ConditionalHighlight()
             //{
