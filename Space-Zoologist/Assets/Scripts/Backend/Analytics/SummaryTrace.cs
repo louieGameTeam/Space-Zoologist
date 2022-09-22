@@ -17,6 +17,8 @@ public class SummaryTrace
     [SerializeField] private float tutorialTime;
     // The time spent playing level 1.
     [SerializeField] private float level1Time;
+    // The time spent playing level 1 enclosure 1.
+    [SerializeField] private float l1Enclosure1Time;
     // The time spent playing level 2.
     [SerializeField] private float level2Time;
     // The time spent playing level 3.
@@ -33,6 +35,8 @@ public class SummaryTrace
     [SerializeField] private bool tutorialComplete;
     // A boolean indicating completion of level 1.
     [SerializeField] private bool level1Complete;
+    // A boolean indicating completion of level 1 enclosure 1.
+    [SerializeField] private bool l1Enclosure1Complete;
     // A boolean indicating completion of level 2.
     [SerializeField] private bool level2Complete;
     // A boolean indicating completion of level 3.
@@ -83,6 +87,7 @@ public class SummaryTrace
         totalPlayTime = 0f;
         tutorialTime = 0f;
         level1Time = 0f;
+        l1Enclosure1Time = 0f;
         level2Time = 0f;
         level3Time = 0f;
         level4Time = 0f;
@@ -90,6 +95,7 @@ public class SummaryTrace
         totalCompletion = false;
         tutorialComplete = false;
         level1Complete = false;
+        l1Enclosure1Complete = false;
         level2Complete = false;
         level3Complete = false;
         level4Complete = false;
@@ -134,6 +140,12 @@ public class SummaryTrace
         set { level1Time = value; }
     }
 
+    public float L1Enclosure1Time
+    {
+        get { return l1Enclosure1Time; }
+        set { l1Enclosure1Time = value; }
+    }
+
     public float Level2Time
     {
         get { return level2Time; }
@@ -174,6 +186,12 @@ public class SummaryTrace
     {
         get { return level1Complete; }
         set { level1Complete = value; }
+    }
+
+    public bool L1Enclosure1Complete
+    {
+        get { return l1Enclosure1Complete; }
+        set { l1Enclosure1Complete = value; }
     }
 
     public bool Level2Complete

@@ -79,6 +79,9 @@ public class SummaryManager : MonoBehaviour
             } else if (currentLevel == 1)
             {
                 currentSummaryTrace.Level1Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L1Enclosure1Time += Time.deltaTime;
+                }
             } else if (currentLevel == 2)
             {
                 currentSummaryTrace.Level2Time += Time.deltaTime;
@@ -236,7 +239,6 @@ public class SummaryManager : MonoBehaviour
     // leaves level 5 out of completion.
     private void CheckAndModifyProgression(int currentLevel, SummaryTrace trace)
     {
-        SaveSummaryTrace();
         if (currentLevel == 0)
         {
             trace.TutorialComplete = true;
@@ -244,6 +246,10 @@ public class SummaryManager : MonoBehaviour
         if (currentLevel == 1)
         {
             trace.Level1Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L1Enclosure1Complete = true;
+            }
         }
         if (currentLevel == 2)
         {
@@ -261,6 +267,7 @@ public class SummaryManager : MonoBehaviour
         {
             trace.Level5Complete = true;
         }
+        SaveSummaryTrace(); 
     }
 
     // A function that executes upon opening the journal.
