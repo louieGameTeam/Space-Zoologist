@@ -69,11 +69,6 @@ public class GameManager : MonoBehaviour
     public bool isMainObjectivesCompleted { get; private set; }
     public int numSecondaryObjectivesCompleted { get; private set; }
 
-    public bool isObjectivePanelOpen { get; private set; }
-
-    [Header("Objective Variables")]
-    [SerializeField] private GameObject objectivePane = default;
-    [SerializeField] private TextMeshProUGUI objectivePanelText = default;
     #endregion
 
     #region Need System Variables
@@ -327,7 +322,6 @@ public class GameManager : MonoBehaviour
 
     private void SetupObjectives()
     {
-        isObjectivePanelOpen = true;
 
         maxDay = LevelData.LevelObjectiveData.numberOfDays;
 
@@ -353,6 +347,11 @@ public class GameManager : MonoBehaviour
         {
             Population population = (Population)eventData;
             this.RegisterWithSurvivalObjectives(population);
+        });
+        inspectorObjectiveUI.SetupObjectiveUI(m_mainObjectives.Concat(m_secondaryObjectives));
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationCountChange, (eventData) =>
+        {
+            UpdateObjectives();
         });
         this.UpdateObjectivePanel();
     }
@@ -539,33 +538,11 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Level Completed!");
     }
 
-    public void TurnObjectivePanelOn()
-    {
-        this.isObjectivePanelOpen = true;
-        this.objectivePane.SetActive(true);
-        UpdateObjectives();
-        this.UpdateObjectivePanel();
-    }
-
-    public void TurnObjectivePanelOff()
-    {
-        this.isObjectivePanelOpen = false;
-        this.objectivePane.SetActive(this.isObjectivePanelOpen);
-        UpdateObjectives();
-        this.UpdateObjectivePanel();
-    }
-
     private void CheckWinConditions()
     {
         isMainObjectivesCompleted = true;
         numSecondaryObjectivesCompleted = 0;
         UpdateObjectives();
-
-        if (isObjectivePanelOpen)
-        {
-            this.UpdateObjectivePanel();
-        }
-
         // All objectives had reach end state
         if (isMainObjectivesCompleted && !this.m_isGameOver)
         {
@@ -605,28 +582,14 @@ public class GameManager : MonoBehaviour
                 numSecondaryObjectivesCompleted++;
             }
         }
+
+        // update UI afterwards
+        this.UpdateObjectivePanel();
     }
 
     public void UpdateObjectivePanel()
     {
-        string displayText = "";
-
-        foreach (Objective objective in m_mainObjectives)
-        {
-            displayText += objective.GetObjectiveText();
-        }
-        if (m_secondaryObjectives.Count == 0)
-        {
-            this.objectivePanelText.text = displayText;
-            return;
-        }
-        displayText += "Secondary Objectives:\n";
-        foreach (Objective objective in m_secondaryObjectives)
-        {
-            displayText += objective.GetObjectiveText();
-        }
-
-        this.objectivePanelText.text = displayText;
+        inspectorObjectiveUI.UpdateObjectiveUI();
     }
 
     private void UpdateDayText(int day)

@@ -13,6 +13,7 @@ public abstract class Objective
     public abstract ObjectiveStatus Status { get; }
     public abstract ObjectiveStatus UpdateStatus();
     public abstract string GetObjectiveText();
+    public abstract float GetProgress();
 }
 
 /// <summary>
@@ -122,6 +123,11 @@ public class SurvivalObjective : Objective
 
         return displayText;
     }
+
+    public override float GetProgress()
+    {
+        return (float)totalPopulationCount / TargetPopulationSize;
+    }
 }
 
 /// <summary>
@@ -158,5 +164,10 @@ public class ResourceObjective : Objective
     public override string GetObjectiveText()
     {
         return $"Have at least ${this.amountToKeep} left when level is complete [{this.status}]\n";
+    }
+
+    public override float GetProgress()
+    {
+        return (float)GameManager.Instance.Balance / this.amountToKeep;
     }
 }
