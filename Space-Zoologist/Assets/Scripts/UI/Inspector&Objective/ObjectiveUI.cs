@@ -37,8 +37,11 @@ public class ObjectiveUI : MonoBehaviour
     {
         foreach(var pair in objectives)
         {
+            // Should set this through inspector in a script, simple enough to use this for now
             pair.Value.GetComponentInChildren<TextMeshProUGUI>().text = pair.Key.GetObjectiveText();
-            pair.Value.GetComponentInChildren<Image>().transform.localScale = new Vector3(pair.Key.GetProgress(), 1, 1);
+            var bar = pair.Value.GetComponentInChildren<HorizontalProgressBar>();
+            bar.MaxValue = pair.Key.GetTargetValue();
+            bar.CurrentValue = pair.Key.GetCurrentValue();
         }
     }
 
