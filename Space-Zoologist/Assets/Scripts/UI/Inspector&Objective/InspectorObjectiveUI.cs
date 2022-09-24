@@ -17,8 +17,8 @@ public class InspectorObjectiveUI : MonoBehaviour
     [Tooltip("Toggle that turns the objective panel on")]
     private Toggle objectiveToggle = null;
     [SerializeField]
-    [Tooltip("Reference to the objective panel")]
-    private GameObject objectivePanel = null;
+    [Tooltip("Reference to the Objective UI Script")]
+    private ObjectiveUI objectiveUI = null;
     [SerializeField]
     [Tooltip("Toggle that turns the inspector panel on")]
     private Toggle inspectorToggle = null;
@@ -36,8 +36,8 @@ public class InspectorObjectiveUI : MonoBehaviour
         // Add listeners to the toggle events
         objectiveToggle.onValueChanged.AddListener(x =>
         {
-            if(x) GameManager.Instance.TurnObjectivePanelOn();
-            else GameManager.Instance.TurnObjectivePanelOff();
+            if(x) objectiveUI.TurnObjectivePanelOn();
+            else objectiveUI.TurnObjectivePanelOff();
         });
         inspectorToggle.onValueChanged.AddListener(x =>
         {
@@ -56,6 +56,16 @@ public class InspectorObjectiveUI : MonoBehaviour
     public void SetIsOpen(bool isOpen)
     {
         root.SetActive(isOpen);
+    }
+
+    public void UpdateObjectiveUI()
+    {
+        objectiveUI.UpdateObjectiveUI();
+    }
+
+    public void SetupObjectiveUI(IEnumerable<Objective> objectives)
+    {
+        objectiveUI.SetupObjectives(objectives);
     }
     #endregion
 }
