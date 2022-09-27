@@ -81,16 +81,49 @@ public class SummaryManager : MonoBehaviour
                 currentSummaryTrace.Level1Time += Time.deltaTime;
                 if (currentSet == 1) {
                     currentSummaryTrace.L1Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L1Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L1Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L1Enclosure4Time += Time.deltaTime;
                 }
             } else if (currentLevel == 2)
             {
                 currentSummaryTrace.Level2Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L2Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L2Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L2Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L2Enclosure4Time += Time.deltaTime;
+                }
             } else if (currentLevel == 3)
             {
                 currentSummaryTrace.Level3Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L3Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L3Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L3Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L3Enclosure4Time += Time.deltaTime;
+                }
             } else if (currentLevel == 4)
             {
                 currentSummaryTrace.Level4Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L4Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L4Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L4Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L4Enclosure4Time += Time.deltaTime;
+                }
             } else if (currentLevel == 5)
             {
                 currentSummaryTrace.Level5Time += Time.deltaTime;
@@ -139,6 +172,7 @@ public class SummaryManager : MonoBehaviour
     {
         var encryption = GetComponent<Encryption>();
         var encryptedId = encryption.Encrypt(id);
+        var encryptedName = encryption.Encrypt(id);
 
         // Check if current user has summary trace data in DB.
         StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(encryptedId, (value) => {
@@ -152,6 +186,7 @@ public class SummaryManager : MonoBehaviour
             {
                 currentSummaryTrace = new SummaryTrace();
                 currentSummaryTrace.PlayerID = encryptedId;
+                currentSummaryTrace.PlayerName = encryptedName;
             }
         }));
     }
@@ -245,23 +280,71 @@ public class SummaryManager : MonoBehaviour
         }
         if (currentLevel == 1)
         {
-            trace.Level1Complete = true;
             if (currentSet == 1)
             {
                 trace.L1Enclosure1Complete = true;
+            } else if (currentSet == 2)
+            {
+                trace.L1Enclosure2Complete = true;
+            } else if (currentSet == 3)
+            {
+                trace.L1Enclosure3Complete = true;
+            } else if (currentSet == 4)
+            {
+                trace.L1Enclosure4Complete = true;
+                trace.Level1Complete = true;
             }
         }
         if (currentLevel == 2)
         {
-            trace.Level2Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L2Enclosure1Complete = true;
+            } else if (currentSet == 2)
+            {
+                trace.L2Enclosure2Complete = true;
+            } else if (currentSet == 3)
+            {
+                trace.L2Enclosure3Complete = true;
+            } else if (currentSet == 4)
+            {
+                trace.L2Enclosure4Complete = true;
+                trace.Level2Complete = true;
+            }
         }
         if (currentLevel == 3)
         {
-            trace.Level3Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L3Enclosure1Complete = true;
+            } else if (currentSet == 2)
+            {
+                trace.L3Enclosure2Complete = true;
+            } else if (currentSet == 3)
+            {
+                trace.L3Enclosure3Complete = true;
+            } else if (currentSet == 4)
+            {
+                trace.L3Enclosure4Complete = true;
+                trace.Level3Complete = true;
+            }
         }
         if (currentLevel == 4)
         {
-            trace.Level4Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L4Enclosure1Complete = true;
+            } else if (currentSet == 2)
+            {
+                trace.L4Enclosure2Complete = true;
+            } else if (currentSet == 3)
+            {
+                trace.L4Enclosure3Complete = true;
+            } else if (currentSet == 4)
+            {
+                trace.L4Enclosure4Complete = true;
+                trace.Level4Complete = true;
+            }
         }
         if (currentLevel == 5)
         {
