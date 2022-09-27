@@ -280,7 +280,6 @@ public class SummaryManager : MonoBehaviour
         }
         if (currentLevel == 1)
         {
-            trace.Level1Complete = true;
             if (currentSet == 1)
             {
                 trace.L1Enclosure1Complete = true;
@@ -293,11 +292,11 @@ public class SummaryManager : MonoBehaviour
             } else if (currentSet == 4)
             {
                 trace.L1Enclosure4Complete = true;
+                trace.Level1Complete = true;
             }
         }
         if (currentLevel == 2)
         {
-            trace.Level2Complete = true;
             if (currentSet == 1)
             {
                 trace.L2Enclosure1Complete = true;
@@ -310,11 +309,11 @@ public class SummaryManager : MonoBehaviour
             } else if (currentSet == 4)
             {
                 trace.L2Enclosure4Complete = true;
+                trace.Level2Complete = true;
             }
         }
         if (currentLevel == 3)
         {
-            trace.Level3Complete = true;
             if (currentSet == 1)
             {
                 trace.L3Enclosure1Complete = true;
@@ -327,11 +326,11 @@ public class SummaryManager : MonoBehaviour
             } else if (currentSet == 4)
             {
                 trace.L3Enclosure4Complete = true;
+                trace.Level3Complete = true;
             }
         }
         if (currentLevel == 4)
         {
-            trace.Level4Complete = true;
             if (currentSet == 1)
             {
                 trace.L4Enclosure1Complete = true;
@@ -344,6 +343,7 @@ public class SummaryManager : MonoBehaviour
             } else if (currentSet == 4)
             {
                 trace.L4Enclosure4Complete = true;
+                trace.Level4Complete = true;
             }
         }
         if (currentLevel == 5)
