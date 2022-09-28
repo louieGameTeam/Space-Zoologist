@@ -509,9 +509,11 @@ public class SummaryManager : MonoBehaviour
     private void SaveSummaryTrace()
     {
         Debug.Log("Sending summary trace to DB.");
-        Debug.Log("Player ID POST: " + currentSummaryTrace.PlayerID);
-        string json = ConvertSummaryTraceToJSON(currentSummaryTrace);
-        StartCoroutine(SubmitSummaryTrace.TrySubmitSummaryTrace(json));
+        if (!string.IsNullOrEmpty(currentSummaryTrace.PlayerID)) {
+            Debug.Log("Player ID POST: " + currentSummaryTrace.PlayerID);
+            string json = ConvertSummaryTraceToJSON(currentSummaryTrace);
+            StartCoroutine(SubmitSummaryTrace.TrySubmitSummaryTrace(json));
+        }
     }
 
     // Helper function for when research tab is opened
