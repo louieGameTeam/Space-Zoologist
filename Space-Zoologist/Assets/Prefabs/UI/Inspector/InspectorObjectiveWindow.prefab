@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -45, y: -45}
-  m_SizeDelta: {x: 35, y: 35}
+  m_AnchoredPosition: {x: -46.210125, y: -46.0037}
+  m_SizeDelta: {x: 35.4964, y: 32.7029}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1210859220
 CanvasRenderer:
@@ -68,7 +68,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: cfa213a9618936c41980afb0d0ed6ec3, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -111,8 +111,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 205.24347, y: 160.07391}
+  m_SizeDelta: {x: -410.4867, y: -320.1478}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1243032564
 MonoBehaviour:
@@ -2281,7 +2281,7 @@ MonoBehaviour:
   inspector: {fileID: 3168205392388878789}
   minimizeButton: {fileID: 1243032564}
   maximizeButton: {fileID: 0}
-  mainDisplayWindow: {fileID: 0}
+  mainDisplayWindowCanvasGroup: {fileID: 0}
 --- !u!114 &6808062258899779883
 MonoBehaviour:
   m_ObjectHideFlags: 0
