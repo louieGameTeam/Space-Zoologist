@@ -1323,6 +1323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  populationHighlightColor: {r: 0.09803922, g: 1, b: 0.22745098, a: 0.7882353}
+  animalHighlightColor: {r: 0.44705883, g: 0.6039216, b: 1, a: 1}
+  foodHighlightColor: {r: 0.18039216, g: 0.40392157, b: 0.93333334, a: 0.92156863}
+  liquidHighlightColor: {r: 0, g: 0.06666667, b: 0.7921569, a: 0.5372549}
   inspectorWindow: {fileID: 4368926420888670963}
   inspectorWindowDisplayScript: {fileID: 7331818809557388825}
   GrowthInfo: {fileID: 7243082125307740525}
@@ -2195,6 +2199,7 @@ GameObject:
   - component: {fileID: 7243082126267867202}
   - component: {fileID: 6037491244839071911}
   - component: {fileID: 6808062258899779883}
+  - component: {fileID: 768986482}
   m_Layer: 5
   m_Name: InspectorObjectiveWindow
   m_TagString: Untagged
@@ -2217,7 +2222,7 @@ RectTransform:
   - {fileID: 5151556513031972717}
   - {fileID: 8877566110954028641}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -2281,7 +2286,7 @@ MonoBehaviour:
   inspector: {fileID: 3168205392388878789}
   minimizeButton: {fileID: 1243032564}
   maximizeButton: {fileID: 0}
-  mainDisplayWindowCanvasGroup: {fileID: 0}
+  mainDisplayWindowCanvasGroup: {fileID: 768986482}
 --- !u!114 &6808062258899779883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2296,6 +2301,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   operationsBlocked:
     operationsBlocked: 0101000001
+--- !u!225 &768986482
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243082126267867201}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7536904850095213284
 GameObject:
   m_ObjectHideFlags: 0

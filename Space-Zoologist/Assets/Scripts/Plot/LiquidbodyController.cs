@@ -56,14 +56,12 @@ public class LiquidbodyController : MonoBehaviour
     public bool GetLiquidContentsAt(Vector3Int pos, out float[] contents, out bool constructing)
     {
         // check if the tile already exists in the liquidbody.
-        foreach (LiquidBody l in liquidBodies)
+        var existingBody = GetLiquidBodyAt(pos);
+        if(existingBody != null)
         {
-            if (l.ContainsTile(pos))
-            {
-                contents = l.contents;
-                constructing = false;
-                return true;
-            }
+            contents = existingBody.contents;
+            constructing = false;
+            return true;
         }
 
         if (constructingTileContentDict.ContainsKey(pos))
@@ -81,11 +79,21 @@ public class LiquidbodyController : MonoBehaviour
 
     public void SetLiquidContentsAt(Vector3Int pos, float[] contents)
     {
+        var body = GetLiquidBodyAt(pos);
+        if(body != null)
+            body.contents = contents;
+    }
+
+    public LiquidBody GetLiquidBodyAt(Vector3Int pos)
+    {
         foreach (LiquidBody l in liquidBodies)
         {
             if (l.ContainsTile(pos))
-                l.contents = contents;
+            {
+                return l;
+            }
         }
+        return null;
     }
 
     public void MergeConstructingTiles()
@@ -120,14 +128,13 @@ public class LiquidbodyController : MonoBehaviour
         LiquidBody originalLiquidbody = new LiquidBody(new List<LiquidBody>());
 
         // find the liquidbody with the tile and remove the tile
-        foreach (LiquidBody l in liquidBodies)
+        var l = GetLiquidBodyAt(pos);
+        if (l != null)
         {
-            if (l.ContainsTile(pos))
-            {
-                originalLiquidbody = l;
-                hasDivisions = l.RemoveTile(pos, out dividedBodiesTiles);
-            }
+            originalLiquidbody = l;
+            hasDivisions = l.RemoveTile(pos, out dividedBodiesTiles);
         }
+        
 
         // check if there are any tiles left, if so delete
         if (originalLiquidbody.TileCount == 0)
@@ -246,11 +253,9 @@ public class LiquidbodyController : MonoBehaviour
     private bool CheckLiquidTileAlreadyExistsAt(Vector3Int pos)
     {
         // check within liquidbodies
-        foreach (LiquidBody l in liquidBodies)
-        {
-            if (l.ContainsTile(pos))
-                return true;
-        }
+        var l = GetLiquidBodyAt(pos);
+        if (l != null)
+            return true;
 
         // check within currently constructing tiles
         if (constructingTileContentDict.ContainsKey(pos))
