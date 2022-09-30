@@ -9,14 +9,12 @@ public class PodStoreSection : StoreSection
     [Header("Handled by Prefab")]
     [SerializeField] Transform PodItemContainer = default;
     private PopulationManager populationManager = default;
-    private TilePlacementController tilePlacementController = default;
 
     AnimalSpecies selectedSpecies = null;
 
     public override void Initialize()
     {
         populationManager = GameManager.Instance.m_populationManager;
-        tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemRegistry.Category.Species;
         base.Initialize();
     }
