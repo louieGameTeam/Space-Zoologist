@@ -6,7 +6,7 @@ public static class VectorExtensions
 {
     public static Vector3Int ToVector3Int(this Vector3 vec)
     {
-        return new Vector3Int((int)vec.x, (int)vec.y, (int)vec.z);
+        return new Vector3Int(Mathf.FloorToInt(vec.x), Mathf.FloorToInt(vec.y), Mathf.FloorToInt(vec.z));
     }
 
     public static Vector3 ToVector3(this Vector2 vec)

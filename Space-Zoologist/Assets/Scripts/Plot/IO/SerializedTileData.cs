@@ -7,14 +7,20 @@ public class SerializedTileData
     public int TileID;
     public int LiquidBodyID;
     public bool Placeable;
-    public bool Locked;
     public int Repetitions;
-    public SerializedTileData(GameTile tile, int liquidbodyID, bool placeable, int repetitions, bool locked = false)
+    public SerializedTileData(GameTile tile, int liquidbodyID, bool placeable, int repetitions)
     {
         this.TileID = tile == null ? -1 : (int)tile.type;
         this.LiquidBodyID = liquidbodyID;
         this.Placeable = placeable;
         this.Repetitions = repetitions;
-        this.Locked = locked;
+    }
+
+    public SerializedTileData(SerializedTileData tile)
+    {
+        this.TileID = tile.TileID;
+        this.LiquidBodyID = tile.LiquidBodyID;
+        this.Placeable = tile.Placeable;
+        this.Repetitions = tile.Repetitions;
     }
 }
