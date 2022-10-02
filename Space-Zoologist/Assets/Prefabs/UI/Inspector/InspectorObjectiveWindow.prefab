@@ -1791,6 +1791,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  populationHighlightColor: {r: 0.06474723, g: 0.9150943, b: 0.29830426, a: 1}
+  animalHighlightColor: {r: 0, g: 0.42721534, b: 1, a: 1}
+  foodHighlightColor: {r: 0, g: 0.5161231, b: 0.9433962, a: 1}
+  liquidHighlightColor: {r: 0.16487186, g: 0.30048138, b: 0.8962264, a: 0.64705884}
   inspectorWindow: {fileID: 4368926420888670963}
   inspectorWindowDisplayScript: {fileID: 7331818809557388825}
   GrowthInfo: {fileID: 7243082125307740525}
@@ -2749,7 +2753,7 @@ RectTransform:
   - {fileID: 4757098134198570664}
   - {fileID: 7407903135602564792}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
