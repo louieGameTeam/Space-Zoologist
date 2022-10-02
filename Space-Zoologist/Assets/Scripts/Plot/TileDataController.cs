@@ -1155,6 +1155,13 @@ public class TileDataController : MonoBehaviour
         return tileCheck;
     }
 
+    public bool IsTilePlacementValid(Vector3Int tilePos, GameTile oldTile, TileType newTile)
+    {
+        if (oldTile == null)
+            return false;
+        return IsTilePlacementValid(tilePos, oldTile.type, newTile);
+    }
+
     public bool IsTilePlacementValid (Vector3Int tilePos, TileType oldTile, TileType newTile) {
         // If there is food on the tile, make sure the food supports the new tile's type
         if (GetTileData (tilePos).Food && !GetTileData (tilePos).Food.GetComponent<FoodSource> ().Species.AccessibleTerrain.Contains(newTile)) {
@@ -1296,7 +1303,8 @@ public class TileDataController : MonoBehaviour
     // Returns true if the tile can be placed
     private bool IsValidTile(Vector3Int cellPosition, Item tile)
     {
-        if (GetTileData(cellPosition) == null || !GetTileData(cellPosition).currentTile){
+        if (GetTileData(cellPosition) == null){
+            HighlightTile(cellPosition, Color.red);
             return false;
         }
 
@@ -1307,9 +1315,8 @@ public class TileDataController : MonoBehaviour
         } else {
             Enum.TryParse(tile.ItemName, out type);
         }
-        TileType curType = GetTileData(cellPosition).currentTile.type;
-        
-        bool isValid = IsTilePlacementValid(cellPosition, curType, type);
+        var curTile = GetTileData(cellPosition).currentTile;
+        bool isValid = IsTilePlacementValid(cellPosition, curTile, type);
         HighlightTile(cellPosition, isValid ? Color.green : Color.red);
         return isValid;
     }

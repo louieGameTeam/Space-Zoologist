@@ -278,10 +278,12 @@ public class TilePlacementController : MonoBehaviour
         {
             return false;
         }
-        
+
+        var currentTile = gridSystemReference.GetTileData(cellLocation).currentTile;
+
         // Can't place certain tiles
         foreach (GameTile tile in referencedTiles) {
-            if (!gridSystemReference.IsTilePlacementValid (cellLocation, gridSystemReference.GetTileData(cellLocation).currentTile.type, tile.type)) {
+            if (currentTile == null || !gridSystemReference.IsTilePlacementValid (cellLocation, currentTile.type, tile.type)) {
                 print ("Should not be able to place tile here!");
                 return false;
             }
