@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -601.50885, y: -301.20956, z: 656.46436}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9168843213614737812}
   m_Father: {fileID: 0}
@@ -45,19 +46,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 10
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":481,\"yPos\":-251},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"What
-    does that mean, exactly?\",\"parentUIDs\":[1,1],\"SpeechUID\":3}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":490,\"yPos\":-381},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Here
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":171.5,\"yPos\":192},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"What
+    does that mean, exactly?\",\"parentUIDs\":[1,1],\"SpeechUID\":3}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":180.5,\"yPos\":62},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Here
     we are. Our remedial enclosure. It is designed specifically to allow new recruits
-    to focus more on the theoretical side of our work than the practical.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":481,\"yPos\":-151},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"That
-    you should have little trouble completing your objective.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":481,\"yPos\":-51},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"While
-    you will once again have to balance the needs of Eligans Impar and Caprax Zeigrun,
-    it should be easier here than in previous enclosures.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":5,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":481,\"yPos\":49},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Therefore
+    to focus more on the theoretical side of our work than the practical.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":288},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"That
+    you should have little trouble completing your objective.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":171.5,\"yPos\":392},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"While
+    you will once again have to balance the needs of Lumoos and Zeigs, it should
+    be easier here than in previous enclosures.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":5,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":171.5,\"yPos\":492},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Therefore
     you will be able to focus on your true objective: closely observing the behavior
-    and needs of the Eligans Impar so you can complete your report back satisfactorily.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":483,\"yPos\":150},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Focus
-    your efforts on observing the food and liquid preferences of the Oligans Impar,
-    as that will be the subject of this enclosure\u2019s report back.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":481,\"yPos\":249},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"I
+    and needs of the Lumoos so you can complete your report back satisfactorily.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":173.5,\"yPos\":593},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Focus
+    your efforts on observing the food and liquid preferences of the Lumoos, as that
+    will be the subject of this enclosure\u2019s report back.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":171.5,\"yPos\":692},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"I
     will return to see how you\u2019ve progressed in 30 days. You\u2019ll need to
-    raise the Oligans Impar and Caprax Zeigrun populations up to 20 apiece.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":481,\"yPos\":349},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Give
+    raise the Lumoo and Zeig populations up to 20 apiece.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":170.5,\"yPos\":793},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Give
     it your best effort, and it should prove no difficulty, though I recommend you
     ensure that you fill your notebook with detailed notes this time.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
@@ -116,6 +117,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3406799636426949801}
   m_RootOrder: 0

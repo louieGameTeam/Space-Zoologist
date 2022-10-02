@@ -18,8 +18,7 @@ MonoBehaviour:
       index: 1
     need: 0
   fixedQuestions:
-  - question: First, how many tiles does each Caprax Zeigrun need to itself in order
-      to thrive?
+  - question: First, how many tiles does each Zeig need to itself in order to thrive?
     category:
       item:
         category: 0
@@ -31,10 +30,10 @@ MonoBehaviour:
     - label: 5
       weight: 0
     - label: 6
-      weight: 0
-    - label: 8
       weight: 1
-  - question: Which of the following terrain types will the Eligan Impar always avoid?
+    - label: 8
+      weight: 2
+  - question: Which of the following terrain types will the Lumoos always avoid?
     category:
       item:
         category: 0
@@ -43,7 +42,7 @@ MonoBehaviour:
     options:
     - label: Swamp
       weight: 2
-    - label: Rock
+    - label: Stone
       weight: 1
     - label: Sand
       weight: 1
@@ -51,21 +50,21 @@ MonoBehaviour:
       weight: 0
     - label: Dirt
       weight: 0
-  - question: Which of the following is a food which the Eligans Impar and Caprax
-      Zeigrun compete over.
+  - question: Which of the following is a food which the Lumoos and Zeigs compete
+      over?
     category:
       item:
         category: 0
         index: 1
       need: 7
     options:
-    - label: Coruscent Laminar
+    - label: Flanweed
       weight: 0
-    - label: Vaccinum Spatium Bacca
+    - label: Bacca Berry Bushes
       weight: 1
-    - label: Formica Collis
+    - label: Formite Hives
       weight: 0
-    - label: Candentis Acernis Aurum
+    - label: Gilded Astral Maples
       weight: 1
   - question: Which of the following species dominates when the two compete for food?
     category:
