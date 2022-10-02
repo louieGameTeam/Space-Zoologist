@@ -27,6 +27,7 @@ public class StoreSection : MonoBehaviour
     protected List<RectTransform> UIElements = default;
     protected TileDataController GridSystem = default;
     protected ResourceManager ResourceManager = default;
+    protected TilePlacementController tilePlacementController = default;
     protected Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
     protected Item selectedItem = null;
     private Vector3Int previousLocation = default;
@@ -38,6 +39,7 @@ public class StoreSection : MonoBehaviour
         this.UIElements = UIElements;
         this.GridSystem = GameManager.Instance.m_tileDataController;
         this.ResourceManager = resourceManager;
+        this.tilePlacementController = GameManager.Instance.m_tilePlacementController;
 
         resourceManager.OnRemainingResourcesChanged += UpdateDisplayValue;
     }
@@ -97,6 +99,7 @@ public class StoreSection : MonoBehaviour
                 }
             }
         }
+
     }
 
     /// <summary>

@@ -39,11 +39,11 @@ public class SerializedTilemap
                     }
 
                     // if tile does not match current
-                    if (tileData.currentTile == null || gameTile.type != tileData.currentTile.type || placeable != tileData.isTilePlaceable)
+                    if (tileData.currentTile == null || gameTile == null || gameTile.type != tileData.currentTile.type || placeable != tileData.isTilePlaceable)
                     {
                         // create and add a new serialized tile data
                         int liquidBodyID = -1;
-                        if (gameTile.type == TileType.Liquid) {
+                        if (gameTile != null &&  gameTile.type == TileType.Liquid) {
                             foreach (LiquidBody l in liquidBodies) {
                                 if (l.ContainsTile(prevTilePos)) {
                                     liquidBodyID = l.bodyID;

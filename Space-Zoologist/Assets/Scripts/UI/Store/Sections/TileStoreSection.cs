@@ -11,7 +11,6 @@ using UnityEngine.EventSystems;
 public class TileStoreSection : StoreSection
 {
     private EnclosureSystem EnclosureSystem = default;
-    private TilePlacementController tilePlacementController = default;
 
     private float startingBalance;
     private int initialAmt;
@@ -21,7 +20,6 @@ public class TileStoreSection : StoreSection
     public override void Initialize()
     {
         EnclosureSystem = GameManager.Instance.m_enclosureSystem;
-        tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemRegistry.Category.Tile;
         base.Initialize();
         //Debug.Assert(tilePlacementController != null);

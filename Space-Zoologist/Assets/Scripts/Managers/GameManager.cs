@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
 
     public SerializedLevel LoadMap(string name = null, bool preset = true)
     {
+        Debug.Log(name);
         name = name ?? m_levelData.Level.SceneName;
         string fullPath = preset ? this.directory + name : Path.Combine(Application.persistentDataPath, name);
 
