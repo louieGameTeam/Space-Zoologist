@@ -107,11 +107,11 @@ public class GameManager : MonoBehaviour
         LoadResources();
         InitializeManagers();
         InitializeUI();
+        Needs = new NeedCache();
+        Needs.RebuildIfDirty();
         LoadLevelData();
         SetupObjectives();
         InitializeGameStateVariables();
-        Needs = new NeedCache();
-        Needs.RebuildIfDirty();
     }
 
     void Update()
