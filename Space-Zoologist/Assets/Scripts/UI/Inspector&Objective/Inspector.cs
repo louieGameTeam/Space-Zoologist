@@ -16,7 +16,14 @@ public class Inspector : MonoBehaviour
     public bool IsInInspectorMode { get; private set; }
     public UnityEvent SelectionChangedEvent => selectionChangedEvent;
 
+    [Header("Highlight Colors")]
+    [SerializeField] private Color populationHighlightColor;
+    [SerializeField] private Color animalHighlightColor;
+    [SerializeField] private Color foodHighlightColor;
+    [SerializeField] private Color liquidHighlightColor;
+
     // The inspector window
+    [Header("Dependencies")]
     [SerializeField] private GameObject inspectorWindow = null;
     [SerializeField] private DisplayInspectorText inspectorWindowDisplayScript = null;
     [SerializeField] private GameObject GrowthInfo = default;
@@ -158,6 +165,9 @@ public class Inspector : MonoBehaviour
         {
             DisplayLiquidText(mouseCellPos);
             selectedPosition = mouseCellPos;
+            // highlight liquid body
+            var body = LiquidbodyController.Instance.GetLiquidBodyAt(mouseCellPos);
+            HighlightLiquidBody(body);
         }
         // Selection is enclosed area
         // Disabled
@@ -268,7 +278,7 @@ public class Inspector : MonoBehaviour
         {
             for (int y = -(foodSize.x - 1) / 2; y <= foodSize.y / 2; y++)
             {
-                GameManager.Instance.m_tileDataController.HighlightRadius(foodPositionInt + new Vector3Int(x, y, 0), Color.blue, rootRadius);
+                GameManager.Instance.m_tileDataController.HighlightRadius(foodPositionInt + new Vector3Int(x, y, 0), foodHighlightColor, rootRadius);
             }
         }
 
@@ -315,13 +325,13 @@ public class Inspector : MonoBehaviour
         this.PopulationHighlighted = population;
         foreach (Transform child in population.transform)
         {
-            child.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+            child.gameObject.GetComponent<SpriteRenderer>().color = animalHighlightColor;
         }
 
         // highlight their accessible terrain too
         Population populationScript = population.GetComponent<Population>();
         List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.AccessibleArea[populationScript];
-        GameManager.Instance.m_tileDataController.HighlightTiles(accessibleTiles, Color.green);
+        GameManager.Instance.m_tileDataController.HighlightTiles(accessibleTiles, populationHighlightColor);
         this.lastPopulationSelected = population;
     }
 
@@ -329,8 +339,15 @@ public class Inspector : MonoBehaviour
     private void HighlightFoodSource(GameObject foodSourceGameObject)
     {
         // Highlight food source object
-        foodSourceGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        foodSourceGameObject.GetComponent<SpriteRenderer>().color = foodHighlightColor;
         this.lastFoodSourceSelected = foodSourceGameObject;
+    }
+
+    private void HighlightLiquidBody(LiquidBody body)
+    {
+        if (body == null)
+            return;
+        GameManager.Instance.m_tileDataController.HighlightTiles(new List<Vector3Int>(body.tiles), liquidHighlightColor);
     }
 
     public GameObject GetAnimalSelected()

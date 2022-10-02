@@ -1323,6 +1323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde49845d12db45a198171e12599d7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  populationHighlightColor: {r: 0.09803922, g: 1, b: 0.22745098, a: 0.7882353}
+  animalHighlightColor: {r: 0.44705883, g: 0.6039216, b: 1, a: 1}
+  foodHighlightColor: {r: 0.18039216, g: 0.40392157, b: 0.93333334, a: 0.92156863}
+  liquidHighlightColor: {r: 0, g: 0.06666667, b: 0.7921569, a: 0.5372549}
   inspectorWindow: {fileID: 4368926420888670963}
   inspectorWindowDisplayScript: {fileID: 7331818809557388825}
   GrowthInfo: {fileID: 7243082125307740525}
