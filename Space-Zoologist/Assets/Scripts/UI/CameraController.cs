@@ -1,4 +1,4 @@
-  using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +32,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float WASDSpeed = 0.5f;
     [SerializeField] float WASDAcceleration = 0.75f;
     [SerializeField] private float zoomLerpSpeed = 5f;
+    [SerializeField] private float ZoomFactor = 0.8f;
     [SerializeField] bool EdgeMovement = false;
     [SerializeField] private float edgeSpeed = 5f;
     [SerializeField] private float edgeBoundary = 10f;
@@ -42,7 +43,6 @@ public class CameraController : MonoBehaviour
     private Camera cam = default;
     private Vector3 originalPosition;
     private float targetZoom;
-    private float zoomFactor = 3f;
     private Vector3 dragOrigin;
     private Vector3 oldPos;
     private Vector2 currentVelocity;
@@ -104,7 +104,7 @@ public class CameraController : MonoBehaviour
         float scrollData = 0;
         if (ZoomEnabled) scrollData = Input.GetAxis("Mouse ScrollWheel");
 
-        targetZoom -= scrollData * zoomFactor;
+        targetZoom -= scrollData * ZoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 2.5f, zoomHeight);
         Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
     }

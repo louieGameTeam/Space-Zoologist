@@ -1785,6 +1785,7 @@ GameObject:
   - component: {fileID: 6805812952272937970}
   - component: {fileID: 370339982456861053}
   - component: {fileID: 7680601676136946662}
+  - component: {fileID: 1636072217289583383}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -1871,7 +1872,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 0.15
   m_Viewport: {fileID: 3401978282487841694}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 333921546236546151}
@@ -1896,6 +1897,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 6805812952272937970}
 --- !u!114 &7680601676136946662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269102678356236891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 6805812952272937970}
+--- !u!114 &1636072217289583383
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2368,6 +2382,7 @@ GameObject:
   - component: {fileID: 5760043073626379443}
   - component: {fileID: 3869591237664508145}
   - component: {fileID: 5962100355964648773}
+  - component: {fileID: 7753669633481597637}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -2454,7 +2469,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 0.15
   m_Viewport: {fileID: 2150714081006880395}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 5581001774948690733}
@@ -2479,6 +2494,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 5760043073626379443}
 --- !u!114 &5962100355964648773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830723389979006812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f3d946d19399d4c93d3edd1274b161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 5760043073626379443}
+--- !u!114 &7753669633481597637
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
