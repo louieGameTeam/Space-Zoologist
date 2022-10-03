@@ -18,7 +18,7 @@ MonoBehaviour:
       index: 1
     need: 0
   fixedQuestions:
-  - question: First, how many tiles does each Zeig need to itself in order to thrive?
+  - question: First, how many tiles does each Lumoo need to itself in order to thrive?
     category:
       item:
         category: 0
@@ -73,9 +73,9 @@ MonoBehaviour:
         index: 1
       need: 7
     options:
-    - label: Caprax Ziegrun
+    - label: Zeigs
       weight: 0
-    - label: 'Eligans Impar '
+    - label: Lumoos
       weight: 1
   - question: 'Lets say Barry was designing an enclosure and he forgot to do research
       before he started experimenting with his design of the enclosure. What are
@@ -101,7 +101,7 @@ MonoBehaviour:
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 00000000000000000000000000000000
+    answers: 0000000000000000000000000000000000000000
     runtimeTemplate:
       template: {fileID: 0}
       questions: []
