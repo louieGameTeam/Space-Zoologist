@@ -19,6 +19,14 @@ public class SubmitSummaryTrace : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
         Debug.Log("Status Code: " + request.responseCode);
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            Debug.Log("Request successfully sent");
+        }
         request.Dispose();
     }
 }
