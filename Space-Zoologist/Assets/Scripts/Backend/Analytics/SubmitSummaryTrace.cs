@@ -15,6 +15,7 @@ public class SubmitSummaryTrace : MonoBehaviour
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
         request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
+        request.chunkedTransfer = false;
         request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
         Debug.Log("Status Code: " + request.responseCode);
