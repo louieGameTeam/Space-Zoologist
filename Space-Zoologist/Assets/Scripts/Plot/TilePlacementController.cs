@@ -16,7 +16,6 @@ public class TilePlacementController : MonoBehaviour
     [SerializeField] public bool godMode = false;
     private bool isPreviewing;
     private bool isFirstTile;
-    [SerializeField] public bool isErasing = false;
 
     private Vector3Int dragStartPosition = Vector3Int.zero;
     private Vector3Int lastMouseCellPosition = Vector3Int.zero;
@@ -26,6 +25,11 @@ public class TilePlacementController : MonoBehaviour
     public GameTile[] gameTiles { get; private set; } = default;
     public HashSet<Vector3Int> addedTiles = new HashSet<Vector3Int>(); // All NEW tiles
     private HashSet<Vector3Int> triedToPlaceTiles = new HashSet<Vector3Int>(); // New tiles and same tile
+
+    [Header("Map Designer Fields")]
+    [SerializeField] public bool isErasing = false;
+    [SerializeField] public bool isTogglingPlaceable = false;
+    [SerializeField] public bool setPlaceableToValue = true;
 
     private void Update()
     {
@@ -38,6 +42,11 @@ public class TilePlacementController : MonoBehaviour
                 if (isErasing)
                 {
                     this.EraseTile();
+                    return;
+                }
+                if (isTogglingPlaceable)
+                {
+                    this.ToggleTilePlaceable();
                     return;
                 }
                 UpdatePreviewPen();
@@ -94,15 +103,20 @@ public class TilePlacementController : MonoBehaviour
         this.triedToPlaceTiles.Clear();
     }
     // does not account for walls
+    public void ToggleTilePlaceable()
+    {
+        TileData currentTile = gridSystemReference.GetTileData(this.currentMouseCellPosition);
+        if (currentTile != null)
+        {
+            currentTile.isTilePlaceable = setPlaceableToValue;
+        }
+    }
     public void EraseTile()
     {
-        foreach (GameTile tile in this.referencedTiles)
+        GameTile currentTile = gridSystemReference.GetGameTileAt(this.currentMouseCellPosition);
+        if (currentTile != null)
         {
-            GameTile currentTile = gridSystemReference.GetGameTileAt(this.currentMouseCellPosition);
-            if (currentTile != null)
-            {
-                gridSystemReference.RemoveTile(this.currentMouseCellPosition);
-            }
+            gridSystemReference.RemoveTile(this.currentMouseCellPosition);
         }
     }
     public int PlacedTileCount()
@@ -208,16 +222,18 @@ public class TilePlacementController : MonoBehaviour
     {
         if (godMode)
             return true;
-
+        var tileData = gridSystemReference.GetTileData(cellPosition);
+        if (tileData == null)
+            return false;
         if (currentMouseCellPosition == dragStartPosition)
         {
-            return GameManager.Instance.LevelData.WallBreakable || gridSystemReference.GetTileData(cellPosition).isTilePlaceable;
+            return GameManager.Instance.LevelData.WallBreakable || tileData.isTilePlaceable;
         }
         foreach (Vector3Int location in FourNeighborTileLocations(cellPosition))
         {
             if (triedToPlaceTiles.Contains(location))
             {
-                return GameManager.Instance.LevelData.WallBreakable || gridSystemReference.GetTileData(location).isTilePlaceable;
+                return GameManager.Instance.LevelData.WallBreakable || tileData.isTilePlaceable;
             }
         }
         return false;
@@ -226,6 +242,8 @@ public class TilePlacementController : MonoBehaviour
 
     public PlacementResult PlaceTile(Vector3Int cellPosition, bool checkPlacable = true) //Main function controls tile placement
     {
+        if (isErasing || isTogglingPlaceable)
+            return PlacementResult.Restricted;
         if (IsPlacable(cellPosition) || !checkPlacable)
         {
             // If animal/food at location
@@ -278,10 +296,12 @@ public class TilePlacementController : MonoBehaviour
         {
             return false;
         }
-        
+
+        var currentTile = gridSystemReference.GetTileData(cellLocation).currentTile;
+
         // Can't place certain tiles
         foreach (GameTile tile in referencedTiles) {
-            if (!gridSystemReference.IsTilePlacementValid (cellLocation, gridSystemReference.GetTileData(cellLocation).currentTile.type, tile.type)) {
+            if (currentTile == null || !gridSystemReference.IsTilePlacementValid (cellLocation, currentTile.type, tile.type)) {
                 print ("Should not be able to place tile here!");
                 return false;
             }

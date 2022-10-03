@@ -15,4 +15,12 @@ public class SerializedTileData
         this.Placeable = placeable;
         this.Repetitions = repetitions;
     }
+
+    public SerializedTileData(SerializedTileData tile)
+    {
+        this.TileID = tile.TileID;
+        this.LiquidBodyID = tile.LiquidBodyID;
+        this.Placeable = tile.Placeable;
+        this.Repetitions = tile.Repetitions;
+    }
 }

@@ -140,22 +140,32 @@ public class GameManager : MonoBehaviour
         if (File.Exists(fullPath))
             Debug.Log("Overwriting file at " + fullPath);
 
-        SerializedLevel level;
-        /*try
-        {*/
-            level = new SerializedLevel();
-            level.SetPopulations(m_populationManager);
-            level.SetPlot(m_plotIO.SavePlot());
-        /*}
-        catch
-        {
-            Debug.LogError("Serialization error, NOT saved to protect existing saves");
-            return;
-        }*/
+        SerializedLevel level = GetSerializedMap();
 
         using (StreamWriter streamWriter = new StreamWriter(fullPath))
             streamWriter.Write(JsonUtility.ToJson(level));
         Debug.Log("Grid Saved to: " + fullPath);
+    }
+
+    /// <summary>
+    /// Serializes map and returns SerializedLevel object
+    /// </summary>
+    /// <returns></returns>
+    public SerializedLevel GetSerializedMap()
+    {
+        SerializedLevel level;
+        try
+        {
+            level = new SerializedLevel();
+            level.SetPopulations(m_populationManager);
+            level.SetPlot(m_plotIO.SavePlot());
+            return level;
+        }
+        catch
+        {
+            Debug.LogError("Serialization error, NOT saved to protect existing saves");
+            return null;
+        }
     }
 
     public SerializedLevel LoadMap(string name = null, bool preset = true)
@@ -180,6 +190,12 @@ public class GameManager : MonoBehaviour
                 JsonUtility.FromJson<SerializedGrid>(File.ReadAllText(this.directory + "_defaultGrid.json"))));
         }
         Debug.Log("Loading " + fullPath);
+        LoadMap(serializedLevel);
+        return serializedLevel;
+    }
+
+    public SerializedLevel LoadMap(SerializedLevel serializedLevel)
+    {
         m_plotIO.LoadPlot(serializedLevel.serializedPlot);
         //Animals loaded after map to avoid path finding issues
         this.PresetMap = serializedLevel;

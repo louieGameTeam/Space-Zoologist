@@ -485,8 +485,8 @@ public class MoveObject : MonoBehaviour
     private void TryPlaceTile(Vector3 worldPos, GameObject toMove)
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
-        var currentGameTile = gridSystem.GetTileData(tilePos).currentTile;
-        if (gridSystem.IsTilePlacementValid (tilePos, currentGameTile.type, initialTile.type))
+        var currentGameTile = gridSystem.GetTileData(tilePos)?.currentTile;
+        if (gridSystem.IsTilePlacementValid (tilePos, currentGameTile, initialTile.type))
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
