@@ -77,7 +77,7 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         /*#if UNITY_EDITOR
         overlay.SetActive(false);
         #else*/
-        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber || levelNumber > Statics.LatestUnlockableLevel);
+        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber || levelNumber > Statics.LatestUnlockableSector);
         //print (levelNumber + ", " + LatestLevelQualified.LevelNumber);
         //#endif
         overlay.transform.SetAsLastSibling();
