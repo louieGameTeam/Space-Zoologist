@@ -72,6 +72,8 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     {
         if(drawingTexture != null)
         {
+            SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
+            summaryManager.CurrentSummaryTrace.NumDrawToolUsed += 1;
             previousTexturePosition = MousePositionToPositionInTexture(data.position);
 
             // Fill a circle as the cap of this line
