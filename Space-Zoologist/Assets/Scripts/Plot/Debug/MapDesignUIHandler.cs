@@ -33,7 +33,7 @@ public class MapDesignUIHandler : MonoBehaviour
         {
             var gameTile = tile.currentTile;
             tileDataText.text += 
-                $"{(gameTile != null ? tile.currentTile.type.ToString() : "GameTile Null")}\n" +
+                $"{(gameTile != null ? tile.currentTile.type + $" ({(int)tile.currentTile.type})" : "GameTile Null")}\n" +
                 $"Placeable: {tile.isTilePlaceable.ToString().ToUpper()}";
         }
         else

@@ -8,13 +8,23 @@ public class MapDesignHighlighter : MonoBehaviour
     [SerializeField] private Color unPlaceableHighlight;
 
     private TileDataController tileDataController;
+    private bool highlightingPlaceables = false;
     private void Start()
     {
         tileDataController = GameManager.Instance.m_tileDataController;
     }
 
+    private void Update()
+    {
+        if(highlightingPlaceables && Input.GetMouseButtonDown(2))
+        {
+            HighlightUnplaceables();
+        }
+    }
+
     public void ToggleShowPlaceableHighlight(bool val)
     {
+        highlightingPlaceables = val;
         if(!val)
             ClearHighlights();
         else
