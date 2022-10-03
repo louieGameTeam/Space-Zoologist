@@ -48,8 +48,8 @@ MonoBehaviour:
       weight: 0
     - label: Glowcaps
       weight: 1
-  - question: "Last question. Let\u2019s change it up a bit and talk about terrain.
-      What kind of terrain will the zeigs never enter? "
+  - question: "Let\u2019s change it up a bit and talk about terrain. What kind of
+      terrain will the zeigs never enter? "
     category:
       item:
         category: 0
@@ -61,9 +61,23 @@ MonoBehaviour:
     - label: Grass
       weight: 0
     - label: Stone
-      weight: 0
-    - label: Sand
       weight: 1
+    - label: Sand
+      weight: 2
+  - question: Last question. Which of the following is the correct order of the design
+      steps on the first page of the command center?
+    category:
+      item:
+        category: 2
+        index: 3
+      need: 6
+    options:
+    - label: Research, Observe, Concepts, Test and Metrics
+      weight: 1
+    - label: 'Observe, Research, Test, Concepts and Metrics '
+      weight: 0
+    - label: Concepts, Test, Observe, Metrics and Research
+      weight: 0
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []

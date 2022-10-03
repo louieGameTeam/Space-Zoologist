@@ -77,6 +77,24 @@ MonoBehaviour:
       weight: 0
     - label: 'Eligans Impar '
       weight: 1
+  - question: 'Lets say Barry was designing an enclosure and he forgot to do research
+      before he started experimenting with his design of the enclosure. What are
+      the possible problems that could arise from this?
+
+'
+    category:
+      item:
+        category: 2
+        index: 3
+      need: 6
+    options:
+    - label: Without doing proper research, Barry will be experimenting and designing
+        efficiently as he is not familiar with what is already known about the species
+        in question.
+      weight: 1
+    - label: Without doing research, Barry will be only able to take notes on what
+        he observes.
+      weight: 0
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []

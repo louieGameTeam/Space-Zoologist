@@ -60,6 +60,21 @@ MonoBehaviour:
       weight: 0
     - label: Lumoos
       weight: 1
+  - question: 'When Barry was designing an enclosure, he read up on the needs of
+      the animals in the enclosure, came up with changes to be made, experimented
+      with those changes, and wrote down what happened. What step did he forget? '
+    category:
+      item:
+        category: 2
+        index: 3
+      need: 6
+    options:
+    - label: Barry forgot to Observe
+      weight: 1
+    - label: Barry forgot to research
+      weight: 0
+    - label: Barry forgot to write down Metrics
+      weight: 0
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []

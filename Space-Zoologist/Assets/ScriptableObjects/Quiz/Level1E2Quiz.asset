@@ -29,14 +29,11 @@ MonoBehaviour:
     options:
     - label: Nothing. They eat the fruits of both trees.
       weight: 1
-    - label: They prefer to eat Golden Space Maples fruit over the normal Space Maples
-        fruit
+    - label: They prefer to eat the Gilded Astral Maple fruit over the normal Astral
+        Maple fruit
       weight: 2
-    - label: The Zeigs prefer to eat berries over the fruit of normal Space Maples,
-        but not over the fruit of the Golden Space Maples.
-      weight: 0
-    - label: "They\u2019ll eat the fruit of the Golden Space Maples, but only after
-        eating all of the available Space Maple fruit."
+    - label: "They\u2019ll eat the Gilded Astral Maple fruit, but only after eating
+        all of the available normal Astral Maple fruit."
       weight: 0
   - question: Alright. Now, on what type of terrain do Zeigs feel most comfortable?
     category:
@@ -53,6 +50,18 @@ MonoBehaviour:
       weight: 1
     - label: Stone
       weight: 0
+  - question: "If a Zeig was on a planet with only Glocaps as their food source,
+      would they survive?\r"
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 3
+    options:
+    - label: Yes
+      weight: 0
+    - label: No
+      weight: 1
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
