@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7087672933868351683}
   m_Father: {fileID: 0}
@@ -46,14 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 5
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":260.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Wow!
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":323,\"yPos\":157},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Wow!
     Your responses fall into the expected ranges based on observations by other engineers.
-    This data will really help confirm CapraX Zeigrun\u2019s needs.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":260.5,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Because
+    This data will really help confirm CapraX Zeigrun\u2019s needs.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":323,\"yPos\":257},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Because
     your research aligned almost perfectly with other observations, the team has
-    put together a stamp for your collection.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":259.5,\"yPos\":222},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"You
-    can put your stamps on the back of your clipboard!\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":261.5,\"yPos\":323},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Based
+    put together a stamp for your collection.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":322,\"yPos\":357},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"You
+    can put your stamps on the back of your clipboard!\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":324,\"yPos\":458},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Based
     on these results, I\u2019d like to set you up with another group of CapraX Zeigrun,
-    where I\u2019ll ask you to focus on their water needs!\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+    where I\u2019ll ask you to focus on their water needs!\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -109,6 +110,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7087672933058657655}
   m_RootOrder: 0
@@ -130,7 +132,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 82d5126eed89849bda97e0110a6d732f, type: 3}
+  Icon: {fileID: 21300000, guid: bdf52160a0856f54b8af8ed579bd7a75, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7087672933868351710
 MonoBehaviour:
@@ -149,7 +151,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: ee9bb28aadb5c3d47898eab5ad58b4d6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7087672933868351681
 MonoBehaviour:
@@ -168,7 +170,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: ee9bb28aadb5c3d47898eab5ad58b4d6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7087672933868351680
 MonoBehaviour:
@@ -187,5 +189,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: ee9bb28aadb5c3d47898eab5ad58b4d6, type: 3}
   Audio: {fileID: 0}

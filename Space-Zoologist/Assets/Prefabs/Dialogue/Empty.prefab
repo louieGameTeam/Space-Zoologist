@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1486706303144558350}
   m_Father: {fileID: 0}
@@ -45,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 82
-  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":60,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"","parentUIDs":[],"AdvanceDialogueAutomatically":true,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0.1,"Volume":0}]}'
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"","parentUIDs":[],"AdvanceDialogueAutomatically":true,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0.1,"Volume":0,"enableNotebookUI":false}]}'
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
@@ -163,6 +164,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 369652747321177089}
   m_RootOrder: 0
@@ -279,6 +281,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
         m_MethodName: TurnObjectivePanelOff
         m_Mode: 1
         m_Arguments:

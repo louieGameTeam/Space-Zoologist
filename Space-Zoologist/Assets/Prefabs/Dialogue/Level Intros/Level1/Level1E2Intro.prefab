@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -601.50885, y: -301.20956, z: 656.46436}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1337394808095098929}
   m_Father: {fileID: 0}
@@ -45,22 +46,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 12
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":298,\"yPos\":-578},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"I
-    told you, I\u2019m not a...Wait, you remembered!\",\"parentUIDs\":[2,2],\"SpeechUID\":4},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":303,\"yPos\":-362},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"...\",\"parentUIDs\":[4,4],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315,\"yPos\":-171},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"But
-    didn\u2019t I already do this?\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315,\"yPos\":29},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Iteration,
-    iteration, iteration\u2026?\",\"parentUIDs\":[8,8],\"SpeechUID\":10}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":315,\"yPos\":-771},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey,
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":146.5,\"yPos\":-380},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"I
+    told you, I\u2019m not a...Wait, you remembered!\",\"parentUIDs\":[2,2],\"SpeechUID\":4},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":151.5,\"yPos\":-164},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"...\",\"parentUIDs\":[4,4],\"SpeechUID\":6},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":27},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"But
+    didn\u2019t I already do this?\",\"parentUIDs\":[6,6],\"SpeechUID\":8},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":227},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Iteration,
+    iteration, iteration\u2026?\",\"parentUIDs\":[8,8],\"SpeechUID\":10}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":163.5,\"yPos\":-573},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey,
     kid. Are you ready to give it another go? That\u2019s what science is all about,
-    after all. Iteration, iteration, iteration!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315,\"yPos\":-671},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"At
-    least, that\u2019s what us biologists say\u2026 Is it the same for you engineers?\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":297,\"yPos\":-504},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Huh?
-    I remembered what? Did I forget something important\u2026?\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315,\"yPos\":-271},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Well,
+    after all. Iteration, iteration, iteration!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":-473},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"At
+    least, that\u2019s what us biologists say\u2026 Is it the same for you engineers?\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":145.5,\"yPos\":-306},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Huh?
+    I remembered what? Did I forget something important\u2026?\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[5],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":-73},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Well,
     anyways! You\u2019ll still be working with the Zeigs, so keep flexing everything
     you\u2019ve learned so far! Your objective is the same as last time: get 30 Zeigs
-    in 25 days.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[7],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315,\"yPos\":-71},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"You
+    in 25 days.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[7],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":127},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"You
     did one group, yes. Remember, though, we\u2019re trying to find out everything
-    we can about the species we have here, and that means\u2026\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315,\"yPos\":129},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"You
+    we can about the species we have here, and that means\u2026\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[9],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":327},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"You
     got it! This enclosure is different from the first, that way we can learn more
     about the Zeig\u2019s habits and preferences. You never know what more there
-    is to learn!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":315,\"yPos\":229},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
+    is to learn!\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":163.5,\"yPos\":427},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
     check back in 25 days to see how you and the little guys are getting along. Remember
     to take notes on your findings!\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
@@ -119,6 +120,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4766346405176523944}
   m_RootOrder: 0
@@ -140,7 +142,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &2130308191080585152
 MonoBehaviour:
@@ -159,7 +161,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: f90457a2014c24bbdb093b2233c905d5, type: 3}
+  Icon: {fileID: 21300000, guid: fcaddc8493a886147b49520ce8146ec8, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7629698400457030178
 MonoBehaviour:
@@ -178,7 +180,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: f90457a2014c24bbdb093b2233c905d5, type: 3}
+  Icon: {fileID: 21300000, guid: fcaddc8493a886147b49520ce8146ec8, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7536101668323516111
 MonoBehaviour:
@@ -197,7 +199,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
+  Icon: {fileID: 21300000, guid: ee9bb28aadb5c3d47898eab5ad58b4d6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7723153243735919577
 MonoBehaviour:
@@ -216,7 +218,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &215238500688676976
 MonoBehaviour:
@@ -235,7 +237,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &4434572232409448536
 MonoBehaviour:
@@ -254,7 +256,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &6087343815580819141
 MonoBehaviour:
