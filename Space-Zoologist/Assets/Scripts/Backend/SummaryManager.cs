@@ -25,6 +25,12 @@ public class SummaryManager : MonoBehaviour
     private float timer;
     #endregion
 
+    public SummaryTrace CurrentSummaryTrace
+    {
+        get { return currentSummaryTrace; }
+        set { currentSummaryTrace = value; }
+    }
+
     // On Awake, check the status of the instance. If the instance is null, replace it with the current SummaryManager.
     // Else, destroy the gameObject this script is attached to. There can only be one.
     void Awake()
