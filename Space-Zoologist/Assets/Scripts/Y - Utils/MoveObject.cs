@@ -268,8 +268,8 @@ public class MoveObject : MonoBehaviour
             default:
                 break;
         }
-        MoveButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"-{moveCost}";
-        DeleteButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"+{sellBackCost}";
+        MoveButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"-${moveCost}";
+        DeleteButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"+${sellBackCost}";
     }
 
     private void UpdateMoveUIPosition()
