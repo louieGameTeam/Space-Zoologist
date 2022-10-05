@@ -37,8 +37,8 @@ public class MoveObject : MonoBehaviour
     int moveCost = 0;
     int sellBackCost = 0;
 
-    const float MoveCost = 0.5f;
-    const float SellBackRefund = 0.25f;
+    const float MoveCost = 0.25f;
+    const float SellBackRefund = 0.5f;
     const float FixedCost = 0;
     const float CostPerUnitSizeAnimal = 10;
     const float CostPerUnitSizeFood = 10;
@@ -268,8 +268,8 @@ public class MoveObject : MonoBehaviour
             default:
                 break;
         }
-        MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
-        DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
+        MoveButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"-{moveCost}";
+        DeleteButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"+{sellBackCost}";
     }
 
     private void UpdateMoveUIPosition()
