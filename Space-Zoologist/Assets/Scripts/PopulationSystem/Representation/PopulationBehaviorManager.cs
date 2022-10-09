@@ -40,13 +40,13 @@ public class PopulationBehaviorManager : MonoBehaviour
     }
     
     public void OnBehaviorComplete(GameObject animal)
-    {        
+    {
         if (!animalsToBehaviorIndex.ContainsKey(animal))// Discriminate force exited callbacks from removing animals
         {
             return;
         }
         int nextBehaviorIndex = animalsToBehaviorIndex[animal] + 1;
-        nextBehaviorIndex = nextBehaviorIndex >= defaultBehaviors.Count ? 0 : nextBehaviorIndex;
+        nextBehaviorIndex = nextBehaviorIndex >= defaultBehaviors.Count ? 1 : nextBehaviorIndex;
         animalsToBehaviorIndex[animal] = nextBehaviorIndex;
         PopulationBehavior behavior = defaultBehaviors[nextBehaviorIndex];
         if (behavior == null)
@@ -58,6 +58,7 @@ public class PopulationBehaviorManager : MonoBehaviour
     
     public void AddAnimal(GameObject animal)
     {
+        // Start at -1 so that the spawn behavior is followed by the first of default behaviors
         animalsToBehaviorIndex.Add(animal, 0);
         defaultBehaviors[0].EnterBehavior(animal, transform.GetSiblingIndex());
     }

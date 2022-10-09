@@ -198,6 +198,7 @@ public class Population : MonoBehaviour
     public void AddAnimal(Vector3 position)
     {
         MovementData data = new MovementData();
+        data.CurrentDirection = Direction.left;
         GameObject newAnimal = this.PoolingSystem.GetGuaranteedPooledObject(this.AnimalPrefab);
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
