@@ -219,10 +219,9 @@ public class Population : MonoBehaviour
         if (this.Count > 0)
         {
             Debug.Log("Animal removed");
-            this.PopulationBehaviorManager.RemoveAnimal(animal);
-            animal.SetActive(false);
-
-            this.PoolingSystem.ReturnObjectToPool(animal);
+            // Despawn instead of remove, since the gameobject may persist to play despawn behaviors
+            this.PopulationBehaviorManager.SetDespawnCallback(DisableAnimalGameObject);
+            this.PopulationBehaviorManager.StartDespawnAnimal(animal);
             this.AnimalPopulation.Remove(animal);
             if (this.Count == 0)
             {
@@ -235,6 +234,12 @@ public class Population : MonoBehaviour
             }
             //Debug.Log ("Animal removed; new population count: " + Count);
         }
+    }
+
+    public void DisableAnimalGameObject(GameObject animal)
+    {
+        animal.SetActive(false);
+        this.PoolingSystem.ReturnObjectToPool(animal);
     }
 
     /// <summary>

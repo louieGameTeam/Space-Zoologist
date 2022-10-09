@@ -119,1063 +119,727 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 0_0_0
+      name: goat_despawn_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 768
-        width: 128
-        height: 128
+        x: 36
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 98afd2b42fa5e714aab49a880743e570
-      internalID: 1321371597
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_1
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84048f99bb1c1c844acb554d77611bce
-      internalID: 1316789312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_2
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 17400d42f1a3dee4f80365cd5dfff51c
-      internalID: -544851740
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_3
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 876121261805e844f827ad5b98eee8ca
-      internalID: 1161943755
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_4
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 076cdc03de434eb4dab1c6bc2b74ae82
-      internalID: 1177078326
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_5
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5e6fb1e4fb537fa489e4cda11f1d1ddf
-      internalID: 572183031
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_6
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7927f19d469dfb443afa28c60f144a31
-      internalID: 679619664
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_7
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fa5233e97f04bb849a18d34296928317
-      internalID: 723591328
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_8
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ba14c0ef8aa9a0d44a7de848468ace9f
-      internalID: 1998656791
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_9
-      rect:
-        serializedVersion: 2
-        x: 1152
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c6781893b311c934db8c2fe12074f427
-      internalID: -1349808788
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_10
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f9d461b7acdc314fbf7e7591f04dc0c
-      internalID: 1480636594
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_11
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35d2790260b272049aaed75647e55760
-      internalID: 387098800
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_12
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 726514781a5368741acdc6eb9a184a03
-      internalID: 1600088894
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_13
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b044edbf9f38b34d835377d9ee48105
-      internalID: 1914021961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_14
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6515c189dfc7b7245a8349800d82b7a3
-      internalID: 1857577258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_15
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 121a3ea3ce2c1114980a28e661393830
-      internalID: 2025825250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0_0_16
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05ede6cfdf9541646a95dd7d0dace77a
-      internalID: -2060535501
+      spriteID: 996070b72bdec0f469c85b68f6bf0b04
+      internalID: -1975457002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_17
+      name: goat_despawn_1
       rect:
         serializedVersion: 2
-        x: 896
-        y: 640
-        width: 128
-        height: 128
+        x: 164
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c8502c2764de744e81fc53a9534171c
-      internalID: 1925774706
+      spriteID: ca894649b3d6ef5449cb24bedb195549
+      internalID: 1135458494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_18
+      name: goat_despawn_2
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 640
-        width: 128
-        height: 128
+        x: 292
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ea0790416a2cf049b36d4e42c8919b3
-      internalID: 1237556972
+      spriteID: 08712be841e11c94ab3499150083a023
+      internalID: -1255958746
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_19
+      name: goat_despawn_3
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 640
-        width: 128
-        height: 128
+        x: 420
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20acc4fe55527fa459b516d89e48b5c9
-      internalID: -1194578953
+      spriteID: 671eb6c1ec6b7534bb837077a5555ac7
+      internalID: 190583957
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_20
+      name: goat_despawn_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 512
-        width: 128
-        height: 128
+        x: 548
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 666dd892d6cc3b943b015220dbd67302
-      internalID: -1864896263
+      spriteID: 4d8079cd52ebb924abebdd11a5e8ec68
+      internalID: 612158641
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_21
+      name: goat_despawn_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 512
-        width: 128
-        height: 128
+        x: 676
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b0a6c1817b70174cbebb63c7cbcf7c6
-      internalID: 1367432530
+      spriteID: 2356a2660e851514faa28e5260dbeae2
+      internalID: -1348019985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_22
+      name: goat_despawn_6
       rect:
         serializedVersion: 2
-        x: 256
-        y: 512
-        width: 128
-        height: 128
+        x: 804
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9da76d3eed454404dbddccf1c33790ab
-      internalID: 1980385798
+      spriteID: 137b8a1b9dbabb84cbec446d9721a39b
+      internalID: 461092145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_23
+      name: goat_despawn_7
       rect:
         serializedVersion: 2
-        x: 384
-        y: 512
-        width: 128
-        height: 128
+        x: 932
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4dbd55371bf995441a883d3025e7f560
-      internalID: 2061647298
+      spriteID: d8af9dd0bf57c004680f8800136c0d30
+      internalID: 545425549
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_24
+      name: goat_despawn_8
       rect:
         serializedVersion: 2
-        x: 512
-        y: 512
-        width: 128
-        height: 128
+        x: 1060
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55788dcbfb771e346916ee2ba4343cff
-      internalID: -1568996022
+      spriteID: f0e090fd98b17a5498c39fae8c51a4c4
+      internalID: 1999436807
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_25
+      name: goat_despawn_9
       rect:
         serializedVersion: 2
-        x: 640
-        y: 512
-        width: 128
-        height: 128
+        x: 1188
+        y: 811
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eebe37ab683228e4d985e6466b6c1f80
-      internalID: 395773279
+      spriteID: 26cf7a04d6f44354797f7c8ebff5cfb7
+      internalID: -1773854857
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_26
+      name: goat_despawn_10
       rect:
         serializedVersion: 2
-        x: 768
-        y: 512
-        width: 128
-        height: 128
+        x: 36
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1bc695fee660eb14eb09ee5df7ca98a0
-      internalID: -2001345334
+      spriteID: fbc9bc42ddb2be441a7f70b082712f05
+      internalID: -1656142365
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_27
+      name: goat_despawn_11
       rect:
         serializedVersion: 2
-        x: 896
-        y: 512
-        width: 128
-        height: 128
+        x: 164
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6562b94402f94b94a8576bce54f2e283
-      internalID: 858423481
+      spriteID: 0088ede6a25dd0543a3b4663932420bd
+      internalID: -416227532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_28
+      name: goat_despawn_12
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 512
-        width: 128
-        height: 128
+        x: 292
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc6b3697fa307d3479f763df6e9ec0ab
-      internalID: -1015071159
+      spriteID: f1f0a63e3a5d47640a17a78bd98ea176
+      internalID: 212752269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_29
+      name: goat_despawn_13
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 512
-        width: 128
-        height: 128
+        x: 420
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 882218c83effdd3488bb7687e519f16b
-      internalID: -1910662907
+      spriteID: d311dc84192c49c43a072e34e94a6f13
+      internalID: 999695185
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_30
+      name: goat_despawn_14
       rect:
         serializedVersion: 2
-        x: 0
-        y: 384
-        width: 128
-        height: 128
+        x: 548
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db87443649ba4cc4186e19d057547356
-      internalID: -1566768771
+      spriteID: d8672836dab4a974294bdbd68b5100b3
+      internalID: -2135612458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_31
+      name: goat_despawn_15
       rect:
         serializedVersion: 2
-        x: 128
-        y: 384
-        width: 128
-        height: 128
+        x: 676
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7beb6e3452e38cc4992e4861bd825bde
-      internalID: 874644248
+      spriteID: 86da6d011e7fc2d4c9ee3fb35974b909
+      internalID: 903378656
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_32
+      name: goat_despawn_16
       rect:
         serializedVersion: 2
-        x: 256
-        y: 384
-        width: 128
-        height: 128
+        x: 804
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6194c982714a8f4d9bc1fa1af2efe9b
-      internalID: -1764303762
+      spriteID: ef0c52ad0dc19dd41960b667ccfd90d9
+      internalID: -2041389777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_33
+      name: goat_despawn_17
       rect:
         serializedVersion: 2
-        x: 384
-        y: 384
-        width: 128
-        height: 128
+        x: 932
+        y: 683
+        width: 55
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6887288f431d8d848ab603e95d02928e
-      internalID: -299406713
+      spriteID: 7edec8bad4bb3f0418b2ddd8c919545c
+      internalID: 1435070575
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_34
+      name: goat_despawn_18
       rect:
         serializedVersion: 2
-        x: 512
-        y: 384
-        width: 128
-        height: 128
+        x: 1059
+        y: 683
+        width: 56
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 996555cebe5cfc940a50a91b889345ee
-      internalID: 165969270
+      spriteID: 193b67e77b510fa4f9879eea1a7364ea
+      internalID: 882967032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_35
+      name: goat_despawn_19
       rect:
         serializedVersion: 2
-        x: 640
-        y: 384
-        width: 128
-        height: 128
+        x: 1188
+        y: 683
+        width: 57
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 007fd8fd19a894249add5a3c443d911c
-      internalID: 662892704
+      spriteID: bd50fd600fd9a044e9d380ba3ddd41d4
+      internalID: -146846518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_36
+      name: goat_despawn_20
       rect:
         serializedVersion: 2
-        x: 768
-        y: 384
-        width: 128
-        height: 128
+        x: 36
+        y: 555
+        width: 58
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3effd0bf484206e4e8617e75253c390f
-      internalID: 1759905095
+      spriteID: 260b6da59048f944cb6ec763f92bf57c
+      internalID: -1466206096
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_37
+      name: goat_despawn_21
       rect:
         serializedVersion: 2
-        x: 896
-        y: 384
-        width: 128
-        height: 128
+        x: 161
+        y: 555
+        width: 61
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9b60f4867bea2748a1e7812db741e73
-      internalID: 1216560932
+      spriteID: 322627145999c6042a5db5a8831b5b35
+      internalID: -264339888
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_38
+      name: goat_despawn_22
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 384
-        width: 128
-        height: 128
+        x: 289
+        y: 555
+        width: 60
+        height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 096cc2106ca233a48a048ddf76e39dbf
-      internalID: 810190041
+      spriteID: a32bc7d4bca76694ca158e8426d4d32a
+      internalID: 1238195927
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_39
+      name: goat_despawn_23
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 384
-        width: 128
-        height: 128
+        x: 418
+        y: 555
+        width: 63
+        height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6019e48d91f62d74c8d600ec3cd40107
-      internalID: 1816227960
+      spriteID: 3cb974d6e2ba61e4f86ca2cb2e8b9ab5
+      internalID: -834609776
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_40
+      name: goat_despawn_24
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
-        width: 128
-        height: 128
+        x: 546
+        y: 555
+        width: 62
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de7792e62acf11441bae9043c4fd8977
-      internalID: 1310113738
+      spriteID: 252e8fe801678634aa74e6a7d7aa404b
+      internalID: -1450504955
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_41
+      name: goat_despawn_25
       rect:
         serializedVersion: 2
-        x: 128
-        y: 256
-        width: 128
-        height: 128
+        x: 674
+        y: 555
+        width: 62
+        height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0d20f5ea98034847a96f9d40c9fb670
-      internalID: -907164001
+      spriteID: f0592710d842eae4d9e877bf9670763f
+      internalID: -1371194874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_42
+      name: goat_despawn_26
       rect:
         serializedVersion: 2
-        x: 256
-        y: 256
-        width: 128
-        height: 128
+        x: 803
+        y: 555
+        width: 61
+        height: 33
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 535ecd8d24734af409b26927f2982adf
-      internalID: -361048908
+      spriteID: 9794c2c2f2fd4674db409c744e71ca1d
+      internalID: -1227008297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_43
+      name: goat_despawn_27
       rect:
         serializedVersion: 2
-        x: 384
-        y: 256
-        width: 128
-        height: 128
+        x: 931
+        y: 555
+        width: 60
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32f1df43f6f72324ca5eee72c07fb745
-      internalID: -490195880
+      spriteID: bef7af1f0e4c844429db9c48e8b76da2
+      internalID: -947457773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_44
+      name: goat_despawn_28
       rect:
         serializedVersion: 2
-        x: 512
-        y: 256
-        width: 128
-        height: 128
+        x: 1059
+        y: 555
+        width: 60
+        height: 33
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 085f14a808aab3341b3f1d9f6e713d78
-      internalID: 760775579
+      spriteID: 2b2f14dbb574a8e43ad6ec5e568dca60
+      internalID: 108108611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_45
+      name: goat_despawn_29
       rect:
         serializedVersion: 2
-        x: 640
-        y: 256
-        width: 128
-        height: 128
+        x: 1187
+        y: 555
+        width: 60
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31e477abe5611a648b1793d0980859ef
-      internalID: -89521600
+      spriteID: 473148866564b0f47b3937507a6023b8
+      internalID: -1980118338
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_46
+      name: goat_despawn_30
       rect:
         serializedVersion: 2
-        x: 768
-        y: 256
-        width: 128
-        height: 128
+        x: 34
+        y: 427
+        width: 61
+        height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 415cc519b0971114f88d15b62c1a3065
-      internalID: -943713890
+      spriteID: f44f093185cbc6d48afcb137680ae88f
+      internalID: 1606111181
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_47
+      name: goat_despawn_31
       rect:
         serializedVersion: 2
-        x: 896
-        y: 256
-        width: 128
-        height: 128
+        x: 160
+        y: 427
+        width: 63
+        height: 28
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6344e291d8af9dd42bc3ce1d2c304a4d
-      internalID: -594690013
+      spriteID: ff75916430ab3074cb32fe7a44204894
+      internalID: -1779878184
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_48
+      name: goat_despawn_32
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 256
-        width: 128
-        height: 128
+        x: 288
+        y: 427
+        width: 62
+        height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31019cb2623f1614babde433ba65bd38
-      internalID: 1022041365
+      spriteID: 3f90fc83d568ad4488aa1d0aa632168c
+      internalID: 847665768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_49
+      name: goat_despawn_33
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 256
-        width: 128
-        height: 128
+        x: 420
+        y: 427
+        width: 61
+        height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0a19bbe574dc5041bba4dc529430ab7
-      internalID: -789412143
+      spriteID: 1579522c842d65c438eb16588c08d067
+      internalID: -1694392478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_50
+      name: goat_despawn_34
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
-        width: 128
-        height: 128
+        x: 544
+        y: 426
+        width: 62
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1183,20 +847,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e846a2c85c725246a28c74c37460737
-      internalID: -826025185
+      spriteID: ccce8c3a6e345f44699aee1ebfbb047f
+      internalID: 31712367
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_51
+      name: goat_despawn_35
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 128
-        height: 128
+        x: 672
+        y: 425
+        width: 61
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1204,20 +868,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2642fd42d4ce23f4e886c60795358dca
-      internalID: 1737859672
+      spriteID: 6a13770d3f7826e4e9218dd2479fb6fb
+      internalID: 1692635471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_52
+      name: goat_despawn_36
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
-        width: 128
-        height: 128
+        x: 801
+        y: 423
+        width: 60
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1225,20 +889,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a564ab8da72af9468562eef82a8d9c3
-      internalID: -1602136891
+      spriteID: 840a1110b2ed94e4bb8d9f1882052fe9
+      internalID: 142258628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_53
+      name: goat_despawn_37
       rect:
         serializedVersion: 2
-        x: 384
-        y: 128
-        width: 128
-        height: 128
+        x: 930
+        y: 424
+        width: 58
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1246,20 +910,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b548e3fd33376cf48acb6abca98be03b
-      internalID: -1817766114
+      spriteID: dedaab666d642cf4fb2526d16b790d10
+      internalID: -1421767862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_54
+      name: goat_despawn_38
       rect:
         serializedVersion: 2
-        x: 512
-        y: 128
-        width: 128
-        height: 128
+        x: 1058
+        y: 423
+        width: 59
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1267,20 +931,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea14f861f4b10364c85f83611aaff7c1
-      internalID: -644759532
+      spriteID: 9ed0391357d3df74f82c6979ce76266e
+      internalID: 91603215
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_55
+      name: goat_despawn_39
       rect:
         serializedVersion: 2
-        x: 640
-        y: 128
-        width: 128
-        height: 128
+        x: 1186
+        y: 423
+        width: 59
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1288,20 +952,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7f11796015a79946b64f56a2800d1c1
-      internalID: 926584575
+      spriteID: 514e34d3aa1a9b54592437068daddbfd
+      internalID: -514287046
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_56
+      name: goat_despawn_40
       rect:
         serializedVersion: 2
-        x: 768
-        y: 128
-        width: 128
-        height: 128
+        x: 33
+        y: 298
+        width: 61
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1309,20 +973,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40c009c8ed911a749a8fd9451c56ea81
-      internalID: -551406450
+      spriteID: ef9847cb8a5c1554ca0464b53a8cd3dd
+      internalID: -1165976015
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_57
+      name: goat_despawn_42
       rect:
         serializedVersion: 2
-        x: 896
-        y: 128
-        width: 128
-        height: 128
+        x: 291
+        y: 299
+        width: 57
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1330,20 +994,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 666de30ba1e7da24082b8346dda629f2
-      internalID: -1174977271
+      spriteID: ddba7c9b5260fa44e818d5fe2d8d4a79
+      internalID: 348128296
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_58
+      name: goat_despawn_44
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 128
-        width: 128
-        height: 128
+        x: 547
+        y: 300
+        width: 56
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1351,20 +1015,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e0527b90c8f608459939c69f660de88
-      internalID: 1659568182
+      spriteID: f7104384883cdb744a2051745755f9fd
+      internalID: 1077092010
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_59
+      name: goat_despawn_53
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 128
-        width: 128
-        height: 128
+        x: 428
+        y: 183
+        width: 48
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1372,20 +1036,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 410e34bd9c2ffa84596d5582182454c6
-      internalID: 1745711821
+      spriteID: ac20890320829fd41839284de1bb8dba
+      internalID: 196416339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_60
+      name: goat_despawn_41
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
+        x: 163
+        y: 299
+        width: 57
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1393,20 +1057,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d8465daf066e8f4da4b8656a7cefa04
-      internalID: 985129119
+      spriteID: 187c4e45f86b70749b9cb14d9b7b0465
+      internalID: -1269590941
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_61
+      name: goat_despawn_43
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 128
+        x: 419
+        y: 301
+        width: 57
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1414,20 +1078,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f464daeb8e31ede499b1aedf955c5cda
-      internalID: -1855288153
+      spriteID: e303478c7230ff0478ab5f9555870f88
+      internalID: 897422179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_62
+      name: goat_despawn_45
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 128
+        x: 674
+        y: 303
+        width: 57
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1435,20 +1099,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17413aabb7bb82e46ab2822101ca14bb
-      internalID: 1231822104
+      spriteID: fe2ee6d11411d4642ac1ab91ab64494d
+      internalID: -1091634321
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_63
+      name: goat_despawn_46
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 128
+        x: 802
+        y: 303
+        width: 57
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1456,20 +1120,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ad317a1e7470704a986938cf4d71122
-      internalID: 563207651
+      spriteID: 7adf49995e112f04baf87be4ff14f7ef
+      internalID: 1684187671
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_64
+      name: goat_despawn_47
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 128
+        x: 931
+        y: 305
+        width: 57
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1477,20 +1141,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55b4a4919a4924d49862905087dd001b
-      internalID: -1742492763
+      spriteID: 1cd94e528feea304a886d3f6accb95f9
+      internalID: -402274996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_65
+      name: goat_despawn_48
       rect:
         serializedVersion: 2
-        x: 640
-        y: 0
-        width: 128
-        height: 128
+        x: 1058
+        y: 305
+        width: 57
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1498,20 +1162,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1cb75328defbdd478cd67ba5088a60a
-      internalID: 924764740
+      spriteID: 890658da8c22d6f48a472743c4a90b4e
+      internalID: 1844533145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_66
+      name: goat_despawn_49
       rect:
         serializedVersion: 2
-        x: 768
-        y: 0
-        width: 128
-        height: 128
+        x: 1188
+        y: 307
+        width: 55
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1519,20 +1183,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50c7b5f25287a5847bbafac661ebd2a7
-      internalID: -26637487
+      spriteID: 96d1d2be513375040b7c4906e898351c
+      internalID: -568701173
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_67
+      name: goat_despawn_50
       rect:
         serializedVersion: 2
-        x: 896
-        y: 0
-        width: 128
-        height: 128
+        x: 35
+        y: 179
+        width: 57
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1540,20 +1204,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b30e1e697e552ef4d915b189eadb9cf0
-      internalID: -529074993
+      spriteID: 3d59e919217bb7645bbc633d2ac1e310
+      internalID: 68790948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_68
+      name: goat_despawn_51
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 128
-        height: 128
+        x: 164
+        y: 180
+        width: 56
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1561,20 +1225,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 756864388634e9d4693d54695306c9e2
-      internalID: -63859896
+      spriteID: f2b36fbbbb50f814a8403f7fc3980efb
+      internalID: 1499659565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0_0_69
+      name: goat_despawn_52
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 0
-        width: 128
-        height: 128
+        x: 300
+        y: 182
+        width: 48
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1582,8 +1246,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7d1517ca9807e6468d6d7f30b28604d
-      internalID: -320789497
+      spriteID: fc80333324a1faf49bcf95b4e7cabe19
+      internalID: -13754354
       vertices: []
       indices: 
       edges: []
@@ -1599,76 +1263,95 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      0_0_50: -826025185
-      0_0_22: 1980385798
-      0_0_52: -1602136891
-      0_0_8: 1998656791
-      0_0_35: 662892704
-      0_0_49: -789412143
-      0_0_18: 1237556972
-      0_0_42: -361048908
-      0_0_56: -551406450
-      0_0_20: -1864896263
-      0_0_61: -1855288153
-      0_0_36: 1759905095
-      0_0_25: 395773279
-      0_0_24: -1568996022
-      0_0_34: 165969270
-      0_0_62: 1231822104
-      0_0_19: -1194578953
-      0_0_37: 1216560932
-      0_0_40: 1310113738
-      0_0_13: 1914021961
-      0_0_4: 1177078326
-      0_0_10: 1480636594
-      0_0_28: -1015071159
-      0_0_16: -2060535501
-      0_0_12: 1600088894
-      0_0_57: -1174977271
-      0_0_53: -1817766114
-      0_0_54: -644759532
-      0_0_5: 572183031
-      0_0_43: -490195880
-      0_0_58: 1659568182
-      0_0_31: 874644248
-      0_0_0: 1321371597
-      0_0_15: 2025825250
-      0_0_27: 858423481
-      0_0_2: -544851740
-      0_0_3: 1161943755
-      0_0_7: 723591328
-      0_0_64: -1742492763
-      0_0_1: 1316789312
-      0_0_32: -1764303762
-      0_0_9: -1349808788
-      0_0_46: -943713890
-      0_0_14: 1857577258
-      0_0_17: 1925774706
-      0_0_66: -26637487
-      0_0_29: -1910662907
-      0_0_41: -907164001
-      0_0_26: -2001345334
-      0_0_33: -299406713
-      0_0_45: -89521600
-      0_0_63: 563207651
-      0_0_68: -63859896
-      0_0_44: 760775579
-      0_0_30: -1566768771
-      0_0_39: 1816227960
-      0_0_55: 926584575
-      0_0_6: 679619664
-      0_0_21: 1367432530
-      0_0_67: -529074993
-      0_0_51: 1737859672
-      0_0_60: 985129119
-      0_0_38: 810190041
-      0_0_65: 924764740
-      0_0_47: -594690013
-      0_0_11: 387098800
-      0_0_59: 1745711821
-      0_0_48: 1022041365
-      0_0_69: -320789497
-      0_0_23: 2061647298
+      goat_despawn_64: 1829108964
+      goat_despawn_85: -227271711
+      goat_despawn_51: 1499659565
+      goat_despawn_3: 190583957
+      goat_despawn_19: -146846518
+      goat_despawn_20: -1466206096
+      goat_despawn_46: 1684187671
+      goat_despawn_36: 142258628
+      goat_despawn_69: 1248165849
+      goat_despawn_39: -514287046
+      goat_despawn_77: 593234749
+      goat_despawn_55: -1366352616
+      goat_despawn_58: -182470603
+      goat_despawn_7: 545425549
+      goat_despawn_71: 1780420014
+      goat_despawn_61: -1451386494
+      goat_despawn_76: 1657677710
+      goat_despawn_84: -1803503162
+      goat_despawn_34: 31712367
+      goat_despawn_44: 1077092010
+      goat_despawn_75: 1978983592
+      goat_despawn_14: -2135612458
+      goat_despawn_82: -572564422
+      goat_despawn_25: -1371194874
+      goat_despawn_16: -2041389777
+      goat_despawn_6: 461092145
+      goat_despawn_80: 687556582
+      goat_despawn_38: 91603215
+      goat_despawn_83: -833593120
+      goat_despawn_52: -13754354
+      goat_despawn_48: 1844533145
+      goat_despawn_21: -264339888
+      goat_despawn_81: -439131171
+      goat_despawn_18: 882967032
+      goat_despawn_13: 999695185
+      goat_despawn_30: 1606111181
+      goat_despawn_35: 1692635471
+      goat_despawn_63: 991322247
+      goat_despawn_74: 968686053
+      goat_despawn_66: 137319570
+      goat_despawn_79: 700389882
+      goat_despawn_15: 903378656
+      goat_despawn_68: 1513216667
+      goat_despawn_28: 108108611
+      goat_despawn_73: 1728463921
+      goat_despawn_59: -85727938
+      goat_despawn_65: -341197031
+      goat_despawn_4: 612158641
+      goat_despawn_50: 68790948
+      goat_despawn_29: -1980118338
+      goat_despawn_10: -1656142365
+      goat_despawn_42: 348128296
+      goat_despawn_17: 1435070575
+      goat_despawn_12: 212752269
+      goat_despawn_9: -1773854857
+      goat_despawn_31: -1779878184
+      goat_despawn_1: 1135458494
+      goat_despawn_2: -1255958746
+      goat_despawn_62: 1743266109
+      goat_despawn_0: -1975457002
+      goat_despawn_32: 847665768
+      goat_despawn_27: -947457773
+      goat_despawn_49: -568701173
+      goat_despawn_67: 1010697850
+      goat_despawn_33: -1694392478
+      goat_despawn_57: 934308374
+      goat_despawn_37: -1421767862
+      goat_despawn_56: 1266381966
+      goat_despawn_70: 1767470778
+      goat_despawn_86: -882541826
+      goat_despawn_23: -834609776
+      goat_despawn_88: -1269590941
+      goat_despawn_47: -402274996
+      goat_despawn_11: -416227532
+      goat_despawn_53: 196416339
+      goat_despawn_43: 897422179
+      goat_despawn_72: -1213044521
+      goat_despawn_78: 988017874
+      goat_despawn_60: 1979627551
+      goat_despawn_24: -1450504955
+      goat_despawn_40: -1165976015
+      goat_despawn_22: 1238195927
+      goat_despawn_87: -1482423743
+      goat_despawn_41: -1414896312
+      goat_despawn_26: -1227008297
+      goat_despawn_8: 1999436807
+      goat_despawn_45: -1091634321
+      goat_despawn_54: 989178845
+      goat_despawn_5: -1348019985
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

@@ -21,7 +21,7 @@ public class MovementController : MonoBehaviour
     private float ChangeDirectionMovement = 0f;
 
     private float bufferedSpeed = -1;
-    public void Start()
+    public void Awake()
     {
         this.Animal = this.gameObject.GetComponent<Animal>();
         this.DestinationReached = false;
@@ -231,6 +231,7 @@ public class MovementController : MonoBehaviour
 
     public void StandStill()
     {
+        ResetPathfindingConditions();
         this.Animal.MovementData.MovementStatus = Movement.idle;
         this.Animal.MovementData.CurrentDirection = Direction.down;
     }

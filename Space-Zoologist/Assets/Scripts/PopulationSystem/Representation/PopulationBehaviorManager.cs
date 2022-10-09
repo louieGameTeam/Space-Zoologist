@@ -6,8 +6,12 @@ public class PopulationBehaviorManager : MonoBehaviour
 {
     private Population population = default;
     [SerializeField] public Dictionary<GameObject, int> animalsToBehaviorIndex = new Dictionary<GameObject, int>();
+    [Header("Behaviors")]
+    [SerializeField] public PopulationBehavior spawnBehavior;
+    [SerializeField] public PopulationBehavior despawnBehavior;
     [SerializeField] public List<PopulationBehavior> defaultBehaviors;
     private BehaviorCompleteCallback BehaviorCompleteCallback;
+    private BehaviorCompleteCallback despawnCompleteCallback;
 
 
     public void Initialize()
@@ -15,7 +19,7 @@ public class PopulationBehaviorManager : MonoBehaviour
         this.BehaviorCompleteCallback = this.OnBehaviorComplete;
         // Only initializes callbacks for each behavior *once* per population, even if defaultBehaviors contains duplicates
         List<int> uniqueBehaviorIDs = new List<int>();
-        foreach (PopulationBehavior behavior in defaultBehaviors)
+        foreach (PopulationBehavior behavior in GetAllUsedBehaviors())
         {
             if (!uniqueBehaviorIDs.Contains(behavior.GetInstanceID())){
                 behavior.AssignCallback(this.BehaviorCompleteCallback);
@@ -45,8 +49,13 @@ public class PopulationBehaviorManager : MonoBehaviour
         {
             return;
         }
+        if(animalsToBehaviorIndex[animal] == -1)
+        {
+            FinishDespawnAnimal(animal);
+            return;
+        }
         int nextBehaviorIndex = animalsToBehaviorIndex[animal] + 1;
-        nextBehaviorIndex = nextBehaviorIndex >= defaultBehaviors.Count ? 1 : nextBehaviorIndex;
+        nextBehaviorIndex = nextBehaviorIndex >= defaultBehaviors.Count ? 0 : nextBehaviorIndex;
         animalsToBehaviorIndex[animal] = nextBehaviorIndex;
         PopulationBehavior behavior = defaultBehaviors[nextBehaviorIndex];
         if (behavior == null)
@@ -58,21 +67,61 @@ public class PopulationBehaviorManager : MonoBehaviour
     
     public void AddAnimal(GameObject animal)
     {
-        // Start at -1 so that the spawn behavior is followed by the first of default behaviors
-        animalsToBehaviorIndex.Add(animal, 0);
-        defaultBehaviors[0].EnterBehavior(animal, transform.GetSiblingIndex());
+        bool spawnBehaviorExists = (spawnBehavior != null);
+        // If spawn behavior, then set the current behavior index to the total
+        // so that it iterates to 0 after spawn behavior ends
+        animalsToBehaviorIndex.Add(animal, spawnBehaviorExists ? defaultBehaviors.Count - 1 : 0);
+        if(spawnBehaviorExists)
+            spawnBehavior.EnterBehavior(animal, transform.GetSiblingIndex());
+        else
+            defaultBehaviors[0].EnterBehavior(animal, transform.GetSiblingIndex());
     }
 
-    public void RemoveAnimal(GameObject animal)
+    public void SetDespawnCallback(BehaviorCompleteCallback callback)
+    {
+        despawnCompleteCallback = callback;
+    }
+
+    public void StartDespawnAnimal(GameObject animal)
+    {
+        if(despawnBehavior == null)
+        {
+            FinishDespawnAnimal(animal);
+        }
+        else
+        {
+            despawnBehavior.EnterBehavior(animal, transform.GetSiblingIndex());
+            animalsToBehaviorIndex[animal] = -1;
+        }
+    }
+
+    private void FinishDespawnAnimal(GameObject animal)
+    {
+        RemoveAnimal(animal);
+        despawnCompleteCallback(animal);
+    }
+
+    
+    private void RemoveAnimal(GameObject animal)
     {
         animalsToBehaviorIndex.Remove(animal);
         animal.GetComponent<AnimalBehaviorManager>().ForceExit();
     }
 
     private void OnDestroy() {
-        foreach (PopulationBehavior behavior in defaultBehaviors)
+        foreach (PopulationBehavior behavior in GetAllUsedBehaviors())
         {
             behavior.RemoveCallback(transform.GetSiblingIndex());
         }
+    }
+
+    public IEnumerable<PopulationBehavior> GetAllUsedBehaviors()
+    {
+        if (spawnBehavior != null)
+            yield return spawnBehavior;
+        foreach (var behavior in defaultBehaviors)   
+            yield return behavior;
+        if (despawnBehavior)
+            yield return despawnBehavior;
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPattern : UniversalAnimatorPattern
+public class DespawnPattern : UniversalAnimatorPattern
 {
 
     public override void Init()
@@ -15,10 +15,12 @@ public class SpawnPattern : UniversalAnimatorPattern
         // spawn facing left
         base.EnterPattern(animal, animalData);
         SetAnimDirectionFloat(animal, 0, -1);
-    }
-    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
-    {
         animalData.animal.MovementController.StandStill();
-        return base.IsPatternFinishedAfterUpdate(animal, animalData);
     }
+
+    protected override void ExitPattern(GameObject animal, bool callCallback)
+    {
+        base.ExitPattern(animal, callCallback);
+    }
+
 }

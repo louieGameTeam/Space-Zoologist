@@ -64,8 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6c2c38391c4c44c96ecc0a939d3080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnBehavior: {fileID: 11400000, guid: 12bd0ec0ba0cb8c4eb536e43cd583904, type: 2}
+  despawnBehavior: {fileID: 11400000, guid: cf30931b7766a534f8839e98cc1819bd, type: 2}
   defaultBehaviors:
-  - {fileID: 11400000, guid: 12bd0ec0ba0cb8c4eb536e43cd583904, type: 2}
   - {fileID: 11400000, guid: eb800ac61a3094d0d9d9c54e9a95acab, type: 2}
   - {fileID: 11400000, guid: 9789784130c1b482a82266949ef044b9, type: 2}
   - {fileID: 11400000, guid: c1ffc32c4467241a18caec0662cc1e2f, type: 2}
