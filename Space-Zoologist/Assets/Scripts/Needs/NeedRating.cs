@@ -76,44 +76,45 @@ public class NeedRating
     /// <returns></returns>
     public float ComputeChangeRate(int populationSize)
     {
+        float totalRating = 0;
+        int appliedRatings = 0;
+
+        float predatorPreyRatio = 0;
         if (predatorCount > 0)
         {
-            float ratio = -predatorCount / (float)populationSize;
-            return Mathf.Max(ratio, -1f);
-        }
-        else if(AllNeedsAreMet)
+            predatorPreyRatio = -predatorCount / (float) populationSize;
+            appliedRatings++;
+        }    
+
+        if (AllNeedsAreMet)
         {
-            float totalRating = 0;
-            int appliedRatings = 0;
-
             // Apply the ratings to the local variables
-            ApplyRatingIf(HasFoodNeed, FoodRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasTerrainNeed, TerrainRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasWaterNeed, WaterRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasTreeNeed, TreeRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasFriendNeed, FriendRating - 1, ref totalRating, ref appliedRatings);
-
-            // If some ratings were applied then return the average rating
-            if (appliedRatings > 0) return totalRating / appliedRatings;
-            // If no ratings were applied then do not change the population size at all
-            else return 0;
+            ApplyRatingIf (HasFoodNeed, FoodRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasTerrainNeed, TerrainRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasWaterNeed, WaterRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasTreeNeed, TreeRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasFriendNeed, FriendRating - 1, ref totalRating, ref appliedRatings);
         }
         else
         {
-            float totalRating = 0;
-            int appliedRatings = 0;
-
             // Apply the ratings to the local variables
-            ApplyRatingIf(HasFoodNeed && !FoodNeedIsMet, FoodRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasTerrainNeed && !TerrainNeedIsMet, TerrainRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasWaterNeed && !WaterNeedIsMet, WaterRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasTreeNeed && !TreeNeedIsMet, TreeRating - 1, ref totalRating, ref appliedRatings);
-            ApplyRatingIf(HasFriendNeed && !FriendNeedIsMet, FriendRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasFoodNeed && !FoodNeedIsMet, FoodRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasTerrainNeed && !TerrainNeedIsMet, TerrainRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasWaterNeed && !WaterNeedIsMet, WaterRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasTreeNeed && !TreeNeedIsMet, TreeRating - 1, ref totalRating, ref appliedRatings);
+            ApplyRatingIf (HasFriendNeed && !FriendNeedIsMet, FriendRating - 1, ref totalRating, ref appliedRatings);
+        }
 
-            // If some ratings were applied then compute the average
-            if (appliedRatings > 0) return totalRating / appliedRatings;
-            // If no ratings were applied then population size will not change at all
-            else return 0;
+        // If some ratings were applied then compute the average
+        if (appliedRatings > 0)
+        {
+            float avgRating = totalRating / appliedRatings;
+            return Mathf.Max (predatorPreyRatio + avgRating, -1f);
+        }
+        // If no ratings were applied then population size will not change at all
+        else
+        {
+            return 0;
         }
     }
     #endregion
