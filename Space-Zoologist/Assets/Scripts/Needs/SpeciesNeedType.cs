@@ -1,5 +1,5 @@
 ﻿
 public enum SpeciesNeedType
 {
-    Predator, Friend
+    Predator, Friend, Prey
 }

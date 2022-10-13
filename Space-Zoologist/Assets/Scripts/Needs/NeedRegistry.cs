@@ -87,6 +87,13 @@ public class NeedRegistry
             .OrderByDescending(need => need.Preferred)
             .ToArray();
     }
+    public NeedData [] FindPreyNeeds ()
+    {
+        return GetNeedsWithCategory (ItemRegistry.Category.Species)
+            .Where (need => need.Needed)
+            .Where (need => need.SpeciesNeedType == SpeciesNeedType.Prey)
+            .ToArray ();
+    }
     public NeedData[] FindWaterNeeds()
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Tile)

@@ -64,8 +64,8 @@ MonoBehaviour:
           id:
             category: 0
             index: 2
-        - needed: 0
-          speciesNeedType: 0
+        - needed: 1
+          speciesNeedType: 2
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
             category: 0
             index: 3
         - needed: 0
-          speciesNeedType: 0
+          speciesNeedType: 1
           useAsTerrainNeed: 0
           traversibleOnly: 0
           foodNeedType: 0
