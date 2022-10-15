@@ -26,7 +26,7 @@ public class PodStoreSection : StoreSection
             return;
         }
 
-        if (Input.GetMouseButtonUp(0)) 
+        if (Input.GetMouseButtonUp(0) && selectedItem != null) 
         {
             Vector2 position = Camera.main.ScreenToWorldPoint (Input.mousePosition);
             selectedSpecies = GameManager.Instance.AnimalSpecies [selectedItem.ID];

@@ -88,7 +88,7 @@ public class PopulationBehaviorManager : MonoBehaviour
         {
             FinishDespawnAnimal(animal);
         }
-        else
+        else if(!despawnBehavior.HasAnimal(animal))
         {
             despawnBehavior.EnterBehavior(animal, transform.GetSiblingIndex());
             animalsToBehaviorIndex[animal] = -1;
@@ -97,6 +97,7 @@ public class PopulationBehaviorManager : MonoBehaviour
 
     private void FinishDespawnAnimal(GameObject animal)
     {
+        Debug.Log("REMOVE");
         RemoveAnimal(animal);
         despawnCompleteCallback(animal);
     }
