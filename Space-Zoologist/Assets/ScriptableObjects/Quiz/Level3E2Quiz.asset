@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level3E2Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 3
+    need: 7
+  fixedQuestions:
+  - question: In which of the following enclosures would the Strot potentially be
+      in danger of being preyed on?
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 7
+    options:
+    - label: An enclosure with Zeigs and Lumoos
+      weight: 0
+    - label: An enclosure with Stroteaters and Zeigs
+      weight: 1
+    - label: 'Neither, Strots are not prey to any species '
+      weight: 0
+  - question: 'Which of the following is a correct list of foods edible for a Strot?
+
+'
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 3
+    options:
+    - label: Bacca berries, Formites, and Glowcaps
+      weight: 0
+    - label: 'Kelp, Glowcaps and Astral Maple fruit '
+      weight: 0
+    - label: Formites and Glowcaps
+      weight: 1
+  - question: "Let\u2019s say a Stroteater\u2019s water need isn\u2019t being satisfied
+      despite them being next to a lake. What should you do first to start trying
+      to fix this?\r\n"
+    category:
+      item:
+        category: 0
+        index: 2
+      need: 4
+    options:
+    - label: Add stagnant water to the water source
+      weight: 0
+    - label: 'Add fresh water to the water source '
+      weight: 0
+    - label: Make the water source bigger
+      weight: 0
+    - label: Look at the research for the Stroteaters to see what water values they
+        need
+      weight: 1
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level3E4Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 2
+    need: 3
+  fixedQuestions:
+  - question: 'Is it possible for Stroteaters and Strots to live in the same enclosure
+      sharing the same terrain?
+
+'
+    category:
+      item:
+        category: 0
+        index: 2
+      need: 7
+    options:
+    - label: 'Yes, if kept balanced, the Strot population and Stroteater can live
+        together without one completely destroying the other '
+      weight: 1
+    - label: No, the Stroteaters will always eat all of the Strots eventually
+      weight: 0
+  - question: "Let\u2019s say Barry just finished doing research on Stroteaters,
+      what should he do next?"
+    category:
+      item:
+        category: 0
+        index: 2
+      need: 3
+    options:
+    - label: Start placing food sources and editing water sources
+      weight: 0
+    - label: 'Observe the current food sources and water sources available for the
+        Stroteaters in the enclosure '
+      weight: 1
+    - label: Start running tests and experiments to see what works for the Stroteaters
+      weight: 0
+  - question: "If a brand new bridge was just finished being built, what would be
+      the next best logical course of action based on what you\u2019ve learned?\r\n"
+    category:
+      item:
+        category: 0
+        index: 2
+      need: 3
+    options:
+    - label: Open the bridge to the public for anyone to use
+      weight: 0
+    - label: Run miniscule tests to see if the bridge will hold up to get the bridge
+        open as soon as possible
+      weight: 0
+    - label: 'Run extensive tests to ensure the bridge is safe to use under all possible
+        conditions before opening it to the public '
+      weight: 1
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 00000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

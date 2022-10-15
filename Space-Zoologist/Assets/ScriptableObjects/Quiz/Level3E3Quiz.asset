@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level3E3Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 3
+    need: 4
+  fixedQuestions:
+  - question: Which of the following water sources would be best for a Strot?
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 4
+    options:
+    - label: 'Water with 96% purity, 2% salinity and 2% bacteria content '
+      weight: 0
+    - label: Water with 97% purity, 1% salinity and 2% bacteria content
+      weight: 1
+    - label: Water with 97% purity, 0% salinity and 3% bacteria content
+      weight: 0
+  - question: If you just finished designing an enclosure and are ready to test how
+      well it works, what would be the best next logical course of action?
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 4
+    options:
+    - label: Placing all owned species immediately for efficiency.
+      weight: 0
+    - label: 'Placing a couple of the owned species multiple separate times in different
+        ways to test if the enclosure is suitable or not before going all in. '
+      weight: 1
+    - label: Placing a couple of the owned species only once to test if the enclosure
+        is suitable or not before going all in.
+      weight: 0
+  - question: "If you were to design an \u201Cenclosure\u201D for humans, what would
+      be the best way to start based on what you\u2019ve learned so far?"
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 4
+    options:
+    - label: Researching human needs
+      weight: 1
+    - label: Experimenting
+      weight: 0
+    - label: Creating the enclosure
+      weight: 0
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 000000000000000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []
