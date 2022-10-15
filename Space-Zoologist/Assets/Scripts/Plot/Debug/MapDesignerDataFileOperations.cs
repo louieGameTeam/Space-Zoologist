@@ -17,8 +17,7 @@ public class MapDesignerDataFileOperations : MonoBehaviour
     {
         var map = GameManager.Instance.GetSerializedMap();
         var plot = map.serializedPlot;
-        // Move food
-        ShiftFoodObjects(plot, new Vector3Int(0, 1, 0));
+        ShiftFoodAndPopulations(map, new Vector3Int(0, 1, 0));
         // Move tiles ( a bit of hard coding, should fix later )
         plot.serializedGrid.serializedTilemap.SerializedTileDatas = ShiftUp(plot.serializedGrid, 1);
 
@@ -28,15 +27,22 @@ public class MapDesignerDataFileOperations : MonoBehaviour
     {
         var map = GameManager.Instance.GetSerializedMap();
         var plot = map.serializedPlot;
-        // Move food
-        ShiftFoodObjects(plot, new Vector3Int(1, 0, 0));
+        ShiftFoodAndPopulations(map, new Vector3Int(1, 0, 0));
         // Move tiles ( a bit of hard coding, should fix later )
         plot.serializedGrid.serializedTilemap.SerializedTileDatas = ShiftRight(plot.serializedGrid, 1);
 
         GameManager.Instance.LoadMap(map);
     }
 
-    private void ShiftFoodObjects(SerializedPlot plot, Vector3Int shiftValue)
+    private void ShiftFoodAndPopulations(SerializedLevel level, Vector3Int shiftValue)
+    {
+        // Move food
+        HandleShiftFoodObjects(level.serializedPlot, shiftValue);
+        // Move animals
+        HandleShiftPopulations(level.serializedPopulations, shiftValue);
+    }
+
+    private void HandleShiftFoodObjects(SerializedPlot plot, Vector3Int shiftValue)
     {
         foreach (var item in plot.serializedMapObjects.gridItemSets)
         {
@@ -44,6 +50,20 @@ public class MapDesignerDataFileOperations : MonoBehaviour
             {
                 item.coords[i] += shiftValue.x;
                 item.coords[i + 1] += shiftValue.y;
+            }
+        }
+    }
+
+    private void HandleShiftPopulations(SerializedPopulation[] populations, Vector3Int shiftValue)
+    {
+        foreach(var serializedPopulation in populations)
+        {
+            var coords = serializedPopulation.population.coords;
+            for(int i = 0;i < coords.Length;i+=3)
+            {
+                coords[i] += shiftValue.x;
+                coords[i + 1] += shiftValue.y;
+                coords[i + 2] += shiftValue.z;
             }
         }
     }

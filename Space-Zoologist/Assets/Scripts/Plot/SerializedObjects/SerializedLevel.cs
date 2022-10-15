@@ -28,7 +28,8 @@ public class SerializedLevel
                 animalPos[k] = activeChildren[k].transform.position;
             }
             Population popClass = populationGO.GetComponent<Population>();
-            this.serializedPopulations[i] = new SerializedPopulation(popClass.species, animalPos, popClass.GrowthCalculator.ChangeRate);
+            // Growth rate is irrelevent since it gets updated in gameplay
+            this.serializedPopulations[i] = new SerializedPopulation(popClass.species, animalPos, -1);
         }
     }
     public void SetPlot(SerializedPlot serializedPlot)
