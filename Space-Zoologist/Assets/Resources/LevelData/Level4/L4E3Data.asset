@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: L4E3Data
   m_EditorClassIdentifier: 
+  IsSpacer: 0
   Level: {fileID: 11400000, guid: befed8bed4e978540a7ddee4bd1f1b2b, type: 2}
   startingBalance: 350
   MapWidth: 29
   MapHeight: 29
-  WallBreakable: 0
+  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: a83c490379b8941b49666ec1763ae8d1, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
