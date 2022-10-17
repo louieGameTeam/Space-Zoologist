@@ -193,6 +193,7 @@ public class SummaryManager : MonoBehaviour
                 currentSummaryTrace = new SummaryTrace();
                 currentSummaryTrace.PlayerID = encryptedId;
                 currentSummaryTrace.PlayerName = encryptedName;
+                currentSummaryTrace.DateStarted = DateTime.Now.ToString();
             }
         }));
     }

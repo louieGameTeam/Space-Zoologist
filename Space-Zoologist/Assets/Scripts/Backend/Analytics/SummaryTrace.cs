@@ -106,6 +106,8 @@ public class SummaryTrace
     [SerializeField] private int numResourceRequestsDenied;
     // An integer representing number of times player used the draw tool.
     [SerializeField] private int numDrawToolUsed;
+    // First time user played.
+    [SerializeField] private string dateStarted;
 
     // TESTING METRICS -- see SetTrace.cs
     // A list of SetTraces.
@@ -506,6 +508,12 @@ public class SummaryTrace
     {
         get { return numDrawToolUsed; }
         set { numDrawToolUsed = value; }
+    }
+
+    public string DateStarted
+    {
+        get { return dateStarted; }
+        set { dateStarted = value; }
     }
 
     public List<SetTrace> SetTraces
