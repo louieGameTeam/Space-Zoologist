@@ -79,4 +79,9 @@ public class PopulationBehavior : ScriptableObject
         animalsToSteps[animal]++;
         ProceedToNext(animal);
     }
+
+    public bool HasAnimal(GameObject animal)
+    {
+        return animalsToSteps.ContainsKey(animal);
+    }
 }

@@ -29,7 +29,7 @@ public class BehaviorPatternUpdater : MonoBehaviour
 
     public void RegisterPopulation(Population population)
     {
-        foreach (PopulationBehavior behaviorTrigger in population.GetComponent<PopulationBehaviorManager>().defaultBehaviors)
+        foreach (PopulationBehavior behaviorTrigger in population.GetComponent<PopulationBehaviorManager>().GetAllUsedBehaviors())
         {
             foreach (BehaviorPattern behaviorPattern in behaviorTrigger.behaviorPatterns)
             {

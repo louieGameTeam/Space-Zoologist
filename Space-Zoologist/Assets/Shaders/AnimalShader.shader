@@ -44,6 +44,7 @@
             };
 
             sampler2D _MainTex;
+            float4 _MainTex_TexelSize;
             float4 _MainTex_ST;
             sampler2D _DeathFlashTex;
             float4 _DeathFlashTex_ST;
@@ -82,8 +83,9 @@
                 // transform shadow uv
                 float2 lightDirection = normalize(_LightDirection.xy);
 
-                // pixelate the shadow first
-                float2 pixelUV = float2(int2(i.uv * _Pixelation)) / _Pixelation;
+                // pixelate the shadow first, scaling with texture size to keep pixelation consistent across textures
+                float2 pixelation = float2(_MainTex_TexelSize.z, _MainTex_TexelSize.w) * _Pixelation;
+                float2 pixelUV = float2(int2(i.uv * pixelation)) / pixelation;
                 float2 shadowUV = pixelUV;
                 shadowUV -= _Min_UV;
                 
@@ -125,7 +127,6 @@
 
                 // add the shadow through lerp
                 col = lerp(shadow, col, col.a);
-
                 return col;
             }
             ENDCG
