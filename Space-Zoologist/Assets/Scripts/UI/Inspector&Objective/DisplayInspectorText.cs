@@ -162,9 +162,13 @@ public class DisplayInspectorText : MonoBehaviour
         else
         {
             string[] liquidName = new string[] { "Water", "Salt", "Bacteria" };
+            int decimalDigitsShown = 3;
+            double truncFactor = Mathf.Pow(10, decimalDigitsShown);
+            
             for (int i = 0; i < 3; i++)
             {
-                displayText += $"{liquidName[i]} : {System.Math.Round(compositions[i] * 100, 3)}%\n";
+                double displayValue = System.Math.Truncate(compositions[i] * truncFactor) / truncFactor;
+                displayText += $"{liquidName[i]} : {displayValue}%\n";
             }
 
         }
