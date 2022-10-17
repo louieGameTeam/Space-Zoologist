@@ -15,6 +15,7 @@ public class PopulationManager : MonoBehaviour
 
     public void Initialize()
     {
+        RemoveAllExistingPopulations();
         SerializedPopulation[] serializedPopulations = GameManager.Instance.PresetMap.serializedPopulations;
         serializedPopulations = serializedPopulations ?? new SerializedPopulation[0];
         for (int i = 0; i < serializedPopulations.Length; i++)
@@ -82,15 +83,6 @@ public class PopulationManager : MonoBehaviour
         }
         return copiedBehaviors;
     }*/
-
-    private void RemovePopulation(object eventData)
-    {
-        if (!ExistingPopulations.Contains((Population)eventData))
-        {
-            return;
-        }
-        this.ExistingPopulations.Remove((Population)eventData);
-    }
 
     /// <summary>
     /// Creates a population if needed, then adds a new animal to the population
@@ -210,6 +202,14 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
+    public void RemoveAllExistingPopulations()
+    {
+        for(int i = Populations.Count-1; i >= 0; i--)
+        {
+            RemovePopulation(Populations[i]);
+        }
+    }
+
     public void RemovePopulation(Population population)
     {
         Debug.Log("Removing " + population);
@@ -220,6 +220,15 @@ public class PopulationManager : MonoBehaviour
 
         // NOTE: does the need cache need to be updated now?
     }
+    private void RemovePopulation(object eventData)
+    {
+        if (!ExistingPopulations.Contains((Population)eventData))
+        {
+            return;
+        }
+        this.ExistingPopulations.Remove((Population)eventData);
+    }
+
 
     public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)
     {

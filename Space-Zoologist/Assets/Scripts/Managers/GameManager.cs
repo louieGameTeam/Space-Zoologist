@@ -161,8 +161,9 @@ public class GameManager : MonoBehaviour
             level.SetPlot(m_plotIO.SavePlot());
             return level;
         }
-        catch
+        catch(System.Exception e)
         {
+            Debug.LogException(e);
             Debug.LogError("Serialization error, NOT saved to protect existing saves");
             return null;
         }
