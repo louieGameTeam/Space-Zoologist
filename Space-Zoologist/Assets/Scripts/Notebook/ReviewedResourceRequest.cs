@@ -115,17 +115,25 @@ public class ReviewedResourceRequest
             // If there is not enough money for any item, don't grant any
             else review.QuantityGranted = 0;
         }
+
+        try
+        {
+            SummaryManager summaryManager = (SummaryManager)GameObject.FindObjectOfType(typeof(SummaryManager));
+            summaryManager.CurrentSummaryTrace.NumResourceRequests += 1;
+            if (review.CurrentStatus == Status.Granted || review.CurrentStatus == Status.PartiallyGranted)
+            {
+                summaryManager.CurrentSummaryTrace.NumResourceRequestsApproved += 1;
+            }
+            else if (review.CurrentStatus == Status.Denied)
+            {
+                summaryManager.CurrentSummaryTrace.NumResourceRequestsDenied += 1;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+        }
         
-        SummaryManager summaryManager = (SummaryManager)GameObject.FindObjectOfType(typeof(SummaryManager));
-        summaryManager.CurrentSummaryTrace.NumResourceRequests += 1;
-        if (review.CurrentStatus == Status.Granted || review.CurrentStatus == Status.PartiallyGranted) 
-        {
-            summaryManager.CurrentSummaryTrace.NumResourceRequestsApproved += 1;
-        }
-        else if (review.CurrentStatus == Status.Denied)
-        {
-            summaryManager.CurrentSummaryTrace.NumResourceRequestsDenied += 1;
-        }
 
         return review;
     }
