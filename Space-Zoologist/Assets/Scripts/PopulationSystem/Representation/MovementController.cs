@@ -233,7 +233,6 @@ public class MovementController : MonoBehaviour
     {
         ResetPathfindingConditions();
         this.Animal.MovementData.MovementStatus = Movement.idle;
-        this.Animal.MovementData.CurrentDirection = Direction.down;
     }
 
     // Can modify pointReachedOffset to have more precise movement towards each destination point
