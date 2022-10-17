@@ -76,21 +76,27 @@ public class Population : MonoBehaviour
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
-            Animator animator = animal.GetComponent<Animator>();
-            Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
-            if (animator.speed != 0)
-            {
-                this.animatorSpeed = animator.speed;
-            }
-            if (overlay.speed != 0)
-            {
-                this.overlaySpeed = overlay.speed;
-            }
-            animator.speed = 0;
-            overlay.speed = 0;
+            // Tentative change to not freeze animations
+            //PauseAnimatorComponent();
             animal.GetComponent<MovementController>().IsPaused = true;
             //animal.GetComponent<MovementController>().TryToCancelDestination();
         }
+    }
+
+    private void PauseAnimatorComponent(GameObject animal)
+    {
+        Animator animator = animal.GetComponent<Animator>();
+        Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
+        if (animator.speed != 0)
+        {
+            this.animatorSpeed = animator.speed;
+        }
+        if (overlay.speed != 0)
+        {
+            this.overlaySpeed = overlay.speed;
+        }
+        animator.speed = 0;
+        overlay.speed = 0;
     }
 
     public void UnpauseAnimalsMovementController()
