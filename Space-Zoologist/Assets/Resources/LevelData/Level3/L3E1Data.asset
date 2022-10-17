@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: L3E1Data
   m_EditorClassIdentifier: 
+  IsSpacer: 0
   Level: {fileID: 11400000, guid: d4681dfe9ebfd4be9a273c28b3de19d3, type: 2}
   startingBalance: 600
   MapWidth: 29
@@ -80,7 +81,7 @@ MonoBehaviour:
     nextLevelID:
       levelNumber: 0
       enclosureNumber: 0
-    quizConversation: {fileID: 8938176367728474889, guid: f6cf09b327d9283489e62435dc54420c,
+    quizConversation: {fileID: 8322917461169029610, guid: fbece8d47d4fa7346845ceb219fb2efb,
       type: 3}
     nextLevelIDs:
       levelIDs:
@@ -90,5 +91,5 @@ MonoBehaviour:
         enclosureNumber: 2
       - levelNumber: 3
         enclosureNumber: 3
-  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+  restertEnclosureConversation: {fileID: 6321586904675867812, guid: cd9cefc4f23194f4a923d1d3e896324d,
     type: 3}
