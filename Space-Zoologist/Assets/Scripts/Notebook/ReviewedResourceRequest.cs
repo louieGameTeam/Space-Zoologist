@@ -116,9 +116,9 @@ public class ReviewedResourceRequest
             else review.QuantityGranted = 0;
         }
 
-        try
-        {
-            SummaryManager summaryManager = (SummaryManager)GameObject.FindObjectOfType(typeof(SummaryManager));
+        SummaryManager summaryManager = (SummaryManager)GameObject.FindObjectOfType(typeof(SummaryManager));
+        if(summaryManager != null)
+        { 
             summaryManager.CurrentSummaryTrace.NumResourceRequests += 1;
             if (review.CurrentStatus == Status.Granted || review.CurrentStatus == Status.PartiallyGranted)
             {
@@ -129,9 +129,9 @@ public class ReviewedResourceRequest
                 summaryManager.CurrentSummaryTrace.NumResourceRequestsDenied += 1;
             }
         }
-        catch (Exception ex)
+        else
         {
-            Debug.LogException(ex);
+            Debug.LogWarning("SummaryManager missing");
         }
         
 

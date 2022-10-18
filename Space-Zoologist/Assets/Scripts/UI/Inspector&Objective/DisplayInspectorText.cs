@@ -167,7 +167,7 @@ public class DisplayInspectorText : MonoBehaviour
             
             for (int i = 0; i < 3; i++)
             {
-                double displayValue = System.Math.Truncate(compositions[i] * truncFactor) / truncFactor;
+                double displayValue = System.Math.Truncate(compositions[i] * 100 * truncFactor) / truncFactor;
                 displayText += $"{liquidName[i]} : {displayValue}%\n";
             }
 
