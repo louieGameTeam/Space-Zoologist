@@ -43,7 +43,7 @@ MonoBehaviour:
       weight: 0
     - label: 'Placing a couple of the owned species multiple separate times in different
         ways to test if the enclosure is suitable or not before going all in. '
-      weight: 1
+      weight: 2
     - label: Placing a couple of the owned species only once to test if the enclosure
         is suitable or not before going all in.
       weight: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
       need: 4
     options:
     - label: Researching human needs
-      weight: 1
+      weight: 2
     - label: Experimenting
       weight: 0
     - label: Creating the enclosure
@@ -67,7 +67,7 @@ MonoBehaviour:
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 000000000000000000000000
+    answers: 010000000100000000000000
     runtimeTemplate:
       template: {fileID: 0}
       questions: []

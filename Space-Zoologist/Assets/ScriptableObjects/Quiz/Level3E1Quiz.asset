@@ -57,7 +57,7 @@ MonoBehaviour:
     options:
     - label: He should have checked his research to see what food the Strots like
         before editing the enclosure.
-      weight: 1
+      weight: 2
     - label: What he did was correct.
       weight: 0
     - label: 'He should have assumed the food source present needed more water, and
@@ -69,7 +69,7 @@ MonoBehaviour:
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 000000000000000000000000
+    answers: 010000000100000000000000
     runtimeTemplate:
       template: {fileID: 0}
       questions: []
