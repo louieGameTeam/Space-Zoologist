@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: L1E2Data
   m_EditorClassIdentifier: 
+  IsSpacer: 0
   Level: {fileID: 11400000, guid: 111ea045cc8ce40ce87418c2e7fa7d56, type: 2}
   startingBalance: 375
   MapWidth: 29
@@ -69,7 +70,7 @@ MonoBehaviour:
       - levelNumber: 1
         enclosureNumber: 3
       - levelNumber: 1
-        enclosureNumber: 3
+        enclosureNumber: 4
       - levelNumber: 1
         enclosureNumber: 4
   restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,

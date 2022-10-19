@@ -18,7 +18,7 @@ MonoBehaviour:
       index: 3
     need: 0
   fixedQuestions:
-  - question: Which of the following is a correct selection of terrain that is traversable
+  - question: Which of the following is a CORRECT selection of terrain that is traversable
       by a Strot?
     category:
       item:
@@ -27,12 +27,12 @@ MonoBehaviour:
       need: 0
     options:
     - label: Rock, grass, sand
-      weight: 1
-    - label: Dirt, grass, swamp
       weight: 0
+    - label: Dirt, grass, swamp
+      weight: 1
     - label: Water, dirt, grass
       weight: 0
-  - question: Which of the following is an incorrect selection of terrain that is
+  - question: Which of the following is an INCORRECT selection of terrain that is
       traversable by a Stroteater?
     category:
       item:
@@ -41,10 +41,10 @@ MonoBehaviour:
       need: 0
     options:
     - label: Grass, rock, swamp
-      weight: 0
-    - label: Dirt, swamp, sand
       weight: 1
-    - label: Grass, dirt, swamp
+    - label: Dirt, rock, sand
+      weight: 0
+    - label: Grass, dirt, rock
       weight: 0
   - question: "Barry saw that the Strot\u2019s food need was not satisfied at all,
       so he placed more of the food source that was already present. What do you
@@ -57,7 +57,7 @@ MonoBehaviour:
     options:
     - label: He should have checked his research to see what food the Strots like
         before editing the enclosure.
-      weight: 1
+      weight: 2
     - label: What he did was correct.
       weight: 0
     - label: 'He should have assumed the food source present needed more water, and
@@ -69,7 +69,7 @@ MonoBehaviour:
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 000000000000000000000000
+    answers: 010000000100000000000000
     runtimeTemplate:
       template: {fileID: 0}
       questions: []

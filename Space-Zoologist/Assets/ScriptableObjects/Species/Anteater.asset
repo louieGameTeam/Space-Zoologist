@@ -19,7 +19,7 @@ MonoBehaviour:
   treesRequired: 0
   friendsRequired: {x: 0, y: 0}
   waterTilesRequired: 2
-  growthRate: 4
+  growthRate: 3
   decayRate: 2
   moveCost: 0
   size: 2
@@ -198,7 +198,7 @@ MonoBehaviour:
           id:
             category: 2
             index: 1
-        - needed: 0
+        - needed: 1
           speciesNeedType: 0
           useAsTerrainNeed: 0
           traversibleOnly: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
           id:
             category: 2
             index: 3
-        - needed: 1
+        - needed: 0
           speciesNeedType: 0
           useAsTerrainNeed: 0
           traversibleOnly: 0
