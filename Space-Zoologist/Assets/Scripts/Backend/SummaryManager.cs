@@ -290,15 +290,19 @@ public class SummaryManager : MonoBehaviour
             if (currentSet == 1)
             {
                 trace.L1Enclosure1Complete = true;
+                trace.L1Enclosure1DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 2)
             {
                 trace.L1Enclosure2Complete = true;
+                trace.L1Enclosure2DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 3)
             {
                 trace.L1Enclosure3Complete = true;
+                trace.L1Enclosure3DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 4)
             {
                 trace.L1Enclosure4Complete = true;
+                trace.L1Enclosure4DateCompleted = DateTime.Now.ToString();
                 trace.Level1Complete = true;
             }
         }
@@ -307,15 +311,19 @@ public class SummaryManager : MonoBehaviour
             if (currentSet == 1)
             {
                 trace.L2Enclosure1Complete = true;
+                trace.L2Enclosure1DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 2)
             {
                 trace.L2Enclosure2Complete = true;
+                trace.L2Enclosure2DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 3)
             {
                 trace.L2Enclosure3Complete = true;
+                trace.L2Enclosure3DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 4)
             {
                 trace.L2Enclosure4Complete = true;
+                trace.L2Enclosure4DateCompleted = DateTime.Now.ToString();
                 trace.Level2Complete = true;
             }
         }
@@ -324,15 +332,19 @@ public class SummaryManager : MonoBehaviour
             if (currentSet == 1)
             {
                 trace.L3Enclosure1Complete = true;
+                trace.L3Enclosure1DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 2)
             {
                 trace.L3Enclosure2Complete = true;
+                trace.L3Enclosure2DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 3)
             {
                 trace.L3Enclosure3Complete = true;
+                trace.L3Enclosure3DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 4)
             {
                 trace.L3Enclosure4Complete = true;
+                trace.L3Enclosure4DateCompleted = DateTime.Now.ToString();
                 trace.Level3Complete = true;
             }
         }
@@ -341,12 +353,15 @@ public class SummaryManager : MonoBehaviour
             if (currentSet == 1)
             {
                 trace.L4Enclosure1Complete = true;
+                trace.L4Enclosure1DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 2)
             {
                 trace.L4Enclosure2Complete = true;
+                trace.L4Enclosure2DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 3)
             {
                 trace.L4Enclosure3Complete = true;
+                trace.L4Enclosure3DateCompleted = DateTime.Now.ToString();
             } else if (currentSet == 4)
             {
                 trace.L4Enclosure4Complete = true;
