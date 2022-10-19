@@ -52,28 +52,45 @@ public class SummaryTrace
     // A boolean indicating completion of level 1.
     [SerializeField] private bool level1Complete;
     // A boolean indicating completion of level 1 enclosure 1.
+    // AND string indicating the date of completion
     [SerializeField] private bool l1Enclosure1Complete;
+    [SerializeField] private string l1Enclosure1DateCompleted;
     [SerializeField] private bool l1Enclosure2Complete;
+    [SerializeField] private string l1Enclosure2DateCompleted;
     [SerializeField] private bool l1Enclosure3Complete;
+    [SerializeField] private string l1Enclosure3DateCompleted;
     [SerializeField] private bool l1Enclosure4Complete;
+    [SerializeField] private string l1Enclosure4DateCompleted;
     // A boolean indicating completion of level 2.
     [SerializeField] private bool level2Complete;
     [SerializeField] private bool l2Enclosure1Complete;
+    [SerializeField] private string l2Enclosure1DateCompleted;
     [SerializeField] private bool l2Enclosure2Complete;
+    [SerializeField] private string l2Enclosure2DateCompleted;
     [SerializeField] private bool l2Enclosure3Complete;
+    [SerializeField] private string l2Enclosure3DateCompleted;
     [SerializeField] private bool l2Enclosure4Complete;
+    [SerializeField] private string l2Enclosure4DateCompleted;
     // A boolean indicating completion of level 3.
     [SerializeField] private bool level3Complete;
     [SerializeField] private bool l3Enclosure1Complete;
+    [SerializeField] private string l3Enclosure1DateCompleted;
     [SerializeField] private bool l3Enclosure2Complete;
+    [SerializeField] private string l3Enclosure2DateCompleted;
     [SerializeField] private bool l3Enclosure3Complete;
+    [SerializeField] private string l3Enclosure3DateCompleted;
     [SerializeField] private bool l3Enclosure4Complete;
+    [SerializeField] private string l3Enclosure4DateCompleted;
     // A boolean indicating completion of level 4.
     [SerializeField] private bool level4Complete;
     [SerializeField] private bool l4Enclosure1Complete;
+    [SerializeField] private string l4Enclosure1DateCompleted;
     [SerializeField] private bool l4Enclosure2Complete;
+    [SerializeField] private string l4Enclosure2DateCompleted;
     [SerializeField] private bool l4Enclosure3Complete;
+    [SerializeField] private string l4Enclosure3DateCompleted;
     [SerializeField] private bool l4Enclosure4Complete;
+    [SerializeField] private string l4Enclosure4DateCompleted;
     // A boolean indicating completion of level 5.
     [SerializeField] private bool level5Complete;
 
@@ -145,24 +162,40 @@ public class SummaryTrace
         tutorialComplete = false;
         level1Complete = false;
         l1Enclosure1Complete = false;
+        l1Enclosure1DateCompleted = "";
         l1Enclosure2Complete = false;
+        l1Enclosure2DateCompleted = "";
         l1Enclosure3Complete = false;
+        l1Enclosure3DateCompleted = "";
         l1Enclosure4Complete = false;
+        l1Enclosure4DateCompleted = "";
         level2Complete = false;
         l2Enclosure1Complete = false;
+        l2Enclosure1DateCompleted = "";
         l2Enclosure2Complete = false;
+        l2Enclosure2DateCompleted = "";
         l2Enclosure3Complete = false;
+        l2Enclosure3DateCompleted = "";
         l2Enclosure4Complete = false;
+        l2Enclosure4DateCompleted = "";
         level3Complete = false;
         l3Enclosure1Complete = false;
+        l3Enclosure1DateCompleted = "";
         l3Enclosure2Complete = false;
+        l3Enclosure2DateCompleted = "";
         l3Enclosure3Complete = false;
+        l3Enclosure3DateCompleted = "";
         l3Enclosure4Complete = false;
+        l3Enclosure4DateCompleted = "";
         level4Complete = false;
         l4Enclosure1Complete = false;
+        l4Enclosure1DateCompleted = "";
         l4Enclosure2Complete = false;
+        l4Enclosure2DateCompleted = "";
         l4Enclosure3Complete = false;
+        l4Enclosure3DateCompleted = "";
         l4Enclosure4Complete = false;
+        l4Enclosure4DateCompleted = "";
         level5Complete = false;
         numResearchTabOpen = 0;
         timeResearchTabOpen = 0f;
@@ -338,20 +371,40 @@ public class SummaryTrace
         get { return l1Enclosure1Complete; }
         set { l1Enclosure1Complete = value; }
     }
+    public string L1Enclosure1DateCompleted
+    {
+        get { return l1Enclosure1DateCompleted; }
+        set { l1Enclosure1DateCompleted = value; }
+    }
     public bool L1Enclosure2Complete
     {
         get { return l1Enclosure2Complete; }
         set { l1Enclosure2Complete = value; }
+    }
+    public string L1Enclosure2DateCompleted
+    {
+        get { return l1Enclosure2DateCompleted; }
+        set { l1Enclosure2DateCompleted = value; }
     }
     public bool L1Enclosure3Complete
     {
         get { return l1Enclosure3Complete; }
         set { l1Enclosure3Complete = value; }
     }
+    public string L1Enclosure3DateCompleted
+    {
+        get { return l1Enclosure3DateCompleted; }
+        set { l1Enclosure3DateCompleted = value; }
+    }
     public bool L1Enclosure4Complete
     {
         get { return l1Enclosure4Complete; }
         set { l1Enclosure4Complete = value; }
+    }
+    public string L1Enclosure4DateCompleted
+    {
+        get { return l1Enclosure4DateCompleted; }
+        set { l1Enclosure4DateCompleted = value; }
     }
 
     public bool Level2Complete
@@ -364,20 +417,40 @@ public class SummaryTrace
         get { return l2Enclosure1Complete; }
         set { l2Enclosure1Complete = value; }
     }
+    public string L2Enclosure1DateCompleted
+    {
+        get { return l2Enclosure1DateCompleted; }
+        set { l2Enclosure1DateCompleted = value; }
+    }
     public bool L2Enclosure2Complete
     {
         get { return l2Enclosure2Complete; }
         set { l2Enclosure2Complete = value; }
+    }
+    public string L2Enclosure2DateCompleted
+    {
+        get { return l2Enclosure2DateCompleted; }
+        set { l2Enclosure2DateCompleted = value; }
     }
     public bool L2Enclosure3Complete
     {
         get { return l2Enclosure3Complete; }
         set { l2Enclosure3Complete = value; }
     }
+    public string L2Enclosure3DateCompleted
+    {
+        get { return l2Enclosure3DateCompleted; }
+        set { l2Enclosure3DateCompleted = value; }
+    }
     public bool L2Enclosure4Complete
     {
         get { return l2Enclosure4Complete; }
         set { l2Enclosure4Complete = value; }
+    }
+    public string L2Enclosure4DateCompleted
+    {
+        get { return l2Enclosure4DateCompleted; }
+        set { l2Enclosure4DateCompleted = value; }
     }
 
     public bool Level3Complete
@@ -390,20 +463,40 @@ public class SummaryTrace
         get { return l3Enclosure1Complete; }
         set { l3Enclosure1Complete = value; }
     }
+    public string L3Enclosure1DateCompleted
+    {
+        get { return l3Enclosure1DateCompleted; }
+        set { l3Enclosure1DateCompleted = value; }
+    }
     public bool L3Enclosure2Complete
     {
         get { return l3Enclosure2Complete; }
         set { l3Enclosure2Complete = value; }
+    }
+    public string L3Enclosure2DateCompleted
+    {
+        get { return l3Enclosure2DateCompleted; }
+        set { l3Enclosure2DateCompleted = value; }
     }
     public bool L3Enclosure3Complete
     {
         get { return l3Enclosure3Complete; }
         set { l3Enclosure3Complete = value; }
     }
+    public string L3Enclosure3DateCompleted
+    {
+        get { return l3Enclosure3DateCompleted; }
+        set { l3Enclosure3DateCompleted = value; }
+    }
     public bool L3Enclosure4Complete
     {
         get { return l3Enclosure4Complete; }
         set { l3Enclosure4Complete = value; }
+    }
+    public string L3Enclosure4DateCompleted
+    {
+        get { return l3Enclosure4DateCompleted; }
+        set { l3Enclosure4DateCompleted = value; }
     }
 
     public bool Level4Complete
@@ -416,20 +509,40 @@ public class SummaryTrace
         get { return l4Enclosure1Complete; }
         set { l4Enclosure1Complete = value; }
     }
+    public string L4Enclosure1DateCompleted
+    {
+        get { return l4Enclosure1DateCompleted; }
+        set { l4Enclosure1DateCompleted = value; }
+    }
     public bool L4Enclosure2Complete
     {
         get { return l4Enclosure2Complete; }
         set { l4Enclosure2Complete = value; }
+    }
+    public string L4Enclosure2DateCompleted
+    {
+        get { return l4Enclosure2DateCompleted; }
+        set { l4Enclosure2DateCompleted = value; }
     }
     public bool L4Enclosure3Complete
     {
         get { return l4Enclosure3Complete; }
         set { l4Enclosure3Complete = value; }
     }
+    public string L4Enclosure3DateCompleted
+    {
+        get { return l4Enclosure3DateCompleted; }
+        set { l4Enclosure3DateCompleted = value; }
+    }
     public bool L4Enclosure4Complete
     {
         get { return l4Enclosure4Complete; }
         set { l4Enclosure4Complete = value; }
+    }
+    public string L4Enclosure4DateCompleted
+    {
+        get { return l4Enclosure4DateCompleted; }
+        set { l4Enclosure4DateCompleted = value; }
     }
 
     public bool Level5Complete
