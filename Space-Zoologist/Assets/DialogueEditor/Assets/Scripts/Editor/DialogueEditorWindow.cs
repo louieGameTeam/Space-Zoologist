@@ -405,42 +405,43 @@ namespace DialogueEditor
 
         private void DrawTitleBar()
         {
-            GUILayout.BeginHorizontal(EditorStyles.toolbar);
-            if (GUILayout.Button("Reset view", EditorStyles.toolbarButton))
+            using (new GUILayout.HorizontalScope (EditorStyles.toolbar))
             {
-                Recenter();
-            }
-            if (GUILayout.Button("Reset panel", EditorStyles.toolbarButton))
-            {
-                ResetPanelSize();
-            }
+                if (GUILayout.Button ("Reset view", EditorStyles.toolbarButton))
+                {
+                    Recenter ();
+                }
+                if (GUILayout.Button ("Reset panel", EditorStyles.toolbarButton))
+                {
+                    ResetPanelSize ();
+                }
 
-            // BEGIN ADDED CODE
-            if(GUILayout.Button("Focus Node with ID", EditorStyles.toolbarButton))
-            {
-                FocusNode(focusNodeID);
-            }
-            GUI.SetNextControlName("FocusNodeID");
-            focusNodeID = EditorGUILayout.IntField(focusNodeID, EditorStyles.toolbarTextField);
+                // BEGIN ADDED CODE
+                if (GUILayout.Button ("Focus Node with ID", EditorStyles.toolbarButton))
+                {
+                    FocusNode (focusNodeID);
+                }
+                GUI.SetNextControlName ("FocusNodeID");
+                focusNodeID = EditorGUILayout.IntField (focusNodeID, EditorStyles.toolbarTextField);
 
-            // Focus node when enter key is pressed
-            if (GUI.GetNameOfFocusedControl() == "FocusNodeID" && Event.current.isKey && 
-                (Event.current.keyCode == KeyCode.Return || Event.current.keyCode == KeyCode.KeypadEnter))
-            {
-                FocusNode(focusNodeID);
-            }
-            // END ADDED CODE
+                // Focus node when enter key is pressed
+                if (GUI.GetNameOfFocusedControl () == "FocusNodeID" && Event.current.isKey &&
+                    (Event.current.keyCode == KeyCode.Return || Event.current.keyCode == KeyCode.KeypadEnter))
+                {
+                    FocusNode (focusNodeID);
+                }
+                // END ADDED CODE
 
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Manual Save", EditorStyles.toolbarButton))
-            {
-                Save(true);
+                GUILayout.FlexibleSpace ();
+                if (GUILayout.Button ("Manual Save", EditorStyles.toolbarButton))
+                {
+                    Save (true);
+                }
+                if (GUILayout.Button ("Help", EditorStyles.toolbarButton))
+                {
+                    Application.OpenURL (HELP_URL);
+                }
             }
-            if (GUILayout.Button("Help", EditorStyles.toolbarButton))
-            {
-                Application.OpenURL(HELP_URL);
-            }
-            GUILayout.EndHorizontal();
         }
 
         private void DrawNodes()
@@ -449,7 +450,7 @@ namespace DialogueEditor
             {
                 for (int i = 0; i < uiNodes.Count; i++)
                 {
-                    uiNodes[i].Draw();
+                    uiNodes[i].Draw(offset);
                 }
             }
         }
@@ -693,7 +694,7 @@ namespace DialogueEditor
                     break;
 
                 case eInputState.PlacingOption:
-                    m_currentPlacingNode.SetPosition(e.mousePosition);
+                    m_currentPlacingNode.SetPosition(e.mousePosition, offset);
 
                     // Left click
                     if (e.type == UnityEngine.EventType.MouseDown && e.button == 0)
@@ -707,7 +708,7 @@ namespace DialogueEditor
                     break;
 
                 case eInputState.PlacingSpeech:
-                    m_currentPlacingNode.SetPosition(e.mousePosition);
+                    m_currentPlacingNode.SetPosition(e.mousePosition, offset);
 
                     // Left click
                     if (e.type == UnityEngine.EventType.MouseDown && e.button == 0)
@@ -841,8 +842,9 @@ namespace DialogueEditor
                         dragging = false;
                     break;
 
+
                 case UnityEngine.EventType.MouseDrag:
-                    if (dragging && (e.button == 0 || e.button == 2) && !clickInBox && !IsANodeSelected())
+                    if (dragging && (e.button == 0 || e.button == 2) && !clickInBox)
                     {
                         OnDrag(e.delta);
                     }
@@ -877,7 +879,7 @@ namespace DialogueEditor
             {
                 for (int i = 0; i < uiNodes.Count; i++)
                 {
-                    uiNodes[i].Drag(delta);
+                    uiNodes[i].DragView (delta);
                 }
             }
 
@@ -1101,7 +1103,7 @@ namespace DialogueEditor
             Vector2 delta = target - new Vector2(ConversationRoot.EditorInfo.xPos, ConversationRoot.EditorInfo.yPos);
             for (int i = 0; i < uiNodes.Count; i++)
             {
-                uiNodes[i].Drag(delta);
+                uiNodes[i].DragView (delta);
             }
             Repaint();
         }
@@ -1189,7 +1191,7 @@ namespace DialogueEditor
                 // Add the difference to the positions of all nodes
                 foreach(UINode node in uiNodes)
                 {
-                    node.Drag(delta);
+                    node.DragView (delta);
                 }
 
                 // Set gui to changed

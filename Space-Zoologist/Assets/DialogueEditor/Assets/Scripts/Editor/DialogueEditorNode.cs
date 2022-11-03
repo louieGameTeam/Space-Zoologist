@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using GluonGui;
 
 namespace DialogueEditor
 {
@@ -34,6 +35,7 @@ namespace DialogueEditor
         public bool isSelected;
         protected string title;
         protected GUIStyle currentBoxStyle;
+        public Vector2 viewOffset = Vector2.zero;
 
         // Static
         private static GUIStyle titleStyle;
@@ -70,21 +72,21 @@ namespace DialogueEditor
             }
         }
 
-        protected void CreateRect(Vector2 pos, float wid, float hei)
+        protected void CreateRect(Vector2 pos, Vector2 viewPos, float wid, float hei)
         {
-            rect = new Rect(pos.x, pos.y, wid, hei);
-            Info.EditorInfo.xPos = rect.x;
-            Info.EditorInfo.yPos = rect.y;
+            rect = new Rect(pos.x + viewPos.x, pos.y + viewPos.y, wid, hei);
+            Info.EditorInfo.xPos = rect.x - viewPos.x;
+            Info.EditorInfo.yPos = rect.y - viewPos.y;
         }
 
 
         // Generic methods, called from window
-        public void SetPosition(Vector2 newPos)
+        public void SetPosition(Vector2 newPos, Vector2 viewPos)
         {
             Vector2 centeredPos = new Vector2(newPos.x - rect.width / 2, newPos.y - rect.height / 2);
             rect.position = centeredPos;
-            Info.EditorInfo.xPos = centeredPos.x;
-            Info.EditorInfo.yPos = centeredPos.y;
+            Info.EditorInfo.xPos = centeredPos.x - viewPos.x;
+            Info.EditorInfo.yPos = centeredPos.y - viewPos.y;
         }
 
 
@@ -94,8 +96,10 @@ namespace DialogueEditor
         // Drawing
         //---------------------------------
 
-        public void Draw()
+        public void Draw(Vector2 offset)
         {
+            //viewOffset = offset;
+
             // Box
             GUI.Box(rect, title, currentBoxStyle);
 
@@ -123,11 +127,17 @@ namespace DialogueEditor
         // Interactions / Input Events
         //---------------------------------
 
-        public void Drag(Vector2 moveDelta)
+        public void DragView(Vector2 moveDelta)
+        {
+            viewOffset += moveDelta;
+            rect.position += moveDelta;
+        }
+
+        public void Drag (Vector2 moveDelta)
         {
             rect.position += moveDelta;
-            Info.EditorInfo.xPos = rect.x;
-            Info.EditorInfo.yPos = rect.y;
+            Info.EditorInfo.xPos += moveDelta.x;
+            Info.EditorInfo.yPos += moveDelta.y;
         }
 
         public void SetSelected(bool selected)
@@ -277,7 +287,7 @@ namespace DialogueEditor
 
             currentBoxStyle = defaultNodeStyle;
 
-            CreateRect(pos, Width, Height);
+            CreateRect(pos, viewOffset, Width, Height);
         }
 
 
@@ -315,13 +325,14 @@ namespace DialogueEditor
                 for (int i = 0; i < SpeechNode.Options.Count; i++)
                 {
                     DialogueEditorUtil.GetConnectionDrawInfo(rect, SpeechNode.Options[i], out start, out end);
+                    end += viewOffset;
 
                     Vector2 toStart = (start - end).normalized;
                     Vector2 toEnd = (end - start).normalized;
                     Handles.DrawBezier(start, end, start + toStart, end + toEnd, DefaultColor, null, LINE_WIDTH);
 
                     Vector2 intersection;
-                    Vector2 boxPos = new Vector2(SpeechNode.Options[i].EditorInfo.xPos, SpeechNode.Options[i].EditorInfo.yPos);
+                    Vector2 boxPos = new Vector2(SpeechNode.Options[i].EditorInfo.xPos + viewOffset.x, SpeechNode.Options[i].EditorInfo.yPos + viewOffset.y);
                     if (DialogueEditorUtil.DoesLineIntersectWithBox(start, end, boxPos, true, out intersection))
                     {
                         DialogueEditorUtil.DrawArrowTip(intersection, toEnd, DefaultColor);
@@ -332,13 +343,14 @@ namespace DialogueEditor
             {
                 Vector2 start, end;
                 DialogueEditorUtil.GetConnectionDrawInfo(rect, SpeechNode.Speech, out start, out end);
-
+                end += viewOffset;
+                
                 Vector2 toStart = (start - end).normalized;
                 Vector2 toEnd = (end - start).normalized;
                 Handles.DrawBezier(start, end, start + toStart, end + toEnd, DefaultColor, null, LINE_WIDTH);
 
                 Vector2 intersection;
-                Vector2 boxPos = new Vector2(SpeechNode.Speech.EditorInfo.xPos, SpeechNode.Speech.EditorInfo.yPos);
+                Vector2 boxPos = new Vector2(SpeechNode.Speech.EditorInfo.xPos + viewOffset.x, SpeechNode.Speech.EditorInfo.yPos + viewOffset.y);
                 if (DialogueEditorUtil.DoesLineIntersectWithBox(start, end, boxPos, false, out intersection))
                 {
                     DialogueEditorUtil.DrawArrowTip(intersection, toEnd, DefaultColor);
@@ -427,7 +439,7 @@ namespace DialogueEditor
 
             currentBoxStyle = defaultNodeStyle;
 
-            CreateRect(pos, Width, Height);
+            CreateRect(pos, viewOffset, Width, Height);
         }
 
 
@@ -450,12 +462,14 @@ namespace DialogueEditor
                 Vector2 start, end;
                 DialogueEditorUtil.GetConnectionDrawInfo(rect, OptionNode.Speech, out start, out end);
 
+                end += viewOffset;
+
                 Vector2 toStart = (start - end).normalized;
                 Vector2 toEnd = (end - start).normalized;
                 Handles.DrawBezier(start, end, start + toStart, end + toEnd, DefaultColor, null, LINE_WIDTH);
 
                 Vector2 intersection;
-                Vector2 boxPos = new Vector2(OptionNode.Speech.EditorInfo.xPos, OptionNode.Speech.EditorInfo.yPos);
+                Vector2 boxPos = new Vector2(OptionNode.Speech.EditorInfo.xPos + viewOffset.x, OptionNode.Speech.EditorInfo.yPos + viewOffset.y);
                 if (DialogueEditorUtil.DoesLineIntersectWithBox(start, end, boxPos, false, out intersection))
                 {
                     DialogueEditorUtil.DrawArrowTip(intersection, toEnd, DefaultColor);
