@@ -41,6 +41,11 @@ public class PodStoreSection : StoreSection
             populationManager.SpawnAnimal (selectedSpecies, position);
             GridSystem.UpdateAnimalCellGrid ();
             base.ResourceManager.Placed (selectedSpecies, 1);
+            // Cancel if no left after placing
+            if (base.ResourceManager.CheckRemainingResource(selectedSpecies) <= 0)
+            {
+                base.OnItemSelectionCanceled();
+            }
         }
     }
 

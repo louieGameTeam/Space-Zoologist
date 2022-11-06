@@ -59,6 +59,24 @@ public class Population : MonoBehaviour
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         this.GrowthCalculator = new GrowthCalculator(this);
+        InitializeExistingAnimals();
+    }
+    
+    /// <summary>
+    /// Initialize existing animals. Always called after InitializeNewPopulation
+    /// </summary>
+    public void InitializeExistingAnimals()
+    {
+        foreach (GameObject animal in this.AnimalPopulation)
+        {
+            if (animal.activeSelf)
+            {
+                MovementData data = new MovementData();
+                animal.GetComponent<Animal>().Initialize(this, data);
+            }
+        }
+        this.prePopulationCount = this.Count;
+        this.PopulationBehaviorManager.Initialize();
     }
 
     /// <summary>
@@ -109,20 +127,6 @@ public class Population : MonoBehaviour
             overlay.speed = this.overlaySpeed;
             animal.GetComponent<MovementController>().IsPaused = false;
         }
-    }
-
-    public void InitializeExistingAnimals()
-    {
-        foreach (GameObject animal in this.AnimalPopulation)
-        {
-            if (animal.activeSelf)
-            {
-                MovementData data = new MovementData();
-                animal.GetComponent<Animal>().Initialize(this, data);
-            }
-        }
-        this.prePopulationCount = this.Count;
-        this.PopulationBehaviorManager.Initialize();
     }
 
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
@@ -241,7 +245,7 @@ public class Population : MonoBehaviour
             //Debug.Log ("Animal removed; new population count: " + Count);
         }
     }
-
+    
     public void DisableAnimalGameObject(GameObject animal)
     {
         animal.SetActive(false);

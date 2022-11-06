@@ -10,15 +10,15 @@ public class SpawnPattern : UniversalAnimatorPattern
         base.Init();
     }
 
-    protected override void EnterPattern(GameObject animal, AnimalData animalData)
+    protected override void EnterPattern(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         // spawn facing left
-        base.EnterPattern(animal, animalData);
+        base.EnterPattern(animal, animalCallbackData);
         SetAnimDirectionFloat(animal, 0, -1);
     }
-    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
+    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        animalData.animal.MovementController.StandStill();
-        return base.IsPatternFinishedAfterUpdate(animal, animalData);
+        animalCallbackData.animal.MovementController.StandStill();
+        return base.IsPatternFinishedAfterUpdate(animal, animalCallbackData);
     }
 }
