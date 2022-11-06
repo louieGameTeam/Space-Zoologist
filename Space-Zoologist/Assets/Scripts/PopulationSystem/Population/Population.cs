@@ -238,6 +238,7 @@ public class Population : MonoBehaviour
             // Despawn instead of remove, since the gameobject may persist to play despawn behaviors
             this.PopulationBehaviorManager.SetDespawnCallback(DisableAnimalGameObject);
             this.PopulationBehaviorManager.StartDespawnAnimal(animal);
+            AudioManager.instance.PlayOneShot(SFXType.AnimalDespawn);
             //Debug.Log ("Animal removed; new population count: " + Count);
         }
     }
