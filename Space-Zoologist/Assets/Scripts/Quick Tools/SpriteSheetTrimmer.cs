@@ -27,6 +27,7 @@ public static class SpriteSheetTrimmer
         var spriteRects = dataProvider.GetSpriteRects();
         foreach (var rect in spriteRects)
         {
+            bool foundPixels = false;
             float left = float.MaxValue, right = 0, bottom = float.MaxValue, top = 0;
             int width = (int)rect.rect.width;
             int height = (int)rect.rect.height;
@@ -38,18 +39,20 @@ public static class SpriteSheetTrimmer
                 {
                     if (tex.GetPixel(i, j).a > 0)
                     {
+                        foundPixels = true;
                         if (i < left)
                             left = i;
-                        else if (i > right)
+                        if (i > right)
                             right = i;
                         if (j < bottom)
                             bottom = j;
-                        else if (j > top)
+                        if (j > top)
                             top = j;
                     }
                 }
             }
-            rect.rect = new Rect(left, bottom, right - left, top - bottom);
+            if(foundPixels)
+                rect.rect = new Rect(left, bottom, right - left, top - bottom);
         }
         dataProvider.SetSpriteRects(spriteRects);
     }
