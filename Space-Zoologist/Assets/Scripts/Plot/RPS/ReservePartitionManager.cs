@@ -30,8 +30,10 @@ public class ReservePartitionManager : MonoBehaviour
     // The long is a bit mask with the bit (IDth bit) representing a population
     public Dictionary<Vector3Int, long> AccessMap { get; private set; }
 
-    // Accessible area for each population
+    // Accessible and preferred terrain area for each population
     public Dictionary<Population, List<Vector3Int>> AccessibleArea { get; private set; }
+    public Dictionary<Population, List<Vector3Int>> AccessibleNotPreferredArea { get; private set; }
+    public Dictionary<Population, List<Vector3Int>> PreferredArea { get; private set; }
 
     // Amount of shared space with each population <id, <id, shared tiles> >
     public Dictionary<int, long[]> SharedSpaces { get; private set; }
@@ -63,7 +65,11 @@ public class ReservePartitionManager : MonoBehaviour
         PopulationToID = new Dictionary<Population, int>();
         PopulationByID = new Dictionary<int, Population>();
         AccessMap = new Dictionary<Vector3Int, long>();
+        
         AccessibleArea = new Dictionary<Population, List<Vector3Int>>();
+        AccessibleNotPreferredArea = new Dictionary<Population, List<Vector3Int>>();
+        PreferredArea = new Dictionary<Population, List<Vector3Int>>();
+        
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
         populationAccessibleLiquidCompositions = new Dictionary<Population, List<float[]>>();
@@ -151,17 +157,27 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> accessible = new HashSet<Vector3Int>();
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
+        
         List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
+        List<Vector3Int> newAccessibleNotPreferredLocations = new List<Vector3Int>();
+        List<Vector3Int> newPreferredLocations = new List<Vector3Int>();
+        
         List<Vector3Int> newLiquidLocations = new List<Vector3Int>();
         List<float[]> newLiquidCompositions = new List<float[]>();
         List<LiquidBody> newLiquidBodies = new List<LiquidBody>();
         // cache needs for performance to avoid repeating costly linq searches
         var treeNeeds = population.species.RequiredTreeNeeds;
         var accessibleTerrain = population.species.AccessibleTerrain;
+        var preferredTerrain = population.species.PreferredTerrain;
 
         if (!this.AccessibleArea.ContainsKey(population))
         {
             this.AccessibleArea.Add(population, new List<Vector3Int>());
+        }
+        
+        if (!this.PreferredArea.ContainsKey(population))
+        {
+            this.PreferredArea.Add(population, new List<Vector3Int>());
         }
 
         // Number of shared tiles
@@ -214,7 +230,7 @@ public class ReservePartitionManager : MonoBehaviour
                 newLiquidCompositions.Add(composition);
                 newLiquidLocations.Add(cur);
             }
-            bool isTileValid = tile != null && gridSystem.IsValidTileForAnimal(population.species,cur , treeNeeds, accessibleTerrain);
+            bool isTileValid = tile != null && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, accessibleTerrain);
             if (isTileValid)
             {
                 // save the accessible location
@@ -222,6 +238,16 @@ public class ReservePartitionManager : MonoBehaviour
 
                 // save to accessible location
                 newAccessibleLocations.Add(cur);
+
+                // If preferred, then save to preferred list
+                if (gridSystem.IsValidTileForAnimal(population.species, cur, treeNeeds, preferredTerrain))
+                {
+                    newPreferredLocations.Add(cur);
+                }
+                else
+                {
+                    newAccessibleNotPreferredLocations.Add(cur);
+                }
                 
                 TypesOfTerrain[population][(int)tile.type]++;
 
@@ -266,6 +292,8 @@ public class ReservePartitionManager : MonoBehaviour
         if (population.HasAccessibilityChanged)
         {
             this.AccessibleArea[population] = newAccessibleLocations;
+            this.AccessibleNotPreferredArea[population] = newAccessibleNotPreferredLocations;
+            this.PreferredArea[population] = newPreferredLocations;
             this.populationAccessibleLiquidCompositions[population] = newLiquidCompositions;
             this.populationAccessibleLiquidLocations[population] = newLiquidLocations;
         }

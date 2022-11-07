@@ -72,6 +72,19 @@ public class NeedRegistry
 
         return new HashSet<TileType>(tileTypes);
     }
+    
+    public HashSet<TileType> FindPreferredTerrain()
+    {
+        // Get all tile types on traversible terrain
+        IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
+            .Where(need => need.Preferred)
+            .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
+            .Select(need => need.ID.Data.Tile)
+            .Distinct();
+
+        return new HashSet<TileType>(tileTypes);
+    }
+
     public NeedData[] FindPredatorNeeds()
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Species)
