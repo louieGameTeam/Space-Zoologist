@@ -1,57 +1,58 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public delegate void BehaviorCompleteCallback(GameObject animal);
 public class PopulationBehaviorManager : MonoBehaviour
 {
-    private Population population = default;
-    [SerializeField] public Dictionary<GameObject, int> animalsToBehaviorIndex = new Dictionary<GameObject, int>();
+
     [Header("Behaviors")]
     [SerializeField] public PopulationBehavior spawnBehavior;
     [SerializeField] public PopulationBehavior despawnBehavior;
     [SerializeField] public List<PopulationBehavior> defaultBehaviors;
-    private BehaviorCompleteCallback BehaviorCompleteCallback;
+
+    public List<GameObject> animals;
+    public List<int> behaviorIndex;
+
+    // Private fields
+    private Population population = default;
+    private Dictionary<GameObject, int> animalsToBehaviorIndex = new Dictionary<GameObject, int>();
+    
+    // Callbacks
+    private BehaviorCompleteCallback behaviorCompleteCallback;
     private BehaviorCompleteCallback despawnCompleteCallback;
 
 
     public void Initialize()
     {
-        this.BehaviorCompleteCallback = this.OnBehaviorComplete;
-        // Only initializes callbacks for each behavior *once* per population, even if defaultBehaviors contains duplicates
-        List<int> uniqueBehaviorIDs = new List<int>();
-        foreach (PopulationBehavior behavior in GetAllUsedBehaviors())
-        {
-            if (!uniqueBehaviorIDs.Contains(behavior.GetInstanceID())){
-                behavior.AssignCallback(this.BehaviorCompleteCallback);
-            }
-            uniqueBehaviorIDs.Add (behavior.GetInstanceID());
-        }
-        this.population = this.gameObject.GetComponent<Population>();
-        int currentBehaviorIndex = 0;
+        behaviorCompleteCallback = OnBehaviorComplete;
+        population = gameObject.GetComponent<Population>();
         foreach (GameObject animal in population.AnimalPopulation)
         {
-            animalsToBehaviorIndex.Add(animal, currentBehaviorIndex);
-            currentBehaviorIndex++;
+            animalsToBehaviorIndex.Add(animal, 0);
         }
     }
 
-    string readableDict(Dictionary<GameObject, int> dict) {
-        string output = "";
-        foreach (var pair in animalsToBehaviorIndex) {
-            output += pair.Key.GetInstanceID() + ": " + pair.Value.ToString() + "\n";
-        }
-        return output;
+    void Update()
+    {
+        animals = animalsToBehaviorIndex.Keys.ToList();
+        behaviorIndex = animalsToBehaviorIndex.Values.ToList();
     }
     
+    public IEnumerable<PopulationBehavior> GetAllUsedBehaviors()
+    {
+        if (spawnBehavior != null)
+            yield return spawnBehavior;
+        foreach (var behavior in defaultBehaviors)   
+            yield return behavior;
+        if (despawnBehavior)
+            yield return despawnBehavior;
+    }
+
     public void OnBehaviorComplete(GameObject animal)
     {
         if (!animalsToBehaviorIndex.ContainsKey(animal))// Discriminate force exited callbacks from removing animals
         {
-            return;
-        }
-        if(animalsToBehaviorIndex[animal] == -1)
-        {
-            FinishDespawnAnimal(animal);
             return;
         }
         int nextBehaviorIndex = animalsToBehaviorIndex[animal] + 1;
@@ -62,19 +63,19 @@ public class PopulationBehaviorManager : MonoBehaviour
         {
             return;
         }
-        behavior.EnterBehavior(animal, transform.GetSiblingIndex());
+        behavior.EnterBehavior(animal, behaviorCompleteCallback);
     }
     
     public void AddAnimal(GameObject animal)
     {
         bool spawnBehaviorExists = (spawnBehavior != null);
-        // If spawn behavior, then set the current behavior index to the total
+        // If spawn behavior, then set the current behavior index to -1
         // so that it iterates to 0 after spawn behavior ends
-        animalsToBehaviorIndex.Add(animal, spawnBehaviorExists ? defaultBehaviors.Count - 1 : 0);
+        animalsToBehaviorIndex.Add(animal, spawnBehaviorExists ? -1 : 0);
         if(spawnBehaviorExists)
-            spawnBehavior.EnterBehavior(animal, transform.GetSiblingIndex());
+            spawnBehavior.EnterBehavior(animal, behaviorCompleteCallback);
         else
-            defaultBehaviors[0].EnterBehavior(animal, transform.GetSiblingIndex());
+            defaultBehaviors[0].EnterBehavior(animal, behaviorCompleteCallback);
     }
 
     public void SetDespawnCallback(BehaviorCompleteCallback callback)
@@ -82,6 +83,11 @@ public class PopulationBehaviorManager : MonoBehaviour
         despawnCompleteCallback = callback;
     }
 
+    /// <summary>
+    /// Force exit the animal from its current behavior and enter its despawn behavior
+    ///  Use a despawn callback provided elsewhere
+    /// </summary>
+    /// <param name="animal"></param>
     public void StartDespawnAnimal(GameObject animal)
     {
         if(despawnBehavior == null)
@@ -90,14 +96,22 @@ public class PopulationBehaviorManager : MonoBehaviour
         }
         else if(!despawnBehavior.HasAnimal(animal))
         {
-            despawnBehavior.EnterBehavior(animal, transform.GetSiblingIndex());
-            animalsToBehaviorIndex[animal] = -1;
+            var currentBehavior = GetAnimalCurrentPopulationBehavior(animal);
+            currentBehavior.ForceRemoveAnimal(animal);
+            despawnBehavior.EnterBehavior(animal, FinishDespawnAnimal);
         }
+    }
+
+    private PopulationBehavior GetAnimalCurrentPopulationBehavior(GameObject animal)
+    {
+        int index = animalsToBehaviorIndex[animal];
+        if (index == -1)
+            return spawnBehavior;
+        return defaultBehaviors[index];
     }
 
     private void FinishDespawnAnimal(GameObject animal)
     {
-        Debug.Log("REMOVE");
         RemoveAnimal(animal);
         despawnCompleteCallback(animal);
     }
@@ -106,23 +120,26 @@ public class PopulationBehaviorManager : MonoBehaviour
     private void RemoveAnimal(GameObject animal)
     {
         animalsToBehaviorIndex.Remove(animal);
-        animal.GetComponent<AnimalBehaviorManager>().ForceExit();
+        animal.GetComponent<AnimalBehaviorManager>().ForceExitPopulationBehavior();
     }
 
-    private void OnDestroy() {
-        foreach (PopulationBehavior behavior in GetAllUsedBehaviors())
+    private void OnDestroy()
+    {
+        for (int i = 0; i < transform.childCount; i++)
         {
-            behavior.RemoveCallback(transform.GetSiblingIndex());
+            GameObject child = transform.GetChild(i).gameObject;
+            foreach (PopulationBehavior behavior in GetAllUsedBehaviors())
+            {
+                behavior.ForceRemoveAnimal(child);
+            }
         }
     }
 
-    public IEnumerable<PopulationBehavior> GetAllUsedBehaviors()
-    {
-        if (spawnBehavior != null)
-            yield return spawnBehavior;
-        foreach (var behavior in defaultBehaviors)   
-            yield return behavior;
-        if (despawnBehavior)
-            yield return despawnBehavior;
+    private string DictToDisplayString(Dictionary<GameObject, int> dict) {
+        string output = "";
+        foreach (var pair in animalsToBehaviorIndex) {
+            output += pair.Key.GetInstanceID() + ": " + pair.Value.ToString() + "\n";
+        }
+        return output;
     }
 }

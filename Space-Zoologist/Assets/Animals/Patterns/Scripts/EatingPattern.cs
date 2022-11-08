@@ -17,7 +17,7 @@ public class EatingPattern : UniversalAnimatorPattern
         base.Init();
     }
 
-    protected override void EnterPattern(GameObject animal, AnimalData animalData)
+    protected override void EnterPattern(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
 
@@ -43,7 +43,7 @@ public class EatingPattern : UniversalAnimatorPattern
                     }
 
                     this.AnimatorTriggerName = GetTriggerName(i, j);
-                    base.EnterPattern(animal, animalData);
+                    base.EnterPattern(animal, animalCallbackData);
                     SetAnimDirectionFloat(animal, i, j);
                     return;
                 }
@@ -51,7 +51,7 @@ public class EatingPattern : UniversalAnimatorPattern
         }
         // No edible food
         // this.AnimatorTriggerName = this.Up;
-        base.EnterPattern(animal, animalData);
+        base.EnterPattern(animal, animalCallbackData);
         base.ExitPattern(animal, true);
     }
 
