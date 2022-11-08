@@ -12,6 +12,7 @@ public enum SFXType
     BuildModeOpen, BuildModeClose, BuildModeTabSwitch,
     NotebookOpen, NotebookClose, NotebookDropdown, NotebookTabSwitch,
     GoodFood, NeutralFood, BadFood,
+    AnimalDespawn,
     NumTypes
 }
 
