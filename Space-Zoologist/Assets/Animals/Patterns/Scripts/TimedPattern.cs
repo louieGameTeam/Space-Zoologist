@@ -7,13 +7,13 @@ public class TimedPattern : BehaviorPattern
     protected Dictionary<GameObject,float> AnimalToTimeElapsed = new Dictionary<GameObject, float>();
     [SerializeField] protected float ExitTime = 0f;
 
-    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
+    protected override void EnterPattern(GameObject gameObject, AnimalCallbackData animalCallbackData)
     {
         this.AnimalToTimeElapsed.Add(gameObject, 0);
-        animalData.animal.MovementData.MovementStatus = Movement.idle;
+        animalCallbackData.animal.MovementData.MovementStatus = Movement.idle;
     }
     // Default behavior moves along a random path
-    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
+    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         if (this.AnimalToTimeElapsed[animal] > ExitTime)
         {

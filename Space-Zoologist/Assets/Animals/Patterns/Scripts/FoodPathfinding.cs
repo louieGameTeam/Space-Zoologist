@@ -16,7 +16,7 @@ public class FoodPathfinding : GeneralPathfinding
     [SerializeField] private float BadFoodProbability = default;
     #endregion
 
-    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
+    protected override void EnterPattern(GameObject gameObject, AnimalCallbackData animalCallbackData)
     {
         Animal animal = gameObject.GetComponent<Animal>();
 
@@ -24,7 +24,7 @@ public class FoodPathfinding : GeneralPathfinding
         FoodProbabilities = AssignFoodProbabilities(animal.PopulationInfo.Species.Needs.FindFoodNeeds(), animal);
 
         // Select random accessible food species to path to, accounting for weights of each food type
-        SelectRandomFood(animalData);
+        SelectRandomFood(animalCallbackData);
 
         Vector3Int[] destinations = GameManager.Instance.m_foodSourceManager.GetFoodSourcesLocationWithSpecies(foodSpeciesName);
         Vector3Int destination = base.TileDataController.WorldToCell(gameObject.transform.position);
@@ -43,7 +43,7 @@ public class FoodPathfinding : GeneralPathfinding
             // Get a valid destination
             foreach (Vector3Int potentialDestination in destinations)
             {
-                if (animalData.animal.PopulationInfo.AccessibleLocations.Contains(potentialDestination))
+                if (animalCallbackData.animal.PopulationInfo.AccessibleLocations.Contains(potentialDestination))
                 {
                     destination = potentialDestination;
                     break;
@@ -52,19 +52,19 @@ public class FoodPathfinding : GeneralPathfinding
 
             if (destination.Equals(new Vector3Int(-1, -1, -1)))
             {
-                int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-                if (animalData.animal.PopulationInfo.AccessibleLocationsExist)
-                    destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+                int locationIndex = animalCallbackData.animal.PopulationInfo.random.Next(0, animalCallbackData.animal.PopulationInfo.AccessibleLocations.Count);
+                if (animalCallbackData.animal.PopulationInfo.AccessibleLocationsExist)
+                    destination = animalCallbackData.animal.PopulationInfo.AccessibleLocations[locationIndex];
             }
 
             animal.SetFoodTargetSpeciesName(foodSpeciesName);
-            AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+            AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalCallbackData.animal.MovementController.AssignPath, animalCallbackData.animal.PopulationInfo.Grid);
         }
 
         else
         {
             // If the edible food doesn't exist, just go to a random food (or whatever ItemType destination is set to)
-            base.EnterPattern(gameObject, animalData);
+            base.EnterPattern(gameObject, animalCallbackData);
         }
     }
 
@@ -147,8 +147,8 @@ public class FoodPathfinding : GeneralPathfinding
     /// <summary>
     /// Updates FoodSpeciesName to path to, based on food quality weights
     /// </summary>
-    /// <param name="animalData"></param>
-    private void SelectRandomFood(AnimalData animalData)
+    /// <param name="animalCallbackData"></param>
+    private void SelectRandomFood(AnimalCallbackData animalCallbackData)
     {
         // Set of all reachable food species to the current animal
         HashSet<ItemID> reachableFoodSpecies = new HashSet<ItemID>();
@@ -161,7 +161,7 @@ public class FoodPathfinding : GeneralPathfinding
                 foreach (Vector3Int foodLocation in foodItemLocations)
                 {
                     // If animal can reach at least one of this foodItem, no longer need to scan through others
-                    if (animalData.animal.PopulationInfo.AccessibleLocations.Contains(foodLocation))
+                    if (animalCallbackData.animal.PopulationInfo.AccessibleLocations.Contains(foodLocation))
                     {
                         reachableFoodSpecies.Add(foodItem);
                         universalProbability += FoodProbabilities[foodItem];

@@ -21,14 +21,19 @@ public class AnimalBehaviorManager : MonoBehaviour
     /// Force exit behavior when overridden by other behaviors. Behavior Pattern handles its exit (Usually just call exit), and ForceExitCallback will be called for behaviors to exit
     /// </summary>
     /// <param name="isDriven">A bool used to call all partners to stop, but do not reference its self back, just leave as default</param>
-    public void ForceExit()
+    public void ForceExitPopulationBehavior()
     {
-        if (activeBehaviorPattern != null) // Happens when cooperating animal gets removed
+        if (activeBehavior != null) // Happens when cooperating animal gets removed
         {
-            activeBehaviorPattern.ForceExit(this.gameObject);
-            activeBehavior.ForceExitCallback.Invoke(this.gameObject);
-            activeBehavior = null;
+            ForceExitBehaviorPattern();
+            //activeBehavior.ForceExitCallback.Invoke(this.gameObject);
+            activeBehavior = null;  
         }
     }
 
+    public void ForceExitBehaviorPattern()
+    {
+        if(activeBehaviorPattern != null)
+            activeBehaviorPattern.ForceExit(this.gameObject);
+    }
 }
