@@ -10,12 +10,12 @@ public class DespawnPattern : UniversalAnimatorPattern
         base.Init();
     }
 
-    protected override void EnterPattern(GameObject animal, AnimalData animalData)
+    protected override void EnterPattern(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         // spawn facing left
-        base.EnterPattern(animal, animalData);
+        base.EnterPattern(animal, animalCallbackData);
         SetAnimDirectionFloat(animal, 0, -1);
-        animalData.animal.MovementController.StandStill();
+        animalCallbackData.animal.MovementController.StandStill();
     }
 
     protected override void ExitPattern(GameObject animal, bool callCallback)

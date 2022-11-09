@@ -59,7 +59,6 @@ public class PopulationManager : MonoBehaviour
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
         population.InitializeNewPopulation(species, position);
         this.HandlePopulationRegistration(population);
-        population.InitializeExistingAnimals();
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
         return population;
     }

@@ -5,42 +5,42 @@ using UnityEngine;
 public class RandomMovementPattern : BehaviorPattern
 {
     private System.Random random = new System.Random();
-    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
+    protected override void EnterPattern(GameObject gameObject, AnimalCallbackData animalCallbackData)
     {
-        if (animalData.animal.PopulationInfo.AccessibleLocations.Count == 0)
+        if (animalCallbackData.animal.PopulationInfo.AccessibleLocations.Count == 0)
         {
             ExitPattern(gameObject);
             return;
         }
         int locationIndex = this.random.Next(0, AnimalsToAnimalData[gameObject].animal.PopulationInfo.AccessibleLocations.Count);
         Vector3Int end = AnimalsToAnimalData[gameObject].animal.PopulationInfo.AccessibleLocations[locationIndex];
-        if (animalData.animal.MovementController == null)
+        if (animalCallbackData.animal.MovementController == null)
         {
             return;
         }
         AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), end, AnimalsToAnimalData[gameObject].animal.MovementController.AssignPath, AnimalsToAnimalData[gameObject].animal.PopulationInfo.Grid);
     }
-    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
+    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        if (animalData.animal.MovementController.HasPath)
+        if (animalCallbackData.animal.MovementController.HasPath)
         {
-            if (animalData.animal.MovementController.DestinationCancelled)
+            if (animalCallbackData.animal.MovementController.DestinationCancelled)
             {
                 return false;
             }
-            animalData.animal.MovementController.MoveTowardsDestination();
-            if (animalData.animal.MovementController.DestinationReached)
+            animalCallbackData.animal.MovementController.MoveTowardsDestination();
+            if (animalCallbackData.animal.MovementController.DestinationReached)
             {
                 return true;
             }
         }
         return false;
     }
-    protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
+    protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        if (animalData.animal.MovementController.HasPath)
+        if (animalCallbackData.animal.MovementController.HasPath)
         {
-            if (animalData.animal.MovementController.DestinationCancelled)
+            if (animalCallbackData.animal.MovementController.DestinationCancelled)
             {
                 return true;
             }

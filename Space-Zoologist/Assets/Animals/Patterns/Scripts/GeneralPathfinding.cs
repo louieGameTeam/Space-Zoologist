@@ -8,33 +8,33 @@ public class GeneralPathfinding : BehaviorPattern
     [SerializeField] 
     ItemRegistry.Category Destination = default;
 
-    protected override void EnterPattern(GameObject gameObject, AnimalData animalData)
+    protected override void EnterPattern(GameObject gameObject, AnimalCallbackData animalCallbackData)
     {
         Vector3Int destination = base.TileDataController.WorldToCell(gameObject.transform.position);
         if (Destination.Equals(ItemRegistry.Category.Tile))
         {
-            destination = base.TileDataController.FindClosestLiquidSource(animalData.animal.PopulationInfo, gameObject);
+            destination = base.TileDataController.FindClosestLiquidSource(animalCallbackData.animal.PopulationInfo, gameObject);
         }
         else
         {
-            int locationIndex = animalData.animal.PopulationInfo.random.Next(0, animalData.animal.PopulationInfo.AccessibleLocations.Count);
-            if (animalData.animal.PopulationInfo.AccessibleLocationsExist)
-                destination = animalData.animal.PopulationInfo.AccessibleLocations[locationIndex];
+            int locationIndex = animalCallbackData.animal.PopulationInfo.random.Next(0, animalCallbackData.animal.PopulationInfo.AccessibleLocations.Count);
+            if (animalCallbackData.animal.PopulationInfo.AccessibleLocationsExist)
+                destination = animalCallbackData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         }
-        AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalData.animal.MovementController.AssignPath, animalData.animal.PopulationInfo.Grid);
+        AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalCallbackData.animal.MovementController.AssignPath, animalCallbackData.animal.PopulationInfo.Grid);
     }
-    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
+    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        if (animalData.animal.MovementController.HasPath)
+        if (animalCallbackData.animal.MovementController.HasPath)
         {
-            if (animalData.animal.MovementController.DestinationCancelled)
+            if (animalCallbackData.animal.MovementController.DestinationCancelled)
             {
                 return true;
             }
-            animalData.animal.MovementController.MoveTowardsDestination();
-            if (animalData.animal.MovementController.DestinationReached)
+            animalCallbackData.animal.MovementController.MoveTowardsDestination();
+            if (animalCallbackData.animal.MovementController.DestinationReached)
             {
-                animalData.animal.MovementController.ResetPathfindingConditions();
+                animalCallbackData.animal.MovementController.ResetPathfindingConditions();
                 //Debug.Log(animal.name + " has reached their destination of " + this.Destination.ToString());
                 return true;
             }
@@ -43,7 +43,7 @@ public class GeneralPathfinding : BehaviorPattern
         return true;
     }
 
-    protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalData animalData)
+    protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         //if (animalData.animal.MovementController.HasPath)
         //{

@@ -18,6 +18,7 @@ public class Inspector : MonoBehaviour
 
     [Header("Highlight Colors")]
     [SerializeField] private Color populationHighlightColor;
+    [SerializeField] private Color populationPreferredHighlightColor;
     [SerializeField] private Color animalHighlightColor;
     [SerializeField] private Color foodHighlightColor;
     [SerializeField] private Color liquidHighlightColor;
@@ -328,10 +329,13 @@ public class Inspector : MonoBehaviour
             child.gameObject.GetComponent<SpriteRenderer>().color = animalHighlightColor;
         }
 
-        // highlight their accessible terrain too
+        // highlight accessible terrain, then highlight again tiles that are preferred
         Population populationScript = population.GetComponent<Population>();
-        List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.AccessibleArea[populationScript];
-        GameManager.Instance.m_tileDataController.HighlightTiles(accessibleTiles, populationHighlightColor);
+        List<Vector3Int> accessibleNotPreferredTiles = GameManager.Instance.m_reservePartitionManager.AccessibleNotPreferredArea[populationScript];
+        GameManager.Instance.m_tileDataController.HighlightTiles(accessibleNotPreferredTiles, populationHighlightColor);
+        
+        List<Vector3Int> preferredTiles = GameManager.Instance.m_reservePartitionManager.PreferredArea[populationScript];
+        GameManager.Instance.m_tileDataController.HighlightTiles(preferredTiles, populationPreferredHighlightColor);
         this.lastPopulationSelected = population;
     }
 
