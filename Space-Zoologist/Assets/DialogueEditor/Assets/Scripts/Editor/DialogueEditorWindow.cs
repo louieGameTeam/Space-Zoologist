@@ -237,7 +237,7 @@ namespace DialogueEditor
             if (node.GetType() != typeof(EditableSpeechNode)) return null;
 
             int nameIndex = Mathf.Max(System.Array.IndexOf (NPCNameCache, ((EditableSpeechNode) node).Name), 0);
-            Debug.Log (nameIndex);
+            //Debug.Log (nameIndex);
             NPCData curNPC = (NPCData) allNPCCache [nameIndex];
             NPCExpressionCache = curNPC.Expressions;
             NPCExpressionNameCache = curNPC.Expressions.Select (expression => expression.DisplayName).ToArray ();
