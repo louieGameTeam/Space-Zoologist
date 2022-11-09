@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
+using static Codice.CM.WorkspaceServer.DataStore.WkTree.WriteWorkspaceTree;
 
 namespace DialogueEditor
 {
@@ -63,6 +65,10 @@ namespace DialogueEditor
 
         // Integer id of the node to focus on in the editor window
         private int focusNodeID = 0;
+        private Object[] allNPCCache;
+        private string [] NPCNameCache = new string [0];
+        private string [] NPCExpressionNameCache = new string [0];
+        private List<NPCExpression> NPCExpressionCache = new List<NPCExpression>();
 
 
         //--------------------------------------
@@ -213,6 +219,33 @@ namespace DialogueEditor
 
 
 
+        // Load NPCS
+
+        void LoadNPCCache ()
+        {
+            allNPCCache = Resources.LoadAll ("Dialogue/NPCData", typeof(NPCData));
+
+            NPCNameCache = new string [allNPCCache.Length];
+            for (int i = 0; i < allNPCCache.Length; i++)
+            {
+                NPCNameCache [i] = ((NPCData)allNPCCache [i]).CharacterName;
+            }
+        }
+
+        List<NPCExpression> RebakeExpressionCache (EditableConversationNode node)
+        {
+            if (node.GetType() != typeof(EditableSpeechNode)) return null;
+
+            int nameIndex = Mathf.Max(System.Array.IndexOf (NPCNameCache, ((EditableSpeechNode) node).Name), 0);
+            Debug.Log (nameIndex);
+            NPCData curNPC = (NPCData) allNPCCache [nameIndex];
+            NPCExpressionCache = curNPC.Expressions;
+            NPCExpressionNameCache = curNPC.Expressions.Select (expression => expression.DisplayName).ToArray ();
+            return curNPC.Expressions;
+        }
+
+
+
 
         //--------------------------------------
         // OnEnable, OnDisable, OnFocus, LostFocus, 
@@ -287,6 +320,8 @@ namespace DialogueEditor
                     }
                 }
             }
+
+            LoadNPCCache ();
         }
 
         // protected void OnLostFocus()
@@ -543,11 +578,39 @@ namespace DialogueEditor
                     EditableSpeechNode node = (CurrentlySelectedNode.Info as EditableSpeechNode);
                     GUILayout.Label("[" + node.ID + "] NPC Dialogue Node.", panelTitleStyle);
                     EditorGUILayout.Space();
-
+                    /*
                     GUILayout.Label("Character Name", EditorStyles.boldLabel);
                     GUI.SetNextControlName(CONTROL_NAME);
                     node.Name = GUILayout.TextField(node.Name);
-                    EditorGUILayout.Space();
+                    EditorGUILayout.Space();*/
+
+                    GUILayout.Label ("Character", EditorStyles.boldLabel);
+                    using (var changeCheckScope = new EditorGUI.ChangeCheckScope ())
+                    {
+                        int npcIndex = EditorGUILayout.Popup (System.Array.IndexOf (NPCNameCache, node.Name), NPCNameCache);
+
+                        if (changeCheckScope.changed)
+                        {
+                            node.Name = NPCNameCache [npcIndex];
+                            RebakeExpressionCache (node);
+                            node.Icon = NPCExpressionCache.FirstOrDefault (exp => exp.DisplayName == node.Expression).Icon;
+                        }
+                    }
+                    EditorGUILayout.Space ();
+
+                    GUILayout.Label ("Expression", EditorStyles.boldLabel);
+                    using (var changeCheckScope = new EditorGUI.ChangeCheckScope ())
+                    {
+                        int expressionIndex = EditorGUILayout.Popup (System.Array.IndexOf (NPCExpressionNameCache, node.Expression), NPCExpressionNameCache);
+
+                        if (changeCheckScope.changed)
+                        {
+                            node.Expression = NPCExpressionNameCache [expressionIndex];
+                            node.Icon = NPCExpressionCache.FirstOrDefault (exp => exp.DisplayName == node.Expression).Icon;
+                            //Debug.Log ($"Current selection: {node.CharacterName} is making the {node.Expression} expression");
+                        }
+                    }
+                    EditorGUILayout.Space ();
 
                     GUILayout.Label("Dialogue", EditorStyles.boldLabel);
                     node.Text = GUILayout.TextArea(node.Text);
@@ -567,10 +630,10 @@ namespace DialogueEditor
                         }
                         EditorGUILayout.Space();
                     }
-
+                    /*
                     GUILayout.Label("Icon", EditorStyles.boldLabel);
                     node.Icon = (Sprite)EditorGUILayout.ObjectField(node.Icon, typeof(Sprite), false, GUILayout.ExpandWidth(true));
-                    EditorGUILayout.Space();
+                    EditorGUILayout.Space();*/
 
                     GUILayout.Label("Audio Options", EditorStyles.boldLabel);
                     GUILayout.Label("Audio");
@@ -1035,6 +1098,8 @@ namespace DialogueEditor
 
                 CurrentlySelectedNode = node;
                 CurrentlySelectedNode.SetSelected(true);
+
+                RebakeExpressionCache (node.Info);
             }
             else
             {
