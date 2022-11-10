@@ -19,7 +19,7 @@ public class MapDesignerDataFileOperations : MonoBehaviour
         var plot = map.serializedPlot;
         ShiftFoodAndPopulations(map, new Vector3Int(0, 1, 0));
         // Move tiles ( a bit of hard coding, should fix later )
-        plot.serializedGrid.serializedTilemap.SerializedTileDatas = ShiftUp(plot.serializedGrid, 1);
+        plot.serializedGrid.serializedTilemap.SerializedTileDatas = ShiftUp(plot.serializedGrid, 2);
 
         GameManager.Instance.LoadMap(map);
     }
@@ -29,7 +29,7 @@ public class MapDesignerDataFileOperations : MonoBehaviour
         var plot = map.serializedPlot;
         ShiftFoodAndPopulations(map, new Vector3Int(1, 0, 0));
         // Move tiles ( a bit of hard coding, should fix later )
-        plot.serializedGrid.serializedTilemap.SerializedTileDatas = ShiftRight(plot.serializedGrid, 1);
+        plot.serializedGrid.serializedTilemap.SerializedTileDatas = ShiftRight(plot.serializedGrid, 2);
 
         GameManager.Instance.LoadMap(map);
     }
