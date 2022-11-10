@@ -135,18 +135,18 @@ public static class NeedRatingBuilder
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
     {
         // Select only water that is drinkable
-        IEnumerable<NeedAvailabilityItem> drinkableWater = availability
+        IEnumerable<NeedAvailabilityItem> drinkableWaterPools = availability
             .FindWaterItems()
             .Where(item => needs.WaterIsDrinkable(item.WaterContent.Contents));
 
         // Number of water tiles that the species can drink from
-        float totalDrinkableWater = drinkableWater.Sum(item => item.AmountAvailable);
+        float totalDrinkableWaterTiles = drinkableWaterPools.Sum(item => item.AmountAvailable);
 
         // Water rating calculated this way to give rise to the following behavior:
         //  - If the population has no drinkable water, their water needs bar should be empty
         //  - Once the population has drinkable water, their water needs bar will begin to fill
         // This value is clamped between (0f, 2f) to account for the boosting
-        return Mathf.Clamp( (float)totalDrinkableWater / waterTilesNeeded, 0f, 2f );
+        return Mathf.Clamp( (float)totalDrinkableWaterTiles / waterTilesNeeded, 0f, 2f );
 
 
         //// Drinkable water used will not exceed the amount actually needed
