@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// A runtime instance of a population.
@@ -158,6 +159,7 @@ public class Population : MonoBehaviour
                     AddAnimal(FindValidPositionAroundCurrentAnimals());
                 }
             }
+            PlaySpawnAudio();
         }
         else
         {
@@ -170,9 +172,10 @@ public class Population : MonoBehaviour
                 {
                     if (this.AnimalPopulation.Count == 0)
                         break;
-                    this.RemoveAnimal(this.AnimalPopulation[0]);
+                    this.RemoveAnimal(this.AnimalPopulation[0], true);
                 }
             }
+            PlayDespawnAudio();
         }
 
         return readyForGrowth;
@@ -219,7 +222,7 @@ public class Population : MonoBehaviour
     }
 
     // removes last animal in list and last behavior
-    public void RemoveAnimal(GameObject animal)
+    public void RemoveAnimal(GameObject animal, bool triggerDespawnBehavior = false)
     {
         if (this.Count == 0)
         {
@@ -241,8 +244,7 @@ public class Population : MonoBehaviour
             }
             // Despawn instead of remove, since the gameobject may persist to play despawn behaviors
             this.PopulationBehaviorManager.SetDespawnCallback(DisableAnimalGameObject);
-            this.PopulationBehaviorManager.StartDespawnAnimal(animal);
-            AudioManager.instance.PlayOneShot(SFXType.AnimalDespawn);
+            this.PopulationBehaviorManager.DespawnAnimal(animal, triggerDespawnBehavior);
             //Debug.Log ("Animal removed; new population count: " + Count);
         }
     }
@@ -283,5 +285,17 @@ public class Population : MonoBehaviour
     {
         this.HasAccessibilityChanged = false;
         this.prePopulationCount = this.Count;
+    }
+
+    private void PlaySpawnAudio()
+    {
+        List<AudioClip> clips = species.AnimalShopItem.AudioClips;
+        var selectedClip = clips[UnityEngine.Random.Range(0, clips.Count)];
+        AudioManager.instance.PlayOneShot(selectedClip);
+    }
+
+    private void PlayDespawnAudio()
+    {
+        AudioManager.instance.PlayOneShot(SFXType.AnimalDespawn);
     }
 }
