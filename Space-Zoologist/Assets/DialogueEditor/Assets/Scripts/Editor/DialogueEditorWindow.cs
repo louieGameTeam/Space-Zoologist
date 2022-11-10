@@ -306,18 +306,14 @@ namespace DialogueEditor
             // Get asset the user is selecting
             newlySelectedAsset = Selection.activeTransform;
 
-            // If it's not null
-            if (newlySelectedAsset != null)
+            // If it's not null and a conversation scriptable, load new asset
+            if (newlySelectedAsset != null && newlySelectedAsset.GetComponent<NPCConversation> () != null)
             {
-                // If its a conversation scriptable, load new asset
-                if (newlySelectedAsset.GetComponent<NPCConversation>() != null)
-                {
-                    currentlySelectedAsset = newlySelectedAsset.GetComponent<NPCConversation>();
+                currentlySelectedAsset = newlySelectedAsset.GetComponent<NPCConversation>();
 
-                    if (currentlySelectedAsset != CurrentAsset)
-                    {
-                        LoadNewAsset(currentlySelectedAsset);
-                    }
+                if (currentlySelectedAsset != CurrentAsset)
+                {
+                    LoadNewAsset(currentlySelectedAsset);
                 }
             }
 
@@ -593,7 +589,7 @@ namespace DialogueEditor
                         {
                             node.Name = NPCNameCache [npcIndex];
                             RebakeExpressionCache (node);
-                            node.Icon = NPCExpressionCache.FirstOrDefault (exp => exp.DisplayName == node.Expression).Icon;
+                            node.Icon = NPCExpressionCache?.FirstOrDefault (exp => exp?.DisplayName == node.Expression)?.Icon;
                         }
                     }
                     EditorGUILayout.Space ();
@@ -606,7 +602,7 @@ namespace DialogueEditor
                         if (changeCheckScope.changed)
                         {
                             node.Expression = NPCExpressionNameCache [expressionIndex];
-                            node.Icon = NPCExpressionCache.FirstOrDefault (exp => exp.DisplayName == node.Expression).Icon;
+                            node.Icon = NPCExpressionCache?.FirstOrDefault (exp => exp?.DisplayName == node.Expression)?.Icon;
                             //Debug.Log ($"Current selection: {node.CharacterName} is making the {node.Expression} expression");
                         }
                     }
