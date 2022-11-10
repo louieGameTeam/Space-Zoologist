@@ -197,7 +197,7 @@ public class PopulationManager : MonoBehaviour
 
     public void HandleGrowth () {
         foreach (Population population in this.ExistingPopulations) {
-            population.HandleGrowth ();
+            population.HandleGrowth();
         }
     }
 
