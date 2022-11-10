@@ -90,16 +90,17 @@ public class PopulationBehaviorManager : MonoBehaviour
     /// <param name="animal"></param>
     public void DespawnAnimal(GameObject animal, bool enterDespawnBehavior = false)
     {
+        // Force exit current behavior
+        var currentBehavior = GetAnimalCurrentPopulationBehavior(animal);
+        currentBehavior.ForceRemoveAnimal(animal);
         // Skip despawn behavior and immediately despawn
         if(despawnBehavior == null || !enterDespawnBehavior)
         {
             FinishDespawnAnimal(animal);
         }
-        // Force exit current behavior, enter despawn behavior
+        // Enter despawn behavior
         else if(!despawnBehavior.HasAnimal(animal))
         {
-            var currentBehavior = GetAnimalCurrentPopulationBehavior(animal);
-            currentBehavior.ForceRemoveAnimal(animal);
             despawnBehavior.EnterBehavior(animal, FinishDespawnAnimal);
         }
     }
