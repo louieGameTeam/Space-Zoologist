@@ -10,7 +10,8 @@ public class NeedRating
 {
     #region Public Properties
     public int PredatorCount => predatorCount;
-    public float FoodRating => foodRating;
+    public int PreyCount => preyCount;
+    public float FoodRating => preyCount > 0 ? 2 : foodRating;
     public float TerrainRating => terrainRating;
     public float WaterRating => waterRating;
     public float FriendRating => friendRating;
@@ -39,6 +40,9 @@ public class NeedRating
     [Tooltip("Number of species hostile to this species in the area")]
     private int predatorCount;
     [SerializeField]
+    [Tooltip ("Number of species consumable by this species in the area")]
+    private int preyCount;
+    [SerializeField]
     [Tooltip("Rating of how well the food need is met, from 0 - 2")]
     private float foodRating;
     [SerializeField]
@@ -56,9 +60,10 @@ public class NeedRating
     #endregion
 
     #region Constructors
-    public NeedRating(int predatorCount, float foodRating, float terrainRating, float waterRating, float friendRating, float treeRating)
+    public NeedRating(int predatorCount, int preyCount, float foodRating, float terrainRating, float waterRating, float friendRating, float treeRating)
     {
         this.predatorCount = predatorCount;
+        this.preyCount = preyCount;
         this.foodRating = foodRating;
         this.terrainRating = terrainRating;
         this.waterRating = waterRating;

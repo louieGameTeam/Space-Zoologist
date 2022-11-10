@@ -26,6 +26,9 @@ public static class NeedRatingBuilder
         int predatorCount = CountPredators(
             population.Species.Needs,
             availability);
+        int preyCount = CountPrey (
+            population.Species.Needs,
+            availability);
         float foodRating = FoodRating(
             population.Species.Needs, 
             availability, 
@@ -50,7 +53,7 @@ public static class NeedRatingBuilder
             population.Species.TreesRequired * population.Count);
 
         // Return the new need rating object
-        return new NeedRating(predatorCount, foodRating, terrainRating, waterRating, friendRating, treeRating);
+        return new NeedRating(predatorCount, preyCount, foodRating, terrainRating, waterRating, friendRating, treeRating);
     }
     /// <summary>
     /// Build the need rating for a single food source
@@ -71,7 +74,7 @@ public static class NeedRatingBuilder
             foodSource.Species.WaterTilesRequired);
 
         // Return the new need rating object
-        return new NeedRating(0, float.NaN, terrainRating, waterRating, float.NaN, float.NaN);
+        return new NeedRating(0, 0, float.NaN, terrainRating, waterRating, float.NaN, float.NaN);
     }
     #endregion
 
@@ -96,6 +99,27 @@ public static class NeedRatingBuilder
 
         return (int)predatorCount;
     }
+    private static int CountPrey (NeedRegistry needs, NeedAvailability availability)
+    {
+        NeedData [] preyNeeds = needs.FindPreyNeeds ();
+        float preyCount = 0;
+
+        foreach (NeedData need in preyNeeds)
+        {
+            // Find a predator with the same id as the need
+            NeedAvailabilityItem prey = availability.FindWithItem (need.ID);
+
+            // If we found an available predator then 
+            // add the number available to the local variable
+            if (prey != null)
+            {
+                preyCount += prey.AmountAvailable;
+            }
+        }
+
+        return (int) preyCount;
+    }
+
     private static float FoodRating(NeedRegistry needs, NeedAvailability availability, int minFoodNeeded, int maxFoodConsumed)
     {
         return SimplePreferenceNeedRating(
