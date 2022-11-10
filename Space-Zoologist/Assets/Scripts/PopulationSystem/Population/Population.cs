@@ -152,20 +152,24 @@ public class Population : MonoBehaviour
             readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
             if (readyForGrowth)
             {
+                bool didAdd = false;
                 //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
                 float populationIncreaseAmount = this.Count * GrowthCalculator.ChangeRate;
                 for (int i = 0; i < populationIncreaseAmount; ++i)
                 {
+                    didAdd = true;
                     AddAnimal(FindValidPositionAroundCurrentAnimals());
                 }
+                if(didAdd)
+                    PlaySpawnAudio();
             }
-            PlaySpawnAudio();
         }
         else
         {
             readyForGrowth = this.GrowthCalculator.ReadyForDecay();
             if (readyForGrowth)
             {
+                bool didRemove = false;
                 //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
                 float populationDecreaseAmount = this.Count * this.GrowthCalculator.ChangeRate * -1;
                 for (int i = 0; i < populationDecreaseAmount; ++i)
@@ -173,9 +177,11 @@ public class Population : MonoBehaviour
                     if (this.AnimalPopulation.Count == 0)
                         break;
                     this.RemoveAnimal(this.AnimalPopulation[0], true);
+                    didRemove = true;
                 }
+                if(didRemove)
+                    PlayDespawnAudio();
             }
-            PlayDespawnAudio();
         }
 
         return readyForGrowth;
