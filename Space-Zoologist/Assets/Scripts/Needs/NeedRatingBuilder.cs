@@ -135,39 +135,46 @@ public static class NeedRatingBuilder
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
     {
         // Select only water that is drinkable
-        IEnumerable<NeedAvailabilityItem> drinkableWater = availability
+        IEnumerable<NeedAvailabilityItem> drinkableWaterPools = availability
             .FindWaterItems()
             .Where(item => needs.WaterIsDrinkable(item.WaterContent.Contents));
 
         // Number of water tiles that the species can drink from
-        float totalDrinkableWater = drinkableWater.Sum(item => item.AmountAvailable);
-        
-        // Drinkable water used will not exceed the amount actually needed
-        float drinkableWaterUsed = Mathf.Min(totalDrinkableWater, waterTilesNeeded);
+        float totalDrinkableWaterTiles = drinkableWaterPools.Sum(item => item.AmountAvailable);
 
-        if (drinkableWaterUsed >= waterTilesNeeded)
-        {
-            // Find the need for fresh water
-            NeedData freshWaterNeed = Array.Find(
-                needs.FindWaterNeeds(), 
-                need => need.ID.WaterIndex == 0);
+        // Water rating calculated this way to give rise to the following behavior:
+        //  - If the population has no drinkable water, their water needs bar should be empty
+        //  - Once the population has drinkable water, their water needs bar will begin to fill
+        // This value is clamped between (0f, 2f) to account for the boosting
+        return Mathf.Clamp( (float)totalDrinkableWaterTiles / waterTilesNeeded, 0f, 2f );
 
-            // If we have a fresh water need, boost it
-            if (freshWaterNeed != null)
-            {
-                // Average the fresh water from all water sources
-                float averageFreshWater = drinkableWater
-                    .Sum(item => item.WaterContent.Contents[0] * item.AmountAvailable);
-                averageFreshWater /= totalDrinkableWater;
 
-                // Boost the rating by how close it is to the max possible fresh water
-                return 1 + (averageFreshWater - freshWaterNeed.Minimum) / (MaxFreshWater - freshWaterNeed.Minimum);
-            }
-            // If we have no fresh water need,
-            // for now just assume a max boost
-            else return 2f;
-        }
-        else return (float)drinkableWaterUsed / waterTilesNeeded;
+        //// Drinkable water used will not exceed the amount actually needed
+        //float drinkableWaterUsed = Mathf.Min(totalDrinkableWater, waterTilesNeeded);
+
+        //if (drinkableWaterUsed >= waterTilesNeeded)
+        //{
+        //    // Find the need for fresh water
+        //    NeedData freshWaterNeed = Array.Find(
+        //        needs.FindWaterNeeds(), 
+        //        need => need.ID.WaterIndex == 0);
+
+        //    // If we have a fresh water need, boost it
+        //    if (freshWaterNeed != null)
+        //    {
+        //        // Average the fresh water from all water sources
+        //        float averageFreshWater = drinkableWater
+        //            .Sum(item => item.WaterContent.Contents[0] * item.AmountAvailable);
+        //        averageFreshWater /= totalDrinkableWater;
+
+        //        // Boost the rating by how close it is to the max possible fresh water
+        //        return 1 + (averageFreshWater - freshWaterNeed.Minimum) / (MaxFreshWater - freshWaterNeed.Minimum);
+        //    }
+        //    // If we have no fresh water need,
+        //    // for now just assume a max boost
+        //    else return 2f;
+        //}
+        //else return (float)drinkableWaterUsed / waterTilesNeeded;
     }
     private static float SimplePreferenceNeedRating(
         NeedData[] needs,
