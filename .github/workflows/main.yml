@@ -27,12 +27,25 @@ jobs:
           projectPath: Space-Zoologist
           buildsPath: Build
           targetPlatform: WebGL
+      - name: 'Upload Build Artifact'
+        uses: actions/upload-artifact@v3
+        with: 
+          name: build-artifact
+          path: 'Build/WebGL/WebGL'
+  Build_Upload:
+    runs-on: ubuntu-latest
+    needs: Auto_Build
+      - name: 'Download Build Artifact'
+        uses: actions/download-artifact@v3
+        with: 
+          name: build-artifact
+          path: 'Build/'
       - name: Copy to Host Repository
         uses: notpresident35/copy_large_folder_to_another_repo_action@1.0.3
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_folder: 'Build/WebGL/WebGL'
+          source_folder: 'Build/'
           destination_repo: 'louieGameTeam/ResearchACampusStoryGame'
           destination_folder: 'SpaceZoologist'
           user_email: ${{ secrets.UNITY_EMAIL }}
