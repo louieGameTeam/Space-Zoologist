@@ -38,7 +38,7 @@ public class PodStoreSection : StoreSection
                 return;
             }
             base.HandleAudio ();
-            populationManager.SpawnAnimal (selectedSpecies, position);
+            populationManager.SpawnAnimal (selectedSpecies, position, true);
             GridSystem.UpdateAnimalCellGrid ();
             base.ResourceManager.Placed (selectedSpecies, 1);
             // Cancel if no left after placing

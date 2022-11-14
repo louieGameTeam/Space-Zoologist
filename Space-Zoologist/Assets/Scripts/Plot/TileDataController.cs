@@ -1213,7 +1213,10 @@ public class TileDataController : MonoBehaviour
                 }
                 else
                 {
-                    HighlightTile(pos, IsValidTileForAnimal(selectedSpecies,pos) ? Color.green : Color.red);
+                    bool isValidTile = IsValidTileForAnimal(selectedSpecies, pos);
+                    bool isTraversableOnly = IsTraversableOnlyTileForAnimal(selectedSpecies, pos);
+                    Color highlightColor = isValidTile ? (isTraversableOnly ? Color.yellow : Color.green) : Color.red;
+                    HighlightTile(pos, highlightColor);
                 }
             }
         }
@@ -1231,6 +1234,12 @@ public class TileDataController : MonoBehaviour
     {
         var tile = GetGameTileAt(cellPosition);
         return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.AccessibleTerrain.Contains(tile.type);
+    }
+
+    public bool IsTraversableOnlyTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
+    {
+        var tile = GetGameTileAt(cellPosition);
+        return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.TraversableOnlyTerrain.Contains(tile.type);
     }
 
     /// <summary>

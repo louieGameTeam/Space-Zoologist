@@ -69,7 +69,7 @@ public class ResourceRequest
                 if (need.Preferred) return 2;
                 else return 1;
             }
-            // If no need was found then this item is not edible/traversible,
+            // If no need was found then this item is not edible/traversable,
             // it is not useful at all
             else return 0;
         }

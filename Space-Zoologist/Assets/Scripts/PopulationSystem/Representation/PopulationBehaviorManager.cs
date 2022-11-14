@@ -66,16 +66,21 @@ public class PopulationBehaviorManager : MonoBehaviour
         behavior.EnterBehavior(animal, behaviorCompleteCallback);
     }
     
-    public void AddAnimal(GameObject animal)
+    public void AddAnimal(GameObject animal, bool triggerSpawnBehavior)
     {
         bool spawnBehaviorExists = (spawnBehavior != null);
         // If spawn behavior, then set the current behavior index to -1
         // so that it iterates to 0 after spawn behavior ends
-        animalsToBehaviorIndex.Add(animal, spawnBehaviorExists ? -1 : 0);
-        if(spawnBehaviorExists)
+        bool useSpawnBehavior = spawnBehaviorExists && triggerSpawnBehavior;
+        animalsToBehaviorIndex.Add(animal, useSpawnBehavior ? -1 : 0);
+        if (useSpawnBehavior)
+        {
             spawnBehavior.EnterBehavior(animal, behaviorCompleteCallback);
+        }
         else
+        {
             defaultBehaviors[0].EnterBehavior(animal, behaviorCompleteCallback);
+        }
     }
 
     public void SetDespawnCallback(BehaviorCompleteCallback callback)

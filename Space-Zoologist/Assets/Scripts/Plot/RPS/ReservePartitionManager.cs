@@ -31,9 +31,8 @@ public class ReservePartitionManager : MonoBehaviour
     public Dictionary<Vector3Int, long> AccessMap { get; private set; }
 
     // Accessible and preferred terrain area for each population
-    public Dictionary<Population, List<Vector3Int>> AccessibleArea { get; private set; }
-    public Dictionary<Population, List<Vector3Int>> AccessibleNotPreferredArea { get; private set; }
-    public Dictionary<Population, List<Vector3Int>> PreferredArea { get; private set; }
+    public Dictionary<Population, List<Vector3Int>> NeededArea { get; private set; }
+    public Dictionary<Population, List<Vector3Int>> TraversableOnlyArea { get; private set; }
 
     // Amount of shared space with each population <id, <id, shared tiles> >
     public Dictionary<int, long[]> SharedSpaces { get; private set; }
@@ -66,9 +65,8 @@ public class ReservePartitionManager : MonoBehaviour
         PopulationByID = new Dictionary<int, Population>();
         AccessMap = new Dictionary<Vector3Int, long>();
         
-        AccessibleArea = new Dictionary<Population, List<Vector3Int>>();
-        AccessibleNotPreferredArea = new Dictionary<Population, List<Vector3Int>>();
-        PreferredArea = new Dictionary<Population, List<Vector3Int>>();
+        NeededArea = new Dictionary<Population, List<Vector3Int>>();
+        TraversableOnlyArea = new Dictionary<Population, List<Vector3Int>>();
         
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
@@ -158,26 +156,25 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
         
-        List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
-        List<Vector3Int> newAccessibleNotPreferredLocations = new List<Vector3Int>();
-        List<Vector3Int> newPreferredLocations = new List<Vector3Int>();
+        List<Vector3Int> newNeededLocations = new List<Vector3Int>();
+        List<Vector3Int> newTraversableOnlyLocations = new List<Vector3Int>();
         
         List<Vector3Int> newLiquidLocations = new List<Vector3Int>();
         List<float[]> newLiquidCompositions = new List<float[]>();
         List<LiquidBody> newLiquidBodies = new List<LiquidBody>();
         // cache needs for performance to avoid repeating costly linq searches
         var treeNeeds = population.species.RequiredTreeNeeds;
-        var accessibleTerrain = population.species.AccessibleTerrain;
-        var preferredTerrain = population.species.PreferredTerrain;
+        var neededTerrain = population.species.NeededTerrain;
+        var traversableOnlyTerrain = population.species.TraversableOnlyTerrain;
 
-        if (!this.AccessibleArea.ContainsKey(population))
+        if (!this.NeededArea.ContainsKey(population))
         {
-            this.AccessibleArea.Add(population, new List<Vector3Int>());
+            this.NeededArea.Add(population, new List<Vector3Int>());
         }
         
-        if (!this.PreferredArea.ContainsKey(population))
+        if (!this.TraversableOnlyArea.ContainsKey(population))
         {
-            this.PreferredArea.Add(population, new List<Vector3Int>());
+            this.TraversableOnlyArea.Add(population, new List<Vector3Int>());
         }
 
         // Number of shared tiles
@@ -230,25 +227,27 @@ public class ReservePartitionManager : MonoBehaviour
                 newLiquidCompositions.Add(composition);
                 newLiquidLocations.Add(cur);
             }
-            bool isTileValid = tile != null && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, accessibleTerrain);
-            if (isTileValid)
+
+            bool isTileNull = (tile == null);
+            bool isTileNeeded = !isTileNull && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, neededTerrain);
+            bool isTileOnlyTraversable = !isTileNull && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, traversableOnlyTerrain);
+            if (isTileNeeded || isTileOnlyTraversable)
             {
                 // save the accessible location
                 accessible.Add(cur);
 
-                // save to accessible location
-                newAccessibleLocations.Add(cur);
-
-                // If preferred, then save to preferred list
-                if (gridSystem.IsValidTileForAnimal(population.species, cur, treeNeeds, preferredTerrain))
+                // Save to needed locations
+                if (isTileNeeded)
                 {
-                    newPreferredLocations.Add(cur);
-                }
-                else
-                {
-                    newAccessibleNotPreferredLocations.Add(cur);
+                    newNeededLocations.Add(cur);
                 }
                 
+                // Save to only traversable locations
+                if (isTileOnlyTraversable)
+                {
+                    newTraversableOnlyLocations.Add(cur);
+                }
+
                 TypesOfTerrain[population][(int)tile.type]++;
 
                 if (!AccessMap.ContainsKey(cur))
@@ -291,9 +290,8 @@ public class ReservePartitionManager : MonoBehaviour
         // Update space
         if (population.HasAccessibilityChanged)
         {
-            this.AccessibleArea[population] = newAccessibleLocations;
-            this.AccessibleNotPreferredArea[population] = newAccessibleNotPreferredLocations;
-            this.PreferredArea[population] = newPreferredLocations;
+            this.NeededArea[population] = newNeededLocations;
+            this.TraversableOnlyArea[population] = newTraversableOnlyLocations;
             this.populationAccessibleLiquidCompositions[population] = newLiquidCompositions;
             this.populationAccessibleLiquidLocations[population] = newLiquidLocations;
         }
@@ -505,12 +503,12 @@ public class ReservePartitionManager : MonoBehaviour
             throw new ArgumentNullException(
                 "Cannot get the accessible food sources for population 'null'");
 
-        if (!AccessibleArea.ContainsKey(population))
+        if (!NeededArea.ContainsKey(population))
             throw new ArgumentException(
                 $"Population '{population}' has no list of accessible area associated with it");
 
         // Get the area that this population can access
-        HashSet<Vector3Int> area = new HashSet<Vector3Int>(AccessibleArea[population]);
+        HashSet<Vector3Int> area = new HashSet<Vector3Int>(NeededArea[population]);
 
         // Local function checks if this food source has any cell position
         // in the set of positions that the population can access
@@ -610,7 +608,7 @@ public class ReservePartitionManager : MonoBehaviour
         Dictionary<Vector3Int, List<Population>> result = new Dictionary<Vector3Int, List<Population>>();
 
         // Go through each entry in the accessible area
-        foreach (KeyValuePair<Population, List<Vector3Int>> kvp in AccessibleArea)
+        foreach (KeyValuePair<Population, List<Vector3Int>> kvp in NeededArea)
         {
             // Go through each cell position in the list
             foreach (Vector3Int cell in kvp.Value)
