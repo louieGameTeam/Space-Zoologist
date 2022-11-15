@@ -89,8 +89,8 @@ public class NeedDataDrawer : PropertyDrawer
         // Get the species need type
         SpeciesNeedType speciesNeedType = (SpeciesNeedType)parent.FindPropertyRelative(nameof(speciesNeedType)).enumValueIndex;
 
-        // Traversible-only field is conditional on "useAsTerrainNeed" for first water, so indent it
-        return (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "traversibleOnly") ||
+        // Traversable-only field is conditional on "useAsTerrainNeed" for first water, so indent it
+        return (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "traversableOnly") ||
 
             // Preferred field is conditional on "useAsTerrainNeed" for first water, so indent it
             (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "preferred") ||
@@ -112,7 +112,7 @@ public class NeedDataDrawer : PropertyDrawer
         // Get some values to help with displaying other properties
         bool useAsTerrainNeed = parent.FindPropertyRelative(nameof(useAsTerrainNeed)).boolValue;
         bool useAsWaterNeed = parent.FindPropertyRelative(nameof(useAsWaterNeed)).boolValue;
-        bool traversibleOnly = parent.FindPropertyRelative(nameof(traversibleOnly)).boolValue;
+        bool traversableOnly = parent.FindPropertyRelative(nameof(traversableOnly)).boolValue;
         SpeciesNeedType speciesNeedType = (SpeciesNeedType)parent.FindPropertyRelative(nameof(speciesNeedType)).enumValueIndex;
         FoodNeedType foodNeedType = (FoodNeedType)parent.FindPropertyRelative(nameof(foodNeedType)).enumValueIndex;
         bool isNonWaterTile = itemID.Category == ItemRegistry.Category.Tile && !itemID.IsWater;
@@ -125,11 +125,11 @@ public class NeedDataDrawer : PropertyDrawer
             // Display "useAsTerrainNeed" only for the first water
             (isFirstWater && child.name == "useAsTerrainNeed") ||
 
-            // Display "traversibleOnly" for any non water tile
-            (isNonWaterTile && child.name == "traversibleOnly") ||
+            // Display "traversableOnly" for any non water tile
+            (isNonWaterTile && child.name == "traversableOnly") ||
 
-            // Display "traversibleOnly" for the first water if it is used as a terrain need
-            (isFirstWater && useAsTerrainNeed && child.name == "traversibleOnly") ||
+            // Display "traversableOnly" for the first water if it is used as a terrain need
+            (isFirstWater && useAsTerrainNeed && child.name == "traversableOnly") ||
 
             // Display "foodNeedType" for all food
             (itemID.Category == ItemRegistry.Category.Food && child.name == "foodNeedType") ||
@@ -140,11 +140,11 @@ public class NeedDataDrawer : PropertyDrawer
             // Display "preferred" for any food
             (itemID.Category == ItemRegistry.Category.Food && child.name == "preferred") ||
 
-            // Display "preferred" for any non water tile that is not traversible only
-            (isNonWaterTile && !traversibleOnly && child.name == "preferred") ||
+            // Display "preferred" for any non water tile that is not traversable only
+            (isNonWaterTile && !traversableOnly && child.name == "preferred") ||
 
             // Display "preferred" for first water tile only if it is used as a terrain need
-            (isFirstWater && useAsTerrainNeed && !traversibleOnly && child.name == "preferred") ||
+            (isFirstWater && useAsTerrainNeed && !traversableOnly && child.name == "preferred") ||
 
             // Display "useAsWaterNeed" only for first water
             (isFirstWater && child.name == "useAsWaterNeed") ||

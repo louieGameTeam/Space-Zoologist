@@ -43,22 +43,22 @@ public class TerrainDominanceItemDrawer : PropertyDrawer
                 // Disable dominances that cannot traverse this terrain
                 ItemID itemID = AnimalDominanceItemDrawer.GetID(element);
                 AnimalSpecies animal = itemID.Data.Species as AnimalSpecies;
-                bool traversible = false;
+                bool traversable = false;
 
                 // Check if an animal species has been specified
                 if (animal)
                 {
-                    traversible = animal.Needs.TerrainIsNeeded(tile);
+                    traversable = animal.Needs.TerrainIsNeeded(tile);
 
-                    // If this is not traversible then set the dominance to zero
-                    if (!traversible)
+                    // If this is not traversable then set the dominance to zero
+                    if (!traversable)
                     {
                         SerializedProperty dominance = element.FindPropertyRelative(nameof(dominance));
                         dominance.floatValue = 0f;
                     }
                 }
 
-                GUI.enabled = traversible;
+                GUI.enabled = traversable;
                 EditorGUIAuto.PropertyField(ref position, element);
                 GUI.enabled = true;
             }

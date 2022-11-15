@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// The data for a single need of a 
@@ -29,7 +30,7 @@ public class NeedData
     public bool Needed => needed;
     public SpeciesNeedType SpeciesNeedType => speciesNeedType;
     public bool UseAsTerrainNeed => useAsTerrainNeed;
-    public bool TraversibleOnly => traversibleOnly;
+    public bool TraversableOnly => traversableOnly;
     public FoodNeedType FoodNeedType => foodNeedType;
     public bool Preferred => preferred;
     public bool UseAsWaterNeed => useAsWaterNeed;
@@ -51,10 +52,11 @@ public class NeedData
     [Tooltip("If true, then this water need should be treated as terrain " +
         "that the species can traverse")]
     private bool useAsTerrainNeed = false;
-    [SerializeField]
-    [Tooltip("A traversible only terrain can be traversed by the species " +
+    
+    [SerializeField][FormerlySerializedAs("traversibleOnly")]
+    [Tooltip("A traversable only terrain can be traversed by the species " +
         "but does not contribute to the species terrain need")]
-    private bool traversibleOnly = false;
+    private bool traversableOnly = false;
 
     [SerializeField]
     [Tooltip("How the food source is used. The species may use it as food to eat " +

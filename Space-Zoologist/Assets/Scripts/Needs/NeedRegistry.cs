@@ -51,33 +51,45 @@ public class NeedRegistry
     #endregion
 
     #region Find Methods
-    public bool TerrainIsTraversible(TileType tile)
-    {
-        return FindTraversibleTerrain().Contains(tile);
-    }
+
     public bool TerrainIsNeeded(TileType tile)
     {
         NeedData[] terrainNeeds = FindTerrainNeeds();
         int index = Array.FindIndex(terrainNeeds, need => need.ID.Data.Tile == tile);
         return index >= 0 && index < terrainNeeds.Length;
     }
-    public HashSet<TileType> FindTraversibleTerrain()
+    public HashSet<TileType> FindNeededTerrain()
     {
-        // Get all tile types on traversible terrain
+        // Get all tile types on traversable terrain
         IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
-            .Where(need => need.Needed)
+            .Where(need => need.Needed && !need.TraversableOnly)
             .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
             .Select(need => need.ID.Data.Tile)
             .Distinct();
 
         return new HashSet<TileType>(tileTypes);
     }
-    
-    public HashSet<TileType> FindPreferredTerrain()
+
+    /// <summary>
+    /// Accessible terrain is either needed OR traversable only
+    /// </summary>
+    /// <returns></returns>
+    public HashSet<TileType> FindAccessibleTerrain()
     {
-        // Get all tile types on traversible terrain
         IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
-            .Where(need => need.Preferred)
+            .Where(need => need.Needed || need.TraversableOnly)
+            .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
+            .Select(need => need.ID.Data.Tile)
+            .Distinct();
+        
+        return new HashSet<TileType>(tileTypes);
+    }
+    
+    public HashSet<TileType> FindTraversableOnlyTerrain()
+    {
+        // Get all tile types on traversable terrain
+        IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
+            .Where(need => need.TraversableOnly && !need.UseAsTerrainNeed)
             .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
             .Select(need => need.ID.Data.Tile)
             .Distinct();
@@ -128,7 +140,7 @@ public class NeedRegistry
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Tile)
             .Where(need => need.Needed)
-            .Where(need => !need.TraversibleOnly)
+            .Where(need => !need.TraversableOnly)
             .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
             .OrderByDescending(need => need.Preferred)
             .ToArray();

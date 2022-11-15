@@ -17,8 +17,8 @@ public class Inspector : MonoBehaviour
     public UnityEvent SelectionChangedEvent => selectionChangedEvent;
 
     [Header("Highlight Colors")]
-    [SerializeField] private Color populationHighlightColor;
-    [SerializeField] private Color populationPreferredHighlightColor;
+    [SerializeField] private Color populationNeededHighlightColor;
+    [SerializeField] private Color populationTraversableOnlyHighlightColor;
     [SerializeField] private Color animalHighlightColor;
     [SerializeField] private Color foodHighlightColor;
     [SerializeField] private Color liquidHighlightColor;
@@ -329,13 +329,14 @@ public class Inspector : MonoBehaviour
             child.gameObject.GetComponent<SpriteRenderer>().color = animalHighlightColor;
         }
 
-        // highlight accessible terrain, then highlight again tiles that are preferred
+        // highlight accessible terrain 
         Population populationScript = population.GetComponent<Population>();
-        List<Vector3Int> accessibleNotPreferredTiles = GameManager.Instance.m_reservePartitionManager.AccessibleNotPreferredArea[populationScript];
-        GameManager.Instance.m_tileDataController.HighlightTiles(accessibleNotPreferredTiles, populationHighlightColor);
+        List<Vector3Int> accessibleTiles = GameManager.Instance.m_reservePartitionManager.NeededArea[populationScript];
+        GameManager.Instance.m_tileDataController.HighlightTiles(accessibleTiles, populationNeededHighlightColor);
         
-        List<Vector3Int> preferredTiles = GameManager.Instance.m_reservePartitionManager.PreferredArea[populationScript];
-        GameManager.Instance.m_tileDataController.HighlightTiles(preferredTiles, populationPreferredHighlightColor);
+        // Highlight only traversable terrain
+        List<Vector3Int> traversableTiles = GameManager.Instance.m_reservePartitionManager.TraversableOnlyArea[populationScript];
+        GameManager.Instance.m_tileDataController.HighlightTiles(traversableTiles, populationTraversableOnlyHighlightColor);
         this.lastPopulationSelected = population;
     }
 

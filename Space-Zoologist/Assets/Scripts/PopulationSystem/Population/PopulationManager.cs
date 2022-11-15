@@ -89,14 +89,14 @@ public class PopulationManager : MonoBehaviour
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public Population SpawnAnimal(AnimalSpecies species, Vector3 position)
+    public Population SpawnAnimal(AnimalSpecies species, Vector3 position, bool triggerSpawnBehavior = false)
     {
         Population population = GetPopulation(species, position);
         if (population == null)
         {
             population = CreatePopulation(species, position);
         }
-        population.AddAnimal(position);
+        population.AddAnimal(position, triggerSpawnBehavior);
         return population;
     }
 

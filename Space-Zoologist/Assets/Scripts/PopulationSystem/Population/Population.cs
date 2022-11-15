@@ -158,7 +158,7 @@ public class Population : MonoBehaviour
                 for (int i = 0; i < populationIncreaseAmount; ++i)
                 {
                     didAdd = true;
-                    AddAnimal(FindValidPositionAroundCurrentAnimals());
+                    AddAnimal(FindValidPositionAroundCurrentAnimals(), true);
                 }
                 if(didAdd)
                     PlaySpawnAudio();
@@ -214,14 +214,14 @@ public class Population : MonoBehaviour
         return finalPos;
     }
 
-    public void AddAnimal(Vector3 position)
+    public void AddAnimal(Vector3 position, bool triggerSpawnBehavior = false)
     {
         MovementData data = new MovementData();
         data.CurrentDirection = Direction.left;
         GameObject newAnimal = this.PoolingSystem.GetGuaranteedPooledObject(this.AnimalPrefab);
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        this.PopulationBehaviorManager.AddAnimal(newAnimal);
+        this.PopulationBehaviorManager.AddAnimal(newAnimal, triggerSpawnBehavior);
         this.AnimalPopulation.Add(newAnimal);
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, true));
