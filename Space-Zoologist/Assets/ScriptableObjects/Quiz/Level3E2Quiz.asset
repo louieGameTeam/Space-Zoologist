@@ -32,39 +32,38 @@ MonoBehaviour:
       weight: 1
     - label: 'Neither, Strots are not prey to any species '
       weight: 0
-  - question: 'Which of the following is a CORRECT list of foods edible for a Strot?
-
-'
+  - question: "Which of the following is a correct ordering of the Strot\u2019s preferred
+      food in order of most preferred to least preferred?\n"
     category:
       item:
         category: 0
         index: 3
       need: 3
     options:
-    - label: Bacca berries, Formites, and Glowcaps
-      weight: 0
-    - label: 'Kelp, Glowcaps and Astral Maple fruit '
-      weight: 0
-    - label: Formites and Glowcaps
+    - label: Glowcaps, Formites, Bacca berries
       weight: 1
-  - question: "Let\u2019s say a Stroteater\u2019s water need isn\u2019t being satisfied
-      despite them being next to a lake. What should you do first to start trying
-      to fix this?\r\n"
+    - label: Formites, Glowcaps, Bacca berries
+      weight: 0
+    - label: Glowcaps, Bacca berries, Formites
+      weight: 0
+  - question: "Barry observed that a Stroteater\u2019s water need wasn\u2019t being
+      satisfied despite them being next to a lake. He decided to add stagnant water
+      to change the water\u2019s purity values, but it didn\u2019t help. What might
+      you have done? Rank the following in order of best choice to worst choice:
+      A. Make the water source bigger B. Check research on Stroteater\u2019s water
+      needs. C. Test adding both salt water and stagnant water to see which works.\r\n"
     category:
       item:
         category: 0
         index: 2
       need: 4
     options:
-    - label: Add stagnant water to the water source
+    - label: A, B, C
       weight: 0
-    - label: 'Add fresh water to the water source '
-      weight: 0
-    - label: Make the water source bigger
-      weight: 0
-    - label: Look at the research for the Stroteaters to see what water values they
-        need
+    - label: 'B, C, A '
       weight: 2
+    - label: C, B, A
+      weight: 0
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []

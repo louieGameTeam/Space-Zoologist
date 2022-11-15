@@ -41,26 +41,30 @@ MonoBehaviour:
     options:
     - label: Placing all owned species immediately for efficiency.
       weight: 0
-    - label: 'Placing a couple of the owned species multiple separate times in different
-        ways to test if the enclosure is suitable or not before going all in. '
+    - label: 'Placing 1 or 2 of a species iteratively to see how well the enclosure
+        supports them. '
       weight: 2
-    - label: Placing a couple of the owned species only once to test if the enclosure
-        is suitable or not before going all in.
+    - label: Continuing to adjust the enclosure to try and make it perfect before
+        doing any controlled testing.
       weight: 0
-  - question: "If you were to design an \u201Cenclosure\u201D for humans, what would
-      be the best way to start based on what you\u2019ve learned so far?"
+  - question: "You need to temporarily house 5 Stroteaters in one of 2 available
+      enclosures. Enclosure A contains 25% grass, 25% dirt, 50% sand and Enclosure
+      B contains 70% Dirt, 20% rock, 10% swamp. What do you predict will happen to
+      the Stroteater population in 3 days in these enclosures?\r"
     category:
       item:
         category: 0
-        index: 3
+        index: 2
       need: 4
     options:
-    - label: Researching human needs
+    - label: 'Stroteater numbers will decrease in Enclosure A and be stable in Enclosure
+        B '
+      weight: 0
+    - label: Stroteater numbers will decrease in both A and B
+      weight: 0
+    - label: Stroteater numbers will be stable in Enclosure A and decrease in Enclosure
+        B
       weight: 2
-    - label: Experimenting
-      weight: 0
-    - label: Creating the enclosure
-      weight: 0
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []

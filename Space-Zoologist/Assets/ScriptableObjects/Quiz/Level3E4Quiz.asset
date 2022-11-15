@@ -48,21 +48,22 @@ MonoBehaviour:
       weight: 2
     - label: Start running tests and experiments to see what works for the Stroteaters
       weight: 0
-  - question: "If a brand new bridge was just finished being built, what would be
-      the next best logical course of action based on what you\u2019ve learned?\r\n"
+  - question: "Let\u2019s say Barry is going to build a bridge. Rank the following
+      in order of which they should be performed: A. Research bridges and any pertinent
+      information related to this project. B. Start planning concepts and sketch
+      documentation for how the bridge will be built. C. Look at the environment
+      in which the bridge will be built and observe what is present.\n"
     category:
       item:
         category: 0
         index: 2
       need: 3
     options:
-    - label: Open the bridge to the public for anyone to use
+    - label: C, B, A
       weight: 0
-    - label: Run miniscule tests to see if the bridge will hold up to get the bridge
-        open as soon as possible
+    - label: B, C, A
       weight: 0
-    - label: 'Run extensive tests to ensure the bridge is safe to use under all possible
-        conditions before opening it to the public '
+    - label: A, C, B
       weight: 2
   randomQuestionPool:
     questionsToPick: 0

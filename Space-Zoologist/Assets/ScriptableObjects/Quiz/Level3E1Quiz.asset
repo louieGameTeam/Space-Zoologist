@@ -18,7 +18,7 @@ MonoBehaviour:
       index: 3
     need: 0
   fixedQuestions:
-  - question: Which of the following is a CORRECT selection of terrain that is traversable
+  - question: Which of the following is a correct selection of terrain that is traversable
       by a Strot?
     category:
       item:
@@ -32,20 +32,21 @@ MonoBehaviour:
       weight: 1
     - label: Water, dirt, grass
       weight: 0
-  - question: Which of the following is an INCORRECT selection of terrain that is
-      traversable by a Stroteater?
+  - question: You need to temporarily house 10 Strots in an enclosure containing
+      20% swamp, 20% grass and 60% sand. What do you predict will happen to the Strot
+      population over the next 3 days based on the terrain in the enclosure?
     category:
       item:
         category: 0
-        index: 2
+        index: 3
       need: 0
     options:
-    - label: Grass, rock, swamp
+    - label: The Strot population will increase.
+      weight: 0
+    - label: The Strot population will remain stable.
+      weight: 0
+    - label: The strot population will decrease.
       weight: 1
-    - label: Dirt, rock, sand
-      weight: 0
-    - label: Grass, dirt, rock
-      weight: 0
   - question: "Barry saw that the Strot\u2019s food need was not satisfied at all,
       so he placed more of the food source that was already present. What do you
       think about this choice?\r"

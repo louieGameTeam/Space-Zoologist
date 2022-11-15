@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level4E3Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 0
+    need: 0
+  fixedQuestions:
+  - question: For the following example enclosures, put them in order of which ones
+      Zeigs would do best in to which ones Zeigs would do poorly in. Enclosure A
+      contains dirt terrain, high purity water, and plenty of Bacca berry bushes.
+      Enclosure B contains grass terrain, high purity water and plenty of Astral
+      Maple Trees. Enclosure C contains dirt terrain, high purity water, plenty of
+      Astral Maple Trees and Lumoos.
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 0
+    options:
+    - label: A, B, C
+      weight: 0
+    - label: B, C, A
+      weight: 0
+    - label: B, A, C
+      weight: 2
+  - question: "When Juno was designing an enclosure she realized the Zeig\u2019s
+      food need wasn\u2019t being satisfied at all, so she went ahead and placed
+      more of the food that was already present. In which of the following situations
+      would what Juno did make the most sense?"
+    category:
+      item:
+        category: 0
+        index: 0
+      need: 3
+    options:
+    - label: If there was another species nearby that ate the same food as the Zeigs
+      weight: 2
+    - label: "If the currently present food wasn\u2019t close enough to any water
+        sources."
+      weight: 0
+    - label: "If the currently placed food wasn\u2019t on traversable terrain for
+        the Zeigs."
+      weight: 0
+  - question: 'If Flan were introduced to a natural swamp habitat on Earth, there
+      would likely be many impacts on that habitat. Order these choices from most
+      likely to least likely. A. They would quickly outstrip the food resources of
+      the area. B. They would cause the nearby insect/arachnid population to rapidly
+      decrease. C. They would decrease the amount of available food for predators
+      that prey on slug-like animals. '
+    category:
+      item:
+        category: 0
+        index: 4
+      need: 0
+    options:
+    - label: 'A, B, C '
+      weight: 0
+    - label: B, A, C
+      weight: 2
+    - label: C, B, A
+      weight: 0
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 00000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []
