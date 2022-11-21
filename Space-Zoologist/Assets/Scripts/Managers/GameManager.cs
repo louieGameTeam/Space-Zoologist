@@ -359,7 +359,13 @@ public class GameManager : MonoBehaviour
         {
             m_secondaryObjectives.Add(new ResourceObjective(objectiveData.amountToKeep));
         }
-
+        
+        // Add existing (pre-placed) populations to the related objectives
+        foreach (var population in m_populationManager.Populations)
+        {
+            this.RegisterWithSurvivalObjectives(population);
+        }
+        
         // Add the population to related objective if not seen before
         EventManager.Instance.SubscribeToEvent(EventType.NewPopulation, (eventData) =>
         {
@@ -371,6 +377,7 @@ public class GameManager : MonoBehaviour
         {
             UpdateObjectives();
         });
+        UpdateObjectives();
         this.UpdateObjectivePanel();
     }
 
@@ -384,7 +391,7 @@ public class GameManager : MonoBehaviour
                 SurvivalObjective survivalObjective = (SurvivalObjective)objective;
                 if (survivalObjective.AnimalSpecies == population.species && !survivalObjective.Populations.Contains(population))
                 {
-                    // Debug.Log(population.name + " was added to survival objective");
+                    Debug.Log(population.name + " was added to survival objective");
                     survivalObjective.Populations.Add(population);
                 }
             }

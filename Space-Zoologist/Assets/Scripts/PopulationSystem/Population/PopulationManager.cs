@@ -15,6 +15,13 @@ public class PopulationManager : MonoBehaviour
 
     public void Initialize()
     {
+        SpawnSerializedPopulations();
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
+        EventManager.Instance.SubscribeToEvent(EventType.PreCacheRebuild, UpdateAccessibleLocations);
+    }
+
+    private void SpawnSerializedPopulations()
+    {
         RemoveAllExistingPopulations();
         SerializedPopulation[] serializedPopulations = GameManager.Instance.PresetMap.serializedPopulations;
         serializedPopulations = serializedPopulations ?? new SerializedPopulation[0];
@@ -28,9 +35,6 @@ public class PopulationManager : MonoBehaviour
                 pop = SpawnAnimal(species, position);
             }
         }
-
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
-        EventManager.Instance.SubscribeToEvent(EventType.PreCacheRebuild, UpdateAccessibleLocations);
     }
 
     private AnimalSpecies LoadSpecies(string name)
