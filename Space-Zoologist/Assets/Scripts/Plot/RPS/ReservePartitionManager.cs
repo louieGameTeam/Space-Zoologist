@@ -503,12 +503,13 @@ public class ReservePartitionManager : MonoBehaviour
             throw new ArgumentNullException(
                 "Cannot get the accessible food sources for population 'null'");
 
-        if (!NeededArea.ContainsKey(population))
+        if (!NeededArea.ContainsKey(population) && !TraversableOnlyArea.ContainsKey(population))
             throw new ArgumentException(
                 $"Population '{population}' has no list of accessible area associated with it");
 
-        // Get the area that this population can access
+        // Get the area that this population can access, both needed and traversable only
         HashSet<Vector3Int> area = new HashSet<Vector3Int>(NeededArea[population]);
+        area.UnionWith(TraversableOnlyArea[population]);
 
         // Local function checks if this food source has any cell position
         // in the set of positions that the population can access
