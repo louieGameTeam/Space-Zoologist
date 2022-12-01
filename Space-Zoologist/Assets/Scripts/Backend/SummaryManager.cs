@@ -439,9 +439,6 @@ public class SummaryManager : MonoBehaviour
         //    observationOpen = false;
         //}
 
-        Debug.Log(picker.CurrentTab);
-        // Concepts, TestAndMetrics, Reports 
-
         // Handle research tab
         if (picker.CurrentTab == NotebookTab.Research)
         {
