@@ -19,6 +19,9 @@ public class SummaryManager : MonoBehaviour
     // Boolean values indicating status of notebook tabs.
     private bool researchOpen = false;
     private bool observationOpen = false;
+    private bool conceptsOpen = false;
+    private bool testAndMetricsOpen = false;
+    private bool reportsOpen = false;
     // Keep track of certain objects in scene globally.
     private LevelDataReference levelData;
     private NotebookTabPicker picker;
@@ -143,6 +146,18 @@ public class SummaryManager : MonoBehaviour
             if (observationOpen)
             {
                 currentSummaryTrace.TimeObservationToolOpen += Time.deltaTime;
+            }
+            if (conceptsOpen)
+            {
+                currentSummaryTrace.TimeConceptsTabOpen += Time.deltaTime;
+            }
+            if (testAndMetricsOpen)
+            {
+                currentSummaryTrace.TimeTestAndMetricsTabOpen += Time.deltaTime;
+            }
+            if (reportsOpen)
+            {
+                currentSummaryTrace.TimeReportsTabOpen += Time.deltaTime;
             }
         }
 
@@ -424,16 +439,23 @@ public class SummaryManager : MonoBehaviour
         //    observationOpen = false;
         //}
 
-
+        Debug.Log(picker.CurrentTab);
+        // Concepts, TestAndMetrics, Reports 
 
         // Handle research tab
         if (picker.CurrentTab == NotebookTab.Research)
         {
             ResearchTabOpened();
 
-            // If observation tab was open, run its relevant closing function
+            // If another tab was open, run its relevant closing function
             if (observationOpen)
                 ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
         }
 
         // Handle observation tab
@@ -441,9 +463,60 @@ public class SummaryManager : MonoBehaviour
         {
             ObservationTabOpened();
 
-            // If research tab was open, run its relevant closing function
+            // If another tab was open, run its relevant closing function
             if (researchOpen)
                 ResearchTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
+        }
+
+        else if (picker.CurrentTab == NotebookTab.Concepts)
+        {
+            ConceptsTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+            else if (observationOpen)
+                ObservationTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
+        }
+
+        else if (picker.CurrentTab == NotebookTab.TestAndMetrics)
+        {
+            TestAndMetricsTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+            else if (observationOpen)
+                ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
+        }
+
+        else if (picker.CurrentTab == NotebookTab.Reports)
+        {
+            ReportsTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+            else if (observationOpen)
+                ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
         }
 
         // Handle generic tab switch behaviors
@@ -456,6 +529,12 @@ public class SummaryManager : MonoBehaviour
             // If observation tab was open, run its relevant closing function
             else if (observationOpen)
                 ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
         }
     }
 
@@ -572,5 +651,47 @@ public class SummaryManager : MonoBehaviour
         Debug.Log("Observation tab closed");
 
         observationOpen = false;
+    }
+
+    private void ConceptsTabOpened()
+    {
+        Debug.Log("Concepts tab opened");
+
+        conceptsOpen = true;
+        currentSummaryTrace.NumConceptsTabOpen += 1;
+    }
+    private void ConceptsTabClosed()
+    {
+        Debug.Log("Concepts tab closed");
+
+        conceptsOpen = false;
+    }
+
+    private void TestAndMetricsTabOpened()
+    {
+        Debug.Log("TestAndMetrics tab opened");
+
+        testAndMetricsOpen = true;
+        currentSummaryTrace.NumTestAndMetricsTabOpen += 1;
+    }
+    private void TestAndMetricsTabClosed()
+    {
+        Debug.Log("TestAndMetrics tab closed");
+
+        testAndMetricsOpen = false;
+    }
+
+    private void ReportsTabOpened()
+    {
+        Debug.Log("Reports tab opened");
+
+        reportsOpen = true;
+        currentSummaryTrace.NumReportsTabOpen += 1;
+    }
+    private void ReportsTabClosed()
+    {
+        Debug.Log("Reports tab closed");
+
+        reportsOpen = false;
     }
 }
