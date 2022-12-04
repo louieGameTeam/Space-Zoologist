@@ -97,14 +97,14 @@ public class NeedRegistry
     private bool IsNeededTileOnly(NeedData need)
     {
         bool isNeededLiquid = need.ID.IsWater && need.UseAsTerrainNeed && !need.TraversableOnly;
-        bool isNeededTerrain = need.Needed && !need.TraversableOnly;
+        bool isNeededTerrain = !need.ID.IsWater && need.Needed && !need.TraversableOnly;
         return isNeededLiquid || isNeededTerrain;
     }
     
     private bool IsTraversableTileOnly(NeedData need)
     {
         bool isTraversableOnlyLiquid = need.ID.IsWater && need.UseAsTerrainNeed && need.TraversableOnly;
-        bool isTraversableOnlyTerrain = need.TraversableOnly;
+        bool isTraversableOnlyTerrain = !need.ID.IsWater && need.TraversableOnly;
         return isTraversableOnlyLiquid || isTraversableOnlyTerrain;
     }
 
