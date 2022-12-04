@@ -166,7 +166,8 @@ public class ReservePartitionManager : MonoBehaviour
         var treeNeeds = population.species.RequiredTreeNeeds;
         var neededTerrain = population.species.NeededTerrain;
         var traversableOnlyTerrain = population.species.TraversableOnlyTerrain;
-
+        var accessibleTerrain = population.species.AccessibleTerrain;
+        
         if (!this.NeededArea.ContainsKey(population))
         {
             this.NeededArea.Add(population, new List<Vector3Int>());
@@ -227,10 +228,24 @@ public class ReservePartitionManager : MonoBehaviour
                 newLiquidCompositions.Add(composition);
                 newLiquidLocations.Add(cur);
             }
-
+            
+            // Tile validity logic
+            
             bool isTileNull = (tile == null);
-            bool isTileNeeded = !isTileNull && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, neededTerrain);
-            bool isTileOnlyTraversable = !isTileNull && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, traversableOnlyTerrain);
+            bool isTileNeeded = !isTileNull && gridSystem.IsNeededTileForAnimal(
+                population.species,
+                cur,
+                treeNeeds,
+                neededTerrain,
+                accessibleTerrain);
+            
+            
+            bool isTileOnlyTraversable = !isTileNull && gridSystem.IsTraversableOnlyTileForAnimal(
+                population.species, 
+                cur , 
+                treeNeeds, 
+                traversableOnlyTerrain);
+            
             if (isTileNeeded || isTileOnlyTraversable)
             {
                 // save the accessible location

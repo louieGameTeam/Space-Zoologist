@@ -19,9 +19,12 @@ public class NeedCache
     public NeedCache()
     {
         EventManager.Instance.SubscribeToEvent(EventType.PopulationCountChange, MarkPopulationCacheDirty);
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, MarkPopulationCacheDirty);
+        
         EventManager.Instance.SubscribeToEvent(EventType.LiquidChange, MarkFoodCacheDirty);
         EventManager.Instance.SubscribeToEvent(EventType.FoodSourceChange, MarkFoodCacheDirty);
         EventManager.Instance.SubscribeToEvent(EventType.TilemapChange, MarkFoodCacheDirty);
+        
         EventManager.Instance.SubscribeToEvent(EventType.InspectorSelectionChanged, RebuildIfDirty);
         EventManager.Instance.SubscribeToEvent(EventType.StoreToggled, RebuildIfDirty);
     }
@@ -29,9 +32,12 @@ public class NeedCache
     ~NeedCache()
     {
         EventManager.Instance.UnsubscribeToEvent(EventType.PopulationCountChange, MarkPopulationCacheDirty);
+        EventManager.Instance.UnsubscribeToEvent(EventType.PopulationExtinct, MarkPopulationCacheDirty);
+        
         EventManager.Instance.UnsubscribeToEvent(EventType.LiquidChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.FoodSourceChange, MarkFoodCacheDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.TilemapChange, MarkFoodCacheDirty);
+        
         EventManager.Instance.UnsubscribeToEvent(EventType.InspectorSelectionChanged, RebuildIfDirty);
         EventManager.Instance.UnsubscribeToEvent(EventType.StoreToggled, RebuildIfDirty);
     }
