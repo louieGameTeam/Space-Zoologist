@@ -42,8 +42,7 @@ public static class NeedRatingBuilder
         float friendRating = FriendRating(
             population.Species.Needs,
             availability,
-            population.Species.FriendsRequired.x * population.Count,
-            population.Species.FriendsRequired.y * population.Count);
+            population.Count);
         float treeRating = TreeRating(
             population.Species.Needs,
             availability,
@@ -123,14 +122,64 @@ public static class NeedRatingBuilder
             treesNeeded,
             false);
     }
-    private static float FriendRating(NeedRegistry needs, NeedAvailability availability, int minFriendsNeeded, int maxFriendsNeeded)
+    private static float FriendRating(NeedRegistry needs, NeedAvailability availability, int populationCount)
     {
-        return SimplePreferenceNeedRating(
-            needs.FindFriendNeeds(),
-            availability.FindFriendItems(),
-            minFriendsNeeded,
-            maxFriendsNeeded,
-            false);
+        // Friend rating is calculated using individual species
+        NeedData[] friendNeeds = needs.FindFriendNeeds();
+        NeedAvailabilityItem[] friendItems = availability.FindFriendItems();
+        if (friendNeeds.Length > 0)
+        {
+            int totalFriendsNeededMin = 0;
+            int totalFriendsNeededBonus = 0;
+
+            int totalFriendsAvailableBounded = 0;
+            int totalFriendsAvailableExtra = 0;
+
+            bool individualSpeciesSatisfied = true;
+            
+            foreach (NeedData need in friendNeeds)
+            {
+                NeedAvailabilityItem applicableItem = Array
+                    .Find(friendItems, item => item.ID == need.ID);
+
+                int speciesFriendNeededMin = need.SpeciesFriendNeedCount.x * populationCount;
+                int speciesFriendNeededMax = need.SpeciesFriendNeedCount.y * populationCount;
+                
+                totalFriendsNeededMin += speciesFriendNeededMin;
+                totalFriendsNeededBonus += Mathf.Max(0,speciesFriendNeededMax - speciesFriendNeededMin);
+
+                if (applicableItem != null)
+                {
+                    int speciesAvailable = (int)applicableItem.AmountAvailable;
+                    
+                    totalFriendsAvailableExtra += Mathf.Min(speciesAvailable, speciesFriendNeededMax) - speciesFriendNeededMin;
+                    totalFriendsAvailableBounded += Mathf.Min(speciesAvailable, speciesFriendNeededMin);
+                    
+                    if (speciesAvailable < speciesFriendNeededMin)
+                    {
+                        individualSpeciesSatisfied = false;
+                    }
+                }
+                else
+                {
+                    individualSpeciesSatisfied = false;
+                }
+            }
+
+            if (individualSpeciesSatisfied)
+            {
+                float bonus = totalFriendsNeededBonus == 0 ? 0 : (float)totalFriendsAvailableExtra / totalFriendsNeededBonus;
+                return 1 + bonus;
+            }
+            else
+            {
+                return (float)totalFriendsAvailableBounded / totalFriendsNeededMin;
+            }
+        }
+        else
+        {
+            return float.NaN;
+        }
     }
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
     {

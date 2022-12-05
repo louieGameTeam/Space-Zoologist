@@ -33,13 +33,13 @@ public class NeedDataDrawer : PropertyDrawer
             foreach (SerializedProperty child in children)
             {
                 // Check if we should indent this property
-                bool indent = IndentProperty(parent, child);
+                bool indent = ShouldIndentProperty(parent, child);
 
                 // If we should indent then increase the indent
                 if (indent) EditorGUI.indentLevel++;
 
                 // Only display the property if we are supposed to
-                if (DisplayProperty(parent, child))
+                if (ShouldDisplayProperty(parent, child))
                 {
                     EditorGUIAuto.PropertyField(ref position, child, true);
                 }
@@ -73,7 +73,7 @@ public class NeedDataDrawer : PropertyDrawer
             IEnumerable<SerializedProperty> children = EditorGUIAuto.ToEnd(property, id, false, false);
 
             height += children
-                .Where(child => DisplayProperty(parent, child))
+                .Where(child => ShouldDisplayProperty(parent, child))
                 .Sum(child => EditorGUI.GetPropertyHeight(child, true));
         }
 
@@ -82,7 +82,7 @@ public class NeedDataDrawer : PropertyDrawer
     #endregion
 
     #region Private Methods
-    private static bool IndentProperty(SerializedProperty parent, SerializedProperty child)
+    private static bool ShouldIndentProperty(SerializedProperty parent, SerializedProperty child)
     {
         ItemID itemID = GetID(parent);
 
@@ -104,7 +104,7 @@ public class NeedDataDrawer : PropertyDrawer
             // Maximum is conditional on "useAsWaterNeed" for first water, so indent it
             (itemID.IsWater && itemID.WaterIndex == 0 && child.name == "maximum");
     }
-    private static bool DisplayProperty(SerializedProperty parent, SerializedProperty child)
+    private static bool ShouldDisplayProperty(SerializedProperty parent, SerializedProperty child)
     {
         // Construct the item id
         ItemID itemID = GetID(parent);
@@ -136,6 +136,9 @@ public class NeedDataDrawer : PropertyDrawer
 
             // Display "preferred" for species friend needs
             (itemID.Category == ItemRegistry.Category.Species && speciesNeedType == SpeciesNeedType.Friend && child.name == "preferred") ||
+            
+            // Display friend need count for species friend needs
+            (itemID.Category == ItemRegistry.Category.Species && speciesNeedType == SpeciesNeedType.Friend && child.name == "speciesFriendNeedCount") ||
 
             // Display "preferred" for any food
             (itemID.Category == ItemRegistry.Category.Food && child.name == "preferred") ||
