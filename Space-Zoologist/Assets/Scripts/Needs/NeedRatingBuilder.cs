@@ -107,11 +107,11 @@ public static class NeedRatingBuilder
     }
     private static float TerrainRating(NeedRegistry needs, NeedAvailability availability, int terrainTilesNeeded)
     {
-        return SimplePreferenceNeedRating(
+        return SimpleTotalNeedRating(
             needs.FindTerrainNeeds(),
             availability.FindTerrainItems(),
             terrainTilesNeeded,
-            terrainTilesNeeded,
+            terrainTilesNeeded + 20,
             true);
     }
     private static float TreeRating(NeedRegistry needs, NeedAvailability availability, int treesNeeded)
@@ -247,6 +247,72 @@ public static class NeedRatingBuilder
         // If there were no needs then return the number for no need rating "NaN"
         else return float.NaN;
     }
+    
+    /// <summary>
+    /// This variant ignores preferences when calculating how much "extra" need is available.
+    /// Bonus value comes from extra available needs, preferred or not
+    /// </summary>
+    /// <param name="needs"></param>
+    /// <param name="items"></param>
+    /// <param name="minNeeded"></param>
+    /// <param name="maxUsed"></param>
+    /// <param name="useAmount"></param>
+    /// <returns></returns>
+    private static float SimpleTotalNeedRating(
+        NeedData[] needs,
+        NeedAvailabilityItem[] items,
+        int minNeeded,
+        int maxUsed,
+        bool useAmount)
+    {
+        // Check if some needs were passed in
+        if (needs.Length > 0)
+        {
+            // Start at using none
+            float preferredUsed = 0;
+            float survivableUsed = 0;
 
+            // Go through each need in the needs
+            foreach (NeedData need in needs)
+            {
+                // Find an item with the same id as the need
+                NeedAvailabilityItem applicableItem = Array
+                    .Find(items, item => item.ID == need.ID);
+
+                if (applicableItem != null)
+                {
+                    // Get total available based on whether to use the item count or amount available
+                    float totalAvailable = useAmount ? applicableItem.AmountAvailable : applicableItem.ItemCount;
+
+                    // If the need is preferred then add to preferred used
+                    if (need.Preferred)
+                    {
+                        preferredUsed += totalAvailable;
+                    }
+                    // If the need is not preferred the add to survivable used
+                    else survivableUsed += totalAvailable;
+                }
+
+            }
+
+            // Cannot use more than what is needed
+            preferredUsed = Mathf.Min(preferredUsed, maxUsed);
+            survivableUsed = Mathf.Min(survivableUsed, maxUsed - preferredUsed);
+            float totalUsed = preferredUsed + survivableUsed;
+
+            // If we used the amound we needed, then boost the rating
+            if (totalUsed >= minNeeded)
+            {
+                int bonusMax = maxUsed - minNeeded;
+                int extra = (int)totalUsed - minNeeded;
+                return 1 + (float)extra/bonusMax;
+            }
+            // If we did not use the amount we needed
+            // then the rating is the proportion that we needed
+            else return (float)totalUsed / minNeeded;
+        }
+        // If there were no needs then return the number for no need rating "NaN"
+        else return float.NaN;
+    }
     #endregion
 }

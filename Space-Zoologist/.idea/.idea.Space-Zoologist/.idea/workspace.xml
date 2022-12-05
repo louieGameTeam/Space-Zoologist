@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7d906d2e-554a-45de-a110-1b82c5813e7f" name="Changes" comment="" />
+    <list default="true" id="7d906d2e-554a-45de-a110-1b82c5813e7f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Space-Zoologist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Space-Zoologist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Needs/NeedRatingBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Needs/NeedRatingBuilder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Plot/RPS/ReservePartitionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Plot/TileDataController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Plot/TileDataController.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,10 +42,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="16464">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="16464" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -73,6 +78,8 @@
       <workItem from="1668481116174" duration="1172000" />
       <workItem from="1669539798096" duration="738000" />
       <workItem from="1670113860774" duration="7566000" />
+      <workItem from="1670152255606" duration="832000" />
+      <workItem from="1670200718603" duration="5653000" />
     </task>
     <servers />
   </component>
@@ -97,6 +104,49 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Plot/TileDataController.cs</url>
+          <line>1283</line>
+          <properties documentPath="C:\Users\arthu\OneDrive\Documents\SpaceZoologist\Space-Zoologist\Assets\Scripts\Plot\TileDataController.cs" initialLine="1285" containingFunctionPresentation="method 'IsAccessibleTileForAnimal'">
+            <startOffsets>
+              <option value="54362" />
+            </startOffsets>
+            <endOffsets>
+              <option value="54468" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Plot/TileDataController.cs</url>
+          <line>1204</line>
+          <properties documentPath="C:\Users\arthu\OneDrive\Documents\SpaceZoologist\Space-Zoologist\Assets\Scripts\Plot\TileDataController.cs" initialLine="1204" containingFunctionPresentation="method 'IsValidAnimalPlacement'">
+            <startOffsets>
+              <option value="51541" />
+            </startOffsets>
+            <endOffsets>
+              <option value="51556" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Plot/TileDataController.cs</url>
+          <line>1245</line>
+          <properties documentPath="C:\Users\arthu\OneDrive\Documents\SpaceZoologist\Space-Zoologist\Assets\Scripts\Plot\TileDataController.cs" initialLine="1245" containingFunctionPresentation="method 'IsValidAnimalPlacement'">
+            <startOffsets>
+              <option value="52916" />
+            </startOffsets>
+            <endOffsets>
+              <option value="53039" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Frame#BehaviorPattern.InitializePattern" memberName="alternativeCallback" />

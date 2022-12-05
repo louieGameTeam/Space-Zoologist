@@ -236,8 +236,8 @@ public class ReservePartitionManager : MonoBehaviour
                 population.species,
                 cur,
                 treeNeeds,
-                neededTerrain,
-                accessibleTerrain);
+                accessibleTerrain,
+                neededTerrain);
             
             
             bool isTileOnlyTraversable = !isTileNull && gridSystem.IsTraversableOnlyTileForAnimal(

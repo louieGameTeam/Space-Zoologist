@@ -1201,9 +1201,7 @@ public class TileDataController : MonoBehaviour
         var traversableOnly = selectedSpecies.TraversableOnlyTerrain;
         var accessibleTerrain = selectedSpecies.AccessibleTerrain;
         var treeNeeds = selectedSpecies.RequiredTreeNeeds;
-        
-        accessibleTerrain.UnionWith(neededOnly);
-        
+
         Vector3Int pos;
         GameTile tile;
         bool valid = true;
@@ -1225,8 +1223,8 @@ public class TileDataController : MonoBehaviour
                         selectedSpecies, 
                         pos, 
                         treeNeeds, 
-                        neededOnly, 
-                        accessibleTerrain);
+                        accessibleTerrain,
+                        neededOnly);
                     bool isTraversableOnly = IsTraversableOnlyTileForAnimal(
                         selectedSpecies,
                         pos,
@@ -1301,8 +1299,8 @@ public class TileDataController : MonoBehaviour
         AnimalSpecies species, 
         Vector3Int cellPosition, 
         NeedData[] treeNeeds,
-        HashSet<TileType> neededTerrain,
-        HashSet<TileType> accessibleTerrain)
+        HashSet<TileType> accessibleTerrain,
+        HashSet<TileType> neededTerrain)
     {
         var tile = GetGameTileAt(cellPosition);
         bool hasTreeNeeds = treeNeeds.Length > 0;
