@@ -121,8 +121,10 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         GameManager.Instance.m_reservePartitionManager.AddPopulation(population);
-        population.UpdateAccessibleArea(GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population),
-        GameManager.Instance.m_tileDataController.GetGridWithAccess(population));
+        population.UpdateAccessibleArea(
+            GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population),
+            GameManager.Instance.m_tileDataController.GetGridWithAccess(population));
+        
         this.BehaviorPatternUpdater.RegisterPopulation(population);
 
         // NOTE: does the need cache need to be updated now?

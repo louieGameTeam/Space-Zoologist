@@ -804,6 +804,7 @@ public class TileDataController : MonoBehaviour
         }
         foreach (ConstructionCluster cluster in finishedClusters)
             ConstructionClusters.Remove(cluster);
+        
         LiquidbodyController.Instance.MergeConstructingTiles();
         BufferTexture.Apply();
         BufferCenterTexture.Apply();
@@ -814,6 +815,7 @@ public class TileDataController : MonoBehaviour
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
+            EventManager.Instance.InvokeEvent(EventType.TilemapChange, null);
             GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
