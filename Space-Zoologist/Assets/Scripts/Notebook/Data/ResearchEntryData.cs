@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class ResearchEntryData : NotebookDataModule
 {
+    public List<ResearchEncyclopediaArticleData> Articles => articles;
+
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("List of notes that the player has taken in this research entry")]
