@@ -126,6 +126,15 @@ public class SummaryTrace
     // First time user played.
     [SerializeField] private string dateStarted;
 
+    // Metrics for Concepts, Test + Metrics, and Reports Tab usage
+    [SerializeField] private int numConceptsTabOpen;
+    [SerializeField] private float timeConceptsTabOpen;
+    [SerializeField] private int numTestAndMetricsTabOpen;
+    [SerializeField] private float timeTestAndMetricsTabOpen;
+    [SerializeField] private int numReportsTabOpen;
+    [SerializeField] private float timeReportsTabOpen;
+
+
     // TESTING METRICS -- see SetTrace.cs
     // A list of SetTraces.
     [SerializeField] private List<SetTrace> setTraces;
@@ -209,6 +218,12 @@ public class SummaryTrace
         numResourceRequestsApproved = 0;
         numResourceRequestsDenied = 0;
         numDrawToolUsed = 0;
+        numConceptsTabOpen = 0;
+        timeConceptsTabOpen = 0f;
+        numTestAndMetricsTabOpen = 0;
+        timeTestAndMetricsTabOpen = 0f;
+        numReportsTabOpen = 0;
+        timeReportsTabOpen = 0f;
         setTraces = new List<SetTrace>();
     }
 
@@ -627,6 +642,42 @@ public class SummaryTrace
     {
         get { return dateStarted; }
         set { dateStarted = value; }
+    }
+
+    public int NumConceptsTabOpen
+    {
+        get { return numConceptsTabOpen; }
+        set { numConceptsTabOpen = value; }
+    }
+
+    public float TimeConceptsTabOpen
+    {
+        get { return timeConceptsTabOpen; }
+        set { timeConceptsTabOpen = value; }
+    }
+
+    public int NumTestAndMetricsTabOpen
+    {
+        get { return numTestAndMetricsTabOpen; }
+        set { numTestAndMetricsTabOpen = value; }
+    }
+
+    public float TimeTestAndMetricsTabOpen
+    {
+        get { return timeTestAndMetricsTabOpen; }
+        set { timeTestAndMetricsTabOpen = value; }
+    }
+
+    public int NumReportsTabOpen
+    {
+        get { return numReportsTabOpen; }
+        set { numReportsTabOpen = value; }
+    }
+
+    public float TimeReportsTabOpen
+    {
+        get { return timeReportsTabOpen; }
+        set { timeReportsTabOpen = value; }
     }
 
     public List<SetTrace> SetTraces
