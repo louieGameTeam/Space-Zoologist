@@ -197,13 +197,22 @@ public class SummaryManager : MonoBehaviour
 
         // Check if current user has summary trace data in DB.
         StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(encryptedId, (value) => {
-            SummaryTraceResponse response = value;
-            // If the trace was found for the user, set its data field to be the current summary trace.
-            if (response.code == 0)
+            if (value != null) 
             {
-                currentSummaryTrace = JsonUtility.FromJson<SummaryTrace>(response.data);
-            // If no trace for the current user is found, create a new summary trace to work from.
-            } else if (response.code == 2)
+                SummaryTraceResponse response = value;
+                // If the trace was found for the user, set its data field to be the current summary trace.
+                if (response.code == 0)
+                {
+                    currentSummaryTrace = JsonUtility.FromJson<SummaryTrace>(response.data);
+                // If no trace for the current user is found, create a new summary trace to work from.
+                } else if (response.code == 2)
+                {
+                    currentSummaryTrace = new SummaryTrace();
+                    currentSummaryTrace.PlayerID = encryptedId;
+                    currentSummaryTrace.PlayerName = encryptedName;
+                    currentSummaryTrace.DateStarted = DateTime.Now.ToString();
+                }
+            } else
             {
                 currentSummaryTrace = new SummaryTrace();
                 currentSummaryTrace.PlayerID = encryptedId;
