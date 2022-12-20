@@ -35,7 +35,7 @@ public class CreditsManager : MonoBehaviour
     /// Unity reference to the .csv containing employee names and roles. File is assumed to be sorted by last name in alphabetical order after being sorted by role
     /// </summary>
     [SerializeField] private TextAsset EmployeeList = null;
-
+    [SerializeField] private CanvasGroup CreditsCanvasGroup = null;
     [SerializeField] private TMP_Text CreditsContent = null;
 
     [SerializeField] private Canvas CanvasReference = null;
@@ -44,11 +44,13 @@ public class CreditsManager : MonoBehaviour
     /// Number of lines of spacing between each role's members
     /// </summary>
     [SerializeField] private int RoleSpacing = 3;
+    [SerializeField] private int JobTitleTextSize = 82;
 
     [Range(1f, 10f)]
     [SerializeField] private float ScrollSpeedMultiplier = 1f;
 
     private Vector3 CreditsTargetEndPosition = Vector3.zero;
+    private bool IsScrolling = false;
 
     /// <summary>
     /// Maps role priorities to their strings containing formatted employee names for display in a RoleList
@@ -85,16 +87,9 @@ public class CreditsManager : MonoBehaviour
         SetupCreditsContent();
     }
 
-    private void Start()
-    {
-        // Force rebuild of layout to update height of RectTransform
-        LayoutRebuilder.ForceRebuildLayoutImmediate(CreditsContent.rectTransform);
-        ResetCreditsContentPosition();
-    }
-
     private void LateUpdate()
     {
-        if (CreditsContent.rectTransform.position.y < CreditsTargetEndPosition.y)
+        if (IsScrolling && CreditsContent.rectTransform.position.y < CreditsTargetEndPosition.y)
         {
             CreditsContent.rectTransform.Translate(0, Time.deltaTime * SCROLL_SPEED_CONSTANT * ScrollSpeedMultiplier, 0);
         }
@@ -153,7 +148,7 @@ public class CreditsManager : MonoBehaviour
 
         foreach (KeyValuePair<string, RolePriority> role in PriorityDict)
         {
-            creditsText += $"<size=45><b><u>{role.Key}</u></b></size>\n\n";
+            creditsText += $"<size={JobTitleTextSize}><b><u>{role.Key}</u></b></size>\n\n";
             creditsText += RoleDict[role.Value];
 
             for (int i = 0; i < RoleSpacing; i++)
@@ -168,6 +163,27 @@ public class CreditsManager : MonoBehaviour
 
         // Set the target position for when the CreditsContent has left the top of the canvas
         CreditsTargetEndPosition = new Vector3(CreditsContent.rectTransform.position.x, CanvasReference.GetComponent<RectTransform>().rect.height);
+    }
+
+    /// <summary>
+    /// Starts the credits panel
+    /// </summary>
+    public void StartCredits()
+    {
+        // Force rebuild of layout to update height of RectTransform
+        LayoutRebuilder.ForceRebuildLayoutImmediate(CreditsContent.rectTransform);
+        CreditsCanvasGroup.gameObject.SetActive(true);
+        ResetCreditsContentPosition();
+        IsScrolling = true;
+    }
+
+    /// <summary>
+    /// Stops the credits panel
+    /// </summary>
+    public void StopCredits()
+    {
+        CreditsCanvasGroup.gameObject.SetActive(false);
+        IsScrolling = false;
     }
 
     /// <summary>
