@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class CreditsManager : MonoBehaviour
 {
-    enum RolePriority
+    private enum RolePriority
     {
         Faculty,
         Project_Manager,
@@ -20,23 +22,43 @@ public class CreditsManager : MonoBehaviour
         UI_UX
     }
 
-    #region Private Fields
+    /// <summary>
+    /// Constant modifier to scroll speed to make it reasonable, simplifies the range of values ScrollSpeedMultiplier can take
+    /// </summary>
+    private const int SCROLL_SPEED_CONSTANT = 10;
+
+
+#region Private Fields
     private Regex Pattern = new Regex(@"^(?<FirstName>[a-zA-Z\s]*)[,](?<MiddleName>[a-zA-Z\s]*)[,](?<LastName>[a-zA-Z\s]*)[,](?>[""]?(?<JobTitle>[a-zA-Z\s\/]+)[""]?[,]?){1,}$");
 
     /// <summary>
     /// Unity reference to the .csv containing employee names and roles. File is assumed to be sorted by last name in alphabetical order after being sorted by role
     /// </summary>
-    [SerializeField] private TextAsset EmployeeList;
+    [SerializeField] private TextAsset EmployeeList = null;
+
+    [SerializeField] private TMP_Text CreditsContent = null;
+
+    [SerializeField] private Canvas CanvasReference = null;
+
+    /// <summary>
+    /// Number of lines of spacing between each role's members
+    /// </summary>
+    [SerializeField] private int RoleSpacing = 3;
+
+    [Range(1f, 5f)]
+    [SerializeField] private float ScrollSpeedMultiplier = 1f;
+
+    private Vector3 CreditsTargetEndPosition = Vector3.zero;
 
     /// <summary>
     /// Maps role priorities to their strings containing formatted employee names for display in a RoleList
     /// </summary>
-    private Dictionary<RolePriority, string> RoleDict;
+    private Dictionary<RolePriority, string> RoleDict = null;
 
     /// <summary>
     /// Maps role names as strings to their priority levels
     /// </summary>
-    private Dictionary<string, RolePriority> PriorityDict = new Dictionary<string, RolePriority>
+    private readonly Dictionary<string, RolePriority> PriorityDict = new Dictionary<string, RolePriority>
     {
         { "Faculty", RolePriority.Faculty},
         { "Project Manager", RolePriority.Project_Manager},
@@ -49,18 +71,38 @@ public class CreditsManager : MonoBehaviour
         { "Gameplay Programmer", RolePriority.Gameplay_Programmer},
         { "UI/UX", RolePriority.UI_UX},
     }; 
-    #endregion
+#endregion
 
 
-    #region Monobehaviour Callbacks
+#region Monobehaviour Callbacks
     private void Awake()
     {
-        LoadCredits();
+        if (RoleDict == null)
+        {
+            LoadCredits();
+        }
+
+        SetupCreditsContent();
     }
-    #endregion
+
+    private void Start()
+    {
+        // Force rebuild of layout to update height of RectTransform
+        LayoutRebuilder.ForceRebuildLayoutImmediate(CreditsContent.rectTransform);
+        ResetCreditsContentPosition();
+    }
+
+    private void LateUpdate()
+    {
+        if (CreditsContent.rectTransform.position.y < CreditsTargetEndPosition.y)
+        {
+            CreditsContent.rectTransform.Translate(0, Time.deltaTime * SCROLL_SPEED_CONSTANT * ScrollSpeedMultiplier, 0);
+        }
+    }
+#endregion
 
 
-    #region Private Functions
+#region Private Functions
     /// <summary>
     /// Loads data from EmployeeList into RoleDict
     /// </summary>
@@ -80,7 +122,9 @@ public class CreditsManager : MonoBehaviour
                 string fullName = match.Groups[1].Value;
 
                 if (!string.IsNullOrEmpty(match.Groups[2].Value))
+                {
                     fullName += $" {match.Groups[2]}.";
+                }
 
                 fullName += $" {match.Groups[3]}";
 
@@ -100,7 +144,39 @@ public class CreditsManager : MonoBehaviour
         }
     }
 
-    // TODO: FINISH IMPLEMENTING CREATION OF ROLELIST OBJECTS AND SETTING THEIR VALUES AND SCROLLING/BOUNDCHECKING/CLEANUP
+    /// <summary>
+    /// Places content parsed from LoadCredits into the CreditsContent text, adding formatting
+    /// </summary>
+    private void SetupCreditsContent()
+    {
+        string creditsText = "";
+
+        foreach (KeyValuePair<string, RolePriority> role in PriorityDict)
+        {
+            creditsText += $"<size=45><b><u>{role.Key}</u></b></size>\n\n";
+            creditsText += RoleDict[role.Value];
+
+            for (int i = 0; i < RoleSpacing; i++)
+            {
+                creditsText += "\n";
+            }
+        }
+
+        creditsText = creditsText.TrimEnd();
+
+        CreditsContent.text = creditsText;
+
+        // Set the target position for when the CreditsContent has left the top of the canvas
+        CreditsTargetEndPosition = new Vector3(CreditsContent.rectTransform.position.x, CanvasReference.GetComponent<RectTransform>().rect.height);
+    }
+
+    /// <summary>
+    /// Sets CreditsContent to its starting position (out of view below the Canvas)
+    /// </summary>
+    private void ResetCreditsContentPosition()
+    {
+        CreditsContent.rectTransform.anchoredPosition = new Vector2(0, -CreditsContent.rectTransform.rect.height);
+    }
 
     /// <summary>
     /// Prints the contents of RoleDict to Debug.Log
@@ -117,5 +193,5 @@ public class CreditsManager : MonoBehaviour
                 Debug.Log("NO MEMBERS");
         }
     }
-    #endregion
+#endregion
 }
