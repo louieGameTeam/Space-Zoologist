@@ -45,7 +45,7 @@ public class CreditsManager : MonoBehaviour
     /// </summary>
     [SerializeField] private int RoleSpacing = 3;
 
-    [Range(1f, 5f)]
+    [Range(1f, 10f)]
     [SerializeField] private float ScrollSpeedMultiplier = 1f;
 
     private Vector3 CreditsTargetEndPosition = Vector3.zero;
@@ -177,7 +177,10 @@ public class CreditsManager : MonoBehaviour
     {
         CreditsContent.rectTransform.anchoredPosition = new Vector2(0, -CreditsContent.rectTransform.rect.height);
     }
+#endregion
+    
 
+#region Debug Functions
     /// <summary>
     /// Prints the contents of RoleDict to Debug.Log
     /// </summary>
